@@ -47,13 +47,8 @@ public sealed partial class TurnstileComponent : Component
     public Dictionary<EntityUid, TimeSpan> PriedExceptions = new();
 
     /// <summary>
-    /// default state of the turnstile sprite.
-    /// </summary>
-    [DataField]
-    public string DefaultState = "turnstile_idle";
-
-    /// <summary>
     /// animation state of the turnstile spinning.
+    /// Frame 0 will be used for the idle state
     /// </summary>
     [DataField]
     public string SpinState = "operate";
@@ -123,14 +118,24 @@ public sealed partial class TurnstileComponent : Component
     [DataField]
     public TimeSpan PryExpirationTime = TimeSpan.FromSeconds(3);
 
-    [DataField, AutoNetworkedField]
+    /// <summary>
+    /// Server variable for keeping track of if the turnstile has had access broken since construction
+    /// </summary>
+    [DataField(serverOnly: true, readOnly: true)]
     public bool AccessBroken;
+
+    /// <summary>
+    /// Client variable for keeping track of if the turnstile "obviously" has broken access for prediction.
+    /// This should match the "constantly spinning" anomation state
+    /// </summary>
+    [DataField(readOnly: true), AutoNetworkedField]
+    public bool ObviouslyAccessBroken;
 }
 
 [Serializable, NetSerializable]
 public enum TurnstileVisuals : byte
 {
-    AccessBroken,
+    AccessBrokenSpinning,
 }
 
 [Serializable, NetSerializable]

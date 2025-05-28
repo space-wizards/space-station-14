@@ -47,14 +47,14 @@ public abstract class SharedTurnstileSystem : EntitySystem
     {
         if (args.BoltsDown)
         {
-            StopAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
-            _appearance.SetData(ent, TurnstileVisuals.AccessBroken, false);
+            _appearance.SetData(ent, TurnstileVisuals.AccessBrokenSpinning, false);
+            ent.Comp.ObviouslyAccessBroken = false;
+            return;
         }
-        else if (ent.Comp.AccessBroken)
-        {
-            StopAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
-            _appearance.SetData(ent, TurnstileVisuals.AccessBroken, true);
-        }
+
+        // Bolts are not set
+        _appearance.SetData(ent, TurnstileVisuals.AccessBrokenSpinning, ent.Comp.AccessBroken);
+        ent.Comp.ObviouslyAccessBroken = ent.Comp.AccessBroken;
     }
 
     private void OnPreventCollide(Entity<TurnstileComponent> ent, ref PreventCollideEvent args)
@@ -101,10 +101,12 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
         if (!_bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
         {
-            if (!_accessReader.IsAllowed(args.OtherEntity, ent))
+            var knownAccessBroken = ent.Comp.ObviouslyAccessBroken || ent.Comp.AccessBroken;
+
+            if (!knownAccessBroken && !_accessReader.IsAllowed(args.OtherEntity, ent))
                 return;
 
-            var method = ent.Comp.AccessBroken ? EntranceMethod.AccessBroken : EntranceMethod.Access;
+            var method = knownAccessBroken ? EntranceMethod.AccessBroken : EntranceMethod.Access;
             ent.Comp.CollideExceptions[args.OtherEntity] = method;
             if (_pulling.GetPulling(args.OtherEntity) is { } uid)
                 ent.Comp.CollideExceptions[uid] = EntranceMethod.Pulled;
@@ -125,34 +127,49 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
     private void OnStartCollide(Entity<TurnstileComponent> ent, ref StartCollideEvent args)
     {
+        var knownAccessBroken = ent.Comp.AccessBroken || ent.Comp.ObviouslyAccessBroken;
         if (!ent.Comp.CollideExceptions.TryGetValue(args.OtherEntity, out var method))
         {
-            if (!_bolt.IsBolted(ent) && CanPassDirection(ent, args.OtherEntity))
-            {
-                if (!_accessReader.IsAllowed(args.OtherEntity, ent))
-                {
-                    _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
-                    PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.DenyState);
-                }
-            }
+            // Will not be allowed through!
+
+            // If it's bolted or entered from the wrong direction, no animation or anything
+            if (_bolt.IsBolted(ent) || !CanPassDirection(ent, args.OtherEntity))
+                return;
+
+            // If we know that access is broken, don't play a deny sound
+            if (knownAccessBroken)
+                return;
+
+            // Don't play a deny sound if access is allowed
+            if (_accessReader.IsAllowed(args.OtherEntity, ent))
+                return;
+
+            // Finally, play a denial sound and animation
+            _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
+            PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.DenyState);
 
             return;
         }
+
         // if they passed through:
-        if(!ent.Comp.AccessBroken || _bolt.IsBolted(ent)) // it's already spinnin'!
+        if(!knownAccessBroken  // it's already spinnin', don't play animation
+           || _bolt.IsBolted(ent)) // I still want it to spin when someone is dragged through
             PlayAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
-        if(method == EntranceMethod.Access)
+
+        if(method == EntranceMethod.Access) // The access reader was used, show the indicator lights
             PlayAnimation(ent, TurnstileVisualLayers.Indicators, ent.Comp.GrantedState);
+
+        // Always play the turn sound!
         _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
     }
 
     private void OnEndCollide(Entity<TurnstileComponent> ent, ref EndCollideEvent args)
     {
-        if (!args.OurFixture.Hard)
-        {
-            ent.Comp.CollideExceptions.Remove(args.OtherEntity);
-            Dirty(ent);
-        }
+        if (args.OurFixture.Hard)
+            return;
+
+        ent.Comp.CollideExceptions.Remove(args.OtherEntity);
+        Dirty(ent);
     }
 
     private bool CanPassDirection(Entity<TurnstileComponent> ent, EntityUid other)
@@ -178,8 +195,6 @@ public abstract class SharedTurnstileSystem : EntitySystem
 
     protected virtual void PlayAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId) { }
 
-    protected virtual void StopAnimation(EntityUid uid, TurnstileVisualLayers layer, string stateId) { }
-
     private void OnEmagged(Entity<TurnstileComponent> ent, ref GotEmaggedEvent args)
     {
         switch (args.Type)
@@ -191,8 +206,8 @@ public abstract class SharedTurnstileSystem : EntitySystem
                 ent.Comp.AccessBroken = true;
                 if(!_bolt.IsBolted(ent))
                 {
-                    StopAnimation(ent, TurnstileVisualLayers.Spinner, ent.Comp.SpinState);
-                    _appearance.SetData(ent, TurnstileVisuals.AccessBroken, true);
+                    ent.Comp.ObviouslyAccessBroken = true;
+                    _appearance.SetData(ent, TurnstileVisuals.AccessBrokenSpinning, true);
                 }
                 break;
             case EmagType.None:
