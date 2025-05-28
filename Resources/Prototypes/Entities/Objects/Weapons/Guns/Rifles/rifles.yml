@@ -103,8 +103,8 @@
 - type: entity
   name: M-90gl
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
-  id: WeaponRifleM90GrenadeLauncher
-  description: A somewhat outdated bullpup rifle, with an attached underbarrel grenade launcher. Feeds from .20 rifle magazines.
+  id: WeaponRifleM90GrenadeLauncher # Spaces in description for new line
+  description: A somewhat outdated bullpup rifle in a grenadier configuration. It still has the underbarrel grenade launcher, but it looks broken beyond repair.                                                                                                    Feeds from .20 rifle magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
@@ -147,8 +147,8 @@
 - type: entity
   name: Lecter
   parent: [BaseWeaponRifle, BaseSecurityContraband]
-  id: WeaponRifleLecter
-  description: Popular gas-operated combat rifle used by nearly all of Nanotrasen’s armed details. Operating in semi or fully automatic, its accuracy, stopping power, and reliability make it excel in all manner of environments. Feeds from .20 rifle magazines.
+  id: WeaponRifleLecter # Spaces in description for new line
+  description: Popular gas-operated combat rifle used heavily by Nanotrasen and SolGov. Operating in semi or fully automatic, its accuracy, stopping power, and reliability make it excel in all manner of environments.                                                                                                    Feeds from .20 rifle magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
