@@ -637,7 +637,7 @@ MagazineLightRifle: MagazineLightRifleSP
 MagazinePistolSubMachineGun: MagazinePistolSubMachineGunSP
 MagazineRifle: MagazineRifleSP
 
-BorgModuleTreatment: BorgModuleMedical
+BorgModuleTreatment: BorgModuleTopicals
 # 🌟Starlight🌟 end
 
 # 2025-05-18

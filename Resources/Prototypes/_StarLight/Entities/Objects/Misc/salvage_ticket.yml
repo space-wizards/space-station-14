@@ -62,7 +62,7 @@
 
 - type: stack
   id: SalvageTicket
-  name: ticket
+  name: stack-ticket
   icon: { sprite: /Textures/_Starlight/Objects/Economy/salvage_ticket.rsi, state: icon }
   spawn: SalvageTicket
   

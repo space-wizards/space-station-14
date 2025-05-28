@@ -146,5 +146,6 @@ bounty-description-cardboard-box = "The Cardborgs Cometh" is a new play premieri
 bounty-description-wine = The new librarian and the Quartermaster are falling head over heels for each other after she caught him disassembling the bookshelves for wood. Send a couple bottles of wine (or cans, if you must) to help make the date go well.
 bounty-description-cotton-boll = A massive swarm of mothroaches ate all the paper and cloth on the station. Send us some cotton to help keep our winged crewmembers fed.
 bounty-description-microwave-machine-board = Mr. Giggles thought it'd be funny to stick forks in all the kitchen microwaves. Help us replace them before the chefs start making clown burgers.
+bounty-description-oven-machine-board = We need another oven to speed up the cooking process, could you please send a board? Mr. Giggles would be very pleased.
 bounty-description-flashes = GREETINGS \[Station] WE REQUIRE 6 FLASHES DUE TO A NORMAL \[TrainingExercise] WITH SECURITY. EVERYTHING IS \[Normal].
 bounty-description-ring = On this EXTRAORDINARY day there will be a wedding between the Gelts, but Mr. Gelt has lost the rings, send a pair of rings.

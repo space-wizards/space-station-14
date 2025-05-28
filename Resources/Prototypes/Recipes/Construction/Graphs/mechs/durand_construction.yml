@@ -81,10 +81,10 @@
           data: 9
 
       - tag: CapacitorStockPart
-        name: capacitor
+        name: construction-graph-tag-capacitor
         icon:
           sprite: Objects/Misc/stock_parts.rsi
-          state: construction-graph-tag-capacitor
+          state: capacitor
         completed:
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"

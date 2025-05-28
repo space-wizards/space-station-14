@@ -95,7 +95,7 @@
 
 - type: stack
   id: NTCredit
-  name: credit
+  name: stack-credit
   icon: { sprite: /Textures/_Starlight/Objects/Economy/cash.rsi, state: cash_1 }
   spawn: NTCredit
 

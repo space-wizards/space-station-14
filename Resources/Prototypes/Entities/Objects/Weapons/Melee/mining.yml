@@ -99,7 +99,6 @@
   components:
   - type: Sharp
   - type: Execution
-    meleeDoAfterDuration: 4.0
   - type: UnpoweredFlashlight
   - type: PointLight
     color: "#ffeead"

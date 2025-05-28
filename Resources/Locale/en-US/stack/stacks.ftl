@@ -232,3 +232,21 @@ stack-astro-snow-floor = astro-snow floor
 stack-large-wood-floor = large wood floor
 stack-red-circuit-floor = red-circuit floor
 stack-asteroid-astro-sand-floor = asteroid astro-sand floor
+
+
+stack-brutepack = brutepack
+stack-blueointment = blueointment
+stack-redointment = redointment
+stack-redbrutepack = redbrutepack
+stack-redpunctpack = redpunctpack
+stack-redlacepack = redlacepack
+stack-redbruizpack = redbruizpack
+
+stack-credit = credit
+stack-ticket = ticket
+
+stack-paper = paper
+stack-wizcoin = wizcoin
+
+stack-abyssium-ore = abyssium ore
+stack-abyssium-bar = abyssium bar
