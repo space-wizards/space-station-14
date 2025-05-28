@@ -41,7 +41,6 @@ namespace Content.Client.UserInterface.Systems.Actions;
 
 public sealed class ActionUIController : UIController, IOnStateChanged<GameplayState>, IOnSystemChanged<ActionsSystem>
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IOverlayManager _overlays = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -164,11 +163,11 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_playerManager.LocalEntity is not { } user)
             return false;
 
-        if (!_entMan.TryGetComponent<ActionsComponent>(user, out var comp))
+        if (!EntityManager.TryGetComponent<ActionsComponent>(user, out var comp))
             return false;
 
         if (_actionsSystem.GetAction(actionId) is not {} action ||
-            !_entMan.TryGetComponent<TargetActionComponent>(action, out var target))
+            !EntityManager.TryGetComponent<TargetActionComponent>(action, out var target))
         {
             return false;
         }
@@ -182,10 +181,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         }
 
         var ev = new ActionTargetAttemptEvent(args, (user, comp), action);
-        _entMan.EventBus.RaiseLocalEvent(action, ref ev);
+        EntityManager.EventBus.RaiseLocalEvent(action, ref ev);
         if (!ev.Handled)
         {
-            Logger.Error($"Action {_entMan.ToPrettyString(actionId)} did not handle ActionTargetAttemptEvent!");
+            Logger.Error($"Action {EntityManager.ToPrettyString(actionId)} did not handle ActionTargetAttemptEvent!");
             return false;
         }
 
@@ -241,7 +240,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         }
 
         // TODO: probably should have a clientside event raised for flexibility
-        if (_entMan.TryGetComponent<TargetActionComponent>(action, out var target))
+        if (EntityManager.TryGetComponent<TargetActionComponent>(action, out var target))
             ToggleTargeting((action, action, target));
         else
             _actionsSystem?.TriggerAction(action);
@@ -254,7 +253,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         // TODO: event
         // if the action is toggled when we add it, start targeting
-        if (action.Comp.Toggled && _entMan.TryGetComponent<TargetActionComponent>(actionId, out var target))
+        if (action.Comp.Toggled && EntityManager.TryGetComponent<TargetActionComponent>(actionId, out var target))
             StartTargeting((action, action, target));
 
         if (_actions.Contains(action))
@@ -326,8 +325,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             Filters.Enabled => comp.Enabled,
             Filters.Item => comp.Container != null && comp.Container != _playerManager.LocalEntity,
             Filters.Innate => comp.Container == null || comp.Container == _playerManager.LocalEntity,
-            Filters.Instant => _entMan.HasComponent<InstantActionComponent>(uid),
-            Filters.Targeted => _entMan.HasComponent<TargetActionComponent>(uid),
+            Filters.Instant => EntityManager.HasComponent<InstantActionComponent>(uid),
+            Filters.Targeted => EntityManager.HasComponent<TargetActionComponent>(uid),
             _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, null)
         };
     }
@@ -583,7 +582,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         // TODO: make this an event
-        if (!_entMan.TryGetComponent<TargetActionComponent>(action, out var target))
+        if (!EntityManager.TryGetComponent<TargetActionComponent>(action, out var target))
         {
             _actionsSystem?.TriggerAction(action);
             return;
@@ -832,7 +831,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         // - Add a yes/no checkmark where the HandItemOverlay usually is
 
         // Highlight valid entity targets
-        if (!_entMan.TryGetComponent<EntityTargetActionComponent>(uid, out var entity))
+        if (!EntityManager.TryGetComponent<EntityTargetActionComponent>(uid, out var entity))
             return;
 
         Func<EntityUid, bool>? predicate = null;
