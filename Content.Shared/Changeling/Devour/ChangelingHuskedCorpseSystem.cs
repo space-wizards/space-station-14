@@ -34,11 +34,9 @@ public sealed class ChangelingHuskedCorpseSystem : EntitySystem
 
         _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ent.Owner):player} was successfully consumed by a changeling and their body was husked");
 
-        var huskedBodyAppearance = Spawn(speciesPrototype.Prototype, MapCoordinates.Nullspace);
-
-        _humanoidSystem.CloneAppearance(huskedBodyAppearance, ent);
-
-        QueueDel(huskedBodyAppearance);
+        RemComp(ent, humanoid);
+        var newComp = EnsureComp<HumanoidAppearanceComponent>(ent);
+        newComp.Species = speciesPrototype;
         _metaSystem.SetEntityName(ent, Loc.GetString("changeling-unidentified-husked-corpse"));
 
         _humanoidSystem.SetGender((ent, humanoid), Gender.Epicene);
