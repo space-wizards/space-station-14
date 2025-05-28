@@ -122,11 +122,10 @@
     maxAngle: 20
     angleIncrease: 2.2
     angleDecay: 4
-    fireRate: 2
+    selectedMode: Burst
     burstFireRate: 8
     availableModes:
     - Burst
-    - SemiAuto
     shotsPerBurst: 4
     burstCooldown: 0.6
   - type: MagazineVisuals
