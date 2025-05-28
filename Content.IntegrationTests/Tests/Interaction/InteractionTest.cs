@@ -148,6 +148,7 @@ public abstract partial class InteractionTest
     tags:
     - CanPilot
   - type: UserInterface
+  - type: Weightlessness
 ";
 
     [SetUp]
