@@ -284,7 +284,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         var direction = xform.LocalRotation.GetCardinalDir();
         var netId = TryGettingFirstPipeNode(uid, out var _, out var firstNetId) ? firstNetId : -1;
         var color = TryComp<AtmosPipeColorComponent>(uid, out var atmosPipeColor) ? atmosPipeColor.Color : Color.White;
-        var layer = TryComp<AtmosPipeLayersComponent>(uid, out var atmosPipeLayers) ? atmosPipeLayers.CurrentPipeLayer : (byte)0;
+        var layer = TryComp<AtmosPipeLayersComponent>(uid, out var atmosPipeLayers) ? atmosPipeLayers.CurrentPipeLayer : AtmosPipeLayer.Primary;
 
         device = new AtmosDeviceNavMapData(GetNetEntity(uid), GetNetCoordinates(xform.Coordinates), netId.Value, component.NavMapBlip.Value, direction, color, layer);
 

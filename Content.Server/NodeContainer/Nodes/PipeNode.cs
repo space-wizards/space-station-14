@@ -1,10 +1,8 @@
-using Content.Server.Atmos;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.NodeContainer;
-using Content.Shared.NodeContainer.NodeGroups;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
@@ -28,7 +26,7 @@ namespace Content.Server.NodeContainer.Nodes
         ///     The *current* layer to which the pipe node is assigned.
         /// </summary>
         [DataField("pipeLayer")]
-        public byte CurrentPipeLayer;
+        public AtmosPipeLayer CurrentPipeLayer = AtmosPipeLayer.Primary;
 
         /// <summary>
         ///     The *current* pipe directions (accounting for rotation)

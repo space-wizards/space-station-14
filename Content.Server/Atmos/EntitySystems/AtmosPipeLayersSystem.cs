@@ -33,7 +33,7 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
     }
 
     /// <inheritdoc/>
-    public override void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, int layer, EntityUid? user = null, EntityUid? used = null)
+    public override void SetPipeLayer(Entity<AtmosPipeLayersComponent> ent, AtmosPipeLayer layer, EntityUid? user = null, EntityUid? used = null)
     {
         if (ent.Comp.PipeLayersLocked)
             return;

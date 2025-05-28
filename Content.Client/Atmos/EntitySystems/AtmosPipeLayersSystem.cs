@@ -2,8 +2,8 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Atmos.EntitySystems;
 
@@ -13,8 +13,8 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IReflectionManager _reflection = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -31,26 +31,15 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
         if (_appearance.TryGetData<string>(ent, AtmosPipeLayerVisuals.Sprite, out var spriteRsi) &&
             _resourceCache.TryGetResource(SpriteSpecifierSerializer.TextureRoot / spriteRsi, out RSIResource? resource))
         {
-            sprite.BaseRSI = resource.RSI;
+            _sprite.SetBaseRsi((ent, sprite), resource.RSI);
         }
 
         if (_appearance.TryGetData<Dictionary<string, string>>(ent, AtmosPipeLayerVisuals.SpriteLayers, out var pipeState))
         {
             foreach (var (layerKey, rsiPath) in pipeState)
-                sprite.LayerSetRSI(ParseKey(layerKey), rsiPath);
+            {
+                _sprite.LayerSetRsi((ent, sprite), layerKey, new ResPath(rsiPath));
+            }
         }
-    }
-
-    /// <summary>
-    /// Parses a string for enum references
-    /// </summary>
-    /// <param name="keyString">The string to parse</param>
-    /// <returns>The parsed string</returns>
-    private object ParseKey(string keyString)
-    {
-        if (_reflection.TryParseEnumReference(keyString, out var @enum))
-            return @enum;
-
-        return keyString;
     }
 }

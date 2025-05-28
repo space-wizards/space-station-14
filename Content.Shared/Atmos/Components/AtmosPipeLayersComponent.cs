@@ -17,6 +17,8 @@ public sealed partial class AtmosPipeLayersComponent : Component
 {
     /// <summary>
     /// The number of pipe layers this entity supports.
+    /// Must be equal to or less than the number of values
+    /// in <see cref="AtmosPipeLayer"/>.
     /// </summary>
     [DataField]
     public byte NumberOfPipeLayers = 3;
@@ -27,7 +29,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// </summary>
     [DataField("pipeLayer"), AutoNetworkedField]
     [ViewVariables(VVAccess.ReadOnly)]
-    public byte CurrentPipeLayer;
+    public AtmosPipeLayer CurrentPipeLayer = AtmosPipeLayer.Primary;
 
     /// <summary>
     /// The RSI path that the entity sprite will use for each pipe layer.
@@ -38,7 +40,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// (from 0 to <see cref="NumberOfPipeLayers"/> - 1).
     /// </remarks>
     [DataField]
-    public string[] SpriteRsiPaths = [];
+    public Dictionary<AtmosPipeLayer, string> SpriteRsiPaths = [];
 
     /// <summary>
     /// A dictionary of entity sprite layers that have their
@@ -49,7 +51,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// (from 0 to <see cref="NumberOfPipeLayers"/> - 1).
     /// </remarks>
     [DataField]
-    public Dictionary<string, string[]> SpriteLayersRsiPaths = new();
+    public Dictionary<string, Dictionary<AtmosPipeLayer, string>> SpriteLayersRsiPaths = new();
 
     /// <summary>
     /// Entity prototypes with alternative layers; will replace the current
@@ -85,7 +87,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
 /// Raised when a player attempts to cycle a pipe to its next layer
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class TryCyclingPipeLayerCompletedEvent : SimpleDoAfterEvent;
+public sealed partial class TrySetNextPipeLayerCompletedEvent : SimpleDoAfterEvent;
 
 /// <summary>
 /// Raised when a player attempts to set a pipe a specified layer
@@ -93,9 +95,9 @@ public sealed partial class TryCyclingPipeLayerCompletedEvent : SimpleDoAfterEve
 [Serializable, NetSerializable]
 public sealed partial class TrySettingPipeLayerCompletedEvent : SimpleDoAfterEvent
 {
-    public int PipeLayer;
+    public AtmosPipeLayer PipeLayer;
 
-    public TrySettingPipeLayerCompletedEvent(int pipeLayer)
+    public TrySettingPipeLayerCompletedEvent(AtmosPipeLayer pipeLayer)
     {
         PipeLayer = pipeLayer;
     }
@@ -107,4 +109,12 @@ public enum AtmosPipeLayerVisuals
     Sprite,
     SpriteLayers,
     DrawDepth,
+}
+
+[Serializable, NetSerializable]
+public enum AtmosPipeLayer
+{
+    Primary,
+    Secondary,
+    Tertiary,
 }

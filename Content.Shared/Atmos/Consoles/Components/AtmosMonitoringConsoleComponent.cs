@@ -67,7 +67,7 @@ public struct AtmosPipeChunk(Vector2i origin)
     /// Indexed by the net ID, layer and color hexcode of the pipe
     /// </summary>
     [ViewVariables]
-    public Dictionary<(int, byte, string), ulong> AtmosPipeData = new();
+    public Dictionary<(int, AtmosPipeLayer, string), ulong> AtmosPipeData = new();
 
     /// <summary>
     /// The last game tick that the chunk was updated
@@ -112,7 +112,7 @@ public struct AtmosDeviceNavMapData
     /// <summary>
     /// The pipe layer the entity is on
     /// </summary>
-    public byte PipeLayer;
+    public AtmosPipeLayer PipeLayer;
 
     /// <summary>
     /// Populate the atmos monitoring console nav map with a single entity
@@ -123,7 +123,7 @@ public struct AtmosDeviceNavMapData
         ProtoId<NavMapBlipPrototype> navMapBlip,
         Direction direction,
         Color pipeColor,
-        byte pipeLayer)
+        AtmosPipeLayer pipeLayer)
     {
         NetEntity = netEntity;
         NetCoordinates = netCoordinates;

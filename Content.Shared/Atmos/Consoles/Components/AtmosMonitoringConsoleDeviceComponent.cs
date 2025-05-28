@@ -19,6 +19,11 @@ public sealed partial class AtmosMonitoringConsoleDeviceComponent : Component
     [DataField]
     public ProtoId<NavMapBlipPrototype>? NavMapBlip = null;
 
+    /// <summary>
+    /// Sets whether attached atmos pipes will always be rendered
+    /// on the atmos monitoring console nav map, even if these
+    /// pipes are not connected to any pipes in a neighboring tile.
+    /// </summary>
     [DataField]
     public bool ShowAbsentConnections = true;
 }
