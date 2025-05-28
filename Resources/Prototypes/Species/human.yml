@@ -17,6 +17,7 @@
 - type: speciesBaseSprites
   id: MobHumanSprites
   sprites:
+    Tail: MobHumanoidAnyMarking # Starlight
     Special: MobHumanoidAnyMarking
     Head: MobHumanHead
     Hair: MobHumanoidAnyMarking

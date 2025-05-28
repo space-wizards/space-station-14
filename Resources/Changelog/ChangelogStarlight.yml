@@ -6220,4 +6220,68 @@ Entries:
   id: 861
   time: '2025-05-26T19:03:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/690
+- author: choccy
+  changes:
+  - message: Fixes Nukie outpost
+    type: Fix
+  id: 862
+  time: '2025-05-27T18:16:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/702
+- author: CringeCursed
+  changes:
+  - message: Cat tail marking for humans now work correctly
+    type: Fix
+  id: 863
+  time: '2025-05-28T20:07:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/703
+- author: Quini98
+  changes:
+  - message: Added 'Execution & DNR Order' to Document Printer
+    type: Add
+  id: 864
+  time: '2025-05-28T20:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/706
+- author: Quini98
+  changes:
+  - message: Removed 'Orders' category from Document Printer
+    type: Remove
+  id: 865
+  time: '2025-05-28T20:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/706
+- author: Quini98
+  changes:
+  - message: Moved 'Product order' to 'Inquiries and appeals'
+    type: Tweak
+  id: 866
+  time: '2025-05-28T20:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/706
+- author: Quini98
+  changes:
+  - message: Fixed capitalisations in Document Printer
+    type: Fix
+  id: 867
+  time: '2025-05-28T20:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/706
+- author: Quini98
+  changes:
+  - message: Fixed "Complaints" being misspelled in multiple files
+    type: Fix
+  id: 868
+  time: '2025-05-28T20:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/706
+- author: Happyrobot33
+  changes:
+  - message: Fixed Nukies. Again.
+    type: Fix
+  id: 869
+  time: '2025-05-28T20:11:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/708
+- author: deltaVelocity
+  changes:
+  - message: Added Displacements for Head and OuterClothing for Vulpakin-no more snouts
+      and legs sticking out!
+    type: Add
+  id: 870
+  time: '2025-05-28T20:20:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/704
 

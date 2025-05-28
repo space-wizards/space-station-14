@@ -49,6 +49,7 @@
   - PrintedDocumentPrisonerParoleOrderRecipe
   - PrintedDocumentOrderRecognizingReasonablenessCreatureRecipe
   - PrintedDocumentMedicalInterventionOrderRecipe
+  - PrintedDocumentExecutionDNROrderRecipe
   # Orders
   - PrintedDocumentProductOrderRecipe
 
