@@ -1,0 +1,63 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Assets taken from Skyrat 13 (/tg/station Downstream) at https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297. horns_argali, horns_ayrshire, horns_myrsore, horns_bighorn and horns_demonic by Ubaser (github). horns_kobold_ears by Pigeonpeas (github), modified by Ubaser (github). horns_floppy_kobold_ears by Sadie-silly (github).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "horns_simple",
+            "directions": 4
+        },
+        {
+            "name": "horns_short",
+            "directions": 4
+        },
+        {
+            "name": "horns_curled",
+            "directions": 4
+        },
+        {
+            "name": "horns_ram",
+            "directions": 4
+        },
+        {
+            "name": "horns_angler",
+            "directions": 4
+        },
+        {
+            "name": "horns_double",
+            "directions": 4
+        },
+        {
+            "name": "horns_argali",
+            "directions": 4
+        },
+        {
+            "name": "horns_ayrshire",
+            "directions": 4
+        },
+        {
+            "name": "horns_myrsore",
+            "directions": 4
+        },
+        {
+            "name": "horns_bighorn",
+            "directions": 4
+        },
+        {
+            "name": "horns_demonic",
+            "directions": 4
+        },
+        {
+            "name": "horns_kobold_ears",
+            "directions": 4
+        },
+        {
+            "name": "horns_floppy_kobold_ears",
+            "directions": 4
+        }
+    ]
+}
