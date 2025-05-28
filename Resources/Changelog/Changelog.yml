@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Cyborgs no longer have their brains removed if the salvage site they
-      are on despawns.
-    type: Fix
-  id: 8069
-  time: '2025-03-16T18:15:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35855
 - author: slarticodefast
   changes:
   - message: Paradox clones now recieve a copy of (almost) all the inventory items
@@ -3917,3 +3909,10 @@
   id: 8580
   time: '2025-05-28T09:39:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37869
+- author: deltanedas
+  changes:
+  - message: Diona "Gib yourself!" action now has a suicide warning like microbombs.
+    type: Tweak
+  id: 8581
+  time: '2025-05-28T19:52:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27422
