@@ -79,7 +79,7 @@ namespace Content.Shared.Gravity
             if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
                 return false;
 
-            if (entity.Comp2.BodyType == (BodyType.Static | BodyType.Kinematic))
+            if (entity.Comp2.BodyType is BodyType.Static or BodyType.Kinematic)
                 return false;
 
             // Check if something other than the grid or map is overriding our gravity
