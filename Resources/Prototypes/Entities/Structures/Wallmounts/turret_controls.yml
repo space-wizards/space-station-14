@@ -39,6 +39,8 @@
   - type: Construction
     graph: WeaponEnergyTurretControlPanel
     node: frame
+    containers:
+    - board
   placement:
     mode: SnapgridCenter
     snap:
