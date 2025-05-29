@@ -26,7 +26,7 @@ namespace Content.Shared.Construction.Conditions
             if (!turfSystem.TryGetTileRef(location, out var tileFound))
                 return false;
 
-            var tile = tileFound.Value.Tile.GetContentTileDefinition();
+            var tile = turfSystem.GetContentTileDefinition(tileFound.Value);
             foreach (var targetTile in TargetTiles)
             {
                 if (tile.ID == targetTile)
