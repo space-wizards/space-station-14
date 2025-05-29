@@ -2251,7 +2251,6 @@ entities:
       name: Nuclear Operative Outpost
     - type: Transform
     - type: Map
-      mapPaused: True
     - type: PhysicsMap
     - type: GridTree
     - type: MovedGrids
