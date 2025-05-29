@@ -90,6 +90,9 @@ uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with
 uplink-pistol-magazine-c20r-name = SMG magazine (.35 auto)
 uplink-pistol-magazine-c20r-desc = Rifle magazine with 30 catridges. Compatible with C-20r.
 
+uplink-pistol-magazine-bulldog-name = Drum magazine (.35 auto)
+uplink-pistol-magazine-bulldog-desc = Shotgun magazine with 30 catridges. Compatible with C-20r.
+
 uplink-pistol-magazine-caseless-name = Pistol Magazine (.25 caseless)
 uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compatible with the Cobra.
 
