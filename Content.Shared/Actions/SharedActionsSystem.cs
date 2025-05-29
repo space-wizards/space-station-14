@@ -300,7 +300,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
         }
 
-        if (args.Input.EntityTarget is not {} netTarget)
+        if (args.EntityTarget is not {} target)
         {
             args.Invalid = true;
             return;
@@ -308,13 +308,14 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var user = args.User;
 
-        var target = GetEntity(netTarget);
-
         var targetWorldPos = _transform.GetWorldPosition(target);
         _rotateToFace.TryFaceCoordinates(user, targetWorldPos);
 
         if (!ValidateEntityTarget(user, target, ent))
+        {
+            args.Invalid = true;
             return;
+        }
 
         _adminLogger.Add(LogType.Action,
             $"{ToPrettyString(user):user} is performing the {Name(ent):action} action (provided by {ToPrettyString(args.Provider):provider}) targeted at {ToPrettyString(target):target}.");
@@ -324,21 +325,20 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnWorldValidate(Entity<WorldTargetActionComponent> ent, ref ActionValidateEvent args)
     {
-        if (args.Input.EntityCoordinatesTarget is not { } netTarget)
+        if (args.EntityCoordinatesTarget is not { } target)
         {
             args.Invalid = true;
             return;
         }
 
         var user = args.User;
-        var target = GetCoordinates(netTarget);
-        _rotateToFace.TryFaceCoordinates(user, target.ToMapPos(EntityManager, _transform));
+        _rotateToFace.TryFaceCoordinates(user, _transform.ToWorldPosition(target));
 
         if (!ValidateWorldTarget(user, target, ent))
             return;
 
         // if the client specified an entity it needs to be valid
-        var targetEntity = GetEntity(args.Input.EntityTarget);
+        var targetEntity = args.EntityTarget;
         if (targetEntity != null && (
             !TryComp<EntityTargetActionComponent>(ent, out var entTarget) ||
             !ValidateEntityTarget(user, targetEntity.Value, (ent, entTarget))))
@@ -823,16 +823,16 @@ public abstract class SharedActionsSystem : EntitySystem
     /// Tries to validate an action and use it. If it's not valid or can't be used it blocks the action from being used.
     /// This is its own method so that both NPCs and Players don't have two different systems to do the same thing.
     /// </summary>
-    public void TryValidAction(EntityUid user,
+    public bool TryValidAction(EntityUid user,
         EntityUid actionEnt,
         EntityUid? entTarget,
         EntityCoordinates? actionCoords)
     {
         if (!_actionsQuery.TryComp(user, out var component))
-            return;
+            return false;
 
         if (!TryComp(actionEnt, out MetaDataComponent? metaData))
-            return;
+            return false;
 
         var name = Name(actionEnt, metaData);
 
@@ -841,41 +841,44 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Action,
                 $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {name}.");
-            return;
+            return false;
         }
 
         if (GetAction(actionEnt) is not {} action)
-            return;
+            return false;
 
         DebugTools.Assert(action.Comp.AttachedEntity == user);
         if (!action.Comp.Enabled)
-            return;
+            return false;
 
         var curTime = GameTiming.CurTime;
         if (IsCooldownActive(action, curTime))
-            return;
+            return false;
 
         // check for action use prevention
         // TODO: make code below use this event with a dedicated component
         var attemptEv = new ActionAttemptEvent(user);
         RaiseLocalEvent(action, ref attemptEv);
         if (attemptEv.Cancelled)
-            return;
+            return false;
 
         // Validate request by checking action blockers and the like
         var provider = action.Comp.Container ?? user;
         var validateEv = new ActionValidateEvent()
         {
-            // Input = ev,
+            Action = actionEnt,
+            EntityTarget = entTarget,
+            EntityCoordinatesTarget = actionCoords,
             User = user,
             Provider = provider
         };
         RaiseLocalEvent(action, ref validateEv);
         if (validateEv.Invalid)
-            return;
+            return false;
 
         // All checks passed. Perform the action!
         PerformAction((user, component), action);
+        return true;
     }
 
     private void OnRelayActionCompChange(Entity<ActionsComponent> ent, ref RelayedActionComponentChangeEvent args)

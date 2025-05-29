@@ -7,7 +7,6 @@ namespace Content.Server.NPC.Systems;
 
 public sealed class NPCUseActionOnTargetSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     /// <inheritdoc/>
@@ -27,18 +26,18 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         }
     }
 
-    public void TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, Components.NPCActionsData action, EntityUid target)
+    private bool TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, NPCActionsData action, EntityUid target)
     {
         if (!Resolve(user, ref user.Comp, false))
-            return;
+            return false;
 
         if (action.ActionEnt is not { Valid: true } entityTarget)
         {
             Log.Error($"An NPC attempted to perform an entity-targeted action without a target!");
-            return;
+            return false;
         }
 
-        _actions.TryValidAction(user.Owner, entityTarget, target, Transform(target).Coordinates);
+        return _actions.TryValidAction(user.Owner, entityTarget, target, Transform(target).Coordinates);
     }
 
     public override void Update(float frameTime)
@@ -54,7 +53,9 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
                 if (!htn.Blackboard.TryGetValue<EntityUid>(action.TargetKey, out var target, EntityManager))
                     continue;
 
-                TryUseAction((uid, comp), action, target);
+                // Only use one action per tick
+                if (TryUseAction((uid, comp), action, target))
+                    return;
             }
         }
     }
