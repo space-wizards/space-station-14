@@ -54,7 +54,7 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
             if (!TryComp<AnalysisConsoleComponent>(source, out var analysis))
                 continue;
 
-            analysis.AnalyzerEntity = GetNetEntity(ent);
+            analysis.AnalyzerEntity = ent;
             ent.Comp.Console = source;
             Dirty(source, analysis);
             Dirty(ent);
@@ -67,7 +67,7 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
         if (!TryComp<ArtifactAnalyzerComponent>(args.Sink, out var analyzer))
             return;
 
-        ent.Comp.AnalyzerEntity = GetNetEntity(args.Sink);
+        ent.Comp.AnalyzerEntity = args.Sink;
         analyzer.Console = ent;
         Dirty(args.Sink, analyzer);
         Dirty(ent);
@@ -79,7 +79,7 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
         if (args.Port != ent.Comp.LinkingPort || analyzerNetEntity == null)
             return;
 
-        var analyzerEntityUid = GetEntity(analyzerNetEntity);
+        var analyzerEntityUid = analyzerNetEntity;
         if (TryComp<ArtifactAnalyzerComponent>(analyzerEntityUid, out var analyzer))
         {
             analyzer.Console = null;
@@ -98,7 +98,7 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
         if (!_powerReceiver.IsPowered(consoleEnt))
             return false;
 
-        var analyzerUid = GetEntity(ent.Comp.AnalyzerEntity);
+        var analyzerUid = ent.Comp.AnalyzerEntity;
         if (!TryComp<ArtifactAnalyzerComponent>(analyzerUid, out var analyzerComp))
             return false;
 
