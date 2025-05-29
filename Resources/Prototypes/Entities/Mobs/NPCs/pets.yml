@@ -836,7 +836,7 @@
   name: Wa Wa
   parent: MobEmotionalSupportScurret
   id: MobScurretWaWa
-  description: A junior barkeeping assistant. Look at it. It's a scurret in a top hat. The universe has peaked. Loves vodka, hates the rain.
+  description: A junior barkeeping assistant. Look at it. It's a scurret in a top hat. The universe has peaked. Loves vodka, hates rain.
   components:
   - type: GhostRole
     prob: 1
