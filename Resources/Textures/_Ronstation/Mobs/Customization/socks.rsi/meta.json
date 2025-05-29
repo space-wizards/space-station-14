@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Socks drawn by welladooom for Ronstation fork",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "leftsock",
+      "directions": 4
+    },
+    {
+      "name": "rightsock",
+      "directions": 4
+    },
+    {
+      "name": "voxleftsock",
+      "directions": 4
+    },
+    {
+      "name": "voxrightsock",
+      "directions": 4
+    }
+  ]
+}
