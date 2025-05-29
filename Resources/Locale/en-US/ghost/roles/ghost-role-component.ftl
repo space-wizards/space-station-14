@@ -69,6 +69,9 @@ ghost-role-information-smile-description = The sweetest creature in the world. S
 ghost-role-information-punpun-name = Pun Pun
 ghost-role-information-punpun-description = An honorable member of the monkey society in charge of the bar and helping the bartenders in any way he can.
 
+ghost-role-information-wawa-name = Wa Wa
+ghost-role-information-wawa-description = An independently-minded scurret, here to run the bar and help the bartenders. You're a scurret in a top hat. What more could you possibly ask for in life?
+
 ghost-role-information-xeno-name = Xeno
 ghost-role-information-xeno-description = You are a xeno, co-operate with your hive to kill all crewmembers!
 ghost-role-information-xeno-rules = You are a [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] with all other xenos.
@@ -320,9 +323,6 @@ ghost-role-information-gingerbread-description = A being of pure holiday spirit.
 
 ghost-role-information-wizard-name = Wizard
 ghost-role-information-wizard-desc = YER A WIZARD! Show the station what your magic is made of.
-
-ghost-role-information-wawa-name = Wa Wa
-ghost-role-information-wawa-description = An independently-minded scurret filling in for Pun whilst he's on holiday. You're a scurret in a top hat. What more could you possibly ask for in life?
 
 ghost-role-information-emotional-support-scurret-name = Emotional Support Scurret
 ghost-role-information-emotional-support-scurret-description = Support the crew, be adorable, say "wa" a lot.

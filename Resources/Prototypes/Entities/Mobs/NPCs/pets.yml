@@ -856,7 +856,7 @@
       amount: 1
   - type: Tag
     tags:
-    - CannotSuicide
+    - CannotSuicide # He cannot escape his torment
     - DoorBumpOpener
     - VimPilot
     - AnomalyHost
@@ -864,6 +864,17 @@
     attributes:
       proper: true
       gender: male
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret/scurret.rsi
+      state: scurret
+      color: "#cccccc" # Wa is always a white scurret :>
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
 
 - type: entity
   name: Tropico
