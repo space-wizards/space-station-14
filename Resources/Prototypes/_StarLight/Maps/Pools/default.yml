@@ -1,6 +1,7 @@
 - type: gameMapPool
   id: DefaultStarlightMapPool
   maps:
+  - Barratry
   - StarlightCog
   - StarlightFland
   - Lobster
