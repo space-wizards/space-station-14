@@ -50,7 +50,7 @@ public sealed partial class ChameleonClothingComponent : Component
     ///     Can be interpreted as "How many times clothes will change every second?".
     ///     Useless without <see cref="AffectedByEmp"/> set to true.
     /// </summary>
-    [ViewVariables, DataField]
+    [DataField]
     public int EmpChangeIntensity = 7;
 
     /// <summary>
@@ -58,7 +58,7 @@ public sealed partial class ChameleonClothingComponent : Component
     ///     (False = once, True = continuously)
     ///     Useless without <see cref="AffectedByEmp"/>
     /// </summary>
-    [ViewVariables, DataField]
+    [DataField]
     public bool EmpContinuous = true;
 
     /// <summary>
