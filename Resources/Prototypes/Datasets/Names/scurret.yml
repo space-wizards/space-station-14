@@ -1,4 +1,4 @@
-﻿- type: dataset
+﻿- type: localizedDataset
   id: NamesFirstScurret
   values:
 # Emotions
@@ -35,7 +35,7 @@
   - Trusting
   - Fast
 
-- type: dataset
+- type: localizedDataset
   id: NamesLastScurret
   values:
 # The names of things that exist in wetlands
