@@ -58,7 +58,10 @@ namespace Content.Server.Construction.Conditions
             if (!entityManager.System<SharedMapSystem>().TryGetTileRef(transform.GridUid.Value, grid, indices, out var tile))
                 return !HasEntity;
 
-            var entities = tile.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static, lookup);
+            var bounds = lookup.GetWorldBounds(tile);
+            bounds.Box.Scale(0.9f);
+
+            var entities = lookup.GetEntitiesIntersecting(tile.GridUid, bounds, LookupFlags.Approximate | LookupFlags.Static);
 
             foreach (var ent in entities)
             {
