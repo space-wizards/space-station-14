@@ -1,15 +1,14 @@
+using System.Linq;
 using Content.Client.Clothing;
 using Content.Client.Items.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Hands;
+using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
-using System.Linq;
-using Content.Shared.Inventory;
-using Content.Shared.Light.Components;
-using Robust.Shared.EntitySerialization.Components;
 
 namespace Content.Client.Toggleable;
 
