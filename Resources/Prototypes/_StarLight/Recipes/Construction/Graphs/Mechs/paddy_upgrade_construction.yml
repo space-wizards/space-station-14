@@ -7,7 +7,7 @@
     - to: paddy
       steps:
       - tag: PaddyUpgradeKit
-        name: Paddy Conversion Kit
+        name: construction-graph-tag-paddy-conversion-kit
         doAfter: 5
   - node: paddy
     actions:
