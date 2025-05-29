@@ -69,8 +69,8 @@ ghost-role-information-smile-description = The sweetest creature in the world. S
 ghost-role-information-punpun-name = Pun Pun
 ghost-role-information-punpun-description = An honourable monkey, here to run the bar and help the bartenders.
 
-ghost-role-information-punpun-name = Kweh Kweh
-ghost-role-information-punpun-description = An ambitious kobold, here to run the bar and help the bartenders.
+ghost-role-information-kwehkweh-name = Kweh Kweh
+ghost-role-information-kwehkweh-description = An ambitious kobold, here to run the bar and help the bartenders.
 
 ghost-role-information-wawa-name = Wa Wa
 ghost-role-information-wawa-description = An independently-minded scurret, here to run the bar and help the bartenders. You're a scurret in a top hat. What more could you possibly ask for in life?
