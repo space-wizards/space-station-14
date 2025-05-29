@@ -13,13 +13,13 @@ public sealed partial class TraitorCodePaperComponent : Component
     /// The faction to get codewords for.
     /// </summary>
     [DataField]
-    public ProtoId<CodewordFaction> CodewordFaction = "Traitor";
+    public ProtoId<CodewordFactionPrototype> CodewordFaction = "Traitor";
 
     /// <summary>
     /// The generator to use for the fake words.
     /// </summary>
     [DataField]
-    public ProtoId<CodewordGenerator> CodewordGenerator = "TraitorCodewordGenerator";
+    public ProtoId<CodewordGeneratorPrototype> CodewordGenerator = "TraitorCodewordGenerator";
 
     /// <summary>
     /// The number of codewords that should be generated on this paper.

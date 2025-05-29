@@ -19,7 +19,7 @@ public sealed partial class TraitorRuleComponent : Component
     public ProtoId<AntagPrototype> TraitorPrototypeId = "Traitor";
 
     [DataField]
-    public ProtoId<CodewordFaction> CodewordFactionPrototypeId = "Traitor";
+    public ProtoId<CodewordFactionPrototype> CodewordFactionPrototypeId = "Traitor";
 
     [DataField]
     public ProtoId<NpcFactionPrototype> NanoTrasenFaction = "NanoTrasen";

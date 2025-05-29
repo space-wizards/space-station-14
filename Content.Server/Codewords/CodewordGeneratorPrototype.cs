@@ -6,8 +6,8 @@ namespace Content.Server.Codewords;
 /// <summary>
 /// This is a prototype for specifying codeword generation
 /// </summary>
-[Prototype("codewordGenerator")]
-public sealed partial class CodewordGenerator : IPrototype
+[Prototype]
+public sealed partial class CodewordGeneratorPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

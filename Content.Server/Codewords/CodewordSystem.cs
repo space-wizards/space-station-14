@@ -53,7 +53,7 @@ public sealed class CodewordSystem : GameRuleSystem<CodewordRuleComponent>
     /// Retrieves codewords for the faction specified.
     /// </summary>
     /// <exception cref="InvalidOperationException">Thrown when no codewords have been generated for that faction.</exception>
-    public string[] GetCodewords(ProtoId<CodewordFaction> faction)
+    public string[] GetCodewords(ProtoId<CodewordFactionPrototype> faction)
     {
         var query = EntityQueryEnumerator<CodewordRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var codewordRuleComponent, out var gameRuleComponent))
@@ -86,9 +86,9 @@ public sealed class CodewordSystem : GameRuleSystem<CodewordRuleComponent>
     }
 
     /// <summary>
-    /// Generates codewords as specified by the <see cref="CodewordGenerator"/> codeword generator.
+    /// Generates codewords as specified by the <see cref="CodewordGeneratorPrototype"/> codeword generator.
     /// </summary>
-    public string[] GenerateCodewords(ProtoId<CodewordGenerator> generatorId)
+    public string[] GenerateCodewords(ProtoId<CodewordGeneratorPrototype> generatorId)
     {
         var generator = _prototypeManager.Index(generatorId);
 

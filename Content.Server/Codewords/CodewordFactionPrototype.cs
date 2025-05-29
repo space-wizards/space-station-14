@@ -5,8 +5,8 @@ namespace Content.Server.Codewords;
 /// <summary>
 /// This is a prototype for easy access to codewords using identifiers instead of magic strings.
 /// </summary>
-[Prototype("codewordFaction")]
-public sealed partial class CodewordFaction : IPrototype
+[Prototype]
+public sealed partial class CodewordFactionPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
