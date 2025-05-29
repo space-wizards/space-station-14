@@ -41,7 +41,7 @@
   name: guide-entry-rules-ronstation-only
   ruleEntry: true
   priority: 10
-  text: "/ServerInfo/Guidebook/ServerRules/WizDenLRPRules.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/RonstationRulesTemporary.xml"
 
 - type: guideEntry
   id: CoreRules
