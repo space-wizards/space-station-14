@@ -83,6 +83,21 @@
   - BiofabricatorMachineCircuitboard
   - BiomassReclaimerMachineCircuitboard
 
+- type: technology
+  id: BiochemicalStasis
+  name: research-technology-biochemical-stasis
+  icon:
+    sprite: Structures/Machines/stasis_bed.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - StasisBedMachineCircuitboard
+  - CryoPodMachineCircuitboard
+  - CryostasisBeaker
+  - SyringeCryostasis
+
 # Tier 2
 
 - type: technology
@@ -102,21 +117,6 @@
   - FauxTileAstroSnow
   - FauxTileAstroAsteroidSand
 
-- type: technology
-  id: BiochemicalStasis
-  name: research-technology-biochemical-stasis
-  icon:
-    sprite: Structures/Machines/stasis_bed.rsi
-    state: icon
-  discipline: CivilianServices
-  tier: 2
-  cost: 7500
-  recipeUnlocks:
-  - StasisBedMachineCircuitboard
-  - CryoPodMachineCircuitboard
-  - CryostasisBeaker
-  - SyringeCryostasis
-
 - type: technology # Merge with other T2 medical research if possible!
   id: MechanizedTreatment
   name: research-technology-mechanized-treatment
@@ -128,6 +128,18 @@
   cost: 5000
   recipeUnlocks:
   - BorgModuleAdvancedChemical
+
+- type: technology # great joke, previous commenter.
+  id: CompactDefib
+  name: research-technology-portable-resuscitation
+  icon:
+    sprite: Objects/Specific/Medical/defibsmall.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+  - CompactDefibrillator
 
 - type: technology
   id: AdvancedCleaning
@@ -200,6 +212,19 @@
   recipeUnlocks:
   - PushHorn
 
+- type: technology
+  id: BluespaceChemistry
+  name: research-technology-bluespace-chemistry
+  icon:
+    sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
+    state: beakerbluespace
+  discipline: CivilianServices
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - BluespaceBeaker
+  - SyringeBluespace
+
 # Tier 3
 
 - type: technology
@@ -213,19 +238,6 @@
   cost: 10000
   recipeUnlocks:
   - ClothingShoesBootsSpeed
-
-- type: technology
-  id: BluespaceChemistry
-  name: research-technology-bluespace-chemistry
-  icon:
-    sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
-    state: beakerbluespace
-  discipline: CivilianServices
-  tier: 3
-  cost: 10000
-  recipeUnlocks:
-  - BluespaceBeaker
-  - SyringeBluespace
 
 - type: technology
   id: LauncherSyringe

@@ -8,8 +8,7 @@
     - type: MachineBoard
       prototype: OreProcessorBasic
       stackRequirements:
-        MatterBin: 1
-        Manipulator: 1
+        Manipulator: 2
     - type: PhysicalComposition
       materialComposition:
         Glass: 125
