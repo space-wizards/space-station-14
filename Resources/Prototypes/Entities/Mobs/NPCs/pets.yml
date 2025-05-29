@@ -833,9 +833,9 @@
       gender: male
 
 - type: entity
-  name: Kweh Kweh
+  name: Yip Yip
   parent: MobBaseKobold
-  id: MobKoboldKweh
+  id: MobKoboldYip
   description: A junior barkeeping assistant who loves a warm and cozy bar almost as much as he loves a firey whiskey.
   components:
   - type: GhostRole
@@ -843,8 +843,8 @@
     makeSentient: true
     allowSpeech: true
     allowMovement: true
-    name: ghost-role-information-kwehkweh-name
-    description: ghost-role-information-kwehkweh-description
+    name: ghost-role-information-yipyip-name
+    description: ghost-role-information-yipyip-description
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Butcherable
@@ -861,7 +861,7 @@
     - VimPilot
     - AnomalyHost
   - type: Loadout
-    prototypes: [ MobKwehKwehGear ]
+    prototypes: [ MobYipYipGear ]
   - type: Grammar
     attributes:
       proper: true

@@ -104,7 +104,7 @@
     id: PunPunIDCard
 
 - type: startingGear
-  id: MobKwehKwehGear
+  id: MobYipYipGear
   equipment:
     head: ClothingHeadHatTophat
     ears: ClothingHeadsetService

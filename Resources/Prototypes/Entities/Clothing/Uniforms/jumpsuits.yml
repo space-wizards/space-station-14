@@ -55,9 +55,9 @@
   description: A warm trenchcoat for a cozy kobold. Enough room inside for three.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/kwehkweh.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/yipyip.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/kwehkweh.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/yipyip.rsi
   - type: SuitSensor
     controlsLocked: false
     randomMode: false
