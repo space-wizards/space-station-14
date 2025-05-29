@@ -1,4 +1,4 @@
-﻿using Content.Shared.Roles;
+using Content.Shared.Roles;
 using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
@@ -385,6 +385,12 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> ContrabandExamine =
         CVarDef.Create("game.contraband_examine", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     If true, contraband examination is only possible while wearing an item with `ShowContrabandDetailsComponent`. Requires `ContrabandExamine` to be true as well.
+    /// </summary>
+    public static readonly CVarDef<bool> ContrabandExamineOnlyInHUD =
+        CVarDef.Create("game.contraband_examine_only_in_hud", false, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Size of the lookup area for adding entities to the context menu

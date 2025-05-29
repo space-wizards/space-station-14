@@ -67,3 +67,18 @@
   loadouts:
   - BlueShieldGlasses
   - BlueShieldHud
+    
+- type: loadoutGroup
+  id: SecurityNonLethalWeapon
+  name: loadout-group-security-non-lethal-weapon
+  loadouts:
+  - SecurityTaser
+  - SecurityDominator
+
+- type: loadoutGroup
+  id: SecuritySidearm
+  name: loadout-group-security-sidearm
+  loadouts:
+  - SecurityMk58
+  - SecurityPistolDP
+

@@ -320,7 +320,7 @@
 
 - type: entity
   name: mirror shield
-  parent: BaseShield
+  parent: [ BaseShield, BaseMagicalContraband ]
   id: MirrorShield
   description: Eerily glows red... you hear the geometer whispering
   components:

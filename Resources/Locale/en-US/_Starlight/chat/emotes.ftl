@@ -7,6 +7,8 @@ chat-emote-name-trill = Trill
 chat-emote-name-howl = Howl
 chat-emote-name-growl = Growl
 chat-emote-name-bark = Bark
+chat-emote-name-yip = Yip
+chat-emote-name-whine = Whine
 
 # Emote Messages
 chat-emote-msg-mew = mews
@@ -17,3 +19,5 @@ chat-emote-msg-trill = trills
 chat-emote-msg-howl = howls
 chat-emote-msg-growl = growls
 chat-emote-msg-bark = barks
+chat-emote-msg-yip = yips
+chat-emote-msg-whine = whines
