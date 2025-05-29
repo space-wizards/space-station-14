@@ -16,7 +16,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
     /// <summary>
     /// STARLIGHT: Path to the cosmonaut lobby music track used for revolutionary victory
     /// </summary>
-    public const string RevVictoryMusic = "/Audio/_Starlight/Music/Lobby/sov_win.ogg";
+    public const string RevVictoryMusic = "/Audio/_Starlight/Music/Lobby/Resistance.ogg";
     
     [ValidatePrototypeId<SoundCollectionPrototype>]
     private const string LobbyMusicCollection = "LobbyMusic";
