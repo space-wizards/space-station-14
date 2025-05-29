@@ -1,4 +1,5 @@
 using Content.Shared.Maps;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 
@@ -32,7 +33,7 @@ public sealed partial class TileNotBlocked : IConstructionCondition
             return false;
         }
 
-        return !tileRef.Value.IsBlockedTurf(_filterMobs);
+        return !turfSystem.IsTileBlocked(tileRef.Value, _filterMobs ? CollisionGroup.MobMask : CollisionGroup.Impassable);
     }
 
     public ConstructionGuideEntry GenerateGuideEntry()
