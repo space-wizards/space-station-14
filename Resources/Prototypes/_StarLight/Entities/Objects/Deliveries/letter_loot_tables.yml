@@ -4,4 +4,4 @@
   id: MailAntagSpamLetter
   table: !type:GroupSelector
     children:
-      - MailSyndicateSpamLetter
+      - id: MailSyndicateSpamLetter
