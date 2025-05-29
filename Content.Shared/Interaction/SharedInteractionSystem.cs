@@ -91,7 +91,6 @@ namespace Content.Shared.Interaction
         public const string RateLimitKey = "Interaction";
 
         private static readonly ProtoId<TagPrototype> BypassInteractionRangeChecksTag = "BypassInteractionRangeChecks";
-        private static readonly ProtoId<TagPrototype> WallTag = "Wall";
 
         public delegate bool Ignored(EntityUid entity);
 
@@ -889,18 +888,6 @@ namespace Content.Shared.Interaction
 
                 if (ignoreAnchored && _mapManager.TryFindGridAt(targetCoords, out var gridUid, out var grid))
                     ignored.UnionWith(_map.GetAnchoredEntities((gridUid, grid), targetCoords));
-            }
-            else if (_tagSystem.HasTag(target, WallTag))
-            {
-                if (_mapManager.TryFindGridAt(targetCoords, out var gridUid, out var grid))
-                {
-                    // If the target is a wall, it should ignore collision with other walls at the same coordinates
-                    // This fixes the bug of not being able to target or break walls when they are overlapping
-                    //   like those spawned by rock anomalies
-                    var wallIgnored = _map.GetAnchoredEntities((gridUid, grid), targetCoords)
-                        .Where(e => _tagSystem.HasTag(e, WallTag));
-                    ignored.UnionWith(wallIgnored);
-                }
             }
 
             Ignored combinedPredicate = e => e == target || (predicate?.Invoke(e) ?? false) || ignored.Contains(e);
