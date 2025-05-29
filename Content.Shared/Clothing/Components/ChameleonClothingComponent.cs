@@ -3,6 +3,7 @@ using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Clothing.Components;
 
@@ -16,14 +17,12 @@ public sealed partial class ChameleonClothingComponent : Component
     /// <summary>
     ///     Filter possible chameleon options by their slot flag.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
     [DataField(required: true)]
     public SlotFlags Slot;
 
     /// <summary>
     ///     EntityPrototype id that chameleon item is trying to mimic.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
     [DataField(required: true), AutoNetworkedField]
     public EntProtoId? Default;
 
@@ -64,7 +63,7 @@ public sealed partial class ChameleonClothingComponent : Component
     /// <summary>
     ///     When should next EMP-caused appearance change happen?
     /// </summary>
-    [AutoPausedField, DataField]
+    [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextEmpChange = TimeSpan.Zero;
 }
 
