@@ -220,6 +220,21 @@
 
 - type: entity
   parent: MarkerBase
+  id: SpawnMobScurretWaWa
+  name: Wa Wa Spawner
+  suffix: The More Adorable Bartender Pet
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: scurret
+      sprite: Mobs/Animals/scurret/scurret.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobScurretWaWa
+
+- type: entity
+  parent: MarkerBase
   id: SpawnMobPossumMorty
   name: Possum Morty Spawner
   suffix: Morgue Pet

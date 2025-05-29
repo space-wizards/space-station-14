@@ -1,0 +1,11 @@
+﻿- type: startingGear
+  id: EmotionalSupportScurretGear
+  equipment:
+    id: ScurretPDA
+
+- type: startingGear
+  id: MobWaWaGear
+  equipment:
+    head: ClothingHeadHatTophat
+    ears: ClothingHeadsetService
+    id: PunPunIDCard # Wa doesn't get a PDA. Go bug the HOP.

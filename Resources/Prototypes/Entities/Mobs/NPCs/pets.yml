@@ -833,6 +833,39 @@
       gender: male
 
 - type: entity
+  name: Wa Wa
+  parent: MobEmotionalSupportScurret
+  id: MobScurretWaWa
+  description: The first scurret ever to escape the clutches of Arnold's Pizza and make their own luck out in space. Prefers vodka, hates rain.
+  components:
+  - type: GhostRole
+    prob: 1
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-wawa-name
+    description: ghost-role-information-wawa-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat # It somehow tastes like vodka
+      amount: 4
+    - id: DrinkVodkaBottleFull
+      amount: 1
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - VimPilot
+    - AnomalyHost
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+
+- type: entity
   name: Tropico
   parent: MobCrab
   id: MobCrabAtmos
