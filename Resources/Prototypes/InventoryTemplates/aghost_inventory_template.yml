@@ -9,9 +9,6 @@
       uiWindowPos: 2,1
       strippingWindowPos: 2,4
       displayName: ID
-      blacklist:
-        tags:
-        - PetOnly
     - name: id
       slotTexture: id
       fullTextureName: template_small
