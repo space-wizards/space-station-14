@@ -219,8 +219,6 @@
 - type: Tag
   id: CanPilot
 
-- type: Tag
-  id: CapacitorStockPart
 
 - type: Tag
   id: CaptainSabre
@@ -963,6 +961,9 @@
 
 - type: Tag
   id: Multitool
+
+- type: Tag
+  id: Mushroom
 
 - type: Tag
   id: NoBlockAnchoring
