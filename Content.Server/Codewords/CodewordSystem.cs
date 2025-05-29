@@ -26,9 +26,8 @@ public sealed class CodewordSystem : GameRuleSystem<CodewordRuleComponent>
     public void EnsureAvailable()
     {
         if (CheckCodewordsAvailable())
-            return;
+            return; // We already have codewords, no need to do anything.
 
-        // We already have codewords, no need to do anything.
         GameTicker.StartGameRule(RuleComponent);
     }
 
