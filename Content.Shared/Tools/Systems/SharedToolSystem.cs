@@ -54,7 +54,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         ev.DoAfter = args.DoAfter;
 
         if (args.OriginalTarget != null)
-            RaiseLocalEvent(GetEntity(args.OriginalTarget.Value), (object) ev);
+            RaiseLocalEvent(args.OriginalTarget.Value, (object) ev);
         else
             RaiseLocalEvent((object) ev);
     }
@@ -166,7 +166,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!CanStartToolUse(tool, user, target, fuel, toolQualitiesNeeded, toolComponent))
             return false;
 
-        var toolEvent = new ToolDoAfterEvent(fuel, doAfterEv, GetNetEntity(target));
+        var toolEvent = new ToolDoAfterEvent(fuel, doAfterEv, target);
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
         {
             BreakOnDamage = true,
@@ -274,8 +274,8 @@ public abstract partial class SharedToolSystem : EntitySystem
         /// <summary>
         ///     Entity that the wrapped do after event will get directed at. If null, event will be broadcast.
         /// </summary>
-        [DataField("target")]
-        public NetEntity? OriginalTarget;
+        [DataField("target"), NonSerialized]
+        public EntityUid? OriginalTarget;
 
         [DataField("wrappedEvent")]
         public DoAfterEvent WrappedEvent = default!;
@@ -284,7 +284,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         {
         }
 
-        public ToolDoAfterEvent(float fuel, DoAfterEvent wrappedEvent, NetEntity? originalTarget)
+        public ToolDoAfterEvent(float fuel, DoAfterEvent wrappedEvent, EntityUid? originalTarget)
         {
             DebugTools.Assert(wrappedEvent.GetType().HasCustomAttribute<NetSerializableAttribute>(), "Tool event is not serializable");
 
