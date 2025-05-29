@@ -106,6 +106,14 @@
         type: LatheBoundUserInterface
       enum.ResearchClientUiKey.Key:
         type: ResearchClientBoundUserInterface
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+      enum.PowerMonitoringConsoleUiKey.Key:
+        type: PowerMonitoringConsoleBoundUserInterface
+      enum.IFFConsoleUiKey.Key:
+        type: IFFConsoleBoundUserInterface
+      enum.ShuttleConsoleUiKey.Key:
+        type: ShuttleConsoleBoundUserInterface
   - type: Transform
     anchored: true
   - type: Pullable
@@ -181,3 +189,56 @@
     whitelist:
       components:
       - BorgChassis
+  - type: IntrinsicUI
+    uis:
+      enum.PowerMonitoringConsoleUiKey.Key:
+        toggleAction: ActionMothershipShowPower
+      enum.IFFConsoleUiKey.Key:
+        toggleAction: ActionMothershipShowIFF
+      enum.ShuttleConsoleUiKey.Key:
+        toggleAction: ActionMothershipShowShuttle
+  - type: ShowElectrocutionHUD
+  - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
+  - type: ShuttleConsole
+  - type: RadarConsole
+    maxRange: 384
+  - type: WorldLoader
+    radius: 1536
+
+
+- type: entity
+  id: ActionMothershipShowPower
+  name: Power Monitoring Interface
+  description: View a Power Monitoring Interface.
+  components:
+  - type: InstantAction
+    icon: { sprite: Structures/Machines/computers.rsi, state: power_monitor }
+    iconOn: { sprite: Structures/Machines/computers.rsi, state: power_monitor }
+    keywords: [ "AI", "console", "interface" ]
+    priority: -6
+    event: !type:ToggleIntrinsicUIEvent { key: enum.PowerMonitoringConsoleUiKey.Key }
+
+- type: entity
+  id: ActionMothershipShowIFF
+  name: IFF Interface
+  description: View an IFF Interface.
+  components:
+  - type: InstantAction
+    icon: { sprite: Structures/Shuttles/iff.rsi, state: helm }
+    iconOn: { sprite: Structures/Shuttles/iff.rsi, state: helm }
+    keywords: [ "AI", "console", "interface" ]
+    priority: -6
+    event: !type:ToggleIntrinsicUIEvent { key: enum.IFFConsoleUiKey.Key }
+
+- type: entity
+  id: ActionMothershipShowShuttle
+  name: Shuttle Interface
+  description: View a Shuttle Interface.
+  components:
+  - type: InstantAction
+    icon: Interface/Alerts/piloting.png
+    iconOn: Interface/Alerts/piloting.png
+    keywords: [ "AI", "console", "interface" ]
+    priority: -6
+    event: !type:ToggleIntrinsicUIEvent { key: enum.ShuttleConsoleUiKey.Key }
