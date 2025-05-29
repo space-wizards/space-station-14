@@ -47,24 +47,6 @@
       path: /Audio/_Starlight/Effects/Radio/bso.ogg
 
 - type: entity
-  parent: [ClothingHeadsetAlt, BaseCommandContraband]
-  id: ClothingHeadsetAltWizard
-  name: magic over-ear headset (stolen)
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyStationMaster
-  - type: Sprite
-    sprite: Clothing/Ears/Headsets/command.rsi
-  - type: Clothing
-    sprite: Clothing/Ears/Headsets/command.rsi
-  - type: RadioChime
-    chimeSound:
-      path: /Audio/_Starlight/Effects/Radio/wizard.ogg
-
-
-- type: entity
   parent: [ClothingHeadsetAlt, BaseSyndicateContraband]
   id: ClothingHeadsetAltSyndicateCommander
   name: blood-red over-ear commander headset

@@ -214,3 +214,6 @@
       sprite: Clothing/Ears/Headsets/wizard.rsi
     - type: Clothing
       sprite: Clothing/Ears/Headsets/wizard.rsi
+    - type: RadioChime
+      chimeSound:
+        path: /Audio/_Starlight/Effects/Radio/wizard.ogg
