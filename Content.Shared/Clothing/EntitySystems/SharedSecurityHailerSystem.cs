@@ -11,10 +11,12 @@ using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stealth.Components;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Collections.Generic;
@@ -23,6 +25,9 @@ namespace Content.Shared.Clothing.EntitySystems;
 
 public abstract class SharedSecurityHailerSystem : EntitySystem
 {
+    private const string CUTTING_QUALITY = "Cutting";
+    private const string SCREWING_QUALITY = "Screwing";
+
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -139,7 +144,8 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
     }
     private void OnInteractCutting(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
     {
-        StartADoAfter(ent, args, SecHailerToolDoAfterEvent.ToolQuality.Cutting);
+        ProtoId<ToolQualityPrototype> quality = CUTTING_QUALITY;
+        StartADoAfter(ent, args, quality);
     }
 
     private void OnInteractScrewing(Entity<SecurityHailerComponent> ent, ref InteractUsingEvent args)
@@ -147,19 +153,19 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         //If it's emagged we don't change it
         if (HasComp<EmaggedComponent>(ent) || ent.Comp.CurrentState != SecMaskState.Functional)
             return;
-        StartADoAfter(ent, args, SecHailerToolDoAfterEvent.ToolQuality.Screwing);
+        ProtoId<ToolQualityPrototype> quality = SCREWING_QUALITY;
+        StartADoAfter(ent, args, quality);
     }
 
-    private void StartADoAfter(Entity<SecurityHailerComponent> ent, InteractUsingEvent args, SecHailerToolDoAfterEvent.ToolQuality quality)
+    private void StartADoAfter(Entity<SecurityHailerComponent> ent, InteractUsingEvent args, ProtoId<ToolQualityPrototype> quality)
     {
         float? time = null;
-
         //What delay to use ?
-        if (quality == SecHailerToolDoAfterEvent.ToolQuality.Screwing)
+        if (quality == SCREWING_QUALITY)
         {
             time = ent.Comp.ScrewingDoAfterDelay;
         }
-        else if (quality == SecHailerToolDoAfterEvent.ToolQuality.Cutting)
+        else if (quality == CUTTING_QUALITY)
         {
             time = ent.Comp.CuttingDoAfterDelay;
         }
@@ -185,12 +191,12 @@ public abstract class SharedSecurityHailerSystem : EntitySystem
         if (args.Cancelled || args.Handled)
             return;
 
-        switch (args.UsedTool)
+        switch (args.ToolQuality)
         {
-            case SecHailerToolDoAfterEvent.ToolQuality.Cutting:
+            case CUTTING_QUALITY:
                 OnCuttingDoAfter(ent, ref args);
                 break;
-            case SecHailerToolDoAfterEvent.ToolQuality.Screwing:
+            case SCREWING_QUALITY:
                 OnScrewingDoAfter(ent, ref args);
                 break;
         }

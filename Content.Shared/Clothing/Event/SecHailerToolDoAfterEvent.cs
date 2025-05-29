@@ -1,4 +1,6 @@
 using Content.Shared.DoAfter;
+using Content.Shared.Tools;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Clothing.Event;
@@ -9,16 +11,11 @@ namespace Content.Shared.Clothing.Event;
 [Serializable, NetSerializable]
 public sealed partial class SecHailerToolDoAfterEvent : SimpleDoAfterEvent
 {
-    public enum ToolQuality
-    {
-        Screwing,
-        Cutting
-    }
 
-    public ToolQuality UsedTool { get; set; }
+    public ProtoId<ToolQualityPrototype> ToolQuality;
 
-    public SecHailerToolDoAfterEvent(ToolQuality tool)
+    public SecHailerToolDoAfterEvent(ProtoId<ToolQualityPrototype> quality)
     {
-        UsedTool = tool;
+        ToolQuality = quality;
     }
 }
