@@ -70,63 +70,54 @@
   name: guide-entry-rules-c1
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC1Admins.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/CoreRules/RuleC1.xml"
 
 - type: guideEntry
   id: RuleC2
   name: guide-entry-rules-c2
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC2DBAD.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/CoreRules/RuleC2.xml"
 
 - type: guideEntry
   id: RuleC3
   name: guide-entry-rules-c3
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC3NoHate.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/CoreRules/RuleC3.xml"
 
 - type: guideEntry
   id: RuleC4
   name: guide-entry-rules-c4
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC4NoERP.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/CoreRules/RuleC4.xml"
 
 - type: guideEntry
   id: RuleC5
   name: guide-entry-rules-c5
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC5Metacomms.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/CoreRules/RuleC5.xml"
 
 - type: guideEntry
   id: RuleC6
   name: guide-entry-rules-c6
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC6BanEvasion.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/CoreRules/RuleC6.xml"
 
 - type: guideEntry
   id: RuleC7
   name: guide-entry-rules-c7
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC7EnglishOnly.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/CoreRules/RuleC7.xml"
 
 - type: guideEntry
   id: RuleC8
   name: guide-entry-rules-c8
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC8Exploits.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/CoreRules/RuleC8.xml"
 
 - type: guideEntry
   id: RuleC9
   name: guide-entry-rules-c9
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC9Multikey.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/CoreRules/RuleC9.xml"
 
 - type: guideEntry
   id: RuleC10
@@ -157,7 +148,6 @@
   name: guide-entry-rules-c14
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC14ICinOOC.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/CoreRules/RuleC10.xml"
 
 - type: guideEntry
   id: RoleplayRules
@@ -187,42 +177,36 @@
   name: guide-entry-rules-r1
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR1Silicons.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/RoleplayRules/RuleR1.xml"
 
 - type: guideEntry
   id: RuleR2
   name: guide-entry-rules-r2
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR2Familiars.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/RoleplayRules/RuleR2.xml"
 
 - type: guideEntry
   id: RuleR3
   name: guide-entry-rules-r3
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR3NormalRP.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/RoleplayRules/RuleR3.xml"
 
 - type: guideEntry
   id: RuleR4
   name: guide-entry-rules-r4
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR4Metashield.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/RoleplayRules/RuleR4.xml"
 
 - type: guideEntry
   id: RuleR5
   name: guide-entry-rules-r5
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR5Arrivals.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/RoleplayRules/RuleR5.xml"
 
 - type: guideEntry
   id: RuleR6
   name: guide-entry-rules-r6
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/RoleplayRules/RuleR6SelfAntag.xml"
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/RoleplayRules/RuleR6.xml"
 
 - type: guideEntry
   id: RuleR7
