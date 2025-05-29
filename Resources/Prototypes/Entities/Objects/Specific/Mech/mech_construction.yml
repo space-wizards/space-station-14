@@ -597,10 +597,6 @@
   - type: Appearance
   - type: ItemMapper
     mapLayers:
-      ripleymkii_upgrade_kit+o:
-        whitelist:
-          tags:
-          - RipleyMKIIUpgradeKit
       ripleymkii_l_arm+o:
         whitelist:
           tags:
