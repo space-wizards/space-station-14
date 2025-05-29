@@ -17,6 +17,7 @@ public sealed class TurfSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitions = default!;
 
 
     /// <summary>
@@ -99,14 +100,14 @@ public sealed class TurfSystem : EntitySystem
             rot -= gridRot;
             pos = (-gridRot).RotateVec(pos - gridPos);
 
-            var xform = new Transform(pos, (float) rot.Theta);
+            var xform = new Transform(pos, (float)rot.Theta);
 
             foreach (var fixture in fixtures.Fixtures.Values)
             {
                 if (!fixture.Hard)
                     continue;
 
-                if ((fixture.CollisionLayer & (int) mask) == 0)
+                if ((fixture.CollisionLayer & (int)mask) == 0)
                     continue;
 
                 for (var i = 0; i < fixture.Shape.ChildCount; i++)
@@ -130,5 +131,21 @@ public sealed class TurfSystem : EntitySystem
         var grid = Comp<MapGridComponent>(turf.GridUid);
         var center = (turf.GridIndices + new Vector2(0.5f, 0.5f)) * grid.TileSize;
         return new EntityCoordinates(turf.GridUid, center);
+    }
+
+    /// <summary>
+    ///     Returns the content tile definition for a tile.
+    /// </summary>
+    public ContentTileDefinition GetContentTileDefinition(Tile tile)
+    {
+        return (ContentTileDefinition)_tileDefinitions[tile.TypeId];
+    }
+
+    /// <summary>
+    ///     Returns the content tile definition for a tile ref.
+    /// </summary>
+    public ContentTileDefinition GetContentTileDefinition(TileRef tile)
+    {
+        return GetContentTileDefinition(tile.Tile);
     }
 }

@@ -30,6 +30,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Returns the content tile definition for a tile.
         /// </summary>
+        [Obsolete("Use the equivalent TurfSystem method")]
         public static ContentTileDefinition GetContentTileDefinition(this Tile tile, ITileDefinitionManager? tileDefinitionManager = null)
         {
             tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
@@ -47,6 +48,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Returns the content tile definition for a tile ref.
         /// </summary>
+        [Obsolete("Use the equivalent TurfSystem method")]
         public static ContentTileDefinition GetContentTileDefinition(this TileRef tile, ITileDefinitionManager? tileDefinitionManager = null)
         {
             return tile.Tile.GetContentTileDefinition(tileDefinitionManager);
