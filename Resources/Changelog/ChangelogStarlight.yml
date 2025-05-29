@@ -6284,4 +6284,67 @@ Entries:
   id: 870
   time: '2025-05-28T20:20:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/704
+- author: STARLIGHT TEAM
+  changes:
+  - message: upstream.
+    type: Tweak
+  id: 871
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Lobster updated for genpop
+    type: Tweak
+  id: 872
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Omega updated for genpop
+    type: Tweak
+  id: 873
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Orwell updated for genpop
+    type: Tweak
+  id: 874
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Manor updated for genpop
+    type: Tweak
+  id: 875
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Starboard updated for genpop
+    type: Tweak
+  id: 876
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cog updated for genpop
+    type: Tweak
+  id: 877
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Oasis updated for genpop
+    type: Tweak
+  id: 878
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fland updated for genpop
+    type: Tweak
+  id: 879
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
 
