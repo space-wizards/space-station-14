@@ -19,5 +19,5 @@ public sealed partial class CodewordRuleComponent : Component
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
-    public readonly Dictionary<ProtoId<CodewordFactionPrototype>, EntityUid> Codewords = new();
+    public Dictionary<ProtoId<CodewordFactionPrototype>, EntityUid> Codewords = new();
 }
