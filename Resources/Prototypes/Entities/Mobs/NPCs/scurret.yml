@@ -114,7 +114,9 @@
     tags:
       - DoorBumpOpener
       - FootstepSound
-      - CanPilot # Inexplicably, scurrets have a natural aptitude for spaceflight TODO: FIX THIS AS IT DOESN'T WORK YET :<
+      - CanPilot
+      - VimPilot
+      - AnomalyHost
 
 - type: inventoryTemplate
   id: scurret

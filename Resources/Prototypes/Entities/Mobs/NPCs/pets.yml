@@ -919,6 +919,8 @@
     tags:
     - CannotSuicide # He cannot escape his torment
     - DoorBumpOpener
+    - FootstepSound
+    - CanPilot
     - VimPilot
     - AnomalyHost
   - type: Loadout
