@@ -112,7 +112,7 @@
   effects:
     - !type:ExplosionReactionEffect
       explosionType: Default
-      intensityPerUnit: 0.2 # 50+50 reagent for maximum explosion
+      intensityPerUnit: 0.25
       maxTotalIntensity: 100
       intensitySlope: 4
       maxIntensity: 7
