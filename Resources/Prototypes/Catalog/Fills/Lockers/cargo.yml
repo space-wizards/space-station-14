@@ -5,8 +5,34 @@
     - id: NitrogenTankFilled
     - id: OxygenTankFilled
     - id: ClothingShoesBootsMag
+    - id: ClothingShoesBootsSalvage
     - id: ClothingOuterHardsuitSpatio
     - id: ClothingMaskGasExplorer
+
+- type: entityTable
+  id: FillMiningHardsuitGear
+  table: !type:AllSelector
+    children:
+    - id: NitrogenTankFilled
+    - id: OxygenTankFilled
+    - id: ClothingShoesBootsMag
+    - id: ClothingShoesBootsSalvage
+    - id: ClothingOuterHardsuitSalvage
+    - id: ClothingMaskGasExplorer
+    - id: Pickaxe
+
+- type: entityTable
+  id: FillLuxuryHardsuitGear
+  table: !type:AllSelector
+    children:
+    - id: NitrogenTankFilled
+    - id: OxygenTankFilled
+    - id: ClothingShoesBootsMag
+    - id: ClothingShoesBootsSalvage
+    - id: ClothingOuterHardsuitLuxury
+    - id: ClothingMaskGasExplorer
+    - id: Pickaxe
+    - id: ClothingNeckBling
 
 - type: entityTable
   id: LockerFillSalvageSpecialist

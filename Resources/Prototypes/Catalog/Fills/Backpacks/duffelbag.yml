@@ -215,21 +215,6 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
-  id: ClothingBackpackDuffelSyndicateEVABundle
-  name: syndicate EVA bundle
-  description: "Contains the Syndicate approved EVA suit."
-  components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadHelmetSyndicate
-      - id: ClothingOuterEVASuitSyndicate
-      - id: ClothingMaskGasSyndicate
-      - id: ClothingHandsGlovesColorYellowBudget
-      - id: DoubleEmergencyOxygenTankFilled
-      - id: DoubleEmergencyNitrogenTankFilled
-
-- type: entity
-  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateHardsuitBundle
   name: syndicate hardsuit bundle
   description: "Contains the Syndicate's signature blood red hardsuit."

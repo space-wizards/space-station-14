@@ -9,11 +9,34 @@
     sprite: Clothing/OuterClothing/Suits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,3
   - type: Tag
     tags:
     - SuitEVA
     - MonkeyWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: BaseItem
+  id: SuitEVAPackage
+  name: EVA flatpack
+  description: An EVA suit compressed and packaged for ease of storage. Helmet not included, unfold by hand.
+  components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,1
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/eva.rsi
+    state: package
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClothingOuterHardsuitEVA
+    sound:
+      path: /Audio/Effects/unwrap.ogg
 
 #Syndicate EVA
 - type: entity
@@ -26,11 +49,26 @@
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
+  - type: Item
+    shape:
+    - 0,0,2,3
   - type: Tag
     tags:
     - SuitEVA
     - MonkeyWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: SuitEVAPackage
+  id: SuitEVAPackageSyndicate
+  name: syndicate EVA flatpack
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClothingOuterEVASuitSyndicate
+
 
 #Emergency EVA
 - type: entity
@@ -57,6 +95,21 @@
     containers:
       toggleable-clothing: !type:ContainerSlot {}
 
+- type: entity
+  parent: SuitEVAPackage
+  id: SuitEmergencyPackage
+  name: emergency EVA flatpack
+  description: An emergency EVA suit compressed and packaged for ease of storage. Helmet included, unfold by hand.
+  components:
+  - type: Item
+    shape:
+    - 0,0,2,1
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClothingOuterSuitEmergency
+
 #Prisoner EVA
 - type: entity
   parent: ClothingOuterEVASuitBase
@@ -68,23 +121,42 @@
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,3
   - type: Tag
     tags:
     - SuitEVA
     - MonkeyWearable
     - WhitelistChameleon
 
+- type: entity
+  parent: SuitEmergencyPackage
+  id: SuitPrisonerPackage
+  name: prisoner EVA flatpack
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClothingOuterHardsuitEVAPrisoner
+
+
 #NTSRA Voidsuit / Ancient Voidsuit
 - type: entity
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitAncientEVA
   name: NTSRA voidsuit #Nanotrasen Space Research Association
-  description: An ancient space suit, designed by the NTSRA branch of CentComm. It is very finely crafted, allowing for greater mobility than most modern space suits.
+  description: An ancient space suit design, made by the Nanotrasen Space Research Association. They were so finely crafted way back when you can't tell how old this one is.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
+  - type: Item
+    shape:
+    - 0,0,1,3
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85
@@ -94,14 +166,17 @@
 - type: entity
   parent: [ClothingOuterEVASuitBase, BaseMedicalContraband] #Despite "Voidsuits are light hardsuits", since it parents of EVA Suits, it goes with the other softsuits
   id: ClothingOuterHardsuitVoidParamed
-  name: paramedic void suit
-  description: A void suit made for paramedics.
+  name: paramedic voidsuit
+  description: A lightweight voidfairing suit made for paramedics, providing the minimum protection you need to get in, get a body, and get out in a hazardous environment. Comes with a siren!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
     layers:
     - state: icon
   - type: Appearance
+  - type: Item
+    shape:
+    -  0,0,1,4
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
   - type: PressureProtection

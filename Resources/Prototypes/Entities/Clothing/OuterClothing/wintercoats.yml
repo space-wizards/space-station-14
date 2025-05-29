@@ -100,9 +100,10 @@
     clothingPrototype: ClothingHeadHatHoodWinterBartender
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
+  parent: [AllowSuitStorageClothing, ClothingOuterWinterCoatToggleable, BaseCommandContraband]
   id: ClothingOuterWinterCap
-  name: captain's winter coat
+  name: captain's armored winter coat
+  description: A regal winter coat made of premium furs, concealing discrete armor plating. Not as robust against brute damage, but will keep you warm and has pockets to hold more unimportant things.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -114,6 +115,8 @@
       - state: CAP-inhand-left
       right:
       - state: CAP-inhand-right
+    shape:
+    - 0,0,1,2
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     clothingVisuals:
@@ -121,6 +124,17 @@
       - state: CAP-equipped-OUTERCLOTHING
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterCaptain
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.7
+        Heat: 0.4
+        Caustic: 0.75
+        Shock: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -667,9 +681,10 @@
     clothingPrototype: ClothingHeadHatHoodWinterSci
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
+  parent: [AllowSuitStorageClothing, ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
   id: ClothingOuterWinterSec
-  name: security winter coat
+  name: security armored winter coat
+  description: While less armored than a standard armor vest, still keeps you protected. Also keeps you warm and has pockets!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -681,6 +696,8 @@
       - state: SEC-inhand-left
       right:
       - state: SEC-inhand-right
+    shape:
+    - 0,0,1,2
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
     clothingVisuals:
@@ -688,6 +705,13 @@
       - state: SEC-equipped-OUTERCLOTHING
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterSec
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.75
+        Blunt: 0.75
+        Piercing: 0.8
+        Heat: 0.7
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -784,7 +808,7 @@
 
 ##############################################################
 - type: entity
-  parent: [ BaseSyndicateContraband, ClothingOuterWinterWarden ]
+  parent: [ClothingOuterWinterWarden, BaseSyndicateContraband]
   id: ClothingOuterWinterSyndieCapArmored
   name: syndicate's armored winter coat
   description: "The syndicate's armored winter coat is made of durable fabric, with gilded patterns, and coarse wool."

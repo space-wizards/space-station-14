@@ -18,3 +18,19 @@
     - id: ClothingHeadHelmetRaid
     - id: ClothingMaskGasSyndicate
     - id: ClothingHandsGlovesCombat
+
+- type: entity
+  parent: ClothingBackpackSyndicateBundle
+  id: ClothingBackpackSyndicateEVABundle
+  name: syndicate EVA bundle
+  description: "Contains the Syndicate approved EVA suit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetSyndicate
+      - id: SuitEVAPackageSyndicate
+      - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesColorYellowBudget
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+

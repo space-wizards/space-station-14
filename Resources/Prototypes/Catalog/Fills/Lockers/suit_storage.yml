@@ -199,7 +199,7 @@
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitWarden
-        - id: ClothingMaskBreath
+        - id: ClothingMaskGasSecurity
   - type: AccessReader
     access: [["Armory"]]
 
@@ -219,6 +219,7 @@
 #Salvage hardsuit
 - type: entity
   id: SuitStorageSalv
+  name: spationaut suit storage
   parent: SuitStorageBase
   suffix: Salvage
   components:
@@ -228,6 +229,36 @@
         tableId: FillSalvageSpecialistHardsuitSpatio
   - type: AccessReader
     access: [["Salvage"]]
+
+#Mining hardsuit
+- type: entity
+  id: SuitStorageMining
+  name: mining suit storage
+  description: A suit storage unit containing a mining hardsuit, air tanks, footwear, and a spare pickaxe.
+  parent: SuitStorageBase
+  suffix: Salvage
+  components:
+    - type: EntityTableContainerFill
+      containers:
+        entity_storage: !type:NestedSelector
+          tableId: FillMiningHardsuitGear
+    - type: AccessReader
+      access: [["Salvage"]]
+
+#Luxury hardsuit
+- type: entity
+  id: SuitStorageLuxury
+  name: luxury mining suit storage
+  description: A suit storage unit containing a luxury mining hardsuit, amenities for it, and a declaration of your wealth to go around your neck.
+  parent: SuitStorageBase
+  suffix: Salvage, DO NOT MAP
+  components:
+    - type: EntityTableContainerFill
+      containers:
+        entity_storage: !type:NestedSelector
+          tableId: FillLuxuryHardsuitGear
+    - type: AccessReader
+      access: [["Salvage"]]
 
 #Blood-red hardsuit
 - type: entity

@@ -19,6 +19,9 @@
     sprite: Clothing/OuterClothing/Coats/detective.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/detective.rsi
+  - type: Item
+    shape:
+    - 0,0,1,2
   - type: StorageFill
     contents:
     - id: SmokingPipeFilledTobacco
@@ -73,6 +76,9 @@
         Caustic: 0.75 # not the full 90% from ss13 because of the head
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: Item
+    shape:
+    - 0,0,1,2
 
 - type: entity
   abstract: true
@@ -89,6 +95,9 @@
         Caustic: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: Item
+    shape:
+    - 0,0,1,2
 
 - type: entity
   parent: [ClothingOuterArmorHoS, ClothingOuterStorageBase, BaseSecurityCommandContraband]
