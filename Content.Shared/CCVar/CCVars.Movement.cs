@@ -25,14 +25,14 @@ public sealed partial class CCVars
     /// </summary>
     [CVarControl(AdminFlags.VarEdit)]
     public static readonly CVarDef<float> MovementPushingVelocityProduct =
-        CVarDef.Create("movement.pushing_velocity_product", -1f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("movement.pushing_velocity_product", -9999f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     /// Cap for how much an entity can be pushed per second.
     /// </summary>
     [CVarControl(AdminFlags.VarEdit)]
     public static readonly CVarDef<float> MovementPushingCap =
-        CVarDef.Create("movement.pushing_cap", 100f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("movement.pushing_cap", 25f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     /// Minimum pushing impulse per tick. If the value is below this it rounds to 0.
@@ -40,7 +40,7 @@ public sealed partial class CCVars
     /// </summary>
     [CVarControl(AdminFlags.VarEdit)]
     public static readonly CVarDef<float> MovementMinimumPush =
-        CVarDef.Create("movement.minimum_push", 0.1f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("movement.minimum_push", 0f, CVar.SERVER | CVar.REPLICATED);
 
     // Really this just exists because hot reloading is cooked on rider.
     /// <summary>
@@ -48,7 +48,7 @@ public sealed partial class CCVars
     /// </summary>
     [CVarControl(AdminFlags.VarEdit)]
     public static readonly CVarDef<float> MovementPenetrationCap =
-        CVarDef.Create("movement.penetration_cap", 0.3f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("movement.penetration_cap", 0.5f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     /// Based on the mass difference multiplies the push amount by this proportionally.

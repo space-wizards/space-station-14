@@ -30,6 +30,8 @@
   - Changeling
   - AllHostile
   - Wizard
+  - Xenoborg
+  - Dragon
 
 - type: npcFaction
   id: Mouse
@@ -71,7 +73,9 @@
   - Changeling
   - AllHostile
   - Wizard
+  - Xenoborg
   - Dragon
+  - Xeno
 
 - type: npcFaction
   id: SimpleNeutral
@@ -91,6 +95,8 @@
   - Changeling
   - AllHostile
   - Wizard
+  - Xenoborg
+  - Dragon
 
 - type: npcFaction
   id: Xeno
@@ -109,6 +115,7 @@
   - AllHostile
   - Wizard
   - Dragon
+  - Xenoborg
 
 - type: npcFaction
   id: Zombie
@@ -128,6 +135,7 @@
   - AllHostile
   - Wizard
   - Dragon
+  - Xenoborg
 
 - type: npcFaction
   id: Revolutionary
@@ -173,6 +181,7 @@
   - Zombie
   - AllHostile
   - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: HonkNeutral
@@ -202,6 +211,7 @@
   - Vampire
   - Changeling
   - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: Wizard
@@ -217,4 +227,23 @@
   - Xeno
   - Zombie
   - Revolutionary
+  - AllHostile
+  - Xenoborg
+
+- type: npcFaction
+  id: Xenoborg
+  hostile:
+  # they have brains
+  - NanoTrasen
+  - Syndicate
+  - DungeonSyndicate
+  - DungeonSoviet
+  - Zombie
+  - Revolutionary
+  - Wizard
+
+  - Xeno # rivalry
+
+  # cause they are hostile to them
+  - SimpleHostile 
   - AllHostile

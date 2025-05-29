@@ -50,10 +50,13 @@ public sealed partial class PathfindingSystem
 
     private void OnTileChange(ref TileChangedEvent ev)
     {
-        if (ev.OldTile.IsEmpty == ev.NewTile.Tile.IsEmpty)
-            return;
+        foreach (var change in ev.Changes)
+        {
+            if (change.OldTile.IsEmpty == change.NewTile.IsEmpty)
+                continue;
 
-        DirtyChunk(ev.Entity, Comp<MapGridComponent>(ev.Entity).GridTileToLocal(ev.NewTile.GridIndices));
+            DirtyChunk(ev.Entity, _maps.GridTileToLocal(ev.Entity, ev.Entity.Comp, change.GridIndices));
+        }
     }
 
 

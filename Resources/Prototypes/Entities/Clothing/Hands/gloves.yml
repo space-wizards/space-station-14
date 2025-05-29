@@ -449,3 +449,194 @@
     fiberMaterial: fibers-rubber
     fiberColor: fibers-yellow
   - type: FingerprintMask
+
+#Knuckledusters
+- type: entity
+  parent: [ClothingHandsBase, BaseMinorContraband]
+  id: ClothingHandsKnuckleDusters
+  name: knuckle dusters
+  description: "Cold plasteel knuckle dusters, makes your punches hit much harder."
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/knuckleduster.rsi
+    state: knuckleduster
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/knuckleduster.rsi
+  - type: Fiber
+    fiberColor: fibers-silver
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 12 #Damaged focus unlike Rigged or Northstars which are stun and speed focus
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+    mustBeEquippedToUse: true
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingHandsKnuckleDusters, BaseMinorContraband] #Craftable version of base knuckledusters
+  id: ClothingHandsKnuckleDustersBrass
+  name: brass knuckle dusters
+  description: "Brass knuckle dusters, just like how they used to make em and still hit just as hard."
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/brassknuckleduster.rsi
+    state: brassknuckleduster
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/brassknuckleduster.rsi
+  - type: Construction
+    graph: ClothingHandsKnuckleDustersBrass
+    node: icon
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingHandsBase, BaseGrandTheftContraband]
+  id: ClothingHandsKnuckleDustersQM
+  name: QM's golden knuckle dusters
+  description: "24karat gold infused with plasteel and branded with the Nanotrasen logo. A true symbol of the Quartermaster's might."
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/goldenknuckleduster.rsi
+    state: goldenknuckleduster
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/goldenknuckleduster.rsi
+  - type: Fiber
+    fiberColor: fibers-gold
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 14
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+    mustBeEquippedToUse: true
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: StealTarget
+    stealGroup: ClothingHandsKnuckleDustersQM
+
+- type: entity
+  parent: [ClothingHandsBase, BaseSyndicateContraband]
+  id: ClothingHandsKnuckleDustersSyndicate
+  name: syndicate knuckle dusters
+  description: "Plastitanium knuckle dusters branded with the blood-red S. A real man beats someone to death with these."
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/syndicateknuckleduster.rsi
+    state: syndicateknuckleduster
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/syndicateknuckleduster.rsi
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 8
+        Piercing: 8
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+    mustBeEquippedToUse: true
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
+  name: stun knuckle dusters
+  parent: [ClothingHandsBase, BaseToggleClothing, BaseSecurityContraband]
+  id: ClothingHandsKnuckleDustersStun
+  description: A pair of knuckle dusters combined with the tech of a stun baton. This makes beating tiders a whole lot easier.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/electricknuckleduster.rsi
+    layers:
+    - state: knuckleduster_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/electricknuckleduster.rsi
+    equippedPrefix: on
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: knuckleduster_on}
+          False: {state: knuckleduster_off}
+  - type: ToggleClothing
+    action: ActionToggleKnuckleDustersStun
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      collection: sparks
+      params:
+        variation: 0.250
+        volume: 5
+    soundDeactivate:
+      collection: sparks
+      params:
+        variation: 0.250
+        volume: 5
+    soundFailToActivate:
+      path: /Audio/Machines/button.ogg
+      params:
+        variation: 0.250
+        volume: 5
+  - type: Stunbaton
+    energyPerUse: 50
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Blunt: 0
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 8
+    bluntStaminaDamageFactor: 2.0
+    animation: WeaponArcFist
+  - type: StaminaDamageOnHit
+    damage: 35
+    sound: /Audio/Weapons/egloves.ogg
+  - type: StaminaDamageOnCollide
+    damage: 35
+    sound: /Audio/Weapons/egloves.ogg
+  - type: LandAtCursor # it deals stamina damage when thrown
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: GuideHelp
+    guides:
+    - Security
+    - Antagonists
+
+- type: entity #Admeme
+  parent: ClothingHandsKnuckleDusters
+  id: ClothingHandsKnuckleBoneCrushers
+  name: bone crushers
+  description: "Blessed by the Gods to break all those who don't obey."
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/goldenknuckleduster.rsi
+    state: goldenknuckleduster
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/KnuckleDusters/goldenknuckleduster.rsi
+  - type: Fiber
+    fiberColor: fibers-gold
+  - type: MeleeWeapon
+    attackRate: 2
+    damage:
+      types:
+        Blunt: 35
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+

@@ -56,19 +56,19 @@
     sprite: Structures/Power/Generation/Tesla/coil.rsi
     state: coil
   - type: Battery
-    maxCharge: 1000000
+    maxCharge: 5000000
     startingCharge: 0
   - type: BatteryDischarger
   - type: TeslaCoil
-    chargeFromLightning: 2000000
+    chargeFromLightning: 5000000
   - type: LightningTarget
     priority: 4
     hitProbability: 0.5
     lightningResistance: 10
     lightningExplode: false
   - type: PowerNetworkBattery
-    maxSupply: 1000000
-    supplyRampTolerance: 1000000
+    maxSupply: 350000
+    supplyRampTolerance: 350000
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
