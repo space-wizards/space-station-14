@@ -303,6 +303,7 @@
           min: 8
         key: ForcedSleep
         component: ForcedSleeping
+        delay: 6
         refresh: false
         type: Add
 

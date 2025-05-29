@@ -4,7 +4,6 @@ using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.StatusEffect
 {
@@ -46,7 +45,17 @@ namespace Content.Shared.StatusEffect
                 foreach (var state in status.ActiveEffects)
                 {
                     if (curTime > state.Value.Cooldown.Item2)
+                    {
                         TryRemoveStatusEffect(uid, state.Key, status);
+                    }
+                    else if (curTime > state.Value.Cooldown.Item1)
+                    {
+                        if (state.Value.RelevantComponent != null && !EntityManager.HasComponent(uid, Factory.GetRegistration(state.Value.RelevantComponent).Type))
+                        {
+                            var newComponent = (Component) Factory.GetComponent(state.Value.RelevantComponent);
+                            EntityManager.AddComponent(uid, newComponent);
+                        }
+                    }
                 }
             }
 
@@ -124,19 +133,25 @@ namespace Content.Shared.StatusEffect
         }
 
         public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh, string component,
-            StatusEffectsComponent? status = null)
+            StatusEffectsComponent? status = null,
+            TimeSpan? startTime = null)
         {
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            if (TryAddStatusEffect(uid, key, time, refresh, status))
+            if (TryAddStatusEffect(uid, key, time, refresh, status, startTime))
             {
                 // If they already have the comp, we just won't bother updating anything.
                 if (!EntityManager.HasComponent(uid, Factory.GetRegistration(component).Type))
                 {
-                    var newComponent = (Component) Factory.GetComponent(component);
-                    EntityManager.AddComponent(uid, newComponent);
                     status.ActiveEffects[key].RelevantComponent = component;
+
+                    var curTime = _gameTiming.CurTime;
+                    if (startTime == null || curTime >= startTime)
+                    {
+                        var newComponent = (Component)Factory.GetComponent(component);
+                        EntityManager.AddComponent(uid, newComponent);
+                    }
                 }
                 return true;
             }
