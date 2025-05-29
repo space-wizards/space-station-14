@@ -538,8 +538,8 @@
       Welder:
         reagents:
         - ReagentId: Plasma
-          Quantity: 0.1
-        maxVol: 50
+          Quantity: 10
+        maxVol: 10
 
 - type: entity
   parent: [FlippoLighter, BaseCentcommContraband]

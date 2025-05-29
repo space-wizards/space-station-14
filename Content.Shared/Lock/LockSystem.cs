@@ -425,7 +425,10 @@ public sealed class LockSystem : EntitySystem
         {
             args.Cancelled = true;
             if (lockComp.Locked)
-                args.Popup = Loc.GetString("lock-comp-has-user-access-fail");
+                _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-generic-fail",
+                ("target", Identity.Entity(uid, EntityManager))),
+                uid,
+                args.User);;
         }
     }
 }
