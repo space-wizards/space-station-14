@@ -6,7 +6,6 @@
   showInVote: false # secret
   description: survival-description
   rules:
-    - CodewordRule
     - MeteorSwarmScheduler
     - RampingStationEventScheduler
     - SpaceTrafficControlEventScheduler
@@ -23,7 +22,6 @@
   showInVote: false # secret
   description: kessler-syndrome-description
   rules:
-    - CodewordRule
     - KesslerSyndromeScheduler
     - RampingStationEventScheduler
     - SpaceTrafficControlEventScheduler
@@ -37,7 +35,6 @@
   description: all-at-once-description
   showInVote: false
   rules:
-    - CodewordRule
     - Nukeops
     - Traitor
     - Revolutionary
@@ -59,7 +56,6 @@
   description: aller-at-once-description
   showInVote: false #Please god dont do this
   rules:
-    - CodewordRule
     - Nukeops
     - Traitor
     - Revolutionary
@@ -83,7 +79,6 @@
   showInVote: false #2boring2vote
   description: extended-description
   rules:
-  - CodewordRule
   - BasicStationEventScheduler
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
@@ -98,7 +93,6 @@
   showInVote: false #4boring4vote
   description: greenshift-description
   rules:
-  - CodewordRule
   - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
 
@@ -111,7 +105,6 @@
   showInVote: true
   description: secret-description
   rules:
-    - CodewordRule
     - Secret
 
 - type: gamePreset
@@ -122,7 +115,6 @@
   showInVote: false #Admin Use
   description: secret-description
   rules:
-    - CodewordRule
     - BasicStationEventScheduler
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
@@ -136,7 +128,6 @@
   showInVote: false #Admin Use
   description: secret-description
   rules:
-  - CodewordRule
   - SpaceTrafficControlFriendlyEventScheduler
   - BasicRoundstartVariation
 
@@ -149,7 +140,6 @@
   showInVote: false # Not suitable for use without admin intervention, since entity spamming can quickly crash a server
   maxPlayers: 5
   rules:
-    - CodewordRule
     - Sandbox
 
 - type: gamePreset
@@ -161,7 +151,6 @@
   description: traitor-description
   showInVote: false
   rules:
-  - CodewordRule
   - DummyNonAntagChance
   - Traitor
   - SubGamemodesRule
@@ -191,7 +180,6 @@
   description: nukeops-description
   showInVote: false
   rules:
-  - CodewordRule
   - Nukeops
   - DummyNonAntagChance
   - SubGamemodesRule
@@ -210,7 +198,6 @@
   description: rev-description
   showInVote: false
   rules:
-  - CodewordRule
   - DummyNonAntagChance
   - Revolutionary
   - SubGamemodesRule
@@ -227,7 +214,6 @@
   description: wizard-description
   showInVote: false
   rules:
-  - CodewordRule
   - Wizard
   - DummyNonAntagChance
   - SubGamemodesRuleNoWizard #No Dual Wizards at the start, midround is fine
@@ -248,7 +234,6 @@
   description: zombie-description
   showInVote: false
   rules:
-  - CodewordRule
   - Zombie
   - BasicStationEventScheduler
   - MeteorSwarmScheduler
@@ -265,7 +250,6 @@
   description: zombieteors-description
   showInVote: false
   rules:
-  - CodewordRule
   - Zombie
   - BasicStationEventScheduler
   - KesslerSyndromeScheduler

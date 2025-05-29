@@ -14,8 +14,23 @@ namespace Content.Server.Codewords;
 /// </summary>
 public sealed class CodewordSystem : GameRuleSystem<CodewordRuleComponent>
 {
+    [ValidatePrototypeId<EntityPrototype>]
+    public static string RuleComponent = "CodewordRule";
+
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
+    /// <summary>
+    /// Ensures codewords are available.
+    /// </summary>
+    public void EnsureAvailable()
+    {
+        if (CheckCodewordsAvailable())
+            return;
+
+        // We already have codewords, no need to do anything.
+        GameTicker.StartGameRule(RuleComponent);
+    }
 
     /// <summary>
     /// Checks if the codeword system has any valid codewords.
