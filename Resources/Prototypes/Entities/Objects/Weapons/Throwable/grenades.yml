@@ -40,6 +40,39 @@
     - HandGrenade
 
 - type: entity
+  abstract: true
+  parent: BaseItem
+  id: GrenadeImpactBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/grenade.rsi
+  - type: Item
+    size: Small
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 2
+    damage:
+      types:
+        Blunt: 5
+  - type: Tag
+    tags:
+    - HandGrenade
+
+- type: entity
   name: explosive grenade
   description: Grenade that creates a small but devastating explosion.
   parent: [GrenadeBase, BaseSyndicateContraband]
@@ -533,3 +566,33 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
+
+- type: entity
+  name: kudzu globe
+  description: A glass globe full of a quick growing kudzu strain. Breaks when it lands on the ground, releasing the kudzu.
+  parent: [GrenadeImpactBase, BaseSyndicateContraband]
+  id: SyndieKudzuBomb
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/kudzubomb.rsi
+    state: icon
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FastKudzu:
+            min: 8
+            max: 10
+        offset: 1.7
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
