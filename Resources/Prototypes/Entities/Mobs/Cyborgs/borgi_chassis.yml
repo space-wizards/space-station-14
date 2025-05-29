@@ -138,7 +138,7 @@
       tags:
       - BorgModuleGeneric
       - BorgModuleCargo
-      - BorgModuleTopicals
+      - BorgModuleMedical
       - BorgModuleSyndicate # allow installing a Esword into borgis.
       - BorgModuleSyndicateAssault # allow installing a l6c into borigs!
     hasMindState: corgitag
@@ -537,7 +537,7 @@
       - BorgModuleTool
       - BorgModuleAdvancedTool
       - BorgModuleSyndicateWeapon
-      - BorgModuleTopicals
+      - BorgModuleMedical
       - BorgModuleFireExtinguisher
   - type: NpcFactionMember
     factions:
