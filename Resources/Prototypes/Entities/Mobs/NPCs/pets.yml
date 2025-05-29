@@ -833,7 +833,7 @@
       gender: male
 
 - type: entity
-  name: Yip Yip
+  name: Yip Yap
   parent: MobBaseKobold
   id: MobKoboldYip
   description: A junior barkeeping assistant who loves a warm and cozy bar almost as much as he loves a firey whiskey.
@@ -843,8 +843,8 @@
     makeSentient: true
     allowSpeech: true
     allowMovement: true
-    name: ghost-role-information-yipyip-name
-    description: ghost-role-information-yipyip-description
+    name: ghost-role-information-yipyap-name
+    description: ghost-role-information-yipyap-description
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Butcherable
@@ -861,7 +861,7 @@
     - VimPilot
     - AnomalyHost
   - type: Loadout
-    prototypes: [ MobYipYipGear ]
+    prototypes: [ MobYipYapGear ]
   - type: Grammar
     attributes:
       proper: true
