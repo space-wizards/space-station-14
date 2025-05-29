@@ -10,21 +10,21 @@ namespace Content.Server._Starlight.Paper;
 
 public sealed class AntagOnSignSystem : EntitySystem
 {
-    
+
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     private ISawmill _sawmill = default!;
-    
-    
+
+
     private readonly EntProtoId _paradoxCloneRuleId = "ParadoxCloneSpawn";
-    
+
     public override void Initialize()
     {
         base.Initialize();
         _sawmill = Logger.GetSawmill(this.SawmillName);
-        SubscribeLocalEvent<AntagOnSignComponent,PaperSignedEvent>(OnPaperSigned);
+        SubscribeLocalEvent<AntagOnSignComponent, PaperSignedEvent>(OnPaperSigned);
     }
 
     private void OnPaperSigned(EntityUid uid, AntagOnSignComponent component, PaperSignedEvent args)
@@ -41,8 +41,8 @@ public sealed class AntagOnSignSystem : EntitySystem
 
         if (_random.NextFloat() > component.Chance)
             return;
-        
-        
+
+
         var session = actor.PlayerSession;
         foreach (var antag in component.Antags)
         {
@@ -52,11 +52,11 @@ public sealed class AntagOnSignSystem : EntitySystem
             if (fmakeantag == null)
             {
                 _sawmill.Error("Failed to reflect \"ForceMakeAntag\" method from AntagSelectionSystem for genericization");
-                continue;   
+                continue;
             }
             var generic = fmakeantag.MakeGenericMethod(targetComp.GetType());
             generic.Invoke(_antag, [session, antag.Antag.Id]);
-            
+
             //_antag.ForceMakeAntag<GameRuleComponent>(session, antag.Id);
         }
 

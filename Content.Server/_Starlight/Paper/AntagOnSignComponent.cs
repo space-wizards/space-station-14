@@ -42,7 +42,7 @@ public sealed partial class AntagCompPair
 {
     [DataField]
     public EntProtoId Antag;
-    
+
     /// <summary>
     /// Icky evil raw string but there is no `Component` Seriliazable type
     /// </summary>
