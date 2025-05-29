@@ -40,6 +40,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Returns whether a tile is considered space.
         /// </summary>
+        [Obsolete("Used the equivalent TurfSystem method")]
         public static bool IsSpace(this Tile tile, ITileDefinitionManager? tileDefinitionManager = null)
         {
             return tile.GetContentTileDefinition(tileDefinitionManager).MapAtmosphere;
@@ -57,6 +58,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Returns whether a tile ref is considered space.
         /// </summary>
+        [Obsolete("Used the equivalent TurfSystem method")]
         public static bool IsSpace(this TileRef tile, ITileDefinitionManager? tileDefinitionManager = null)
         {
             return tile.Tile.IsSpace(tileDefinitionManager);

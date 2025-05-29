@@ -124,6 +124,26 @@ public sealed class TurfSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns whether a tile is considered to be space or directly exposed to space.
+    /// </summary>
+    /// <param name="tile">The tile in question.</param>
+    /// <returns>True if the tile is considered to be space, false otherwise.</returns>
+    public bool IsSpace(Tile tile)
+    {
+        return GetContentTileDefinition(tile).MapAtmosphere;
+    }
+
+    /// <summary>
+    /// Returns whether a tile is considered to be space or directly exposed to space.
+    /// </summary>
+    /// <param name="tile">The tile in question.</param>
+    /// <returns>True if the tile is considered to be space, false otherwise.</returns>
+    public bool IsSpace(TileRef tile)
+    {
+        return IsSpace(tile.Tile);
+    }
+
+    /// <summary>
     /// Returns the location of the centre of the tile in grid coordinates.
     /// </summary>
     public EntityCoordinates GetTileCenter(TileRef turf)
