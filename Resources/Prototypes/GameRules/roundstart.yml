@@ -449,7 +449,15 @@
       prob: 0.90
     - id: SolarPanelDamageVariationPass
     - id: SolarPanelEmptyVariationPass
-
+    - id: BasicDecalDirtVariationPass
+    - id: BasicDecalGraffitiVariationPass
+    - id: BasicDecalBrunsVariationPass
+      prob: 0.50
+      orGroup: monospaceDecals
+    - id: BasicDecalDirtMonospaceVariationPass
+      prob: 0.50
+      orGroup: monospaceDecals
+      
 - type: entity
   parent: BaseGameRule
   id: CodewordRule
@@ -457,3 +465,4 @@
   - type: CodewordRule
     generators:
       Traitor: TraitorCodewordGenerator
+
