@@ -28,7 +28,7 @@ public sealed partial class TileNotBlocked : IConstructionCondition
             return false;
         }
 
-        if (!tileRef.Value.GetContentTileDefinition().Sturdy && _failIfNotSturdy)
+        if (!turfSystem.GetContentTileDefinition(tileRef.Value).Sturdy && _failIfNotSturdy)
         {
             return false;
         }
