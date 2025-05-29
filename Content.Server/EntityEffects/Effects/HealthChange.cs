@@ -64,48 +64,6 @@ namespace Content.Server.EntityEffects.Effects
 
             damageSpec = entSys.GetEntitySystem<DamageableSystem>().ApplyUniversalAllModifiers(damageSpec);
 
-            foreach (var group in prototype.EnumeratePrototypes<DamageGroupPrototype>())
-            {
-                if (!damageSpec.TryGetDamageInGroup(group, out var amount))
-                    continue;
-
-                var relevantTypes = damageSpec.DamageDict
-                    .Where(x => x.Value != FixedPoint2.Zero && group.DamageTypes.Contains(x.Key)).ToList();
-
-                if (relevantTypes.Count != group.DamageTypes.Count)
-                    continue;
-
-                var sum = FixedPoint2.Zero;
-                foreach (var type in group.DamageTypes)
-                {
-                    sum += damageSpec.DamageDict.GetValueOrDefault(type);
-                }
-
-                // if the total sum of all the types equal the damage amount,
-                // assume that they're evenly distributed.
-                if (sum != amount)
-                    continue;
-
-                var sign = FixedPoint2.Sign(amount);
-
-                if (sign < 0)
-                    heals = true;
-                if (sign > 0)
-                    deals = true;
-
-                damages.Add(
-                    Loc.GetString("health-change-display",
-                        ("kind", group.LocalizedName),
-                        ("amount", MathF.Abs(amount.Float())),
-                        ("deltasign", sign)
-                    ));
-
-                foreach (var type in group.DamageTypes)
-                {
-                    damageSpec.DamageDict.Remove(type);
-                }
-            }
-
             foreach (var (kind, amount) in damageSpec.DamageDict)
             {
                 var sign = FixedPoint2.Sign(amount);

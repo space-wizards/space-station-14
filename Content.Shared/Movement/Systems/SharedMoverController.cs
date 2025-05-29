@@ -414,6 +414,17 @@ public abstract partial class SharedMoverController : VirtualController
 
     }
 
+    public void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref float velocity)
+    {
+        if (velocity < minimumFrictionSpeed)
+            return;
+
+        // This equation is lifted from the Physics Island solver.
+        // We re-use it here because Kinematic Controllers can't/shouldn't use the Physics Friction
+        velocity *= Math.Clamp(1.0f - frameTime * friction, 0.0f, 1.0f);
+
+    }
+
     /// <summary>
     /// Adjusts the current velocity to the target velocity based on the specified acceleration.
     /// </summary>

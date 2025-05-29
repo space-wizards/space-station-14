@@ -22,9 +22,6 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
-  - type: Tag
-    tags:
-    - VoxFood
 
 # Meals
 
@@ -353,7 +350,7 @@
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
   - type: Food
-    trash: 
+    trash:
     - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
@@ -615,7 +612,7 @@
   description: Buttery.
   components:
   - type: Food
-    trash: 
+    trash:
     - FoodPlate
   - type: FlavorProfile
     flavors:
