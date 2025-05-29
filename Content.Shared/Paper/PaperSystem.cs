@@ -360,7 +360,7 @@ public sealed class PaperSystem : EntitySystem
                 $"{ToPrettyString(signer):player} has signed {ToPrettyString(paper):paper}.");
 
             UpdateUserInterface(paper);
-            // #region Starlight            
+            // #region Starlight
             var eve = new PaperSignedEvent(signer);
             RaiseLocalEvent(paper, ref eve);
             // #endregion
