@@ -20,9 +20,9 @@ plant-analyzer-soil = There is some [color=white]{$chemicals}[/color] in this {$
 } not been absorbed.
 plant-analyzer-soil-empty = There are no unabsorbed chemicals in this {$holder}.
 
-plant-analyzer-component-environemt = This [color=green]{$seedName}[/color] requires an atmosphere at a pressure level of [color=lightblue]{$kpa}kPa ± {$kpaTolerance}kPa[/color], temperature of [color=lightsalmon]{$temp}°k ± {$tempTolerance}°k[/color] and a light level of [color=white]{$lightLevel} ± {$lightTolerance}[/color].
+plant-analyzer-component-environemt = This [color=green]{$seedName}[/color] requires an atmosphere at a pressure level of [color=lightblue]{$kpa} kPa ± {$kpaTolerance} kPa[/color], temperature of [color=lightsalmon]{$temp} K ± {$tempTolerance} K[/color] and a light level of [color=white]{$lightLevel} ± {$lightTolerance}[/color].
 plant-analyzer-component-environemt-void = This [color=green]{$seedName}[/color] has to be grown [bolditalic]in the vacuum of space[/bolditalic] at a light level of [color=white]{$lightLevel} ± {$lightTolerance}[/color].
-plant-analyzer-component-environemt-gas = This [color=green]{$seedName}[/color] requires an atmosphere containing [bold]{$gases}[/bold] at a pressure level of [color=lightblue]{$kpa}kPa ± {$kpaTolerance}kPa[/color], temperature of [color=lightsalmon]{$temp}°k ± {$tempTolerance}°k[/color] and a light level of [color=white]{$lightLevel} ± {$lightTolerance}[/color].
+plant-analyzer-component-environemt-gas = This [color=green]{$seedName}[/color] requires an atmosphere containing [bold]{$gases}[/bold] at a pressure level of [color=lightblue]{$kpa} kPa ± {$kpaTolerance} kPa[/color], temperature of [color=lightsalmon]{$temp} K ± {$tempTolerance} K[/color] and a light level of [color=white]{$lightLevel} ± {$lightTolerance}[/color].
 
 plant-analyzer-produce-plural = {MAKEPLURAL($thing)}
 plant-analyzer-output = {$yield ->
@@ -88,8 +88,8 @@ plant-analyzer-printout = [color=#9FED58][head=2]Plant Analyzer Report[/head][/c
     }{$indent}[bullet/] Weeds: [color=red]{$weeds}[/color]{$nl
     }[bullet/] Environmental profile:{$nl
     }{$indent}[bullet/] Composition: [bold]{$gasesIn}[/bold]{$nl
-    }{$indent}[bullet/] Pressure: [color=lightblue]{$kpa}kPa ± {$kpaTolerance}kPa[/color]{$nl
-    }{$indent}[bullet/] Temperature: [color=lightsalmon]{$temp}°k ± {$tempTolerance}°k[/color]{$nl
+    }{$indent}[bullet/] Pressure: [color=lightblue]{$kpa} kPa ± {$kpaTolerance} kPa[/color]{$nl
+    }{$indent}[bullet/] Temperature: [color=lightsalmon]{$temp} K ± {$tempTolerance} K[/color]{$nl
     }{$indent}[bullet/] Light: [color=gray][bold]{$lightLevel} ± {$lightTolerance}[/bold][/color]{$nl
     }[bullet/] Flowers: {$yield ->
         [-1]{LOC("plant-analyzer-printout-missing")}
