@@ -23,7 +23,7 @@ public sealed partial class TileNotBlocked : IConstructionCondition
             return false;
         }
 
-        if (tileRef.Value.IsSpace() && _failIfSpace)
+        if (turfSystem.IsSpace(tileRef.Value) && _failIfSpace)
         {
             return false;
         }
