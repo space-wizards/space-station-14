@@ -1208,7 +1208,7 @@
   parent: BaseComputerAiAccess
   id: ComputerSalvageJobBoard
   name: salvage job board
-  description: Console for accessing salvage jobs, if you're tough enough.
+  description: It seems like a particularly disgruntled scientist hacked the software used on this computer. None of the buttons work and there is writing in bold letters saying "NO TO ORE VOID". # Ronstation - Originally was "Console for accessing salvage jobs, if you're tough enough.".
   components:
   - type: Sprite
     layers:
@@ -1217,28 +1217,28 @@
     - map: ["computerLayerKeyboard"]
       state: generic_keyboard
     - map: ["computerLayerScreen"]
-      state: salvjob # givin em a salvjob like hawk tuah
+      state: screen_broken # Ronstation - To indicate broken state. Original comment was "givin em a salvjob like hawk tuah".
     - map: ["computerLayerKeys"]
       state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
-  - type: SalvageJobBoardConsole
-  - type: ActivatableUI
-    key: enum.SalvageJobBoardUiKey.Key
-  - type: UserInterface
+  #- type: SalvageJobBoardConsole # Ronstation - Balance.
+  #- type: ActivatableUI # Ronstation - Balance.
+  #  key: enum.SalvageJobBoardUiKey.Key # Ronstation - Balance.
+  #- type: UserInterface
     interfaces:
-      enum.SalvageJobBoardUiKey.Key:
-        type: SalvageJobBoardBoundUserInterface
+      #enum.SalvageJobBoardUiKey.Key: # Ronstation - Balance.
+      #  type: SalvageJobBoardBoundUserInterface # Ronstation - Balance.
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
-  - type: ActiveRadio
-    channels: [ Supply ]
+  #- type: ActiveRadio # Ronstation - Balance.
+  #  channels: [ Supply ] # Ronstation - Balance.
   - type: Computer
     board: SalvageJobBoardComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    color: "#b89f25"
+    color: "#6666ff" # Ronstation, original was "#b89f25".
 
 - type: entity
   id: ComputerSalvageExpedition
