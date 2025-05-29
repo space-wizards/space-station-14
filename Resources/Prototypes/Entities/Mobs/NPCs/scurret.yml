@@ -114,13 +114,6 @@
 - type: inventoryTemplate
   id: scurret
   slots:
-  - name: jumpsuit
-    slotTexture: uniform
-    slotFlags: INNERCLOTHING
-    stripTime: 6
-    uiWindowPos: 0,1
-    strippingWindowPos: 0,2
-    displayName: Jumpsuit
   - name: head
     slotTexture: head
     slotFlags: HEAD
@@ -134,33 +127,50 @@
     uiWindowPos: 0,2
     strippingWindowPos: 1,2
     displayName: Ears
-  - name: eyes
-    slotTexture: glasses
-    slotFlags: EYES
-    stripTime: 3
-    uiWindowPos: 0,3
-    strippingWindowPos: 0,0
-    displayName: Eyes
   - name: mask
     slotTexture: mask
     slotFlags: MASK
     uiWindowPos: 0,1
     strippingWindowPos: 1,1
     displayName: Mask
+  - name: jumpsuit
+    slotTexture: uniform
+    slotFlags: INNERCLOTHING
+    stripTime: 6
+    uiWindowPos: 1,0
+    strippingWindowPos: 0,2
+    displayName: Jumpsuit
   - name: id
     slotTexture: id
+    fullTextureName: template_small
     slotFlags: IDCARD
     slotGroup: SecondHotbar
     stripTime: 6
     uiWindowPos: 2,1
     strippingWindowPos: 2,4
+    dependsOn: jumpsuit
     displayName: ID
-  - name: gloves
-    slotTexture: gloves
-    slotFlags: GLOVES
-    uiWindowPos: 2,1
-    strippingWindowPos: 2,2
-    displayName: Gloves
+  # - name: suitstorage
+  #   slotTexture: suit_storage
+  #   slotFlags:   SUITSTORAGE
+  #   slotGroup: MainHotbar
+  #   stripTime: 3
+  #   uiWindowPos: 2,0
+  #   strippingWindowPos: 2,5
+  #   dependsOn: outerClothing
+  #   dependsOnComponents:
+  #   - type: AllowSuitStorage
+  #   displayName: Suit Storage
+  # - name: outerClothing
+  #   slotTexture: suit
+  #   slotFlags: OUTERCLOTHING
+  #   stripTime: 6
+  #   uiWindowPos: 1,1
+  #   strippingWindowPos: 1,3
+  #   displayName: Suit
+  #   whitelist:
+  #     tags:
+  #       - MonkeyWearable
 
 - type: speechSounds
   id: Wawa
@@ -234,6 +244,7 @@
     nameSegments:
       - NamesFirstScurret
       - NamesLastScurret
+    nameFormat: name-format-standard
   # They come in a variety of colours
   - type: RandomSprite
     available:

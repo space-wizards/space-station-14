@@ -834,7 +834,7 @@
 
 - type: entity
   name: Wa Wa
-  parent: MobEmotionalSupportScurret
+  parent: MobBaseEmotionalSupportScurret # Use the base here as the non-abstract one has a forced name and random colour.
   id: MobScurretWaWa
   description: A junior barkeeping assistant. Look at it. It's a scurret in a top hat. The universe has peaked. Loves vodka, hates rain.
   components:
@@ -860,21 +860,12 @@
     - DoorBumpOpener
     - VimPilot
     - AnomalyHost
+  - type: Loadout
+    prototypes: [ MobWaWaGear ]
   - type: Grammar
     attributes:
       proper: true
       gender: male
-  - type: Sprite
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret/scurret.rsi
-      state: scurret
-      color: "#cccccc" # Wa is always a white scurret :>
-    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-      color: "#ffffff"
-      sprite: Objects/Misc/handcuffs.rsi
-      state: body-overlay-2
-      visible: false
 
 - type: entity
   name: Tropico
