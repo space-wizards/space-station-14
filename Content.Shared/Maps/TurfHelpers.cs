@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Maps
 {
@@ -15,24 +14,14 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Attempts to get the turf at a certain coordinates or null if no such turf is found.
         /// </summary>
+        [Obsolete("Use the equivalent TurfSystem method")]
         public static TileRef? GetTileRef(this EntityCoordinates coordinates, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
             entityManager ??= IoCManager.Resolve<IEntityManager>();
-
-            if (!coordinates.IsValid(entityManager))
-                return null;
-
-            mapManager ??= IoCManager.Resolve<IMapManager>();
-            var pos = entityManager.System<SharedTransformSystem>().ToMapCoordinates(coordinates);
-            if (!mapManager.TryFindGridAt(pos, out _, out var grid))
-                return null;
-
-            if (!grid.TryGetTileRef(coordinates, out var tile))
-                return null;
-
-            return tile;
+            return entityManager.SystemOrNull<TurfSystem>()?.GetTileRef(coordinates);
         }
 
+        [Obsolete("Use the equivalent TurfSystem method")]
         public static bool TryGetTileRef(this EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? turf, IEntityManager? entityManager = null, IMapManager? mapManager = null)
         {
             return (turf = coordinates.GetTileRef(entityManager, mapManager)) != null;
