@@ -108,7 +108,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
             foreach (var tile in _map.GetTilesIntersecting(entityGridUid.Value, grid, circle))
             {
-                if (tile.IsSpace(_tileDefinitionManager)
+                if (_turf.IsSpace(tile)
                     || _turf.IsTileBlocked(tile, CollisionGroup.MobMask)
                     || !_atmosphere.IsTileMixtureProbablySafe(entityGridUid, entityMapUid.Value,
                         _map.TileIndicesFor((entityGridUid.Value, grid), mapPos)))

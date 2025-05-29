@@ -29,7 +29,6 @@ namespace Content.Server.Decals
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
         [Dependency] private readonly IParallelManager _parMan = default!;
         [Dependency] private readonly ChunkingSystem _chunking = default!;
         [Dependency] private readonly IConfigurationManager _conf = default!;
@@ -309,7 +308,7 @@ namespace Content.Server.Decals
             if (!TryComp(gridId, out MapGridComponent? grid))
                 return false;
 
-            if (_mapSystem.GetTileRef(gridId.Value, grid, coordinates).IsSpace(_tileDefMan))
+            if (_turf.IsSpace(_mapSystem.GetTileRef(gridId.Value, grid, coordinates)))
                 return false;
 
             if (!TryComp(gridId, out DecalGridComponent? comp))

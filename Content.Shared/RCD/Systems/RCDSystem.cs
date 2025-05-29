@@ -175,7 +175,7 @@ public sealed class RCDSystem : EntitySystem
                 else
                 {
                     var deconstructedTile = _mapSystem.GetTileRef(gridUid.Value, mapGrid, location);
-                    var protoName = !deconstructedTile.IsSpace() ? _deconstructTileProto : _deconstructLatticeProto;
+                    var protoName = !_turf.IsSpace(deconstructedTile) ? _deconstructTileProto : _deconstructLatticeProto;
 
                     if (_protoManager.TryIndex(protoName, out var deconProto))
                     {
