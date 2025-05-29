@@ -119,19 +119,22 @@ public sealed class SpriteFadeSystem : EntitySystem
                             continue;
                         }
 
-                        var hasSpriteBeneath = false;
-                        foreach (var subEnt in state.GetClickableEntities(mapPos, excludeFaded: false))
+                        if (_fadeQuery.TryGetComponent(ent, out SpriteFadeComponent? fadeComp) && !fadeComp.IgnoreClickableRestriction)
                         {
-                            if (subEnt != ent &&
-                                _spriteQuery.TryGetComponent(ent, out var subSprite) &&
-                                subSprite?.DrawDepth >= sprite.DrawDepth)
+                            var hasSpriteBeneath = false;
+                            foreach (var subEnt in state.GetClickableEntities(mapPos, excludeFaded: false))
                             {
-                                hasSpriteBeneath = true;
-                                break;
+                                if (subEnt != ent &&
+                                    _spriteQuery.TryGetComponent(ent, out var subSprite) &&
+                                    subSprite?.DrawDepth >= sprite.DrawDepth)
+                                {
+                                    hasSpriteBeneath = true;
+                                    break;
+                                }
                             }
+                            if (!hasSpriteBeneath)
+                                continue;
                         }
-                        if (!hasSpriteBeneath)
-                            continue;
                     }
 
                     if (!_fadingQuery.TryComp(ent, out var fading))
