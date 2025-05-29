@@ -103,6 +103,27 @@
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
     id: PunPunIDCard
 
+- type: startingGear
+  id: MobKwehKwehGear
+  equipment:
+    head: ClothingHeadHatTophat
+    ears: ClothingHeadsetService
+    jumpsuit: ClothingUniformJumpsuitTrenchcoatKobold
+    id: PunPunIDCard
+
+- type: startingGear
+  id: EmotionalSupportScurretGear
+  equipment:
+    id: ScurretPDA
+
+- type: startingGear
+  id: MobWaWaGear
+  equipment:
+    head: ClothingHeadHatTophat
+    ears: ClothingHeadsetService
+    jumpsuit: ClothingUniformJumpsuitWaistcoatScurret
+    id: PunPunIDCard # Wa doesn't get a PDA. Go bug the HOP.
+
 # DeathMatch Gear
 
 - type: startingGear

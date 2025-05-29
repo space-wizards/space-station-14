@@ -34,13 +34,46 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitJacketMonkey
-  name: bartender's jacket monkey
-  description: A decent jacket, for a decent monkey.
+  name: bartender's jacket
+  suffix: monkey
+  description: A decent jacket for a decent monkey.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/punpun.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/punpun.rsi
+  - type: SuitSensor
+    controlsLocked: false
+    randomMode: false
+    mode: SensorCords
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTrenchcoatKobold
+  name: bartender's trenchcoat
+  suffix: kobold
+  description: A warm trenchcoat for a cozy kobold. Enough room inside for three.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/kwehkweh.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/kwehkweh.rsi
+  - type: SuitSensor
+    controlsLocked: false
+    randomMode: false
+    mode: SensorCords
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitWaistcoatScurret
+  name: bartender's waistcoat
+  suffix: scurret
+  description: A fancy waistcoat for an independent scurret.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/wawa.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/wawa.rsi
   - type: SuitSensor
     controlsLocked: false
     randomMode: false

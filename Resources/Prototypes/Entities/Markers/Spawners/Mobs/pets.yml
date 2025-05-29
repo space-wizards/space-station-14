@@ -206,7 +206,7 @@
 - type: entity
   parent: MarkerBase
   id: SpawnMobMonkeyPunpun
-  name: Pun Pun Spawner
+  name: Junior Assistant Bartender Spawner
   suffix: Bartender Pet
   components:
   - type: Sprite
@@ -216,22 +216,13 @@
       sprite: Mobs/Animals/monkey.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobMonkeyPunpun
-
-- type: entity
-  parent: MarkerBase
-  id: SpawnMobScurretWaWa
-  name: Wa Wa Spawner
-  suffix: The More Adorable Bartender Pet
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: scurret
-      sprite: Mobs/Animals/scurret/scurret.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobScurretWaWa
+      - MobMonkeyPunpun
+      - MobMonkeyPunpun
+      - MobMonkeyPunpun
+      - MobMonkeyPunpun # 4/7 chance
+      - MobScurretKwehKweh
+      - MobScurretKwehKweh # 2/7 chance
+      - MobScurretWaWa # 1/7 chance
 
 - type: entity
   parent: MarkerBase

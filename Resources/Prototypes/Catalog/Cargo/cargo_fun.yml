@@ -117,7 +117,7 @@
   cost: 500
   category: cargoproduct-category-name-fun
   group: market
-  
+
 - type: cargoProduct
   id: FunSharkPlushies
   icon:
@@ -215,6 +215,16 @@
     state: icon
   product: CrateFunDartsSet
   cost: 900
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: HydratedScurret
+  icon:
+    sprite: Structures/Wallmounts/posters.rsi
+    state: poster55_legit
+  product: CrateFunScurret
+  cost: 25000 # You will surely not regret buying this
   category: cargoproduct-category-name-fun
   group: market
 

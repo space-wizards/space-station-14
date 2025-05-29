@@ -1516,7 +1516,7 @@
 - type: entity
   parent: ClearPDA
   id: ScurretPDA
-  description: A temporary PDA granted to the scurret temps. Doesn't do much. Wawa!
+  description: A temporary PDA granted to scurret temps. Doesn't do much. Wawa!
   components:
   - type: Pda
     id: VisitorIDCard
