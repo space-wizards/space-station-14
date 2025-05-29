@@ -37,6 +37,7 @@ namespace Content.Server.Decals
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly TurfSystem _turf = default!;
 
         private readonly Dictionary<NetEntity, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -167,7 +168,7 @@ namespace Content.Server.Decals
 
             foreach (var change in args.Changes)
             {
-                if (!change.NewTile.IsSpace(_tileDefMan))
+                if (!_turf.IsSpace(change.NewTile))
                     continue;
 
                 var indices = GetChunkIndices(change.GridIndices);
