@@ -17,7 +17,7 @@ public sealed partial class AntagOnSignComponent : Component
     /// </summary>
     [ViewVariables]
     public List<EntityUid> SignedEntityUids = [];
-    
+
     /// <summary>
     /// What is the chance of this signature procing and making them a antag with 1 being always and 0 being never
     /// </summary>
@@ -27,7 +27,7 @@ public sealed partial class AntagOnSignComponent : Component
     /// <summary>
     /// should we spawn a paradox clone of the person signing this. technically not making them a antag but it works nearly the same
     /// </summary>
-    [DataField("spawnParadoxClone")] 
+    [DataField("spawnParadoxClone")]
     public bool ParadoxClone = false;
 
     /// <summary>
