@@ -43,6 +43,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
     private const string RevSupplyRiftListingId = "RevSupplyRiftListing";
     
@@ -501,7 +502,8 @@ public sealed class RevSupplyRiftSystem : EntitySystem
             if (!mindContainer.HasMind || mindContainer.Mind == null)
                 continue;
 
-            var mind = Comp<MindComponent>(mindContainer.Mind.Value);
+            // Get the mind component
+            var mindComp = Comp<MindComponent>(mindContainer.Mind.Value);
 
             // Check if the entity is a revolutionary or head revolutionary
             if (HasComp<RevolutionaryComponent>(uid) || HasComp<HeadRevolutionaryComponent>(uid))
@@ -512,11 +514,11 @@ public sealed class RevSupplyRiftSystem : EntitySystem
                     ("message", message));
                 
                 // Only send if the player is connected
-                if (mind.Session != null)
+                if (mindComp.UserId != null && _playerManager.TryGetSessionById(mindComp.UserId.Value, out var session))
                 {
                     // Use red color for the message
                     var color = Color.Red;
-                    _chatManager.ChatMessageToOne(ChatChannel.Radio, message, wrappedMessage, uid, false, mind.Session.Channel, color);
+                    _chatManager.ChatMessageToOne(ChatChannel.Radio, message, wrappedMessage, uid, false, session.Channel, color);
                 }
             }
         }
