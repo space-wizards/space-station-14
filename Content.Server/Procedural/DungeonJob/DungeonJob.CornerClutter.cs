@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Content.Shared.EntityTable;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Random;
@@ -43,7 +42,7 @@ public sealed partial class DungeonJob
                 if (random.Prob(gen.Chance))
                 {
                     var coords = _maps.GridTileToLocal(_gridUid, _grid, tile);
-                    var protos = contentsTable.Table.GetSpawns(random, _entManager, _prototype, new EntityTableContext());
+                    var protos = _entTable.GetSpawns(contentsTable, random);
                     _entManager.SpawnEntitiesAttachedTo(coords, protos);
                 }
 
