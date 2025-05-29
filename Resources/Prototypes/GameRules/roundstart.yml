@@ -457,7 +457,7 @@
     - id: BasicDecalDirtMonospaceVariationPass
       prob: 0.50
       orGroup: monospaceDecals
-      
+
 - type: entity
   parent: BaseGameRule
   id: CodewordRule
@@ -465,4 +465,3 @@
   - type: CodewordRule
     generators:
       Traitor: TraitorCodewordGenerator
-
