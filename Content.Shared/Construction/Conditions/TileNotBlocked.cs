@@ -14,9 +14,10 @@ public sealed partial class TileNotBlocked : IConstructionCondition
 
     public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
     {
-        var tileRef = location.GetTileRef();
+        if (!IoCManager.Resolve<IEntityManager>().TrySystem<TurfSystem>(out var turfSystem))
+            return false;
 
-        if (tileRef == null)
+        if (!turfSystem.TryGetTileRef(location, out var tileRef))
         {
             return false;
         }
