@@ -43,6 +43,9 @@
     },
     {
       "name": "pda-mailtech"
+    },
+    {
+      "name": "pda-commander"
     }
   ]
 }

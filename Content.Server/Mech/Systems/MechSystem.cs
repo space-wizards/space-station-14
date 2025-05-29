@@ -41,6 +41,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Linq;
+using Content.Shared.Atmos.Components;
 
 namespace Content.Server.Mech.Systems;
 
@@ -113,29 +114,6 @@ public sealed partial class MechSystem : SharedMechSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        var lightDraw = EntityQueryEnumerator<PowerCellDrawComponent, MechComponent>();
-
-        while (lightDraw.MoveNext(out var uid, out var comp, out var mechComp))
-        {
-            if (!mechComp.Light)
-                continue;
-
-            if (Timing.CurTime < comp.NextUpdateTime)
-                continue;
-
-            comp.NextUpdateTime += comp.Delay;
-
-            if (mechComp.BatterySlot.ContainedEntity == null 
-                || !TryComp<BatteryComponent>(mechComp.BatterySlot.ContainedEntity.Value, out var battery) )
-                continue;
-
-            if (!_battery.TryUseCharge(mechComp.BatterySlot.ContainedEntity.Value, comp.DrawRate))
-                continue;
-            
-            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
-            RaiseLocalEvent(uid, ref ev);
-        }
-        
         var thrustDraw = EntityQueryEnumerator<MechThrustersComponent, MechComponent>();
 
         while (thrustDraw.MoveNext(out var uid, out var comp, out var mechComp))

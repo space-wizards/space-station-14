@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Robust.Client.Graphics;
-using Robust.Shared.Graphics;
 
 namespace Content.Client.Parallax.Data
 {
@@ -13,6 +12,13 @@ namespace Content.Client.Parallax.Data
         /// Note that this should be cached, but not necessarily *here*.
         /// </summary>
         Task<Texture> GenerateTexture(CancellationToken cancel = default);
+
+        /// <summary>
+        /// Called when the parallax texture is no longer necessary, and may be unloaded.
+        /// </summary>
+        void Unload(IDependencyCollection dependencies)
+        {
+        }
     }
 }
 

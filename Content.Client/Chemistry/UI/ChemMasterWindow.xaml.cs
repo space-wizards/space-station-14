@@ -120,7 +120,10 @@ namespace Content.Client.Chemistry.UI
                 ("1", ChemMasterReagentAmount.U1, StyleBase.ButtonOpenBoth),
                 ("5", ChemMasterReagentAmount.U5, StyleBase.ButtonOpenBoth),
                 ("10", ChemMasterReagentAmount.U10, StyleBase.ButtonOpenBoth),
+                ("15", ChemMasterReagentAmount.U15, StyleBase.ButtonOpenBoth),
+                ("20", ChemMasterReagentAmount.U20, StyleBase.ButtonOpenBoth),
                 ("25", ChemMasterReagentAmount.U25, StyleBase.ButtonOpenBoth),
+                ("30", ChemMasterReagentAmount.U30, StyleBase.ButtonOpenBoth),
                 ("50", ChemMasterReagentAmount.U50, StyleBase.ButtonOpenBoth),
                 ("100", ChemMasterReagentAmount.U100, StyleBase.ButtonOpenBoth),
                 (Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, StyleBase.ButtonOpenLeft),
@@ -144,14 +147,18 @@ namespace Content.Client.Chemistry.UI
         public void UpdateState(BoundUserInterfaceState state)
         {
             var castState = (ChemMasterBoundUserInterfaceState)state;
-
+            // Starlight Start
+            var outputCreationSolutionVariable = new Label
+            {
+                Text = $" {castState.InputContainerInfo?.CurrentVolume ?? 0}u",
+            }; //Starlight End Creates a variable for how much solution is in the input beaker to be used for Pill/Patches creation
+          
             if (castState.UpdateLabel)
                 LabelLine = GenerateLabel(castState);
 
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
-
-            BufferCurrentVolume.Text = $" {castState.BufferCurrentVolume?.Int() ?? 0}u";
+            BufferCurrentVolume.Text = outputCreationSolutionVariable.Text; // Starlight Beaker Changes for Pills/Patches creation
 
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
@@ -170,10 +177,10 @@ namespace Content.Client.Chemistry.UI
             var holdsReagents = output?.Reagents != null;
             var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
             var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
-            var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
+            var beakerVolume = castState.InputContainerInfo?.CurrentVolume.Int() ?? 0;
 
-            PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
-            PatchDosage.Value = (int)Math.Min(bufferVolume, castState.PatchDosageLimit); // Starlight-edit
+            PillDosage.Value = (int)Math.Min(beakerVolume, castState.PillDosageLimit); // Starlight-edit
+            PatchDosage.Value = (int)Math.Min(beakerVolume, castState.PatchDosageLimit); // Starlight-edit
             
             PillTypeButtons[castState.SelectedPillType].Pressed = true;
 
@@ -196,7 +203,7 @@ namespace Content.Client.Chemistry.UI
             // Avoid division by zero
             if (PillDosage.Value > 0)
             {
-                PillNumber.Value = Math.Min(bufferVolume / PillDosage.Value, pillNumberMax);
+                PillNumber.Value = Math.Min(beakerVolume / PillDosage.Value, pillNumberMax);
             }
             else
             {
@@ -206,15 +213,15 @@ namespace Content.Client.Chemistry.UI
             // Starlight-start
             if (PatchDosage.Value > 0)
             {
-                PatchNumber.Value = Math.Min(bufferVolume / PatchDosage.Value, pillNumberMax);
+                PatchNumber.Value = Math.Min(beakerVolume / PatchDosage.Value, pillNumberMax);
             }
             else
             {
                 PatchNumber.Value = 0;
             }
-            // Starlight-end
 
-            BottleDosage.Value = Math.Min(bottleAmountMax, bufferVolume);
+            BottleDosage.Value = Math.Min(bottleAmountMax, beakerVolume);
+            // Starlight-end
         }
         /// <summary>
         /// Generate a product label based on reagents in the buffer.

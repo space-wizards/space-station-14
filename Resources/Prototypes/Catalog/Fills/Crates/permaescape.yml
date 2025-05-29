@@ -74,7 +74,7 @@
         prob: 0.10
       - id: ClothingOuterSanta
         prob: 0.10
-      - id: ClothingOuterHardsuitSyndicate
+      - id: ClothingOuterEVASuitSyndicate
         prob: 0.20
       - id: EmergencyOxygenTankFilled
         prob: 0.25

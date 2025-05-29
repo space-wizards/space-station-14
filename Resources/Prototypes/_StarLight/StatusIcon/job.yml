@@ -45,3 +45,27 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: CentComm
   jobName: job-name-centcomm
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconCommander
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: Commander
+  jobName: job-name-Commander
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSyndicateAgent
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: SyndicateAgent
+  jobName: job-name-SyndicateAgent
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconOperative
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: Operative
+  jobName: job-name-Operative

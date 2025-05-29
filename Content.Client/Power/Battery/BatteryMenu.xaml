@@ -1,0 +1,146 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                      SetSize="650 330"
+                      Resizable="False">
+    <BoxContainer Orientation="Vertical">
+        <!-- Top row: main content -->
+        <BoxContainer Name="MainContent" Orientation="Horizontal" VerticalExpand="True" Margin="4">
+            <!-- Left pane: I/O, passthrough, sprite view -->
+            <BoxContainer Name="IOPane" Orientation="Vertical" HorizontalExpand="True">
+                <!-- Top row: input -->
+                <BoxContainer Name="InputRow" Orientation="Horizontal">
+                    <!-- Input power line -->
+                    <PanelContainer Name="InPowerLine" SetHeight="2" VerticalAlignment="Top" SetWidth="32"
+                                    Margin="2 16" />
+
+                    <!-- Box with breaker, label, values -->
+                    <PanelContainer HorizontalExpand="True" StyleClasses="Inset">
+                        <BoxContainer Orientation="Vertical">
+                            <BoxContainer Orientation="Horizontal">
+                                <Label Text="{Loc 'battery-menu-in'}" HorizontalExpand="True" VerticalAlignment="Top"
+                                       StyleClasses="LabelKeyText" />
+                                <controls:OnOffButton Name="InBreaker" />
+                            </BoxContainer>
+                            <Label Name="InValue" />
+                        </BoxContainer>
+                    </PanelContainer>
+                </BoxContainer>
+
+                <!-- Middle row: Entity view & passthrough -->
+                <BoxContainer Name="MiddleRow" Orientation="Horizontal" VerticalExpand="True">
+                    <SpriteView Name="EntityView" SetSize="64 64" Scale="2 2" OverrideDirection="South" Margin="15" />
+
+                    <BoxContainer Orientation="Vertical" VerticalAlignment="Center" HorizontalExpand="True"
+                                  HorizontalAlignment="Right">
+                        <Label HorizontalAlignment="Right" Text="{Loc 'battery-menu-passthrough'}" StyleClasses="StatusFieldTitle" />
+                        <Label HorizontalAlignment="Right" Name="PassthroughValue" />
+                    </BoxContainer>
+                </BoxContainer>
+
+                <!-- Bottom row: output -->
+                <BoxContainer Name="OutputRow" Orientation="Horizontal">
+                    <!-- Output power line -->
+                    <PanelContainer Name="OutPowerLine" SetHeight="2" VerticalAlignment="Bottom" SetWidth="32"
+                                    Margin="2 16" />
+
+                    <!-- Box with breaker, label, values -->
+                    <PanelContainer HorizontalExpand="True" StyleClasses="Inset">
+                        <BoxContainer Orientation="Vertical">
+                            <BoxContainer Orientation="Horizontal">
+                                <Label Text="{Loc 'battery-menu-out'}" HorizontalExpand="True" VerticalAlignment="Top"
+                                       StyleClasses="LabelKeyText" />
+                                <controls:OnOffButton Name="OutBreaker" />
+                            </BoxContainer>
+                            <Label Name="OutValue" />
+                        </BoxContainer>
+                    </PanelContainer>
+                </BoxContainer>
+            </BoxContainer>
+
+            <!-- Separator connecting panes with some wires -->
+            <BoxContainer Orientation="Vertical" SetWidth="22" Margin="2 16">
+                <PanelContainer Name="InSecondPowerLine" SetHeight="2" />
+                <PanelContainer Name="PassthroughPowerLine" SetWidth="2" HorizontalAlignment="Center" VerticalExpand="True" />
+                <PanelContainer Name="OutSecondPowerLine" SetHeight="2" />
+            </BoxContainer>
+
+            <!-- Middle pane: charge/discharge -->
+            <BoxContainer Name="ChargeDischarge" Orientation="Vertical" HorizontalExpand="True">
+                <!-- Charge -->
+                <PanelContainer VerticalExpand="True" StyleClasses="Inset" Margin="0 0 0 8">
+                    <BoxContainer Orientation="Vertical">
+                        <Label Text="{Loc 'battery-menu-charge-header'}" StyleClasses="LabelKeyText" />
+                        <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
+                            <Slider Name="ChargeRateSlider" />
+                            <BoxContainer Orientation="Horizontal">
+                                <Label Text="{Loc 'battery-menu-max'}" StyleClasses="StatusFieldTitle" HorizontalExpand="True" />
+                                <Label Name="ChargeMaxValue" />
+                            </BoxContainer>
+                        </BoxContainer>
+                        <BoxContainer Orientation="Horizontal">
+                            <Label Text="{Loc 'battery-menu-current'}" StyleClasses="StatusFieldTitle" HorizontalExpand="True" />
+                            <Label Name="ChargeCurrentValue" />
+                        </BoxContainer>
+                    </BoxContainer>
+                </PanelContainer>
+                <!-- Discharge -->
+                <PanelContainer VerticalExpand="True" StyleClasses="Inset">
+                    <BoxContainer Orientation="Vertical">
+                        <Label Text="{Loc 'battery-menu-discharge-header'}" StyleClasses="LabelKeyText" />
+                        <BoxContainer Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Center">
+                            <Slider Name="DischargeRateSlider" />
+                            <BoxContainer Orientation="Horizontal">
+                                <Label Text="{Loc 'battery-menu-max'}" StyleClasses="StatusFieldTitle" HorizontalExpand="True" />
+                                <Label Name="DischargeMaxValue" />
+                            </BoxContainer>
+                        </BoxContainer>
+                        <BoxContainer Orientation="Horizontal">
+                            <Label Text="{Loc 'battery-menu-current'}" StyleClasses="StatusFieldTitle" HorizontalExpand="True" />
+                            <Label Name="DischargeCurrentValue" />
+                        </BoxContainer>
+                    </BoxContainer>
+                </PanelContainer>
+            </BoxContainer>
+
+            <!-- Separator connecting panes with some wires -->
+            <BoxContainer Orientation="Vertical" SetWidth="22" Margin="2 16">
+                <PanelContainer Name="ChargePowerLine" SetHeight="2" VerticalAlignment="Top" VerticalExpand="True" />
+                <PanelContainer Name="DischargePowerLine" SetHeight="2" VerticalAlignment="Bottom" VerticalExpand="True" />
+            </BoxContainer>
+
+            <!-- Right pane: storage -->
+            <PanelContainer Name="Storage" StyleClasses="Inset" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical">
+                    <Label Text="{Loc 'battery-menu-storage-header'}" StyleClasses="LabelKeyText" />
+                    <GridContainer Columns="2">
+                        <Label Text="{Loc 'battery-menu-stored'}" StyleClasses="StatusFieldTitle" />
+                        <Label Name="StoredPercentageValue" HorizontalAlignment="Right" HorizontalExpand="True" />
+                        <Label Text="{Loc 'battery-menu-energy'}" StyleClasses="StatusFieldTitle" />
+                        <Label Name="StoredEnergyValue" HorizontalAlignment="Right" />
+                        <Label Name="EtaLabel" StyleClasses="StatusFieldTitle" />
+                        <Label Name="EtaValue" HorizontalAlignment="Right" />
+                    </GridContainer>
+
+                    <!-- Charge meter -->
+                    <GridContainer Name="ChargeMeter" Columns="3" VerticalExpand="True" Margin="0 24 0 0">
+
+                    </GridContainer>
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Name="Footer" Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'battery-menu-footer-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'battery-menu-footer-right'}" StyleClasses="WindowFooterText"
+                       HorizontalAlignment="Right" HorizontalExpand="True" Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                             VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19" />
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

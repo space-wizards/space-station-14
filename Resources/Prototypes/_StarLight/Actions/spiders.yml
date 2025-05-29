@@ -59,12 +59,13 @@
   name: Lay the egg.
   description: Lay the egg.
   components:
+  - type: LimitedCharges
+    maxCharges: 3
+  - type: AutoRecharge
+    rechargeDuration: 90
   - type: InstantAction
     itemIconStyle: BigAction
-    renewCharges: true
-    charges: 1
-    maxCharges: 3
-    useDelay: 120
+    useDelay: 5
     icon:
       sprite: _Starlight/Interface/Actions/actions_spider.rsi
       state: egg
