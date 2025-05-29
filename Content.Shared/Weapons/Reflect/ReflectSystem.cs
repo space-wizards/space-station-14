@@ -2,25 +2,20 @@
 using System.Numerics;
 using Content.Shared._Starlight.Weapon;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Alert;
-using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item.ItemToggle;
-using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -29,7 +24,6 @@ namespace Content.Shared.Weapons.Reflect;
 /// </summary>
 public sealed class ReflectSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -38,117 +32,104 @@ public sealed class ReflectSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        Subs.SubscribeWithRelay<ReflectComponent, ProjectileReflectAttemptEvent>(OnReflectUserCollide, baseEvent: false);
+        Subs.SubscribeWithRelay<ReflectComponent, HitScanReflectAttemptEvent>(OnReflectUserHitscan, baseEvent: false);
         SubscribeLocalEvent<ReflectComponent, ProjectileReflectAttemptEvent>(OnReflectCollide);
         SubscribeLocalEvent<ReflectComponent, HitScanReflectAttemptEvent>(OnReflectHitscan);
+
         SubscribeLocalEvent<ReflectComponent, GotEquippedEvent>(OnReflectEquipped);
         SubscribeLocalEvent<ReflectComponent, GotUnequippedEvent>(OnReflectUnequipped);
         SubscribeLocalEvent<ReflectComponent, GotEquippedHandEvent>(OnReflectHandEquipped);
         SubscribeLocalEvent<ReflectComponent, GotUnequippedHandEvent>(OnReflectHandUnequipped);
-        SubscribeLocalEvent<ReflectComponent, ItemToggledEvent>(OnToggleReflect);
-
-        SubscribeLocalEvent<ReflectUserComponent, ProjectileReflectAttemptEvent>(OnReflectUserCollide);
-        SubscribeLocalEvent<ReflectUserComponent, HitScanReflectAttemptEvent>(OnReflectUserHitscan);
     }
 
-    private void OnReflectUserHitscan(EntityUid uid, ReflectUserComponent component, ref HitScanReflectAttemptEvent args)
-    {
-        if (args.Reflected)
-            return;
-
-        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.All & ~SlotFlags.POCKET))
-        {
-            if (!TryReflectHitscan(uid, ent, args.Shooter, args.SourceItem, args.Direction, args.Reflective, out var dir)) //🌟Starlight🌟
-                continue;
-
-            args.Direction = dir.Value;
-            args.Reflected = true;
-            break;
-        }
-    }
-
-    private void OnReflectUserCollide(EntityUid uid, ReflectUserComponent component, ref ProjectileReflectAttemptEvent args)
-    {
-        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(uid, SlotFlags.All & ~SlotFlags.POCKET))
-        {
-            if (!TryReflectProjectile(uid, ent, args.ProjUid))
-                continue;
-
-            args.Cancelled = true;
-            break;
-        }
-    }
-
-    private void OnReflectCollide(EntityUid uid, ReflectComponent component, ref ProjectileReflectAttemptEvent args)
+    private void OnReflectUserCollide(Entity<ReflectComponent> ent, ref ProjectileReflectAttemptEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (TryReflectProjectile(uid, uid, args.ProjUid, reflect: component))
+        if (!ent.Comp.InRightPlace)
+            return; // only reflect when equipped correctly
+
+        if (TryReflectProjectile(ent, ent.Owner, args.ProjUid))
             args.Cancelled = true;
     }
 
-    private bool TryReflectProjectile(EntityUid user, EntityUid reflector, EntityUid projectile, ProjectileComponent? projectileComp = null, ReflectComponent? reflect = null)
+    private void OnReflectUserHitscan(Entity<ReflectComponent> ent, ref HitScanReflectAttemptEvent args)
     {
-        if (!Resolve(reflector, ref reflect, false) ||
-            !_toggle.IsActivated(reflector) ||
-            !TryComp<ReflectiveComponent>(projectile, out var reflective) ||
-            (reflect.Reflects & reflective.Reflective) == 0x0 ||
-            !_random.Prob(reflect.ReflectProb) ||
+        if (args.Reflected)
+            return;
+
+        if (!ent.Comp.InRightPlace)
+            return; // only reflect when equipped correctly
+
+        if (TryReflectHitscan(ent, ent.Owner, args.Shooter, args.SourceItem, args.Direction, args.Reflective, out var dir))
+        {
+            args.Direction = dir.Value;
+            args.Reflected = true;
+        }
+    }
+
+    private void OnReflectCollide(Entity<ReflectComponent> ent, ref ProjectileReflectAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (TryReflectProjectile(ent, ent.Owner, args.ProjUid))
+            args.Cancelled = true;
+    }
+
+    private void OnReflectHitscan(Entity<ReflectComponent> ent, ref HitScanReflectAttemptEvent args)
+    {
+        if (args.Reflected)
+            return;
+
+        if (TryReflectHitscan(ent, ent.Owner, args.Shooter, args.SourceItem, args.Direction, args.Reflective, out var dir))
+        {
+            args.Direction = dir.Value;
+            args.Reflected = true;
+        }
+    }
+
+    private bool TryReflectProjectile(Entity<ReflectComponent> reflector, EntityUid user, Entity<ProjectileComponent?> projectile)
+    {
+        if (!TryComp<ReflectiveComponent>(projectile, out var reflective) ||
+            (reflector.Comp.Reflects & reflective.Reflective) == 0x0 ||
+            !_toggle.IsActivated(reflector.Owner) ||
+            !_random.Prob(reflector.Comp.ReflectProb) ||
             !TryComp<PhysicsComponent>(projectile, out var physics))
         {
             return false;
         }
 
-        if (reflect.OverrideAngle is not null)
+        var rotation = _random.NextAngle(-reflector.Comp.Spread / 2, reflector.Comp.Spread / 2).Opposite();
+        var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
+        var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(user);
+        var newVelocity = rotation.RotateVec(relativeVelocity);
+
+        // Have the velocity in world terms above so need to convert it back to local.
+        var difference = newVelocity - existingVelocity;
+
+        _physics.SetLinearVelocity(projectile, physics.LinearVelocity + difference, body: physics);
+
+        var locRot = Transform(projectile).LocalRotation;
+        var newRot = rotation.RotateVec(locRot.ToVec());
+        _transform.SetLocalRotation(projectile, newRot.ToAngle());
+
+        PlayAudioAndPopup(reflector.Comp, user);
+
+        if (Resolve(projectile, ref projectile.Comp, false))
         {
-            var overrideAngle = _transform.GetWorldRotation(reflector) + reflect.OverrideAngle.Value;
+            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)} from {ToPrettyString(projectile.Comp.Weapon)} shot by {projectile.Comp.Shooter}");
 
-            var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
-            var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(user);
-            var speed = relativeVelocity.Length();
-
-            var newVelocity = new Vector2((float)Math.Cos(overrideAngle), (float)Math.Sin(overrideAngle)) * speed;
-
-            var difference = newVelocity - existingVelocity;
-            _physics.SetLinearVelocity(projectile, physics.LinearVelocity + difference, body: physics);
-            var velocityAngle = (float)Math.Atan2(newVelocity.Y, newVelocity.X);
-            _transform.SetWorldRotation(projectile, velocityAngle - reflect.OverrideAngle.Value);
-        }
-        else
-        {
-            var rotation = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2).Opposite();
-            var existingVelocity = _physics.GetMapLinearVelocity(projectile, component: physics);
-            var relativeVelocity = existingVelocity - _physics.GetMapLinearVelocity(user);
-            var newVelocity = rotation.RotateVec(relativeVelocity);
-
-            var difference = newVelocity - existingVelocity;
-
-            _physics.SetLinearVelocity(projectile, physics.LinearVelocity + difference, body: physics);
-
-            var locRot = Transform(projectile).LocalRotation;
-            var newRot = rotation.RotateVec(locRot.ToVec());
-            _transform.SetLocalRotation(projectile, newRot.ToAngle());
-        }
-
-        if (_netManager.IsServer)
-        {
-            _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
-        }
-
-        if (Resolve(projectile, ref projectileComp, false))
-        {
-            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)} from {ToPrettyString(projectileComp.Weapon)} shot by {projectileComp.Shooter}");
-
-            projectileComp.Shooter = user;
-            projectileComp.Weapon = user;
-            Dirty(projectile, projectileComp);
+            projectile.Comp.Shooter = user;
+            projectile.Comp.Weapon = user;
+            Dirty(projectile, projectile.Comp);
         }
         else
         {
@@ -157,53 +138,38 @@ public sealed class ReflectSystem : EntitySystem
 
         return true;
     }
-
-    private void OnReflectHitscan(EntityUid uid, ReflectComponent component, ref HitScanReflectAttemptEvent args)
-    {
-        if (args.Reflected) //🌟Starlight🌟
-            return;     //🌟Starlight🌟
-
-        if (TryReflectHitscan(uid, uid, args.Shooter, args.SourceItem, args.Direction, args.Reflective, out var dir)) //🌟Starlight🌟
-        {
-            args.Direction = dir.Value;
-            args.Reflected = true;
-        }
-    }
-
     private bool TryReflectHitscan(
+        Entity<ReflectComponent> reflector,
         EntityUid user,
-        EntityUid reflector,
         EntityUid? shooter,
         EntityUid shotSource,
         Vector2 direction,
-        ReflectType reflectType,//🌟Starlight🌟
+        ReflectType hitscanReflectType,
         [NotNullWhen(true)] out Vector2? newDirection)
     {
-        if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
-            !_toggle.IsActivated(reflector) ||
-            (reflect.Reflects & reflectType) == 0x0 ||  //🌟Starlight🌟
-            !_random.Prob(reflect.ReflectProb))
+        if ((reflector.Comp.Reflects & hitscanReflectType) == 0x0 ||
+            !_toggle.IsActivated(reflector.Owner) ||
+            !_random.Prob(reflector.Comp.ReflectProb))
         {
             newDirection = null;
             return false;
         }
 
-        if (_netManager.IsServer)
+        PlayAudioAndPopup(reflector.Comp, user);
+
+        // 🌟Starlight🌟 start
+        if (reflector.Comp.OverrideAngle is { } newAngle)
         {
-            _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioHelpers.WithVariation(0.05f, _random));
-        }
-        if (reflect.OverrideAngle is not null)
-        {
-            var overrideAngle = _transform.GetWorldRotation(reflector) + reflect.OverrideAngle.Value;
+            var overrideAngle = _transform.GetWorldRotation(reflector) + newAngle;
             newDirection = new Vector2((float)Math.Cos(overrideAngle), (float)Math.Sin(overrideAngle));
             newDirection = newDirection.Value.Normalized();
         }
         else
         {
-            var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
+            var spread = _random.NextAngle(-reflector.Comp.Spread / 2, reflector.Comp.Spread / 2);
             newDirection = -spread.RotateVec(direction);
         }
+        // 🌟Starlight🌟 end
 
         if (shooter != null)
             _adminLogger.Add(LogType.HitScanHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected hitscan from {ToPrettyString(shotSource)} shot by {ToPrettyString(shooter.Value)}");
@@ -213,52 +179,37 @@ public sealed class ReflectSystem : EntitySystem
         return true;
     }
 
-    private void OnReflectEquipped(EntityUid uid, ReflectComponent component, GotEquippedEvent args)
+    private void PlayAudioAndPopup(ReflectComponent reflect, EntityUid user)
     {
-        if (_gameTiming.ApplyingState)
-            return;
-
-        EnsureComp<ReflectUserComponent>(args.Equipee);
-    }
-
-    private void OnReflectUnequipped(EntityUid uid, ReflectComponent comp, GotUnequippedEvent args)
-    {
-        RefreshReflectUser(args.Equipee);
-    }
-
-    private void OnReflectHandEquipped(EntityUid uid, ReflectComponent component, GotEquippedHandEvent args)
-    {
-        if (_gameTiming.ApplyingState)
-            return;
-
-        EnsureComp<ReflectUserComponent>(args.User);
-    }
-
-    private void OnReflectHandUnequipped(EntityUid uid, ReflectComponent component, GotUnequippedHandEvent args)
-    {
-        RefreshReflectUser(args.User);
-    }
-
-    private void OnToggleReflect(EntityUid uid, ReflectComponent comp, ref ItemToggledEvent args)
-    {
-        if (args.User is { } user)
-            RefreshReflectUser(user);
-    }
-
-    /// <summary>
-    /// Refreshes whether someone has reflection potential so we can raise directed events on them.
-    /// </summary>
-    private void RefreshReflectUser(EntityUid user)
-    {
-        foreach (var ent in _inventorySystem.GetHandOrInventoryEntities(user, SlotFlags.All & ~SlotFlags.POCKET))
+        // Can probably be changed for prediction
+        if (_netManager.IsServer)
         {
-            if (!HasComp<ReflectComponent>(ent) || !_toggle.IsActivated(ent))
-                continue;
-
-            EnsureComp<ReflectUserComponent>(user);
-            return;
+            _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
+            _audio.PlayPvs(reflect.SoundOnReflect, user);
         }
+    }
 
-        RemCompDeferred<ReflectUserComponent>(user);
+    private void OnReflectEquipped(Entity<ReflectComponent> ent, ref GotEquippedEvent args)
+    {
+        ent.Comp.InRightPlace = (ent.Comp.SlotFlags & args.SlotFlags) == args.SlotFlags;
+        Dirty(ent);
+    }
+
+    private void OnReflectUnequipped(Entity<ReflectComponent> ent, ref GotUnequippedEvent args)
+    {
+        ent.Comp.InRightPlace = false;
+        Dirty(ent);
+    }
+
+    private void OnReflectHandEquipped(Entity<ReflectComponent> ent, ref GotEquippedHandEvent args)
+    {
+        ent.Comp.InRightPlace = ent.Comp.ReflectingInHands;
+        Dirty(ent);
+    }
+
+    private void OnReflectHandUnequipped(Entity<ReflectComponent> ent, ref GotUnequippedHandEvent args)
+    {
+        ent.Comp.InRightPlace = false;
+        Dirty(ent);
     }
 }

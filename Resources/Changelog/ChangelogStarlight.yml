@@ -6167,4 +6167,184 @@ Entries:
   id: 854
   time: '2025-05-26T17:17:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/686
+- author: Quini98
+  changes:
+  - message: Added ERT-request document to Document Printer
+    type: Add
+  id: 855
+  time: '2025-05-26T17:55:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/699
+- author: RoadTrain
+  changes:
+  - message: Added the Paddy Conversion Kit (20 plasteel) to the exosuit fab.
+    type: Add
+  id: 856
+  time: '2025-05-26T18:10:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/681
+- author: RoadTrain
+  changes:
+  - message: Added a T2 arsenal research (8500, requires MK-II to be unlocked) to
+      research Paddy (for now you HAVE to use the kit to upgrade it, cannot make it
+      from scratch).
+    type: Add
+  id: 857
+  time: '2025-05-26T18:10:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/681
+- author: RoadTrain
+  changes:
+  - message: Changed the prereq for Gygax research to be Paddy rather than Ripley2.
+    type: Tweak
+  id: 858
+  time: '2025-05-26T18:10:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/681
+- author: RoadTrain
+  changes:
+  - message: Paddy is now classed as an Industrial Mech and can use Industrial mech
+      equipment.
+    type: Tweak
+  id: 859
+  time: '2025-05-26T18:10:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/681
+- author: Happyrobot33
+  changes:
+  - message: Fixed Vulp tails not toggling between wagging and not wagging properly.
+    type: Fix
+  id: 860
+  time: '2025-05-26T19:03:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/690
+- author: Happyrobot33
+  changes:
+  - message: Fixed tails that can be toggled for wagging losing their glowing state
+      when doing so.
+    type: Fix
+  id: 861
+  time: '2025-05-26T19:03:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/690
+- author: choccy
+  changes:
+  - message: Fixes Nukie outpost
+    type: Fix
+  id: 862
+  time: '2025-05-27T18:16:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/702
+- author: CringeCursed
+  changes:
+  - message: Cat tail marking for humans now work correctly
+    type: Fix
+  id: 863
+  time: '2025-05-28T20:07:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/703
+- author: Quini98
+  changes:
+  - message: Added 'Execution & DNR Order' to Document Printer
+    type: Add
+  id: 864
+  time: '2025-05-28T20:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/706
+- author: Quini98
+  changes:
+  - message: Removed 'Orders' category from Document Printer
+    type: Remove
+  id: 865
+  time: '2025-05-28T20:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/706
+- author: Quini98
+  changes:
+  - message: Moved 'Product order' to 'Inquiries and appeals'
+    type: Tweak
+  id: 866
+  time: '2025-05-28T20:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/706
+- author: Quini98
+  changes:
+  - message: Fixed capitalisations in Document Printer
+    type: Fix
+  id: 867
+  time: '2025-05-28T20:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/706
+- author: Quini98
+  changes:
+  - message: Fixed "Complaints" being misspelled in multiple files
+    type: Fix
+  id: 868
+  time: '2025-05-28T20:09:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/706
+- author: Happyrobot33
+  changes:
+  - message: Fixed Nukies. Again.
+    type: Fix
+  id: 869
+  time: '2025-05-28T20:11:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/708
+- author: deltaVelocity
+  changes:
+  - message: Added Displacements for Head and OuterClothing for Vulpakin-no more snouts
+      and legs sticking out!
+    type: Add
+  id: 870
+  time: '2025-05-28T20:20:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/704
+- author: STARLIGHT TEAM
+  changes:
+  - message: upstream.
+    type: Tweak
+  id: 871
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Lobster updated for genpop
+    type: Tweak
+  id: 872
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Omega updated for genpop
+    type: Tweak
+  id: 873
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Orwell updated for genpop
+    type: Tweak
+  id: 874
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Manor updated for genpop
+    type: Tweak
+  id: 875
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Starboard updated for genpop
+    type: Tweak
+  id: 876
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cog updated for genpop
+    type: Tweak
+  id: 877
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Oasis updated for genpop
+    type: Tweak
+  id: 878
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fland updated for genpop
+    type: Tweak
+  id: 879
+  time: '2025-05-29T01:21:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/585
 

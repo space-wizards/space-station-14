@@ -224,6 +224,7 @@ namespace Content.Server.Entry
             Load(CCVars.ConfigPresetDebug, "debug");
 #endif
 
+#pragma warning disable CS8321
             void Load(CVarDef<bool> cVar, string name)
             {
                 var path = $"{ConfigPresetsDirBuild}{name}.toml";
@@ -233,6 +234,7 @@ namespace Content.Server.Entry
                     sawmill.Info("Loaded config preset: {Preset}", path);
                 }
             }
+#pragma warning restore CS8321
         }
     }
 }

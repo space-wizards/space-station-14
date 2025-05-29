@@ -254,6 +254,10 @@
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
+    equipmentWhitelist:
+      tags:
+      - IndustrialMech
+      - PaddyUpgradeKit
     baseState: base
     openState: base-open
     brokenState: base-broken
@@ -279,6 +283,10 @@
     radius: 3
     energy: 5
     enabled: false
+  - type: Construction
+    graph: PaddyUpgrade
+    node: start
+    defaultTarget: paddy
 
 - type: entity
   id: MechRipley2Battery
@@ -295,27 +303,31 @@
 # Paddy
 - type: entity
   id: MechPaddy
-  parent: [ BaseMech, CombatMech, BaseSecurityContraband ]
+  parent: [ BaseMech, CombatMech, IndustrialMech, BaseSecurityContraband ]
   name: Paddy
   description: Autonomous Power Loader Unit Subtype Paddy. A Modified MK-II Ripley design intended for light security use.
   components:
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/paddy.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: paddy
-    - state: paddy_sirens
+      state: base
+    - state: base-sirens
       map: [ "enum.MechVisualLayers.Siren" ]
       shader: unshaded
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
-    baseState: paddy
-    openState: paddy-open
-    brokenState: paddy-broken
+    equipmentWhitelist:
+      tags:
+      - CombatMech
+      - IndustrialMech
+    baseState: base
+    openState: base-open
+    brokenState: base-broken
     mechToPilotDamageMultiplier: 0.60
     airtight: true
     pilotWhitelist:
