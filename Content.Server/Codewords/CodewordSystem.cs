@@ -49,7 +49,7 @@ public sealed class CodewordSystem : GameRuleSystem<CodewordRuleComponent>
             EnsureComp<CodewordComponent>(codewordsContainer)
                 .Codewords = codewords;
             component.Codewords[id] = codewordsContainer;
-            _adminLogger.Add(LogType.EventStarted, LogImpact.Low, $"Codewords generated for faction {id}: {string.Join(", ", component.Codewords)}");
+            _adminLogger.Add(LogType.EventStarted, LogImpact.Low, $"Codewords generated for faction {id}: {string.Join(", ", codewords)}");
         }
     }
 
