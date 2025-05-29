@@ -69,3 +69,27 @@
     state: vent
   - type: AbductorOrgan
     organ: Vent
+
+- type: entity
+  id: RandomOrganDubious
+  name: random gland
+  description: a random abductor gland
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/dubious-organs.rsi
+      state: vent
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: true
+      table: !type:NestedSelector
+        tableId: LootTableAbductorGland
+        
+- type: entityTable
+  id: LootTableAbductorGland
+  table: !type:GroupSelector
+    children:
+      - id: OrganDubiousHealth
+      - id: OrganDubiousPlasma
+      - id: OrganDubiousGravity
+      - id: OrganDubiousEgg
+      - id: OrganDubiousSpider
+      - id: OrganDubiousVent

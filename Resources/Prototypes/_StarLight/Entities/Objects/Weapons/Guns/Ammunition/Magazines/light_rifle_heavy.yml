@@ -10,6 +10,7 @@
     proto: CartridgeLightRifleSP
     capacity: 80
   - type: Item
+    size: Normal
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_heavy.rsi
     layers:

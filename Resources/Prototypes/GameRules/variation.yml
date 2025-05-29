@@ -123,3 +123,25 @@
     blacklist:
       components:
       - ParticleAcceleratorControlBox
+
+- type: entity
+  id: SolarPanelDamageVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: SolarPanelReplaceVariationPass
+  - type: EntityReplaceVariationPass
+    entitiesPerReplacementAverage: 30
+    entitiesPerReplacementStdDev: 5
+    replacements:
+    - id: SolarPanelBroken
+
+- type: entity
+  id: SolarPanelEmptyVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: SolarPanelReplaceVariationPass
+  - type: EntityReplaceVariationPass
+    entitiesPerReplacementAverage: 30
+    entitiesPerReplacementStdDev: 5
+    replacements:
+    - id: SolarAssembly

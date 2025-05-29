@@ -68,12 +68,11 @@
   id: CrateMaterialPlasteel
   parent: CrateGenericSteel
   name: plasteel crate
-  description: 90 sheets of plasteel.
+  description: 30 sheets of plasteel.
   components:
   - type: StorageFill
     contents:
       - id: SheetPlasteel
-        amount: 3
 
 - type: entity
   id: CrateMaterialPlasma
@@ -86,15 +85,35 @@
       - id: SheetPlasma
 
 - type: entity
+  id: CrateMaterialGold
+  parent: CrateGenericSteel
+  name: gold crate
+  description: 30 bars of gold.
+  components:
+  - type: StorageFill
+    contents:
+    - id: IngotGold
+
+- type: entity
+  id: CrateMaterialSilver
+  parent: CrateGenericSteel
+  name: silver crate
+  description: 30 bars of silver.
+  components:
+  - type: StorageFill
+    contents:
+    - id: IngotSilver
+
+- type: entity
   id: CrateMaterialCardboard
   parent: CrateGenericSteel
   name: cardboard crate
-  description: 60 pieces of cardboard.
+  description: 90 pieces of cardboard.
   components:
   - type: StorageFill
     contents:
       - id: MaterialCardboard
-        amount: 2
+        amount: 3
 
 - type: entity
   id: CrateMaterialPaper
@@ -149,9 +168,35 @@
       entity_storage: !type:NestedSelector
         tableId: RandomMaterialCrateTable
         rolls: !type:RangeNumberSelector
-          range: 1, 3
-          # for some reason, the selector here adds 1 to whatever value it generates,
-          # so this is actually 2-4
+          range: 2, 4
+
+- type: entity
+  id: CrateMaterialSilo
+  parent: CrateGenericSteel
+  name: material silo crate
+  description: A package including all the materials to create a material silo.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MaterialSiloMachineCircuitboard
+    - id: SheetSteel1
+      amount: 5
+    - id: MatterBinStockPart
+      amount: 4
+    - id: CableApcStack1
+      amount: 2
+
+- type: entity
+  id: CrateMaterialBasicResource
+  parent: CrateGenericSteel
+  name: basic sheet crate
+  description: 30 sheets of steel, glass, and plastic.
+  components:
+  - type: StorageFill
+    contents:
+    - id: SheetSteel
+    - id: SheetGlass
+    - id: SheetPlastic
 
 #- type: entity
 #  id: CrateMaterialHFuelTank

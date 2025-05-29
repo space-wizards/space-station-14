@@ -1,0 +1,249 @@
+﻿Entries:
+- author: ArtisticRoomba
+  changes:
+  - message: The mapping changelog has been added! This primarily serves as a way
+      to make players aware of large changes or important fixes to maps, without cluttering
+      the main changelog.
+    type: Add
+  id: 1
+  time: '2025-02-03T01:29:24.112Z'
+- author: ArtisticRoomba
+  changes:
+  - message: A chemical dispenser has been added to the nukie planet, allowing new
+      agents to work in a familiar environment.
+    type: Add
+  id: 2
+  time: '2025-01-27T07:10:24.000Z'
+- author: ArtisticRoomba
+  changes:
+  - message: On many stations, power has been rebalanced to allow more time for engineering
+      to setup power. This should allow time for activities like TA mentoring and
+      more complex power setups.
+    type: Tweak
+  id: 3
+  time: '2025-01-27T07:10:24.000Z'
+- author: Nox, ToxicSonicFan04
+  changes:
+  - message: Station armory contents have been tweaked to balance security gear to
+      the amount of security personnel.
+    type: Tweak
+  id: 4
+  time: '2025-01-27T07:10:24.000Z'
+- author: ArtisticRoomba
+  changes:
+  - message: On Meta, Engineering and Atmospherics now share a distinct HV subnet
+      seperate from the station's main power grid. Previously Engineering and Atmos
+      couldn't share power, and one side would be discharged depending on who setup
+      power first.
+    type: Fix
+  id: 5
+  time: '2025-01-26T12:00:00Z'
+- author: Southbridge
+  changes:
+  - message: On many stations, uncleanable dirt decals have been made cleanable.
+    type: Fix
+  id: 6
+  time: '2025-01-12T12:00:00Z'
+- author: Compilatron144
+  changes:
+  - message: Plasma station's population limit has been raised to make it into a high
+      population station.
+    type: Tweak
+  id: 7
+  time: '2025-01-19T12:00:00Z'
+- author: IProduceWidgets
+  changes:
+  - message: On Oasis, the genpop prison has been added.
+    type: Add
+  - message: On Oasis, Security has been given a large department rework.
+    type: Tweak
+  id: 8
+  time: '2025-04-29T09:04:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37031
+- author: LaCumbiaDelCoronavirus
+  changes:
+  - message: Added a new salvage ruin, Telescience.
+    type: Add
+  id: 9
+  time: '2025-04-30T14:49:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36653
+- author: Southbridge
+  changes:
+  - message: 'New salvage ruin: Atmos Interchange'
+    type: Add
+  id: 10
+  time: '2025-05-02T15:45:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37115
+- author: spanky-spanky
+  changes:
+  - message: Omega has been updated to include genpop.
+    type: Add
+  id: 11
+  time: '2025-05-03T21:19:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37157
+- author: Southbridge
+  changes:
+  - message: On Bagel, removed the very convenient Captain's ID sitting out in deep
+      space.
+    type: Remove
+  id: 12
+  time: '2025-05-04T07:20:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37171
+- author: Spessmann
+  changes:
+  - message: On Convex, reconstructed genpop. It can now hold 8 prisoners.
+    type: Tweak
+  - message: On Convex, removed the prisoner eva room.
+    type: Remove
+  id: 13
+  time: '2025-05-06T06:56:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37216
+- author: Southbridge, Flipsie27
+  changes:
+  - message: On Amber, gave the captain a tertiary ID card.
+    type: Add
+  - message: On Amber, gave Atmos their own front desk across from sec.
+    type: Add
+  - message: On Amber, gave botany a large water container.
+    type: Tweak
+  - message: On Amber, overhauled the security department to introduce GenPop.
+    type: Tweak
+  - message: On Amber, overhauled and moved the AI satellite to the east side of the
+      map, enlarging it to accommodate AI turrets in the future.
+    type: Tweak
+  id: 14
+  time: '2025-05-08T01:39:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37262
+- author: Deerstop
+  changes:
+  - message: On Elkridge, the botany area has been improved with additional trays,
+      vents, and scrubbers.
+    type: Tweak
+  - message: On Elkridge, firelocks and emergency lights have been added to security.
+    type: Fix
+  - message: On Elkridge, the backstage area is now accessible to service and theatre
+      access.
+    type: Tweak
+  - message: On Elkridge, the service request console is now backstage
+    type: Tweak
+  id: 15
+  time: '2025-05-11T00:49:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37206
+- author: spanky-spanky
+  changes:
+  - message: On Omega, the TEG burn chamber blast door buttons are now engineering
+      access instead of atmospherics.
+    type: Fix
+  - message: On Omega, security now get hardsuits.
+    type: Fix
+  id: 16
+  time: '2025-05-16T02:10:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37490
+- author: Spessmann
+  changes:
+  - message: On Convex, added a window to sec EVA storage
+    type: Add
+  id: 17
+  time: '2025-05-17T04:49:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37533
+- author: Southbridge
+  changes:
+  - message: On Amber, gave salvage a job board.
+    type: Add
+  - message: On Amber, gave the warden a blue toolbox.
+    type: Add
+  id: 18
+  time: '2025-05-18T07:23:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37565
+- author: Minemoder
+  changes:
+  - message: The ATS station anchor room was rebuilt to prevent stealing from the
+      room, and to add shuttle miners to repressurize the ATS.
+    type: Tweak
+  id: 19
+  time: '2025-05-18T08:12:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37560
+- author: Spessmann
+  changes:
+  - message: On Convex, added a job board computer to the salvage bay.
+    type: Add
+  - message: On Convex, remove the extra pair of mass scanners and expedition consoles
+      from the salvage bay.
+    type: Remove
+  id: 20
+  time: '2025-05-18T17:43:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37579
+- author: Southbridge
+  changes:
+  - message: On Box, added the Salvage Job Board.
+    type: Add
+  - message: On Box, swapped the devices in the freezer to their freezer variants.
+    type: Tweak
+  - message: On Box, modified the containment area to be a little more intuitive for
+      both singularity and tesla setups.
+    type: Tweak
+  - message: On Box, modified TEG piping to make more sense.
+    type: Tweak
+  id: 21
+  time: '2025-05-19T08:16:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37602
+- author: Deerstop
+  changes:
+  - message: On Elkridge, the salvage bay has received an overhaul, including the
+      new Job Board Computer
+    type: Tweak
+  id: 22
+  time: '2025-05-19T18:55:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37600
+- author: spanky-spanky
+  changes:
+  - message: On Fland, the salvage job board has been added.
+    type: Add
+  id: 23
+  time: '2025-05-20T23:27:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37653
+- author: spanky-spanky
+  changes:
+  - message: On Bagel, the salvage job board has been added.
+    type: Add
+  id: 24
+  time: '2025-05-20T23:27:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37652
+- author: spanky-spanky
+  changes:
+  - message: On Marathon, the salvage job board has been added.
+    type: Add
+  - message: On Marathon, the default TEG has been improved.
+    type: Tweak
+  id: 25
+  time: '2025-05-20T23:29:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37654
+- author: spanky-spanky
+  changes:
+  - message: On Omega, the salvage job board has been added.
+    type: Add
+  id: 26
+  time: '2025-05-20T23:35:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37655
+- author: spanky-spanky
+  changes:
+  - message: On Packed, the salvage job board has been added.
+    type: Add
+  id: 27
+  time: '2025-05-21T00:12:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37656
+- author: Southbridge
+  changes:
+  - message: On Box, redesigned Security to have GenPop.
+    type: Tweak
+  id: 28
+  time: '2025-05-21T05:00:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37663
+- author: spanky-spanky
+  changes:
+  - message: On Reach, all recent content additions have been added.
+    type: Add
+  id: 29
+  time: '2025-05-21T07:51:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37669
+Order: 1
