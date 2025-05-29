@@ -17,6 +17,7 @@ public sealed partial class CodewordRuleComponent : Component
     /// <summary>
     /// The generated codewords. The value contains the entity that has the <see cref="CodewordComponent"/>
     /// </summary>
+    [DataField]
     [ViewVariables(VVAccess.ReadOnly)]
     public readonly Dictionary<ProtoId<CodewordFactionPrototype>, EntityUid> Codewords = new();
 }
