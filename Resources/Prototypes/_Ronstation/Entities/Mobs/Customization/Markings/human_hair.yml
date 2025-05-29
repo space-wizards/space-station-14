@@ -1,0 +1,22 @@
+- type: marking
+  id: HumanHairPonytailWithBows
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Ronstation/Mobs/Customization/human_hair.rsi
+      state: ponytailwithbows
+- type: marking
+  id: HumanHairLongBangs
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Ronstation/Mobs/Customization/human_hair.rsi
+      state: longbangs
+- type: marking
+  id: HumanHairZebra
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Ronstation/Mobs/Customization/human_hair.rsi
+      state: zebra
+
