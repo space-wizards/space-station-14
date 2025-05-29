@@ -220,8 +220,8 @@
       - MobMonkeyPunpun
       - MobMonkeyPunpun
       - MobMonkeyPunpun # 4/7 chance
-      - MobKoboldKwehKweh
-      - MobKoboldKwehKweh # 2/7 chance
+      - MobKoboldKweh
+      - MobKoboldKweh # 2/7 chance
       - MobScurretWaWa # 1/7 chance
 
 - type: entity
