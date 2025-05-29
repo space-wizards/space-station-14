@@ -1,4 +1,4 @@
-﻿- type: mealRecipe
+﻿- type: microwaveMealRecipe
   id: RecipeDreamingCake
   name: Dreaming cake Recipe
   result: FoodResomiCake
@@ -10,7 +10,7 @@
     RightHandResomi: 1
     FoodCakePlain: 1
 
-- type: mealRecipe
+- type: microwaveMealRecipe
   id: RecipeBakedVulpkanin
   name: baked vulpkanin recipe
   result: FoodBakedVulpkaninPlate
@@ -24,7 +24,7 @@
     FoodApple: 1
     HeadVulpkanin: 1
     
-- type: mealRecipe
+- type: microwaveMealRecipe
   id: RecipeFoodFriedfelionoid
   name: kentucky fried felionoid recipe
   result: FoodFriedfelionoid
@@ -37,7 +37,7 @@
     LeftLegFelionoid: 1
     RightLegFelionoid: 1
     
-- type: mealRecipe
+- type: microwaveMealRecipe
   id: RecipeFoodCookedlizard
   name: Volcanic explosion recipe
   result: FoodCookedLizardPlate

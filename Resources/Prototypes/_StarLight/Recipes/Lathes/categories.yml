@@ -25,7 +25,7 @@
   name: lathe-category-inquiries-and-appeals
 
 - type: latheCategory
-  id: Complaintst
+  id: Complaints
   name: lathe-category-complaints
 
 - type: latheCategory
@@ -35,10 +35,6 @@
 - type: latheCategory
   id: OrdersAndInstructions
   name: lathe-category-orders-and-instructions
-
-- type: latheCategory
-  id: Orders
-  name: lathe-category-orders
 
 - type: latheCategory
   id: Evidence

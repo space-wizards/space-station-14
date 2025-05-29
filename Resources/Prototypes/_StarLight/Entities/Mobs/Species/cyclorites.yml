@@ -22,8 +22,7 @@
     - Hair
     - Snout
   - type: MovementSpeedModifier
-    speciesSprintSpeedModifier: 0.85
-    speciesWalkSpeedModifier: 1.00
+    baseSprintSpeed : 3.825
   - type: Body
     prototype: Cyclorite
     requiredLegs: 2
