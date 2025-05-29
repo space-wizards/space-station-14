@@ -836,7 +836,7 @@
   name: Wa Wa
   parent: MobEmotionalSupportScurret
   id: MobScurretWaWa
-  description: The first scurret ever to escape the clutches of Arnold's Pizza and make their own luck out in space. Prefers vodka, hates rain.
+  description: A junior barkeeping assistant. Look at it. It's a scurret in a top hat. The universe has peaked. Loves vodka, hates the rain.
   components:
   - type: GhostRole
     prob: 1
