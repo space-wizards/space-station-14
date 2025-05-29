@@ -496,7 +496,10 @@ public sealed class ChatUIController : UIController
 
     public void RemoveSpeechBubble(EntityUid entityUid, SpeechBubble bubble)
     {
-        bubble.Dispose();
+        if (!bubble.IsInsideTree)
+            return;
+
+        bubble.Orphan();
 
         var list = _activeSpeechBubbles[entityUid];
         list.Remove(bubble);

@@ -69,7 +69,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 
         if (disposing)
         {
-            _window?.Dispose();
+            _window?.Close();
         }
     }
 
