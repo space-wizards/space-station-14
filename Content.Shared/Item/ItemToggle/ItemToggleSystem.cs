@@ -1,3 +1,4 @@
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle.Components;
@@ -6,7 +7,6 @@ using Content.Shared.Temperature;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Content.Shared.Wieldable;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 
@@ -22,6 +22,8 @@ public sealed class ItemToggleSystem : EntitySystem
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ClothingSystem _clothing = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     private EntityQuery<ItemToggleComponent> _query;
@@ -43,6 +45,8 @@ public sealed class ItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleHotComponent, IsHotEvent>(OnIsHotEvent);
 
         SubscribeLocalEvent<ItemToggleActiveSoundComponent, ItemToggledEvent>(UpdateActiveSound);
+
+        SubscribeLocalEvent<ItemToggleVisualsComponent, ItemToggledEvent>(OnVisualsToggled);
     }
 
     private void OnStartup(Entity<ItemToggleComponent> ent, ref ComponentStartup args)
@@ -289,5 +293,12 @@ public sealed class ItemToggleSystem : EntitySystem
             if (stream?.Entity is {} entity)
                 comp.PlayingStream = entity;
         }
+    }
+
+    private void OnVisualsToggled(Entity<ItemToggleVisualsComponent> ent, ref ItemToggledEvent args)
+    {
+        _appearance.SetData(ent, ItemToggleVisuals.State, args.Activated);
+        _item.SetHeldPrefix(ent, args.Activated ? ent.Comp.HeldPrefixOn : ent.Comp.HeldPrefixOff);
+        _clothing.SetEquippedPrefix(ent, args.Activated ? ent.Comp.EquippedPrefixOn : ent.Comp.EquippedPrefixOff);
     }
 }

@@ -503,23 +503,21 @@
     - type: Sprite
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       layers:
-        - state: teleriot-icon
-        - state: teleriot-on
-          visible: false
-          map: [ "shield" ]
+        - state: icon
+          map: [ "enum.ItemToggleVisuals.Layer" ]
+    - type: ItemToggleVisuals
+    - type: GenericVisualizer
+      visuals:
+        enum.ItemToggleVisuals.State:
+          enum.ItemToggleVisuals.Layer:
+            True: { state: icon-on }
+            False: { state: icon }
     - type: Item
       size: Small
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
-      heldPrefix: teleriot
+      heldPrefix: off
     - type: UseDelay
       delay: 0.5
-    - type: ToggleableLightVisuals
-      spriteLayer: shield
-      inhandVisuals:
-        left:
-          - state: inhand-left-shield
-        right:
-          - state: inhand-right-shield
     - type: Appearance
     - type: Destructible
       thresholds:
@@ -548,3 +546,4 @@
                   max: 2
     - type: StaticPrice
       price: 250
+

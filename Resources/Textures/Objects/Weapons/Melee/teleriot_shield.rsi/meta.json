@@ -8,25 +8,25 @@
   },
   "states": [
     {
-      "name": "teleriot-icon"
+      "name": "icon"
     },
     {
-      "name": "teleriot-inhand-right",
+      "name": "off-inhand-right",
       "directions": 4
     },
     {
-      "name": "teleriot-inhand-left",
+      "name": "off-inhand-left",
       "directions": 4
     },
     {
-      "name": "teleriot-on"
+      "name": "icon-on"
     },
     {
-      "name": "inhand-right-shield",
+      "name": "on-inhand-right",
       "directions": 4
     },
     {
-      "name": "inhand-left-shield",
+      "name": "on-inhand-left",
       "directions": 4
     }
   ]
