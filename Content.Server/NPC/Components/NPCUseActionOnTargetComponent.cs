@@ -1,6 +1,5 @@
 using Content.Server.NPC.Systems;
-using Content.Shared.Actions;
-using Content.Shared.NPC;
+using Content.Shared.Actions.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.Components;
@@ -23,7 +22,7 @@ public sealed partial class NPCUseActionOnTargetComponent : Component
 public sealed partial class NPCActionsData
 {
     [DataField(required: true)]
-    public EntProtoId<EntityWorldTargetActionComponent> ActionId;
+    public EntProtoId<TargetActionComponent> ActionId;
     /// <summary>
     /// HTN blackboard key for the target entity
     /// </summary>

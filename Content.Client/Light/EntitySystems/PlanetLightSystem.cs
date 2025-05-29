@@ -16,6 +16,7 @@ public sealed class PlanetLightSystem : EntitySystem
         _overlayMan.AddOverlay(new RoofOverlay(EntityManager));
         _overlayMan.AddOverlay(new TileEmissionOverlay(EntityManager));
         _overlayMan.AddOverlay(new LightBlurOverlay());
+        _overlayMan.AddOverlay(new SunShadowOverlay());
         _overlayMan.AddOverlay(new AfterLightTargetOverlay());
     }
 
@@ -31,6 +32,7 @@ public sealed class PlanetLightSystem : EntitySystem
         _overlayMan.RemoveOverlay<RoofOverlay>();
         _overlayMan.RemoveOverlay<TileEmissionOverlay>();
         _overlayMan.RemoveOverlay<LightBlurOverlay>();
+        _overlayMan.RemoveOverlay<SunShadowOverlay>();
         _overlayMan.RemoveOverlay<AfterLightTargetOverlay>();
     }
 }

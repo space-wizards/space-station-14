@@ -62,7 +62,10 @@ public abstract partial class InteractionTest
 
         // Please someone purge async construction code
         Task<bool> task = default!;
-        await Server.WaitPost(() => task = SConstruction.TryStartItemConstruction(prototype, SEntMan.GetEntity(Player)));
+        await Server.WaitPost(() =>
+        {
+            task = SConstruction.TryStartItemConstruction(prototype, SEntMan.GetEntity(Player));
+        });
 
         Task? tickTask = null;
         while (!task.IsCompleted)
@@ -788,7 +791,7 @@ public abstract partial class InteractionTest
             gridUid = gridEnt;
             gridComp = gridEnt.Comp;
             var gridXform = SEntMan.GetComponent<TransformComponent>(gridUid);
-            Transform.SetWorldPosition(gridXform, pos.Position);
+            Transform.SetWorldPosition((gridUid, gridXform), pos.Position);
             MapSystem.SetTile((gridUid, gridComp), SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
 
             if (!MapMan.TryFindGridAt(pos, out _, out _))

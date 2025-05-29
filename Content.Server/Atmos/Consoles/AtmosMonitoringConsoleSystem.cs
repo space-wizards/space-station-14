@@ -17,6 +17,8 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.NodeContainer;
 
 namespace Content.Server.Atmos.Consoles;
 
@@ -360,7 +362,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             chunk.AtmosPipeData[index] = atmosPipeData & ~mask;
         }
 
-        // Rebuild the tile's pipe data 
+        // Rebuild the tile's pipe data
         foreach (var ent in _sharedMapSystem.GetAnchoredEntities(gridUid, grid, coords))
         {
             if (!TryComp<AtmosPipeColorComponent>(ent, out var entAtmosPipeColor))

@@ -1,61 +1,215 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/2a19963297f91efb452dbb5c1d4eb28a14776b0a/icons/mob/silicon/ai.dmi",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "ai",
-      "delays": [
-        [
-          0.2,
-          0.2,
-          0.1,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.2,
-          0.1
-        ]
-      ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/blob/e2923df112df8aa025846d0764697bad6506586a/icons/mob/AI.dmi - modified by chromiumboy.",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "ai_camera",
-      "delays": [
-        [
-          1.0,
-          1.0
-        ]
-      ]
-    },
-    {
-      "name": "ai_dead"
-    },
-    {
-      "name": "ai_empty",
-      "delays": [
-        [
-          0.7,
-          0.7
-        ]
-      ]
-    },
-    {
-      "name": "default",
-      "directions": 4
-    },
-    {
-      "name": "base"
-    }
-  ]
+    "states": [
+        {
+            "name": "ai",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.1,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "ai_angel",
+            "delays": [
+                [
+                    0.08,
+                    0.08,
+                    0.08,
+                    0.08,
+                    0.08,
+                    0.08
+                ]
+            ]
+        },
+        {
+            "name": "ai_angel_dead",
+            "delays": [
+                [
+                    1.00,
+                    0.08,
+                    0.50,
+                    0.20
+                ]
+            ]
+        },
+        {
+            "name": "ai_bliss"
+        },
+        {
+            "name": "ai_clown",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "ai_clown_dead",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "ai_dorf",
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "ai_heartline",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "ai_heartline_dead",
+            "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "ai_smiley",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "ai_camera",
+            "delays": [
+                [
+                    1.0,
+                    1.0
+                ]
+            ]
+        },
+        {
+            "name": "ai_dead"
+        },
+        {
+            "name": "ai_empty",
+            "delays": [
+                [
+                    0.7,
+                    0.7
+                ]
+            ]
+        },
+        {
+            "name": "default",
+            "directions": 4
+        },
+        {
+            "name": "base"
+        }
+    ]
 }
