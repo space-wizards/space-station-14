@@ -18,6 +18,24 @@ public sealed class CodewordSystem : GameRuleSystem<CodewordRuleComponent>
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     /// <summary>
+    /// Checks if the codeword system has any valid codewords.
+    /// </summary>
+    /// <returns>True if there is a valid codeword gamerule. False if there is none.</returns>
+    public bool CheckCodewordsAvailable()
+    {
+        var query = EntityQueryEnumerator<CodewordRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out _, out var gameRuleComponent))
+        {
+            if (!GameTicker.IsGameRuleActive(uid, gameRuleComponent))
+                continue;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Retrieves codewords for the faction specified.
     /// </summary>
     /// <exception cref="InvalidOperationException">Thrown when no codewords have been generated for that faction.</exception>

@@ -48,6 +48,8 @@ public sealed class TraitorCodePaperSystem : EntitySystem
     private bool TryGetTraitorCode([NotNullWhen(true)] out string? traitorCode, TraitorCodePaperComponent component)
     {
         traitorCode = null;
+        if (!_codewordSystem.CheckCodewordsAvailable())
+            return false;
 
         var codesMessage = new FormattedMessage();
         var codeList = _codewordSystem.GetCodewords(component.CodewordFaction).ToList();
