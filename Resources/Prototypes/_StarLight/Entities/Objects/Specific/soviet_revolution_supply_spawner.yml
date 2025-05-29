@@ -7,7 +7,7 @@
       layers:
         - state: red
         - sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
-          state: icon
+          state: base
     - type: RandomSpawner
       prototypes:
         - WeaponSniperMosin
