@@ -29,6 +29,7 @@
   description: Instantly gibs a target.
   components:
   - type: Action
+    useDelay: 90
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/disintegrate.ogg
     icon:
