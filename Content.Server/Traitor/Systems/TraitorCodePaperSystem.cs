@@ -51,17 +51,7 @@ public sealed class TraitorCodePaperSystem : EntitySystem
 
         var codesMessage = new FormattedMessage();
         var codeList = _codewordSystem.GetCodewords(component.CodewordFaction).ToList();
-        // Find the first nuke that matches the passed location.
-        if (_gameTicker.IsGameRuleAdded<TraitorRuleComponent>())
-        {
-            var ruleEnts = _gameTicker.GetAddedGameRules();
-            foreach (var ruleEnt in ruleEnts)
-            {
-                if (TryComp(ruleEnt, out TraitorRuleComponent? traitorComp))
-                {
-                }
-            }
-        }
+
         if (codeList.Count == 0)
         {
             if (component.FakeCodewords)
