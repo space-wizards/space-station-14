@@ -1,5 +1,3 @@
-using Content.Shared.Hands.Components;
-using Content.Shared.Item;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Sprite;
@@ -10,6 +8,9 @@ namespace Content.Shared.Sprite;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SpriteFadeComponent : Component
 {
-    [DataField("ignoreClickableRestrict")]
+    /// <summary>
+    ///     If true, fades the item even if there is nothing else clickable behind the hovered point.
+    /// </summary>
+    [DataField]
     public bool IgnoreClickableRestriction = false;
 }
