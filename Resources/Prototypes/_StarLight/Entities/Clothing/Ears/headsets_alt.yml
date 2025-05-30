@@ -64,7 +64,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/marauder_commander.ogg
 
 - type: entity
@@ -85,5 +85,5 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/marauder_agent.ogg

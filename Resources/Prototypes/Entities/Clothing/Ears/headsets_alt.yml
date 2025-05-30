@@ -26,7 +26,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/cargo.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/qm.ogg
 
 - type: entity
@@ -44,7 +44,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/cc.ogg
 
 - type: entity
@@ -62,7 +62,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/deathsquad.ogg
 
 - type: entity
@@ -79,7 +79,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/captain.ogg
 
 - type: entity
@@ -98,7 +98,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/ce.ogg
 
 - type: entity
@@ -119,7 +119,7 @@
   - type: StealTarget
     stealGroup: ClothingHeadsetAltMedical
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/cmo.ogg
 
 - type: entity
@@ -138,7 +138,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/hos.ogg
 
 - type: entity
@@ -157,7 +157,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/science.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/rd.ogg
 
 - type: entity
@@ -178,7 +178,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/marauder.ogg
 
 - type: entity
@@ -215,5 +215,5 @@
     - type: Clothing
       sprite: Clothing/Ears/Headsets/wizard.rsi
     - type: RadioChime
-      chimeSound:
+      sound:
         path: /Audio/_Starlight/Effects/Radio/wizard.ogg
