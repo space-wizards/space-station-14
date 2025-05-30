@@ -6,7 +6,7 @@
     "x": 32,
     "y": 32
   },
-  "states": [
+ "states": [
     {
       "name": "icon",
       "directions": 1
@@ -35,6 +35,22 @@
     },
     {
       "name": "on-equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-SUITSTORAGE",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-SUITSTORAGE",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-BELT",
       "directions": 4
     }
   ]

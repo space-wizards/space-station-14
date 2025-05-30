@@ -24,9 +24,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/backpack.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/backpack.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/ex1stence/backpack.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/backpack.rsi
     clothingVisuals:
       back:
       - state: equipped-BACKPACK
@@ -65,9 +65,9 @@
     grid:
     - 0,0,9,1
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/belt.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/belt.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/ex1stence/belt.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/belt.rsi
   - type: Item
     size: Huge
   - type: StorageFill
@@ -88,7 +88,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/cloak.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/cloak.rsi
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -104,7 +104,7 @@
     tags:
       - Pickaxe
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/crusher.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/crusher.rsi
     state: icon
   - type: AmmoCounter
   - type: UseDelayOnShoot
@@ -145,7 +145,7 @@
   - type: GunRequiresWield
   - type: Item
     size: Huge
-    sprite: _DeadSpace/Sponsor/ex1stence/crusher-inhands.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/crusher-inhands.rsi
   - type: DisarmMalus
   - type: Prying
   - type: PointLight
@@ -153,7 +153,7 @@
     enabled: false
     radius: 5
   - type: Clothing # DS14
-    sprite: _DeadSpace/Sponsor/ex1stence/crusher.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/crusher.rsi
     quickEquip: false
     slots:
     - Back
@@ -168,9 +168,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/gasmask.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/gasmask.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/ex1stence/gasmask.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/gasmask.rsi
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -183,9 +183,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/gloves.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/gloves.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/ex1stence/gloves.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/gloves.rsi
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -198,9 +198,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/hardsuit.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/hardsuit.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/ex1stence/hardsuit.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/hardsuit.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitpvrsifvl
   - type: Item
@@ -231,9 +231,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/helmet.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/helmet.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/ex1stence/helmet.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/helmet.rsi
   - type: PointLight
     color: "#73caec"
     radius: 7
@@ -258,7 +258,7 @@
   markingCategory: HeadTop
   sponsorOnly: true
   sprites:
-    - sprite: _DeadSpace/Sponsor/ex1stence/horns_marking.rsi
+    - sprite: _DeadSpace/Sponsor/pvrsifvl/horns_marking.rsi
       state: horn
 
 #Hud
@@ -270,9 +270,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/DragonFox/hud.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/hud.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/DragonFox/hud.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/hud.rsi
   - type: EyeProtection
   - type: IdentityBlocker
     coverage: EYES
@@ -288,10 +288,10 @@
   id: Hypospraypvrsifvl
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/hypo.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/hypo.rsi
     state: icon
   - type: Item
-    sprite: _DeadSpace/Sponsor/ex1stence/hypo.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/hypo.rsi
   - type: SolutionContainerManager
     solutions:
       hypospray:
@@ -319,11 +319,11 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Item
-    sprite: _DeadSpace/Sponsor/ex1stence/jetpack.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/jetpack.rsi
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/jetpack.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/jetpack.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/ex1stence/jetpack.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/jetpack.rsi
     slots:
       - Back
       - suitStorage
@@ -339,9 +339,9 @@
   description: По внешнему состоянию заметно, что почти не носилась владельцем. Сшит по заказу спонсорской организации Warmind.
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/jumpsuit.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/jumpsuit.rsi
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/ex1stence/jumpsuit.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/jumpsuit.rsi
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -354,12 +354,12 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
-      sprite: _DeadSpace/Sponsor/ex1stence/magboots.rsi
+      sprite: _DeadSpace/Sponsor/pvrsifvl/magboots.rsi
       layers:
       - state: icon
         map: [ "enum.ToggleVisuals.Layer" ]
     - type: Clothing
-      sprite: _DeadSpace/Sponsor/ex1stence/magboots.rsi
+      sprite: _DeadSpace/Sponsor/pvrsifvl/magboots.rsi
     - type: ClothingSpeedModifier
       walkModifier: 1
       sprintModifier: 1
@@ -375,9 +375,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Icon
-    sprite: _DeadSpace/Sponsor/ex1stence/pda.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/pda.rsi
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/pda.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/pda.rsi
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     preinstalled:
@@ -398,10 +398,10 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/tools_powerdrill.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/tools_powerdrill.rsi
     state: drill_screw
   - type: Item
-    sprite: _DeadSpace/Sponsor/ex1stence/tools_powerdrill.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/tools_powerdrill.rsi
     size: Small
   - type: Tool
     qualities:
@@ -413,7 +413,7 @@
     entries:
       - behavior: Screwing
         sprite:
-          sprite: _DeadSpace/Sponsor/ex1stence/tools_powerdrill.rsi
+          sprite: _DeadSpace/Sponsor/pvrsifvl/tools_powerdrill.rsi
           state: drill_screw
         useSound:
           path: /Audio/Items/drill_use.ogg
@@ -421,7 +421,7 @@
           path: /Audio/Items/change_drill.ogg
       - behavior: Anchoring
         sprite:
-          sprite: _DeadSpace/Sponsor/ex1stence/tools_powerdrill.rsi
+          sprite: _DeadSpace/Sponsor/pvrsifvl/tools_powerdrill.rsi
           state: drill_bolt
         useSound:
           path: /Audio/Items/drill_use.ogg
@@ -451,26 +451,26 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/tools_jawsoflife.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/tools_jawsoflife.rsi
     state: syn_jaws_pry
   - type: Item
     inhandVisuals:
       left:
-      - state: inhand-left
+      - state: syn_inhand-left
       right:
-      - state: inhand-right
+      - state: syn_inhand-right
     size: Normal
   - type: MultipleTool
     entries:
       - behavior: Prying
         sprite:
-          sprite: _DeadSpace/Sponsor/ex1stence/tools_jawsoflife.rsi
+          sprite: _DeadSpace/Sponsor/pvrsifvl/tools_jawsoflife.rsi
           state: syn_jaws_pry
         useSound: /Audio/Items/jaws_pry.ogg
         changeSound: /Audio/Items/change_jaws.ogg
       - behavior: Cutting
         sprite:
-          sprite: _DeadSpace/Sponsor/ex1stence/tools_jawsoflife.rsi
+          sprite: _DeadSpace/Sponsor/pvrsifvl/tools_jawsoflife.rsi
           state: syn_jaws_cutter
         useSound: /Audio/Items/jaws_cut.ogg
         changeSound: /Audio/Items/change_jaws.ogg
@@ -488,9 +488,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/tools_welder.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/tools_welder.rsi
   - type: Item
-    sprite: _DeadSpace/Sponsor/ex1stence/tools_welder.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/tools_welder.rsi
 
 #multitool
 - type: entity
@@ -501,18 +501,22 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/tools_multitool.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/tools_multitool.rsi
 
 #Гарнитура
 - type: entity
   parent: ClothingHeadset
   id: ClothingHeadsetpvrsifvl
   name: полноразмерная гарнитура Warmind
-  description: полноразмерная гарнитура Warmind | К сожалению, не заглушает бесполезный вопль, а только заставляет его слушать. Модифицирована по чертежам Warmind.
+  description: К сожалению, не заглушает бесполезный вопль, а только заставляет его слушать. Модифицирована по чертежам Warmind.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/ex1stence/headset.rsi
+    sprite: _DeadSpace/Sponsor/pvrsifvl/headset.rsi
+  - type: Headset
+    color: "#db313f"
+  - type: EncryptionKeyHolder
+    keySlots: 5
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -531,4 +535,6 @@
       stampedName: Центральное Командование
     - stampedColor: '#00BE00FF'
       stampedName: Одобрено
-    content: paper-law-ex1stence
+    content: paper-law-pvrsifvl
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
