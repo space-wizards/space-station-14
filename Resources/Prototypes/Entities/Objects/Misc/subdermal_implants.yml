@@ -303,6 +303,45 @@
     - HideContextMenu
     - DeathAcidifier
 
+
+- type: entity
+  name: holoparasite implant
+  id: HoloparasiteImplant
+  parent: BaseSubdermalImplant
+  description: This implant allows the user to host a metaphysical hard-light guardian.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    permanent: true
+  - type: GuardianCreator
+    guardianProto: MobHoloparasiteGuardian
+
+- type: entity
+  name: holoclown implant
+  id: HoloClownImplant
+  parent: HoloparasiteImplant
+  description: This implant allows the user to host a metaphysical hard-light clown.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    permanent: true
+  - type: GuardianCreator
+    guardianProto: MobHoloClownGuardian
+
+## This one doesn't come in a traditional implant, so the describtion is adjusted.
+- type: entity
+  name: ifrit implant
+  id: IfritImplant
+  parent: HoloparasiteImplant
+  description: This magical item will summon a Jhin to serve as your guardian.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    permanent: true
+  - type: GuardianCreator
+    guardianProto: MobIfritGuardian
+
+
 - type: entity
   parent: BaseSubdermalImplant
   id: DeathRattleImplant

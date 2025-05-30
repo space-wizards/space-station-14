@@ -246,6 +246,22 @@
     - type: Implanter
       implant: DnaScramblerImplant
 
+- type: entity
+  id: HoloparasiteImplanter
+  name: holoparasite implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: HoloparasiteImplant
+
+- type: entity
+  id: HoloClownImplanter
+  name: holoclown implanter
+  parent: HoloparasiteImplanter
+  components:
+    - type: Implanter
+      implant: HoloClownImplant
+
 #Nuclear Operative/Special implanters
 
 - type: entity
@@ -315,3 +331,25 @@
   components:
   - type: Implanter
     implant: DeathRattleImplantCentcomm
+
+# Wizard implanters
+
+- type: entity
+  id: IfritImplanter
+  name: magical lamp
+  parent: HoloparasiteImplanter
+  describtion: The wizard federation had to cut corners on the lamps after the jinn merchandise scandal somehow.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/Lights/lamp.rsi
+      layers:
+        - state: lamp
+    - type: GenericVisualizer
+      visuals:
+        enum.ImplanterVisuals.Full:
+          implantFull:
+            True: {visible: true}
+            False: {visible: false}
+    - type: Implanter
+      implant: IfritImplant
+
