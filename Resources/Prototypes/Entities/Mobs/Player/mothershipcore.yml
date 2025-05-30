@@ -206,7 +206,7 @@
   components:
   - type: Action
     icon:
-      spirte: Interface/Alerts/shuttle.rsi
+      sprite: Interface/Alerts/shuttle.rsi
       state: piloting
     keywords: [ "AI", "console", "interface" ]
     priority: -6
