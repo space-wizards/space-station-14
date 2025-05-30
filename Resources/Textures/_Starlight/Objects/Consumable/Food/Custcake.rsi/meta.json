@@ -11,7 +11,10 @@
       "name": "ResomiKart"
     },
     {
-     "name": "ResomiKartSlice"
+      "name": "ResomiKartSlice"
+    },
+    {
+      "name": "MoffCake"
     }
   ]
 }

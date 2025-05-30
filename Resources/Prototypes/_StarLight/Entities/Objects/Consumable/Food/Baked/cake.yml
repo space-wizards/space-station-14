@@ -25,9 +25,39 @@
     - type: Tag
       tags:
         - Cake
-
 - type: entity
-  name: A slice of dreaming
+  name: Cotton Cake
+  parent: FoodCakeBase
+  id: FoodCottonCake
+  description: A sweet treat for the moth to eat
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Consumable/Food/Custcake.rsi
+      layers:
+        - state: mothcake
+    - type: FlavorProfile
+      flavors:
+        - Fiber
+        - Sweet
+    - type: SliceableFood
+      slice: FoodCakeResomiSlice
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 30
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 15
+            - ReagentId: Fiber
+              Quantity: 15                 
+    - type: Tag
+      tags:
+        - Cake
+        - ClothMade
+    - type: Food
+      requiresSpecialDigestion: true
+- type: entity
+  name: A Slice of dreaming
   parent: FoodCakeSliceBase
   id: FoodCakeResomiSlice
   description: Broken wings cant fly, neither can the Resomi this was made with.
@@ -44,9 +74,11 @@
     - type: SolutionContainerManager
       solutions:
         food:
-          maxVol: 5
+          maxVol: 10
           reagents:
             - ReagentId: Nutriment
+              Quantity: 5
+            - ReagentId: Fiber
               Quantity: 5
     - type: Tag
       tags:
