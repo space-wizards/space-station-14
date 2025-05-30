@@ -205,7 +205,7 @@
   description: View a Shuttle Interface.
   components:
   - type: InstantAction
-    icon: 
+    icon:
       sprite: Interface/Alerts/piloting.png
     keywords: [ "AI", "console", "interface" ]
     priority: -6
