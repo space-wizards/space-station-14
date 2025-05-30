@@ -246,4 +246,10 @@ marking-WingsDragonfly-dragonfly3 = Tail
 marking-WingsLanterfly = Wings (Lanternfly)
 marking-WingsLanterfly-lanternfly = Wings
 
+marking-WingsPyrausta = Wings (Pyrausta)
+marking-WingsPyrausta-pyr_neck = Neck
+marking-WingsPyrausta-pyr_wing_front = Wings
+marking-WingsPyrausta-pyr_inner_front = Inner wing
+marking-WingsPyrausta-pyr_stripes_front = Stripes
+
 # RArmExtension

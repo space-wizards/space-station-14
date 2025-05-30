@@ -20,6 +20,7 @@
   id: MobMothSprites
   sprites:
     TailBehind: MobHumanoidAnyMarking # floof
+    TailBehindBackpack: MobHumanoidAnyMarking #imp
     TailOversuit: MobHumanoidAnyMarking # floof
     Head: MobMothHead
     Snout: MobHumanoidAnyMarking

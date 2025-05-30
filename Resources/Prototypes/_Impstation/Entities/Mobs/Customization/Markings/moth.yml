@@ -846,4 +846,33 @@
   - sprite: _Impstation/Mobs/Customization/Moth/tail.rsi
     state: lanternfly
 
+- type: marking
+  id: WingsPyrausta
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Moth ]
+  layering:
+    pyr_neck: TailBehindBackpack
+    pyr_wing_behind: TailBehind
+    pyr_wing_front: TailBehindBackpack
+    pyr_inner_behind: TailBehind
+    pyr_inner_front: TailBehindBackpack
+    pyr_stripes_front: TailBehindBackpack
+  colorLinks:
+    pyr_wing_behind: pyr_wing_front
+    pyr_inner_behind: pyr_inner_front
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Moth/taillayers.rsi
+    state: pyr_neck
+  - sprite: _Impstation/Mobs/Customization/Moth/taillayers.rsi
+    state: pyr_wing_behind
+  - sprite: _Impstation/Mobs/Customization/Moth/taillayers.rsi
+    state: pyr_wing_front
+  - sprite: _Impstation/Mobs/Customization/Moth/taillayers.rsi
+    state: pyr_inner_behind
+  - sprite: _Impstation/Mobs/Customization/Moth/taillayers.rsi
+    state: pyr_inner_front
+  - sprite: _Impstation/Mobs/Customization/Moth/taillayers.rsi
+    state: pyr_stripes_front
+
 # RArmExtension
