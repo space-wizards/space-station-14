@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: The Syndicate Backpack can now fit more items (35 item slots, from 28).
-    type: Tweak
-  id: 8074
-  time: '2025-03-17T17:58:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35888
 - author: beck-thompson
   changes:
   - message: Chameleon vests now have the same stats as winter coats (Cold protection,
@@ -3915,3 +3908,14 @@
   id: 8585
   time: '2025-05-30T01:24:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37710
+- author: Beck, SlamBamActionman
+  changes:
+  - message: Added a chameleon controller implant that allows you to quickly switch
+      between job outfits! It also interacts with Agent IDs and fake mindshield implant.
+      Will use your profile's loadout if possible.
+    type: Add
+  - message: The chameleon kit now includes the chameleon controller implant.
+    type: Add
+  id: 8586
+  time: '2025-05-30T10:07:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33887
