@@ -19,6 +19,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -32,19 +33,19 @@ namespace Content.Shared.Movement.Systems;
 /// </summary>
 public abstract partial class SharedMoverController : VirtualController
 {
-    [Dependency] private   readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private   readonly ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private   readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private   readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private   readonly InventorySystem _inventory = default!;
-    [Dependency] private   readonly MobStateSystem _mobState = default!;
-    [Dependency] private   readonly SharedAudioSystem _audio = default!;
-    [Dependency] private   readonly SharedContainerSystem _container = default!;
-    [Dependency] private   readonly SharedMapSystem _mapSystem = default!;
-    [Dependency] private   readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private   readonly SharedTransformSystem _transform = default!;
-    [Dependency] private   readonly TagSystem _tags = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
 
     protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
     protected EntityQuery<FootstepModifierComponent> FootstepModifierQuery;
@@ -92,6 +93,8 @@ public abstract partial class SharedMoverController : VirtualController
         MapQuery = GetEntityQuery<MapComponent>();
 
         SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
+        SubscribeLocalEvent<InputMoverComponent, PhysicsBodyTypeChangedEvent>(OnPhysicsBodyChanged);
+        SubscribeLocalEvent<InputMoverComponent, UpdateCanMoveEvent>(OnCanMove);
 
         InitializeInput();
         InitializeRelay();
@@ -186,14 +189,14 @@ public abstract partial class SharedMoverController : VirtualController
         // If we can't move then just use tile-friction / no movement handling.
         if (!mover.CanMove
             || !PhysicsQuery.TryComp(uid, out var physicsComponent)
-            || physicsComponent.BodyType == BodyType.Static
             || PullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
         {
             UsedMobMovement[uid] = false;
             return;
         }
 
-        DebugTools.Assert(physicsComponent.BodyType == BodyType.KinematicController, $"Input mover: {ToPrettyString(uid)} in HandleMobMovement is not the correct BodyType, BodyType found: {physicsComponent.BodyType}, expected: KinematicController.");
+        DebugTools.Assert(physicsComponent.BodyType == BodyType.KinematicController,
+            $"Input mover: {ToPrettyString(uid)} in HandleMobMovement is not the correct BodyType, BodyType found: {physicsComponent.BodyType}, expected: KinematicController.");
 
         // If the body is in air but isn't weightless then it can't move
         // TODO: MAKE ISWEIGHTLESS EVENT BASED
@@ -207,6 +210,7 @@ public abstract partial class SharedMoverController : VirtualController
                 UsedMobMovement[uid] = false;
                 return;
             }
+
             inAirHelpless = true;
         }
 
@@ -227,8 +231,10 @@ public abstract partial class SharedMoverController : VirtualController
         if (weightless || inAirHelpless)
         {
             // Find the speed we should be moving at and make sure we're not trying to move faster than that
-            var walkSpeed = moveSpeedComponent?.WeightlessWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-            var sprintSpeed = moveSpeedComponent?.WeightlessSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+            var walkSpeed = moveSpeedComponent?.WeightlessWalkSpeed ??
+                            MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            var sprintSpeed = moveSpeedComponent?.WeightlessSprintSpeed ??
+                              MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
             wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
 
@@ -256,7 +262,8 @@ public abstract partial class SharedMoverController : VirtualController
                 friction = moveSpeedComponent?.OffGridFriction ?? _offGridDamping;
             }
 
-            accel = moveSpeedComponent?.WeightlessAcceleration ?? MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
+            accel = moveSpeedComponent?.WeightlessAcceleration ??
+                    MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
         }
         else
         {
@@ -266,7 +273,8 @@ public abstract partial class SharedMoverController : VirtualController
                 tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ??
+                              MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
             wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
 
@@ -290,7 +298,8 @@ public abstract partial class SharedMoverController : VirtualController
         if (wishDir != Vector2.Zero)
             friction = Math.Min(friction, accel);
         friction = Math.Max(friction, _minDamping);
-        var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
+        var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ??
+                                   MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
         Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
 
         if (!weightless || touching)
@@ -452,7 +461,8 @@ public abstract partial class SharedMoverController : VirtualController
     /// <summary>
     /// Used for weightlessness to determine if we are near a wall.
     /// </summary>
-    private bool IsAroundCollider(EntityLookupSystem lookupSystem, Entity<PhysicsComponent, MobMoverComponent, TransformComponent> entity)
+    private bool IsAroundCollider(EntityLookupSystem lookupSystem,
+        Entity<PhysicsComponent, MobMoverComponent, TransformComponent> entity)
     {
         var (uid, collider, mover, transform) = entity;
         var enlargedAABB = _lookup.GetWorldAABB(entity.Owner, transform).Enlarged(mover.GrabRange);
@@ -469,7 +479,7 @@ public abstract partial class SharedMoverController : VirtualController
             if (otherCollider.BodyType != BodyType.Static ||
                 !otherCollider.CanCollide ||
                 ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
-                (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
+                 (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
                 (TryComp(otherEntity, out PullableComponent? pullable) && pullable.BeingPulled))
             {
                 continue;
@@ -628,5 +638,17 @@ public abstract partial class SharedMoverController : VirtualController
             args.Modifier *= ent.Comp.BaseWeightlessFriction;
         else
             args.Modifier *= ent.Comp.BaseFriction;
+    }
+
+    private void OnPhysicsBodyChanged(Entity<InputMoverComponent> entity, ref PhysicsBodyTypeChangedEvent args)
+    {
+        _blocker.UpdateCanMove(entity);
+    }
+
+    private void OnCanMove(Entity<InputMoverComponent> entity, ref UpdateCanMoveEvent args)
+    {
+        // If we don't have a physics component, or have a static body type then we can't move.
+        if (!PhysicsQuery.TryComp(entity, out var body) || body.BodyType == BodyType.Static)
+            args.Cancel();
     }
 }
