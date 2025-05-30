@@ -6429,4 +6429,11 @@ Entries:
   id: 890
   time: '2025-05-30T20:55:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/719
+- author: Cyanogen
+  changes:
+  - message: Case (in)sen fix.
+    type: Add
+  id: 891
+  time: '2025-05-30T22:12:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/723
 
