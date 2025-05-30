@@ -70,6 +70,10 @@
     whitelist:
       tags:
         - CartridgeMagnum
+    soundRack:
+      path: /Audio/_Starlight/Weapons/Guns/Cock/cycle_bolt.ogg
+      params:
+        variation: 0.146
   - type: Gun
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/mosin.ogg # Starlight

@@ -67,6 +67,10 @@
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/m41_cock.ogg
+    soundBoltClosed: 
+      path: /Audio/Weapons/Guns/Bolt/lmg_bolt_closed.ogg
+    soundBoltOpened: 
+      path: /Audio/Weapons/Guns/Cock/shotgun_open.ogg
   - type: Appearance
   - type: ItemSlots
     slots:
