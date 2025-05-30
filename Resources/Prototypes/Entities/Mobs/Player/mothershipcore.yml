@@ -205,8 +205,8 @@
   description: View a Shuttle Interface.
   components:
   - type: InstantAction
-    icon: Interface/Alerts/piloting.png
-    iconOn: Interface/Alerts/piloting.png
+    icon: 
+      sprite: Interface/Alerts/piloting.png
     keywords: [ "AI", "console", "interface" ]
     priority: -6
     event: !type:ToggleIntrinsicUIEvent { key: enum.ShuttleConsoleUiKey.Key }
