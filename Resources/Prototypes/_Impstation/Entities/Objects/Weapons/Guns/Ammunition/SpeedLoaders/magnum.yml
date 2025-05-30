@@ -17,3 +17,53 @@
     steps: 7
     zeroVisible: false
   - type: Appearance
+
+- type: entity
+  id: SpeedLoaderSturm
+  name: "stripper clip (.45 magnum)"
+  description: An 8-round .45 magnum stripper clip.
+  parent: [ BaseItem, BaseSecurityContraband ]
+  components:
+  - type: Tag
+    tags:
+      - SpeedLoaderSturm
+  - type: SpeedLoader
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeMagnum
+    capacity: 8
+    proto: CartridgeMagnum
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/sturm_speed_loader.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-8
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 9
+    zeroVisible: false
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
+
+- type: entity
+  id: SpeedLoaderSturmEmpty
+  name: "stripper clip (.45 magnum any)"
+  description: An 8-round .45 magnum stripper clip.
+  parent: SpeedLoaderSturm
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/sturm_speed_loader.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-8
+      map: ["enum.GunVisualLayers.Mag"]

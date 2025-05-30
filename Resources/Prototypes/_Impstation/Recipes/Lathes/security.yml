@@ -279,6 +279,20 @@
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
+  id: SpeedLoaderSturm
+  result: SpeedLoaderSturm
+  materials:
+    Steel: 240
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: SpeedLoaderSturmEmpty
+  result: SpeedLoaderSturmEmpty
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
   id: MagazineBoxMagnumStun
   result: MagazineBoxMagnumStun
   materials:
