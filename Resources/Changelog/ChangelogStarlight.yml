@@ -6354,4 +6354,11 @@ Entries:
   id: 880
   time: '2025-05-30T02:06:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/717
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cybernetic limb active abilities are now disabled upon being amputated.
+    type: Fix
+  id: 881
+  time: '2025-05-30T02:20:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/713
 
