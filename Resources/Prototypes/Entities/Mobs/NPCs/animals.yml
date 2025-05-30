@@ -1481,7 +1481,6 @@
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
 
-
 - type: entity
   name: monkey
   id: MobBaseSyndicateMonkey
