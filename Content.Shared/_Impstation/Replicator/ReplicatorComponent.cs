@@ -63,6 +63,9 @@ public sealed partial class ReplicatorComponent : Component
 
     public bool HasSpawnedNest;
     public bool HasBeenGivenUpgradeActions;
+
+    [DataField]
+    public LocId QueenDiedMessage = "replicator-queen-died-msg";
 }
 
 [Serializable, NetSerializable]

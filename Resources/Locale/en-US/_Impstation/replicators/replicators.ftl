@@ -32,6 +32,8 @@ replicator-nest-levelup = There is a flurry of activity from the nest.
 replicator-nest-destroyed = Your nest has been destroyed. 
                             A Replicator has been selected to replace it.
                             Your pinpointer has been updated to follow them.
+replicator-queen-died-msg = The Queen has been deactivated.
+                            You are orphaned from the nest.
 
 # action confirmations
 replicator-nest-confirm = Are you sure? Use the action again to confirm.

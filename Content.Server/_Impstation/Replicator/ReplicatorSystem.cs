@@ -119,6 +119,9 @@ public sealed class ReplicatorSystem : EntitySystem
         // and we don't need the RelatedReplicators list anymore, so,
         ent.Comp.RelatedReplicators.Clear();
 
+        // remove queen status from this replicator
+        ent.Comp.Queen = false;
+
         // then we need to remove the action, to ensure it can't be used infinitely.
         QueueDel(args.Action);
     }
@@ -164,8 +167,16 @@ public sealed class ReplicatorSystem : EntitySystem
 
     private void OnMobStateChanged(Entity<ReplicatorComponent> ent, ref MobStateChangedEvent args)
     {
-        if (args.NewMobState == MobState.Critical || args.NewMobState == MobState.Dead)
-            _appearance.SetData(ent, ReplicatorVisuals.Combat, false);
+        if (args.NewMobState != MobState.Critical || args.NewMobState != MobState.Dead)
+            return;
+
+        _appearance.SetData(ent, ReplicatorVisuals.Combat, false);
+
+        if (ent.Comp.Queen && ent.Comp.MyNest == null)
+        {
+            foreach (var (uid, comp) in ent.Comp.RelatedReplicators)
+                _popup.PopupEntity(Loc.GetString(comp.QueenDiedMessage), uid, uid, PopupType.LargeCaution);
+        }
     }
 
     private void OnEmpPulse(Entity<ReplicatorComponent> ent, ref EmpPulseEvent args)
