@@ -48,24 +48,6 @@
       path: /Audio/_Starlight/Effects/Radio/cc.ogg
 
 - type: entity
-  parent: ClothingHeadsetAltCentCom
-  id: ClothingHeadsetAltCentComDS
-  name: CentComm agent over-ear headset
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyCentCom
-      - EncryptionKeyStationMaster
-  - type: Sprite
-    sprite: Clothing/Ears/Headsets/centcom.rsi
-  - type: Clothing
-    sprite: Clothing/Ears/Headsets/centcom.rsi
-  - type: RadioChime
-    sound:
-      path: /Audio/_Starlight/Effects/Radio/deathsquad.ogg
-
-- type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
   id: ClothingHeadsetAltCommand
   name: command over-ear headset

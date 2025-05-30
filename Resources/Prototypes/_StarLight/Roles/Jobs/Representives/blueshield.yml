@@ -54,7 +54,7 @@
     head: ClothingHeadHatBeretBlueShield
     outerClothing: ClothingOuterArmorBlueShield
     id: BlueShieldPDA
-    ears: ClothingHeadsetAltBSO
+    ears: ClothingHeadsetAltBSO # Starlight
     belt: ClothingBeltBlueShieldWebbingFilled
     gloves: ClothingHandsGlovesCombat
     pocket1: WeaponMultiphaseGun

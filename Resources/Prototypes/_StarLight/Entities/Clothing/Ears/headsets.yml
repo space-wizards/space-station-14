@@ -28,3 +28,14 @@
         - EncryptionKeyCommand
     - type: Sprite
       sprite: Clothing/Ears/Headsets/servicesecurity.rsi
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetAssistantNinja
+  name: stolen headset
+  components:
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/service.rsi
+  - type: RadioChime
+    sound:
+      path: /Audio/_Starlight/Effects/Radio/ninja.ogg
