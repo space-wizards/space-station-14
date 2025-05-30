@@ -69,8 +69,8 @@ public sealed partial class AtmosphereSystem
        mixtures[7].AdjustMoles(Gas.Nitrogen, Atmospherics.MolesCellStandard);
 
        // 8: Air (GM)
-       mixtures[8].AdjustMoles(Gas.Oxygen, Atmospherics.MolesCellGasMiner);
-       mixtures[8].AdjustMoles(Gas.Nitrogen, Atmospherics.MolesCellGasMiner);
+       mixtures[8].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesGasMiner);
+       mixtures[8].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesGasMiner);
 
        foreach (var arg in args)
        {

@@ -91,7 +91,7 @@ public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     ///     Increases explosion for each scale kPa above threshold.
     /// </summary>
     [DataField]
-    public float TankFragmentScale = 2 * Atmospherics.OneAtmosphere;
+    public float TankFragmentScale = 2.25f * Atmospherics.OneAtmosphere;
 
     [DataField]
     public EntProtoId ToggleAction = "ActionToggleInternals";

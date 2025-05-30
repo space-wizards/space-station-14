@@ -13,7 +13,7 @@ namespace Content.Server.NodeContainer.EntitySystems
     /// </summary>
     /// <seealso cref="NodeGroupSystem"/>
     [UsedImplicitly]
-    public sealed class NodeContainerSystem : EntitySystem
+    public sealed class NodeContainerSystem : SharedNodeContainerSystem
     {
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
         private EntityQuery<NodeContainerComponent> _query;
