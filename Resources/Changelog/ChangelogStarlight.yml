@@ -6422,4 +6422,11 @@ Entries:
   id: 889
   time: '2025-05-30T20:53:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/710
+- author: PubliclyExecutedPig
+  changes:
+  - message: Lobster Station now actually has ATMs and stuff
+    type: Fix
+  id: 890
+  time: '2025-05-30T20:55:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/719
 
