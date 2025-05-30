@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Clothing.EntitySystems;
 
 namespace Content.Shared.Implants;
 
@@ -11,6 +11,7 @@ public abstract partial class SharedChameleonControllerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ChameleonControllerOpenMenuEvent>(OpenUI);
+        SubscribeLocalEvent<ChameleonControllerImplantComponent, ImplantRelayEvent<CanAccessChameleonClothingEvent>>(OnCanAccessRelay);
     }
 
     private void OpenUI(ChameleonControllerOpenMenuEvent ev)
@@ -24,5 +25,10 @@ public abstract partial class SharedChameleonControllerSystem : EntitySystem
             return;
 
         _uiSystem.OpenUi(implant.Value, ChameleonControllerKey.Key, ev.Performer);
+    }
+
+    private void OnCanAccessRelay(Entity<ChameleonControllerImplantComponent> ent, ref ImplantRelayEvent<CanAccessChameleonClothingEvent> args)
+    {
+        args.Event.CanAccess = true;
     }
 }
