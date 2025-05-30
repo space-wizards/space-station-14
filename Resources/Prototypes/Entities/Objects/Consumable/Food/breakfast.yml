@@ -22,10 +22,8 @@
           Quantity: 40
         - ReagentId: Vitamin
           Quantity: 10
-  - type: Tag
-    tags:
 
-# breakfasts
+# Breakfasts
 
 - type: entity
   name: full american breakfast
@@ -38,7 +36,6 @@
       - food
   - type: Sprite
     state: fullamerican
-# Tastes like food.
 
 - type: entity
   name: full english breakfast
@@ -51,4 +48,3 @@
       - food
   - type: Sprite
     state: fullenglish
-# Tastes like food.
