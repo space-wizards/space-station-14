@@ -482,6 +482,8 @@
     fireRate: 4.5 #imp
     soundGunshot:
       path: /Audio/_Impstation/Weapons/Guns/Gunshots/lasermil.ogg #imp
+    availableModes: FullAuto #imp
+    selectedMode: FullAuto #imp
   - type: HitscanBatteryAmmoProvider
     proto: RedHeavyLaser
     fireCost: 40 #imp
