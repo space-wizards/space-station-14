@@ -27,6 +27,8 @@
   - Atmospherics
   - Brig
   - Cryogenics
+  - GenpopEnter #starlight
+  - GenpopLeave #starlight
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
