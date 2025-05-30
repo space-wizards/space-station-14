@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da, edited by Ghagliiarghii",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da, edited by Ghagliiarghii, equipped-EYES-arachnid and equipped-EYES-moth modified from equipped-EYES by HTMLSystem",
   "size": {
     "x": 32,
     "y": 32
@@ -15,7 +15,15 @@
       "directions": 4
     },
     {
+      "name": "equipped-EYES-arachnid",
+      "directions": 4
+    },
+    {
       "name": "equipped-EYES-hamster",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-moth",
       "directions": 4
     },
     {

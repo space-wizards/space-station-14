@@ -101,6 +101,14 @@
   price: 0 # Maybe better for it to be priceless, knowing how greedy cargo is.
 
 - type: material
+  id: Cotton
+  name: materials-cotton
+  unit: materials-unit-boll
+  icon: { sprite: Objects/Materials/materials.rsi, state: cotton }
+  color: "#cccccc" 
+  price: 0.01 #Who knew cotton was infinitely more valuable than silk
+
+- type: material
   id: Bones
   name: materials-bones
   unit: materials-unit-piece

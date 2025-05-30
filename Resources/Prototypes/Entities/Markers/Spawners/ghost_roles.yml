@@ -194,6 +194,26 @@
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
+  id: SpawnPointGhostParadoxClone
+  components:
+  - type: GhostRole
+    name: ghost-role-information-paradox-clone-name
+    description: ghost-role-information-paradox-clone-description
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: default
+  - type: Sprite
+    layers:
+    - sprite: Markers/jobs.rsi
+      state: green
+    - sprite: Mobs/Aliens/paradox_clone.rsi
+      state: preview
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
   id: SpawnPointGhostDerelictCyborg
   components:
   - type: GhostRole

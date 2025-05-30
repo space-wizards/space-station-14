@@ -22,6 +22,7 @@ public sealed class ProjectileAnomalySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -41,7 +42,7 @@ public sealed class ProjectileAnomalySystem : EntitySystem
 
     private void ShootProjectilesAtEntities(EntityUid uid, ProjectileAnomalyComponent component, float severity)
     {
-        var projectileCount = (int) MathF.Round(MathHelper.Lerp(component.MinProjectiles, component.MaxProjectiles, severity));
+        var projectileCount = (int)MathF.Round(MathHelper.Lerp(component.MinProjectiles, component.MaxProjectiles, severity));
         var xformQuery = GetEntityQuery<TransformComponent>();
         var mobQuery = GetEntityQuery<MobStateComponent>();
         var xform = xformQuery.GetComponent(uid);
@@ -81,14 +82,14 @@ public sealed class ProjectileAnomalySystem : EntitySystem
         EntityCoordinates targetCoords,
         float severity)
     {
-        var mapPos = coords.ToMap(EntityManager, _xform);
+        var mapPos = _xform.ToMapCoordinates(coords);
 
         var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var gridUid, out _)
-                ? coords.WithEntityId(gridUid, EntityManager)
-                : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
+                ? _xform.WithEntityId(coords, gridUid)
+                : new(_map.GetMapOrInvalid(mapPos.MapId), mapPos.Position);
 
         var ent = Spawn(component.ProjectilePrototype, spawnCoords);
-        var direction = targetCoords.ToMapPos(EntityManager, _xform) - mapPos.Position;
+        var direction = _xform.ToMapCoordinates(targetCoords).Position - mapPos.Position;
 
         if (!TryComp<ProjectileComponent>(ent, out var comp))
             return;

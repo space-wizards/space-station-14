@@ -1,7 +1,7 @@
 - type: vendingMachineInventory
   id: DrGibbInventory
   startingInventory:
-    DrinkDrGibbCan: 4
+    DrinkDrGibbCan: 6
     DrinkGrapeCan: 2
     DrinkRootBeerCan: 2
     DrinkIcedTeaCan: 2

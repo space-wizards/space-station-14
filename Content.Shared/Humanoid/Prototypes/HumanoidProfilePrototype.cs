@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Humanoid.Prototypes;
 
-[Prototype("humanoidProfile")]
+[Prototype]
 public sealed partial class HumanoidProfilePrototype : IPrototype
 {
     [IdDataField]
