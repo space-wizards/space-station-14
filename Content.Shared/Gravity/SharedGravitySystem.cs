@@ -31,6 +31,7 @@ namespace Content.Shared.Gravity
             SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
             SubscribeLocalEvent<GravityComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<GravityComponent, ComponentHandleState>(OnHandleState);
+            SubscribeLocalEvent<WeightlessnessComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<WeightlessnessComponent, EntParentChangedMessage>(OnEntParentChanged);
 
             _gravityQuery = GetEntityQuery<GravityComponent>();
@@ -94,6 +95,11 @@ namespace Content.Shared.Gravity
             return !EntityGridOrMapHaveGravity((entity, entity.Comp3));
         }
 
+        /// <summary>
+        /// Refreshes weightlessness status, needs to be called anytime it would change.
+        /// </summary>
+        /// <param name="entity">The entity we are updating the weightless status of</param>
+        /// <param name="weightless">The weightless value we are trying to change to, helps avoid networking</param>
         public void RefreshWeightless(Entity<WeightlessnessComponent?> entity, bool? weightless = null)
         {
             if (!Resolve(entity, ref entity.Comp))
@@ -114,6 +120,11 @@ namespace Content.Shared.Gravity
                 return;
 
             RefreshWeightless((entity.Owner, entity.Comp), !EntityGridOrMapHaveGravity((entity, args.Transform)));
+        }
+
+        private void OnMapInit(Entity<WeightlessnessComponent> entity, ref MapInitEvent args)
+        {
+            RefreshWeightless((entity.Owner, entity.Comp));
         }
 
         /// <summary>
