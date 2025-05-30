@@ -382,6 +382,9 @@
     useDelay: 1
   - type: InstantAction
     event: !type:FakeMindShieldToggleEvent
+  - type: Tag
+    tags:
+    - FakeMindShieldImplant
 
 - type: entity
   parent: BaseToggleAction
@@ -397,15 +400,27 @@
     itemIconStyle: BigAction
 
 - type: entity
+  parent: BaseAction
   id: ActionGravityJump
   name: Jump
   description: Activating the advanced propulsion system, you propel yourself a short distance in the direction of your gaze.
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 8
     icon: 
       sprite: Interface/Actions/jump.rsi
       state: icon
+  - type: InstantAction
     event: !type:GravityJumpEvent {}
     
-
+  id: ActionChameleonController
+  name: Control clothing
+  description: Change your entire outfit fast!
+  components:
+  - type: Action
+    priority: -20
+    icon: { sprite: Actions/Implants/implants.rsi, state: chameleon }
+    itemIconStyle: BigAction
+  - type: InstantAction
+    event: !type:ChameleonControllerOpenMenuEvent
+    
