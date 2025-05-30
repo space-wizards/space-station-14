@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: More Syndicate uniforms are considered minor contraband.
-    type: Tweak
-  id: 1255
-  time: '2025-03-08T06:15:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1858
 - author: DinnerCalzone
   changes:
   - message: Command airlocks have received new sprites to differentiate which heads
@@ -4215,3 +4208,13 @@
   id: 1754
   time: '2025-05-30T09:56:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2599
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: 8-round .45 magnum stripper clips for more convenient Sturm reloading
+    type: Add
+  - message: replaced the ammo-pouch with the .45 magnum stripper clip in Warden/HoS
+      loadout options.
+    type: Tweak
+  id: 1755
+  time: '2025-05-30T11:21:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2590
