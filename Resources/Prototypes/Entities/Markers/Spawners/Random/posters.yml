@@ -92,6 +92,15 @@
       - PosterContrabandWaffleCorp
       - PosterContrabandMissingSpacepen
       - PosterContrabandYoutoolpia
+      - PosterContrabandDoCauseCancer
+      - PosterContrabandLnuGlorf
+      - PosterContrabandRobustVox
+      - PosterContrabandRobirdVox
+      - PosterContrabandForumPost
+      - PosterContrabandHaveYouSeenHimJohnToe
+      - PosterContrabandIlluminatePropaganda
+      - PosterContrabandHolyInsuls
+      - PosterContrabandFentsAndCo
     chance: 1
 
 - type: entity
@@ -147,7 +156,6 @@
       - PosterLegitJustAWeekAway
       - PosterLegitSecWatch
       - PosterLegitVacation
-      - PosterLegitPeriodicTable
       - PosterLegitRenault
       - PosterLegitNTTGC
       - PosterLegitSafetyMothDelam
@@ -161,4 +169,14 @@
       - PosterLegitCleanHands
       - PosterLegitEyeChart
       - PosterLegitTyrone
+      - PosterLegitSkillIssue
+      - PosterLegitShoeless
+      - PosterLegitDoNotCauseCancer
+      - PosterLegitRenaissanceFair
+      - PosterLegitKillEmAll
+      - PosterLegitHaveYouSeenHimJuanToe
+      - PosterLegitMaxCap
+      - PosterLegitRipleyCertified
+      - PosterLegitKillersClinic
+      - PosterlegitLawPoster
     chance: 1

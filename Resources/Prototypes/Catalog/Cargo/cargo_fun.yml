@@ -117,6 +117,16 @@
   cost: 500
   category: cargoproduct-category-name-fun
   group: market
+  
+- type: cargoProduct
+  id: FunSharkPlushies
+  icon:
+    sprite: Objects/Fun/sharkplush.rsi
+    state: blue
+  product: CrateFunSharkPlushieBulk
+  cost: 500
+  category: cargoproduct-category-name-fun
+  group: market
 
 - type: cargoProduct
   id: FunBoardGames

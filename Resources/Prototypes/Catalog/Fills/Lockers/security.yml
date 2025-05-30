@@ -132,15 +132,13 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesGlassesSecurity
-        prob: 0.3
-      - id: ClothingEyesHudSecurity
-        prob: 0.3
+      - id: ClothingEyesGlassesNoir
       - id: ClothingHeadHatFedoraBrown
       - id: ClothingHeadHatDetGadget
       - id: ClothingNeckTieDet
       - id: ClothingOuterVestDetective
-      - id: ClothingOuterCoatDetective
+      - id: ClothingOuterCoatDetectiveLoadout
+      - id: FlippoEngravedLighter
       - id: FlashlightSeclite
       - id: ForensicScanner
       - id: LogProbeCartridge

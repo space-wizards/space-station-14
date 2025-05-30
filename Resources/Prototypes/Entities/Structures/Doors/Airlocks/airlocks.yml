@@ -42,6 +42,16 @@
 
 - type: entity
   parent: Airlock
+  id: AirlockSalvage
+  suffix: Salvage
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/salvage.rsi
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: Airlock
   id: AirlockHydroponics
   suffix: Hydroponics
   components:
@@ -204,6 +214,16 @@
     sprite: Structures/Doors/Airlocks/Glass/cargo.rsi
   - type: PaintableAirlock
     department: Cargo
+  - type: Wires
+    layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockSalvageGlass
+  suffix: Salvage
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/salvage.rsi
   - type: Wires
     layoutId: AirlockCargo
 

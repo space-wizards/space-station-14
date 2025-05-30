@@ -6,8 +6,6 @@
   components:
     - type: SpaceGarbage
     - type: ExpendableLight
-      spentName: expendable-light-spent-green-glowstick-name
-      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900 # time in seconds
       glowColorLit: "#00FF00"
       fadeOutDuration: 300

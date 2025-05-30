@@ -1,3 +1,4 @@
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Starlight.TextToSpeech;
@@ -74,6 +75,8 @@ public sealed partial class HumanoidAppearanceComponent : Component
 
     [DataField, AutoNetworkedField]
     public Color EyeColor = Color.Brown;
+    [DataField, AutoNetworkedField]
+    public bool EyeGlowing = false; //starlight
 
     /// <summary>
     ///     Hair color of this humanoid. Used to avoid looping through all markings
@@ -110,6 +113,12 @@ public sealed partial class HumanoidAppearanceComponent : Component
     };
     [DataField("voice", customTypeSerializer: typeof(PrototypeIdSerializer<VoicePrototype>))]
     public string? Voice { get; set; }
+
+    /// <summary>
+    ///     The displacement maps that will be applied to specific layers of the humanoid.
+    /// </summary>
+    [DataField]
+    public Dictionary<HumanoidVisualLayers, DisplacementData> MarkingsDisplacement = new();
 }
 
 [DataDefinition]

@@ -52,6 +52,7 @@ using static Content.Server.Starlight.TextToSpeech.TTSManager;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 using System.Collections.Generic;
+using Content.Server.PowerCell;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -64,8 +65,9 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly TransformSystem _transform = default!;  // 🌟Starlight🌟
-    [Dependency] private readonly StaminaSystem _stamina = default!;
+    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;  // 🌟Starlight🌟
     [Dependency] private readonly DecalSystem _decals = default!;  // 🌟Starlight🌟
     [Dependency] private readonly FlammableSystem _flammableSystem = default!; // 🌟Starlight🌟
@@ -119,16 +121,16 @@ public sealed partial class GunSystem : SharedGunSystem
             }
         }
 
-        var fromMap = fromCoordinates.ToMap(EntityManager, TransformSystem);
-        var toMap = toCoordinates.ToMapPos(EntityManager, TransformSystem);
+        var fromMap = TransformSystem.ToMapCoordinates(fromCoordinates);
+        var toMap = TransformSystem.ToMapCoordinates(toCoordinates).Position;
         var mapDirection = toMap - fromMap.Position;
         var mapAngle = mapDirection.ToAngle();
         var angle = GetRecoilAngle(Timing.CurTime, gun, mapDirection.ToAngle());
 
         // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
-        var fromEnt = MapManager.TryFindGridAt(fromMap, out var gridUid, out var grid)
-            ? fromCoordinates.WithEntityId(gridUid, EntityManager)
-            : new EntityCoordinates(MapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
+        var fromEnt = MapManager.TryFindGridAt(fromMap, out var gridUid, out _)
+            ? TransformSystem.WithEntityId(fromCoordinates, gridUid)
+            : new EntityCoordinates(_map.GetMapOrInvalid(fromMap.MapId), fromMap.Position);
 
         var pointerLength = mapDirection.Length(); // 🌟Starlight🌟
         // Update shot based on the recoil
@@ -292,7 +294,7 @@ public sealed partial class GunSystem : SharedGunSystem
                                 break;
 
                             fromEffect = Transform(hit).Coordinates;
-                            from = fromEffect.ToMap(EntityManager, _transform);
+                            from = TransformSystem.ToMapCoordinates(fromEffect);
                             dir = ev.Direction;
                             lastUser = hit;
                         }

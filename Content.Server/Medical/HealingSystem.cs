@@ -26,6 +26,7 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Medical;
 
@@ -36,7 +37,6 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StackSystem _stacks = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
@@ -104,6 +104,7 @@ public sealed class HealingSystem : EntitySystem
             if (_stacks.GetCount(args.Used.Value, stackComp) <= 0)
                 dontRepeat = true;
         }
+        // Starlight start
         else if (healing.SolutionDrain && TryComp<SolutionContainerManagerComponent>(args.Used, out var solutionManager))
         {
             Entity<SolutionComponent>? solutionEntity = null;
@@ -127,6 +128,7 @@ public sealed class HealingSystem : EntitySystem
                     dontRepeat = true;
             }
         }
+        // Starlight end
         else
         {
             QueueDel(args.Used.Value);
@@ -143,7 +145,7 @@ public sealed class HealingSystem : EntitySystem
                 $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
         }
 
-        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
+        _audio.PlayPvs(healing.HealingEndSound, entity.Owner); // Starlight
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(entity, healing) && !dontRepeat);
@@ -219,7 +221,8 @@ public sealed class HealingSystem : EntitySystem
 
         if (TryComp<StackComponent>(uid, out var stack) && stack.Count < 1)
             return false;
-        
+
+        // Starlight start
         if (component.SolutionDrain && TryComp<SolutionContainerManagerComponent>(uid, out var solutionManager))
         {
             Entity<SolutionComponent>? solutionEntity = null;
@@ -234,15 +237,14 @@ public sealed class HealingSystem : EntitySystem
             else
                 return false;
         }
-
+         // Starlight end
         if (!HasDamage((target, targetDamage), component))
         {
             _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid, user);
             return false;
         }
 
-        _audio.PlayPvs(component.HealingBeginSound, uid,
-                AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
+        _audio.PlayPvs(component.HealingBeginSound, uid);
 
         var isNotSelf = user != target;
 
