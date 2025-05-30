@@ -43,7 +43,7 @@ namespace Content.Shared.Gravity
             UpdateShake();
         }
 
-        [Obsolete("Use the Entity<WeightlessnessComponent?> overloadd instead.")]
+        [Obsolete("Use the Entity<WeightlessnessComponent?, PhysicsComponent?> overload instead.")]
         public bool IsWeightless(Entity<WeightlessnessComponent?> entity, PhysicsComponent? body = null, TransformComponent? xform = null)
         {
             if (Resolve(entity, ref entity.Comp))
