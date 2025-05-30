@@ -63,7 +63,6 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     [Dependency] private   readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedDeviceLinkSystem _device = default!; // Goobstation
 
-    public abstract bool HasDisposals([NotNullWhen(true)] EntityUid? uid);
     public static readonly ProtoId<SourcePortPrototype> ReadyPort = "DisposalReady"; // Goobstation
     public const float PressurePerSecond = 0.05f;
     protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);

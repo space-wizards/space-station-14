@@ -42,4 +42,10 @@ public sealed partial class GasVolumePumpComponent : Component
 
     [DataField]
     public float LastMolesTransferred;
+
+    /// <summary>
+    /// Frontier - Enables the device on MapInit if set to true.
+    /// </summary>
+    [DataField]
+    public bool StartEnabled;
 }

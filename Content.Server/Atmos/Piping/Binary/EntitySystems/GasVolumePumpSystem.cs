@@ -127,7 +127,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
             pump.Enabled = true;
             UpdateAppearance(uid, pump);
-            DirtyUI(uid, pump);
             _userInterfaceSystem.CloseUi(uid, GasVolumePumpUiKey.Key);
         }
     }
