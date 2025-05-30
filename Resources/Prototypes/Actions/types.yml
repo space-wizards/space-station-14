@@ -413,6 +413,7 @@
   - type: InstantAction
     event: !type:GravityJumpEvent {}
     
+- type: entity
   id: ActionChameleonController
   name: Control clothing
   description: Change your entire outfit fast!
