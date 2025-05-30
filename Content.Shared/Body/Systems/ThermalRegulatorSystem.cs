@@ -1,13 +1,12 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Body.Systems;
+namespace Content.Shared.Body.Systems;
 
-public sealed partial class ThermalRegulatorSystem : SharedThermalRegulatorSystem
+public sealed partial class ThermalRegulatorSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedTemperatureSystem _temperature = default!;
@@ -17,10 +16,10 @@ public sealed partial class ThermalRegulatorSystem : SharedThermalRegulatorSyste
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ThermalRegulatorComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ThermalRegulatorComponent, ComponentStartup>(OnStartup);
     }
 
-    private void OnMapInit(Entity<ThermalRegulatorComponent> ent, ref MapInitEvent args)
+    private void OnStartup(Entity<ThermalRegulatorComponent> ent, ref ComponentStartup args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
     }

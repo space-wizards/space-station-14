@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Body.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(SharedThermalRegulatorSystem))]
+[Access(typeof(ThermalRegulatorSystem))]
 public sealed partial class ThermalRegulatorComponent : Component
 {
     /// <summary>
