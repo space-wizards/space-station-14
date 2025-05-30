@@ -16,14 +16,11 @@ public sealed partial class GenpopLockerMenu : FancyWindow
 
     public event Action<string, float, string>? OnConfigurationComplete;
 
-    // CCVar.
-    private int _maxIdJobLength;
-
     public GenpopLockerMenu(EntityUid owner, IEntityManager entMan)
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        _maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
 
         Title = entMan.GetComponent<MetaDataComponent>(owner).EntityName;
 
@@ -34,7 +31,8 @@ public sealed partial class GenpopLockerMenu : FancyWindow
         SentenceEdit.Text = "5";
         CrimeEdit.Text = Loc.GetString("genpop-prisoner-id-crime-default");
 
-        NameEdit.IsValid = val => !string.IsNullOrWhiteSpace(val) && val.Length <= _maxIdJobLength;
+        var maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
+        NameEdit.IsValid = val => !string.IsNullOrWhiteSpace(val) && val.Length <= maxIdJobLength;
         SentenceEdit.IsValid = val => float.TryParse(val, out var f) && f >= 0;
         CrimeEdit.IsValid = val => !string.IsNullOrWhiteSpace(val) && val.Length <= GenpopLockerComponent.MaxCrimeLength;
 
