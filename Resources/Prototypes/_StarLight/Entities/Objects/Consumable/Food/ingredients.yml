@@ -1,5 +1,5 @@
 - type: entity
-  name: cotton cake batter
+  name: cotton batter
   parent: FoodBakingBase
   id: FoodMothBatter
   description: Cook it to get a cute moth cake.
@@ -16,7 +16,7 @@
       tags:
         - ClothMade
     - type: Food
-      requiresSpecialDigestion: true- 
+      requiresSpecialDigestion: true 
     - type: SolutionContainerManager
       solutions:
         food:
