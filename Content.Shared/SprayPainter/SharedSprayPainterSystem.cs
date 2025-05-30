@@ -106,10 +106,10 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Dirty(target, paintedComponent);
 
         var ev = new EntityPaintedEvent(
-            user: args.User,
-            tool: ent,
-            prototype: args.Prototype,
-            group: args.Group);
+            User: args.User,
+            Tool: ent,
+            Prototype: args.Prototype,
+            Group: args.Group);
         RaiseLocalEvent(target, ref ev);
 
         AdminLogger.Add(LogType.Action,
