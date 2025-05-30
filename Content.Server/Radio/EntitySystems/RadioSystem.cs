@@ -30,7 +30,7 @@ using Robust.Shared.Utility;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared;
 using Content.Server.Radio.Components;
-using Content.Server.Radio.Systems;
+using Content.Server._Starlight.Radio.Systems;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -46,9 +46,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly ClothingSystem _clothingSystem = default!; //🌟Starlight🌟
-    [Dependency] private readonly InventorySystem _inventorySystem = default!; //🌟Starlight🌟
-    [Dependency] private readonly InventorySystem _inventory = default!; //🌟Starlight🌟
+    [Dependency] private readonly RadioChimeSystem _chime = default!; //🌟Starlight🌟
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -161,6 +159,7 @@ public sealed class RadioSystem : EntitySystem
             jobName = Loc.GetString("job-name-station-ai");
         }
 
+        _chime.TryGetSenderHeadsetChime(messageSource, out var chime);
         // End Starlight
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
@@ -177,8 +176,11 @@ public sealed class RadioSystem : EntitySystem
             ChatChannel.Radio,
             message,
             wrappedMessage,
-            GetNetEntity(messageSource), // Starlight
-            null);
+            NetEntity.Invalid,
+            null)
+        {
+            Chime = chime, // 🌟Starlight🌟
+        };
         var chatMsg = new MsgChatMessage { Message = chat };
         var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg, []);
 

@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using Content.Server.Chat.Systems;
 using Content.Server.Starlight.TextToSpeech;
 using Content.Shared.Humanoid;
+using Content.Shared.Radio.Components;
 using Content.Shared.Starlight;
 using Content.Shared.Starlight.CCVar;
 using Content.Shared.Starlight.TextToSpeech;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -82,15 +84,19 @@ public sealed partial class TTSSystem : EntitySystem
             || args.Message.Length > MaxChars)
             return;
 
+        var chime = TryComp<RadioChimeComponent>(args.Source, out var chimeComponent)
+            ? chimeComponent.Sound
+            : default;
+
         if (!TryComp(args.Source, out TextToSpeechComponent? senderComponent)
             || senderComponent.VoicePrototypeId is not string voiceId)
         {
-            HandleRadio(args.Receivers, args.Message, 92);
+            HandleRadio(args.Receivers, args.Message, 92, chime);
         }
         else
         {
             var voice = _prototypeManager.TryIndex(voiceId, out VoicePrototype? proto) ? proto.Voice : 1;
-            HandleRadio(args.Receivers, args.Message, voice);
+            HandleRadio(args.Receivers, args.Message, voice, chime);
         }
     }
 
@@ -248,13 +254,13 @@ public sealed partial class TTSSystem : EntitySystem
         }
     }
 
-    private async void HandleRadio(EntityUid[] uIds, string message, int voice)
+    private async void HandleRadio(EntityUid[] uIds, string message, int voice, SoundCollectionSpecifier? chime)
     {
         var soundData = await GenerateTTS(message, voice, isRadio: true);
         if (soundData is null)
             return;
 
-        RaiseNetworkEvent(new PlayTTSEvent { IsRadio = true, Data = soundData }, Filter.Entities(uIds).RemovePlayers(_ignoredRecipients));
+        RaiseNetworkEvent(new PlayTTSEvent { IsRadio = true, Chime = chime, Data = soundData }, Filter.Entities(uIds).RemovePlayers(_ignoredRecipients));
     }
 
     private async void HandleCollectiveMind(EntityUid[] uIds, string message, int voice)
