@@ -269,8 +269,7 @@ public abstract partial class SharedMoverController : VirtualController
                 tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ??
-                              MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
             wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
 
@@ -472,7 +471,8 @@ public abstract partial class SharedMoverController : VirtualController
             // Only allow pushing off of anchored things that have collision.
             if (otherCollider.BodyType != BodyType.Static ||
                 !otherCollider.CanCollide ||
-                ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 && (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
+                ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
+                 (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
                 (TryComp(otherEntity, out PullableComponent? pullable) && pullable.BeingPulled))
             {
                 continue;
