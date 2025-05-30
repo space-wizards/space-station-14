@@ -489,6 +489,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         if (ev.Reflected)
                         {
+                            hitHashSet.Clear();
                             fromEffect = Transform(hit).Coordinates;
                             from = TransformSystem.ToMapCoordinates(fromEffect);
                             dir = ev.Direction;
@@ -504,6 +505,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         if (ev.Ricocheted)
                         {
+                            hitHashSet.Clear();
                             fromEffect = _transform.ToCoordinates(result.HitEntity, new MapCoordinates(result.HitPos, fromMap.MapId));
                             from = TransformSystem.ToMapCoordinates(fromEffect);
                             dir = ev.Dir;
