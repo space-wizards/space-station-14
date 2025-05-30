@@ -25,6 +25,8 @@
     - type: Tag
       tags:
         - Cake
+
+
 - type: entity
   name: Cotton Cake
   parent: FoodCakeBase
@@ -38,9 +40,9 @@
     - type: FlavorProfile
       flavors:
         - Fiber
-        - Sweet
+        - Sweetness
     - type: SliceableFood
-      slice: FoodCakeResomiSlice
+      slice: FoodCottonCakeSlice
     - type: SolutionContainerManager
       solutions:
         food:
@@ -56,6 +58,39 @@
         - ClothMade
     - type: Food
       requiresSpecialDigestion: true
+
+- type: entity
+  name: A Slice of Cotton Cake
+  parent: FoodCottonCake
+  id: FoodCottonCakeSlice
+  description: You cut up the moff how dare you
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Consumable/Food/Custcake.rsi
+      layers:
+        - state: mothcakeslice
+    - type: FlavorProfile
+      flavors:
+        - Fiber
+        - Sweetness
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 10
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 5
+            - ReagentId: Fiber
+              Quantity: 5
+    - type: Tag
+      tags:
+        - Cake
+        - Slice
+        - ClothMade
+    - type: Food
+      requiresSpecialDigestion: true
+
+
 - type: entity
   name: A Slice of dreaming
   parent: FoodCakeSliceBase
@@ -77,10 +112,9 @@
           maxVol: 10
           reagents:
             - ReagentId: Nutriment
-              Quantity: 5
-            - ReagentId: Fiber
-              Quantity: 5
+              Quantity: 10
     - type: Tag
       tags:
         - Cake
         - Slice
+        
