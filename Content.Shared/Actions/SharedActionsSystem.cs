@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Events;
@@ -348,7 +347,9 @@ public abstract class SharedActionsSystem : EntitySystem
         var target = GetEntity(netTarget);
 
         var targetWorldPos = _transform.GetWorldPosition(target);
-        _rotateToFace.TryFaceCoordinates(user, targetWorldPos);
+
+        if (ent.Comp.RotateOnUse)
+            _rotateToFace.TryFaceCoordinates(user, targetWorldPos);
 
         if (!ValidateEntityTarget(user, target, ent))
             return;
@@ -369,7 +370,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var user = args.User;
         var target = GetCoordinates(netTarget);
-        _rotateToFace.TryFaceCoordinates(user, target.ToMapPos(EntityManager, _transform));
+
+        if (ent.Comp.RotateOnUse)
+            _rotateToFace.TryFaceCoordinates(user, _transform.ToMapCoordinates(target).Position);
 
         if (!ValidateWorldTarget(user, target, ent))
             return;
