@@ -206,7 +206,8 @@
   components:
   - type: Action
     icon:
-      sprite: Interface/Alerts/piloting.png
+      spirte: Interface/Alerts/shuttle.rsi
+      state: piloting
     keywords: [ "AI", "console", "interface" ]
     priority: -6
   - type: InstantAction
