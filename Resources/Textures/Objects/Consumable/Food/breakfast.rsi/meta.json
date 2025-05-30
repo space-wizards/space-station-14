@@ -8,10 +8,10 @@
   },
   "states": [
     {
-      "name": "fullamerican"
+        "name": "fullamerican"
     },
     {
-      "name": "fullenglish"
+        "name": "fullenglish"
     }
   ]
 }
