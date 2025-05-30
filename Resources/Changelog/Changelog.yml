@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: claustro305
-  changes:
-  - message: Fixed an issue where small lights are too hard to shoot.
-    type: Fix
-  id: 8080
-  time: '2025-03-19T15:07:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35920
 - author: aada
   changes:
   - message: Donk Co. Microwaves now burn twice as hot as their competitors.
@@ -3914,3 +3907,12 @@
   id: 8591
   time: '2025-05-30T18:11:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37914
+- author: ArtisticRoomba
+  changes:
+  - message: The TEG now shows its capable peak power output on inspect, making it
+      easier for engineers to match the TEG's power output with the current grid demand
+      (to save fuel!).
+    type: Add
+  id: 8592
+  time: '2025-05-30T21:41:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37957
