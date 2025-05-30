@@ -29,6 +29,7 @@ namespace Content.IntegrationTests.Tests.Doors
             bounds: ""-0.49,-0.49,0.49,0.49""
         layer:
         - Impassable
+    - type: Weightlessness
 
 - type: entity
   name: AirlockDummy
