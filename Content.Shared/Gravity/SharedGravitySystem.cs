@@ -1,11 +1,9 @@
 using Content.Shared.Alert;
 using Content.Shared.Inventory;
-using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Systems;
-using Content.Shared.Tools.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -33,6 +31,7 @@ namespace Content.Shared.Gravity
             SubscribeLocalEvent<GravityComponent, ComponentHandleState>(OnHandleState);
             SubscribeLocalEvent<WeightlessnessComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<WeightlessnessComponent, EntParentChangedMessage>(OnEntParentChanged);
+            SubscribeLocalEvent<WeightlessnessComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
 
             _gravityQuery = GetEntityQuery<GravityComponent>();
         }
@@ -43,39 +42,34 @@ namespace Content.Shared.Gravity
             UpdateShake();
         }
 
-        [Obsolete("Use the Entity<WeightlessnessComponent?, PhysicsComponent?> overload instead.")]
-        public bool IsWeightless(Entity<WeightlessnessComponent?> entity, PhysicsComponent? body = null, TransformComponent? xform = null)
+        [Obsolete("Use the Entity<WeightlessnessComponent?> overload instead.")]
+        public bool IsWeightless(EntityUid uid, PhysicsComponent body, TransformComponent? xform = null)
         {
-            if (Resolve(entity, ref entity.Comp))
-                return IsWeightless(entity);
+            if (TryComp<WeightlessnessComponent>(uid, out var weightless))
+                return IsWeightless((uid, weightless));
 
-            Resolve(entity, ref body, false);
-
-            if ((body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0)
+            if ((body.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0)
                 return false;
 
-            var ev = new IsWeightlessEvent(entity);
-            RaiseLocalEvent(entity, ref ev);
+            var ev = new IsWeightlessEvent(uid);
+            RaiseLocalEvent(uid, ref ev);
             if (ev.Handled)
                 return ev.IsWeightless;
 
-            if (!Resolve(entity, ref xform))
+            if (!Resolve(uid, ref xform))
                 return true;
 
             // If grid / map has gravity
-            if (EntityGridOrMapHaveGravity((entity, xform)))
+            if (EntityGridOrMapHaveGravity((uid, xform)))
                 return false;
 
             return true;
         }
 
-        public bool IsWeightless(Entity<WeightlessnessComponent?, PhysicsComponent?> entity)
+        public bool IsWeightless(Entity<WeightlessnessComponent?> entity)
         {
-            if (!Resolve(entity, ref entity.Comp2, false) || entity.Comp2.BodyType is BodyType.Static or BodyType.Kinematic)
-                return false;
-
             // If we can be weightless and are weightless, return true, otherwise return false
-            return Resolve(entity, ref entity.Comp1) && entity.Comp1.Weightless;
+            return Resolve(entity, ref entity.Comp) && entity.Comp.Weightless;
         }
 
         private bool TryWeightless(Entity<WeightlessnessComponent?, PhysicsComponent?, TransformComponent?> entity)
@@ -116,6 +110,11 @@ namespace Content.Shared.Gravity
             Dirty(entity);
         }
 
+        private void OnMapInit(Entity<WeightlessnessComponent> entity, ref MapInitEvent args)
+        {
+            RefreshWeightless((entity.Owner, entity.Comp));
+        }
+
         private void OnEntParentChanged(Entity<WeightlessnessComponent> entity, ref EntParentChangedMessage args)
         {
             // If we've moved but are still on the same grid, then don't do anything.
@@ -125,8 +124,12 @@ namespace Content.Shared.Gravity
             RefreshWeightless((entity.Owner, entity.Comp), !EntityGridOrMapHaveGravity((entity, args.Transform)));
         }
 
-        private void OnMapInit(Entity<WeightlessnessComponent> entity, ref MapInitEvent args)
+        private void OnBodyTypeChanged(Entity<WeightlessnessComponent> entity, ref PhysicsBodyTypeChangedEvent args)
         {
+            // No need to update weightlessness if we're not weightless and we're a body type that can't be weightless
+            if (args.New is BodyType.Static or BodyType.Kinematic && entity.Comp.Weightless == false)
+                return;
+
             RefreshWeightless((entity.Owner, entity.Comp));
         }
 
