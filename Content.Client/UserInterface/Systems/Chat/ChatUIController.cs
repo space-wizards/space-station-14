@@ -60,8 +60,8 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
-    [Dependency] private readonly RadioChimeSystem _chime = default!;// 🌟Starlight🌟
 
+    [UISystemDependency] private readonly RadioChimeSystem? _chime = default;// 🌟Starlight🌟
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
     [UISystemDependency] private readonly CollectiveMindSystem? _collectiveMind = default!;
@@ -882,7 +882,7 @@ public sealed class ChatUIController : UIController
             History.Add((_timing.CurTick, msg));
             MessageAdded?.Invoke(msg);
 
-            _chime.PlayChime(msg.Chime); // 🌟Starlight🌟
+            _chime?.PlayChime(msg.Chime); // 🌟Starlight🌟
 
             if (!msg.Read)
             {
