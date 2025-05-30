@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: slarticodefast
   changes:
-  - message: Paradox clones now receive any implants the original has.
-    type: Add
-  - message: Cloning pods no longer copy items in slime storage.
-    type: Fix
-  id: 8076
-  time: '2025-03-18T05:21:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35906
-- author: slarticodefast
-  changes:
   - message: Tomato Killers now take damage from weedkiller and plant b gone.
     type: Tweak
   id: 8077
@@ -3918,3 +3909,10 @@
   id: 8587
   time: '2025-05-30T15:19:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34321
+- author: Nox38
+  changes:
+  - message: Assault Rifles can now be switched between semi and full auto.
+    type: Tweak
+  id: 8588
+  time: '2025-05-30T15:50:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34907
