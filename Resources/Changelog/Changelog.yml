@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: Chameleon vests now have the same stats as winter coats (Cold protection,
-      minor heat increase, 5% slash resistance, 10% heat resistance)
-    type: Tweak
-  id: 8075
-  time: '2025-03-17T18:39:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34929
 - author: slarticodefast
   changes:
   - message: Paradox clones now receive any implants the original has.
@@ -3919,3 +3911,10 @@
   id: 8586
   time: '2025-05-30T10:07:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33887
+- author: aada
+  changes:
+  - message: Filter categories added to the cutter machine.
+    type: Add
+  id: 8587
+  time: '2025-05-30T15:19:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34321
