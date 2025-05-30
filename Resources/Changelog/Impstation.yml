@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Command airlocks have received new sprites to differentiate which heads
-      may access them.
-    type: Add
-  - message: The Administrative Assistant locker has received a new sprite to match
-      the current style of lockers.
-    type: Add
-  - message: The Musician airlock can now be selected in the spray painter tool.
-    type: Fix
-  id: 1256
-  time: '2025-03-07T22:20:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1860
 - author: SixValentine
   changes:
   - message: Fixed Embryo
@@ -4218,3 +4205,13 @@
   id: 1755
   time: '2025-05-30T11:21:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2590
+- author: widgetbeck
+  changes:
+  - message: All related replicators (should) now get a popup when the current Queen
+      dies.
+    type: Add
+  - message: Replicators are now blocked from using vendors and other machines.
+    type: Remove
+  id: 1756
+  time: '2025-05-30T19:46:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2610
