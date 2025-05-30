@@ -5,6 +5,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: Weightlessness
   - type: MovementIgnoreGravity
   - type: Sprite
     sprite: Objects/Fun/immovable_rod.rsi
@@ -37,7 +38,6 @@
     blacklist:
       tags:
       - GhostOnlyWarp
-  - type: Weightlessness
 
 - type: entity
   id: ImmovableRodDespawn
