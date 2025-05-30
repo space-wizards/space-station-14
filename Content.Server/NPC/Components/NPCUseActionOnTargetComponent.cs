@@ -11,7 +11,7 @@ namespace Content.Server.NPC.Components;
 public sealed partial class NPCUseActionOnTargetComponent : Component
 {
     [DataField("actions")]
-    public List<NPCActionsData> Actions = new();
+    public List<NpcActionData> Actions = new();
 }
 
 /// <summary>
@@ -19,7 +19,7 @@ public sealed partial class NPCUseActionOnTargetComponent : Component
 /// </summary>
 [Serializable]
 [DataDefinition]
-public sealed partial class NPCActionsData
+public sealed partial class NpcActionData
 {
     /// <summary>
     /// Prototype our Action is built from

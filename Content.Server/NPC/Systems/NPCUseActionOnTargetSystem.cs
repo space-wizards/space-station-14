@@ -58,7 +58,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         }
     }
 
-    private bool TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, NPCActionsData action, EntityUid target)
+    private bool TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, NpcActionData action, EntityUid target)
     {
         if (!Resolve(user, ref user.Comp, false))
             return false;
