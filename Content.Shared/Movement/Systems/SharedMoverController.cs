@@ -472,7 +472,7 @@ public abstract partial class SharedMoverController : VirtualController
             if (otherCollider.BodyType != BodyType.Static ||
                 !otherCollider.CanCollide ||
                 ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
-                 (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
+                (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
                 (TryComp(otherEntity, out PullableComponent? pullable) && pullable.BeingPulled))
             {
                 continue;
