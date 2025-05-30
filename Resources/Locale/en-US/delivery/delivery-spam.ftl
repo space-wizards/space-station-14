@@ -74,7 +74,7 @@ delivery-spam-3 =   Reasons to choose The Syndicate!
 
                     {"[bold]NUMBER ONE[/bold]"}
                     THEIR GUNS SUCK! THEY DON'T EVEN HAVE SNIPER RIFLES! THEIR SECURITY FORCES CAN'T EVEN CARRY BIG GUNS IN MOST SITUATIONS!
-
+                    
                     {"[bold]NUMBER TWO[/bold]"}
                     THEIR COMMANDERS? THEY DIE FROM A SINGLE SHOT! NO COOL ARMOR! JUST BANG, DEAD! LAME! OUR COMMANDERS GET COOL HARDSUITS!
 
