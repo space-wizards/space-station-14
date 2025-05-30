@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
@@ -14,6 +15,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Friction
 {
@@ -107,7 +109,10 @@ namespace Content.Shared.Friction
                 PhysicsSystem.SetAngularDamping(uid, body, friction);
 
                 if (body.BodyType != BodyType.KinematicController)
+                {
+                    DebugTools.Assert(!HasComp<InputMoverComponent>(uid), $"Input mover: {ToPrettyString(uid)} in TileFrictionController is not the correct BodyType, BodyType found: {body.BodyType}, expected: KinematicController.");
                     continue;
+                }
 
                 // Physics engine doesn't apply damping to Kinematic Controllers so we have to do it here.
                 // BEWARE YE TRAVELLER:

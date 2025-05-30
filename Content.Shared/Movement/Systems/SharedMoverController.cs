@@ -186,11 +186,14 @@ public abstract partial class SharedMoverController : VirtualController
         // If we can't move then just use tile-friction / no movement handling.
         if (!mover.CanMove
             || !PhysicsQuery.TryComp(uid, out var physicsComponent)
+            || physicsComponent.BodyType == BodyType.Static
             || PullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
         {
             UsedMobMovement[uid] = false;
             return;
         }
+
+        DebugTools.Assert(physicsComponent.BodyType == BodyType.KinematicController, $"Input mover: {ToPrettyString(uid)} in HandleMobMovement is not the correct BodyType, BodyType found: {physicsComponent.BodyType}, expected: KinematicController.");
 
         // If the body is in air but isn't weightless then it can't move
         // TODO: MAKE ISWEIGHTLESS EVENT BASED
