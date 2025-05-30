@@ -390,6 +390,8 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Crates/cage.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
     layers:
     - state: base
     - state: closed
@@ -438,9 +440,9 @@
           bounds: "-0.4,-0.4,0.4,0.29"
         density: 80
         mask:
-        - CrateMask
+        - TabletopMachineMask
         layer:
-        - LargeMobLayer
+        - TabletopMachineLayer
   - type: StaticPrice
     price: 75
 
