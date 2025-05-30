@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Luna Station
-    type: Add
-  id: 1252
-  time: '2025-03-07T06:18:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1837
-- author: DinnerCalzone
-  changes:
-  - message: Fixed the Hospitality Director's mantle requiring CE playtime instead
-      of HD playtime.
-    type: Fix
-  id: 1253
-  time: '2025-03-07T08:02:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1855
 - author: honeyed-lemons
   changes:
   - message: Update Xeno's medbay, xenoarch room, and Bar
@@ -4212,3 +4197,18 @@
   id: 1751
   time: '2025-05-30T03:31:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2618
+- author: SixValentine
+  changes:
+  - message: Hash QoL and Future Proofing.
+    type: Tweak
+  id: 1752
+  time: '2025-05-30T09:52:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2619
+- author: DinnerCalzone
+  changes:
+  - message: Space cleaner dispensers start with considerably less space cleaner in
+      them. Ask your local chemist for a resupply if you need more!
+    type: Tweak
+  id: 1753
+  time: '2025-05-30T09:51:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2621
