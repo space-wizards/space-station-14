@@ -1,8 +1,17 @@
+- type: loadoutEffectGroup
+  id: SeniorChefApron
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChef
+      time: 36000 #10 hrs ~7 rounds
+
 - type: loadout
   id: ChefCuteApron
   effects:
   - !type:GroupLoadoutEffect
-    proto: SeniorChef
+    proto: SeniorChefApron
   equipment:
     outerClothing: ClothingOuterApronCuteChef
 

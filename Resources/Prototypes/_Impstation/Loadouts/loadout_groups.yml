@@ -405,6 +405,8 @@
   - HospitalityDirectorApron
   - HospitalityDirectorVest
   - HospitalityDirectorWintercoat
+  - BartenderCuteApron
+  - ChefCuteApron
 
 - type: loadoutGroup
   id: HospitalityDirectorShoes
