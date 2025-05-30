@@ -831,6 +831,13 @@
     attributes:
       proper: true
       gender: male
+  - type: Clumsy # Pun has the shakes
+    gunShootFailDamage:
+      types:
+        Blunt: 5
+        Piercing: 4
+      groups:
+        Burn: 3
 
 - type: entity
   name: Yip Yap
@@ -891,6 +898,13 @@
       sprite: "Effects/creampie.rsi"
       state: "creampie_human"
       visible: false
+  - type: Clumsy # Yip has the shakes
+    gunShootFailDamage:
+      types:
+        Blunt: 5
+        Piercing: 4
+      groups:
+        Burn: 3
 
 
 - type: entity
