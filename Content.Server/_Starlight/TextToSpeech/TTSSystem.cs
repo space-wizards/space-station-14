@@ -254,7 +254,7 @@ public sealed partial class TTSSystem : EntitySystem
         }
     }
 
-    private async void HandleRadio(EntityUid[] uIds, string message, int voice, SoundCollectionSpecifier? chime)
+    private async void HandleRadio(EntityUid[] uIds, string message, int voice, SoundSpecifier? chime)
     {
         var soundData = await GenerateTTS(message, voice, isRadio: true);
         if (soundData is null)

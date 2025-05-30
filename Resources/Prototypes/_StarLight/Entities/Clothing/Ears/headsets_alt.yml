@@ -43,7 +43,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/bso.ogg
 
 - type: entity

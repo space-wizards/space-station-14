@@ -11,6 +11,6 @@ namespace Content.Shared.Radio.Components
     public sealed partial class RadioChimeComponent : Component
     {
         [DataField(required: true)]
-        public SoundCollectionSpecifier Sound = default!;
+        public SoundSpecifier Sound = default!;
     }
 }

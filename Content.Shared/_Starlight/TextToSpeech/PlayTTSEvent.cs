@@ -9,7 +9,7 @@ public sealed class PlayTTSEvent : EntityEventArgs
 {
     public byte[] Data { get; set; } = [];
 
-    public SoundCollectionSpecifier? Chime { get; set; }
+    public SoundSpecifier? Chime { get; set; }
     public NetEntity? SourceUid { get; set; }
     public bool IsRadio { get; set; }
     public float VolumeModifier { get; set; } = 1;

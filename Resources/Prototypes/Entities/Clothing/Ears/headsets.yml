@@ -43,7 +43,7 @@
   - type: Sprite
     sprite: Clothing/Ears/Headsets/service.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/ninja.ogg
 
 - type: entity
@@ -86,7 +86,7 @@
       - EncryptionKeyCommand
       - EncryptionKeyCommon
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/qm.ogg
 
 - type: entity
@@ -105,7 +105,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/centcom.rsi
   - type: RadioChime #Starlight
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/marauder.ogg
 
 - type: entity
@@ -123,7 +123,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/command.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/captain.ogg
 
 - type: entity
@@ -155,7 +155,7 @@
       - EncryptionKeyCommand
       - EncryptionKeyCommon
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/ce.ogg
 
 - type: entity
@@ -187,7 +187,7 @@
       - EncryptionKeyCommand
       - EncryptionKeyCommon
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/cmo.ogg
 
 - type: entity
@@ -251,7 +251,7 @@
       - EncryptionKeyCommand
       - EncryptionKeyCommon
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/rd.ogg
 
 - type: entity
@@ -270,9 +270,8 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/security.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/secoff.ogg
-
 
 - type: entity
   parent: [ClothingHeadset, BaseSecurityContraband]
@@ -291,7 +290,7 @@
   - type: Clothing
     sprite: Clothing/Ears/Headsets/brigmedic.rsi
   - type: RadioChime
-    chimeSound:
+    sound:
       path: /Audio/_Starlight/Effects/Radio/brigmedic.ogg
 
 - type: entity
