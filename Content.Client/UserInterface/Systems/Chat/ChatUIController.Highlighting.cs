@@ -89,17 +89,30 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
         for (int i = 0; i < splittedHighlights.Length; i++)
         {
             // Replace every "\" character with a "\\" to prevent "\n", "\0", etc...
-            string keyword = splittedHighlights[i].Replace("\\", "\\\\");
+            string keyword = splittedHighlights[i].Replace(@"\", @"\\");
 
             // Escape the keyword to prevent special characters like "(" and ")" to be considered valid regex.
             keyword = Regex.Escape(keyword);
 
-            // Replace any double quote (") character with a whole-word (\b) regex tag,
-            // this tag will make sure the words to match are separated by spaces or punctuation.
-            keyword = keyword.Replace("\"", "\\b");
+            // 1. Since the "["s in WrappedMessage are already sanitized, add 2 extra "\"s
+            // to make sure it matches the literal "\" before the square bracket.
+            keyword = keyword.Replace(@"\[", @"\\\[");
+
+            // If present, replace the double quotes at the edges with tags
+            // that make sure the words to match are separated by spaces or punctuation.
+            // NOTE: The reason why we don't use \b tags is that \b doesn't match reverse slash characters "\" so
+            // a pre-sanitized (see 1.) string like "\[test]" wouldn't get picked up by the \b.
+            if (keyword.Count(c => (c == '"')) > 0)
+            {
+                // Matches the last double quote character.
+                keyword = Regex.Replace(keyword, "\"$", "(?!\\w)");
+                // When matching for the first double quote character we also consider the possibility
+                // of the double quote being preceded by a @ character.
+                keyword = Regex.Replace(keyword, "^\"|(?<=^@)\"", "(?<!\\w)");
+            }
 
             // Make sure any name tagged as ours gets highlighted only when others say it.
-            keyword = keyword.Replace("@", "(?<=(?<=/name.*)|(?<=,.*\"\".*))");
+            keyword = Regex.Replace(keyword, "^@", "(?<=(?<=/name.*)|(?<=,.*\"\".*))");
 
             _highlights.Add(keyword);
         }
