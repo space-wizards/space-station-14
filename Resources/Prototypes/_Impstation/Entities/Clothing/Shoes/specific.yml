@@ -25,9 +25,9 @@
     - type: ItemToggle
       onUse: false
       onActivate: false
-      soundActivate: 
+      soundActivate:
         path: /Audio/_Impstation/Effects/Footsteps/jesterstep_on.ogg
-      soundDeactivate: 
+      soundDeactivate:
         path: /Audio/_Impstation/Effects/Footsteps/jesterstep_off.ogg
 
 - type: entity
@@ -48,9 +48,9 @@
     - type: ItemToggle
       onUse: false
       onActivate: false
-      soundActivate: 
+      soundActivate:
         path: /Audio/_Impstation/Effects/Footsteps/jesterstep_on.ogg
-      soundDeactivate: 
+      soundDeactivate:
         path: /Audio/_Impstation/Effects/Footsteps/jesterstep_off.ogg
 
 - type: entity
@@ -71,7 +71,10 @@
   - type: ItemToggle
     onUse: false
     onActivate: false
-    soundActivate: 
+    soundActivate:
       path: /Audio/_Impstation/Effects/Footsteps/jesterstep_on.ogg
-    soundDeactivate: 
+    soundDeactivate:
       path: /Audio/_Impstation/Effects/Footsteps/jesterstep_off.ogg
+  - type: Tag
+    tags:
+    - WhitelistChameleon

@@ -19,3 +19,6 @@
     sprite: _Impstation/Clothing/Shoes/Misc/angelsandals.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Shoes/Misc/angelsandals.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon

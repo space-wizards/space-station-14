@@ -74,6 +74,9 @@
     sprite: _Impstation/Clothing/Neck/Misc/angelwings.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Neck/Misc/angelwings.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingNeckBase
@@ -85,3 +88,6 @@
     sprite: _Impstation/Clothing/Neck/Misc/devilwings.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Neck/Misc/devilwings.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon

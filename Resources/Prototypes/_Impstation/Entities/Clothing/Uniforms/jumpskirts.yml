@@ -216,3 +216,6 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/angeldress.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/angeldress.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon

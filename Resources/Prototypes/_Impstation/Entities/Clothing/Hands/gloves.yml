@@ -60,3 +60,6 @@
     fiberMaterial: fibers-web
     fiberColor: fibers-white
   - type: FingerprintMask
+  - type: Tag
+    tags:
+    - WhitelistChameleon

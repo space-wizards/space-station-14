@@ -249,7 +249,7 @@
     tags:
     - ClothMade
     - WhitelistChameleon
-    
+
 - type: entity
   parent: ClothingHeadHatHolyWatermelon
   id: ClothingHeadHalo
@@ -261,3 +261,6 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/holyhatmelon.rsi
   - type: Armor
+  - type: Tag
+    tags:
+    - WhitelistChameleon
