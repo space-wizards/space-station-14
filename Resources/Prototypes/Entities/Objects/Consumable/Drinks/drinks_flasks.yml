@@ -37,9 +37,6 @@
     closeable: true
     closeSound:
       collection: bottleCloseSounds
-  - type: Shakeable
-  - type: PressurizedSolution
-    solution: drink
 
 # Flasks
 
