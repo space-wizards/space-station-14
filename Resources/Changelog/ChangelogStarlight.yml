@@ -6408,4 +6408,11 @@ Entries:
   id: 887
   time: '2025-05-30T02:59:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/680
+- author: Citrea
+  changes:
+  - message: Gun magazines for Starlight guns wont display ERROR when held anymore.
+    type: Fix
+  id: 888
+  time: '2025-05-30T20:48:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/720
 
