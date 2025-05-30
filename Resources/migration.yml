@@ -641,3 +641,6 @@ ClothingNeckCloakMiner: null
 # 2025-05-22
 MatterBinStockPart: MicroManipulatorStockPart
 CapacitorStockPart: MicroManipulatorStockPart
+
+# 2025-05-30
+SpawnHonkBot: SpawnMobHonkBot
