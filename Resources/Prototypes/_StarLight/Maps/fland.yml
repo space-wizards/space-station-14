@@ -4,7 +4,7 @@
   mapPath: /Maps/_Starlight/Stations/Fland.yml
   minPlayers: 65
   stations:
-    Fland:
+    StarlightFland:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
