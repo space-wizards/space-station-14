@@ -35,8 +35,8 @@ public sealed class RadioChimeSystem : EntitySystem
     {
         base.Initialize();
 
-        Subs.CVar(_cfg, StarlightCCVars.TTSClientEnabled, x => IsMuted = x, true);
-        Subs.CVar(_cfg, StarlightCCVars.RadioChimeMuted, x => _ttsEnabled = x, true);
+        Subs.CVar(_cfg, StarlightCCVars.TTSClientEnabled, x => _ttsEnabled = x, true);
+        Subs.CVar(_cfg, StarlightCCVars.RadioChimeMuted, x => IsMuted = x, true);
     }
 
     public void PlayChime(SoundSpecifier? chimeSound)
