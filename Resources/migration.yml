@@ -646,3 +646,7 @@ CapacitorStockPart: MicroManipulatorStockPart
 WeaponEnergyTurretStation: WeaponEnergyTurretSecurity
 WeaponEnergyTurretStationControlPanel: WeaponEnergyTurretSecurityControlPanel
 WeaponEnergyTurretStationMachineCircuitboard: WeaponEnergyTurretSecurityMachineCircuitboard
+
+# 2025-05-30
+SpawnHonkBot: SpawnMobHonkBot
+

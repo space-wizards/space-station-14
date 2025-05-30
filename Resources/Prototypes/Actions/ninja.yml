@@ -1,73 +1,82 @@
 # gloves
 - type: entity
+  parent: BaseToggleAction
   id: ActionToggleNinjaGloves
   name: Toggle ninja gloves
   description: Toggles all glove actions on left click. Includes your doorjack, draining power, stunning enemies and hacking certain computers.
   components:
-  - type: InstantAction
+  - type: Action
     priority: -13
-    event: !type:ToggleActionEvent {}
 
 # suit
 - type: entity
+  parent: BaseAction
   id: ActionCreateThrowingStar
   name: Create throwing star
   description: Channels suit power into creating a throwing star that deals extra stamina damage.
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 0.5
     icon:
       sprite: Objects/Weapons/Throwable/throwing_star.rsi
       state: icon
     itemIconStyle: NoItem
     priority: -10
+  - type: InstantAction
     event: !type:CreateItemEvent {}
 
 - type: entity
+  parent: BaseAction
   id: ActionRecallKatana
   name: Recall katana
   description: Teleports the Energy Katana linked to this suit to its wearer, cost based on distance.
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 1
     icon:
       sprite: Objects/Weapons/Melee/energykatana.rsi
       state: icon
     itemIconStyle: NoItem
     priority: -11
+  - type: InstantAction
     event: !type:RecallKatanaEvent {}
 
 - type: entity
+  parent: BaseAction
   id: ActionNinjaEmp
   name: EM Burst
   description: Disable any nearby technology with an electro-magnetic pulse.
   components:
-  - type: InstantAction
+  - type: Action
     icon:
       sprite: Objects/Weapons/Grenades/empgrenade.rsi
       state: icon
     itemIconStyle: BigAction
     priority: -13
+  - type: InstantAction
     event: !type:NinjaEmpEvent {}
 
 - type: entity
+  parent: BaseAction
   id: ActionTogglePhaseCloak
   name: Phase cloak
   description: Toggles your suit's phase cloak. Beware that if you are hit, all abilities are disabled for 5 seconds, including your cloak!
   components:
-  - type: InstantAction
+  - type: Action
     # have to plan (un)cloaking ahead of time
     useDelay: 5
     priority: -9
+  - type: InstantAction
     event: !type:ToggleActionEvent
 
 # katana
 - type: entity
+  parent: BaseAction
   id: ActionEnergyKatanaDash
   name: Katana dash
   description: Teleport to anywhere you can see, if your Energy Katana is in your hand.
   components:
-  - type: WorldTargetAction
+  - type: Action
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: blink
@@ -77,6 +86,8 @@
       params:
         volume: 5
     priority: -12
-    event: !type:DashEvent
+  - type: TargetAction
     checkCanAccess: false
     range: 0
+  - type: WorldTargetAction
+    event: !type:DashEvent

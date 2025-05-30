@@ -1,66 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Added NanoTask
-    type: Add
-  id: 8066
-  time: '2025-03-15T16:24:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34095
-- author: K-Dynamic
-  changes:
-  - message: Renamed "shell box (X)" to "ammunition box (.50 X)" to match existing
-      naming scheme, and are thus easier to find in certain vendors and fabricators.
-    type: Tweak
-  id: 8067
-  time: '2025-03-15T16:43:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35326
-- author: VerinSenpai
-  changes:
-  - message: Holopads now collide with walls instead of phasing through them.
-    type: Fix
-  id: 8068
-  time: '2025-03-16T00:41:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34300
-- author: Tayrtahn
-  changes:
-  - message: Cyborgs no longer have their brains removed if the salvage site they
-      are on despawns.
-    type: Fix
-  id: 8069
-  time: '2025-03-16T18:15:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35855
-- author: slarticodefast
-  changes:
-  - message: Paradox clones now recieve a copy of (almost) all the inventory items
-      their original has.
-    type: Tweak
-  id: 8070
-  time: '2025-03-16T22:02:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35838
-- author: Errant
-  changes:
-  - message: Some ghostrole antagonists were incorrectly not marked as such in the
-      round end playerlist. Now all antagonists are sorted to the top and have red
-      names.
-    type: Fix
-  id: 8071
-  time: '2025-03-16T22:11:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35832
-- author: slarticodefast
-  changes:
-  - message: Paradox clones now receive any objective the original had.
-    type: Add
-  id: 8072
-  time: '2025-03-16T22:24:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35829
-- author: Errant-4
-  changes:
-  - message: The Syndicate Instigator shuttle's crew now has the proper antagonist
-      role type.
-    type: Fix
-  id: 8073
-  time: '2025-03-17T16:27:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35892
 - author: SlamBamActionman
   changes:
   - message: The Syndicate Backpack can now fit more items (35 item slots, from 28).
@@ -3915,3 +3853,65 @@
   id: 8577
   time: '2025-05-27T21:21:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37866
+- author: SlamBamActionman
+  changes:
+  - message: Seismic Charges now trigger the timer when sent a signal, instead of
+      detonating instantly.
+    type: Tweak
+  - message: Signal Triggers for modular grenades now detonate after a 3 second delay.
+    type: Tweak
+  id: 8578
+  time: '2025-05-28T07:31:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34465
+- author: Minemoder5000
+  changes:
+  - message: Grape juice cups now contain grape juice.
+    type: Fix
+  id: 8579
+  time: '2025-05-28T09:32:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37895
+- author: Moomoobeef
+  changes:
+  - message: Made high-viz vest less visible.
+    type: Tweak
+  id: 8580
+  time: '2025-05-28T09:39:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37869
+- author: deltanedas
+  changes:
+  - message: Diona "Gib yourself!" action now has a suicide warning like microbombs.
+    type: Tweak
+  id: 8581
+  time: '2025-05-28T19:52:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/27422
+- author: sowelipililimute
+  changes:
+  - message: Plants can process nutrition again
+    type: Fix
+  - message: Plants can process robust harvest again
+    type: Fix
+  id: 8582
+  time: '2025-05-28T22:51:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37912
+- author: mhamster
+  changes:
+  - message: Chameleon clothes are now affected by any kind of EMP explosion, which
+      makes them go wild and change your current outfit to a random mess once.
+    type: Tweak
+  id: 8583
+  time: '2025-05-30T00:06:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30924
+- author: brainfood1183
+  changes:
+  - message: Bananium Rock Anomaly added
+    type: Add
+  id: 8584
+  time: '2025-05-30T01:16:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37787
+- author: Seam_Less
+  changes:
+  - message: Added practice magazines to the Secfab as a roundstart recipe
+    type: Add
+  id: 8585
+  time: '2025-05-30T01:24:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37710
