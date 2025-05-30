@@ -37,6 +37,7 @@
     blacklist:
       tags:
       - GhostOnlyWarp
+  - type: Weightlessness
 
 - type: entity
   id: ImmovableRodDespawn
