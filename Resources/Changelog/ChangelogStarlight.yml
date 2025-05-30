@@ -6436,4 +6436,12 @@ Entries:
   id: 891
   time: '2025-05-30T22:12:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/723
+- author: Happyrobot33
+  changes:
+  - message: Fixed All Starlightified upstream maps not initializing properly due
+      to wizden bugfix.
+    type: Fix
+  id: 892
+  time: '2025-05-30T22:44:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/722
 
