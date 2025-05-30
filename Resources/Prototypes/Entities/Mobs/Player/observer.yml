@@ -44,7 +44,24 @@
     color: "#fff8"
     layers:
     - state: animated
+      map: [ "ghostVariant" ]
       shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.GhostVisuals.Damage:
+        ghostVariant:
+          ghost_blunt: { state: ghost_blunt }
+          ghost_slash: { state: ghost_slash }
+          ghost_pierce: { state: ghost_pierce }
+          ghost_heat: { state: ghost_heat }
+          ghost_cold: { state: ghost_cold }
+          ghost_radiation: { state: ghost_radiation }
+          ghost_cellular: { state: ghost_cellular }
+          ghost_poison: { state: ghost_poison }
+          ghost_airloss: { state: ghost_airloss }
+          ghost_explosion: { state: ghost_explosion }
+          ghost_bloodloss: { state: animated }
   - type: ContentEye
     maxZoom: 1.44,1.44
   - type: Eye
