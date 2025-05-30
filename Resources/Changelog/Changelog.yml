@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Donk Co. Microwaves now burn twice as hot as their competitors.
-    type: Tweak
-  id: 8081
-  time: '2025-03-19T22:33:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35937
 - author: TiniestShark
   changes:
   - message: Added inhand and neck sprites to the snake plushie.
@@ -3916,3 +3909,10 @@
   id: 8592
   time: '2025-05-30T21:41:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37957
+- author: Centronias
+  changes:
+  - message: Headphones show animated music notes when activated again.
+    type: Fix
+  id: 8593
+  time: '2025-05-30T23:53:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35341
