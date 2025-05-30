@@ -3,9 +3,10 @@
   parent: [BaseRevUplinkRadio, StorePresetUSSP, BaseSovietContraband]
   name: Svyaz-UZL radio
   description: Soviet comm-link node radio in broad use by USSP forces. This one has been modified for SKB agents and their assets. Unauthorized use is strongly discouraged, because we will find you.
-  tags:
-  - SubdermalImplant
   components:
+  - type: Tag
+    tags:
+    - SubdermalImplant
   - type: Store
     balance:
       Telebond: 0
@@ -15,9 +16,10 @@
   parent: [BaseRevUplinkRadio, StorePresetUSSP, BaseSovietContraband]
   name: Svyaz-UZL radio (Debug)
   description: Soviet comm-link node radio in broad use by USSP forces. This one has been modified for SKB agents and their assets. Unauthorized use is strongly discouraged, because we will find you.
-  tags:
-  - SubdermalImplant
   components:
+  - type: Tag
+    tags:
+    - SubdermalImplant
   - type: Store
     balance:
       Telebond: 1000

@@ -1,5 +1,5 @@
 - type: stack
   id: Telebond
   name: telebond
-  icon: _StarLight/Objects/Specific/USSP/telebond.rsi
+  icon: _Starlight/Objects/Specific/USSP/telebond.rsi
   spawn: Telebond1

@@ -16,8 +16,6 @@
     - Flash
     - ClothingEyesGlassesSunglasses
     - USSPUplinkImplanter
-  implants:
-    # Removed USSPUplinkRadioPreset to prevent starting implanted
 
 - type: antag
   id: Rev
