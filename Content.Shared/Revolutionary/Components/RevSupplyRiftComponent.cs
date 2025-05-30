@@ -1,13 +1,14 @@
 using Content.Shared.Dragon;
-using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Revolutionary.Components;
+namespace Content.Shared.Revolutionary.Components;
 
 /// <summary>
 /// Component for the revolutionary supply rift.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class RevSupplyRiftComponent : Component
 {
     /// <summary>

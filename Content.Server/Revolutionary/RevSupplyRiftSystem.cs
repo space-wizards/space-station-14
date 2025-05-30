@@ -5,7 +5,6 @@ using Content.Server.NPC;
 using Content.Server.NPC.Systems;
 using Content.Server.Pinpointer;
 using Content.Shared.Store.Components;
-using Content.Server.Revolutionary.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Dragon;

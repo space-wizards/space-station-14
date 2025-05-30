@@ -21,3 +21,4 @@
   - type: Store
     balance:
       Telebond: 1000
+      Conversion: 1000

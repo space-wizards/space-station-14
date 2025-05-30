@@ -1,4 +1,5 @@
 using Content.Shared.Dragon;
+using Content.Shared.Revolutionary.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
 
