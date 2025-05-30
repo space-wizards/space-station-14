@@ -6347,4 +6347,65 @@ Entries:
   id: 879
   time: '2025-05-29T01:21:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/585
+- author: Cyanogen
+  changes:
+  - message: Meow mrrp! :3 (Give staff roundstart coder socks.)
+    type: Add
+  id: 880
+  time: '2025-05-30T02:06:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/717
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cybernetic limb active abilities are now disabled upon being amputated.
+    type: Fix
+  id: 881
+  time: '2025-05-30T02:20:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/713
+- author: STARLIGHT TEAM
+  changes:
+  - message: Money now appears on the ATM instead of the AI core when the AI uses
+      the ATM.
+    type: Fix
+  id: 882
+  time: '2025-05-30T02:23:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/712
+- author: STARLIGHT TEAM
+  changes:
+  - message: ATM UI properly updates when you use the ATM as AI now, instead of showing
+      the previous user.
+    type: Fix
+  id: 883
+  time: '2025-05-30T02:23:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/712
+- author: RoadTrain
+  changes:
+  - message: Fixed the ripley mk2 requiring the exosuit upgrade kit for SOME reason
+      as part of its' construction.
+    type: Fix
+  id: 884
+  time: '2025-05-30T02:43:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/700
+- author: Professor Renderer
+  changes:
+  - message: Added the weh-pet. It's a lizard plushie if it was fused with a trumpet.
+      Can be found in maints lockers as rare loot.
+    type: Add
+  id: 885
+  time: '2025-05-30T02:52:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/693
+- author: choccy
+  changes:
+  - message: 22 new posters of various flavours, find 'em all!
+    type: Add
+  id: 886
+  time: '2025-05-30T02:56:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/691
+- author: walksanatora
+  changes:
+  - message: Signing "Reasons to join the Syndicate" spam mail now has a 25% chance
+      to turn you into a traitor
+    type: Add
+  id: 887
+  time: '2025-05-30T02:59:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/680
 

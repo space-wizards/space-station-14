@@ -85,3 +85,8 @@ public sealed partial class PaperComponent : Component
         Written
     }
 }
+
+//#region Starlight
+[ByRefEvent]
+public record struct PaperSignedEvent(EntityUid Signer);
+//#endregion Starlight

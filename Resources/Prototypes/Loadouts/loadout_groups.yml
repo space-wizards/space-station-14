@@ -53,6 +53,7 @@
   - TowelColorWhite
   - TowelColorYellow
   - SuperSynthesizerInstrument # 🌟Starlight🌟
+  - ClothingUnderSocksCoder # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: Glasses
@@ -1070,12 +1071,12 @@
   - CorpsmanBelt #Starlight
 
 #Starlight Start
-- type: loadoutGroup 
+- type: loadoutGroup
   id: BrigmedicGloves
   name: loadout-group-brigmedic-gloves
   loadouts:
   - Nitrile
-  - BlackNitrile 
+  - BlackNitrile
 #Starlight End
 
 - type: loadoutGroup

@@ -1,0 +1,13 @@
+- type: entity
+  id: MailSyndicateSpamLetter
+  name: Reasons to choose The Syndicate!
+  description: An advertisement for the The Syndicate.
+  parent: Paper
+  components:
+    - type: Paper
+      content: delivery-spam-reasons-to-join-syndicate
+    - type: AntagOnSign
+      chance: 0.25
+      antags:
+        - antag: Traitor
+          targetComponent: TraitorRule
