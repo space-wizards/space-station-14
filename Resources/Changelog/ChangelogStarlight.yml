@@ -6385,4 +6385,12 @@ Entries:
   id: 884
   time: '2025-05-30T02:43:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/700
+- author: Professor Renderer
+  changes:
+  - message: Added the weh-pet. It's a lizard plushie if it was fused with a trumpet.
+      Can be found in maints lockers as rare loot.
+    type: Add
+  id: 885
+  time: '2025-05-30T02:52:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/693
 
