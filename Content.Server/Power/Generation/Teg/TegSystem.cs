@@ -1,7 +1,10 @@
-﻿using Content.Server.Atmos.EntitySystems;
+﻿using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Audio;
+using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
@@ -14,6 +17,7 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Power.Generation.Teg;
 
@@ -162,7 +166,7 @@ public sealed class TegSystem : EntitySystem
             // Reduce efficiency at low temperature differences to encourage burn chambers (instead
             // of just feeding the TEG room temperature gas from an infinite gas miner).
             var dT = Thot - Tcold;
-            N *= MathF.Tanh(dT / 700); // https://www.wolframalpha.com/input?i=tanh(x/700)+from+0+to+1000
+            N *= MathF.Tanh(dT/700); // https://www.wolframalpha.com/input?i=tanh(x/700)+from+0+to+1000
 
             var transfer = Wmax * N;
             electricalEnergy = transfer * component.PowerFactor;
@@ -298,9 +302,7 @@ public sealed class TegSystem : EntitySystem
         if (_pointLight.TryGetLight(ent, out var pointLight))
         {
             _pointLight.SetEnabled(ent, powered, pointLight);
-            _pointLight.SetColor(ent,
-                speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow,
-                pointLight);
+            _pointLight.SetColor(ent, speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow, pointLight);
         }
     }
 
@@ -360,8 +362,8 @@ public sealed class TegSystem : EntitySystem
     private (PipeNode inlet, PipeNode outlet) GetPipes(EntityUid uidCirculator)
     {
         var nodeContainer = _nodeContainerQuery.GetComponent(uidCirculator);
-        var inlet = (PipeNode)nodeContainer.Nodes[NodeNameInlet];
-        var outlet = (PipeNode)nodeContainer.Nodes[NodeNameOutlet];
+        var inlet = (PipeNode) nodeContainer.Nodes[NodeNameInlet];
+        var outlet = (PipeNode) nodeContainer.Nodes[NodeNameOutlet];
 
         return (inlet, outlet);
     }
