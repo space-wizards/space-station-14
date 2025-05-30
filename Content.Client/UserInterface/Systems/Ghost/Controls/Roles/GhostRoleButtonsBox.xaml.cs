@@ -23,7 +23,6 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
             foreach (var role in roles)
             {
-
                 var button = new GhostRoleEntryButtons(role);
                 button.RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
                 button.FollowButton.OnPressed += _ => OnRoleFollow?.Invoke(role);

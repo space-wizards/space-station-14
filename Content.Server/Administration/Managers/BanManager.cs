@@ -345,7 +345,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
         foreach (var role in roles)
         {
-            if ( bans.Contains(role))
+            if (bans.Contains(role))
                 return true;
         }
 

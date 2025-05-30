@@ -209,7 +209,6 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         else if (role.StartsWith(AntagPrefix, StringComparison.Ordinal))
             role = role[AntagPrefix.Length..];
 
-        var cvar = _cfg.GetCVar(CCVars.GameRoleTimers);
         _prototypes.TryIndex<JobPrototype>(role, out job);
         _prototypes.TryIndex<AntagPrototype>(role, out antag);
 
