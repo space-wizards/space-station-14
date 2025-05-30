@@ -6444,4 +6444,26 @@ Entries:
   id: 892
   time: '2025-05-30T22:44:04.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/722
+- author: Happyrobot33
+  changes:
+  - message: Added genpop accesses to access configurator.
+    type: Add
+  id: 893
+  time: '2025-05-30T22:53:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/724
+- author: Happyrobot33
+  changes:
+  - message: Made turnstile deconstruction time WAY longer, it is now 15 ish seconds
+      instead of the 5 before, now using almost all the tools.
+    type: Tweak
+  id: 894
+  time: '2025-05-30T22:53:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/724
+- author: Happyrobot33
+  changes:
+  - message: Made turnstile construction time slightly longer.
+    type: Tweak
+  id: 895
+  time: '2025-05-30T22:53:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/724
 
