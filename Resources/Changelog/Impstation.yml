@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Update Xeno's medbay, xenoarch room, and Bar
-    type: Tweak
-  id: 1254
-  time: '2025-03-08T06:15:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1867
 - author: hivehum
   changes:
   - message: More Syndicate uniforms are considered minor contraband.
@@ -4212,3 +4205,13 @@
   id: 1753
   time: '2025-05-30T09:51:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2621
+- author: kipdotnet
+  changes:
+  - message: The frilly aprons for bartender and chef are now unlocked at 10 hours
+      each, down from 30.
+    type: Tweak
+  - message: Hospitality directors can now choose a frilly apron if they have it unlocked.
+    type: Tweak
+  id: 1754
+  time: '2025-05-30T09:56:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2599
