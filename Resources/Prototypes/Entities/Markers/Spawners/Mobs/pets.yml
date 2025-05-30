@@ -214,15 +214,19 @@
     - state: green
     - state: monkey
       sprite: Mobs/Animals/monkey.rsi
-  - type: ConditionalSpawner
-    prototypes:
-      - MobMonkeyPunpun
-      - MobMonkeyPunpun
-      - MobMonkeyPunpun
-      - MobMonkeyPunpun # 4/7 chance
-      - MobKoboldYip
-      - MobKoboldYip # 2/7 chance
-      - MobScurretWaWa # 1/7 chance
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: BartenderAssistantTable
+
+- type: entityTable
+  id: BartenderAssistantTable
+  table: !type:GroupSelector
+    children:
+    - id: MobMonkeyPunpun
+      weight: 7
+    - id: MobKoboldYip
+      weight: 2
+    - id: MobScurretWaWa
 
 - type: entity
   parent: MarkerBase
