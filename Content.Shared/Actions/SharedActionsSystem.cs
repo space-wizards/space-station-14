@@ -58,6 +58,7 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<ActionsComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<ActionsComponent, ComponentGetState>(OnGetState);
 
+        SubscribeLocalEvent<ActionComponent, ActionValidateEvent>(OnValidate);
         SubscribeLocalEvent<InstantActionComponent, ActionValidateEvent>(OnInstantValidate);
         SubscribeLocalEvent<EntityTargetActionComponent, ActionValidateEvent>(OnEntityValidate);
         SubscribeLocalEvent<WorldTargetActionComponent, ActionValidateEvent>(OnWorldValidate);
