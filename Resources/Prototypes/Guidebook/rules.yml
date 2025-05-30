@@ -41,7 +41,7 @@
   name: guide-entry-rules-ronstation-only
   ruleEntry: true
   priority: 10
-  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/RonstationRulesTemporary.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/Ronstation/RonstationRulesTemporary.xml" # Ronstation - guidebook is temporary until we get the rules right.
 
 - type: guideEntry
   id: CoreRules
