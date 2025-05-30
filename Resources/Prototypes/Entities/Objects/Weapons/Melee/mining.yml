@@ -98,6 +98,8 @@
   description: An early design of the proto-kinetic accelerator.
   components:
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: UnpoweredFlashlight
   - type: PointLight
     color: "#ffeead"
