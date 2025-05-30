@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: slarticodefast
   changes:
-  - message: Tomato Killers now take damage from weedkiller and plant b gone.
-    type: Tweak
-  id: 8077
-  time: '2025-03-18T08:00:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35898
-- author: slarticodefast
-  changes:
   - message: Paradox Clones now start with their suit sensors turned off.
     type: Tweak
   id: 8078
@@ -3916,3 +3909,12 @@
   id: 8588
   time: '2025-05-30T15:50:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34907
+- author: Alpaccalypse
+  changes:
+  - message: Absinthe makes you mildly hallucinate.
+    type: Tweak
+  - message: Absinthe is served in a smaller glass. No more vomiting.
+    type: Tweak
+  id: 8589
+  time: '2025-05-30T16:03:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34371
