@@ -102,14 +102,12 @@
         requireInputValidation: false
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.PowerMonitoringConsoleUiKey.Key:
+        type: PowerMonitoringConsoleBoundUserInterface
       enum.LatheUiKey.Key:
         type: LatheBoundUserInterface
       enum.ResearchClientUiKey.Key:
         type: ResearchClientBoundUserInterface
-      enum.RadarConsoleUiKey.Key:
-        type: RadarConsoleBoundUserInterface
-      enum.ShuttleConsoleUiKey.Key:
-        type: ShuttleConsoleBoundUserInterface
   - type: Transform
     anchored: true
   - type: Pullable
@@ -187,28 +185,25 @@
       - BorgChassis
   - type: IntrinsicUI
     uis:
-      enum.ShuttleConsoleUiKey.Key:
-        toggleAction: ActionMothershipShowShuttle
+      enum.PowerMonitoringConsoleUiKey.Key:
+        toggleAction: ActionMothershipShowPower
   - type: ShowElectrocutionHUD
-  - type: ShuttleConsole
-  - type: RadarConsole
-    maxRange: 384
-  - type: WorldLoader
-    radius: 1536
+  - type: PowerMonitoringConsole
+  - type: PowerMonitoringCableNetworks
 
 # TODO: add xenoborg control interface action
 # TODO: add xenoborg camera monitor interface action
 
 - type: entity
-  id: ActionMothershipShowShuttle
-  name: Shuttle Interface
-  description: View a Shuttle Interface.
+  id: ActionMothershipShowPower
+  name: Power Monitoring Interface
+  description: View a Power Monitoring Interface.
   components:
   - type: Action
     icon:
-      sprite: Interface/Alerts/shuttle.rsi
-      state: piloting
+      sprite: Structures/Machines/computers.rsi # TODO: custom sprite here
+      state: power_monitor
     keywords: [ "AI", "console", "interface" ]
     priority: -6
   - type: InstantAction
-    event: !type:ToggleIntrinsicUIEvent { key: enum.ShuttleConsoleUiKey.Key }
+    event: !type:ToggleIntrinsicUIEvent { key: enum.PowerMonitoringConsoleUiKey.Key }
