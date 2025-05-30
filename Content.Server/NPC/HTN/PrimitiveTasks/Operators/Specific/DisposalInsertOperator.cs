@@ -1,4 +1,6 @@
 using Content.Server.Chat.Systems;
+using Content.Shared.NPC.Components;
+using Content.Shared.Mobs.Components;
 using Content.Server.Disposal.Unit;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -7,7 +9,7 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Interaction;
-using Robust.Shared.Containers;
+using Robust.Server.Containers;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
@@ -17,7 +19,7 @@ public sealed partial class DisposalInsertOperator : HTNOperator
     private ChatSystem _chat = default!;
     private DisposalUnitSystem _disposalSystem = default!;
     private SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    private ContainerSystem _container = default!;
 
     /// <summary>
     /// Target entity to flush
@@ -36,6 +38,7 @@ public sealed partial class DisposalInsertOperator : HTNOperator
         base.Initialize(sysManager);
         _disposalSystem = sysManager.GetEntitySystem<DisposalUnitSystem>();
         _interaction = sysManager.GetEntitySystem<SharedInteractionSystem>();
+        _container = sysManager.GetEntitySystem<ContainerSystem>();
     }
 
     public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
@@ -49,7 +52,6 @@ public sealed partial class DisposalInsertOperator : HTNOperator
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         var disposalUnitQuery = _entManager.GetEntityQuery<DisposalUnitComponent>();
 
-
         if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager) || _entManager.Deleted(target))
             return HTNOperatorStatus.Failed;
 
@@ -59,14 +61,9 @@ public sealed partial class DisposalInsertOperator : HTNOperator
         if (!disposalUnitQuery.TryGetComponent(disposalTarget, out var disposalComp))
             return HTNOperatorStatus.Failed;
 
-        var container = _container.GetContainer(disposalTarget, disposalComp.Container.ID);
+        _disposalSystem.DoInsertDisposalUnit(disposalTarget, target, owner, disposalComp);
 
-        _container.Insert(target, container);
-
-        //_disposalSystem.TryInsert(disposalTarget, target, null);
-
-        //_disposalSystem.DoInsertDisposalUnit(disposalTarget, target, owner);
-
+        _chat.TryEmoteWithoutChat(owner, "whatever");
         return HTNOperatorStatus.Finished;
 
     }

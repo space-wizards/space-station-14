@@ -40,3 +40,15 @@
       operator: !type:DisposalInsertOperator
         targetKey: FlushableTarget
         disposalTargetKey: DisposalBinTarget
+
+    - !type:HTNPrimitiveTask
+      operator: !type:SetFloatOperator
+        targetKey: WaitTime
+        amount: 1
+
+    - !type:HTNPrimitiveTask
+      operator: !type:WaitOperator
+        key: WaitTime
+      preconditions:
+      - !type:KeyExistsPrecondition
+        key: WaitTime
