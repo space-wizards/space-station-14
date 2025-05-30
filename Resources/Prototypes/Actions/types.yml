@@ -408,4 +408,5 @@
     priority: -20
     icon: { sprite: Actions/Implants/implants.rsi, state: chameleon }
     itemIconStyle: BigAction
+  - type: InstantAction
     event: !type:ChameleonControllerOpenMenuEvent

@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Implants;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Tag;
@@ -31,8 +32,10 @@ public sealed class SharedFakeMindShieldSystem : EntitySystem
 
     private void OnChameleonControllerOutfitSelected(EntityUid uid, FakeMindShieldComponent component, ChameleonControllerOutfitSelectedEvent args)
     {
-        // This assumes there is only one fake mindshield action per entity (This is currently enforced)
+        if (component.IsEnabled == args.ChameleonOutfit.HasMindShield)
+            return;
 
+        // This assumes there is only one fake mindshield action per entity (This is currently enforced)
         if (!TryComp<ActionsComponent>(uid, out var actionsComp))
             return;
 
@@ -44,24 +47,24 @@ public sealed class SharedFakeMindShieldSystem : EntitySystem
             if (!_tag.HasTag(action, FakeMindShieldImplantTag))
                 continue;
 
-            if (!TryComp<InstantActionComponent>(action, out var instantActionComp))
+            if (!TryComp<ActionComponent>(action, out var actionComp))
                 continue;
 
             actionFound = true;
 
-            if (_actions.IsCooldownActive(instantActionComp, _timing.CurTime))
+            if (_actions.IsCooldownActive(actionComp, _timing.CurTime))
                 continue;
 
             component.IsEnabled = args.ChameleonOutfit.HasMindShield;
             Dirty(uid, component);
 
-            if (instantActionComp.UseDelay != null)
-                _actions.SetCooldown(action, instantActionComp.UseDelay.Value);
+            if (actionComp.UseDelay != null)
+                _actions.SetCooldown(action, actionComp.UseDelay.Value);
 
-            _actions.SetToggled(action, component.IsEnabled);
             return;
         }
 
+        // If they don't have the action for some reason, still set it correctly.
         if (!actionFound)
         {
             component.IsEnabled = args.ChameleonOutfit.HasMindShield;
