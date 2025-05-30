@@ -48,7 +48,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
-        SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(OnTemperatureChangeAttempt);
+        Subs.SubscribeWithRelay<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt, held: false);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
 
@@ -300,20 +300,16 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         }
     }
 
-    private void OnTemperatureChangeAttempt(
-        Entity<TemperatureProtectionComponent> ent,
-        ref InventoryRelayedEvent<ModifyChangedTemperatureEvent> args
-    )
+    private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component, ModifyChangedTemperatureEvent args)
     {
-        TemperatureProtectionComponent protection = ent;
-        var coefficient = args.Args.HeatDelta < 0
-            ? protection.CoolingCoefficient
-            : protection.HeatingCoefficient;
+        var coefficient = args.HeatDelta < 0
+            ? component.CoolingCoefficient
+            : component.HeatingCoefficient;
 
         var ev = new GetTemperatureProtectionEvent(coefficient);
-        RaiseLocalEvent(ent, ref ev);
+        RaiseLocalEvent(uid, ref ev);
 
-        args.Args.HeatDelta *= ev.Coefficient;
+        args.HeatDelta *= ev.Coefficient;
     }
 
     private void ChangeTemperatureOnCollide(Entity<ChangeTemperatureOnCollideComponent> ent, ref ProjectileHitEvent args)
