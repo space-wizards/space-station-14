@@ -1,6 +1,6 @@
 using Content.Shared.DeviceNetwork;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -26,6 +26,6 @@ public sealed partial class SurveillanceCameraRouterComponent : Component
     [DataField("subnetFrequency", customTypeSerializer:typeof(PrototypeIdSerializer<DeviceFrequencyPrototype>))]
     public string? SubnetFrequencyId { get; set;  }
 
-    [DataField("setupAvailableNetworks", customTypeSerializer:typeof(PrototypeIdListSerializer<DeviceFrequencyPrototype>))]
-    public List<string> AvailableNetworks { get; private set; } = new();
+    [DataField("setupAvailableNetworks")]
+    public List<ProtoId<DeviceFrequencyPrototype>> AvailableNetworks { get; private set; } = new();
 }
