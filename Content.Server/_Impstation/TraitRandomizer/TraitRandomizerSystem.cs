@@ -8,6 +8,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Tag;
 using Content.Shared.Traits;
 using Content.Shared.Whitelist;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -18,6 +19,7 @@ public sealed partial class TraitRandomizerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
@@ -33,13 +35,13 @@ public sealed partial class TraitRandomizerSystem : EntitySystem
 
     private void OnMapInit(Entity<TraitRandomizerComponent> ent, ref MapInitEvent args)
     {
-        if (!_mind.TryGetMind(ent, out _, out var mindComponent) || mindComponent.Session == null)
+        if (!_mind.TryGetMind(ent, out _, out var mindComponent) || !_playerManager.TryGetSessionById(mindComponent.UserId, out var session))
             return;
 
         var allTraits = _prototypeManager.EnumeratePrototypes<TraitPrototype>().ToList();
         List<TraitPrototype> traits = [];
 
-        // make a list of the traits we should be adding 
+        // make a list of the traits we should be adding
         foreach (var trait in allTraits)
         {
             foreach (var category in ent.Comp.Categories)
@@ -49,7 +51,7 @@ public sealed partial class TraitRandomizerSystem : EntitySystem
             }
         }
 
-        var curProfile = (HumanoidCharacterProfile)_prefs.GetPreferences(mindComponent.Session.UserId).SelectedCharacter;
+        var curProfile = (HumanoidCharacterProfile)_prefs.GetPreferences(session.UserId).SelectedCharacter;
 
         var curTraits = curProfile.TraitPreferences.ToList();
 
@@ -65,7 +67,7 @@ public sealed partial class TraitRandomizerSystem : EntitySystem
         List<TraitPrototype> finalTraits = [];
 
         // pick a trait, ensure we don't pick it again, and add it to the final traits list. do this that many times.
-        // note: currently this ignores points limits, because I think it's funnier that way. 
+        // note: currently this ignores points limits, because I think it's funnier that way.
         for (var i = 0; i < traitsToRoll; i++)
         {
             var thisTrait = _random.Pick(traits);

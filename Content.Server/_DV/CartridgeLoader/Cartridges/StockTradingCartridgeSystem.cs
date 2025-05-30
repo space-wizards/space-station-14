@@ -4,6 +4,7 @@ using Content.Server._DV.Cargo.Components;
 using Content.Server._DV.Cargo.Systems;
 using Content.Server.Station.Systems;
 using Content.Server.CartridgeLoader;
+using Content.Shared.Cargo; // imp
 using Content.Shared.Cargo.Components;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
@@ -13,6 +14,7 @@ namespace Content.Server._DV.CartridgeLoader.Cartridges;
 public sealed class StockTradingCartridgeSystem : EntitySystem
 {
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
+    [Dependency] private readonly SharedCargoSystem _cargo = default!;
     [Dependency] private readonly StationSystem _station = default!;
 
     public override void Initialize()
@@ -74,18 +76,16 @@ public sealed class StockTradingCartridgeSystem : EntitySystem
 
     private void UpdateUI(Entity<StockTradingCartridgeComponent> ent, EntityUid loader)
     {
-        if (_station.GetOwningStation(loader) is { } station)
-            ent.Comp.Station = station;
-
-        if (!TryComp<StationStockMarketComponent>(ent.Comp.Station, out var stockMarket) ||
-            !TryComp<StationBankAccountComponent>(ent.Comp.Station, out var bankAccount))
+        if (_station.GetOwningStation(loader) is not { } station ||
+            !TryComp<StationStockMarketComponent>(station, out var stockMarket) ||
+            !TryComp<StationBankAccountComponent>(station, out var bankAccount))
             return;
 
         // Send the UI state with balance and owned stocks
         var state = new StockTradingUiState(
             entries: stockMarket.Companies,
             ownedStocks: stockMarket.StockOwnership,
-            balance: bankAccount.Balance
+            balance: _cargo.GetBalanceFromAccount((station, bankAccount), bankAccount.PrimaryAccount) // TODO: multiple accounts
         );
 
         _cartridgeLoader.UpdateCartridgeUiState(loader, state);
