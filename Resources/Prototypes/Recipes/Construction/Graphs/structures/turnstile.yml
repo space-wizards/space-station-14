@@ -27,17 +27,15 @@
         amount: 4
       - !type:DeleteEntity
       steps: #starlight, steps increased and overall time lengthened to prevent shitters
-      - tool: Welding
-        doAfter: 2.5
+      - tool: Pulsing
+        doAfter: 0.5
       - tool: Cutting
+        doAfter: 3.0
+      - tool: Screwing
+        doAfter: 2.0
+      - tool: Anchoring
         doAfter: 2.5
       - tool: Welding
-        doAfter: 2.5
-      - tool: Cutting
-        doAfter: 2.5
-      - tool: Welding
-        doAfter: 2.5
-      - tool: Cutting
-        doAfter: 2.5
+        doAfter: 4.0
       - tool: Prying
         doAfter: 5.0
