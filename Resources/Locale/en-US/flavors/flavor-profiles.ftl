@@ -181,6 +181,7 @@ flavor-complex-true-nature = like the true nature of reality
 flavor-complex-false-meat = not entirely unlike meat
 flavor-complex-paper = like mushy pulp
 flavor-complex-compressed-meat = like compressed meat
+flavor-complex-dog-food = like dog food
 
 # Drink-specific flavors.
 
@@ -343,3 +344,4 @@ flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
 flavor-weh = like weh
 flavor-hew = like hew
+
