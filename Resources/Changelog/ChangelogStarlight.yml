@@ -6393,4 +6393,11 @@ Entries:
   id: 885
   time: '2025-05-30T02:52:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/693
+- author: choccy
+  changes:
+  - message: 22 new posters of various flavours, find 'em all!
+    type: Add
+  id: 886
+  time: '2025-05-30T02:56:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/691
 
