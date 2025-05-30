@@ -12,7 +12,7 @@ namespace Content.Client.SprayPainter.UI;
 [GenerateTypedNameReferences]
 public sealed partial class SprayPainterGroup : BoxContainer
 {
-    public Action<SpriteListData>? OnButtonPressed;
+    public event Action<SpriteListData>? OnButtonPressed;
 
     public SprayPainterGroup()
     {
