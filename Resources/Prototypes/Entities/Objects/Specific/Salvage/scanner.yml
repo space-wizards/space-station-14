@@ -3,7 +3,7 @@
   parent: BaseItem
   name: mineral scanner
   description: A scanner that checks surrounding rock for useful minerals. It must be in your hand or pocket to work.
-  suffix: Unpowered
+  suffix: Always Powered
   components:
   - type: Sprite
     sprite: Objects/Specific/Mining/mineral_scanner.rsi
@@ -36,7 +36,7 @@
 - type: entity
   id: MineralScanner
   parent: [ MineralScannerUnpowered, PowerCellSlotMediumItem ]
-  suffix: Powered
+  suffix: ""
   components:
   - type: ToggleCellDraw
   - type: PowerCellDraw
@@ -58,7 +58,7 @@
   parent: MineralScannerUnpowered
   name: advanced mineral scanner
   description: A scanner that checks surrounding rock for useful minerals. It must be in your hand or pocket to work. This one has an extended range.
-  suffix: Unpowered
+  suffix: Always Powered
   components:
   - type: Sprite
     layers:
@@ -75,7 +75,7 @@
 - type: entity
   id: AdvancedMineralScanner
   parent: [ AdvancedMineralScannerUnpowered, PowerCellSlotMediumItem ]
-  suffix: Powered
+  suffix: ""
   components:
   - type: ToggleCellDraw
   - type: PowerCellDraw

@@ -21,6 +21,12 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 15
@@ -252,6 +258,41 @@
     guides:
     - CargoBounties
     - Cargo
+
+- type: entity
+  id: PaperSalvageJobLabel
+  parent: PaperCargoInvoice
+  name: salvage job shipment label
+  description: A paper label designating a crate as containing a shipment to fulfill a salvage job. Selling a crate with this will fulfill the job.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+      color: "#f7e574"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#f7e574"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperLabelType
+    paperType: Bounty
+  - type: Tag
+    tags:
+    - Document
+    - Trash
+    - Paper
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#f7e574"
+    contentImageModulate: "#f7e574"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+  - type: JobBoardLabel
+  - type: StaticPrice #infinitely printable
+    price: 0
 
 - type: entity
   name: character sheet
