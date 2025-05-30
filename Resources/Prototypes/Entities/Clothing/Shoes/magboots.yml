@@ -18,6 +18,10 @@
   - type: ComponentToggler
     components:
     - type: NoSlip
+  - type: ItemTogglePrefix
+    prefixOn: on
+  - type: ToggleClothingPrefix
+    prefixOn: on
   - type: Magboots
   - type: ClothingSpeedModifier
     walkModifier: 0.85
@@ -111,10 +115,12 @@
     size: Normal
 
 - type: entity
+  parent: BaseAction
   id: ActionToggleMagboots
   name: Toggle Magboots
   description: Toggles the magboots on and off.
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigItem
+  - type: InstantAction
     event: !type:ToggleActionEvent

@@ -8,11 +8,13 @@ using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -34,6 +36,8 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     #endregion Dependencies
+
+    private static readonly ProtoId<TagPrototype> HighRiskItemTag = "HighRiskItem";
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
 
@@ -123,10 +127,10 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             return;
 
         if (HasComp<MindContainerComponent>(morsel)
-            || _tagSystem.HasTag(morsel, "HighRiskItem")
+            || _tagSystem.HasTag(morsel, HighRiskItemTag)
             || HasComp<ContainmentFieldGeneratorComponent>(morsel))
         {
-            _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} entered the event horizon of {ToPrettyString(hungry)} and was deleted");
+            _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(morsel):player} entered the event horizon of {ToPrettyString(hungry)} and was deleted");
         }
 
         EntityManager.QueueDeleteEntity(morsel);
@@ -265,7 +269,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         var toConsume = new List<(Vector2i, Tile)>();
         foreach (var tile in tiles)
         {
-            if (CanConsumeTile(hungry, grid, tile))
+            if (CanConsumeTile(hungry, tile, grid))
                 toConsume.Add((tile.GridIndices, Tile.Empty));
         }
 
@@ -280,12 +284,12 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Checks whether an event horizon can consume a given tile.
     /// This is only possible if it can also consume all entities anchored to the tile.
     /// </summary>
-    public bool CanConsumeTile(Entity<EventHorizonComponent> hungry, Entity<MapGridComponent> grid, TileRef tile)
+    public bool CanConsumeTile(Entity<EventHorizonComponent> hungry, TileRef tile, Entity<MapGridComponent> grid)
     {
         foreach (var blockingEntity in _mapSystem.GetAnchoredEntities(grid, tile.GridIndices))
         {
             if (!CanConsumeEntity(hungry, blockingEntity))
-                return false; // Please don't eat the hull out from under the field generators.
+                return false;
         }
 
         return true;
@@ -567,11 +571,11 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         return AttemptConsumeTiles((hungry, eventHorizon), (gridId, grid), tiles);
     }
 
-    /// <inheritdoc cref="CanConsumeTile(Entity{EventHorizonComponent}, Entity{MapGridComponent}, TileRef)"/>
+    /// <inheritdoc cref="CanConsumeTile(Entity{EventHorizonComponent}, TileRef, Entity{MapGridComponent})"/>
     [Obsolete("This method is obsolete, use the Entity<T> override.")]
     public bool CanConsumeTile(EntityUid hungry, TileRef tile, MapGridComponent grid, EventHorizonComponent eventHorizon)
     {
-        return CanConsumeTile((hungry, eventHorizon), (grid.Owner, grid), tile);
+        return CanConsumeTile((hungry, eventHorizon), tile, (grid.Owner, grid));
     }
 
     /// <inheritdoc cref="ConsumeTilesInRange(Entity{EventHorizonComponent?, TransformComponent?}, float)"/>

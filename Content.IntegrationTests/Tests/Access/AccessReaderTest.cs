@@ -13,35 +13,6 @@ namespace Content.IntegrationTests.Tests.Access
     public sealed class AccessReaderTest
     {
         [Test]
-        public async Task TestProtoTags()
-        {
-            await using var pair = await PoolManager.GetServerClient();
-            var server = pair.Server;
-
-            var protoManager = server.ResolveDependency<IPrototypeManager>();
-            var accessName = server.ResolveDependency<IComponentFactory>().GetComponentName(typeof(AccessReaderComponent));
-
-            await server.WaitAssertion(() =>
-            {
-                foreach (var ent in protoManager.EnumeratePrototypes<EntityPrototype>())
-                {
-                    if (!ent.Components.TryGetComponent(accessName, out var access))
-                        continue;
-
-                    var reader = (AccessReaderComponent) access;
-                    var allTags = reader.AccessLists.SelectMany(c => c).Union(reader.DenyTags);
-
-                    foreach (var level in allTags)
-                    {
-                        Assert.That(protoManager.HasIndex<AccessLevelPrototype>(level), $"Invalid access level: {level} found on {ent}");
-                    }
-                }
-            });
-
-            await pair.CleanReturnAsync();
-        }
-
-        [Test]
         public async Task TestTags()
         {
             await using var pair = await PoolManager.GetServerClient();

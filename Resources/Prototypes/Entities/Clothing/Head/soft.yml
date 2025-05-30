@@ -18,7 +18,7 @@
     - state: icon_flipped
       map: ["foldedLayer"]
       visible: false
-      
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHeadHatBaseFlipped
@@ -69,6 +69,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - HamsterWearable
     - WhitelistChameleon
 
@@ -80,6 +81,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - HamsterWearable
     - WhitelistChameleon
 
@@ -98,7 +100,23 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatQMsoft]
   id: ClothingHeadHatQMsoftFlipped
   name: quartermaster's cap
-    
+
+- type: entity
+  parent: ClothingHeadHeadHatBaseFlippable
+  id: ClothingHeadHatCommandSoft
+  name: command cap
+  description: It's a baseball hat painted in Command colours.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Soft/commandsoft.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Soft/commandsoft.rsi
+
+- type: entity
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatCommandSoft ]
+  id: ClothingHeadHatCommandSoftFlipped
+  name: command cap
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCorpsoft
@@ -166,7 +184,7 @@
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatMimesoft
-  name: mime cap
+  name: white cap
   description: "It's a baseball hat in a tasteless white colour."
   components:
   - type: Sprite
@@ -177,7 +195,7 @@
 - type: entity
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatMimesoft]
   id: ClothingHeadHatMimesoftFlipped
-  name: mime cap
+  name: white cap
 
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
@@ -208,6 +226,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - HamsterWearable
     - WhitelistChameleon
 
@@ -219,6 +238,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - HamsterWearable
     - WhitelistChameleon
 
@@ -285,7 +305,7 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBizarreSoft]
   id: ClothingHeadHatBizarreSoftFlipped
   name: troublemaker's cap
-    
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatParamedicsoft
@@ -299,6 +319,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - HamsterWearable
     - WhitelistChameleon
 
@@ -310,5 +331,6 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - HamsterWearable
     - WhitelistChameleon

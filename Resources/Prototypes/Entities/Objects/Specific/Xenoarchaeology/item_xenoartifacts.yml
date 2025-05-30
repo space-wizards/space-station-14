@@ -1,0 +1,144 @@
+﻿- type: entity
+  parent: [BaseItem, BaseXenoArtifact]
+  id: BaseXenoArtifactItem
+  name: artifact
+  description: A strange artifact from time unknown. Looks like a good time. Fits in hand perfectly.
+  abstract: true
+  noSpawn: true
+  components:
+  # Visual
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    layers:
+    - state: ano01
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+    - state: ano01_on
+      map: [ "enum.ArtifactsVisualLayers.UnlockingEffect" ]
+      visible: false
+    - state: artifact-activation
+      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+      map: [ "enum.ArtifactsVisualLayers.ActivationEffect" ]
+      visible: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: CollisionWake
+    enabled: false
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        layer:
+        - Opaque
+        restitution: 0.3  # fite me
+        friction: 0.2
+  - type: RandomArtifactSprite
+    maxSprite: 11
+    activationTime: 2.4
+  - type: RandomSprite
+    available:
+    - enum.ArtifactsVisualLayers.UnlockingEffect:
+        ano01_on: Rainbow
+  # gameplay interactions
+  - type: Item
+    size: Normal
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    heldPrefix: ano01
+  - type: Construction
+    graph: Artifact
+    node: done
+  - type: XenoArtifact
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsDefaultTable
+        weight: 54
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsHandheldOnlyTable
+        weight: 2
+
+- type: entity
+  parent: BaseXenoArtifactItem
+  id: ComplexXenoArtifactItem
+  suffix: Hand-Sized
+  components:
+  - type: XenoArtifact
+    nodeCount:
+      min: 9
+      max: 13
+
+- type: entity
+  id: ArtifactFragment
+  parent: BaseItem
+  name: artifact fragment
+  description: A broken piece of an artifact. You could probably repair it if you had more.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/artifact_fragments.rsi
+    layers:
+    - state: ancientball1
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+  - type: RandomSprite
+    available: #yaml hero
+    - enum.ArtifactsVisualLayers.Base:
+        ancientball1: ""
+        ancientball2: ""
+        ancientball3: ""
+        ancientball4: ""
+        ancientball5: ""
+        ancientball6: ""
+        eldritchball1: ""
+        eldritchball2: ""
+        eldritchball3: ""
+        eldritchball4: ""
+        eldritchball5: ""
+        eldritchball6: ""
+        martianball1: ""
+        martianball2: ""
+        martianball3: ""
+        martianball4: ""
+        martianball5: ""
+        martianball6: ""
+        precursorball1: ""
+        precursorball2: ""
+        precursorball3: ""
+        precursorball4: ""
+        precursorball5: ""
+        precursorball6: ""
+        wizardball1: ""
+        wizardball2: ""
+        wizardball3: ""
+        wizardball4: ""
+        wizardball5: ""
+        wizardball6: ""
+  - type: Appearance
+  - type: Item
+    size: Normal
+  - type: Tag
+    tags:
+    - ArtifactFragment
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Artifexium
+        Quantity: 10
+  - type: StaticPrice
+    price: 0
+  - type: Stack
+    stackType: ArtifactFragment
+  - type: GuideHelp
+    guides:
+    - Xenoarchaeology
+
+- type: entity
+  parent: ArtifactFragment
+  id: ArtifactFragment1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

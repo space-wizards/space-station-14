@@ -114,7 +114,7 @@
 
 - type: entity
   name: survival knife
-  parent: [CombatKnife, BaseSecurityCargoContraband]
+  parent: [BaseSecurityCargoContraband, CombatKnife]
   id: SurvivalKnife
   description: Weapon of first and last resort for combatting space carp.
   components:
@@ -129,7 +129,7 @@
 
 - type: entity
   name: kukri knife
-  parent: [CombatKnife, BaseSecurityCargoContraband]
+  parent: [BaseSecurityCargoContraband, CombatKnife]
   id: KukriKnife
   description: Professionals have standards. Be polite. Be efficient. Have a plan to kill everyone you meet.
   components:
