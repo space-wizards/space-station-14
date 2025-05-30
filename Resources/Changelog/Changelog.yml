@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Errant-4
-  changes:
-  - message: The Syndicate Instigator shuttle's crew now has the proper antagonist
-      role type.
-    type: Fix
-  id: 8073
-  time: '2025-03-17T16:27:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35892
 - author: SlamBamActionman
   changes:
   - message: The Syndicate Backpack can now fit more items (35 item slots, from 28).
@@ -3916,3 +3908,10 @@
   id: 8584
   time: '2025-05-30T01:16:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37787
+- author: Seam_Less
+  changes:
+  - message: Added practice magazines to the Secfab as a roundstart recipe
+    type: Add
+  id: 8585
+  time: '2025-05-30T01:24:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37710
