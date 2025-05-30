@@ -6377,4 +6377,12 @@ Entries:
   id: 883
   time: '2025-05-30T02:23:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/712
+- author: RoadTrain
+  changes:
+  - message: Fixed the ripley mk2 requiring the exosuit upgrade kit for SOME reason
+      as part of its' construction.
+    type: Fix
+  id: 884
+  time: '2025-05-30T02:43:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/700
 
