@@ -21,14 +21,17 @@ public sealed partial class NPCUseActionOnTargetComponent : Component
 [DataDefinition]
 public sealed partial class NPCActionsData
 {
+    /// <summary>
+    /// Prototype our Action is built from
+    /// </summary>
     [DataField(required: true)]
-    public EntProtoId<TargetActionComponent> ActionId;
+    public EntProtoId<ActionComponent> ActionId;
     /// <summary>
     /// HTN blackboard key for the target entity
     /// </summary>
     [DataField] public string TargetKey = "Target";
     /// <summary>
-    /// A place to store the EntityUID of our action (might not be necessary make sure to check stupid)
+    /// The entityUid of our action
     /// </summary>
     [DataField] public EntityUid? ActionEnt;
     /// <summary>

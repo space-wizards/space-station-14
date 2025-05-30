@@ -130,7 +130,6 @@
     useDelay: 8
   - type: TargetAction
     range: 10
-  - type: EntityTargetAction
   - type: WorldTargetAction
     event: !type:GoliathSummonTentacleAction
 

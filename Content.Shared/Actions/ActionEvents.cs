@@ -181,15 +181,21 @@ public abstract partial class BaseActionEvent : HandledEntityEventArgs
     public bool Toggle;
 }
 
-[ByRefEvent]
-public readonly struct AddedActionEvent
-{
-    public readonly EntityUid Action;
-    public readonly BaseActionComponent Component;
 
-    public AddedActionEvent(EntityUid action, BaseActionComponent component)
-    {
-        Action = action;
-        Component = component;
-    }
+/// <summary>
+/// Raised directly on an entity when they have an action added to them.
+/// </summary>
+[ByRefEvent]
+public readonly struct AddedActionEvent(Entity<ActionComponent> action)
+{
+    public readonly Entity<ActionComponent> Action = action;
+}
+
+/// <summary>
+/// Raised directly on an entity when they have an action removed from them
+/// </summary>
+[ByRefEvent]
+public readonly struct RemovedActionEvent(Entity<ActionComponent> action)
+{
+    public readonly Entity<ActionComponent> Action = action;
 }

@@ -633,6 +633,8 @@ public abstract class SharedActionsSystem : EntitySystem
         performer.Comp.Actions.Add(ent);
         Dirty(performer, performer.Comp);
         ActionAdded((performer, performer.Comp), (ent, ent.Comp));
+        var ev = new AddedActionEvent(ent);
+        RaiseLocalEvent(performer, ref ev);
         return true;
     }
 
@@ -800,6 +802,8 @@ public abstract class SharedActionsSystem : EntitySystem
     /// </summary>
     protected virtual void ActionRemoved(Entity<ActionsComponent> performer, Entity<ActionComponent> action)
     {
+        var ev = new RemovedActionEvent(action);
+        RaiseLocalEvent(performer, ref ev);
         // See client-side system for UI code.
     }
 
@@ -826,7 +830,7 @@ public abstract class SharedActionsSystem : EntitySystem
     public bool TryValidAction(EntityUid user,
         EntityUid actionEnt,
         EntityUid? entTarget,
-        EntityCoordinates? actionCoords)
+        EntityCoordinates? actionCoords, bool predicted = true)
     {
         if (!_actionsQuery.TryComp(user, out var component))
             return false;
@@ -877,7 +881,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return false;
 
         // All checks passed. Perform the action!
-        PerformAction((user, component), action);
+        PerformAction((user, component), action, predicted: predicted);
         return true;
     }
 
