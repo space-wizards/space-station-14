@@ -24,13 +24,13 @@ public sealed partial class GameruleOnSignComponent : Component
     /// A Whitelist of whos signatures should count for this component.
     /// </summary>
     [DataField]
-    public EntityWhitelist Whitelist = new();
+    public EntityWhitelist? Whitelist = null;
     
     /// <summary>
     /// A Whitelist of whos signatures should not count for this component.
     /// </summary>
     [DataField]
-    public EntityWhitelist Blacklist = new();
+    public EntityWhitelist? Blacklist = null;
     
     /// <summary>
     /// What is the chance of this going on after all the signatures are collected. 1 is always, 0 is never.
