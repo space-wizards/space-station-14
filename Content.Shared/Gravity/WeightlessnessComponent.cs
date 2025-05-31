@@ -13,5 +13,5 @@ public sealed partial class WeightlessnessComponent : Component
     /// If true, this entity will be considered "weightless"
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Weightless;
+    public bool Weightless = true;
 }

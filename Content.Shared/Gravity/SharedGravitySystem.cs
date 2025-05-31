@@ -51,7 +51,7 @@ namespace Content.Shared.Gravity
             if ((body.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0)
                 return false;
 
-            var ev = new IsWeightlessEvent(uid);
+            var ev = new IsWeightlessEvent();
             RaiseLocalEvent(uid, ref ev);
             if (ev.Handled)
                 return ev.IsWeightless;
@@ -80,14 +80,14 @@ namespace Content.Shared.Gravity
             if (entity.Comp2.BodyType is BodyType.Static or BodyType.Kinematic)
                 return false;
 
+            if (!Resolve(entity, ref entity.Comp3))
+                return true;
+
             // Check if something other than the grid or map is overriding our gravity
-            var ev = new IsWeightlessEvent(entity);
+            var ev = new IsWeightlessEvent();
             RaiseLocalEvent(entity, ref ev);
             if (ev.Handled)
                 return ev.IsWeightless;
-
-            if (!Resolve(entity, ref entity.Comp3))
-                return true;
 
             return !EntityGridOrMapHaveGravity((entity, entity.Comp3));
         }
@@ -174,23 +174,19 @@ namespace Content.Shared.Gravity
 
         private void OnGravityChange(ref GravityChangedEvent ev)
         {
-            var alerts = AllEntityQuery<WeightlessnessComponent, TransformComponent>();
-            while(alerts.MoveNext(out var uid, out var weightless, out var xform))
+            var gravity = AllEntityQuery<WeightlessnessComponent, TransformComponent>();
+            while(gravity.MoveNext(out var uid, out var weightless, out var xform))
             {
                 if (xform.GridUid != ev.ChangedGridIndex || ev.HasGravity == !weightless.Weightless )
                     continue;
 
-                // If we are weightless and the grid has gravity, then update weightlessness, and vice versa
-                if (weightless.Weightless == ev.HasGravity)
-                {
-                    weightless.Weightless = TryWeightless(uid);
-                    Dirty(uid, weightless);
-                }
+                weightless.Weightless = TryWeightless(uid);
+                Dirty(uid, weightless);
 
                 if(!HasComp<AlertsComponent>(uid))
                     continue;
 
-                if (!ev.HasGravity)
+                if (weightless.Weightless)
                 {
                     _alerts.ShowAlert(uid, WeightlessAlert);
                 }
@@ -243,7 +239,7 @@ namespace Content.Shared.Gravity
     }
 
     [ByRefEvent]
-    public record struct IsWeightlessEvent(EntityUid Entity, bool IsWeightless = false, bool Handled = false) : IInventoryRelayEvent
+    public record struct IsWeightlessEvent(bool IsWeightless = false, bool Handled = false) : IInventoryRelayEvent
     {
         SlotFlags IInventoryRelayEvent.TargetSlots => ~SlotFlags.POCKET;
     }
