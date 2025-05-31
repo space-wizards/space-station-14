@@ -6,6 +6,7 @@
   components:
   - type: Action
     itemIconStyle: BigAction
+    useDelay: 90
   - type: TargetAction
     interactOnMiss: false
   - type: EntityTargetAction
