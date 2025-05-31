@@ -338,8 +338,8 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
             //fallback to target a random head
             foreach (var person in allHumans)
             {
-            if (TryComp<MindComponent>(person, out var mind) && mind.OwnedEntity is { } owned && HasComp<CommandStaffComponent>(owned))
-                antags.Add(person);
+                if (TryComp<MindComponent>(person, out var mind) && mind.OwnedEntity is { } owned && HasComp<CommandStaffComponent>(owned))
+                    antags.Add(person);
             }
 
             // just go for some random person if there's no command.

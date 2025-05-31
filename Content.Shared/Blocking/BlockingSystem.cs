@@ -139,22 +139,19 @@ public sealed partial class BlockingSystem : EntitySystem
         var msgUser = Loc.GetString("action-popup-blocking-user", ("shield", shieldName));
         var msgOther = Loc.GetString("action-popup-blocking-other", ("blockerName", blockerName), ("shield", shieldName));
 
-        if (ent.Comp.BlockingToggleAction != null)
+        // Don't allow someone to block if they're not holding the shield
+        if (!_handsSystem.IsHolding(user, ent, out _))
         {
-            // Don't allow someone to block if they're not holding the shield
-            if (!_handsSystem.IsHolding(user, ent, out _))
-            {
-                CantBlockError(user);
-                return;
-            }
+            CantBlockError(user);
+            return;
+        }
 
-            _actionsSystem.SetToggled(ent.Comp.BlockingToggleActionEntity, true);
-            if (_gameTiming.IsFirstTimePredicted)
-            {
-                _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
-                if (_gameTiming.InPrediction)
-                    _popupSystem.PopupEntity(msgUser, user, user);
-            }
+        _actionsSystem.SetToggled(ent.Comp.BlockingToggleActionEntity, true);
+        if (_gameTiming.IsFirstTimePredicted)
+        {
+            _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
+            if (_gameTiming.InPrediction)
+                _popupSystem.PopupEntity(msgUser, user, user);
         }
 
         ent.Comp.IsBlocking = true;
@@ -183,7 +180,7 @@ public sealed partial class BlockingSystem : EntitySystem
         var msgUser = Loc.GetString("action-popup-blocking-disabling-user", ("shield", shieldName));
         var msgOther = Loc.GetString("action-popup-blocking-disabling-other", ("blockerName", blockerName), ("shield", shieldName));
 
-        if (ent.Comp.BlockingToggleAction != null && TryComp<BlockingUserComponent>(user, out _))
+        if (TryComp<BlockingUserComponent>(user, out _))
         {
             _actionsSystem.SetToggled(ent.Comp.BlockingToggleActionEntity, false);
             if (_gameTiming.IsFirstTimePredicted)
