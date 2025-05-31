@@ -1,0 +1,25 @@
+- type: paintableGroupCategory
+  id: Airlocks
+  groups:
+  - AirlockStandard
+  - AirlockGlass
+
+- type: paintableGroupCategory
+  id: Canisters
+  groups:
+  - Canisters
+
+- type: paintableGroupCategory
+  id: Crates
+  groups:
+  - CrateSteel
+  - CratePlastic
+  - CrateSteelSec
+
+- type: paintableGroupCategory
+  id: Lockers
+  groups:
+  - Locker
+  - Closet
+  - WallLocker
+  - WallLockerEmergency

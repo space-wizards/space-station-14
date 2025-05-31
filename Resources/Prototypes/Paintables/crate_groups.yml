@@ -1,0 +1,38 @@
+- type: paintableGroup
+  id: CrateSteel
+  cost: 2
+  defaultStyle: basic
+  styles:
+    basic: CrateGenericSteel
+    electrical: CrateElectrical
+    engineering: CrateEngineering
+    radiation: CrateRadiation
+    science: CrateScience
+    surgery: CrateSurgery
+
+- type: paintableGroup
+  id: CratePlastic
+  cost: 2
+  defaultStyle: basic
+  styles:
+    basic: CratePlastic
+    hydroponics: CrateHydroponics
+    medical: CrateMedical
+    oxygen: CrateInternals
+
+- type: paintableGroup
+  id: CrateSteelSec
+  cost: 2
+  defaultStyle: basic
+  styles:
+    basic: CrateSecure
+    chemistry: CrateChemistrySecure
+    command: CrateCommandSecure
+    engineering: CrateEngineeringSecure
+    hydroponics: CrateHydroSecure
+    medical: CrateMedicalSecure
+    plasma: CratePlasma
+    private: CratePrivateSecure
+    science: CrateScienceSecure
+    secgear: CrateSecgear
+    weapon: CrateWeaponSecure
