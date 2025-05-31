@@ -202,9 +202,6 @@ public sealed partial class JobPriorityEditor : BoxContainer
                         SelectedJobPriorities[jobId] = JobPriority.Medium;
                     }
 
-                    // TODO: Only reload on high change (either to or from).
-                    // ReloadPreview();
-
                     UpdateJobPriorities();
                     SetDirty();
                 };
