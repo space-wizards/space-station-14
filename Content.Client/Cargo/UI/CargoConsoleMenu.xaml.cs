@@ -212,12 +212,24 @@ namespace Content.Client.Cargo.UI
 
                 var product = _protoManager.Index<EntityPrototype>(order.ProductId);
                 var productName = product.Name;
+                var requester = !string.IsNullOrEmpty(order.Requester) ?
+                    order.Requester : Loc.GetString("cargo-console-menu-order-row-alerts-requester-unknown");
                 var account = _protoManager.Index(order.Account);
 
                 var row = new CargoOrderRow
                 {
                     Order = order,
+
+                    Title =
+                    {
+                        Text = Loc.GetString(
+                            "cargo-console-menu-order-row-title",
+                            ("orderRequester", requester),
+                            ("orderPrice", order.Price))
+                    },
+
                     Icon = { Texture = _spriteSystem.Frame0(product) },
+
                     ProductName =
                     {
                         Text = Loc.GetString(
@@ -228,12 +240,20 @@ namespace Content.Client.Cargo.UI
                             ("accountColor", account.Color),
                             ("account", Loc.GetString(account.Code)))
                     },
+
                     Description =
                     {
-                        Text = Loc.GetString("cargo-console-menu-order-reason-description",
-                                                        ("reason", order.Reason))
+                        Text = !string.IsNullOrEmpty(order.Reason) ?
+                            Loc.GetString(
+                                "cargo-console-menu-order-row-product-description",
+                                ("orderReason", order.Reason))
+                        :
+                            Loc.GetString(
+                                "cargo-console-menu-order-row-product-description",
+                                ("orderReason", Loc.GetString("cargo-console-menu-order-row-alerts-reason-absent")))
                     }
                 };
+
                 row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
 
                 // TODO: Disable based on access.
@@ -290,8 +310,7 @@ namespace Content.Client.Cargo.UI
                                            TransferSpinBox.Value > bankAccount.Accounts[orderConsole.Account] * orderConsole.TransferLimit ||
                                            _timing.CurTime < orderConsole.NextAccountActionTime;
 
-            OrdersSpacer.Visible = !orderConsole.SlipPrinter;
-            Orders.Visible = !orderConsole.SlipPrinter;
+            RightPart.Visible = !orderConsole.SlipPrinter;
         }
     }
 }
