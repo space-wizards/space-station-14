@@ -2312,11 +2312,6 @@ entities:
       parent: 1
 - proto: AirlockGlassShuttleSyndicate
   entities:
-  - uid: 1653
-    components:
-    - type: Transform
-      pos: -55.5,12.5
-      parent: 1
   - uid: 2398
     components:
     - type: Transform
