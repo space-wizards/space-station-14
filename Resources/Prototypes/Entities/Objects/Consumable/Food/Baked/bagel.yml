@@ -25,6 +25,10 @@
   id: FoodBagel
   name: bagel
   parent: FoodBagelBase
+  components:
+  - type: Construction
+    graph: CookingDough
+    node: cookedBagel
 
 - type: entity
   id: FoodBagelPoppy
@@ -49,11 +53,14 @@
           Quantity: 5
 
 - type: entity
-  id: FoodBagelCotton
+  id: FoodCottonBagel
   parent: FoodBagelBase
   name: cotton bagel
   description: A delicious bagel made with cotton dough.
   components:
+  - type: Construction
+    graph: CookingCottonDough
+    node: cookedCottonBagel
   - type: FlavorProfile
     flavors:
     - bread
