@@ -15,8 +15,8 @@ namespace Content.Server.Maps;
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class PlanetCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly BiomeSystem _biome = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override string Command => "planet";
@@ -48,9 +48,8 @@ public sealed class PlanetCommand : LocalizedEntityCommands
             return;
         }
 
-        var biomeSystem = _entManager.System<BiomeSystem>();
         var mapUid = _map.GetMapOrInvalid(mapId);
-        biomeSystem.EnsurePlanet(mapUid, biomeTemplate);
+        _biome.EnsurePlanet(mapUid, biomeTemplate);
 
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));
     }
@@ -58,7 +57,7 @@ public sealed class PlanetCommand : LocalizedEntityCommands
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entManager), "Map Id");
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), "Map Id");
 
         if (args.Length == 2)
         {
