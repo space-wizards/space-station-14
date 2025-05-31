@@ -2,7 +2,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking.Events;
 using Content.Shared.Database;
-using Content.Shared.GameTicking.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -14,7 +13,6 @@ namespace Content.Server.Codewords;
 /// </summary>
 public sealed class CodewordSystem : EntitySystem
 {
-
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
