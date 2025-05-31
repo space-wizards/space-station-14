@@ -29,14 +29,14 @@ public sealed class AntagOnSignSystem : EntitySystem
 
     private void OnPaperSigned(EntityUid uid, AntagOnSignComponent component, PaperSignedEvent args)
     {
-        if (component.ChargesRemaing <= 0)
+        if (component.ChargesRemaining <= 0)
             return;
         var signer = args.Signer;
         if (!TryComp(signer, out ActorComponent? actor))
             return;
         if (component.SignedEntityUids.Contains(signer))
             return;
-        component.ChargesRemaing--;
+        component.ChargesRemaining--;
         component.SignedEntityUids.Add(signer);
 
         if (_random.NextFloat() > component.Chance)
