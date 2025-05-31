@@ -108,6 +108,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
 
     /// <summary>
     /// The profile that this entity was originally spawned with.
+    /// If null, the entity was not spawned with a profile.
     /// </summary>
     public HumanoidCharacterProfile? BaseProfile;
     
