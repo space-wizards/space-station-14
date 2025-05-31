@@ -10,6 +10,7 @@ using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Interaction;
 using Robust.Server.Containers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
@@ -45,25 +46,28 @@ public sealed partial class DisposalInsertOperator : HTNOperator
     {
         base.TaskShutdown(blackboard, status);
         blackboard.Remove<EntityUid>(TargetKey);
+        blackboard.Remove<EntityUid>(DisposalTargetKey);
     }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        var disposalUnitQuery = _entManager.GetEntityQuery<DisposalUnitComponent>();
 
         if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager) || _entManager.Deleted(target))
             return HTNOperatorStatus.Failed;
 
-        if (!blackboard.TryGetValue<EntityUid>(DisposalTargetKey, out var disposalTarget, _entManager) || _entManager.Deleted(target))
+        if (!blackboard.TryGetValue<EntityUid>(DisposalTargetKey, out var disposalUnitTarget, _entManager) || _entManager.Deleted(target))
             return HTNOperatorStatus.Failed;
 
-        if (!disposalUnitQuery.TryGetComponent(disposalTarget, out var disposalComp))
+        if (!_entManager.TryGetComponent<DisposalUnitComponent>(disposalUnitTarget, out var disposalComp))
             return HTNOperatorStatus.Failed;
 
-        _disposalSystem.DoInsertDisposalUnit(disposalTarget, target, owner, disposalComp);
+        if (!_disposalSystem.TryInsert(disposalUnitTarget, target, owner))
+            return HTNOperatorStatus.Failed;
 
-        _chat.TryEmoteWithoutChat(owner, "whatever");
+        //if (!disposalComp.Engaged)
+        //    _disposalSystem.ToggleEngage(disposalUnitTarget, disposalComp);
+
         return HTNOperatorStatus.Finished;
 
     }

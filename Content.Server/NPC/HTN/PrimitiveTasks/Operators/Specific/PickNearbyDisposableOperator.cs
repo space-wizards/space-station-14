@@ -68,20 +68,26 @@ public sealed partial class PickNearbyDisposableOperator : HTNOperator
             if (mailingUnitQuery.TryGetComponent(entity, out var mailingComp))
                 continue;
 
-
-            foreach (var flushable in _lookup.GetEntitiesInRange(entity, 3))
+            //checking if there is anyone NEAR the bin we found
+            foreach (var flushable in _lookup.GetEntitiesInRange(entity, 1))
             {
+                if (flushable == owner)
+                    continue;
+
                 if (mobState.TryGetComponent(flushable, out var state))
                 {
+                    if (state.CurrentState != MobState.Critical)
+                        continue;
+
                     var pathRange = SharedInteractionSystem.InteractionRange;
                     var path = await _pathfinding.GetPath(owner, flushable, pathRange, cancelToken);
 
                     if (path.Result == PathResult.NoPath)
-                        continue;
+                        return (false, null);
 
                     return (true, new Dictionary<string, object>()
                     {
-                        {TargetKey, entity},
+                        {TargetKey, flushable},
                         {DisposalTargetKey, entity},
                         {TargetMoveKey, _entManager.GetComponent<TransformComponent>(flushable).Coordinates},
                         {NPCBlackboard.PathfindKey, path},

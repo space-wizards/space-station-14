@@ -1416,7 +1416,7 @@
       - Passive
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: MonkeyCompound
     blackboard:
       NavInteract: !type:Bool
         true
@@ -1469,9 +1469,6 @@
         Burn: 3
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
-  - type: HTN
-    rootTask:
-      task: MonkeyCompound
 
 
 - type: entity

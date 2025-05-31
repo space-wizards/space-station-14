@@ -6,13 +6,12 @@
       task: DisposalsNearbyCompound
   - tasks:
     - !type:HTNCompoundTask
-      task: IdleCompound
+      task: SimpleHostileCompound
 
 - type: htnCompound
   id: DisposalsNearbyCompound
   branches:
   - tasks:
-    # TODO: Kill this shit
     - !type:HTNPrimitiveTask
       operator: !type:PickNearbyDisposableOperator
         targetKey: FlushableTarget
@@ -35,7 +34,6 @@
       - !type:KeyExistsPrecondition
         key: IdleTime
 
-    # TODO: Kill this
     - !type:HTNPrimitiveTask
       operator: !type:DisposalInsertOperator
         targetKey: FlushableTarget
