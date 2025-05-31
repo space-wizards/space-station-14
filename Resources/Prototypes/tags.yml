@@ -224,6 +224,9 @@
   id: CaptainSabre
 
 - type: Tag
+  id: CapybaraWearable
+
+- type: Tag
   id: Carpet
 
 - type: Tag

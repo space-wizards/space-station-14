@@ -730,9 +730,14 @@
       reagents:
       - ReagentId: JuiceOrange
         Quantity: 10
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/orange.rsi
+    slots:
+    - HEAD
   - type: Tag
     tags:
     - Fruit
+    - CapybaraWearable
   - type: FoodSequenceElement
     entries:
       Burger: Orange
