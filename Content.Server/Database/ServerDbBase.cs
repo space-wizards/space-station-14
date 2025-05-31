@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
@@ -67,9 +68,15 @@ namespace Content.Server.Database
                 profiles[profile.Slot] = ConvertProfiles(profile);
             }
 
+            var constructionFavorites = new List<ProtoId<ConstructionPrototype>>(prefs.ConstructionFavorites.Count);
+            foreach (var favorite in prefs.ConstructionFavorites)
+            {
+                constructionFavorites.Add(new ProtoId<ConstructionPrototype>(favorite));
+            }
+
             var jobPriorities = prefs.JobPriorities.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
 
-            return new PlayerPreferences(profiles, Color.FromHex(prefs.AdminOOCColor), jobPriorities);
+            return new PlayerPreferences(profiles, Color.FromHex(prefs.AdminOOCColor), constructionFavorites, jobPriorities);
         }
 
         public async Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
@@ -169,6 +176,7 @@ namespace Content.Server.Database
             {
                 UserId = userId.UserId,
                 AdminOOCColor = Color.Red.ToHex(),
+                ConstructionFavorites = [],
                 JobPriorities = dbPriorities,
             };
 
@@ -181,8 +189,9 @@ namespace Content.Server.Database
             return new PlayerPreferences(
                 new[] {new KeyValuePair<int, ICharacterProfile>(0, defaultProfile)},
                 Color.FromHex(prefs.AdminOOCColor),
+                [],
                 priorities
-                );
+            );
         }
 
         public async Task SaveAdminOOCColorAsync(NetUserId userId, Color color)
@@ -193,6 +202,21 @@ namespace Content.Server.Database
                 .Include(p => p.Profiles)
                 .SingleAsync(p => p.UserId == userId.UserId);
             prefs.AdminOOCColor = color.ToHex();
+
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task SaveConstructionFavoritesAsync(NetUserId userId, List<ProtoId<ConstructionPrototype>> constructionFavorites)
+        {
+            await using var db = await GetDb();
+            var prefs = await db.DbContext.Preference.SingleAsync(p => p.UserId == userId.UserId);
+
+            var favorites = new List<string>(constructionFavorites.Count);
+            foreach (var favorite in constructionFavorites)
+            {
+                favorites.Add(favorite.Id);
+            }
+            prefs.ConstructionFavorites = favorites;
 
             await db.DbContext.SaveChangesAsync();
         }

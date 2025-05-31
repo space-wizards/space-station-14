@@ -821,6 +821,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("admin_ooc_color");
 
+                    b.PrimitiveCollection<string[]>("ConstructionFavorites")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("construction_favorites");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
