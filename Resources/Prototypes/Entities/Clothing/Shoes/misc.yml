@@ -187,7 +187,7 @@
   parent: ClothingShoesBase
   id: ClothingShoesBootsJump
   name: jump boots
-  description: High-tech boots that give you the incredible ability to JUMP! With these boots you can jump over lava, chasms and weird chemicals on the floor!
+  description: High-tech boots used by explorers of new worlds to avoid unwanted obstacles.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/jumpboots.rsi
@@ -199,6 +199,9 @@
     jumpDistance: 4
     jumpSound: /Audio/Effects/stealthoff.ogg
   - type: ActionGrant
+    actions:
+    - ActionGravityJump 
+  - type: ItemActionGrant
     actions:
     - ActionGravityJump 
   - type: StaticPrice

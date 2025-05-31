@@ -1,16 +1,15 @@
 using Content.Shared.Actions;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Content.Shared.Movement.Systems;
 
 namespace Content.Shared.Movement.Components;
 
 /// <summary>
 /// A component for configuring the settings for the jump action.
-/// To give the jump action to an entity use <see cref="ActionGrantComponent"/>.
+/// To give the jump action to an entity use <see cref="ActionGrantComponent"/> and <see cref="ItemActionGrantComponent"/>.
 /// The basic action prototype is "ActionGravityJump".
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedJumpAbilitySystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class JumpAbilityComponent : Component
 {
     /// <summary>
