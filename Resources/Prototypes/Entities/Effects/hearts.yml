@@ -1,6 +1,7 @@
 - type: entity
   id: EffectHearts
   categories: [ HideSpawnMenu ]
+  save: false
   components:
   - type: TimedDespawn
     lifetime: 0.85
