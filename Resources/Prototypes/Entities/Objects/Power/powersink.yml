@@ -6,6 +6,10 @@
   components:
     - type: Item
       size: Huge
+    - type: MultiHandedItem
+    - type: HeldSpeedModifier #verrryy heavy
+      walkModifier: 0.60
+      sprintModifier: 0.60
     - type: NodeContainer
       examinable: true
       nodes:
