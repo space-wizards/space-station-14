@@ -11,6 +11,46 @@
       "name": "animated",
       "directions": 4
     },
+      {
+          "name": "ghost_blunt",
+          "directions": 4
+      },
+      {
+          "name": "ghost_slash",
+          "directions": 4
+      },
+      {
+          "name": "ghost_pierce",
+          "directions": 4
+      },
+      {
+          "name": "ghost_heat",
+          "directions": 4
+      },
+      {
+          "name": "ghost_cold",
+          "directions": 4
+      },
+      {
+          "name": "ghost_radiation",
+          "directions": 4
+      },
+      {
+          "name": "ghost_cellular",
+          "directions": 4
+      },
+      {
+          "name": "ghost_poison",
+          "directions": 4
+      },
+      {
+          "name": "ghost_airloss",
+          "directions": 4
+      },
+      {
+          "name": "ghost_explosion",
+          "directions": 4
+      },
     {
       "name": "icon"
     }
