@@ -6098,75 +6098,6 @@ entities:
     - type: Transform
       pos: 3.5402613,7.6028175
       parent: 1
-- proto: ActionToggleBlock
-  entities:
-  - uid: 10629
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 10628
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 10628
-- proto: ActionToggleInternals
-  entities:
-  - uid: 797
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 795
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 795
-  - uid: 826
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 824
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 824
-  - uid: 966
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 960
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 960
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 796
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 795
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 795
-  - uid: 825
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 824
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 824
-  - uid: 965
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 960
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 960
 - proto: AirAlarm
   entities:
   - uid: 2084
@@ -63922,49 +63853,16 @@ entities:
     - type: Transform
       pos: 27.287785,23.77419
       parent: 1
-    - type: GasTank
-      toggleActionEntity: 797
-    - type: Jetpack
-      toggleActionEntity: 796
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 796
-          - 797
   - uid: 824
     components:
     - type: Transform
       pos: 27.298203,23.440857
       parent: 1
-    - type: GasTank
-      toggleActionEntity: 826
-    - type: Jetpack
-      toggleActionEntity: 825
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 825
-          - 826
   - uid: 960
     components:
     - type: Transform
       pos: 27.339869,23.576273
       parent: 1
-    - type: GasTank
-      toggleActionEntity: 966
-    - type: Jetpack
-      toggleActionEntity: 965
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 965
-          - 966
 - proto: KitchenMicrowave
   entities:
   - uid: 1813
@@ -74432,14 +74330,6 @@ entities:
     - type: Transform
       pos: 26.350285,23.71169
       parent: 1
-    - type: Blocking
-      blockingToggleActionEntity: 10629
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 10629
 - proto: RubberStampApproved
   entities:
   - uid: 4013
