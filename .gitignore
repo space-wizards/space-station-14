@@ -306,3 +306,5 @@ Resources/MapImages
 
 # Direnv stuff
 .direnv/
+Resources/Textures/Objects/Weapons/Melee/spellblade.rsi/meta.json
+Resources/Prototypes/Entities/Objects/Weapons/Melee/spellblade.yml
