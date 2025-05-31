@@ -4,8 +4,8 @@ meta:
   engineVersion: 251.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/27/2025 14:40:55
-  entityCount: 27194
+  time: 05/30/2025 03:31:51
+  entityCount: 27195
 maps:
 - 1
 grids:
@@ -8608,7 +8608,7 @@ entities:
       pos: 11.5,-27.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -29469.656
+      secondsUntilStateChange: -29724.271
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -122581,6 +122581,20 @@ entities:
       parent: 2
     - type: Paper
       content: "- There is a series of hastily drawn 'LEGAL C-20r' designs... mostly including 'candy dispensing' actions/features. It's difficult to tell if an adult made this -"
+  - uid: 4240
+    components:
+    - type: Transform
+      pos: 2.437273,48.621346
+      parent: 2
+    - type: Paper
+      stampState: paper_stamp-signature
+      stampedBy:
+      - hasIcon: False
+        stampFont: Default
+        stampLargeIcon: null
+        stampedColor: '#009100FF'
+        stampedName: Bladud Moeller
+      content: "Dear Officers, \n\nThe show 'Officer Vlogs' has been discontinued due to optics. "
   - uid: 5874
     components:
     - type: Transform
@@ -122693,6 +122707,30 @@ entities:
 
 
         Please wait warmly while we install new NT logistical structures into your department. 
+
+
+        Sincerely, 
+
+
+        Director of Maintenance Bladud Moeller
+  - uid: 9754
+    components:
+    - type: Transform
+      pos: 69.78793,83.358086
+      parent: 2
+    - type: Paper
+      stampState: paper_stamp-signature
+      stampedBy:
+      - hasIcon: False
+        stampFont: Default
+        stampLargeIcon: null
+        stampedColor: '#009100FF'
+        stampedName: Bladud Moeller
+      content: >-
+        Dear Salvagers, 
+
+
+        Your program 'Salvagers Gone Wild' may be slated to be discontinued due to graphic content upsetting viewers. Please try to keep graphic depictions of dismemberment to a minimum and also you are limited to 4 uses of vulger language per episode. 
 
 
         Sincerely, 
@@ -138056,7 +138094,7 @@ entities:
       pos: 0.5,-46.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -29899.91
+      secondsUntilStateChange: -30154.525
       state: Opening
   - uid: 7274
     components:
@@ -141325,16 +141363,6 @@ entities:
       - SurveillanceCameraEntertainment
       nameSet: True
       id: CLOWN WORLD NO MERCY
-  - uid: 4240
-    components:
-    - type: Transform
-      pos: 2.309955,48.497185
-      parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraEntertainment
-      nameSet: True
-      id: Officer Vlogs
   - uid: 25211
     components:
     - type: Transform
