@@ -11,8 +11,8 @@
     size: Ginormous
   - type: AmmoCounter
   - type: Gun
-    showingInabilityToShoot: false
     soundGunshot: /Audio/Magic/fireball.ogg
+    soundEmpty: /Audio/Magic/rumble.ogg
     useKey: false
   - type: BasicEntityAmmoProvider
     proto: ProjectileSpellblade
@@ -21,11 +21,11 @@
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 10
   - type: MeleeWeapon
-    wideAnimationRotation: -135
     damage:
       types:
-        Heat: 15
+        Heat: 10
         Slash: 10
+        Structual: 20
     soundHit:
       collection: MetalThud
   - type: Prying
