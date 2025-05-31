@@ -1,0 +1,1482 @@
+﻿- type: entity
+  id: SpiderMigration
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    minimumPlayers: 35
+    weight: 5
+    duration: 50
+  - type: VentCrittersRule
+    entries:
+    - id: SpawnPointGhostSpaceQueen 
+      prob: 0.005      
+
+- type: entity
+  id: SpawnPointGhostSpaceQueen 
+  name: спавнер роли королевы-пауков 
+  suffix: паук-королева
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: spider-roy-name
+    description: spider-roy-desc
+    rules: spider-roy-desc
+    requirements:
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 600    
+    raffle:
+      settings: default        
+  - type: GhostRoleMobSpawner
+    prototype: MobSpiderSpaceQueen
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Mobs/Animals/spider.rsi
+        state: midwife    
+    
+- type: entity
+  noSpawn: true
+  name: Probca
+  id: MobSpiderSpacePueen
+  parent:
+  - MobAtmosStandard
+  - MobSpaceBasic
+  description: spider dance
+  components:
+  - type: Insulated
+  - type: CombatMode
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+  - type: Sprite 
+    drawdepth: Mobs
+    sprite: Mobs/Animals/spider.rsi
+    scale: 1.3, 1.3  
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: midwife-moving
+  - type: MobThresholds #HP
+    thresholds:
+      0: Alive
+      300: Dead
+  - type: Stamina
+    critThreshold: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: midwife-moving
+      Dead:
+        Base: midwife_dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 2
+    - id: EggSpider
+      amount: 1
+      prob: 0.5
+  - type: Bloodstream
+    bloodMaxVolume: 250
+    bloodReagent: Cryoxadone
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 120
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0.
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 12 #Damage
+        Poison: 4
+        Structural: 15
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: ChloralHydrate #Iad
+          Quantity: 60
+  - type: MeleeChemicalInjector
+    solution: melee
+    transferAmount: 3
+  - type: InteractionPopup
+    successChance: 0.20
+    interactSuccessString: petting-success-tarantula
+    interactFailureString: petting-failure-generic
+  - type: NoSlip
+  - type: IgnoreSpiderWeb
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.Самолечение
+    allowedStates:
+    - Alive
+    damageCap: 300
+    damage:
+      types:
+        Heat: -4.5
+      groups:
+        Brute: -4.5
+        Toxin: -7
+        Airloss: -4.5
+        Burn: -4.5
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+  - type: Tool
+    qualities:
+      - Prying
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: Prying
+    speedModifier: 1.5
+    pryPowered: true
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: Barotrauma #Damage
+    damage:
+      types:
+        Blunt: 1
+        Heat: 1
+  - type: Temperature #Damage
+    heatDamageThreshold: 325
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    specificHeat: 42
+    coldDamage:
+      types:
+        Cold: 0.1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat: 0.1 #per second, scales with temperature & other constants
+  - type: Speech #krik
+    speechVerb: Arachnid
+    speechSounds: Arachnid
+  - type: Vocal
+    sounds:
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid #krik
+  - type: PointLight
+    radius: 0
+    energy: 0
+    color: "#ff4242"
+    castShadows: false     
+  - type: IntrinsicRadioReceiver    
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - HiveRadio
+  - type: ActiveRadio
+    channels:
+    - HiveRadio
+
+- type: radioChannel #Connection
+  id: HiveRadio
+  name: Улей
+  keycode: 'у' 
+  frequency: 2885
+  color: "#cc80ff"
+  longRange: true   
+   
+- type: entity
+  noSpawn: true
+  name: Ghost tole
+  id: MobSpiderGost
+  components:
+  - type: GhostRole #Ghost role
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    requirements:
+    name: spider-roy-name
+    description: spider-roy-desc
+  - type: GhostTakeoverAvailable   #Ghost role
+
+#Spiders
+- type: entity
+  name: Spider queen
+  id: MobSpiderSpaceQueen
+  parent:
+  - MobSpiderSpacePueen
+  - MobSpiderGost
+  description: spider dance
+  components:
+  - type: AutoImplant
+    implants:
+    - LightImplantSpiderHunter
+    - LightImplantSpiderWallWeb2
+    - LightImplantSpider
+    - LightImplantSpiderGhost
+    - LightImplantSpiderCrystal
+    - LightImplantSpiderLittle
+    - LightImplantSpiderSpiderQueen
+    - LightImplantSpiderShooter
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSpider
+      amount: 3
+    - id: MobSpiderSpaceLittle
+      amount: 7
+  - type: Spider
+    webPrototype: SpiderWebAbility
+  - type: RechargeBasicEntityAmmo 
+    rechargeCooldown: 1.5
+  - type: BasicEntityAmmoProvider
+    proto: PoisonousAcid
+    capacity: 2
+    count: 2
+  - type: Gun
+    fireRate: 1
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg  
+  - type: MovementSpeedModifier 
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 4
+  - type: LizardAccent    
+
+- type: entity
+  name: spider guard
+  id: MobSpiderSpaceDrone
+  parent:
+  - MobSpiderSpacePueen
+  - MobSpiderGost
+  description: spider dance
+  components:
+  - type: Sprite #Спрайт
+    drawdepth: Mobs
+    sprite: Mobs/Animals/spider.rsi
+    scale: 1, 1 
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: guard-moving
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      85: Dead   #HP
+  - type: Stamina
+    critThreshold: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: guard-moving
+      Dead:
+        Base: guard_dead
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute. Самолечение
+    allowedStates:
+    - Alive
+    damageCap: 85
+    damage:
+      types:
+        Heat: -4
+      groups:
+        Brute: -4
+        Toxin: -6
+        Airloss: -4
+        Burn: -4
+  - type: MeleeWeapon #Damage
+    hidden: true
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 5 #Damage
+        Structural: 10
+  - type: SolutionContainerManager #Iad
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 0
+  - type: AutoImplant
+    implants:
+    - LightImplantSpiderWallWeb
+    - LightImplantSpiderCrystal
+    - LightImplantSpiderSpider
+  - type: Spider
+    webPrototype: SpiderWebAbility
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 3.9 
+
+- type: entity
+  name: spider hunt
+  id: MobSpiderSpaceHunter
+  parent:
+  - MobSpiderSpacePueen
+  - MobSpiderGost
+  description: spider dance
+  components:
+  - type: Sprite 
+    drawdepth: Mobs
+    sprite: Mobs/Animals/spider.rsi
+    scale: 1, 1
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: hunter-moving
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      110: Dead   
+  - type: Stamina
+    critThreshold: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: hunter-moving
+      Dead:
+        Base: hunter_dead
+  - type: PassiveDamage 
+    allowedStates:
+    - Alive
+    damageCap: 110
+    damage:
+      types:
+        Heat: -3
+      groups:
+        Brute: -3
+        Toxin: -6
+        Airloss: -3
+        Burn: -3
+  - type: MeleeWeapon 
+    hidden: true
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 15 
+        Structural: 15
+  - type: SolutionContainerManager 
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 0
+  - type: Spider
+    webPrototype: SpiderWebAbility
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 3.9
+  - type: AutoImplant
+    implants:
+    - LightImplantSpiderSpiderHunter
+    
+- type: entity
+  name: spider ghost
+  id: MobSpiderSpaceGhost
+  parent:
+  - MobSpiderSpacePueen
+  - MobSpiderGost
+  description: spider dance
+  components:
+  - type: Sprite 
+    drawdepth: Mobs
+    sprite: Mobs/Animals/spider.rsi
+    scale: 1, 1
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: nurse-moving
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead   
+  - type: Stamina
+    critThreshold: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: nurse-moving
+      Dead:
+        Base: nurse_dead
+  - type: PassiveDamage 
+    allowedStates:
+    - Alive
+    damageCap: 100
+    damage:
+      types:
+        Heat: -3
+      groups:
+        Brute: -3
+        Toxin: -8
+        Airloss: -3
+        Burn: -3
+  - type: MeleeWeapon 
+    hidden: true
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 3 
+        Poison: 4
+        Structural: 10
+  - type: SolutionContainerManager 
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 20
+  - type: Stealth 
+  - type: StealthOnMove
+    passiveVisibilityRate: -0.37
+    movementVisibilityRate: 0.35
+  - type: RechargeBasicEntityAmmo 
+    rechargeCooldown: 1.5
+  - type: BasicEntityAmmoProvider
+    proto: PoisonousAcid
+    capacity: 1
+    count: 1
+  - type: Gun
+    fireRate: 0.75
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg  
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1.5
+    baseSprintSpeed : 3.9
+  - type: AutoImplant
+    implants:
+    - LightImplantSpiderSpiderHunter
+    
+- type: entity
+  name: spider shooter
+  id: MobSpiderSpaceShooter
+  parent:
+  - MobSpiderSpacePueen
+  - MobSpiderGost
+  description: spider dance
+  components:
+  - type: Sprite 
+    drawdepth: Mobs
+    sprite: Mobs/Animals/spider.rsi
+    scale: 1, 1
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: viper-moving
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      80: Dead   
+  - type: Stamina
+    critThreshold: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: viper-moving
+      Dead:
+        Base: viper_dead
+  - type: PassiveDamage 
+    allowedStates:
+    - Alive
+    damageCap: 80
+    damage:
+      types:
+        Heat: -1.5
+      groups:
+        Brute: -2.5
+        Toxin: -5
+        Airloss: -2.5
+        Burn: -2.5
+  - type: MeleeWeapon 
+    hidden: true
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Poison: 5
+        Piercing: 2
+        Structural: 5 
+  - type: SolutionContainerManager 
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 35
+  - type: RechargeBasicEntityAmmo 
+    rechargeCooldown: 1.5
+  - type: BasicEntityAmmoProvider
+    proto: PoisonousAcid
+    capacity: 3
+    count: 3
+  - type: Gun
+    fireRate: 4
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg  
+  - type: AutoImplant
+    implants:
+    - LightImplantSpiderSpiderClown
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 3.7
+
+- type: entity
+  id: PoisonousAcid 
+  name: spider-split
+  parent: BaseBullet
+  noSpawn: true
+  components:
+    - type: Projectile
+      damage:
+        types: 
+          Poison: 6
+          Structural: 2
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
+      layers:
+        - state: xeno_toxic
+    - type: Ammo
+      muzzleFlash: null
+
+- type: entity
+  name: small spider
+  id: MobSpiderSpaceLittle
+  parent: MobSpiderSpacePueen
+  description: spider dance
+  components:
+  - type: Sprite 
+    drawdepth: Mobs
+    sprite: Mobs/Animals/spider.rsi
+    scale: 0.4, 0.4
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: viper-moving
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      15: Dead   
+  - type: Stamina
+    critThreshold: 150
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: viper-moving
+      Dead:
+        Base: viper_dead 
+  - type: PassiveDamage 
+    allowedStates:
+    - Alive
+    damageCap: 15
+    damage:
+      types:
+        Heat: -0.5
+      groups:
+        Brute: -0.5
+        Toxin: -0.5
+        Airloss: -0.5
+        Burn: -0.5
+  - type: MeleeWeapon 
+    hidden: true
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 5
+  - type: SolutionContainerManager 
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 0
+  - type: TimedDespawn 
+    lifetime: 20
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 4.5
+    
+#Implants
+- type: entity
+  parent: BaseSubdermalImplant 
+  id: LightImplantSpider
+  name: spider-spawn-egg-guard
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpider      
+    - type: PointLight
+      enabled: false
+      radius: 2.5
+      softness: 5
+      mask: /Textures/Effects/LightMasks/cone.png
+      autoRot: true
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - HideContextMenu
+        - Flashlight
+    - type: UnpoweredFlashlight
+
+- type: entity
+  parent: LightImplantSpider 
+  id: LightImplantSpiderHunter
+  name: spider-spawn-egg-hunt
+  description:
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpiderHunter      
+
+- type: entity
+  parent: LightImplantSpider 
+  id: LightImplantSpiderGhost
+  name: spider-spawn-egg-ghost
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpiderGhost      
+
+- type: entity
+  parent: LightImplantSpider 
+  id: LightImplantSpiderShooter
+  name: spider-spawn-egg-shooter
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpiderShooter         
+
+- type: entity
+  parent: LightImplantSpider 
+  id: LightImplantSpiderCrystal
+  name: spider-spawn-kristal
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpiderCrystal       
+
+- type: entity
+  parent: LightImplantSpider 
+  id: LightImplantSpiderWallWeb
+  name: spider-spawn-wall
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpiderWallWeb        
+
+- type: entity
+  parent: LightImplantSpider 
+  id: LightImplantSpiderWallWeb2
+  name: spider-spawn-wall2
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpiderWallWeb2         
+
+- type: entity
+  parent: LightImplantSpider 
+  id: LightImplantSpiderLittle
+  name: spider-spawn-smallspider
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpiderLittle         
+
+- type: entity
+  parent: LightImplantSpider 
+  id: LightImplantSpiderSpider
+  name: spider-spawn-web
+  description: spider-spawn-web-desc
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpiderSpiderWeb           
+
+- type: entity
+  parent: LightImplantSpider 
+  id: LightImplantSpiderSpiderHunter
+  name: spider-spawn-web-hunt
+  description: spider-spawn-web-desc
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpiderSpiderWebHunter
+
+- type: entity
+  parent: LightImplantSpider  
+  id: LightImplantSpiderSpiderQueen
+  name: spider-spawn-web-queen
+  description: spider-spawn-web-desc
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpiderSpiderWebQueen           
+
+- type: entity
+  parent: LightImplantSpider  
+  id: LightImplantSpiderSpiderClown
+  name: spider-spawn-web-clown
+  description: spider-spawn-web-desc
+  noSpawn: true
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionSpawnMagicarpSpellSpiderSpiderWebClown          
+
+#Spell
+- type: entity
+  id: ActionSpawnMagicarpSpellSpider 
+  name: spider-spawn-egg-guard
+  description: spider-spawn-egg-guard-desc
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 200 
+    range: 1
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Misc/eggspider.rsi
+      state: icon
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: SpiderEggDrone
+        amount: 1
+      offset: 0, 1
+      speech: action-speech-spell-spider
+
+- type: entity
+  id: ActionSpawnMagicarpSpellSpiderHunter 
+  name: spider-spawn-egg-hunt
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 300 #КД
+    range: 1
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Misc/eggspider.rsi
+      state: icon
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: SpiderEggHunter
+        amount: 1
+      offset: 0, 1
+      speech: action-speech-spell-spider
+
+- type: entity
+  id: ActionSpawnMagicarpSpellSpiderGhost
+  name: spider-spawn-egg-ghost
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 350 #КД
+    range: 1
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Misc/eggspider.rsi
+      state: icon
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: SpiderEggGhost
+        amount: 1
+      offset: 0, 1
+      speech: action-speech-spell-spider
+
+- type: entity
+  id: ActionSpawnMagicarpSpellSpiderShooter 
+  name: spider-spawn-egg-shooter
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 380 
+    range: 1
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Misc/eggspider.rsi
+      state: icon
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: SpiderEggShooter
+        amount: 1
+      offset: 0, 1
+      speech: action-speech-spell-spider
+
+- type: entity
+  id: ActionSpawnMagicarpSpellSpiderCrystal 
+  name: spider-spawn-kristal
+  description: spider-spawn-kristal-desc
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 30 
+    range: 1
+    itemIconStyle: BigAction
+    icon:
+      sprite: Structures/Decoration/crystal.rsi
+      state: crystal_grey
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: ShardCrystalBlueXeno
+        amount: 1
+      offset: 0, 1
+      speech: action-speech-spell-spider
+      
+- type: entity
+  id: ShardCrystalBlueXeno 
+  parent: ShardCrystalBlue
+  name: spider-spawn-crystal
+  description: spider-spawn-crystal-desc
+  noSpawn: true
+  components:  
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 0
+            max: 0
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy  
+
+- type: entity
+  id: ActionSpawnMagicarpSpellSpiderLittle 
+  name: spider-spawn-smallspider
+  description: spider-spawn-smallspider-desc
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 40 
+    range: 2
+    itemIconStyle: BigAction
+    icon:
+      sprite: Mobs/Animals/spider.rsi
+      state: viper_dead
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: MobSpiderSpaceLittle
+        amount: 3
+      offset: 0, 1
+      speech: action-speech-spell-spider
+
+- type: entity
+  id: ActionSpawnMagicarpSpellSpiderWallWeb 
+  name: spider-spawn-wall
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 8 
+    range: 1.5
+    itemIconStyle: BigAction
+    icon:
+      sprite: Structures/Walls/web.rsi
+      state: full
+      useDelay: 30
+    event: !type:WorldSpawnSpellEvent
+      useDelay: 25
+      prototypes:
+      - id: FloorTileItemWebSpiders
+        amount: 1
+        useDelay: 25
+      offset: 0, 1
+      speech: action-speech-spell-spider
+
+- type: entity
+  id: ActionSpawnMagicarpSpellSpiderWallWeb2 
+  name: spider-spawn-wall3
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 10 
+    range: 1.5
+    itemIconStyle: BigAction
+    icon:
+      sprite: Structures/Walls/web.rsi
+      state: full
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: FloorTileItemWebSpiders2
+        amount: 1
+      offset: 0, 1
+      speech: action-speech-spell-spider
+
+- type: entity
+  id: ActionSpawnMagicarpSpellSpiderSpiderWeb 
+  name: spider-spawn-web
+  description: spider-spawn-web-desc
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 2 #КД
+    range: 1.5
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Misc/spiderweb.rsi
+      state: spider_web_1
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: SpiderWebUsual
+        amount: 1
+      offset: 0, 1
+      speech: action-speech-spell-spider
+
+- type: entity
+  id: ActionSpawnMagicarpSpellSpiderSpiderWebHunter 
+  name: spider-spawn-web-hunt
+  description: spider-spawn-web-desc
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 6
+    range: 1.5
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Misc/spiderweb.rsi
+      state: spider_web_1
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: SpiderWeb
+        amount: 1
+      offset: 0, 1
+      speech: action-speech-spell-spider
+
+- type: entity
+  id: ActionSpawnMagicarpSpellSpiderSpiderWebQueen 
+  name: spider-spawn-web-queen
+  description: spider-spawn-web-desc
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 4 #КД
+    range: 1.5
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Misc/spiderweb.rsi
+      state: spider_web_1
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: SpiderWebQueen
+        amount: 1
+      offset: 0, 1
+      speech: action-speech-spell-spider
+
+- type: entity
+  id: ActionSpawnMagicarpSpellSpiderSpiderWebClown 
+  name: spider-spawn-web-clown
+  description: spider-spawn-web-desc
+  noSpawn: true
+  components:
+  - type: WorldTargetAction
+    useDelay: 30 #КД
+    range: 1.3
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Misc/spiderweb.rsi
+      state: spider_web_clown_1
+    event: !type:WorldSpawnSpellEvent
+      prototypes:
+      - id: SpiderWebClown
+        amount: 1
+      offset: 0, 1
+      speech: action-speech-spell-spider
+
+#Egg
+- type: entity
+  parent: BaseItemSpider
+  id: SpiderEggHunter 
+  noSpawn: true
+  name: the-egg-of-the-spider-guard
+  description: Is it a gemstone? Is it an egg? It looks expensive.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/eggspider.rsi
+    state: icon
+  - type: PointLight
+    radius: 1.5
+    energy: 3
+    color: "#4faffb"
+  - type: StaticPrice
+    price: 500 
+  - type: Barotrauma #Урон от разгермы
+    damage:
+      types:
+        Blunt: 0.1
+        Heat: 0.1 
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
+  - type: Damageable
+    damageContainer: Biological        
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:SpillBehavior
+        solution: food
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          EggshellsSpider:
+            min: 1
+            max: 1
+          # Wow double-yolk you're so lucky!
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: PoisonWine
+          Quantity: 10      
+  - type: TimedDespawn #Система цикла
+    lifetime: 80        
+  - type: SpawnOnDespawn
+    prototype: MobSpiderSpaceHunter   #Система цикла  
+         
+- type: entity 
+  parent: SpiderEggHunter
+  id: SpiderEggDrone
+  noSpawn: true
+  name: spider hive egg
+  description: Is this a gem? Is this an egg? It looks expensive.
+  components:
+  - type: TimedDespawn 
+    lifetime: 55
+  - type: SpawnOnDespawn
+    prototype: MobSpiderSpaceDrone   
+
+- type: entity 
+  parent: SpiderEggDrone
+  id: SpiderEggGhost
+  noSpawn: true
+  name: spider hive egg
+  description: Is this a gem? Is this an egg? It looks expensive.
+  components:
+  - type: TimedDespawn 
+    lifetime: 80
+  - type: SpawnOnDespawn
+    prototype: MobSpiderSpaceGhost   
+
+- type: entity 
+  parent: SpiderEggDrone
+  id: SpiderEggShooter
+  noSpawn: true
+  name: spider hive egg
+  description: Is this a gem? Is this an egg? It looks expensive.
+  components:
+  - type: TimedDespawn 
+    lifetime: 80
+  - type: SpawnOnDespawn
+    prototype: MobSpiderSpaceShooter   
+    
+- type: entity
+  name: eggshells
+  parent: Eggshells
+  id: EggshellsSpider
+  noSpawn: true
+  description: You're walkin' on 'em bud.
+  suffix: FraG 
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/egg.rsi
+    state: eggshells
+    shader: unshaded
+    color: gray     
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: PoisonWine
+          Quantity: 1
+  - type: Tag
+    tags:
+    - Egg
+    - Trash
+       
+#Web
+- type: entity
+  id: SpiderWebUsual 
+  name: web
+  description: web
+  noSpawn: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
+    - type: Sprite
+      sprite: Objects/Misc/spiderweb.rsi
+      layers:
+        - state: spider_web_1
+          map: ["spiderWebLayer"]
+      drawdepth: WallMountedItems
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.SpiderWebVisuals.Variant:
+          spiderWebLayer:
+            1:  {state: spider_web_1}
+            2:  {state: spider_web_2}
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          hard: false
+          density: 7
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+          - MidImpassable
+    - type: Damageable
+      damageModifierSet: Wood
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 30
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+      coldDamage: {}
+      coldDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true
+      damage:
+        types:
+          Heat: 5
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
+    - type: SpiderWebObject
+    - type: SpeedModifierContacts
+      walkSpeedModifier: 0.25
+      sprintSpeedModifier: 0.25
+      ignoreWhitelist:
+        components:
+            - IgnoreSpiderWeb
+
+
+- type: entity
+  id: SpiderWebQueen 
+  parent: SpiderWebUsual
+  name: web
+  description: web
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]  
+    - type: SpeedModifierContacts
+      walkSpeedModifier: 0.15
+      sprintSpeedModifier: 0.15
+      ignoreWhitelist:
+        components:
+            - IgnoreSpiderWeb
+
+
+- type: entity
+  id: SpiderWebAbility 
+  parent: SpiderWebUsual
+  name: web
+  description: web
+  noSpawn: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: TimedDespawn
+      lifetime: 13
+    - type: SpeedModifierContacts
+      walkSpeedModifier: 0.1
+      sprintSpeedModifier: 0.1
+      ignoreWhitelist:
+        components:
+            - IgnoreSpiderWeb
+
+
+#Wall system
+# AT THE BOTTOM IS A TILE MADE OF COBWEBS.
+- type: entity
+  name: web construction
+  description: Very smooth and surprisingly durable.
+  parent: FloorTileItemBaseSpiders
+  id: FloorTileItemWebSpiders
+  noSpawn: true  
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/web.rsi
+    state: icon
+  - type: FloorTile
+    outputs:
+      - FloorWebTile
+  - type: Construction
+    graph: WebObjects
+    node: tile
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: TimedDespawn 
+    lifetime: 5
+  - type: SpawnOnDespawn
+    prototype: TableWebSpiders 
+
+- type: entity
+  parent: BaseItemSpider
+  id: FloorTileItemBaseSpiders
+  description: These could work as a pretty decent throwing weapon.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/tile.rsi
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger 
+        damage: 30
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+
+- type: entity
+  name: "item"
+  id: BaseItemSpider 
+  abstract: true
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: MovedByPressure
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/drop.ogg
+      params:
+        volume: 2
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: CollisionWake
+  - type: TileFrictionModifier
+    modifier: 0.5
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3  # fite me
+        friction: 0.2
+  - type: Pullable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+#ABOVE IS A TILE MADE OF COBWEBS.
+
+- type: entity
+  id: TableWebSpiders 
+  parent: TableBase
+  name: web
+  description: web
+  noSpawn: true
+  components:
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/web.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/web.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Construction
+    graph: WebStructures
+    node: table
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepCarpet
+  - type: TimedDespawn 
+    lifetime: 5
+  - type: SpawnOnDespawn
+    prototype: WallWeb  
+
+#SOLID WALL
+# AT THE BOTTOM IS A TILE MADE OF COBWEBS.
+- type: entity
+  name: web  
+  description: Web
+  parent: FloorTileItemWebSpiders
+  id: FloorTileItemWebSpiders2
+  noSpawn: true
+  components:
+  - type: TimedDespawn 
+    lifetime: 6
+  - type: SpawnOnDespawn
+    prototype: TableWebSpiders2  
+  - type: Sprite
+    sprite: Objects/Tiles/web.rsi
+    state: icon
+    shader: unshaded
+    color: gray
+
+- type: entity
+  id: TableWebSpiders2 
+  parent: TableWebSpiders
+  name: web
+  description: web
+  noSpawn: true
+  components:
+  - type: TimedDespawn 
+    lifetime: 8
+  - type: SpawnOnDespawn
+    prototype: WallWebDurable  
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/web.rsi
+    shader: unshaded
+    color: gray
+
+#ABOVE IS A TILE MADE OF COBWEBS.
+- type: entity
+  parent: BaseWall
+  id: WallWebDurable
+  name: web
+  description: web
+  components:
+  - type: Clickable 
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Tag
+    tags:
+      - Wall
+  - type: Sprite
+    sprite: Structures/Walls/web.rsi
+    shader: unshaded
+    color: gray
+  - type: Icon
+    sprite: Structures/Walls/web.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 125
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 1
+            max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+  - type: IconSmooth
+    key: webs
+    base: wall
+  - type: Construction
+    graph: WebStructures
+    node: wall 
