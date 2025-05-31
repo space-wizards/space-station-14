@@ -206,6 +206,23 @@
   - RainbowJumpskirt
 
 - type: loadoutGroup
+  id: AssistantGlasses
+  name: loadout-group-assistant-glasses
+  minLimit: 0
+  loadouts:
+  - Glasses
+  - GlassesJamjar
+  - GlassesJensen
+  - WeldingGoggles
+
+- type: loadoutGroup
+  id: AssistantHead
+  name: loadout-group-assistant-head
+  minLimit: 0
+  loadouts:
+  - WeldingMask
+
+- type: loadoutGroup
   id: AssistantFace
   name: loadout-group-assistant-mask
   minLimit: 0
@@ -218,6 +235,15 @@
   minLimit: 0
   loadouts:
   - AssistantGloves
+
+- type: loadoutGroup
+  id: AssistantBackpack
+  name: loadout-group-assistant-backpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+  - SmugglerSatchel
 
 - type: loadoutGroup
   id: CommonBackpack
