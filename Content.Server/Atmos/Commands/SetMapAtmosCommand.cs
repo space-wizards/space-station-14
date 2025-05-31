@@ -12,10 +12,12 @@ namespace Content.Server.Atmos.Commands;
 public sealed class AddMapAtmosCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
 
+    private const string _cmd = "cmd-set-map-atmos";
     public override string Command => "setmapatmos";
+    public override string Description => Loc.GetString($"{_cmd}-desc");
+    public override string Help => Loc.GetString($"{_cmd}-help");
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -42,7 +44,7 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
         if (space || args.Length < 4)
         {
             _entities.RemoveComponent<MapAtmosphereComponent>(map);
-            shell.WriteLine(Loc.GetString($"cmd-setmapatmos-removed", ("map", id)));
+            shell.WriteLine(Loc.GetString($"{_cmd}-removed", ("map", id)));
             return;
         }
 
@@ -67,25 +69,26 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
             mix.AdjustMoles(i, moles);
         }
 
-        _atmos.SetMapAtmosphere(map, space, mix);
-        shell.WriteLine(Loc.GetString($"cmd-setmapatmos-updated", ("map", id)));
+        var atmos = _entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+        atmos.SetMapAtmosphere(map, space, mix);
+        shell.WriteLine(Loc.GetString($"{_cmd}-updated", ("map", id)));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entities), Loc.GetString($"cmd-setmapatmos-hint-map"));
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entities), Loc.GetString($"{_cmd}-hint-map"));
 
         if (args.Length == 2)
-            return CompletionResult.FromHintOptions(new[]{ "false", "true"}, Loc.GetString($"cmd-setmapatmos-hint-space"));
+            return CompletionResult.FromHintOptions(new[] { "false", "true" }, Loc.GetString($"{_cmd}-hint-space"));
 
         if (!bool.TryParse(args[1], out var space) || space)
             return CompletionResult.Empty;
 
         if (args.Length == 3)
-            return CompletionResult.FromHint(Loc.GetString($"cmd-setmapatmos-hint-temp"));
+            return CompletionResult.FromHint(Loc.GetString($"{_cmd}-hint-temp"));
 
-        var gas = (Gas) args.Length - 4;
-        return CompletionResult.FromHint(Loc.GetString($"cmd-setmapatmos-hint-gas" , ("gas", gas.ToString())));
+        var gas = (Gas)args.Length - 4;
+        return CompletionResult.FromHint(Loc.GetString($"{_cmd}-hint-gas", ("gas", gas.ToString())));
     }
 }
