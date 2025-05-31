@@ -10,7 +10,7 @@ public sealed class GhostToggleSelfVisibility : IConsoleCommand
 
     public string Command => "toggleselfghost";
     public string Description => "Toggles seeing your own ghost.";
-    public string Help => "toggleselfghost";
+    public string Help => "toggleselfghost"; 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var attachedEntity = shell.Player?.AttachedEntity;
