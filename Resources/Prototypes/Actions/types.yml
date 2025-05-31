@@ -400,6 +400,20 @@
     itemIconStyle: BigAction
 
 - type: entity
+  parent: BaseAction
+  id: ActionGravityJump
+  name: Jump
+  description: Activating the advanced propulsion system, you propel yourself a short distance in the direction of your gaze.
+  components:
+  - type: Action
+    useDelay: 8
+    icon: 
+      sprite: Interface/Actions/jump.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:GravityJumpEvent {}
+    
+- type: entity
   id: ActionChameleonController
   name: Control clothing
   description: Change your entire outfit fast!
@@ -410,3 +424,4 @@
     itemIconStyle: BigAction
   - type: InstantAction
     event: !type:ChameleonControllerOpenMenuEvent
+    
