@@ -14,6 +14,7 @@
   - tasks:
     - !type:HTNPrimitiveTask
       operator: !type:PickNearbyDisposableOperator
+        rangeKey: VisionRadius
         targetKey: FlushableTarget
         disposalTargetKey: DisposalBinTarget
         targetMoveKey: TargetCoordinates

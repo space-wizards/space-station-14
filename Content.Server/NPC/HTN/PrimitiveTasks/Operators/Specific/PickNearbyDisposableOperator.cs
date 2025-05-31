@@ -17,7 +17,8 @@ public sealed partial class PickNearbyDisposableOperator : HTNOperator
     private ContainerSystem _container = default!;
 
 
-    [DataField("rangeKey")] public string RangeKey = NPCBlackboard.MedibotInjectRange;
+    [DataField("rangeKey", required: true)]
+    public string RangeKey = default!;
 
     /// <summary>
     /// Target entity to flush
