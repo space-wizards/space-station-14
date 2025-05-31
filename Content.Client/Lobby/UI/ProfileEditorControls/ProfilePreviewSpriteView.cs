@@ -11,6 +11,7 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
     private IClientPreferencesManager _preferencesManager = default!;
     private IPrototypeManager _prototypeManager = default!;
     private ISharedPlayerManager _playerManager = default!;
+    private MetaDataSystem _metaDataSystem = default!;
 
     public string? ProfileName { get; private set; }
     public string? JobName { get; private set; }
@@ -26,6 +27,7 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
         _preferencesManager = prefMan;
         _prototypeManager = protoMan;
         _playerManager = playerMan;
+        _metaDataSystem = EntMan.System<MetaDataSystem>();
     }
 
     public void LoadPreview(ICharacterProfile profile, JobPrototype? jobOverride = null, bool showClothes = true)
@@ -46,7 +48,7 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
 
         SetEntity(PreviewDummy);
         InvalidateMeasure();
-        EntMan.System<MetaDataSystem>().SetEntityName(PreviewDummy, profile.Name);
+        _metaDataSystem.SetEntityName(PreviewDummy, profile.Name);
     }
 
     public void ReloadProfilePreview(ICharacterProfile profile)
