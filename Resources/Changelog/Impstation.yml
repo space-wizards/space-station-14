@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Luna wiring should no longer output a Gorbillion Kw requirement to engie
-      monitors (Only a zillion)
-    type: Fix
-  id: 1258
-  time: '2025-03-09T07:49:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1877
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Changed cargorilla to be able to roll on low-pop, as well as earlier
@@ -4215,3 +4207,10 @@
   id: 1757
   time: '2025-05-31T06:34:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2620
+- author: CrystalClover
+  changes:
+  - message: Simple Sutures are now twice as expensive in the medical lathe
+    type: Tweak
+  id: 1758
+  time: '2025-05-31T12:17:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2625
