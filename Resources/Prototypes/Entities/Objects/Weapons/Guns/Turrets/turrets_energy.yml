@@ -153,6 +153,7 @@
   components:
   - type: AccessReader
     access: [["StationAi"], ["ResearchDirector"]]
+  - type: StationAiTurret
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Borg
@@ -162,4 +163,3 @@
   - type: DeviceNetwork
     receiveFrequencyId: TurretControlAI
     transmitFrequencyId: TurretAI
-
