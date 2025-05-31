@@ -4,9 +4,24 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Internals;
 
-[Serializable, NetSerializable]
-public sealed partial class InternalsDoAfterEvent : SimpleDoAfterEvent
+public enum ToggleMode
 {
+    Toggle,
+    On,
+    Off
+}
+
+[Serializable, NetSerializable]
+public sealed partial class InternalsDoAfterEvent : DoAfterEvent
+{
+    public ToggleMode ToggleMode = ToggleMode.Toggle;
+
+    public InternalsDoAfterEvent(ToggleMode mode)
+    {
+        ToggleMode = mode;
+    }
+
+    public override DoAfterEvent Clone() => this;
 }
 
 public sealed partial class ToggleInternalsAlertEvent : BaseAlertEvent;
