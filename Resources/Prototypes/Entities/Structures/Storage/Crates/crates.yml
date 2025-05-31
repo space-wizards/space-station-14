@@ -390,7 +390,7 @@
   components:
   - type: Sprite
     sprite: Structures/Storage/Crates/cage.rsi
-    drawdepth: SmallObjects
+    drawdepth: LargeObjects
     snapCardinals: true
     layers:
     - state: base
@@ -437,7 +437,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.29"
+          bounds: "-0.4,-0.2,0.4,0.29"
         density: 80
         mask:
         - TabletopMachineMask
