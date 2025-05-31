@@ -8,7 +8,7 @@ namespace Content.Shared.Doors.Components;
 /// Companion component to DoorComponent that handles bolt-specific behavior.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedDoorSystem))]
+[Access(typeof(SharedBoltSystem))]
 [AutoGenerateComponentState]
 public sealed partial class DoorBoltComponent : Component
 {
@@ -23,6 +23,12 @@ public sealed partial class DoorBoltComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier BoltDownSound = new SoundPathSpecifier("/Audio/Machines/boltsdown.ogg");
+
+    /// <summary>
+    /// If false, the bolts and the bolt light indicators will function without power
+    /// </summary>
+    [DataField]
+    public bool BoltsRequirePower = true;
 
     /// <summary>
     /// Whether the door bolts are currently deployed.
@@ -47,4 +53,11 @@ public sealed partial class DoorBoltComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Powered;
+}
+
+[ByRefEvent]
+public record BeforeBoltEvent(EntityUid Target)
+{
+    public EntityUid Target = Target;
+    public bool Cancelled = false;
 }

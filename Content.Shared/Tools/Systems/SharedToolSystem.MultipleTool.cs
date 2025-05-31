@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Prying.Components;
+using Content.Shared.Prying.Systems;
 using Content.Shared.Tools.Components;
 
 namespace Content.Shared.Tools.Systems;
@@ -72,7 +73,7 @@ public abstract partial class SharedToolSystem
         // TODO: Replace this with a better solution later
         if (TryComp<PryingComponent>(uid, out var pryComp))
         {
-            pryComp.Enabled = current.Behavior.Contains("Prying");
+            PryingSystem.SetPryingEnabled((uid, pryComp), current.Behavior.Contains("Prying"));
         }
 
         if (playSound && current.ChangeSound != null)
