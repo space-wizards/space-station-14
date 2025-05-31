@@ -30,6 +30,10 @@ namespace Content.Client.Lobby.UI
         private readonly Button _createNewCharacterButton;
         private readonly HumanoidProfileEditor _humanoidProfileEditor;
 
+        /// <summary>
+        /// This just holds which character is currently selected, but only for UI rendering purposes!
+        /// The player preferences no longer tracks the "currently selected character slot"
+        /// </summary>
         public int? SelectedCharacterSlot;
 
         /// <summary>

@@ -72,6 +72,9 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public JobPrototype? JobOverride;
 
+        /// <summary>
+        /// Track the state of the ShowClothes button to use for the profile preview
+        /// </summary>
         public bool ShouldShowClothes => ShowClothes.Pressed;
 
         /// <summary>

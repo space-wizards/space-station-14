@@ -79,6 +79,12 @@ public sealed partial class TestPair
         return SetAntagPreferences(Player!, antagPreferences);
     }
 
+    /// <summary>
+    /// Assert that the player of a given session has a job and check antag status.
+    /// </summary>
+    /// <param name="job">Job to assert against</param>
+    /// <param name="session">Session to check</param>
+    /// <param name="isAntag">Assert that the player is or isn't an antag</param>
     public void AssertJob(
         ProtoId<JobPrototype> job,
         ICommonSession session,
@@ -87,6 +93,13 @@ public sealed partial class TestPair
         AssertJob(job, session.UserId, isAntag);
     }
 
+    /// <summary>
+    /// Assert that the player of a given NetUserId has a job and check antag status.
+    /// Uses testpair Client if id is null.
+    /// </summary>
+    /// <param name="job">Job to assert against</param>
+    /// <param name="user">NetUserId to check, Client.User if null</param>
+    /// <param name="isAntag">Assert that the player is or isn't an antag</param>
     public void AssertJob(ProtoId<JobPrototype> job, NetUserId? user = null, bool isAntag = false)
     {
         var jobSys = Server.System<SharedJobSystem>();

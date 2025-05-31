@@ -105,6 +105,9 @@ namespace Content.Server.Preferences.Managers
                 await _db.SaveConstructionFavoritesAsync(userId, favorites);
         }
 
+        /// <summary>
+        /// Update the job priorities dictionary for a given player
+        /// </summary>
         public async Task SetJobPriorities(NetUserId userId, Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
         {
             if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
@@ -130,6 +133,9 @@ namespace Content.Server.Preferences.Managers
             await DeleteProfile(userId, slot);
         }
 
+        /// <summary>
+        /// Delete a character profile for the given player in the given slot
+        /// </summary>
         public async Task DeleteProfile(NetUserId userId, int slot)
         {
             if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
@@ -157,6 +163,9 @@ namespace Content.Server.Preferences.Managers
             }
         }
 
+        /// <summary>
+        /// Handle the net message from a client to enable or disable a character in a given slot
+        /// </summary>
         private async void HandleSetCharacterEnableMessage(MsgSetCharacterEnable message)
         {
             var slot = message.CharacterIndex;
@@ -166,7 +175,7 @@ namespace Content.Server.Preferences.Managers
 
             if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
             {
-                Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
+                _sawmill.Warning("prefs", $"User {userId} tried to modify preferences before they loaded.");
                 return;
             }
 
@@ -194,6 +203,9 @@ namespace Content.Server.Preferences.Managers
                 await _db.SaveCharacterSlotAsync(userId, profile, slot);
         }
 
+        /// <summary>
+        /// Handler for the message from a client to update a player's job priorities dictionary
+        /// </summary>
         public async void HandleUpdateJobPrioritiesMessage(MsgUpdateJobPriorities message)
         {
             var userId = message.MsgChannel.UserId;
@@ -363,6 +375,7 @@ namespace Content.Server.Preferences.Managers
             // such as removed jobs still being selected.
             var prototypeManager = collection.Resolve<IPrototypeManager>();
 
+            // Sanitize the job priorities
             var priorities = new Dictionary<ProtoId<JobPrototype>, JobPriority>(prefs.JobPriorities
                 .Where(p => prototypeManager.TryIndex(p.Key, out var job) && job.SetPreference && p.Value switch
                 {
@@ -373,6 +386,7 @@ namespace Content.Server.Preferences.Managers
                     _ => false
                 }));
 
+            // Ensure only one high priority job
             var hasHighPrio = false;
             foreach (var (key, value) in priorities)
             {

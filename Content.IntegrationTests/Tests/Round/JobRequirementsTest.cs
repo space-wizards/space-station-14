@@ -97,6 +97,13 @@ public sealed class JobRequirementsTest
                     FreezerHead: [ -1, -1 ]
         """;
 
+    /// <summary>
+    /// Generic test for the age requirements
+    /// </summary>
+    /// <param name="age">Age of created character</param>
+    /// <param name="wantedJob">Job that this character wants</param>
+    /// <param name="expectedJob">If true, assert that the job was assigned.
+    /// If false, assert that job was not given</param>
     [Test]
     [TestCase(75, "SeniorCitizen")]
     [TestCase(20, "SeniorCitizen", false)]
@@ -153,6 +160,12 @@ public sealed class JobRequirementsTest
         await pair.CleanReturnAsync();
     }
 
+    /// <summary>
+    /// This tests that age requirements are actually used for the final profile selection.
+    /// This makes and enables 29 profiles that fail the age requirement but request a job.
+    /// 1 profile is made that will pass the age requirement.
+    /// It asserts that after the game is started, the single profile that meets the age requirement is properly selected.
+    /// </summary>
     [Test]
     [TestCase]
     public async Task AgeRequirementsTestMultipleCharacters()
@@ -209,6 +222,13 @@ public sealed class JobRequirementsTest
         await pair.CleanReturnAsync();
     }
 
+    /// <summary>
+    /// Generic test for species requirements
+    /// </summary>
+    /// <param name="species">Species of the created profile</param>
+    /// <param name="wantedJob">Job preference of the created profile</param>
+    /// <param name="expectedJob">If true, assert that the job was assigned.
+    /// If false, assert that job was not given</param>
     [Test]
     [TestCase("Reptilian", "Wehngineer")]
     [TestCase("Moth", "Wehngineer", false)]

@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Preferences
 {
     /// <summary>
-    ///     Contains all player characters and the index of the currently selected character.
+    ///     Contains all player characters and the player's selected job priorities
     ///     Serialized both over the network and to disk.
     /// </summary>
     [Serializable]

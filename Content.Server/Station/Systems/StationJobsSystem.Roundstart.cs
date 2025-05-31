@@ -47,7 +47,7 @@ public sealed partial class StationJobsSystem
     /// Assigns jobs based on the given preferences and list of stations to assign for.
     /// This does NOT change the slots on the station, only figures out where each player should go.
     /// </summary>
-    /// <param name="profilesIn">The profiles to use for selection.</param>
+    /// <param name="userIdsIn">Set of the UserIds we will be attempting to assign.</param>
     /// <param name="stations">List of stations to assign for.</param>
     /// <param name="useRoundStartJobs">Whether or not to use the round-start jobs for the stations instead of their current jobs.</param>
     /// <returns>List of players and their assigned jobs.</returns>
@@ -56,20 +56,20 @@ public sealed partial class StationJobsSystem
     /// as there may end up being more round-start slots than available slots, which can cause weird behavior.
     /// A warning to all who enter ye cursed lands: This function is long and mildly incomprehensible. Best used without touching.
     /// </remarks>
-    public Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> AssignJobs(IReadOnlySet<NetUserId> profilesIn, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
+    public Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> AssignJobs(IReadOnlySet<NetUserId> userIdsIn, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
     {
         DebugTools.Assert(stations.Count > 0);
 
         InitializeRoundStart();
 
-        if (profilesIn.Count == 0)
+        if (userIdsIn.Count == 0)
             return new();
 
         // We need to modify this collection later, so make a copy of it.
-        var profiles = profilesIn.ToHashSet();
+        var userIds = userIdsIn.ToHashSet();
 
         // Player <-> (job, station)
-        var assigned = new Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)>(profiles.Count);
+        var assigned = new Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)>(userIds.Count);
 
         // The jobs left on the stations. This collection is modified as jobs are assigned to track what's available.
         var stationJobs = new Dictionary<EntityUid, Dictionary<ProtoId<JobPrototype>, int?>>();
@@ -108,10 +108,10 @@ public sealed partial class StationJobsSystem
         {
             for (var selectedPriority = JobPriority.High; selectedPriority > JobPriority.Never; selectedPriority--)
             {
-                if (profiles.Count == 0)
+                if (userIds.Count == 0)
                     goto endFunc;
 
-                var candidates = GetPlayersJobCandidates(weight, selectedPriority, profiles);
+                var candidates = GetPlayersJobCandidates(weight, selectedPriority, userIds);
 
                 var optionsRemaining = 0;
 
@@ -127,7 +127,7 @@ public sealed partial class StationJobsSystem
                     }
 
                     stationJobs[station][job]--;
-                    profiles.Remove(player);
+                    userIds.Remove(player);
                     assigned.Add(player, (job, station));
 
                     optionsRemaining--;

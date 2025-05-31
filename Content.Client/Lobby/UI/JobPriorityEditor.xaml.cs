@@ -17,6 +17,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby.UI;
 
+/// <summary>
+/// UI class to handle the selection of a player's job priorities.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class JobPriorityEditor : BoxContainer
 {
@@ -34,9 +37,6 @@ public sealed partial class JobPriorityEditor : BoxContainer
     /// <summary>
     /// Create a new job priority editor
     /// </summary>
-    /// <param name="preferencesManager"></param>
-    /// <param name="prototypeManager"></param>
-    /// <param name="requirements"></param>
     public JobPriorityEditor(
         IClientPreferencesManager preferencesManager,
         IPrototypeManager prototypeManager,
