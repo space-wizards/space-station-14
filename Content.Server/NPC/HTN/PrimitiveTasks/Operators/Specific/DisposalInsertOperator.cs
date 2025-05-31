@@ -1,4 +1,3 @@
-using Content.Server.Chat.Systems;
 using Content.Server.Disposal.Unit;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Interaction;
@@ -9,7 +8,6 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 public sealed partial class DisposalInsertOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    private ChatSystem _chat = default!;
     private DisposalUnitSystem _disposalSystem = default!;
 
     /// <summary>
