@@ -25,7 +25,15 @@ namespace Content.Server.Preferences.Managers
 
         Task SetProfile(NetUserId userId, int slot, ICharacterProfile profile);
         Task SetConstructionFavorites(NetUserId userId, List<ProtoId<ConstructionPrototype>> favorites);
+
+        /// <summary>
+        /// Save a player's job priorities to their player profile.
+        /// </summary>
         Task SetJobPriorities(NetUserId userId, Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities);
+
+        /// <summary>
+        /// Delete the character profile in the given slot from a player's profile
+        /// </summary>
         Task DeleteProfile(NetUserId userId, int slot);
     }
 }
