@@ -47,7 +47,7 @@ ui-options-display-label = Display
 ui-options-quality-label = Quality
 ui-options-misc-label = Misc
 ui-options-interface-label = Interface
-
+ui-options-lighting-label = Lighting
 
 ui-options-show-held-item = Show held item next to cursor
 ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor
@@ -58,11 +58,16 @@ ui-options-fancy-speech = Show names in speech bubbles
 ui-options-fancy-name-background = Add background to speech bubble names
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
-ui-options-lighting-label = Lighting Quality:
+ui-options-lighting-quality-label = Quality:
 ui-options-lighting-very-low = Very Low
 ui-options-lighting-low = Low
 ui-options-lighting-medium = Medium
 ui-options-lighting-high = High
+ui-options-lighting-custom = Custom
+ui-options-lighting-resolution-scale-label = Resolution scale
+ui-options-lighting-blur-label = Light blur
+ui-options-lighting-blur-factor-label = Blur factor
+ui-options-lighting-soft-shadows-label = Soft shadows
 ui-options-scale-label = UI Scale:
 ui-options-scale-auto = Automatic ({ TOSTRING($scale, "P0") })
 ui-options-scale-75 = 75%
