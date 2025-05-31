@@ -107,7 +107,6 @@ namespace Content.Server.Preferences.Managers
 
         public async Task SetJobPriorities(NetUserId userId, Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
         {
-
             if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
             {
                 _sawmill.Warning("prefs", $"User {userId} tried to modify preferences before they loaded.");
