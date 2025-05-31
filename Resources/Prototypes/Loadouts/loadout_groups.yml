@@ -204,6 +204,8 @@
   - AncientJumpsuit
   - RainbowJumpsuit
   - RainbowJumpskirt
+  - GreyJumpsuit
+  - GreyJumpskirt
 
 - type: loadoutGroup
   id: AssistantGlasses
@@ -214,6 +216,7 @@
   - GlassesJamjar
   - GlassesJensen
   - WeldingGoggles
+  - CheapSunnies
 
 - type: loadoutGroup
   id: AssistantHead
@@ -221,6 +224,15 @@
   minLimit: 0
   loadouts:
   - WeldingMask
+  - GreyCowboy
+  - GreyBandana
+  - GreyFlatcap
+  - GreyCap
+  - CorpoCap
+  - SyndieCap
+  - GreyFedoraA
+  - SolidHeadband
+  - GreytideBizarreAdventures
 
 - type: loadoutGroup
   id: AssistantFace
@@ -228,6 +240,7 @@
   minLimit: 0
   loadouts:
   - AssistantFace
+  - NeckGaiter
 
 - type: loadoutGroup
   id: AssistantGloves
@@ -235,6 +248,8 @@
   minLimit: 0
   loadouts:
   - AssistantGloves
+  - GreyGloves
+  - ParagonGloves
 
 - type: loadoutGroup
   id: AssistantBackpack
@@ -266,6 +281,8 @@
   minLimit: 0
   loadouts:
   - AssistantWintercoat
+  - GreyHoodieA
+  - GreyTrenchcoatA
 
 - type: loadoutGroup
   id: AssistantShoes
