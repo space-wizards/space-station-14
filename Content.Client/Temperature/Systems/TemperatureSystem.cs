@@ -2,4 +2,6 @@
 
 namespace Content.Client.Temperature.Systems;
 
-public sealed partial class EntityHeaterSystem : SharedEntityHeaterSystem;
+public sealed class TemperatureSystem : SharedTemperatureSystem
+{
+}
