@@ -348,6 +348,7 @@
   - type: Alerts
   - type: FTLSmashImmune
   - type: CargoSellBlacklist
+  - type: Weightlessness # Remove after test success this is to filter out fake test fails and find entities that need this component
   - type: StationAiVision
     range: 20
 
