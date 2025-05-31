@@ -48,7 +48,7 @@
   - type: Brain
   - type: InputMover
   - type: Physics
-    bodyType: KinematicController
+    bodyType: KinematicController # Temporary fix, brains shouldn't have InputMover because they don't move
   - type: Examiner
   - type: BlockMovement
   - type: BadFood
