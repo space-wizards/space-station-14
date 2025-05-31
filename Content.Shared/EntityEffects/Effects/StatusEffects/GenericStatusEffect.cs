@@ -1,6 +1,6 @@
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.EntityEffects.Effects.StatusEffects;
 
@@ -24,6 +24,9 @@ public sealed partial class GenericStatusEffect : EntityEffect
     [DataField]
     public float Time = 2.0f;
 
+    [DataField]
+    public float Delay = 0f;
+
     /// <remarks>
     ///     true - refresh status effect time,  false - accumulate status effect time
     /// </remarks>
@@ -39,6 +42,7 @@ public sealed partial class GenericStatusEffect : EntityEffect
     public override void Effect(EntityEffectBaseArgs args)
     {
         var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>();
+        var gameTiming = IoCManager.Resolve<IGameTiming>();
 
         var time = Time;
         if (args is EntityEffectReagentArgs reagentArgs)
@@ -46,7 +50,7 @@ public sealed partial class GenericStatusEffect : EntityEffect
 
         if (Type == StatusEffectMetabolismType.Add && Component != String.Empty)
         {
-            statusSys.TryAddStatusEffect(args.TargetEntity, Key, TimeSpan.FromSeconds(time), Refresh, Component);
+            statusSys.TryAddStatusEffect(args.TargetEntity, Key, TimeSpan.FromSeconds(time), Refresh, Component, startTime: gameTiming.CurTime + TimeSpan.FromSeconds(Delay));
         }
         else if (Type == StatusEffectMetabolismType.Remove)
         {
@@ -58,7 +62,16 @@ public sealed partial class GenericStatusEffect : EntityEffect
         }
     }
 
-    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString(
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
+        Delay > 0
+            ? Loc.GetString(
+        "reagent-effect-guidebook-status-effect-delay",
+        ("chance", Probability),
+        ("type", Type),
+        ("time", Time),
+        ("key", $"reagent-effect-status-effect-{Key}"),
+        ("delay", Delay))
+            : Loc.GetString(
         "reagent-effect-guidebook-status-effect",
         ("chance", Probability),
         ("type", Type),
