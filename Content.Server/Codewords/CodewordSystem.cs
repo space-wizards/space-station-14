@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Events;
 using Content.Shared.Database;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Map;
@@ -12,41 +12,24 @@ namespace Content.Server.Codewords;
 /// <summary>
 /// Gamerule that provides codewords for other gamerules that rely on them.
 /// </summary>
-public sealed class CodewordSystem : GameRuleSystem<CodewordRuleComponent>
+public sealed class CodewordSystem : EntitySystem
 {
-    [ValidatePrototypeId<EntityPrototype>]
-    public static string RuleComponent = "CodewordRule";
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
-    /// <summary>
-    /// Ensures codewords are available.
-    /// </summary>
-    public void EnsureAvailable()
+    public override void Initialize()
     {
-        if (CheckCodewordsAvailable())
-            return; // We already have codewords, no need to do anything.
+        base.Initialize();
 
-        GameTicker.StartGameRule(RuleComponent);
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
     }
 
-    /// <summary>
-    /// Checks if the codeword system has any valid codewords.
-    /// </summary>
-    /// <returns>True if there is a valid codeword gamerule. False if there is none.</returns>
-    public bool CheckCodewordsAvailable()
+    private void OnRoundStart(RoundStartingEvent ev)
     {
-        var query = EntityQueryEnumerator<CodewordRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out _, out var gameRuleComponent))
-        {
-            if (!GameTicker.IsGameRuleActive(uid, gameRuleComponent))
-                continue;
-
-            return true;
-        }
-
-        return false;
+        var manager = Spawn();
+        AddComp<CodewordManagerComponent>(manager);
     }
 
     /// <summary>
@@ -55,34 +38,30 @@ public sealed class CodewordSystem : GameRuleSystem<CodewordRuleComponent>
     /// <exception cref="InvalidOperationException">Thrown when no codewords have been generated for that faction.</exception>
     public string[] GetCodewords(ProtoId<CodewordFactionPrototype> faction)
     {
-        var query = EntityQueryEnumerator<CodewordRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var codewordRuleComponent, out var gameRuleComponent))
+        var query = EntityQueryEnumerator<CodewordManagerComponent>();
+        while (query.MoveNext(out  _, out var manager))
         {
-            if (!GameTicker.IsGameRuleActive(uid, gameRuleComponent))
-                continue;
-
-            if (!codewordRuleComponent.Codewords.TryGetValue(faction, out var codewordEntity))
-                continue;
+            if (!manager.Codewords.TryGetValue(faction, out var codewordEntity))
+                return GenerateForFaction(faction, ref manager);
 
             return Comp<CodewordComponent>(codewordEntity).Codewords;
         }
 
-        throw new InvalidOperationException($"Tried to index codewords for faction {faction}, but no codewords were generated for that faction.");
+        throw new InvalidOperationException($"Codeword system not initialized.");
     }
 
-    protected override void Added(EntityUid uid, CodewordRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
+    private string[] GenerateForFaction(ProtoId<CodewordFactionPrototype> faction, ref CodewordManagerComponent manager)
     {
-        base.Added(uid, component, gameRule, args);
+        var factionProto = _prototypeManager.Index<CodewordFactionPrototype>(faction.Id);
 
-        foreach (var (id, generatorId) in component.Generators)
-        {
-            var codewords = GenerateCodewords(generatorId);
-            var codewordsContainer = EntityManager.Spawn(protoName:null, MapCoordinates.Nullspace);
-            EnsureComp<CodewordComponent>(codewordsContainer)
-                .Codewords = codewords;
-            component.Codewords[id] = codewordsContainer;
-            _adminLogger.Add(LogType.EventStarted, LogImpact.Low, $"Codewords generated for faction {id}: {string.Join(", ", codewords)}");
-        }
+        var codewords = GenerateCodewords(factionProto.Generator);
+        var codewordsContainer = EntityManager.Spawn(protoName:null, MapCoordinates.Nullspace);
+        EnsureComp<CodewordComponent>(codewordsContainer)
+            .Codewords = codewords;
+        manager.Codewords[faction] = codewordsContainer;
+        _adminLogger.Add(LogType.EventStarted, LogImpact.Low, $"Codewords generated for faction {faction}: {string.Join(", ", codewords)}");
+
+        return codewords;
     }
 
     /// <summary>
@@ -92,14 +71,18 @@ public sealed class CodewordSystem : GameRuleSystem<CodewordRuleComponent>
     {
         var generator = _prototypeManager.Index(generatorId);
 
-        var adjectives = _prototypeManager.Index(generator.CodewordAdjectives).Values;
-        var verbs = _prototypeManager.Index(generator.CodewordVerbs).Values;
-        var codewordPool = adjectives.Concat(verbs).ToList();
+        var codewordPool = new List<string>();
+        foreach (var dataset in generator.Words
+                     .Select(datasetPrototype => _prototypeManager.Index(datasetPrototype)))
+        {
+            codewordPool.AddRange(dataset.Values);
+        }
+
         var finalCodewordCount = Math.Min(generator.Amount, codewordPool.Count);
         var codewords = new string[finalCodewordCount];
         for (var i = 0; i < finalCodewordCount; i++)
         {
-            codewords[i] = Loc.GetString(RobustRandom.PickAndTake(codewordPool));
+            codewords[i] = Loc.GetString(_random.PickAndTake(codewordPool));
         }
         return codewords;
     }

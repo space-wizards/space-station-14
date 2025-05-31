@@ -14,16 +14,15 @@ public sealed partial class CodewordGeneratorPrototype : IPrototype
     public string ID { get; } = default!;
 
     /// <summary>
-    /// The adjectives to be used by the generator
+    /// List of datasets to use for word generation. All values will be concatenated into one list and then randomly chosen from
     /// </summary>
     [DataField]
-    public ProtoId<LocalizedDatasetPrototype> CodewordAdjectives = "Adjectives";
+    public List<ProtoId<LocalizedDatasetPrototype>> Words { get; } =
+    [
+        "Adjectives",
+        "Verbs",
+    ];
 
-    /// <summary>
-    /// The verbs to be used by the generator
-    /// </summary>
-    [DataField]
-    public ProtoId<LocalizedDatasetPrototype> CodewordVerbs = "Verbs";
 
     /// <summary>
     /// How many codewords should be generated?

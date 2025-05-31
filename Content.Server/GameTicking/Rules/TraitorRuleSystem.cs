@@ -59,8 +59,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     public bool MakeTraitor(EntityUid traitor, TraitorRuleComponent component)
     {
         Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - start");
-        _codewordSystem.EnsureAvailable();
-
         var factionCodewords = _codewordSystem.GetCodewords(component.CodewordFactionPrototypeId);
 
         //Grab the mind if it wasn't provided
