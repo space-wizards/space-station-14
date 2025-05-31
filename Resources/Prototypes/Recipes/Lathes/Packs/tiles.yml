@@ -47,3 +47,22 @@
   - FloorTileItemOldConcrete
   - FloorTileItemOldConcreteMono
   - FloorTileItemOldConcreteSmooth
+
+- type: latheRecipePack
+  id: CircuitFloorsStatic
+  recipes:
+  - FloorGreenCircuit
+  - FloorBlueCircuit
+  - FloorRedCircuit
+
+## Dynamic
+
+- type: latheRecipePack
+  id: FauxTiles
+  recipes:
+  - FauxTileAstroGrass
+  - FauxTileMowedAstroGrass
+  - FauxTileJungleAstroGrass
+  - FauxTileAstroIce
+  - FauxTileAstroSnow
+  - FauxTileAstroAsteroidSand
