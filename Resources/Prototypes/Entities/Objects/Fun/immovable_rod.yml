@@ -12,6 +12,7 @@
     noRot: false
   - type: ImmovableRod
   - type: Weightlessness
+    weightless: false
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
