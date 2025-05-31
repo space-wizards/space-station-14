@@ -100,7 +100,7 @@ namespace Content.Server.Cargo.Systems
             {
                 OnInteractUsingCash(uid, component, ref args);
             }
-            else if (TryComp<CargoSlipComponent>(args.Used, out var slip) && !component.SlipPrinter)
+            else if (TryComp<CargoSlipComponent>(args.Used, out var slip) && component.Mode == CargoOrderConsoleMode.DirectOrder)
             {
                 OnInteractUsingSlip((uid, component), ref args, slip);
             }
@@ -144,7 +144,7 @@ namespace Content.Server.Cargo.Systems
             if (args.Actor is not { Valid: true } player)
                 return;
 
-            if (component.SlipPrinter)
+            if (component.Mode != CargoOrderConsoleMode.DirectOrder)
                 return;
 
             if (!_accessReaderSystem.IsAllowed(player, uid))
@@ -181,7 +181,7 @@ namespace Content.Server.Cargo.Systems
                 return;
             }
 
-            var amount = GetOutstandingOrderCount(orderDatabase, order.Account);
+            var amount = GetOutstandingOrderCount((station.Value, orderDatabase), order.Account);
             var capacity = orderDatabase.Capacity;
 
             // Too many orders, avoid them getting spammed in the UI.
@@ -312,7 +312,7 @@ namespace Content.Server.Cargo.Systems
         {
             var station = _station.GetOwningStation(uid);
 
-            if (component.SlipPrinter)
+            if (component.Mode != CargoOrderConsoleMode.DirectOrder)
                 return;
 
             if (!TryGetOrderDatabase(station, out var orderDatabase))
@@ -367,6 +367,9 @@ namespace Content.Server.Cargo.Systems
             if (!TryGetOrderDatabase(stationUid, out var orderDatabase))
                 return;
 
+            if (!TryComp<StationBankAccountComponent>(stationUid, out var bank))
+                return;
+
             if (!_protoMan.TryIndex<CargoProductPrototype>(args.CargoProductId, out var product))
             {
                 Log.Error($"Tried to add invalid cargo product {args.CargoProductId} as order!");
@@ -376,15 +379,17 @@ namespace Content.Server.Cargo.Systems
             if (!GetAvailableProducts((uid, component)).Contains(args.CargoProductId))
                 return;
 
-            if (component.SlipPrinter)
+            if (component.Mode == CargoOrderConsoleMode.PrintSlip)
             {
                 OnAddOrderMessageSlipPrinter(uid, component, args, product);
                 return;
             }
 
+            var targetAccount = component.Mode == CargoOrderConsoleMode.SendToPrimary ? bank.PrimaryAccount : component.Account;
+
             var data = GetOrderData(args, product, GenerateOrderId(orderDatabase), component.Account);
 
-            if (!TryAddOrder(stationUid.Value, component.Account, data, orderDatabase))
+            if (!TryAddOrder(stationUid.Value, targetAccount, data, orderDatabase))
             {
                 PlayDenySound(uid, component);
                 return;
@@ -419,13 +424,31 @@ namespace Content.Server.Cargo.Systems
                     CargoConsoleUiKey.Orders,
                     new CargoConsoleInterfaceState(
                     MetaData(station.Value).EntityName,
-                    GetOutstandingOrderCount(orderDatabase, console.Account),
+                    GetOutstandingOrderCount((station!.Value, orderDatabase), console.Account),
                     orderDatabase.Capacity,
                     GetNetEntity(station.Value),
-                    orderDatabase.Orders[console.Account],
+                    RelevantOrders((station!.Value, orderDatabase), (consoleUid, console)),
                     GetAvailableProducts((consoleUid, console))
                 ));
             }
+        }
+
+        /// <summary>
+        /// Gets orders relevant to this account, i.e. orders on the account directly or orders on behalf of the account in the primary account.
+        /// </summary>
+        private List<CargoOrderData> RelevantOrders(Entity<StationCargoOrderDatabaseComponent> station, Entity<CargoOrderConsoleComponent> console)
+        {
+            if (!TryComp<StationBankAccountComponent>(station, out var bank))
+                return [];
+
+            var ourOrders = station.Comp.Orders[console.Comp.Account];
+
+            if (console.Comp.Account == bank.PrimaryAccount)
+                return ourOrders;
+
+            var otherOrders = station.Comp.Orders[bank.PrimaryAccount].Where(order => order.Account == console.Comp.Account);
+
+            return ourOrders.Concat(otherOrders).ToList();
         }
 
         private void ConsolePopup(EntityUid actor, string text)
@@ -447,12 +470,27 @@ namespace Content.Server.Cargo.Systems
             return new CargoOrderData(id, cargoProduct.Product, cargoProduct.Name, cargoProduct.Cost, args.Amount, args.Requester, args.Reason, account);
         }
 
-        public static int GetOutstandingOrderCount(StationCargoOrderDatabaseComponent component, ProtoId<CargoAccountPrototype> account)
+        public int GetOutstandingOrderCount(Entity<StationCargoOrderDatabaseComponent> station, ProtoId<CargoAccountPrototype> account)
         {
             var amount = 0;
 
-            foreach (var order in component.Orders[account])
+            if (!TryComp<StationBankAccountComponent>(station, out var bank))
+                return amount;
+
+            foreach (var order in station.Comp.Orders[account])
             {
+                if (!order.Approved)
+                    continue;
+                amount += order.OrderQuantity - order.NumDispatched;
+            }
+
+            if (account == bank.PrimaryAccount)
+                return amount;
+
+            foreach (var order in station.Comp.Orders[bank.PrimaryAccount])
+            {
+                if (order.Account != account)
+                    continue;
                 if (!order.Approved)
                     continue;
                 amount += order.OrderQuantity - order.NumDispatched;
