@@ -37,21 +37,21 @@ public sealed partial class LogWireAction : ComponentWireAction<AccessReaderComp
     public override bool Cut(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
-        comp.LoggingDisabled = true;
-        EntityManager.Dirty(wire.Owner, comp);
+        EntityManager.System<AccessReaderSystem>().SetLoggingActive((wire.Owner, comp), false);
+
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
-        comp.LoggingDisabled = false;
+        EntityManager.System<AccessReaderSystem>().SetLoggingActive((wire.Owner, comp), true);
         return true;
     }
 
     public override void Pulse(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
         _access.LogAccess((wire.Owner, comp), Loc.GetString(PulseLog));
-        comp.LoggingDisabled = true;
+        EntityManager.System<AccessReaderSystem>().SetLoggingActive((wire.Owner, comp), false);
         WiresSystem.StartWireAction(wire.Owner, PulseTimeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitPulseCancel, wire));
     }
 
@@ -64,7 +64,7 @@ public sealed partial class LogWireAction : ComponentWireAction<AccessReaderComp
     private void AwaitPulseCancel(Wire wire)
     {
         if (!wire.IsCut && EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var comp))
-            comp.LoggingDisabled = false;
+            EntityManager.System<AccessReaderSystem>().SetLoggingActive((wire.Owner, comp), true);
     }
 
     private enum PulseTimeoutKey : byte
