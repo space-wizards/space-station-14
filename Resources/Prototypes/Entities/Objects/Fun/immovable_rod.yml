@@ -5,6 +5,8 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: MovementIgnoreGravity
+    weightless: true
   - type: Sprite
     sprite: Objects/Fun/immovable_rod.rsi
     state: icon
@@ -78,8 +80,6 @@
     damage:
       types:
         Blunt: 190
-  - type: MovementIgnoreGravity
-    weightless: true
   - type: InputMover
   - type: MovementSpeedModifier
     baseWeightlessAcceleration: 5
