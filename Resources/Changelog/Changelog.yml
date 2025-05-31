@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TiniestShark
-  changes:
-  - message: Added inhand and neck sprites to the snake plushie.
-    type: Add
-  id: 8082
-  time: '2025-03-19T23:14:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35323
 - author: MisterImp
   changes:
   - message: The copypasta recipe now requires two small plates, which are left behind
@@ -3916,3 +3909,10 @@
   id: 8593
   time: '2025-05-30T23:53:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35341
+- author: beck-thompson
+  changes:
+  - message: Removed the keep alive traitor objective.
+    type: Remove
+  id: 8594
+  time: '2025-05-31T02:09:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37945
