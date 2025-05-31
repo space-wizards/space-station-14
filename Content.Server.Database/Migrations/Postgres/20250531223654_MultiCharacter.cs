@@ -53,6 +53,7 @@ namespace Content.Server.Database.Migrations.Postgres
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            // Convert the currently selected character's job priorities to the player's job priorities
             migrationBuilder.Sql(
                 """
                 INSERT INTO job_priority_entry (preference_id, job_name, priority)
