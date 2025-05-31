@@ -33,6 +33,9 @@ public sealed class JobRequirementsTest
           - !type:AgeRequirement
             requiredAge: 65
 
+        - type: roleLoadout
+          id: JobSeniorCitizen
+
         - type: job
           id: Twenties
           playTimeTracker: PlayTimeDummyTwenties
@@ -42,6 +45,9 @@ public sealed class JobRequirementsTest
           - !type:AgeRequirement
             requiredAge: 29
             inverted: true
+
+        - type: roleLoadout
+          id: JobTwenties
 
         - type: playTimeTracker
           id: PlayTimeDummyWehngineer
@@ -57,6 +63,9 @@ public sealed class JobRequirementsTest
             species:
             - Reptilian
 
+        - type: roleLoadout
+          id: JobWehngineer
+
         - type: job
           id: FreezerHead
           playTimeTracker: PlayTimeDummyFreezerHead
@@ -65,6 +74,9 @@ public sealed class JobRequirementsTest
             inverted: true
             species:
             - Reptilian
+
+        - type: roleLoadout
+          id: JobFreezerHead
 
         - type: gameMap
           id: JobRequirementsTestMap
