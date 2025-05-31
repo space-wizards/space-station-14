@@ -99,7 +99,7 @@ namespace Content.Shared.Gravity
         /// <param name="weightless">The weightless value we are trying to change to, helps avoid networking</param>
         public void RefreshWeightless(Entity<WeightlessnessComponent?> entity, bool? weightless = null)
         {
-            if (!Resolve(entity, ref entity.Comp, false))
+            if (!Resolve(entity, ref entity.Comp))
                 return;
 
             // Only update if we're changing our weightless status
