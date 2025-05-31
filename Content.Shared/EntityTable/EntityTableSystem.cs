@@ -14,7 +14,7 @@ public sealed class EntityTableSystem : EntitySystem
     public IEnumerable<EntProtoId> GetSpawns(EntityTablePrototype entTableProto, System.Random? rand = null, EntityTableContext? ctx = null)
     {
         // convenient
-        return GetSpawns(entTableProto.Table, rand);
+        return GetSpawns(entTableProto.Table, rand, ctx);
     }
 
     public IEnumerable<EntProtoId> GetSpawns(EntityTableSelector? table, System.Random? rand = null, EntityTableContext? ctx = null)
