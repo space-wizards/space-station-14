@@ -55,6 +55,11 @@ public sealed partial class ProfilePreview : BoxContainer
 
     private void SetPreviewRotation(Direction direction)
     {
+        // I didn't write this code but it's pretty wacky...
+        // It looks like OnRotateLeft/Right will increment or decrement the direction of _previewRotation, which includes
+        // all 8 directions, but then this function basically truncates that to four directions, and multiplies by two
+        // in order to get the sprite to rotate in 90 degree increments instead of 45 degree increments.
+        // It's pretty wacky like I said but I'm not inclined to change code that works right now.
         SpriteView.OverrideDirection = (Direction) ((int) direction % 4 * 2);
     }
 
