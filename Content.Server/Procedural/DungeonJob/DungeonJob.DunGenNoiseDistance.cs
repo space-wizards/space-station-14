@@ -28,7 +28,7 @@ public sealed partial class DungeonJob
         Random random)
     {
         var tiles = new List<(Vector2i, Tile)>();
-        var matrix = Matrix3Helpers.CreateTranslation(position);
+        var matrix = Matrix3Helpers.CreateTranslation(_position + position);
 
         foreach (var layer in dungen.Layers)
         {
@@ -76,7 +76,9 @@ public sealed partial class DungeonJob
                         break;
                     }
 
-                    tiles.Add((adjusted, new Tile(tileDef.TileId, variant: variant)));
+                    var tile = new Tile(tileDef.TileId, variant: variant);
+                    tiles.Add((adjusted, tile));
+                    AddLoadedTile(adjusted, tile);
                     roomTiles.Add(adjusted);
                     break;
                 }
@@ -101,6 +103,8 @@ public sealed partial class DungeonJob
     {
         switch (distance)
         {
+            case DunGenDistanceSquared:
+                return dx * dx + dy * dy;
             case DunGenEuclideanSquaredDistance:
                 return MathF.Min(1f, (dx * dx + dy * dy) / MathF.Sqrt(2));
             case DunGenSquareBump:
