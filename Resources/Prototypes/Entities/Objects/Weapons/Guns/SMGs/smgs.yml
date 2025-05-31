@@ -74,7 +74,7 @@
   - type: Gun
     fireRate: 10
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
+      collection: AtreidesGunshot
   - type: MagazineVisuals
     magState: mag
     steps: 1
