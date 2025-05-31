@@ -123,10 +123,10 @@
           restitution: 0.98
           friction: 0.01
     - type: Physics
-      angularDamping: 0.02
-      linearDamping: 0.02
       fixedRotation: true
       bodyType: Dynamic
+    - type: MovementIgnoreGravity
+      gravityState: true
     - type: TileFrictionModifier
       modifier: 0.1
     - type: Tag
