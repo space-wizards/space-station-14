@@ -4,8 +4,6 @@
   abstract: true
   components:
   - type: Absorbable
-  - type: MovementSpeedModifier
-    baseSprintSpeed : 5.625
   - type: Speech
     speechVerb: Felionoid
     allowedEmotes: ['Mew', 'Hisses', 'Meow', 'Growl', 'Purr', 'Trill']

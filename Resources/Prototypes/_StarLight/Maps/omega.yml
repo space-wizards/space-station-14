@@ -5,7 +5,7 @@
   minPlayers: 0
   maxPlayers: 35
   stations:
-    Omega:
+    StarlightOmega:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup

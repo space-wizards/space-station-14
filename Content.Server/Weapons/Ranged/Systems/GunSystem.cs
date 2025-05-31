@@ -158,7 +158,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (!cartridge.Spent)
                     {
                         var hitscanPrototype = ProtoManager.Index(cartridge.Hitscan);
-
+                        var hitHashSet = new HashSet<EntityUid>();
                         if (hitscanPrototype.Count > 1)
                         {
                             var spread = (hitscanPrototype.Spread + gun.Spread) / 2;
@@ -171,13 +171,13 @@ public sealed partial class GunSystem : SharedGunSystem
 
                             List<List<(EntityCoordinates, float, Angle, EntityUid?)>> hits = new(hitscanPrototype.Count);
                             for (var i = 0; i < hitscanPrototype.Count; i++)
-                                hits.Add(Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, angles[i].ToVec(), hitscanPrototype));
+                                hits.Add(Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, angles[i].ToVec(), hitscanPrototype, hitHashSet));
 
                             FireEffects(hits.ToList(), hitscanPrototype);
                         }
                         else
                         {
-                            var hits = Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, mapDirection, hitscanPrototype);
+                            var hits = Hitscan(gunUid, gun, fromCoordinates, user, fromMap, pointerLength, mapDirection, hitscanPrototype, hitHashSet);
                             FireEffects([hits], hitscanPrototype);
                         }
 
@@ -410,12 +410,24 @@ public sealed partial class GunSystem : SharedGunSystem
             MuzzleFlash(gunUid, ammoComp, mapDirection.ToAngle(), user);
             Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
         }
+
         //🌟Starlight🌟
-        List<(EntityCoordinates, float, Angle, EntityUid?)> Hitscan(EntityUid gunUid, GunComponent gun, EntityCoordinates fromCoordinates, EntityUid? user, MapCoordinates fromMap, float pointer, Vector2 mapDirection, HitscanPrototype hitscan)
+        // This is fucked already, we need to just comment out the entire Wizden shooting system, take over full maintenance, and rewrite it from scratch.
+        List<(EntityCoordinates, float, Angle, EntityUid?)> Hitscan
+            (
+                EntityUid gunUid,
+                GunComponent gun,
+                EntityCoordinates fromCoordinates,
+                EntityUid? user,
+                MapCoordinates fromMap,
+                float pointer,
+                Vector2 mapDirection,
+                HitscanPrototype hitscan,
+                HashSet<EntityUid> hitHashSet
+            )
         {
             EntityUid? lastHit = null;
             List<(EntityCoordinates fromCoordinates, float distance, Angle mapDirection, EntityUid? hitEntity)> effects = [];
-            var accuracyZone = 3f;
 
             var from = fromMap;
             // can't use map coords above because funny FireEffects
@@ -424,15 +436,16 @@ public sealed partial class GunSystem : SharedGunSystem
 
             //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
             var lastUser = user ?? gunUid;
+            hitHashSet.Clear();
+            hitHashSet.Add(lastUser);
 
             if (hitscan.Reflective != ReflectType.None)
             {
                 for (var reflectAttempt = 0; reflectAttempt < hitscan.Steps; reflectAttempt++)
                 {
                     var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
-                    var rayCastResults =
-                        Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
-                    if (!rayCastResults.Any())
+                    var rayCastResults = Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
+                    if (rayCastResults.Count == 0)
                         break;
 
                     var result = rayCastResults[0];
@@ -445,9 +458,8 @@ public sealed partial class GunSystem : SharedGunSystem
                         {
                             if (collide.HitEntity != gun.Target &&
                                 CompOrNull<RequireProjectileTargetComponent>(collide.HitEntity)?.Active == true)
-                            {
                                 continue;
-                            }
+
                             if (collide.Distance < pointer - 2f && HasComp<MobMoverComponent>(collide.HitEntity))
                             {
                                 if (pointer - collide.Distance > 4f) continue;
@@ -455,6 +467,10 @@ public sealed partial class GunSystem : SharedGunSystem
                                 var chance = Math.Clamp(1f - ((collide.Distance - 2f) / 2f), 0f, 1f);
                                 if (!_rand.Prob(chance)) continue;
                             }
+                            if (!hitHashSet.Contains(collide.HitEntity))
+                                hitHashSet.Add(collide.HitEntity);
+                            else
+                                continue;
 
                             result = collide;
                             break;
@@ -473,6 +489,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         if (ev.Reflected)
                         {
+                            hitHashSet.Clear();
+                            hitHashSet.Add(hit);
                             fromEffect = Transform(hit).Coordinates;
                             from = TransformSystem.ToMapCoordinates(fromEffect);
                             dir = ev.Direction;
@@ -488,6 +506,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         if (ev.Ricocheted)
                         {
+                            hitHashSet.Clear();
+                            hitHashSet.Add(hit);
                             fromEffect = _transform.ToCoordinates(result.HitEntity, new MapCoordinates(result.HitPos, fromMap.MapId));
                             from = TransformSystem.ToMapCoordinates(fromEffect);
                             dir = ev.Dir;
@@ -711,7 +731,7 @@ public sealed partial class GunSystem : SharedGunSystem
                 var fromXform = Transform(fromCoordinates.EntityId);
 
                 var gridUid = fromXform.GridUid;
-                
+
                 if (gridUid != fromCoordinates.EntityId && TryComp(gridUid, out TransformComponent? gridXform))
                 {
                     var (_, gridRot, gridInvMatrix) = TransformSystem.GetWorldPositionRotationInvMatrix(gridXform);
@@ -771,7 +791,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (pvs.Count > 0)
         {
             var filter = Filter.Empty();
-            foreach (var pos in pvs.Where(x=>x.IsValid(EntityManager)))
+            foreach (var pos in pvs.Where(x => x.IsValid(EntityManager)))
                 filter.Merge(Filter.Pvs(pos, entityMan: EntityManager));
 
             RaiseNetworkEvent(hitscanEvent, filter);
