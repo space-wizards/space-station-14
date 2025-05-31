@@ -18,6 +18,8 @@ namespace Content.Shared.Preferences.Loadouts;
 [Serializable, NetSerializable, DataDefinition]
 public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
 {
+    [Dependency] private readonly ILogManager _logManager = default!;
+
     [DataField]
     public ProtoId<RoleLoadoutPrototype> Role;
 
@@ -214,7 +216,11 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
 
         var collection = IoCManager.Instance!;
         if(!protoManager.TryIndex(Role, out var roleProto, logError: false))
+        {
+            _logManager.GetSawmill("RoleLoadout").Warning(
+                $"Role {Role} has no corresponding RoleLoadoutPrototype, cannot set default loadout.");
             return;
+        }
 
         for (var i = roleProto.Groups.Count - 1; i >= 0; i--)
         {
