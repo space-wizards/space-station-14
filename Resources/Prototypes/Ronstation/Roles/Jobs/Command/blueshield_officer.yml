@@ -53,3 +53,13 @@
     - Flash
     - WeaponPistolMk58
     - MagazinePistol
+
+- type: chameleonOutfit
+  id: BlueshieldOfficerOutfit
+  job: BlueshieldOfficer
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBeretBlueshield
+    mask: ClothingMaskGasSecurity
+    neck: Dinkyshield
+    gloves: ClothingHandsGlovesColorBlack

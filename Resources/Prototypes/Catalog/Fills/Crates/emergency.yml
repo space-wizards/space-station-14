@@ -88,10 +88,40 @@
         amount: 4
 
 - type: entity
+  id: CrateEVASuitsBasic
+  parent: CrateInternals
+  name: EVA suit crate
+  description: Contains packaged EVA suits with helmets for them, but no air tanks.
+  components:
+    - type: StorageFill
+      contents:
+        - id: ClothingHeadHelmetEVA
+          amount: 2
+        - id: SuitEVAPackage
+          amount: 2
+
+- type: entity
+  id: CrateEvaKit
+  parent: CrateCommandSecure
+  name: EVA kit
+  description: A crate containing 3 EVA suits, helmets, and air tanks for them. # used to contain just 2 suits and helmets. command locked and used to be in the engineering crates file. What.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetEVA
+        amount: 3
+      - id: SuitEVAPackage
+        amount: 3
+      - id: NitrogenTankFilled
+        amount: 3
+      - id: OxygenTankFilled
+        amount: 3
+
+- type: entity
   id: CrateEmergencyRadiation
   parent: CrateRadiation
   name: radiation protection crate
-  description: Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this.
+  description: Survive the Nuclear Apocalypse and Singuloose alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this.
   components:
   - type: StorageFill
     contents:

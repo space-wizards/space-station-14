@@ -74,7 +74,7 @@
   parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
   id: ClothingOuterHardsuitSpatio
   name: spationaut hardsuit
-  description: A lightweight hardsuit designed for industrial EVA in zero gravity.
+  description: A lightweight hardsuit designed for industrial EVA applications, a salvage specialist's best friend.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
@@ -89,7 +89,7 @@
         Blunt: 0.9
         Slash: 0.9
         Piercing: 0.9
-        Radiation: 0.3 #salv is supposed to have radiation hazards in the future
+        Radiation: 0.7
         Caustic: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.9
@@ -108,7 +108,7 @@
   parent: [ClothingOuterHardsuitBase, BaseCargoContraband]
   id: ClothingOuterHardsuitSalvage
   name: mining hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters.
+  description: A hardsuit built for rock crushers and alien robusters. Comes with a brighter light so you can see better when mining, and robusting.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
@@ -124,10 +124,10 @@
       coefficients:
         Blunt: 0.7
         Slash: 0.6
-        Piercing: 0.7
+        Piercing: 0.8
         Heat: 0.7
-        Radiation: 0.3
-        Caustic: 0.7
+        Radiation: 0.5
+        Caustic: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.75
     sprintModifier: 0.75
@@ -150,16 +150,16 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.3
+    damageCoefficient: 0.9
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7
-        Slash: 0.7
-        Piercing: 0.5
-        Heat: 0.7 #Goliath hide gets grilled instead of you
-        Radiation: 0.3
-        Caustic: 0.8
+        Blunt: 0.5
+        Slash: 0.35
+        Piercing: 0.85
+        Heat: 0.6
+        Radiation: 0.65
+        Caustic: 0.5
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -266,7 +266,7 @@
   parent: [ClothingOuterHardsuitBase, BaseSecurityContraband]
   id: ClothingOuterHardsuitWarden
   name: warden's hardsuit
-  description: A specialized riot suit geared to combat low pressure environments.
+  description: Generations of designs originally tracing from "void cabable riot gear" have produced a frightening hardsuit that lets you REALLY put your foot down and hold your ground.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
@@ -276,18 +276,17 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.4
+    damageCoefficient: 0.3
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.4
-        Slash: 0.5
-        Piercing: 0.6
-        Heat: 0.8
-        Caustic: 0.7
+        Blunt: 0.35
+        Slash: 0.35
+        Piercing: 0.3
+        Heat: 0.6
   - type: ClothingSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.7
+    walkModifier: 0.6
+    sprintModifier: 0.6
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
@@ -363,7 +362,7 @@
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
   id: ClothingOuterHardsuitMedical
   name: chief medical officer's hardsuit
-  description: A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement.
+  description: A lightweight void-capable suit issued to the CMO, Built with advanced fabrics with laceration and chemical protection, that feel soft and don't slow you down!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/medical.rsi
@@ -375,6 +374,10 @@
   - type: Armor
     modifiers:
       coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Heat: 0.5
+        Radiation: 0.45
         Caustic: 0.1
   - type: ZombificationResistance
     zombificationResistanceCoefficient: 0.4
@@ -466,7 +469,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitLuxury #DO NOT MAP - https://github.com/space-wizards/space-station-14/pull/19738#issuecomment-1703486738
   name: luxury mining hardsuit
-  description: A refurbished mining hardsuit, fashioned after the Quartermaster's colors. Graphene lining provides less protection, but is much easier to move.
+  description: A refurbished mining hardsuit with a new coat of paint and added bling. Comes with improved armor plating more resistant to gibtonite explosions.
   categories: [ DoNotMap ]
   components:
   - type: Sprite
@@ -477,19 +480,19 @@
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.9
+    damageCoefficient: 0.35
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.9
-        Slash: 0.8
-        Piercing: 0.9
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.7
         Heat: 0.9
-        Radiation: 0.5
-        Caustic: 0.8
+        Radiation: 0.25
+        Caustic: 0.7
   - type: ClothingSpeedModifier
-    walkModifier: 0.85
-    sprintModifier: 0.9
+    walkModifier: 0.75
+    sprintModifier: 0.75
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLuxury
@@ -506,6 +509,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: Item
     size: Huge
+    shape:
+    - 0,0,4,4
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
   - type: PressureProtection
@@ -588,6 +593,8 @@
         Caustic: 0.5
   - type: Item
     size: Huge
+    shape:
+    - 0,0,4,4
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 0.9
@@ -665,6 +672,7 @@
   - type: Tag
     tags:
     - MonkeyWearable
+    - WhitelistChameleon
 
 #Wizard Hardsuit
 - type: entity

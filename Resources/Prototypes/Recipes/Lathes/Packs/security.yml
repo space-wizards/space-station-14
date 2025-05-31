@@ -22,6 +22,11 @@
   - MagazineBoxRiflePractice
   - WeaponDisablerPractice
   - WeaponLaserCarbinePractice
+  - MagazineLightRiflePractice
+  - MagazineRiflePractice
+  - MagazinePistolPractice
+  - SpeedLoaderMagnumPractice
+  - MagazinePistolSubMachineGunPractice
   - WeaponFlareGunSecurity
 
 # Shared between secfab and emagged autolathe
@@ -57,6 +62,11 @@
   - Stunbaton
   - CombatKnife
   - RiotShield
+  # armor in the weapons pack? more likely than you think
+  - ClothingHeadHelmetRiot
+  - ClothingOuterArmorRiot
+  - ClothingOuterArmorBulletproof
+  - ClothingOuterArmorReflective
 
 ## Dynamic recipes
 

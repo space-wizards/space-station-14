@@ -204,7 +204,7 @@
   id: UplinkGrenadeLauncherBundle
   name: uplink-grenade-launcher-bundle-name
   description: uplink-grenade-launcher-bundle-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi, state: icon }
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi, state: base }
   productEntity: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   discountCategory: veryRareDiscounts
   discountDownTo:
@@ -1628,7 +1628,7 @@
   name: uplink-eva-syndie-name
   description: uplink-eva-syndie-desc
   icon: { sprite: /Textures/Clothing/OuterClothing/Suits/eva_syndicate.rsi, state: icon }
-  productEntity: ClothingBackpackDuffelSyndicateEVABundle
+  productEntity: ClothingBackpackSyndicateEVABundle
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 1

@@ -49,6 +49,16 @@
   group: market
 
 - type: cargoProduct
+  id: EvaKit
+  icon:
+    sprite: Clothing/Head/Helmets/eva.rsi
+    state: icon
+  product: CrateEvaKit
+  cost: 5000
+  category: cargoproduct-category-name-emergency
+  group: market
+
+- type: cargoProduct
   id: EmergencyInflatablewall
   icon:
     sprite: Objects/Misc/inflatable_wall.rsi

@@ -211,22 +211,7 @@
         - id: ClothingEyesChameleon
         - id: ClothingHeadsetChameleon
         - id: ClothingShoesChameleon
-        - id: BarberScissors
-
-- type: entity
-  parent: ClothingBackpackDuffelSyndicateBundle
-  id: ClothingBackpackDuffelSyndicateEVABundle
-  name: syndicate EVA bundle
-  description: "Contains the Syndicate approved EVA suit."
-  components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadHelmetSyndicate
-      - id: ClothingOuterEVASuitSyndicate
-      - id: ClothingMaskGasSyndicate
-      - id: ClothingHandsGlovesColorYellowBudget
-      - id: DoubleEmergencyOxygenTankFilled
-      - id: DoubleEmergencyNitrogenTankFilled
+        - id: ChameleonControllerImplanter
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

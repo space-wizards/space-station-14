@@ -213,6 +213,17 @@
   flavor: bitter
   color: "#C0C0C0"
   physicalDesc: reagent-physical-desc-strong-smelling
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:Emote
+        emote: Cough
+        showInChat: true
+        probability: 0.08
+# feel free to add this line below if you want a min before coughing starts -Mystic
+#        conditions:
+#        - !type:ReagentThreshold
+#          min: 3
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5

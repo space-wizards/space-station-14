@@ -6,8 +6,7 @@
   - type: MachineBoard
     prototype: PaperPrinter
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
 
 - type: entity
   id: PaperPrinterCommandMachineCircuitboard
@@ -19,8 +18,7 @@
   - type: MachineBoard
     prototype: PaperPrinterCommand
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
 
 - type: entity
   id: PaperPrinterSecurityMachineCircuitboard
@@ -32,8 +30,7 @@
   - type: MachineBoard
     prototype: PaperPrinterSecurity
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
 
 - type: entity
   id: PaperPrinterEngineeringMachineCircuitboard
@@ -45,8 +42,7 @@
   - type: MachineBoard
     prototype: PaperPrinterEngineering
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
 
 - type: entity
   id: PaperPrinterMedicalMachineCircuitboard
@@ -58,8 +54,7 @@
   - type: MachineBoard
     prototype: PaperPrinterMedical
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
 
 - type: entity
   id: PaperPrinterSupplyMachineCircuitboard
@@ -71,8 +66,7 @@
   - type: MachineBoard
     prototype: PaperPrinterSupply
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
 
 - type: entity
   id: PaperPrinterScienceMachineCircuitboard
@@ -84,8 +78,7 @@
   - type: MachineBoard
     prototype: PaperPrinterScience
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
 
 - type: entity
   id: PaperPrinterServiceMachineCircuitboard
@@ -97,8 +90,7 @@
   - type: MachineBoard
     prototype: PaperPrinterService
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
 
 - type: entity
   id: PaperPrinterCaptainMachineCircuitboard
@@ -110,8 +102,7 @@
   - type: MachineBoard
     prototype: PaperPrinterCaptain
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
 
 - type: entity
   id: PaperPrinterHeadOfPersonnelMachineCircuitboard
@@ -123,5 +114,4 @@
   - type: MachineBoard
     prototype: PaperPrinterHeadOfPersonnel
     stackRequirements:
-      MatterBin: 1
-      Manipulator: 2
+      Manipulator: 3
