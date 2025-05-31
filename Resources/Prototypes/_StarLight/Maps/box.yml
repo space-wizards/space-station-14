@@ -4,7 +4,7 @@
   mapPath: /Maps/_Starlight/Stations/Box.yml
   minPlayers: 50
   stations:
-    Boxstation:
+    StarlightBox:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
