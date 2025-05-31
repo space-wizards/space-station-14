@@ -9,7 +9,6 @@ namespace Content.Client.Weapons.Melee;
 
 public sealed class MeleeSpreadCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
@@ -19,13 +18,14 @@ public sealed class MeleeSpreadCommand : LocalizedEntityCommands
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public override string Command => "showmeleespread";
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (_overlay.RemoveOverlay<MeleeArcOverlay>())
             return;
 
         _overlay.AddOverlay(new MeleeArcOverlay(
-            _entManager,
+            EntityManager,
             _eyeManager,
             _inputManager,
             _playerManager,
