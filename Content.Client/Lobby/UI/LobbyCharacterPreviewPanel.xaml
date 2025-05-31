@@ -6,52 +6,68 @@
     xmlns:style="clr-namespace:Content.Client.Stylesheets">
     <BoxContainer Name="VBox" Orientation="Vertical">
         <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}" />
+
+        <!-- This is the main bit, only shows once we have preferences from the server -->
         <BoxContainer Name="Loaded" Orientation="Vertical" Visible="False">
+
+            <!-- Where we show ALL the jobs, separated into priorities -->
             <BoxContainer Name="JobGrid"
                           VerticalExpand="True"
                           HorizontalExpand="True"
                           SeparationOverride="6">
 
+                <!-- Jobs with "Never" priority -->
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <Label Text="{Loc 'humanoid-profile-editor-job-priority-never-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="0 6"/>
+                    <!-- We stuff the job icons into this GridContainer -->
                     <GridContainer Name="NeverBox" MaxGridWidth="140" HorizontalAlignment="Center"/>
                 </BoxContainer>
 
+                <!-- Vertical rule -->
                 <PanelContainer MinSize="2 0">
                     <PanelContainer.PanelOverride>
                         <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
                     </PanelContainer.PanelOverride>
                 </PanelContainer>
 
+                <!-- Jobs with "Low" priority -->
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <Label Text="{Loc 'humanoid-profile-editor-job-priority-low-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="6"/>
                     <GridContainer Name="LowBox" MaxGridWidth="140" HorizontalAlignment="Center"/>
                 </BoxContainer>
 
+                <!-- Vertical rule -->
                 <PanelContainer MinSize="2 0">
                     <PanelContainer.PanelOverride>
                         <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
                     </PanelContainer.PanelOverride>
                 </PanelContainer>
 
+                <!-- Jobs with "Medium" priority -->
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <Label Text="{Loc 'humanoid-profile-editor-job-priority-medium-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="0 6"/>
                     <GridContainer Name="MediumBox" MaxGridWidth="140" HorizontalAlignment="Center"/>
                 </BoxContainer>
 
+                <!-- Vertical rule -->
                 <PanelContainer MinSize="2 0">
                     <PanelContainer.PanelOverride>
                         <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
                     </PanelContainer.PanelOverride>
                 </PanelContainer>
 
+                <!-- THE job with "HIGH" priority -->
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <Label Text="{Loc 'humanoid-profile-editor-job-priority-high-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="0 6"/>
+                    <!-- There can only be one high priority job, so bigger boxcontainer instead of a grid -->
                     <BoxContainer Name="HighBox" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </BoxContainer>
 
-            </BoxContainer>
+            </BoxContainer> <!-- End job grids -->
+
             <controls:VSpacer/>
+
+            <!-- Character setup button -->
             <Button Name="CharacterSetup" Text="{Loc 'lobby-character-preview-panel-character-setup-button'}"
                     HorizontalAlignment="Center"
                     Margin="0 5 0 0"/>
