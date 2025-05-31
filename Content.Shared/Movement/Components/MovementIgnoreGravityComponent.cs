@@ -11,7 +11,7 @@ namespace Content.Shared.Movement.Components
         /// <summary>
         /// Whether gravity is on or off for this object. This will always override the current Gravity State.
         /// </summary>
-        [DataField("gravityState"), AutoNetworkedField]
+        [DataField, AutoNetworkedField]
         public bool Weightless;
     }
 }

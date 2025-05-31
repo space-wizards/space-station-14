@@ -5,14 +5,12 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: MovementIgnoreGravity
   - type: Sprite
     sprite: Objects/Fun/immovable_rod.rsi
     state: icon
     noRot: false
   - type: ImmovableRod
   - type: Weightlessness
-    weightless: false
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
@@ -81,7 +79,7 @@
       types:
         Blunt: 190
   - type: MovementIgnoreGravity
-    gravityState: true
+    weightless: true
   - type: InputMover
   - type: MovementSpeedModifier
     baseWeightlessAcceleration: 5
