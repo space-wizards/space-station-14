@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Tag;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -16,6 +17,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
@@ -223,6 +225,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
             doAfter.InitialHand = handsComponent.ActiveHand?.Name;
             doAfter.InitialItem = handsComponent.ActiveHandEntity;
+        }
+
+        if (args.BreakOnContainerChange && args.EventTarget != null)
+        {
+            if (_container.TryGetContainingContainer((args.EventTarget.Value, null, null), out var container))
+            {
+                doAfter.InitialContainerID = container.ID;
+            }
         }
 
         doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
