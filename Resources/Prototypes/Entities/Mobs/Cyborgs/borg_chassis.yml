@@ -161,16 +161,24 @@
     - type: Sprite
       layers:
         - state: synd_engi
+          map: ["enum.BorgVisualLayers.Body"]
+        - state: engineer
+          map: [ "enum.BorgDisguiseVisualLayers.Body" ]
+          visible: false
         - state: synd_engi_e
           map: ["enum.BorgVisualLayers.Light"]
           shader: unshaded
           visible: false
+        - state: engineer_e
+          map: [ "enum.BorgDisguiseVisualLayers.Light" ]
+          shader: unshaded
+          visible: false
         - state: synd_engi_l
           shader: unshaded
-          map: ["light"]
+          map: [ "light" ]
           visible: false
     - type: BorgChassis
-      maxModules: 3
+      maxModules: 6 # Syndies figured out how to use a generic module interface on a specialized engi chassis
       moduleWhitelist:
         tags:
           - BorgModuleGeneric
@@ -187,6 +195,33 @@
       interactFailureString: petting-failure-syndicate-cyborg
       interactSuccessSound:
         path: /Audio/Ambience/Objects/periodic_beep.ogg
+    - type: BorgDisguise
+      action: ActionBorgDisguiseToggle
+      hasMindState: engineer_e
+      noMindState: engineer_e_r
+      description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
+      disguisedLight: engineer_l
+      realLight: synd_engi_l
+    - type: GenericVisualizer
+      visuals:
+        enum.BorgDisguiseVisuals.IsDisguised:
+          enum.BorgVisualLayers.Body:
+            True: { visible: false }
+            False: { visible: true }
+          enum.BorgDisguiseVisualLayers.Body:
+            True: { visible: true }
+            False: { visible: false }
+
+# actions
+- type: entity
+  id: ActionBorgDisguiseToggle
+  name: Toggle Chameleon Projector
+  description: Use this to toggle your chameleon projector, allowing you to hide as a Nanotrasen cyborg.
+  components:
+  - type: InstantAction
+    icon: /Textures/Interface/VerbIcons/settings.svg.192dpi.png
+    itemIconStyle: BigAction
+    event: !type:BorgDisguiseToggleActionEvent
 
 - type: entity
   id: BorgChassisDerelict
