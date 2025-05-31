@@ -494,10 +494,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     }
 
     /// <summary>
-    /// Retrieve the humanoid profile used to create this entity
+    /// Retrieve the humanoid profile used to create this entity, or null if no profile was used to spawn this entity.
     /// </summary>
-    /// <param name="ent"></param>
-    /// <returns></returns>
     public HumanoidCharacterProfile? GetBaseProfile(Entity<HumanoidAppearanceComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))

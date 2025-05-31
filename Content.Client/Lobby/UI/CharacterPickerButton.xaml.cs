@@ -32,10 +32,9 @@ public sealed partial class CharacterPickerButton : ContainerButton
     /// <summary>
     /// Create a new character picker button
     /// </summary>
-    /// <param name="prefMan"></param>
-    /// <param name="protoMan"></param>
-    /// <param name="entMan"></param>
-    /// <param name="playerMan"></param>
+    /// <param name="prefMan">Passed in dependency</param>
+    /// <param name="protoMan">Passed in dependency</param>
+    /// <param name="playerMan">Passed in dependency</param>
     /// <param name="group">Button group to join</param>
     /// <param name="profile">Profile this button is attached to</param>
     /// <param name="isSelected">If true, start in pressed state</param>

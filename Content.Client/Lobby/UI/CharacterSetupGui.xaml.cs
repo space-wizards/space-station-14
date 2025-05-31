@@ -50,8 +50,6 @@ namespace Content.Client.Lobby.UI
         /// <summary>
         /// UI Class for the character customization window that pops up when you click "Customize" on the lobby screen
         /// </summary>
-        /// <param name="profileEditor"></param>
-        /// <param name="jobPriorityEditor"></param>
         public CharacterSetupGui(HumanoidProfileEditor profileEditor, JobPriorityEditor jobPriorityEditor)
         {
             _humanoidProfileEditor = profileEditor;
