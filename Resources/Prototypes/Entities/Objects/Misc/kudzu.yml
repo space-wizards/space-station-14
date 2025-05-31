@@ -111,6 +111,15 @@
       spreadChance: 0.3
 
 - type: entity
+  id: FastKudzu
+  parent: Kudzu
+  suffix: Fast
+  components:
+  - type: Kudzu
+    spreadChance: 0.6
+    growthTickChance: 0.6
+
+- type: entity
   id: KudzuFlowerFriendly
   name: floral carpet
   suffix: Friendly, Floral Anomaly

@@ -280,6 +280,9 @@ uplink-carp-dehydrated-desc = Looks like a plush toy carp, but just add water an
 uplink-gatfruit-seeds-name = Packet Of Gatfruit Seeds
 uplink-gatfruit-seeds-desc = And who says guns don't grow on trees?
 
+uplink-kudzu-globe-kit-name = Kudzu Globe Kit
+uplink-kudzu-globe-kit-desc = Contains a box full of Kudzu Globes, which explode with a fast growing Kudzu when they land.
+
 uplink-rigged-boxing-gloves-name = Rigged Boxing Gloves
 uplink-rigged-boxing-gloves-desc = Float like a butterfly, sting like a bee.
 

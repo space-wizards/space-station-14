@@ -85,3 +85,14 @@
       - id: WeaponBaguette
       - id: SyndicateMicrowaveMachineCircuitboard
       - id: PaperWrittenCombatBakeryKit
+
+- type: entity
+  id: KudzuBombKit
+  parent: [BoxCardboard, BaseSyndicateContraband]
+  name: kudzu globe kit
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: SyndieKudzuBomb
+      amount: 4

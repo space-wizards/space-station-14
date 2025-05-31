@@ -1937,6 +1937,23 @@
     - Botanist
 
 - type: listing
+  id: uplinkKudzuGlobeKit
+  name: uplink-kudzu-globe-kit-name
+  description: uplink-kudzu-globe-kit-desc
+  productEntity: KudzuBombKit
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Botanist
+
+- type: listing
   id: uplinkRiggedBoxingGlovesPassenger
   name: uplink-rigged-boxing-gloves-name
   description: uplink-rigged-boxing-gloves-desc
