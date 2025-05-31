@@ -21,11 +21,11 @@ public sealed partial class ProfilePreviewSpriteView
     /// <param name="humanoid">Profile to apply to the dummy</param>
     private void ReloadHumanoidEntity(HumanoidCharacterProfile humanoid)
     {
-        if (!_entManager.EntityExists(PreviewDummy) ||
-            !_entManager.HasComponent<HumanoidAppearanceComponent>(PreviewDummy))
+        if (!EntMan.EntityExists(PreviewDummy) ||
+            !EntMan.HasComponent<HumanoidAppearanceComponent>(PreviewDummy))
             return;
 
-        _entManager.System<HumanoidAppearanceSystem>().LoadProfile(PreviewDummy, humanoid);
+        EntMan.System<HumanoidAppearanceSystem>().LoadProfile(PreviewDummy, humanoid);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public sealed partial class ProfilePreviewSpriteView
                 LoadoutSystem.GetJobPrototype(job.ID),
                 _playerManager.LocalSession,
                 humanoid.Species,
-                _entManager,
+                EntMan,
                 _prototypeManager);
 
             // If the job has a preview specific entity or a job specific entity use that
@@ -62,7 +62,7 @@ public sealed partial class ProfilePreviewSpriteView
             if (previewEntity != null)
             {
                 // This is currently for borg and AI
-                PreviewDummy = _entManager.SpawnEntity(previewEntity, MapCoordinates.Nullspace);
+                PreviewDummy = EntMan.SpawnEntity(previewEntity, MapCoordinates.Nullspace);
                 JobName = job.LocalizedName;
                 // Grab the loadout specific name too!
                 LoadoutName = GetLoadoutName(loadout);
@@ -71,7 +71,7 @@ public sealed partial class ProfilePreviewSpriteView
         }
 
         // No job specific entities, we should spawn a humanoid
-        PreviewDummy = _entManager.SpawnEntity(
+        PreviewDummy = EntMan.SpawnEntity(
             _prototypeManager.Index(humanoid.Species).DollPrototype,
             MapCoordinates.Nullspace);
 
@@ -115,7 +115,7 @@ public sealed partial class ProfilePreviewSpriteView
             LoadoutSystem.GetJobPrototype(job.ID),
             _playerManager.LocalSession,
             humanoid.Species,
-            _entManager,
+            EntMan,
             _prototypeManager);
 
         LoadoutName = GetLoadoutName(loadout);
@@ -170,7 +170,7 @@ public sealed partial class ProfilePreviewSpriteView
         if (!antag.PreviewStartingGear.HasValue)
             return;
 
-        var spawnSys = _entManager.System<StationSpawningSystem>();
+        var spawnSys = EntMan.System<StationSpawningSystem>();
 
         spawnSys.EquipStartingGear(PreviewDummy, antag.PreviewStartingGear);
     }
@@ -180,7 +180,7 @@ public sealed partial class ProfilePreviewSpriteView
     /// </summary>
     private void GiveDummyJobClothes(EntityUid dummy, HumanoidCharacterProfile profile, JobPrototype job)
     {
-        var inventorySys = _entManager.System<InventorySystem>();
+        var inventorySys = EntMan.System<InventorySystem>();
         if (!inventorySys.TryGetSlots(dummy, out var slots))
             return;
 
@@ -204,12 +204,12 @@ public sealed partial class ProfilePreviewSpriteView
 
                             if (inventorySys.TryUnequip(dummy, slot.Name, out var unequippedItem, silent: true, force: true, reparent: false))
                             {
-                                _entManager.DeleteEntity(unequippedItem.Value);
+                                EntMan.DeleteEntity(unequippedItem.Value);
                             }
 
                             if (itemType != string.Empty)
                             {
-                                var item = _entManager.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                                var item = EntMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
                                 inventorySys.TryEquip(dummy, item, slot.Name, true, true);
                             }
                         }
@@ -219,12 +219,12 @@ public sealed partial class ProfilePreviewSpriteView
 
                             if (inventorySys.TryUnequip(dummy, slot.Name, out var unequippedItem, silent: true, force: true, reparent: false))
                             {
-                                _entManager.DeleteEntity(unequippedItem.Value);
+                                EntMan.DeleteEntity(unequippedItem.Value);
                             }
 
                             if (itemType != string.Empty)
                             {
-                                var item = _entManager.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                                var item = EntMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
                                 inventorySys.TryEquip(dummy, item, slot.Name, true, true);
                             }
                         }
@@ -242,12 +242,12 @@ public sealed partial class ProfilePreviewSpriteView
 
             if (inventorySys.TryUnequip(dummy, slot.Name, out var unequippedItem, silent: true, force: true, reparent: false))
             {
-                _entManager.DeleteEntity(unequippedItem.Value);
+                EntMan.DeleteEntity(unequippedItem.Value);
             }
 
             if (itemType != string.Empty)
             {
-                var item = _entManager.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                var item = EntMan.SpawnEntity(itemType, MapCoordinates.Nullspace);
                 inventorySys.TryEquip(dummy, item, slot.Name, true, true);
             }
         }
@@ -263,7 +263,7 @@ public sealed partial class ProfilePreviewSpriteView
         if (roleLoadout == null)
             return;
 
-        var spawnSys = _entManager.System<StationSpawningSystem>();
+        var spawnSys = EntMan.System<StationSpawningSystem>();
 
         foreach (var group in roleLoadout.SelectedLoadouts.Values)
         {

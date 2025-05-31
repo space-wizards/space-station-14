@@ -43,7 +43,6 @@ public sealed partial class CharacterPickerButton : ContainerButton
     public CharacterPickerButton(
         IClientPreferencesManager prefMan,
         IPrototypeManager protoMan,
-        IEntityManager entMan,
         ISharedPlayerManager playerMan,
         ButtonGroup group,
         HumanoidCharacterProfile profile,
@@ -54,8 +53,7 @@ public sealed partial class CharacterPickerButton : ContainerButton
         AddStyleClass(StyleClassButton);
         ToggleMode = true;
         Group = group;
-
-        View.Initialize(prefMan, protoMan, entMan, playerMan);
+        View.Initialize(prefMan, protoMan, playerMan);
         View.LoadPreview(profile);
 
         EnabledCheck.Pressed = profile.Enabled;

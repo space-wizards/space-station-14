@@ -22,7 +22,6 @@ namespace Content.Client.Lobby.UI
     public sealed partial class CharacterSetupGui : Control
     {
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -138,7 +137,6 @@ namespace Content.Client.Lobby.UI
                 var characterPickerButton = new CharacterPickerButton(
                     _preferencesManager,
                     _protoManager,
-                    _entManager,
                     _playerManager,
                     characterButtonsGroup,
                     humanoid,
