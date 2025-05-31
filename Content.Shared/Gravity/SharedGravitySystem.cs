@@ -74,7 +74,7 @@ namespace Content.Shared.Gravity
 
         private bool TryWeightless(Entity<WeightlessnessComponent?, PhysicsComponent?, TransformComponent?> entity)
         {
-            if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
+            if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
                 return false;
 
             if (entity.Comp2.BodyType is BodyType.Static or BodyType.Kinematic)
