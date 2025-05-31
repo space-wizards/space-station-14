@@ -2,7 +2,7 @@
   parent: Paper
   id: PaperTooQuietNeedChaos
   name: the end of Q
-  description: this paper makes you dread whats coming going to happen...
+  description: this paper makes you dread whats going to happen...
   components:
     - type: Paper
       content: paper-too-quiet-need-chaos
@@ -30,7 +30,7 @@
   parent: Paper
   id: PaperTooQuietNeedChaosFew
   name: the end of Q
-  description: this paper makes you dread whats coming going to happen...
+  description: this paper makes you dread whats going to happen...
   suffix: Lowpop
   components:
     - type: Paper
