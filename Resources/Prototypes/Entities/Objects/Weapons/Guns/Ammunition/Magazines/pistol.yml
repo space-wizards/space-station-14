@@ -104,9 +104,8 @@
 - type: entity
   id: MagazinePistolSubMachineGunTopMounted
   name: WT550 magazine (.35 auto top-mounted)
-  description: A 30-round .35 auto top-mounted SMG magazine, marked as live-fire ammo. #imp
   parent: [ BaseItem, BaseSecurityContraband ]
-  description: Unconventional 30-round top feeding magazine for the WT550 SMG. Intended to hold general-purpose kinetic ammunition.
+  description: A 30-round .35 auto top-mounted SMG magazine, marked as live-fire ammo. #imp
   components:
   - type: Tag
     tags:
@@ -137,9 +136,8 @@
 - type: entity
   id: MagazinePistolSubMachineGunTopMountedEmpty
   name: WT550 magazine (.35 auto top-mounted any)
-  description: A 35-round .35 auto top-mounted SMG magazine with no apparent markings. #imp
   parent: MagazinePistolSubMachineGunTopMounted
-  description: Unconventional 30-round top feeding magazine for the WT550 SMG.
+  description: A 35-round .35 auto top-mounted SMG magazine with no apparent markings. #imp
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -147,9 +145,8 @@
 - type: entity
   id: MagazinePistol
   name: pistol magazine (.35 auto)
-  description: A 10-round .35 auto pistol magazine, marked as live-fire ammo. #imp
   parent: BaseMagazinePistol
-  description: 10-round single-stack magazine for pistols. Intended to hold general-purpose kinetic ammunition.
+  description: A 10-round .35 auto pistol magazine, marked as live-fire ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
@@ -163,10 +160,9 @@
 - type: entity
   id: MagazinePistolEmpty
   name: pistol magazine (.35 auto any)
-  description: A 10-round .35 auto pistol magazine with no apparent markings. #imp
   suffix: empty
   parent: MagazinePistol
-  description: 10-round single-stack magazine for pistols.
+  description: A 10-round .35 auto pistol magazine with no apparent markings. #imp
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -181,9 +177,8 @@
 - type: entity
   id: MagazinePistolIncendiary
   name: pistol magazine (.35 auto incendiary)
-  description: A 10-round .35 auto pistol magazine, marked as incendiary ammo. #imp
   parent: MagazinePistol
-  description: 10-round single-stack magazine for pistols. Intended to hold self-igniting incendiary ammunition.
+  description: A 10-round .35 auto pistol magazine, marked as incendiary ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
@@ -191,9 +186,8 @@
 - type: entity
   id: MagazinePistolPractice
   name: pistol magazine (.35 auto practice)
-  description: A 10-round .35 auto pistol magazine, marked as practice ammo. #imp
   parent: BaseMagazinePistol
-  description: 10-round single-stack magazine for pistols. Intended to hold non-harmful chalk ammunition.
+  description: A 10-round .35 auto pistol magazine, marked as practice ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -207,9 +201,8 @@
 - type: entity
   id: MagazinePistolUranium
   name: pistol magazine (.35 auto uranium)
-  description: A 10-round .35 auto pistol magazine, marked as uranium ammo. #imp
   parent: BaseMagazinePistol
-  description: 10-round single-stack magazine for pistols. Intended to hold exotic uranium-core ammunition.
+  description: A 10-round .35 auto pistol magazine, marked as uranium ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium
@@ -284,9 +277,8 @@
 - type: entity
   id: MagazinePistolSubMachineGun
   name: SMG magazine (.35 auto)
-  description: A 30-round .35 auto SMG magazine, marked as live-fire ammo. #imp
   parent: BaseMagazinePistolSubMachineGun
-  description: 30-round double-stack magazine for submachine guns. Intended to hold general-purpose kinetic ammunition.
+  description: A 30-round .35 auto SMG magazine, marked as live-fire ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
@@ -305,10 +297,9 @@
 - type: entity
   id: MagazinePistolSubMachineGunEmpty
   name: SMG magazine (.35 auto any)
-  description: A 30-round .35 auto SMG magazine with no apparent markings. #imp
   suffix: empty
   parent: BaseMagazinePistolSubMachineGun
-  description: 30-round double-stack magazine for submachine guns.
+  description: A 30-round .35 auto SMG magazine with no apparent markings. #imp
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -322,9 +313,8 @@
 - type: entity
   id: MagazinePistolSubMachineGunPractice
   name: SMG magazine (.35 auto practice)
-  description: A 30-round .35 auto SMG magazine, marked as practice ammo. #imp
   parent: BaseMagazinePistolSubMachineGun
-  description: 30-round double-stack magazine for submachine guns. Intended to hold non-harmful chalk ammunition.
+  description: A 30-round .35 auto SMG magazine, marked as practice ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -338,9 +328,8 @@
 - type: entity
   id: MagazinePistolSubMachineGunUranium
   name: SMG magazine (.35 auto uranium)
-  description: A 30-round .35 auto SMG magazine, marked as uranium ammo. #imp
   parent: BaseMagazinePistolSubMachineGun
-  description: 30-round double-stack magazine for submachine guns. Intended to hold exotic uranium-core ammunition.
+  description: A 30-round .35 auto SMG magazine, marked as uranium ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium
