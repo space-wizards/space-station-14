@@ -41,7 +41,7 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
                 LoadHumanoidEntity(humanoid, jobOverride, showClothes);
                 break;
             default:
-                throw new NotImplementedException("Only humanoid profiles are implemented in ProfilePreviewSpriteView");
+                throw new ArgumentException("Only humanoid profiles are implemented in ProfilePreviewSpriteView");
         }
 
         FullDescription = ConstructFullDescription();
@@ -59,7 +59,7 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
                 ReloadHumanoidEntity(humanoid);
                 break;
             default:
-                throw new NotImplementedException("Only humanoid profiles are implemented in ProfilePreviewSpriteView");
+                throw new ArgumentException("Only humanoid profiles are implemented in ProfilePreviewSpriteView");
         }
     }
 
