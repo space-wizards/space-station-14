@@ -126,21 +126,21 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var oldPref = db.DbContext.Preference
+            var oldPrios = db.DbContext.Preference
                 .Include(p => p.JobPriorities)
                 .Single(p => p.UserId == userId.UserId);
 
-            var newPrefs = new List<JobPriorityEntry>();
+            var newPrios = new List<JobPriorityEntry>();
             foreach (var (job, priority) in newJobPriorities)
             {
-                var newPref = new JobPriorityEntry
+                var newPrio = new JobPriorityEntry
                 {
                     JobName = job,
                     Priority = (DbJobPriority)priority,
                 };
-                newPrefs.Add(newPref);
+                newPrios.Add(newPrio);
             }
-            oldPref.JobPriorities = newPrefs;
+            oldPrios.JobPriorities = newPrios;
 
             await db.DbContext.SaveChangesAsync();
         }
