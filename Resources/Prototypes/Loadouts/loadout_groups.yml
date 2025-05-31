@@ -1439,7 +1439,7 @@
   - MedicalDoctorDuffel
 
 - type: loadoutGroup
-  id: MedicalDoctorShoes
+  id: MedicalShoes
   name: loadout-group-medical-doctor-shoes
   loadouts:
   - WhiteShoes

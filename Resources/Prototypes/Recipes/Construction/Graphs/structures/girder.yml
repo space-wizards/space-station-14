@@ -264,49 +264,6 @@
             - tool: Prying
               doAfter: 5
 
-    - node: shuttleInteriorWall
-      entity: WallShuttleInterior
-      edges:
-        - to: miningInteriorWall #imp
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-          conditions:
-            - !type:EntityAnchored { }
-          steps:
-            - material: Plasteel
-              amount: 2
-              doAfter: 1
-            - tool: Welding
-              doAfter: 4
-        - to: girder
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: PartRodMetal1
-              amount: 2
-          steps:
-            - tool: Welding
-              doAfter: 10
-            - tool: Screwing
-              doAfter: 1
-
-    - node: miningInteriorWall #imp
-      entity: WallMiningInterior
-      edges:
-        - to: shuttleInteriorWall
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetPlasteel1
-              amount: 2
-          steps:
-            - tool: Welding
-              doAfter: 4
-            - tool: Cutting
-              doAfter: 1
-
     - node: reinforcedGirder
       entity: ReinforcedGirder
       edges:

@@ -253,7 +253,7 @@
 - type: reaction
   id: Bronx
   requiredMixerCategories:
-  - Shake
+  - Stir # imp edit, classic martini
   reactants:
     Gin:
       amount: 1

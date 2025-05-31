@@ -4,7 +4,7 @@
   completetime: 2
   materials:
     Steel: 50
-    Glass: 50
+    Glass: 100
 
 - type: latheRecipe
   id: DeskBell

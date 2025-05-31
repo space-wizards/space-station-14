@@ -1,3 +1,6 @@
+# WHY IS THIS CALLED ALCHOHOL.YML
+# ITS BEEN THIS WAY FOR ALMOST ONE YEAR?????????
+# OUR CODEBASE IS CRUMBLING.
 - type: reagent
   id: TheeHorsepussy
   name: reagent-name-theehorsepussy
@@ -737,7 +740,7 @@
             Poison: .3
   fizziness: .2
 
-- type: reagent 
+- type: reagent
   id: Burnchamber
   name: reagent-name-burnchamber
   parent: BaseAlcohol
@@ -776,7 +779,7 @@
           probability: 0.2
   fizziness: .5
 
-- type: reagent 
+- type: reagent
   id: WeldingCoils
   name: reagent-name-weldingcoils
   parent: BaseAlcohol
@@ -846,7 +849,7 @@
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
-          min: 200 
+          min: 200
         amount: -7500
   fizziness: 0.1
 
@@ -854,7 +857,6 @@
   id: DoubleGreen
   name: reagent-name-doublegreen
   parent: BaseAlcohol
-  slippery: false
   desc: reagent-desc-doublegreen
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: doublegreen

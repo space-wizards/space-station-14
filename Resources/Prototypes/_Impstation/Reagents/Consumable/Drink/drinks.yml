@@ -120,7 +120,6 @@
   id: LiquidLunch
   name: reagent-name-liquidlunch
   parent: BaseDrink
-  slippery: false
   desc: reagent-desc-liquidlunch
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: liquidlunch

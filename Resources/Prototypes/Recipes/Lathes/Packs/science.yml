@@ -53,6 +53,7 @@
   recipes:
   - WeaponPistolCHIMP
   - WeaponForceGun
+  - WeaponLaserSvalinn # imp, T2
   - WeaponProtoKineticAccelerator
   - WeaponTetherGun
   - WeaponGauntletGorilla

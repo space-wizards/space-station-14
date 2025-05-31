@@ -22,16 +22,6 @@
 
 - type: entity
   abstract: true
-  parent: [BaseTraitorObjective, BaseSocialObjective]
-  id: BaseTraitorSvSSocialObjective # Used for rounds when basically every valid person will be a traitor.
-  components:
-  - type: Objective
-    icon:
-      sprite: Objects/Misc/bureaucracy.rsi
-      state: folder-white
-
-- type: entity
-  abstract: true
   parent: [BaseTraitorObjective, BaseStealObjective]
   id: BaseTraitorStealObjective
   components:
