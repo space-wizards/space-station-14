@@ -8,7 +8,6 @@ namespace Content.Client.Lobby.UI.ProfileEditorControls;
 
 public sealed partial class ProfilePreviewSpriteView : SpriteView
 {
-
     private IClientPreferencesManager _preferencesManager = default!;
     private IPrototypeManager _prototypeManager = default!;
     private ISharedPlayerManager _playerManager = default!;
@@ -40,7 +39,7 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
                 LoadHumanoidEntity(humanoid, jobOverride, showClothes);
                 break;
             default:
-                return;
+                throw new NotImplementedException("Only humanoid profiles are implemented in ProfilePreviewSpriteView");
         }
 
         FullDescription = ConstructFullDescription();
@@ -57,6 +56,8 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
             case HumanoidCharacterProfile humanoid:
                 ReloadHumanoidEntity(humanoid);
                 break;
+            default:
+                throw new NotImplementedException("Only humanoid profiles are implemented in ProfilePreviewSpriteView");
         }
     }
 
