@@ -399,6 +399,8 @@
   params:
     variation: 0.05
   sounds:
+    Scream:
+      collection: SiliconScreams
     Beep:
       path: /Audio/Machines/twobeep.ogg
     Chime:
@@ -417,6 +419,8 @@
   params:
     variation: 0.05
   sounds:
+    Scream:
+      collection: SiliconScreams
     Laugh:
       path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
     Beep:
@@ -437,20 +441,22 @@
   params:
     variation: 0.05
   sounds:
+    Scream:
+      collection: XenoborgScream
     Laugh:
-      path: /Audio/Voice/Xenoborg/xenoborg_laugh.ogg
+      collection: XenoborgLaugh
     Beep:
-      path: /Audio/Voice/Xenoborg/xenoborg_twobeep.ogg
+      collection: XenoborgBeep
     Chime:
-      path: /Audio/Voice/Xenoborg/xenoborg_chime.ogg
+      collection: XenoborgChime
     Buzz:
-      path: /Audio/Voice/Xenoborg/xenoborg_buzz-sigh.ogg
+      collection: XenoborgBuzz
     Buzz-Two:
-      path: /Audio/Voice/Xenoborg/xenoborg_buzz-two.ogg
+      collection: XenoborgBuzzTwo
     Honk:
-      path: /Audio/Voice/Xenoborg/xenoborg_bikehorn.ogg
+      collection: XenoborgBikeHorn
     Ping:
-      path: /Audio/Voice/Xenoborg/xenoborg_ping.ogg
+      collection: XenoborgPing
 
 # body emotes
 - type: emoteSounds

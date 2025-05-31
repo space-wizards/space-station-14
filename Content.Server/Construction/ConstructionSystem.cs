@@ -4,7 +4,6 @@ using Content.Shared.Construction;
 using Content.Shared.DoAfter;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 

@@ -49,13 +49,15 @@
       provided_container: !type:Container { }
 
 - type: entity
+  parent: BaseAction
   id: ActionBorgSwapModule
   name: Swap Module
   description: Select this module, enabling you to use the tools it provides.
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     useDelay: 0.5
+  - type: InstantAction
     event: !type:BorgModuleActionSelectedEvent
 
 - type: entity
@@ -408,7 +410,6 @@
       - state: base-stripes-inhand-right
         color: "#FF00CC"
 
-
 # generic modules
 - type: entity
   id: BorgModuleCable
@@ -624,7 +625,7 @@
     - LightReplacer
     - BorgTrashBag
     - Plunger
-    - SoapNT
+    - SoapBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: light-replacer-module }
 
@@ -1163,7 +1164,7 @@
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleSword
   name: sword xenoborg module
-  description: Module with an energy dagger.
+  description: Module with a kukri knife.
   components:
   - type: Sprite
     layers:
@@ -1171,16 +1172,16 @@
     - state: icon-xenoborg-sword
   - type: ItemBorgModule
     items:
-    - EnergyDaggerLoudBlue
+    - KukriKnife
     - JetpackXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-sword-module }
 
 - type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
-  id: XenoborgModuleFastSword
-  name: fast sword xenoborg module
-  description: Module with a crusher dagger.
+  id: XenoborgModuleEnergySword
+  name: energy sword xenoborg module
+  description: Module with an energy dagger.
   components:
   - type: Sprite
     layers:
@@ -1188,7 +1189,7 @@
     - state: icon-xenoborg-sword2
   - type: ItemBorgModule
     items:
-    - WeaponCrusherDagger
+    - EnergyDaggerLoudBlue
     - JetpackXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-sword2-module }
@@ -1240,3 +1241,19 @@
     - CloakingDevice
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleSuperCloakDevice
+  name: cloaking device xenoborg module
+  description: Module with a device that allows xenoborgs to become truly invisible for less time.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_stealth
+    - state: icon-xenoborg-cloak2
+  - type: ItemBorgModule
+    items:
+    - SuperCloakingDevice
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye2-module }

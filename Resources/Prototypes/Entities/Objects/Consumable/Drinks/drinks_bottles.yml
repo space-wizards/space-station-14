@@ -45,6 +45,97 @@
   - type: Shakeable
 
 - type: entity
+  parent: DrinkBase
+  id: DrinkBottlePlasticSmallBaseFull
+  abstract: true
+  suffix: Full
+  components:
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+      - DrinkCup
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: FitsInDispenser
+    solution: drink
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: Sprite
+    state: icon
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+       - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+       - !type:SpillBehavior { }
+  - type: DnaSubstanceTrace
+  - type: PressurizedSolution
+    solution: drink
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: Shakeable
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 100
+
+- type: entity
+  parent: DrinkBottlePlasticSmallBaseFull
+  id: DrinkBottleGlassSmallBaseFull
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/beer.rsi
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 4
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BrokenBottle:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tool
+    qualities:
+    - Rolling
+    speedModifier: 0.75
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
+
+- type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkBottleGlassBaseFull
   abstract: true
@@ -124,6 +215,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: fill-
+
+# Large Glass Bottles
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -222,24 +315,6 @@
     currentLabel: reagent-name-cognac
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
-  - type: Sealable
-
-- type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
-  id: DrinkColaBottleFull
-  name: Space Cola bottle
-  description: Cola. In spaaace!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Cola
-          Quantity: 100
-  - type: Label
-    currentLabel: reagent-name-cola
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/colabottle.rsi
   - type: Sealable
 
 - type: entity
@@ -400,44 +475,6 @@
   - type: Sealable
 
 - type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
-  id: DrinkSpaceMountainWindBottleFull
-  name: Space Solar Wind bottle
-  description: Blows right through you like a solar wind.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: SpaceMountainWind
-          Quantity: 100
-  - type: Drink
-  - type: Label
-    currentLabel: reagent-name-space-mountain-wind
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
-  - type: Sealable
-
-- type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
-  id: DrinkSpaceUpBottleFull
-  name: Space-Up bottle
-  description: Tastes like a hull breach in your mouth.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: SpaceUp
-          Quantity: 100
-  - type: Drink
-  - type: Label
-    currentLabel: reagent-name-space-up
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
-  - type: Sealable
-
-- type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkTequilaBottleFull
   name: Caccavo Guaranteed Quality tequila bottle
@@ -531,34 +568,6 @@
     - Wine
     - DrinkBottle
 
-# Small Bottles
-
-- type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
-  id: DrinkBeerBottleFull
-  name: beer bottle # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
-  description: An alcoholic beverage made from malted grains, hops, yeast, and water.
-  components:
-  - type: Item
-    size: Small
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Beer
-          Quantity: 50
-  - type: Label
-    currentLabel: reagent-name-beer
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/beer.rsi
-  - type: Openable
-    closeable: false
-  - type: Tag
-    tags:
-    - Beer
-    - DrinkBottle
-
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkBeerGrowler # Needs to be renamed DrinkBeerBottleFull
@@ -584,29 +593,7 @@
     - DrinkBottle
 
 - type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
-  id: DrinkAleBottleFull
-  name: Magm-Ale bottle
-  description: A true dorf's drink of choice.
-  components:
-  - type: Item
-    size: Small
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Ale
-          Quantity: 50
-  - type: Label
-    currentLabel: reagent-name-ale
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/alebottle.rsi
-  - type: Openable
-    closeable: false
-
-- type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkAleBottleFullGrowler
   name: Magm-Ale growler
   description: A true dorf's drink of choice. XL growler bottle.
@@ -625,42 +612,64 @@
   - type: Openable
     closeable: false
 
+# Large Plastic Bottles
+
 - type: entity
-  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
-  id: DrinkWaterBottleFull
-  name: water bottle
-  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
+  id: DrinkColaBottleFull
+  name: Space Cola bottle
+  description: Cola. In spaaace!
   components:
-  - type: Item
-    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
         reagents:
-        - ReagentId: Water
-          Quantity: 30
+        - ReagentId: Cola
+          Quantity: 100
   - type: Label
-    currentLabel: reagent-name-water
-  - type: Drink
+    currentLabel: reagent-name-cola
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/waterbottle.rsi
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: icon-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: icon-
-    inHandsMaxFillLevels: 2
-    inHandsFillBaseName: -fill-
+    sprite: Objects/Consumable/Drinks/colabottle.rsi
   - type: Sealable
 
 - type: entity
-  parent: DrinkWaterBottleFull
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
+  id: DrinkSpaceMountainWindBottleFull
+  name: Space Solar Wind bottle
+  description: Blows right through you like a solar wind.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: SpaceMountainWind
+          Quantity: 100
+  - type: Label
+    currentLabel: reagent-name-space-mountain-wind
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
+  - type: Sealable
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
+  id: DrinkSpaceUpBottleFull
+  name: Space-Up bottle
+  description: Tastes like a hull breach in your mouth.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: SpaceUp
+          Quantity: 100
+  - type: Label
+    currentLabel: reagent-name-space-up
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
+  - type: Sealable
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkSodaWaterBottleFull
   name: soda water bottle
   description: Like water, but angry!
@@ -668,15 +677,18 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 150
+        maxVol: 100
         reagents:
         - ReagentId: SodaWater
-          Quantity: 150
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/sodawater-bottle.rsi
   - type: Label
     currentLabel: reagent-name-soda-water
+  - type: Sealable
 
 - type: entity
-  parent: DrinkWaterBottleFull
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkTonicWaterBottleFull
   name: tonic water bottle
   description: Like soda water, but angrier maybe? Often sweeter.
@@ -684,15 +696,82 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 150
+        maxVol: 100
         reagents:
         - ReagentId: TonicWater
-          Quantity: 150
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/tonic-bottle.rsi
   - type: Label
     currentLabel: reagent-name-tonic-water
+  - type: Sealable
+
+# Small Bottles
 
 - type: entity
-  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticSmallBaseFull]
+  id: DrinkWaterBottleFull
+  name: water bottle
+  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
+  - type: SolutionContainerVisuals
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
+  - type: Label
+    currentLabel: reagent-name-water
+  - type: Sealable
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassSmallBaseFull]
+  id: DrinkBeerBottleFull
+  name: beer bottle # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
+  description: An alcoholic beverage made from malted grains, hops, yeast, and water.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Beer
+          Quantity: 50
+  - type: Label
+    currentLabel: reagent-name-beer
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/beer.rsi
+  - type: Openable
+    closeable: false
+  - type: Tag
+    tags:
+    - Beer
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassSmallBaseFull]
+  id: DrinkAleBottleFull
+  name: Magm-Ale bottle
+  description: A true dorf's drink of choice.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Ale
+          Quantity: 50
+  - type: Label
+    currentLabel: reagent-name-ale
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/alebottle.rsi
+  - type: Openable
+    closeable: false
+
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassSmallBaseFull]
   id: DrinkSakeBottleFull
   name: small sake bottle
   description: The regret of the next morning seems to be nipping on the bottle too.
