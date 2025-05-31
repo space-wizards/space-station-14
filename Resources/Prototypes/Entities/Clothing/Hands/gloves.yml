@@ -470,7 +470,9 @@
       types:
         Blunt: 12 #Damaged focus unlike Rigged or Northstars which are stun and speed focus
     soundHit:
-      collection: Punch
+      collection: Knuckles #Starlight
+      params:
+        variation: 0.125
     animation: WeaponArcFist
     mustBeEquippedToUse: true
   - type: Tag
@@ -514,7 +516,9 @@
       types:
         Blunt: 14
     soundHit:
-      collection: Punch
+      collection: Knuckles #Starlight
+      params:
+        variation: 0.125
     animation: WeaponArcFist
     mustBeEquippedToUse: true
   - type: Tag
@@ -541,7 +545,9 @@
         Blunt: 8
         Piercing: 8
     soundHit:
-      collection: Punch
+      collection: Knuckles #Starlight
+      params:
+        variation: 0.125
     animation: WeaponArcFist
     mustBeEquippedToUse: true
   - type: Tag
@@ -635,7 +641,9 @@
       types:
         Blunt: 35
     soundHit:
-      collection: Punch
+      collection: Knuckles #Starlight
+      params:
+        variation: 0.125
     animation: WeaponArcFist
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
