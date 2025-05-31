@@ -57,6 +57,15 @@ public sealed partial class GunComponent : Component
     public float CameraRecoilScalarModified = 1f;
 
     /// <summary>
+    /// The base value applied to the calculation governing knockback when fired in zero grav.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ImpulseStrength = 25f;
+
+    [AutoNetworkedField]
+    public float ImpulseStrengthModified;
+
+    /// <summary>
     /// Last time the gun fired.
     /// Used for recoil purposes.
     /// </summary>
