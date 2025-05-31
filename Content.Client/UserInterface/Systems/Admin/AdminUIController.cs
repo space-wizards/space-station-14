@@ -79,8 +79,7 @@ public sealed class AdminUIController : UIController,
 
     public void OnSystemUnloaded(AdminSystem system)
     {
-        if (_window != null)
-            _window.Dispose();
+        _window?.Close();
 
         _admin.AdminStatusUpdated -= AdminStatusUpdated;
 
@@ -105,7 +104,6 @@ public sealed class AdminUIController : UIController,
         _window.ObjectsTabControl.OnEntryKeyBindDown += ObjectsTabEntryKeyBindDown;
         _window.OnOpen += OnWindowOpen;
         _window.OnClose += OnWindowClosed;
-        _window.OnDisposed += OnWindowDisposed;
     }
 
     public void UnloadButton()
@@ -150,7 +148,6 @@ public sealed class AdminUIController : UIController,
         _window.ObjectsTabControl.OnEntryKeyBindDown -= ObjectsTabEntryKeyBindDown;
         _window.OnOpen -= OnWindowOpen;
         _window.OnClose -= OnWindowClosed;
-        _window.OnDisposed -= OnWindowDisposed;
         _window = null;
     }
 
