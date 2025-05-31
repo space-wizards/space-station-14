@@ -4,7 +4,7 @@
   name: the end of Q
   components:
     - type: Paper
-      content: "do you ever feel like it is to [bold]QUIET[/bold] well... if you can get 9 signatures of reinforced minds we can fix that... dont ask how this got into your locker. CC wont know."
+      content: "do you ever feel like it is too [bold]QUIET[/bold] well... if you can get 9 signatures of reinforced minds we can fix that... dont ask how this got into your locker. CC wont know."
     - type: GameruleOnSign
       remaining: 7 # command, security, cargo, science, medical, engineering, service, and 2 members of sec outside of hos (or more sec/salv and less heads... or people who you mindshielded JUST to get this signed)
       whitelist: 
@@ -26,7 +26,7 @@
   suffix: Lowpop
   components:
     - type: Paper
-      content: "do you ever feel like it is to [bold]QUIET[/bold] well... if you can get 3 signatures of reinforced minds we can fix that... dont ask how this got into your locker. CC wont know."
+      content: "do you ever feel like it is too [bold]QUIET[/bold] well... if you can get 3 signatures of reinforced minds we can fix that... dont ask how this got into your locker. CC wont know."
     - type: GameruleOnSign
       remaining: 3 # on 15 pop usually there are only about 3 heads I expect
       whitelist: 
