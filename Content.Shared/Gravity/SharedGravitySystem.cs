@@ -69,7 +69,7 @@ namespace Content.Shared.Gravity
         public bool IsWeightless(Entity<WeightlessnessComponent?> entity)
         {
             // If we can be weightless and are weightless, return true, otherwise return false
-            return Resolve(entity, ref entity.Comp) && entity.Comp.Weightless;
+            return Resolve(entity, ref entity.Comp, false) && entity.Comp.Weightless;
         }
 
         private bool TryWeightless(Entity<WeightlessnessComponent?, PhysicsComponent?, TransformComponent?> entity)
