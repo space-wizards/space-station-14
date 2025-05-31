@@ -936,6 +936,9 @@
   id: MimeHappyHonk
 
 - type: Tag
+  id: FakeMindShieldImplant
+
+- type: Tag
   id: MindTransferTarget
 
 - type: Tag
