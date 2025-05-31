@@ -292,6 +292,12 @@
   id: ChiliBowl
 
 - type: Tag
+  id: Cigar
+
+- type: Tag
+  id: CigarBombHarmlessCrafter
+
+- type: Tag
   id: Cigarette
 
 - type: Tag
@@ -1256,6 +1262,9 @@
 
 - type: Tag
   id: Smokable
+  
+- type: Tag
+  id: SnapPop
 
 - type: Tag
   id: SnowyLabs
