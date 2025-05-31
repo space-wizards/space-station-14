@@ -18,6 +18,25 @@
       role: JobPassenger
       time: 72000 #20 hrs, fun mantle for the most experienced assistants
 
+# Paragon of the Grey
+- type: loadoutEffectGroup
+  id: ParagonGrey
+  effects:
+  - !type:RoleTimeRequirement
+    role: JobPassenger
+    time: 144000 #40 hours, gloves for truly the greatest (grey-test) of the grey
+
+# Head
+
+# Eyes
+- type: loadout
+  id: WeldingGoggles
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    eyes: ClothingEyesWeldingGoggles
+
 # Face
 - type: loadout
   id: AssistantFace
@@ -27,8 +46,7 @@
   equipment:
     mask: ClothingMaskGas
 
-# Jumpsuits
-# Basic
+# Body
 - type: loadout
   id: BasicJumpsuit
   equipment:
@@ -39,7 +57,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtAssistant
 
-# Rainbow
 - type: loadout
   id: RainbowJumpsuit
   effects:
@@ -48,7 +65,6 @@
   equipment:
     jumpsuit: ClothingUniformColorRainbow
 
-# Rainbow Jumpskirt
 - type: loadout
   id: RainbowJumpskirt
   effects:
@@ -57,7 +73,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorRainbow
 
-# Ancient
 - type: loadout
   id: AncientJumpsuit
   effects:
@@ -96,7 +111,12 @@
   equipment:
     back: ClothingBackpackDuffel
 
-# Gloves
+- type: loadout
+  id: SmugglerSatchel
+  equipment:
+    back: ClothingBackpackSatchelSmuggler
+
+# Hands
 - type: loadout
   id: AssistantGloves
   effects:
@@ -105,13 +125,13 @@
   equipment:
     gloves: ClothingHandsGlovesFingerlessInsulated
 
-# Outerclothing
+# Outerbody
 - type: loadout
   id: AssistantWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCoat
 
-# Shoes
+# Feet
 - type: loadout
   id: BlackShoes
   equipment:
