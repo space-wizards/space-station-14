@@ -99,7 +99,7 @@
     zeroVisible: true
   - type: Appearance
   - type: StaticPrice
-    price: 500
+    price: 5000
 
 - type: entity
   name: double-barreled shotgun

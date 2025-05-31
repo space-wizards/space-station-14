@@ -127,6 +127,8 @@
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }
           On: { state: syndicate-pai-on-overlay }
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: PersonalAI

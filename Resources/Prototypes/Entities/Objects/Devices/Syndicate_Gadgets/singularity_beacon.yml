@@ -40,4 +40,4 @@
   - type: ApcPowerReceiver
     powerLoad: 15000
   - type: StaticPrice
-    price: 1500
+    price: 7500
