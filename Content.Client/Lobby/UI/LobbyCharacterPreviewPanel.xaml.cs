@@ -144,7 +144,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
             };
             if(!profile.Enabled)
                 profilePreview.Modulate = Color.Salmon;
-            profilePreview.Initialize(_preferences, _prototypeManager, _entManager, _playerManager);
+            profilePreview.Initialize(_preferences, _prototypeManager, _playerManager);
             profilePreview.LoadPreview(profile, job);
 
             var description = profilePreview.ProfileName;

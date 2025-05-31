@@ -38,7 +38,7 @@ public sealed partial class ProfilePreview : BoxContainer
     {
         _editor = profileEditor;
         _entityManager = entMan;
-        SpriteView.Initialize(prefMan, protoMan, entMan, playerMan);
+        SpriteView.Initialize(prefMan, protoMan, playerMan);
     }
 
     private void OnRotateLeft(BaseButton.ButtonEventArgs obj)

@@ -11,7 +11,6 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
 
     private IClientPreferencesManager _preferencesManager = default!;
     private IPrototypeManager _prototypeManager = default!;
-    private IEntityManager _entManager = default!;
     private ISharedPlayerManager _playerManager = default!;
 
     public string? ProfileName { get; private set; }
@@ -23,18 +22,16 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
 
     public void Initialize(IClientPreferencesManager prefMan,
         IPrototypeManager protoMan,
-        IEntityManager entMan,
         ISharedPlayerManager playerMan)
     {
         _preferencesManager = prefMan;
         _prototypeManager = protoMan;
-        _entManager = entMan;
         _playerManager = playerMan;
     }
 
     public void LoadPreview(ICharacterProfile profile, JobPrototype? jobOverride = null, bool showClothes = true)
     {
-        _entManager.DeleteEntity(PreviewDummy);
+        EntMan.DeleteEntity(PreviewDummy);
         PreviewDummy = EntityUid.Invalid;
 
         switch (profile)
@@ -50,7 +47,7 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
 
         SetEntity(PreviewDummy);
         InvalidateMeasure();
-        _entManager.System<MetaDataSystem>().SetEntityName(PreviewDummy, profile.Name);
+        EntMan.System<MetaDataSystem>().SetEntityName(PreviewDummy, profile.Name);
     }
 
     public void ReloadProfilePreview(ICharacterProfile profile)
@@ -79,7 +76,7 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
         if (!disposing)
             return;
 
-        _entManager.DeleteEntity(PreviewDummy);
+        EntMan.DeleteEntity(PreviewDummy);
         PreviewDummy = EntityUid.Invalid;
     }
 }
