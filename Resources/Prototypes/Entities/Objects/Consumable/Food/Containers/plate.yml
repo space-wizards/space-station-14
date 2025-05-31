@@ -68,9 +68,18 @@
     shape:
     - 0,0,1,0
     storedOffset: 0,-6
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
   - type: Tag
     tags:
     - Trash
+  - type: Food
+    requiresSpecialDigestion: true
   - type: SpaceGarbage
 
 # Small Plate
@@ -86,7 +95,7 @@
     state: plate-small
   - type: Item
     storedOffset: 0,-3
-# Needs the full thing because inherting is dumb sometimes.
+# Needs the full thing because inheriting is dumb sometimes.
   - type: Destructible
     thresholds:
     - trigger:
