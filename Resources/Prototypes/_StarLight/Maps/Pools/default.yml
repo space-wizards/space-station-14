@@ -1,0 +1,21 @@
+- type: gameMapPool
+  id: DefaultStarlightMapPool
+  maps:
+  - StarlightCog
+  - StarlightFland
+  - Lobster
+  - Manor
+  - StarlightOasis
+  - StarlightOmega
+  - Orwell
+  - StarlightReach
+  - StarlightSaltern
+
+# - StarlightBagel
+# - StarlightBox
+# - StarlightHotel
+# - StarlightMarathon
+# - StarlightMeta
+# - StarlightPacked
+# - Starboard
+# - StarlightElkridge
