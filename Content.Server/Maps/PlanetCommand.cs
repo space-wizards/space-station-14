@@ -29,8 +29,7 @@ public sealed class PlanetCommand : LocalizedEntityCommands
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override string Command => "planet";
-    public override string Description => Loc.GetString("cmd-planet-desc");
-    public override string Help => Loc.GetString("cmd-planet-help", ("command", Command));
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
