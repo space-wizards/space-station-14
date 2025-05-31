@@ -6,7 +6,9 @@
   suffix: Chameleon
   components:
     - type: Tag
-      tags: [] # ignore "WhitelistChameleon" tag
+      tags:
+      - CorgiWearable
+      - WhitelistChameleon
     - type: Sprite
       sprite: Clothing/Eyes/Glasses/sunglasses.rsi
     - type: Clothing

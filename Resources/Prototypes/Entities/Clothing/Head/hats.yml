@@ -41,7 +41,7 @@
   - type: Tag
     tags:
     - ClothMade
-    - Recyclable    
+    - Recyclable
     - WhitelistChameleon
 
 - type: entity
@@ -448,6 +448,11 @@
     sprite: Clothing/Head/Hats/redwizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/redwizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   parent: [ClothingHeadBase, BaseFoldable]
@@ -477,8 +482,6 @@
     - state: icon-nobeard
       map: [ "foldedLayer" ]
       visible: true
-  
-    
 
 - type: entity
   parent: ClothingHeadBase
@@ -638,6 +641,11 @@
     sprite: Clothing/Head/Hats/violetwizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/violetwizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -711,6 +719,7 @@
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
+    - CorgiWearable
 
 - type: entity
   parent: ClothingHeadBase
