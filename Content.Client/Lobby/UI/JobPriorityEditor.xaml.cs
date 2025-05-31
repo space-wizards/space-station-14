@@ -255,6 +255,10 @@ public sealed partial class JobPriorityEditor : BoxContainer
         IsDirty = false;
     }
 
+    /// <summary>
+    /// True if the current set of priorities is different from the saved ones.
+    /// Used to determine if the save and reset buttons should be active.
+    /// </summary>
     private bool _isDirty;
 
     public bool IsDirty
