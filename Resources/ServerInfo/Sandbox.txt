@@ -14,3 +14,4 @@
 [color=#a4885c]AlignTileDense[/color] colliders must be in the target tile.
 [color=#a4885c]AlignWall[/color] snaps to vertical halftiles.
 [color=#a4885c]AlignWallProper[/color] snaps the entity to the middle of the tile edges
+[color=#a4885c]AlignWallSigns[/color] used for snapping directional hallway signs to walls.
