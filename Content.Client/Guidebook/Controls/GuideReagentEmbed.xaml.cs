@@ -25,9 +25,11 @@ namespace Content.Client.Guidebook.Controls;
 public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISearchableControl, IPrototypeRepresentationControl
 {
     [Dependency] private readonly IEntitySystemManager _systemManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private readonly ChemistryGuideDataSystem _chemistryGuideData;
+    private readonly ISawmill _sawmill;
 
     public IPrototype? RepresentedPrototype { get; private set; }
 
@@ -35,6 +37,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+        _sawmill = _logManager.GetSawmill("guidebook.reagent");
         _chemistryGuideData = _systemManager.GetEntitySystem<ChemistryGuideDataSystem>();
         MouseFilter = MouseFilterMode.Stop;
     }
@@ -64,13 +67,13 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         control = null;
         if (!args.TryGetValue("Reagent", out var id))
         {
-            Logger.Error("Reagent embed tag is missing reagent prototype argument");
+            _sawmill.Error("Reagent embed tag is missing reagent prototype argument");
             return false;
         }
 
         if (!_prototype.TryIndex<ReagentPrototype>(id, out var reagent))
         {
-            Logger.Error($"Specified reagent prototype \"{id}\" is not a valid reagent prototype");
+            _sawmill.Error($"Specified reagent prototype \"{id}\" is not a valid reagent prototype");
             return false;
         }
 

@@ -94,3 +94,5 @@ command-description-xenoartifact-averageResearch =
     Calculates amount of research points average generated xeno artifact will output when fully activated.
 command-description-xenoartifact-unlockAllNodes =
     Unlocks all nodes of artifact.
+command-description-jobboard-completeJob =
+    Completes a given salvage job board job for the station.

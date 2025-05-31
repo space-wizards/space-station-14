@@ -6,7 +6,6 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed class TwoStageTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
     [Dependency] private readonly TriggerSystem _triggerSystem = default!;
@@ -30,7 +29,7 @@ public sealed class TwoStageTriggerSystem : EntitySystem
     {
         foreach (var (name, entry) in component.SecondStageComponents)
         {
-            var comp = (Component)_factory.GetComponent(name);
+            var comp = (Component) Factory.GetComponent(name);
             var temp = (object)comp;
 
             if (EntityManager.TryGetComponent(uid, entry.Component.GetType(), out var c))

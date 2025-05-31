@@ -247,12 +247,12 @@
   - type: ContainerFill
     containers:
       board: [ WallmountSubstationElectronics ]
-      capacitor: [ CapacitorStockPart ]
+      manipulator: [ MicroManipulatorStockPart ]
       powercell: [ PowerCellSmall ]
   - type: ContainerContainer
     containers:
       board: !type:Container
-      capacitor: !type:Container
+      manipulator: !type:Container
       powercell: !type:Container
 
       # Construction Frame

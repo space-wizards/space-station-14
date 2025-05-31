@@ -20,14 +20,14 @@ public sealed class LockVisualizerSystem : VisualizerSystem<LockVisualsComponent
 
         if (AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component))
         {
-            args.Sprite.LayerSetVisible(LockVisualLayers.Lock, !open);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, !open);
         }
-        else if (!(bool) unlockedStateExist!)
-            args.Sprite.LayerSetVisible(LockVisualLayers.Lock, locked);
+        else if (!(bool)unlockedStateExist!)
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), LockVisualLayers.Lock, locked);
 
-        if (!open && (bool) unlockedStateExist!)
+        if (!open && (bool)unlockedStateExist!)
         {
-            args.Sprite.LayerSetState(LockVisualLayers.Lock, locked ? comp.StateLocked : comp.StateUnlocked);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), LockVisualLayers.Lock, locked ? comp.StateLocked : comp.StateUnlocked);
         }
     }
 }

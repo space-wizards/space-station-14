@@ -1,26 +1,26 @@
 {
     "version": 1,
-    "license": "CC0-1.0",
-    "copyright": "Made by Thinbug for ss14 :33",
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprites by mubururu_ (github)",
     "size": {
-      "x": 32,
-      "y": 32
+        "x": 32,
+        "y": 32
     },
     "states": [
-      {
-        "name": "icon"
-      },
-      {
-        "name": "equipped-BELT",
-        "directions": 4
-      },
-      {
-        "name": "inhand-left",
-        "directions": 4
-      },
-      {
-        "name": "inhand-right",
-        "directions": 4
-      }
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-BELT",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
     ]
 }

@@ -1,34 +1,63 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/blob/9c3494fd79e6bf8dc532300b9de4f688ff276ac9/icons/obj/machines/telecomms.dmi",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "unlit",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprites by Spangs04, based on servers taken from tgstation at commit https://github.com/tgstation/tgstation/blob/9c3494fd79e6bf8dc532300b9de4f688ff276ac9/icons/obj/machines/telecomms.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "icon"
-    },
-    {
-      "name": "panel"
-    }
-  ]
+    "states": [
+        {
+            "name": "telecom-on",
+            "delays": [
+                [
+                    0.35,
+                    0.35,
+                    0.35
+                ]
+            ]
+        },
+        {
+            "name": "telecom-nopower"
+        },
+        {
+            "name": "telecom-stripe"
+        },
+        {
+            "name": "variant-cargo"
+        },
+        {
+            "name": "variant-common"
+        },
+        {
+            "name": "variant-engineering"
+        },
+        {
+            "name": "variant-service"
+        },
+        {
+            "name": "variant-medical"
+        },
+        {
+            "name": "variant-science"
+        },
+        {
+            "name": "variant-sec"
+        },
+        {
+            "name": "variant-command"
+        },
+        {
+            "name": "variant-default"
+        },
+        {
+            "name": "variant-multiple"
+        },
+        {
+            "name": "variant-nokey"
+        },
+        {
+            "name": "telecom-open"
+        }
+    ]
 }

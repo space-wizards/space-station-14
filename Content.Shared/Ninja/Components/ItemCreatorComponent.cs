@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -22,7 +23,7 @@ public sealed partial class ItemCreatorComponent : Component
     /// The action id for creating an item.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId<InstantActionComponent> Action = string.Empty;
+    public EntProtoId<InstantActionComponent> Action;
 
     [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;

@@ -97,9 +97,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
@@ -13759,34 +13757,6 @@ entities:
     - type: Transform
       pos: 0.4563446,-2.5673122
       parent: 37842
-- proto: ActionToggleInternals
-  entities:
-  - uid: 1760
-    components:
-    - type: Transform
-      parent: 28888
-    - type: InstantAction
-      container: 28888
-  - uid: 1780
-    components:
-    - type: Transform
-      parent: 11597
-    - type: InstantAction
-      container: 11597
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 1739
-    components:
-    - type: Transform
-      parent: 28888
-    - type: InstantAction
-      container: 28888
-  - uid: 1770
-    components:
-    - type: Transform
-      parent: 11597
-    - type: InstantAction
-      container: 11597
 - proto: AirAlarm
   entities:
   - uid: 942
@@ -139229,17 +139199,6 @@ entities:
     - type: Transform
       pos: -101.70569,49.460007
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 1760
-    - type: Jetpack
-      toggleActionEntity: 1739
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 1739
-          - 1760
 - proto: JetpackMiniFilled
   entities:
   - uid: 11597
@@ -139247,17 +139206,6 @@ entities:
     - type: Transform
       pos: -39.5489,-15.375725
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 1780
-    - type: Jetpack
-      toggleActionEntity: 1770
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 1770
-          - 1780
   - uid: 15052
     components:
     - type: Transform

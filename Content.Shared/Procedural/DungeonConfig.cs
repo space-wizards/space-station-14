@@ -6,12 +6,6 @@ namespace Content.Shared.Procedural;
 public partial class DungeonConfig
 {
     /// <summary>
-    /// <see cref="Data"/>
-    /// </summary>
-    [DataField]
-    public DungeonData Data = DungeonData.Empty;
-
-    /// <summary>
     /// The secret sauce, procedural generation layers that get run.
     /// </summary>
     [DataField]

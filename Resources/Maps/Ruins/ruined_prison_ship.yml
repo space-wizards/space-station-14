@@ -467,15 +467,6 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-- proto: ActionToggleInternals
-  entities:
-  - uid: 624
-    components:
-    - type: Transform
-      parent: 623
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 623
 - proto: AirCanister
   entities:
   - uid: 628
@@ -2029,14 +2020,6 @@ entities:
     - type: Transform
       pos: 4.497028,-9.338669
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 624
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 624
 - proto: EphedrineChemistryBottle
   entities:
   - uid: 667

@@ -25,3 +25,15 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: SalvageSpecialistChameleonOutfit
+  job: SalvageSpecialist
+  equipment:
+    head: ClothingHeadHatCargosoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskGasExplorer
+    outerClothing: ClothingOuterWinterMiner
+    neck: ClothingNeckScarfStripedBrown
+    gloves: ClothingHandsGlovesColorBlack
+

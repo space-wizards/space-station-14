@@ -33,7 +33,7 @@ player-first-join-message = Player {$name} joined for the first time.
 # Displayed in chat to admins when a player leaves
 player-leave-message = Player {$name} left.
 
-latejoin-arrival-announcement = {$character} ({$job}) { CONJUGATE-HAVE($entity) } arrived at the station!
+latejoin-arrival-announcement = {$character} ({$job}) has arrived at the station!
 latejoin-arrival-announcement-special = {$job} {$character} on deck!
 latejoin-arrival-sender = Station
 latejoin-arrivals-direction = A shuttle transferring you to your station will arrive shortly.

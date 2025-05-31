@@ -58,11 +58,12 @@
     sprite: Clothing/Shoes/Specific/clown_banana.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Specific/clown_banana.rsi
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepSlip
-      params:
-        variation: 0.10
+  #- type: FootstepModifier You can add a sound effect when you make one that doesn't sound like a dog dying. -emo
+  #  footstepSoundCollection:
+  #    collection: FootstepSlip
+  #    params:
+  #      volume: -10
+  #      variation: 0.10
   - type: Construction
     graph: BananaClownShoes
     node: shoes

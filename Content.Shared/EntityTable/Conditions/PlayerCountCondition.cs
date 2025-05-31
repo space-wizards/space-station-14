@@ -1,3 +1,4 @@
+using Content.Shared.EntityTable.EntitySelectors;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -22,7 +23,7 @@ public sealed partial class PlayerCountCondition : EntityTableCondition
 
     private static ISharedPlayerManager? _playerManager;
 
-    public override bool EvaluateImplementation(IEntityManager entMan, IPrototypeManager proto)
+    protected override bool EvaluateImplementation(EntityTableSelector root, IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
         // Don't resolve this repeatedly
         _playerManager ??= IoCManager.Resolve<ISharedPlayerManager>();

@@ -8,7 +8,7 @@
     sprite: Objects/Misc/fire_extinguisher.rsi
     layers:
     - state: fire_extinguisher_closed
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Item
     sprite: Objects/Misc/fire_extinguisher.rsi
     size: Normal
@@ -67,8 +67,8 @@
       - FireExtinguisher
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: { state: fire_extinguisher_open }
           False: { state: fire_extinguisher_closed }
   - type: PhysicalComposition

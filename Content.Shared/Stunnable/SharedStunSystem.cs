@@ -26,7 +26,6 @@ namespace Content.Shared.Stunnable;
 public abstract class SharedStunSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-    [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -52,7 +51,6 @@ public abstract class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
         SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
 
-        SubscribeLocalEvent<StunOnContactComponent, ComponentStartup>(OnStunOnContactStartup);
         SubscribeLocalEvent<StunOnContactComponent, StartCollideEvent>(OnStunOnContactCollide);
 
         // helping people up if they're knocked down
@@ -112,12 +110,6 @@ public abstract class SharedStunSystem : EntitySystem
     private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
     {
         _blocker.UpdateCanMove(uid);
-    }
-
-    private void OnStunOnContactStartup(Entity<StunOnContactComponent> ent, ref ComponentStartup args)
-    {
-        if (TryComp<PhysicsComponent>(ent, out var body))
-            _broadphase.RegenerateContacts((ent, body));
     }
 
     private void OnStunOnContactCollide(Entity<StunOnContactComponent> ent, ref StartCollideEvent args)

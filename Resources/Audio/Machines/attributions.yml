@@ -172,12 +172,25 @@
   license: "CC0-1.0"
   copyright: "by Ko4erga"
   source: "https://github.com/space-wizards/space-station-14/pull/30431"
-  
+
+- files:
+  - robotscream_1.ogg
+  - robotscream_2.ogg
+  - robotscream_3.ogg
+  - robotscream_4.ogg
+  - robotscream_5.ogg
+  - robotscream_6.ogg
+  - robotscream_7.ogg
+  - robotscream_8.ogg
+  - robotscream_9.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "/tg/station and modified by AsnDen"
+  source: "https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8"
+
 - files: ["double_ring.ogg"]
   license: "CC0-1.0"
   copyright: "Created by fspera, converted to OGG and modified by chromiumboy."
   source: "https://freesound.org/people/fspera/sounds/528111/"
-
 - files:
   - airlock_emergencyoff.ogg
   - airlock_emergencyon.ogg

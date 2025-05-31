@@ -11,6 +11,8 @@
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Door
     closeTimeOne: 0.4
     closeTimeTwo: 0.4

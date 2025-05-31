@@ -89,6 +89,19 @@ public static class EntityEffectExt
     }
 }
 
+[ByRefEvent]
+public struct ExecuteEntityEffectEvent<T> where T : EntityEffect
+{
+    public T Effect;
+    public EntityEffectBaseArgs Args;
+
+    public ExecuteEntityEffectEvent(T effect, EntityEffectBaseArgs args)
+    {
+        Effect = effect;
+        Args = args;
+    }
+}
+
 /// <summary>
 ///     EntityEffectBaseArgs only contains the target of an effect.
 ///     If a trigger wants to include more info (e.g. the quantity of the chemical triggering the effect), it can be extended (see EntityEffectReagentArgs).

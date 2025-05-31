@@ -7,6 +7,8 @@ namespace Content.Client.Gravity;
 public sealed partial class GravitySystem : SharedGravitySystem
 {
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -26,34 +28,34 @@ public sealed partial class GravitySystem : SharedGravitySystem
         {
             if (comp.SpriteMap.TryGetValue(state, out var spriteState))
             {
-                var layer = args.Sprite.LayerMapGet(GravityGeneratorVisualLayers.Base);
-                args.Sprite.LayerSetState(layer, spriteState);
+                var layer = _sprite.LayerMapGet((uid, args.Sprite), GravityGeneratorVisualLayers.Base);
+                _sprite.LayerSetRsiState((uid, args.Sprite), layer, spriteState);
             }
         }
 
         if (_appearanceSystem.TryGetData<float>(uid, PowerChargeVisuals.Charge, out var charge, args.Component))
         {
-            var layer = args.Sprite.LayerMapGet(GravityGeneratorVisualLayers.Core);
+            var layer = _sprite.LayerMapGet((uid, args.Sprite), GravityGeneratorVisualLayers.Core);
             switch (charge)
             {
                 case < 0.2f:
-                    args.Sprite.LayerSetVisible(layer, false);
+                    _sprite.LayerSetVisible((uid, args.Sprite), layer, false);
                     break;
                 case >= 0.2f and < 0.4f:
-                    args.Sprite.LayerSetVisible(layer, true);
-                    args.Sprite.LayerSetState(layer, comp.CoreStartupState);
+                    _sprite.LayerSetVisible((uid, args.Sprite), layer, true);
+                    _sprite.LayerSetRsiState((uid, args.Sprite), layer, comp.CoreStartupState);
                     break;
                 case >= 0.4f and < 0.6f:
-                    args.Sprite.LayerSetVisible(layer, true);
-                    args.Sprite.LayerSetState(layer, comp.CoreIdleState);
+                    _sprite.LayerSetVisible((uid, args.Sprite), layer, true);
+                    _sprite.LayerSetRsiState((uid, args.Sprite), layer, comp.CoreIdleState);
                     break;
                 case >= 0.6f and < 0.8f:
-                    args.Sprite.LayerSetVisible(layer, true);
-                    args.Sprite.LayerSetState(layer, comp.CoreActivatingState);
+                    _sprite.LayerSetVisible((uid, args.Sprite), layer, true);
+                    _sprite.LayerSetRsiState((uid, args.Sprite), layer, comp.CoreActivatingState);
                     break;
                 default:
-                    args.Sprite.LayerSetVisible(layer, true);
-                    args.Sprite.LayerSetState(layer, comp.CoreActivatedState);
+                    _sprite.LayerSetVisible((uid, args.Sprite), layer, true);
+                    _sprite.LayerSetRsiState((uid, args.Sprite), layer, comp.CoreActivatedState);
                     break;
             }
         }

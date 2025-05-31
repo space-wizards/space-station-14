@@ -24,6 +24,10 @@
   name: lathe-category-robotics
 
 - type: latheCategory
+  id: Tiles
+  name: lathe-category-tiles
+
+- type: latheCategory
   id: Tools
   name: lathe-category-tools
 
@@ -77,12 +81,37 @@
   id: Supply
   name: lathe-category-supply
 
+# Cutter machine
+- type: latheCategory
+  id: Concrete
+  name: lathe-category-concrete
+
+- type: latheCategory
+  id: Dark
+  name: lathe-category-dark
+
+- type: latheCategory
+  id: Maints
+  name: lathe-category-maints
+
+- type: latheCategory
+  id: Steel
+  name: lathe-category-steel
+
+- type: latheCategory
+  id: White
+  name: lathe-category-white
+
+- type: latheCategory
+  id: Wood
+  name: lathe-category-wood
+
 # Science
 - type: latheCategory
   id: Mech
   name: lathe-category-mechs
 
-# Sec
+# Security TechFab
 - type: latheCategory
   id: Ammo
   name: lathe-category-ammo

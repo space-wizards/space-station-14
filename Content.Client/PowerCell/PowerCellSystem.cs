@@ -9,6 +9,7 @@ namespace Content.Client.PowerCell;
 public sealed class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -44,19 +45,19 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         if (args.Sprite == null)
             return;
 
-        if (!args.Sprite.TryGetLayer((int) PowerCellVisualLayers.Unshaded, out var unshadedLayer))
+        if (!_sprite.LayerExists((uid, args.Sprite), PowerCellVisualLayers.Unshaded))
             return;
 
         if (_appearance.TryGetData<byte>(uid, PowerCellVisuals.ChargeLevel, out var level, args.Component))
         {
             if (level == 0)
             {
-                unshadedLayer.Visible = false;
+                _sprite.LayerSetVisible((uid, args.Sprite), PowerCellVisualLayers.Unshaded, false);
                 return;
             }
 
-            unshadedLayer.Visible = true;
-            args.Sprite.LayerSetState(PowerCellVisualLayers.Unshaded, $"o{level}");
+            _sprite.LayerSetVisible((uid, args.Sprite), PowerCellVisualLayers.Unshaded, false);
+            _sprite.LayerSetRsiState((uid, args.Sprite), PowerCellVisualLayers.Unshaded, $"o{level}");
         }
     }
 

@@ -11777,9 +11777,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: Parallax
@@ -11978,15 +11976,6 @@ entities:
     - type: Transform
       pos: -0.019477844,-27.376728
       parent: 2
-- proto: ActionToggleLight
-  entities:
-  - uid: 15419
-    components:
-    - type: Transform
-      parent: 1478
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 1478
 - proto: AirAlarm
   entities:
   - uid: 755
@@ -104116,20 +104105,6 @@ entities:
     - type: Transform
       pos: -36.532166,7.5278516
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 15419
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 15419
-    - type: ActionsContainer
   - uid: 5896
     components:
     - type: Transform
@@ -106527,11 +106502,11 @@ entities:
         After several simulations where Superconducting Magnetic Energy Storage units were drained from the main system from [italic]a variety[/italic] of user errors and other shenanigans, it has been determined that the Singularity should be put on its own power loop, disconnected from the main station. The upsides of this include but are not limited to:
 
 
-        [bold]1.[/bold] Limited external forces from the containments power. 
+        [bold]1.[/bold] Limited external forces from the containments power.
 
-        [bold]2.[/bold] An "early warning" system, if you see JUST the PA room run out of power, you know there is an issue. 
+        [bold]2.[/bold] An "early warning" system, if you see JUST the PA room run out of power, you know there is an issue.
 
-        [bold]3.[/bold] Due to being on its own small loop, its much easier to spot faults in the system. 
+        [bold]3.[/bold] Due to being on its own small loop, its much easier to spot faults in the system.
 
 
         [italic]While we have listed the upsides we also acknowledge the downside,[/italic] for it being on its own loop you will need an external force if the system "runs out of juice". Our recommendation for this is simply attaching a generator to said SMES and letting it get to full charge before continuing operations but as said from another of our technicians... "just attach it to the main grid for like, a hot moment, and kickstart the thing!"

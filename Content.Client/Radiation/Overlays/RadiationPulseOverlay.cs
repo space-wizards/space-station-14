@@ -59,7 +59,7 @@ namespace Content.Client.Radiation.Overlays
                 shd?.SetParameter("positionInput", tempCoords);
                 shd?.SetParameter("range", instance.Range);
                 var life = (_gameTiming.RealTime - instance.Start).TotalSeconds / instance.Duration;
-                shd?.SetParameter("life", (float) life);
+                shd?.SetParameter("life", (float)life);
 
                 // There's probably a very good reason not to do this.
                 // Oh well!

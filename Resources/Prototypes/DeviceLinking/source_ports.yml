@@ -25,13 +25,13 @@
   id: Left
   name: signal-port-name-left
   description: signal-port-description-left
-  defaultLinks: [ On, Open, Forward, Trigger, Timer ]
+  defaultLinks: [ On, Open, Reverse, Trigger, Timer ]
 
 - type: sourcePort
   id: Right
   name: signal-port-name-right
   description: signal-port-description-right
-  defaultLinks: [ On, Open, Reverse, Trigger, Timer ]
+  defaultLinks: [ On, Open, Forward, Trigger, Timer ]
 
 - type: sourcePort
   id: Middle
@@ -156,3 +156,9 @@
   id: PowerDischarging
   name: signal-port-name-power-discharging
   description: signal-port-description-power-discharging
+
+- type: sourcePort
+  id: ItemDetected
+  name: signal-port-name-item-detected
+  description: signal-port-description-item-detected
+  defaultLinks: [ Toggle, Trigger, Timer ]

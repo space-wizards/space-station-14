@@ -28,3 +28,14 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: BotanistChameleonOutfit
+  job: Botanist
+  equipment:
+    head: ClothingHeadBandBotany
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    neck: ClothingNeckScarfStripedGreen
+    outerClothing: ClothingOuterApronBotanist
+    gloves: ClothingHandsGlovesLeather

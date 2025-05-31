@@ -282,7 +282,7 @@ public sealed class ItemToggleSystem : EntitySystem
     {
         if (TryComp(ent, out AppearanceComponent? appearance))
         {
-            _appearance.SetData(ent, ToggleVisuals.Toggled, ent.Comp.Activated, appearance);
+            _appearance.SetData(ent, ToggleableVisuals.Enabled, ent.Comp.Activated, appearance);
         }
     }
 

@@ -21,13 +21,28 @@
       sprite: Structures/Machines/server.rsi
       snapCardinals: true
       layers:
-        - state: server
+        - state: server-off
+        - state: server-on
+          visible: false
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: server_o
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { visible: true }
+            False: { visible: false }
+    - type: Appearance
     - type: AmbientOnPowered
     - type: AmbientSound
       volume: -9
       range: 5
+      enabled: false
       sound:
         path: /Audio/Ambience/Objects/server_fans.ogg
+    - type: WiresVisuals
+    - type: WiresPanel
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -140,13 +155,28 @@
     - type: Sprite
       sprite: Structures/Machines/server.rsi
       layers:
-        - state: server
+        - state: server-off
+        - state: server-on
+          visible: false
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: server_o
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { visible: true }
+            False: { visible: false }
+    - type: Appearance
     - type: AmbientOnPowered
     - type: AmbientSound
       volume: -9
       range: 5
+      enabled: false
       sound:
         path: /Audio/Ambience/Objects/server_fans.ogg
+    - type: WiresVisuals
+    - type: WiresPanel
 
 - type: entity
   parent: SurveillanceCameraWirelessRouterBase

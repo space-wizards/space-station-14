@@ -46,7 +46,7 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 100  # Considering we need a lot of thrusters didn't want to make an individual one too tanky
+          damage: 300  # Changed 100->300 because impact damage is real
         behaviors:
           - !type:DoActsBehavior
             acts: ["Destruction"]
@@ -72,13 +72,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 600
       behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 300
       behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]

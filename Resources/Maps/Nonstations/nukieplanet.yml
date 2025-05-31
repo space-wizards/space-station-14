@@ -1630,9 +1630,7 @@ entities:
     - type: MetaData
     - type: Transform
     - type: Map
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: FTLDestination
       whitelist:
         tags:
@@ -1661,15 +1659,6 @@ entities:
         - 0
         - 0
     - type: LoadedMap
-- proto: ActionStethoscope
-  entities:
-  - uid: 1739
-    components:
-    - type: Transform
-      parent: 1336
-    - type: EntityTargetAction
-      originalIconColor: '#FFFFFFFF'
-      container: 1336
 - proto: AirlockExternalGlassNukeopLocked
   entities:
   - uid: 49
@@ -10317,14 +10306,6 @@ entities:
     - type: Transform
       pos: -2.327716,-12.470306
       parent: 104
-    - type: Stethoscope
-      actionEntity: 1739
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 1739
 - proto: ClothingShoesBootsSalvage
   entities:
   - uid: 542

@@ -31,6 +31,16 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     [ViewVariables]
     public int NumOrdersCreated;
 
+    /// <summary>
+    /// An all encompassing determiner of what markets can be ordered from.
+    /// Not every console can order from every market, but a console can't order from a market not on this list.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<CargoMarketPrototype>> Markets = new()
+    {
+        "market",
+    };
+
     // TODO: Can probably dump this
     /// <summary>
     /// The cargo shuttle assigned to this station.

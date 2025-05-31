@@ -47,13 +47,20 @@
     - SignalTrigger
   - type: PayloadTrigger
     components:
-    - type: TriggerOnSignal
+    - type: TimerStartOnSignal
     - type: DeviceNetwork
       deviceNetId: Wireless
       receiveFrequencyId: BasicDevice
     - type: WirelessNetworkConnection
       range: 200
     - type: DeviceLinkSink
+    - type: OnUseTimerTrigger
+      delay: 3
+      initialBeepDelay: 0
+      beepSound:
+        path: /Audio/Machines/Nuke/general_beep.ogg
+        params:
+          volume: -2
 
 - type: entity
   parent: BaseItem
