@@ -72,7 +72,7 @@
       90: Critical
       180: Dead
   - type: Sprite 
-    scale: 0.9, 0.9
+    scale: 0.91, 0.91
   - type: TemperatureSpeed
     thresholds:
       250: 0.9
@@ -99,8 +99,8 @@
     weightlessAcceleration: 1.6 # Avalis are specifically built to fly in low-g environments 
     weightlessFriction: 1
     weightlessModifier: 1
-    speciesSprintSpeedModifier: 1.05 #slightly faster due to smaller size (I refuse to go any higher because of what happened with the run speed of felonids.)
-    speciesWalkSpeedModifier: 1.00
+    SprintSpeedModifier: 1.05 #slightly faster due to smaller size (I refuse to go any higher because of what happened with the run speed of felonids.)
+    WalkSpeedModifier: 1.00
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Avali

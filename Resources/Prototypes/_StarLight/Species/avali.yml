@@ -167,26 +167,26 @@
     - type: AvaliStasis
       enterStasisAction: ActionAvaliStasisEnter
       exitStasisAction: ActionAvaliStasisExit
-      stasisCooldown: 30
-      stasisBluntHealPerSecond: 5
-      stasisSlashingHealPerSecond: 5
-      stasisPiercingHealPerSecond: 5
-      stasisHeatHealPerSecond: 5
-      stasisColdHealPerSecond: 5
+      stasisCooldown: 300
+      stasisBluntHealPerSecond: 2
+      stasisSlashingHealPerSecond: 2
+      stasisPiercingHealPerSecond: 2
+      stasisHeatHealPerSecond: 2
+      stasisColdHealPerSecond: 2
       stasisBleedHealPerSecond: 1.0
-      stasisAdditionalDamageResistance: 0.1
+      stasisAdditionalDamageResistance: 1.5
       stasisInCritBluntHealPerSecond: 1
       stasisInCritSlashingHealPerSecond: 1
       stasisInCritPiercingHealPerSecond: 1
       stasisInCritHeatHealPerSecond: 1
       stasisInCritColdHealPerSecond: 1
       stasisInCritBleedHealPerSecond: 0.5
-      stasisInCritAdditionalDamageResistance: 0.1
-      stasisEnterEffect: EffectTeleportationEntity
-      stasisEnterEffectLifetime: 3.0
+      stasisInCritAdditionalDamageResistance: 1.5
+      stasisEnterEffect: EffectNanitesEnter
+      stasisEnterEffectLifetime: 2.7
       stasisEnterSound: /Audio/_Starlight/Misc/alien_teleport.ogg
-      stasisExitEffect: EffectTeleportationEntity
-      stasisExitEffectLifetime: 3.0
+      stasisExitEffect: EffectNanitesExit
+      stasisExitEffectLifetime: 2.7
       stasisExitSound: /Audio/_Starlight/Misc/alien_teleport.ogg
-      stasisContinuousEffect: EffectTeleportation
+      stasisContinuousEffect: EffectNanitesCurrent
       
