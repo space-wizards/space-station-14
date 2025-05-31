@@ -1,0 +1,22 @@
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: PirateBreakerUnlimited
+  suffix: PirateBreaker
+  name: Pirate Lock Breaker
+  description: A hacked access configurator, held together with pirate curses and gum
+  components:
+  - type: Emag
+    emagType: Access
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/pirate_breaker.rsi
+    state: icon
+  - type: Item
+    sprite: _Starlight/Objects/Tools/pirate_breaker.rsi
+
+- type: entity
+  parent: PirateBreakerUnlimited
+  id: PirateBreaker
+  suffix: Limited
+  components:
+  - type: LimitedCharges
+  - type: AutoRecharge

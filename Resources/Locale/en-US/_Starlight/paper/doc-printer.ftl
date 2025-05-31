@@ -710,8 +710,60 @@ doc-text-printer-request-modernization =
 
 
 
+doc-text-printer-request-ert =
+   ⠀[logo]            [cclogo] 
+
+                             [head=3]NT-CC Consortium Services[/head]
+
+                  [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
+    ────────────────────────────────────────
+   ⠀⠀           [bold]EMERGENCY RESPONSE TEAM REQUEST[/bold]
+    ────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    Position of Document Compiler:
+
+    Threat(s) to the station:
+    ⠀[bullet] ...
+
+    Type of ERT requested:
+    (Security / Engineering / Janitorial / Medical / ...)
+
+    Fatalities (approximate number):
+
+   ⠀ [italic]Warning, abuse of this form may lead to immediate termination[/italic]
+   ⠀ [italic]of the contract of the person(s) involved in this request.[/italic]
+    ────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+
+
+
+doc-text-printer-product-order =
+   ⠀[logo]            [cclogo] 
+
+                             [head=3]NT-CC Consortium Services[/head]
+
+                  [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
+    ────────────────────────────────────────
+   ⠀⠀                                 [bold]PRODUCT ORDER[/bold]
+    ────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    Position of Document Compiler:
+    
+    Request to produce products by the following department:
+
+    List of products required:
+    
+    Reason for order:
+    
+    ────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+
+
+
    
-# Complaintst
+# Complaints
 
 doc-text-printer-complaint-violation-labor-rules =
    ⠀[logo]            [cclogo] 
@@ -1072,27 +1124,36 @@ doc-text-printer-medical-intervention-order =
    ⠀                                    [italic]Place for stamps[/italic]
 
 
-   
-# Orders
 
-doc-text-printer-product-order =
+doc-text-printer-execution-dnr-order =
    ⠀[logo]            [cclogo] 
 
                              [head=3]NT-CC Consortium Services[/head]
 
                   [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
     ────────────────────────────────────────
-   ⠀⠀                                 [bold]PRODUCT ORDER[/bold]
+   ⠀⠀             [bold]EXECUTION AND DO NOT REVIVE ORDER[/bold]
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
     Position of Document Compiler:
     
-    Request to produce products by the following department:
+    Name of Prisoner: 
+    Former position of Prisoner:
 
-    List of products required:
-    
-    Reason for order:
-    
+    Crimes committed:
+    ⠀[bullet] ...
+
+    Reason for the execution and DNR:
+    ⠀[bullet] ...
+
+    Authority ordering the Execution (Name + Position): 
+
+   ⠀ [italic]This order can only be issued by the (Acting) Captain of the[/italic]
+   ⠀ [italic]station. If a Magistrate is present, they can overrule the Captain[/italic]
+   ⠀ [italic]on the decision, and their stamp is required.[/italic]
+   ⠀ [italic]The prisoner is to remain restrained in a secure jail cell.[/italic]
+   ⠀ [italic]The execution method is to be chosen by the prisoner, to a[/italic]
+   ⠀ [italic]lawful extent, and must be as humane as possible.[/italic]
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]

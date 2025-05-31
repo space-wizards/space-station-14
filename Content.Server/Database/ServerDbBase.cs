@@ -21,6 +21,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Server.Humanoid.Markings.Extensions;
 
 namespace Content.Server.Database
 {
@@ -208,7 +209,7 @@ namespace Content.Server.Database
             {
                 foreach (var marking in markingsRaw)
                 {
-                    var parsed = Marking.ParseFromDbString(marking);
+                    var parsed = MarkingExtensions.ParseFromDbString(marking); //starlight
 
                     if (parsed is null) continue;
 
@@ -252,9 +253,12 @@ namespace Content.Server.Database
                 (
                     profile.HairName,
                     Color.FromHex(profile.HairColor),
+                    profile.HairGlowing, //starlight
                     profile.FacialHairName,
                     Color.FromHex(profile.FacialHairColor),
+                    profile.FacialHairGlowing, //starlight
                     Color.FromHex(profile.EyeColor),
+                    profile.EyeGlowing, //starlight
                     Color.FromHex(profile.SkinColor),
                     markings
                 ),
@@ -274,7 +278,7 @@ namespace Content.Server.Database
             List<string> markingStrings = new();
             foreach (var marking in appearance.Markings)
             {
-                markingStrings.Add(marking.ToString());
+                markingStrings.Add(marking.ToDBString()); //starlight
             }
             var markings = JsonSerializer.SerializeToDocument(markingStrings);
 
@@ -287,9 +291,12 @@ namespace Content.Server.Database
             profile.Gender = humanoid.Gender.ToString();
             profile.HairName = appearance.HairStyleId;
             profile.HairColor = appearance.HairColor.ToHex();
+            profile.HairGlowing = appearance.HairGlowing; //starlight
             profile.FacialHairName = appearance.FacialHairStyleId;
             profile.FacialHairColor = appearance.FacialHairColor.ToHex();
+            profile.FacialHairGlowing = appearance.FacialHairGlowing; //starlight
             profile.EyeColor = appearance.EyeColor.ToHex();
+            profile.EyeGlowing = appearance.EyeGlowing; //starlight
             profile.SkinColor = appearance.SkinColor.ToHex();
             profile.SpawnPriority = (int)humanoid.SpawnPriority;
             profile.Markings = markings;
