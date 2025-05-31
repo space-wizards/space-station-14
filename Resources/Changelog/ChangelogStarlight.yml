@@ -6408,4 +6408,62 @@ Entries:
   id: 887
   time: '2025-05-30T02:59:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/680
+- author: Citrea
+  changes:
+  - message: Gun magazines for Starlight guns wont display ERROR when held anymore.
+    type: Fix
+  id: 888
+  time: '2025-05-30T20:48:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/720
+- author: STARLIGHT TEAM
+  changes:
+  - message: You will no longer shoot yourself if the target is too close to you.
+    type: Fix
+  id: 889
+  time: '2025-05-30T20:53:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/710
+- author: PubliclyExecutedPig
+  changes:
+  - message: Lobster Station now actually has ATMs and stuff
+    type: Fix
+  id: 890
+  time: '2025-05-30T20:55:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/719
+- author: Cyanogen
+  changes:
+  - message: Case (in)sen fix.
+    type: Add
+  id: 891
+  time: '2025-05-30T22:12:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/723
+- author: Happyrobot33
+  changes:
+  - message: Fixed All Starlightified upstream maps not initializing properly due
+      to wizden bugfix.
+    type: Fix
+  id: 892
+  time: '2025-05-30T22:44:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/722
+- author: Happyrobot33
+  changes:
+  - message: Added genpop accesses to access configurator.
+    type: Add
+  id: 893
+  time: '2025-05-30T22:53:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/724
+- author: Happyrobot33
+  changes:
+  - message: Made turnstile deconstruction time WAY longer, it is now 15 ish seconds
+      instead of the 5 before, now using almost all the tools.
+    type: Tweak
+  id: 894
+  time: '2025-05-30T22:53:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/724
+- author: Happyrobot33
+  changes:
+  - message: Made turnstile construction time slightly longer.
+    type: Tweak
+  id: 895
+  time: '2025-05-30T22:53:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/724
 

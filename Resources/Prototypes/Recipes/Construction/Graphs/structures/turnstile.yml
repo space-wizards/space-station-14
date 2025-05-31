@@ -12,10 +12,10 @@
       steps:
       - material: MetalRod
         amount: 4
-        doAfter: 6
+        doAfter: 10 #starlight, increased
       - material: Steel
         amount: 1
-        doAfter: 2
+        doAfter: 5 #starlight, increased
 
   - node: turnstile
     entity: Turnstile
@@ -26,8 +26,16 @@
         prototype: PartRodMetal1
         amount: 4
       - !type:DeleteEntity
-      steps:
+      steps: #starlight, steps increased and overall time lengthened to prevent shitters
+      - tool: Pulsing
+        doAfter: 0.5
+      - tool: Cutting
+        doAfter: 3.0
+      - tool: Screwing
+        doAfter: 2.0
+      - tool: Anchoring
+        doAfter: 2.5
       - tool: Welding
         doAfter: 4.0
-      - tool: Cutting
-        doAfter: 2.0
+      - tool: Prying
+        doAfter: 5.0

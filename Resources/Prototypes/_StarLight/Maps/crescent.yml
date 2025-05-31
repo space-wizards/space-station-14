@@ -5,7 +5,7 @@
   minPlayers: 40
   maxPlayers: 95
   stations:
-    Crescent:
+    StarlightCrescent:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup

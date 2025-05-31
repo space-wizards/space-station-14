@@ -5,7 +5,7 @@
   minPlayers: 40
   maxPlayers: 100 #big map
   stations:
-    Cog:
+    StarlightCog:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup

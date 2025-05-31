@@ -4,7 +4,7 @@
   mapPath: /Maps/_Starlight/Stations/Oasis.yml
   minPlayers: 65
   stations:
-    Oasis:
+    StarlightOasis:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup

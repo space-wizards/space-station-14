@@ -4,7 +4,7 @@
   mapPath: /Maps/_Starlight/Stations/Retro.yml
   minPlayers: 60
   stations:
-    Retro:
+    StarlightRetro:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
