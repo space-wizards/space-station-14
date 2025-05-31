@@ -41,12 +41,12 @@
 
     - !type:HTNPrimitiveTask
       operator: !type:SetFloatOperator
-        targetKey: WaitTime
+        targetKey: IdleTime
         amount: 1
 
     - !type:HTNPrimitiveTask
       operator: !type:WaitOperator
-        key: WaitTime
+        key: IdleTime
       preconditions:
       - !type:KeyExistsPrecondition
-        key: WaitTime
+        key: IdleTime

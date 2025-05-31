@@ -1,14 +1,11 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Chat.Systems;
-using Content.Server.Disposal.Unit;
-using Content.Shared.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Interaction;
-using Content.Server.Disposal.Unit;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Robust.Server.Containers;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
@@ -16,9 +13,9 @@ public sealed partial class PickNearbyDisposableOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     private EntityLookupSystem _lookup = default!;
-    private ChatSystem _chat = default!;
-    private DisposalUnitSystem _disposalSystem = default!;
     private PathfindingSystem _pathfinding = default!;
+    private ContainerSystem _container = default!;
+
 
     [DataField("rangeKey")] public string RangeKey = NPCBlackboard.MedibotInjectRange;
 
@@ -44,8 +41,8 @@ public sealed partial class PickNearbyDisposableOperator : HTNOperator
     {
         base.Initialize(sysManager);
         _lookup = sysManager.GetEntitySystem<EntityLookupSystem>();
-        _disposalSystem = sysManager.GetEntitySystem<DisposalUnitSystem>();
         _pathfinding = sysManager.GetEntitySystem<PathfindingSystem>();
+        _container = sysManager.GetEntitySystem<ContainerSystem>();
     }
 
     public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
@@ -72,6 +69,9 @@ public sealed partial class PickNearbyDisposableOperator : HTNOperator
             foreach (var flushable in _lookup.GetEntitiesInRange(entity, 1))
             {
                 if (flushable == owner)
+                    continue;
+
+                if (_container.IsEntityInContainer(flushable))
                     continue;
 
                 if (mobState.TryGetComponent(flushable, out var state))
