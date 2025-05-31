@@ -1518,6 +1518,40 @@
     stackType: FloorTileAstroGrass
 
 - type: entity
+  id: FloorTileItemDarkAstroGrass
+  parent: FloorTileItemBase
+  name: dark astro-grass
+  description: Fake grass that covers up wires and even comes with realistic NanoTrimmings!
+  components:
+  - type: Sprite
+    state: grassdark
+  - type: Item
+    heldPrefix: darkgrass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkAstroGrass
+  - type: Stack
+    stackType: FloorTileDarkAstroGrass
+
+- type: entity
+  id: FloorTileItemLightAstroGrass
+  parent: FloorTileItemBase
+  name: light astro-grass
+  description: Fake grass that covers up wires and even comes with realistic NanoTrimmings!
+  components:
+  - type: Sprite
+    state: grasslight
+  - type: Item
+    heldPrefix: lightgrass
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorLightAstroGrass
+  - type: Stack
+    stackType: FloorTileLightAstroGrass
+
+- type: entity
   id: FloorTileItemAstroIce
   parent: FloorTileItemBase
   name: astro-ice
@@ -1584,6 +1618,23 @@
     - FloorAstroAsteroidSandBorderless
   - type: Stack
     stackType: FloorTileAstroAsteroidSand
+
+- type: entity
+  id: FloorTileItemDesertAstroSand
+  parent: FloorTileItemBase
+  name: desert astro-sand
+  description: Fake sand, designed to be fine.
+  components:
+  - type: Sprite
+    state: desertsand
+  - type: Item
+    heldPrefix: desertsand
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDesertAstroSand
+  - type: Stack
+    stackType: FloorTileDesertAstroSand
 
 - type: entity
   name: large wood floor

@@ -1987,6 +1987,24 @@
   deconstructTools: [ Cutting ]
   itemDrop: FloorTileItemJungleAstroGrass
 
+- type: tile
+  id: FloorDarkAstroGrass
+  name: tiles-dark-astro-grass
+  parent: FloorGrassDark
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemDarkAstroGrass
+
+- type: tile
+  id: FloorLightAstroGrass
+  name: tiles-light-astro-grass
+  parent: FloorGrassLight
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemLightAstroGrass
+
 # Ice
 - type: tile
   id: FloorAstroIce
@@ -2029,6 +2047,16 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroAsteroidSand
+  weather: false
+
+- type: tile
+  id: FloorDesertAstroSand
+  name: tiles-desert-astro-sand
+  parent: FloorDesert
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemDesertAstroSand
   weather: false
 
 - type: tile
