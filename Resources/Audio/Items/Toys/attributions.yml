@@ -92,3 +92,18 @@
   license: "CC0-1.0"
   copyright: "Created by xprospero for ss14"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Items/Toys/rubber_chicken_3.ogg"
+
+- files: ["pushHornHonk.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Matislav, modified by Thinbug"
+  source: "https://freesound.org/s/564697/"
+
+- files: ["pushHornFloor.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Dedshot_Dyzek"
+  source: "https://freesound.org/people/Dedshot_Dyzek/sounds/769792/"
+
+- files: ["arf.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Orsoniks, from the game Casualties Unknown"
+  source: "https://orsonik.itch.io/scav-prototype"

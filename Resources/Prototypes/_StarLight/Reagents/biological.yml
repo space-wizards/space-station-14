@@ -8,7 +8,6 @@
   color: "#d600bd"
   recognizable: true
   physicalDesc: reagent-physical-desc-abductor
-  slippery: false
 
 - type: reagent
   parent: Blood
@@ -20,4 +19,3 @@
   color: "#6C3BAA"
   recognizable: true
   physicalDesc: reagent-physical-desc-avali
-  slippery: false

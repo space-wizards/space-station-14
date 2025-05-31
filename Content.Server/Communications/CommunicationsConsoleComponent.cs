@@ -66,6 +66,13 @@ namespace Content.Server.Communications
         /// Announce sound file path
         /// </summary>
         [DataField]
-        public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/_Starlight/Announcements/announce2.ogg"); // 🌟Starlight🌟  
+        public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
+
+        /// <summary>
+        /// Hides the sender identity (If they even have one).
+        /// In practise this removes the "Sent by ScugMcWawa (Slugcat Captain)" at the bottom of the announcement.
+        /// </summary>
+        [DataField]
+        public bool AnnounceSentBy = true;
     }
 }

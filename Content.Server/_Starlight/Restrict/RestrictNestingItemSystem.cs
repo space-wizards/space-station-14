@@ -1,9 +1,7 @@
-using Content.Server.Disposal.Mailing;
-using Content.Server.Disposal.Unit.EntitySystems;
-using Content.Shared.Item;
+using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Mailing;
 using Content.Shared.Popups;
 using Content.Shared.Starlight.Restrict;
-using Robust.Shared.Containers;
 
 namespace Content.Server.Starlight.Restrict;
 public sealed partial class RestrictNestingItemSystem : SharedRestrictNestingItemSystem

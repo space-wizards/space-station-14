@@ -93,7 +93,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speed = default!;
-    [Dependency] private readonly StaminaSystem _stamina = default!;
+    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
     [Dependency] private readonly GravitySystem _gravity = default!;
     [Dependency] private readonly BlindableSystem _blindable = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
