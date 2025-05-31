@@ -27,6 +27,13 @@
     time: 144000 #40 hours, gloves for truly the greatest (grey-test) of the grey
 
 # Head
+- type: loadout
+  id: WeldingMask
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    head:
 
 # Eyes
 - type: loadout
@@ -113,6 +120,9 @@
 
 - type: loadout
   id: SmugglerSatchel
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
   equipment:
     back: ClothingBackpackSatchelSmuggler
 
