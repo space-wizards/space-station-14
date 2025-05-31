@@ -6482,4 +6482,11 @@ Entries:
   id: 897
   time: '2025-05-31T05:47:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/726
+- author: Conflee
+  changes:
+  - message: Fixed Omega job load error again, caused by a different issue
+    type: Fix
+  id: 898
+  time: '2025-05-31T19:25:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/732
 
