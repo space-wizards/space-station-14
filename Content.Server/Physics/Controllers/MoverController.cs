@@ -430,12 +430,12 @@ public sealed class MoverController : SharedMoverController
                     if (!torque.Equals(0f))
                     {
                         PhysicsSystem.ApplyTorque(shuttleUid, torque, body: body);
-                        _thruster.SetAngularThrust(shuttle, true);
+                        _thruster.SetAngularThrustVisualState(shuttle, true);
                     }
                 }
                 else
                 {
-                    _thruster.SetAngularThrust(shuttle, false);
+                    _thruster.SetAngularThrustVisualState(shuttle, false);
                 }
             }
 
@@ -530,7 +530,7 @@ public sealed class MoverController : SharedMoverController
                 PhysicsSystem.SetSleepingAllowed(shuttleUid, body, true);
 
                 if (brakeInput <= 0f)
-                    _thruster.SetAngularThrust(shuttle, false);
+                    _thruster.SetAngularThrustVisualState(shuttle, false);
             }
             else
             {
@@ -548,7 +548,7 @@ public sealed class MoverController : SharedMoverController
                 if (!torque.Equals(0f))
                 {
                     PhysicsSystem.ApplyTorque(shuttleUid, torque, body: body);
-                    _thruster.SetAngularThrust(shuttle, true);
+                    _thruster.SetAngularThrustVisualState(shuttle, true);
                 }
             }
         }

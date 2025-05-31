@@ -349,7 +349,7 @@ public sealed partial class ShuttleSystem
 
         _thruster.DisableLinearThrusters(shuttle);
         _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.North);
-        _thruster.SetAngularThrust(shuttle, false);
+        _thruster.SetAngularThrustVisualState(shuttle, false);
         _dockSystem.UndockDocks(uid);
 
         component = AddComp<FTLComponent>(uid);
