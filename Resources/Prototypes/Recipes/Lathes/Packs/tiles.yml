@@ -1,7 +1,7 @@
 ## Static
 
 - type: latheRecipePack
-  id: FloorTilesStatic
+  id: FloorDarkTilesStatic
   recipes:
   - FloorTileItemDark
   - FloorTileItemDarkDiagonalMini
@@ -12,7 +12,10 @@
   - FloorTileItemDarkPavement
   - FloorTileItemDarkPavementVertical
   - FloorTileItemDarkOffset
-  - FloorTileItemSteelCheckerDark
+
+- type: latheRecipePack
+  id: FloorSteelTilesStatic
+  recipes:
   - FloorTileItemSteel
   - FloorTileItemSteelOffset
   - FloorTileItemSteelDiagonalMini
@@ -22,6 +25,12 @@
   - FloorTileItemSteelMono
   - FloorTileItemSteelPavement
   - FloorTileItemSteelPavementVertical
+  - FloorTileItemSteelCheckerDark
+  - FloorTileItemSteelCheckerLight
+
+- type: latheRecipePack
+  id: FloorWhiteTilesStatic
+  recipes:
   - FloorTileItemWhite
   - FloorTileItemWhiteOffset
   - FloorTileItemWhiteDiagonalMini
@@ -31,13 +40,24 @@
   - FloorTileItemWhiteMono
   - FloorTileItemWhitePavement
   - FloorTileItemWhitePavementVertical
-  - FloorTileItemSteelCheckerLight
+
+- type: latheRecipePack
+  id: FloorMaintsTilesStatic
+  recipes:
   - FloorTileItemGratingMaint
   - FloorTileItemTechmaint
   - FloorTileItemSteelMaint
+
+- type: latheRecipePack
+  id: FloorWoodTilesStatic
+  recipes:
   - FloorTileItemWood
   - FloorTileItemWoodLarge
   - FloorTileItemWoodPattern
+
+- type: latheRecipePack
+  id: FloorConcreteTilesStatic
+  recipes:
   - FloorTileItemConcrete
   - FloorTileItemConcreteMono
   - FloorTileItemConcreteSmooth
