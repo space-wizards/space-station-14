@@ -19,6 +19,8 @@
     - state: artifact-activation
       map: [ "enum.ArtifactsVisualLayers.ActivationEffect" ]
       visible: false
+  - type: Physics
+    bodyType: KinematicController
   - type: RandomArtifactSprite
     maxSprite: 36
   - type: RandomSprite
