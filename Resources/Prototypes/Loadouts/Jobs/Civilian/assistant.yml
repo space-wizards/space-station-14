@@ -33,7 +33,79 @@
   - !type:GroupLoadoutEffect
     proto: MasterGrey
   equipment:
-    head:
+    head: ClothingHeadHatWelding
+
+- type: loadout
+  id: GreyCowboy
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatCowboyGrey
+
+- type: loadout
+  id: GreyBandana
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadBandGrey
+
+- type: loadout
+  id: GreyFlatcap
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatGreyFlatcap
+
+- type: loadout
+  id: GreyCap
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatGreysoft
+
+- type: loadout
+  id: CorpoCap
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatCorpsoft
+
+- type: loadout
+  id: SyndieCap
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatSyndie
+
+- type: loadout
+  id: GreyFedoraA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatFedoraGrey
+
+- type: loadout
+  id: SolidHeadband
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatSolidHeadband
+
+- type: loadout
+  id: GreytideBizarreAdventures
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatBizarreSoft
 
 # Eyes
 - type: loadout
@@ -44,6 +116,14 @@
   equipment:
     eyes: ClothingEyesWeldingGoggles
 
+- type: loadout
+  id: CheapSunnies
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    eyes: ClothingEyesGlassesCheapSunglasses
+
 # Face
 - type: loadout
   id: AssistantFace
@@ -52,6 +132,14 @@
     proto: HonoredAssistant
   equipment:
     mask: ClothingMaskGas
+
+- type: loadout
+  id: NeckGaiter
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    mask: ClothingMaskNeckGaiter
 
 # Body
 - type: loadout
@@ -87,6 +175,22 @@
     proto: HonoredAssistant
   equipment:
     jumpsuit: ClothingUniformJumpsuitAncient
+
+- type: loadout
+  id: GreyJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+
+- type: loadout
+  id: GreyJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorGrey
 
 # Neck
 - type: loadout
@@ -134,6 +238,22 @@
     proto: HonoredAssistant
   equipment:
     gloves: ClothingHandsGlovesFingerlessInsulated
+
+- type: loadout
+  id: GreyGloves
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    gloves: ClothingHandsGlovesColorGray
+
+- type: loadout
+  id: ParagonGloves
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ParagonGrey
+  equipment:
+    gloves: ClothingHandsGlovesColorYellow
 
 # Outerbody
 - type: loadout
