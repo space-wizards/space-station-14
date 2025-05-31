@@ -35,7 +35,7 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
         if (_whitelist.IsWhitelistFail(vessel.Whitelist, ent))
             return;
 
-        if (GetBankAccount(ent) is not {} bank)
+        if (GetBankAccount(ent) is not { } bank)
             return;
 
         if (bank.Comp.Accounts[bank.Comp.PrimaryAccount] < vessel.Price)
@@ -85,7 +85,7 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
 
     private Entity<StationBankAccountComponent>? GetBankAccount(EntityUid console)
     {
-        if (_station.GetOwningStation(console) is not {} station)
+        if (_station.GetOwningStation(console) is not { } station)
             return null;
 
         if (!TryComp<StationBankAccountComponent>(station, out var bank))
