@@ -97,7 +97,7 @@
     - id: BoxPillCanister
     - id: BoxBottle
     - id: BoxVial
-    - id: PlasmaChemistryVial
+    # - id: PlasmaChemistryVial # imp
     - id: ChemBag
     - id: ClothingHandsGlovesLatex
     - id: ClothingHeadsetMedical

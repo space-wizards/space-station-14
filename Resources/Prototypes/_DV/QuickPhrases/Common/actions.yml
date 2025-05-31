@@ -1,0 +1,70 @@
+- type: quickPhrase
+  id: BaseActionPhrase
+  parent: BaseCommonPhrase
+  group: Actions
+  abstract: true
+
+- type: quickPhrase
+  id: CallPhrase
+  parent: BaseActionPhrase
+  text: phrase-call
+
+- type: quickPhrase
+  id: DrinkActionPhrase
+  parent: BaseActionPhrase
+  text: phrase-actiondrink
+
+- type: quickPhrase
+  id: ShowMePhrase
+  parent: BaseActionPhrase
+  text: phrase-show
+
+- type: quickPhrase
+  id: HelpPhrase
+  parent: BaseActionPhrase
+  text: phrase-help
+
+- type: quickPhrase
+  id: AttackPhrase
+  parent: BaseActionPhrase
+  text: phrase-attack
+
+- type: quickPhrase
+  id: BreakPhrase
+  parent: BaseActionPhrase
+  text: phrase-break
+
+- type: quickPhrase
+  id: BuildPhrase
+  parent: BaseActionPhrase
+  text: phrase-build
+
+- type: quickPhrase
+  id: HealPhrase
+  parent: BaseActionPhrase
+  text: phrase-heal
+
+- type: quickPhrase
+  id: RunPhrase
+  parent: BaseActionPhrase
+  text: phrase-run
+
+- type: quickPhrase
+  id: GoPhrase
+  parent: BaseActionPhrase
+  text: phrase-go
+
+- type: quickPhrase
+  id: FixPhrase
+  parent: BaseActionPhrase
+  text: phrase-fix
+
+- type: quickPhrase
+  id: SwitchPhrase
+  parent: BaseActionPhrase
+  text: phrase-switch
+
+- type: quickPhrase
+  id: KnowPhrase
+  parent: BaseActionPhrase
+  text: phrase-know

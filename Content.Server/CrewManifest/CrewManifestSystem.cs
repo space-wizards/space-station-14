@@ -9,13 +9,18 @@ using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.CrewManifest;
 using Content.Shared.GameTicking;
+using Content.Shared.IdentityManagement; // imp
 using Content.Shared.Roles;
+using Content.Shared.Silicons.StationAi; // imp
 using Content.Shared.StationRecords;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Robust.Shared.GameObjects.Components.Localization; // imp
+using Robust.Shared.Enums; // imp; for Gender
+
 
 namespace Content.Server.CrewManifest;
 
@@ -235,6 +240,16 @@ public sealed class CrewManifestSystem : EntitySystem
             _prototypeManager.TryIndex(record.JobPrototype, out JobPrototype? job);
             entriesSort.Add((job, entry));
         }
+        //START IMP EDIT: if the station has an AI on-board, add that as a fake record so people know what the AI's pronouns are
+        var query = EntityQueryEnumerator<GrammarComponent, StationAiHeldComponent>();
+        while (query.MoveNext(out var ai, out var grammar, out _))
+        {
+            var genderString = (grammar.Gender.HasValue ? grammar.Gender.Value : Gender.Epicene).ToString().ToLowerInvariant();
+            var entry = new CrewManifestEntry(Identity.Name(ai, EntityManager), genderString, "Station AI", "JobIconStationAi", "StationAi");
+            _prototypeManager.TryIndex("StationAi", out JobPrototype? job);
+            entriesSort.Add((job, entry));
+        }
+        //END IMP EDIT
 
         entriesSort.Sort((a, b) =>
         {

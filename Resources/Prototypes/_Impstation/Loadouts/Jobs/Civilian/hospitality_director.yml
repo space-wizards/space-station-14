@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobHospitalityDirector
-      time: 72000 #10 hrs ~7 rounds
+      time: 72000 #20 hrs ~14 rounds
 
 # For the veteran hospitality director cosmetics
 - type: loadoutEffectGroup

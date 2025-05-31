@@ -17,6 +17,8 @@
 - type: speciesBaseSprites
   id: MobGastropoidSprites
   sprites:
+    TailBehind: MobHumanoidAnyMarking # floof
+    TailOversuit: MobHumanoidAnyMarking # floof
     Eyes: MobGastropoidEyes
     Head: MobGastropoidHead
     HeadTop: MobHumanoidAnyMarking

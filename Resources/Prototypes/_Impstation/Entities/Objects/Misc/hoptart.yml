@@ -1,0 +1,462 @@
+- type: entity
+  parent: PassengerIDCard # Meant to seem identical to a regular ID until microwaved
+  id: HopTart
+  suffix: HoPfruit
+  components:
+  - type: Produce
+    seedId: employedhops
+  - type: IdCard
+    canMicrowave: false # Should just get rid of turning into a burning mess
+
+- type: entity
+  parent: FoodMealBase
+  id: HopTartCookedBase
+  name: HoPtart
+  description: A tart necessary to enjoy various tastes aboard the station.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/idtart.rsi
+    state: default
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+
+- type: entity
+  name: HoPTart Spawner
+  id: SpawnHoPTart
+  suffix: HopTart flavors
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: default
+        sprite: _Impstation/Objects/Consumable/Food/idtart.rsi
+  - type: RandomSpawner
+    prototypes:
+      - HopTartCookedArmory
+      - HopTartCookedAtmospherics
+      - HopTartCookedBar
+      - HopTartCookedBrig
+      - HopTartCookedCaptain
+      - HopTartCookedCargo
+      - HopTartCookedCentcomm
+      - HopTartCookedChapel
+      - HopTartCookedChemistry
+      - HopTartCookedChiefEngineer
+      - HopTartCookedChiefMedicalOfficer
+      - HopTartCookedClown
+      - HopTartCookedCommand
+      - HopTartCookedCourier
+      - HopTartCookedCryogenics
+      - HopTartCookedDetective
+      - HopTartCookedEngineering
+      - HopTartCookedExternal
+      - HopTartCookedHeadOfPersonnel
+      - HopTartCookedHeadOfSecurity
+      - HopTartCookedHospitalityDirector
+      - HopTartCookedHydroponics
+      - HopTartCookedJanitor
+      - HopTartCookedKitchen
+      - HopTartCookedLawyer
+      - HopTartCookedLibrarian
+      - HopTartCookedLogistics
+      - HopTartCookedMaintenance
+      - HopTartCookedMedical
+      - HopTartCookedMime
+      - HopTartCookedMusician
+      - HopTartCookedNuclearOperative
+      - HopTartCookedQuartermaster
+      - HopTartCookedReporter
+      - HopTartCookedResearch
+      - HopTartCookedResearchDirector
+      - HopTartCookedSalvage
+      - HopTartCookedSecurity
+      - HopTartCookedService
+      - HopTartCookedSyndicateAgent
+      - HopTartCookedTheatre
+      - HopTartCookedWizard
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedArmory
+  suffix: Armory
+  components:
+  - type: FlavorProfile
+    flavors:
+      - armory
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedAtmospherics
+  suffix: Atmospherics
+  components:
+  - type: FlavorProfile
+    flavors:
+      - atmospherics
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedBar
+  suffix: Bar
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bar
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedBrig
+  suffix: Brig
+  components:
+  - type: FlavorProfile
+    flavors:
+      - brig
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedCaptain
+  suffix: Captain
+  components:
+  - type: FlavorProfile
+    flavors:
+      - captain
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedCargo
+  suffix: Cargo
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cargo
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedCentcomm
+  suffix: Centcomm
+  components:
+  - type: FlavorProfile
+    flavors:
+      - centcomm
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedChapel
+  suffix: Chapel
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chapel
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedChemistry
+  suffix: Chemistry
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chemistry
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedChiefEngineer
+  suffix: Chief Engineer
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chiefengineer
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedChiefMedicalOfficer
+  suffix: Chief Medical Officer
+  components:
+  - type: FlavorProfile
+    flavors:
+      - chiefmedicalofficer
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedClown
+  suffix: Clown
+  components:
+  - type: FlavorProfile
+    flavors:
+      - clown
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedCommand
+  suffix: Command
+  components:
+  - type: FlavorProfile
+    flavors:
+      - command
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedCourier
+  suffix: Courier
+  components:
+  - type: FlavorProfile
+    flavors:
+      - courier
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedCryogenics
+  suffix: Cryogenics
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cryogenics
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedDetective
+  suffix: Detective
+  components:
+  - type: FlavorProfile
+    flavors:
+      - detective
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedEngineering
+  suffix: Engineering
+  components:
+  - type: FlavorProfile
+    flavors:
+      - engineering
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedExternal
+  suffix: External
+  components:
+  - type: FlavorProfile
+    flavors:
+      - external
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedHeadOfPersonnel
+  suffix: Head of Personnel
+  components:
+  - type: FlavorProfile
+    flavors:
+      - headofpersonnel
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedHeadOfSecurity
+  suffix: Head of Security
+  components:
+  - type: FlavorProfile
+    flavors:
+      - headofsecurity
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedHospitalityDirector
+  suffix: Hospitality Director
+  components:
+  - type: FlavorProfile
+    flavors:
+      - hospitalitydirector
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedHydroponics
+  suffix: Hydroponics
+  components:
+  - type: FlavorProfile
+    flavors:
+      - hydroponics
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedJanitor
+  suffix: Janitor
+  components:
+  - type: FlavorProfile
+    flavors:
+      - janitor
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedKitchen
+  suffix: Kitchen
+  components:
+  - type: FlavorProfile
+    flavors:
+      - kitchen
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedLawyer
+  suffix: Lawyer
+  components:
+  - type: FlavorProfile
+    flavors:
+      - lawyer
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedLibrarian
+  suffix: Librarian
+  components:
+  - type: FlavorProfile
+    flavors:
+      - librarian
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedLogistics
+  suffix: Logistics
+  components:
+  - type: FlavorProfile
+    flavors:
+      - logistics
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedMaintenance
+  suffix: Maintenance
+  components:
+  - type: FlavorProfile
+    flavors:
+      - maintenance
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedMedical
+  suffix: Medical
+  components:
+  - type: FlavorProfile
+    flavors:
+      - medical
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedMime
+  suffix: Mime
+  components:
+  - type: FlavorProfile
+    flavors:
+      - mime
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedMusician
+  suffix: Musician
+  components:
+  - type: FlavorProfile
+    flavors:
+      - musician
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedNuclearOperative
+  suffix: Nuclear Operative
+  components:
+  - type: FlavorProfile
+    flavors:
+      - nuclearoperative
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedQuartermaster
+  suffix: Quartermaster
+  components:
+  - type: FlavorProfile
+    flavors:
+      - quartermaster
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedReporter
+  suffix: Reporter
+  components:
+  - type: FlavorProfile
+    flavors:
+      - reporter
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedResearch
+  suffix: Research
+  components:
+  - type: FlavorProfile
+    flavors:
+      - research
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedResearchDirector
+  suffix: Research Director
+  components:
+  - type: FlavorProfile
+    flavors:
+      - researchdirector
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedSalvage
+  suffix: Salvage
+  components:
+  - type: FlavorProfile
+    flavors:
+      - salvage
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedSecurity
+  suffix: Security
+  components:
+  - type: FlavorProfile
+    flavors:
+      - security
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedService
+  suffix: Service
+  components:
+  - type: FlavorProfile
+    flavors:
+      - service
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedSyndicateAgent
+  suffix: Syndicate Agent
+  components:
+  - type: FlavorProfile
+    flavors:
+      - syndicateagent
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedTheatre
+  suffix: Theatre
+  components:
+  - type: FlavorProfile
+    flavors:
+      - theatre
+
+- type: entity
+  parent: HopTartCookedBase
+  id: HopTartCookedWizard
+  suffix: Wizard
+  components:
+  - type: FlavorProfile
+    flavors:
+      - wizard

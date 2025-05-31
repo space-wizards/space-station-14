@@ -15,6 +15,10 @@
     maxItemSize: Normal
     quickInsert: true
     areaInsert: true
+    whitelist:
+      components:
+        - Produce
+        - Seed
   - type: Dumpable
   - type: Construction
     graph: HempWovenSack

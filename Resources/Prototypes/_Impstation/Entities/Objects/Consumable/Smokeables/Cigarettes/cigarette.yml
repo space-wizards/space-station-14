@@ -20,3 +20,313 @@
             Quantity: 30
           - ReagentId: Leporazine
             Quantity: 20
+
+- type: entity
+  id: CigaretteTazinide
+  parent: SoakedCigarette
+  name: Slept Past Alarm
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Tazinide
+            Quantity: 5
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Tazinide
+            Quantity: 5
+
+- type: entity
+  id: CigaretteFresiumChloral
+  parent: SoakedCigarette
+  name: Rollbacks
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Fresium
+            Quantity: 5
+          - ReagentId: ChloralHydrate
+            Quantity: 5
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Fresium
+            Quantity: 5
+          - ReagentId: ChloralHydrate
+            Quantity: 5
+
+- type: entity
+  id: CigaretteFresiumStimulant
+  parent: SoakedCigarette
+  name: Cruise Chaser
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Fresium
+            Quantity: 5
+          - ReagentId: Stimulants
+            Quantity: 5
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Fresium
+            Quantity: 5
+          - ReagentId: Stimulants
+            Quantity: 5
+
+- type: entity
+  id: CigaretteHonkRazorium
+  parent: SoakedCigarette
+  name: Performance Art
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Honk
+            Quantity: 5
+          - ReagentId: Razorium
+            Quantity: 5
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Honk
+            Quantity: 5
+          - ReagentId: Razorium
+            Quantity: 5
+
+- type: entity
+  id: CigarettePhlogCLF3
+  parent: SoakedCigarette
+  name: Passion Of Love
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Phlogiston
+            Quantity: 5
+          - ReagentId: ChlorineTrifluoride
+            Quantity: 5
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Phlogiston
+            Quantity: 5
+          - ReagentId: ChlorineTrifluoride
+            Quantity: 5
+
+- type: entity
+  id: CigaretteMute
+  parent: SoakedCigarette
+  name: On Second Thought
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: MuteToxin
+            Quantity: 5
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: MuteToxin
+            Quantity: 5
+
+- type: entity
+  id: CigaretteLead
+  parent: SoakedCigarette
+  name: Big City Slugger
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Lead
+            Quantity: 5
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Lead
+            Quantity: 5
+
+- type: entity
+  id: CigarettePotassiumWater
+  parent: SoakedCigarette
+  name: Banana Scented
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Potassium
+            Quantity: 5
+          - ReagentId: Water
+            Quantity: 5
+        canReact: false
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Potassium
+            Quantity: 5
+          - ReagentId: Water
+            Quantity: 5
+        canReact: false
+
+- type: entity
+  id: CigaretteWehHew
+  parent: SoakedCigarette
+  name: Super Powered
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: JuiceThatMakesYouWeh
+            Quantity: 5
+          - ReagentId: JuiceThatMakesYouHew
+            Quantity: 5
+        canReact: false
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: JuiceThatMakesYouWeh
+            Quantity: 5
+          - ReagentId: JuiceThatMakesYouHew
+            Quantity: 5
+        canReact: false
+
+- type: entity
+  id: CigaretteFlash
+  parent: SoakedCigarette
+  name: Say Cheese
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Potassium
+            Quantity: 5
+          - ReagentId: Sulfur
+            Quantity: 5
+          - ReagentId: Aluminium
+            Quantity: 5
+        canReact: false
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: Potassium
+            Quantity: 5
+          - ReagentId: Sulfur
+            Quantity: 5
+          - ReagentId: Aluminium
+            Quantity: 5
+        canReact: false
+
+- type: entity
+  id: CigaretteEMP
+  parent: SoakedCigarette
+  name: Anarcho Primitivist
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Iron
+            Quantity: 5
+          - ReagentId: Uranium
+            Quantity: 5
+          - ReagentId: Aluminium
+            Quantity: 5
+        canReact: false
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: Iron
+            Quantity: 5
+          - ReagentId: Uranium
+            Quantity: 5
+          - ReagentId: Aluminium
+            Quantity: 5
+        canReact: false
+
+- type: entity
+  id: CigarettePlasmaGas
+  parent: SoakedCigarette
+  name: Botanist's Folly
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: SulfuricAcid
+            Quantity: 5
+          - ReagentId: Plasma
+            Quantity: 5
+          - ReagentId: Phosphorus
+            Quantity: 5
+        canReact: false
+      food: # imp
+        maxVol: 40
+        reagents:
+          - ReagentId: SulfuricAcid
+            Quantity: 5
+          - ReagentId: Plasma
+            Quantity: 5
+          - ReagentId: Phosphorus
+            Quantity: 5
+        canReact: false

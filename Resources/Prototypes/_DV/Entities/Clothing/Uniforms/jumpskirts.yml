@@ -20,9 +20,9 @@
   description: A comfortable and tight-fitting turtleneck for those with the patience to reach the position of Warden.
   components:
   - type: Sprite
-    sprite: _DV/Clothing/Uniforms/Jumpskirt/armourer_alt.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/armourer_alt.rsi #imp
   - type: Clothing
-    sprite: _DV/Clothing/Uniforms/Jumpskirt/armourer_alt.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/armourer_alt.rsi #imp
 
 # Justice
 

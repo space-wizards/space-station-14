@@ -4,6 +4,7 @@
   name: seeds-coffee-name
   noun: seeds-noun-seeds
   displayName: seeds-coffee-display-name
+  plural: true # imp
   plantRsi: _NF/Objects/Specific/Hydroponics/coffee.rsi
   packetPrototype: CoffeeSeeds
   productPrototypes:

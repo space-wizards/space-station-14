@@ -9,3 +9,129 @@
         amount: 10
       - id: ClothingUniformRandomBusinessSkirt
         amount: 10
+
+- type: entity
+  id: ClosetWallGreyFilled
+  suffix: Filled
+  parent: ClosetWallGrey
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitColorGrey
+      amount: 2
+    - id: ClothingUniformJumpskirtColorGrey
+      amount: 2
+    - id: ClothingShoesColorBlack
+      amount: 3
+    - id: ClothingHeadHatGreysoft
+    - id: ClothingBackpackDuffel
+      prob: 0.5
+    - id: ClothingOuterCoatBomber
+      prob: 0.3
+
+- type: entity
+  id: ClosetWallMixedFilled
+  suffix: Filled
+  parent: ClosetWallMixed
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingShoesColorBlack
+      amount: 1
+    - id: ClothingShoesColorBrown
+      amount: 1
+    - id: ClothingShoesColorWhite
+      amount: 1
+    - id: ClothingOuterCoatBomber
+      prob: 0.4
+    - id: ClothingOuterCoatGentle
+      prob: 0.3
+    - id: ClothingUniformRandomShorts
+      amount: 3
+    - id: ClothingUniformRandomArmless
+      amount: 5
+    - id: ClothingUniformRandomStandard
+      amount: 5
+    - id: ClothingUniformRandomBra
+      amount: 5
+    - id: ClothingUniformRandomShirt
+      amount: 4
+
+- type: entity
+  id: ClosetWallYellowFilled
+  suffix: Filled
+  parent: ClosetWallYellow
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitColorYellow
+    - id: ClothingUniformJumpskirtColorYellow
+    - id: ClothingShoesColorOrange
+      amount: 2
+    - id: ClothingHeadBandGold
+
+
+- type: entity
+  id: ClosetWallWhiteFilled
+  suffix: Filled
+  parent: ClosetWallWhite
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitColorWhite
+    - id: ClothingUniformJumpskirtColorWhite
+    - id: ClothingShoesColorWhite
+      amount: 2
+    - id: ClothingHeadHatMimesoft
+
+- type: entity
+  id: ClosetWallBlueFilled
+  suffix: Filled
+  parent: ClosetWallBlue
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitColorBlue
+    - id: ClothingUniformJumpskirtColorBlue
+    - id: ClothingShoesColorBrown
+      amount: 2
+
+- type: entity
+  id: ClosetWallPinkFilled
+  suffix: Filled
+  parent: ClosetWallPink
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitColorPink
+    - id: ClothingUniformJumpskirtColorPink
+    - id: ClothingShoesColorBrown
+      amount: 2
+
+- type: entity
+  id: ClosetWallBlackFilled
+  suffix: Filled
+  parent: ClosetWallBlack
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitColorBlack
+    - id: ClothingUniformJumpskirtColorBlack
+    - id: ClothingShoesColorBlack
+      amount: 2
+    - id: ClothingHeadBandBlack
+    - id: ClothingHeadBandSkull
+      prob: 0.4
+
+- type: entity
+  id: ClosetWallGreenFilled
+  suffix: Filled
+  parent: ClosetWallGreen
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitColorGreen
+    - id: ClothingUniformJumpskirtColorGreen
+    - id: ClothingShoesColorBlack
+      amount: 2
+    - id: ClothingHeadBandGreen

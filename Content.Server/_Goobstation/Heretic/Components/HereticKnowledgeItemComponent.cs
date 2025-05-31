@@ -7,4 +7,10 @@ public sealed partial class HereticKnowledgeItemComponent : Component
 {
     [DataField]
     public bool Spent;
+
+    [DataField]
+    public float PointGain = 1f;
+
+    [DataField]
+    public float UseTimeSeconds = 10f;
 }

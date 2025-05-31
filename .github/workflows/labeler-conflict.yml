@@ -11,6 +11,9 @@ on:
 jobs:
   Label:
     if: ( github.event.pull_request.draft == false ) && ( github.actor != 'ImpstationBot' )
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Check for Merge Conflicts

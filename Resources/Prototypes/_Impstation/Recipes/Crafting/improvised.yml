@@ -11,18 +11,18 @@
     state: icon
   objectType: Item
 
-- type: construction
-  name: fishing rod
-  id: FishingRod
-  graph: FishingRod
-  startNode: start
-  targetNode: rod
-  category: construction-category-tools
-  objectType: Item
-  description: A tool of the ages used to bring things out of reach closer.
-  icon:
-    sprite: _Impstation/Objects/Fishing/fishingrod.rsi
-    state: base
+#- type: construction # disabled until there is something to fish
+#  name: fishing rod
+#  id: FishingRod
+#  graph: FishingRod
+#  startNode: start
+#  targetNode: rod
+#  category: construction-category-tools
+#  objectType: Item
+#  description: A tool of the ages used to bring things out of reach closer.
+#  icon:
+#    sprite: _Impstation/Objects/Fishing/fishingrod.rsi
+#    state: base
 
 - type: construction
   name: yarn noodles

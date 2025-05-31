@@ -1,0 +1,29 @@
+ - type: entity
+   id: ClosetWallAtmosphericsFilled
+   suffix: Filled
+   parent: ClosetWallAtmospherics
+   description: "This locker contains a uniform for atmospheric technicians."
+   components:
+   - type: StorageFill
+     contents:
+     - id: ClothingUniformJumpsuitAtmos
+     - id: ClothingBackpackEngineering
+     - id: ClothingShoesColorWhite
+     - id: ClothingUniformJumpskirtAtmos
+
+ - type: entity
+   id: ClosetWallOrangeFilled
+   suffix: Filled
+   parent: ClosetWallOrange
+   description: "Contains a selection of nice orange clothes for people enjoying their stay in the brig."
+   components:
+   - type: StorageFill
+     contents:
+     - id: ClothingUniformJumpsuitPrisoner
+       amount: 2
+     - id: ClothingUniformJumpskirtPrisoner
+       amount: 2
+     - id: ClothingShoesColorBlack
+       amount: 2
+     - id: ClothingMaskMuzzle
+

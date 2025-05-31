@@ -117,6 +117,8 @@
   - FauxTileAstroIce
   - FauxTileAstroSnow
   - FauxTileAstroAsteroidSand
+  - FauxTileShoveledAstroSnow # imp
+  - FauxTileAstroCave # imp
 
 - type: technology
   id: BiochemicalStasis

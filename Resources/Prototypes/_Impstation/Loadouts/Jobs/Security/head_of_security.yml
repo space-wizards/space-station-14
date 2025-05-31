@@ -50,4 +50,4 @@
   id: SecurityAmmoSturm
   storage:
     back:
-    - AmmoPouch
+    - SpeedLoaderSturm

@@ -1,5 +1,5 @@
 - type: reagent
-  id: AquaAvari 
+  id: AquaAvari
   name: reagent-name-aquaavari
   group: Toxins
   desc: reagent-desc-aquaavari
@@ -30,5 +30,19 @@
       methods: [ Touch ]
       effects:
       - !type:ExtinguishReaction
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+            Blunt: 0.1
+#            Poison: 0.1
+            Heat: 0.1
+            Shock: 0.1
+            Cold: 0.1
   tileReactions:
   - !type:ExtinguishTileReaction { }

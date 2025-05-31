@@ -110,5 +110,5 @@
     range: 5
   # Power
   - type: ApcPowerReceiver
-    powerLoad: 50 # Idle power usage, increases when active
+    powerLoad: 300 # imp, static 300 power draw instead of idle 50 -> active 3000
   - type: PowerSwitch

@@ -64,8 +64,6 @@ internal sealed class ChatManager : IChatManager
 
                 if (_adminMgr.HasFlag(AdminFlags.Admin))
                     _consoleHost.ExecuteCommand($"dsay \"{CommandParsing.Escape(str)}\"");
-                else if (_systems.GetEntitySystemOrNull<GhostSystem>() is {IsGhostBarPatron: true})
-                    _consoleHost.ExecuteCommand($"gbsay \"{CommandParsing.Escape(str)}\"");
                 else
                     _sawmill.Warning("Tried to speak on deadchat without being ghost or admin.");
                 break;

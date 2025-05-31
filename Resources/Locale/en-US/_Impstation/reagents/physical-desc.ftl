@@ -10,4 +10,4 @@ reagent-physical-desc-brotherly = brotherly
 reagent-physical-desc-thegrease = really greasy
 reagent-physical-desc-rodent = mousy
 reagent-physical-desc-lovepotion = romantic
-
+reagent-physical-desc-sad = sad

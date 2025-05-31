@@ -5,12 +5,12 @@
   description: The Rapid Parcel Delivery System is a de-militarised piece of surplus military equipment, repurposed for throwing mail at people. Made infamous by the courier cartel known as the 'Paperboys'. # imp new description lol
   components:
   - type: Sprite
-    sprite: _NF/Objects/Weapons/Guns/Launchers/mail.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/mail.rsi #Imp
     layers:
       - state: icon
         map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
-    sprite: _NF/Objects/Weapons/Guns/Launchers/mail.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/mail.rsi #Imp
     quickEquip: false
     slots:
     - Back

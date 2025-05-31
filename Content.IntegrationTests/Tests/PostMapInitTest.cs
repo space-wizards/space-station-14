@@ -134,6 +134,7 @@ namespace Content.IntegrationTests.Tests
             // _Impstation/Maps
             "E1M1",
             "Banana",
+            "Bedlam",
             "Boat",
             "Hummingbird",
             "Lilboat",

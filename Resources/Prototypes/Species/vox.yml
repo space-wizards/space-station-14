@@ -25,6 +25,8 @@
 - type: speciesBaseSprites
   id: MobVoxSprites
   sprites:
+    TailBehind: MobHumanoidAnyMarking # floof
+    TailOversuit: MobHumanoidAnyMarking # floof
     Head: MobVoxHead
     Snout: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking #imp
@@ -122,13 +124,13 @@
 - type: humanoidBaseSprite
   id: MobVoxTorsoMale
   baseSprite:
-    sprite: Mobs/Species/Vox/parts.rsi
+    sprite: _Impstation/Mobs/Species/Vox/parts.rsi #imp
     state: torso
 
 - type: humanoidBaseSprite
   id: MobVoxTorsoFemale
   baseSprite:
-    sprite: Mobs/Species/Vox/parts.rsi
+    sprite: _Impstation/Mobs/Species/Vox/parts.rsi #imp
     state: torso
 
 - type: humanoidBaseSprite

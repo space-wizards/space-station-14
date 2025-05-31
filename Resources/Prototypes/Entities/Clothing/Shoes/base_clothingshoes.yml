@@ -70,4 +70,4 @@
   components:
   - type: TemperatureProtection
     heatingCoefficient: 1.025
-    coolingCoefficient: 0.5
+    coolingCoefficient: 0.75 #imp edit, winter boots too strong, made scarves give same protection

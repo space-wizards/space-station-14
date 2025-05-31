@@ -136,13 +136,15 @@
     sprite: Clothing/Neck/Cloaks/miner.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousCloak ] # imp
   id: ClothingNeckCloakTrans
   name: vampire cloak
   description: Worn by high ranking vampires of the transylvanian society of vampires.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/trans.rsi
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-trans
 
 - type: entity
   parent: ClothingNeckBase
@@ -209,92 +211,112 @@
     proto: alien
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousCloak ] # imp
   id: ClothingNeckCloakAce
   name: pilot's cloak
   description: Cloak awarded to Nanotrasen's finest space aces.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/ace.rsi
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-ace
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousCloak ] # imp
   id: ClothingNeckCloakAro
   name: werewolf cloak
   description: This cloak lets others know you're a lone wolf.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/aro.rsi
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-aro
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousCloak ] # imp
   id: ClothingNeckCloakAroace
   name: aeropilot's cloak # thank you happyman442 this was the best name idea ever
   description: Cloak awarded to Nanotrasen's finest pilots on planets with inhabitable atmospheres.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/aroace.rsi
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-aroace
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousCloak ] # imp
   id: ClothingNeckCloakBi
   name: poison cloak
   description: The purple color is a clear indicator you are poisonous.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/bi.rsi
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-bi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousCloak ] # imp
   id: ClothingNeckCloakIntersex
   name: cyclops cloak
   description: The circle on this cloak represents a cyclops' eye.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/intersex.rsi
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-intersex
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousCloak ] # imp
   id: ClothingNeckCloakLesbian
   name: poet cloak
   description: This cloak belonged to an ancient poet, you forgot which one.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/les.rsi
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-lesbian
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousCloak ] # imp
   id: ClothingNeckCloakGay
   name: multi-level marketing cloak
   description: This cloak is highly sought after in the Nanotrasen Marketing Offices.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/gay.rsi
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-gay
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousCloak ] # imp
   id: ClothingNeckCloakEnby
   name: treasure hunter cloak
   description: This cloak belonged to a greedy treasure hunter.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/enby.rsi
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-nonbinary
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousCloak ] # imp
   id: ClothingNeckCloakPan
   name: chef's cloak
   description: Meant to be worn alongside a frying pan.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/pan.rsi
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-pan
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ ClothingNeckBase, BaseObviousCloak ] # imp
   id: ClothingNeckCloakBear
   name: druid cloak
   description: This cloak has a wild-looking shape on it.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/bear.rsi
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-bear
 

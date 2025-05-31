@@ -30,6 +30,11 @@
           Quantity: 1 # sugar needs nutriment to be able to satiate hunger so im nerfing this but keeping it
         - ReagentId: Sugar
           Quantity: 10
+  - type: Clothing # DeltaV lollipop wearing sprite stuff
+    sprite: _DV/Objects/Consumable/Food/candy.rsi
+    slots: [ mask ]
+    equippedPrefix: lollipop
+    quickEquip: false # would block eating otherwise
 
 - type: entity
   name: cloth lollipop

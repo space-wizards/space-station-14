@@ -92,7 +92,7 @@
 - type: reaction #if this recipe ever causes test fail again you should just kill her
   id: Rotgut
   requiredMixerCategories:
-    - Stir 
+    - Stir
   reactants:
     Water:
       amount: 1
@@ -534,3 +534,60 @@
       amount: 1
   products:
     Supermixerpsych: 3
+
+- type: reaction
+  id: Moonrise
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    HummingBird:
+      amount: 1
+    JuiceWatermelon:
+      amount: 1
+    Cream:
+      amount: 1
+  products:
+    Moonrise: 3
+
+- type: reaction
+  id: PoorMansFrezon
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Ice:
+      amount: 1
+    SpaceDrugs:
+      amount: 2
+    Ethanol:
+      amount: 3
+  products:
+    PoorMansFrezon: 6
+
+- type: reaction
+  id: DoubleGreen
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    InsectBlood:
+      amount: 2
+    MindbreakerToxin:
+      amount: 2
+    Moonshine:
+      amount: 1
+  products:
+    DoubleGreen: 5
+
+- type: reaction
+  id: LiquidLunch
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Blood:
+      amount: 3
+    Fiber:
+      amount: 1
+    UncookedAnimalProteins:
+      amount: 2
+  products:
+    LiquidLunch: 6
+

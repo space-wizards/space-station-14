@@ -1,0 +1,110 @@
+- type: quickPhraseGroup
+  id: ReplicatorPhrases
+  prototypes:
+# Safety
+    - SafetyInDangerPhrase
+    - SafetyInjuredPhrase
+    - SafetyEscapePhrase
+    - SafetyHazardousPhrase
+    - SafetyNotPhrase
+    - SafetyYouArePhrase
+    - SafetyIAmPhrase
+# Species
+    - ReplicatorOrganicPhrase
+    - ReplicatorSiliconPhrase
+# Actions
+    - ShowMePhrase
+    - HelpPhrase
+    - AttackPhrase
+    - BreakPhrase
+    - RunPhrase
+# Tools
+    - WrenchPhrase
+    - CrowbarPhrase
+    - ScrewdriverPhrase
+    - WirecutterPhrase
+    - WeldingToolPhrase
+    - MultitoolPhrase
+# Laws
+    - ReplicatorLaw1Phrase
+    - ReplicatorLaw2Phrase
+    - ReplicatorLaw3Phrase
+# Directions
+    - LocationNearPhrase
+    - LocationFarPhrase
+    - LocationInsidePhrase
+    - LocationOutsidePhrase
+    - LocationNorthPhrase
+    - LocationEastPhrase
+    - LocationSouthPhrase
+    - LocationWestPhrase
+    - LocationNorthEastPhrase
+    - LocationSouthEastPhrase
+    - LocationSouthWestPhrase
+    - LocationNorthWestPhrase
+# Pronouns
+    - ItPhrase
+    - WePhrase
+    - WeArePhrase
+# Hostiles
+    - HostileLifeformPhrase
+    - HostileEntityPhrase
+    - HostileWeaponPhrase
+# Manners
+    - YesPhrase
+    - NoPhrase
+# Commands
+    - GoAwayPhrase
+    - GoToPhrase
+    - DoNotPhrase
+    - ThisPhrase
+    - TakePhrase
+    - LeavePhrase
+    - StopPhrase
+    - WaitPhrase
+# Questions
+    - WherePhrase
+    - WhoPhrase
+    - WhatPhrase
+    - WhyPhrase
+    - HowPhrase
+    - WhenPhrase
+    - WhichPhrase
+
+# Species
+- type: quickPhrase
+  id: ReplicatorOrganicPhrase
+  parent: BaseSpeciesPhrase
+  text: repli-phrase-species-organic
+
+- type: quickPhrase
+  id: ReplicatorSiliconPhrase
+  parent: BaseSpeciesPhrase
+  text: repli-phrase-species-silicon
+
+# Laws
+- type: quickPhrase
+  id: ReplicatorLaw1Phrase
+  tab: Laws
+  text: law-replicator-1
+
+- type: quickPhrase
+  id: ReplicatorLaw2Phrase
+  tab: Laws
+  text: law-replicator-2
+
+- type: quickPhrase
+  id: ReplicatorLaw3Phrase
+  tab: Laws
+  text: law-replicator-3
+
+# Pronouns
+- type: quickPhrase
+  id: WePhrase
+  parent: BaseNounsPhrase
+  text: phrase-we
+
+- type: quickPhrase
+  id: WeArePhrase
+  parent: BaseNounsPhrase
+  text: phrase-we-are

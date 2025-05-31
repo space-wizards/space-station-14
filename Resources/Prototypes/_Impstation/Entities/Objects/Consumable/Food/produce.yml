@@ -282,3 +282,35 @@
           Quantity: 5
         - ReagentId: CoconutWater
           Quantity: 10
+
+- type: entity
+  name: hops
+  parent: FoodProduceBase
+  id: FoodHops
+  description: Looking to start your own craft brewery, huh? With your own unique twist on the IPA?
+  components:
+  - type: FlavorProfile
+    flavors:
+    - beer
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 9
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/hops.rsi
+    state: hops
+  - type: Produce
+    seedId: hops
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Beer
+        Quantity: 10
+  - type: Tag
+    tags:
+    - Fruit

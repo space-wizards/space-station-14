@@ -1,8 +1,17 @@
+- type: loadoutEffectGroup
+  id: SeniorBartenderApron
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBartender
+      time: 36000 #10 hrs ~7 rounds
+
 - type: loadout
   id: BartenderCuteApron
   effects:
   - !type:GroupLoadoutEffect
-    proto: SeniorBartender
+    proto: SeniorBartenderApron
   equipment:
     outerClothing: ClothingOuterApronCuteBar
 
@@ -31,4 +40,3 @@
     proto: SeniorBartender
   equipment:
     jumpsuit: ClothingUniformSeniorBartenderSkirt #imp
-    

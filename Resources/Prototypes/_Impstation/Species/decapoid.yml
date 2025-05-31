@@ -17,6 +17,8 @@
 - type: speciesBaseSprites
   id: MobDecapoidSprites
   sprites:
+    TailBehind: MobHumanoidAnyMarking # floof
+    TailOversuit: MobHumanoidAnyMarking # floof
     Eyes: MobHumanoidAnyMarking
     Head: MobDecapoidHead
     HeadTop: MobHumanoidAnyMarking

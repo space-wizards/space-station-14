@@ -1,0 +1,21 @@
+- type: entity
+  id: ToolboxJanitorialFilled
+  name: janitorial toolbox
+  parent: ToolboxJanitorial
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: WelderJanitorial
+    - id: Plunger
+    - id: Wrench # for moving things aside to get to spills
+    - id: RagItem
+    - id: Soap
+    - id: FlashlightLantern
+    - id: Wirecutter # for cobwebs
+    - id: DrinkMopwataBottleRandom
+      prob: 0.5
+    - id: CigPackMixed # dan's soaked smokes
+      prob: 0.5
+    - id: CleanerGrenade
+      prob: 0.15

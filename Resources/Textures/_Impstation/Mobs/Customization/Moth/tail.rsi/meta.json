@@ -177,6 +177,34 @@
         {
             "name": "truebutterfly3",
             "directions": 4
+        },
+        {
+            "name": "dragonfly1",
+            "directions": 4
+        },
+        {
+            "name": "dragonfly2",
+            "directions": 4
+        },
+        {
+            "name": "dragonfly3",
+            "directions": 4
+        },
+        {
+            "name": "fly1",
+            "directions": 4
+        },
+        {
+            "name": "fly2",
+            "directions": 4
+        },
+        {
+            "name": "fly3",
+            "directions": 4
+        },
+        {
+            "name": "lanternfly",
+            "directions": 4
         }
     ]
 }

@@ -1,0 +1,17 @@
+﻿- type: entity #Imp
+  id: MedkitInjectorFilled
+  name: injector kit
+  description: A combat kit filled with an assortment of autoinjectors for emergency use
+  suffix: Filled
+  parent: MedkitCombat
+  components:
+  - type: StorageFill
+    contents:
+    - id: AirlossAutoInjector
+    - id: BruteAutoInjector
+    - id: BurnAutoInjector
+    - id: RadAutoInjector
+    - id: AntiPoisonMedipen
+    - id: SpaceMedipen
+    - id: EmergencyMedipen
+    - id: EmergencyMedipen

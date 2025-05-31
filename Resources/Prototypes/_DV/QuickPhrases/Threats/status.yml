@@ -1,0 +1,117 @@
+- type: quickPhrase
+  id: BaseSafetyStatusPhrase
+  parent: BaseThreatPhrase
+  abstract: true
+
+- type: quickPhrase
+  id: SafetySafePhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-safe
+
+- type: quickPhrase
+  id: SafetyInDangerPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-in-danger
+
+- type: quickPhrase
+  id: SafetyInjuredPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-injured
+
+- type: quickPhrase
+  id: SafetyDyingPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-dying
+
+- type: quickPhrase
+  id: SafetyCriticalPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-critical
+
+- type: quickPhrase
+  id: SafetyBleedingPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-bleeding
+
+- type: quickPhrase
+  id: SafetyDeadPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-dead
+
+- type: quickPhrase
+  id: SafetyAlivePhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-alive
+
+- type: quickPhrase
+  id: SafetyTrustworthyPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-trustworthy
+
+- type: quickPhrase
+  id: SafetyEscapePhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-escape
+
+- type: quickPhrase
+  id: SafetyLeavingPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-leaving
+
+- type: quickPhrase
+  id: SafetyNeedPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-need
+
+- type: quickPhrase
+  id: SafetyRescuePhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-rescue
+
+- type: quickPhrase
+  id: SafetyDangerousPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-dangerous
+
+- type: quickPhrase
+  id: SafetyHazardousPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-hazardous
+
+- type: quickPhrase
+  id: SafetyHereToHelpPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-here-to-help
+  styleClass: ServiceButton
+
+- type: quickPhrase
+  id: SafetyHowToHelpPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-how-to-help
+  styleClass: ServiceButton
+
+- type: quickPhrase
+  id: SafetyEvacPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-evac
+  styleClass: ServiceButton
+
+- type: quickPhrase
+  id: SafetyNotPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-not
+
+- type: quickPhrase
+  id: SafetyLostPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-safety-lost
+
+- type: quickPhrase
+  id: SafetyIAmPhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-i-am
+
+- type: quickPhrase
+  id: SafetyYouArePhrase
+  parent: BaseSafetyStatusPhrase
+  text: phrase-you-are

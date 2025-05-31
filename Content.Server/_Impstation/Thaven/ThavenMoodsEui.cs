@@ -18,6 +18,7 @@ public sealed class ThavenMoodsEui : BaseEui
     private List<ThavenMood> _sharedMoods = new();
     private ISawmill _sawmill = default!;
     private EntityUid _target;
+    private bool _followsShared = false;
 
     public ThavenMoodsEui(ThavenMoodsSystem thavenMoodsSystem, EntityManager entityManager, IAdminManager manager)
     {
@@ -29,7 +30,7 @@ public sealed class ThavenMoodsEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
-        return new ThavenMoodsEuiState(_moods, _entMan.GetNetEntity(_target));
+        return new ThavenMoodsEuiState(_moods, _followsShared, _entMan.GetNetEntity(_target));
     }
 
     public void UpdateMoods(Entity<ThavenMoodsComponent> ent)
@@ -40,6 +41,7 @@ public sealed class ThavenMoodsEui : BaseEui
         _target = ent;
         _moods = ent.Comp.Moods;
         _sharedMoods = _moodsSystem.SharedMoods.ToList();
+        _followsShared = ent.Comp.FollowsSharedMoods;
         StateDirty();
     }
 
@@ -60,6 +62,7 @@ public sealed class ThavenMoodsEui : BaseEui
             return;
         }
 
+        _moodsSystem.SetFollowsSharedmood((uid, comp), message.FollowShared);
         _moodsSystem.SetMoods((uid, comp), message.Moods);
     }
 

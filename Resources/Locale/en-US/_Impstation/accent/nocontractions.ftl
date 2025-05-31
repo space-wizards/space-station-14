@@ -405,3 +405,33 @@ accent-nocontractions-words-replace-134 = of the clock
 
 accent-nocontractions-words-135 = whyd
 accent-nocontractions-words-replace-135 = why did
+
+accent-nocontractions-words-136 = that's
+accent-nocontractions-words-replace-136 = that is
+
+accent-nocontractions-words-137 = thats
+accent-nocontractions-words-replace-137 = that is
+
+accent-nocontractions-words-138 = i'd
+accent-nocontractions-words-replace-138 = i would
+
+accent-nocontractions-words-139 = y'all
+accent-nocontractions-words-replace-139 = you all
+
+accent-nocontractions-words-140 = what'd
+accent-nocontractions-words-replace-140 = what did
+
+accent-nocontractions-words-141 = whatd
+accent-nocontractions-words-replace-141 = what did
+
+accent-nocontractions-words-142 = whered
+accent-nocontractions-words-replace-142 = where did
+
+accent-nocontractions-words-143 = where've
+accent-nocontractions-words-replace-143 = where have
+
+accent-nocontractions-words-144 = ain't
+accent-nocontractions-words-replace-144 = is not
+
+accent-nocontractions-words-145 = aint
+accent-nocontractions-words-replace-145 = is not

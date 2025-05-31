@@ -1,0 +1,107 @@
+﻿- type: entity
+  parent: PetRock
+  id: PetRockBosco
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: bosco
+
+- type: entity
+  parent: PetRock
+  id: PetRockConstance
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: constance
+
+- type: entity
+  parent: PetRock
+  id: PetRockEvilPepper
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: evilpepper
+
+- type: entity
+  parent: PetRock
+  id: PetRockGayRock
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: gayrock
+
+- type: entity
+  parent: PetRock
+  id: PetRockGoogler
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: googler
+
+- type: entity
+  parent: PetRock
+  id: PetRockMisha
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: misha
+
+- type: entity
+  parent: PetRock
+  id: PetRockPainty
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: painty
+
+- type: entity
+  parent: PetRock
+  id: PetRockPepper
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: pepper
+
+- type: entity
+  parent: PetRock
+  id: PetRockSexyRock
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: sexyrock
+
+- type: entity
+  parent: PetRock
+  id: PetRockShoosh
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: shoosh
+
+- type: entity
+  parent: PetRock
+  id: PetRockSkipper
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: skipper
+
+- type: entity
+  parent: PetRock
+  id: PetRockTony
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/petrock.rsi
+    layers:
+    - state: tony

@@ -1,0 +1,74 @@
+- type: quickPhrase
+  id: BaseScienceSubjectPhrase
+  parent: [ BaseSubjectPhrase, BaseSciencePhrase ]
+  abstract: true
+
+- type: quickPhrase
+  id: AnomalyPhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-anomaly
+
+- type: quickPhrase
+  id: APEPhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-ape
+
+- type: quickPhrase
+  id: AnomalyVesselPhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-anomaly-vessel
+
+- type: quickPhrase
+  id: ArtifactPhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-artifact
+
+- type: quickPhrase
+  id: ArtifactContainerPhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-artifact-container
+
+- type: quickPhrase
+  id: RoboticsPhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-robotics
+
+- type: quickPhrase
+  id: CircuitBoardPhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-circuit-board
+
+- type: quickPhrase
+  id: ResearchPhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-research
+
+- type: quickPhrase
+  id: ResearchConsolePhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-research-console
+
+- type: quickPhrase
+  id: ProtolathePhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-protolathe
+
+- type: quickPhrase
+  id: CircuitImprinterPhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-circuit-imprinter
+
+- type: quickPhrase
+  id: ScienceBluespacePhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-bluespace-crystal
+
+- type: quickPhrase
+  id: EpiUpgradePhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-upgrade
+
+- type: quickPhrase
+  id: ChassisPhrase
+  parent: BaseScienceSubjectPhrase
+  text: phrase-chassis

@@ -2,7 +2,7 @@
   parent: BaseItem
   id: EldritchTome
   name: eldritch tome
-  description: A strange book with some kind of ritualistic rune emblazoned on the front.
+  description: A strange book with some kind of ritualistic rune emblazoned on the front. The text seems to rewrite itself whenever you look away.
   components:
   - type: Sprite
     sprite: _Impstation/Heretic/eldritch_book.rsi
@@ -44,7 +44,7 @@
   description: It hurts your head to look at. 
   components:
   - type: TimedDespawn
-    lifetime: 1
+    lifetime: 10
   - type: SpawnOnDespawn
     prototype: EldritchTome
   - type: PointLight
@@ -56,3 +56,14 @@
     sprite: _Goobstation/Heretic/reality_fracture.rsi
     state: icon_harvested
   - type: Clickable
+  
+- type: entity
+  parent: EldritchTome
+  id: DebugEldritchTome
+  name: debug tome
+  description: once you understand everything, all you will be able to think about is Halloween.
+  suffix: Debug
+  components:
+  - type: HereticKnowledgeItem
+    pointGain: 999
+    useTimeSeconds: 1

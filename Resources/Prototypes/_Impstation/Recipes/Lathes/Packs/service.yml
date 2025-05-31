@@ -50,6 +50,7 @@
     - Pitcher
     - BarSpoon
     - DrinkDisposableCup
+    - DrinkNoveltyMug
 
 - type: latheRecipePack
   id: KitchenPack
@@ -90,10 +91,10 @@
     - ClothingBackpackWaterTank
     - CleanerGrenade
 
-- type: latheRecipePack
-  id: ServiceMiscPackDynamic
-  recipes:
-    - FishingRod
+#- type: latheRecipePack # disabled until there is something to fish
+#  id: ServiceMiscPackDynamic
+#  recipes:
+#    - FishingRod
 
 # Emagged
 

@@ -9,8 +9,6 @@
     damage:
       types:
         blunt: 0 # immune to space
-  - type: SnailSpeed
-    snailSlowdownModifier: 0.8
   - type: Absorbable
   - type: Hunger # removed thirst
   - type: Icon
@@ -32,6 +30,7 @@
         Asphyxiation: -1.0
   - type: Sprite
     layers: # Need to redefine the whole order to draw the legs and claw correctly
+    - map: [ "enum.HumanoidVisualLayers.TailBehind" ] # hivehum edit i just saw this layer order and got really scared but this probably wants to render under the back legs
     - map: [ "enum.HumanoidVisualLayers.RFoot" ] # this is the back feet TODO: fix the fact that only the feet render
     - map: [ "enum.HumanoidVisualLayers.RLeg" ] # this is the back legs
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
@@ -49,6 +48,7 @@
     - map: [ "eyes" ]
     - map: [ "belt" ]
     - map: [ "id" ]
+    - map: [ "enum.HumanoidVisualLayers.TailOversuit" ] # hivehum edit well i hope this works
     - map: [ "back" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ] # this is the front legs
     - map: [ "enum.HumanoidVisualLayers.LFoot" ] # this is the front feet
@@ -183,6 +183,7 @@
             state: neck
   - type: Speech
     speechSounds: Decapoid
+    allowedEmotes: ['Chitter', 'Click']
   - type: TypingIndicator
     proto: robot # todo: custom
   - type: HumanoidAppearance

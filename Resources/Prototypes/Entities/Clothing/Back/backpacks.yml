@@ -71,7 +71,7 @@
   description: It's a very sterile backpack.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/brigmedic.rsi
+    sprite: _Impstation/Clothing/Back/Backpacks/brigmedic.rsi #imp
 
 - type: entity
   parent: ClothingBackpack

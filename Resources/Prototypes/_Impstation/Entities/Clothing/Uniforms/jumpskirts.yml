@@ -205,3 +205,17 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/mimecropped.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/mimecropped.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtAngelDress
+  name: angel dress
+  description: Could you stop sabotaging my business?!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/angeldress.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/angeldress.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon

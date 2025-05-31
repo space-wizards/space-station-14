@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: Rose
-  name: Rose
+  name: rose
   description: Smells like love.
   components:
   - type: EmbeddableProjectile
@@ -102,7 +102,7 @@
 - type: entity
   parent: [Rose, BaseMajorContraband]
   id: RoseBlack
-  name: Black Rose
+  name: black rose
   description: Smells like darkness.
   components:
   - type: Clothing
@@ -130,7 +130,7 @@
 - type: entity
   parent: [Rose, Tier3Contraband]
   id: RoseSyndicate
-  name: Blood Red Rose
+  name: blood-red rose
   description: Smells like communism.
   components:
   - type: SolutionInjectOnEmbed

@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Kitchen.Components;
+using Content.Shared._Goobstation.Factory;
 using Robust.Shared.Containers;
 
 namespace Content.Server._Goobstation.Kitchen;
@@ -23,6 +24,9 @@ public sealed class MicrowaveEventsSystem : EntitySystem
 
     private void OnRemoveAttempt(Entity<ActiveMicrowaveComponent> ent, ref ContainerIsRemovingAttemptEvent args)
     {
-        args.Cancel();
+        if (HasComp<RoboticArmComponent>(args.Container.Owner))  // Imp edit, fix microwaves not ejecting beakers and such
+        {
+            args.Cancel();
+        }
     }
 }

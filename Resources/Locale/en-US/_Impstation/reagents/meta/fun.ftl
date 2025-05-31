@@ -18,3 +18,6 @@ reagent-desc-medium = An alchemical medium to the afterlife.
 
 reagent-name-mouse-bites = mouse bites
 reagent-desc-mouse-bites = The patient needs mouse bites to live
+
+reagent-name-sadness = sadness
+reagent-desc-sadness = The pure concept of sadness, in a liquid form. Even looking at it makes you tear up.

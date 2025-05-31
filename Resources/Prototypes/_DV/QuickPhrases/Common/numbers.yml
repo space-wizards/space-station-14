@@ -1,0 +1,105 @@
+- type: quickPhrase
+  id: BaseNumberPhrase
+  parent: BaseCommonPhrase
+  group: Numbers and Units
+  abstract: true
+
+- type: quickPhrase
+  id: Number1Phrase
+  parent: BaseNumberPhrase
+  text: phrase-number1
+
+- type: quickPhrase
+  id: Number2Phrase
+  parent: BaseNumberPhrase
+  text: phrase-number2
+
+- type: quickPhrase
+  id: Number3Phrase
+  parent: BaseNumberPhrase
+  text: phrase-number3
+
+- type: quickPhrase
+  id: Number4Phrase
+  parent: BaseNumberPhrase
+  text: phrase-number4
+
+- type: quickPhrase
+  id: Number5Phrase
+  parent: BaseNumberPhrase
+  text: phrase-number5
+
+- type: quickPhrase
+  id: Number6Phrase
+  parent: BaseNumberPhrase
+  text: phrase-number6
+
+- type: quickPhrase
+  id: Number7Phrase
+  parent: BaseNumberPhrase
+  text: phrase-number7
+
+- type: quickPhrase
+  id: Number8Phrase
+  parent: BaseNumberPhrase
+  text: phrase-number8
+
+- type: quickPhrase
+  id: Number9Phrase
+  parent: BaseNumberPhrase
+  text: phrase-number9
+
+- type: quickPhrase
+  id: Number0Phrase
+  parent: BaseNumberPhrase
+  text: phrase-number0
+
+- type: quickPhrase
+  id: TenPhrase
+  parent: BaseNumberPhrase
+  text: phrase-ten
+
+- type: quickPhrase
+  id: HundredPhrase
+  parent: BaseNumberPhrase
+  text: phrase-hundred
+
+- type: quickPhrase
+  id: ThousandPhrase
+  parent: BaseNumberPhrase
+  text: phrase-thousand
+
+- type: quickPhrase
+  id: MillionPhrase
+  parent: BaseNumberPhrase
+  text: phrase-million
+
+- type: quickPhrase
+  id: BillionPhrase
+  parent: BaseNumberPhrase
+  text: phrase-billion
+
+- type: quickPhrase
+  id: StackPhrase
+  parent: BaseNumberPhrase
+  text: phrase-stack
+
+- type: quickPhrase
+  id: HourPhrase
+  parent: BaseNumberPhrase
+  text: phrase-hour
+
+- type: quickPhrase
+  id: MinutePhrase
+  parent: BaseNumberPhrase
+  text: phrase-minute
+
+- type: quickPhrase
+  id: SecondPhrase
+  parent: BaseNumberPhrase
+  text: phrase-second
+
+- type: quickPhrase
+  id: DayPhrase
+  parent: BaseNumberPhrase
+  text: phrase-day

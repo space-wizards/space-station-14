@@ -20,7 +20,7 @@
   weight: 10
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
-  supervisors: job-supervisors-captain
+  supervisors: job-supervisors-hop-captain #imp
   canBeAntag: false
   access:
   - Medical

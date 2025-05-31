@@ -14,7 +14,7 @@
     sprintModifier: 0.7
   - type: HeldSpeedModifier
   - type: TemperatureProtection
-    heatingCoefficient: 1.2
+    heatingCoefficient: 1.1
     coolingCoefficient: 0.1
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetWinterEVALarge

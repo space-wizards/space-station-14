@@ -18,7 +18,8 @@ public sealed class ThavenMoodsEui : BaseEui
     private void SaveMoods()
     {
         var newMoods = _thavenMoodUi.GetMoods();
-        SendMessage(new ThavenMoodsSaveMessage(newMoods, _target));
+        var toggle = _thavenMoodUi.ShouldFollowShared();
+        SendMessage(new ThavenMoodsSaveMessage(newMoods, toggle, _target));
         _thavenMoodUi.SetMoods(newMoods);
     }
 
@@ -33,6 +34,7 @@ public sealed class ThavenMoodsEui : BaseEui
             return;
 
         _target = s.Target;
+        _thavenMoodUi.SetFollowShared(s.FollowsShared);
         _thavenMoodUi.SetMoods(s.Moods);
     }
 }

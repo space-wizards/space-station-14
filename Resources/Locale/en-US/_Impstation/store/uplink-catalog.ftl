@@ -28,5 +28,17 @@ uplink-satchel-syndicate-desc = A lightweight explosion-proof satchel for when s
 uplink-fugitivecloak-name = Monochrome cloak
 uplink-fugitivecloak-desc = While this cloak hides your extra appendages, it also will reveal who you REALLY want to kiss under the moonlight.
 
-uplink-bloodredrosekit-name = Blood Red Rose Kit
-uplink-bloodredrosekit-desc = A set of roses for the romantic killer to get close to their dear victims.
+uplink-bloodredrosekit-name = Blood-red rose kit
+uplink-bloodredrosekit-desc = A set of roses for the romantic killer to get close to their dear victims. They'll really take your breath / facial features away.
+
+uplink-saw-ammo-name = Ammunition box (.20 rifle)
+uplink-saw-ammo-desc = A box of 50 cartridges compatible with the L6 Nidhogg light machine gun. Doesn't come with any ammo boxes, load it yourself!
+
+uplink-mixed-rejects-name = Dan's Soaked Smokes Rejects
+uplink-mixed-rejects-desc = Dan worked with Interdyne chemistry to dispose of excess chemicals, ENJOY CAUTIOUSLY.
+
+uplink-mixed-rejects-carton-name = Dan's Soaked Smokes Rejects Carton
+uplink-mixed-rejects-carton-desc = A carton containing 6 packets of Dan's Soaked Smokes: Rejects, plus an exclusive Syndicate-branded flippo.
+
+uplink-poison-injector-name = Lethal Poison Auto-Injector
+uplink-poison-injector-desc = A single dose of a lethal toxin mix, courtesy of Gorlex's Stealth Operations department, induces gradual organ failure and esophagus inflammation which eliminates a subject within one to two minutes of injection.

@@ -235,6 +235,7 @@
 - type: hereticKnowledge
   id: RitualOfKnowledge
   sideKnowledge: true
+  stage: 5
   ritualPrototypes:
   - RitualOfKnowledge
 

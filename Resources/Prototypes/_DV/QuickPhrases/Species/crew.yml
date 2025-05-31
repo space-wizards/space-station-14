@@ -1,0 +1,80 @@
+- type: quickPhrase
+  id: BaseCrewSpeciesPhrase
+  parent: BaseSpeciesPhrase
+  group: Crew
+  abstract: true
+
+- type: quickPhrase
+  id: SpeciesHumanPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-human
+
+- type: quickPhrase
+  id: SpeciesDionaPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-diona
+
+- type: quickPhrase
+  id: SpeciesArachnidPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-arachnid
+
+- type: quickPhrase
+  id: SpeciesMothPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-moth
+
+- type: quickPhrase
+  id: SpeciesReptilianPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-reptilian
+
+- type: quickPhrase
+  id: SpeciesSlimePersonPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-slime
+
+- type: quickPhrase
+  id: SpeciesGrayPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-gray
+
+- type: quickPhrase
+  id: SpeciesGastropoidPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-gastropoid
+
+- type: quickPhrase
+  id: SpeciesKodepiiaPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-kodepiia
+
+- type: quickPhrase
+  id: SpeciesThavenPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-thaven
+
+- type: quickPhrase
+  id: SpeciesSkeletonPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-skeleton
+
+- type: quickPhrase
+  id: SpeciesVoxPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-vox
+
+- type: quickPhrase
+  id: SpeciesDecapoidPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-decapoid
+
+- type: quickPhrase
+  id: SpeciesApidPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-apid
+
+- type: quickPhrase
+  id: SpeciesGoblinPhrase
+  parent: BaseCrewSpeciesPhrase
+  text: species-name-goblin

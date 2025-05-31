@@ -16,11 +16,11 @@
   prefix: DR
   fullName: true
   minValue: 10000
-  maxValue: 99999  
+  maxValue: 99999
 
 - type: nameIdentifierGroup
   id: MMI
-  prefix: MMI
+  prefix: OSI # imp
   minValue: 100
   maxValue: 999
 

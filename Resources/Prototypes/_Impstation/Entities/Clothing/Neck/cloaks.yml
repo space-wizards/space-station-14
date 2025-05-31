@@ -1,11 +1,22 @@
 - type: entity
-  parent: [ ClothingNeckBase, BaseSyndicateContraband ]
+  id: BaseObviousCloak
+  abstract: true
+  components:
+  - type: WearerGetsExamineText
+    examineText: obvious-desc-colors
+    thing: obvious-thing-cloak
+    warnExamine: false # for funny jokes!
+
+- type: entity
+  parent: [ ClothingNeckBase, BaseSyndicateContraband, BaseObviousCloak ]
   id: ClothingNeckCloakStraight
   name: hamburglar allegiance cloak
   description: A cloak signifying allegiance with the greatest hamburger thief of all time. Wear with caution.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Neck/Cloaks/straight.rsi
+  - type: WearerGetsExamineText
+    examineText: obvious-x-cloak-straight
 
 - type: entity
   parent: [ClothingNeckCloakStraight, BaseToggleClothing]
@@ -123,9 +134,9 @@
   - type: Sprite
     sprite: _Impstation/Clothing/Neck/Cloaks/juggernautcloak.rsi
 
-    
+
 - type: entity
-  parent: [ClothingNeckBase, BaseSyndicateContraband]
+  parent: [ClothingNeckBase, BaseSyndicateContraband, BaseObviousCloak]
   id: ClothingNeckCloakFugitiveCloak
   name: monochrome cloak
   description: It's a federal crime, buster.
@@ -137,6 +148,10 @@
   - type: HideLayerClothing
     slots:
     - Tail
+  - type: WearerGetsExamineText # imp
+    examineText: obvious-x-cloak-straight
+    warnExamine: true # the fugitive knows they're straight as fuck
+
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckCloakCaptainAdmiral

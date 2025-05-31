@@ -1,0 +1,360 @@
+- type: quickPhrase
+  id: PenPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-pen
+
+- type: quickPhrase
+  id: PaperPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-paper
+
+- type: quickPhrase
+  id: WrenchPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-wrench
+
+- type: quickPhrase
+  id: CrowbarPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-crowbar
+
+- type: quickPhrase
+  id: ScrewdriverPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-screwdriver
+
+- type: quickPhrase
+  id: WirecutterPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-wirecutter
+
+- type: quickPhrase
+  id: WeldingToolPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-welding-tool
+
+- type: quickPhrase
+  id: WeldingMaskPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-welding-mask
+
+- type: quickPhrase
+  id: ToolboxPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-toolbox
+
+- type: quickPhrase
+  id: BeakerPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-beaker
+
+- type: quickPhrase
+  id: RadioPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-radio
+
+- type: quickPhrase
+  id: UniformPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-uniform
+
+- type: quickPhrase
+  id: SuitSensorsPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-suit-sensors
+
+- type: quickPhrase
+  id: InternalsPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-internals
+
+- type: quickPhrase
+  id: GasTankPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-gas-tank
+
+- type: quickPhrase
+  id: MultitoolPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-multitool
+
+- type: quickPhrase
+  id: LathePhrase
+  parent: BaseSubjectPhrase
+  text: phrase-lathe
+
+- type: quickPhrase
+  id: ComputerPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-computer
+
+- type: quickPhrase
+  id: DoorPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-door
+
+- type: quickPhrase
+  id: FirelockPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-firelock
+
+- type: quickPhrase
+  id: SpacePhrase
+  parent: BaseSubjectPhrase
+  text: phrase-space
+
+- type: quickPhrase
+  id: ToolPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-tool
+
+- type: quickPhrase
+  id: WeaponPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-weapon
+
+- type: quickPhrase
+  id: ArmorPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-armor
+
+- type: quickPhrase
+  id: BrainPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-brain
+
+- type: quickPhrase
+  id: DrinkPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-drink
+
+- type: quickPhrase
+  id: FoodPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-food
+
+- type: quickPhrase
+  id: WaterPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-water
+
+- type: quickPhrase
+  id: SignaturePhrase
+  parent: BaseSubjectPhrase
+  text: phrase-signature
+
+- type: quickPhrase
+  id: BeltPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-belt
+
+- type: quickPhrase
+  id: HardsuitPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-hardsuit
+
+- type: quickPhrase
+  id: LightPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-light
+
+- type: quickPhrase
+  id: BagPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-bag
+
+- type: quickPhrase
+  id: LockerPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-locker
+
+- type: quickPhrase
+  id: BoxPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-box
+
+- type: quickPhrase
+  id: ChemicalsPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-chemicals
+
+- type: quickPhrase
+  id: MachinePhrase
+  parent: BaseSubjectPhrase
+  text: phrase-machine
+
+- type: quickPhrase
+  id: BloodPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-blood
+
+- type: quickPhrase
+  id: LawPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-law
+
+- type: quickPhrase
+  id: HolopadPhrase
+  parent: BaseSubjectPhrase
+  text: phrase-holopad
+
+- type: quickPhrase
+  id: UpgradePhrase
+  parent: BaseSubjectPhrase
+  text: phrase-upgrade
+
+# Materials
+
+- type: quickPhrase
+  id: BaseMaterialPhrase
+  parent: BaseSubjectPhrase
+  group: Materials
+  abstract: true
+
+- type: quickPhrase
+  id: SteelPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-steel
+
+- type: quickPhrase
+  id: PlasticPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-plastic
+
+- type: quickPhrase
+  id: PlasteelPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-plasteel
+
+- type: quickPhrase
+  id: PlasmaPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-plasma
+
+- type: quickPhrase
+  id: UraniumPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-uranium
+
+- type: quickPhrase
+  id: BananiumPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-bananium
+
+- type: quickPhrase
+  id: WoodPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-wood
+
+- type: quickPhrase
+  id: ClothPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-cloth
+
+- type: quickPhrase
+  id: CardboardPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-cardboard
+
+- type: quickPhrase
+  id: GoldPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-gold
+
+- type: quickPhrase
+  id: GlassPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-glass
+
+- type: quickPhrase
+  id: SilverPhrase
+  parent: BaseMaterialPhrase
+  text: phrase-silver
+
+- type: quickPhrase
+  id: BluespacePhrase
+  parent: BaseMaterialPhrase
+  text: phrase-bluespace
+
+# Colors
+
+- type: quickPhrase
+  id: BaseColorPhrase
+  parent: BaseSubjectPhrase
+  group: Colors
+  abstract: true
+
+- type: quickPhrase
+  id: ColorRedPhrase
+  parent: BaseColorPhrase
+  text: phrase-color-red
+
+- type: quickPhrase
+  id: ColorOrangePhrase
+  parent: BaseColorPhrase
+  text: phrase-color-orange
+
+- type: quickPhrase
+  id: ColorYellowPhrase
+  parent: BaseColorPhrase
+  text: phrase-color-yellow
+
+- type: quickPhrase
+  id: ColorGreenPhrase
+  parent: BaseColorPhrase
+  text: phrase-color-green
+
+- type: quickPhrase
+  id: ColorBluePhrase
+  parent: BaseColorPhrase
+  text: phrase-color-blue
+
+- type: quickPhrase
+  id: ColorPurplePhrase
+  parent: BaseColorPhrase
+  text: phrase-color-purple
+
+- type: quickPhrase
+  id: ColorPinkPhrase
+  parent: BaseColorPhrase
+  text: phrase-color-pink
+
+- type: quickPhrase
+  id: ColorBlackPhrase
+  parent: BaseColorPhrase
+  text: phrase-color-black
+
+- type: quickPhrase
+  id: ColorWhitePhrase
+  parent: BaseColorPhrase
+  text: phrase-color-white
+
+- type: quickPhrase
+  id: ColorBrightPhrase
+  parent: BaseColorPhrase
+  text: phrase-color-bright
+
+- type: quickPhrase
+  id: ColorDarkPhrase
+  parent: BaseColorPhrase
+  text: phrase-color-dark
+
+- type: quickPhrase
+  id: ColorRainbowPhrase
+  parent: BaseColorPhrase
+  text: phrase-color-rainbow
+
+- type: quickPhrase
+  id: ColorLightPhrase
+  parent: BaseColorPhrase
+  text: phrase-color-light
+
+- type: quickPhrase
+  id: ColorBrownPhrase
+  parent: BaseColorPhrase
+  text: phrase-color-brown
+
+- type: quickPhrase
+  id: ColorGrayPhrase
+  parent: BaseColorPhrase
+  text: phrase-color-gray

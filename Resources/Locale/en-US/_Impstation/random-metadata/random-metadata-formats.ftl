@@ -1,0 +1,1 @@
+﻿sad-blunt = {$part0} :(

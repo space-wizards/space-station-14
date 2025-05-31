@@ -1,0 +1,272 @@
+- type: quickPhrase
+  parent: [ BaseCivilianPhrase, BaseJobPhrase ]
+  id: BaseCivilianJobPhrase
+  abstract: true
+
+- type: quickPhrase
+  parent: [ BaseCommandPhrase, BaseJobPhrase ]
+  id: BaseCommandJobPhrase
+  abstract: true
+
+- type: quickPhrase
+  parent: [ BaseEngineeringPhrase, BaseJobPhrase ]
+  id: BaseEngineeringJobPhrase
+  abstract: true
+
+- type: quickPhrase
+  parent: [ BaseSciencePhrase, BaseJobPhrase ]
+  id: BaseScienceJobPhrase
+  abstract: true
+
+- type: quickPhrase
+  parent: [ BaseCargoPhrase, BaseJobPhrase ]
+  id: BaseCargoJobPhrase
+  abstract: true
+
+- type: quickPhrase
+  parent: [ BaseMedicalPhrase, BaseJobPhrase ]
+  id: BaseMedicalJobPhrase
+  abstract: true
+
+- type: quickPhrase
+  parent: [ BaseSecurityPhrase, BaseJobPhrase ]
+  id: BaseSecurityJobPhrase
+  abstract: true
+
+- type: quickPhrase
+  parent: [ BaseServicePhrase, BaseJobPhrase ]
+  id: BaseServiceJobPhrase
+  abstract: true
+
+# Civilian
+
+- type: quickPhrase
+  parent: BaseCivilianJobPhrase
+  id: PassengerPhrase
+  text: job-name-passenger
+
+- type: quickPhrase
+  parent: BaseCivilianJobPhrase
+  id: VisitorPhrase
+  text: job-name-visitor
+
+# Command
+
+- type: quickPhrase
+  parent: BaseCommandJobPhrase
+  id: CaptainPhrase
+  text: job-name-captain
+
+- type: quickPhrase
+  parent: BaseCommandJobPhrase
+  id: CentralCommandOfficialPhrase
+  text: job-name-centcomoff
+
+- type: quickPhrase
+  parent: BaseCommandJobPhrase
+  id: AdminAssistantPhrase
+  text: job-name-admin-assistant
+
+- type: quickPhrase
+  parent: BaseCommandJobPhrase
+  id: StationAIPhrase
+  text: job-name-station-ai
+
+# Engineering
+
+- type: quickPhrase
+  parent: BaseEngineeringJobPhrase
+  id: ChiefEngineerPhrase
+  text: job-name-ce
+
+- type: quickPhrase
+  parent: BaseEngineeringJobPhrase
+  id: AtmosTechPhrase
+  text: job-name-atmostech
+
+- type: quickPhrase
+  parent: BaseEngineeringJobPhrase
+  id: EngineerPhrase
+  text: job-name-engineer
+
+- type: quickPhrase
+  parent: BaseEngineeringJobPhrase
+  id: TechAssistantPhrase
+  text: job-name-technical-assistant
+
+# Science
+
+- type: quickPhrase
+  parent: BaseScienceJobPhrase
+  id: ResearchDirectorPhrase
+  text: job-name-rd
+
+- type: quickPhrase
+  parent: BaseScienceJobPhrase
+  id: ScientistPhrase
+  text: job-name-scientist
+
+- type: quickPhrase
+  parent: BaseScienceJobPhrase
+  id: ResearchAssistantPhrase
+  text: job-name-research-assistant
+
+- type: quickPhrase
+  parent: BaseScienceJobPhrase
+  id: RoboticistPhrase
+  text: job-name-roboticist
+
+- type: quickPhrase
+  parent: BaseScienceJobPhrase
+  id: BorgPhrase
+  text: job-name-borg
+
+# Cargo
+
+- type: quickPhrase
+  parent: BaseCargoJobPhrase
+  id: QuartermasterPhrase
+  text: job-name-qm
+
+- type: quickPhrase
+  parent: BaseCargoJobPhrase
+  id: CargoTechnicianPhrase
+  text: job-name-cargotech
+
+- type: quickPhrase
+  parent: BaseCargoJobPhrase
+  id: SalvageSpecialistPhrase
+  text: job-name-salvagespec
+
+- type: quickPhrase
+  parent: BaseCargoJobPhrase
+  id: CourierPhrase
+  text: job-name-courier
+
+# Medical
+
+- type: quickPhrase
+  parent: BaseMedicalJobPhrase
+  id: ChiefMedicalOfficerPhrase
+  text: job-name-cmo
+
+- type: quickPhrase
+  parent: BaseMedicalJobPhrase
+  id: ChemistPhrase
+  text: job-name-chemist
+
+- type: quickPhrase
+  parent: BaseMedicalJobPhrase
+  id: ParamedicPhrase
+  text: job-name-paramedic
+
+- type: quickPhrase
+  parent: BaseMedicalJobPhrase
+  id: MedicalDoctorPhrase
+  text: job-name-doctor
+
+- type: quickPhrase
+  parent: BaseMedicalJobPhrase
+  id: MedicalInternPhrase
+  text: job-name-intern
+
+# Security
+
+- type: quickPhrase
+  parent: BaseSecurityJobPhrase
+  id: HeadOfSecurityPhrase
+  text: job-name-hos
+
+- type: quickPhrase
+  parent: BaseSecurityJobPhrase
+  id: WardenPhrase
+  text: job-name-warden
+
+- type: quickPhrase
+  parent: BaseSecurityJobPhrase
+  id: SecurityOfficerPhrase
+  text: job-name-security
+
+- type: quickPhrase
+  parent: BaseSecurityJobPhrase
+  id: SecurityCadetPhrase
+  text: job-name-cadet
+
+- type: quickPhrase
+  parent: BaseSecurityJobPhrase
+  id: DetectivePhrase
+  text: job-name-detective
+
+# Service
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: BartenderPhrase
+  text: job-name-bartender
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: BotanistPhrase
+  text: job-name-botanist
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: ChefPhrase
+  text: job-name-chef
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: JanitorPhrase
+  text: job-name-janitor
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: LibrarianPhrase
+  text: job-name-librarian
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: MusicianPhrase
+  text: job-name-musician
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: ServiceWorkerPhrase
+  text: job-name-serviceworker
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: ClownPhrase
+  text: job-name-clown
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: MimePhrase
+  text: job-name-mime
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: HeadOfPersonnelPhrase
+  text: job-name-hop
+
+# Wildcard
+
+- type: quickPhrase
+  parent: BaseCivilianJobPhrase
+  id: BoxerPhrase
+  text: job-name-boxer
+
+- type: quickPhrase
+  parent: BaseMedicalJobPhrase
+  id: PsychologistPhrase
+  text: job-name-psychologist
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: ReporterPhrase
+  text: job-name-reporter
+
+- type: quickPhrase
+  parent: BaseServiceJobPhrase
+  id: ZookeeperPhrase
+  text: job-name-zookeeper

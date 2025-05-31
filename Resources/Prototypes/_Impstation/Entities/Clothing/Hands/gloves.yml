@@ -45,3 +45,21 @@
     - objective: MassArrestObjective
       components:
       - type: CriminalRecordsHacker
+
+- type: entity
+  parent: [ClothingHandsBase]
+  id: ClothingHandsAngelGloves
+  name: angelic gloves
+  description: Sily smooth! They seem more fit for a highschooler's magical alter ego than an angel, but...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Hands/Gloves/angelgloves.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Hands/Gloves/angelgloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-web
+    fiberColor: fibers-white
+  - type: FingerprintMask
+  - type: Tag
+    tags:
+    - WhitelistChameleon

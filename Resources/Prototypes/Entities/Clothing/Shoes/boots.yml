@@ -115,9 +115,9 @@
   name: brigmedic winter boots
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/Boots/winterbootsbrigmedic.rsi
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootsbrigmedic.rsi #imp
   - type: Clothing
-    sprite: Clothing/Shoes/Boots/winterbootsbrigmedic.rsi
+    sprite: _Impstation/Clothing/Shoes/Boots/winterbootsbrigmedic.rsi #imp
 
 - type: entity
   parent: ClothingShoesBaseWinterBoots

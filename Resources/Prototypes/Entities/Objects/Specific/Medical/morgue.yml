@@ -127,6 +127,7 @@
   - type: Tag
     tags:
     - Trash
+    - Ash # imp this is really stupid
   - type: SolutionContainerManager
     solutions:
       food:

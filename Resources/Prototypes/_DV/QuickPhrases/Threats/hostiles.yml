@@ -1,0 +1,66 @@
+- type: quickPhrase
+  id: BaseHostileThreatPhrase
+  parent: BaseThreatPhrase
+  group: Hostiles
+  styleClass: SecurityButton
+  abstract: true
+
+- type: quickPhrase
+  id: HostileEnemyPhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile-enemy
+
+- type: quickPhrase
+  id: HostilePhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile
+
+- type: quickPhrase
+  id: HostileAttackerPhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile-attacker
+
+- type: quickPhrase
+  id: HostileLifeformPhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile-lifeform
+
+- type: quickPhrase
+  id: HostileEntityPhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile-entity
+
+- type: quickPhrase
+  id: HostileBombPhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile-bomb
+
+- type: quickPhrase
+  id: HostileCriminalPhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile-criminal
+
+- type: quickPhrase
+  id: HostileIntruderPhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile-intruder
+
+- type: quickPhrase
+  id: HostileInfiltratorPhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile-infiltrator
+
+- type: quickPhrase
+  id: HostileFugitivePhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile-fugitive
+
+- type: quickPhrase
+  id: HostileWeaponPhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile-weapon
+
+- type: quickPhrase
+  id: HostileGunPhrase
+  parent: BaseHostileThreatPhrase
+  text: phrase-hostile-gun

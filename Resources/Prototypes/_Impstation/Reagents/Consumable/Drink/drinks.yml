@@ -115,3 +115,27 @@
     - !type:PlantAdjustPests
       amount: -1
   fizziness: 0.1
+
+- type: reagent
+  id: LiquidLunch
+  name: reagent-name-liquidlunch
+  parent: BaseDrink
+  slippery: false
+  desc: reagent-desc-liquidlunch
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: liquidlunch
+  color: "#521414"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/liquidlunch.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 0.5
+      - !type:AdjustReagent
+        reagent: UncookedAnimalProteins
+        amount: 0.1

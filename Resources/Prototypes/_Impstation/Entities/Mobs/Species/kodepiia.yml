@@ -43,6 +43,7 @@
         requireInputValidation: false
   - type: Sprite
     layers:
+    - map: [ "enum.HumanoidVisualLayers.TailBehind" ]
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
     - map: [ "enum.HumanoidVisualLayers.Head" ]
     - map: [ "enum.HumanoidVisualLayers.Snout" ]
@@ -83,6 +84,7 @@
       visible: false
     - map: [ "enum.HumanoidVisualLayers.RArmExtension" ]
     - map: [ "enum.HumanoidVisualLayers.Tail" ]
+    - map: [ "enum.HumanoidVisualLayers.TailOversuit" ] # subject to change, really finicky with the arms im afraid
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
     - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
     - map: [ "mask" ]
@@ -96,7 +98,7 @@
     hideLayersOnEquip:
     - HeadTop
     - HeadSide
-    - Hair 
+    - Hair
     - Tail
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.

@@ -67,3 +67,8 @@
   completetime: 1
   materials:
     Cloth: 100
+
+- type: latheRecipe
+  id: DrinkNoveltyMug
+  parent: DrinkMugMetal
+  result: DrinkNoveltyMug

@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Ghost.Roles.Components; // imp; for the GhostRole check
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
 using Content.Shared.Alert;
@@ -26,6 +27,8 @@ using Content.Shared.Whitelist;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects.Components.Localization; // imp; for Grammar
+using Robust.Shared.Enums; // imp; for Gender
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -55,6 +58,8 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
+    [Dependency] private readonly GrammarSystem _grammar = default!; // imp
+
 
     [ValidatePrototypeId<JobPrototype>]
     public const string BorgJobId = "Borg";
@@ -157,6 +162,14 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind) && args.Container == component.BrainContainer)
         {
+            //IMP EDIT: body-hopping preserves your pronouns!
+            var grammar = EnsureComp<GrammarComponent>(uid);
+            if (TryComp<GrammarComponent>(args.Entity, out var formerSelf))
+            {
+                _grammar.SetProperNoun((uid, grammar), true); //it's a person now, it's not just a chassis labeled its name
+                _grammar.SetGender((uid, grammar), formerSelf.Gender);
+            }
+            //END IMP EDIT
             _mind.TransferTo(mindId, uid, mind: mind);
         }
     }
@@ -167,6 +180,13 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(uid, out var mindId, out var mind) && args.Container == component.BrainContainer)
         {
+            //IMP EDIT: an empty vessel is back to being an object
+            if (TryComp<GrammarComponent>(uid, out var grammar))
+            {
+                _grammar.SetProperNoun((uid, grammar), false);
+                _grammar.SetGender((uid, grammar), Gender.Neuter);
+            }
+            //END IMP EDIT
             _mind.TransferTo(mindId, args.Entity, mind: mind);
         }
     }

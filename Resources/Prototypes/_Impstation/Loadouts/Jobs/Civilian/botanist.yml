@@ -3,3 +3,10 @@
   equipment:
     gloves: ClothingHandsGlovesLeather
 
+- type: loadout
+  id: BotanistLilyMantle
+  equipment:
+    neck: ClothingNeckMantleLily
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorBotanist

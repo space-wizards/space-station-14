@@ -1,115 +1,15 @@
 ﻿{
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "minor, giant bear, plushie hop, and plushie captain by crocodilecarousel (github). finfin, yarn noodles, fabric scrap salad ,odds by starlighthowls. gray plushie by tox. bug, dolls, and imp specific species plushies by Doop. imp plush by mqole,",
+    "copyright": "minor, giant bear, plushie hop, and plushie captain by crocodilecarousel (github). finfin, yarn noodles, fabric scrap salad, odds, iba by starlighthowls. gray plushie by tox. bug, dolls, and imp specific species plushies by Doop. imp plush by mqole, kodepiia plush by UndertaleSex",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
-            "name": "giantbearplush"
-        },
-        {
-            "name": "giantbearplush-inhand",
-            "directions": 4
-        },
-        {
-            "name": "plushie_cap"
-        },
-        {
-            "name": "plushie_hop"
-        },
-        {
-            "name": "plushie_finfin"
-        },
-        {
-            "name": "plushie_finfin-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "plushie_finfin-inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "yarn-noodles"
-        },
-        {
-            "name": "fabric-scrap-salad"
-        },
-        {
-            "name": "plushie_gray"
-        },
-        {
-            "name": "minor"
-        },
-        {
-            "name": "plushie_bug"
-        },
-        {
-            "name": "plushie_bug-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "plushie_bug-inhand-right",
-            "directions": 4
-        },
-        {
             "name": "bug-equipped-HELMET",
             "directions": 4
-        },
-        {
-            "name": "plushie_evilbug"
-        },
-        {
-            "name": "plushie_evilbug-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "plushie_evilbug-inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "evilbug-equipped-HELMET",
-            "directions": 4
-        },
-        {
-            "name": "plushie_decapoid"
-        },
-        {
-            "name": "plushie_snail"
-        },
-        {
-            "name": "plushie_imp"
-        },
-        {
-            "name": "plushie_thaven"
-        },
-        {
-            "name": "plushie_thavenweird"
-        },
-        {
-            "name": "plushie_goblin"
-        },
-        {
-            "name": "plushie_gollylad"
-        },
-        {
-            "name": "plushie_apid"
-        },
-        {
-            "name": "plushie_dwarf"
-        },
-        {
-            "name": "plushie_dwarf_unshaded",
-            "delays": [
-                [
-                  0.2,
-                  0.2,
-                  0.2,
-                  0.2
-                ]
-            ]
         },
         {
             "name": "doll_base"
@@ -134,6 +34,116 @@
             "directions": 4
         },
         {
+            "name": "evilbug-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "fabric-scrap-salad"
+        },
+        {
+            "name": "giantbearplush"
+        },
+        {
+            "name": "giantbearplush-inhand",
+            "directions": 4
+        },
+        {
+            "name": "minor"
+        },
+        {
+            "name": "odds-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "plushie_apid"
+        },
+        {
+            "name": "plushie_bug"
+        },
+        {
+            "name": "plushie_bug-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plushie_bug-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "plushie_cap"
+        },
+        {
+            "name": "plushie_decapoid"
+        },
+        {
+            "name": "plushie_dwarf"
+        },
+        {
+            "name": "plushie_dwarf_unshaded",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "plushie_evilbug"
+        },
+        {
+            "name": "plushie_evilbug-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plushie_evilbug-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "plushie_finfin"
+        },
+        {
+            "name": "plushie_finfin-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "plushie_finfin-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "plushie_goblin"
+        },
+        {
+            "name": "plushie_gollylad"
+        },
+        {
+            "name": "plushie_gray"
+        },
+        {
+            "name": "plushie_hop"
+        },
+        {
+            "name": "plushie_imp"
+        },
+        {
+            "name": "plushie_kodepiia1"
+        },
+        {
+            "name": "plushie_kodepiia2"
+        },
+        {
+            "name": "plushie_kodepiia3"
+        },
+        {
+            "name": "plushie_kodepiia4"
+        },
+        {
+            "name": "plushie_kodepiia5"
+        },
+        {
+            "name": "plushie_mascotgriffy"
+        },
+        {
             "name": "plushie_odds"
         },
         {
@@ -145,11 +155,31 @@
             "directions": 4
         },
         {
-            "name": "odds-equipped-HELMET",
+            "name": "plushie_iba"
+        },
+        {
+            "name": "plushie_iba-inhand-left",
             "directions": 4
         },
         {
-            "name": "plushie_mascotgriffy"
+            "name": "plushie_iba-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "iba-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "plushie_snail"
+        },
+        {
+            "name": "plushie_thaven"
+        },
+        {
+            "name": "plushie_thavenweird"
+        },
+        {
+            "name": "yarn-noodles"
         }
     ]
 }

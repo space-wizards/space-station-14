@@ -111,3 +111,15 @@
   background: /Textures/_Impstation/LobbyScreens/teabar.webp
   name: Hey Whats In This Ice Cream Anyway
   artist: Happy99
+
+- type: lobbyBackground
+  id: movebitch
+  background: /Textures/_Impstation/LobbyScreens/dont_care.webp
+  name: Dont care
+  artist: Ionward
+
+- type: lobbyBackground
+  id: smoko
+  background: /Textures/_Impstation/LobbyScreens/smoko.webp
+  name: Smoko?
+  artist: Wowls

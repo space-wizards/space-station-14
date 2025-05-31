@@ -1,4 +1,4 @@
 - type: guideEntry
   id: Command
   name: guide-entry-command
-  text: "/ServerInfo/Guidebook/Command.xml"
+  text: "/ServerInfo/_Impstation/Guidebook/Command.xml" # imp edit

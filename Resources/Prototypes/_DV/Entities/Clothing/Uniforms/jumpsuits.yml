@@ -33,9 +33,9 @@
   description: A comfortable and tight-fitting turtleneck for those with the patience to reach the position of warden.
   components:
   - type: Sprite
-    sprite: _DV/Clothing/Uniforms/Jumpsuit/armourer_alt.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/armourer_alt.rsi #imp
   - type: Clothing
-    sprite: _DV/Clothing/Uniforms/Jumpsuit/armourer_alt.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/armourer_alt.rsi #imp
 # Misc
 
 - type: entity

@@ -4,6 +4,7 @@
   weights:
     Dragon: 2
     Revenant: 2
+    Replicators: 2
     RatKing: 2
     UristSwarm: 1
     ImmovableFriend: 1
@@ -32,3 +33,8 @@
   id: ImmovableFriend
   announcement: terror-finfin
   rule: ImmovableFriendSpawn
+
+- type: ninjaHackingThreat
+  id: Replicators
+  announcement: terror-replicators
+  rule: ReplicatorSpawn

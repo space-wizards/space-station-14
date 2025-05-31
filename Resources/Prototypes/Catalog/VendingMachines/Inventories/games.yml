@@ -17,6 +17,8 @@
     PaperCNCSheet: 6
     MysteryFigureBox: 2
     MysterySpaceBladeBox: 5 # imp
+    PetRockCarrier: 3 # imp
+    PrizeBall: 5 # imp
     BooksBag: 3
   contrabandInventory:
     Basketball: 1
@@ -25,3 +27,4 @@
     CardBoxNanotrasen: 1 # imp
   emaggedInventory:
     CardBoxSyndicate: 1 # imp
+    WeaponLauncherRocketToy: 1 # imp

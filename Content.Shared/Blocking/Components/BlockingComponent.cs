@@ -76,4 +76,10 @@ public sealed partial class BlockingComponent : Component
     /// </summary>
     [DataField]
     public float ActiveBlockFraction = 1.0f;
+
+    /// <summary>
+    /// Imp. Multiplier applied to MovementSpeed upon blocking.
+    /// </summary>
+    [DataField]
+    public float SlowdownModifier = 0.3f;
 }

@@ -11,55 +11,51 @@
     icon: _Impstation/Interface/Actions/spawn_nest.png
     event: !type:ReplicatorSpawnNestActionEvent
     useDelay: 20
+  - type: ConfirmableAction
+    popup: replicator-nest-confirm
+
+- type: entity
+  id: BaseReplicatorLevelupAction
+  categories: [HideSpawnMenu]
+  components:
+  - type: ConfirmableAction
+    popup: replicator-levelup-confirm
 
 - type: entity
   id: ActionReplicatorUpgrade2
-  name: Upgrade (Tier 2)
+  parent: BaseReplicatorLevelupAction
+  name: Upgrade (Deconstructor)
   description: Gather nanites. Gain manipulation.
   components:
   - type: InstantAction
     itemIconStyle: NoItem
     icon: _Impstation/Interface/Actions/replicator_level2.png
-    event: !type:ReplicatorUpgrade2ActionEvent
+    event: !type:ReplicatorUpgradeActionEvent
+      nextStage: MobReplicatorTier2
+    useDelay: 20
+
+- type: entity
+  id: ActionReplicatorUpgrade2Alt
+  parent: BaseReplicatorLevelupAction
+  name: Upgrade (Defender)
+  description: Gather nanites. Gain weaponry.
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon: _Impstation/Interface/Actions/replicator_level2alt.png
+    event: !type:ReplicatorUpgradeActionEvent
+      nextStage: MobReplicatorTier2Alt
     useDelay: 20
 
 - type: entity
   id: ActionReplicatorUpgrade3
-  name: Upgrade (Tier 3)
+  parent: BaseReplicatorLevelupAction
+  name: Upgrade (Protector)
   description: Gather nanites. Become stronger.
   components:
   - type: InstantAction
     itemIconStyle: NoItem
     icon: _Impstation/Interface/Actions/replicator_level3.png
-    event: !type:ReplicatorUpgrade3ActionEvent
+    event: !type:ReplicatorUpgradeActionEvent
+      nextStage: MobReplicatorTier3
     useDelay: 20
-
-- type: entity
-  id: ActionReplicatorStunRay
-  name: Stun Ray
-  description: Neutralize target to enable termination and consumption.
-  components:
-  - type: WorldTargetAction
-    icon: { sprite: _Impstation/Objects/Weapons/Guns/Projectiles/energybolts.rsi, state: lightstun } # todo: real sprite
-    event: !type:ActionGunShootEvent
-    priority: 2
-    checkCanAccess: false
-    range: 0
-    itemIconStyle: BigAction
-
-- type: entity
-  categories: [ HideSpawnMenu ]
-  id: ReplicatorStunRay
-  name: replicator stun ray
-  description: Neutralize target to enable termination and consumption.
-  components:
-  - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 5
-    rechargeSound: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
-  - type: BasicEntityAmmoProvider
-    proto: BulletDisablerSmg
-    capacity: 1
-    count: 1
-  - type: Gun
-    soundGunshot: /Audio/_Impstation/Weapons/Guns/Gunshots/stunprojector.ogg
-    soundEmpty: null

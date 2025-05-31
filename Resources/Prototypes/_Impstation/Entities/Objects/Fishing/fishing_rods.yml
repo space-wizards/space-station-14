@@ -28,10 +28,10 @@
         enum.TetherVisualsStatus.Key:
           unshaded:
             True: { state: base-unshaded }
-            False: { state: base-unshaded-off }         
-    - type: Construction
-      graph: FishingRod
-      node: rod
+            False: { state: base-unshaded-off }
+    #- type: Construction # disabled until there is something to fish
+    #  graph: FishingRod
+    #  node: rod
 
 - type: entity
   name: plasma rod
@@ -85,7 +85,7 @@
     - type: Unremoveable
     - type: GenericVisualizer #The component that handles multiple states for the sprite
       visuals:
-        enum.AmmoVisuals.HasAmmo: 
+        enum.AmmoVisuals.HasAmmo:
           unshaded:
             True: { state: base-unshaded }
-            False: { state: base-unshaded-off }    
+            False: { state: base-unshaded-off }

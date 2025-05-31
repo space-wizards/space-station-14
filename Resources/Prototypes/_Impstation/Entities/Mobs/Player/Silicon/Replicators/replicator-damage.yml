@@ -3,8 +3,9 @@
   coefficients:
     Blunt: 0.9
     Slash: 0.5
-    Piercing: 0.9
+    Piercing: 0.8
     Shock: 1.2
+    Structural: 1.5
   flatReductions:
     Heat: 5
 
@@ -13,18 +14,20 @@
   coefficients:
     Blunt: 0.8
     Slash: 0.5
-    Piercing: 0.8
+    Piercing: 0.7
     Shock: 1.2
+    Structural: 1.5
   flatReductions:
     Heat: 5
 
 - type: damageModifierSet
   id: Replicator3
   coefficients:
-    Blunt: 0.7
+    Blunt: 0.5
     Slash: 0.5
-    Piercing: 0.7
+    Piercing: 0.5
     Shock: 1.2
+    Structural: 1.5
   flatReductions:
     Heat: 6
 

@@ -1,0 +1,10 @@
+﻿- type: construction
+  name: business card
+  id: BusinessCard
+  graph: BusinessCard
+  startNode: start
+  targetNode: businessCard
+  category: construction-category-misc
+  description: For advertising your goods or services.
+  icon: { sprite: Objects/Misc/bureaucracy.rsi, state: business-card }
+  objectType: Item

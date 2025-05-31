@@ -1,0 +1,5 @@
+- type: nameIdentifierGroup
+  id: Replicator
+  prefix: R
+  minValue: 0
+  maxValue: 9999

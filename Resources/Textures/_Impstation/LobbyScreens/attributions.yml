@@ -92,3 +92,13 @@
   license: "CC-BY-SA-4.0"
   copyright: "Happy99"
   source: "https://github.com/impstation/imp-station-14/"
+
+- files: ["dont_care.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Ionward"
+  source: "https://github.com/impstation/imp-station-14/"
+
+- files: ["smoko.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Wowls"
+  source: "https://github.com/impstation/imp-station-14/"

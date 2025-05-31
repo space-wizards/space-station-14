@@ -11,6 +11,7 @@
     - id: RevenantSpawn
     - id: ParadoxCloneSpawn
     - id: GoblinStowawaysEvent # imp
+    - id: ReplicatorSpawn # imp
 
 - type: entity
   id: ChangelingAwakening

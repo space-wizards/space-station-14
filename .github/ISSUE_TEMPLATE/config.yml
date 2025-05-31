@@ -1,4 +1,4 @@
 contact_links:
   - name: Report a Security Vulnerability
     url: https://github.com/space-wizards/space-station-14/blob/master/SECURITY.md
-    about: Please report security vulnerabilities privately so we can fix them before they are publicly disclosed.
+    about: Please report security vulnerabilities to Wizard's Den privately so they can fix them before they are publicly disclosed.

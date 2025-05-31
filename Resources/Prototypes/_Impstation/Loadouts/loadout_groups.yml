@@ -405,6 +405,8 @@
   - HospitalityDirectorApron
   - HospitalityDirectorVest
   - HospitalityDirectorWintercoat
+  - BartenderCuteApron
+  - ChefCuteApron
 
 - type: loadoutGroup
   id: HospitalityDirectorShoes
@@ -604,6 +606,7 @@
   - ScarfBrown
   - ScarfGreen
   - ScarfLightGreen
+  - BotanistLilyMantle
 
 - type: loadoutGroup
   id: BotanistGloves
@@ -883,7 +886,7 @@
   name: loadout-group-atmospheric-technician-head
   minLimit: 0
   loadouts:
-  - AtmosphericTechnicianBeret
+  - SeniorEngineerBeret
 
 - type: loadoutGroup
   id: AtmosphericTechnicianPDA
@@ -1226,3 +1229,4 @@
   - LeatherShoes
   - BlackHeels
   - ClownShoesExpert
+

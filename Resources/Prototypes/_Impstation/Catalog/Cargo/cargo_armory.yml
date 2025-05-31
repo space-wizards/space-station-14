@@ -24,6 +24,46 @@
     sprite: _Impstation/Objects/Weapons/Guns/Rifles/daito.rsi
     state: icon
   product: CrateArmoryDMR
-  cost: 9000
+  cost: 8000
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: ArmoryLecter
+  icon:
+    sprite: _Impstation/Objects/Weapons/Guns/Rifles/lecter.rsi
+    state: icon
+  product: CrateArmoryLecter
+  cost: 8000
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: ArmoryAKMS
+  icon:
+    sprite: _Impstation/Objects/Weapons/Guns/Rifles/ak.rsi
+    state: icon
+  product: CrateArmoryAKMS
+  cost: 11000
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: ArmoryKammerer
+  icon:
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/pump.rsi
+    state: icon
+  product: CrateArmoryKammerer
+  cost: 5500
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: ArmoryDrozd
+  icon:
+    sprite: _Impstation/Objects/Weapons/Guns/SMGs/drozd.rsi
+    state: icon
+  product: CrateArmoryDrozd
+  cost: 7500
   category: cargoproduct-category-name-armory
   group: market

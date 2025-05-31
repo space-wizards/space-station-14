@@ -40,6 +40,16 @@ public partial class RitualSacrificeBehavior : RitualCustomBehavior
     /// </summary>
     [DataField] public float Max = 1;
 
+    /// <summary>
+    ///     Points gained on sacrificing a normal crewmember.
+    /// </summary>
+    [DataField] public float SacrificePoints = 2f;
+
+    /// <summary>
+    ///     Points gained on sacrificing a normal crewmember.
+    /// </summary>
+    [DataField] public float CommandSacrificePoints = 3f;
+
     // this is awful but it works so i'm not complaining
     // i'm complaining -kandiyaki
     // IM ALSO COMPLAINING -mq
@@ -120,7 +130,7 @@ public partial class RitualSacrificeBehavior : RitualCustomBehavior
         for (int i = 0; i < Max; i++)
         {
             var isCommand = args.EntityManager.HasComponent<CommandStaffComponent>(Uids[i]);
-            var knowledgeGain = isCommand ? 2f : 1f;
+            var knowledgeGain = isCommand ? CommandSacrificePoints : SacrificePoints;
 
             //get the humanoid appearance component
             if (!args.EntityManager.TryGetComponent<HumanoidAppearanceComponent>(Uids[i], out var humanoid))

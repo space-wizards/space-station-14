@@ -1,0 +1,199 @@
+- type: quickPhrase
+  id: BaseServiceSubjectPhrase
+  parent: [ BaseSubjectPhrase, BaseServicePhrase ]
+  abstract: true
+
+- type: quickPhrase
+  id: MeatPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-meat
+
+- type: quickPhrase
+  id: FlourPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-flour
+
+- type: quickPhrase
+  id: RicePhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-rice
+
+- type: quickPhrase
+  id: DoughPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-dough
+
+- type: quickPhrase
+  id: BreadPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-bread
+
+- type: quickPhrase
+  id: MilkPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-milk
+
+- type: quickPhrase
+  id: EggPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-egg
+
+- type: quickPhrase
+  id: WheatPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-wheat
+
+- type: quickPhrase
+  id: VegetablePhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-vegetable
+
+- type: quickPhrase
+  id: FruitPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-fruit
+
+- type: quickPhrase
+  id: SugarPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-sugar
+
+- type: quickPhrase
+  id: AlcoholPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-alcohol
+
+- type: quickPhrase
+  id: NonAlcoholicPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-non-alcoholic
+
+- type: quickPhrase
+  id: JuicePhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-juice
+
+- type: quickPhrase
+  id: MopPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-mop
+
+- type: quickPhrase
+  id: BucketPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-bucket
+
+- type: quickPhrase
+  id: SpaceCleanerPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-space-cleaner
+
+- type: quickPhrase
+  id: SoapPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-soap
+
+- type: quickPhrase
+  id: TrashPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-trash
+
+- type: quickPhrase
+  id: StagePhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-stage
+
+- type: quickPhrase
+  id: SeedPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-seed
+
+- type: quickPhrase
+  id: PlantPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-plant
+
+- type: quickPhrase
+  id: MutagenPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-mutagen
+
+- type: quickPhrase
+  id: RobustPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-robust
+
+- type: quickPhrase
+  id: WeedPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-weed
+
+- type: quickPhrase
+  id: KnifePhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-knife
+
+- type: quickPhrase
+  id: MicrowavePhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-microwave
+
+- type: quickPhrase
+  id: GrillPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-grill
+
+- type: quickPhrase
+  id: SweetPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-sweet
+
+- type: quickPhrase
+  id: SourPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-sour
+
+- type: quickPhrase
+  id: SpicyPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-spicy
+
+- type: quickPhrase
+  id: SavoryPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-savory
+
+- type: quickPhrase
+  id: BitterPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-bitter
+
+- type: quickPhrase
+  id: TomatoPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-tomato
+
+- type: quickPhrase
+  id: PotatoPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-potato
+
+- type: quickPhrase
+  id: OnionPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-onion
+
+- type: quickPhrase
+  id: AloePhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-aloe
+
+- type: quickPhrase
+  id: PoppyPhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-poppy
+
+- type: quickPhrase
+  id: GalaxyThistlePhrase
+  parent: BaseServiceSubjectPhrase
+  text: phrase-galaxythistle

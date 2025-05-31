@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprited by crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "pyr_inner_behind",
+            "directions": 4
+        },
+        {
+            "name": "pyr_inner_front",
+            "directions": 4
+        },
+        {
+            "name": "pyr_neck",
+            "directions": 4
+        },
+        {
+            "name": "pyr_stripes_front",
+            "directions": 4
+        },
+        {
+            "name": "pyr_wing_behind",
+            "directions": 4
+        },
+        {
+            "name": "pyr_wing_front",
+            "directions": 4
+        }
+    ]
+}

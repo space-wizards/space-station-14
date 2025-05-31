@@ -2,3 +2,13 @@
   license: "Custom"
   copyright: "Taken from Rain World; composed by James Primate and published by Black Screen Records."
   source: "https://www.youtube.com/watch?v=HPOKeoa1qOU"
+
+- files: ["replicator_ambiance.ogg"]
+  license: "Custom"
+  copyright: "Made by Widgetbeck (github)"
+  source: "https://github.com/impstation/imp-station-14/pull/2490"
+
+- files: ["hole_2.ogg"]
+  license: "Custom"
+  copyright: "Made by AftrLite (github)"
+  source: "https://github.com/impstation/imp-station-14/pull/2490"

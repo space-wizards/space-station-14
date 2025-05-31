@@ -1,0 +1,36 @@
+- type: entity
+  abstract: true
+  parent: FoodBase
+  id: FoodCandyBase
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Consumable/Food/candy.rsi
+  - type: Appearance
+  - type: RandomizedCandy
+
+- type: entity
+  parent: FoodCandyBase
+  id: FoodGumball
+  name: gumball
+  description: "Try as you might, you can't blow bubbles with it... it's enriched with medicine for minor ailments."
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15 # 1 extra
+        reagents:
+        - ReagentId: Nutriment # Adding so sugar metabolizes
+          Quantity: 1
+        - ReagentId: Sugar
+          Quantity: 4
+        - ReagentId: Kelotane
+          Quantity: 3
+        - ReagentId: Tricordrazine
+          Quantity: 3
+        - ReagentId: Dylovene
+          Quantity: 3
+  - type: Sprite
+    layers:
+    - state: gumball
+      map: [ "enum.CandyVisualLayers.Ball" ]
+    - state: gumball-shine

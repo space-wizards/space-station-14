@@ -27,7 +27,7 @@
 - type: entity
   id: CrateArmoryDMR
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
-  name: marksman rifle crate
+  name: daito crate
   description: For when you need a precise and efficient weapon. Contains two Daito DMRs with extra ammunition. Requires Armory access to open.
   components:
   - type: StorageFill
@@ -36,3 +36,55 @@
         amount: 2
       - id: MagazineDMR
         amount: 4
+
+- type: entity
+  id: CrateArmoryLecter
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  name: lecter crate
+  description: Contains two Lecters with four magazines. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRifleLecter
+      amount: 2
+    - id: MagazineRifle
+      amount: 4
+
+- type: entity
+  id: CrateArmoryAKMS
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  name: AKMS crate
+  description: Contains two AKMS rifles with four magazines. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRifleAk
+      amount: 2
+    - id: MagazineLightRifle
+      amount: 4
+
+- type: entity
+  id: CrateArmoryKammerer
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  name: kammerer crate
+  description: For when the enemy absolutely needs to be replaced with lead within 3-5 business days. Contains two Kammerer shotguns with four boxes of buckshot shells. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponShotgunKammerer
+      amount: 2
+    - id: BoxLethalshot
+      amount: 4
+
+- type: entity
+  id: CrateArmoryDrozd
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  name: drozd crate
+  description: Contains two Drozd submachine guns with four magazines. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponSubMachineGunDrozd
+      amount: 2
+    - id: MagazinePistolSubMachineGun
+      amount: 4

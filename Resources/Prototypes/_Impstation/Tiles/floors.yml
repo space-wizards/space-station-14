@@ -13,3 +13,49 @@
     collection: FootstepTile
   itemDrop: FloorTileItemApid
   heatCapacity: 10000
+
+- type: tile
+  id: FloorCraftedAsphalt
+  name: tiles-crafted-asphalt
+  parent: FloorAsphalt
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemCraftedAsphalt
+
+# Faux sci tiles
+- type: tile
+  id: FloorShoveledAstroSnow
+  name: tiles-shoveled-astro-snow
+  sprite: /Textures/Tiles/Planet/Snow/snow.png
+  variants: 13
+  placementVariants:
+  - 0.8
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0116
+  - 0.0116
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemShoveledAstroSnow
+  footstepSounds:
+    collection: FootstepSnow
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorAstroCave
+  name: tiles-astro-cave
+  parent: FloorCave
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemAstroCave

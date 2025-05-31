@@ -1,0 +1,9 @@
+﻿- type: entity
+  id: CrateEmergencyInjectorKit
+  parent: CrateMedical
+  name: emergency autoinjector crate
+  description: Crate filled with a injector kit
+  components:
+  - type: StorageFill
+    contents:
+    - id: MedkitInjectorFilled

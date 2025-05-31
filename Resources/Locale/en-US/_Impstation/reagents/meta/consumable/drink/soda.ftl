@@ -15,3 +15,6 @@ reagent-desc-supermixer = A simple, sweet mixer. It leaves a little to be desire
 
 reagent-name-supermixerpsych = the supermixer
 reagent-desc-supermixerpsych = A touch of introspection to keep down the heat!
+
+reagent-name-moonrise = Moonrise Blend
+reagent-desc-moonrise = A summer classic from the planet of Cernunnos, this frosty delight is perfect for ushering in the sunset.

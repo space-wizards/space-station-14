@@ -29,11 +29,12 @@ public sealed partial class RitualKnowledgeBehavior : RitualCustomBehavior
     // this is basically a ripoff from hereticritualsystem
     public override bool Execute(RitualData args, out string? outstr)
     {
+        //this isn't a system or a component so we gotta get a little shitcodey with it
         _prot = IoCManager.Resolve<IPrototypeManager>();
         _rand = IoCManager.Resolve<IRobustRandom>();
         _lookup = args.EntityManager.System<EntityLookupSystem>();
         _heretic = args.EntityManager.System<HereticSystem>();
-
+        _container = args.EntityManager.System<SharedContainerSystem>();
 
         outstr = null;
 

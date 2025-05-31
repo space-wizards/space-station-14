@@ -27,3 +27,23 @@
     sprite: _Impstation/Clothing/Neck/Mantles/hdmantle.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Neck/Mantles/hdmantle.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleLily
+  name: lily mantle
+  description: A mantle designed to resemble an orange lily, granted in recognition of expert botany skill.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Mantles/lilymantle.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Mantles/lilymantle.rsi
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: unfold-verb-clothing-collar
+    foldVerbText: fold-verb-clothing-collar
+  - type: FoldableClothing
+    foldedEquippedPrefix: folded
+  - type: Tag
+    tags:
+    - WhitelistChameleon

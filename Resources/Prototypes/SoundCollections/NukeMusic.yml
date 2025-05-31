@@ -5,12 +5,19 @@
     - /Audio/StationEvents/countdown.ogg
     - /Audio/StationEvents/sound_station_14.ogg
     # imp additions below
+    - /Audio/_Impstation/Music/alicorn.ogg
     - /Audio/_Impstation/Music/blatantly_nuclear.ogg
     - /Audio/_Impstation/Music/boss.ogg
     - /Audio/_Impstation/Music/cyber_grind.ogg
+    - /Audio/_Impstation/Music/cyberwildlife_park.ogg
     - /Audio/_Impstation/Music/departure.ogg
+    - /Audio/_Impstation/Music/ds_nuke.ogg
+    - /Audio/_Impstation/Music/eon.ogg
     - /Audio/_Impstation/Music/fiend.ogg
+    - /Audio/_Impstation/Music/final_hours.ogg
+    - /Audio/_Impstation/Music/fly_octo_fly.ogg
     - /Audio/_Impstation/Music/forget_about_freeman.ogg
+    - /Audio/_Impstation/Music/great_heat.ogg
     - /Audio/_Impstation/Music/hurry_up.ogg
     - /Audio/_Impstation/Music/roadkilla.ogg
     - /Audio/_Impstation/Music/ruinous_intnt.ogg

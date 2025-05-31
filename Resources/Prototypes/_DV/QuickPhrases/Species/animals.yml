@@ -1,0 +1,160 @@
+- type: quickPhrase
+  id: BaseAnimalSpeciesPhrase
+  parent: BaseSpeciesPhrase
+  group: Wildlife
+  abstract: true
+
+- type: quickPhrase
+  id: SpeciesDogPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-dog
+
+- type: quickPhrase
+  id: SpeciesCatPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-cat
+
+- type: quickPhrase
+  id: SpeciesOpossumPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-opossum
+
+- type: quickPhrase
+  id: SpeciesLizardPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-lizard
+
+- type: quickPhrase
+  id: SpeciesBatPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-bat
+
+- type: quickPhrase
+  id: SpeciesSlimePhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-slime
+
+- type: quickPhrase
+  id: SpeciesMousePhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-mouse
+
+- type: quickPhrase
+  id: SpeciesMothroachPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-mothroach
+
+- type: quickPhrase
+  id: SpeciesCockroachPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-cockroach
+
+- type: quickPhrase
+  id: SpeciesSpiderPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-spider
+
+- type: quickPhrase
+  id: SpeciesBirdPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-bird
+
+- type: quickPhrase
+  id: SpeciesParrotPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-parrot
+
+- type: quickPhrase
+  id: SpeciesSnakePhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-snake
+
+- type: quickPhrase
+  id: SpeciesPigPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-pig
+
+- type: quickPhrase
+  id: SpeciesMonkeyPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-monkey
+
+- type: quickPhrase
+  id: SpeciesKoboldPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-kobold
+
+- type: quickPhrase
+  id: SpeciesFerretPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-ferret
+
+- type: quickPhrase
+  id: SpeciesCarpPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-carp
+
+- type: quickPhrase
+  id: SpeciesXenoPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-xeno
+
+- type: quickPhrase
+  id: SpeciesHamsterPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-hamster
+
+- type: quickPhrase
+  id: SpeciesRaccoonPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-raccoon
+
+- type: quickPhrase
+  id: SpeciesRounyPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-rouny
+
+- type: quickPhrase
+  id: SpeciesFoxPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-fox
+
+- type: quickPhrase
+  id: SpeciesCrabPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-crab
+
+- type: quickPhrase
+  id: SpeciesKangarooPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-kangaroo
+
+- type: quickPhrase
+  id: SpeciesCowPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-cow
+
+- type: quickPhrase
+  id: SpeciesDuckPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-duck
+
+- type: quickPhrase
+  id: SpeciesBearPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-bear
+
+- type: quickPhrase
+  id: SpeciesPenguinPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-penguin
+
+- type: quickPhrase
+  id: SpeciesGoatPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-goat
+
+- type: quickPhrase
+  id: SpeciesChickenPhrase
+  parent: BaseAnimalSpeciesPhrase
+  text: phrase-species-chicken

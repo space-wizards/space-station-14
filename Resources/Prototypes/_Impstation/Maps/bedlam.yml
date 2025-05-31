@@ -1,0 +1,71 @@
+- type: gameMap
+  id: Bedlam
+  mapName: 'Bedlam'
+  mapPath: /Maps/_Impstation/bedlam.yml
+  minPlayers: 7
+  maxPlayers: 25
+  stations:
+    Bedlam:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Bedlam {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '-VD'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/_Impstation/Shuttles/emergency_bedlam.yml
+        - type: StationCargoShuttle
+          path: /Maps/_Impstation/Shuttles/cargo.yml
+        - type: StationJobs
+          availableJobs:
+            # command
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            AdministrativeAssistant: [ 1, 1 ]
+            ChiefEngineer: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+            # service
+            Bartender: [ 1, 1 ]
+            Botanist: [ 1, 1 ]
+            Chef: [ 1, 1 ]
+            Clown: [ 1, 1 ]
+            Janitor: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            Chaplain: [1, 1]
+            Librarian: [1, 1]
+            Reporter: [1, 1]
+            # engineering
+            AtmosphericTechnician: [ 2, 2 ]
+            StationEngineer: [ 2, 2 ]
+            TechnicalAssistant: [ 1, 1 ]
+            # medical
+            Chemist: [ 1, 1 ]
+            Paramedic: [1, 1]
+            Psychologist: [1, 1]
+            MedicalDoctor: [ 2, 2 ]
+            MedicalIntern: [ 1, 1 ]
+            # science
+            Borg: [ 2, 2 ]
+            ResearchAssistant: [ 1, 1 ]
+            Scientist: [ 2, 2 ]
+            StationAi: [1,1]
+            # security
+            SecurityCadet: [ 1, 1 ]
+            Brigmedic: [1, 1]
+            Detective: [1, 1]
+            Lawyer: [1, 1]
+            Warden: [1,1]
+            SecurityOfficer: [ 2, 2 ]
+            # cargo
+            CargoTechnician: [ 2, 2 ]
+            Courier: [ 1, 1 ]
+            SalvageSpecialist: [ 2, 2 ]
+            SupplyAssistant: [ 1, 1 ]
+            # civilian
+            Passenger: [ -1, -1 ]
