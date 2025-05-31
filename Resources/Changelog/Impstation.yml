@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: SixValentine
   changes:
-  - message: Fixed Embryo
-    type: Fix
-  id: 1257
-  time: '2025-03-08T07:20:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1868
-- author: SixValentine
-  changes:
   - message: Luna wiring should no longer output a Gorbillion Kw requirement to engie
       monitors (Only a zillion)
     type: Fix
@@ -4215,3 +4208,10 @@
   id: 1756
   time: '2025-05-30T19:46:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2610
+- author: SixValentine
+  changes:
+  - message: Officer Vlogs Is Gone
+    type: Remove
+  id: 1757
+  time: '2025-05-31T06:34:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2620
