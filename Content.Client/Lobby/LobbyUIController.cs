@@ -310,7 +310,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
                 return;
             }
 
-            if (_jobPriorityEditor.Visible && _jobPriorityEditor.IsDirty)
+            if (_jobPriorityEditor.Visible && _jobPriorityEditor.IsDirty())
             {
                 OpenSavePanel(SaveJobPriorities);
 

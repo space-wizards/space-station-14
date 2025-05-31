@@ -231,7 +231,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
     }
 
     /// <summary>
-    /// Check if the selected priorities are different than the saved ones
+    /// Check if the selected priorities are different from the saved ones
     /// </summary>
     private void SetDirty()
     {
@@ -239,7 +239,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
         var savedJobPriorities = _preferencesManager.Preferences?.JobPriorities ?? new Dictionary<ProtoId<JobPrototype>, JobPriority>();
         if (!SelectedJobPriorities.Keys.ToHashSet().SetEquals(savedJobPriorities.Keys.ToHashSet()))
         {
-            IsDirty = true;
+            SetDirty(true);
             return;
         }
 
@@ -247,37 +247,51 @@ public sealed partial class JobPriorityEditor : BoxContainer
         {
             if (prio != savedJobPriorities.GetValueOrDefault(job))
             {
-                IsDirty = true;
+                SetDirty(true);
                 return;
             }
         }
 
-        IsDirty = false;
+        SetDirty(false);
     }
+
+    /// <summary>
+    /// Private member that should be only set via <see cref="SetDirty"/>
+    /// </summary>
+    private bool _isDirty;
 
     /// <summary>
     /// True if the current set of priorities is different from the saved ones.
     /// Used to determine if the save and reset buttons should be active.
+    /// <seealso cref="_isDirty"/>
     /// </summary>
-    private bool _isDirty;
-
-    public bool IsDirty
+    public bool IsDirty()
     {
-        get => _isDirty;
-        set
-        {
-            if (_isDirty == value)
-                return;
-
-            _isDirty = value;
-            UpdateSaveButton();
-        }
+        return _isDirty;
     }
 
+    /// <summary>
+    /// Set the dirty state of the Job Priority Editor, will also set the disabled state of the reset and save buttons
+    /// afterwards appropriately
+    /// </summary>
+    /// <param name="value">True if you made a change which makes the current job priorities differ from the saved ones.
+    /// False if you made a change which makes them equal, or if you reset the job priorities or saved them.</param>
+    private void SetDirty(bool value)
+    {
+        if (_isDirty == value)
+            return;
+
+        _isDirty = value;
+        UpdateSaveButton();
+    }
+
+    /// <summary>
+    /// Sets the disabled state of the reset and save buttons according to <see cref="IsDirty"/>.
+    /// </summary>
     private void UpdateSaveButton()
     {
-        SaveButton.Disabled = !IsDirty;
-        ResetButton.Disabled = !IsDirty;
+        SaveButton.Disabled = !IsDirty();
+        ResetButton.Disabled = !IsDirty();
     }
 
     /// <summary>
