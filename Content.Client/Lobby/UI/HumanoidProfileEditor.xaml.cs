@@ -135,7 +135,7 @@ namespace Content.Client.Lobby.UI
 
             ExportImageButton.OnPressed += args =>
             {
-                Preview.ExportImage();
+                Preview.ExportImage(args.Button);
             };
 
             OpenImagesButton.OnPressed += args =>
