@@ -164,7 +164,6 @@ public sealed partial class ProfilePreviewSpriteView
     /// <summary>
     /// Apply PreviewStartingGear from antag prototype to the dummy.
     /// </summary>
-    /// <param name="antag"></param>
     private void GiveDummyAntagLoadout(AntagPrototype antag)
     {
         if (!antag.PreviewStartingGear.HasValue)
@@ -256,8 +255,6 @@ public sealed partial class ProfilePreviewSpriteView
     /// <summary>
     /// Give player's role loadout to the dummy.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="roleLoadout"></param>
     private void GiveDummyLoadout(EntityUid uid, RoleLoadout? roleLoadout)
     {
         if (roleLoadout == null)
