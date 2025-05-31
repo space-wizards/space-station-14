@@ -34,7 +34,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         }
     }
 
-    private void OnStrapMoveEvent(EntityUid uid, StrapComponent component, ref MoveEvent args)
+    private void OnStrapMoveEvent(Entity<StrapComponent> strap, ref MoveEvent args)
     {
         // I'm moving this to the client-side system, but for the sake of posterity let's keep this comment:
         // > This is mega cursed. Please somebody save me from Mr Buckle's wild ride
@@ -52,13 +52,13 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         if (args.NewRotation == args.OldRotation)
             return;
 
-        if (!TryComp<SpriteComponent>(uid, out var strapSprite))
+        if (!TryComp<SpriteComponent>(strap.Owner, out var strapSprite))
             return;
 
-        var angle = _xformSystem.GetWorldRotation(uid) + _eye.CurrentEye.Rotation; // Get true screen position, or close enough
+        var angle = _xformSystem.GetWorldRotation(strap.Owner) + _eye.CurrentEye.Rotation; // Get true screen position, or close enough
 
         var isNorth = angle.GetCardinalDir() == Direction.North;
-        foreach (var buckledEntity in component.BuckledEntities)
+        foreach (var buckledEntity in strap.Comp.BuckledEntities)
         {
             if (!TryComp<BuckleComponent>(buckledEntity, out var buckle))
                 continue;
