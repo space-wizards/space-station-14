@@ -5,6 +5,7 @@
   playTimeTracker: JobSalvageSpecialist
   requirements:
     - !type:DepartmentTimeRequirement
+      department: Cargo
       time: 10800 # 3 hrs, imp
     - !type:OverallPlaytimeRequirement
       time: 36000 #10 hrs, imp
