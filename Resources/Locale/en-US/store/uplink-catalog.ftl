@@ -31,6 +31,9 @@ uplink-gloves-north-star-desc = A pair of gloves that reduce your punching coold
 
 uplink-gloves-knuckleduster-name = Syndicate Knuckle Dusters
 uplink-gloves-knuckleduster-desc = A pair of plastitanium knuckle dusters that let you punch hard enough to break the captains jaw into pieces.
+
+uplink-flamethrower-name = FG13 flamethrower
+uplink-flamethrower-desc = Invite Nanotrasen to the cookout with this portable incendiary weapon.
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
 uplink-explosive-grenade-desc = A simplistic grenade with a 3.5 second long fuse that is geared towards injuring personnel. Causes minimal hull damage.
