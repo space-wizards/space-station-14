@@ -55,22 +55,27 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         while (query.MoveNext(out var uid, out var comp, out var xform))
         {
-            if (_transform.InRange(xform.Coordinates, comp.LastCoordinates, comp.MaxDistance))
+            // As long as the component is clientside it bulldozes *EVERYTHING*.
+            var currentCoords = _transform.GetMoverCoordinates(xform.Coordinates);
+            if (comp.LastCoordinates is not { } lastCoords)
+            {
+                comp.LastCoordinates = currentCoords;
+                continue;
+            }
+            else if (_transform.InRange(xform.Coordinates, lastCoords, comp.MaxDistance))
             {
                 if (_timing.CurTime < comp.TargetTime)
                     continue;
             }
 
-            comp.LastCoordinates = _transform.GetMoverCoordinates(xform.Coordinates);
+            comp.LastCoordinates = currentCoords;
             comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
-
-            CreateParticles(uid);
+            CreateParticles(uid, xform);
         }
     }
 
-    private void CreateParticles(EntityUid uid)
+    private void CreateParticles(EntityUid uid, TransformComponent uidXform)
     {
-        var uidXform = Transform(uid);
         // Don't show particles unless the user is moving.
         if (Container.TryGetContainingContainer((uid, uidXform, null), out var container) &&
             TryComp<PhysicsComponent>(container.Owner, out var body) &&
