@@ -90,8 +90,6 @@
   sounds:
     Scream:
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
-    Laugh:
-      path: /Audio/Animals/lizard_happy.ogg
     Honk:
       collection: BikeHorn
     Whistle:
@@ -114,8 +112,6 @@
   sounds:
     Scream:
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
-    Laugh:
-      path: /Audio/Animals/lizard_happy.ogg
     Honk:
       collection: BikeHorn
     Whistle:
@@ -536,13 +532,6 @@
       variation: 0.125
 
 - type: emoteSounds
-  id: Bear
-  sound:
-    path: /Audio/Animals/bear.ogg
-    params:
-      variation: 0.125
-
-- type: emoteSounds
   id: Cerberus
   sound:
     path: /Audio/Animals/cerberus.ogg
@@ -566,12 +555,5 @@
   id: Parrot
   sound:
     path: /Audio/Animals/parrot_raught.ogg
-    params:
-      variation: 0.125
-
-- type: emoteSounds
-  id: Goat
-  sound:
-    path: /Audio/Animals/goat_bah.ogg
     params:
       variation: 0.125
