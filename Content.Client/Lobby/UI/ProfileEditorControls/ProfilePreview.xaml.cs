@@ -26,14 +26,14 @@ public sealed partial class ProfilePreview : BoxContainer
         SpriteRotateRight.OnPressed += OnRotateRight;
     }
 
-/// <summary>
-/// This should be called before loading a profile to initialize the managers
-/// </summary>
-/// <param name="profileEditor"></param>
-/// <param name="entMan"></param>
-/// <param name="prefMan"></param>
-/// <param name="protoMan"></param>
-/// <param name="playerMan"></param>
+    /// <summary>
+    /// This must be called before loading a profile to initialize the managers
+    /// </summary>
+    /// <param name="profileEditor"></param>
+    /// <param name="entMan"></param>
+    /// <param name="prefMan"></param>
+    /// <param name="protoMan"></param>
+    /// <param name="playerMan"></param>
     public void Initialize(HumanoidProfileEditor profileEditor, IEntityManager entMan, IClientPreferencesManager prefMan, IPrototypeManager protoMan, ISharedPlayerManager playerMan)
     {
         _editor = profileEditor;
