@@ -13,6 +13,12 @@ public sealed class AdminCommandPermissions
     // Commands only executable by admins with one of the given flag masks.
     public readonly Dictionary<string, AdminFlags[]> AdminCommands = new();
 
+    public void Clear()
+    {
+        AnyCommands.Clear();
+        AdminCommands.Clear();
+    }
+
     public void LoadPermissionsFromStream(Stream fs)
     {
         using var reader = new StreamReader(fs, EncodingHelpers.UTF8);
@@ -58,15 +64,15 @@ public sealed class AdminCommandPermissions
             return true;
         }
 
-        if (!AdminCommands.TryGetValue(cmdName, out var flagsReq))
-        {
-            // Server-console only.
-            return false;
-        }
-
         if (admin == null)
         {
             // Player isn't an admin.
+            return false;
+        }
+
+        if (!AdminCommands.TryGetValue(cmdName, out var flagsReq))
+        {
+            // Server-console only.
             return false;
         }
 
