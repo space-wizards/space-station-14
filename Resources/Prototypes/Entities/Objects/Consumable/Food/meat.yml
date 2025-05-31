@@ -50,6 +50,7 @@
     materialComposition:
       Meaterial: 300
 
+# for cured, fake, special or otherwise inexplicably raw meats
 - type: entity
   parent: FoodMeatBase
   id: FoodMeatRawBase
@@ -59,6 +60,13 @@
     tags:
     - Raw
     - Meat
+
+# for everything else
+- type: entity
+  parent: FoodMeatRawBase
+  id: FoodMeatRawPerishableBase
+  abstract: true
+  components:
   - type: Perishable
     # raw meat rots in 5 minutes, get it into the freezer fast
     rotAfter: 300
@@ -69,21 +77,11 @@
     # once it would say bloated, turn into the rotten prototype
     stage: 1
 
-# bruh
-- type: Tag
-  id: Raw
-
-- type: Tag
-  id: Cooked
-
-- type: Tag
-  id: Cutlet
-
 # Raw
 
 - type: entity
   name: raw meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeat
   description: A slab of raw meat.
   components:
@@ -106,13 +104,10 @@
     graph: MeatSteak
     node: start
     defaultTarget: meat steak
-  - type: Tag
-    tags:
-    - Meat
 
 - type: entity
   name: raw human meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatHuman
   description: Gross.
   components:
@@ -130,7 +125,7 @@
 
 - type: entity
   name: raw carp fillet
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   # MeatFish?...
   id: FoodMeatFish
   description: Your last words being "Wow, exotic!" are not worth it. The taste itself though? Maybe.
@@ -138,10 +133,6 @@
   - type: FlavorProfile
     flavors:
       - fishy
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
   - type: Sprite
     state: fish
   - type: SolutionContainerManager
@@ -158,15 +149,11 @@
 
 - type: entity
   name: raw bacon
-  # bacon is cured so not raw = cant rot
-  parent: FoodMeatBase
+  # cured, does not perish
+  parent: FoodMeatRawBase
   id: FoodMeatBacon
   description: A raw piece of bacon.
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
   - type: Sprite
     state: bacon
   - type: SolutionContainerManager
@@ -188,7 +175,7 @@
 
 - type: entity
   name: raw bear meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatBear
   description: A very manly slab of raw bear meat.
   components:
@@ -212,7 +199,7 @@
 
 - type: entity
   name: raw penguin meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatPenguin
   description: A slab of raw penguin meat. Can be used as a substitute for fish in recipes.
   components:
@@ -236,7 +223,7 @@
 
 - type: entity
   name: raw chicken meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatChicken
   description: A slab of raw chicken. Remember to wash your hands!
   components:
@@ -262,7 +249,7 @@
 
 - type: entity
   name: raw duck meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatDuck
   description: A slab of raw duck. Remember to wash your hands!
   components:
@@ -287,15 +274,15 @@
 - type: entity
   name: prime-cut corgi meat
   # can't rot since that would be very bad for syndies
-  parent: [FoodMeatBase, BaseGrandTheftContraband]
+  parent: [FoodMeatRawBase, BaseGrandTheftContraband]
   id: FoodMeatCorgi
   description: The tainted gift of an evil crime. The meat may be delicious, but at what cost?
   components:
   - type: Tag
     tags:
     - Raw
-    - HighRiskItem
     - Meat
+    - HighRiskItem
   - type: Sprite
     state: corgi
   - type: SolutionContainerManager
@@ -311,7 +298,7 @@
 
 - type: entity
   name: raw crab meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatCrab
   description: A pile of raw crab meat.
   components:
@@ -335,7 +322,7 @@
 
 - type: entity
   name: raw goliath meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatGoliath
   description: A slab of goliath meat. It's not very edible now, but it cooks great in lava.
   components:
@@ -358,14 +345,11 @@
 
 - type: entity
   name: dragon flesh
-  parent: FoodMeatBase
+  # mythically unperishable
+  parent: FoodMeatRawBase
   id: FoodMeatDragon
   description: The dense meat of the space-era apex predator is oozing with its mythical ichor. Ironically, best eaten raw.
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
   - type: Sprite
     layers:
     - state: dragon
@@ -392,7 +376,7 @@
 
 - type: entity
   name: raw rat meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatRat
   description: Prime meat from maintenance!
   components:
@@ -412,7 +396,7 @@
 
 - type: entity
   name: raw lizard meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatLizard
   description: Delicious dino damage.
   components:
@@ -436,7 +420,7 @@
 
 - type: entity
   name: raw plant meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatPlant
   description: All the joys of healthy eating with all the fun of cannibalism.
   components:
@@ -445,7 +429,7 @@
 
 - type: entity
   name: rotten meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatRotten
   description: Halfway to becoming fertilizer for your garden.
   components:
@@ -470,7 +454,7 @@
 
 - type: entity
   name: raw spider meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatSpider
   description: A slab of spider meat. That's so Kafkaesque.
   components:
@@ -490,7 +474,7 @@
 
 - type: entity
   name: raw spider leg
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatSpiderLeg
   description: A still twitching leg of a giant spider... you don't really want to eat this, do you?
   components:
@@ -507,7 +491,7 @@
 
 - type: entity
   name: meatwheat clump
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatWheat
   description: This doesn't look like meat, but your standards aren't that high to begin with.
   components:
@@ -525,14 +509,10 @@
 
 - type: entity
   name: raw snake meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatSnake
   description: A long piece of snake meat, hopefully not poisonous.
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
   - type: Sprite
     state: snake
   - type: SolutionContainerManager
@@ -546,8 +526,8 @@
 
 - type: entity
   name: raw xeno meat
-  # not raw since acid kills bacteria or something, same as xeno
-  parent: FoodMeatBase
+  # not perishable since acid kills bacteria or something, same as xeno
+  parent: FoodMeatRawBase
   id: FoodMeatXeno
   description: A slab of xeno meat, dripping with acid.
   components:
@@ -555,10 +535,6 @@
     flavors:
       - meaty
       - acid
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
   - type: Sprite
     state: xeno
   - type: SolutionContainerManager
@@ -573,8 +549,8 @@
 
 - type: entity
   name: raw rouny meat
-  # not raw since rouny best
-  parent: FoodMeatBase
+  # not perishable since rouny best
+  parent: FoodMeatRawBase
   id: FoodMeatRouny
   description: A slab of meat from an innocent red friend.
   components:
@@ -583,10 +559,6 @@
     - meaty
     - acid
     - lostfriendship
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
   - type: Sprite
     state: rouny
   - type: SolutionContainerManager
@@ -601,10 +573,11 @@
     defaultTarget: rouny steak
 
 - type: entity
-  name: killer tomato meat
-  parent: FoodMeatBase
+  name: raw killer tomato meat
+  # TODO: make perishable once a proper cooked version is added
+  parent: FoodMeatRawBase
   id: FoodMeatTomato
-  description: A slice from a huge tomato.
+  description: A slice from a huge, living tomato.
   components:
   - type: Sprite
     state: tomato
@@ -613,17 +586,14 @@
     slice: FoodMeatTomatoCutlet
   - type: StaticPrice
     price: 100
+  # TODO: Construction component for proper cooked version
 
 - type: entity
   name: salami
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatSalami
-  description: A large tube of salami. Best not to ask what went into it.
+  description: A large tube of cured salami. Best not to ask what went into it.
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
   - type: Sprite
     sprite: Objects/Consumable/Food/salami.rsi
     state: salami
@@ -642,7 +612,7 @@
 
 - type: entity
   name: meat clown
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatClown
   description: A delicious, round piece of meat clown. How horrifying.
   components:
@@ -650,10 +620,6 @@
     flavors:
       - meaty
       - funny
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
   - type: Sprite
     state: clown
   - type: SliceableFood
@@ -661,14 +627,10 @@
 
 - type: entity
   name: meatball
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatMeatball
   description: A raw ball of meat. Meat ball.
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
   - type: Sprite
     state: meatball
   - type: Construction
@@ -679,14 +641,10 @@
 
 - type: entity
   name: meat patty
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatPatty
   description: A flat slab of ground meat. Ready for grillin'.
   components:
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
   - type: Sprite
     state: raw_patty
   - type: InternalTemperature
@@ -698,17 +656,13 @@
 
 - type: entity
   name: slimeball
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatSlime
   description: A gelatinous shaping of slime jelly.
   components:
   - type: FlavorProfile
     flavors:
       - slimy
-  - type: Tag
-    tags:
-    - Raw
-    - Meat
   - type: Extractable
     juiceSolution:
       reagents:
@@ -719,7 +673,7 @@
 
 - type: entity
   name: raw snail meat
-  parent: FoodMeatRawBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatSnail
   description: Improved with salt.
   components:
@@ -739,6 +693,7 @@
 
 - type: entity
   name: anomalous meat mass
+  # unperishable for anomalous reasons
   parent: FoodMeatRawBase
   id: FoodMeatAnomaly
   description: An impossibly dense slab of meat. Just looking at it makes you uncomfortable.
@@ -763,12 +718,10 @@
     graph: AnomalyMeatSteak
     node: start
     defaultTarget: anomaly steak
-  - type: Tag
-    tags:
-    - Meat
 
 # Cooked
 
+# tagged as meat but is otherwise just a FoodBase because uhh... ask science?
 - type: entity
   parent: FoodBase
   id: MaterialSmileExtract
@@ -1341,7 +1294,7 @@
 
 - type: entity
   name: raw cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatCutlet
   description: A raw meat cutlet.
   components:
@@ -1367,7 +1320,7 @@
 
 - type: entity
   name: raw bear cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatBearCutlet
   description: A very manly cutlet of raw bear meat.
   components:
@@ -1396,7 +1349,7 @@
 
 - type: entity
   name: raw penguin cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatPenguinCutlet
   description: A cutlet of raw penguin meat. Can be used as a substitute for fish in recipes.
   components:
@@ -1423,7 +1376,7 @@
 
 - type: entity
   name: raw chicken cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatChickenCutlet
   description: A cutlet of raw chicken. Remember to wash your hands!
   components:
@@ -1450,7 +1403,7 @@
 
 - type: entity
   name: raw duck cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatDuckCutlet
   description: A cutlet of raw duck. Remember to wash your hands!
   components:
@@ -1477,7 +1430,7 @@
 
 - type: entity
   name: raw lizard cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatLizardCutlet
   description: Delicious dino cutlet.
   components:
@@ -1507,7 +1460,7 @@
 
 - type: entity
   name: raw spider cutlet
-  parent: FoodMeatBase
+  parent: FoodMeatRawPerishableBase
   id: FoodMeatSpiderCutlet
   description: A cutlet of raw spider meat. So Kafkaesque.
   components:
@@ -1533,7 +1486,8 @@
 
 - type: entity
   name: raw xeno cutlet
-  parent: FoodMeatBase
+  # not perishable since acid kills bacteria or something, same as xeno
+  parent: FoodMeatRawBase
   id: FoodMeatXenoCutlet
   description: A slab of raw xeno meat, dripping with acid.
   components:
@@ -1561,23 +1515,21 @@
 
 - type: entity
   name: raw killer tomato cutlet
-  parent: FoodMeatBase
+  # TODO: make perishable once a proper cooked version is added
+  parent: FoodMeatRawBase
   id: FoodMeatTomatoCutlet
-  description: A cutlet from a slab of tomato.
+  description: A cutlet from a slab of living tomato.
   components:
-  - type: Tag
-    tags:
-    - Cutlet
-    - Meat
   - type: Sprite
     state: salami-slice
     color: red
   - type: StaticPrice
     price: 30
+  # TODO: Construction component for proper cooked version
 
 - type: entity
   name: salami slice
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatSalamiSlice
   description: A slice of cured salami.
   components:
@@ -1599,7 +1551,8 @@
 
 - type: entity
   name: raw dragon cutlet
-  parent: FoodMeatBase
+  # mythically unperishable
+  parent: FoodMeatRawBase
   id: FoodMeatDragonCutlet
   description: A raw dragon meat cutlet.
   components:
