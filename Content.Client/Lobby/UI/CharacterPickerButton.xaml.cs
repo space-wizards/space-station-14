@@ -16,8 +16,8 @@ namespace Content.Client.Lobby.UI;
 [GenerateTypedNameReferences]
 public sealed partial class CharacterPickerButton : ContainerButton
 {
-    const string EnabledLoc = "character-setup-gui-character-picker-button-enabled-button";
-    const string DisabledLoc = "character-setup-gui-character-picker-button-disabled-button";
+    private const string EnabledLoc = "character-setup-gui-character-picker-button-enabled-button";
+    private const string DisabledLoc = "character-setup-gui-character-picker-button-disabled-button";
 
     /// <summary>
     /// Invoked if we should delete the attached character
