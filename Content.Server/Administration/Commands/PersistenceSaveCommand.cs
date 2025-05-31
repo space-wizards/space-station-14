@@ -16,8 +16,6 @@ public sealed class PersistenceSave : LocalizedEntityCommands
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
 
     public override string Command => "persistencesave";
-    public override string Description => Loc.GetString($"cmd-persistencesave-desc");
-    public override string Help => Loc.GetString($"cmd-persistencesave-help");
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

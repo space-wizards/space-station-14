@@ -1,0 +1,141 @@
+- type: entity
+  abstract: true
+  parent: Paper
+  id: PaperAcquisitionSlip
+  name: acquisition slip
+  description: A slip with order details on it. It can be given to Cargo to complete the order.
+  components:
+  - type: Sprite
+    layers:
+    - state: acquisition_form
+    - state: acquisition_form_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: acquisition_form_header
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: Tag
+    tags:
+    - Trash
+    - Document
+    - Paper
+  - type: Paper
+    editingDisabled: true
+  - type: PaperVisuals
+    footerImagePath: "/Textures/Interface/Paper/AcquisitionSlips/barcode.svg.192dpi.png"
+    maxWritableArea: 512.0, 512.0
+
+- type: entity
+  parent: PaperAcquisitionSlip
+  id: PaperAcquisitionSlipMedical
+  suffix: Medical
+  components:
+  - type: Sprite
+    layers:
+    - state: acquisition_form
+    - state: acquisition_form_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: acquisition_form_header
+      color: "#57b8f0"
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/AcquisitionSlips/medical.svg.192dpi.png"
+
+- type: entity
+  parent: PaperAcquisitionSlip
+  id: PaperAcquisitionSlipScience
+  suffix: Science
+  components:
+  - type: Sprite
+    layers:
+    - state: acquisition_form
+    - state: acquisition_form_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: acquisition_form_header
+      color: "#cd7ccd"
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/AcquisitionSlips/science.svg.192dpi.png"
+
+- type: entity
+  parent: PaperAcquisitionSlip
+  id: PaperAcquisitionSlipSecurity
+  suffix: Security
+  components:
+  - type: Sprite
+    layers:
+    - state: acquisition_form
+    - state: acquisition_form_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: acquisition_form_header
+      color: "#ff4242"
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/AcquisitionSlips/security.svg.192dpi.png"
+
+- type: entity
+  parent: PaperAcquisitionSlip
+  id: PaperAcquisitionSlipService
+  suffix: Service
+  components:
+  - type: Sprite
+    layers:
+    - state: acquisition_form
+    - state: acquisition_form_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: acquisition_form_header
+      color: "#539c00"
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/AcquisitionSlips/service.svg.192dpi.png"
+
+- type: entity
+  parent: PaperAcquisitionSlip
+  id: PaperAcquisitionSlipCargo
+  suffix: Cargo
+  components:
+  - type: Sprite
+    layers:
+    - state: acquisition_form
+    - state: acquisition_form_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: acquisition_form_header
+      color: "#b48b57"
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/AcquisitionSlips/cargo.svg.192dpi.png"
+
+- type: entity
+  parent: PaperAcquisitionSlip
+  id: PaperAcquisitionSlipEngineering
+  suffix: Engineering
+  components:
+  - type: Sprite
+    layers:
+    - state: acquisition_form
+    - state: acquisition_form_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: acquisition_form_header
+      color: "#ff733c"
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/AcquisitionSlips/engineering.svg.192dpi.png"

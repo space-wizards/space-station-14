@@ -26,8 +26,7 @@ public sealed class PlanetCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly BiomeSystem _biomeSystem = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override string Command => "planet";
     public override string Description => Loc.GetString("cmd-planet-desc");
@@ -48,7 +47,7 @@ public sealed class PlanetCommand : LocalizedEntityCommands
 
         var mapId = new MapId(mapInt);
 
-        if (!_mapSystem.MapExists(mapId))
+        if (!_map.MapExists(mapId))
         {
             shell.WriteError(Loc.GetString($"cmd-planet-map", ("map", mapId)));
             return;
@@ -60,8 +59,9 @@ public sealed class PlanetCommand : LocalizedEntityCommands
             return;
         }
 
-        var mapUid = _mapSystem.GetMap(mapId);
-        _biomeSystem.EnsurePlanet(mapUid, biomeTemplate);
+        var biomeSystem = _entManager.System<BiomeSystem>();
+        var mapUid = _map.GetMapOrInvalid(mapId);
+        biomeSystem.EnsurePlanet(mapUid, biomeTemplate);
 
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));
     }

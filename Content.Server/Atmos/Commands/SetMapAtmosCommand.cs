@@ -12,7 +12,6 @@ namespace Content.Server.Atmos.Commands;
 public sealed class AddMapAtmosCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override string Command => "setmapatmos";
@@ -29,7 +28,7 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
         var map = _map.GetMapOrInvalid(new MapId(id));
         if (!map.IsValid())
         {
-            shell.WriteError(Loc.GetString("cmd-parse-failure-mapid",  ("arg", args[0])));
+            shell.WriteError(Loc.GetString("cmd-parse-failure-mapid", ("arg", args[0])));
             return;
         }
 
@@ -52,15 +51,15 @@ public sealed class AddMapAtmosCommand : LocalizedEntityCommands
             return;
         }
 
-        var mix = new GasMixture(Atmospherics.CellVolume) {Temperature = Math.Max(temp, Atmospherics.TCMB)};
+        var mix = new GasMixture(Atmospherics.CellVolume) { Temperature = Math.Max(temp, Atmospherics.TCMB) };
         for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
         {
             if (args.Length == 3 + i)
                 break;
 
-            if (!float.TryParse(args[3+i], out var moles))
+            if (!float.TryParse(args[3 + i], out var moles))
             {
-                shell.WriteError(Loc.GetString("cmd-parse-failure-float", ("arg", args[3+i])));
+                shell.WriteError(Loc.GetString("cmd-parse-failure-float", ("arg", args[3 + i])));
                 return;
             }
 
