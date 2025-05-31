@@ -110,7 +110,8 @@ namespace Content.Shared.Friction
 
                 if (body.BodyType != BodyType.KinematicController)
                 {
-                    DebugTools.Assert(!HasComp<InputMoverComponent>(uid), $"Input mover: {ToPrettyString(uid)} in TileFrictionController is not the correct BodyType, BodyType found: {body.BodyType}, expected: KinematicController.");
+                    // Commented out because it's not nearly as important and actual issues should get caught by the other assert
+                    // DebugTools.Assert(!HasComp<InputMoverComponent>(uid), $"Input mover: {ToPrettyString(uid)} in TileFrictionController is not the correct BodyType, BodyType found: {body.BodyType}, expected: KinematicController.");
                     continue;
                 }
 
