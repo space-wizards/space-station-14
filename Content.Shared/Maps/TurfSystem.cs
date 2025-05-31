@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Toolshed.Commands.Values;
 
 namespace Content.Shared.Maps;
 
@@ -11,8 +13,43 @@ namespace Content.Shared.Maps;
 /// </summary>
 public sealed class TurfSystem : EntitySystem
 {
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitions = default!;
+
+
+    /// <summary>
+    /// Attempts to get the turf at or under some given coordinates or null if no such turf exists.
+    /// </summary>
+    /// <param name="coordinates">The coordinates to search for a turf.</param>
+    /// <returns>A <see cref="TileRef"/> for the turf found at the given coordinates or null if no such turf exists.</returns>
+    public TileRef? GetTileRef(EntityCoordinates coordinates)
+    {
+        if (!coordinates.IsValid(EntityManager))
+            return null;
+
+        var pos = _transform.ToMapCoordinates(coordinates);
+        if (!_mapManager.TryFindGridAt(pos, out var gridUid, out var gridComp))
+            return null;
+
+        if (!_mapSystem.TryGetTileRef(gridUid, gridComp, coordinates, out var tile))
+            return null;
+
+        return tile;
+    }
+
+    /// <summary>
+    /// Attempts to get the turf at or under some given coordinates.
+    /// </summary>
+    /// <param name="coordinates">The coordinates to search for a turf.</param>
+    /// <param name="tile">Returns the turf found at the given coordinates if any.</param>
+    /// <returns>True if a turf was found at the given coordinates, false otherwise.</returns>
+    public bool TryGetTileRef(EntityCoordinates coordinates, [NotNullWhen(true)] out TileRef? tile)
+    {
+        return (tile = GetTileRef(coordinates)) is not null;
+    }
 
     /// <summary>
     ///     Returns true if a given tile is blocked by physics-enabled entities.
@@ -63,14 +100,14 @@ public sealed class TurfSystem : EntitySystem
             rot -= gridRot;
             pos = (-gridRot).RotateVec(pos - gridPos);
 
-            var xform = new Transform(pos, (float) rot.Theta);
+            var xform = new Transform(pos, (float)rot.Theta);
 
             foreach (var fixture in fixtures.Fixtures.Values)
             {
                 if (!fixture.Hard)
                     continue;
 
-                if ((fixture.CollisionLayer & (int) mask) == 0)
+                if ((fixture.CollisionLayer & (int)mask) == 0)
                     continue;
 
                 for (var i = 0; i < fixture.Shape.ChildCount; i++)
@@ -87,6 +124,26 @@ public sealed class TurfSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns whether a tile is considered to be space or directly exposed to space.
+    /// </summary>
+    /// <param name="tile">The tile in question.</param>
+    /// <returns>True if the tile is considered to be space, false otherwise.</returns>
+    public bool IsSpace(Tile tile)
+    {
+        return GetContentTileDefinition(tile).MapAtmosphere;
+    }
+
+    /// <summary>
+    /// Returns whether a tile is considered to be space or directly exposed to space.
+    /// </summary>
+    /// <param name="tile">The tile in question.</param>
+    /// <returns>True if the tile is considered to be space, false otherwise.</returns>
+    public bool IsSpace(TileRef tile)
+    {
+        return IsSpace(tile.Tile);
+    }
+
+    /// <summary>
     /// Returns the location of the centre of the tile in grid coordinates.
     /// </summary>
     public EntityCoordinates GetTileCenter(TileRef turf)
@@ -94,5 +151,21 @@ public sealed class TurfSystem : EntitySystem
         var grid = Comp<MapGridComponent>(turf.GridUid);
         var center = (turf.GridIndices + new Vector2(0.5f, 0.5f)) * grid.TileSize;
         return new EntityCoordinates(turf.GridUid, center);
+    }
+
+    /// <summary>
+    ///     Returns the content tile definition for a tile.
+    /// </summary>
+    public ContentTileDefinition GetContentTileDefinition(Tile tile)
+    {
+        return (ContentTileDefinition)_tileDefinitions[tile.TypeId];
+    }
+
+    /// <summary>
+    ///     Returns the content tile definition for a tile ref.
+    /// </summary>
+    public ContentTileDefinition GetContentTileDefinition(TileRef tile)
+    {
+        return GetContentTileDefinition(tile.Tile);
     }
 }

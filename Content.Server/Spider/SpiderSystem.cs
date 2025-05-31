@@ -10,6 +10,8 @@ namespace Content.Server.Spider;
 public sealed class SpiderSystem : SharedSpiderSystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     public override void Initialize()
     {
@@ -66,7 +68,13 @@ public sealed class SpiderSystem : SharedSpiderSystem
 
     private bool IsTileBlockedByWeb(EntityCoordinates coords)
     {
-        foreach (var entity in coords.GetEntitiesInTile())
+        if (!_turf.TryGetTileRef(coords, out var tile))
+            return false;
+
+        var bounds = _lookup.GetWorldBounds(tile.Value);
+        bounds.Box.Scale(0.9f);
+
+        foreach (var entity in _lookup.GetEntitiesIntersecting(tile.Value.GridUid, bounds, LookupFlags.Static))
         {
             if (HasComp<SpiderWebObjectComponent>(entity))
                 return true;
