@@ -33,3 +33,13 @@
     - WeaponPistolMk58
     - MagazinePistol
     - MagazinePistol
+
+- type: chameleonOutfit
+  id: CentralCommandBlueshieldOfficerOutfit
+  job: CentralCommandBlueshieldOfficer
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBeretBlueshield
+    mask: ClothingMaskGasSecurity
+    neck: ClothingNeckScarfStripedCentcom
+    gloves: ClothingHandsGlovesColorBlack
