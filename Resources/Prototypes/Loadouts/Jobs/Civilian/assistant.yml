@@ -79,7 +79,7 @@
   id: SyndieCap
   effects:
   - !type:GroupLoadoutEffect
-    proto: HonoredAssistant
+    proto: MasterGrey
   equipment:
     head: ClothingHeadHatSyndie
 
@@ -95,7 +95,7 @@
   id: SolidHeadband
   effects:
   - !type:GroupLoadoutEffect
-    proto: HonoredAssistant
+    proto: MasterGrey
   equipment:
     head: ClothingHeadHatSolidHeadband
 
@@ -103,7 +103,7 @@
   id: GreytideBizarreAdventures
   effects:
   - !type:GroupLoadoutEffect
-    proto: HonoredAssistant
+    proto: MasterGrey
   equipment:
     head: ClothingHeadHatBizarreSoft
 
@@ -124,7 +124,7 @@
   equipment:
     eyes: ClothingEyesGlassesCheapSunglasses
 
-# Face
+# Mask
 - type: loadout
   id: AssistantFace
   effects:
@@ -141,7 +141,7 @@
   equipment:
     mask: ClothingMaskNeckGaiter
 
-# Body
+# Jumpsuit
 - type: loadout
   id: BasicJumpsuit
   equipment:
@@ -230,7 +230,7 @@
   equipment:
     back: ClothingBackpackSatchelSmuggler
 
-# Hands
+# Gloves
 - type: loadout
   id: AssistantGloves
   effects:
@@ -255,11 +255,27 @@
   equipment:
     gloves: ClothingHandsGlovesColorYellow
 
-# Outerbody
+# Outerclothing
 - type: loadout
   id: AssistantWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCoat
+
+- type: loadout
+  id: GreyHoodieA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    outerClothing: ClothingOuterHoodieGrey
+
+- type: loadout
+  id: GreyTrenchcoatA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    outetClothing: ClothingOuterCoatDetectiveLoadoutGrey
 
 # Feet
 - type: loadout
