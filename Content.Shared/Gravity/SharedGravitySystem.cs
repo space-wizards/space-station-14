@@ -183,9 +183,6 @@ namespace Content.Shared.Gravity
                 weightless.Weightless = TryWeightless(uid);
                 Dirty(uid, weightless);
 
-                if(!HasComp<AlertsComponent>(uid))
-                    continue;
-
                 if (weightless.Weightless)
                 {
                     _alerts.ShowAlert(uid, WeightlessAlert);
