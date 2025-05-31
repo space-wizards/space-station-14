@@ -1,6 +1,7 @@
 using Content.Shared.DisplacementMap;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
 namespace Content.Client.DisplacementMap;
@@ -31,7 +32,12 @@ public sealed class DisplacementMapSystem : EntitySystem
             return false;
 
         if (data.ShaderOverride != null)
-            sprite.Comp.LayerSetShader(index, data.ShaderOverride);
+        {
+            sprite.Comp.LayerSetShader(index,
+                (sprite.Comp[index] is SpriteComponent.Layer layer && layer.ShaderPrototype == "unshaded") //feels like a hack? want to know if there's a better way of doing this.
+                    ? data.ShaderOverrideUnshaded
+                    : data.ShaderOverride);
+        }
 
         _sprite.RemoveLayer(sprite.AsNullable(), displacementKey, false);
 
