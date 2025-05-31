@@ -21,9 +21,8 @@
     - id: RubberStampQm
     - id: AstroNavCartridge
     - id: MailTeleporterMachineCircuitboard
-    - id: StockTradingCartridge # Delta-V
     - id: PersonalAILearnerCargo #impspecial
-    
+
 - type: entity
   id: LockerQuarterMasterFilled
   suffix: Filled
@@ -58,7 +57,7 @@
     - id: ClothingEyesGlassesCommand
     - id: TicketPad #imp special
     - id: PersonalAILearnerCommand #impspecial
-  
+
 # No laser table + Laser table
 - type: entityTable
   id: LockerFillCaptainLaser

@@ -61,7 +61,6 @@
       - CrewManifestCartridge
       - NotekeeperCartridge
       - NewsReaderCartridge
-      - StockTradingCartridge # DeltaV
       - NanoChatCartridge # DeltaV
       - SOSCartridge # Imp
 

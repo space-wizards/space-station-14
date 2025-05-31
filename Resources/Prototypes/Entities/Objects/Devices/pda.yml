@@ -497,7 +497,6 @@
       - NewsReaderCartridge
       - NanoChatCartridge # DV
       # - MailMetricsCartridge  # DV - turning this off until i can fix it with the rest of the mail
-      - StockTradingCartridge # DeltaV
       - SOSCartridge # Imp
 
 - type: entity
@@ -522,7 +521,6 @@
       - CrewManifestCartridge
       - NotekeeperCartridge
       - NewsReaderCartridge
-      - StockTradingCartridge # DeltaV
       - NanoChatCartridge # DeltaV
       - SOSCartridge # Imp
 
@@ -978,7 +976,6 @@
     - LogProbeCartridge
     - AstroNavCartridge
     - NanoChatCartridge # DV
-    - StockTradingCartridge # DV
     - SOSCartridge # Imp
 
 - type: entity
@@ -1007,7 +1004,6 @@
     - MedTekCartridge
     - AstroNavCartridge
     - NanoChatCartridge # DV
-    - StockTradingCartridge # DV
     - SOSCartridge # Imp
 
   - type: Tag #  Ignore Chameleon tags

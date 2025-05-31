@@ -195,18 +195,6 @@
     difficulty: 1
 
 - type: entity
-  parent: BaseThiefStealObjective
-  id: StockTradingCartridgeStealObjective
-  components:
-  - type: NotJobRequirement
-    job: [ SalvageSpecialist, CargoTechnician, Courier ]
-  - type: StealCondition
-    stealGroup: StockTradingCartridge
-  - type: Objective
-    difficulty: 1
-# vending machines
-
-- type: entity
   parent: BaseThiefStealStructureObjective
   id: PTechStealObjective
   components:
