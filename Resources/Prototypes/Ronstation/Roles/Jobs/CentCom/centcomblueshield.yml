@@ -35,8 +35,8 @@
     - MagazinePistol
 
 - type: chameleonOutfit
-  id: BlueshieldOfficerOutfit
-  job: BlueshieldOfficer
+  id: CentralCommandBlueshieldOfficerOutfit
+  job: CentralCommandBlueshieldOfficer
   hasMindShield: true
   equipment:
     head: ClothingHeadHatBeretBlueshield
