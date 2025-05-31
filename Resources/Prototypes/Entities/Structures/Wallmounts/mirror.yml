@@ -29,10 +29,10 @@
 
 - type: entity
   parent: Mirror
-  id: MirrorAntique
+  id: MirrorModern
   name: mirror
-  suffix: antique
+  suffix: rectangle
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/mirror.rsi
-    state: antique-mirror
+    state: rectangle-mirror
