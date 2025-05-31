@@ -157,7 +157,6 @@ public sealed partial class JobPriorityEditor : BoxContainer
                 {
                     Margin = new Thickness(3f, 3f, 3f, 0f),
                 };
-                // selector.OnOpenGuidebook += OnOpenGuidebook;
 
                 var icon = new TextureRect
                 {
@@ -212,7 +211,6 @@ public sealed partial class JobPriorityEditor : BoxContainer
 
                 _jobPriorities.Add((job.ID, selector));
                 jobContainer.AddChild(selector);
-                // jobContainer.AddChild(loadoutWindowBtn);
                 category.AddChild(jobContainer);
             }
         }
