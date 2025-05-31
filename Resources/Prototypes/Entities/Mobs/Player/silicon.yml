@@ -418,7 +418,7 @@
   - type: BlockMovement
     blockInteraction: false
   - type: SiliconLawProvider
-    laws: CrewsimovAI
+    laws: NTDefault
   - type: SiliconLawBound
   - type: ActionGrant
     actions:
