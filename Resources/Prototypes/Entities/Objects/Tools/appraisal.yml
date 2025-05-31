@@ -9,6 +9,9 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/appraisal-tool.rsi
+    shape: # Pistol shaped.
+    - 0,0,1,0
+    - 0,1,0,1
   - type: PriceGun
   - type: UseDelay
     delay: 3
