@@ -1,0 +1,13 @@
+# Slime hue shifting
+- type: entity
+  id: ActionOpenColorShift
+  name: Shift pigments
+  description: You morph and mix your internals to reflect a new pigment.
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    priority: -10
+    icon:
+      sprite: Mobs/Aliens/slimes.rsi
+      state: blue_adult_slime
+    event: !type:OpenColorShiftEvent
