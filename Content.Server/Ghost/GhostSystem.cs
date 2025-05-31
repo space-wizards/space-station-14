@@ -481,33 +481,19 @@ namespace Content.Server.Ghost
             var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition.Value);
             var ghostComponent = Comp<GhostComponent>(ghost);
 
-            //get damage values and like put them inside the ghost spawn variable
-            string highestDamageType = "";
-            var highestValue = FixedPoint2.Zero;
-            var damageValues = ("", FixedPoint2.Zero);
-
+            //Get damage values and choose the ghost sprite
             if (TryComp<DamageableComponent>(mind.Comp.CurrentEntity, out var damageComp))  //this will cause issues, a brain from gibs wont have a damage comp
             {
-                foreach (var (damageGroupId, damageAmount) in damageComp.DamagePerGroup)  // go trough each group
+                var highestDamageType = _damageable.GetHighestDamageTypes(damageComp);
+
+                //gotta figure out what to do when theres multiple types
+                /*
+                string damageName = ("ghost_" + highestDamageType).ToLower();
+                if (TryComp<AppearanceComponent>(ghost, out var appearanceComp))
                 {
-                    var group = _prototypeManager.Index<DamageGroupPrototype>(damageGroupId);  //get the id of the grup
-                    foreach (var type in group.DamageTypes)  // go trough each type on that group
-                    {
-                        if (damageComp.Damage.DamageDict.TryGetValue(type, out var damageValue) && damageValue > 0)  //get value and make sure it aint 0
-                        {
-                            if (damageValue > highestValue) //check if the damage is higher
-                            {
-                                highestValue = damageValue;
-                                highestDamageType = type;
-                            }
-                        }
-                    }
+                    _appearance.SetData(ghost, GhostVisuals.Damage, damageName, appearanceComp);
                 }
-            }
-            string damageName = ("ghost_" + highestDamageType).ToLower();
-            if (TryComp<AppearanceComponent>(ghost, out var appearanceComp))
-            {
-                _appearance.SetData(ghost, GhostVisuals.Damage, damageName, appearanceComp);
+                */
             }
 
             // Try setting the ghost entity name to either the character name or the player name.
