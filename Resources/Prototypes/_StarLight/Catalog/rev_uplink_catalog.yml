@@ -41,6 +41,19 @@
     stockLimit: 2
 
 - type: listing
+  id: SKBWhistle
+  name: whistle-name
+  description: whistle-desc
+  productEntity: CommanderWhistle
+  cost:
+    Conversion: 38
+  categories:
+  - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
   id: SKBBanner
   name: banner-name
   description: banner-desc

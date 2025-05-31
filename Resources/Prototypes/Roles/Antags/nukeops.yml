@@ -70,7 +70,7 @@
   id: SyndicateCommanderGearFull
   parent: SyndicateOperativeGearFull
   equipment:
-    neck: SyndicateWhistle
+    neck: CommanderWhistle
     outerClothing: ClothingOuterHardsuitSyndieCommander
     id: CommanderPDA
   inhand:

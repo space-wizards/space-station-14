@@ -8,6 +8,8 @@ rev-supply-rift-destroyed = A rift has been destroyed! We deemed it to be too ri
 rev-supply-rift-charged = (!) A shady portal that coughs up Soviet stuff. This exposes them! If it's destroyed, commies won't be able to open another! There are currently {$count} active rifts!
 
 # Total Conversion
+whistle-name = Trench whistle
+whistle-desc = Want me to lead a final charge?
 banner-name = Revolutionary banner
 banner-desc = Dying with purpose, comrade.
 soviet-encryption-key-conversion-desc = Share your status report tovarisch.
