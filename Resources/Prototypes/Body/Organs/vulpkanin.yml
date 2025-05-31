@@ -1,0 +1,10 @@
+- type: entity
+  parent: OrganAnimalStomach
+  id: OrganVulpkaninStomach
+  name: stomach
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Bone
+    isSpecialDigestibleExclusive: false
