@@ -31,6 +31,7 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
 
     private void OnStasisAnimation(AvaliStasisAnimationEvent ev)
     {
+        // This is a hack to prevent the animation from playing multiple times.
         if (!_timing.IsFirstTimePredicted)
             return;
 
@@ -38,18 +39,25 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
         if (!TryComp<AvaliStasisComponent>(entity, out var comp))
             return;
 
+        // We react to a specific animation event, and then play the appropriate animation.
         switch (ev.AnimationType)
         {
             case AvaliStasisAnimationType.Prepare:
+                // Show a popup to the player.
                 _popupSystem.PopupEntity(Loc.GetString("avali-stasis-entering"), entity, PopupType.Medium);
+                // Play the prepare animation.
                 StasisPrepareAnimation(entity, comp);
                 break;
             case AvaliStasisAnimationType.Enter:
+                // Play the enter animation.
                 StasisEnterAnimation(entity, comp);
                 break;
             case AvaliStasisAnimationType.Exit:
+                // Show a popup to the player.
                 _popupSystem.PopupEntity(Loc.GetString("avali-stasis-exiting"), entity, PopupType.Medium);
+                // Play the exit animation.
                 StasisExitAnimation(entity, comp);
+                // End the continuous animation.
                 EndStasisContinuousAnimation();
                 break;
         }
@@ -63,17 +71,22 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
         RemComp<TimedDespawnComponent>(effectEnt);
         if (TryComp<SpriteComponent>(effectEnt, out var sprite))
         {
+            // Set it to be over the parent entity.
             sprite.DrawDepth = (int) DrawDepth.Effects;
+            // Prevent it from rotating.
             sprite.NoRotation = true;
             sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
         }
+        // Play the sound effect.
         _audioSystem.PlayPvs(comp.StasisEnterSound, effectEnt);
         _enterEffect = effectEnt;
     }
     
     private void StasisEnterAnimation(EntityUid uid, AvaliStasisComponent comp)
     {
+        // Start the continuous animation.
         StartStasisContinuousAnimation(uid, comp);
+        // Delete the prepare animation.
         if (_enterEffect != null)
         {
             QueueDel(_enterEffect.Value);
@@ -90,10 +103,13 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
         despawnEffectEntComp.Lifetime = comp.StasisExitEffectLifetime;
         if (TryComp<SpriteComponent>(effectEnt, out var sprite))
         {
+            // Set it to be over the parent entity.
             sprite.DrawDepth = (int) DrawDepth.Effects;
+            // Prevent it from rotating.
             sprite.NoRotation = true;
             sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
         }
+        // Play the sound effect.
         _audioSystem.PlayPvs(comp.StasisExitSound, effectEnt);
 
         // Restore entity visibility
@@ -114,22 +130,27 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
 
         if (TryComp<SpriteComponent>(effectEnt, out var sprite))
         {
+            // Set it to be over the parent entity.
             sprite.DrawDepth = (int) DrawDepth.Effects;
+            // Prevent it from rotating.
             sprite.NoRotation = true;
+            // Make it visible if the parent entity is visible.
             sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
         }
 
-        // Make the entity fully transparent
+        // Make the entity fully transparent, to hide it from being seen while stasis is active.
         if (TryComp<SpriteComponent>(uid, out var entitySprite))
         {
             entitySprite.Color = entitySprite.Color.WithAlpha(0f);
         }
 
+        // Set the continuous effect to the effect entity.
         _continuousEffect = effectEnt;
     }
 
     private void EndStasisContinuousAnimation()
     {
+        // If the continuous effect is set, delete it.
         if (_continuousEffect != null)
         {
             QueueDel(_continuousEffect.Value);
