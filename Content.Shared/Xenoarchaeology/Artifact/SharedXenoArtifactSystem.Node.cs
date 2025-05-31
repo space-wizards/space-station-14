@@ -47,7 +47,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (ent.Comp.Attached is not { } netArtifact)
             return;
 
-        var artifact = GetEntity(netArtifact);
+        var artifact = netArtifact;
         if (!TryComp<XenoArtifactComponent>(artifact, out var artifactComponent))
             return;
 
@@ -385,7 +385,7 @@ public abstract partial class SharedXenoArtifactSystem
             return;
         }
 
-        var artifact = _xenoArtifactQuery.Get(GetEntity(nodeComponent.Attached.Value));
+        var artifact = _xenoArtifactQuery.Get(nodeComponent.Attached.Value);
 
         var nonactiveNodes = GetActiveNodes(artifact);
         var durabilityEffect = MathF.Pow((float)nodeComponent.Durability / nodeComponent.MaxDurability, 2);
