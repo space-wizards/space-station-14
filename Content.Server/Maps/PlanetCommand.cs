@@ -46,7 +46,6 @@ public sealed class PlanetCommand : LocalizedEntityCommands
         }
 
         var mapId = new MapId(mapInt);
-
         if (!_map.MapExists(mapId))
         {
             shell.WriteError(Loc.GetString($"cmd-planet-map", ("map", mapId)));
