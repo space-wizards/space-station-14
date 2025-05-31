@@ -78,6 +78,8 @@
     damage:
       types:
         Blunt: 190
+  - type: Physics
+    bodyType: KinematicController
   - type: MovementIgnoreGravity
     gravityState: true
   - type: InputMover
