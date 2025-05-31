@@ -63,14 +63,20 @@ public sealed partial class ProfilePreviewSpriteView : SpriteView
         }
     }
 
-    private string? ConstructFullDescription()
+    private string ConstructFullDescription()
     {
-        var description = ProfileName;
+        var descriptionLines = new List<string>();
+
+        if (ProfileName != null)
+            descriptionLines.Add(ProfileName);
+
         if (LoadoutName != null)
-            description = $"{description}\n\"{LoadoutName}\"";
+            descriptionLines.Add($"\"{LoadoutName}\"");
+
         if (JobName != null)
-            description = $"{description}\n{JobName}";
-        return description;
+            descriptionLines.Add(JobName);
+
+        return string.Join("\n", descriptionLines);
     }
 
     protected override void Dispose(bool disposing)
