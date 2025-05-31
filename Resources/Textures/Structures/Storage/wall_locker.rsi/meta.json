@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from shiptest at commmit https://github.com/shiptest-ss13/Shiptest/commit/440a15fb476a20d77ba28c1fe315c1b659032ce8, edited by Alekshhh, N2 lockers edited by Lamrr",
+  "copyright": "Taken from shiptest at commmit https://github.com/shiptest-ss13/Shiptest/commit/440a15fb476a20d77ba28c1fe315c1b659032ce8, edited by Alekshhh, N2 lockers edited by Lamrr and Unkn0wnGh0st333 with syndicate",
   "size": {
     "x": 32,
     "y": 32
@@ -36,6 +36,8 @@
     { "name": "unlocked" },
     { "name": "welded" },
     { "name": "white_door" },
-    { "name": "yellow_door" }
+    { "name": "yellow_door" },
+    { "name": "syndicate_closed" },
+    { "name": "syndicate_open" }
   ]
 }
