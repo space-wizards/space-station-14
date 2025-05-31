@@ -1,6 +1,7 @@
 using Content.Client.SubFloor;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -8,7 +9,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Atmos.EntitySystems;
 
 [UsedImplicitly]
-public sealed class AtmosPipeAppearanceSystem : EntitySystem
+public sealed partial class AtmosPipeAppearanceSystem : SharedAtmosPipeAppearanceSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
@@ -85,7 +86,9 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
 
         for (byte i = 0; i < numberOfPipeLayers; i++)
         {
-            // Extract the pipe direction for the current layer
+            // Extract the cardinal pipe orientations for the current pipe layer
+            // '15' is the four bit mask that is used to extract the pipe orientations of interest from 'worldConnectedDirections'
+            // Fun fact: a collection of four bits is called a 'nibble'! They aren't natively supported :(
             var pipeLayerConnectedDirections = (PipeDirection)(15 & (worldConnectedDirections >> (PipeDirectionHelpers.PipeDirections * i)));
 
             // Transform the connected directions to local-coordinates
@@ -110,11 +113,6 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
                 layer.Color = color;
             }
         }
-    }
-
-    private int GetNumberOfPipeLayers(EntityUid uid, out AtmosPipeLayersComponent? atmosPipeLayers)
-    {
-        return TryComp(uid, out atmosPipeLayers) ? atmosPipeLayers.NumberOfPipeLayers : 1;
     }
 
     private SpriteComponent.DirectionOffset ToOffset(PipeConnectionLayer layer)
