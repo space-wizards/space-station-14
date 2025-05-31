@@ -35,7 +35,6 @@ public sealed class CodewordSystem : EntitySystem
     /// <summary>
     /// Retrieves codewords for the faction specified.
     /// </summary>
-    /// <exception cref="InvalidOperationException">Thrown when no codewords have been generated for that faction.</exception>
     public string[] GetCodewords(ProtoId<CodewordFactionPrototype> faction)
     {
         var query = EntityQueryEnumerator<CodewordManagerComponent>();
@@ -47,7 +46,11 @@ public sealed class CodewordSystem : EntitySystem
             return Comp<CodewordComponent>(codewordEntity).Codewords;
         }
 
-        throw new InvalidOperationException($"Codeword system not initialized.");
+        Log.Warning("Codeword system not initialized. Returning empty array.");
+        // While throwing in this situation would be cool, that causes a test fail (in SpawnAndDeleteEntityCountTest)
+        // as the traitor codewords paper gets spawned in and calls this method,
+        // but the "start round" event never gets called in this test case.
+        return [];
     }
 
     private string[] GenerateForFaction(ProtoId<CodewordFactionPrototype> faction, ref CodewordManagerComponent manager)
