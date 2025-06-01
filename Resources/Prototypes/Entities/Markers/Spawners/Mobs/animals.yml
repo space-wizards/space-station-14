@@ -259,6 +259,20 @@
 
 - type: entity
   parent: MarkerBase
+  id: SpawnMobSheep
+  name: Sheep Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sheep
+      sprite: Mobs/Animals/sheep.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSheep
+
+- type: entity
+  parent: MarkerBase
   id: SpawnMobSlug
   name: Slug Spawner
   components:
