@@ -82,7 +82,7 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
             if (brain != null && Resolve(result, ref chassis) && chassis.BrainEntity != null)
             {
                 if (_mind.TryGetMind(brain.Value, out _, out var mind) &&
-                    _player.TryGetSessionById(mind.UserId, out var session) && !_borg.CanPlayerBeBorged(session))
+                    _player.TryGetSessionById(mind.UserId, out var session) && _borg.CanPlayerBeBorged(session))
                 {
                     _itemSlots.TryInsert(chassis.BrainEntity.Value, "brain_slot", brain.Value, uid);
                 }
