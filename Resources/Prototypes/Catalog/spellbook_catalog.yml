@@ -26,11 +26,24 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+# - type: listing
+#   id: SpellbookSmite
+#   name: spellbook-smite-name
+#   description: spellbook-smite-desc
+#   productAction: ActionSmite
+#   cost:
+#     WizCoin: 3
+#   categories:
+#   - SpellbookOffensive
+#   conditions:
+#   - !type:ListingLimitedStockCondition
+#     stock: 1
+
 - type: listing
-  id: SpellbookSmite
-  name: spellbook-smite-name
-  description: spellbook-smite-desc
-  productAction: ActionSmite
+  id: SpellbookCellularSmite
+  name: spellbook-cellular-smite-name
+  description: spellbook-cellular-smite-desc
+  productAction: ActionCellularSmite
   cost:
     WizCoin: 3
   categories:

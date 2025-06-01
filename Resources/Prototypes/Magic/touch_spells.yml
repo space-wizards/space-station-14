@@ -42,6 +42,29 @@
   - type: Magic
     requiresClothes: true
 
+# Non-Gibbing version of the Smite spell for wizards
+- type: entity
+  parent: BaseSmiteAction
+  id: ActionCellularSmite
+  name: Smite
+  description: Puts a target into critical condition
+  components:
+  - type: Action
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/disintegrate.ogg
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: gib
+  - type: EntityTargetAction
+    event: !type:CellularSmiteSpellEvent
+      smiteDamage:
+        types:
+          Cellular: 125
+  - type: SpeakOnAction
+    sentence: action-speech-spell-smite
+  - type: Magic
+    requiresClothes: true
+
 # For the Snail
 - type: entity
   parent: ActionSmite
