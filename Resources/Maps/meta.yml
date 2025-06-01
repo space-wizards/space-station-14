@@ -139496,24 +139496,6 @@ entities:
           ents:
           - 15972
           - 16094
-  - uid: 23508
-    components:
-    - type: Transform
-      pos: -15.5,-4.5
-      parent: 5350
-    - type: Storage
-      storedItems:
-        23509:
-          position: 1,1
-          _rotation: South
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 23509
-    - type: ActiveUserInterface
 - proto: NTDefaultCircuitBoard
   entities:
   - uid: 10763
@@ -140300,47 +140282,6 @@ entities:
 
         Sincerely, Central Command Custodial Research Director Polishes-Every-Inch.
       editingDisabled: True
-  - uid: 23509
-    components:
-    - type: MetaData
-      desc: Looks like the last shift left this here.
-      name: Old Wanted Poster
-    - type: Transform
-      parent: 23508
-    - type: Paper
-      content: >2-
-
-                                              [bold][head=1] MANIAC [/head]
-                                            [head=2]ON THE LOOSE[/bold]
-                                                 [bolditalic]Giggles the Clown[/bold][/italic]
-        ──────────────────────────────────────────
-
-                                [color=#FF8C00]████                                               ████
-                           ██████████                        ██████████
-                     ██████████████[color=#F5F5DC]█████[color=#FF8C00]██████████████
-                     ███████████[color=#F5F5DC]██[color=#F0E68C]██[color=#F8F8FF]██[color=#F0E68C]██[color=#F5F5DC]██[color=#FF8C00]████████████
-                           ███████[color=#F5F5DC]████[color=#00008B]██[color=#F0E68C]██[color=#00008B]██[color=#F5F5DC]████[color=#FF8C00]███████
-                                 █████[color=#F5F5DC]██[color=#F8F8FF]██[color=#F0E68C]██[color=#F8F8FF]██[color=#F0E68C]██[color=#F8F8FF]██[color=#F5F5DC]██[color=#FF8C00]████[color=#F5F5DC]
-                                             ██[color=#F8F8FF]██[color=#FF6347]██[color=#FF0000]██[color=#FF6347]██[color=#F8F8FF]██[color=#F5F5DC]███
-                                                   ██[color=#F8F8FF]██[color=#FF6347]██[color=#F8F8FF]██[color=#F5F5DC]███
-                                                         [color=#FF8C00]██[color=#F5F5DC]███[color=#FF8C00]██
-                                             [color=#87CEEB]██[color=#800000]██[color=#FFB6C1]██[color=#FF8C00]████[color=#FFB6C1]██[color=#800000]██[color=#87CEEB]██
-                                       ████[color=#FFB6C1]██[color=#800000]██[color=#F8F8FF]████[color=#800000]██[color=#FFB6C1]██[color=#87CEEB]████[/color][color=#000000]
-        ────────────────────────────────────────── [italic] Artist's composite sketch of suspect[/italic]
-
-                                                 [head=2][bold]WANTED FOR[/bold]
-                       [head=3]•  Public indecency
-                          •  Hit & Honk
-                          •  Hooliganism[/bold]
-
-        Immediately report all sightings to your Security Department.
-
-
-        [/head]
-                            [head=1][color=red]DO NOT APPROACH
-      editingDisabled: True
-    - type: Physics
-      canCollide: False
 - proto: PaperBin
   entities:
   - uid: 5094
