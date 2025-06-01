@@ -72,6 +72,10 @@ public sealed class JammerSystem : SharedJammerSystem
             EnsureComp<DeviceNetworkJammerComponent>(ent, out var jammingComp);
             _jammer.SetRange((ent, jammingComp), GetCurrentRange(ent));
             _jammer.AddJammableNetwork((ent, jammingComp), DeviceNetworkComponent.DeviceNetIdDefaults.Wireless.ToString());
+
+            // Copy excluded frequencies from RadioJammerComponent
+            if (ent.Comp.FrequenciesExcluded != null)
+                jammingComp.ExcludedFrequencies = new(ent.Comp.FrequenciesExcluded);
         }
         else
         {
