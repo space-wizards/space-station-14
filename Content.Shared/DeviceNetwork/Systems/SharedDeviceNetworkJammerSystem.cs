@@ -64,7 +64,7 @@ public abstract class SharedDeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Enables this entity to stop packets with the specified frequency from being jammmed.
     /// </summary>
-    public void AddExcludedFreequency(Entity<DeviceNetworkJammerComponent> ent, uint frequency)
+    public void AddExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent, uint frequency)
     {
         if (ent.Comp.FrequenciesExcluded.Add(frequency))
             Dirty(ent);
@@ -73,7 +73,7 @@ public abstract class SharedDeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Stops this entity to stop packets with the specified frequency from being jammmed.
     /// </summary>
-    public void RemoveExcludedFreequency(Entity<DeviceNetworkJammerComponent> ent, uint frequency)
+    public void RemoveExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent, uint frequency)
     {
         if (ent.Comp.FrequenciesExcluded.Remove(frequency))
             Dirty(ent);
@@ -82,7 +82,7 @@ public abstract class SharedDeviceNetworkJammerSystem : EntitySystem
     /// <summary>
     /// Stops this entity to stop packets with any frequency from being jammmed.
     /// </summary>
-    public void ClearExcludedFreequency(Entity<DeviceNetworkJammerComponent> ent)
+    public void ClearExcludedFrequency(Entity<DeviceNetworkJammerComponent> ent)
     {
         if (ent.Comp.FrequenciesExcluded.Count == 0)
             return;
