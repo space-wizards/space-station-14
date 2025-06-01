@@ -1610,7 +1610,7 @@
   id: FloorTileItemTabletopWhite
   components:
   - type: Sprite
-    state: tabletop_white
+    state: tabletop-white
   - type: Item
     heldPrefix: wood
   - type: FloorTile
@@ -1626,7 +1626,7 @@
   id: FloorTileItemTabletopBlack
   components:
   - type: Sprite
-    state: tabletop_black
+    state: tabletop-black
   - type: Item
     heldPrefix: wood
   - type: FloorTile
