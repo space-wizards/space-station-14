@@ -47,13 +47,7 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
 
         base.Reclaim(uid, item, component);
 
-        if (!TryFinishProducing(uid, item))
-            return;
-
-        var logImpact = HasComp<HumanoidAppearanceComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
-        _adminLogger.Add(LogType.Gib,
-            logImpact,
-            $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
+        TryFinishProducing(uid, item);
     }
 
     private bool TryFinishProducing(EntityUid uid, EntityUid item, XenoborgFactoryComponent? comp = null)
@@ -84,6 +78,11 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
         {
             Container.TryRemoveFromContainer(part.Id);
         }
+
+        var logImpact = HasComp<HumanoidAppearanceComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
+        _adminLogger.Add(LogType.Gib,
+            logImpact,
+            $"{ToPrettyString(item):victim} was beheaded by {ToPrettyString(uid):entity}");
 
         foreach (var (material, needed) in recipe.Materials)
         {

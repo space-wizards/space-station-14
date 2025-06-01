@@ -1,7 +1,5 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Bed.Sleep;
-using Content.Shared.Database;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
@@ -23,7 +21,6 @@ namespace Content.Shared.Xenoborgs;
 /// </summary>
 public abstract class SharedXenoborgFactorySystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
@@ -82,13 +79,6 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
 
         if (Container.TryGetContainingContainer((item, null, null), out _) && !Container.TryRemoveFromContainer(item))
             return;
-
-        if (user != null)
-        {
-            _adminLog.Add(LogType.Action,
-                LogImpact.High,
-                $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the mothership core, {ToPrettyString(uid)}");
-        }
 
         if (_timing.CurTime > component.NextSound)
         {
