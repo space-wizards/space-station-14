@@ -644,3 +644,6 @@ CapacitorStockPart: MicroManipulatorStockPart
 
 # 2025-05-30
 SpawnHonkBot: SpawnMobHonkBot
+
+# 2025-05-31
+CrateMaterialTextiles: CrateMaterialCloth
