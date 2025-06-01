@@ -24,7 +24,7 @@ namespace Content.Shared.Xenoborgs;
 public abstract class SharedXenoborgFactorySystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
@@ -90,10 +90,10 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
                 $"{ToPrettyString(user.Value):player} destroyed {ToPrettyString(item)} in the mothership core, {ToPrettyString(uid)}");
         }
 
-        if (Timing.CurTime > component.NextSound)
+        if (_timing.CurTime > component.NextSound)
         {
             component.Stream = _audio.PlayPredicted(component.Sound, uid, user)?.Entity;
-            component.NextSound = Timing.CurTime + component.SoundCooldown;
+            component.NextSound = _timing.CurTime + component.SoundCooldown;
         }
 
         var reclaimedEvent = new GotReclaimedEvent(Transform(uid).Coordinates);

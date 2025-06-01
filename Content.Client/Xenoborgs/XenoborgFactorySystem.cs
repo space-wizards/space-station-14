@@ -2,6 +2,7 @@ using Content.Shared.Lathe;
 using Content.Shared.Verbs;
 using Content.Shared.Xenoborgs;
 using Content.Shared.Xenoborgs.Components;
+using System.Linq;
 
 namespace Content.Client.Xenoborgs;
 
@@ -17,18 +18,17 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
         if (!Proto.TryIndex(component.BorgRecipePack, out var recipePack))
             return;
 
-        foreach (var type in recipePack.Recipes)
+        foreach (var v in from type in recipePack.Recipes
+                 let proto = Proto.Index(type)
+                 select new Verb
+                 {
+                     Category = VerbCategory.SelectType,
+                     Text = _lathe.GetRecipeName(proto),
+                     Disabled = type == component.Recipe,
+                     DoContactInteraction = true,
+                     Icon = proto.Icon,
+                 })
         {
-            var proto = Proto.Index(type);
-
-            var v = new Verb
-            {
-                Category = VerbCategory.SelectType,
-                Text = _lathe.GetRecipeName(proto),
-                Disabled = type == component.Recipe,
-                DoContactInteraction = true,
-                Icon = proto.Icon,
-            };
             args.Verbs.Add(v);
         }
     }

@@ -12,13 +12,12 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Lathe;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
-using Content.Shared.Research.Prototypes;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Xenoborgs;
 using Content.Shared.Xenoborgs.Components;
-using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using System.Linq;
 
 namespace Content.Server.Xenoborgs;
 
@@ -61,54 +60,54 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
     {
         if (!Resolve(uid, ref comp, false))
             return false;
-        if (!Proto.TryIndex(comp.Recipe, out LatheRecipePrototype? recipe))
+        if (!Proto.TryIndex(comp.Recipe, out var recipe))
             return false;
-        if (recipe.Result is { } resultProto)
+        if (recipe.Result is not { } resultProto)
+            return false;
+        EntityUid? brain = null;
+        foreach (var (id, _) in _body.GetBodyOrgans(item))
         {
-            EntityUid? brain = null;
-            foreach (var (id, _) in _body.GetBodyOrgans(item))
-            {
-                if (!HasComp<BrainComponent>(id))
-                    continue;
+            if (!HasComp<BrainComponent>(id))
+                continue;
 
-                brain = id;
-                _body.RemoveOrgan(brain.Value);
-                break;
-            }
-
-            if (brain == null)
-                return false;
-
-            var headSlots = _body.GetBodyChildrenOfType(item, BodyPartType.Head);
-
-            foreach (var part in headSlots)
-            {
-                Container.TryRemoveFromContainer(part.Id);
-            }
-
-            foreach (var (material, needed) in recipe.Materials)
-            {
-                MaterialStorage.TryChangeMaterialAmount(uid, material, -needed);
-            }
-
-            var result = Spawn(resultProto, Transform(uid).Coordinates);
-
-            BorgChassisComponent? chassis = null;
-            if (!Resolve(result, ref chassis) || chassis.BrainEntity == null)
-                return false;
-
-            if (_mind.TryGetMind(brain.Value, out _, out var mind) &&
-                _player.TryGetSessionById(mind.UserId, out var session) && _borg.CanPlayerBeBorged(session))
-            {
-                _itemSlots.TryInsert(chassis.BrainEntity.Value, "brain_slot", brain.Value, uid);
-            }
-            else
-            {
-                _popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), brain.Value);
-            }
-            return true;
+            brain = id;
+            _body.RemoveOrgan(brain.Value);
+            break;
         }
-        return false;
+
+        if (brain == null)
+            return false;
+
+        var headSlots = _body.GetBodyChildrenOfType(item, BodyPartType.Head);
+
+        foreach (var part in headSlots)
+        {
+            Container.TryRemoveFromContainer(part.Id);
+        }
+
+        foreach (var (material, needed) in recipe.Materials)
+        {
+            MaterialStorage.TryChangeMaterialAmount(uid, material, -needed);
+        }
+
+        var result = Spawn(resultProto, Transform(uid).Coordinates);
+
+        BorgChassisComponent? chassis = null;
+        if (!Resolve(result, ref chassis) || chassis.BrainEntity == null)
+            return false;
+
+        if (_mind.TryGetMind(brain.Value, out _, out var mind) &&
+            _player.TryGetSessionById(mind.UserId, out var session) && _borg.CanPlayerBeBorged(session))
+        {
+            _itemSlots.TryInsert(chassis.BrainEntity.Value, "brain_slot", brain.Value, uid);
+        }
+        else
+        {
+            _popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), brain.Value);
+        }
+
+        return true;
+
     }
 
     private void OnSuicideByEnvironment(Entity<XenoborgFactoryComponent> entity, ref SuicideByEnvironmentEvent args)
@@ -145,27 +144,26 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
         if (!Proto.TryIndex(component.BorgRecipePack, out var recipePack))
             return;
 
-        foreach (var type in recipePack.Recipes)
+        foreach (var v in from type in recipePack.Recipes
+                 let proto = Proto.Index(type)
+                 select new Verb
+                 {
+                     Category = VerbCategory.SelectType,
+                     Text = _lathe.GetRecipeName(proto),
+                     Disabled = type == component.Recipe,
+                     DoContactInteraction = true,
+                     Icon = proto.Icon,
+                     Act = () =>
+                     {
+                         // Putting this in shared causes the client to execute this multiple times
+                         component.Recipe = type;
+                         _popup.PopupEntity(Loc.GetString("emitter-component-type-set",
+                                 ("type", _lathe.GetRecipeName(proto))),
+                             uid);
+                         Dirty(uid, component);
+                     },
+                 })
         {
-            var proto = Proto.Index(type);
-
-            var v = new Verb
-            {
-                Category = VerbCategory.SelectType,
-                Text = _lathe.GetRecipeName(proto),
-                Disabled = type == component.Recipe,
-                DoContactInteraction = true,
-                Icon = proto.Icon,
-                Act = () =>
-                {
-                    // Putting this in shared causes the client to execute this multiple times
-                    component.Recipe = type;
-                    _popup.PopupEntity(Loc.GetString("emitter-component-type-set",
-                            ("type", _lathe.GetRecipeName(proto))),
-                        uid);
-                    Dirty(uid, component);
-                },
-            };
             args.Verbs.Add(v);
         }
     }
