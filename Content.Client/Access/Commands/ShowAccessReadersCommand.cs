@@ -14,11 +14,6 @@ public sealed class ShowAccessReadersCommand : LocalizedEntityCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var collection = IoCManager.Instance;
-
-        if (collection == null)
-            return;
-
         var existing = _overlay.RemoveOverlay<AccessOverlay>();
         if (!existing)
             _overlay.AddOverlay(new AccessOverlay(EntityManager, _cache, _xform));
