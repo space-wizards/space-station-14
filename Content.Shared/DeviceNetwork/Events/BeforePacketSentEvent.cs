@@ -36,6 +36,6 @@ public sealed class BeforePacketSentEvent : CancellableEntityEventArgs
         SenderTransform = xform;
         SenderPosition = senderPosition;
         NetworkId = networkId;
-        Frequency = frequency
+        Frequency = frequency;
     }
 }
