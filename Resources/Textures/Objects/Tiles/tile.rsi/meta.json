@@ -563,6 +563,12 @@
     {
       "name": "asteroid-inhand-left",
       "directions": 4
+    },
+    {
+      "name": "tabletop_white"
+    },
+    {
+      "name": "tabletop_black"
     }
   ]
 }
