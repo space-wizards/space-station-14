@@ -4,8 +4,8 @@ using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Research.Prototypes;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Content.Shared.Xenoborgs.Components;
 using Robust.Shared.Audio.Systems;
@@ -30,9 +30,11 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
     [Dependency] protected readonly IPrototypeManager Proto = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
+
     public override void Initialize()
     {
         SubscribeLocalEvent<CollideXenoborgFactoryComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<XenoborgFactoryComponent, GetVerbsEvent<Verb>>(OnGetVerb);
     }
 
     private void OnCollide(EntityUid uid, CollideXenoborgFactoryComponent component, ref StartCollideEvent args)
@@ -109,7 +111,7 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
             _audio.Stop(component.Stream);
         }
 
-        if (Proto.TryIndex(component.Recipe, out LatheRecipePrototype? recipe))
+        if (Proto.TryIndex(component.Recipe, out var recipe))
         {
             foreach (var (material, needed) in recipe.Materials)
             {
@@ -126,7 +128,7 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
     {
         if (!Resolve(factory, ref storage, false))
             return false;
-        if (!Proto.TryIndex(component.Recipe, out LatheRecipePrototype? recipe))
+        if (!Proto.TryIndex(component.Recipe, out var recipe))
             return false;
         foreach (var (material, needed) in recipe.Materials)
         {
@@ -136,4 +138,6 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
 
         return true;
     }
+
+    protected abstract void OnGetVerb(EntityUid uid, XenoborgFactoryComponent component, GetVerbsEvent<Verb> args);
 }

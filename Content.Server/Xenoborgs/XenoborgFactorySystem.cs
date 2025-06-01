@@ -8,10 +8,12 @@ using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Lathe;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Verbs;
 using Content.Shared.Xenoborgs;
 using Content.Shared.Xenoborgs.Components;
 using Robust.Shared.Player;
@@ -28,6 +30,8 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
     [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
+    [Dependency] private readonly SharedLatheSystem _lathe = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -114,5 +118,36 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
 
         TryStartProcessItem(entity, victim);
         args.Handled = true;
+    }
+
+    protected override void OnGetVerb(EntityUid uid, XenoborgFactoryComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
+
+        if (!Proto.TryIndex(component.BorgRecipePack, out var recipePack))
+            return;
+
+        foreach (var type in recipePack.Recipes)
+        {
+            var proto = Proto.Index(type);
+
+            var v = new Verb
+            {
+                Category = VerbCategory.SelectType,
+                Text = _lathe.GetRecipeName(proto),
+                Disabled = type == component.Recipe,
+                DoContactInteraction = true,
+                Icon = proto.Icon,
+                Act = () =>
+                {
+                    // Putting this in shared causes the client to execute this multiple times
+                    component.Recipe = type;
+                    _popup.PopupEntity(Loc.GetString("emitter-component-type-set", ("type", _lathe.GetRecipeName(proto))), uid);
+                    Dirty(uid, component);
+                },
+            };
+            args.Verbs.Add(v);
+        }
     }
 }
