@@ -112,6 +112,13 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         var content = tooltip.GetChild(0);
         content.RemoveAllChildren();
 
+        var title = new Label();
+        title.AddStyleClass("LabelHeading");
+        title.Text = job.LocalizedName;
+        title.HorizontalAlignment = HAlignment.Center;
+
+        content.AddChild(title);
+
         var grid = new GridContainer()
         {
             MaxGridHeight = _uiManager.PopupRoot.Height * 0.99f,
