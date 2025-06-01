@@ -62,11 +62,11 @@ public sealed class StationPowerTests
         // Let powernet set up
         await server.WaitRunTicks(1);
 
-        // Find the power network with the greatest stored charge in its SMESes.
+        // Find the power network with the greatest stored charge in its batteries.
         // This keeps backup SMESes out of the calculation.
         var networks = new Dictionary<PowerState.Network, float>();
-        var smesQuery = entMan.EntityQueryEnumerator<PowerNetworkBatteryComponent, BatteryComponent, NodeContainerComponent>();
-        while (smesQuery.MoveNext(out var uid, out _, out var battery, out var nodeContainer))
+        var batteryQuery = entMan.EntityQueryEnumerator<PowerNetworkBatteryComponent, BatteryComponent, NodeContainerComponent>();
+        while (batteryQuery.MoveNext(out var uid, out _, out var battery, out var nodeContainer))
         {
             if (!nodeContainer.Nodes.TryGetValue("output", out var node))
                 continue;
