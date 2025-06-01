@@ -6554,4 +6554,11 @@ Entries:
   id: 907
   time: '2025-06-01T05:00:39.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/733
+- author: Zarq0
+  changes:
+  - message: Made roaches able to vent crawl.
+    type: Tweak
+  id: 908
+  time: '2025-06-01T05:06:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/696
 
