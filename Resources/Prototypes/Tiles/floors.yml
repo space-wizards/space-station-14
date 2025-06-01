@@ -2065,7 +2065,7 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
-    collection: FootstepAsteroid
+    collection: FootstepTile
   friction: 0.8
   itemDrop: FloorTileItemMarble
   heatCapacity: 10000
@@ -2084,7 +2084,7 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
-    collection: FootstepAsteroid
+    collection: FootstepTile
   friction: 0.8
   itemDrop: FloorTileItemDarkMarble
   heatCapacity: 10000
@@ -2103,7 +2103,7 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
-    collection: FootstepAsteroid
+    collection: FootstepTile
   friction: 0.8
   itemDrop: FloorTileItemPlasmaMarble
   heatCapacity: 10000
@@ -2122,7 +2122,7 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
-    collection: FootstepAsteroid
+    collection: FootstepTile
   friction: 0.8
   itemDrop: FloorTileItemUraniumMarble
   heatCapacity: 10000
