@@ -7,9 +7,6 @@ reagent-desc-theehorsepussy = They are going this drink after me when i die
 reagent-name-lovetap = love tap
 reagent-desc-lovetap = Straight Root Beer, with a love tap of Rum.
 
-reagent-name-calimotxo = calimotxo
-reagent-desc-calimotxo = A classy, 50/50 mix of Wine and Cola.
-
 reagent-name-reaganomics = reaganomics
 reagent-desc-reaganomics = Why would we ever want anything else?
 

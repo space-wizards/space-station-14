@@ -40,22 +40,6 @@
           mobstate: Alive
 
 - type: reagent
-  id: Calimotxo
-  name: reagent-name-calimotxo
-  parent: BaseAlcohol
-  desc: reagent-desc-calimotxo
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: cola
-  color: "#663100"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/wineglass.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: true
-  fizziness: 0.8
-
-- type: reagent
   id: LoveTap
   name: reagent-name-lovetap
   parent: BaseAlcohol
