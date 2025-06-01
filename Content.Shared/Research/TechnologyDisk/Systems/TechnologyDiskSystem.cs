@@ -15,7 +15,6 @@ namespace Content.Shared.Research.TechnologyDisk.Systems;
 
 public sealed class TechnologyDiskSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
