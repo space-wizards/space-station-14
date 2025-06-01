@@ -2312,16 +2312,6 @@ entities:
       parent: 1
 - proto: AirlockGlassShuttleSyndicate
   entities:
-  - uid: 1643
-    components:
-    - type: Transform
-      pos: -59.5,12.5
-      parent: 1
-  - uid: 1653
-    components:
-    - type: Transform
-      pos: -55.5,12.5
-      parent: 1
   - uid: 2398
     components:
     - type: Transform
@@ -14776,7 +14766,7 @@ entities:
       pos: -3.5,1.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -16645.03
+      secondsUntilStateChange: -16761.75
       state: Opening
   - uid: 730
     components:
@@ -14784,7 +14774,7 @@ entities:
       pos: -3.5,2.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -16645.896
+      secondsUntilStateChange: -16762.617
       state: Opening
 - proto: MinimoogInstrument
   entities:
@@ -24866,7 +24856,7 @@ entities:
       pos: -15.5,-5.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -18914.592
+      secondsUntilStateChange: -19031.312
       state: Opening
   - uid: 1244
     components:
@@ -24874,6 +24864,6 @@ entities:
       pos: -15.5,-4.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -18915.025
+      secondsUntilStateChange: -19031.746
       state: Opening
 ...

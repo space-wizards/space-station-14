@@ -5,7 +5,7 @@
   minPlayers: 7
   maxPlayers: 50
   stations:
-    Amber:
+    StarlightAmber:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup

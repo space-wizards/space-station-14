@@ -5,7 +5,7 @@
   minPlayers: 35
   maxPlayers: 70
   stations:
-    Marathon:
+    StarlightMarathon:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
