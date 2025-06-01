@@ -96,19 +96,23 @@ public sealed class JammerSystem : SharedJammerSystem
 
     private void OnRadioSendAttempt(ref RadioSendAttemptEvent args)
     {
-        if (ShouldCancelSend(args.RadioSource))
+        if (ShouldCancelSend(args.RadioSource, args.Channel.Frequency))
         {
             args.Cancelled = true;
         }
     }
 
-    private bool ShouldCancelSend(EntityUid sourceUid)
+    private bool ShouldCancelSend(EntityUid sourceUid, int frequency)
     {
         var source = Transform(sourceUid).Coordinates;
         var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out _, out var jam, out var transform))
         {
+            // Check if this jammer excludes the frequency
+            if (jam.FrequenciesExcluded != null && jam.FrequenciesExcluded.Contains(frequency))
+                continue;
+
             if (_transform.InRange(source, transform.Coordinates, GetCurrentRange((uid, jam))))
             {
                 return true;
