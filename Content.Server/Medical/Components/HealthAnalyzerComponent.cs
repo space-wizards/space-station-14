@@ -1,4 +1,4 @@
-using Content.Server.AbstractAnalyzer;
+using Content.Shared.AbstractAnalyzer;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Medical.Components;
