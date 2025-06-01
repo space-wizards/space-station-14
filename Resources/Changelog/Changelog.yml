@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: MisterImp
-  changes:
-  - message: The copypasta recipe now requires two small plates, which are left behind
-      when it is consumed.
-    type: Tweak
-  id: 8083
-  time: '2025-03-20T00:35:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35925
 - author: muburu
   changes:
   - message: Produce now has in-hand sprites.
@@ -3916,3 +3908,13 @@
   id: 8594
   time: '2025-05-31T02:09:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37945
+- author: ScarKy0
+  changes:
+  - message: Priority mail now grants slightly more spesos if delivered on time, and
+      slightly less if done otherwise.
+    type: Tweak
+  - message: Bomb mail now explodes way after and deals slightly more damage.
+    type: Tweak
+  id: 8595
+  time: '2025-06-01T04:28:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37986
