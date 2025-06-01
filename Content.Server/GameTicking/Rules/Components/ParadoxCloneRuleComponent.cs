@@ -14,7 +14,7 @@ public sealed partial class ParadoxCloneRuleComponent : Component
     ///     Cloning settings to be used.
     /// </summary>
     [DataField]
-    public ProtoId<CloningSettingsPrototype> Settings = "BaseClone";
+    public ProtoId<CloningSettingsPrototype> Settings = "Antag";
 
     /// <summary>
     ///     Visual effect spawned when gibbing at round end.
@@ -23,11 +23,18 @@ public sealed partial class ParadoxCloneRuleComponent : Component
     public EntProtoId GibProto = "MobParadoxTimed";
 
     /// <summary>
+    ///     Entity of the original player.
+    ///     Gets randomly chosen from all alive players if not specified.
+    /// </summary>
+    [DataField]
+    public EntityUid? OriginalBody;
+
+    /// <summary>
     ///     Mind entity of the original player.
     ///     Gets assigned when cloning.
     /// </summary>
     [DataField]
-    public EntityUid? Original;
+    public EntityUid? OriginalMind;
 
     /// <summary>
     ///     Whitelist for Objectives to be copied to the clone.

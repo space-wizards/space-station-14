@@ -6,6 +6,4 @@ namespace Content.Shared.Sound.Components;
 ///     Simple sound emitter that emits sound on entity spawn.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class EmitSoundOnSpawnComponent : BaseEmitSoundComponent
-{
-}
+public sealed partial class EmitSoundOnSpawnComponent : BaseEmitSoundComponent;

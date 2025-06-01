@@ -26,7 +26,7 @@
     DrinkLithiumFlask: 1
     StrangePill: 3
   emaggedInventory:
-    ToxinChemistryBottle: 1
+    ChemistryBottleToxin: 1
 
 - type: vendingMachineInventory
   id: ChemVendInventorySyndicate
@@ -53,12 +53,13 @@
     JugSugar: 3
     JugSulfur: 1
     JugWeldingFuel: 1
+    PlasmaChemistryVial: 1
   contrabandInventory:
     DrinkLithiumFlask: 1
     StrangePill: 3
   emaggedInventory:
-    PaxChemistryBottle: 3
-    MuteToxinChemistryBottle: 3
-    LeadChemistryBottle: 2
-    ToxinChemistryBottle: 1
-    
+    ChemistryBottlePax: 3
+    ChemistryBottleMuteToxin: 3
+    ChemistryBottleLead: 2
+    ChemistryBottleToxin: 1
+

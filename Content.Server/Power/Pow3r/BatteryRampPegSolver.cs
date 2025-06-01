@@ -1,6 +1,8 @@
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Robust.Shared.Utility;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using Robust.Shared.Threading;
 using static Content.Server.Power.Pow3r.PowerState;
 
@@ -40,7 +42,9 @@ namespace Content.Server.Power.Pow3r
             DebugTools.Assert(state.GroupedNets.Select(x => x.Count).Sum() == state.Networks.Count);
             _networkJob.State = state;
             _networkJob.FrameTime = frameTime;
+#if DEBUG
             ValidateNetworkGroups(state, state.GroupedNets);
+#endif
 
             // Each network height layer can be run in parallel without issues.
             foreach (var group in state.GroupedNets)
@@ -328,8 +332,15 @@ namespace Content.Server.Power.Pow3r
                     RecursivelyEstimateNetworkDepth(state, network, groupedNetworks);
             }
 
-            ValidateNetworkGroups(state, groupedNetworks);
             return groupedNetworks;
+        }
+
+        public void Validate(PowerState state)
+        {
+            if (state.GroupedNets == null)
+                throw new InvalidOperationException("We don't have grouped networks cached??");
+
+            ValidateNetworkGroups(state, state.GroupedNets);
         }
 
         /// <summary>
@@ -337,7 +348,6 @@ namespace Content.Server.Power.Pow3r
         /// group in parallel. This assumes that batteries are the only device that connects to multiple networks, and
         /// is thus the only obstacle to solving everything in parallel.
         /// </summary>
-        [Conditional("DEBUG")]
         private void ValidateNetworkGroups(PowerState state, List<List<Network>> groupedNetworks)
         {
             HashSet<Network> nets = new();
@@ -362,9 +372,9 @@ namespace Content.Server.Power.Pow3r
                             continue;
                         }
 
-                        DebugTools.Assert(!nets.Contains(subNet));
-                        DebugTools.Assert(!netIds.Contains(subNet.Id));
-                        DebugTools.Assert(subNet.Height < net.Height);
+                        Check(!nets.Contains(subNet), $"Net {net.Id}, battery {batteryId}");
+                        Check(!netIds.Contains(subNet.Id), $"Net {net.Id}, battery {batteryId}");
+                        Check(subNet.Height < net.Height, $"Net {net.Id}, battery {batteryId}");
                     }
 
                     foreach (var batteryId in net.BatterySupplies)
@@ -380,14 +390,31 @@ namespace Content.Server.Power.Pow3r
                             continue;
                         }
 
-                        DebugTools.Assert(!nets.Contains(parentNet));
-                        DebugTools.Assert(!netIds.Contains(parentNet.Id));
-                        DebugTools.Assert(parentNet.Height > net.Height);
+                        Check(!nets.Contains(parentNet), $"Net {net.Id}, battery {batteryId}");
+                        Check(!netIds.Contains(parentNet.Id), $"Net {net.Id}, battery {batteryId}");
+                        Check(parentNet.Height > net.Height, $"Net {net.Id}, battery {batteryId}");
                     }
 
-                    DebugTools.Assert(nets.Add(net));
-                    DebugTools.Assert(netIds.Add(net.Id));
+                    Check(nets.Add(net), $"Net {net.Id}");
+                    Check(netIds.Add(net.Id), $"Net {net.Id}");
                 }
+            }
+
+            return;
+
+            // Most readable C# function def.
+            [AssertionMethod]
+            static void Check(
+                [AssertionCondition(AssertionConditionType.IS_TRUE)]
+                [DoesNotReturnIf(false)]
+                bool condition,
+                [InterpolatedStringHandlerArgument("condition")]
+                ref DebugTools.AssertInterpolatedStringHandler handler,
+                [CallerArgumentExpression(nameof(condition))]
+                string check = "")
+            {
+                if (!condition)
+                    throw new DebugAssertException($"{handler.ToStringAndClear()}: failed check: {check}");
             }
         }
 
