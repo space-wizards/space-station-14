@@ -278,7 +278,15 @@
     proto: HonoredAssistant
   equipment:
     outerClothing: ClothingOuterCoatDetectiveLoadoutGrey
-
+  
+- type: loadout
+  id: SpaceAssholeCoat
+  effects:
+    - !type:GroupLoadoutEffect
+      proto: MasterGrey
+  equipment:
+    outerClothing: ClothingOuterCoatSpaceAsshole
+  
 # Feet
 - type: loadout
   id: BlackShoes
