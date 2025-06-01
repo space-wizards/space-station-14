@@ -9,6 +9,17 @@
   group: market
 
 - type: cargoProduct
+  id: ServiceCleanerGrenades
+  icon:
+    sprite: Objects/Storage/boxes.rsi
+    state: box
+    state: flashbang
+  product: CrateServiceCleanerGrenades
+  cost: 400
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
   id: ServiceLightsReplacement
   icon:
     sprite: Objects/Power/light_bulb.rsi
