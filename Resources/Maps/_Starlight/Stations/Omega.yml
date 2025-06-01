@@ -1,17 +1,6 @@
 meta:
-  format: 7
-  category: Map
-  engineVersion: 260.2.0
-  forkId: Starlight
-  forkVersion: 1732131340
-  time: 05/30/2025 07:20:37
-  entityCount: 14325
-maps:
-- 14320
-grids:
-- 4812
-orphans: []
-nullspace: []
+  format: 6
+  postmapinit: false
 tilemap:
   0: Space
   7: FloorAsteroidSand
@@ -4955,7 +4944,7 @@ entities:
           - 0
         chunkSize: 4
     - type: BecomesStation
-      id: Omega
+      id: StarlightOmega
     - type: OccluderTree
     - type: Shuttle
       dampingModifier: 0.25
