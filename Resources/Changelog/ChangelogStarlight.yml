@@ -6496,4 +6496,39 @@ Entries:
   id: 899
   time: '2025-05-31T20:38:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/714
+- author: choccy
+  changes:
+  - message: (Starboard) Turrets from syndie base outside
+    type: Remove
+  id: 900
+  time: '2025-06-01T04:38:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/716
+- author: choccy
+  changes:
+  - message: (Starboard) SMES increase! To fix peak power issues
+    type: Add
+  id: 901
+  time: '2025-06-01T04:38:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/716
+- author: choccy
+  changes:
+  - message: (Starboard) Changes salvage to make it more efficient
+    type: Tweak
+  id: 902
+  time: '2025-06-01T04:38:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/716
+- author: choccy
+  changes:
+  - message: (Starboard) Made Atmospherics bigger
+    type: Tweak
+  id: 903
+  time: '2025-06-01T04:38:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/716
+- author: choccy
+  changes:
+  - message: (Starboard) New maints
+    type: Tweak
+  id: 904
+  time: '2025-06-01T04:38:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/716
 
