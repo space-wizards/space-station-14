@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
-using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
-using Robust.Server.GameObjects;
+using Content.Shared.NodeContainer;
 using Robust.Shared.EntitySerialization;
 
 namespace Content.IntegrationTests.Tests.Power;
