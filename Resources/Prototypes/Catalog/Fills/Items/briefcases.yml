@@ -45,7 +45,7 @@
       - id: ClothingOuterCoatJensen
       - id: ClothingHandsGlovesCombat
       - id: ClothingMaskNeckGaiter
-      - id: SyndieHandyFlag
+      - id: CardBoxSyndicate
 
 - type: entity
   id: BriefcaseThiefBribingBundleFilled
