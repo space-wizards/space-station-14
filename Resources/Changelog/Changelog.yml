@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Velken
-  changes:
-  - message: Cargo can now find a special bag for carrying mail in their drobe vendor.
-    type: Add
-  id: 8086
-  time: '2025-03-20T01:32:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35702
 - author: GaussiArson
   changes:
   - message: Disablers, practice disablers, and disabler smgs no longer deal heat
@@ -3916,3 +3909,10 @@
   id: 8597
   time: '2025-06-01T15:48:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38000
+- author: ToastEnjoyer
+  changes:
+  - message: C-4 is now listed under major contraband instead of syndicate.
+    type: Tweak
+  id: 8598
+  time: '2025-06-01T21:09:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38004
