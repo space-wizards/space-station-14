@@ -26,12 +26,6 @@
       - XenoArtifact
       - ResistLocker
     canTargetSelf: false
-    interactOnMiss: false
-    sound: !type:SoundPathSpecifier
-      path: /Audio/Magic/staff_animation.ogg
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: spell_default
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: Animate
