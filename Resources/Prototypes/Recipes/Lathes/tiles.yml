@@ -313,7 +313,7 @@
   materials:
     Steel: 25
     Glass: 25
-    Plasma: 25
+    Plasma: 50
 
 - type: latheRecipe
   parent: BaseMarbleTileRecipe
@@ -322,5 +322,5 @@
   materials:
     Steel: 25
     Glass: 25
-    Uranium: 25
+    Uranium: 50
  
