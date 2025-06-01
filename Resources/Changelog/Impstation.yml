@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Changed cargorilla to be able to roll on low-pop, as well as earlier
-      in the shift.
-    type: Tweak
-  id: 1259
-  time: '2025-03-09T07:50:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1878
-- author: crocodilecarousel
-  changes:
-  - message: Added 33 new markings, including underwear for grays and tails for thaven.
-    type: Add
-  id: 1260
-  time: '2025-03-09T08:05:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1876
 - author: Sha-Seng
   changes:
   - message: Spider Fluffy and Fuzzy overlay markings are now colorable
@@ -4214,3 +4199,19 @@
   id: 1758
   time: '2025-05-31T12:17:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2625
+- author: Widgetbeck, ThatKidConnor
+  changes:
+  - message: Added Cindy, the Syndicate counterpart to NT's Griffy.
+    type: Add
+  id: 1759
+  time: '2025-06-01T02:38:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2635
+- author: SixValentine
+  changes:
+  - message: Warden's must beg to become a dog on Hash
+    type: Add
+  - message: Some Hash fixes
+    type: Fix
+  id: 1760
+  time: '2025-06-01T02:38:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2632
