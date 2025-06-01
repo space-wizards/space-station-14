@@ -1,4 +1,12 @@
-﻿# any type of magical items used by wizards and similiar
+﻿# used by the unique items of xenoborgs (like modules and stuff)
+- type: entity
+  id: BaseXenoborgContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Major # placeholder until they make a better severity
+
+# any type of magical items used by wizards and similiar
 - type: entity
   id: BaseMagicalContraband
   abstract: true

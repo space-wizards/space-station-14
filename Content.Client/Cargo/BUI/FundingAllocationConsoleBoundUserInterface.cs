@@ -17,9 +17,9 @@ public sealed class FundingAllocationConsoleBoundUserInterface(EntityUid owner, 
 
         _menu = this.CreateWindow<FundingAllocationMenu>();
 
-        _menu.OnSavePressed += d =>
+        _menu.OnSavePressed += (dicts, primary, lockbox) =>
         {
-            SendMessage(new SetFundingAllocationBuiMessage(d));
+            SendMessage(new SetFundingAllocationBuiMessage(dicts, primary, lockbox));
         };
     }
 
