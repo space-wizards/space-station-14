@@ -10,7 +10,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
-namespace Content.Server.AbstractAnalyzer;
+namespace Content.Shared.AbstractAnalyzer;
 
 public abstract class AbstractAnalyzerSystem<TAnalyzerComponent, TAnalyzerDoAfterEvent> : EntitySystem
     where TAnalyzerComponent : AbstractAnalyzerComponent
@@ -24,6 +24,7 @@ public abstract class AbstractAnalyzerSystem<TAnalyzerComponent, TAnalyzerDoAfte
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
 
     public override void Initialize()
     {
@@ -77,7 +78,8 @@ public abstract class AbstractAnalyzerSystem<TAnalyzerComponent, TAnalyzerDoAfte
 
         _audio.PlayPvs(uid.Comp.ScanningBeginSound, uid);
 
-        var doAfterCancelled = !_doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, uid.Comp.ScanDelay, new TAnalyzerDoAfterEvent(), uid, target: args.Target, used: uid)
+        var doAfterEvent = _typeFactory.CreateInstance<TAnalyzerDoAfterEvent>();
+        var doAfterCancelled = !_doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, uid.Comp.ScanDelay, doAfterEvent, uid, target: args.Target, used: uid)
         {
             NeedHand = true,
             BreakOnMove = true,
