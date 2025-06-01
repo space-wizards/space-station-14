@@ -75,7 +75,7 @@ public sealed class JammerSystem : SharedJammerSystem
 
             // Copy excluded frequencies from RadioJammerComponent
             if (ent.Comp.FrequenciesExcluded != null)
-                jammingComp.ExcludedFrequencies = new(ent.Comp.FrequenciesExcluded);
+                jammingComp.FrequenciesExcluded = new(ent.Comp.FrequenciesExcluded);
         }
         else
         {
