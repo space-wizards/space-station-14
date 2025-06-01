@@ -53,7 +53,8 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
     protected void TryStartProcessItem(EntityUid uid,
         EntityUid item,
         XenoborgFactoryComponent? component = null,
-        EntityUid? user = null)
+        EntityUid? user = null,
+        bool suicide = false)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -70,7 +71,7 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
         if (HasComp<BorgChassisComponent>(item))
             return;
 
-        if (!_mobState.IsIncapacitated(item) && !HasComp<SleepingComponent>(item) && _actionBlocker.CanInteract(item, null))
+        if (!_mobState.IsIncapacitated(item) && !HasComp<SleepingComponent>(item) && _actionBlocker.CanInteract(item, null) && !suicide)
             return;
 
         if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||

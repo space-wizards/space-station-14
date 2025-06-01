@@ -121,17 +121,17 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
             _ghostSystem.OnGhostAttempt(mindId, false, mind: mind);
             if (mind.OwnedEntity is { Valid: true } suicider)
             {
-                _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), suicider);
+                _popup.PopupEntity(Loc.GetString("xenoborgfactory-component-suicide-message"), suicider);
             }
         }
 
-        _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message-others",
+        _popup.PopupEntity(Loc.GetString("xenoborgfactory-component-suicide-message-others",
                 ("victim", Identity.Entity(victim, EntityManager))),
             victim,
             Filter.PvsExcept(victim, entityManager: EntityManager),
             true);
 
-        TryStartProcessItem(entity, victim);
+        TryStartProcessItem(entity, victim, suicide:true);
         args.Handled = true;
     }
 
