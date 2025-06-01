@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: muburu
-  changes:
-  - message: Produce now has in-hand sprites.
-    type: Add
-  - message: Killer tomatoes now require two hands to hold.
-    type: Tweak
-  id: 8084
-  time: '2025-03-20T00:53:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35151
 - author: Seam_Less
   changes:
   - message: Added in-hand sprites to Bling, Camera Bug, Cap Cap, Centcom Cap, Damp
@@ -3918,3 +3909,10 @@
   id: 8595
   time: '2025-06-01T04:28:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37986
+- author: TheFlyingSentry
+  changes:
+  - message: Added a new disability called Monochromacy, total colorblindness.
+    type: Add
+  id: 8596
+  time: '2025-06-01T05:31:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37989
