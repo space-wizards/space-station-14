@@ -4,6 +4,7 @@ using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Internals;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
@@ -70,26 +71,38 @@ public abstract class SharedInternalsSystem : EntitySystem
     }
 
     protected bool ToggleInternals(
-        EntityUid uid,
+        EntityUid target,
         EntityUid user,
         bool force,
         InternalsComponent? internals = null,
         ToggleMode mode = ToggleMode.Toggle)
     {
-        if (!Resolve(uid, ref internals, logMissing: false))
+        if (!Resolve(target, ref internals, logMissing: false))
             return false;
 
         // Check if a mask is present.
         if (internals.BreathTools.Count == 0)
         {
-            _popupSystem.PopupClient(Loc.GetString("internals-no-breath-tool"), uid, user);
+            var message = user == target ? Loc.GetString("internals-self-no-breath-tool") : Loc.GetString("internals-other-no-breath-tool", ("ent", Identity.Name(target, EntityManager, user)));
+            _popupSystem.PopupClient(message, target, user);
+            return false;
+        }
+
+        // Check if tank is present.
+        var tank = FindBestGasTank(target);
+
+        // If they're not on then check if we have a mask to use
+        if (tank == null)
+        {
+            var message = user == target ? Loc.GetString("internals-self-no-tank") : Loc.GetString("internals-other-no-tank", ("ent", Identity.Name(target, EntityManager, user)));
+            _popupSystem.PopupClient(message, target, user);
             return false;
         }
 
         // Start the toggle do-after if it's on someone else.
-        if (!force && user != uid)
+        if (!force && user != target)
         {
-            return StartToggleInternalsDoAfter(user, (uid, internals), mode);
+            return StartToggleInternalsDoAfter(user, (target, internals), mode);
         }
 
         // Toggle off.
@@ -106,16 +119,6 @@ public abstract class SharedInternalsSystem : EntitySystem
         // If the intent was to disable internals there’s nothing left to do
         if (mode == ToggleMode.Off)
             return false;
-
-        // Check if tank is present.
-        var tank = FindBestGasTank(uid);
-
-        // If they're not on then check if we have a mask to use
-        if (tank == null)
-        {
-            _popupSystem.PopupClient(Loc.GetString("internals-no-tank"), uid, user);
-            return false;
-        }
 
         return _gasTank.ConnectToInternals(tank.Value, user: user);
     }
