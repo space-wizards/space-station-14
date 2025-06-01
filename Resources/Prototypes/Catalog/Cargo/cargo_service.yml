@@ -11,9 +11,8 @@
 - type: cargoProduct
   id: ServiceCleanerGrenades
   icon:
-    sprite: Objects/Storage/boxes.rsi
-    state: box
-    state: flashbang
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+    state: icon
   product: CrateServiceCleanerGrenades
   cost: 400
   category: cargoproduct-category-name-service
