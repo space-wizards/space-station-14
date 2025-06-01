@@ -56,10 +56,10 @@
   components:
   - type: RadioJammer
     frequenciesExcluded:
-    - 2002
-    - 2003
-    - 2004
-    - 2005
+    - 2002 # xenoborg radio
+    - 2003 # mothership radio
+    - 2004 # xenoborg network
+    - 2005 # mothership network
   - type: ItemSlots
     slots:
       cell_slot:
