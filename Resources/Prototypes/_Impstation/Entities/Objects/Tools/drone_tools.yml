@@ -146,7 +146,6 @@
   components:
   - type: LimitedCharges
     maxCharges: 50
-    charges: 50
   - type: AutoRecharge
     rechargeDuration: 0.1
 
