@@ -43,11 +43,10 @@ public sealed class ColorShiftSystem : SharedColorShiftSystem
 
     private void OnMessageReceive(Entity<ColorShifterComponent> ent, ref PleaseHueShiftNetworkMessage args)
     {
-        // Validate client input
-        if (!TryComp<MindContainerComponent>(ent.Owner, out var mindContainer))
-            return;
+        Log.Debug(args.Actor.Id.ToString());
 
-        if (mindContainer.Mind != args.Actor)
+        // Validate client input
+        if (ent.Owner != _entityManager.GetEntity(args.Entity))
             return;
 
         // Perform doafter
