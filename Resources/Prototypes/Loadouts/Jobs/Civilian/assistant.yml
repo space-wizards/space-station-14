@@ -22,9 +22,11 @@
 - type: loadoutEffectGroup
   id: ParagonGrey
   effects:
-  - !type:RoleTimeRequirement
-    role: JobPassenger
-    time: 144000 #40 hours, gloves for truly the greatest (grey-test) of the grey
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 144000 #40 hours, gloves for truly the greatest (grey-test) of the grey
 
 # Head
 - type: loadout
@@ -275,7 +277,7 @@
   - !type:GroupLoadoutEffect
     proto: HonoredAssistant
   equipment:
-    outetClothing: ClothingOuterCoatDetectiveLoadoutGrey
+    outerClothing: ClothingOuterCoatDetectiveLoadoutGrey
 
 # Feet
 - type: loadout
