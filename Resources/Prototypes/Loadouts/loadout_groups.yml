@@ -5,6 +5,7 @@
   minLimit: 0
   maxLimit: 4 #imp
   loadouts:
+  - NoviceMark # imp
   - BarFlask
   - CardBoxBlack
   - CDDogtags #_CD

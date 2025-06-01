@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Made by normalgirl2171 for Impstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-NECK",
+      "directions": 4
+    }
+  ]
+}

@@ -8,6 +8,12 @@
       inverted: true # don't let experienced players select these
 
 - type: loadout
+  id: NoviceMark # no playtime lockout for needing time :)
+  storage:
+    back:
+    - ClothingNeckNoviceMark
+
+- type: loadout
   id: CigPackNewport
   storage:
     back:

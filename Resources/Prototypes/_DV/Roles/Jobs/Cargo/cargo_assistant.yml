@@ -21,6 +21,7 @@
   id: SupplyAssistantGear
   equipment:
     shoes: ClothingShoesColorBlack
+    neck: ClothingNeckNoviceMark # imp
     id: SupplyAssistantPDA
     ears: ClothingHeadsetCargo
     pocket1: BookLogistics

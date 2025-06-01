@@ -21,6 +21,7 @@
   equipment:
     shoes: ClothingShoesColorWhite
     id: MedicalInternPDA
+    neck: ClothingNeckNoviceMark # imp
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
     pocket1: TutorialPersonalAI #imp
