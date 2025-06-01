@@ -1,4 +1,6 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Database;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
@@ -29,6 +31,8 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
     [Dependency] protected readonly SharedMaterialStorageSystem MaterialStorage = default!;
     [Dependency] protected readonly IPrototypeManager Proto = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+
 
 
     public override void Initialize()
@@ -67,6 +71,9 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
             return;
 
         if (HasComp<BorgChassisComponent>(item))
+            return;
+
+        if (!_mobState.IsIncapacitated(item) && !HasComp<SleepingComponent>(item) && _actionBlocker.CanInteract(item, null))
             return;
 
         if (_whitelistSystem.IsWhitelistFail(component.Whitelist, item) ||
