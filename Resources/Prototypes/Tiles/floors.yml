@@ -410,7 +410,7 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
-    collection: FootstepFloor
+    collection: FootstepTile
   itemDrop: FloorTileItemWhiteHorizontalSlatsContinuous
   heatCapacity: 10000
 
@@ -428,7 +428,7 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
-    collection: FootstepFloor
+    collection: FootstepTile
   itemDrop: FloorTileItemWhiteHorizontalSlatsBordered
   heatCapacity: 10000
 
@@ -656,7 +656,7 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
-    collection: FootstepFloor
+    collection: FootstepTile
   itemDrop: FloorTileItemDarkHorizontalSlatsContinuous
   heatCapacity: 10000
 
@@ -674,7 +674,7 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
-    collection: FootstepFloor
+    collection: FootstepTile
   itemDrop: FloorTileItemDarkHorizontalSlatsBordered
   heatCapacity: 10000
 
