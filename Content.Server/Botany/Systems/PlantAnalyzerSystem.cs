@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.AbstractAnalyzer;
 using Content.Server.Botany.Components;
 using Content.Server.Popups;
+using Content.Shared.AbstractAnalyzer;
 using Content.Shared.Botany.PlantAnalyzer;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
