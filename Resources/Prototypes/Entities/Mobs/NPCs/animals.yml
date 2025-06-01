@@ -346,6 +346,7 @@
   id: MobCockroach
   description: This station is just crawling with bugs.
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: SmallMobs
     sprite: Mobs/Animals/cockroach.rsi

@@ -6482,4 +6482,83 @@ Entries:
   id: 897
   time: '2025-05-31T05:47:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/726
+- author: Conflee
+  changes:
+  - message: Fixed Omega job load error again, caused by a different issue
+    type: Fix
+  id: 898
+  time: '2025-05-31T19:25:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/732
+- author: choccy
+  changes:
+  - message: Fixes Nukie outpost, hopefully for the final time...
+    type: Fix
+  id: 899
+  time: '2025-05-31T20:38:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/714
+- author: choccy
+  changes:
+  - message: (Starboard) Turrets from syndie base outside
+    type: Remove
+  id: 900
+  time: '2025-06-01T04:38:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/716
+- author: choccy
+  changes:
+  - message: (Starboard) SMES increase! To fix peak power issues
+    type: Add
+  id: 901
+  time: '2025-06-01T04:38:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/716
+- author: choccy
+  changes:
+  - message: (Starboard) Changes salvage to make it more efficient
+    type: Tweak
+  id: 902
+  time: '2025-06-01T04:38:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/716
+- author: choccy
+  changes:
+  - message: (Starboard) Made Atmospherics bigger
+    type: Tweak
+  id: 903
+  time: '2025-06-01T04:38:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/716
+- author: choccy
+  changes:
+  - message: (Starboard) New maints
+    type: Tweak
+  id: 904
+  time: '2025-06-01T04:38:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/716
+- author: walksanatora
+  changes:
+  - message: Rare paper that can spawn in captains locker that will be able to put
+      to end all responses to "It is too QUIET"
+    type: Add
+  id: 905
+  time: '2025-06-01T04:59:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/727
+- author: walksanatora
+  changes:
+  - message: Signable gamerule/antag papers can no longer be put into the fax until
+      FaxSystem can copy components properly.
+    type: Fix
+  id: 906
+  time: '2025-06-01T04:59:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/727
+- author: Aedler
+  changes:
+  - message: Fixed starlight version of announcement sound for comms & AI.
+    type: Fix
+  id: 907
+  time: '2025-06-01T05:00:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/733
+- author: Zarq0
+  changes:
+  - message: Made roaches able to vent crawl.
+    type: Tweak
+  id: 908
+  time: '2025-06-01T05:06:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/696
 
