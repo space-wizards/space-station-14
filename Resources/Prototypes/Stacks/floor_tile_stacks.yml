@@ -635,14 +635,16 @@
   spawn: FloorTileItemWoodLarge
   maxCount: 30
 
+# Game boards
 - type: stack
-  id: FloorTileTabletopWhite
-  name: stack-tabletop-white-floor
-  spawn: FloorTileItemTabletopWhite
+  id: FloorCarpetBoardWhite
+  name: stack-board-white-tile
+  spawn: FloorCarpetItemBoardWhite
   maxCount: 30
 
 - type: stack
-  id: FloorTileTabletopBlack
-  name: stack-tabletop-black-floor
-  spawn: FloorTileItemTabletopBlack
+  id: FloorCarpetBoardBlack
+  name: stack-board-black-tile
+  spawn: FloorCarpetItemBoardBlack
   maxCount: 30
+

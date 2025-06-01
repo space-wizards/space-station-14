@@ -1604,35 +1604,3 @@
     graph: TileWoodLarge
     node: woodtilelarge
 
-- type: entity
-  name: white tabletop square
-  parent: FloorTileItemBase
-  id: FloorTileItemTabletopWhite
-  components:
-  - type: Sprite
-    state: tabletop-white
-  - type: Item
-    heldPrefix: wood
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorTabletopWhite
-  - type: Stack
-    stackType: FloorTileTabletopWhite
-
-- type: entity
-  name: black tabletop square
-  parent: FloorTileItemBase
-  id: FloorTileItemTabletopBlack
-  components:
-  - type: Sprite
-    state: tabletop-black
-  - type: Item
-    heldPrefix: wood
-  - type: FloorTile
-    outputs:
-      - Plating
-      - FloorTabletopBlack
-  - type: Stack
-    stackType: FloorTileTabletopBlack
-
