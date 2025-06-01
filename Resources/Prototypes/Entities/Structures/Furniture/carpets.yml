@@ -370,7 +370,7 @@
 - type: entity
   id: CarpetBoardWhite
   parent: CarpetBase
-  suffix: White
+  name: "white tabletop board"
   components:
   - type: Clickable
   - type: Sprite
@@ -400,7 +400,7 @@
 - type: entity
   id: CarpetBoardBlack
   parent: CarpetBase
-  suffix: Black
+  name: "black tabletop board"
   components:
   - type: Clickable
   - type: Sprite
