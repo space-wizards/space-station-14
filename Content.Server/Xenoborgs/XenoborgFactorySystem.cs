@@ -46,7 +46,8 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
 
         base.Reclaim(uid, item, component);
 
-        FinishProducing(uid, item);
+        if (!TryFinishProducing(uid, item))
+            return;
 
         var logImpact = HasComp<HumanoidAppearanceComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
         _adminLogger.Add(LogType.Gib,
@@ -58,40 +59,51 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
         Del(item);
     }
 
-    private void FinishProducing(EntityUid uid, EntityUid item, XenoborgFactoryComponent? comp = null)
+    private bool TryFinishProducing(EntityUid uid, EntityUid item, XenoborgFactoryComponent? comp = null)
     {
         if (!Resolve(uid, ref comp, false))
-            return;
+            return false;
         if (!Proto.TryIndex(comp.Recipe, out LatheRecipePrototype? recipe))
-            return;
+            return false;
         if (recipe.Result is { } resultProto)
         {
-            var result = Spawn(resultProto, Transform(uid).Coordinates);
-            BorgChassisComponent? chassis = null;
             EntityUid? brain = null;
             foreach (var (id, _) in _body.GetBodyOrgans(item))
             {
-                if (HasComp<BrainComponent>(id))
-                {
-                    brain = id;
-                    _body.RemoveOrgan(brain.Value);
-                    break;
-                }
+                if (!HasComp<BrainComponent>(id))
+                    continue;
+
+                brain = id;
+                _body.RemoveOrgan(brain.Value);
+                break;
             }
 
-            if (brain != null && Resolve(result, ref chassis) && chassis.BrainEntity != null)
+            if (brain == null)
+                return false;
+
+            foreach (var (material, needed) in recipe.Materials)
             {
-                if (_mind.TryGetMind(brain.Value, out _, out var mind) &&
-                    _player.TryGetSessionById(mind.UserId, out var session) && _borg.CanPlayerBeBorged(session))
-                {
-                    _itemSlots.TryInsert(chassis.BrainEntity.Value, "brain_slot", brain.Value, uid);
-                }
-                else
-                {
-                    _popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), brain.Value);
-                }
+                MaterialStorage.TryChangeMaterialAmount(uid, material, -needed);
             }
+
+            var result = Spawn(resultProto, Transform(uid).Coordinates);
+
+            BorgChassisComponent? chassis = null;
+            if (!Resolve(result, ref chassis) || chassis.BrainEntity == null)
+                return false;
+
+            if (_mind.TryGetMind(brain.Value, out _, out var mind) &&
+                _player.TryGetSessionById(mind.UserId, out var session) && _borg.CanPlayerBeBorged(session))
+            {
+                _itemSlots.TryInsert(chassis.BrainEntity.Value, "brain_slot", brain.Value, uid);
+            }
+            else
+            {
+                _popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), brain.Value);
+            }
+            return true;
         }
+        return false;
     }
 
     private void OnSuicideByEnvironment(Entity<XenoborgFactoryComponent> entity, ref SuicideByEnvironmentEvent args)
@@ -143,7 +155,9 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
                 {
                     // Putting this in shared causes the client to execute this multiple times
                     component.Recipe = type;
-                    _popup.PopupEntity(Loc.GetString("emitter-component-type-set", ("type", _lathe.GetRecipeName(proto))), uid);
+                    _popup.PopupEntity(Loc.GetString("emitter-component-type-set",
+                            ("type", _lathe.GetRecipeName(proto))),
+                        uid);
                     Dirty(uid, component);
                 },
             };

@@ -26,7 +26,7 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] protected readonly SharedMaterialStorageSystem MaterialStorage = default!;
     [Dependency] protected readonly IPrototypeManager Proto = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
@@ -111,14 +111,6 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
             _audio.Stop(component.Stream);
         }
 
-        if (Proto.TryIndex(component.Recipe, out var recipe))
-        {
-            foreach (var (material, needed) in recipe.Materials)
-            {
-                _materialStorage.TryChangeMaterialAmount(uid, material, -needed);
-            }
-        }
-
         Dirty(uid, component);
     }
 
@@ -132,7 +124,7 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
             return false;
         foreach (var (material, needed) in recipe.Materials)
         {
-            if (_materialStorage.GetMaterialAmount(factory, material) < needed)
+            if (MaterialStorage.GetMaterialAmount(factory, material) < needed)
                 return false;
         }
 
