@@ -66,21 +66,21 @@ namespace Content.Server.GameTicking
         }
 
         private void SpawnPlayers(List<ICommonSession> readyPlayers,
-            HashSet<NetUserId> profiles,
+            HashSet<NetUserId> netUserIds,
             bool force)
         {
             // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
-            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
+            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, netUserIds, force));
 
             var playerNetIds = readyPlayers.Select(o => o.UserId).ToHashSet();
 
             // RulePlayerSpawning feeds a readonlydictionary of profiles.
             // We need to take these players out of the pool of players available as they've been used.
-            if (readyPlayers.Count != profiles.Count)
+            if (readyPlayers.Count != netUserIds.Count)
             {
                 var toRemove = new RemQueue<NetUserId>();
 
-                foreach (var player in profiles)
+                foreach (var player in netUserIds)
                 {
                     if (playerNetIds.Contains(player))
                         continue;
@@ -90,16 +90,16 @@ namespace Content.Server.GameTicking
 
                 foreach (var player in toRemove)
                 {
-                    profiles.Remove(player);
+                    netUserIds.Remove(player);
                 }
             }
 
             var spawnableStations = GetSpawnableStations();
-            var assignedJobs = _stationJobs.AssignJobs(profiles, spawnableStations);
+            var assignedJobs = _stationJobs.AssignJobs(netUserIds, spawnableStations);
 
             // Calculate extended access for stations.
             var stationJobCounts = spawnableStations.ToDictionary(e => e, _ => 0);
-            foreach (var netUser in profiles)
+            foreach (var netUser in netUserIds)
             {
                 if(!assignedJobs.TryGetValue(netUser, out var assignedJobAndStation) || assignedJobAndStation.Item1 is null)
                 {
@@ -149,7 +149,7 @@ namespace Content.Server.GameTicking
             // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
             RaiseLocalEvent(new RulePlayerJobsAssignedEvent(
                 assignedJobs.Keys.Select(x => _playerManager.GetSessionById(x)).ToArray(),
-                profiles,
+                netUserIds,
                 force));
         }
 
