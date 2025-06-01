@@ -1605,7 +1605,7 @@
     node: woodtilelarge
 
 - type: entity
-  name: white tabletop sqaure
+  name: white tabletop square
   parent: FloorTileItemBase
   id: FloorTileItemTabletopWhite
   components:
@@ -1621,7 +1621,7 @@
     stackType: FloorTileTabletopWhite
 
 - type: entity
-  name: black tabletop sqaure
+  name: black tabletop square
   parent: FloorTileItemBase
   id: FloorTileItemTabletopBlack
   components:
