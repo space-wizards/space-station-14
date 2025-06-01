@@ -2055,8 +2055,12 @@
   id: FloorMarble
   name: tiles-marble
   sprite: /Textures/Tiles/marble.png
-  variants: 4
+  variants: 8
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -2074,8 +2078,12 @@
   id: FloorDarkMarble
   name: tiles-dark-marble
   sprite: /Textures/Tiles/dark_marble.png
-  variants: 4
+  variants: 8
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -2093,8 +2101,12 @@
   id: FloorPlasmaMarble
   name: tiles-plasma-marble
   sprite: /Textures/Tiles/plasmarble.png
-  variants: 4
+  variants: 8
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
@@ -2112,8 +2124,12 @@
   id: FloorUraniumMarble
   name: tiles-uranium-marble
   sprite: /Textures/Tiles/uranium_marble.png
-  variants: 4
+  variants: 8
   placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   - 1.0
   - 1.0
   - 1.0
