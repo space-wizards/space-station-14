@@ -1,29 +1,4 @@
 ﻿Entries:
-- author: MisterImp
-  changes:
-  - message: The copypasta recipe now requires two small plates, which are left behind
-      when it is consumed.
-    type: Tweak
-  id: 8083
-  time: '2025-03-20T00:35:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35925
-- author: muburu
-  changes:
-  - message: Produce now has in-hand sprites.
-    type: Add
-  - message: Killer tomatoes now require two hands to hold.
-    type: Tweak
-  id: 8084
-  time: '2025-03-20T00:53:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35151
-- author: Seam_Less
-  changes:
-  - message: Added in-hand sprites to Bling, Camera Bug, Cap Cap, Centcom Cap, Damp
-      Rag, and Incomplete Baseball Bat.
-    type: Add
-  id: 8085
-  time: '2025-03-20T01:04:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35433
 - author: Velken
   changes:
   - message: Cargo can now find a special bag for carrying mail in their drobe vendor.
@@ -3916,3 +3891,28 @@
   id: 8594
   time: '2025-05-31T02:09:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37945
+- author: ScarKy0
+  changes:
+  - message: Priority mail now grants slightly more spesos if delivered on time, and
+      slightly less if done otherwise.
+    type: Tweak
+  - message: Bomb mail now explodes way after and deals slightly more damage.
+    type: Tweak
+  id: 8595
+  time: '2025-06-01T04:28:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37986
+- author: TheFlyingSentry
+  changes:
+  - message: Added a new disability called Monochromacy, total colorblindness.
+    type: Add
+  id: 8596
+  time: '2025-06-01T05:31:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37989
+- author: Hitlinemoss
+  changes:
+  - message: Cargo can now order the bulk cleanades crate, containing two cleanade
+      boxes for $400.
+    type: Add
+  id: 8597
+  time: '2025-06-01T15:48:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38000
