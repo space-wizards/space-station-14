@@ -30,3 +30,20 @@
     sprite: _Starlight/Clothing/Head/Hats/beret_corpsman.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Head/Hats/beret_corpsman.rsi
+
+- type: entity
+  parent: [ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatSheriffHat
+  name: head of security's sheriff hat
+  description: It's high noon.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/sheriffhat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/sheriffhat.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - HamsterWearable
+    - WhitelistChameleon
