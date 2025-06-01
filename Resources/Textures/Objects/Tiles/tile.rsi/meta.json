@@ -565,10 +565,10 @@
       "directions": 4
     },
     {
-      "name": "tabletop_white"
+      "name": "tabletop-white"
     },
     {
-      "name": "tabletop_black"
+      "name": "tabletop-black"
     }
   ]
 }
