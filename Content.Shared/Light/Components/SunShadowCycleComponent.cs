@@ -38,14 +38,19 @@ public sealed partial class SunShadowCycleComponent : Component
 [Serializable]
 public partial record struct SunShadowCycleDirection
 {
+    [DataField]
+    public float Ratio;
+
+    [DataField]
+    public Vector2 Direction;
+
+    [DataField]
+    public float Alpha;
+
     public SunShadowCycleDirection(float ratio, Vector2 direction, float alpha)
     {
         Ratio = ratio;
         Direction = direction;
         Alpha = alpha;
     }
-
-    public float Ratio;
-    public Vector2 Direction;
-    public float Alpha;
 };
