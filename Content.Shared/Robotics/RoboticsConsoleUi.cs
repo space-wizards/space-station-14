@@ -18,10 +18,12 @@ public sealed class RoboticsConsoleState : BoundUserInterfaceState
     /// Map of device network addresses to cyborg data.
     /// </summary>
     public Dictionary<string, CyborgControlData> Cyborgs;
+    public bool AllowBorgControl;
 
-    public RoboticsConsoleState(Dictionary<string, CyborgControlData> cyborgs)
+    public RoboticsConsoleState(Dictionary<string, CyborgControlData> cyborgs, bool allowBorgControl)
     {
         Cyborgs = cyborgs;
+        AllowBorgControl = allowBorgControl;
     }
 }
 
