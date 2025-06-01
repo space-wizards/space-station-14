@@ -1,6 +1,7 @@
 using Content.Server.Antag;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.Fax.Components;
 using Content.Shared.Paper;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -25,6 +26,14 @@ public sealed class AntagOnSignSystem : EntitySystem
         base.Initialize();
         _sawmill = Logger.GetSawmill(this.SawmillName);
         SubscribeLocalEvent<AntagOnSignComponent, PaperSignedEvent>(OnPaperSigned);
+        SubscribeLocalEvent<AntagOnSignComponent, ComponentInit>(OnComponentInit);
+    }
+
+    private void OnComponentInit(EntityUid uid, AntagOnSignComponent comp, ComponentInit init)
+    {
+        if (comp.KeepFaxable) 
+            return;
+        RemComp<FaxableObjectComponent>(uid); //cause this breaks shit like infinite antags
     }
 
     private void OnPaperSigned(EntityUid uid, AntagOnSignComponent component, PaperSignedEvent args)

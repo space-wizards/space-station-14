@@ -35,6 +35,12 @@ public sealed partial class AntagOnSignComponent : Component
     /// </summary>
     [DataField]
     public List<AntagCompPair> Antags = [];
+
+    /// <summary>
+    /// is the faxable component kept? this is for admeme protos
+    /// </summary>
+    [DataField]
+    public bool KeepFaxable = false;
 }
 
 [DataDefinition]

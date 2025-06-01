@@ -2,7 +2,7 @@
   parent: Paper
   id: PaperTooQuietNeedChaos
   name: the end of Q
-  description: this paper makes you dread whats going to happen...
+  description: dreadful paper that cant fit in a fax machine.
   components:
     - type: Paper
       content: paper-too-quiet-need-chaos
@@ -30,7 +30,7 @@
   parent: Paper
   id: PaperTooQuietNeedChaosFew
   name: the end of Q
-  description: this paper makes you dread whats going to happen...
+  description: dreadful paper that cant fit in a fax machine.
   suffix: Lowpop
   components:
     - type: Paper
