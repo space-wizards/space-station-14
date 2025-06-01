@@ -25,7 +25,6 @@
       - TegCirculator
       - XenoArtifact
       - ResistLocker
-    canTargetSelf: false
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: Animate
