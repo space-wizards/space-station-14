@@ -240,7 +240,7 @@ public sealed partial class ShuttleSystem
                 continue;
 
             // don't throw if buckled
-            if (_buckle.IsBuckled(uid, _buckleQuery.CompOrNull(uid)))
+            if (_buckle.IsBuckled(uid))
                 continue;
 
             // don't throw them if they have magboots

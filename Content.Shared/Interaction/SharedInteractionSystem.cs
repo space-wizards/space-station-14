@@ -263,7 +263,7 @@ namespace Content.Shared.Interaction
             if (!InRangeUnobstructed(userEntity.Value, uid, popup: true))
                 return false;
 
-            _pullSystem.TogglePull(uid, userEntity.Value);
+            _pullSystem.TogglePull(userEntity.Value, uid);
             return false;
         }
 

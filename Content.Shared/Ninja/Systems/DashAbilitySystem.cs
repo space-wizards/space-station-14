@@ -86,7 +86,7 @@ public sealed class DashAbilitySystem : EntitySystem
         }
 
         // Check if the user is BEING pulled, and escape if so
-        if (TryComp<PullableComponent>(user, out var pull) && _pullingSystem.IsPulled(user, pull))
+        if (TryComp<PullableComponent>(user, out var pull) && _pullingSystem.IsPulled((user, pull)))
             _pullingSystem.TryStopPull(user, pull);
 
         // Check if the user is pulling anything, and drop it if so
