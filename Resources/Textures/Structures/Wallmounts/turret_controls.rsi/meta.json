@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/blob/b4363f59f5feacbc48c29aea4eb7794ad358cd92/icons/obj/device.dmi. Modified by chromiumboy.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "safe",
+      "delays": [
+        [
+          0.2,
+          2.0
+        ]
+      ]
+    },
+    {
+      "name": "stun",
+      "delays": [
+        [
+          0.2,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "lethal",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "wires"
+    }
+  ]
+}

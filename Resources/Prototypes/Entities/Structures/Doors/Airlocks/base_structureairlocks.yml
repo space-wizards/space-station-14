@@ -31,11 +31,16 @@
       shader: unshaded
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: electrified
+    - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
       shader: unshaded
       visible: false
       map: ["enum.ElectrifiedLayers.HUD"]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.Sparks"]
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -77,6 +82,12 @@
   - type: NavMapDoor
   - type: DoorBolt
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ElectrifiedVisuals.ShowSparks:
+        enum.ElectrifiedLayers.Sparks:
+          True: { visible: True }
+          False: { visible: False }
   - type: WiresVisuals
   - type: ElectrocutionHUDVisuals
   - type: ApcPowerReceiver
@@ -163,6 +174,11 @@
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
   - type: PryUnpowered
   - type: BlockWeather
+  - type: GuideHelp
+    guides:
+    - Airlocks
+    - WirePanels
+    - Networking
   placement:
     mode: SnapgridCenter
 

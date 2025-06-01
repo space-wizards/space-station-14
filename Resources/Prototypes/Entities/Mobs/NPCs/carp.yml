@@ -170,6 +170,8 @@
       name: ghost-role-information-sentient-carp-name
       description: ghost-role-information-sentient-carp-description
       rules: ghost-role-information-space-dragon-summoned-carp-rules
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonistFlock
       raffle:
         settings: short
     - type: GhostTakeoverAvailable
@@ -241,8 +243,7 @@
         - id: FoodMeatFish
           amount: 4
         - id: MaterialToothSharkminnow1
-          amount: 1
-          maxAmount: 3
+          amount: 3
     - type: MeleeWeapon
       damage:
         types:

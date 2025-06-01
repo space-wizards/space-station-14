@@ -27,3 +27,6 @@
   - type: Tool
     qualities:
       - Cutting
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200

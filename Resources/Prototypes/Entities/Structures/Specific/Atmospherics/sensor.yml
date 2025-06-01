@@ -2,32 +2,37 @@
   id: AirSensorBase
   abstract: true
   components:
-    - type: DeviceNetwork
-      deviceNetId: AtmosDevices
-      receiveFrequencyId: AtmosMonitor
-      transmitFrequencyId: AtmosMonitor
-      prefix: device-address-prefix-sensor
-      sendBroadcastAttemptEvent: true
-      examinableAddress: true
-    - type: WiredNetworkConnection
-    - type: DeviceNetworkRequiresPower
-    - type: AtmosDevice
-    - type: AtmosMonitor
-      temperatureThresholdId: stationTemperature
-      pressureThresholdId: stationPressure
-      gasThresholdPrototypes:
-        Oxygen: stationOxygen
-        Nitrogen: ignore
-        CarbonDioxide: stationCO2
-        Plasma: stationPlasma
-        Tritium: stationTritium
-        WaterVapor: stationWaterVapor
-        Ammonia: stationAmmonia
-        NitrousOxide: stationNO
-        Frezon: danger
-    - type: Tag
-      tags:
-        - AirSensor
+  - type: DeviceNetwork
+    deviceNetId: AtmosDevices
+    receiveFrequencyId: AtmosMonitor
+    transmitFrequencyId: AtmosMonitor
+    prefix: device-address-prefix-sensor
+    sendBroadcastAttemptEvent: true
+    examinableAddress: true
+  - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
+  - type: AtmosDevice
+  - type: AtmosMonitor
+    temperatureThresholdId: stationTemperature
+    pressureThresholdId: stationPressure
+    gasThresholdPrototypes:
+      Oxygen: stationOxygen
+      Nitrogen: stationNitrogen
+      CarbonDioxide: stationCO2
+      Plasma: stationPlasma
+      Tritium: stationTritium
+      WaterVapor: stationWaterVapor
+      Ammonia: stationAmmonia
+      NitrousOxide: stationNO
+      Frezon: danger
+  - type: Tag
+    tags:
+      - AirSensor
+      - ForceFixRotations
+  - type: GuideHelp
+    guides:
+    - DeviceMonitoringAndControl
+    - AtmosphericsSystems
 
 - type: entity
   id: AirSensor
@@ -37,54 +42,54 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Transform
-      anchored: true
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-          - !type:DoActsBehavior
-            acts: ["Destruction"]
-    - type: Physics
-      canCollide: false
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
-          density: 20
-          mask:
-            - ItemMask
-          restitution: 0.3
-          friction: 0.2
-    - type: Clickable
-    - type: InteractionOutline
-    - type: ApcPowerReceiver
-    - type: ExtensionCableReceiver
-    - type: AccessReader
-      access: [ [ "Atmospherics" ] ]
-    - type: Construction
-      graph: AirSensor
-      node: sensor
-    - type: Appearance
-    - type: Sprite
-      drawdepth: FloorObjects
-      sprite: Structures/Specific/Atmospherics/sensor.rsi
-      layers:
-        - state: gsensor1
-          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - type: GenericVisualizer
-      visuals:
-        enum.PowerDeviceVisuals.Powered:
-          enum.PowerDeviceVisualLayers.Powered:
-            True: { state: gsensor1 }
-            False: { state: gsensor0 }
+  - type: Transform
+    anchored: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Physics
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Clickable
+  - type: InteractionOutline
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: AccessReader
+    access: [ [ "Atmospherics" ] ]
+  - type: Construction
+    graph: AirSensor
+    node: sensor
+  - type: Appearance
+  - type: Sprite
+    drawdepth: FloorObjects
+    sprite: Structures/Specific/Atmospherics/sensor.rsi
+    layers:
+    - state: gsensor1
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: gsensor1 }
+          False: { state: gsensor0 }
 
 - type: entity
   parent: BaseItem
@@ -92,14 +97,14 @@
   name: air sensor assembly
   description: Air sensor assembly. An assembly of air sensors?
   components:
-    - type: Item
-      size: Small
-    - type: Anchorable
-    - type: Construction
-      graph: AirSensor
-      node: assembly
-    - type: Sprite
-      drawdepth: FloorObjects
-      sprite: Structures/Specific/Atmospherics/sensor.rsi
-      layers:
-        - state: gsensor0
+  - type: Item
+    size: Small
+  - type: Anchorable
+  - type: Construction
+    graph: AirSensor
+    node: assembly
+  - type: Sprite
+    drawdepth: FloorObjects
+    sprite: Structures/Specific/Atmospherics/sensor.rsi
+    layers:
+    - state: gsensor0

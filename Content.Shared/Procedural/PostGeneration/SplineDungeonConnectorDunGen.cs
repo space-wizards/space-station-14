@@ -1,3 +1,6 @@
+using Content.Shared.Maps;
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Procedural.PostGeneration;
 
 /// <summary>
@@ -5,6 +8,12 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// </summary>
 public sealed partial class SplineDungeonConnectorDunGen : IDunGenLayer
 {
+    [DataField(required: true)]
+    public ProtoId<ContentTileDefinition> Tile;
+
+    [DataField]
+    public ProtoId<ContentTileDefinition>? WidenTile;
+
     /// <summary>
     /// Will divide the distance between the start and end points so that no subdivision is more than these metres away.
     /// </summary>

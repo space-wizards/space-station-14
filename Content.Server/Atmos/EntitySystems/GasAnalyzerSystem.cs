@@ -7,6 +7,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.NodeContainer;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
@@ -76,14 +77,13 @@ public sealed class GasAnalyzerSystem : EntitySystem
     /// </summary>
     private void OnUseInHand(Entity<GasAnalyzerComponent> entity, ref UseInHandEvent args)
     {
+        // Not checking for Handled because ActivatableUISystem already marks it as such.
+
         if (!entity.Comp.Enabled)
-        {
             ActivateAnalyzer(entity, args.User);
-        }
         else
-        {
             DisableAnalyzer(entity, args.User);
-        }
+
         args.Handled = true;
     }
 

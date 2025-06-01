@@ -8,7 +8,7 @@ namespace Content.Shared.CriminalRecords;
 /// Can be viewed and edited in a criminal records console by security.
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed record CriminalRecord
+public sealed partial record CriminalRecord
 {
     /// <summary>
     /// Status of the person (None, Wanted, Detained).
