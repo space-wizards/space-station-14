@@ -64592,8 +64592,6 @@ entities:
       pos: -48.5,67.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 697
   - uid: 2686
@@ -64603,8 +64601,6 @@ entities:
       pos: -46.5,50.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 697
   - uid: 2695
@@ -64614,8 +64610,6 @@ entities:
       pos: -47.5,50.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 697
   - uid: 4696
@@ -64625,8 +64619,6 @@ entities:
       pos: -47.5,67.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 697
   - uid: 4697
@@ -64636,8 +64628,6 @@ entities:
       pos: -46.5,67.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 697
   - uid: 4703
@@ -64647,8 +64637,6 @@ entities:
       pos: -48.5,50.5
       parent: 30
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 697
   - uid: 5649
