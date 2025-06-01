@@ -44,7 +44,10 @@ public sealed class StationPowerTests
     [Test, TestCaseSource(nameof(GameMaps))]
     public async Task TestStationStartingPowerWindow(string mapProtoId)
     {
-        await using var pair = await PoolManager.GetServerClient();
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Dirty = true,
+        });
         var server = pair.Server;
 
         var entMan = server.EntMan;
