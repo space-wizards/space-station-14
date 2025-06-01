@@ -85,17 +85,22 @@ namespace Content.Client.Lobby
             _preferences.OnServerDataLoaded += UpdateReadyAllowed;
         }
 
-        private Control GetReadyButtonTooltip(Control sender)
+        private string GetReadyButtonTooltipText()
         {
             if (!Lobby!.ReadyButton.ToggleMode)
-                return new Tooltip { Text = Loc.GetString("ui-lobby-ready-button-tooltip-join-state") };
+                return Loc.GetString("ui-lobby-ready-button-tooltip-join-state");
             if (!_preferences.ServerDataLoaded)
-                return new Tooltip { Text = Loc.GetString("ui-lobby-ready-button-tooltip-not-loaded") };
+                return Loc.GetString("ui-lobby-ready-button-tooltip-not-loaded");
             if (!_readyPossibleWithCharacters)
-                return new Tooltip { Text = Loc.GetString("ui-lobby-ready-button-tooltip-no-possible-characters") };
+                return Loc.GetString("ui-lobby-ready-button-tooltip-no-possible-characters");
             if (Lobby!.ReadyButton.Pressed)
-                return new Tooltip { Text = Loc.GetString("ui-lobby-ready-button-tooltip-is-ready") };
-            return new Tooltip { Text = Loc.GetString("ui-lobby-ready-button-tooltip-is-not-ready") };
+                return Loc.GetString("ui-lobby-ready-button-tooltip-is-ready");
+            return Loc.GetString("ui-lobby-ready-button-tooltip-is-not-ready");
+        }
+
+        private Control GetReadyButtonTooltip(Control sender)
+        {
+            return new Tooltip { Text = GetReadyButtonTooltipText() };
         }
 
         protected override void Shutdown()
@@ -214,9 +219,7 @@ namespace Content.Client.Lobby
                 // If there is a tooltip showing, make sure to update the text in it as well!
                 if (Lobby!.ReadyButton.SuppliedTooltip is Tooltip tooltip)
                 {
-                    tooltip.Text = Loc.GetString(Lobby!.ReadyButton.Pressed
-                        ? "ui-lobby-ready-button-tooltip-is-ready"
-                        : "ui-lobby-ready-button-tooltip-is-not-ready");
+                    tooltip.Text = GetReadyButtonTooltipText();
                 }
                 Lobby!.ReadyButton.ToggleMode = true;
                 Lobby!.ReadyButton.Disabled = !_readyPossibleWithCharacters;
