@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by PotatOverlord (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "board_0",
+      "directions": 4
+    },
+    {
+      "name": "board_1",
+      "directions": 4
+    },
+    {
+      "name": "board_2",
+      "directions": 4
+    },
+    {
+      "name": "board_3",
+      "directions": 4
+    },
+    {
+      "name": "board_4",
+      "directions": 4
+    },
+    {
+      "name": "board_5",
+      "directions": 4
+    },
+    {
+      "name": "board_6",
+      "directions": 4
+    },
+    {
+      "name": "board_7",
+      "directions": 4
+    }
+  ]
+}
