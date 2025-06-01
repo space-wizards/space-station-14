@@ -465,27 +465,16 @@ public sealed class PullingSystem : EntitySystem
     /// If puller pulls the pullable entity. It stops the pull.
     /// </summary>
     /// <param name="puller">The entity doing the pull.</param>
-    /// <param name="nullablePullable">The entity being pulled.</param>
+    /// <param name="pullable">The entity being pulled.</param>
     ///  <returns>
     ///     true if pulling status was succesfully changed.
     /// </returns>
-    public bool TogglePull(Entity<PullerComponent?> puller, Entity<PullableComponent?>? nullablePullable = null)
+    public bool TogglePull(Entity<PullableComponent?> pullable, Entity<PullerComponent?> puller)
     {
-        if (!Resolve(puller, ref puller.Comp, false))
+        if (!Resolve(pullable, ref pullable.Comp, false))
             return false;
 
-        Entity<PullableComponent?> pullable;
-        if (nullablePullable == null)
-        {
-            if (puller.Comp.Pulling != null)
-                pullable = (puller.Comp.Pulling.Value, null);
-            else
-                return false; // puller does not pull, and there is no one to pull. Do nothing.
-        }
-        else
-            pullable = nullablePullable.Value;
-
-        if (!Resolve(pullable, ref pullable.Comp, false))
+        if (!Resolve(puller, ref puller.Comp, false))
             return false;
 
         if (pullable.Comp.Puller == puller)
