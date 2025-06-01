@@ -1,4 +1,5 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io" xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <BoxContainer Orientation="Vertical" Margin="8">
         <Label Name="Description" Access="Public" />
         <BoxContainer Orientation="Horizontal" Margin="8" HorizontalAlignment="Center" HorizontalExpand="True">

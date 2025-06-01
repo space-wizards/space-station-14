@@ -1,8 +1,10 @@
-﻿namespace Content.Server.Traits.Assorted;
+﻿using Content.Shared.Silicons.Borgs.Components;
+
+namespace Content.Server.Traits.Assorted;
 
 /// <summary>
 /// This trait prevents the owner's brain from being inserted into an MMI.
-/// All this component does is add the <see cref="BrainUnborgableComponent"/> to the brain.
+/// All this component does is add the <see cref="MMIIncompatibleComponent"/> to the brain.
 /// </summary>
 [RegisterComponent, Access(typeof(UnborgableSystem))]
 public sealed partial class UnborgableComponent : Component

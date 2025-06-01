@@ -34,6 +34,8 @@ public sealed class AcceptBorgingEui : BaseEui
 
     public override void Opened()
     {
+        base.Opened();
+
         IoCManager.Resolve<IClyde>().RequestWindowAttention();
         _window.OpenCentered();
     }

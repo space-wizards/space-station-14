@@ -1,12 +1,9 @@
-﻿namespace Content.Shared.Silicons.Borgs;
+﻿using Content.Shared.Silicons.Borgs.Components;
+
+namespace Content.Shared.Silicons.Borgs;
 
 [ByRefEvent]
-public sealed class AttemptMakeBrainIntoSiliconEvent : CancellableEntityEventArgs
-{
-    public EntityUid BrainHolder;
-
-    public AttemptMakeBrainIntoSiliconEvent(EntityUid brainHolder)
-    {
-        BrainHolder = brainHolder;
-    }
-}
+public record struct AttemptMakeBrainIntoSiliconEvent(
+    EntityUid Brain,
+    Entity<MMIComponent> BrainHolder,
+    bool Cancelled = false);

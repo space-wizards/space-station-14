@@ -48,7 +48,8 @@ public sealed partial class BorgSystem
         Dirty(uid, component);
 
         if (_mind.TryGetMind(ent, out var mindId, out var mind) &&
-            mind.Session is { } playerSession)
+            mind.UserId is { } userId &&
+            _player.TryGetSessionById(userId, out var playerSession))
         {
             // If mind is not already in the MMI, open a confirmation window.
             // Otherwise, transfer the mind to the MMI.
@@ -107,7 +108,7 @@ public sealed partial class BorgSystem
     }
 
     /// <summary>
-    /// Directly transfer a mind into a man-machine interface.
+    /// Directly transfer a mind into a man-machine interface, bypassing the confirmation window.
     /// </summary>
     public void DirectTransferToMMI(Entity<MMIComponent> mmi, Entity<MindComponent> mind)
     {

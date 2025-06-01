@@ -9,11 +9,11 @@ namespace Content.Server.Silicons.Borgs;
 
 public sealed class AcceptBorgingEui : BaseEui
 {
-    [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly BorgSystem _borgSystem = default!;
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
 
-    private EntityUid _brain;
-    private Entity<MMIComponent> _mmi;
+    private readonly EntityUid _brain;
+    private readonly Entity<MMIComponent> _mmi;
     private readonly Entity<MindComponent> _mind;
 
     public AcceptBorgingEui(

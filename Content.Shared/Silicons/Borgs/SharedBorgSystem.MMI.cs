@@ -12,8 +12,8 @@ public partial class SharedBorgSystem
 
     private void OnMMIAttemptInsert(Entity<MMIComponent> entity, ref ContainerIsInsertingAttemptEvent args)
     {
-        var ev = new AttemptMakeBrainIntoSiliconEvent(entity);
-        RaiseLocalEvent(args.EntityUid, ref ev, true);
+        var ev = new AttemptMakeBrainIntoSiliconEvent(args.EntityUid, entity);
+        RaiseLocalEvent(args.EntityUid, ref ev);
         if (ev.Cancelled)
             args.Cancel();
     }

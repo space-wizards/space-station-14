@@ -24,7 +24,7 @@ public sealed class UnborgableSystem : EntitySystem
 
         foreach (var brain in brains)
         {
-            EnsureComp<BrainUnborgableComponent>(brain, out var newComp);
+            EnsureComp<MMIIncompatibleComponent>(brain, out var newComp);
 
             newComp.FailureMessage = entity.Comp.FailureMessage;
         }
