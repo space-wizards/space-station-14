@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Spider Fluffy and Fuzzy overlay markings are now colorable
-    type: Tweak
-  id: 1261
-  time: '2025-03-10T18:07:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1856
 - author: TheGrimbeeper
   changes:
   - message: Sentient artifacts can no longer re-appear in the ghost role list after
@@ -4215,3 +4208,12 @@
   id: 1760
   time: '2025-06-01T02:38:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2632
+- author: jtfg-dev & normalgirl2171
+  changes:
+  - message: "The novice's mark pin \U0001F530 has been added! For trainees and anyone\
+      \ (as a trinket) who might feel a little unskilled, and need patience from their\
+      \ fellows!"
+    type: Add
+  id: 1761
+  time: '2025-06-01T02:44:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2626
