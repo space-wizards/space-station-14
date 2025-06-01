@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Ghost;
 using Content.Server.Silicons.Borgs;
+using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
@@ -16,6 +17,7 @@ using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Xenoborgs;
 using Content.Shared.Xenoborgs.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
 namespace Content.Server.Xenoborgs;
@@ -53,10 +55,6 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
         _adminLogger.Add(LogType.Gib,
             logImpact,
             $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
-        _body.GibBody(item);
-
-
-        Del(item);
     }
 
     private bool TryFinishProducing(EntityUid uid, EntityUid item, XenoborgFactoryComponent? comp = null)
@@ -80,6 +78,13 @@ public sealed class XenoborgFactorySystem : SharedXenoborgFactorySystem
 
             if (brain == null)
                 return false;
+
+            var headSlots = _body.GetBodyChildrenOfType(item, BodyPartType.Head);
+
+            foreach (var part in headSlots)
+            {
+                Container.TryRemoveFromContainer(part.Id);
+            }
 
             foreach (var (material, needed) in recipe.Materials)
             {
