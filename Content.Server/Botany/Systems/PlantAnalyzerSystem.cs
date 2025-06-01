@@ -165,9 +165,7 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             ("lifespan", data.PlantData?.Lifespan.ToString("0.00") ?? missingData),
             ("seeds", data.ProduceData is not null ? (data.ProduceData.Seedless ? "no" : "yes") : "other"),
             ("viable", data.PlantData is not null ? (data.PlantData.Viable ? "yes" : "no") : "other"),
-            ("kudzu", data.PlantData is not null ? (data.PlantData.Kudzu ? "yes" : "no") : "other"),
-            ("indent", "    "),
-            ("nl", "\n")
+            ("kudzu", data.PlantData is not null ? (data.PlantData.Kudzu ? "yes" : "no") : "other")
         ];
 
         _paperSystem.SetContent((printed, paperComp), Loc.GetString($"plant-analyzer-printout", [.. parameters]));
