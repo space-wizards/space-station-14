@@ -1,7 +1,7 @@
 - type: entity
   id: MailSyndicateSpamLetter
   name: Reasons to choose The Syndicate!
-  description: An advertisement for the The Syndicate.
+  description: An advertisement for the Syndicate. Wont fit in a fax somehow.
   parent: Paper
   components:
     - type: Paper
