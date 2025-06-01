@@ -4,19 +4,19 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
 
-public sealed partial class BlackAndWhiteOverlay : Overlay
+public sealed partial class NoirOverlay : Overlay
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
-    private readonly ShaderInstance _greyscaleShader;
+    private readonly ShaderInstance _noirShader;
 
-    public BlackAndWhiteOverlay()
+    public NoirOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _greyscaleShader = _prototypeManager.Index<ShaderPrototype>("GreyscaleFullscreen").InstanceUnique();
-        ZIndex = 10; // draw this over the DamageOverlay, RainbowOverlay etc.
+        _noirShader = _prototypeManager.Index<ShaderPrototype>("Noir").InstanceUnique();
+        ZIndex = 9; // draw this over the DamageOverlay, RainbowOverlay etc, but before the black and white shader
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -25,8 +25,8 @@ public sealed partial class BlackAndWhiteOverlay : Overlay
             return;
 
         var handle = args.WorldHandle;
-        _greyscaleShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        handle.UseShader(_greyscaleShader);
+        _noirShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        handle.UseShader(_noirShader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
     }

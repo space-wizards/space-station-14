@@ -4,11 +4,11 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Overlays;
 
-public sealed partial class BlackAndWhiteOverlaySystem : EquipmentHudSystem<BlackAndWhiteOverlayComponent>
+public sealed partial class NoirOverlaySystem : EquipmentHudSystem<NoirOverlayComponent>
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
-    private BlackAndWhiteOverlay _overlay = default!;
+    private NoirOverlay _overlay = default!;
 
     public override void Initialize()
     {
@@ -17,7 +17,7 @@ public sealed partial class BlackAndWhiteOverlaySystem : EquipmentHudSystem<Blac
         _overlay = new();
     }
 
-    protected override void UpdateInternal(RefreshEquipmentHudEvent<BlackAndWhiteOverlayComponent> component)
+    protected override void UpdateInternal(RefreshEquipmentHudEvent<NoirOverlayComponent> component)
     {
         base.UpdateInternal(component);
 
