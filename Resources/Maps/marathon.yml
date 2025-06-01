@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 260.1.0
+  engineVersion: 261.1.0
   forkId: ""
   forkVersion: ""
-  time: 05/28/2025 12:57:58
-  entityCount: 23141
+  time: 06/01/2025 19:23:17
+  entityCount: 23140
 maps:
 - 5350
 grids:
@@ -7642,9 +7642,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
 - proto: AcousticGuitarInstrument
@@ -11552,7 +11550,7 @@ entities:
       pos: 34.5,45.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -19644.295
+      secondsUntilStateChange: -19653.71
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -44259,23 +44257,6 @@ entities:
     components:
     - type: Transform
       pos: -6.4990587,-5.49392
-      parent: 30
-- proto: CapacitorStockPart
-  entities:
-  - uid: 20967
-    components:
-    - type: Transform
-      pos: 2.4657774,20.884964
-      parent: 30
-  - uid: 20974
-    components:
-    - type: Transform
-      pos: 2.2878256,21.230333
-      parent: 30
-  - uid: 20982
-    components:
-    - type: Transform
-      pos: 2.6220274,21.009964
       parent: 30
 - proto: CaptainIDCard
   entities:
@@ -103115,13 +103096,6 @@ entities:
     - type: Transform
       pos: -7.4727917,-35.277233
       parent: 30
-    - type: HandheldLight
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
     - type: Physics
       canCollide: True
   - uid: 21649
@@ -104914,10 +104888,25 @@ entities:
       parent: 30
 - proto: MicroManipulatorStockPart
   entities:
+  - uid: 20967
+    components:
+    - type: Transform
+      pos: 2.4657774,20.884964
+      parent: 30
   - uid: 20970
     components:
     - type: Transform
       pos: 2.559926,21.402208
+      parent: 30
+  - uid: 20974
+    components:
+    - type: Transform
+      pos: 2.2878256,21.230333
+      parent: 30
+  - uid: 20982
+    components:
+    - type: Transform
+      pos: 2.6220274,21.009964
       parent: 30
   - uid: 22099
     components:
