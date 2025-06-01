@@ -1,3 +1,4 @@
+using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.ValueSelector;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -26,24 +27,64 @@ public abstract partial class EntityTableSelector
     [DataField]
     public double Prob = 1;
 
+    /// <summary>
+    /// A list of conditions that must evaluate to 'true' for the selector to apply.
+    /// </summary>
+    [DataField]
+    public List<EntityTableCondition> Conditions = new();
+
+    /// <summary>
+    /// If true, all the conditions must be successful in order for the selector to process.
+    /// Otherwise, only one of them must be.
+    /// </summary>
+    [DataField]
+    public bool RequireAll = true;
+
     public IEnumerable<EntProtoId> GetSpawns(System.Random rand,
         IEntityManager entMan,
-        IPrototypeManager proto)
+        IPrototypeManager proto,
+        EntityTableContext ctx)
     {
+        if (!CheckConditions(entMan, proto, ctx))
+            yield break;
+
         var rolls = Rolls.Get(rand);
         for (var i = 0; i < rolls; i++)
         {
             if (!rand.Prob(Prob))
                 continue;
 
-            foreach (var spawn in GetSpawnsImplementation(rand, entMan, proto))
+            foreach (var spawn in GetSpawnsImplementation(rand, entMan, proto, ctx))
             {
                 yield return spawn;
             }
         }
     }
 
+    public bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        if (Conditions.Count == 0)
+            return true;
+
+        var success = false;
+        foreach (var condition in Conditions)
+        {
+            var res = condition.Evaluate(this, entMan, proto, ctx);
+
+            if (RequireAll && !res)
+                return false; // intentional break out of loop and function
+
+            success |= res;
+        }
+
+        if (RequireAll)
+            return true;
+
+        return success;
+    }
+
     protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
         IEntityManager entMan,
-        IPrototypeManager proto);
+        IPrototypeManager proto,
+        EntityTableContext ctx);
 }
