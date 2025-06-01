@@ -4,6 +4,8 @@ using Content.Shared.ColorShift;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 
 namespace Content.Server.ColorShift;
 
@@ -41,6 +43,14 @@ public sealed class ColorShiftSystem : SharedColorShiftSystem
 
     private void OnMessageReceive(Entity<ColorShifterComponent> ent, ref PleaseHueShiftNetworkMessage args)
     {
+        // Validate client input
+        if (!TryComp<MindContainerComponent>(ent.Owner, out var mindContainer))
+            return;
+
+        if (mindContainer.Mind != args.Actor)
+            return;
+
+        // Perform doafter
         var evt = new HueShiftDoAfterEvent(Color.FromHsv(new Vector4(args.Hue, args.Saturation, args.Value, 1f)));
         var doAfterArgs = new DoAfterArgs(EntityManager, ent.Owner, ent.Comp.HueShiftLength, evt, ent.Owner)
         {
