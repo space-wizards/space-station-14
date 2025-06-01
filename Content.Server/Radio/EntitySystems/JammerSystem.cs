@@ -78,7 +78,7 @@ public sealed class JammerSystem : SharedJammerSystem
             {
                 foreach (var freq in ent.Comp.FrequenciesExcluded)
                 {
-                    _jammer.AddExcludedFreequency((ent, jammingComp), (uint)freq);
+                    _jammer.AddExcludedFrequency((ent, jammingComp), (uint)freq);
                 }
             }
         }
