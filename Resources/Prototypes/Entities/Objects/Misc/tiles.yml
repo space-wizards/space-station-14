@@ -1603,3 +1603,36 @@
   - type: Construction
     graph: TileWoodLarge
     node: woodtilelarge
+
+- type: entity
+  name: white tabletop sqaure
+  parent: FloorTileItemBase
+  id: FloorTileItemTabletopWhite
+  components:
+  - type: Sprite
+    state: tabletop_white
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorTabletopWhite
+  - type: Stack
+    stackType: FloorTileTabletopWhite
+
+- type: entity
+  name: black tabletop sqaure
+  parent: FloorTileItemBase
+  id: FloorTileItemTabletopBlack
+  components:
+  - type: Sprite
+    state: tabletop_black
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorTabletopBlack
+  - type: Stack
+    stackType: FloorTileTabletopBlack
+

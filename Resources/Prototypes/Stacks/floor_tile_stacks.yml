@@ -634,3 +634,15 @@
   name: stack-large-wood-floor
   spawn: FloorTileItemWoodLarge
   maxCount: 30
+
+- type: stack
+  id: FloorTileTabletopWhite
+  name: stack-tabletop-white-floor
+  spawn: FloorTileItemTabletopWhite
+  maxCount: 30
+
+- type: stack
+  id: FloorTileTabletopBlack
+  name: stack-tabletop-black-floor
+  spawn: FloorTileItemTabletopBlack
+  maxCount: 30
