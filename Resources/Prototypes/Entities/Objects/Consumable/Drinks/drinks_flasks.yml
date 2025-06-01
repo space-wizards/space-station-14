@@ -33,10 +33,10 @@
       map: ["enum.OpenableVisuals.Layer"]
   - type: Openable
     sound:
-      collection: bottleOpenSounds
+      collection: flaskOpenSounds
     closeable: true
     closeSound:
-      collection: bottleCloseSounds
+      collection: flaskCloseSounds
 
 # Flasks
 
