@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.AbstractAnalyzer;
 using Content.Server.Medical.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -10,6 +9,7 @@ using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Traits.Assorted;
+using Content.Shared.AbstractAnalyzer;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Medical;
