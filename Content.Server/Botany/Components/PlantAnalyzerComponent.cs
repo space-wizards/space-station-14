@@ -1,5 +1,5 @@
-using Content.Server.AbstractAnalyzer;
 using Content.Server.Botany.Systems;
+using Content.Shared.AbstractAnalyzer;
 using Content.Shared.Paper;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;

@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.AbstractAnalyzer;
 using Content.Server.Body.Components;
 using Content.Server.Medical.Components;
 using Content.Server.Temperature.Components;
@@ -10,6 +9,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
+using Content.Shared.AbstractAnalyzer;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Medical;

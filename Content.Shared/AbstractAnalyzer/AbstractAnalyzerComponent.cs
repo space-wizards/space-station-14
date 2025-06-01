@@ -1,6 +1,6 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.AbstractAnalyzer;
+namespace Content.Shared.AbstractAnalyzer;
 
 /// <summary>
 /// After scanning, retrieves the target Uid to use with its related UI.
