@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by ThatKidConnor",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "full"
+    },
+    {
+      "name": "alive-equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "alive-equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "incapacitated-equipped-OUTERCLOTHING",
+      "directions": 4
+    }
+  ]
+}

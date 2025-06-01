@@ -220,3 +220,26 @@
     blacklist:
       components:
         - SurplusBundle
+
+- type: listing
+  id: UplinkMascotCindySuitBundle
+  name: uplink-mascot-cindy-suit-bundle-name
+  description: uplink-mascot-cindy-suit-bundle-desc
+  icon: { sprite: _Impstation/Clothing/OuterClothing/Hardsuits/cindysuit.rsi, state: full }
+  productEntity: ClothingBackpackDuffelSyndicateFilledMascotCindy
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 10
+  cost:
+    Telecrystal: 15
+  categories:
+  - UplinkPointless
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+        - SurplusBundle
