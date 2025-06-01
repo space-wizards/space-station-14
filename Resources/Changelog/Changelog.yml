@@ -1,98 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Some ghostrole antagonists were incorrectly not marked as such in the
-      round end playerlist. Now all antagonists are sorted to the top and have red
-      names.
-    type: Fix
-  id: 8071
-  time: '2025-03-16T22:11:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35832
-- author: slarticodefast
-  changes:
-  - message: Paradox clones now receive any objective the original had.
-    type: Add
-  id: 8072
-  time: '2025-03-16T22:24:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35829
-- author: Errant-4
-  changes:
-  - message: The Syndicate Instigator shuttle's crew now has the proper antagonist
-      role type.
-    type: Fix
-  id: 8073
-  time: '2025-03-17T16:27:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35892
-- author: SlamBamActionman
-  changes:
-  - message: The Syndicate Backpack can now fit more items (35 item slots, from 28).
-    type: Tweak
-  id: 8074
-  time: '2025-03-17T17:58:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35888
-- author: beck-thompson
-  changes:
-  - message: Chameleon vests now have the same stats as winter coats (Cold protection,
-      minor heat increase, 5% slash resistance, 10% heat resistance)
-    type: Tweak
-  id: 8075
-  time: '2025-03-17T18:39:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34929
-- author: slarticodefast
-  changes:
-  - message: Paradox clones now receive any implants the original has.
-    type: Add
-  - message: Cloning pods no longer copy items in slime storage.
-    type: Fix
-  id: 8076
-  time: '2025-03-18T05:21:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35906
-- author: slarticodefast
-  changes:
-  - message: Tomato Killers now take damage from weedkiller and plant b gone.
-    type: Tweak
-  id: 8077
-  time: '2025-03-18T08:00:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35898
-- author: slarticodefast
-  changes:
-  - message: Paradox Clones now start with their suit sensors turned off.
-    type: Tweak
-  id: 8078
-  time: '2025-03-18T20:07:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35909
-- author: AgentSmithRadio
-  changes:
-  - message: Smite Vendors can now be restocked using the standard beverage restock
-      box.
-    type: Fix
-  - message: Smite and other soda vendors now carry more soda, and are less likely
-      to be empty at shift start.
-    type: Tweak
-  id: 8079
-  time: '2025-03-18T23:45:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35144
-- author: claustro305
-  changes:
-  - message: Fixed an issue where small lights are too hard to shoot.
-    type: Fix
-  id: 8080
-  time: '2025-03-19T15:07:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35920
-- author: aada
-  changes:
-  - message: Donk Co. Microwaves now burn twice as hot as their competitors.
-    type: Tweak
-  id: 8081
-  time: '2025-03-19T22:33:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35937
-- author: TiniestShark
-  changes:
-  - message: Added inhand and neck sprites to the snake plushie.
-    type: Add
-  id: 8082
-  time: '2025-03-19T23:14:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35323
 - author: MisterImp
   changes:
   - message: The copypasta recipe now requires two small plates, which are left behind
@@ -3917,3 +3823,96 @@
   id: 8582
   time: '2025-05-28T22:51:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37912
+- author: mhamster
+  changes:
+  - message: Chameleon clothes are now affected by any kind of EMP explosion, which
+      makes them go wild and change your current outfit to a random mess once.
+    type: Tweak
+  id: 8583
+  time: '2025-05-30T00:06:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30924
+- author: brainfood1183
+  changes:
+  - message: Bananium Rock Anomaly added
+    type: Add
+  id: 8584
+  time: '2025-05-30T01:16:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37787
+- author: Seam_Less
+  changes:
+  - message: Added practice magazines to the Secfab as a roundstart recipe
+    type: Add
+  id: 8585
+  time: '2025-05-30T01:24:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37710
+- author: Beck, SlamBamActionman
+  changes:
+  - message: Added a chameleon controller implant that allows you to quickly switch
+      between job outfits! It also interacts with Agent IDs and fake mindshield implant.
+      Will use your profile's loadout if possible.
+    type: Add
+  - message: The chameleon kit now includes the chameleon controller implant.
+    type: Add
+  id: 8586
+  time: '2025-05-30T10:07:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33887
+- author: aada
+  changes:
+  - message: Filter categories added to the cutter machine.
+    type: Add
+  id: 8587
+  time: '2025-05-30T15:19:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34321
+- author: Nox38
+  changes:
+  - message: Assault Rifles can now be switched between semi and full auto.
+    type: Tweak
+  id: 8588
+  time: '2025-05-30T15:50:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34907
+- author: Alpaccalypse
+  changes:
+  - message: Absinthe makes you mildly hallucinate.
+    type: Tweak
+  - message: Absinthe is served in a smaller glass. No more vomiting.
+    type: Tweak
+  id: 8589
+  time: '2025-05-30T16:03:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34371
+- author: Nox38
+  changes:
+  - message: Increased firerate and cooldown of Drozd's burst mode.
+    type: Tweak
+  id: 8590
+  time: '2025-05-30T16:16:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34906
+- author: spanky-spanky
+  changes:
+  - message: Secret door sprites now display correctly when facing all directions.
+    type: Fix
+  id: 8591
+  time: '2025-05-30T18:11:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37914
+- author: ArtisticRoomba
+  changes:
+  - message: The TEG now shows its capable peak power output on inspect, making it
+      easier for engineers to match the TEG's power output with the current grid demand
+      (to save fuel!).
+    type: Add
+  id: 8592
+  time: '2025-05-30T21:41:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37957
+- author: Centronias
+  changes:
+  - message: Headphones show animated music notes when activated again.
+    type: Fix
+  id: 8593
+  time: '2025-05-30T23:53:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35341
+- author: beck-thompson
+  changes:
+  - message: Removed the keep alive traitor objective.
+    type: Remove
+  id: 8594
+  time: '2025-05-31T02:09:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37945
