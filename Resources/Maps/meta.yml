@@ -4,7 +4,7 @@ meta:
   engineVersion: 261.1.0
   forkId: ""
   forkVersion: ""
-  time: 06/01/2025 22:30:11
+  time: 06/01/2025 23:21:52
   entityCount: 29601
 maps:
 - 951
@@ -12603,7 +12603,7 @@ entities:
       pos: 33.5,27.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -75230.93
+      secondsUntilStateChange: -75240.29
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13450,7 +13450,7 @@ entities:
       pos: 38.5,-0.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -112332.914
+      secondsUntilStateChange: -112342.27
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14062,7 +14062,7 @@ entities:
       pos: 57.5,13.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -30328.117
+      secondsUntilStateChange: -30337.479
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -15495,7 +15495,7 @@ entities:
       pos: 19.5,32.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -33283.48
+      secondsUntilStateChange: -33292.844
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -122006,8 +122006,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 45.5,39.5
       parent: 5350
-    - type: GasPressurePump
-      enabled: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 9222
@@ -122133,7 +122131,6 @@ entities:
       parent: 5350
     - type: GasPressurePump
       targetPressure: 4500
-      enabled: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 12439
@@ -122158,7 +122155,6 @@ entities:
       color: '#0055CCFF'
     - type: GasPressurePump
       targetPressure: 4500
-      enabled: True
   - uid: 14616
     components:
     - type: Transform
@@ -122223,7 +122219,6 @@ entities:
       parent: 5350
     - type: GasPressurePump
       targetPressure: 100
-      enabled: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 26178
@@ -122232,8 +122227,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 102.5,-9.5
       parent: 5350
-    - type: GasPressurePump
-      enabled: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 27128
@@ -122266,7 +122259,6 @@ entities:
       parent: 5350
     - type: GasPressurePump
       targetPressure: 4500
-      enabled: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 29586
@@ -152953,6 +152945,12 @@ entities:
     - type: Transform
       pos: -2.5,55.5
       parent: 5350
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
 - proto: SeedExtractor
   entities:
   - uid: 5253
@@ -169746,6 +169744,12 @@ entities:
     - type: Transform
       pos: -13.5,-0.5
       parent: 5350
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
     - type: MaterialStorage
       materialWhiteList:
       - Cloth
