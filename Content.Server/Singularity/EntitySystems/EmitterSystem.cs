@@ -62,7 +62,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnActivate(EntityUid uid, EmitterComponent component, ActivateInWorldEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.Complex)
                 return;
 
             if (TryComp(uid, out LockComponent? lockComp) && lockComp.Locked)
