@@ -293,4 +293,11 @@
   id: 35
   time: '2025-05-30T12:52:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37961
+- author: Boaz1111
+  changes:
+  - message: Marathon has Genpop now.
+    type: Add
+  id: 36
+  time: '2025-06-01T19:38:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37687
 Order: 1
