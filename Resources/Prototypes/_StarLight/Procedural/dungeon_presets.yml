@@ -1,4 +1,4 @@
 - type: dungeonPreset
   id: Arena
   roomPacks:
-    - -12,10,38,60
+    - -60,10,-10,60
