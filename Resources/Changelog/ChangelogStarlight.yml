@@ -6657,4 +6657,12 @@ Entries:
   id: 921
   time: '2025-06-02T20:37:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/746
+- author: Conflee
+  changes:
+  - message: Added Saltern, updated with Department Economy, Genpop, and all Starlight
+      stuff again.
+    type: Add
+  id: 922
+  time: '2025-06-02T20:42:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/735
 
