@@ -79,6 +79,9 @@
     - type: Icon
       sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
       state: "l_leg"
+    - type: MovementBodyPart
+      sprintSpeed : 4.725 # +5%
+      maxDensity: 111
 
 - type: entity
   id: RightLegCyber
@@ -93,6 +96,9 @@
     - type: Icon
       sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
       state: "r_leg"
+    - type: MovementBodyPart
+      sprintSpeed : 4.725 # +5%
+      maxDensity: 111
 
 - type: entity
   id: LeftFootCyber

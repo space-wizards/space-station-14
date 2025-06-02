@@ -198,13 +198,12 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             };
             var mindDescriptionMessage = new FormattedMessage();
             mindDescriptionMessage.AddText("Available collective minds:");
-            foreach (var mindId in minds)
+            foreach (var mindPrototype in minds)
             {
-                var mindPrototype = _prototypeManager.Index<CollectiveMindPrototype>(mindId.Key);
-
                 mindDescriptionMessage.AddText("\n");
-                mindDescriptionMessage.PushColor(mindPrototype.Color);
-                mindDescriptionMessage.AddText($"{mindId.Key}: +{mindPrototype.KeyCode}");
+                mindDescriptionMessage.PushColor(mindPrototype.Key.Color);
+                mindDescriptionMessage.AddText($"{mindPrototype.Key.LocalizedName}: +{mindPrototype.Key.KeyCode}");
+                mindDescriptionMessage.AddText($" (Number {mindPrototype.Value.MindId})");
                 mindDescriptionMessage.Pop();
             }
             mindsControl.Description.SetMessage(mindDescriptionMessage);
@@ -247,18 +246,11 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         if (!_ent.TryGetComponent<MindComponent>(container.Mind.Value, out var mind))
             return;
 
-        var roleText = Loc.GetString("role-type-crew-aligned-name");
-        var color = Color.White;
-        if (_prototypeManager.TryIndex(mind.RoleType, out var proto))
-        {
-            roleText = Loc.GetString(proto.Name);
-            color = proto.Color;
-        }
-        else
-            _sawmill.Error($"{_player.LocalEntity} has invalid Role Type '{mind.RoleType}'. Displaying '{roleText}' instead");
+        if (!_prototypeManager.TryIndex(mind.RoleType, out var proto))
+            _sawmill.Error($"Player '{_player.LocalSession}' has invalid Role Type '{mind.RoleType}'. Displaying default instead");
 
-        _window.RoleType.Text = roleText;
-        _window.RoleType.FontColorOverride = color;
+        _window.RoleType.Text = Loc.GetString(proto?.Name ?? "role-type-crew-aligned-name");
+        _window.RoleType.FontColorOverride = proto?.Color ?? Color.White;
     }
 
     private void CharacterDetached(EntityUid uid)

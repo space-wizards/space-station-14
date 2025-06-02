@@ -13,11 +13,13 @@ public sealed partial class MagicMirrorWindow : DefaultWindow
     // MMMMMMM
     public Action<(int slot, string id)>? OnHairSelected;
     public Action<(int slot, Marking marking)>? OnHairColorChanged;
+    public Action<(int slot, Marking marking)>? OnHairGlowingChanged; //starlight
     public Action<int>? OnHairSlotRemoved;
     public Action? OnHairSlotAdded;
 
     public Action<(int slot, string id)>? OnFacialHairSelected;
     public Action<(int slot, Marking marking)>? OnFacialHairColorChanged;
+    public Action<(int slot, Marking marking)>? OnFacialHairGlowingChanged; //starlight
     public Action<int>? OnFacialHairSlotRemoved;
     public Action? OnFacialHairSlotAdded;
 
@@ -34,6 +36,10 @@ public sealed partial class MagicMirrorWindow : DefaultWindow
         FacialHairPicker.OnColorChanged += args => OnFacialHairColorChanged!(args);
         FacialHairPicker.OnSlotRemove += args => OnFacialHairSlotRemoved!(args);
         FacialHairPicker.OnSlotAdd += delegate { OnFacialHairSlotAdded!(); };
+
+        //starlight
+        HairPicker.OnGlowingChanged += args => OnHairGlowingChanged!(args);
+        FacialHairPicker.OnGlowingChanged += args => OnFacialHairGlowingChanged!(args);
     }
 
     public void UpdateState(MagicMirrorUiState state)

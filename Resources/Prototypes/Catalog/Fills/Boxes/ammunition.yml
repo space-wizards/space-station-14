@@ -219,6 +219,14 @@
   id: BoxMagazineRifleSP
   description: A box full of .20 rifle magazines.
   components:
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,3
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,2,3
   - type: StorageFill
     contents:
       - id: MagazineRifleFMJ

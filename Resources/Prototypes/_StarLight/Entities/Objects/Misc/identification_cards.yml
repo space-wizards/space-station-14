@@ -87,6 +87,19 @@
 
 - type: entity
   parent: IDCardStandard
+  id: NTCCBlueShieldIDCard
+  name: NT-CC consortium officer's ID card
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/id_cards.rsi
+    layers:
+    - state: gold
+    - state: idblueshield
+  - type: PresetIdCard
+    job: NTCCBlueshield
+
+- type: entity
+  parent: IDCardStandard
   id: MiningIDCard
   name: mining ID card
   components:
@@ -110,3 +123,75 @@
     - state: idmailtech
   - type: PresetIdCard
     job: MailTech
+    
+- type: entity
+  parent: IDCardStandard
+  id: CommanderIDCard
+  name: Commander ID Card
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/id_cards.rsi
+      layers:
+        - state: syndi
+        - state: idcommander
+    - type: Access
+      tags:
+        - Maintenance
+        - SyndicateAgent
+        - NuclearOperative
+    - type: AgentIDCard
+    - type: ActivatableUI
+      key: enum.AgentIDCardUiKey.Key
+      inHandsOnly: true
+    - type: UserInterface
+      interfaces:
+        enum.AgentIDCardUiKey.Key:
+          type: AgentIDCardBoundUserInterface
+
+- type: entity
+  parent: IDCardStandard
+  id: SyndicateAgentIDCard
+  name: Syndicate Agent ID Card
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/id_cards.rsi
+      layers:
+        - state: syndi
+        - state: idsyndiagent
+    - type: Access
+      tags:
+        - Maintenance
+        - SyndicateAgent
+        - NuclearOperative
+    - type: AgentIDCard
+    - type: ActivatableUI
+      key: enum.AgentIDCardUiKey.Key
+      inHandsOnly: true
+    - type: UserInterface
+      interfaces:
+        enum.AgentIDCardUiKey.Key:
+          type: AgentIDCardBoundUserInterface
+
+- type: entity
+  parent: IDCardStandard
+  id: OperativeIDCard
+  name: Operative ID Card
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/id_cards.rsi
+      layers:
+        - state: syndi
+        - state: idoperative
+    - type: Access
+      tags:
+        - Maintenance
+        - SyndicateAgent
+        - NuclearOperative
+    - type: AgentIDCard
+    - type: ActivatableUI
+      key: enum.AgentIDCardUiKey.Key
+      inHandsOnly: true
+    - type: UserInterface
+      interfaces:
+        enum.AgentIDCardUiKey.Key:
+          type: AgentIDCardBoundUserInterface

@@ -30,6 +30,15 @@
     },
     {
       "name": "idmailtech"
+    },
+    {
+      "name": "syndi"
+    },
+    { "name": "idcommander"
+    },
+    { "name": "idsyndiagent"
+    },
+    { "name": "idoperative"
     }
   ]
 }

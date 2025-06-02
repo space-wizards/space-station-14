@@ -213,52 +213,14 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             return;
         }
 
-        var entries = listing.ToList();
-        entries.Sort((a, b) => string.Compare(a.Value, b.Value, StringComparison.Ordinal));
-        // `entries` now contains the definitive list of items which should be in
-        // our list of records and is in the order we want to present those items.
-
-        // Walk through the existing items in RecordListing and in the updated listing
-        // in parallel to synchronize the items in RecordListing with `entries`.
-        int i = RecordListing.Count - 1;
-        int j = entries.Count - 1;
-        while (i >= 0 && j >= 0)
-        {
-            var strcmp = string.Compare(RecordListing[i].Text, entries[j].Value, StringComparison.Ordinal);
-            if (strcmp == 0)
-            {
-                // This item exists in both RecordListing and `entries`. Nothing to do.
-                i--;
-                j--;
-            }
-            else if (strcmp > 0)
-            {
-                // Item exists in RecordListing, but not in `entries`. Remove it.
-                RecordListing.RemoveAt(i);
-                i--;
-            }
-            else if (strcmp < 0)
-            {
-                // A new entry which doesn't exist in RecordListing. Create it.
-                RecordListing.Insert(i + 1, new ItemList.Item(RecordListing){Text = entries[j].Value, Metadata = entries[j].Key});
-                j--;
-            }
-        }
-
-        // Any remaining items in RecordListing don't exist in `entries`, so remove them
-        while (i >= 0)
-        {
-            RecordListing.RemoveAt(i);
-            i--;
-        }
-
-        // And finally, any remaining items in `entries`, don't exist in RecordListing. Create them.
-        while (j >= 0)
-        {
-            RecordListing.Insert(0, new ItemList.Item(RecordListing){ Text = entries[j].Value, Metadata = entries[j].Key });
-            j--;
-        }
+        var entries = listing.Select(i => new ItemList.Item(RecordListing) {
+                Text = i.Value,
+                Metadata = i.Key
+        }).ToList();
+        entries.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.Ordinal));
+        RecordListing.SetItems(entries, (a,b) => string.Compare(a.Text, b.Text));
     }
+
     private void PopulateRecordContainer(GeneralStationRecord stationRecord, CriminalRecord criminalRecord)
     {
         var specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown");

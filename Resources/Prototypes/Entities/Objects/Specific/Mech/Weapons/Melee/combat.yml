@@ -1,6 +1,6 @@
 - type: entity
   id: WeaponMechChainSword
-  parent: [ BaseMechWeaponMelee, CombatMechEquipment  ]
+  parent: [ BaseMechWeaponMelee, CombatMechEquipment, BaseSecurityContraband ]
   name: exosuit chainsword
   suffix: Mech Weapon, Melee, Combat
   description: Equipment for combat exosuits. This is the mechanical chainsword that'll pierce the heavens!

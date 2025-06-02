@@ -2,9 +2,9 @@
   id: StarlightOasis
   mapName: 'Oasis'
   mapPath: /Maps/_Starlight/Stations/Oasis.yml
-  minPlayers: 70
+  minPlayers: 65
   stations:
-    Oasis:
+    StarlightOasis:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -40,7 +40,7 @@
             Paramedic: [ 2, 2 ]
             MedicalIntern: [ 4, 4 ]
             Psychologist: [ 1, 1 ]
-            Surgeon: [ 1, 1 ]
+            Surgeon: [ 2, 2 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 6, 6 ]

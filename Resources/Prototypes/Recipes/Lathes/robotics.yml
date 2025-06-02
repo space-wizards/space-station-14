@@ -124,6 +124,11 @@
 
 - type: latheRecipe
   parent: BaseBorgModuleRecipe
+  id: BorgModuleTool
+  result: BorgModuleTool
+
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleCable
   result: BorgModuleCable
 
@@ -132,20 +137,12 @@
   id: BorgModuleFireExtinguisher
   result: BorgModuleFireExtinguisher
 
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleGPS
-  result: BorgModuleGPS
+# Cargo Modules
 
 - type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleRadiationDetection
-  result: BorgModuleRadiationDetection
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleTool
-  result: BorgModuleTool
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleAdvancedMining
+  result: BorgModuleAdvancedMining
 
 # Engineering Modules
 
@@ -165,34 +162,9 @@
 
 - type: latheRecipe
   parent: BaseGoldBorgModuleRecipe
-  id: BorgModuleAdvancedTreatment
-  result: BorgModuleAdvancedTreatment
+  id: BorgModuleAdvancedChemical
+  result: BorgModuleAdvancedChemical
 
-- type: latheRecipe
-  parent: BaseGoldBorgModuleRecipe
-  id: BorgModuleDefibrillator
-  result: BorgModuleDefibrillator
-
-# Science Modules
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleArtifact
-  result: BorgModuleArtifact
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleAnomaly
-  result: BorgModuleAnomaly
+# Science Modules (if we add a advanced sci module that requires crafting)
 
 # Service Modules
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleGardening
-  result: BorgModuleGardening
-
-- type: latheRecipe
-  parent: BaseBorgModuleRecipe
-  id: BorgModuleHarvesting
-  result: BorgModuleHarvesting

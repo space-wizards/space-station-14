@@ -34,7 +34,7 @@ public sealed class CharacterInfoSystem : EntitySystem
         var objectives = new Dictionary<string, List<ObjectiveInfo>>();
         var jobTitle = Loc.GetString("character-info-no-profession");
         string? briefing = null;
-        Dictionary<string, int>? collectiveMinds = null;
+        Dictionary<CollectiveMindPrototype, CollectiveMindMemberData>? collectiveMinds = null;
         if (TryComp<CollectiveMindComponent>(entity, out var mindsComp))
             collectiveMinds = mindsComp.Minds;
         if (_minds.TryGetMind(entity, out var mindId, out var mind))
