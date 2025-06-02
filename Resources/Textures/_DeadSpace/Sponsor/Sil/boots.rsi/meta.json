@@ -11,6 +11,9 @@
       "name": "icon"
     },
     {
+      "name": "icon-on"
+    },
+    {
       "name": "equipped-FEET",
       "directions": 4
     },

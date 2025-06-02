@@ -82,7 +82,7 @@
 
 # Boots
 - type: entity
-  parent: ClothingShoesBootsCombat
+  parent: [ClothingShoesBootsMag, ClothingSlotBase]
   id: ClothingShoesBootsDominatorSil
   name: белые армейские ботинки
   description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Могут вместить в себя нож.
@@ -98,12 +98,15 @@
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
-          True: {state: icon}
-          False: {state: icon}
+  - type: Matchbox
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-boots-sidearm
+        whitelist:
+          tags:
+          - Knife
+          - Sidearm
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
