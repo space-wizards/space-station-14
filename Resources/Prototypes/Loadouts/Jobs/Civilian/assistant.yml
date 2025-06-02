@@ -18,6 +18,114 @@
       role: JobPassenger
       time: 72000 #20 hrs, fun mantle for the most experienced assistants
 
+# Paragon of the Grey
+- type: loadoutEffectGroup
+  id: ParagonGrey
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 144000 #40 hours, gloves for truly the greatest (grey-test) of the grey
+
+# Head
+- type: loadout
+  id: WeldingMask
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    head: ClothingHeadHatWelding
+
+- type: loadout
+  id: GreyCowboy
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatCowboyGrey
+
+- type: loadout
+  id: GreyBandana
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadBandGrey
+
+- type: loadout
+  id: GreyFlatcap
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatGreyFlatcap
+
+- type: loadout
+  id: GreyCap
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatGreysoft
+
+- type: loadout
+  id: CorpoCap
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatCorpsoft
+
+- type: loadout
+  id: SyndieCap
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    head: ClothingHeadHatSyndie
+
+- type: loadout
+  id: GreyFedoraA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    head: ClothingHeadHatFedoraGrey
+
+- type: loadout
+  id: SolidHeadband
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    head: ClothingHeadHatSolidHeadband
+
+- type: loadout
+  id: GreytideBizarreAdventures
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    head: ClothingHeadHatBizarreSoft
+
+# Eyes
+- type: loadout
+  id: WeldingGoggles
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    eyes: ClothingEyesWeldingGoggles
+
+- type: loadout
+  id: CheapSunnies
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    eyes: ClothingEyesGlassesCheapSunglasses
+
 # Mask
 - type: loadout
   id: AssistantFace
@@ -26,6 +134,14 @@
     proto: HonoredAssistant
   equipment:
     mask: ClothingMaskGas
+
+- type: loadout
+  id: NeckGaiter
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    mask: ClothingMaskNeckGaiter
 
 # Jumpsuit
 - type: loadout
@@ -62,6 +178,22 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitAncient
 
+- type: loadout
+  id: GreyJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorGrey
+
+- type: loadout
+  id: GreyJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorGrey
+
 # Neck
 - type: loadout
   id: Mantle
@@ -92,6 +224,14 @@
   equipment:
     back: ClothingBackpackDuffel
 
+- type: loadout
+  id: SmugglerSatchel
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterGrey
+  equipment:
+    back: ClothingBackpackSatchelSmuggler
+
 # Gloves
 - type: loadout
   id: AssistantGloves
@@ -101,12 +241,52 @@
   equipment:
     gloves: ClothingHandsGlovesFingerlessInsulated
 
+- type: loadout
+  id: GreyGloves
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    gloves: ClothingHandsGlovesColorGray
+
+- type: loadout
+  id: ParagonGloves
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ParagonGrey
+  equipment:
+    gloves: ClothingHandsGlovesColorYellow
+
 # Outerclothing
 - type: loadout
   id: AssistantWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCoat
 
+- type: loadout
+  id: GreyHoodieA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    outerClothing: ClothingOuterHoodieGrey
+
+- type: loadout
+  id: GreyTrenchcoatA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    outerClothing: ClothingOuterCoatDetectiveLoadoutGrey
+  
+- type: loadout
+  id: SpaceAssholeCoat
+  effects:
+    - !type:GroupLoadoutEffect
+      proto: MasterGrey
+  equipment:
+    outerClothing: ClothingOuterCoatSpaceAsshole
+  
 # Feet
 - type: loadout
   id: BlackShoes
