@@ -6584,4 +6584,48 @@ Entries:
   id: 911
   time: '2025-06-02T11:06:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/741
+- author: Aedler
+  changes:
+  - message: Added Radio Chimes. Starlight QOL & Immersion development № 1
+    type: Add
+  id: 912
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Added Radio Chimes to Captain, Security, CE, HoS, BrigMedic, Nukie Commander,
+      Nukie Operative, Nukie Agent, Ninja, QM, BSO, CMO, RD, Wizard, DeathSquad and
+      CC.
+    type: Add
+  id: 913
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Added Radio Chime to Station AI.
+    type: Add
+  id: 914
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Added Radio Chimes disable setting under Audio.
+    type: Add
+  id: 915
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Chimes are now synchronized to TTS.
+    type: Tweak
+  id: 916
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Replaced some of the headsets in loadouts to support chimes.
+    type: Tweak
+  id: 917
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
 
