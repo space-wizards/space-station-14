@@ -6561,4 +6561,71 @@ Entries:
   id: 908
   time: '2025-06-01T05:06:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/696
+- author: Conflee
+  changes:
+  - message: Changed Asteroid durability from 120 to 60, halving the mining time so
+      Mining Specialists can feasibly do their job again.
+    type: Tweak
+  id: 909
+  time: '2025-06-02T04:23:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/744
+- author: Cyanogen
+  changes:
+  - message: Made cat ears not contra
+    type: Tweak
+  id: 910
+  time: '2025-06-02T11:03:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/745
+- author: deltaVelocity
+  changes:
+  - message: Increased the PKA's base range to ~6.5 tiles, from Wizden-nerfed 5.5.
+      With modkit, range is now ~9.5 tiles.
+    type: Tweak
+  id: 911
+  time: '2025-06-02T11:06:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/741
+- author: Aedler
+  changes:
+  - message: Added Radio Chimes. Starlight QOL & Immersion development № 1
+    type: Add
+  id: 912
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Added Radio Chimes to Captain, Security, CE, HoS, BrigMedic, Nukie Commander,
+      Nukie Operative, Nukie Agent, Ninja, QM, BSO, CMO, RD, Wizard, DeathSquad and
+      CC.
+    type: Add
+  id: 913
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Added Radio Chime to Station AI.
+    type: Add
+  id: 914
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Added Radio Chimes disable setting under Audio.
+    type: Add
+  id: 915
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Chimes are now synchronized to TTS.
+    type: Tweak
+  id: 916
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Replaced some of the headsets in loadouts to support chimes.
+    type: Tweak
+  id: 917
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
 
