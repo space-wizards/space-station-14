@@ -17,7 +17,6 @@ namespace Content.Server.Machines.EntitySystems;
 public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 {
     [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
 
     public override void Initialize()
@@ -42,8 +41,23 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (ent.Comp.Parts.TryGetValue(part, out var value))
-            value.Entity = null;
+        if (!ent.Comp.Parts.TryGetValue(part, out var value))
+            return;
+
+        if (!value.Entity.HasValue)
+            return;
+
+        var partEnt = GetEntity(value.Entity.Value);
+        var partComp = EnsureComp<MultipartMachinePartComponent>(partEnt);
+
+        if (partComp.Master.HasValue)
+        {
+            partComp.Master = null;
+            Dirty(partEnt, partComp);
+        }
+
+        value.Entity = null;
+        Dirty(ent);
     }
 
     /// <summary>
@@ -83,7 +97,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             if (!_factory.TryGetRegistration(part.Component, out var registration))
                 break;
 
-            var query = _entManager.GetEntityQuery(registration.Type);
+            var query = EntityManager.GetEntityQuery(registration.Type);
 
             ScanPart(machineOrigin, machineRotation, query, gridUid.Value, grid, part);
 
@@ -95,12 +109,14 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
             stateHasChanged = true;
 
+            MultipartMachinePartComponent comp;
+            EntityUid partEnt;
             if (part.Entity.HasValue)
             {
                 // This part gained an entity, add the Part component so it can find out which machine
                 // it's a part of
-                var partEnt = GetEntity(part.Entity.Value);
-                var comp = EnsureComp<MultipartMachinePartComponent>(partEnt);
+                partEnt = GetEntity(part.Entity.Value);
+                comp = EnsureComp<MultipartMachinePartComponent>(partEnt);
                 comp.Master = ent;
                 partsAdded.Add(key, partEnt);
             }
@@ -108,21 +124,25 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             {
                 // This part lost its entity, ensure we clean up the old entity so it's no longer marked
                 // as something we care about.
-                var partEnt = GetEntity(originalPart!.Value);
-                var comp = EnsureComp<MultipartMachinePartComponent>(partEnt);
+                partEnt = GetEntity(originalPart!.Value);
+                comp = EnsureComp<MultipartMachinePartComponent>(partEnt);
                 comp.Master = null;
                 partsRemoved.Add(key, partEnt);
             }
+
+            Dirty(partEnt, comp);
         }
 
         ent.Comp.IsAssembled = !missingParts;
         if (stateHasChanged)
         {
-            var ev = new MultipartMachineAssemblyStateChanged(ent,
+            var ev = new MultipartMachineAssemblyStateChanged(
+                ent,
                 ent.Comp.IsAssembled,
                 user,
                 partsAdded,
-                partsRemoved);
+                partsRemoved
+            );
             RaiseLocalEvent(ent, ref ev);
 
             Dirty(ent);
@@ -143,22 +163,30 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         Dictionary<Enum, EntityUid> clearedParts = [];
         foreach (var (key, part) in ent.Comp.Parts)
         {
-            if (part.Entity.HasValue)
-            {
-                stateHasChanged = true;
-                clearedParts.Add(key, GetEntity(part.Entity.Value));
-                part.Entity = null;
-            }
+            if (!part.Entity.HasValue)
+                continue;
+
+            stateHasChanged = true;
+            var partEnt = GetEntity(part.Entity.Value);
+            var partComp = EnsureComp<MultipartMachinePartComponent>(partEnt);
+            partComp.Master = null;
+            Dirty(partEnt, partComp);
+
+            clearedParts.Add(key, partEnt);
+            part.Entity = null;
         }
+
         ent.Comp.IsAssembled = false;
 
         if (stateHasChanged)
         {
-            var ev = new MultipartMachineAssemblyStateChanged(ent,
+            var ev = new MultipartMachineAssemblyStateChanged(
+                ent,
                 ent.Comp.IsAssembled,
                 null,
                 [],
-                clearedParts);
+                clearedParts
+            );
             RaiseLocalEvent(ent, ref ev);
 
             Dirty(ent);

@@ -1,4 +1,4 @@
-namespace Content.Shared.Machines.Components;
+namespace Content.Client.Machines.Components;
 
 /// <summary>
 /// Component attached to all multipart machine ghosts

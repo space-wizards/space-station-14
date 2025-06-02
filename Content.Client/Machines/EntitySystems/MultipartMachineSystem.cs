@@ -1,4 +1,5 @@
 using Content.Client.Examine;
+using Content.Client.Machines.Components;
 using Content.Shared.Machines.Components;
 using Content.Shared.Machines.EntitySystems;
 using Robust.Client.GameObjects;
