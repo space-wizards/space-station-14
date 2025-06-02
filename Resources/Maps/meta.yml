@@ -9746,98 +9746,6 @@ entities:
     - type: Transform
       pos: 44.41815,13.574265
       parent: 5350
-- proto: ActionToggleInternals
-  entities:
-  - uid: 15198
-    components:
-    - type: Transform
-      parent: 15120
-  - uid: 15592
-    components:
-    - type: Transform
-      parent: 15483
-  - uid: 18711
-    components:
-    - type: Transform
-      parent: 18691
-  - uid: 23329
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 23324
-  - uid: 23340
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 23338
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 15196
-    components:
-    - type: Transform
-      parent: 15120
-  - uid: 15521
-    components:
-    - type: Transform
-      parent: 15483
-  - uid: 18692
-    components:
-    - type: Transform
-      parent: 18691
-  - uid: 23325
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 23324
-  - uid: 23339
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 23338
-- proto: ActionToggleLight
-  entities:
-  - uid: 3199
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 15020
-  - uid: 9878
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7513
-  - uid: 11380
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7885
-  - uid: 14853
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 10450
-  - uid: 14865
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 19733
-  - uid: 28315
-    components:
-    - type: Transform
-      parent: 28314
-  - uid: 28317
-    components:
-    - type: Transform
-      parent: 28316
 - proto: AirAlarm
   entities:
   - uid: 172
@@ -90349,7 +90257,6 @@ entities:
           occludes: True
           ents:
           - 11380
-    - type: ActionsContainer
   - uid: 28314
     components:
     - type: Transform
@@ -90368,7 +90275,6 @@ entities:
           occludes: True
           ents:
           - 28315
-    - type: ActionsContainer
   - uid: 28316
     components:
     - type: Transform
@@ -90387,7 +90293,6 @@ entities:
           occludes: True
           ents:
           - 28317
-    - type: ActionsContainer
 - proto: FlashlightSeclite
   entities:
   - uid: 10450
@@ -90408,7 +90313,6 @@ entities:
           occludes: True
           ents:
           - 14853
-    - type: ActionsContainer
   - uid: 18438
     components:
     - type: Transform
@@ -90432,7 +90336,6 @@ entities:
           occludes: True
           ents:
           - 14865
-    - type: ActionsContainer
 - proto: FlippoLighter
   entities:
   - uid: 6894
@@ -136151,7 +136054,6 @@ entities:
       toggleActionEntity: 15592
     - type: Jetpack
       toggleActionEntity: 15521
-    - type: ActionsContainer
     - type: ContainerContainer
       containers:
         actions: !type:Container
@@ -136167,7 +136069,6 @@ entities:
       toggleActionEntity: 18711
     - type: Jetpack
       toggleActionEntity: 18692
-    - type: ActionsContainer
     - type: ContainerContainer
       containers:
         actions: !type:Container
@@ -136191,7 +136092,6 @@ entities:
       toggleActionEntity: 23329
     - type: Jetpack
       toggleActionEntity: 23325
-    - type: ActionsContainer
     - type: ContainerContainer
       containers:
         actions: !type:Container
@@ -136216,7 +136116,6 @@ entities:
       toggleActionEntity: 23340
     - type: Jetpack
       toggleActionEntity: 23339
-    - type: ActionsContainer
     - type: ContainerContainer
       containers:
         actions: !type:Container
@@ -136457,7 +136356,6 @@ entities:
           - 9878
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 7910
     components:
     - type: Transform
@@ -136489,7 +136387,6 @@ entities:
           - 3199
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 16799
     components:
     - type: Transform
