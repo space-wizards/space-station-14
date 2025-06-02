@@ -283,6 +283,7 @@
   - type: Sprite
     state: syndicakes
   - type: Item
+    heldPrefix: syndicakes
   - type: Food
     trash:
     - FoodPacketSyndiTrash

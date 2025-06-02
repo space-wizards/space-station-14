@@ -109,6 +109,12 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: raw human meat
@@ -127,6 +133,12 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: raw carp fillet
@@ -155,6 +167,12 @@
       reagents:
       - ReagentId: CarpoToxin
         Quantity: 5
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw bacon
@@ -233,6 +251,12 @@
     graph: PenguinSteak
     node: start
     defaultTarget: cooked penguin
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw chicken meat
@@ -259,6 +283,12 @@
     graph: ChickenSteak
     node: start
     defaultTarget: cooked chicken
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw duck meat
@@ -308,6 +338,12 @@
     price: 750
   - type: StealTarget
     stealGroup: FoodMeatCorgi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: corgi-inhand-left
+      right:
+      - state: corgi-inhand-right
 
 - type: entity
   name: raw crab meat
@@ -389,6 +425,12 @@
     graph: DragonSteak
     node: start
     defaultTarget: dragon steak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: dragon-inhand-left
+      right:
+      - state: dragon-inhand-right
 
 - type: entity
   name: raw rat meat
@@ -409,6 +451,12 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: raw lizard meat
@@ -467,6 +515,12 @@
           Quantity: 4
         - ReagentId: Fat
           Quantity: 4
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: rotten-inhand-left
+      right:
+      - state: rotten-inhand-right
 
 - type: entity
   name: raw spider meat
@@ -543,6 +597,12 @@
           Quantity: 10
         - ReagentId: Toxin
           Quantity: 2
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: snake-inhand-left
+      right:
+      - state: snake-inhand-right
 
 - type: entity
   name: raw xeno meat
@@ -613,6 +673,12 @@
     slice: FoodMeatTomatoCutlet
   - type: StaticPrice
     price: 100
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: tomato-inhand-left
+      right:
+      - state: tomato-inhand-right
 
 - type: entity
   name: salami
@@ -716,6 +782,12 @@
         Quantity: 10
   - type: Sprite
     state: slime
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: slime-inhand-left
+      right:
+      - state: slime-inhand-right
 
 - type: entity
   name: raw snail meat
@@ -766,6 +838,12 @@
   - type: Tag
     tags:
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 # Cooked
 
@@ -833,6 +911,12 @@
     entries:
       Burger: MeatSteak
       Taco: MeatSteak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
 
 - type: entity
   name: bacon
@@ -868,6 +952,12 @@
     entries:
       Burger: MeatBacon
       Taco: MeatBacon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: cooked bear
@@ -1299,6 +1389,12 @@
   - type: Construction
     graph: AnomalyMeatSteak
     node: anomaly steak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
 
 - type: entity
   name: dragon steak
@@ -1334,6 +1430,12 @@
     entries:
       Burger: DragonSteak
       Taco: DragonSteak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: dragon-cooked-inhand-left
+      right:
+      - state: dragon-cooked-inhand-right
 
 # Cutlets
 
@@ -1364,6 +1466,12 @@
     graph: Cutlet
     node: start
     defaultTarget: cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw bear cutlet
@@ -1420,6 +1528,12 @@
     graph: PenguinCutlet
     node: start
     defaultTarget: penguin cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw chicken cutlet
@@ -1447,6 +1561,12 @@
     graph: ChickenCutlet
     node: start
     defaultTarget: chicken cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw duck cutlet
@@ -1474,6 +1594,12 @@
     graph: DuckCutlet
     node: start
     defaultTarget: duck cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw lizard cutlet

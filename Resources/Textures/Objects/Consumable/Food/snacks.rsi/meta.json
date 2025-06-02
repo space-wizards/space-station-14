@@ -140,6 +140,14 @@
       "name": "syndicakes"
     },
     {
+      "name": "syndicakes-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "syndicakes-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "syndicakes-trash"
     },
     {

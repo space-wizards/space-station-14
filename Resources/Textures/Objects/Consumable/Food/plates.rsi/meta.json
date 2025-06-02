@@ -11,6 +11,22 @@
       "name": "plate"
     },
     {
+      "name": "plate-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "plate-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "plate-plastic-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "plate-plastic-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "plate-trash"
     },
     {
