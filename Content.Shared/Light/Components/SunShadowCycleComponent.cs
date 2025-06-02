@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.Components;
 
