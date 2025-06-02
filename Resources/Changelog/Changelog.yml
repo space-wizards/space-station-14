@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: GaussiArson
-  changes:
-  - message: Disablers, practice disablers, and disabler smgs no longer deal heat
-      damage. They still deal the same amount of stamina damage.
-    type: Tweak
-  id: 8087
-  time: '2025-03-20T01:50:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35834
 - author: Errant
   changes:
   - message: The correct popup messages will now show for both players when someone
@@ -3916,3 +3908,14 @@
   id: 8598
   time: '2025-06-01T21:09:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38004
+- author: chromiumboy
+  changes:
+  - message: Atmospheric pipes can now be built on three different sublayers, allowing
+      for multiple pipe networks on a single tile
+    type: Add
+  - message: Pipe manifolds can now be constructed to connect pipes across different
+      sublayers
+    type: Add
+  id: 8599
+  time: '2025-06-02T05:01:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36124
