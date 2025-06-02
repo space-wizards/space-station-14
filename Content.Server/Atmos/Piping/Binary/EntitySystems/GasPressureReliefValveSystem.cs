@@ -3,9 +3,9 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Piping;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
@@ -144,7 +144,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         _atmosphere.Merge(outletPipeNode.Air, removed);
 
         // Calculate the flow rate in L/s for the UI.
-        var sentFlowRate = MathF.Round(actualVolumeToTransfer * args.dt, 1);
+        var sentFlowRate = MathF.Round(actualVolumeToTransfer / args.dt, 1);
 
         ChangeStatus(true, valveEntity, inletPipeNode, outletPipeNode, sentFlowRate);
     }
@@ -154,14 +154,11 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
     /// </summary>
     /// <param name="valveEntity">The <see cref="Entity{GasPressureReliefValveComponent, AppearanceComponent}"/>
     /// representing the valve with respective components.</param>
-    private void UpdateAppearance(Entity<GasPressureReliefValveComponent, AppearanceComponent?> valveEntity)
+    private void UpdateAppearance(Entity<GasPressureReliefValveComponent> valveEntity)
     {
-        if (!Resolve(valveEntity, ref valveEntity.Comp2, false))
-            return;
-
         _appearance.SetData(valveEntity,
             PressureReliefValveVisuals.State,
-            valveEntity.Comp1.Enabled);
+            valveEntity.Comp.Enabled);
     }
 
     /// <summary>
@@ -196,7 +193,8 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         // The valve has changed state, so we need to dirty all applicable fields *right now* so the UI updates
         // at the same time as everything else.
-        DirtyFields(ent.AsNullable(), null,
+        DirtyFields(ent.AsNullable(),
+            null,
             nameof(ent.Comp.InletPressure),
             nameof(ent.Comp.OutletPressure),
             nameof(ent.Comp.FlowRate));

@@ -2,14 +2,14 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Atmos.Components;
+namespace Content.Shared.Atmos.Piping.Binary.Components;
 
 /// <summary>
 /// Defines a gas pressure relief valve,
 /// which releases gas depending on a set pressure threshold between two pipe nodes.
 /// </summary>
-[RegisterComponent] [NetworkedComponent]
-[AutoGenerateComponentState(true, true)] [AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState(true, true), AutoGenerateComponentPause]
 public sealed partial class GasPressureReliefValveComponent : Component
 {
     /// <summary>
@@ -27,6 +27,12 @@ public sealed partial class GasPressureReliefValveComponent : Component
     public string InletName = "inlet";
 
     /// <summary>
+    /// Specifies the pipe node name to be treated as the outlet.
+    /// </summary>
+    [DataField]
+    public string OutletName = "outlet";
+
+    /// <summary>
     /// The max transfer rate of the valve.
     /// </summary>
     [GuidebookData]
@@ -39,12 +45,6 @@ public sealed partial class GasPressureReliefValveComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan NextUiUpdate = TimeSpan.Zero;
-
-    /// <summary>
-    /// Specifies the pipe node name to be treated as the outlet.
-    /// </summary>
-    [DataField]
-    public string OutletName = "outlet";
 
     /// <summary>
     /// Sets the opening threshold of the valve.
