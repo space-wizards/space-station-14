@@ -248,7 +248,7 @@
 
 - type: entity
   id: CrateAirGrenade
-  parent: CrateGenericSteel
+  parent: CrateEngineering
   name: air grenade crate
   description: A crate containing 3 air grenades.
   components:
