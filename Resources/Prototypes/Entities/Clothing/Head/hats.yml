@@ -360,7 +360,7 @@
   parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatHoshat
   name: head of security cap
-  description: The robust hat of the Head of Security. For showing the officers who's the real sheriff 
+  description: The robust hat of the Head of Security. For showing the officers who's the real boss.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/hoshat.rsi
