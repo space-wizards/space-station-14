@@ -19,7 +19,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 3
-  
+
 - type: listing
   id: VendorPlushieSharkPink
   productEntity: PlushieSharkPink
@@ -29,7 +29,7 @@
   - SLPlushies
   conditions:
   - !type:ListingLimitedStockCondition
-    stock: 1 
+    stock: 1
 
 - type: listing
   id: VendorPlushieHampter
@@ -274,7 +274,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-        
+
 - type: listing
   id: VendorPlushieHuman
   productEntity: PlushieHuman
@@ -284,7 +284,7 @@
   - SLSpecies
   conditions:
   - !type:ListingLimitedStockCondition
-    stock: 1    
+    stock: 1
 
 - type: listing
   id: VendorPlushieMoth
@@ -295,7 +295,7 @@
   - SLSpecies
   conditions:
   - !type:ListingLimitedStockCondition
-    stock: 1   
+    stock: 1
 
 - type: listing
   id: VendorPlushieXeno
@@ -306,7 +306,7 @@
   - SLSpecies
   conditions:
   - !type:ListingLimitedStockCondition
-    stock: 1   
+    stock: 1
 
 - type: listing
   id: VendorPlushieVox
@@ -328,6 +328,17 @@
   - SLSpecies
   conditions:
   - !type:ListingLimitedStockCondition
-    stock: 1    
+    stock: 1
 
-# 
+- type: listing
+  id: VendorCatEars
+  productEntity: ClothingHeadHatCatEars
+  cost:
+    NTCredit: 1666
+  categories:
+  - SLSpecies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+#
