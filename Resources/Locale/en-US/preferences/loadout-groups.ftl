@@ -40,9 +40,6 @@ loadout-group-assistant-gloves = Assistant gloves
 loadout-group-assistant-outerclothing = Assistant outer clothing
 loadout-group-assistant-shoes = Assistant shoes
 loadout-group-assistant-neck = Assistant neck
-loadout-group-assistant-glasses = Assistant glasses # starlight
-loadout-group-assistant-head = Assistant head # starlight
-loadout-group-assistant-backpack = Assistant backpack # starlight
 
 loadout-group-bartender-head = Bartender head
 loadout-group-bartender-jumpsuit = Bartender jumpsuit
