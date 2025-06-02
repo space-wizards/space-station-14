@@ -1,4 +1,4 @@
-- files: ["captain","secoff","ce","ai","hos","brigmedic","marauder","marauder_commander","marauder_agent","qm","bso","cmo","rd","cc","ninja","deathsquad","wizard"]
+- files: ["captain","secoff","ce","ai","hos","brigmedic","marauder","marauder_commander","marauder_agent","qm","bso","cmo","rd","cc","ninja","deathsquad","warden","wizard"]
   license: "CC-BY-4.0"
   copyright: 'JustAdler'
   source: "https://github.com/ss14Starlight/space-station-14"
