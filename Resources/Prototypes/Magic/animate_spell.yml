@@ -24,6 +24,7 @@
       - TegGenerator
       - TegCirculator
       - XenoArtifact
+      - ResistLocker
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: Animate
