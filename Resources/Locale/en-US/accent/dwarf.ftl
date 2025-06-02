@@ -439,23 +439,23 @@ accent-dwarf-words-replace-152 = gaun yersel'
 accent-dwarf-words-153 = congrats
 accent-dwarf-words-replace-153 = gaun yersel'
 
-accent-dwarf-words-154 = leave
-accent-dwarf-words-replace-154 = bolt
+accent-dwarf-words-154 = janitor
+accent-dwarf-words-replace-154 = janny
 
-accent-dwarf-words-155 = janitor
-accent-dwarf-words-replace-155 = janny
+accent-dwarf-words-155 = implant
+accent-dwarf-words-replace-155 = jab
 
-accent-dwarf-words-156 = implant
-accent-dwarf-words-replace-156 = jab
+accent-dwarf-words-156 = implanter
+accent-dwarf-words-replace-156 = jabber
 
-accent-dwarf-words-157 = implanter
-accent-dwarf-words-replace-157 = jabber
+accent-dwarf-words-157 = generator
+accent-dwarf-words-replace-157 = jenny
 
-accent-dwarf-words-158 = generator
+accent-dwarf-words-158 = pacman
 accent-dwarf-words-replace-158 = jenny
 
-accent-dwarf-words-159 = pacman
-accent-dwarf-words-replace-159 = jenny
+accent-dwarf-words-159 = hi
+accent-dwarf-words-replace-159 = haw
 
 accent-dwarf-words-160 = ssd
 accent-dwarf-words-replace-160 = kippy
@@ -496,8 +496,8 @@ accent-dwarf-words-replace-171 = chib
 accent-dwarf-words-172 = cold
 accent-dwarf-words-replace-172 = cauld
 
-accent-dwarf-words-173 = water
-accent-dwarf-words-replace-173 = cooncil juice
+accent-dwarf-words-173 = angry
+accent-dwarf-words-replace-173 = raging
 
 accent-dwarf-words-174 = down
 accent-dwarf-words-replace-174 = doon
@@ -520,8 +520,8 @@ accent-dwarf-words-replace-179 = groond
 accent-dwarf-words-180 = half
 accent-dwarf-words-replace-180 = hauf
 
-accent-dwarf-words-181 = head
-accent-dwarf-words-replace-181 = noggin
+accent-dwarf-words-181 = too
+accent-dwarf-words-replace-181 = tae
 
 accent-dwarf-words-182 = thing
 accent-dwarf-words-replace-182 = hingway
@@ -537,12 +537,3 @@ accent-dwarf-words-replace-185 = pish
 
 accent-dwarf-words-186 = drunk
 accent-dwarf-words-replace-186 = rat-arsed
-
-accent-dwarf-words-187 = angry
-accent-dwarf-words-replace-187 = raging
-
-accent-dwarf-words-188 = too
-accent-dwarf-words-replace-188 = tae
-
-accent-dwarf-words-189 = hi
-accent-dwarf-words-replace-189 = haw
