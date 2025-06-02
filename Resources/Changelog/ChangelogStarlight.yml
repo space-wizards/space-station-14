@@ -6569,4 +6569,11 @@ Entries:
   id: 909
   time: '2025-06-02T04:23:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/744
+- author: Cyanogen
+  changes:
+  - message: Made cat ears not contra
+    type: Tweak
+  id: 910
+  time: '2025-06-02T11:03:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/745
 
