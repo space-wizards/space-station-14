@@ -95,7 +95,7 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
 
     private void OnDisable(Entity<RoboticsConsoleComponent> ent, ref RoboticsConsoleDisableMessage args)
     {
-        if (!ent.AllowBorgControl)
+        if (!ent.Comp.AllowBorgControl)
             return;
 
         if (_lock.IsLocked(ent.Owner))
@@ -115,7 +115,7 @@ public sealed class RoboticsConsoleSystem : SharedRoboticsConsoleSystem
 
     private void OnDestroy(Entity<RoboticsConsoleComponent> ent, ref RoboticsConsoleDestroyMessage args)
     {
-        if (!ent.AllowBorgControl)
+        if (!ent.Comp.AllowBorgControl)
             return;
 
         if (_lock.IsLocked(ent.Owner))
