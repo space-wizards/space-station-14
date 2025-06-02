@@ -40,7 +40,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
     private void OnExamined(Entity<AtmosPipeLayersComponent> ent, ref ExaminedEvent args)
     {
-        var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + ent.Comp.CurrentPipeLayer);
+        var layerName = GetPipeLayerName(ent.Comp.CurrentPipeLayer);
         args.PushMarkup(Loc.GetString("atmos-pipe-layers-component-current-layer", ("layerName", layerName)));
     }
 
@@ -92,7 +92,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             for (var i = 0; i < ent.Comp.NumberOfPipeLayers; i++)
             {
                 var index = i;
-                var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + index);
+                var layerName = GetPipeLayerName((AtmosPipeLayer)index);
                 var label = Loc.GetString("atmos-pipe-layers-component-select-layer", ("layerName", layerName));
 
                 var v = new Verb
@@ -214,7 +214,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         if (user != null)
         {
-            var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + (int)ent.Comp.CurrentPipeLayer);
+            var layerName = GetPipeLayerName(ent.Comp.CurrentPipeLayer);
             var message = Loc.GetString("atmos-pipe-layers-component-change-layer", ("layerName", layerName));
 
             _popup.PopupPredicted(message, ent, user);
@@ -255,5 +255,10 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         }
 
         return false;
+    }
+
+    private string GetPipeLayerName(AtmosPipeLayer layer)
+    {
+        return Loc.GetString("atmos-pipe-layers-component-layer-" + layer.ToString().ToLower());
     }
 }
