@@ -65,7 +65,7 @@ public sealed partial class MachinePart
     /// is no matched entity. Can reference dummy entities to give more detailed descriptions.
     /// </summary>
     [DataField]
-    public EntProtoId? ExpectedProtoForGhost = null;
+    public EntProtoId? GhostProto = null;
 
     /// <summary>
     /// Expected rotation for this machine to have.
