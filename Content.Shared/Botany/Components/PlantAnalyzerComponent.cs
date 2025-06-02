@@ -1,15 +1,14 @@
-using Content.Server.Botany.Systems;
 using Content.Shared.AbstractAnalyzer;
 using Content.Shared.Paper;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Botany.Components;
+namespace Content.Shared.Botany.Components;
 
 /// <inheritdoc/>
-[RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(PlantAnalyzerSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class PlantAnalyzerComponent : AbstractAnalyzerComponent
 {
     /// <inheritdoc/>
@@ -20,7 +19,8 @@ public sealed partial class PlantAnalyzerComponent : AbstractAnalyzerComponent
     /// <summary>
     /// When will the analyzer be ready to print again?
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan PrintReadyAt = TimeSpan.Zero;
 
     /// <summary>
