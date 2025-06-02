@@ -88,7 +88,7 @@
         amount: 1
     - type: NPCUseActionOnTarget
       actionId: ActionMobBlink
-      
+
 - type: entity
   name: worm
   parent: [ SimpleSpaceMobBase, MobCombat ]
