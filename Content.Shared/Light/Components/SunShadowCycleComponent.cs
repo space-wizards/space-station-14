@@ -35,7 +35,7 @@ public sealed partial class SunShadowCycleComponent : Component
 };
 
 [DataDefinition]
-[Serializable]
+[Serializable, NetSerializable]
 public partial record struct SunShadowCycleDirection
 {
     [DataField]
