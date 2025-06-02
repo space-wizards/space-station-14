@@ -6628,4 +6628,11 @@ Entries:
   id: 917
   time: '2025-06-02T11:12:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed "Diona are slow as shit"
+    type: Fix
+  id: 918
+  time: '2025-06-02T20:14:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/750
 
