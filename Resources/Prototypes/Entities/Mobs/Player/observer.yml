@@ -53,7 +53,7 @@
         ghostVariant:
           ghost_blunt: { state: ghost_blunt }
           ghost_slash: { state: ghost_slash }
-          ghost_pierce: { state: ghost_pierce }
+          ghost_piercing: { state: ghost_piercing }
           ghost_heat: { state: ghost_heat }
           ghost_cold: { state: ghost_cold }
           ghost_radiation: { state: ghost_radiation }
@@ -71,6 +71,7 @@
   - type: Examiner
     skipChecks: true
   - type: Ghost
+  - type: GhostSpriteState
   - type: GhostHearing
   - type: ShowElectrocutionHUD
   - type: IntrinsicRadioReceiver

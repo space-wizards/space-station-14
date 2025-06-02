@@ -17,6 +17,7 @@ using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
+using Content.Shared.Ghost.GhostSpriteStateSelection;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
@@ -481,19 +482,11 @@ namespace Content.Server.Ghost
             var ghost = SpawnAtPosition(GameTicker.ObserverPrototypeName, spawnPosition.Value);
             var ghostComponent = Comp<GhostComponent>(ghost);
 
-            //Get damage values and choose the ghost sprite
-            if (TryComp<DamageableComponent>(mind.Comp.CurrentEntity, out var damageComp))  //this will cause issues, a brain from gibs wont have a damage comp
+            // Raise an event to assign a sprite state according to the damage taken
+            if (mind.Comp.CurrentEntity != null)
             {
-                var highestDamageType = _damageable.GetHighestDamageTypes(damageComp);
-
-                //gotta figure out what to do when theres multiple types
-                /*
-                string damageName = ("ghost_" + highestDamageType).ToLower();
-                if (TryComp<AppearanceComponent>(ghost, out var appearanceComp))
-                {
-                    _appearance.SetData(ghost, GhostVisuals.Damage, damageName, appearanceComp);
-                }
-                */
+                var spriteEvent = new GhostSpriteEvent(mind.Comp.CurrentEntity.Value);
+                RaiseLocalEvent(ghost, spriteEvent);
             }
 
             // Try setting the ghost entity name to either the character name or the player name.
