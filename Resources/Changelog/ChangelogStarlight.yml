@@ -6561,4 +6561,12 @@ Entries:
   id: 908
   time: '2025-06-01T05:06:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/696
+- author: Conflee
+  changes:
+  - message: Changed Asteroid durability from 120 to 60, halving the mining time so
+      Mining Specialists can feasibly do their job again.
+    type: Tweak
+  id: 909
+  time: '2025-06-02T04:23:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/744
 
