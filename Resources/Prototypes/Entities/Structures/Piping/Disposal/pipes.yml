@@ -152,6 +152,14 @@
     - DisposalTagger
 
 - type: entity
+  parent: DisposalTagger
+  id: DisposalTaggerWaste
+  suffix: waste
+  components:
+  - type: DisposalTagger
+    tag: Waste
+
+- type: entity
   id: DisposalSignaller
   parent: DisposalPipeBase
   name: disposal signaller
@@ -273,6 +281,15 @@
     - DisposalRouter
 
 - type: entity
+  parent: DisposalRouter
+  id: DisposalRouterWaste
+  suffix: waste
+  components:
+  - type: DisposalRouter
+    tags:
+    - Waste
+
+- type: entity
   id: DisposalRouterFlipped
   description: A three-way router. Entities with matching tags get routed to the side.
   parent: DisposalRouter
@@ -312,6 +329,15 @@
     node: routerflipped
     containers:
     - DisposalRouter
+
+- type: entity
+  parent: DisposalRouterFlipped
+  id: DisposalRouterFlippedWaste
+  suffix: flipped, waste
+  components:
+  - type: DisposalRouter
+    tags:
+    - Waste
 
 - type: entity
   id: DisposalJunction
