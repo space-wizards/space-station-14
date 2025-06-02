@@ -49,11 +49,11 @@ public sealed partial class BorgSystem
             var hpPercent = 1f;
 
             // gaze upon the horrible if ladder
-            if (_entityManager.TryGetComponent(uid, out DamageableComponent? damageable))
+            if (_entityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
             {
-                if (_entityManager.TryGetComponent(uid, out MobStateComponent? mobState))
+                if (_entityManager.TryGetComponent<MobStateComponent>(uid, out var mobState))
                 {
-                    if (_entityManager.TryGetComponent(uid, out MobThresholdsComponent? mobThresholds))
+                    if (_entityManager.TryGetComponent<MobThresholdsComponent>(uid, out var mobThresholds))
                     {
                         if (CalcProgress(uid, mobState, damageable, mobThresholds) is not { } deathProgress)
                             hpPercent = 0f;
