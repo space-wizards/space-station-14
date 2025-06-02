@@ -51,16 +51,16 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         var query = EntityQueryEnumerator<GasPressureReliefValveComponent>();
 
-        while (query.MoveNext(out var ent, out var comp))
+        while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.NextUiUpdate > _timing.CurTime)
                 continue;
 
             comp.NextUiUpdate += comp.UpdateInterval;
 
-            DirtyFields(ent,
+            DirtyFields(uid,
                 comp,
-                MetaData(ent),
+                null,
                 nameof(comp.InletPressure),
                 nameof(comp.OutletPressure),
                 nameof(comp.FlowRate));
@@ -196,8 +196,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         // The valve has changed state, so we need to dirty all applicable fields *right now* so the UI updates
         // at the same time as everything else.
-        DirtyFields(ent!,
-            MetaData(ent),
+        DirtyFields(ent.AsNullable(), null,
             nameof(ent.Comp.InletPressure),
             nameof(ent.Comp.OutletPressure),
             nameof(ent.Comp.FlowRate));

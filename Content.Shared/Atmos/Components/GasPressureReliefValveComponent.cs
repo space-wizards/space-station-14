@@ -52,7 +52,7 @@ public sealed partial class GasPressureReliefValveComponent : Component
     /// <example> If set to 500 kPa, the valve will only
     /// open if the pressure in the inlet side is above
     /// 500 kPa. </example>
-    [DataField] [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float Threshold;
 
     /// <summary>
@@ -67,21 +67,21 @@ public sealed partial class GasPressureReliefValveComponent : Component
     /// The current flow rate of the valve.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField] [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float FlowRate;
 
     /// <summary>
     /// Current inlet pressure the valve.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField] [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float InletPressure;
 
     /// <summary>
     /// Current outlet pressure of the valve.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField] [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float OutletPressure;
 
     #endregion
