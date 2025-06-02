@@ -67,10 +67,10 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
             ent.Comp.Ghosts.Add(ghostEnt);
 
-            if (part.ExpectedProtoForGhost == null)
+            if (part.GhostProto == null)
                 continue;
 
-            var entProto = _prototype.Index(part.ExpectedProtoForGhost.Value);
+            var entProto = _prototype.Index(part.GhostProto.Value);
             if (!entProto.Components.TryGetComponent("Sprite", out var s) || s is not SpriteComponent protoSprite)
                 return;
 
