@@ -107,6 +107,10 @@ public sealed class AmeControllerSystem : EntitySystem
                 var powerOutput = group.InjectFuel(availableInject, out var overloading);
                 if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                     powerOutlet.MaxSupply = powerOutput;
+
+                // Dirty for the sake of the AME fuel examine not mispredicting
+                Dirty(controller.FuelSlot.Item.Value, fuelContainer);
+
                 fuelContainer.FuelAmount -= availableInject;
                 // only play audio if we actually had an injection
                 if (availableInject > 0)
