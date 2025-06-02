@@ -5,7 +5,7 @@
   minPlayers: 7
   maxPlayers: 55
   stations:
-    Hotel:
+    StarlightHotel:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup

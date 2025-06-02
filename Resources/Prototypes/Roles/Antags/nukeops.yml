@@ -70,7 +70,7 @@
   id: SyndicateCommanderGearFull
   parent: SyndicateOperativeGearFull
   equipment:
-    neck: CommanderWhistle
+    neck: CommanderWhistle #Starlight
     outerClothing: ClothingOuterHardsuitSyndieCommander
     id: CommanderPDA
   inhand:
@@ -83,6 +83,7 @@
   equipment:
     eyes: ClothingEyesHudSyndicateAgent
     outerClothing: ClothingOuterHardsuitSyndieMedic
+    ears: ClothingHeadsetAltSyndicateAgent #Starlight
     shoes: ClothingShoesBootsMagSyndie
     id: SyndiAgentPDA
     belt: ClothingBeltMilitaryWebbingMedFilled

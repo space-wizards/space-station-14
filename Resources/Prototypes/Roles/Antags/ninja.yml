@@ -22,7 +22,7 @@
     outerClothing: ClothingOuterSuitSpaceNinja
     shoes: ClothingShoesSpaceNinja
     id: AgentIDCard
-    ears: ClothingHeadsetAssistant
+    ears: ClothingHeadsetAssistantNinja # Starlight
     pocket1: SpiderCharge
     pocket2: PinpointerStation
     belt: EnergyKatana

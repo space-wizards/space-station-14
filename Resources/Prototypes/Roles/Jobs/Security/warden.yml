@@ -25,6 +25,8 @@
   - Detective
   - Cryogenics
   - Brigmedic
+  - GenpopEnter #starlight
+  - GenpopLeave #starlight
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -33,7 +35,7 @@
   id: WardenGear
   equipment:
     id: WardenPDA
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetSecurityWarden
     pocket1: WeaponPistolDP
   storage:
     back:

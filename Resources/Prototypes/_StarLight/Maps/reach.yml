@@ -5,7 +5,7 @@
   minPlayers: 0
   maxPlayers: 12
   stations:
-    Reach:
+    StarlightReach:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup

@@ -1,7 +1,7 @@
 - type: gameMap
   id: Starboard
   mapName: 'Starboard'
-  mapPath: /Maps/_Starlight/Stations/starboard.yml
+  mapPath: /Maps/_Starlight/Stations/Starboard.yml
   minPlayers: 90
   stations:
     Starboard:
