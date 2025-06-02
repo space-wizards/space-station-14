@@ -130,11 +130,20 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
             _ => "blue"
         };
 
+        var hpPercentColor = data.HpPercent switch {
+            < 0.2f => "red",
+            < 0.4f => "orange",
+            < 0.6f => "yellow",
+            < 0.8f => "green",
+            _ => "blue"
+        };
+
         var text = new FormattedMessage();
         text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-model", ("name", model))}\n");
         text.AddMarkupOrThrow(Loc.GetString("robotics-console-designation"));
         text.AddText($" {data.Name}\n"); // prevent players trolling by naming borg [color=red]satan[/color]
         text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-battery", ("charge", (int)(data.Charge * 100f)), ("color", batteryColor))}\n");
+        text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-hp", ("hp", (int)(data.HpPercent * 100f)), ("color", hpPercentColor))}\n");
         text.AddMarkupOrThrow($"{Loc.GetString("robotics-console-brain", ("brain", data.HasBrain))}\n");
         text.AddMarkupOrThrow(Loc.GetString("robotics-console-modules", ("count", data.ModuleCount)));
         BorgInfo.SetMessage(text);
