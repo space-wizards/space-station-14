@@ -17,7 +17,7 @@ public sealed partial class StationCentcommComponent : Component
 
     //starlight, support for multiple centcomms to randomly be rolled at roundstart
     [DataField]
-    public ResPath[] Maps = { new("/Maps/_Starlight/Centcomms/CC_Outpost_SC17.yml")};
+    public ResPath[] Maps = { new("/Maps/_Starlight/Centcomms/CC_Outpost_SC17.yml"), new("/Maps/_Starlight/Centcomms/CC_Outpost_G24.yml")};
     /* [DataField]
     public ResPath Map = new("/Maps/_Starlight/centcomm.yml"); */
 
