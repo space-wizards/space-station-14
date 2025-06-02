@@ -347,3 +347,13 @@
   cost: 1500
   category: cargoproduct-category-name-fun
   group: market
+
+- type: cargoProduct
+  id: FunBigChess
+  icon:
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: w_king
+  product: CrateFunBigChess
+  cost: 2000
+  category: cargoproduct-category-name-fun
+  group: market

@@ -49,6 +49,7 @@
     - id: CrateCandles
     - id: CrateFunArtSupplies
     - id: CrateFunFoamGuns
+    - id: CrateFunBigChess
       weight: 0.01
 
 - type: entityTable
