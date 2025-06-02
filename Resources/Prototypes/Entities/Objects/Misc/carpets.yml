@@ -166,12 +166,12 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemBoardWhite
-  name: "white tabletop board" 
+  suffix: White Board
   components:
   - type: Sprite
     state: tabletop-white
   - type: Item
-    name: "white tabletop board"
+    heldPrefix: carpet-board-white
   - type: Stack
     stackType: FloorCarpetBoardWhite
   - type: SpawnAfterInteract #Nuke after convert to FloorTile
@@ -182,12 +182,12 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemBoardBlack
-  name: "black tabletop board" 
+  name: Black Board
   components:
   - type: Sprite
     state: tabletop-black
   - type: Item
-    name: "black tabletop board"
+    heldPrefix: carpet-board-black
   - type: Stack
     stackType: FloorCarpetBoardBlack
   - type: SpawnAfterInteract #Nuke after convert to FloorTile
