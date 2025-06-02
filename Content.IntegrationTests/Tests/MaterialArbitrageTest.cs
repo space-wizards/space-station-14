@@ -33,7 +33,7 @@ public sealed class MaterialArbitrageTest
     [
         "BaseChemistryEmptyVial", "DrinkShotGlass", "SodiumLightTube", "DrinkGlassCoupeShaped",
         "LedLightBulb", "ExteriorLightTube", "LightTube", "DrinkGlass", "DimLightBulb", "LightBulb", "LedLightTube",
-        "SheetRGlass1", "ChemistryEmptyBottle01", "WarmLightBulb",
+        "SheetRGlass1", "ChemistryEmptyBottle01", "WarmLightBulb", "UvLightTube", // imp add uv light (oops)
     ];
 
     private readonly HashSet<string> _compositionArbitrageIgnore =

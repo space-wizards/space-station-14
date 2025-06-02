@@ -222,7 +222,7 @@ namespace Content.Shared.Interaction
         {
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
-            else
+            else if (LifeStage(uid) < EntityLifeStage.Terminating) //imp edit - make the client not crash while it closes. this is for test fails.
                 PredictedQueueDel(uid);
         }
 
@@ -230,7 +230,7 @@ namespace Content.Shared.Interaction
         {
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
-            else
+            else if (LifeStage(uid) < EntityLifeStage.Terminating) //imp edit - make the client not crash while it closes. this is for test fails.
                 PredictedQueueDel(uid);
         }
 
@@ -238,7 +238,7 @@ namespace Content.Shared.Interaction
         {
             if (!item.DeleteOnDrop)
                 RemCompDeferred<UnremoveableComponent>(uid);
-            else
+            else if (LifeStage(uid) < EntityLifeStage.Terminating) //imp edit - make the client not crash while it closes. this is for test fails.
                 PredictedQueueDel(uid);
         }
 
