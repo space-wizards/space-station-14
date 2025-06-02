@@ -6628,4 +6628,56 @@ Entries:
   id: 917
   time: '2025-06-02T11:12:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed "Diona are slow as shit"
+    type: Fix
+  id: 918
+  time: '2025-06-02T20:14:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/750
+- author: Conflee
+  changes:
+  - message: Added Trieste-NT and Reflection lobby art (By Conflee)
+    type: Add
+  id: 919
+  time: '2025-06-02T20:25:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/747
+- author: Conflee
+  changes:
+  - message: Added Echoes in the Deep lobby song (By nightyshade in the Trieste Discord)
+    type: Add
+  id: 920
+  time: '2025-06-02T20:25:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/747
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where projectiles would ricochet in random directions off
+      reflectors.
+    type: Fix
+  id: 921
+  time: '2025-06-02T20:37:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/746
+- author: Conflee
+  changes:
+  - message: Added Saltern, updated with Department Economy, Genpop, and all Starlight
+      stuff again.
+    type: Add
+  id: 922
+  time: '2025-06-02T20:42:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/735
+- author: Aedler
+  changes:
+  - message: Belt textures now overlap outerclothing so you can see your chestrigs.
+    type: Tweak
+  id: 923
+  time: '2025-06-02T20:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/731
+- author: walksanatora
+  changes:
+  - message: Syndicate borg modules can now be produced expensively in emagged exosuit
+      fabs. a shadow factory must be armed.
+    type: Add
+  id: 924
+  time: '2025-06-02T20:53:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/748
 
