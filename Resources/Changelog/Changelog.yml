@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Correctly set default production amount in Lathe UI
-    type: Fix
-  id: 8091
-  time: '2025-03-20T16:38:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35951
 - author: Tayrtahn
   changes:
   - message: Erasing the content from a paper will now make it appear blank.
@@ -3914,3 +3907,15 @@
   id: 8602
   time: '2025-06-02T11:09:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36073
+- author: BarryNorfolk
+  changes:
+  - message: New component and system for creating more multipart machines!
+    type: Add
+  - message: Converted the Particle Accelerator to use new multipart machine system.
+    type: Tweak
+  - message: Examining a Particle Accelerator now shows ghosts of what and where to
+      place the exact parts.
+    type: Add
+  id: 8603
+  time: '2025-06-02T14:02:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35969
