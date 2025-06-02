@@ -12,6 +12,7 @@
       color: "#FFFFFF80"
     - type: TimedDespawn
       lifetime: 5
+    - type: Clickable
     - type: Tag
       tags:
         - HideContextMenu

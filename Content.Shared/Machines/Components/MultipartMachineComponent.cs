@@ -61,11 +61,11 @@ public sealed partial class MachinePart
     public bool Optional = false;
 
     /// <summary>
-    /// Sprite to show when user examines the machine and there
-    /// is no matched entity for this part.
+    /// ID of prototype, used to show sprite and description of part, when user examines the machine and there
+    /// is no matched entity. Can reference dummy entities to give more detailed descriptions.
     /// </summary>
     [DataField]
-    public SpriteSpecifier? Sprite = null;
+    public EntProtoId? ExpectedProtoForGhost = null;
 
     /// <summary>
     /// Expected rotation for this machine to have.

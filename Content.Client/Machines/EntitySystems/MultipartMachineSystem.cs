@@ -5,6 +5,7 @@ using Content.Shared.Machines.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Spawners;
 
 namespace Content.Client.Machines.EntitySystems;
@@ -17,6 +18,12 @@ namespace Content.Client.Machines.EntitySystems;
 public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 {
     private readonly EntProtoId _ghostPrototype = "MultipartMachineGhost";
+    private readonly Color _partiallyTransparent = new Color(255, 255, 255, 180);
+
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly ISerializationManager _serialization= default!;
 
     public override void Initialize()
     {
@@ -50,6 +57,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
             var entityCoords = new EntityCoordinates(ent.Owner, part.Offset);
             var ghostEnt = Spawn(_ghostPrototype, entityCoords);
+
             if (!XformQuery.TryGetComponent(ghostEnt, out var xform))
                 break;
 
@@ -57,13 +65,22 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 
             Comp<MultipartMachineGhostComponent>(ghostEnt).LinkedMachine = ent;
 
-            if (part.Sprite != null)
-            {
-                var sprite = Comp<SpriteComponent>(ghostEnt);
-                sprite.LayerSetSprite(0, part.Sprite);
-            }
-
             ent.Comp.Ghosts.Add(ghostEnt);
+
+            if (part.ExpectedProtoForGhost == null)
+                continue;
+
+            var entProto = _prototype.Index(part.ExpectedProtoForGhost.Value);
+            if (!entProto.Components.TryGetComponent("Sprite", out var s) || s is not SpriteComponent protoSprite)
+                return;
+
+            var ghostSprite = EnsureComp<SpriteComponent>(ghostEnt);
+            _serialization.CopyTo(protoSprite, ref ghostSprite, notNullableOverride: true);
+
+            _sprite.SetColor((ghostEnt, ghostSprite), _partiallyTransparent);
+
+            _metaData.SetEntityName(ghostEnt, entProto.Name);
+            _metaData.SetEntityDescription(ghostEnt, entProto.Description);
         }
     }
 
