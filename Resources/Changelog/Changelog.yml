@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Seam_Less
-  changes:
-  - message: Added in-hand sprites to many common medical items that previously lacked
-      one.
-    type: Add
-  - message: Fixed the bruise pack using the ointment in-hand sprite instead of it's
-      own sprite.
-    type: Fix
-  id: 8089
-  time: '2025-03-20T02:18:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34984
 - author: psykana
   changes:
   - message: C4 head slot equip/unequip is now delayed similar to EVA helmet
@@ -3918,3 +3907,10 @@
   id: 8600
   time: '2025-06-02T09:18:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38010
+- author: Cojoke-dot
+  changes:
+  - message: Lube now evaporates slowly
+    type: Tweak
+  id: 8601
+  time: '2025-06-02T10:41:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37998
