@@ -154,10 +154,12 @@
             ]
         },
         {
-            "name": "pumpPressureValve"
+            "name": "pumpPressureValve",
+            "directions": 4
         },
         {
-            "name": "pumpPressureValveOn"
+            "name": "pumpPressureValveOn",
+            "directions": 4
         }
     ]
 }
