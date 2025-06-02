@@ -23,6 +23,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         base.Initialize();
 
         SubscribeLocalEvent<MultipartMachineComponent, ClientExaminedEvent>(OnMachineExamined);
+        SubscribeLocalEvent<MultipartMachineComponent, AfterAutoHandleStateEvent>(OnHandleState);
         SubscribeLocalEvent<MultipartMachineGhostComponent, TimedDespawnEvent>(OnGhostDespawned);
     }
 
@@ -63,6 +64,14 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             }
 
             ent.Comp.Ghosts.Add(ghostEnt);
+        }
+    }
+
+    private void OnHandleState(Entity<MultipartMachineComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        foreach (var part in ent.Comp.Parts.Values)
+        {
+            part.Entity = part.NetEntity.HasValue ? EnsureEntity<MultipartMachinePartComponent>(part.NetEntity.Value, ent) : null;
         }
     }
 

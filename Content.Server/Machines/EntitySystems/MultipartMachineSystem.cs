@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Shared.Machines.Components;
@@ -18,6 +17,12 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
 {
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+
+    // The largest size ANY machine can theoretically have.
+    // Used to aid search for machines in range of parts that have been anchored/constructed.
+    private const float MaximumRange = 30;
+    private readonly HashSet<Entity<MultipartMachineComponent>> _entitiesInRange = [];
 
     public override void Initialize()
     {
@@ -47,7 +52,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         if (!value.Entity.HasValue)
             return;
 
-        var partEnt = GetEntity(value.Entity.Value);
+        var partEnt = value.Entity.Value;
         var partComp = EnsureComp<MultipartMachinePartComponent>(partEnt);
 
         if (partComp.Master.HasValue)
@@ -115,7 +120,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             {
                 // This part gained an entity, add the Part component so it can find out which machine
                 // it's a part of
-                partEnt = GetEntity(part.Entity.Value);
+                partEnt = part.Entity.Value;
                 comp = EnsureComp<MultipartMachinePartComponent>(partEnt);
                 comp.Master = ent;
                 partsAdded.Add(key, partEnt);
@@ -124,7 +129,7 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
             {
                 // This part lost its entity, ensure we clean up the old entity so it's no longer marked
                 // as something we care about.
-                partEnt = GetEntity(originalPart!.Value);
+                partEnt = originalPart!.Value;
                 comp = EnsureComp<MultipartMachinePartComponent>(partEnt);
                 comp.Master = null;
                 partsRemoved.Add(key, partEnt);
@@ -167,13 +172,16 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
                 continue;
 
             stateHasChanged = true;
-            var partEnt = GetEntity(part.Entity.Value);
-            var partComp = EnsureComp<MultipartMachinePartComponent>(partEnt);
-            partComp.Master = null;
-            Dirty(partEnt, partComp);
+            var partEntity = part.Entity.Value;
+            var partComp = EnsureComp<MultipartMachinePartComponent>(partEntity);
 
-            clearedParts.Add(key, partEnt);
+            clearedParts.Add(key, partEntity);
+
             part.Entity = null;
+            part.NetEntity = null;
+
+            partComp.Master = null;
+            Dirty(partEntity, partComp);
         }
 
         ent.Comp.IsAssembled = false;
@@ -200,18 +208,10 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
     /// <param name="args">Args for the startup.</param>
     private void OnComponentStartup(Entity<MultipartMachineComponent> ent, ref ComponentStartup args)
     {
-        foreach (var (_, part) in ent.Comp.Parts)
-        {
-            if (part.Offset.Length > ent.Comp.MaxRange)
-                ent.Comp.MaxRange = part.Offset.Length;
-        }
-
         // If anchored, perform a rescan of this machine when the component starts so we can immediately
         // jump to an assembled state if needed.
-        if (!XformQuery.TryGetComponent(ent.Owner, out var xform) || !xform.Anchored)
-            return;
-
-        Rescan(ent);
+        if (XformQuery.TryGetComponent(ent.Owner, out var xform) && xform.Anchored)
+            Rescan(ent);
     }
 
     /// <summary>
@@ -243,14 +243,10 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         if (!XformQuery.TryGetComponent(ent.Owner, out var constructXform))
             return;
 
-        var query = EntityQueryEnumerator<MultipartMachineComponent>();
-        while (query.MoveNext(out var uid, out var machineComp))
+        _lookupSystem.GetEntitiesInRange(constructXform.Coordinates, MaximumRange, _entitiesInRange);
+        foreach (var machine in _entitiesInRange)
         {
-            var machine = (uid, machineComp);
-            if (!IsMachineInRange(machine, constructXform.LocalPosition))
-                continue; // This part is outside the max range of the machine, ignore
-
-            foreach (var part in machineComp.Parts.Values)
+            foreach (var part in machine.Comp.Parts.Values)
             {
                 if (args.Graph == part.Graph &&
                     (args.PreviousNode == part.ExpectedNode || args.CurrentNode == part.ExpectedNode))
@@ -290,31 +286,12 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
         if (!XformQuery.TryGetComponent(ent.Owner, out var constructXform))
             return;
 
-        var query = EntityQueryEnumerator<MultipartMachineComponent>();
-        while (query.MoveNext(out var uid, out var machineComp))
+        _lookupSystem.GetEntitiesInRange(constructXform.Coordinates, MaximumRange, _entitiesInRange);
+        foreach (var machine in _entitiesInRange)
         {
-            var machine = (uid, machineComp);
-            if (!IsMachineInRange(machine, constructXform.LocalPosition))
-                continue; // This part is outside the max range of the machine, ignore
-
-            if (Rescan(machine) && HasPartEntity(machine, ent.Owner))
+            if (Rescan(machine) && HasPartEntity(machine.AsNullable(), ent.Owner))
                 return; // This machine is using this entity so we don't need to go any further
         }
-    }
-
-    /// <summary>
-    /// Checks whether a given position is within the MaxRange of the specified machine.
-    /// </summary>
-    /// <param name="machine">Specific machine to check against.</param>
-    /// <param name="position">Position to check against.</param>
-    /// <returns>True if the position is within the MaxRange of the machine, false otherwise</returns>
-    private bool IsMachineInRange(Entity<MultipartMachineComponent> machine, Vector2 position)
-    {
-        if (!XformQuery.TryGetComponent(machine.Owner, out var machineXform))
-            return false;
-
-        var direction = position - machineXform.LocalPosition;
-        return direction.Length() <= machine.Comp.MaxRange;
     }
 
     /// <summary>
@@ -365,7 +342,8 @@ public sealed class MultipartMachineSystem : SharedMultipartMachineSystem
                 continue;
             }
 
-            part.Entity = GetNetEntity(entity);
+            part.Entity = entity;
+            part.NetEntity = GetNetEntity(entity);
             return true;
         }
 
