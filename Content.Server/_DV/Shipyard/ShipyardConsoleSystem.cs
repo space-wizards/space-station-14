@@ -38,7 +38,7 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
         if (GetBankAccount(ent) is not { } bank)
             return;
 
-        if (bank.Comp.Accounts[bank.Comp.PrimaryAccount] < vessel.Price)
+        if (bank.Comp.Accounts[ent.Comp.Account] < vessel.Price) // imp edit- ent account
         {
             var popup = Loc.GetString("cargo-console-insufficient-funds", ("cost", vessel.Price));
             Popup.PopupEntity(popup, ent, user);
@@ -46,7 +46,7 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
             return;
         }
 
-        if (_shipyard.TrySendShuttle(bank.Owner, GetResPath(vessel)) is not {} shuttle)
+        if (_shipyard.TrySendShuttle(bank.Owner, GetResPath(vessel)) is not { } shuttle)
         {
             var popup = Loc.GetString("shipyard-console-error");
             Popup.PopupEntity(popup, ent, user);
@@ -56,7 +56,7 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
 
         _meta.SetEntityName(shuttle, $"{vessel.Name} {_random.Next(1000):000}");
 
-        _cargo.UpdateBankAccount((bank, bank), -vessel.Price, _cargo.CreateAccountDistribution(bank));
+        _cargo.UpdateBankAccount((bank, bank), -vessel.Price, ent.Comp.Account); // imp account
 
         var message = Loc.GetString("shipyard-console-docking", ("vessel", vessel.Name.ToString()));
         _radio.SendRadioMessage(ent, message, ent.Comp.Channel, ent);
@@ -68,10 +68,10 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
         UpdateUI(ent);
     }
 
-    private void UpdateUI(EntityUid uid)
+    private void UpdateUI(Entity<ShipyardConsoleComponent> ent)
     {
-        if (GetBankAccount(uid) is {} bank)
-            UpdateUI(uid, bank.Comp.Accounts[bank.Comp.PrimaryAccount]);
+        if (GetBankAccount(ent) is { } bank)
+            UpdateUI(ent, bank.Comp.Accounts[ent.Comp.Account]); // imp account
     }
 
     private void UpdateUI(EntityUid uid, int balance)

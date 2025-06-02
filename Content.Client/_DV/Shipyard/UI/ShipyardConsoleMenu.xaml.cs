@@ -74,7 +74,7 @@ namespace Content.Client._DV.Shipyard.UI
         {
             Vessels.RemoveAllChildren();
 
-            var access = _player.LocalSession?.AttachedEntity is {} player
+            var access = _player.LocalSession?.AttachedEntity is { } player
                          && _access.IsAllowed(player, Console);
 
             var search = SearchBar.Text.Trim().ToLowerInvariant();
