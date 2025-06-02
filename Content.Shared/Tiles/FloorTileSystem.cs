@@ -106,7 +106,7 @@ public sealed class FloorTileSystem : EntitySystem
         // otherwise check it isn't blocked by a wall
         if (!canAccessCenter)
         {
-            foreach (var ent in location.GetEntitiesInTile(lookupSystem: _lookup))
+            foreach (var ent in _lookup.GetEntitiesInRange(location, 0.05f))
             {
                 if (physicQuery.TryGetComponent(ent, out var phys) &&
                     phys.BodyType == BodyType.Static &&
