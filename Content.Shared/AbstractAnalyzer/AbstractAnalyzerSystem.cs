@@ -76,7 +76,7 @@ public abstract class AbstractAnalyzerSystem<TAnalyzerComponent, TAnalyzerDoAfte
         if (args.Target == null || !args.CanReach || !ValidScanTarget(args.Target) || !_cell.HasDrawCharge(uid, user: args.User))
             return;
 
-        _audio.PlayPvs(uid.Comp.ScanningBeginSound, uid);
+        _audio.PlayPredicted(uid.Comp.ScanningBeginSound, uid, null);
 
         var doAfterEvent = _typeFactory.CreateInstance<TAnalyzerDoAfterEvent>();
         var doAfterCancelled = !_doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, uid.Comp.ScanDelay, doAfterEvent, uid, target: args.Target, used: uid)
@@ -98,7 +98,7 @@ public abstract class AbstractAnalyzerSystem<TAnalyzerComponent, TAnalyzerDoAfte
             return;
 
         if (!uid.Comp.Silent)
-            _audio.PlayPvs(uid.Comp.ScanningEndSound, uid);
+            _audio.PlayPredicted(uid.Comp.ScanningEndSound, uid, null);
 
         OpenUserInterface(args.User, uid);
         BeginAnalyzingEntity(uid, args.Target.Value);
