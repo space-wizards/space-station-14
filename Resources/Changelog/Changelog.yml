@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: The correct popup messages will now show for both players when someone
-      removes someone else's handcuffs.
-    type: Fix
-  id: 8088
-  time: '2025-03-20T02:15:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35743
 - author: Seam_Less
   changes:
   - message: Added in-hand sprites to many common medical items that previously lacked
@@ -3919,3 +3911,10 @@
   id: 8599
   time: '2025-06-02T05:01:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36124
+- author: ScarKy0
+  changes:
+  - message: Air Grenades can now be ordered from your request consoles.
+    type: Add
+  id: 8600
+  time: '2025-06-02T09:18:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38010
