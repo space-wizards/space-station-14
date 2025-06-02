@@ -6665,4 +6665,11 @@ Entries:
   id: 922
   time: '2025-06-02T20:42:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/735
+- author: Aedler
+  changes:
+  - message: Belt textures now overlap outerclothing so you can see your chestrigs.
+    type: Tweak
+  id: 923
+  time: '2025-06-02T20:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/731
 
