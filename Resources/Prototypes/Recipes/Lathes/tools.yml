@@ -216,3 +216,11 @@
     Steel: 750
     Plasma: 150
     Uranium: 150
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: ToolboxMetal
+  result: ToolboxMetal
+  completetime: 8 #John McTider stares you down for an awkwardly long amount of time
+  materials:
+    Steel: 2000
