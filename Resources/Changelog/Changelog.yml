@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Erasing the content from a paper will now make it appear blank.
-    type: Fix
-  id: 8092
-  time: '2025-03-20T21:01:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35967
 - author: SonicHDC
   changes:
   - message: Added zips for senior coats!
@@ -3919,3 +3912,11 @@
   id: 8603
   time: '2025-06-02T14:02:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35969
+- author: slarticodefast
+  changes:
+  - message: The detective's noir glasses now show red colors in a Sin City style
+      shader.
+    type: Tweak
+  id: 8604
+  time: '2025-06-02T16:16:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37996
