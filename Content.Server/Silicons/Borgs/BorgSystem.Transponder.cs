@@ -1,3 +1,4 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
@@ -22,6 +23,7 @@ public sealed partial class BorgSystem
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
     private void InitializeTransponder()
     {
@@ -68,7 +70,8 @@ public sealed partial class BorgSystem
                 }
             }
 
-            var hasBrain = chassis.BrainEntity != null && !comp.FakeDisabled;
+            // checks if it has a brain and if the brain is not a empty MMI (gives false anyway if the fake disable is true)
+            var hasBrain = CheckBrain(chassis.BrainEntity) && !comp.FakeDisabled;
             var canDisable = comp.NextDisable == null && !comp.FakeDisabling;
             var data = new CyborgControlData(
                 comp.Sprite,
@@ -215,5 +218,27 @@ public sealed partial class BorgSystem
         }
 
         return (0, true);
+    }
+
+    /// <summary>
+    /// Returns true if the borg has a brain and fakeDisabled is false
+    /// </summary>
+    private bool CheckBrain(EntityUid? brainEntity)
+    {
+        if (brainEntity == null)
+            return false;
+
+        EntityUid realBrainEntity = brainEntity.Value;
+        if (_entityManager.HasComponent<BorgBrainComponent>(realBrainEntity) && _itemSlotsSystem.TryGetSlot(realBrainEntity, "brain_slot", out var slot) && slot != null)
+        {
+            if (slot.ContainerSlot != null)
+            {
+                return slot.ContainerSlot.ContainedEntity != null;
+            }
+            else
+                return false;
+        }
+        else
+            return true;
     }
 }
