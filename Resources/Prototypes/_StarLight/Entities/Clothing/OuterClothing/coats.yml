@@ -50,9 +50,9 @@
   description: A strict inspector's coat from a bygone era.
   components:
   - type: Sprite
-    sprite: /Textures/_StarLight/Clothing/OuterClothing/Coats/insp_coat.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Coats/insp_coat.rsi
   - type: Clothing
-    sprite: /Textures/_StarLight/Clothing/OuterClothing/Coats/insp_coat.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Coats/insp_coat.rsi
   - type: Armor
     modifiers:
       coefficients:
