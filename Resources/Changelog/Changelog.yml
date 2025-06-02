@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: SonicHDC
-  changes:
-  - message: Added zips for senior coats!
-    type: Add
-  - message: Added zip and sprites for expensive coat!
-    type: Add
-  id: 8093
-  time: '2025-03-20T21:46:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35029
 - author: shibechef
   changes:
   - message: Bodies can now thermally regulate themselves again.
@@ -3920,3 +3911,13 @@
   id: 8604
   time: '2025-06-02T16:16:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37996
+- author: Krunklehorn
+  changes:
+  - message: Animals can no longer fiddle with guns, radiation collectors, emitters,
+      welders, stun batons, cameras and camera routers.
+    type: Fix
+  - message: Animals can no longer rotate and flip buildings or unbuckle others.
+    type: Fix
+  id: 8605
+  time: '2025-06-02T17:06:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37246
