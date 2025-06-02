@@ -370,6 +370,15 @@
       state: tail_smooth_wagging_secondary
 
 - type: marking
+  id: LizardTailLargeAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_large_wagging
+
+- type: marking
   id: LizardTailSpikesAnimated
   bodyPart: Tail
   markingCategory: Tail

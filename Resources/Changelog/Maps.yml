@@ -195,4 +195,109 @@
   id: 22
   time: '2025-05-19T18:55:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37600
+- author: spanky-spanky
+  changes:
+  - message: On Fland, the salvage job board has been added.
+    type: Add
+  id: 23
+  time: '2025-05-20T23:27:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37653
+- author: spanky-spanky
+  changes:
+  - message: On Bagel, the salvage job board has been added.
+    type: Add
+  id: 24
+  time: '2025-05-20T23:27:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37652
+- author: spanky-spanky
+  changes:
+  - message: On Marathon, the salvage job board has been added.
+    type: Add
+  - message: On Marathon, the default TEG has been improved.
+    type: Tweak
+  id: 25
+  time: '2025-05-20T23:29:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37654
+- author: spanky-spanky
+  changes:
+  - message: On Omega, the salvage job board has been added.
+    type: Add
+  id: 26
+  time: '2025-05-20T23:35:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37655
+- author: spanky-spanky
+  changes:
+  - message: On Packed, the salvage job board has been added.
+    type: Add
+  id: 27
+  time: '2025-05-21T00:12:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37656
+- author: Southbridge
+  changes:
+  - message: On Box, redesigned Security to have GenPop.
+    type: Tweak
+  id: 28
+  time: '2025-05-21T05:00:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37663
+- author: spanky-spanky
+  changes:
+  - message: On Reach, all recent content additions have been added.
+    type: Add
+  id: 29
+  time: '2025-05-21T07:51:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37669
+- author: Southbridge
+  changes:
+  - message: On Amber, added sentry turrets to the AI core, armory, and vault.
+    type: Add
+  id: 30
+  time: '2025-05-27T23:08:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37859
+- author: Southbridge
+  changes:
+  - message: Added Decal Spawners
+    type: Add
+  id: 31
+  time: '2025-05-27T23:55:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37066
+- author: ArtisticRoomba
+  changes:
+  - message: The ATS has been updated to allow atmos techs to easily refill the ATS
+      with air after a spacing.
+    type: Tweak
+  id: 32
+  time: '2025-05-28T07:52:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37891
+- author: Spessmann
+  changes:
+  - message: Randomized maintenance rooms now use decal spawners, which prevent them
+      from having the decals oriented wrong
+    type: Tweak
+  id: 33
+  time: '2025-05-29T05:03:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37916
+- author: Southbridge
+  changes:
+  - message: On Box, added sentry turrets to the AI core, armory, and vault.
+    type: Add
+  id: 34
+  time: '2025-05-30T07:25:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37860
+- author: K-Dynamic
+  changes:
+  - message: Elkridge now has turrets within the AI core, vault and armory
+    type: Add
+  - message: Elkridge now has criminal records computer next to genpop within security
+      lobby
+    type: Add
+  id: 35
+  time: '2025-05-30T12:52:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37961
+- author: Boaz1111
+  changes:
+  - message: Marathon has Genpop now.
+    type: Add
+  id: 36
+  time: '2025-06-01T19:38:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37687
 Order: 1
