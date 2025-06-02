@@ -162,3 +162,36 @@
     prototype: CarpetWhite
     doAfter: 0.5
     removeOnInteract: true
+
+- type: entity
+  parent: FloorCarpetItemRed
+  id: FloorCarpetItemBoardWhite
+  name: "white tabletop board" 
+  components:
+  - type: Sprite
+    state: tabletop-white
+  - type: Item
+    name: "white tabletop board"
+  - type: Stack
+    stackType: FloorCarpetBoardWhite
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetBoardWhite
+    doAfter: 0.5
+    removeOnInteract: true
+
+- type: entity
+  parent: FloorCarpetItemRed
+  id: FloorCarpetItemBoardBlack
+  name: "black tabletop board" 
+  components:
+  - type: Sprite
+    state: tabletop-black
+  - type: Item
+    name: "black tabletop board"
+  - type: Stack
+    stackType: FloorCarpetBoardBlack
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetBoardBlack
+    doAfter: 0.5
+    removeOnInteract: true
+
