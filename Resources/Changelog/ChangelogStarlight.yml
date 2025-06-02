@@ -6635,4 +6635,18 @@ Entries:
   id: 918
   time: '2025-06-02T20:14:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/750
+- author: Conflee
+  changes:
+  - message: Added Trieste-NT and Reflection lobby art (By Conflee)
+    type: Add
+  id: 919
+  time: '2025-06-02T20:25:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/747
+- author: Conflee
+  changes:
+  - message: Added Echoes in the Deep lobby song (By nightyshade in the Trieste Discord)
+    type: Add
+  id: 920
+  time: '2025-06-02T20:25:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/747
 
