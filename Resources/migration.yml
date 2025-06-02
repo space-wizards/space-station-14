@@ -649,8 +649,3 @@ FishingRodPlasma: null
 # 2025-05-31
 # impstation: remove DV stock cartridge
 StockTradingCartridge: null
-
-# 2025-06-01
-# impstation: mapped artifact fixes
-ComplexXenoArtifact: RandomArtifactSpawner
-BiasedArtifact: RandomArtifactSpawner
