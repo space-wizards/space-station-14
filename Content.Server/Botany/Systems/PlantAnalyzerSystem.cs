@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Server.Popups;
 using Content.Shared.AbstractAnalyzer;
+using Content.Shared.Botany.Components;
 using Content.Shared.Botany.PlantAnalyzer;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -11,7 +12,6 @@ using Content.Shared.Paper;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Botany.Systems;
@@ -25,8 +25,8 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly LabelSystem _labelSystem = default!;
+    [Dependency] private readonly PlantAnalyzerLocalizationHelper _localizationHelper = default!;
 
     public override void Initialize()
     {
@@ -144,13 +144,13 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
         var seedName = data.PlantData is not null ? Loc.GetString(data.PlantData.SeedDisplayName) : null;
         (string, object)[] parameters = [
             ("seedName", seedName ?? missingData),
-            ("produce", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ProduceToLocalizedStrings(data.ProduceData.Produce, _prototypeManager).Plural : missingData),
+            ("produce", data.ProduceData is not null ? _localizationHelper.ProduceToLocalizedStrings(data.ProduceData.Produce).Plural : missingData),
             ("water", data.TolerancesData?.WaterConsumption.ToString("0.00") ?? missingData),
             ("nutrients", data.TolerancesData?.NutrientConsumption.ToString("0.00") ?? missingData),
             ("toxins", data.TolerancesData?.ToxinsTolerance.ToString("0.00") ?? missingData),
             ("pests", data.TolerancesData?.PestTolerance.ToString("0.00") ?? missingData),
             ("weeds", data.TolerancesData?.WeedTolerance.ToString("0.00") ?? missingData),
-            ("gasesIn", data.TolerancesData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.TolerancesData.ConsumeGasses, _prototypeManager) : missingData),
+            ("gasesIn", data.TolerancesData is not null ? _localizationHelper.GasesToLocalizedStrings(data.TolerancesData.ConsumeGasses) : missingData),
             ("kpa", data.TolerancesData?.IdealPressure.ToString("0.00") ?? missingData),
             ("kpaTolerance", data.TolerancesData?.PressureTolerance.ToString("0.00") ?? missingData),
             ("temp", data.TolerancesData?.IdealHeat.ToString("0.00") ?? missingData),
@@ -159,8 +159,8 @@ public sealed class PlantAnalyzerSystem : AbstractAnalyzerSystem<PlantAnalyzerCo
             ("lightTolerance", data.TolerancesData?.LightTolerance.ToString("0.00") ?? missingData),
             ("yield", data.ProduceData?.Yield ?? -1),
             ("potency", data.ProduceData is not null ? Loc.GetString(data.ProduceData.Potency) : missingData),
-            ("chemicals", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.ChemicalsToLocalizedStrings(data.ProduceData.Chemicals, _prototypeManager) : missingData),
-            ("gasesOut", data.ProduceData is not null ? PlantAnalyzerLocalizationHelper.GasesToLocalizedStrings(data.ProduceData.ExudeGasses, _prototypeManager) : missingData),
+            ("chemicals", data.ProduceData is not null ? _localizationHelper.ChemicalsToLocalizedStrings(data.ProduceData.Chemicals) : missingData),
+            ("gasesOut", data.ProduceData is not null ? _localizationHelper.GasesToLocalizedStrings(data.ProduceData.ExudeGasses) : missingData),
             ("endurance", data.PlantData?.Endurance.ToString("0.00") ?? missingData),
             ("lifespan", data.PlantData?.Lifespan.ToString("0.00") ?? missingData),
             ("seeds", data.ProduceData is not null ? (data.ProduceData.Seedless ? "no" : "yes") : "other"),
