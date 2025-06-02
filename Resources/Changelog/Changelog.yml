@@ -1,61 +1,4 @@
 ﻿Entries:
-- author: GaussiArson
-  changes:
-  - message: Disablers, practice disablers, and disabler smgs no longer deal heat
-      damage. They still deal the same amount of stamina damage.
-    type: Tweak
-  id: 8087
-  time: '2025-03-20T01:50:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35834
-- author: Errant
-  changes:
-  - message: The correct popup messages will now show for both players when someone
-      removes someone else's handcuffs.
-    type: Fix
-  id: 8088
-  time: '2025-03-20T02:15:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35743
-- author: Seam_Less
-  changes:
-  - message: Added in-hand sprites to many common medical items that previously lacked
-      one.
-    type: Add
-  - message: Fixed the bruise pack using the ointment in-hand sprite instead of it's
-      own sprite.
-    type: Fix
-  id: 8089
-  time: '2025-03-20T02:18:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34984
-- author: psykana
-  changes:
-  - message: C4 head slot equip/unequip is now delayed similar to EVA helmet
-    type: Add
-  id: 8090
-  time: '2025-03-20T16:33:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35922
-- author: Darkmajia
-  changes:
-  - message: Correctly set default production amount in Lathe UI
-    type: Fix
-  id: 8091
-  time: '2025-03-20T16:38:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35951
-- author: Tayrtahn
-  changes:
-  - message: Erasing the content from a paper will now make it appear blank.
-    type: Fix
-  id: 8092
-  time: '2025-03-20T21:01:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35967
-- author: SonicHDC
-  changes:
-  - message: Added zips for senior coats!
-    type: Add
-  - message: Added zip and sprites for expensive coat!
-    type: Add
-  id: 8093
-  time: '2025-03-20T21:46:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35029
 - author: shibechef
   changes:
   - message: Bodies can now thermally regulate themselves again.
@@ -3916,3 +3859,65 @@
   id: 8598
   time: '2025-06-01T21:09:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38004
+- author: chromiumboy
+  changes:
+  - message: Atmospheric pipes can now be built on three different sublayers, allowing
+      for multiple pipe networks on a single tile
+    type: Add
+  - message: Pipe manifolds can now be constructed to connect pipes across different
+      sublayers
+    type: Add
+  id: 8599
+  time: '2025-06-02T05:01:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36124
+- author: ScarKy0
+  changes:
+  - message: Air Grenades can now be ordered from your request consoles.
+    type: Add
+  id: 8600
+  time: '2025-06-02T09:18:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38010
+- author: Cojoke-dot
+  changes:
+  - message: Lube now evaporates slowly
+    type: Tweak
+  id: 8601
+  time: '2025-06-02T10:41:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37998
+- author: ciaran
+  changes:
+  - message: Clearer labels for toggle internals actions
+    type: Add
+  id: 8602
+  time: '2025-06-02T11:09:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36073
+- author: BarryNorfolk
+  changes:
+  - message: New component and system for creating more multipart machines!
+    type: Add
+  - message: Converted the Particle Accelerator to use new multipart machine system.
+    type: Tweak
+  - message: Examining a Particle Accelerator now shows ghosts of what and where to
+      place the exact parts.
+    type: Add
+  id: 8603
+  time: '2025-06-02T14:02:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35969
+- author: slarticodefast
+  changes:
+  - message: The detective's noir glasses now show red colors in a Sin City style
+      shader.
+    type: Tweak
+  id: 8604
+  time: '2025-06-02T16:16:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37996
+- author: Krunklehorn
+  changes:
+  - message: Animals can no longer fiddle with guns, radiation collectors, emitters,
+      welders, stun batons, cameras and camera routers.
+    type: Fix
+  - message: Animals can no longer rotate and flip buildings or unbuckle others.
+    type: Fix
+  id: 8605
+  time: '2025-06-02T17:06:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37246
