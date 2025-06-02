@@ -4,6 +4,11 @@ loadout-group-roboticist-jumpsuit = Roboticist jumpsuit
 loadout-group-roboticist-outerclothing = Roboticist outer clothing
 loadout-group-roboticist-backpack = Roboticist backpack
 
+# Civilian
+loadout-group-assistant-glasses = Assistant glasses
+loadout-group-assistant-head = Assistant head
+loadout-group-assistant-backpack = Assistant backpack
+
 # Command
 
 loadout-group-nanotrasenrepresentative-outerclothing = NanoTrasen representative outer clothing
