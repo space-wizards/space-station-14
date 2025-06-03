@@ -2,13 +2,13 @@
   id: DefaultMapPool
   maps:
   - Amber
-  - Atlas
+  #- Atlas
   - Bagel
   - Banana
   - Barratry
   - Boat
   - Box
-  - Cluster
+  #- Cluster
   - Cog
   - Convex
   - Core
@@ -17,6 +17,7 @@
   - Gate
   - Hummingbird
   - Hash
+  - Lilboat
   - Luna
   #- Loop
   - Marathon
@@ -31,4 +32,3 @@
   - Train
   - Union
   - Xeno
-  - Lilboat
