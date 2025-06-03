@@ -1,3 +1,4 @@
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
@@ -16,6 +17,7 @@ public abstract class SharedBodycamSystem: EntitySystem
         SubscribeLocalEvent<BodycamComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<BodycamComponent, GotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<BodycamComponent, GotUnequippedEvent>(OnUnequip);
+        SubscribeLocalEvent<BodycamComponent, ExaminedEvent>(OnExamine);
     }
 
     private void OnEquip(EntityUid uid, BodycamComponent comp, GotEquippedEvent args)
@@ -50,6 +52,14 @@ public abstract class SharedBodycamSystem: EntitySystem
                 Text = Loc.GetString("bodycam-switch-off-verb"),
             });
         }
+    }
+
+    private void OnExamine(EntityUid uid, BodycamComponent comp, ExaminedEvent args)
+    {
+        if (comp.State == BodycamState.Active)
+            args.PushMarkup(Loc.GetString("bodycam-examine-enabled"));
+        else if (comp.State == BodycamState.Disabled)
+            args.PushMarkup(Loc.GetString("bodycam-examine-disabled"));
     }
 
     /// <summary>

@@ -8,3 +8,6 @@ bodycam-switch-off-message-other = {$user} switches off the bodycam.
 bodycam-switch-off-message-unequipped = The bodycam switches off.
 
 bodycam-name = {$wearer}'s Bodycam
+
+bodycam-examine-enabled = The bodycam is [color=green]Enabled[/color].
+bodycam-examine-disabled = The bodycam is [color=darkred]Disabled[/color].
