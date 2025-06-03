@@ -4308,7 +4308,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: BecomesStation
-      id: Hotel
+      id: StarlightHotel
   - uid: 5
     components:
     - type: MetaData
