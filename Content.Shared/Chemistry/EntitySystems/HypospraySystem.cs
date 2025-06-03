@@ -14,20 +14,24 @@ using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
 public sealed class HypospraySystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainers = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<HyposprayComponent, MeleeHitEvent>(OnAttack);
         SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
@@ -45,7 +49,7 @@ public sealed class HypospraySystem : EntitySystem
 
     private void OnAfterInteract(Entity<HyposprayComponent> entity, ref AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach || args.Target is null)
+        if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
         args.Handled = TryUseHypospray(entity, args.Target.Value, args.User);
@@ -121,9 +125,9 @@ public sealed class HypospraySystem : EntitySystem
             return false;
 
         // The target event gets priority for the overriden message.
-        if (targetEvent.InjectMessageOverride is not null)
+        if (targetEvent.InjectMessageOverride != null)
             msgFormat = targetEvent.InjectMessageOverride;
-        else if (selfEvent.InjectMessageOverride is not null)
+        else if (selfEvent.InjectMessageOverride != null)
             msgFormat = selfEvent.InjectMessageOverride;
         else if (target == user)
             msgFormat = "hypospray-component-inject-self-message";
@@ -142,9 +146,9 @@ public sealed class HypospraySystem : EntitySystem
 
         _popup.PopupClient(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message", ("other", target)), target, user);
 
-        if (target != user)
+        if (target != user && _timing.IsFirstTimePredicted)
         {
-            _popup.PopupClient(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
+            _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             // TODO: This should just be using melee attacks...
             // meleeSys.SendLunge(angle, user);
         }
@@ -153,7 +157,7 @@ public sealed class HypospraySystem : EntitySystem
 
         // Medipens and such use this system and don't have a delay, requiring extra checks
         // BeginDelay function returns if item is already on delay
-        if (delayComp is not null)
+        if (delayComp != null)
             _useDelay.TryResetDelay((uid, delayComp));
 
         // Get transfer amount. May be smaller than component.TransferAmount if not enough room
