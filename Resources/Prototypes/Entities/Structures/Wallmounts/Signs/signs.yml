@@ -695,6 +695,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignGenpop
+  name: genpop sign
+  description: A sign indicating the genpop prison.
+  components:
+  - type: Sprite
+    state: genpop
+
+- type: entity
+  parent: BaseSign
   id: SignPrison
   name: prison sign
   description: A sign indicating the prison.
@@ -1235,6 +1244,15 @@
   components:
   - type: Sprite
     state: security
+
+- type: entity
+  parent: BaseSign
+  id: SignDetective
+  name: Detective sign
+  description: A sign depicting the detective's office.
+  components:
+  - type: Sprite
+    state: detective
 
 - type: entity
   parent: BaseSign

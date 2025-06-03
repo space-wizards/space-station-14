@@ -127,13 +127,13 @@
     clumsyProof: true
   - type: ProjectileBatteryAmmoProvider
     proto: FoodPieBananaCream
-    fireCost: 100
+    fireCost: 30
   - type: Battery
-    maxCharge: 300
-    startingCharge: 300
+    maxCharge: 90
+    startingCharge: 90
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 10
+    autoRechargeRate: 1
   - type: AmmoCounter
   - type: Item
     size: Normal

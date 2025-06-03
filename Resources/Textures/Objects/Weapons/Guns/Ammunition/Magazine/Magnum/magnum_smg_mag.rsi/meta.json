@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/shiptest-ss13/Shiptest/commit/662c08272acd7be79531550919f56f846726eabb , https://github.com/shiptest-ss13/Shiptest/blob/master/icons/obj/ammo.dmi",
+    "copyright": "https://github.com/shiptest-ss13/Shiptest/commit/662c08272acd7be79531550919f56f846726eabb , https://github.com/shiptest-ss13/Shiptest/blob/master/icons/obj/ammo.dmi, inhands by TiniestShark (github)",
     "states": [
         {
             "name": "base"
@@ -24,6 +24,22 @@
         },
         {
             "name": "mag-1"
+        },
+        {
+            "name": "inhand-left-mag",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-stripe",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-mag",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-stripe",
+            "directions": 4
         }
     ]
 }
