@@ -603,7 +603,7 @@
 
 - type: entity
   name: combat medipen
-  parent: [ChemicalMedipen, BaseSyndicateContraband]
+  parent: ChemicalMedipen
   id: CombatMedipen
   description: A single-use medipen containing chemicals that regenerate most types of damage.
   components:
