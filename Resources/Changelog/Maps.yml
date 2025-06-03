@@ -316,4 +316,11 @@
   id: 38
   time: '2025-06-03T05:58:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37768
+- author: Spessmann
+  changes:
+  - message: On Convex, added AI turrets to the AI core
+    type: Add
+  id: 39
+  time: '2025-06-03T23:08:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38053
 Order: 1
