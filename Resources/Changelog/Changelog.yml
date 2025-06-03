@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: New sprite for Singularity Generator.
-    type: Tweak
-  id: 8097
-  time: '2025-03-21T08:48:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31500
 - author: ArtisticRoomba
   changes:
   - message: Fixed organic thermoregulation. Humans, arachnids, moths, etc. will maintain
@@ -3926,3 +3919,11 @@
   id: 8608
   time: '2025-06-03T16:01:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38006
+- author: TheFlyingSentry
+  changes:
+  - message: Electropacks now shock people regardless of if they have insulated gloves
+      or not
+    type: Tweak
+  id: 8609
+  time: '2025-06-03T17:38:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38011
