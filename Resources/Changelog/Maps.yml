@@ -300,4 +300,12 @@
   id: 36
   time: '2025-06-01T19:38:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37687
+- author: Mixelz
+  changes:
+  - message: On Plasma, added Genpop, Salv Job Board & AI Turrets! Along with several
+      other fixes & rebalanced maints loot.
+    type: Add
+  id: 37
+  time: '2025-06-03T04:30:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38028
 Order: 1
