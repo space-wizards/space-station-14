@@ -19,7 +19,7 @@ public sealed partial class AreaReactionEffect : EventEntityEffect<AreaReactionE
     /// <summary>
     /// How many units of reaction for 1 smoke entity.
     /// </summary>
-    [DataField] public FixedPoint2 OverflowThreshold = FixedPoint2.New(2.5);
+    [DataField] public FixedPoint2 OverflowThreshold = FixedPoint2.New(1);
 
     /// <summary>
     /// The entity prototype that will be spawned as the effect.
@@ -31,6 +31,12 @@ public sealed partial class AreaReactionEffect : EventEntityEffect<AreaReactionE
     /// Sound that will get played when this reaction effect occurs.
     /// </summary>
     [DataField("sound", required: true)] public SoundSpecifier Sound = default!;
+
+    /// <summary>
+    /// To what factor are the reagents multiplied, used to make the reaction not boring
+    /// </summary>
+    [DataField]
+    public float Scale = 3;
 
     public override bool ShouldLog => true;
 

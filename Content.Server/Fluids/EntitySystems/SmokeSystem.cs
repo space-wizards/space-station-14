@@ -135,27 +135,24 @@ public sealed class SmokeSystem : EntitySystem
             return;
         }
 
-        if (args.NeighborFreeTiles.Count == 0)
-            return;
-
         TryComp<TimedDespawnComponent>(entity, out var timer);
 
-        // wtf is the logic behind any of this.
-        var smokePerSpread = entity.Comp.SpreadAmount / Math.Max(1, args.NeighborFreeTiles.Count);
+        // used for finding how much spread to distribute to the new smoke
+        var smokePerSpread = (entity.Comp.SpreadAmount - args.NeighborFreeTiles.Count) / Math.Max(1, args.NeighborFreeTiles.Count);
         foreach (var neighbor in args.NeighborFreeTiles)
         {
-            var coords = _map.GridTileToLocal(neighbor.Tile.GridUid, neighbor.Grid, neighbor.Tile.GridIndices);
-            var ent = Spawn(prototype.ID, coords);
-            var spreadAmount = Math.Max(0, smokePerSpread);
-            entity.Comp.SpreadAmount -= args.NeighborFreeTiles.Count;
-
-            StartSmoke(ent, solution.Clone(), timer?.Lifetime ?? entity.Comp.Duration, spreadAmount);
-
-            if (entity.Comp.SpreadAmount == 0)
+            if (entity.Comp.SpreadAmount <= 0) // if it can't spread anymore then break
             {
                 RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
                 break;
             }
+
+            var coords = _map.GridTileToLocal(neighbor.Tile.GridUid, neighbor.Grid, neighbor.Tile.GridIndices); // where is it spawning
+            var ent = Spawn(prototype.ID, coords); // spawn the new smoke tile
+            var spreadAmount = Math.Max(0, smokePerSpread); // get the spread value of the new smoke
+            entity.Comp.SpreadAmount -= spreadAmount + 1; // reduce the spread value of the old smoke, amount added to the new smoke + the new smoke itself
+
+            StartSmoke(ent, solution.Clone(), timer?.Lifetime ?? entity.Comp.Duration, spreadAmount);
         }
 
         args.Updates--;
@@ -167,23 +164,29 @@ public sealed class SmokeSystem : EntitySystem
 
         var smokeQuery = GetEntityQuery<SmokeComponent>();
 
-        _random.Shuffle(args.Neighbors);
-        foreach (var neighbor in args.Neighbors)
+        // make sure you distribute everything
+        while (entity.Comp.SpreadAmount > 0)
         {
-            if (!smokeQuery.TryGetComponent(neighbor, out var smoke))
-                continue;
-
-            smoke.SpreadAmount++;
-            entity.Comp.SpreadAmount--;
-            EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
-
-            if (entity.Comp.SpreadAmount == 0)
+            // distribute it to your neighbors in a random order
+            _random.Shuffle(args.Neighbors);
+            foreach (var neighbor in args.Neighbors)
             {
-                RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
-                break;
+                if (!smokeQuery.TryGetComponent(neighbor, out var smoke))
+                    continue;
+
+                var random = _random.Next(1, entity.Comp.SpreadAmount + 1); // +1 because the max is exclusive
+
+                smoke.SpreadAmount += random;
+                entity.Comp.SpreadAmount -= random;
+                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+
+                if (entity.Comp.SpreadAmount == 0)
+                {
+                    RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
+                    break;
+                }
             }
         }
-
     }
 
     private void OnReactionAttempt(Entity<SmokeComponent> entity, ref ReactionAttemptEvent args)
