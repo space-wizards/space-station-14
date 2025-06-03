@@ -28,8 +28,8 @@ public sealed class BodycamSystem: SharedBodycamSystem
 
         base.SwitchOn(uid, comp, user);
         _camera.SetActive(uid, true);
-        if (TryComp<SurveillanceCameraComponent>(uid, out var camera))
-            camera.CameraId = Loc.GetString("bodycam-name", ("wearer", Identity.Name(comp.Wearer.Value, EntityManager)));
+        var bodycamName = Loc.GetString("bodycam-name", ("wearer", Identity.Name(comp.Wearer.Value, EntityManager)));
+        _camera.SetName(uid, bodycamName);
     }
 
     /// <inheritdoc cref="SharedBodycamSystem.SwitchOff"/>

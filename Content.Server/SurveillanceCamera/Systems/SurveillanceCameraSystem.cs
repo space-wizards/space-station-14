@@ -289,6 +289,19 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         UpdateVisuals(camera, component);
     }
 
+    /// <summary>
+    /// Set the name of a surveillance camera.
+    /// This is what will be seen on the camera console.
+    /// </summary>
+    public void SetName(EntityUid camera, string name, SurveillanceCameraComponent? component = null)
+    {
+        if (!Resolve(camera, ref component))
+            return;
+
+        component.CameraId = name;
+        component.NameSet = true;
+    }
+
     public void AddActiveViewer(EntityUid camera, EntityUid player, EntityUid? monitor = null, SurveillanceCameraComponent? component = null, ActorComponent? actor = null)
     {
         if (!Resolve(camera, ref component)
