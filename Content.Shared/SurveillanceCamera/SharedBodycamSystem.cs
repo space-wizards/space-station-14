@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using Content.Shared.Emp;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Examine;
@@ -25,6 +26,7 @@ public abstract class SharedBodycamSystem: EntitySystem
     private void OnEquip(EntityUid uid, BodycamComponent comp, GotEquippedEvent args)
     {
         comp.Wearer = args.Equipee;
+        Dirty(uid, comp);
     }
 
     private void OnUnequip(EntityUid uid, BodycamComponent comp, GotUnequippedEvent args)
@@ -33,6 +35,7 @@ public abstract class SharedBodycamSystem: EntitySystem
 
         if (comp.State == BodycamState.Active)
             SwitchOff(uid, comp, args.Equipee, false);
+        Dirty(uid, comp);
     }
 
     private void OnGetVerbs(EntityUid uid, BodycamComponent comp, GetVerbsEvent<AlternativeVerb> args)
@@ -90,6 +93,7 @@ public abstract class SharedBodycamSystem: EntitySystem
             return;
 
         comp.State = BodycamState.Active;
+        Dirty(uid, comp);
 
         // what the person who switches the body cam on sees (only send to user client)
         _popup.PopupClient(Loc.GetString("bodycam-switch-on-message-self"), user, user);
@@ -105,6 +109,7 @@ public abstract class SharedBodycamSystem: EntitySystem
     protected virtual void SwitchOff(EntityUid uid, BodycamComponent comp, EntityUid user, bool causedByPlayer)
     {
         comp.State = BodycamState.Disabled;
+        Dirty(uid, comp);
 
         if (causedByPlayer)
         {
