@@ -146,7 +146,7 @@ public sealed class HypospraySystem : EntitySystem
 
         _popup.PopupClient(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message", ("other", target)), target, user);
 
-        if (target != user && _timing.IsFirstTimePredicted)
+        if (target != user)
         {
             _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
             // TODO: This should just be using melee attacks...
