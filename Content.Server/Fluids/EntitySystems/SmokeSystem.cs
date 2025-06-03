@@ -137,7 +137,7 @@ public sealed class SmokeSystem : EntitySystem
 
         TryComp<TimedDespawnComponent>(entity, out var timer);
 
-        // used for finding how much spread to distribute to the new smoke
+        // used for finding how much spread to distribute to the new smoke, take the number of tiles it can spread to and split it up amongst them
         var smokePerSpread = (entity.Comp.SpreadAmount - args.NeighborFreeTiles.Count) / Math.Max(1, args.NeighborFreeTiles.Count);
         foreach (var neighbor in args.NeighborFreeTiles)
         {
@@ -150,7 +150,7 @@ public sealed class SmokeSystem : EntitySystem
             var coords = _map.GridTileToLocal(neighbor.Tile.GridUid, neighbor.Grid, neighbor.Tile.GridIndices); // where is it spawning
             var ent = Spawn(prototype.ID, coords); // spawn the new smoke tile
             var spreadAmount = Math.Max(0, smokePerSpread); // get the spread value of the new smoke
-            entity.Comp.SpreadAmount -= spreadAmount + 1; // reduce the spread value of the old smoke, amount added to the new smoke + the new smoke itself
+            entity.Comp.SpreadAmount -= spreadAmount + 1; // reduce the spread value of the old smoke. Amount added to the new smoke + the new smoke itself
 
             StartSmoke(ent, solution.Clone(), timer?.Lifetime ?? entity.Comp.Duration, spreadAmount);
         }
