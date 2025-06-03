@@ -8,6 +8,7 @@ using Content.Shared.Contraband;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Electrocution;
+using Content.Shared.Examine;
 using Content.Shared.Explosion;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Gravity;
@@ -50,6 +51,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, ZombificationResistanceQueryEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, IsEquippingTargetAttemptEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, IsUnequippingTargetAttemptEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, ExaminedEvent>(RelayInventoryEvent);
 
         // by-ref events
         SubscribeLocalEvent<InventoryComponent, RefreshFrictionModifiersEvent>(RefRelayInventoryEvent);

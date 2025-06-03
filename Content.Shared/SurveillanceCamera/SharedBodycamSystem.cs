@@ -3,6 +3,7 @@ using Content.Shared.Emp;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -10,6 +11,9 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.SurveillanceCamera;
 
+/// <summary>
+/// Manages the bodycams.
+/// </summary>
 public abstract class SharedBodycamSystem: EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -20,7 +24,8 @@ public abstract class SharedBodycamSystem: EntitySystem
         SubscribeLocalEvent<BodycamComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<BodycamComponent, GotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<BodycamComponent, GotUnequippedEvent>(OnUnequip);
-        SubscribeLocalEvent<BodycamComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<BodycamComponent, ExaminedEvent>(OnBodycamExamine);
+        SubscribeLocalEvent<BodycamComponent, InventoryRelayedEvent<ExaminedEvent>>(OnBodycamWearerExamine);
     }
 
     private void OnEquip(EntityUid uid, BodycamComponent comp, GotEquippedEvent args)
@@ -32,10 +37,10 @@ public abstract class SharedBodycamSystem: EntitySystem
     private void OnUnequip(EntityUid uid, BodycamComponent comp, GotUnequippedEvent args)
     {
         comp.Wearer = null;
+        Dirty(uid, comp);
 
         if (comp.State == BodycamState.Active)
             SwitchOff(uid, comp, args.Equipee, false);
-        Dirty(uid, comp);
     }
 
     private void OnGetVerbs(EntityUid uid, BodycamComponent comp, GetVerbsEvent<AlternativeVerb> args)
@@ -75,12 +80,21 @@ public abstract class SharedBodycamSystem: EntitySystem
         }
     }
 
-    private void OnExamine(EntityUid uid, BodycamComponent comp, ExaminedEvent args)
+    private void OnBodycamExamine(EntityUid uid, BodycamComponent comp, ExaminedEvent args)
     {
         if (comp.State == BodycamState.Active)
             args.PushMarkup(Loc.GetString("bodycam-examine-enabled"));
         else if (comp.State == BodycamState.Disabled)
             args.PushMarkup(Loc.GetString("bodycam-examine-disabled"));
+    }
+
+    private void OnBodycamWearerExamine(EntityUid uid, BodycamComponent comp, InventoryRelayedEvent<ExaminedEvent> args)
+    {
+        var identity = Identity.Entity(args.Args.Examined, EntityManager);
+        if (comp.State == BodycamState.Active)
+            args.Args.PushMarkup(Loc.GetString("bodycam-wearer-examine-enabled", ("identity", identity)));
+        else if (comp.State == BodycamState.Disabled)
+            args.Args.PushMarkup(Loc.GetString("bodycam-wearer-examine-disabled", ("identity", identity)));
     }
 
     /// <summary>
@@ -102,7 +116,7 @@ public abstract class SharedBodycamSystem: EntitySystem
     }
 
     /// <summary>
-    /// Called on the bodycam when someoen alt-clicks it to turn it off or it gets taken off.
+    /// Called on the bodycam when someone alt-clicks it to turn it off or it gets taken off.
     /// Turns the bodycam off and disables the camera (which happens on the server version of this system).
     /// <param name="causedByPlayer">If the bodycam was swtiched off because the player did the verb or if it automatically switched off from being unequipped.</param>
     /// </summary>

@@ -16,3 +16,6 @@ bodycam-name = {$wearer}'s Bodycam
 
 bodycam-examine-enabled = The bodycam is [color=green]Enabled[/color].
 bodycam-examine-disabled = The bodycam is [color=darkred]Disabled[/color].
+
+bodycam-wearer-examine-enabled = {SUBJECT($identity)} is wearing an [color=green]active[/color] bodycam.
+bodycam-wearer-examine-disabled = {SUBJECT($identity)} is wearing an [color=darkred]inactive[/color] bodycam.

@@ -5,6 +5,7 @@ using Content.Shared.SurveillanceCamera;
 
 namespace Content.Server.SurveillanceCamera.Systems;
 
+/// <inheritdoc cref="SharedBodycamSystem"/>
 public sealed class BodycamSystem: SharedBodycamSystem
 {
     [Dependency] private readonly SurveillanceCameraSystem _camera = default!;

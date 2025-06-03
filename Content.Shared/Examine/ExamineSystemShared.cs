@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
@@ -293,8 +294,10 @@ namespace Content.Shared.Examine
     ///     If you're pushing multiple messages that should be grouped together (or ordered in some way),
     ///     call <see cref="PushGroup"/> before pushing and <see cref="PopGroup"/> when finished.
     /// </summary>
-    public sealed class ExaminedEvent : EntityEventArgs
+    public sealed class ExaminedEvent : EntityEventArgs, IInventoryRelayEvent
     {
+        public SlotFlags TargetSlots => SlotFlags.All;
+
         /// <summary>
         ///     The message that will be displayed as the examine text.
         ///     You should use <see cref="PushMarkup"/> and similar instead to modify this,
