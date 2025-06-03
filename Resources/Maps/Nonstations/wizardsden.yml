@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 260.2.0
+  engineVersion: 261.1.0
   forkId: ""
   forkVersion: ""
-  time: 05/22/2025 02:11:19
+  time: 06/03/2025 05:27:43
   entityCount: 625
 maps:
 - 411
@@ -468,9 +468,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: Parallax
@@ -480,7 +478,7 @@ entities:
       mixture:
         volume: 2500
         immutable: True
-        temperature: 248.15
+        temperature: 293.2
         moles:
         - 21.824879
         - 82.10312
