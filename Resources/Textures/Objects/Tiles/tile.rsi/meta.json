@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, additional attributions available in the Resources/Textures/Tiles/attributions.yml file. Ice tile and Snow tile modifications, Astreroid tile and in-hands created by Southbridge-fur (github), Astro-asteroid by kosticia (Github), tabletop by PotatOverlord",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, additional attributions available in the Resources/Textures/Tiles/attributions.yml file. Ice tile and Snow tile modifications, Astreroid tile and in-hands created by Southbridge-fur (github), Astro-asteroid by kosticia (Github), tabletop variants by PotatOverlord",
   "size": {
     "x": 32,
     "y": 32
@@ -568,10 +568,34 @@
       "name": "tabletop-white"
     },
     {
+      "name": "tabletop-white-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "tabletop-white-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "tabletop-black"
     },
     {
+      "name": "tabletop-black-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "tabletop-black-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "tabletop-checker"
+    },
+    {
+      "name": "tabletop-checker-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "tabletop-checker-inhand-left",
+      "directions": 4
     }
   ]
 }
