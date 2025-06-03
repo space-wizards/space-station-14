@@ -4,8 +4,8 @@ meta:
   engineVersion: 261.1.0
   forkId: ""
   forkVersion: ""
-  time: 06/03/2025 02:48:54
-  entityCount: 16147
+  time: 06/03/2025 03:58:36
+  entityCount: 16214
 maps:
 - 1
 grids:
@@ -1929,78 +1929,9 @@ entities:
             340: -24,53
         - node:
             color: '#FFFFFFFF'
-            id: BushAOne
-          decals:
-            1442: 32,79
-            1516: -29,49
-        - node:
-            color: '#FFFFFFFF'
-            id: BushAThree
-          decals:
-            1490: 36,46
-        - node:
-            color: '#FFFFFFFF'
-            id: BushATwo
-          decals:
-            3211: -15,67
-        - node:
-            color: '#FFFFFFFF'
-            id: BushCTwo
-          decals:
-            1436: 24,82
-            1491: 36,43
-        - node:
-            color: '#FFFFFFFF'
-            id: Busha1
-          decals:
-            1438: 39,82
-            1460: -15,66
-            1468: 1,50
-        - node:
-            color: '#FFFFFFFF'
             id: Busha2
           decals:
-            1471: 13,50
-            1500: -19,82
             1536: 22,55
-        - node:
-            color: '#FFFFFFFF'
-            id: Busha3
-          decals:
-            1437: 26,79
-            1449: 32,82
-            1526: -6,30
-            1534: 0,64
-            3174: 66,33
-        - node:
-            color: '#FFFFFFFF'
-            id: Bushb3
-          decals:
-            1470: 9,50
-        - node:
-            color: '#FFFFFFFF'
-            id: Bushc1
-          decals:
-            1445: 26,82
-            1467: 11,49
-            3212: -15,68
-        - node:
-            color: '#FFFFFFFF'
-            id: Bushc2
-          decals:
-            1447: 37,82
-            1469: 4,50
-            1499: -19,84
-            1511: 0,63
-            1517: -32,49
-        - node:
-            color: '#FFFFFFFF'
-            id: Bushc3
-          decals:
-            1443: 27,81
-            1446: 24,79
-            1448: 30,79
-            3213: -15,69
         - node:
             color: '#FFFFFFFF'
             id: Delivery
@@ -2246,11 +2177,6 @@ entities:
           decals:
             1537: 23,55
         - node:
-            color: '#FFFFFFFF'
-            id: Flowersy3
-          decals:
-            1466: 0,57
-        - node:
             color: '#52B4E9D6'
             id: FullTileOverlayGreyscale
           decals:
@@ -2270,53 +2196,9 @@ entities:
             1585: -13,52
         - node:
             color: '#FFFFFFFF'
-            id: Grassa1
-          decals:
-            1527: -6,29
-        - node:
-            color: '#FFFFFFFF'
             id: Grassa2
           decals:
-            1456: 31,82
             1473: 2,50
-            1492: 36,47
-        - node:
-            color: '#FFFFFFFF'
-            id: Grassa3
-          decals:
-            1493: 36,44
-        - node:
-            color: '#FFFFFFFF'
-            id: Grassa4
-          decals:
-            1450: 25,82
-        - node:
-            color: '#FFFFFFFF'
-            id: Grassa5
-          decals:
-            1533: 1,64
-        - node:
-            color: '#FFFFFFFF'
-            id: Grassb1
-          decals:
-            1474: 6,50
-        - node:
-            color: '#FFFFFFFF'
-            id: Grassb2
-          decals:
-            1453: 25,79
-        - node:
-            color: '#FFFFFFFF'
-            id: Grassb3
-          decals:
-            1452: 29,82
-        - node:
-            color: '#FFFFFFFF'
-            id: Grassb5
-          decals:
-            1454: 36,82
-            1455: 37,79
-            1475: 10,50
         - node:
             color: '#3E6292FF'
             id: HalfTileOverlayGreyscale270
@@ -2817,32 +2699,6 @@ entities:
             1835: -10,83
         - node:
             color: '#FFFFFFFF'
-            id: Rock01
-          decals:
-            1477: 0,56
-        - node:
-            color: '#FFFFFFFF'
-            id: Rock02
-          decals:
-            1510: 0,62
-        - node:
-            color: '#FFFFFFFF'
-            id: Rock03
-          decals:
-            1441: 30,82
-        - node:
-            color: '#FFFFFFFF'
-            id: Rock04
-          decals:
-            1478: 11,50
-            1525: -6,26
-        - node:
-            color: '#FFFFFFFF'
-            id: Rock05
-          decals:
-            1440: 38,79
-        - node:
-            color: '#FFFFFFFF'
             id: Rock06
           decals:
             1457: -2,98
@@ -3175,12 +3031,12 @@ entities:
             2583: -7,101
             2652: 33,26
             2653: 34,26
-            2654: 35,26
-            2655: 36,26
             3183: 71,68
             3208: -2,68
             3230: 21,70
             3231: 23,70
+            3274: 35,26
+            3275: 36,26
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinCornerNe
@@ -3271,12 +3127,6 @@ entities:
             id: splatter
           decals:
             2723: 81,41
-        - node:
-            color: '#CD0000FF'
-            id: splatter
-          decals:
-            2650: 35,25
-            2651: 36,26
         - node:
             color: '#E60000FF'
             id: star
@@ -8310,7 +8160,7 @@ entities:
       pos: -27.5,53.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -199835.88
+      secondsUntilStateChange: -200518.52
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -41971,7 +41821,7 @@ entities:
       pos: -41.5,59.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -194327.95
+      secondsUntilStateChange: -195010.6
       state: Closing
   - uid: 7249
     components:
@@ -42048,6 +41898,343 @@ entities:
     components:
     - type: Transform
       pos: 82.704346,45.4205
+      parent: 2
+- proto: DecalSpawnerBasaltRock
+  entities:
+  - uid: 16201
+    components:
+    - type: Transform
+      pos: 72.5,33.5
+      parent: 2
+- proto: DecalSpawnerBloodSplatters
+  entities:
+  - uid: 16188
+    components:
+    - type: Transform
+      pos: -32.5,40.5
+      parent: 2
+  - uid: 16189
+    components:
+    - type: Transform
+      pos: -31.5,40.5
+      parent: 2
+  - uid: 16190
+    components:
+    - type: Transform
+      pos: -31.5,39.5
+      parent: 2
+  - uid: 16202
+    components:
+    - type: Transform
+      pos: 35.5,25.5
+      parent: 2
+  - uid: 16203
+    components:
+    - type: Transform
+      pos: 35.5,26.5
+      parent: 2
+  - uid: 16204
+    components:
+    - type: Transform
+      pos: 36.5,26.5
+      parent: 2
+  - uid: 16205
+    components:
+    - type: Transform
+      pos: 33.5,26.5
+      parent: 2
+  - uid: 16206
+    components:
+    - type: Transform
+      pos: 80.5,40.5
+      parent: 2
+- proto: DecalSpawnerBushesAC
+  entities:
+  - uid: 8529
+    components:
+    - type: Transform
+      pos: 0.5,64.5
+      parent: 2
+  - uid: 16157
+    components:
+    - type: Transform
+      pos: 24.5,82.5
+      parent: 2
+  - uid: 16158
+    components:
+    - type: Transform
+      pos: 27.5,81.5
+      parent: 2
+  - uid: 16160
+    components:
+    - type: Transform
+      pos: 24.5,79.5
+      parent: 2
+  - uid: 16161
+    components:
+    - type: Transform
+      pos: 26.5,79.5
+      parent: 2
+  - uid: 16166
+    components:
+    - type: Transform
+      pos: 32.5,82.5
+      parent: 2
+  - uid: 16168
+    components:
+    - type: Transform
+      pos: 30.5,79.5
+      parent: 2
+  - uid: 16169
+    components:
+    - type: Transform
+      pos: 32.5,79.5
+      parent: 2
+  - uid: 16172
+    components:
+    - type: Transform
+      pos: 39.5,82.5
+      parent: 2
+  - uid: 16173
+    components:
+    - type: Transform
+      pos: 37.5,82.5
+      parent: 2
+  - uid: 16175
+    components:
+    - type: Transform
+      pos: 0.5,50.5
+      parent: 2
+  - uid: 16176
+    components:
+    - type: Transform
+      pos: 1.5,49.5
+      parent: 2
+  - uid: 16177
+    components:
+    - type: Transform
+      pos: 5.5,50.5
+      parent: 2
+  - uid: 16178
+    components:
+    - type: Transform
+      pos: 14.5,50.5
+      parent: 2
+  - uid: 16179
+    components:
+    - type: Transform
+      pos: 12.5,50.5
+      parent: 2
+  - uid: 16186
+    components:
+    - type: Transform
+      pos: -31.5,49.5
+      parent: 2
+  - uid: 16187
+    components:
+    - type: Transform
+      pos: -28.5,49.5
+      parent: 2
+  - uid: 16193
+    components:
+    - type: Transform
+      pos: -5.5,30.5
+      parent: 2
+  - uid: 16194
+    components:
+    - type: Transform
+      pos: 36.5,47.5
+      parent: 2
+  - uid: 16195
+    components:
+    - type: Transform
+      pos: 36.5,45.5
+      parent: 2
+  - uid: 16200
+    components:
+    - type: Transform
+      pos: 66.5,33.5
+      parent: 2
+  - uid: 16208
+    components:
+    - type: Transform
+      pos: 85.5,52.5
+      parent: 2
+  - uid: 16209
+    components:
+    - type: Transform
+      pos: -14.5,69.5
+      parent: 2
+  - uid: 16210
+    components:
+    - type: Transform
+      pos: -14.5,66.5
+      parent: 2
+  - uid: 16213
+    components:
+    - type: Transform
+      pos: -18.5,84.5
+      parent: 2
+- proto: DecalSpawnerFlowers
+  entities:
+  - uid: 16155
+    components:
+    - type: Transform
+      pos: 0.5,57.5
+      parent: 2
+- proto: DecalSpawnerGrassAB
+  entities:
+  - uid: 16152
+    components:
+    - type: Transform
+      pos: 1.5,64.5
+      parent: 2
+  - uid: 16153
+    components:
+    - type: Transform
+      pos: 0.5,63.5
+      parent: 2
+  - uid: 16159
+    components:
+    - type: Transform
+      pos: 26.5,82.5
+      parent: 2
+  - uid: 16162
+    components:
+    - type: Transform
+      pos: 25.5,79.5
+      parent: 2
+  - uid: 16163
+    components:
+    - type: Transform
+      pos: 29.5,82.5
+      parent: 2
+  - uid: 16164
+    components:
+    - type: Transform
+      pos: 31.5,82.5
+      parent: 2
+  - uid: 16167
+    components:
+    - type: Transform
+      pos: 31.5,79.5
+      parent: 2
+  - uid: 16170
+    components:
+    - type: Transform
+      pos: 37.5,79.5
+      parent: 2
+  - uid: 16174
+    components:
+    - type: Transform
+      pos: 38.5,82.5
+      parent: 2
+  - uid: 16182
+    components:
+    - type: Transform
+      pos: 0.5,49.5
+      parent: 2
+  - uid: 16183
+    components:
+    - type: Transform
+      pos: 6.5,50.5
+      parent: 2
+  - uid: 16184
+    components:
+    - type: Transform
+      pos: 11.5,50.5
+      parent: 2
+  - uid: 16185
+    components:
+    - type: Transform
+      pos: 9.5,50.5
+      parent: 2
+  - uid: 16192
+    components:
+    - type: Transform
+      pos: -5.5,29.5
+      parent: 2
+  - uid: 16197
+    components:
+    - type: Transform
+      pos: 36.5,46.5
+      parent: 2
+  - uid: 16198
+    components:
+    - type: Transform
+      pos: 36.5,43.5
+      parent: 2
+  - uid: 16207
+    components:
+    - type: Transform
+      pos: 85.5,54.5
+      parent: 2
+  - uid: 16211
+    components:
+    - type: Transform
+      pos: -14.5,68.5
+      parent: 2
+  - uid: 16214
+    components:
+    - type: Transform
+      pos: -18.5,82.5
+      parent: 2
+- proto: DecalSpawnerGrassyRock
+  entities:
+  - uid: 8528
+    components:
+    - type: Transform
+      pos: 0.5,62.5
+      parent: 2
+  - uid: 16154
+    components:
+    - type: Transform
+      pos: 0.5,56.5
+      parent: 2
+  - uid: 16156
+    components:
+    - type: Transform
+      pos: 25.5,82.5
+      parent: 2
+  - uid: 16165
+    components:
+    - type: Transform
+      pos: 30.5,82.5
+      parent: 2
+  - uid: 16171
+    components:
+    - type: Transform
+      pos: 38.5,79.5
+      parent: 2
+  - uid: 16180
+    components:
+    - type: Transform
+      pos: 11.5,49.5
+      parent: 2
+  - uid: 16181
+    components:
+    - type: Transform
+      pos: 3.5,50.5
+      parent: 2
+  - uid: 16191
+    components:
+    - type: Transform
+      pos: -5.5,26.5
+      parent: 2
+  - uid: 16196
+    components:
+    - type: Transform
+      pos: 36.5,44.5
+      parent: 2
+  - uid: 16199
+    components:
+    - type: Transform
+      pos: 66.5,32.5
+      parent: 2
+  - uid: 16212
+    components:
+    - type: Transform
+      pos: -14.5,67.5
       parent: 2
 - proto: DefaultStationBeaconAISatellite
   entities:
@@ -81236,6 +81423,20 @@ entities:
     components:
     - type: Transform
       pos: -33.427303,37.85118
+      parent: 2
+- proto: RiotLaserShield
+  entities:
+  - uid: 8521
+    components:
+    - type: Transform
+      pos: 67.64818,67.57437
+      parent: 2
+- proto: RiotShield
+  entities:
+  - uid: 8526
+    components:
+    - type: Transform
+      pos: 67.4138,67.57437
       parent: 2
 - proto: RobocopCircuitBoard
   entities:
