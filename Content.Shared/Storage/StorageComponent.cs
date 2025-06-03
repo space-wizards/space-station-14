@@ -19,6 +19,14 @@ namespace Content.Shared.Storage
     {
         public static string ContainerId = "storagebase";
 
+        public const byte ChunkSize = 8;
+
+        // No datafield because we can just derive it from stored items.
+        /// <summary>
+        /// Bitmask of occupied tiles
+        /// </summary>
+        public Dictionary<Vector2i, ulong> OccupiedGrid = new();
+
         [ViewVariables]
         public Container Container = default!;
 
