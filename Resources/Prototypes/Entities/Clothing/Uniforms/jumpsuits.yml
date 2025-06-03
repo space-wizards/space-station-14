@@ -947,6 +947,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/safari.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/safari.rsi
+  - type: Tags
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
@@ -958,6 +961,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/journalist.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/journalist.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
