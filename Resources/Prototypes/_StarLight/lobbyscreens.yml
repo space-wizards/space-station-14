@@ -4,3 +4,11 @@
 - type: lobbyBackground
   id: IPCsaster
   background: /Textures/_Starlight/LobbyScreens/IPCsaster.webp
+
+- type: lobbyBackground
+  id: Reflection
+  background: /Textures/_Starlight/LobbyScreens/reflection.webp
+
+- type: lobbyBackground
+  id: TriesteNT
+  background: /Textures/_Starlight/LobbyScreens/trieste-nt.webp

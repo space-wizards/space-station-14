@@ -50,3 +50,12 @@
     FoodOrange: 1
     RightHandReptilian: 1
     FoodCabbage: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMothCake
+  name: cotton cake recipe
+  result: FoodCottonCake
+  time: 15
+  group: Cake
+  solids: 
+    FoodMothBatter: 1

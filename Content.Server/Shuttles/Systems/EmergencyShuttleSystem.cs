@@ -559,14 +559,20 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             return;
         }
 
-        if (string.IsNullOrEmpty(component.Map.ToString()))
+        if (component.Maps.Length == 0) //starlight edit
         {
-            Log.Warning("No CentComm map found, skipping setup.");
+            Log.Warning("No CentComm maps found, skipping setup.");
             return;
         }
 
         var map = _mapSystem.CreateMap(out var mapId);
-        if (!_loader.TryLoadGrid(mapId, component.Map, out var grid))
+
+        //starlight start
+        //randomly select a centcomm map
+        var mapPath = _random.Pick(component.Maps);
+        //starlight end
+
+        if (!_loader.TryLoadGrid(mapId, mapPath, out var grid)) //starlight edit
         {
             Log.Error($"Failed to set up centcomm grid!");
             return;

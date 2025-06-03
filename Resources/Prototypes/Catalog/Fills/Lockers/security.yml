@@ -11,6 +11,7 @@
       - id: Flash
       - id: ClothingEyesGlassesSecurity
       - id: ClothingEyesHudSecurity
+      - id: ClothingHeadsetSecurityWarden
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
       - id: ClothingOuterCoatWarden
@@ -39,6 +40,7 @@
       - id: Flash
       - id: ClothingEyesGlassesSecurity
       - id: ClothingEyesHudSecurity
+      - id: ClothingHeadsetSecurityWarden
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
       - id: ClothingOuterCoatWarden
