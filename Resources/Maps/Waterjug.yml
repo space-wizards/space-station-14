@@ -5141,42 +5141,6 @@ entities:
     - type: Transform
       pos: 5.5166698,91.75289
       parent: 2
-- proto: ActionToggleInternals
-  entities:
-  - uid: 7186
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7184
-  - uid: 7190
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7188
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 7185
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7184
-  - uid: 7189
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 7188
-- proto: ActionToggleLight
-  entities:
-  - uid: 15818
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 15817
 - proto: AirAlarm
   entities:
   - uid: 350
@@ -40674,20 +40638,6 @@ entities:
     - type: Transform
       pos: 34.263424,21.60135
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 15818
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 15818
-    - type: ActionsContainer
 - proto: ClothingMaskGas
   entities:
   - uid: 13611
@@ -73726,33 +73676,11 @@ entities:
     - type: Transform
       pos: 40.61539,52.471504
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 7186
-    - type: Jetpack
-      toggleActionEntity: 7185
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 7185
-          - 7186
   - uid: 7188
     components:
     - type: Transform
       pos: 40.412266,52.67463
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 7190
-    - type: Jetpack
-      toggleActionEntity: 7189
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 7189
-          - 7190
 - proto: Jukebox
   entities:
   - uid: 883
