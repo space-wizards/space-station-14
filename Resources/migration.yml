@@ -645,7 +645,11 @@ CapacitorStockPart: MicroManipulatorStockPart
 # 2025-05-30
 SpawnHonkBot: SpawnMobHonkBot
 
-# 2025-05-31
+# 2025-06-01
+CrateFoodPizzaLarge: CrateFoodPizza
+CrateFoodSoftdrinksLarge: CrateFoodSoftdrinks
+
+# 2025-06-03
 FloorTileItemGCircuit4: FloorTileItemGCircuit
 FloorTileItemBCircuit4: FloorTileItemBCircuit
 FloorTileItemRCircuit4: FloorTileItemRCircuit
