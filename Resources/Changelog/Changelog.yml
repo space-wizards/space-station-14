@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TiniestShark
-  changes:
-  - message: Added inhand sprites to Grenades, Bolas and Throwing Stars
-    type: Add
-  id: 8099
-  time: '2025-03-21T09:37:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35974
 - author: TeenSarlacc
   changes:
   - message: You can now buy Foam Force weapons through Cargo.
@@ -3926,3 +3919,11 @@
   id: 8610
   time: '2025-06-03T18:13:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37979
+- author: ScarKy0
+  changes:
+  - message: Increased the health of uranium windows, making them a reasonable upgrade
+      over regular plasma.
+    type: Tweak
+  id: 8611
+  time: '2025-06-03T18:20:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38040
