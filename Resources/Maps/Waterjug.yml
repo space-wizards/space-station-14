@@ -4,8 +4,8 @@ meta:
   engineVersion: 261.1.0
   forkId: ""
   forkVersion: ""
-  time: 06/03/2025 00:05:07
-  entityCount: 16151
+  time: 06/03/2025 02:48:54
+  entityCount: 16147
 maps:
 - 1
 grids:
@@ -5141,14 +5141,6 @@ entities:
     - type: Transform
       pos: 5.5166698,91.75289
       parent: 2
-- proto: ActionToggleBlock
-  entities:
-  - uid: 8529
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 8528
 - proto: ActionToggleInternals
   entities:
   - uid: 7186
@@ -8354,7 +8346,7 @@ entities:
       pos: -27.5,53.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -199355.03
+      secondsUntilStateChange: -199835.88
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12047,13 +12039,13 @@ entities:
     - type: Transform
       pos: 57.5,69.5
       parent: 2
-- proto: BarSign
+- proto: BarSignAlignTile
   entities:
   - uid: 2494
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: -12.5,37.5
+      pos: -12.5,36.5
       parent: 2
 - proto: BaseGasCondenser
   entities:
@@ -42029,7 +42021,7 @@ entities:
       pos: -41.5,59.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -193847.11
+      secondsUntilStateChange: -194327.95
       state: Closing
   - uid: 7249
     components:
@@ -81317,33 +81309,6 @@ entities:
     - type: Transform
       pos: -33.427303,37.85118
       parent: 2
-- proto: RiotBulletShield
-  entities:
-  - uid: 8521
-    components:
-    - type: Transform
-      pos: 67.361694,67.57556
-      parent: 2
-  - uid: 8526
-    components:
-    - type: Transform
-      pos: 67.49905,67.57054
-      parent: 2
-- proto: RiotLaserShield
-  entities:
-  - uid: 8528
-    components:
-    - type: Transform
-      pos: 67.68655,67.58617
-      parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 8529
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 8529
 - proto: RobocopCircuitBoard
   entities:
   - uid: 7093
