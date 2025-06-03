@@ -53,7 +53,7 @@
 
 - type: entity
   id: UraniumWindowDirectional
-  parent: WindowDirectional
+  parent: WindowDirectionalRCDResistant
   name: directional uranium window
   description: Don't smudge up the glass down there.
   placement:
