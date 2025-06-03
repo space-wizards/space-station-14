@@ -4,8 +4,8 @@ meta:
   engineVersion: 260.2.0
   forkId: ""
   forkVersion: ""
-  time: 05/23/2025 23:49:56
-  entityCount: 1168
+  time: 06/03/2025 04:43:09
+  entityCount: 1170
 maps: []
 grids:
 - 2
@@ -441,16 +441,16 @@ entities:
           4,2:
             1: 17
           0,-4:
-            0: 224
+            2: 224
           0,-3:
             0: 36846
           0,-2:
             0: 52431
             1: 4352
           0,-5:
-            2: 57344
+            3: 57344
             1: 1
-            3: 224
+            4: 224
           1,-3:
             0: 35771
           1,-2:
@@ -510,6 +510,21 @@ entities:
           moles:
           - 0
           - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 1400.0662
+          - 5266.916
           - 0
           - 0
           - 0
@@ -3373,6 +3388,13 @@ entities:
     - type: Transform
       pos: 14.521044,-0.37344456
       parent: 2
+- proto: DrinkRootBeerFloatGlass
+  entities:
+  - uid: 1170
+    components:
+    - type: Transform
+      pos: 7.739999,-17.41706
+      parent: 2
 - proto: DrinkShaker
   entities:
   - uid: 487
@@ -5973,6 +5995,13 @@ entities:
     components:
     - type: Transform
       pos: 1.5,-18.5
+      parent: 2
+- proto: PlushieArachind
+  entities:
+  - uid: 1166
+    components:
+    - type: Transform
+      pos: 8.5609665,-17.542507
       parent: 2
 - proto: PoweredLEDLightPostSmall
   entities:
