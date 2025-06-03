@@ -1978,6 +1978,14 @@
     entries:
       Burger: MeatCutlet
       Taco: MeatCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3614"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3614"
 
 - type: entity
   name: bear cutlet
@@ -2010,6 +2018,14 @@
     entries:
       Burger: BearCutletBurger
       Taco: BearCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3614"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3614"
 
 - type: entity
   name: penguin cutlet
@@ -2040,6 +2056,14 @@
     entries:
       Burger: PenguinCutletBurger
       Taco: PenguinCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3614"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3614"
 
 - type: entity
   name: chicken cutlet
@@ -2070,6 +2094,14 @@
     entries:
       Burger: ChickenCutlet
       Taco: ChickenCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3614"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3614"
 
 - type: entity
   name: duck cutlet
@@ -2100,6 +2132,14 @@
     entries:
       Burger: DuckCutlet
       Taco: DuckCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3614"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3614"
 
 - type: entity
   name: lizard cutlet
@@ -2131,6 +2171,14 @@
     entries:
       Burger: LizardCutletBurger
       Taco: LizardCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#153F06"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#153F06"
 
 - type: entity
   name: spider cutlet
@@ -2160,6 +2208,14 @@
     entries:
       Burger: SpiderCutletBurger
       Taco: SpiderCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#153F06"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#153F06"
 
 - type: entity
   name: xeno cutlet
@@ -2189,6 +2245,14 @@
     entries:
       Burger: XenoCutlet
       Taco: XenoCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#153F06"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#153F06"
 
 - type: entity
   name: dragon cutlet
@@ -2220,3 +2284,11 @@
     entries:
       Burger: DragonCutlet
       Taco: DragonCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#7A1763"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#7A1763"
