@@ -1,5 +1,10 @@
 bodycam-switch-on-verb = Switch on bodycam
+bodycam-switch-on-verb-tooltip = Switches on the bodycam.
+bodycam-switch-on-verb-disabled-unequipped = You need to be wearing the bodycam to switch it on.
+bodycam-switch-on-verb-disabled-emp = The bodycam is glitching out!
+
 bodycam-switch-off-verb = Switch off the bodycam
+bodycam-switch-off-verb-tooltip = Switches off the bodycam.
 
 bodycam-switch-on-message-self = You switch on the bodycam.
 bodycam-switch-on-message-other = {$user} switches on the bodycam.

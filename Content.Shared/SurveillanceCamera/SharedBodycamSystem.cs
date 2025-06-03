@@ -1,3 +1,5 @@
+using Content.Shared.Emp;
+using Content.Shared.EntityEffects.Effects;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory.Events;
@@ -35,12 +37,27 @@ public abstract class SharedBodycamSystem: EntitySystem
 
     private void OnGetVerbs(EntityUid uid, BodycamComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (comp.State == BodycamState.Disabled && comp.Wearer is not null)
+        if (comp.State == BodycamState.Disabled)
         {
+            var disabled = false;
+            var message = Loc.GetString("bodycam-switch-on-verb-tooltip");
+            if (comp.Wearer is null)
+            {
+                disabled = true;
+                message = Loc.GetString("bodycam-switch-on-verb-disabled-unequipped");
+            }
+            else if (HasComp<EmpDisabledComponent>(uid))
+            {
+                disabled = true;
+                message = Loc.GetString("bodycam-switch-on-verb-disabled-emp");
+            }
+
             args.Verbs.Add(new AlternativeVerb()
             {
                 Act = () => SwitchOn(uid, comp, args.User),
                 Text = Loc.GetString("bodycam-switch-on-verb"),
+                Disabled = disabled,
+                Message = message
             });
         }
 
@@ -50,6 +67,7 @@ public abstract class SharedBodycamSystem: EntitySystem
             {
                 Act = () => SwitchOff(uid, comp, args.User, true),
                 Text = Loc.GetString("bodycam-switch-off-verb"),
+                Message = Loc.GetString("bodycam-switch-off-verb-tooltip")
             });
         }
     }
@@ -68,7 +86,7 @@ public abstract class SharedBodycamSystem: EntitySystem
     /// </summary>
     protected virtual void SwitchOn(EntityUid uid, BodycamComponent comp, EntityUid user)
     {
-        if (comp.Wearer is null)
+        if (comp.Wearer is null || HasComp<EmpDisabledComponent>(uid))
             return;
 
         comp.State = BodycamState.Active;

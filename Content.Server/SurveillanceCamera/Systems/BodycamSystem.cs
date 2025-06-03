@@ -1,3 +1,5 @@
+using Content.Server.Emp;
+using Content.Shared.Emp;
 using Content.Shared.IdentityManagement;
 using Content.Shared.SurveillanceCamera;
 
@@ -11,6 +13,7 @@ public sealed class BodycamSystem: SharedBodycamSystem
     {
         base.Initialize();
         SubscribeLocalEvent<BodycamComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<BodycamComponent, EmpPulseEvent>(OnEmp);
     }
 
     private void OnMapInit(EntityUid uid, BodycamComponent comp, MapInitEvent args)
@@ -20,10 +23,17 @@ public sealed class BodycamSystem: SharedBodycamSystem
         _camera.SetActive(uid, false);
     }
 
+    private void OnEmp(EntityUid uid, BodycamComponent comp, ref EmpPulseEvent args)
+    {
+        args.Affected = true;
+        args.Disabled = true;
+        comp.State = BodycamState.Disabled;
+    }
+
     /// <inheritdoc cref="SharedBodycamSystem.SwitchOn"/>
     protected override void SwitchOn(EntityUid uid, BodycamComponent comp, EntityUid user)
     {
-        if (comp.Wearer == null)
+        if (comp.Wearer == null || HasComp<EmpDisabledComponent>(uid))
             return;
 
         base.SwitchOn(uid, comp, user);
