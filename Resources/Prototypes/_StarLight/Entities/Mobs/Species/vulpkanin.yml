@@ -76,9 +76,6 @@
     damageModifierSet: Vulpkanin
   - type: Wagging
   - type: NightVision
-  - type: ThermalVision
-  - type: FlashModifier
-    modifier: 4
 
 - type: entity
   save: false
