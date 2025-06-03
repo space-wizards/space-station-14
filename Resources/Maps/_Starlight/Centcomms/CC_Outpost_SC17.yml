@@ -4,8 +4,8 @@ meta:
   engineVersion: 260.2.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 06/03/2025 19:31:14
-  entityCount: 6911
+  time: 06/03/2025 19:37:48
+  entityCount: 6900
 maps: []
 grids:
 - 1
@@ -4397,7 +4397,7 @@ entities:
       pos: 5.5,3.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -16632.129
+      secondsUntilStateChange: -16728.123
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4634,7 +4634,7 @@ entities:
       pos: -11.5,-13.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -69173.24
+      secondsUntilStateChange: -69269.234
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12118,55 +12118,10 @@ entities:
     - type: Transform
       pos: -22.5,42.5
       parent: 1
-  - uid: 1582
-    components:
-    - type: Transform
-      pos: -22.5,41.5
-      parent: 1
-  - uid: 1583
-    components:
-    - type: Transform
-      pos: -22.5,40.5
-      parent: 1
-  - uid: 1584
-    components:
-    - type: Transform
-      pos: -22.5,38.5
-      parent: 1
   - uid: 1585
     components:
     - type: Transform
       pos: -22.5,46.5
-      parent: 1
-  - uid: 1586
-    components:
-    - type: Transform
-      pos: -22.5,37.5
-      parent: 1
-  - uid: 1587
-    components:
-    - type: Transform
-      pos: -22.5,35.5
-      parent: 1
-  - uid: 1588
-    components:
-    - type: Transform
-      pos: -22.5,36.5
-      parent: 1
-  - uid: 1589
-    components:
-    - type: Transform
-      pos: -22.5,39.5
-      parent: 1
-  - uid: 1590
-    components:
-    - type: Transform
-      pos: -22.5,34.5
-      parent: 1
-  - uid: 1591
-    components:
-    - type: Transform
-      pos: -22.5,33.5
       parent: 1
   - uid: 1592
     components:
@@ -12177,11 +12132,6 @@ entities:
     components:
     - type: Transform
       pos: -22.5,29.5
-      parent: 1
-  - uid: 1594
-    components:
-    - type: Transform
-      pos: -22.5,32.5
       parent: 1
   - uid: 1595
     components:
@@ -12197,11 +12147,6 @@ entities:
     components:
     - type: Transform
       pos: -22.5,26.5
-      parent: 1
-  - uid: 1598
-    components:
-    - type: Transform
-      pos: -22.5,31.5
       parent: 1
   - uid: 1599
     components:
