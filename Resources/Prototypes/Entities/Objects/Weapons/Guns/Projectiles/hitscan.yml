@@ -38,6 +38,7 @@
 - type: entity
   parent: BasicHitscan
   id: RedLightLaser
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -47,6 +48,7 @@
 - type: entity
   parent: BasicHitscan
   id: RedLaser
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -56,6 +58,7 @@
 - type: entity
   parent: BasicHitscan
   id: RedMediumLaser
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -65,6 +68,7 @@
 - type: entity
   parent: BasicHitscan
   id: RedHeavyLaser
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -84,6 +88,7 @@
 - type: entity
   parent: BasicHitscan
   id: RedLaserPractice
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -93,6 +98,7 @@
 - type: entity
   parent: BasicHitscan
   id: XrayLaser
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -113,6 +119,7 @@
 - type: entity
   parent: BasicHitscan
   id: Pulse
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicDamage
     damage:
@@ -132,6 +139,7 @@
 - type: entity
   parent: BasicHitscan
   id: RedShuttleLaser
+  categories: [ HideSpawnMenu ]
   components:
   - type: HitscanBasicRaycast
     maxDistance: 60.0
