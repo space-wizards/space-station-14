@@ -4,16 +4,16 @@
 # this isn't how codeowners rules work pls read the first comment instead of trying to force a sorting order
 
 /Resources/ConfigPresets/WizardsDen/  @crazybrain23
-/Content.*/Administration/ @DrSmugleaf @crazybrain23
+/Content.*/Administration/ @DrSmugleaf @crazybrain23 @Admiral-Obvious-001
 /Resources/ServerInfo/ @crazybrain23
-/Resources/ServerInfo/Guidebook/ServerRules/ @crazybrain23
+/Resources/ServerInfo/Guidebook/ServerRules/ @crazybrain23 @Admiral-Obvious-001
 
 /Resources/Prototypes/Maps/** @Emisse @ArtisticRoomba
 
 /Resources/Prototypes/Body/ @DrSmugleaf # suffering
 /Resources/Prototypes/Entities/Mobs/Player/ @DrSmugleaf
 /Resources/Prototypes/Entities/Mobs/Species/ @DrSmugleaf
-/Resources/Prototypes/Guidebook/rules.yml @crazybrain23
+/Resources/Prototypes/Guidebook/rules.yml @crazybrain23 @Admiral-Obvious-001
 /Content.*/Body/ @DrSmugleaf
 /Content.YAMLLinter @DrSmugleaf
 /Content.Shared/Damage/ @DrSmugleaf
