@@ -109,10 +109,13 @@ public abstract class SharedBodycamSystem: EntitySystem
         comp.State = BodycamState.Active;
         Dirty(uid, comp);
 
+        // we assume the person wearing the bodycam is the one turning it on
+        var identity = Identity.Entity(user, EntityManager);
+        var name = Identity.Name(user, EntityManager);
         // what the person who switches the body cam on sees (only send to user client)
-        _popup.PopupClient(Loc.GetString("bodycam-switch-on-message-self"), user, user);
+        _popup.PopupClient(Loc.GetString("bodycam-switch-on-message-self"), uid, user);
         // what everyone else sees (filter out the user from it)
-        _popup.PopupEntity(Loc.GetString("bodycam-switch-on-message-other", ("user", Identity.Name(user, EntityManager))), user, Filter.Pvs(user, entityManager: EntityManager).RemoveWhere(e => e.AttachedEntity == user), true);
+        _popup.PopupEntity(Loc.GetString("bodycam-switch-on-message-other", ("user", name), ("identity", identity)), uid, Filter.Pvs(user, entityManager: EntityManager).RemoveWhere(e => e.AttachedEntity == user), true);
     }
 
     /// <summary>
@@ -127,10 +130,13 @@ public abstract class SharedBodycamSystem: EntitySystem
 
         if (causedByPlayer)
         {
+            // we assume the person wearing the bodycam is the one turning it off
+            var identity = Identity.Entity(user, EntityManager);
+            var name = Identity.Name(user, EntityManager);
             // what the person who switches the body cam on sees (only send to user client)
-            _popup.PopupClient(Loc.GetString("bodycam-switch-off-message-self"), user, user);
+            _popup.PopupClient(Loc.GetString("bodycam-switch-off-message-self"), uid, user);
             // what everyone else sees (filter out the user from it)
-            _popup.PopupEntity(Loc.GetString("bodycam-switch-off-message-other", ("user", Identity.Name(user, EntityManager))), user, Filter.Pvs(user, entityManager: EntityManager).RemoveWhere(e => e.AttachedEntity == user), true);
+            _popup.PopupEntity(Loc.GetString("bodycam-switch-off-message-other", ("user", name), ("identity", identity)), user, Filter.Pvs(user, entityManager: EntityManager).RemoveWhere(e => e.AttachedEntity == user), true);
         }
         else
         {
