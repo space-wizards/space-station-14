@@ -308,4 +308,12 @@
   id: 37
   time: '2025-06-03T04:30:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38028
+- author: JpegOfAFrog
+  changes:
+  - message: On Plasma Station evacuation shuttle, gas holding tanks are now filled
+      when the shuttle arrives.
+    type: Tweak
+  id: 38
+  time: '2025-06-03T05:58:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37768
 Order: 1
