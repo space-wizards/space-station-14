@@ -20,7 +20,7 @@
       rootTask:
         task: SimpleRangedHostileCompound
     - type: HitscanBatteryAmmoProvider
-      proto: RedLaser
+      hitscanEntityProto: RedLaser
       fireCost: 62.5
     - type: Battery
       maxCharge: 1000

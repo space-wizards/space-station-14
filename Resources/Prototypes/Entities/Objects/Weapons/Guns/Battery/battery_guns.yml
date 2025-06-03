@@ -43,7 +43,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: RedLightLaser
+    hitscanEntityProto: RedLightLaser
     fireCost: 50
   - type: ItemSlots
     slots:
@@ -137,7 +137,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
+    hitscanEntityProto: RedMediumLaser
     fireCost: 62.5
   - type: MagazineVisuals
     magState: mag
@@ -167,7 +167,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
+    hitscanEntityProto: RedLaser
     fireCost: 62.5
   - type: Battery
     maxCharge: 500
@@ -228,7 +228,7 @@
     availableModes:
     - SemiAuto
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaserPractice
+    hitscanEntityProto: RedLaserPractice
     fireCost: 62.5
   - type: StaticPrice
     price: 300
@@ -242,7 +242,7 @@
   - type: StaticPrice
     price: 420
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
+    hitscanEntityProto: RedLaser
     fireCost: 62.5
 
 - type: entity
@@ -273,7 +273,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: Pulse
+    hitscanEntityProto: Pulse
     fireCost: 200
   - type: Battery
     maxCharge: 2000
@@ -309,7 +309,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: Pulse
+    hitscanEntityProto: Pulse
     fireCost: 200
   - type: Battery
     maxCharge: 5000
@@ -341,7 +341,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: Pulse
+    hitscanEntityProto: Pulse
     fireCost: 100
   - type: Battery
     maxCharge: 40000
@@ -373,7 +373,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: RedHeavyLaser
+    hitscanEntityProto: RedHeavyLaser
     fireCost: 100
   - type: Tag
     tags:
@@ -430,7 +430,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: XrayLaser
+    hitscanEntityProto: XrayLaser
     fireCost: 100
   - type: MagazineVisuals
     magState: mag
@@ -599,7 +599,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
+    hitscanEntityProto: RedMediumLaser
     fireCost: 100
   - type: BatterySelfRecharger
     autoRecharge: true
@@ -645,7 +645,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
+    hitscanEntityProto: RedMediumLaser
     fireCost: 100
   - type: BatterySelfRecharger
     autoRecharge: true
@@ -739,7 +739,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_clown.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
+    hitscanEntityProto: RedMediumLaser
     fireCost: 100
   - type: BatterySelfRecharger
     autoRecharge: true
@@ -859,4 +859,4 @@
   id: XenoborgHeavyLaserGun
   components:
   - type: HitscanBatteryAmmoProvider
-    proto: RedHeavyLaser
+    hitscanEntityProto: RedHeavyLaser
