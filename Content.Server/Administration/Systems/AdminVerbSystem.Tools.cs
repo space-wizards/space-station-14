@@ -1,6 +1,7 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Content.Server._Starlight.Medical.Limbs;
 using Content.Server.Administration.Components;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
@@ -19,6 +20,8 @@ using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Content.Shared.Construction.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -26,6 +29,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Electrocution;
 using Content.Shared.Hands.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Stacks;
@@ -57,6 +61,11 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly BatterySystem _batterySystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly GunSystem _gun = default!;
+
+    //🌟Starlight🌟 start
+    [Dependency] private readonly LimbSystem _limbSystem = default!;
+    [Dependency] private readonly StarlightEntitySystem _entitySystem = default!;
+    //🌟Starlight🌟 end
 
     private void AddTricksVerbs(GetVerbsEvent<Verb> args)
     {
@@ -752,10 +761,42 @@ public sealed partial class AdminVerbSystem
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-set-bullet-amount-description"),
-                Priority = (int) TricksVerbPriorities.SetBulletAmount,
+                Priority = (int)TricksVerbPriorities.SetBulletAmount,
             };
             args.Verbs.Add(setCapacity);
         }
+
+        // 🌟Starlight🌟 start
+        if (TryComp<BodyComponent>(args.Target, out var bodyComp))
+        {
+            Verb reaperArm = new()
+            {
+                Text = "Replace the right hand with a Reaper arm.",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/_Starlight/Mobs/Species/Cyberlimbs/parts.rsi"), "r_silver_arm"),
+                Act = () =>
+                {
+                    var torso = _bodySystem.GetBodyChildrenOfType(args.Target, BodyPartType.Torso).FirstOrDefault();
+                    var rightArm = _bodySystem.GetBodyChildrenOfType(args.Target, BodyPartType.Arm).FirstOrDefault(part => part.Component.Symmetry == BodyPartSymmetry.Right);
+                    if (torso == default || rightArm == default)
+                        return;
+
+                    if (_entitySystem.TryEntity<TransformComponent, HumanoidAppearanceComponent, BodyComponent>(args.Target, out var body)
+                    && _entitySystem.TryEntity<TransformComponent, MetaDataComponent, BodyPartComponent>(rightArm.Id, out var partEnt))
+                    {
+                        _limbSystem.Amputatate(body, partEnt);
+                        var reaper = Spawn("RightArmCyberReaper", body.Comp1.Coordinates);
+                        if (_entitySystem.TryEntity<BodyPartComponent>(reaper, out var reaperEnt))
+                            _limbSystem.AttachLimb((body.Owner, body.Comp2), "right arm", torso, reaperEnt);
+                    }
+                },
+                Impact = LogImpact.Medium,
+                Message = "Replace the right hand with a Reaper arm.",
+                Priority = (int)TricksVerbPriorities.SetBulletAmount,
+            };
+            args.Verbs.Add(reaperArm);
+        }
+        // 🌟Starlight🌟 end
     }
 
     private void RefillEquippedTanks(EntityUid target, Gas gasType)

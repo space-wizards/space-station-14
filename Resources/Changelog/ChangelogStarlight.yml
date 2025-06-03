@@ -6680,4 +6680,109 @@ Entries:
   id: 924
   time: '2025-06-02T20:53:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/748
+- author: STARLIGHT TEAM
+  changes:
+  - message: Abyss mobs now blink again.
+    type: Fix
+  id: 925
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Removed a Syndicate mission that was accidentally set.
+    type: Fix
+  id: 926
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Mission difficulties now follow a normal distribution centered around
+      medium difficulty.
+    type: Tweak
+  id: 927
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Difficult-tier missions are now only available starting from the 30-minute
+      mark.
+    type: Tweak
+  id: 928
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: The Abyss Core is now classified as an artifact for R&D, with a massive
+      research multiplier.
+    type: Tweak
+  id: 929
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added a new Impossible-level expedition, available from the 60-minute
+      mark. Do not go on it. You will die.
+    type: Add
+  id: 930
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: IQlvlZero, Walksanator, Conf
+  changes:
+  - message: added moff cake
+    type: Add
+  id: 931
+  time: '2025-06-03T00:06:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/721
+- author: InanimateIJK
+  changes:
+  - message: Timefracture, a track by Bad History is added to the lobby and round-end
+      sound collection.
+    type: Add
+  id: 932
+  time: '2025-06-03T01:57:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/754
+- author: Happyrobot33
+  changes:
+  - message: Added CC Outpost G24 (Conf).
+    type: Add
+  id: 933
+  time: '2025-06-03T02:04:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/753
+- author: Happyrobot33
+  changes:
+  - message: Added CC Outpost SC17 (Trep Maul).
+    type: Add
+  id: 934
+  time: '2025-06-03T02:04:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/753
+- author: Happyrobot33
+  changes:
+  - message: Added randomization to centcomm map selection, currently 2 maps in the
+      CC map pool. Selected round start.
+    type: Add
+  id: 935
+  time: '2025-06-03T02:04:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/753
+- author: Happyrobot33
+  changes:
+  - message: Fixed oversight with escape pod docking system.
+    type: Fix
+  id: 936
+  time: '2025-06-03T02:04:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/753
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cyber arms now spawn with the hand attached by default.
+    type: Add
+  id: 937
+  time: '2025-06-03T02:36:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/738
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added a button that lets admins replace their right arm with a Reaper
+      arm, for easier surgical work.
+    type: Add
+  id: 938
+  time: '2025-06-03T02:36:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/738
 

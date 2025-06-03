@@ -80,6 +80,9 @@
   
 - type: Tag
   id: SovietDungeon
+    
+- type: Tag
+  id: SovietWarehouse
 
 - type: Tag
   id: SpeedLoaderShotgun
