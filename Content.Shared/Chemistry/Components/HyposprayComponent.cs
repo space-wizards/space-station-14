@@ -1,6 +1,5 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.Chemistry.Components;
@@ -12,7 +11,6 @@ public sealed partial class HyposprayComponent : Component
     public string SolutionName = "hypospray";
 
     [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
     [DataField]

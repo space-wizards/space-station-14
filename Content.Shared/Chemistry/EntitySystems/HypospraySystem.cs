@@ -121,9 +121,9 @@ public sealed class HypospraySystem : EntitySystem
             return false;
 
         // The target event gets priority for the overriden message.
-        if (targetEvent.InjectMessageOverride != null)
+        if (targetEvent.InjectMessageOverride is not null)
             msgFormat = targetEvent.InjectMessageOverride;
-        else if (selfEvent.InjectMessageOverride != null)
+        else if (selfEvent.InjectMessageOverride is not null)
             msgFormat = selfEvent.InjectMessageOverride;
         else if (target == user)
             msgFormat = "hypospray-component-inject-self-message";
