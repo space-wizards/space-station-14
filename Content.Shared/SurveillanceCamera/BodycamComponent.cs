@@ -16,6 +16,12 @@ public sealed partial class BodycamComponent: Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string Name = "Unknown";
+
+    /// <summary>
+    /// Who is currently wearing the bodycam.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? Wearer = null;
 }
 
 public enum BodycamState

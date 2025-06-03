@@ -1,3 +1,4 @@
+using Content.Shared.IdentityManagement;
 using Content.Shared.SurveillanceCamera;
 
 namespace Content.Server.SurveillanceCamera.Systems;
@@ -19,10 +20,22 @@ public sealed class BodycamSystem: SharedBodycamSystem
         _camera.SetActive(uid, false);
     }
 
+    /// <inheritdoc cref="SharedBodycamSystem.SwitchOn"/>
     protected override void SwitchOn(EntityUid uid, BodycamComponent comp, EntityUid user)
     {
+        if (comp.Wearer == null)
+            return;
+
         base.SwitchOn(uid, comp, user);
         _camera.SetActive(uid, true);
-        // todo: set camera name to wearer name
+        if (TryComp<SurveillanceCameraComponent>(uid, out var camera))
+            camera.CameraId = Loc.GetString("bodycam-name", ("wearer", Identity.Name(comp.Wearer.Value, EntityManager)));
+    }
+
+    /// <inheritdoc cref="SharedBodycamSystem.SwitchOff"/>
+    protected override void SwitchOff(EntityUid uid, BodycamComponent comp, EntityUid user, bool causedByPlayer)
+    {
+        base.SwitchOff(uid, comp, user, causedByPlayer);
+        _camera.SetActive(uid, false);
     }
 }
