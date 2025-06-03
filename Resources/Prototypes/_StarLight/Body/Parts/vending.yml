@@ -1,0 +1,35 @@
+- type: entity
+  id: LeftLegWithFootHuman
+  name: "left human leg"
+  parent: [PartHuman, BaseLeftLeg, LeftLegHuman]
+  components:
+  - type: WithAttachedBodyParts
+    parts:
+      left foot: LeftFootHuman
+
+- type: entity
+  id: RightLegWithFootHuman
+  name: "right human leg"
+  parent: [PartHuman, BaseRightLeg, RightLegHuman]
+  components:
+  - type: WithAttachedBodyParts
+    parts:
+      right foot: RightFootHuman
+
+- type: entity
+  id: LeftArmWithHandHuman
+  name: "left human arm"
+  parent: [PartHuman, BaseLeftArm, LeftArmHuman]
+  components:
+  - type: WithAttachedBodyParts
+    parts:
+      left hand: LeftHandHuman
+
+- type: entity
+  id: RightArmWithHandHuman
+  name: "right human arm"
+  parent: [PartHuman, BaseRightArm, RightArmHuman]
+  components:
+  - type: WithAttachedBodyParts
+    parts:
+      right hand: RightHandHuman
