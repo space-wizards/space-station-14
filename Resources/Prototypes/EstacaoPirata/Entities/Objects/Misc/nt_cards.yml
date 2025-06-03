@@ -108,7 +108,7 @@
     name: card-sc-2-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_2_of_Clubs_nanotrasen
+    state: sc_2_of_Clubs_black
 
 - type: entity
   parent: CardBaseNanotrasen
