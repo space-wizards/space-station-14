@@ -182,7 +182,7 @@
 - type: entity
   parent: FloorCarpetItemRed
   id: FloorCarpetItemBoardBlack
-  name: Black Board
+  suffix: Black Board
   components:
   - type: Sprite
     state: tabletop-black
@@ -192,6 +192,22 @@
     stackType: FloorCarpetBoardBlack
   - type: SpawnAfterInteract #Nuke after convert to FloorTile
     prototype: CarpetBoardBlack
+    doAfter: 0.5
+    removeOnInteract: true
+
+- type: entity
+  parent: FloorCarpetItemRed
+  id: FloorCarpetItemBoardChecker
+  suffix: Checkered Board
+  components:
+  - type: Sprite
+    state: tabletop-checker
+  - type: Item
+    heldPrefix: carpet-board-checker
+  - type: Stack
+    stackType: FloorCarpetBoardChecker
+  - type: SpawnAfterInteract #Nuke after convert to FloorTile
+    prototype: CarpetBoardChecker
     doAfter: 0.5
     removeOnInteract: true
 

@@ -416,17 +416,15 @@
         prob: 0.05
 
 - type: entity
-  name: big chess set
-  description: Perfect for any high profile chess game.
-  id: CrateFunBigChess
+  name: bigger chess set
+  description: Perfect for any really high profile chess game.
+  id: CrateFunBiggerChess
   parent: CratePlastic
   components:
   - type: StorageFill
     contents:
       - id: FloorCarpetItemBoardBlack
-        amount: 32
       - id: FloorCarpetItemBoardWhite
-        amount: 32
       - id: BlackKing
         amount: 1
       - id: BlackQueen

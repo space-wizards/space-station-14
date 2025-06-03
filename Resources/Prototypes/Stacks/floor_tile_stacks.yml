@@ -640,11 +640,16 @@
   id: FloorCarpetBoardWhite
   name: stack-board-white-tile
   spawn: FloorCarpetItemBoardWhite
-  maxCount: 30
+  maxCount: 32
 
 - type: stack
   id: FloorCarpetBoardBlack
   name: stack-board-black-tile
   spawn: FloorCarpetItemBoardBlack
-  maxCount: 30
+  maxCount: 32
 
+- type: stack
+  id: FloorCarpetBoardChecker
+  name: stack-board-checker-tile
+  spawn: FloorCarpetItemBoardChecker
+  maxCount: 32

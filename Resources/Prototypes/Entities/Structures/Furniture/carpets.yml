@@ -426,3 +426,33 @@
               FloorCarpetItemBoardBlack:
                 min: 1
                 max: 1
+
+- type: entity
+  id: CarpetBoardChecker
+  parent: CarpetBase
+  name: "checkered tabletop board"
+  components:
+  - type: Clickable
+  - type: Sprite
+    sprite: Structures/Furniture/Carpets/checker_board.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Carpets/checker_board.rsi
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              FloorCarpetItemBoardChecker:
+                min: 1
+                max: 1
