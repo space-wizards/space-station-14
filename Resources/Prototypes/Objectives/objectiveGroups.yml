@@ -65,7 +65,7 @@
     TechnologyDiskStealCollectionObjective: 1           #sci
     MailStealCollectionObjective: 1                     #cargo
     IDCardsStealCollectionObjective: 1
-    ClothingEyesHudsStealCollectionObjective: 5
+    ClothingEyesHudsStealCollectionObjective: 1
     LAMPStealCollectionObjective: 2                     #only for moth
 
 - type: weightedRandom
