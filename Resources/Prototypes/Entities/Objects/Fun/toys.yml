@@ -32,7 +32,7 @@
   components:
   - type: Tag
     tags:
-      - Payload
+    - Payload
   - type: UseDelay
     delay: 1.0
   - type: MeleeWeapon
@@ -58,8 +58,6 @@
   name: rubber ducky
   description: Not carried here by ocean currents.
   components:
-  - type: Item
-    size: Tiny
   - type: Sprite
     sprite: Objects/Fun/ducky.rsi
     state: icon
@@ -68,6 +66,8 @@
     sprite: Objects/Fun/ducky.rsi
     slots:
     - HEAD
+  - type: Item
+    size: Tiny
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/quack.ogg
@@ -167,7 +167,7 @@
     state: icon
   - type: Tag
     tags:
-      - Payload
+    - Payload
   - type: UseDelay
     delay: 180.0
   - type: EmitSoundOnUse
@@ -195,11 +195,11 @@
   name: ian toy
   description: Unable to eat, but just as fluffy as the real guy!
   components:
-  - type: Item
-    size: Tiny
   - type: Sprite
     sprite: Objects/Fun/toy_ian.rsi
     state: icon
+  - type: Item
+    size: Tiny
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/ian.ogg
@@ -254,13 +254,13 @@
     fireRate: 0.5
     selectedMode: SemiAuto
     availableModes:
-      - SemiAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/click.ogg
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - BulletFoam
+      - BulletFoam
     capacity: 1
     soundInsert:
       path: /Audio/Items/bow_pull.ogg
@@ -298,7 +298,7 @@
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
-      - SemiAuto
+    - SemiAuto
     fireRate: 2
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
@@ -308,8 +308,8 @@
   - type: RevolverAmmoProvider
     whitelist:
       tags:
-        - CartridgeCap
-        - SpeedLoaderCap
+      - CartridgeCap
+      - SpeedLoaderCap
     proto: CartridgeCap
     capacity: 6
     chambers: [ True, True, True, True, True, True ]
@@ -330,10 +330,10 @@
   - type: RevolverAmmoProvider
     whitelist:
       tags:
-        - CartridgeCap
-        - SpeedLoaderCap
-        - CartridgeMagnum
-        - SpeedLoaderMagnum
+      - CartridgeCap
+      - SpeedLoaderCap
+      - CartridgeMagnum
+      - SpeedLoaderMagnum
     proto: CartridgeMagnumAP
 
 - type: entity
@@ -555,68 +555,68 @@
   name: toy sword
   description: New Sandy-Cat plastic sword! Comes with realistic sound and full color! Looks almost like the real thing!
   components:
-    - type: EnergySword
-    - type: ItemToggle
-      soundActivate:
-        path: /Audio/Weapons/ebladeon.ogg
-      soundDeactivate:
-        path: /Audio/Weapons/ebladeoff.ogg
-    - type: ItemToggleActiveSound
-      activeSound:
-        path: /Audio/Weapons/ebladehum.ogg
-    - type: Sprite
-      sprite: Objects/Weapons/Melee/e_sword.rsi
-      layers:
-        - state: e_sword
-        - state: e_sword_blade
-          color: "#FFFFFF"
-          visible: false
-          shader: unshaded
-          map: [ "blade" ]
-    - type: Item
-      size: Small
-      sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
-    - type: UseDelay
-      delay: 1.0
-    - type: PointLight
-      enabled: false
-      radius: 2
-      energy: 2
-      color: white
-      netsync: false
-    - type: Appearance
-    - type: ToggleableLightVisuals
-      spriteLayer: blade
-      inhandVisuals:
-        left:
-          - state: inhand-left-blade
-            shader: unshaded
-        right:
-          - state: inhand-right-blade
-            shader: unshaded
-    - type: ItemTogglePointLight
-    - type: DisarmMalus
-      malus: 0
-    - type: StaminaDamageOnHit
-      damage: 8
-    - type: MeleeWeapon
-      wideAnimationRotation: -135
-      damage:
-        types:
-          Blunt: 0
-    - type: ItemToggleMeleeWeapon
-      activatedSoundOnHit:
-        path: /Audio/Weapons/eblade1.ogg
-        params:
-          variation: 0.250
-      activatedSoundOnHitNoDamage:
-        path: /Audio/Weapons/eblade1.ogg
-        params:
-          variation: 0.250
-      activatedSoundOnSwing:
-        path: /Audio/Weapons/eblademiss.ogg
-        params:
-          variation: 0.125
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_sword.rsi
+    layers:
+    - state: e_sword
+    - state: e_sword_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: EnergySword
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/ebladeon.ogg
+    soundDeactivate:
+      path: /Audio/Weapons/ebladeoff.ogg
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/ebladehum.ogg
+  - type: Item
+    size: Small
+    sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
+  - type: UseDelay
+    delay: 1.0
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 2
+    color: white
+    netsync: false
+  - type: Appearance
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+        shader: unshaded
+      right:
+      - state: inhand-right-blade
+        shader: unshaded
+  - type: ItemTogglePointLight
+  - type: DisarmMalus
+    malus: 0
+  - type: StaminaDamageOnHit
+    damage: 8
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 0
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Weapons/eblade1.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnSwing:
+      path: /Audio/Weapons/eblademiss.ogg
+      params:
+        variation: 0.125
 
 - type: entity
   parent: BasePlushie
@@ -632,8 +632,8 @@
     - state: visor
   - type: RandomSprite
     available:
-      - enum.DamageStateVisualLayers.Base:
-          base: Sixteen
+    - enum.DamageStateVisualLayers.Base:
+        base: Sixteen
 #  - type: FoodSequenceElement - does not work with randomized sprites
 #    entries:
 #      CottonBurger: AmongPequeno
@@ -700,36 +700,36 @@
   name: rubber hammer
   description: A brightly colored hammer made of rubber.
   components:
-    - type: Sprite
-      sprite: Objects/Fun/rubber_hammer.rsi
-      state: icon
-    - type: WeaponRandom
-      damageBonus:
-          types:
-              Blunt: 1000
-    - type: StaminaDamageOnHit
-      damage: 8
-    - type: Item
-      size: Small
-      sprite: Objects/Fun/rubber_hammer.rsi
-    - type: Appearance
-    - type: DisarmMalus
-      malus: 0
-    - type: MeleeWeapon
-      wideAnimationRotation: -135
-      soundHit:
-        collection: RubberHammer
-        params:
-            variation: 0.03
-            volume: 3
-      soundNoDamage:
-        collection: RubberHammer
-        params:
-            variation: 0.03
-            volume: 3
-      damage:
-        types:
-          Blunt: 0
+  - type: Sprite
+    sprite: Objects/Fun/rubber_hammer.rsi
+    state: icon
+  - type: WeaponRandom
+    damageBonus:
+      types:
+        Blunt: 1000
+  - type: StaminaDamageOnHit
+    damage: 8
+  - type: Item
+    size: Small
+    sprite: Objects/Fun/rubber_hammer.rsi
+  - type: Appearance
+  - type: DisarmMalus
+    malus: 0
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    soundHit:
+      collection: RubberHammer
+      params:
+        variation: 0.03
+        volume: 3
+    soundNoDamage:
+      collection: RubberHammer
+      params:
+        variation: 0.03
+        volume: 3
+    damage:
+      types:
+        Blunt: 0
 
 - type: entity
   parent: BaseItem
@@ -743,7 +743,7 @@
     quickEquip: false
   - type: Tag
     tags:
-      - Payload
+    - Payload
   - type: EmitSoundOnUse
     sound:
       collection: Parp
@@ -815,12 +815,12 @@
   description: A plastic banana.
   suffix: Plastic
   components:
-  - type: FlavorProfile
-    flavors:
-      - plastic
-  - type: Food
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
+  - type: FlavorProfile
+    flavors:
+    - plastic
+  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -837,15 +837,12 @@
   name: crazy glue
   description:  A bottle of crazy glue manufactured by Honk! Co.
   components:
-  - type: Openable
-    sound:
-      collection: packetOpenSounds
   - type: Sprite
     sprite: Objects/Fun/glue.rsi
     state: icon
     layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -864,11 +861,14 @@
         reagents:
         - ReagentId: SpaceGlue
           Quantity: 100
+  - type: Openable
+    sound:
+      collection: packetOpenSounds
   - type: TrashOnSolutionEmpty
     solution: drink
   - type: Tag
     tags:
-      - DrinkSpaceGlue
+    - DrinkSpaceGlue
 
 - type: entity
   parent: BaseItem
