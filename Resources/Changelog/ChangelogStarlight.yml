@@ -6680,4 +6680,50 @@ Entries:
   id: 924
   time: '2025-06-02T20:53:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/748
+- author: STARLIGHT TEAM
+  changes:
+  - message: Abyss mobs now blink again.
+    type: Fix
+  id: 925
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Removed a Syndicate mission that was accidentally set.
+    type: Fix
+  id: 926
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Mission difficulties now follow a normal distribution centered around
+      medium difficulty.
+    type: Tweak
+  id: 927
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Difficult-tier missions are now only available starting from the 30-minute
+      mark.
+    type: Tweak
+  id: 928
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: The Abyss Core is now classified as an artifact for R&D, with a massive
+      research multiplier.
+    type: Tweak
+  id: 929
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added a new Impossible-level expedition, available from the 60-minute
+      mark. Do not go on it. You will die.
+    type: Add
+  id: 930
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
 
