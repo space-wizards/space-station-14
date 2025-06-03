@@ -2,7 +2,7 @@
   id: Bagel
   mapName: 'Bagel Station'
   mapPath: /Maps/bagel.yml
-  minPlayers: 30
+  minPlayers: 25
   maxPlayers: 75
   stations:
     Bagel:
@@ -17,65 +17,64 @@
           emergencyShuttlePath: /Maps/Shuttles/emergency_lox.yml
         - type: StationJobs
           availableJobs:
-            #command
+            # cmd
             Captain: [ 1, 1 ]
-            #service
-            HeadOfPersonnel: [ 1, 1 ]
-            Bartender: [ 2, 2 ]
-            Botanist: [ 3, 3 ]
-            Chef: [ 2, 2 ]
-            Janitor: [ 4, 4 ]
-            Chaplain: [ 1, 1 ]
-            Librarian: [ 1, 1 ]
-            ServiceWorker: [ 2, 2 ]
-            #engineering
-            ChiefEngineer: [ 1, 1 ]
-            SeniorEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 4, 4 ]
-            TechnicalAssistant: [ 4, 4 ]
-            #medical
+            BlueShieldOfficer: [ 1, 1 ]
+            # law
+            # Magistrat: [ 1, 1 ]
+            IAA: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]
+            # sec
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
+            Detective: [ 1, 1 ]
+            SecurityPilot: [ 1, 1 ]
+            SecurityOfficer: [ 4, 4 ]
+            Brigmedic: [ 1, 1 ]
+            SecurityCadet: [ 2, 2 ]
+            # med
             ChiefMedicalOfficer: [ 1, 1 ]
             SeniorPhysician: [ 1, 1 ]
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
+            Coroner: [ 1, 1 ]
             MedicalIntern: [ 4, 4 ]
-            # MedicalSurgeon: [ 1, 1 ]
-            #science
+            # rnd
             ResearchDirector: [ 1, 1 ]
             SeniorResearcher: [ 1, 1 ]
             Scientist: [ 5, 5 ]
             ResearchAssistant: [ 4, 4 ]
-            #security
-            HeadOfSecurity: [ 1, 1 ]
-            Warden: [ 1, 1 ]
-            SeniorOfficer: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
-            Detective: [ 1, 1 ]
-            SecurityCadet: [ 4, 4 ]
-            #supply
+            # eng
+            ChiefEngineer: [ 1, 1 ]
+            SeniorEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 3, 3 ]
+            StationEngineer: [ 4, 4 ]
+            TechnicalAssistant: [ 3, 3 ]
+            # sup
             Quartermaster: [ 1, 1 ]
+            SeniorSalvageSpecialist: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
-            #civilian
-            Passenger: [ -1, -1 ]
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
+            # civ
+            HeadOfPersonnel: [ 1, 1 ]
+            SeniorAdministrator: [ 1, 1 ]
+            Chef: [ 2, 2 ]
+            Botanist: [ 3, 3 ]
+            Bartender: [ 2, 2 ]
+            ServiceWorker: [ 2, 2 ]
+            Janitor: [ 4, 4 ]
+            Librarian: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
             Reporter: [ 2, 2 ]
-            #silicon
+            Musician: [ 1, 1 ]
+            Passenger: [ -1, -1 ]
+            Mime: [ 1, 1 ]
+            Clown: [ 1, 1 ]
+            # sil
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
-            # DS14
-            BlueShieldOfficer: [ 1, 1 ]
             BorgSecurity: [ 1, 1 ]
-            # Magistrat: [ 1, 1 ]
-            Lawyer: [ 2, 2 ]
-            Brigmedic: [ 1, 1 ]
+            # etc
             ClownSponsor: [ 0, 2 ]
-            Coroner: [ 1, 1 ]
-            SeniorSalvageSpecialist: [ 1, 1 ]
-            SeniorAdministrator: [ 1, 1 ]
-            SecurityPilot: [ 1, 1 ]
-            IAA: [ 1, 1 ]

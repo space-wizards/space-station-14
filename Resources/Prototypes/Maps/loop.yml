@@ -2,14 +2,14 @@
   id: Loop
   mapName: 'Loop Station'
   mapPath: /Maps/loop.yml
-  minPlayers: 35
-  maxPlayers: 70
+  minPlayers: 0
+  maxPlayers: 40
   stations:
     Loop:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Loop Station {1}'
+          mapNameTemplate: '{0} Loop {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
@@ -17,67 +17,64 @@
           emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml
         - type: StationJobs
           availableJobs:
-            #command
+            # cmd
             Captain: [ 1, 1 ]
-            #service
-            HeadOfPersonnel: [ 1, 1 ]
-            Bartender: [ 2, 2 ]
-            Botanist: [ 2, 2 ]
-            Chef: [ 2, 2 ]
-            Janitor: [ 2, 2 ]
-            Chaplain: [ 1, 1 ]
-            Librarian: [ 1, 1 ]
-            ServiceWorker: [ 3, 3 ]
-            #engineering
-            ChiefEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 5, 5 ]
-            TechnicalAssistant: [ 5, 5 ]
-            #medical
-            ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 4, 5 ]
-            Paramedic: [ 2, 2 ]
-            MedicalIntern: [ 4, 4 ]
-            # MedicalSurgeon: [ 1, 1 ]
-            #science
-            ResearchDirector: [ 1, 1 ]
-            Scientist: [ 5, 5 ]
-            ResearchAssistant: [ 4, 4 ]
-            #security
-            HeadOfSecurity: [ 1, 1 ]
-            Warden: [ 1, 1 ]
-            SecurityOfficer: [ 5, 5 ]
-            Detective: [ 1, 1 ]
-            SecurityCadet: [ 4, 4 ]
-            #supply
-            Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 3, 3 ]
-            CargoTechnician: [ 4, 4 ]
-            #civilian
-            Passenger: [ -1, -1 ]
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
-            Reporter: [ 1, 1 ]
-            # silicon
-            StationAi: [ 1, 1 ]
-            Borg: [ 2, 3 ]
-            BorgSecurity: [ 1, 1 ]
-            # seniors
-            SeniorEngineer: [1, 1 ]
-            SeniorPhysician: [ 1, 1 ]
-            SeniorResearcher: [ 1, 1 ]
-            SeniorOfficer: [ 1, 1 ]
-            SeniorSalvageSpecialist: [ 1, 1 ]
-            SeniorAdministrator: [ 1, 1 ]
+            BlueShieldOfficer: [ 1, 1 ]
             # law
             # Magistrat: [ 1, 1 ]
             IAA: [ 1, 1 ]
-            Lawyer: [ 4, 4 ]
-            # DS14
-            BlueShieldOfficer: [ 1, 1 ]
-            Brigmedic: [ 1, 1 ]
-            ClownSponsor: [ 0, 2 ]
-            Coroner: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]
+            # sec
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            SeniorOfficer: [ 1, 1 ]
+            Detective: [ 1, 1 ]
             SecurityPilot: [ 1, 1 ]
+            SecurityOfficer: [ 3, 3 ]
+            Brigmedic: [ 1, 1 ]
+            SecurityCadet: [ 2, 2 ]
+            # med
+            ChiefMedicalOfficer: [ 1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 4, 4 ]
+            Paramedic: [ 2, 2 ]
+            Coroner: [ 1, 1 ]
+            MedicalIntern: [ 3, 3 ]
+            # rnd
+            ResearchDirector: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ]
+            Scientist: [ 3, 3 ]
+            ResearchAssistant: [ 3, 3 ]
+            # eng
+            ChiefEngineer: [ 1, 1 ]
+            SeniorEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 3, 3 ]
+            StationEngineer: [ 5, 5 ]
+            TechnicalAssistant: [ 5, 5 ]
+            # sup
+            Quartermaster: [ 1, 1 ]
+            SeniorSalvageSpecialist: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 3 ]
+            CargoTechnician: [ 2, 2 ]
+            # civ
+            HeadOfPersonnel: [ 1, 1 ]
+            SeniorAdministrator: [ 1, 1 ]
+            Chef: [ 2, 2 ]
+            Botanist: [ 2, 2 ]
+            Bartender: [ 2, 2 ]
+            ServiceWorker: [ 3, 3 ]
+            Janitor: [ 2, 2 ]
+            Librarian: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
+            Reporter: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            Passenger: [ -1, -1 ]
+            Mime: [ 1, 1 ]
+            Clown: [ 1, 1 ]
+            # sil
+            StationAi: [ 1, 1 ]
+            Borg: [ 2, 3 ]
+            BorgSecurity: [ 1, 1 ]
+            # etc
+            ClownSponsor: [ 0, 2 ]

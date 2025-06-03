@@ -1,0 +1,256 @@
+- type: sponsorLoadout
+  id: LoToK1
+  entity: ClothingBackpackLoToK1
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackLoToK1
+  name: ведьмина сумочка
+  description: Сумка использующая технологию блюспейса для увелечения своего максимального объёма. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,16,6
+  - type: StorageFill
+    contents:
+      - id: ClothingBeltLoToK1Filled
+      - id: ClothingNeckCloakLoToK1
+      - id: ClothingHandsGlovesLoToK1
+      - id: ClothingOuterHardsuitLoToK1
+      - id: ClothingUniformJumpsuitLoToK1
+      - id: ClothingShoesBootsMagLoToK1
+      - id: ClothingUnderSocksLoToK1
+      - id: ClothingMaskLoToK1
+      - id: ClothingHeadHatLoToK1
+      - id: PDALoToK1
+      - id: ADTtelescopicBaton
+      - id: SpaceCash1000
+      - id: PaperLawsLoToK1
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltLoToK1Filled
+  name: ведьмин корсет
+  description: Корсет-пояс, имеющий как декоративную функцию, так и функцию хранение вещей.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LoToK1/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakLoToK1
+  name: тёмная шёлковая мантия
+  description: Мантия тёмного цвета. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/cloak.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodLoToK1
+    requiredSlot:
+    - neck
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodLoToK1
+  categories: [ HideSpawnMenu ]
+  name: ведьмин капюшон с ушками
+  description: Ой какие ушки!
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/headcloak.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LoToK1/headcloak.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesLoToK1
+  name: шёлковые перчатки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Изолированны.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LoToK1/gloves.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitLoToK1
+  name: модифицированный ведьмин скафандр
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LoToK1/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitLoToK1
+  - type: Item
+    size: Huge
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitLoToK1
+  categories: [ HideSpawnMenu ]
+  name: шлем ведьминого скафандра
+  description: Шлем изолирующий владельца от страшного вакуума снаружи.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LoToK1/helmet.rsi
+  - type: PointLight
+    color: "#fc03c6"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitLoToK1
+  name: ведьмина юбка
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LoToK1/jumpsuit.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagLoToK1
+  name: ведьмины магнитные ботинки на каблуках
+  description: Магнитные ботинки имеющие продвинутую технологию магнетизма.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/LoToK1/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/LoToK1/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+
+# Socks
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderSocksLoToK1
+  name: полосатые ведьмины чулки
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/socks.rsi
+
+# Other
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawsLoToK1
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено 
+    content: paper-law-lotok1
+
+# Gasmask
+- type: entity
+  parent: ClothingMaskGasSyndicate
+  id: ClothingMaskLoToK1
+  name: ведьмина маска мима
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LoToK1/gasmask.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# PDA
+- type: entity
+  parent: BaseMedicalPDA
+  id: PDALoToK1
+  name: КПК тыковка
+  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Sponsor/LoToK1/pda.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/pda.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Head
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatLoToK1
+  name: фирменная ведьмина шляпка
+  description: Вышита шёлком. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/LoToK1/hat.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/LoToK1/hat.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
