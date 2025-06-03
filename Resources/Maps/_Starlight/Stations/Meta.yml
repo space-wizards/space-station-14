@@ -8462,7 +8462,7 @@ entities:
           - 0
         chunkSize: 4
     - type: BecomesStation
-      id: Meta
+      id: StarlightMeta
     - type: OccluderTree
     - type: Shuttle
     - type: GasTileOverlay
