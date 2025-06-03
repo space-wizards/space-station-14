@@ -104,6 +104,8 @@
         type: StrippableBoundUserInterface
       enum.PowerMonitoringConsoleUiKey.Key:
         type: PowerMonitoringConsoleBoundUserInterface
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
       enum.LatheUiKey.Key:
         type: LatheBoundUserInterface
       enum.ResearchClientUiKey.Key:
@@ -192,23 +194,40 @@
     uis:
       enum.PowerMonitoringConsoleUiKey.Key:
         toggleAction: ActionMothershipShowPower
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionMothershipShowRadar
   - type: ShowElectrocutionHUD
   - type: PowerMonitoringConsole
   - type: PowerMonitoringCableNetworks
+  - type: RadarConsole
 
-# TODO: add xenoborg control interface action
-# TODO: add xenoborg camera monitor interface action
+# TODO: add xenoborg control interface action (part 5)
+# TODO: add xenoborg camera monitor interface action (part 5)
 
 - type: entity
   id: ActionMothershipShowPower
   name: Power Monitoring Interface
-  description: View a Power Monitoring Interface.
+  description: View the Power Monitoring Interface.
   components:
   - type: Action
     icon:
-      sprite: Structures/Machines/computers.rsi # TODO: custom sprite here
+      sprite: Structures/Machines/computers.rsi # TODO: custom sprite here (part 5)
       state: power_monitor
     keywords: [ "AI", "console", "interface" ]
     priority: -6
   - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.PowerMonitoringConsoleUiKey.Key }
+
+- type: entity
+  id: ActionMothershipShowRadar
+  name: Radar Monitor
+  description: View the radar monitor.
+  components:
+  - type: Action
+    icon:
+      sprite: Structures/Machines/computers.rsi # TODO: custom sprite here (part 5)
+      state: solar_screen
+    keywords: [ "AI", "console", "interface" ]
+    priority: -6
+  - type: InstantAction
+    event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
