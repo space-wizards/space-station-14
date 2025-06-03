@@ -541,6 +541,8 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatSpiderCutlet
+  - type: Item
+    heldPrefix: spider
 
 - type: entity
   name: raw spider leg
@@ -761,6 +763,8 @@
     graph: CookedPatty
     node: start
     defaultTarget: cooked meat patty
+  - type: Item
+    heldPrefix: generic-pink
 
 - type: entity
   name: slimeball
@@ -1331,6 +1335,8 @@
     entries:
       Burger: MeatPatty
       Taco: MeatPatty
+  - type: Item
+    heldPrefix: meatball
 
 - type: entity
   name: boiled snail
