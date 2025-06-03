@@ -29,7 +29,7 @@
   id: SecurityCadetGear
   equipment:
     shoes: ClothingShoesBootsJackFilled
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterArmorBasicWithBodycam
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled

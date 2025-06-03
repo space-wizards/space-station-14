@@ -226,7 +226,7 @@
     back: ClothingBackpackSecurity
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterArmorBasicWithBodycam
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
   inhand:
@@ -244,7 +244,7 @@
     back: ClothingBackpackSatchelSecurity
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
-    outerClothing: ClothingOuterArmorBasicSlim
+    outerClothing: ClothingOuterArmorBasicSlimWithBodycam
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
   inhand:
@@ -261,7 +261,7 @@
     back: ClothingBackpackSecurity
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterArmorBasicWithBodycam
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
   inhand:
@@ -279,10 +279,10 @@
     back: ClothingBackpackSatchelSecurity
     ears: ClothingHeadsetSecurity
     eyes: ClothingEyesGlassesSecurity
-    outerClothing: ClothingOuterArmorBasicSlim
+    outerClothing: ClothingOuterArmorBasicSlimWithBodycam
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
-  inhand: 
+  inhand:
   - FlashlightSeclite
 
 - type: startingGear
@@ -859,7 +859,7 @@
     eyes: ClothingEyesHudMedical
     pocket1: RegenerativeMesh
     pocket2: PillCanisterBicaridine
-  inhand: 
+  inhand:
   - ScalpelAdvanced
   - MedicatedSuture
 
