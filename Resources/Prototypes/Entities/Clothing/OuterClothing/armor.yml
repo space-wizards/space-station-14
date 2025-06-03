@@ -43,9 +43,10 @@
     sprite: Clothing/OuterClothing/Armor/security_slim.rsi
 
 - type: entity
-  parent: ClothingOuterArmorBase
+  parent: [ ClothingOuterArmorBase, BaseClothingWithBodycam ]
   id: ClothingOuterArmorBulletproof
   name: bulletproof vest
+  suffix: bodycam
   description: A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent.
   components:
   - type: Sprite
@@ -63,9 +64,10 @@
     damageCoefficient: 0.80
 
 - type: entity
-  parent: ClothingOuterArmorBase
+  parent: [ ClothingOuterArmorBase, BaseClothingWithBodycam ]
   id: ClothingOuterArmorReflective
   name: reflective vest
+  suffix: bodycam
   description: An armored vest with advanced shielding to protect against energy weapons.
   components:
   - type: Sprite
@@ -292,9 +294,10 @@
     size: Normal
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSecurityContraband]
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSecurityContraband, BaseClothingWithBodycam]
   id: ClothingOuterArmorRiot
   name: riot suit
+  suffix: bodycam
   description: A suit of semi-flexible polycarbonate body armor with heavy padding to protect against melee attacks. Perfect for fighting delinquents around the station.
   components:
   - type: Sprite
