@@ -8,21 +8,6 @@
     - type: Item
       size: Tiny
 
-
-# - type: entity
-#   parent: BaseItem
-#   id: TreasureCoinIron
-#   name: coin
-#   description: A flat bit of metal. If it was still in circulation, inflation would've made it worthless. Since it isn't, it's worth enough to keep in a book.
-#   components:
-#   - type: Sprite
-#     sprite: Objects/Misc/coins.rsi
-#     state: coin_iron
-#   - type: Item
-#     size: Tiny
-#   - type: StaticPrice
-#     price: 75
-
 - type: entity
   parent: PokerChipBase
   id: PokerChipRed
