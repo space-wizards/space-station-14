@@ -86,12 +86,12 @@ public sealed class DashAbilitySystem : EntitySystem
         }
 
         // Check if the user is BEING pulled, and escape if so
-        if (TryComp<PullableComponent>(user, out var pull) && _pullingSystem.IsPulled((user, pull)))
-            _pullingSystem.TryStopPull(user, pull);
+        _pullingSystem.TryStopPull(user);
 
         // Check if the user is pulling anything, and drop it if so
-        if (TryComp<PullerComponent>(user, out var puller) && TryComp<PullableComponent>(puller.Pulling, out var pullable))
-            _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
+        var puller = _pullingSystem.GetPuller(user);
+        if (puller != null)
+            _pullingSystem.TryStopPull(puller.Value);
 
         var xform = Transform(user);
         _transform.SetCoordinates(user, xform, args.Target);
