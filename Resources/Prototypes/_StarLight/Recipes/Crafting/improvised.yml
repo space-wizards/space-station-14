@@ -387,3 +387,120 @@
   icon:
     sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
     state: icon
+
+- type: construction
+  name: wooden hilt
+  id: HiltWood
+  graph: HiltWoodGraph
+  startNode: start
+  targetNode: hilt
+  category: construction-category-tools
+  objectType: Item
+  description: Needed in the construction of basic bladed weapons.
+  icon:
+    sprite: _Starlight/Objects/Misc/wooden_hilt.rsi
+    state: icon
+
+- type: construction
+  name: plasteel hilt
+  id: HiltPlasteel
+  graph: HiltPlasteelGraph
+  startNode: start
+  targetNode: hilt
+  category: construction-category-tools
+  objectType: Item
+  description: Needed in the construction of advanced bladed weapons.
+  icon:
+    sprite: _Starlight/Objects/Misc/plasteel_hilt.rsi
+    state: icon
+
+- type: construction
+  name: steel blade
+  id: BladeSteel
+  graph: BladeSteelGraph
+  startNode: start
+  targetNode: blade
+  category: construction-category-tools
+  objectType: Item
+  description: Needed in the construction of basic bladed weapons.
+  icon:
+    sprite: _Starlight/Objects/Misc/steel_blade.rsi
+    state: icon
+
+- type: construction
+  name: plasteel blade
+  id: BladePlasteel
+  graph: BladePlasteelGraph
+  startNode: start
+  targetNode: blade
+  category: construction-category-tools
+  objectType: Item
+  description: Needed in the construction of advanced bladed weapons.
+  icon:
+    sprite: _Starlight/Objects/Misc/plasteel_blade.rsi
+    state: icon
+
+- type: construction
+  name: makeshift sword
+  id: SwordMakeshift
+  graph: SwordMakeshiftGraph
+  startNode: start
+  targetNode: sword
+  category: construction-category-weapons
+  objectType: Item
+  description: Big and scary, but not that dangerous.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Melee/makeshift_sword.rsi
+    state: icon
+
+- type: construction
+  name: improvised sword
+  id: SwordImprovised
+  graph: SwordImprovisedGraph
+  startNode: start
+  targetNode: sword
+  category: construction-category-weapons
+  objectType: Item
+  description: The budget option for aspiring maints knights.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Melee/improvised_sword.rsi
+    state: icon
+
+- type: construction
+  name: forged sword
+  id: SwordForged
+  graph: SwordForgedGraph
+  startNode: start
+  targetNode: sword
+  category: construction-category-weapons
+  objectType: Item
+  description: Now THAT'S a weapon! Best paired with equally shiny armor, needs welding.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Melee/forged_sword.rsi
+    state: icon
+
+- type: construction
+  name: dawnbreaker
+  id: SwordFlaming
+  graph: SwordFlamingGraph
+  startNode: start
+  targetNode: sword
+  category: construction-category-weapons
+  objectType: Item
+  description: Burn away the unholdy heretics with this weapon of justice!
+  icon:
+    sprite: _Starlight/Objects/Weapons/Melee/dawnbreaker.rsi
+    state: icon
+
+- type: construction
+  name: tidebreaker
+  id: ClaymoreForged
+  graph: ClaymoreForgedGraph
+  startNode: start
+  targetNode: sword
+  category: construction-category-weapons
+  objectType: Item
+  description: Crush those who oppose you!
+  icon:
+    sprite: _Starlight/Objects/Weapons/Melee/tidebreaker.rsi
+    state: icon

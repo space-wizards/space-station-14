@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: HiltPlasteelGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: hilt
+      steps:
+      - material: Plasteel
+        amount: 4
+        doAfter: 10
+  - node: hilt
+    entity: HiltPlasteel

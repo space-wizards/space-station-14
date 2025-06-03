@@ -2,7 +2,13 @@
   
 - type: Tag
   id: Arachnid
-  
+
+- type: Tag
+  id: BladePlasteel
+
+- type: Tag
+  id: BladeSteel
+
 - type: Tag
   id: CantInteract
   
@@ -35,6 +41,12 @@
 
 - type: Tag
   id: EmergencyWelder
+
+- type: Tag
+  id: HiltPlasteel
+
+- type: Tag
+  id: HiltWood
 
 - type: Tag
   id: ImprovisedMultitool
@@ -83,6 +95,9 @@
   
 - type: Tag
   id: SecCyberEyes
+
+- type: Tag
+  id: SwordForged
 
 - type: Tag
   id: ShipWreck

@@ -144,3 +144,117 @@
   - type: Construction
     graph: ForgedOmnitoolGraph
     node: tool
+
+- type: entity
+  parent: BaseItem
+  id: HiltWood
+  name: wooden hilt
+  description: People will try to convince you otherwise, but wooden handles are not part of a high-quality sword, nor a knife.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/wooden_hilt.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - HiltWood
+  - type: Construction
+    graph: HiltWoodGraph
+    node: hilt
+
+- type: entity
+  parent: BaseItem
+  id: HiltPlasteel
+  name: plasteel hilt
+  description: Part of high-quality sword & knife crafting.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/plasteel_hilt.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - HiltPlasteel
+  - type: Construction
+    graph: HiltPlasteelGraph
+    node: hilt
+
+- type: entity
+  parent: BaseItem
+  id: BladeSteel
+  name: steel blade
+  description: Doesn't look very sharp..
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/steel_blade.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - BladeSteel
+  - type: Construction
+    graph: BladeSteelGraph
+    node: blade
+
+- type: entity
+  parent: BaseItem
+  id: BladePlasteel
+  name: plasteel blade
+  description: Ouch! Just touching the edge can cut you.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/plasteel_blade.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - BladePlasteel
+  - type: Construction
+    graph: BladePlasteelGraph
+    node: blade
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedSwordForged
+  name: forged sword parts
+  description: Simply needs a bit of welding around the edges.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/forged_sword.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: SwordForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: SwordForgedGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedClaymoreForged
+  name: tidebreaker parts
+  description: Simply needs a bit of welding around the edges.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/tidebreaker.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ClaymoreForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ClaymoreForgedGraph
+    node: tool

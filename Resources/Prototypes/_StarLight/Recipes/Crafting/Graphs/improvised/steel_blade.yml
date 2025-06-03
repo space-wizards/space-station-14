@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: BladeSteelGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: blade
+      steps:
+      - material: Steel
+        amount: 4
+        doAfter: 10
+  - node: blade
+    entity: BladeSteel

@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: HiltWoodGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: hilt
+      steps:
+      - material: WoodPlank
+        amount: 3
+        doAfter: 4
+  - node: hilt
+    entity: HiltWood
