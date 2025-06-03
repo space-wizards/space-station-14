@@ -121,7 +121,7 @@
   - type: VoiceOverride
     nameOverride: MOTHERSHIP CORE
   - type: TypingIndicator
-    proto: robot
+    proto: xenoborg
   - type: Speech
     speechVerb: Robotic
     speechSounds: Xenoborg
