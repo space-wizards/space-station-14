@@ -677,7 +677,7 @@
       amount: 1
   products:
     Traumoxadone: 3
-  
+
 - type: reaction
   id: Stelloxadone
   impact: Medium
