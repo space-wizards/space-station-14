@@ -36,14 +36,14 @@ public sealed partial class ExplosionPrototype : IPrototype
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
     [DataField("tileBreakChance")]
-    private float[] _tileBreakChance = { 0f, 1f };
+    public float[] _tileBreakChance = { 0f, 1f };
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakChance"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
     [DataField("tileBreakIntensity")]
-    private float[] _tileBreakIntensity = {0f, 15f };
+    public float[] _tileBreakIntensity = { 0f, 15f };
 
     /// <summary>
     ///     When a tile is broken by an explosion, the intensity is reduced by this amount and is used to try and
@@ -115,19 +115,13 @@ public sealed partial class ExplosionPrototype : IPrototype
     /// </summary>
     public float TileBreakChance(float intensity)
     {
-        if (_tileBreakChance.Length == 0 || _tileBreakChance.Length != _tileBreakIntensity.Length)
-        {
-            Logger.Error($"Malformed tile break chance definitions for explosion prototype: {ID}");
-            return 0;
-        }
-
         if (intensity >= _tileBreakIntensity[^1] || _tileBreakIntensity.Length == 1)
             return _tileBreakChance[^1];
 
         if (intensity <= _tileBreakIntensity[0])
             return _tileBreakChance[0];
 
-        int i = Array.FindIndex(_tileBreakIntensity, k => k >= intensity);
+        var i = Array.FindIndex(_tileBreakIntensity, k => k >= intensity);
 
         var slope = (_tileBreakChance[i] - _tileBreakChance[i - 1]) / (_tileBreakIntensity[i] - _tileBreakIntensity[i - 1]);
         return _tileBreakChance[i - 1] + slope * (intensity - _tileBreakIntensity[i - 1]);
