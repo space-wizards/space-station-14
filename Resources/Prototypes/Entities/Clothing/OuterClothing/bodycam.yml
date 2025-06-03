@@ -1,6 +1,5 @@
 - type: entity
   id: BaseClothingWithBodycam
-  name: bodycam
   abstract: true
   components:
   - type: Eye
@@ -15,8 +14,15 @@
     nameSet: true
   - type: Bodycam
 
+# basic sec armour
+# most sec armours and outerwear will have the prototype modified to add a bodycam
+# but these two vests are absolutely everywhere so i'll make two bodycam versions and give them to sec
 - type: entity
   id: ClothingOuterArmorBasicWithBodycam
   parent: [ ClothingOuterArmorBasic, BaseClothingWithBodycam ]
-  name: armor vest
+  suffix: bodycam
+
+- type: entity
+  id: ClothingOuterArmorBasicSlimWithBodycam
+  parent: [ ClothingOutArmorBasicSlim, BaseClothingWithBodycam ]
   suffix: bodycam
