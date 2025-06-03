@@ -6770,4 +6770,19 @@ Entries:
   id: 936
   time: '2025-06-03T02:04:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/753
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cyber arms now spawn with the hand attached by default.
+    type: Add
+  id: 937
+  time: '2025-06-03T02:36:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/738
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added a button that lets admins replace their right arm with a Reaper
+      arm, for easier surgical work.
+    type: Add
+  id: 938
+  time: '2025-06-03T02:36:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/738
 
