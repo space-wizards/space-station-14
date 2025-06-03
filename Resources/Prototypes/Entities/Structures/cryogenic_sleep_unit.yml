@@ -21,8 +21,6 @@
     access: [["Cryogenics"]]
   - type: InteractionOutline
   - type: Cryostorage
-  - type: Physics
-    canCollide: false
   - type: Fixtures
     fixtures:
       fix1:
