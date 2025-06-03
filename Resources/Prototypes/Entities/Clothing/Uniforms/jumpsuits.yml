@@ -947,7 +947,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/safari.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/safari.rsi
-  - type: Tags
+  - type: Tag
     tags:
     - WhitelistChameleon
 
