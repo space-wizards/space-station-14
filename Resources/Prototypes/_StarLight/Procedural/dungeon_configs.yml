@@ -94,7 +94,7 @@
   - !type:PrefabDunGen
     roomWhitelist:
       tags:
-      - SyndieDungeon
+      - ShipWreck
     presets:
     - Bucket
     - Wow
@@ -239,4 +239,64 @@
     - id: PosterContrabandRevolt
     - id: PosterContrabandRise
     - id: PosterLegitWorkForAFuture
+
 #========================================================================
+
+- type: dungeonConfig
+  id: SovietStrategicResourcesWarehouseDungeon
+  layers:
+  - !type:PrefabDunGen
+    roomWhitelist:
+      tags:
+      - SovietWarehouse
+    presets:
+    - Arena
+
+  - !type:CorridorDunGen
+    width: 5
+    tile: FloorConcreteMono
+
+  - !type:DungeonEntranceDunGen
+    count: 5
+    tile: FloorConcreteMono
+    contents: SovietDungeonEntrance
+
+  - !type:RoomEntranceDunGen
+    tile: FloorConcreteMono
+    contents: SovietDungeonRoomEntrance
+
+  - !type:EntranceFlankDunGen
+    tile: FloorConcreteMono
+    contents: SovietDungeonWindow
+
+  - !type:WallMountDunGen
+    tile: FloorConcreteMono
+    contents: SovietDungeonWalls
+
+  - !type:BoundaryWallDunGen
+    tile: FloorConcreteMono
+    wall: WallBrick
+    cornerWall: WallBrick
+
+  - !type:AutoCablingDunGen
+    entity: CableApcExtension
+
+  - !type:CornerClutterDunGen
+    contents: BaseClutter
+
+  - !type:CorridorDecalSkirtingDunGen
+    cardinalDecals:
+      South: BrickTileWhiteLineS
+      East: BrickTileWhiteLineE
+      North: BrickTileWhiteLineN
+      West: BrickTileWhiteLineW
+    cornerDecals:
+      SouthEast: BrickTileWhiteCornerSe
+      SouthWest: BrickTileWhiteCornerSw
+      NorthEast: BrickTileWhiteCornerNe
+      NorthWest: BrickTileWhiteCornerNw
+    pocketDecals:
+      SouthWest: BrickTileWhiteInnerSw
+      SouthEast: BrickTileWhiteInnerSe
+      NorthWest: BrickTileWhiteInnerNw
+      NorthEast: BrickTileWhiteInnerNe
