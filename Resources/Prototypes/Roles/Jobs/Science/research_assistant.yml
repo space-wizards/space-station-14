@@ -20,6 +20,7 @@
   id: ResearchAssistantGear
   equipment:
     shoes: ClothingShoesColorWhite
+    neck: ClothingNeckNoviceMark # imp
     id: ResearchAssistantPDA
     ears: ClothingHeadsetScience
     pocket1: TutorialPersonalAI #imp

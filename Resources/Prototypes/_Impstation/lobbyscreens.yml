@@ -29,12 +29,6 @@
   artist: GooseyTeeth
 
 - type: lobbyBackground
-  id: SamGreetingCard
-  background: /Textures/_Impstation/LobbyScreens/greeting_card_lobby.webp
-  name: Greeting Card
-  artist: ghostphasemoon
-
-- type: lobbyBackground
   id: Bellmoth
   background: /Textures/_Impstation/LobbyScreens/Shovel_incident.webp
   name: Shovel Incident

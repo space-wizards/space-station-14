@@ -40,9 +40,10 @@
             Chaplain: [1, 1]
             Librarian: [1, 1]
             Reporter: [1, 1]
+            Boxer: [2, 2]
             #ServiceWorker: [2, 2]
             # engineering
-            AtmosphericTechnician: [ 2, 2 ]
+            AtmosphericTechnician: [ 1, 1 ]
             StationEngineer: [ 1, 1 ]
             TechnicalAssistant: [ 1, 1 ]
             # medical
@@ -55,7 +56,7 @@
             Borg: [ 1, 1 ]
             ResearchAssistant: [ 1, 1 ]
             Scientist: [ 1, 1 ]
-            StationAi: [1,1]
+            StationAi: [1, 1]
             # security
             SecurityCadet: [ 1, 1 ]
             Brigmedic: [1, 1]

@@ -18,11 +18,6 @@
   copyright: "lazyriverfolk"
   source: "https://github.com/impstation/imp-station-14/"
 
-- files: ["greeting_card_lobby.webp"]
-  license: "CC-BY-SA-4.0"
-  copyright: "ghostphasemoon"
-  source: "https://github.com/impstation/imp-station-14/"
-
 - files: ["Shovel Incident.webp"]
   license: "CC-BY-SA-4.0"
   copyright: "Wowls"

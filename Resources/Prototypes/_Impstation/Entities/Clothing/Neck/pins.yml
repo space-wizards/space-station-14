@@ -12,3 +12,16 @@
     equippedPrefix: straight
   - type: WearerGetsExamineText
     examineText: obvious-x-pin-straight
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckNoviceMark
+  name: novice's mark
+  description: A mark in CentComm's green and gold, for identifying yourself as unskilled to others. Take it (as a trinket) if you need to! # the rest of the description is handled by WearerGetsExamineText
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/novicemark.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Misc/novicemark.rsi
+  - type: WearerGetsExamineText
+    examineText: obvious-x-pin-novice

@@ -1,49 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Fixed Embryo
-    type: Fix
-  id: 1257
-  time: '2025-03-08T07:20:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1868
-- author: SixValentine
-  changes:
-  - message: Luna wiring should no longer output a Gorbillion Kw requirement to engie
-      monitors (Only a zillion)
-    type: Fix
-  id: 1258
-  time: '2025-03-09T07:49:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1877
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Changed cargorilla to be able to roll on low-pop, as well as earlier
-      in the shift.
-    type: Tweak
-  id: 1259
-  time: '2025-03-09T07:50:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1878
-- author: crocodilecarousel
-  changes:
-  - message: Added 33 new markings, including underwear for grays and tails for thaven.
-    type: Add
-  id: 1260
-  time: '2025-03-09T08:05:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1876
-- author: Sha-Seng
-  changes:
-  - message: Spider Fluffy and Fuzzy overlay markings are now colorable
-    type: Tweak
-  id: 1261
-  time: '2025-03-10T18:07:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1856
-- author: TheGrimbeeper
-  changes:
-  - message: Sentient artifacts can no longer re-appear in the ghost role list after
-      having been taken, if someone is still inside it.
-    type: Fix
-  id: 1262
-  time: '2025-03-10T18:06:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1854
 - author: DinnerCalzone
   changes:
   - message: The Station Specific and Dining Services departments no longer appear
@@ -4215,3 +4170,49 @@
   id: 1756
   time: '2025-05-30T19:46:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2610
+- author: SixValentine
+  changes:
+  - message: Officer Vlogs Is Gone
+    type: Remove
+  id: 1757
+  time: '2025-05-31T06:34:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2620
+- author: CrystalClover
+  changes:
+  - message: Simple Sutures are now twice as expensive in the medical lathe
+    type: Tweak
+  id: 1758
+  time: '2025-05-31T12:17:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2625
+- author: Widgetbeck, ThatKidConnor
+  changes:
+  - message: Added Cindy, the Syndicate counterpart to NT's Griffy.
+    type: Add
+  id: 1759
+  time: '2025-06-01T02:38:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2635
+- author: SixValentine
+  changes:
+  - message: Warden's must beg to become a dog on Hash
+    type: Add
+  - message: Some Hash fixes
+    type: Fix
+  id: 1760
+  time: '2025-06-01T02:38:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2632
+- author: jtfg-dev & normalgirl2171
+  changes:
+  - message: "The novice's mark pin \U0001F530 has been added! For trainees and anyone\
+      \ (as a trinket) who might feel a little unskilled, and need patience from their\
+      \ fellows!"
+    type: Add
+  id: 1761
+  time: '2025-06-01T02:44:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2626
+- author: ghostphasemoon
+  changes:
+  - message: Removed Sam Grimm Lobby Art from the Lobby Art rotation.
+    type: Remove
+  id: 1762
+  time: '2025-06-02T02:41:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2642

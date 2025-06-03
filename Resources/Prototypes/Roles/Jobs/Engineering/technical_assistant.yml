@@ -24,6 +24,7 @@
   equipment:
     shoes: ClothingShoesBootsWork
     id: TechnicalAssistantPDA
+    neck: ClothingNeckNoviceMark # imp
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
     pocket1: TutorialPersonalAI #imp

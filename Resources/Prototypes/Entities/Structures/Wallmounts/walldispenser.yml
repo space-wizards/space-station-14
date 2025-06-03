@@ -58,7 +58,7 @@
       tank:
         reagents:
         - ReagentId: SpaceCleaner
-          Quantity: 500 #imp edit, was 5000
+          Quantity: 1000 #imp edit, was 5000
   - type: DrainableSolution
     solution: tank
   - type: ReagentTank
