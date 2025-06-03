@@ -5,4 +5,4 @@ ghost-role-information-syndicate-pai-rules =    You shall [color=red]NOT[/color]
                                                 You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
 
 ghost-role-information-chaospaper-name = The end of Q
-ghost-role-information-chaospaper-description = try to convince the oh so mindshielded crew of your powerful nature and get them to sign you.
+ghost-role-information-chaospaper-description = Try to mindshielded crew of your powerful nature and get them to sign you.
