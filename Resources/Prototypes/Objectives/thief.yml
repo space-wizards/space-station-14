@@ -136,8 +136,6 @@
   - type: Objective
     difficulty: 0.7
 
-
-
 - type: entity
   parent: BaseThiefStealCollectionObjective
   id: LAMPStealCollectionObjective
@@ -152,6 +150,19 @@
     verifyMapExistence: true
   - type: Objective
     difficulty: 0.5 # just for fun, collectings LAMP on Moth
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: ClothingEyesHudsStealCollectionObjective
+  components:
+  - type: StealCondition
+    stealGroup: ClothingEyesHuds
+    minCollectionSize: 7
+    maxCollectionSize: 12
+    verifyMapExistence: false
+    checkStealAreas: false
+  - type: Objective
+    difficulty: 0.1
 
 # steal item
 
@@ -273,17 +284,6 @@
     difficulty: 0.7
 
 - type: entity                                      #Service subgroup
-  parent: BaseThiefStealObjective
-  id: ClothingEyesHudBeerStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Bartender
-  - type: StealCondition
-    stealGroup: ClothingEyesHudBeer
-  - type: Objective
-    difficulty: 0.3
-
-- type: entity
   parent: BaseThiefStealObjective
   id: BibleStealObjective
   components:

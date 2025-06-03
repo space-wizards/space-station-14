@@ -65,6 +65,7 @@
     TechnologyDiskStealCollectionObjective: 1           #sci
     MailStealCollectionObjective: 1                     #cargo
     IDCardsStealCollectionObjective: 1
+    ClothingEyesHudsStealCollectionObjective: 5
     LAMPStealCollectionObjective: 2                     #only for moth
 
 - type: weightedRandom
@@ -82,8 +83,7 @@
     ExpeditionsCircuitboardStealObjective: 1            #sup
     CargoShuttleCircuitboardStealObjective: 1
     SalvageShuttleCircuitboardStealObjective: 1
-    ClothingEyesHudBeerStealObjective: 1                #srv
-    BibleStealObjective: 1
+    BibleStealObjective: 1                              #srv
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
 
