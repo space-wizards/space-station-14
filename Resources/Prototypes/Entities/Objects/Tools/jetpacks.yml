@@ -45,7 +45,7 @@
     sprite: Objects/Tanks/Jetpacks/blue.rsi
     quickEquip: false
     slots:
-      - Back
+    - Back
   - type: GasTank
     outputPressure: 21.3
     air:
@@ -58,8 +58,8 @@
     visuals:
       enum.JetpackVisuals.Enabled:
         enum.JetpackVisuals.Layer:
-            True: {state: icon-on}
-            False: {state: icon}
+          True: {state: icon-on}
+          False: {state: icon}
   - type: StaticPrice
     price: 100
 
