@@ -28,6 +28,7 @@ public sealed class BodycamSystem: SharedBodycamSystem
         args.Affected = true;
         args.Disabled = true;
         comp.State = BodycamState.Disabled;
+        Dirty(uid, comp);
     }
 
     /// <inheritdoc cref="SharedBodycamSystem.SwitchOn"/>
