@@ -3,11 +3,14 @@ using Content.Shared.Storage;
 
 namespace Content.Server.StationEvents.Components;
 
+/// <summary>
+/// Spawns a selection of entities at a random marker with the corresponding <see cref="MarkerSpawnLocationComponent"/>.
+/// </summary>
 [RegisterComponent, Access(typeof(MarkerLocationSpawnRule))]
 public sealed partial class MarkerLocationSpawnRuleComponent : Component
 {
     /// <summary>
-    /// Which markers will be targetted by this spawn rule, based on the given string.
+    /// Used to match which marker entities will be eligible to be selected by this spawn rule.
     /// </summary>
     [DataField(required: true)]
     public string TargetString;
