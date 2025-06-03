@@ -203,6 +203,12 @@
     graph: Bacon
     node: start
     defaultTarget: bacon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: raw bear meat
@@ -227,6 +233,14 @@
     graph: BearSteak
     node: start
     defaultTarget: filet migrawr
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#934C64"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#934C64"
 
 - type: entity
   name: raw penguin meat
@@ -313,6 +327,12 @@
     graph: DuckSteak
     node: start
     defaultTarget: cooked duck
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+      right:
+      - state: generic-pink-inhand-right
 
 - type: entity
   name: prime-cut corgi meat
@@ -391,6 +411,12 @@
     graph: GoliathSteak
     node: start
     defaultTarget: goliath steak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: dragon flesh
@@ -481,6 +507,14 @@
     graph: LizardSteak
     node: start
     defaultTarget: lizard steak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+        color: "#6EFF41"
+      right:
+      - state: plain-inhand-right
+        color: "#6EFF41"
 
 - type: entity
   name: raw plant meat
@@ -560,6 +594,14 @@
           Quantity: 10
         - ReagentId: Fat
           Quantity: 3
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: snake-inhand-left
+        color: "#333333"
+      right:
+      - state: snake-inhand-right
+        color: "#333333"
 
 - type: entity
   name: meatwheat clump
@@ -578,6 +620,14 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 1
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#934C64"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#934C64"
 
 - type: entity
   name: raw snake meat
@@ -632,6 +682,14 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatXenoCutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+        color: "#6EFF41"
+      right:
+      - state: plain-inhand-right
+        color: "#6EFF41"
 
 - type: entity
   name: raw rouny meat
@@ -661,6 +719,12 @@
     graph: RounySteak
     node: start
     defaultTarget: rouny steak
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      right:
+      - state: plain-inhand-right
 
 - type: entity
   name: killer tomato meat
@@ -812,6 +876,14 @@
           Quantity: 3
         - ReagentId: Water
           Quantity: 4 #It makes saline if you add salt!
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#E2AE7C"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#E2AE7C"
 
 - type: entity
   name: anomalous meat mass
@@ -960,8 +1032,10 @@
     inhandVisuals:
       left:
       - state: generic-pink-inhand-left
+        color: "#5B3E2A"
       right:
       - state: generic-pink-inhand-right
+        color: "#5B3E2A"
 
 - type: entity
   name: cooked bear
@@ -995,6 +1069,8 @@
     entries:
       Burger: MeatBearBurger
       Taco: MeatBear
+  - type: Item
+    heldPrefix: meatball
 
 - type: entity
   name: penguin filet
@@ -1027,6 +1103,14 @@
     entries:
       Burger: MeatPenguinBurger
       Taco: MeatPenguin
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+        color: "#F7E3A3"
+      right:
+      - state: plain-cooked-inhand-right
+        color: "#F7E3A3"
 
 - type: entity
   name: cooked chicken
@@ -1059,6 +1143,14 @@
     entries:
       Burger: MeatChicken
       Taco: MeatChicken
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+        color: "#F7E3A3"
+      right:
+      - state: plain-cooked-inhand-right
+        color: "#F7E3A3"
 
 - type: entity
   name: fried chicken
@@ -1091,6 +1183,14 @@
     entries:
       Burger: MeatChicken
       Taco: MeatChicken
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+        color: "#F7E3A3"
+      right:
+      - state: plain-cooked-inhand-right
+        color: "#F7E3A3"
 
 - type: entity
   name: cooked duck
@@ -1123,6 +1223,14 @@
     entries:
       Burger: MeatDuck
       Taco: MeatDuck
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+        color: "#F7E3A3"
+      right:
+      - state: plain-cooked-inhand-right
+        color: "#F7E3A3"
 
 - type: entity
   name: cooked crab
@@ -1155,6 +1263,12 @@
     entries:
       Burger: MeatCrabBurger
       Taco: MeatCrab
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
 
 - type: entity
   name: goliath steak
@@ -1185,6 +1299,12 @@
     entries:
       Burger: MeatGoliathBurger
       Taco: MeatGoliath
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
 
 - type: entity
   name: rouny steak
@@ -1219,6 +1339,12 @@
     entries:
       Burger: MeatXeno
       Taco: MeatXeno
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
 
 - type: entity
   name: lizard steak
@@ -1252,6 +1378,12 @@
     entries:
       Burger: MeatLizardBurger
       Taco: MeatLizard
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-cooked-inhand-left
+      right:
+      - state: plain-cooked-inhand-right
 
 - type: entity
   name: boiled spider leg
@@ -1278,6 +1410,14 @@
     entries:
       Burger: MeatSpiderBurger
       Taco: MeatSpider
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: snake-inhand-left
+        color: "#44201A"
+      right:
+      - state: snake-inhand-right
+        color: "#44201A"
 
 - type: entity
   name: meatball
@@ -1306,6 +1446,8 @@
   - type: Construction
     graph: MeatMeatballCooked
     node: meatball cooked
+  - type: Item
+    heldPrefix: meatball
 
 - type: entity
   name: cooked meat patty
@@ -1366,6 +1508,14 @@
     entries:
       Burger: MeatSnail
       Taco: MeatSnail
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#5B3E2A"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#5B3E2A"
 
 - type: entity
   name: anomalous steak
@@ -1507,6 +1657,14 @@
     graph: BearCutlet
     node: start
     defaultTarget: bear cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: brown
+      right:
+      - state: generic-pink-inhand-right
+        color: brown
 
 - type: entity
   name: raw penguin cutlet
@@ -1538,8 +1696,10 @@
     inhandVisuals:
       left:
       - state: generic-pink-inhand-left
+        color: white
       right:
       - state: generic-pink-inhand-right
+        color: white
 
 - type: entity
   name: raw chicken cutlet
@@ -1636,6 +1796,14 @@
     graph: LizardCutlet
     node: start
     defaultTarget: lizard cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: green
+      right:
+      - state: generic-pink-inhand-right
+        color: green
 
 - type: entity
   name: raw spider cutlet
@@ -1662,6 +1830,14 @@
     graph: SpiderCutlet
     node: start
     defaultTarget: spider cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: green
+      right:
+      - state: generic-pink-inhand-right
+        color: green
 
 - type: entity
   name: raw xeno cutlet
@@ -1690,6 +1866,14 @@
     graph: XenoCutlet
     node: start
     defaultTarget: xeno cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: green
+      right:
+      - state: generic-pink-inhand-right
+        color: green
 
 - type: entity
   name: raw killer tomato cutlet
@@ -1755,6 +1939,14 @@
     graph: DragonCutlet
     node: start
     defaultTarget: dragon cutlet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: generic-pink-inhand-left
+        color: "#D127A7"
+      right:
+      - state: generic-pink-inhand-right
+        color: "#D127A7"
 
 # Cooked
 
