@@ -229,6 +229,7 @@
   - type: Sprite
     state: raisins
   - type: Item
+    heldPrefix: raisins
   - type: Food
     trash:
     - FoodPacketRaisinsTrash
@@ -343,6 +344,7 @@
   - type: Sprite
     state: chinese1
   - type: Item
+    heldPrefix: chinese1
   - type: SolutionContainerManager
     solutions:
       food:
@@ -370,6 +372,7 @@
   - type: Sprite
     state: chinese2
   - type: Item
+    heldPrefix: chinese2
   - type: SolutionContainerManager
     solutions:
       food:
@@ -419,6 +422,7 @@
   components:
   - type: Item
     size: Small
+    heldPrefix: nutribrick
   - type: Tag
     tags:
       - FoodSnack
@@ -443,6 +447,7 @@
       - nutribrick
   - type: Item
     size: Small
+    heldPrefix: nutribrick-open
   - type: Tag
     tags:
       - ReptilianFood
@@ -466,6 +471,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: mre-brownie
+  - type: Item
+    heldPrefix: mre-brownie
   - type: Tag
     tags:
       - FoodSnack
@@ -488,6 +495,8 @@
       - mrebrownie
   - type: Sprite
     state: mre-brownie-open
+  - type: Item
+    heldPrefix: mre-brownie-open
   - type: Food
   - type: SolutionContainerManager
     solutions:
