@@ -6726,4 +6726,11 @@ Entries:
   id: 930
   time: '2025-06-03T00:01:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: IQlvlZero, Walksanator, Conf
+  changes:
+  - message: added moff cake
+    type: Add
+  id: 931
+  time: '2025-06-03T00:06:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/721
 
