@@ -30,6 +30,7 @@
   - HoloprojectorField
   - SignallerAdvanced
   - DeviceQuantumSpinInverter
+  - DeviceDesynchronizer
 
 - type: latheRecipePack
   id: ScienceClothing
@@ -52,7 +53,7 @@
   recipes:
   - WeaponPistolCHIMP
   - WeaponForceGun
-  - WeaponLaserSvalinn
+  - WeaponLaserSvalinn # imp, T2
   - WeaponProtoKineticAccelerator
   - WeaponTetherGun
   - WeaponGauntletGorilla

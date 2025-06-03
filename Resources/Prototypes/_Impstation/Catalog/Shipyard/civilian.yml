@@ -57,7 +57,7 @@
   id: FlyingBridge
   name: NT-Outreach
   description: A small shuttle that can serve as a docking arm.
-  price: 15000
+  price: 18000
   path:
   - /Maps/_Impstation/Shuttles/Shipyard/dokururin-flying-bridge.yml
   categories:
@@ -90,7 +90,7 @@
   id: Peregrine
   name: NT-Peregrine
   description: A decommissioned fighter shuttle, retrofitted for civilian use. Still has the mounts for ship-based weaponry...
-  price: 22000
+  price: 25000
   path:
   - /Maps/_Impstation/Shuttles/Shipyard/peregrine.yml
   categories:

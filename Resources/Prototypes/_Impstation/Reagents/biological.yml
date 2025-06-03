@@ -7,7 +7,9 @@
   color: "#b1d8c1"
   recognizable: true
   physicalDesc: reagent-physical-desc-viscous
-  slippery: true
+  slipData:
+    requiredSlipSpeed: 4.0 #It's not as slippery as water
+  friction: 0.4
   impEvaporates: true
   impEvaporationAmount: 15.0
   metabolisms:
@@ -36,7 +38,6 @@
   color: "#DC143C"
   recognizable: true
   physicalDesc: reagent-physical-desc-viscous
-  slippery: false
   metabolisms:
     # like a shitter omnizine, and a shittier ichor
     Drink:
@@ -90,7 +91,6 @@
   color: "#FFC6C6"
   recognizable: true
   physicalDesc: reagent-physical-desc-alive
-  slippery: false
   metabolisms:
     Medicine:
       effects:
@@ -116,7 +116,6 @@
   color: "#ff624a" # a slightly warmer color than the ichor extracted from dragon flesh
   recognizable: true
   physicalDesc: reagent-physical-desc-shimmering-blood
-  slippery: false
   metabolisms:
     Food:
       effects:

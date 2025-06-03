@@ -23,27 +23,6 @@
       "name": "envelope_torn_overlay"
     },
     {
-      "name": "folder-base"
-    },
-    {
-      "name": "folder-colormap"
-    },
-    {
-      "name": "folder-white"
-    },
-    {
-      "name": "folder-centcom"
-    },
-    {
-      "name": "folder-overlay-paper"
-    },
-    {
-      "name": "folder-sec-doc"
-    },
-    {
-      "name": "folder-stamp-inverse"
-    },
-    {
       "name": "label_cart"
     },
     {
@@ -255,11 +234,11 @@
     {
       "name": "thief_card"
     },
-      {
-          "name": "business-card"
-      },
-      {
-          "name": "business-card-writing"
-      }
+    {
+      "name": "business-card"
+    },
+    {
+      "name": "business-card-writing"
+    }
   ]
 }

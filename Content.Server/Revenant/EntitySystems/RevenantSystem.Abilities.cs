@@ -55,6 +55,7 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly RevenantAnimatedSystem _revenantAnimated = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string RevenantEssenceRegen = "EssenceRegen";
@@ -286,8 +287,8 @@ public sealed partial class RevenantSystem
             component: new RevenantRegenModifierComponent(witnesses, newHaunts)
         ))
         {
-            if (_mind.TryGetMind(uid, out var _, out var mind) && mind.Session != null)
-                RaiseNetworkEvent(new RevenantHauntWitnessEvent(witnesses), mind.Session);
+            if (_mind.TryGetMind(uid, out var _, out var mind) && _playerManager.TryGetSessionById(mind.UserId, out var session))
+                RaiseNetworkEvent(new RevenantHauntWitnessEvent(witnesses), session);
 
             _store.TryAddCurrency(new Dictionary<string, FixedPoint2>
             { {comp.StolenEssenceCurrencyPrototype, comp.HauntStolenEssencePerWitness * newHaunts} }, uid);

@@ -38,10 +38,10 @@
   - GroupTankHarnessCommandWithOuterwearAquatic # imp special
 
 # Silicons
-#- type: roleLoadout
-#  id: JobBorg
-#  nameDataset: roleloadout doesn't support both so need to update that first.
-#  canCustomizeName: true
+- type: roleLoadout
+  id: JobBorg
+  nameDataset: NamesBorg
+  canCustomizeName: true
 
 - type: roleLoadout
   id: JobStationAi
@@ -215,6 +215,7 @@
 
 - type: roleLoadout
   id: JobClown
+  canCustomizeName: true
   groups:
   - ClownHead
   - ClownMask #imp
@@ -232,6 +233,7 @@
 
 - type: roleLoadout
   id: JobMime
+  canCustomizeName: true
   groups:
   - MimeHead
   - MimeMask
@@ -554,9 +556,10 @@
   - ChiefMedicalOfficerBelt #imp
   - ChiefMedicalOfficerShoes
   - ChiefMedicalOfficerHeadset #imp
-  - Glasses
   - ChiefMedicalOfficerBackpack #imp
   - SurvivalCommand #imp
+  - MedicalEyewear
+  - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical
   - GroupTankHarnessCommandWithOuterwear
@@ -572,10 +575,10 @@
   - MedicalDoctorJumpsuit
   - MedicalDoctorOuterClothing
   - MedicalGloves
-  - MedicalDoctorShoes
-  - Glasses
   - MedicalBackpack
+  - MedicalShoes
   - MedicalDoctorPDA
+  - MedicalEyewear
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical
@@ -589,6 +592,7 @@
   - MedicalInternJumpsuit
   - Glasses
   - MedicalBackpack
+  - MedicalEyewear
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical
@@ -625,7 +629,7 @@
   - ParamedicOuterClothing
   - MedicalGloves
   - ParamedicShoes
-  - Glasses
+  - MedicalEyewear
   - MedicalBackpack
   - ParamedicPDA # imp
   - SurvivalMedical

@@ -1,0 +1,96 @@
+- type: entity
+  id: Turnstile
+  parent: BaseStructure
+  name: turnstile
+  description: A mechanical door that permits one-way access and prevents tailgating.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/turnstile.rsi
+    snapCardinals: true
+    drawdepth: Doors
+    layers:
+    - state: turnstile
+      map: [ "enum.TurnstileVisualLayers.Base" ]
+  - type: AnimationPlayer
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # same dimensions as a door for tall turnstile, prevents objects being thrown through
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - AirlockLayer
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.50,-0.50,0.50,0.50" # same dimensions as a door for tall turnstile, prevents objects being thrown through
+        hard: false
+        mask:
+        - FullTileMask
+        layer:
+        - AirlockLayer
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/smash.ogg"
+  - type: InteractionOutline
+  - type: Turnstile
+    processWhitelist:
+      components:
+      - MobState # no mobs
+      - Pullable # no dragging things in
+  - type: Appearance
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: AccessReader
+  - type: Construction
+    graph: Turnstile
+    node: turnstile
+
+- # Spawned by the client-side turnstile examine code to indicate the direction to pass through.
+  type: entity
+  id: TurnstileArrow
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/turnstile.rsi
+    color: "#FFFFFFBB"
+    layers:
+    - state: arrow
+      offset: 0, 0.78125
+  - type: TimedDespawn
+    lifetime: 2
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+# Genpop
+
+- type: entity
+  id: TurnstileGenpopEnter
+  parent: Turnstile
+  suffix: Genpop Enter
+  components:
+  - type: AccessReader
+    access: [["GenpopEnter"], ["Security"]]
+
+- type: entity
+  id: TurnstileGenpopLeave
+  parent: Turnstile
+  suffix: Genpop Leave
+  components:
+  - type: AccessReader
+    access: [["GenpopLeave"], ["Security"]]

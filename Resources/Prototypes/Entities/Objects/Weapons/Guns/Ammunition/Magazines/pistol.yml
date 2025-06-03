@@ -82,7 +82,7 @@
     whitelist:
       tags:
         - CartridgePistol
-    capacity: 30 #imp
+    capacity: 30
   - type: Item
     size: Small
   - type: ContainerContainer
@@ -104,8 +104,8 @@
 - type: entity
   id: MagazinePistolSubMachineGunTopMounted
   name: WT550 magazine (.35 auto top-mounted)
-  description: A 30-round .35 auto top-mounted SMG magazine, marked as live-fire ammo. #imp
   parent: [ BaseItem, BaseSecurityContraband ]
+  description: A 30-round .35 auto top-mounted SMG magazine, marked as live-fire ammo. #imp
   components:
   - type: Tag
     tags:
@@ -136,8 +136,8 @@
 - type: entity
   id: MagazinePistolSubMachineGunTopMountedEmpty
   name: WT550 magazine (.35 auto top-mounted any)
-  description: A 35-round .35 auto top-mounted SMG magazine with no apparent markings. #imp
   parent: MagazinePistolSubMachineGunTopMounted
+  description: A 35-round .35 auto top-mounted SMG magazine with no apparent markings. #imp
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -145,8 +145,8 @@
 - type: entity
   id: MagazinePistol
   name: pistol magazine (.35 auto)
-  description: A 10-round .35 auto pistol magazine, marked as live-fire ammo. #imp
   parent: BaseMagazinePistol
+  description: A 10-round .35 auto pistol magazine, marked as live-fire ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
@@ -160,9 +160,9 @@
 - type: entity
   id: MagazinePistolEmpty
   name: pistol magazine (.35 auto any)
-  description: A 10-round .35 auto pistol magazine with no apparent markings. #imp
   suffix: empty
   parent: MagazinePistol
+  description: A 10-round .35 auto pistol magazine with no apparent markings. #imp
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -177,8 +177,8 @@
 - type: entity
   id: MagazinePistolIncendiary
   name: pistol magazine (.35 auto incendiary)
-  description: A 10-round .35 auto pistol magazine, marked as incendiary ammo. #imp
   parent: MagazinePistol
+  description: A 10-round .35 auto pistol magazine, marked as incendiary ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
@@ -186,8 +186,8 @@
 - type: entity
   id: MagazinePistolPractice
   name: pistol magazine (.35 auto practice)
-  description: A 10-round .35 auto pistol magazine, marked as practice ammo. #imp
   parent: BaseMagazinePistol
+  description: A 10-round .35 auto pistol magazine, marked as practice ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -201,8 +201,8 @@
 - type: entity
   id: MagazinePistolUranium
   name: pistol magazine (.35 auto uranium)
-  description: A 10-round .35 auto pistol magazine, marked as uranium ammo. #imp
   parent: BaseMagazinePistol
+  description: A 10-round .35 auto pistol magazine, marked as uranium ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium
@@ -277,11 +277,10 @@
 - type: entity
   id: MagazinePistolSubMachineGun
   name: SMG magazine (.35 auto)
-  description: A 30-round .35 auto SMG magazine, marked as live-fire ammo. #imp
   parent: BaseMagazinePistolSubMachineGun
+  description: A 30-round .35 auto SMG magazine, marked as live-fire ammo. #imp
   components:
   - type: BallisticAmmoProvider
-    capacity: 30
     proto: CartridgePistol
     whitelist:
       tags:
@@ -298,9 +297,9 @@
 - type: entity
   id: MagazinePistolSubMachineGunEmpty
   name: SMG magazine (.35 auto any)
-  description: A 30-round .35 auto SMG magazine with no apparent markings. #imp
   suffix: empty
   parent: BaseMagazinePistolSubMachineGun
+  description: A 30-round .35 auto SMG magazine with no apparent markings. #imp
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -314,8 +313,8 @@
 - type: entity
   id: MagazinePistolSubMachineGunPractice
   name: SMG magazine (.35 auto practice)
-  description: A 30-round .35 auto SMG magazine, marked as practice ammo. #imp
   parent: BaseMagazinePistolSubMachineGun
+  description: A 30-round .35 auto SMG magazine, marked as practice ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -329,8 +328,8 @@
 - type: entity
   id: MagazinePistolSubMachineGunUranium
   name: SMG magazine (.35 auto uranium)
-  description: A 30-round .35 auto SMG magazine, marked as uranium ammo. #imp
   parent: BaseMagazinePistolSubMachineGun
+  description: A 30-round .35 auto SMG magazine, marked as uranium ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium
@@ -345,6 +344,7 @@
   parent: BaseMagazinePistolSubMachineGun
   id: MagazinePistolSubMachineGunIncendiary
   name: SMG magazine (.35 auto incendiary)
+  description: 30-round double-stack magazine for submachine guns. Intended to hold self-igniting incendiary ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary

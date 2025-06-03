@@ -21090,14 +21090,13 @@ entities:
     - type: Transform
       pos: 30.546324,44.637684
       parent: 2
-- proto: ComplexXenoArtifact
+- proto: RandomArtifactSpawner
   entities:
   - uid: 2696
     components:
     - type: Transform
       pos: 2.5,-29.5
       parent: 2
-    - type: BiasedArtifact
 - proto: ComputerAlert
   entities:
   - uid: 1598
@@ -50381,13 +50380,6 @@ entities:
     - type: Transform
       pos: 47.414303,7.664655
       parent: 2
-- proto: StockTradingCartridge
-  entities:
-  - uid: 6733
-    components:
-    - type: Transform
-      pos: 25.874012,33.46873
-      parent: 2
 - proto: Stool
   entities:
   - uid: 1044
@@ -52865,7 +52857,6 @@ entities:
     - type: Transform
       pos: 2.4386702,-38.599815
       parent: 2
-    - type: BiasedArtifact
 - proto: VendingBarDrobe
   entities:
   - uid: 957

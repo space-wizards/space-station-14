@@ -20,22 +20,6 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkCalimotxoGlass
-  suffix: calimotxo
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Calimotxo
-          Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/wineglass.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlass
   id: DrinkLoveTapGlass
   suffix: love tap
   components:

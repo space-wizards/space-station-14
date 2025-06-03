@@ -21,6 +21,7 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Collections;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -30,7 +31,6 @@ public abstract class SharedWieldableSystem : EntitySystem
 {
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
@@ -260,26 +260,21 @@ public abstract class SharedWieldableSystem : EntitySystem
             _audio.PlayPredicted(component.WieldSound, used, user);
 
         //This section handles spawning the virtual item(s) to occupy the required additional hand(s).
-        //Since the client can't currently predict entity spawning, only do this if this is running serverside.
-        //Remove this check if TrySpawnVirtualItem in SharedVirtualItemSystem is allowed to complete clientside.
-        if (_netManager.IsServer)
+        var virtuals = new ValueList<EntityUid>();
+        for (var i = 0; i < component.FreeHandsRequired; i++)
         {
-            var virtuals = new List<EntityUid>();
-            for (var i = 0; i < component.FreeHandsRequired; i++)
+            if (_virtualItem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true))
             {
-                if (_virtualItem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true))
-                {
-                    virtuals.Add(virtualItem.Value);
-                    continue;
-                }
-
-                foreach (var existingVirtual in virtuals)
-                {
-                    QueueDel(existingVirtual);
-                }
-
-                return false;
+                virtuals.Add(virtualItem.Value);
+                continue;
             }
+
+            foreach (var existingVirtual in virtuals)
+            {
+                QueueDel(existingVirtual);
+            }
+
+            return false;
         }
 
         var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", used));

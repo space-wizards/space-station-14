@@ -134,6 +134,7 @@
   - WeaponLaserCannon
   - WeaponLaserCarbine
   - WeaponXrayCannon
+  - WeaponTemperatureGun
 
 - type: latheRecipePack
   parent: SecurityDisablersImp # imp

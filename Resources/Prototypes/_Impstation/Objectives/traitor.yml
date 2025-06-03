@@ -1,6 +1,16 @@
 #SVS objectives
 
 - type: entity
+  abstract: true
+  parent: [BaseTraitorObjective, BaseSocialObjective]
+  id: BaseTraitorSvSSocialObjective # Used for rounds when basically every valid person will be a traitor.
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Misc/folders.rsi
+      state: folder-white
+
+- type: entity
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomTraitorSvSObjective # Used for rounds when basically every valid person will be a traitor.
   description: Do it however you like, just make sure they don't make it to centcom.

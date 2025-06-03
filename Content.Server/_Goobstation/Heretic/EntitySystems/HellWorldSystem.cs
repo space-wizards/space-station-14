@@ -14,9 +14,9 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
-using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -33,6 +33,7 @@ namespace Content.Server._Goobstation.Heretic.EntitySystems
         [Dependency] private readonly EuiManager _euiMan = default!;
         [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
         [Dependency] private readonly MetaDataSystem _metaSystem = default!;
@@ -77,14 +78,14 @@ namespace Content.Server._Goobstation.Heretic.EntitySystems
                         //put them back in the original body
                         _mind.TransferTo(victimComp.Mind.Value, victimComp.OriginalBody);
                         //let them ghost again
-                        MindComponent? mindComp = Comp<MindComponent>(victimComp.Mind.Value);
+                        var mindComp = Comp<MindComponent>(victimComp.Mind.Value);
                         mindComp.PreventGhosting = false;
+                        //tell them about the metashield
+                        if (_playerManager.TryGetSessionById(mindComp.UserId, out var session))
+                            _euiMan.OpenEui(new HellMemoryEui(), session);
                     }
                     //give the original body some visual changes
                     TransformVictim(uid);
-                    //tell them about the metashield
-                    if (_mind.TryGetSession(victimComp.Mind, out var session))
-                        _euiMan.OpenEui(new HellMemoryEui(), session);
                     //and then revive the old body
                     _rejuvenate.PerformRejuvenate(uid);
                 }

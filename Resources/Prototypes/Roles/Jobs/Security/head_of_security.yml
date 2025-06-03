@@ -6,10 +6,13 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 10800 #3 hrs
+      time: 10800 #3 hrs, imp
+    - !type:RoleTimeRequirement
+      role: JobDetective
+      time: 3600 #1 hr, knowing how to use the tools is important
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
-      time: 36000 #10 hrs
+      time: 36000 #10 hrs, imp
     - !type:DepartmentTimeRequirement
       department: Security
       time: 324000 # 90 hrs

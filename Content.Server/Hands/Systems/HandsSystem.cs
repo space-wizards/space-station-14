@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Server.Decapoids.Components; // Imp
 using Content.Server.Inventory;
 using Content.Server.Stack;
 using Content.Server.Stunnable;
@@ -7,6 +6,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Part;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Decapoids.Components; // Imp
 using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -100,7 +100,7 @@ namespace Content.Server.Hands.Systems
             }
         }
 
-        private void OnDisarmed(EntityUid uid, HandsComponent component, DisarmedEvent args)
+        private void OnDisarmed(EntityUid uid, HandsComponent component, ref DisarmedEvent args)
         {
             if (args.Handled)
                 return;

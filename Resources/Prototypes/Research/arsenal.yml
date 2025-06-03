@@ -207,17 +207,17 @@
   - PortableRecharger
   - WeaponBlasterMagnum #imp
 
-#- type: technology # imp - rolled into Concentrated Laser Weaponry
-#  id: ExperimentalBatteryAmmo
-#  name: research-technology-experimental-battery-ammo
-#  icon:
-#    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
-#    state: icon
-#  discipline: Arsenal
-#  tier: 3
-#  cost: 15000
-#  recipeUnlocks:
-#  - WeaponLaserSvalinn
+- type: technology
+  id: ThermalWeaponry
+  name: research-technology-thermal-weaponry
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/temp_gun.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - WeaponTemperatureGun
 
 - type: technology
   id: AdvancedShuttleWeapon

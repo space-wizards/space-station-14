@@ -120,13 +120,6 @@
     sprite: Objects/Devices/cartridge.rsi
     state: cart-nav
 
-- type: stealTargetGroup
-  id: StockTradingCartridge
-  name: steal-target-groups-stocktradingcartridge
-  sprite:
-    sprite: _DV/Objects/Devices/cartridge.rsi
-    state: cart-stonk
-
 # vending machines
 
 - type: stealTargetGroup

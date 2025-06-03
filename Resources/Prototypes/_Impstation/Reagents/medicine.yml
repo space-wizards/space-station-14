@@ -59,7 +59,6 @@
   flavor: sour
   color: "#64ffe6"
   physicalDesc: reagent-physical-desc-enigmatic
-  slippery: false
   metabolisms:
     # Bad omnizine that also gives you cancer
     Medicine:

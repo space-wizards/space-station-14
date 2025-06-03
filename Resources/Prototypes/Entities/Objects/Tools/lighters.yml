@@ -100,6 +100,7 @@
   - type: ItemTogglePointLight
   - type: ItemToggleDamageOtherOnHit # imp
   - type: DamageOtherOnHit
+  - type: PhysicalComposition
 
 - type: entity
   name: cheap lighter
@@ -138,7 +139,7 @@
   components:
   - type: Sprite
     #imp start
-    sprite: _Impstation/Objects/Tools/lighters.rsi 
+    sprite: _Impstation/Objects/Tools/lighters.rsi
     layers:
     - state: zippo-icon-base
       map: ["base"]
@@ -148,7 +149,7 @@
     - state: zippo-icon-open
       map: ["open"]
       visible: false
-    - state: flame-orange 
+    - state: flame-orange
     # /imp end
       map: ["flame"]
       visible: false
@@ -213,7 +214,7 @@
     tankSafe: true
   - type: ToggleableLightVisuals
     # imp start
-    spriteLayer: flame-orange 
+    spriteLayer: flame-orange
     inhandVisuals:
       left:
       - state: zippo-inhand-left-lit
@@ -250,7 +251,7 @@
   components:
   - type: Sprite
     #imp start
-    sprite: _Impstation/Objects/Tools/lighters.rsi 
+    sprite: _Impstation/Objects/Tools/lighters.rsi
     layers:
     - state: engraved-icon-base
       map: ["base"]
@@ -264,7 +265,7 @@
     # /imp end
       map: ["flame"]
       visible: false
-      shader: unshaded 
+      shader: unshaded
   - type: StealTarget
     stealGroup: FlippoEngravedLighter
     # imp edit start
@@ -272,7 +273,7 @@
     sprite: _Impstation/Objects/Tools/lighters.rsi
     heldPrefix: engraved
   - type: ToggleableLightVisuals
-    spriteLayer: flame-orange 
+    spriteLayer: flame-orange
     inhandVisuals:
       left:
       - state: engraved-inhand-left-lit

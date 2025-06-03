@@ -104,8 +104,8 @@
 - type: entity
   id: MagazinePistolCaselessRifle
   name: "pistol magazine (.25 caseless)"
-  description: A 10-round .25 caseless pistol magazine, marked as live-fire ammo. #imp
   parent: BaseMagazinePistolCaselessRifle
+  description: A 10-round .25 caseless pistol magazine, marked as live-fire ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
@@ -125,8 +125,8 @@
 - type: entity
   id: MagazinePistolCaselessRiflePractice
   name: "pistol magazine (.25 caseless practice)"
-  description: A 10-round .25 caseless pistol magazine, marked as practice ammo. #imp
   parent: BaseMagazinePistolCaselessRifle
+  description: A 10-round .25 caseless pistol magazine, marked as practice ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePractice

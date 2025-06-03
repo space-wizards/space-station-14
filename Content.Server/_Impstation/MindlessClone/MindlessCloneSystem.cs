@@ -46,6 +46,7 @@ public sealed class MindlessCloneSystem : EntitySystem
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
 
     // everything else
     [Dependency] private readonly BodySystem _bodySystem = default!;
@@ -72,7 +73,7 @@ public sealed class MindlessCloneSystem : EntitySystem
     }
 
     /// <summary>
-    /// Handles the "DoAfter"s. 
+    /// Handles the "DoAfter"s.
     /// </summary>
     public override void Update(float frametime)
     {
@@ -188,7 +189,7 @@ public sealed class MindlessCloneSystem : EntitySystem
 
             // swap those minds around right quick
             _mind.TransferTo(cloneMind, targetUid); // technically we won't ever need to do this, it's just here for posterity.
-            _mind.TransferTo(targetMind, ent); // this is the important one. 
+            _mind.TransferTo(targetMind, ent); // this is the important one.
 
             // and then hobble the target for a bit
             _statusEffect.TryAddStatusEffect<MutedComponent>(ent, "Muted", ent.Comp.MindSwapStunTime, true);
@@ -308,10 +309,10 @@ public sealed class MindlessCloneSystem : EntitySystem
             return false;
 
         HumanoidCharacterProfile profile;
-        if (_mind.TryGetMind(original, out _, out var mindComponent) && mindComponent.Session != null)
+        if (_mind.TryGetMind(original, out _, out var mindComponent) && _playerManager.TryGetSessionById(mindComponent.UserId, out var session))
         {
             // get the character profile of the humanoid out of its mind.
-            var targetProfile = (HumanoidCharacterProfile)_prefs.GetPreferences(mindComponent.Session.UserId).SelectedCharacter;
+            var targetProfile = (HumanoidCharacterProfile)_prefs.GetPreferences(session.UserId).SelectedCharacter;
             // clone it onto a new profile
             profile = new HumanoidCharacterProfile(targetProfile);
         }
@@ -400,7 +401,7 @@ public sealed class MindlessCloneSystem : EntitySystem
     }
 
     /// <summary>
-    /// Custom examine text for when the clone is not crit or dead. 
+    /// Custom examine text for when the clone is not crit or dead.
     /// </summary>
     private void OnExamined(Entity<MindlessCloneComponent> ent, ref ExaminedEvent args)
     {

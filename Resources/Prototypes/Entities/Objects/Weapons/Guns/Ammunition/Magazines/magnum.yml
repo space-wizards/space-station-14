@@ -52,9 +52,9 @@
 - type: entity
   id: MagazineMagnumEmpty
   name: pistol magazine (.45 magnum any)
-  description: A 7-round .45 magnum pistol magazine with no apparent markings. #imp
   suffix: empty
   parent: BaseMagazineMagnum
+  description: A 7-round .45 magnum pistol magazine with no apparent markings. #imp
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -68,8 +68,8 @@
 - type: entity
   id: MagazineMagnum
   name: pistol magazine (.45 magnum)
-  description: A 7-round .45 magnum pistol magazine, marked as live-fire ammo. #imp
   parent: BaseMagazineMagnum
+  description: A 7-round .45 magnum pistol magazine, marked as live-fire ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -83,8 +83,8 @@
 - type: entity
   id: MagazineMagnumPractice
   name: pistol magazine (.45 magnum practice)
-  description: A 7-round .45 magnum pistol magazine, marked as practice ammo. #imp
   parent: BaseMagazineMagnum
+  description: A 7-round .45 magnum pistol magazine, marked as practice ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
@@ -98,8 +98,8 @@
 - type: entity
   id: MagazineMagnumUranium
   name: pistol magazine (.45 magnum uranium)
-  description: A 7-round .45 magnum pistol magazine, marked as uranium ammo. #imp
   parent: BaseMagazineMagnum
+  description: A 7-round .45 magnum pistol magazine, marked as uranium ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumUranium
@@ -113,8 +113,8 @@
 - type: entity
   id: MagazineMagnumAP
   name: pistol magazine (.45 magnum armor-piercing)
-  description: A 7-round .45 magnum pistol magazine, marked as armor-piercing ammo. #imp
   parent: BaseMagazineMagnum
+  description: A 7-round .45 magnum pistol magazine, marked as armor-piercing ammo. #imp
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP

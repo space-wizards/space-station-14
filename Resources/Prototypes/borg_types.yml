@@ -84,6 +84,7 @@
   - BorgModuleGrapplingGun
   - BorgModuleBasicMining # imp
   - BorgModuleAppraisal
+  - BorgModuleTool
 
   radioChannels:
   - Supply

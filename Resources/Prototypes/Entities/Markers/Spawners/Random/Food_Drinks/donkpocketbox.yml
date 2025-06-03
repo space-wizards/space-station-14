@@ -19,5 +19,6 @@
         - FoodBoxDonkpocketHonk
         - FoodBoxDonkpocketDink
         - FoodBoxDonkpocketCloth
+        - FoodBoxDonkpocketMoth
       chance: 0.5
       offset: 0.0

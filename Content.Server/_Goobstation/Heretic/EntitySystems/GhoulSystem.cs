@@ -24,6 +24,7 @@ using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.AnimalHusbandry;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Server.Heretic.EntitySystems;
 
@@ -33,6 +34,7 @@ public sealed partial class GhoulSystem : Shared.Heretic.EntitySystems.SharedGho
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly EuiManager _euiMan = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly MobThresholdSystem _threshold = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
@@ -54,7 +56,7 @@ public sealed partial class GhoulSystem : Shared.Heretic.EntitySystems.SharedGho
         {
             SendBriefing(ent, mindId, mind);
 
-            if (_mind.TryGetSession(mindId, out var session))
+            if (_playerManager.TryGetSessionByEntity(mindId, out var session))
             {
                 _euiMan.OpenEui(new GhoulNotifEui(), session);
             }

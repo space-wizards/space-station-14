@@ -102,7 +102,6 @@
       - DroneUsable #They don't have any other chem stuff on their whitelist so they can't refill it
 
 # Vapor
-
 - type: entity
   id: Vapor
   name: "vapor"
@@ -113,6 +112,8 @@
       vapor:
         maxVol: 50
   - type: Vapor
+    active: true
+    transferAmountPercentage: 0.5
   - type: AnimationPlayer
   - type: Sprite
     sprite: Effects/chempuff.rsi
@@ -132,6 +133,8 @@
         mask:
         - FullTileMask
         - Opaque
+        layer:
+        - ItemMask
   - type: Appearance
   - type: VaporVisuals
 

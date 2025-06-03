@@ -6,7 +6,6 @@
   flavor: bitter
   color: "#4B382A"
   physicalDesc: reagent-physical-desc-powdery
-  slippery: false
   recognizable: true # "Waiter, there seems to be grounds in my coffee."
   metabolisms:
     Drink:

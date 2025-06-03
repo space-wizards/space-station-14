@@ -6,7 +6,7 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobCargoTechnician
-      time: 21600 #6 hrs
+      time: 21600 #6 hrs, imp
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
       time: 21600 #6 hrs

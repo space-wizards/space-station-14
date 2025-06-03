@@ -5,7 +5,10 @@
   playTimeTracker: JobLawyer
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 36000 # 10 hrs
+      time: 36000 # 10 hrs, imp
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 7200 #2 hrs, imp
   startingGear: LawyerGear
   icon: "JobIconLawyer"
   supervisors: job-supervisors-hd
