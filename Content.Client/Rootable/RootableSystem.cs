@@ -2,7 +2,4 @@
 
 namespace Content.Client.Rootable;
 
-public sealed class RootableSystem : SharedRootableSystem
-{
-
-}
+public sealed class RootableSystem : SharedRootableSystem;

@@ -4,12 +4,10 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Rootable;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Rootable;
@@ -19,7 +17,6 @@ namespace Content.Server.Rootable;
 /// </summary>
 public sealed class RootableSystem : SharedRootableSystem
 {
-
     [Dependency] private readonly ISharedAdminLogManager _logger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
