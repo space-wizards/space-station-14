@@ -18,6 +18,5 @@ public sealed partial class HitscanBasicDamageComponent : Component
     /// <summary>
     /// How much damage was actually dealt to a hit entity. If null, didn't hit anything!
     /// </summary>
-    [DataField]
     public DamageSpecifier? DamageDealt;
 }

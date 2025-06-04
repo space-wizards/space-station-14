@@ -169,7 +169,7 @@
       types:
         Heat: 5
   - type: HitscanBatteryAmmoProvider
-    hitscanEntityProto: RedLaser
+    proto: RedLaser
     fireCost: 140
   - type: Battery
     maxCharge: 1000

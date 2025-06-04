@@ -21,12 +21,12 @@ public sealed class HitscanBasicEffectsSystem : EntitySystem
 
     private void OnHitscanHit(Entity<HitscanBasicEffectsComponent> hitscan, ref HitscanHitEntityEvent args)
     {
-        if (args.Canceled || args.HitEntity == null || Deleted(args.HitEntity))
+        if (args.Canceled|| Deleted(args.HitEntity))
             return;
 
         TryComp<HitscanBasicDamageComponent>(hitscan, out var hitscanDamageComp);
 
-        var dmg = hitscanDamageComp?.Damage ?? new DamageSpecifier();
+        var dmg = hitscanDamageComp?.DamageDealt ?? new DamageSpecifier();
 
         if (dmg.AnyPositive() && hitscan.Comp.HitColor != null)
             _color.RaiseEffect(hitscan.Comp.HitColor.Value, new List<EntityUid>() { args.HitEntity }, Filter.Pvs(args.HitEntity, entityManager: EntityManager));
