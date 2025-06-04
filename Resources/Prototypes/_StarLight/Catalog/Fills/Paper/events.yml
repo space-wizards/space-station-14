@@ -36,11 +36,12 @@
         tags:
         - GhostOnlyWarp
     - type: GhostRole
-      prob: 1 # the paper is allready rare so make the ghost role guarenteed
       makeSentient: true
       name: ghost-role-information-chaospaper-name
       description: ghost-role-information-chaospaper-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-freeagent-rules
+      mindRoles: 
+        - MindRoleGhostRoleFreeAgent
     - type: ShowMindShieldIcons # gotta know your targets.
     - type: Speech
     - type: TextToSpeech
@@ -79,11 +80,12 @@
         tags:
         - GhostOnlyWarp
     - type: GhostRole
-      prob: 1 # the paper is allready rare so make the ghost role guarenteed
       makeSentient: true
       name: ghost-role-information-chaospaper-name
       description: ghost-role-information-chaospaper-description
-      rules: ghost-role-information-nonantagonist-rules
+      rules: ghost-role-information-freeagent-rules
+      mindRoles: 
+        - MindRoleGhostRoleFreeAgent
     - type: ShowMindShieldIcons # gotta know your targets.
     - type: Speech
     - type: GhostTakeoverAvailable
