@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: TeenSarlacc
-  changes:
-  - message: You can now buy Foam Force weapons through Cargo.
-    type: Add
-  id: 8100
-  time: '2025-03-21T09:39:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35824
-- author: aada
-  changes:
-  - message: 17 machine boards have been recolored.
-    type: Tweak
-  id: 8101
-  time: '2025-03-21T09:40:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35715
-- author: metalgearsloth
-  changes:
-  - message: Fix pulling alert being goofy.
-    type: Fix
-  id: 8102
-  time: '2025-03-22T11:41:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36004
 - author: Boaz1111
   changes:
   - message: Unrevivable now lets you be cloned again
@@ -3927,3 +3906,25 @@
   id: 8611
   time: '2025-06-03T18:20:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38040
+- author: Moomoobeef
+  changes:
+  - message: Nanotask printouts now look much nicer!
+    type: Tweak
+  id: 8612
+  time: '2025-06-04T08:16:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37805
+- author: TheCactus, ilovehans10
+  changes:
+  - message: Added text highlighting.
+    type: Add
+  id: 8613
+  time: '2025-06-04T10:12:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31442
+- author: SlamBamActionman
+  changes:
+  - message: Diona can now root, keeping them from slipping but absorbing fluids from
+      the ground.
+    type: Add
+  id: 8614
+  time: '2025-06-04T10:53:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32782

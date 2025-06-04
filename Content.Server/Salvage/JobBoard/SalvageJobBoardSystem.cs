@@ -55,7 +55,7 @@ public sealed class SalvageJobBoardSystem : EntitySystem
         foreach (var sold in args.Sold)
         {
             if (!FulfillsSalvageJob(sold, (args.Station, salvageJobsData), out var jobId))
-                return;
+                continue;
             TryCompleteSalvageJob((args.Station, salvageJobsData), jobId.Value);
         }
     }
