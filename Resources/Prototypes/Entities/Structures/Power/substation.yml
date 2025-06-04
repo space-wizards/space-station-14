@@ -1,8 +1,74 @@
+# Core logic shared between regular and wall-mount substation
+- type: entity
+  abstract: true
+  id: CoreSubstation
+  components:
+  # Core power behavior
+  - type: Battery
+  - type: ExaminableBattery
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+  - type: BatteryCharger
+    voltage: High
+  - type: BatteryDischarger
+    voltage: Medium
+  - type: PowerNetworkBattery
+    maxSupply: 150000
+    maxChargeRate: 5000
+    supplyRampTolerance: 5000
+    supplyRampRate: 1000
+  - type: StationInfiniteBatteryTarget
+
+  # Interface
+  - type: BatteryInterface
+    minChargeRate: 5000
+    maxChargeRate: 150000
+    minSupply: 5000
+    maxSupply: 150000
+  - type: UserInterface
+    interfaces:
+      enum.BatteryUiKey.Key:
+        type: BatteryBoundUserInterface
+  - type: ActivatableUI
+    key: enum.BatteryUiKey.Key
+
+  - type: PowerMonitoringDevice
+    group: Substation
+    sourceNode: input
+    loadNode: output
+    collectionName: substation
+
+  # Damage
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: PacifismDangerousAttack
+
+  # Guidebook
+  - type: GuideHelp
+    guides:
+    - VoltageNetworks
+    - Power
+
+  # Ambient sound
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -5
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
+
 # Base substation
 - type: entity
   abstract: true
   id: BaseSubstation
-  parent: [ BaseMachine, ConstructibleMachine ]
+  parent: [ CoreSubstation, BaseMachine, ConstructibleMachine ]
   name: substation
   description: Reduces the voltage of electricity put into it.
   placement:
@@ -20,49 +86,22 @@
   - type: Battery
     maxCharge: 2500000
     startingCharge: 0
-  - type: ExaminableBattery
   - type: PointLight
     radius: 1.5
     energy: 1
     color: "#ff6900"
     castShadows: false
-  - type: NodeContainer
-    examinable: true
-    nodes:
-      input:
-        !type:CableDeviceNode
-        nodeGroupID: HVPower
-      output:
-        !type:CableDeviceNode
-        nodeGroupID: MVPower
   - type: PowerMonitoringDevice
-    group: Substation
-    sourceNode: input
-    loadNode: output
-    collectionName: substation
     sprite: Structures/Power/substation.rsi
     state: substation_static
-  - type: BatteryCharger
-    voltage: High
-  - type: BatteryDischarger
-    voltage: Medium
-  - type: PowerNetworkBattery
-    maxSupply: 150000
-    maxChargeRate: 5000
-    supplyRampTolerance: 5000
-    supplyRampRate: 1000
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallicStrong
-  - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 200
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -82,9 +121,9 @@
         gasMixture:
           volume: 1000
           moles:
-            - 0 # oxygen
-            - 0 # nitrogen
-            - 340.5701689 # carbon dioxide
+          - 0 # oxygen
+          - 0 # nitrogen
+          - 340.5701689 # carbon dioxide
           temperature: 373.15
   - type: Explosive
     explosionType: Default
@@ -94,13 +133,8 @@
   - type: WiresPanel
   - type: Machine
     board: SubstationMachineCircuitboard
-  - type: StationInfiniteBatteryTarget
-  - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -5
     range: 3
-    sound:
-      path: /Audio/Ambience/Objects/buzzing.ogg
   - type: Electrified
     onHandInteract: false
     onInteractUsing: false
@@ -108,26 +142,19 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: output
-  - type: GuideHelp
-    guides:
-    - VoltageNetworks
-    - Power
 
 # Compact Wall Substation Base
 - type: entity
   id: BaseSubstationWall
+  parent: CoreSubstation
   categories: [ HideSpawnMenu ]
   name: wallmount substation
   description: A substation designed for compact shuttles and spaces.
   placement:
     mode: SnapgridCenter
   components:
-  - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -5
     range: 2
-    sound:
-      path: /Audio/Ambience/Objects/buzzing.ogg
   - type: PointLight
     radius: 1.5
     energy: 1
@@ -136,8 +163,6 @@
     castShadows: false
     offset: 0, -0.2
   - type: Clickable
-  - type: AccessReader
-    access: [["Engineering"]]
   - type: ContainerFill
     containers:
       board: [ WallmountSubstationElectronics ]
@@ -161,43 +186,17 @@
   - type: Battery
     maxCharge: 2000000
     startingCharge: 0
-  - type: ExaminableBattery
-  - type: NodeContainer
-    examinable: true
-    nodes:
-      input:
-        !type:CableDeviceNode
-        nodeGroupID: HVPower
-      output:
-        !type:CableDeviceNode
-        nodeGroupID: MVPower
   - type: PowerMonitoringDevice
-    group: Substation
-    sourceNode: input
-    loadNode: output
     sprite: Structures/Power/substation.rsi
     state: substation_wall_static
-  - type: BatteryCharger
-    voltage: High
-  - type: BatteryDischarger
-    voltage: Medium
-  - type: PowerNetworkBattery
-    maxSupply: 150000
-    maxChargeRate: 5000
-    supplyRampTolerance: 5000
-    supplyRampRate: 1000
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallicStrong
-  - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 200
       behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -216,12 +215,7 @@
     maxIntensity: 50
     intensitySlope: 2
     totalIntensity: 100
-  - type: StationInfiniteBatteryTarget
   - type: WallMount
-  - type: GuideHelp
-    guides:
-    - VoltageNetworks
-    - Power
 
 # Substations in use
 
@@ -261,7 +255,7 @@
       capacitor: !type:Container
       powercell: !type:Container
 
-# Construction Frame
+      # Construction Frame
 - type: entity
   id: BaseSubstationWallFrame
   categories: [ HideSpawnMenu ]

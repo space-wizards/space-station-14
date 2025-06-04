@@ -11,39 +11,43 @@
       - state: red
       - sprite: Objects/Consumable/Food/snacks.rsi
         state: cheesiehonkers
-  - type: RandomSpawner
-  #small item
-    prototypes:
-      - FoodSnackBoritos
-      - FoodSnackCheesie
-      - FoodSnackChips
-      - FoodSnackChocolate
-      - FoodSnackEnergy
-      - FoodSnackChocolateBar
-      - FoodSnackPopcorn
-      - FoodSnackRaisins
-      - FoodSnackSus
-      - FoodSnackSyndi
-      - FoodSnackChowMein
-      - FoodSnackDanDanNoodles
-      - FoodSnackCookieFortune
-      - FoodSnackNutribrick
-      - FoodSnackMREBrownie
-      - FoodFrozenSandwich
-      - FoodFrozenSandwichStrawberry
-      - FoodFrozenFreezy
-      - FoodFrozenSundae
-      - FoodFrozenCornuto
-      - FoodFrozenPopsicleOrange
-      - FoodFrozenPopsicleBerry
-      - FoodFrozenPopsicleJumbo
-      - FoodFrozenSnowcone
-      - FoodFrozenSnowconeBerry
-      - FoodFrozenSnowconeFruit
-      - FoodFrozenSnowconeClown
-      - FoodFrozenSnowconeMime
-      - FoodFrozenSnowconeRainbow
-      - FoodSnackPistachios
-      - FoodSnackSemki
-    chance: 0.8
-    offset: 0.0
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomSnackTable
+      prob: 0.8
+
+- type: entityTable
+  id: RandomSnackTable
+  table: !type:GroupSelector
+    children:
+    - id: FoodFrozenCornuto
+    - id: FoodFrozenFreezy
+    - id: FoodFrozenPopsicleBerry
+    - id: FoodFrozenPopsicleJumbo
+    - id: FoodFrozenPopsicleOrange
+    - id: FoodFrozenSandwich
+    - id: FoodFrozenSandwichStrawberry
+    - id: FoodFrozenSnowcone
+    - id: FoodFrozenSnowconeBerry
+    - id: FoodFrozenSnowconeClown
+    - id: FoodFrozenSnowconeFruit
+    - id: FoodFrozenSnowconeMime
+    - id: FoodFrozenSnowconeRainbow
+    - id: FoodFrozenSundae
+    - id: FoodSnackBoritos
+    - id: FoodSnackCheesie
+    - id: FoodSnackChips
+    - id: FoodSnackChocolate
+    - id: FoodSnackChocolateBar
+    - id: FoodSnackChowMein
+    - id: FoodSnackCookieFortune
+    - id: FoodSnackDanDanNoodles
+    - id: FoodSnackEnergy
+    - id: FoodSnackMREBrownie
+    - id: FoodSnackNutribrick
+    - id: FoodSnackPistachios
+    - id: FoodSnackPopcorn
+    - id: FoodSnackRaisins
+    - id: FoodSnackSemki
+    - id: FoodSnackSus
+    - id: FoodSnackSyndi

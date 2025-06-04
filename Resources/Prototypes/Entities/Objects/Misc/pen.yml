@@ -119,3 +119,17 @@
   components:
   - type: Sprite
     state: pen_hop
+
+- type: entity
+  name: wizard's magical pen
+  parent: [ PenEmbeddable, BaseMagicalContraband ]
+  id: PenWiz
+  description: A luxurious fountain pen. Seems to have a magical crystal eraser.
+  components:
+  - type: Sprite
+    state: pen_wizard
+  - type: Tag
+    tags:
+    - WriteIgnoreStamps
+    - Write
+    - Pen

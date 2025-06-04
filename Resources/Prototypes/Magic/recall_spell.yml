@@ -1,0 +1,21 @@
+- type: entity
+  id: ActionItemRecall
+  name: Mark Item
+  description: Mark a held item to later summon into your hand.
+  components:
+  - type: InstantAction
+    useDelay: 10
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+      params:
+        volume: -5
+        pitch: 1.2
+        maxDistance: 5
+        variation: 0.2
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: item_recall
+    event: !type:OnItemRecallActionEvent
+  - type: ItemRecall

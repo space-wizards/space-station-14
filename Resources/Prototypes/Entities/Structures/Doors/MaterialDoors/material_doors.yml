@@ -136,6 +136,11 @@
   - type: Construction
     graph: DoorGraph
     node: paperDoor
+  - type: Door
+    openSound:
+      path: /Audio/Effects/paperdoor_openclose.ogg
+    closeSound:
+      path: /Audio/Effects/paperdoor_openclose.ogg
 
 - type: entity
   id: PlasmaDoor

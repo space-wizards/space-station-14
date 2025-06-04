@@ -153,6 +153,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IBanManager>().Initialize();
                 IoCManager.Resolve<IConnectionManager>().PostInit();
                 IoCManager.Resolve<MultiServerKickManager>().Initialize();
+                IoCManager.Resolve<CVarControlManager>().Initialize();
             }
         }
 
@@ -216,6 +217,7 @@ namespace Content.Server.Entry
             Load(CCVars.ConfigPresetDebug, "debug");
 #endif
 
+#pragma warning disable CS8321
             void Load(CVarDef<bool> cVar, string name)
             {
                 var path = $"{ConfigPresetsDirBuild}{name}.toml";
@@ -225,6 +227,7 @@ namespace Content.Server.Entry
                     sawmill.Info("Loaded config preset: {Preset}", path);
                 }
             }
+#pragma warning restore CS8321
         }
     }
 }

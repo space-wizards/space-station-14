@@ -10,7 +10,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Movement.Systems;
 
-public partial class EyeCursorOffsetSystem : EntitySystem
+public sealed partial class EyeCursorOffsetSystem : EntitySystem
 {
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
@@ -45,7 +45,7 @@ public partial class EyeCursorOffsetSystem : EntitySystem
         if (_uiManager.ActiveScreen == null ||!_uiManager.ActiveScreen!.TryGetWidget<MainViewport>(out var mainViewport))
             return null;
 
-        var localPlayer = _player.LocalPlayer?.ControlledEntity;
+        var localPlayer = _player.LocalEntity;
         var mousePos = _inputManager.MouseScreenPosition;
         var screenSize = mainViewport.Size;
 

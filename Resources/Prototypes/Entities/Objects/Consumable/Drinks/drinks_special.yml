@@ -27,6 +27,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker.rsi
     state: icon
+  - type: Item
+    sprite: Objects/Consumable/Drinks/shaker.rsi
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
@@ -140,6 +142,10 @@
     solutions:
       drink:
         maxVol: 20
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+    minTransferAmount: 1
+    maxTransferAmount: 20
   - type: MixableSolution
     solution: drink
   - type: FitsInDispenser
