@@ -40,6 +40,7 @@
   - type: Sprite
     state: boritos
   - type: Item
+    heldPrefix: boritos
   - type: Food
     trash:
     - FoodPacketBoritosTrash
@@ -73,6 +74,7 @@
   - type: Sprite
     state: cheesiehonkers
   - type: Item
+    heldPrefix: cheesiehonkers
   - type: Food
     trash:
     - FoodPacketCheesieTrash
@@ -91,6 +93,7 @@
   - type: Sprite
     state: chips
   - type: Item
+    heldPrefix: chips
   - type: Food
     trash:
     - FoodPacketChipsTrash

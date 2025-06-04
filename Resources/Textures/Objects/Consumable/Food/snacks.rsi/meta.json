@@ -14,10 +14,26 @@
       "name": "boritos"
     },
     {
+      "name": "boritos-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "boritos-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "boritos-trash"
     },
     {
       "name": "cheesiehonkers"
+    },
+    {
+      "name": "cheesiehonkers-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cheesiehonkers-inhand-left",
+      "directions": 4
     },
     {
       "name": "cheesiehonkers-trash"
@@ -52,6 +68,14 @@
     },
     {
       "name": "chips"
+    },
+    {
+      "name": "chips-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "chips-inhand-left",
+      "directions": 4
     },
     {
       "name": "chips-trash"
