@@ -1,5 +1,4 @@
 ﻿# Base item for large pieces (regular tabletop ones are exploitable)
-
 - type: entity
   id: BaseLargeTabletopPiece
   parent: BaseItem
@@ -8,7 +7,6 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
-    
 
 # White chess pieces
 - type: entity
