@@ -2,12 +2,12 @@
 ### Interaction Messages
 
 # When trying to eat food without the required utensil... but you gotta hold it
-food-you-need-to-hold-utensil = You need to be holding a {$utensil} to eat that!
+food-you-need-to-hold-utensil = You need to be holding {INDEFINITE($utensil)} {$utensil} to eat that!
 
 food-nom = Nom. {$flavors}
-food-swallow = You swallow the {$food}. {$flavors}
+food-swallow = You swallow { THE($food) }. {$flavors}
 
-food-has-used-storage = You cannot eat the {$food} with an item stored inside.
+food-has-used-storage = You cannot eat { THE($food) } with an item stored inside.
 
 food-system-remove-mask = You need to take off the {$entity} first.
 

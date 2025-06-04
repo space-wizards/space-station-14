@@ -475,6 +475,7 @@
   - type: Tag
     tags:
     - Slice
+    - ClothMade
   - type: Construction
     graph: DoughRopeCotton
     node: start
@@ -512,6 +513,10 @@
           Quantity: 1.5
         - ReagentId: Fiber
           Quantity: 3.5
+  - type: Tag
+    tags:
+     - ClothMade
+     - Ingredient
 
 - type: entity
   name: raw pastry base

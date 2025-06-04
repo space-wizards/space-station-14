@@ -382,6 +382,13 @@
       reagents:
       - ReagentId: Ichor
         Quantity: 10
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatDragonCutlet
+  - type: Construction
+    graph: DragonSteak
+    node: start
+    defaultTarget: dragon steak
 
 - type: entity
   name: raw rat meat
@@ -667,6 +674,27 @@
   - type: Construction
     graph: MeatMeatballCooked
     node: start
+
+# meat patty - grillin' time
+
+- type: entity
+  name: meat patty
+  parent: FoodMeatBase
+  id: FoodMeatPatty
+  description: A flat slab of ground meat. Ready for grillin'.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
+  - type: Sprite
+    state: raw_patty
+  - type: InternalTemperature
+    conductivity: 0.43
+  - type: Construction
+    graph: CookedPatty
+    node: start
+    defaultTarget: cooked meat patty
 
 - type: entity
   name: slimeball
@@ -1186,6 +1214,35 @@
     node: meatball cooked
 
 - type: entity
+  name: cooked meat patty
+  parent: FoodMeatBase
+  id: FoodMeatPattyCooked
+  description: A cooked meat patty.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+    - Steak
+  - type: Sprite
+    state: patty
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7.5
+        - ReagentId: Protein
+          Quantity: 7.5
+  - type: Construction
+    graph: CookedPatty
+    node: cooked meat patty
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatPatty
+      Taco: MeatPatty
+
+- type: entity
   name: boiled snail
   parent: FoodMeatBase
   id: FoodMeatSnailCooked
@@ -1242,6 +1299,41 @@
   - type: Construction
     graph: AnomalyMeatSteak
     node: anomaly steak
+
+- type: entity
+  name: dragon steak
+  parent: FoodMeatBase
+  id: FoodMeatDragonCooked
+  description: Pouring ketchup on this is considered a capital crime on most stations.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+    - Steak
+  - type: Sprite
+    layers:
+    - state: dragon-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 6
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Protein
+          Quantity: 6
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatDragonCutletCooked
+  - type: Construction
+    graph: DragonSteak
+    node: dragon steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: DragonSteak
+      Taco: DragonSteak
 
 # Cutlets
 
@@ -1505,6 +1597,33 @@
         - ReagentId: Protein
           Quantity: 1
 
+- type: entity
+  name: raw dragon cutlet
+  parent: FoodMeatBase
+  id: FoodMeatDragonCutlet
+  description: A raw dragon meat cutlet.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Cutlet
+    - Meat
+  - type: Sprite
+    layers:
+    - state: dragoncutlet
+    - state: dragoncutlet_veins
+      shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 3
+  - type: Construction
+    graph: DragonCutlet
+    node: start
+    defaultTarget: dragon cutlet
+
 # Cooked
 
 - type: entity
@@ -1746,3 +1865,34 @@
     entries:
       Burger: XenoCutlet
       Taco: XenoCutlet
+
+- type: entity
+  name: dragon cutlet
+  parent: FoodMeatBase
+  id: FoodMeatDragonCutletCooked
+  description: It's a meal for kings!
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Cutlet
+    - Meat
+  - type: Sprite
+    state: dragoncutlet-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 2
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
+  - type: Construction
+    graph: DragonCutlet
+    node: dragon cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: DragonCutlet
+      Taco: DragonCutlet
