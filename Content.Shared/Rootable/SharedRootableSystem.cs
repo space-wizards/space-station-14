@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Damage.Components;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Alert;
 using Content.Shared.Coordinates;
 using Content.Shared.Fluids.Components;
@@ -53,13 +54,20 @@ public abstract class SharedRootableSystem : EntitySystem
 
     private void OnRootableMapInit(Entity<RootableComponent> entity, ref MapInitEvent args)
     {
+        if (!TryComp(entity, out ActionsComponent? comp))
+            return;
+
         entity.Comp.NextUpdate = _timing.CurTime;
-        _actions.AddAction(entity, ref entity.Comp.ActionEntity, entity.Comp.Action, entity);
+        _actions.AddAction(entity, ref entity.Comp.ActionEntity, entity.Comp.Action, component: comp);
     }
 
     private void OnRootableShutdown(Entity<RootableComponent> entity, ref ComponentShutdown args)
     {
-        _actions.RemoveAction(entity, entity.Comp.ActionEntity);
+        if (!TryComp(entity, out ActionsComponent? comp))
+            return;
+
+        var actions = new Entity<ActionsComponent?>(entity, comp);
+        _actions.RemoveAction(actions, entity.Comp.ActionEntity);
     }
 
     private void OnRootableToggle(Entity<RootableComponent> entity, ref ToggleActionEvent args)

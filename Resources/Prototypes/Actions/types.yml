@@ -400,16 +400,16 @@
     itemIconStyle: BigAction
 
 - type: entity
+  parent: BaseToggleAction
   id: ActionToggleRootable
   name: action-name-toggle-rootable
   description: action-description-toggle-rootable
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Actions/rooting.png
     iconOn: Interface/Actions/rooting.png
     itemIconStyle: NoItem
     useDelay: 1
-    event: !type:ToggleActionEvent
 
 - type: entity
   id: ActionChameleonController
