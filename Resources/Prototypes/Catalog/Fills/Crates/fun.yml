@@ -423,8 +423,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: FloorCarpetItemBoardChecker
-        amount: 32
+      - id: FloorCarpetItemBoardChecker32
       - id: LargeBlackKing
         amount: 1
       - id: LargeBlackQueen
@@ -458,10 +457,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: FloorCarpetItemBoardBlack
-        amount: 32
-      - id: FloorCarpetItemBoardWhite
-        amount: 32
+      - id: FloorCarpetItemBoardBlack32
+      - id: FloorCarpetItemBoardWhite32
       - id: LargeBlackKing
         amount: 1
       - id: LargeBlackQueen

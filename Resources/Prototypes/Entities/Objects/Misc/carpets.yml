@@ -211,3 +211,27 @@
     doAfter: 0.5
     removeOnInteract: true
 
+- type: entity
+  parent: FloorCarpetItemBoardChecker
+  id: FloorCarpetItemBoardChecker32
+  suffix: Checkered Board 32
+  components:
+    - type: Stack
+      count: 32
+
+- type: entity
+  parent: FloorCarpetItemBoardWhite
+  id: FloorCarpetItemBoardWhite32
+  suffix: White Board 32
+  components:
+    - type: Stack
+      count: 32
+
+- type: entity
+  parent: FloorCarpetItemBoardBlack
+  id: FloorCarpetItemBoardBlack32
+  suffix: Black Board 32
+  components:
+    - type: Stack
+      count: 32
+
