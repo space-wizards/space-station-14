@@ -129,3 +129,4 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: b_pawn
+
