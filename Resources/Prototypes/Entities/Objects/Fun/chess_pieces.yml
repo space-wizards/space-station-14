@@ -7,6 +7,7 @@
   suffix: Large
   components:
   - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     
 
 # White chess pieces
@@ -17,7 +18,7 @@
   parent: BaseLargeTabletopPiece
   components:
   - type: Sprite
-    sprite: Objects/Fun/Tabletop/chess_pieces.yml
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: w_king
 
 - type: entity
@@ -26,9 +27,9 @@
   description: The white queen, it can move any amount of tiles in any direction. The most powerful piece on the board, it can be tempting to always promote a pawn to a queen, but this can lead to a stalemate if not handled carefully. Worth 9 points.
   parent: BaseLargeTabletopPiece
   components:
-    - type: Sprite
-      sprite: Objects/Fun/Tabletop/chess_pieces.yml
-      state: w_queen
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: w_queen
 
 - type: entity
   id: LargeWhiteRook
@@ -36,9 +37,9 @@
   description: The white rook, it can move any amount of tiles orthogonally. If neither the king nor the rook of the same colour have moved, and there are no pieces inbetween them, then the rook can be moved one square towards the king and the king is moved to where the rook previously was; this is called castling. Worth 5 points.
   parent: BaseLargeTabletopPiece
   components:
-    - type: Sprite
-     sprite: Objects/Fun/Tabletop/chess_pieces.yml
-     state: w_rook
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: w_rook
 
 - type: entity
   id: LargeWhiteBishop
@@ -46,9 +47,9 @@
   description: The white bishop, it can move any amount of tiles diagonally. Each colour has one bishop per square colour, this can be useful for quickly figuring out if a move can be threatened without visualising it fully. Worth 3 points.
   parent: BaseLargeTabletopPiece
   components:
-    - type: Sprite
-      sprite: Objects/Fun/Tabletop/chess_pieces.yml
-      state: w_bishop
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: w_bishop
 
 - type: entity
   id: LargeWhiteKnight
@@ -56,9 +57,9 @@
   description: The white knight (or horsie), It moves moves in an L (three tiles in a direction, then one tile paralell). It is the only piece that can move over other pieces. Worth 3 points.
   parent: BaseLargeTabletopPiece
   components:
-    - type: Sprite
-      sprite: Objects/Fun/Tabletop/chess_pieces.yml
-      state: w_knight
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: w_knight
 
 - type: entity
   id: LargeWhitePawn
@@ -66,9 +67,9 @@
   description: The white pawn, it moves one tile toward the opposing side of the board, but can move two if it has not moved yet in the game. It cannot take a piece by moving straight into it like the other pieces, but has to be diagonally adjacent. If it reaches the opposite side of the board, it can be promoted to a knight, bishop, rook or queen. Worth 1 point.
   parent: BaseLargeTabletopPiece
   components:
-    - type: Sprite
-      sprite: Objects/Fun/Tabletop/chess_pieces.yml
-      state: w_pawn
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: w_pawn
 
 # Black chess pieces
 - type: entity
@@ -77,9 +78,9 @@
   description: The black king, it can move one square in any direction. If the no piece can move and this piece is threatened, then black wins; however, if it is not under threat and no piece can move then the game ends in a stalemate.
   parent: BaseLargeTabletopPiece
   components:
-    - type: Sprite
-      sprite: Objects/Fun/Tabletop/chess_pieces.yml
-      state: b_king
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: b_king
 
 - type: entity
   id: LargeBlackQueen
@@ -87,9 +88,9 @@
   description: The black queen, it can move any amount of tiles in any direction. The most powerful piece on the board, it can be tempting to always promote a pawn to a queen, but this can lead to a stalemate if not handled carefully. Worth 9 points.
   parent: BaseLargeTabletopPiece
   components:
-    - type: Sprite
-      sprite: Objects/Fun/Tabletop/chess_pieces.yml
-      state: b_queen
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: b_queen
 
 - type: entity
   id: LargeBlackRook
@@ -97,9 +98,9 @@
   description: The black rook, it can move any amount of tiles orthogonally. If neither the king nor the rook of the same colour have moved, and there are no pieces inbetween them, then the rook can be moved one square towards the king and the king is moved to where the rook previously was; this is called castling. Worth 5 points.
   parent: BaseLargeTabletopPiece
   components:
-    - type: Sprite
-      sprite: Objects/Fun/Tabletop/chess_pieces.yml
-      state: b_rook
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: b_rook
 
 - type: entity
   id: LargeBlackBishop
@@ -107,9 +108,9 @@
   description: The black bishop, it can move any amount of tiles diagonally. Each colour has one bishop per square colour, this can be useful for quickly figuring out if a move can be threatened without visualising it fully. Worth 3 points.
   parent: BaseLargeTabletopPiece
   components:
-    - type: Sprite
-      sprite: Objects/Fun/Tabletop/chess_pieces.yml
-      state: b_bishop
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: b_bishop
 
 - type: entity
   id: LargeBlackKnight
@@ -117,9 +118,9 @@
   description: The black knight (or horsie), it moves moves in an L (three tiles in a direction, then one tile paralell). It is the only piece that can move over other pieces. Worth 3 points.
   parent: BaseLargeTabletopPiece
   components:
-    - type: Sprite
-      sprite: Objects/Fun/Tabletop/chess_pieces.yml
-      state: b_knight
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: b_knight
 
 - type: entity
   id: LargeBlackPawn
@@ -127,6 +128,6 @@
   description: The black pawn, it moves one tile toward the opposing side of the board, but can move two if it has not moved yet in the game. It cannot take a piece by moving straight into it like the other pieces, but has to be diagonally adjacent. If it reaches the opposite side of the board, it can be promoted to a knight, bishop, rook or queen. Worth 1 point. # contemplated explaining en passant but thats a bit far imo
   parent: BaseLargeTabletopPiece
   components:
-    - type: Sprite
-      sprite: Objects/Fun/Tabletop/chess_pieces.yml
-      state: b_pawn
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chess_pieces.rsi
+    state: b_pawn
