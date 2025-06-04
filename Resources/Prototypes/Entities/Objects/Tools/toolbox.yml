@@ -36,6 +36,7 @@
           True: { state: icon-open }
           False: { state: icon }
   - type: Appearance
+  - type: Dumpable
 
 - type: entity
   name: emergency toolbox
