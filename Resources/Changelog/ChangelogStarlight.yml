@@ -6785,4 +6785,11 @@ Entries:
   id: 938
   time: '2025-06-03T02:36:10.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/738
+- author: Cyanogen
+  changes:
+  - message: Gave slime people built-in beer goggles
+    type: Add
+  id: 939
+  time: '2025-06-04T03:04:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/763
 
