@@ -42,3 +42,49 @@
   - type: Item
     sprite: Objects/Devices/securityhandy.rsi
     heldPrefix: walkietalkie
+
+- type: entity
+  name: expedition radio
+  description: A handy expedition radio.
+  parent: [ RadioHandheld, BaseCargoContraband ]
+  id: RadioHandheldExpedition
+  components:
+    - type: TelecomExempt # what is telecom exempt?
+    - type: RadioMicrophone
+      broadcastChannel: Expedition
+      # listenRange: 1 # what does this do?
+    - type: RadioSpeaker
+      channels:
+        - Expedition
+    - type: Speech
+      speechVerb: Robotic
+    - type: Sprite
+      sprite: Objects/Devices/expeditionhandy.rsi
+      layers:
+        - state: walkietalkie
+        - state: walkietalkie-on
+      state: walkietalkie
+    - type: Item
+      sprite: Objects/Devices/expeditionhandy.rsi
+      heldPrefix: walkietalkie
+    - type: Tag
+      tags:
+        - Radio
+
+- type: entity
+  name: supply radio
+  description: A handy cargo radio.
+  parent: [ RadioHandheld, BaseCargoContraband ]
+  id: RadioHandheldCargo
+  components:
+    - type: RadioMicrophone
+      broadcastChannel: Supply
+      listenRange: 1
+    - type: RadioSpeaker
+      channels:
+        - Supply
+    - type: Sprite
+      sprite: Objects/Devices/supplyhandy.rsi
+    - type: Item
+      sprite: Objects/Devices/supplyhandy.rsi
+      heldPrefix: walkietalkie
