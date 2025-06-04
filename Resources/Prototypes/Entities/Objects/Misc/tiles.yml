@@ -1518,8 +1518,8 @@
     stackType: FloorTileAstroGrass
 
 - type: entity
-  id: FloorTileItemDarkAstroGrass
   parent: FloorTileItemBase
+  id: FloorTileItemDarkAstroGrass
   name: dark astro-grass
   description: Fake grass that covers up wires and even comes with realistic NanoTrimmings!
   components:
@@ -1535,8 +1535,8 @@
     stackType: FloorTileDarkAstroGrass
 
 - type: entity
-  id: FloorTileItemLightAstroGrass
   parent: FloorTileItemBase
+  id: FloorTileItemLightAstroGrass
   name: light astro-grass
   description: Fake grass that covers up wires and even comes with realistic NanoTrimmings!
   components:
@@ -1620,8 +1620,8 @@
     stackType: FloorTileAstroAsteroidSand
 
 - type: entity
-  id: FloorTileItemDesertAstroSand
   parent: FloorTileItemBase
+  id: FloorTileItemDesertAstroSand
   name: desert astro-sand
   description: Fake sand, designed to be fine.
   components:
