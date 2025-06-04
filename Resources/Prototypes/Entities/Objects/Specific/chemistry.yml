@@ -544,6 +544,7 @@
   - type: Injector
     delay: 2.5
     injectOnly: false
+    maxTransferAmount: 25
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: syringe
