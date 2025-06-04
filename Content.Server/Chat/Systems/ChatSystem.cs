@@ -37,6 +37,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Content.Shared.Speech; // Starlight
 
 namespace Content.Server.Chat.Systems;
 
@@ -64,6 +65,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly CollectiveMindUpdateSystem _collectiveMind = default!;
+    [Dependency] private readonly SpeechSystem _speechSystem = default!; //Starlight
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units

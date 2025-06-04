@@ -38,3 +38,9 @@
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
     state: tail_cat
+  #region Starlight
+  emotes:
+    - emotePrototype: Mew
+      requiredMarkings:
+        - CatEars
+  #endregion Starlight

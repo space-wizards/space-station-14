@@ -1,3 +1,4 @@
+using Content.Shared._Starlight.Markings; //#Starlight
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -42,6 +43,11 @@ namespace Content.Shared.Humanoid.Markings
         [DataField("sprites", required: true)]
         public List<SpriteSpecifier> Sprites { get; private set; } = default!;
 
+        //# region starlight
+        [DataField("emotes")]
+        public List<MarkingEmoteData>? Emotes = null;
+        //# endregion starlight
+        
         public Marking AsMarking()
         {
             return new Marking(ID, Sprites.Count);
