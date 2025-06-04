@@ -2,7 +2,7 @@
 
 - type: marking
   id: BasicLeftSock
-  bodyPart: LFoot, LLeg
+  bodyPart: LLeg, LFoot
   markingCategory: Legs
   speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, SlimePerson]
   coloring:
@@ -15,7 +15,7 @@
 
 - type: marking
   id: BasicRightSock
-  bodyPart: RFoot, RLeg
+  bodyPart: RLeg, RFoot
   markingCategory: Legs
   speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, SlimePerson]
   coloring:
@@ -28,7 +28,7 @@
 
 - type: marking
   id: VoxLeftSock
-  bodyPart: LFoot, LLeg
+  bodyPart: LLeg, LFoot
   markingCategory: Legs
   speciesRestriction: [Vox]
   coloring:
@@ -41,7 +41,7 @@
 
 - type: marking
   id: VoxRightSock
-  bodyPart: RFoot, RLeg
+  bodyPart: RLeg, RFoot
   markingCategory: Legs
   speciesRestriction: [Vox]
   coloring:
