@@ -58,13 +58,13 @@
     - type: Speech
       speechVerb: Robotic
     - type: Sprite
-      sprite: Objects/Devices/expeditionhandy.rsi # TODO create this
+      sprite: Objects/Devices/expeditionhandy.rsi # TODO create this in Resources/Textures/Objects/Devices
       layers:
         - state: walkietalkie
         - state: walkietalkie-on
       state: walkietalkie
     - type: Item
-      sprite: Objects/Devices/expeditionhandy.rsi # TODO create this
+      sprite: Objects/Devices/expeditionhandy.rsi # TODO create this in Resources/Textures/Objects/Devices
       heldPrefix: walkietalkie
     - type: Tag
       tags:
@@ -83,7 +83,7 @@
       channels:
         - Supply
     - type: Sprite
-      sprite: Objects/Devices/supplyhandy.rsi # TODO create this
+      sprite: Objects/Devices/supplyhandy.rsi # TODO create this in Resources/Textures/Objects/Devices
     - type: Item
-      sprite: Objects/Devices/supplyhandy.rsi # TODO create this
+      sprite: Objects/Devices/supplyhandy.rsi # TODO create this in Resources/Textures/Objects/Devices
       heldPrefix: walkietalkie
