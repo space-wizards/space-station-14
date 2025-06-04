@@ -62,13 +62,7 @@ public abstract class SharedXenoborgFactorySystem : EntitySystem
         if (_mobState.IsIncapacitated(uid))
             return;
 
-        if (!HasComp<MobStateComponent>(item))
-            return;
-
         if (!CanProduce(uid, component))
-            return;
-
-        if (HasComp<BorgChassisComponent>(item))
             return;
 
         if (!_mobState.IsIncapacitated(item) && !HasComp<SleepingComponent>(item) && _actionBlocker.CanInteract(item, null) && !suicide)
