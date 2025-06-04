@@ -158,7 +158,7 @@
   suffix: Tabletop, 2
   components:
   - type: Stack
-    count: 2 
+    count: 2
 
 - type: entity
   id: LargeWhiteBishop4
@@ -166,7 +166,7 @@
   suffix: Tabletop, 4
   components:
   - type: Stack
-    count: 4 
+    count: 4
 
 - type: entity
   id: LargeWhiteKnight4
@@ -174,7 +174,7 @@
   suffix: Tabletop, 4
   components:
   - type: Stack
-    count: 4 
+    count: 4
 
 - type: entity
   id: LargeWhiteRook4
@@ -182,7 +182,7 @@
   suffix: Tabletop, 4
   components:
   - type: Stack
-    count: 4 
+    count: 4
 
 - type: entity
   id: LargeWhitePawn8
@@ -190,7 +190,7 @@
   suffix: Tabletop, 8
   components:
   - type: Stack
-    count: 8 
+    count: 8
 
 - type: entity
   id: LargeBlackQueen2
@@ -198,7 +198,7 @@
   suffix: Tabletop, 2
   components:
   - type: Stack
-    count: 2 
+    count: 2
 
 - type: entity
   id: LargeBlackBishop4
@@ -206,7 +206,7 @@
   suffix: Tabletop, 4
   components:
   - type: Stack
-    count: 4 
+    count: 4
 
 - type: entity
   id: LargeBlackKnight4
@@ -214,7 +214,7 @@
   suffix: Tabletop, 4
   components:
   - type: Stack
-    count: 4 
+    count: 4
 
 - type: entity
   id: LargeBlackRook4
@@ -222,7 +222,7 @@
   suffix: Tabletop, 4
   components:
   - type: Stack
-    count: 4 
+    count: 4
 
 - type: entity
   id: LargeBlackPawn8
