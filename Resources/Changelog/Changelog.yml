@@ -1,41 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Added playtest cvars for mob and stamina damage. Can be changed via changecvar
-      with VVEDIT perms.
-    type: Add
-  id: 8095
-  time: '2025-03-20T23:01:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35599
-- author: K-Dynamic
-  changes:
-  - message: Dragons and carps now fight NT pets, xenos and zombies.
-    type: Fix
-  id: 8096
-  time: '2025-03-21T00:13:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35578
-- author: Moomoobeef
-  changes:
-  - message: New sprite for Singularity Generator.
-    type: Tweak
-  id: 8097
-  time: '2025-03-21T08:48:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31500
-- author: ArtisticRoomba
-  changes:
-  - message: Fixed organic thermoregulation. Humans, arachnids, moths, etc. will maintain
-      their desired body temperature better.
-    type: Fix
-  id: 8098
-  time: '2025-03-21T09:36:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35981
-- author: TiniestShark
-  changes:
-  - message: Added inhand sprites to Grenades, Bolas and Throwing Stars
-    type: Add
-  id: 8099
-  time: '2025-03-21T09:37:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35974
 - author: TeenSarlacc
   changes:
   - message: You can now buy Foam Force weapons through Cargo.
@@ -3922,3 +3885,45 @@
   id: 8606
   time: '2025-06-02T21:20:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36353
+- author: ScarKy0
+  changes:
+  - message: Directional reinforced plasma and uranium windows are now correctly more
+      durable than regular directional reinforced windows.
+    type: Fix
+  - message: Directional uranium windows can no longer be deconstructed with an RCD.
+    type: Fix
+  id: 8607
+  time: '2025-06-03T11:49:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38038
+- author: Hitlinemoss
+  changes:
+  - message: Most cargo food orders are now more expensive.
+    type: Tweak
+  - message: Disaster pizza deliveries and softdrinks bulk crates have been removed.
+    type: Remove
+  id: 8608
+  time: '2025-06-03T16:01:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38006
+- author: TheFlyingSentry
+  changes:
+  - message: Electropacks now shock people regardless of if they have insulated gloves
+      or not
+    type: Tweak
+  id: 8609
+  time: '2025-06-03T17:38:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38011
+- author: K-Dynamic
+  changes:
+  - message: Cryo sleep units no longer pin players against walls.
+    type: Fix
+  id: 8610
+  time: '2025-06-03T18:13:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37979
+- author: ScarKy0
+  changes:
+  - message: Increased the health of uranium windows, making them a reasonable upgrade
+      over regular plasma.
+    type: Tweak
+  id: 8611
+  time: '2025-06-03T18:20:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38040
