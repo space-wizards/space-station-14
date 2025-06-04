@@ -251,6 +251,14 @@
     },
     {
       "name": "worldpeas-slice"
+    },
+    {
+      "name": "worldpeas-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "worldpeas-slice-inhand-left",
+      "directions": 4
     }
   ]
 }
