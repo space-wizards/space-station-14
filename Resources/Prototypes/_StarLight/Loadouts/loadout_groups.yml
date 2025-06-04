@@ -1,4 +1,79 @@
 - type: loadoutGroup
+  id: AssistantJumpsuit
+  name: loadout-group-assistant-jumpsuit
+  loadouts:
+  - BasicJumpsuit
+  - BasicJumpskirt
+  - AncientJumpsuit
+  - RainbowJumpsuit
+  - RainbowJumpskirt
+  - GreyJumpsuit
+  - GreyJumpskirt
+
+- type: loadoutGroup
+  id: AssistantGlasses
+  name: loadout-group-assistant-glasses
+  minLimit: 0
+  loadouts:
+  - Glasses
+  - GlassesJamjar
+  - GlassesJensen
+  - WeldingGoggles
+  - CheapSunnies
+
+- type: loadoutGroup
+  id: AssistantHead
+  name: loadout-group-assistant-head
+  minLimit: 0
+  loadouts:
+  - WeldingMask
+  - GreyCowboy
+  - GreyBandana
+  - GreyFlatcap
+  - GreyCap
+  - CorpoCap
+  - SyndieCap
+  - GreyFedoraA
+  - SolidHeadband
+  - GreytideBizarreAdventures
+
+- type: loadoutGroup
+  id: AssistantFace
+  name: loadout-group-assistant-mask
+  minLimit: 0
+  loadouts:
+  - AssistantFace
+  - NeckGaiter
+
+- type: loadoutGroup
+  id: AssistantGloves
+  name: loadout-group-assistant-gloves
+  minLimit: 0
+  loadouts:
+  - AssistantGloves
+  - GreyGloves
+  - ParagonGloves
+
+- type: loadoutGroup
+  id: AssistantBackpack
+  name: loadout-group-assistant-backpack
+  loadouts:
+  - CommonBackpack
+  - CommonSatchel
+  - CommonDuffel
+  - SmugglerSatchel
+
+- type: loadoutGroup
+  id: AssistantOuterClothing
+  name: loadout-group-assistant-outerclothing
+  minLimit: 0
+  loadouts:
+  - AssistantWintercoat
+  - GreyHoodieA
+  - GreyTrenchcoatA
+  - SpaceAssholeCoat
+
+- type: loadoutGroup
   id: RoboticistJumpsuit
   name: loadout-group-roboticist-jumpsuit
   loadouts:
