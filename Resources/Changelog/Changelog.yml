@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix pulling alert being goofy.
-    type: Fix
-  id: 8102
-  time: '2025-03-22T11:41:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36004
 - author: Boaz1111
   changes:
   - message: Unrevivable now lets you be cloned again
@@ -3927,3 +3920,11 @@
   id: 8613
   time: '2025-06-04T10:12:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31442
+- author: SlamBamActionman
+  changes:
+  - message: Diona can now root, keeping them from slipping but absorbing fluids from
+      the ground.
+    type: Add
+  id: 8614
+  time: '2025-06-04T10:53:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32782
