@@ -119,7 +119,7 @@
     name: card-sc-3-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_3_of_Clubs_nanotrasen
+    state: sc_3_of_Clubs_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -130,7 +130,7 @@
     name: card-sc-4-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_4_of_Clubs_nanotrasen
+    state: sc_4_of_Clubs_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -141,7 +141,7 @@
     name: card-sc-5-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_5_of_Clubs_nanotrasen
+    state: sc_5_of_Clubs_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -152,7 +152,7 @@
     name: card-sc-6-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_6_of_Clubs_nanotrasen
+    state: sc_6_of_Clubs_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -163,7 +163,7 @@
     name: card-sc-7-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_7_of_Clubs_nanotrasen
+    state: sc_7_of_Clubs_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -174,7 +174,7 @@
     name: card-sc-8-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_8_of_Clubs_nanotrasen
+    state: sc_8_of_Clubs_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -185,7 +185,7 @@
     name: card-sc-9-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_9_of_Clubs_nanotrasen
+    state: sc_9_of_Clubs_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -196,7 +196,7 @@
     name: card-sc-10-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_10_of_Clubs_nanotrasen
+    state: sc_10_of_Clubs_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -207,7 +207,7 @@
     name: card-sc-ace-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Ace_of_Clubs_nanotrasen
+    state: sc_Ace_of_Clubs_black
 
 
 - type: entity
@@ -219,7 +219,7 @@
     name: card-sc-jack-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Jack_of_Clubs_nanotrasen
+    state: sc_Jack_of_Clubs_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -230,7 +230,7 @@
     name: card-sc-king-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_King_of_Clubs_nanotrasen
+    state: sc_King_of_Clubs_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -241,7 +241,7 @@
     name: card-sc-queen-clubs
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Queen_of_Clubs_nanotrasen
+    state: sc_Queen_of_Clubs_black
 
 
 - type: entity
@@ -253,7 +253,7 @@
     name: card-sc-jack-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Jack_of_Diamonds_nanotrasen
+    state: sc_Jack_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -264,7 +264,7 @@
     name: card-sc-queen-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Queen_of_Diamonds_nanotrasen
+    state: sc_Queen_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -275,7 +275,7 @@
     name: card-sc-king-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_King_of_Diamonds_nanotrasen
+    state: sc_King_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -286,7 +286,7 @@
     name: card-sc-ace-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Ace_of_Diamonds_nanotrasen
+    state: sc_Ace_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -297,7 +297,7 @@
     name: card-sc-2-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_2_of_Diamonds_nanotrasen
+    state: sc_2_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -308,7 +308,7 @@
     name: card-sc-3-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_3_of_Diamonds_nanotrasen
+    state: sc_3_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -319,7 +319,7 @@
     name: card-sc-4-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_4_of_Diamonds_nanotrasen
+    state: sc_4_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -330,7 +330,7 @@
     name: card-sc-5-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_5_of_Diamonds_nanotrasen
+    state: sc_5_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -341,7 +341,7 @@
     name: card-sc-6-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_6_of_Diamonds_nanotrasen
+    state: sc_6_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -352,7 +352,7 @@
     name: card-sc-7-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_7_of_Diamonds_nanotrasen
+    state: sc_7_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -363,7 +363,7 @@
     name: card-sc-8-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_8_of_Diamonds_nanotrasen
+    state: sc_8_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -374,7 +374,7 @@
     name: card-sc-9-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_9_of_Diamonds_nanotrasen
+    state: sc_9_of_Diamonds_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -385,7 +385,7 @@
     name: card-sc-10-diamonds
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_10_of_Diamonds_nanotrasen
+    state: sc_10_of_Diamonds_black
 
 
 - type: entity
@@ -397,7 +397,7 @@
     name: card-sc-2-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_2_of_Hearts_nanotrasen
+    state: sc_2_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -408,7 +408,7 @@
     name: card-sc-3-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_3_of_Hearts_nanotrasen
+    state: sc_3_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -419,7 +419,7 @@
     name: card-sc-4-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_4_of_Hearts_nanotrasen
+    state: sc_4_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -430,7 +430,7 @@
     name: card-sc-5-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_5_of_Hearts_nanotrasen
+    state: sc_5_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -441,7 +441,7 @@
     name: card-sc-6-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_6_of_Hearts_nanotrasen
+    state: sc_6_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -452,7 +452,7 @@
     name: card-sc-7-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_7_of_Hearts_nanotrasen
+    state: sc_7_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -463,7 +463,7 @@
     name: card-sc-8-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_8_of_Hearts_nanotrasen
+    state: sc_8_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -474,7 +474,7 @@
     name: card-sc-9-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_9_of_Hearts_nanotrasen
+    state: sc_9_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -485,7 +485,7 @@
     name: card-sc-10-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_10_of_Hearts_nanotrasen
+    state: sc_10_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -496,7 +496,7 @@
     name: card-sc-king-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_King_of_Hearts_nanotrasen
+    state: sc_King_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -507,7 +507,7 @@
     name: card-sc-queen-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Queen_of_Hearts_nanotrasen
+    state: sc_Queen_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -518,7 +518,7 @@
     name: card-sc-jack-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Jack_of_Hearts_nanotrasen
+    state: sc_Jack_of_Hearts_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -529,7 +529,7 @@
     name: card-sc-ace-hearts
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Ace_of_Hearts_nanotrasen
+    state: sc_Ace_of_Hearts_black
 
 
 - type: entity
@@ -541,7 +541,7 @@
     name: card-sc-2-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_2_of_Spades_nanotrasen
+    state: sc_2_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -552,7 +552,7 @@
     name: card-sc-3-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_3_of_Spades_nanotrasen
+    state: sc_3_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -563,7 +563,7 @@
     name: card-sc-4-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_4_of_Spades_nanotrasen
+    state: sc_4_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -574,7 +574,7 @@
     name: card-sc-5-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_5_of_Spades_nanotrasen
+    state: sc_5_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -585,7 +585,7 @@
     name: card-sc-6-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_6_of_Spades_nanotrasen
+    state: sc_6_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -596,7 +596,7 @@
     name: card-sc-7-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_7_of_Spades_nanotrasen
+    state: sc_7_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -607,7 +607,7 @@
     name: card-sc-8-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_8_of_Spades_nanotrasen
+    state: sc_8_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -618,7 +618,7 @@
     name: card-sc-9-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_9_of_Spades_nanotrasen
+    state: sc_9_of_Spades_black
 
 
 - type: entity
@@ -630,7 +630,7 @@
     name: card-sc-10-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_10_of_Spades_nanotrasen
+    state: sc_10_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -641,7 +641,7 @@
     name: card-sc-king-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_King_of_Spades_nanotrasen
+    state: sc_King_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -652,7 +652,7 @@
     name: card-sc-queen-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Queen_of_Spades_nanotrasen
+    state: sc_Queen_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -663,7 +663,7 @@
     name: card-sc-jack-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Jack_of_Spades_nanotrasen
+    state: sc_Jack_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -674,7 +674,7 @@
     name: card-sc-ace-spades
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: sc_Ace_of_Spades_nanotrasen
+    state: sc_Ace_of_Spades_black
 
 - type: entity
   parent: CardBaseNanotrasen
@@ -685,6 +685,6 @@
     name: card-sc-joker
   - type: Sprite
     sprite: EstacaoPirata/Objects/Misc/cards.rsi
-    state: nanotrasen_joker
+    state: black_joker
 
 # endregion Nanotrasen Cards

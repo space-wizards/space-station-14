@@ -77,469 +77,157 @@
       "name": "sc_10_of_Clubs_black"
     },
     {
-      "name": "sc_10_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_10_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_10_of_Diamonds_black"
-    },
-    {
-      "name": "sc_10_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_10_of_Diamonds_syndicate"
     },
     {
       "name": "sc_10_of_Hearts_black"
     },
     {
-      "name": "sc_10_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_10_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_10_of_Spades_black"
-    },
-    {
-      "name": "sc_10_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_10_of_Spades_syndicate"
     },
     {
       "name": "sc_2_of_Clubs_black"
     },
     {
-      "name": "sc_2_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_2_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_2_of_Diamonds_black"
-    },
-    {
-      "name": "sc_2_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_2_of_Diamonds_syndicate"
     },
     {
       "name": "sc_2_of_Hearts_black"
     },
     {
-      "name": "sc_2_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_2_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_2_of_Spades_black"
-    },
-    {
-      "name": "sc_2_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_2_of_Spades_syndicate"
     },
     {
       "name": "sc_3_of_Clubs_black"
     },
     {
-      "name": "sc_3_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_3_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_3_of_Diamonds_black"
-    },
-    {
-      "name": "sc_3_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_3_of_Diamonds_syndicate"
     },
     {
       "name": "sc_3_of_Hearts_black"
     },
     {
-      "name": "sc_3_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_3_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_3_of_Spades_black"
-    },
-    {
-      "name": "sc_3_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_3_of_Spades_syndicate"
     },
     {
       "name": "sc_4_of_Clubs_black"
     },
     {
-      "name": "sc_4_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_4_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_4_of_Diamonds_black"
-    },
-    {
-      "name": "sc_4_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_4_of_Diamonds_syndicate"
     },
     {
       "name": "sc_4_of_Hearts_black"
     },
     {
-      "name": "sc_4_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_4_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_4_of_Spades_black"
-    },
-    {
-      "name": "sc_4_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_4_of_Spades_syndicate"
     },
     {
       "name": "sc_5_of_Clubs_black"
     },
     {
-      "name": "sc_5_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_5_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_5_of_Diamonds_black"
-    },
-    {
-      "name": "sc_5_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_5_of_Diamonds_syndicate"
     },
     {
       "name": "sc_5_of_Hearts_black"
     },
     {
-      "name": "sc_5_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_5_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_5_of_Spades_black"
-    },
-    {
-      "name": "sc_5_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_5_of_Spades_syndicate"
     },
     {
       "name": "sc_6_of_Clubs_black"
     },
     {
-      "name": "sc_6_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_6_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_6_of_Diamonds_black"
-    },
-    {
-      "name": "sc_6_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_6_of_Diamonds_syndicate"
     },
     {
       "name": "sc_6_of_Hearts_black"
     },
     {
-      "name": "sc_6_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_6_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_6_of_Spades_black"
-    },
-    {
-      "name": "sc_6_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_6_of_Spades_syndicate"
     },
     {
       "name": "sc_7_of_Clubs_black"
     },
     {
-      "name": "sc_7_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_7_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_7_of_Diamonds_black"
-    },
-    {
-      "name": "sc_7_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_7_of_Diamonds_syndicate"
     },
     {
       "name": "sc_7_of_Hearts_black"
     },
     {
-      "name": "sc_7_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_7_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_7_of_Spades_black"
-    },
-    {
-      "name": "sc_7_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_7_of_Spades_syndicate"
     },
     {
       "name": "sc_8_of_Clubs_black"
     },
     {
-      "name": "sc_8_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_8_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_8_of_Diamonds_black"
-    },
-    {
-      "name": "sc_8_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_8_of_Diamonds_syndicate"
     },
     {
       "name": "sc_8_of_Hearts_black"
     },
     {
-      "name": "sc_8_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_8_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_8_of_Spades_black"
-    },
-    {
-      "name": "sc_8_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_8_of_Spades_syndicate"
     },
     {
       "name": "sc_9_of_Clubs_black"
     },
     {
-      "name": "sc_9_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_9_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_9_of_Diamonds_black"
-    },
-    {
-      "name": "sc_9_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_9_of_Diamonds_syndicate"
     },
     {
       "name": "sc_9_of_Hearts_black"
     },
     {
-      "name": "sc_9_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_9_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_9_of_Spades_black"
-    },
-    {
-      "name": "sc_9_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_9_of_Spades_syndicate"
     },
     {
       "name": "sc_Ace_of_Clubs_black"
     },
     {
-      "name": "sc_Ace_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_Ace_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_Ace_of_Diamonds_black"
-    },
-    {
-      "name": "sc_Ace_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_Ace_of_Diamonds_syndicate"
     },
     {
       "name": "sc_Ace_of_Hearts_black"
     },
     {
-      "name": "sc_Ace_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_Ace_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_Ace_of_Spades_black"
-    },
-    {
-      "name": "sc_Ace_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_Ace_of_Spades_syndicate"
     },
     {
       "name": "sc_Jack_of_Clubs_black"
     },
     {
-      "name": "sc_Jack_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_Jack_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_Jack_of_Diamonds_black"
-    },
-    {
-      "name": "sc_Jack_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_Jack_of_Diamonds_syndicate"
     },
     {
       "name": "sc_Jack_of_Hearts_black"
     },
     {
-      "name": "sc_Jack_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_Jack_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_Jack_of_Spades_black"
-    },
-    {
-      "name": "sc_Jack_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_Jack_of_Spades_syndicate"
     },
     {
       "name": "sc_King_of_Clubs_black"
     },
     {
-      "name": "sc_King_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_King_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_King_of_Diamonds_black"
-    },
-    {
-      "name": "sc_King_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_King_of_Diamonds_syndicate"
     },
     {
       "name": "sc_King_of_Hearts_black"
     },
     {
-      "name": "sc_King_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_King_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_King_of_Spades_black"
-    },
-    {
-      "name": "sc_King_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_King_of_Spades_syndicate"
     },
     {
       "name": "sc_Queen_of_Clubs_black"
     },
     {
-      "name": "sc_Queen_of_Clubs_nanotrasen"
-    },
-    {
-      "name": "sc_Queen_of_Clubs_syndicate"
-    },
-    {
       "name": "sc_Queen_of_Diamonds_black"
-    },
-    {
-      "name": "sc_Queen_of_Diamonds_nanotrasen"
-    },
-    {
-      "name": "sc_Queen_of_Diamonds_syndicate"
     },
     {
       "name": "sc_Queen_of_Hearts_black"
     },
     {
-      "name": "sc_Queen_of_Hearts_nanotrasen"
-    },
-    {
-      "name": "sc_Queen_of_Hearts_syndicate"
-    },
-    {
       "name": "sc_Queen_of_Spades_black"
-    },
-    {
-      "name": "sc_Queen_of_Spades_nanotrasen"
-    },
-    {
-      "name": "sc_Queen_of_Spades_syndicate"
     },
     {
       "name": "singlecard_down_black"
@@ -564,24 +252,6 @@
     },
     {
       "name": "syndicate_hand5"
-    },
-    {
-      "name": "syndicate_joker",
-      "delays": [
-        [
-          0.5,
-          0.5
-        ]
-      ]
-    },
-    {
-      "name": "nanotrasen_joker",
-      "delays": [
-        [
-          0.5,
-          0.5
-        ]
-      ]
     },
     {
           "name": "black_joker",
