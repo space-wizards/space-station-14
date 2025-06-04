@@ -683,6 +683,17 @@
     damageCoefficient: 0.1
 
 - type: entity
+  parent: ClothingBeltMilitaryWebbing
+  id: ClothingBeltMilitaryWebbingERT
+  name: ERT chest rig
+  description: A set of tactical webbing worn by Emergency Response Team operatives.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/militarywebbingert.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/militarywebbingert.rsi
+
+- type: entity
   parent: ClothingBeltBase
   id: ClothingBeltSuspendersRed
   name: red suspenders
