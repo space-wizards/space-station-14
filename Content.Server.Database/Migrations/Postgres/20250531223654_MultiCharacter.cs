@@ -131,7 +131,7 @@ namespace Content.Server.Database.Migrations.Postgres
                 table: "job",
                 type: "integer",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 2);
 
             migrationBuilder.CreateIndex(
                 name: "IX_job_one_high_priority",

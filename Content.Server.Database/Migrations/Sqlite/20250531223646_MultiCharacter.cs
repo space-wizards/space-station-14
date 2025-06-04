@@ -130,7 +130,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                 table: "job",
                 type: "INTEGER",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 2);
 
             migrationBuilder.CreateIndex(
                 name: "IX_job_one_high_priority",
