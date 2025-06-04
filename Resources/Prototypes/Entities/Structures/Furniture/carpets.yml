@@ -370,7 +370,7 @@
 - type: entity
   id: CarpetBoardWhite
   parent: CarpetBase
-  name: "white tabletop board"
+  name: "white carpet board"
   components:
   - type: Clickable
   - type: Sprite
@@ -400,7 +400,7 @@
 - type: entity
   id: CarpetBoardBlack
   parent: CarpetBase
-  name: "black tabletop board"
+  name: "black carpet board"
   components:
   - type: Clickable
   - type: Sprite
@@ -430,7 +430,7 @@
 - type: entity
   id: CarpetBoardChecker
   parent: CarpetBase
-  name: "checkered tabletop board"
+  name: "checkered carpet board"
   components:
   - type: Clickable
   - type: Sprite
