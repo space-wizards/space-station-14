@@ -123,6 +123,8 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: ShowThirstIcons
+  - type: SolutionScanner
 
 - type: entity
   parent: MobHumanDummy
