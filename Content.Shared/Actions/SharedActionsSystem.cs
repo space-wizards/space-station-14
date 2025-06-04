@@ -348,7 +348,9 @@ public abstract class SharedActionsSystem : EntitySystem
         var target = GetEntity(netTarget);
 
         var targetWorldPos = _transform.GetWorldPosition(target);
-        _rotateToFace.TryFaceCoordinates(user, targetWorldPos);
+
+        if (ent.Comp.RotateOnUse)
+            _rotateToFace.TryFaceCoordinates(user, targetWorldPos);
 
         if (!ValidateEntityTarget(user, target, ent))
             return;
@@ -369,7 +371,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         var user = args.User;
         var target = GetCoordinates(netTarget);
-        _rotateToFace.TryFaceCoordinates(user, target.ToMapPos(EntityManager, _transform));
+
+        if (ent.Comp.RotateOnUse)
+            _rotateToFace.TryFaceCoordinates(user, _transform.ToMapCoordinates(target).Position);
 
         if (!ValidateWorldTarget(user, target, ent))
             return;
@@ -413,15 +417,13 @@ public abstract class SharedActionsSystem : EntitySystem
             return comp.CanTargetSelf;
 
         var targetAction = Comp<TargetActionComponent>(uid);
-        var coords = Transform(target).Coordinates;
-        if (!ValidateBaseTarget(user, coords, (uid, targetAction)))
-        {
-            // if not just checking pure range, let stored entities be targeted by actions
-            // if it's out of range it probably isn't stored anyway...
-            return targetAction.CheckCanAccess && _interaction.CanAccessViaStorage(user, target);
-        }
+        // not using the ValidateBaseTarget logic since its raycast fails if the target is e.g. a wall
+        if (targetAction.CheckCanAccess)
+            return _interaction.InRangeAndAccessible(user, target, range: targetAction.Range);
 
-        return _interaction.InRangeAndAccessible(user, target, range: targetAction.Range);
+        // if not just checking pure range, let stored entities be targeted by actions
+        // if it's out of range it probably isn't stored anyway...
+        return _interaction.CanAccessViaStorage(user, target);
     }
 
     public bool ValidateWorldTarget(EntityUid user, EntityCoordinates target, Entity<WorldTargetActionComponent> ent)
@@ -432,7 +434,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private bool ValidateBaseTarget(EntityUid user, EntityCoordinates coords, Entity<TargetActionComponent> ent)
     {
-        var (uid, comp) = ent;
+        var comp = ent.Comp;
         if (comp.CheckCanAccess)
             return _interaction.InRangeUnobstructed(user, coords, range: comp.Range);
 
@@ -604,7 +606,7 @@ public abstract class SharedActionsSystem : EntitySystem
         return AddAction(performer, ref actionId, out _, actionPrototypeId, container, component);
     }
 
-    /// <inheritdoc cref="AddAction(Robust.Shared.GameObjects.EntityUid,ref System.Nullable{Robust.Shared.GameObjects.EntityUid},string?,Robust.Shared.GameObjects.EntityUid,Content.Shared.Actions.ActionsComponent?)"/>
+    /// <inheritdoc cref="AddAction(Robust.Shared.GameObjects.EntityUid,ref System.Nullable{Robust.Shared.GameObjects.EntityUid},string?,Robust.Shared.GameObjects.EntityUid,ActionsComponent?)"/>
     public bool AddAction(EntityUid performer,
         [NotNullWhen(true)] ref EntityUid? actionId,
         [NotNullWhen(true)] out ActionComponent? action,

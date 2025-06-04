@@ -25,35 +25,43 @@
   name: jetpack
   description: It's a jetpack. It can hold 5 L of gas.
   components:
-    - type: Sprite
-      sprite: Objects/Tanks/Jetpacks/blue.rsi
-      state: icon
-    - type: Item
-      sprite: Objects/Tanks/Jetpacks/blue.rsi
-      size: Huge
-    - type: UserInterface
-      interfaces:
-        enum.SharedGasTankUiKey.Key:
-          type: GasTankBoundUserInterface
-    - type: UseDelay
-      delays:
-        gasTank:
-          length: 1.0
-    - type: Clothing
-      sprite: Objects/Tanks/Jetpacks/blue.rsi
-      quickEquip: false
-      slots:
-        - Back
-    - type: GasTank
-      outputPressure: 21.3
-      air:
-        volume: 5
-        temperature: 293.15
-    - type: Jetpack
-      moleUsage: 0.00085
-    - type: Appearance
-    - type: StaticPrice
-      price: 100
+  - type: Sprite
+    sprite: Objects/Tanks/Jetpacks/blue.rsi
+    layers:
+    - state: icon
+      map: ["enum.JetpackVisuals.Layer"]
+  - type: Item
+    sprite: Objects/Tanks/Jetpacks/blue.rsi
+    size: Huge
+  - type: UserInterface
+    interfaces:
+      enum.SharedGasTankUiKey.Key:
+        type: GasTankBoundUserInterface
+  - type: UseDelay
+    delays:
+      gasTank:
+        length: 1.0
+  - type: Clothing
+    sprite: Objects/Tanks/Jetpacks/blue.rsi
+    quickEquip: false
+    slots:
+    - Back
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      volume: 5
+      temperature: 293.15
+  - type: Jetpack
+    moleUsage: 0.00085
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.JetpackVisuals.Enabled:
+        enum.JetpackVisuals.Layer:
+          True: {state: icon-on}
+          False: {state: icon}
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: BaseAction
