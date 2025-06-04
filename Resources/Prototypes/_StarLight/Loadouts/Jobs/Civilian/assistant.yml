@@ -101,6 +101,12 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterGrey
+  - !type:AnyFlagsRequirement
+      flags:
+      - Staff
+      - Mentor
+      - ExtRoles
+      - Retiree
   equipment:
     eyes: ClothingEyesWeldingGoggles
 
@@ -161,6 +167,12 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: ParagonGrey
+  - !type:AnyFlagsRequirement
+      flags:
+      - Staff
+      - Mentor
+      - ExtRoles
+      - Retiree
   equipment:
     gloves: ClothingHandsGlovesColorYellow
 
