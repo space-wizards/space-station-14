@@ -40,19 +40,19 @@
   maxGroupSize: 12
   radius: 4
 
-- type: biomeMarkerLayer
-  id: OreSalt
-  entityMask:
-    AsteroidRock: AsteroidRockSalt
-    WallRock: WallRockSalt
-    WallRockBasalt: WallRockBasaltSalt
-    WallRockChromite: WallRockChromiteSalt
-    WallRockSand: WallRockSandSalt
-    WallRockSnow: WallRockSnowSalt
-  maxCount: 30
-  minGroupSize: 8
-  maxGroupSize: 12
-  radius: 4
+# - type: biomeMarkerLayer
+#   id: OreSalt
+#   entityMask:
+#     AsteroidRock: AsteroidRockSalt
+#     WallRock: WallRockSalt
+#     WallRockBasalt: WallRockBasaltSalt
+#     WallRockChromite: WallRockChromiteSalt
+#     WallRockSand: WallRockSandSalt
+#     WallRockSnow: WallRockSnowSalt
+#   maxCount: 30
+#   minGroupSize: 8
+#   maxGroupSize: 12
+#   radius: 4
 
 # Medium value
 # Gold
