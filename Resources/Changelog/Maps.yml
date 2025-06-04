@@ -323,4 +323,11 @@
   id: 39
   time: '2025-06-03T23:08:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38053
+- author: spanky-spanky
+  changes:
+  - message: On Omega, sentry turrets have been added to the AI core and vault.
+    type: Add
+  id: 40
+  time: '2025-06-04T20:37:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38066
 Order: 1
