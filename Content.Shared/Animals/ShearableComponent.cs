@@ -38,18 +38,18 @@ public sealed partial class ShearableComponent : Component
     public float ProductsPerSolution = 0;
 
     /// <summary>
-    ///     The solution to add reagent to.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public Entity<SolutionComponent>? Solution;
-
-    /// <summary>
     ///     The "Quality" of the target item that allows this entity to be sheared.
     ///     For example, Wirecutters have the "cutting" quality.
     ///     Leave undefined for no tool required.
     /// </summary>
     [DataField]
     public string ToolQuality = string.Empty;
+
+    /// <summary>
+    ///     The solution to add reagent to.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Entity<SolutionComponent>? Solution;
 
     /// <summary>
     /// These are used as return values for CheckShear()
