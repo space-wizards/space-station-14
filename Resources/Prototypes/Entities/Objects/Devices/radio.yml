@@ -43,7 +43,7 @@
     sprite: Objects/Devices/securityhandy.rsi
     heldPrefix: walkietalkie
 
-- type: entity
+- type: entity # TODO move to _Starlight folder?
   name: expedition radio
   description: A handy expedition radio.
   parent: [ RadioHandheld, BaseCargoContraband ]
@@ -52,26 +52,25 @@
     - type: TelecomExempt # what is telecom exempt?
     - type: RadioMicrophone
       broadcastChannel: Expedition
-      # listenRange: 1 # what does this do?
     - type: RadioSpeaker
       channels:
         - Expedition
     - type: Speech
       speechVerb: Robotic
     - type: Sprite
-      sprite: Objects/Devices/expeditionhandy.rsi
+      sprite: Objects/Devices/expeditionhandy.rsi # TODO create this
       layers:
         - state: walkietalkie
         - state: walkietalkie-on
       state: walkietalkie
     - type: Item
-      sprite: Objects/Devices/expeditionhandy.rsi
+      sprite: Objects/Devices/expeditionhandy.rsi # TODO create this
       heldPrefix: walkietalkie
     - type: Tag
       tags:
         - Radio
 
-- type: entity
+- type: entity # TODO move to _Starlight folder?
   name: supply radio
   description: A handy cargo radio.
   parent: [ RadioHandheld, BaseCargoContraband ]
@@ -84,7 +83,7 @@
       channels:
         - Supply
     - type: Sprite
-      sprite: Objects/Devices/supplyhandy.rsi
+      sprite: Objects/Devices/supplyhandy.rsi # TODO create this
     - type: Item
-      sprite: Objects/Devices/supplyhandy.rsi
+      sprite: Objects/Devices/supplyhandy.rsi # TODO create this
       heldPrefix: walkietalkie
