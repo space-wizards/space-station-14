@@ -25,41 +25,6 @@ public sealed partial class XenoborgFactoryComponent : Component
     public bool Enabled = true;
 
     /// <summary>
-    /// Whether or not the process
-    /// speed scales with the amount of materials being processed
-    /// or if it's just <see cref="MinimumProcessDuration"/>
-    /// </summary>
-    [DataField]
-    public bool ScaleProcessSpeed = true;
-
-    /// <summary>
-    /// How quickly it takes to consume X amount of materials per second.
-    /// For example, with a rate of 50, an entity with 100 total material takes 2 seconds to process.
-    /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public float MaterialProcessRate = 100f;
-
-    /// <summary>
-    /// The minimum amount fo time it can take to process an entity.
-    /// this value supercedes the calculated one using <see cref="MaterialProcessRate"/>
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan MinimumProcessDuration = TimeSpan.FromSeconds(0.5f);
-
-    /// <summary>
-    /// The id of our output solution
-    /// </summary>
-    [DataField]
-    public string? SolutionContainerId;
-
-    /// <summary>
-    /// If the reclaimer should attempt to reclaim all solutions or just drainable ones
-    /// Difference between Recycler and Industrial Reagent Grinder
-    /// </summary>
-    [DataField]
-    public bool OnlyReclaimDrainable = true;
-
-    /// <summary>
     /// a whitelist for what entities can be inserted into this reclaimer
     /// </summary>
     [DataField]
