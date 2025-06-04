@@ -18,7 +18,7 @@
       state: pokerchip_red
     - type: Stack
       stackType: Pokerchips_Red
-      count: 10
+      count: 40
 
 - type: entity
   parent: PokerChipBase
@@ -30,7 +30,7 @@
       state: pokerchip_blue
     - type: Stack
       stackType: Pokerchips_Blue
-      count: 10
+      count: 40
 
 - type: entity
   parent: PokerChipBase
@@ -42,7 +42,7 @@
       state: pokerchip_white
     - type: Stack
       stackType: Pokerchips_White
-      count: 10
+      count: 40
 
 - type: entity
   parent: PokerChipBase
@@ -54,5 +54,17 @@
       state: pokerchip_green
     - type: Stack
       stackType: Pokerchips_Green
-      count: 10
+      count: 40
+
+- type: entity
+  parent: PokerChipBase
+  id: PokerChipBlack
+  name: black pokerchip
+  components:
+    - type: Sprite
+      sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchips.rsi
+      state: pokerchip_black
+    - type: Stack
+      stackType: Pokerchips_Black
+      count: 24
 

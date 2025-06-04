@@ -65,7 +65,7 @@
   parent: BriefcaseBrown
   suffix: Filled, Poker
   name: poker set
-  description: Comes with everything you need to play a game of poker.
+  description: Feeling lucky? Comes with two decks of cards and enough chips for a full table of 8 players, or two tables of 4.
   components:
   - type: StorageFill
     contents:
@@ -74,20 +74,5 @@
       - id: PokerChipBlue
       - id: PokerChipWhite
       - id: PokerChipGreen
-      - id: PokerChipRed
-      - id: PokerChipBlue
-      - id: PokerChipWhite
-      - id: PokerChipGreen
-      - id: PokerChipRed
-      - id: PokerChipBlue
-      - id: PokerChipWhite
-      - id: PokerChipGreen
-      - id: PokerChipRed
-      - id: PokerChipBlue
-      - id: PokerChipWhite
-      - id: PokerChipGreen
-      - id: PokerChipRed
-      - id: PokerChipBlue
-      - id: PokerChipWhite
-      - id: PokerChipGreen
+      - id: PokerChipBlack
       - id: CardBoxPokerFilled
