@@ -8,11 +8,19 @@
   },
   "states": [
     {
-      "name": "leftsock",
+      "name": "leftuppersock",
+      "directions": 4
+    },
+{
+      "name": "leftlowersock",
       "directions": 4
     },
     {
-      "name": "rightsock",
+      "name": "rightuppersock",
+      "directions": 4
+    },
+    {
+      "name": "rightlowersock",
       "directions": 4
     },
     {
