@@ -11,7 +11,6 @@ namespace Content.Client.Chemistry.Visualizers;
 public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent>
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -72,7 +71,7 @@ public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent
             return;
 
         if (TryComp<SpriteComponent>(uid, out var sprite))
-            _sprite.SetVisible((uid, sprite), false);
+            SpriteSystem.SetVisible((uid, sprite), false);
     }
 }
 
