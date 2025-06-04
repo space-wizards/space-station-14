@@ -1988,18 +1988,18 @@
   itemDrop: FloorTileItemJungleAstroGrass
 
 - type: tile
+  parent: FloorGrassDark
   id: FloorDarkAstroGrass
   name: tiles-dark-astro-grass
-  parent: FloorGrassDark
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Cutting ]
   itemDrop: FloorTileItemDarkAstroGrass
 
 - type: tile
+  parent: FloorGrassLight
   id: FloorLightAstroGrass
   name: tiles-light-astro-grass
-  parent: FloorGrassLight
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Cutting ]
@@ -2050,9 +2050,9 @@
   weather: false
 
 - type: tile
+  parent: FloorDesert
   id: FloorDesertAstroSand
   name: tiles-desert-astro-sand
-  parent: FloorDesert
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
