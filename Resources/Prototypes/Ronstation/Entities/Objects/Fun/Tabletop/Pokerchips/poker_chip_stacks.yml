@@ -8,19 +8,16 @@
   id: Pokerchips_Blue
   name: stack-poker-chips
   spawn: PokerChipBlue
-  count: 10
   maxCount: 10
 
 - type: stack
   id: Pokerchips_White
   name: stack-poker-chips
   spawn: PokerChipWhite
-  count: 10
   maxCount: 10
 
 - type: stack
   id: Pokerchips_Green
   name: stack-poker-chips
   spawn: PokerChipGreen
-  count: 10
   maxCount: 10

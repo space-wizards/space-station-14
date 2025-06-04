@@ -18,7 +18,6 @@
       state: pokerchip_red
     - type: Stack
       stackType: Pokerchips_Red
-      name: stack-poker-chips
       count: 10
 
 - type: entity
@@ -31,7 +30,6 @@
       state: pokerchip_blue
     - type: Stack
       stackType: Pokerchips_Blue
-      name: stack-poker-chips
       count: 10
 
 - type: entity
@@ -44,7 +42,6 @@
       state: pokerchip_white
     - type: Stack
       stackType: Pokerchips_White
-      name: stack-poker-chips
       count: 10
 
 - type: entity
@@ -57,6 +54,5 @@
       state: pokerchip_green
     - type: Stack
       stackType: Pokerchips_Green
-      name: stack-poker-chips
       count: 10
 
