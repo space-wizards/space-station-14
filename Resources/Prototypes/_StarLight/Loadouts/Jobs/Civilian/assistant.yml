@@ -14,6 +14,12 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterGrey
+  - !type:AnyFlagsRequirement
+      flags:
+      - Staff
+      - Mentor
+      - ExtRoles
+      - Retiree
   equipment:
     head: ClothingHeadHatWelding
 
