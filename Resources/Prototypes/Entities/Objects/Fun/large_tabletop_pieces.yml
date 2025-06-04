@@ -28,6 +28,8 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: w_queen
+  - type: Stack
+    stackType: LargeWhiteQueen
 
 - type: entity
   id: LargeWhiteRook
@@ -38,6 +40,8 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: w_rook
+  - type: Stack
+    stackType: LargeWhiteRook
 
 - type: entity
   id: LargeWhiteBishop
@@ -48,6 +52,8 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: w_bishop
+  - type: Stack
+    stackType: LargeWhiteBishop
 
 - type: entity
   id: LargeWhiteKnight
@@ -58,6 +64,8 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: w_knight
+  - type: Stack
+    stackType: LargeWhiteKnight
 
 - type: entity
   id: LargeWhitePawn
@@ -68,6 +76,8 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: w_pawn
+  - type: Stack
+    stackType: LargeWhitePawn
 
 # Black chess pieces
 - type: entity
@@ -89,6 +99,8 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: b_queen
+  - type: Stack
+    stackType: LargeBlackQueen
 
 - type: entity
   id: LargeBlackRook
@@ -99,6 +111,8 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: b_rook
+  - type: Stack
+    stackType: LargeBlackRook
 
 - type: entity
   id: LargeBlackBishop
@@ -109,6 +123,8 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: b_bishop
+  - type: Stack
+    stackType: LargeBlackBishop
 
 - type: entity
   id: LargeBlackKnight
@@ -119,6 +135,8 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: b_knight
+  - type: Stack
+    stackType: LargeBlackKnight
 
 - type: entity
   id: LargeBlackPawn
@@ -129,4 +147,87 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi
     state: b_pawn
+  - type: Stack
+    stackType: LargeBlackPawn
 
+# Stacks
+
+- type: entity
+  id: LargeWhiteQueen2
+  parent: LargeWhiteQueen
+  suffix: Tabletop, 2
+  components:
+  - type: Stack
+    count: 2 
+
+- type: entity
+  id: LargeWhiteBishop4
+  parent: LargeWhiteBishop
+  suffix: Tabletop, 4
+  components:
+  - type: Stack
+    count: 4 
+
+- type: entity
+  id: LargeWhiteKnight4
+  parent: LargeWhiteKnight
+  suffix: Tabletop, 4
+  components:
+  - type: Stack
+    count: 4 
+
+- type: entity
+  id: LargeWhiteRook4
+  parent: LargeWhiteRook
+  suffix: Tabletop, 4
+  components:
+  - type: Stack
+    count: 4 
+
+- type: entity
+  id: LargeWhitePawn8
+  parent: LargeWhitePawn
+  suffix: Tabletop, 8
+  components:
+  - type: Stack
+    count: 8 
+
+- type: entity
+  id: LargeBlackQueen2
+  parent: LargeBlackQueen
+  suffix: Tabletop, 2
+  components:
+  - type: Stack
+    count: 2 
+
+- type: entity
+  id: LargeBlackBishop4
+  parent: LargeBlackBishop
+  suffix: Tabletop, 4
+  components:
+  - type: Stack
+    count: 4 
+
+- type: entity
+  id: LargeBlackKnight4
+  parent: LargeBlackKnight
+  suffix: Tabletop, 4
+  components:
+  - type: Stack
+    count: 4 
+
+- type: entity
+  id: LargeBlackRook4
+  parent: LargeBlackRook
+  suffix: Tabletop, 4
+  components:
+  - type: Stack
+    count: 4 
+
+- type: entity
+  id: LargeBlackPawn8
+  parent: LargeBlackPawn
+  suffix: Tabletop, 8
+  components:
+  - type: Stack
+    count: 8

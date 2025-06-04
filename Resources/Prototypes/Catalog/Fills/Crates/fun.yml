@@ -426,28 +426,18 @@
       - id: FloorCarpetItemBoardChecker32
       - id: LargeBlackKing
         amount: 1
-      - id: LargeBlackQueen
-        amount: 2
-      - id: LargeBlackBishop
-        amount: 3
-      - id: LargeBlackKnight
-        amount: 3
-      - id: LargeBlackRook
-        amount: 3
-      - id: LargeBlackPawn
-        amount: 8
+      - id: LargeBlackQueen2
+      - id: LargeBlackBishop4
+      - id: LargeBlackKnight4
+      - id: LargeBlackRook4
+      - id: LargeBlackPawn8
       - id: LargeWhiteKing
         amount: 1
-      - id: LargeWhiteQueen
-        amount: 2
-      - id: LargeWhiteBishop
-        amount: 3
-      - id: LargeWhiteKnight
-        amount: 3
-      - id: LargeWhiteRook
-        amount: 3
-      - id: LargeWhitePawn
-        amount: 8
+      - id: LargeWhiteQueen2
+      - id: LargeWhiteBishop4
+      - id: LargeWhiteKnight4
+      - id: LargeWhiteRook4
+      - id: LargeWhitePawn8
 
 - type: entity
   name: bigger chess set
@@ -461,25 +451,15 @@
       - id: FloorCarpetItemBoardWhite32
       - id: LargeBlackKing
         amount: 1
-      - id: LargeBlackQueen
-        amount: 2
-      - id: LargeBlackBishop
-        amount: 3
-      - id: LargeBlackKnight
-        amount: 3
-      - id: LargeBlackRook
-        amount: 3
-      - id: LargeBlackPawn
-        amount: 8
+      - id: LargeBlackQueen2
+      - id: LargeBlackBishop4
+      - id: LargeBlackKnight4
+      - id: LargeBlackRook4
+      - id: LargeBlackPawn8
       - id: LargeWhiteKing
         amount: 1
-      - id: LargeWhiteQueen
-        amount: 2
-      - id: LargeWhiteBishop
-        amount: 3
-      - id: LargeWhiteKnight
-        amount: 3
-      - id: LargeWhiteRook
-        amount: 3
-      - id: LargeWhitePawn
-        amount: 8
+      - id: LargeWhiteQueen2
+      - id: LargeWhiteBishop4
+      - id: LargeWhiteKnight4
+      - id: LargeWhiteRook4
+      - id: LargeWhitePawn8
