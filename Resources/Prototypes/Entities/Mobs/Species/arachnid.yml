@@ -90,10 +90,9 @@
       - map: ["enum.HumanoidVisualLayers.RHand"]
       - map: [ "gloves" ]
       - map: [ "shoes" ]
-      #- map: [ "belt" ] Moffstation (Belts Over Outerwear)
       - map: [ "id" ]
       - map: [ "outerClothing" ]
-      - map: [ "belt" ] # Moffstation (Belts Over Outerwear)
+      - map: [ "belt" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ] # Mentioned in moth code: This needs renZming lol.
       - map: [ "back" ]
       - map: [ "neck" ]
