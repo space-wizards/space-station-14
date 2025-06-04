@@ -155,7 +155,7 @@
 - type: entity
   id: LargeWhiteQueen2
   parent: LargeWhiteQueen
-  suffix: Tabletop, 2
+  suffix: Large, 2
   components:
   - type: Stack
     count: 2
@@ -163,7 +163,7 @@
 - type: entity
   id: LargeWhiteBishop4
   parent: LargeWhiteBishop
-  suffix: Tabletop, 4
+  suffix: Large, 4
   components:
   - type: Stack
     count: 4
@@ -171,7 +171,7 @@
 - type: entity
   id: LargeWhiteKnight4
   parent: LargeWhiteKnight
-  suffix: Tabletop, 4
+  suffix: Large, 4
   components:
   - type: Stack
     count: 4
@@ -179,7 +179,7 @@
 - type: entity
   id: LargeWhiteRook4
   parent: LargeWhiteRook
-  suffix: Tabletop, 4
+  suffix: Large, 4
   components:
   - type: Stack
     count: 4
@@ -187,7 +187,7 @@
 - type: entity
   id: LargeWhitePawn8
   parent: LargeWhitePawn
-  suffix: Tabletop, 8
+  suffix: Large, 8
   components:
   - type: Stack
     count: 8
@@ -195,7 +195,7 @@
 - type: entity
   id: LargeBlackQueen2
   parent: LargeBlackQueen
-  suffix: Tabletop, 2
+  suffix: Large, 2
   components:
   - type: Stack
     count: 2
@@ -203,7 +203,7 @@
 - type: entity
   id: LargeBlackBishop4
   parent: LargeBlackBishop
-  suffix: Tabletop, 4
+  suffix: Large, 4
   components:
   - type: Stack
     count: 4
@@ -211,7 +211,7 @@
 - type: entity
   id: LargeBlackKnight4
   parent: LargeBlackKnight
-  suffix: Tabletop, 4
+  suffix: Large, 4
   components:
   - type: Stack
     count: 4
@@ -219,7 +219,7 @@
 - type: entity
   id: LargeBlackRook4
   parent: LargeBlackRook
-  suffix: Tabletop, 4
+  suffix: Large, 4
   components:
   - type: Stack
     count: 4
@@ -227,7 +227,7 @@
 - type: entity
   id: LargeBlackPawn8
   parent: LargeBlackPawn
-  suffix: Tabletop, 8
+  suffix: Large, 8
   components:
   - type: Stack
     count: 8
