@@ -52,7 +52,6 @@
     showInMonitor: false
   - type: Electrified
     requirePower: true
-    noWindowInTile: true
     highVoltageNode: high
     mediumVoltageNode: medium
     lowVoltageNode: low
