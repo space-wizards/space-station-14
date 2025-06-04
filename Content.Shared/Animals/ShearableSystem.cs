@@ -107,7 +107,7 @@ public sealed class SharedShearableSystem : EntitySystem
         }
 
         // Modulas the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
-        // Everything is divided by 100, because for fixedPoint2 multiplies everything by 100.
+        // Everything is divided by 100, because fixedPoint2 multiplies everything by 100.
         // Math.Min ensures that no more solution than what is needed for the maximum stack is used, shear the entity multiple times if you want the rest of the product.
         var solutionToRemove = FixedPoint2.New(
             Math.Min(

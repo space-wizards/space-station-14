@@ -40,7 +40,7 @@ public sealed partial class ShearableComponent : Component
     /// <summary>
     ///     The solution to add reagent to.
     /// </summary>
-    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
     public Entity<SolutionComponent>? Solution;
 
     /// <summary>
