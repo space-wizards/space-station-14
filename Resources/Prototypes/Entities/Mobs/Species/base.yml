@@ -30,10 +30,9 @@
     - map: [ "shoes" ]
     - map: [ "ears" ]
     - map: [ "eyes" ]
-    #- map: [ "belt" ] Moffstation (Belts Over Outerwear)
     - map: [ "id" ]
     - map: [ "outerClothing" ]
-    - map: [ "belt" ] # Moffstation (Belts Over Outerwear)
+    - map: [ "belt" ]
     - map: [ "back" ]
     - map: [ "neck" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
