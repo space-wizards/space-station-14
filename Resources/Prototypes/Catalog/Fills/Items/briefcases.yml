@@ -59,3 +59,35 @@
         amount: 1
       - id: ClothingOuterCoatJensen
       - id: ClothingHandsGlovesColorBlack
+
+- type: entity
+  id: BriefcasePokerSet
+  parent: BriefcaseBrown
+  suffix: Filled, Poker
+  name: poker set
+  description: Comes with everything you need to play a game of poker.
+  components:
+  - type: StorageFill
+    contents:
+      - id: CardBoxPokerFilled
+      - id: PokerChipRed
+      - id: PokerChipBlue
+      - id: PokerChipWhite
+      - id: PokerChipGreen
+      - id: PokerChipRed
+      - id: PokerChipBlue
+      - id: PokerChipWhite
+      - id: PokerChipGreen
+      - id: PokerChipRed
+      - id: PokerChipBlue
+      - id: PokerChipWhite
+      - id: PokerChipGreen
+      - id: PokerChipRed
+      - id: PokerChipBlue
+      - id: PokerChipWhite
+      - id: PokerChipGreen
+      - id: PokerChipRed
+      - id: PokerChipBlue
+      - id: PokerChipWhite
+      - id: PokerChipGreen
+      - id: CardBoxPokerFilled

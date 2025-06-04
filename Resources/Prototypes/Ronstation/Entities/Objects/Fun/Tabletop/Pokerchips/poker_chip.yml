@@ -11,7 +11,7 @@
 - type: entity
   parent: PokerChipBase
   id: PokerChipRed
-  name: chip
+  name: red pokerchip
   components:
     - type: Sprite
       sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchips.rsi
@@ -23,7 +23,7 @@
 - type: entity
   parent: PokerChipBase
   id: PokerChipBlue
-  name: chip
+  name: blue pokerchip
   components:
     - type: Sprite
       sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchips.rsi
@@ -35,7 +35,7 @@
 - type: entity
   parent: PokerChipBase
   id: PokerChipWhite
-  name: chip
+  name: white pokerchip
   components:
     - type: Sprite
       sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchips.rsi
@@ -47,7 +47,7 @@
 - type: entity
   parent: PokerChipBase
   id: PokerChipGreen
-  name: chip
+  name: green pokerchip
   components:
     - type: Sprite
       sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchips.rsi
