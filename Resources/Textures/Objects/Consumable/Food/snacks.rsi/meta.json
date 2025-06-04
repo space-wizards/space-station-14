@@ -174,6 +174,14 @@
       "name": "pistachio"
     },
     {
+      "name": "pistachio-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pistachio-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "pistachio-trash"
     },
     {
@@ -208,10 +216,26 @@
       "name": "semki"
     },
     {
+      "name": "semki-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "semki-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "semki-trash"
     },
     {
       "name": "susjerky"
+    },
+    {
+      "name": "susjerky-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "susjerky-inhand-left",
+      "directions": 4
     },
     {
       "name": "susjerky-trash"

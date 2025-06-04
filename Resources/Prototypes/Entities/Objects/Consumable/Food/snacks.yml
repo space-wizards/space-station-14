@@ -193,6 +193,7 @@
   - type: Sprite
     state: pistachio
   - type: Item
+    heldPrefix: pistachio
   - type: Food
     trash:
     - FoodPacketPistachioTrash
@@ -252,6 +253,7 @@
   - type: Sprite
     state: semki
   - type: Item
+    heldPrefix: semki
   - type: Food
     trash:
     - FoodPacketSemkiTrash
@@ -268,6 +270,7 @@
   - type: Sprite
     state: susjerky
   - type: Item
+    heldPrefix: susjerky
   - type: Food
     trash:
     - FoodPacketSusTrash
