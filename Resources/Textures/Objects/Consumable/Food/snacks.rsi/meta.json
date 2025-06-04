@@ -11,6 +11,22 @@
       "name": "ramen"
     },
     {
+      "name": "ramen-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "ramen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "trash-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "trash-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "boritos"
     },
     {
@@ -98,7 +114,23 @@
       "directions": 4
     },
     {
+      "name": "chocolatebar-open-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "chocolatebar-open-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "cnds"
+    },
+    {
+      "name": "cnds-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cnds-inhand-left",
+      "directions": 4
     },
     {
       "name": "cnds-trash"
@@ -107,10 +139,34 @@
       "name": "cookie_fortune"
     },
     {
+      "name": "cookie_fortune-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cookie_fortune-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "energybar"
     },
     {
+      "name": "energybar-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "energybar-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "energybar-open"
+    },
+    {
+      "name": "energybar-open-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "energybar-open-inhand-left",
+      "directions": 4
     },
     {
       "name": "energybar-trash"
