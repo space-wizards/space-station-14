@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: The Station Specific and Dining Services departments no longer appear
-      in the crew manifest.
-    type: Tweak
-  id: 1263
-  time: '2025-03-10T18:44:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1870
 - author: AvianMaiden
   changes:
   - message: All Kammerer models now make an iconic rack sound when you shoot. Pump-action
@@ -4216,3 +4208,10 @@
   id: 1762
   time: '2025-06-02T02:41:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2642
+- author: ComedyIdiot
+  changes:
+  - message: Replicators now take structural damage as originally intended
+    type: Fix
+  id: 1763
+  time: '2025-06-04T08:31:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2663
