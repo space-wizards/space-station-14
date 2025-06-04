@@ -425,29 +425,29 @@
     contents:
       - id: FloorCarpetItemBoardChecker
         amount: 32
-      - id: BlackKing
+      - id: LargeBlackKing
         amount: 1
-      - id: BlackQueen
+      - id: LargeBlackQueen
         amount: 2
-      - id: BlackBishop
+      - id: LargeBlackBishop
         amount: 3
-      - id: BlackKnight
+      - id: LargeBlackKnight
         amount: 3
-      - id: BlackRook
+      - id: LargeBlackRook
         amount: 3
-      - id: BlackPawn
+      - id: LargeBlackPawn
         amount: 8
-      - id: WhiteKing
+      - id: LargeWhiteKing
         amount: 1
-      - id: WhiteQueen
+      - id: LargeWhiteQueen
         amount: 2
-      - id: WhiteBishop
+      - id: LargeWhiteBishop
         amount: 3
-      - id: WhiteKnight
+      - id: LargeWhiteKnight
         amount: 3
-      - id: WhiteRook
+      - id: LargeWhiteRook
         amount: 3
-      - id: WhitePawn
+      - id: LargeWhitePawn
         amount: 8
 
 - type: entity
@@ -462,27 +462,27 @@
         amount: 32
       - id: FloorCarpetItemBoardWhite
         amount: 32
-      - id: BlackKing
+      - id: LargeBlackKing
         amount: 1
-      - id: BlackQueen
+      - id: LargeBlackQueen
         amount: 2
-      - id: BlackBishop
+      - id: LargeBlackBishop
         amount: 3
-      - id: BlackKnight
+      - id: LargeBlackKnight
         amount: 3
-      - id: BlackRook
+      - id: LargeBlackRook
         amount: 3
-      - id: BlackPawn
+      - id: LargeBlackPawn
         amount: 8
-      - id: WhiteKing
+      - id: LargeWhiteKing
         amount: 1
-      - id: WhiteQueen
+      - id: LargeWhiteQueen
         amount: 2
-      - id: WhiteBishop
+      - id: LargeWhiteBishop
         amount: 3
-      - id: WhiteKnight
+      - id: LargeWhiteKnight
         amount: 3
-      - id: WhiteRook
+      - id: LargeWhiteRook
         amount: 3
-      - id: WhitePawn
+      - id: LargeWhitePawn
         amount: 8
