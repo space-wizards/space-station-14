@@ -163,28 +163,28 @@
   - type: Appearance
 
 - type: entity
-  parent: [BaseCentcommContraband, ClothingBeltMilitaryWebbing]
+  parent: ClothingBeltStorageBase
   id: ClothingBeltAssault
-  name: ERT tactical belt
-  description: A tactical belt worn by Nanotrasen's Emergency Response Teams.
+  name: assault belt
+  description: A tactical assault belt.
   components:
   - type: Sprite
     sprite: Clothing/Belt/assault.rsi
   - type: Clothing
     sprite: Clothing/Belt/assault.rsi
-  #- type: Storage
-  #  whitelist:
-  #    tags:
-  #      - CigPack
-  #      - Taser
-  #    components:
-  #      - Stunbaton
-  #      - FlashOnTrigger
-  #      - SmokeOnTrigger
-  #      - Flash
-  #      - Handcuff
-  #      - BallisticAmmoProvider
-  #      - Ammo
+  - type: Storage
+    whitelist:
+      tags:
+        - CigPack
+        - Taser
+      components:
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - Ammo
   - type: ItemMapper
     mapLayers:
       flashbang:
