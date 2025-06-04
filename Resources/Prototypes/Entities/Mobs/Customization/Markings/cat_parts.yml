@@ -43,4 +43,10 @@
     - emotePrototype: Mew
       requiredMarkings:
         - CatEars
+    - emotePrototype: Meow
+      requiredMarkings:
+        - CatEars
+    - emotePrototype: Trill
+      requiredMarkings:
+        - CatEars
   #endregion Starlight

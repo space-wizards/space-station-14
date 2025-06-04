@@ -40,6 +40,15 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    #region Starlight
+    Mew:
+      collection: FelionoidMews
+    Meow:
+      collection: FelionoidMeows
+    Trill:
+      collection: FelionoidTrills
+    #endregion Starlight
+
 
 - type: emoteSounds
   id: FemaleHuman
@@ -82,6 +91,14 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    #region Starlight
+    Mew:
+      collection: FelionoidMews
+    Meow:
+      collection: FelionoidMeows
+    Trill:
+      collection: FelionoidTrills
+    #endregion Starlight
 
 - type: emoteSounds
   id: MaleReptilian
