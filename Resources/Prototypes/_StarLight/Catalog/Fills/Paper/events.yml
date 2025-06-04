@@ -40,12 +40,16 @@
       name: ghost-role-information-chaospaper-name
       description: ghost-role-information-chaospaper-description
       rules: ghost-role-information-freeagent-rules
+      allowSpeech: true
+      reregister: true
       mindRoles: 
         - MindRoleGhostRoleFreeAgent
     - type: ShowMindShieldIcons # gotta know your targets.
     - type: Speech
     - type: TextToSpeech
     - type: GhostTakeoverAvailable
+    - type: MobState
+
 
 - type: entity
   parent: Paper
@@ -84,8 +88,11 @@
       name: ghost-role-information-chaospaper-name
       description: ghost-role-information-chaospaper-description
       rules: ghost-role-information-freeagent-rules
+      allowSpeech: true
+      reregister: true
       mindRoles: 
         - MindRoleGhostRoleFreeAgent
     - type: ShowMindShieldIcons # gotta know your targets.
     - type: Speech
     - type: GhostTakeoverAvailable
+    - type: MobState
