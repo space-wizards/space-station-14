@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TeenSarlacc
-  changes:
-  - message: You can now buy Foam Force weapons through Cargo.
-    type: Add
-  id: 8100
-  time: '2025-03-21T09:39:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35824
 - author: aada
   changes:
   - message: 17 machine boards have been recolored.
@@ -3927,3 +3920,10 @@
   id: 8611
   time: '2025-06-03T18:20:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38040
+- author: Moomoobeef
+  changes:
+  - message: Nanotask printouts now look much nicer!
+    type: Tweak
+  id: 8612
+  time: '2025-06-04T08:16:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37805
