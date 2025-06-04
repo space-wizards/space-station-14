@@ -12,7 +12,7 @@
 
 # White pieces
 - type: entity
-  id: WhiteKing
+  id: LargeWhiteKing
   name: white king
   description: the white king. it can move one square in any direction. If the no piece can move and this peice is threatened, then black wins; however, if it is not under threat and no peice can move then the game ends in a stalemate.
   parent: BaseLargeChessPiece
@@ -21,7 +21,7 @@
     state: w_king
 
 - type: entity
-  id: WhiteQueen
+  id: LargeWhiteQueen
   name: white queen
   description: the white queen. it can move any amount of tiles in any direction. the most powerful piece on the board, it can be tempting to always promote a pawn to a queen, but this can lead to a stalemate if not handled carefully. worth 9 points.
   parent: BaseLargeChessPiece
@@ -30,7 +30,7 @@
       state: w_queen
 
 - type: entity
-  id: WhiteRook
+  id: LargeWhiteRook
   name: white rook
   description: the white rook. it can move any amount of tiles orthogonally. If neither the king nor the rook of the same colour have moved, and there are no pieces inbetween them, then the rook can be moved one square towards the king and the king is moved to where the rook previously was. this is called castling. worth 5 points.
   parent: BaseLargeChessPiece
@@ -39,7 +39,7 @@
       state: w_rook
 
 - type: entity
-  id: WhiteBishop
+  id: LargeWhiteBishop
   name: white bishop
   description: the white bishop. it can move any amount of tiles diagonally. each colour has one bishop per square colour, this can be useful for quickly figuring out if a move can be threatened without visualising it fully. worth 3 points.
   parent: BaseLargeChessPiece
@@ -48,7 +48,7 @@
       state: w_bishop
 
 - type: entity
-  id: WhiteKnight
+  id: LargeWhiteKnight
   name: white knight
   description: the white knight, or horsie. it moves moves in an L (three tiles in a direction, then one tile paralell). it is the only piece that can move over other pieces. worth 3 points.
   parent: BaseLargeChessPiece
@@ -57,7 +57,7 @@
       state: w_knight
 
 - type: entity
-  id: WhitePawn
+  id: LargeWhitePawn
   name: white pawn
   description: the white pawn. it moves one tile toward the opposing side of the board, but can move two if it has not moved yet in the game. it cannot take a piece by moving straight into it like the other pieces, but has to be diagonally adjacent. if it reaches the opposite side of the board, it can be promoted to a knight, bishop, rook or queen. worth 1 point.
   parent: BaseLargeChessPiece
@@ -67,7 +67,7 @@
 
 # Black pieces
 - type: entity
-  id: BlackKing
+  id: LargeBlackKing
   name: black king
   description: the black king. it can move one square in any direction. If the no piece can move and this peice is threatened, then black wins; however, if it is not under threat and no peice can move then the game ends in a stalemate.
   parent: BaseLargeChessPiece
@@ -76,7 +76,7 @@
       state: b_king
 
 - type: entity
-  id: BlackQueen
+  id: LargeBlackQueen
   name: black queen
   description: the black queen. it can move any amount of tiles in any direction. the most powerful piece on the board, it can be tempting to always promote a pawn to a queen, but this can lead to a stalemate if not handled carefully. worth 9 points.
   parent: BaseLargeChessPiece
@@ -85,7 +85,7 @@
       state: b_queen
 
 - type: entity
-  id: BlackRook
+  id: LargeBlackRook
   name: black rook
   description: the black rook. it can move any amount of tiles orthogonally. If neither the king nor the rook of the same colour have moved, and there are no pieces inbetween them, then the rook can be moved one square towards the king and the king is moved to where the rook previously was. this is called castling. worth 5 points.
   parent: BaseLargeChessPiece
@@ -94,7 +94,7 @@
       state: b_rook
 
 - type: entity
-  id: BlackBishop
+  id: LargeBlackBishop
   name: black bishop
   description: the black bishop. it can move any amount of tiles diagonally. each colour has one bishop per square colour, this can be useful for quickly figuring out if a move can be threatened without visualising it fully. worth 3 points.
   parent: BaseLargeChessPiece
@@ -103,7 +103,7 @@
       state: b_bishop
 
 - type: entity
-  id: BlackKnight
+  id: LargeBlackKnight
   name: black knight
   description: the black knight, or horsie. it moves moves in an L (three tiles in a direction, then one tile paralell). it is the only piece that can move over other pieces. worth 3 points.
   parent: BaseLargeChessPiece
@@ -112,7 +112,7 @@
       state: b_knight
 
 - type: entity
-  id: BlackPawn
+  id: LargeBlackPawn
   name: black pawn
   description: the black pawn. it moves one tile toward the opposing side of the board, but can move two if it has not moved yet in the game. it cannot take a piece by moving straight into it like the other pieces, but has to be diagonally adjacent. if it reaches the opposite side of the board, it can be promoted to a knight, bishop, rook or queen. worth 1 point. # contemplated explaining en passant but thats a bit far imo
   parent: BaseLargeChessPiece
