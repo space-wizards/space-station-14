@@ -108,14 +108,6 @@
 
 # Mask
 - type: loadout
-  id: AssistantFace
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: HonoredAssistant
-  equipment:
-    mask: ClothingMaskGas
-
-- type: loadout
   id: NeckGaiter
   effects:
   - !type:GroupLoadoutEffect
@@ -124,40 +116,6 @@
     mask: ClothingMaskNeckGaiter
 
 # Jumpsuit
-- type: loadout
-  id: BasicJumpsuit
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitAssistant
-
-- type: loadout
-  id: BasicJumpskirt
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtAssistant
-
-- type: loadout
-  id: RainbowJumpsuit
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: HonoredAssistant
-  equipment:
-    jumpsuit: ClothingUniformColorRainbow
-
-- type: loadout
-  id: RainbowJumpskirt
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: HonoredAssistant
-  equipment:
-    jumpsuit: ClothingUniformJumpskirtColorRainbow
-
-- type: loadout
-  id: AncientJumpsuit
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: HonoredAssistant
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitAncient
-
 - type: loadout
   id: GreyJumpsuit
   effects:
@@ -174,36 +132,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
 
-# Neck
-- type: loadout
-  id: Mantle
-  equipment:
-    neck: ClothingNeckMantle
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: MasterGrey
-
-- type: startingGear
-  id: Mantle
-  equipment:
-    neck: ClothingNeckMantle
-
 # Back
-- type: loadout
-  id: CommonBackpack
-  equipment:
-    back: ClothingBackpack
-
-- type: loadout
-  id: CommonSatchel
-  equipment:
-    back: ClothingBackpackSatchel
-
-- type: loadout
-  id: CommonDuffel
-  equipment:
-    back: ClothingBackpackDuffel
-
 - type: loadout
   id: SmugglerSatchel
   effects:
@@ -213,14 +142,6 @@
     back: ClothingBackpackSatchelSmuggler
 
 # Gloves
-- type: loadout
-  id: AssistantGloves
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: HonoredAssistant
-  equipment:
-    gloves: ClothingHandsGlovesFingerlessInsulated
-
 - type: loadout
   id: GreyGloves
   effects:
@@ -238,11 +159,6 @@
     gloves: ClothingHandsGlovesColorYellow
 
 # Outerclothing
-- type: loadout
-  id: AssistantWintercoat
-  equipment:
-    outerClothing: ClothingOuterWinterCoat
-
 - type: loadout
   id: GreyHoodieA
   effects:
@@ -266,13 +182,3 @@
       proto: MasterGrey
   equipment:
     outerClothing: ClothingOuterCoatSpaceAsshole
-  
-# Feet
-- type: loadout
-  id: BlackShoes
-  equipment:
-    shoes: ClothingShoesColorBlack
-
-- type: loadout
-  id: WinterBoots
-  equipment:
