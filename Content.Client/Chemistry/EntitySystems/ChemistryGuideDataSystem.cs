@@ -94,7 +94,7 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
             if (entProto.Abstract || usedNames.Contains(entProto.Name))
                 continue;
 
-            if (!entProto.TryGetComponent<ExtractableComponent>(out var extractableComponent))
+            if (!entProto.TryGetComponent<ExtractableComponent>(out var extractableComponent, EntityManager.ComponentFactory))
                 continue;
 
             //these bloat the hell out of blood/fat
@@ -121,7 +121,7 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 
 
             if (extractableComponent.GrindableSolution is { } grindableSolutionId &&
-                entProto.TryGetComponent<SolutionContainerManagerComponent>(out var manager) &&
+                entProto.TryGetComponent<SolutionContainerManagerComponent>(out var manager, EntityManager.ComponentFactory) &&
                 _solutionContainer.TryGetSolution(manager, grindableSolutionId, out var grindableSolution))
             {
                 var data = new ReagentEntitySourceData(
@@ -140,6 +140,11 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
     public List<ReagentSourceData> GetReagentSources(string id)
     {
         return _reagentSources.GetValueOrDefault(id) ?? new List<ReagentSourceData>();
+    }
+
+    // Is handled on server and updated on client via ReagentGuideRegistryChangedEvent
+    public override void ReloadAllReagentPrototypes()
+    {
     }
 }
 

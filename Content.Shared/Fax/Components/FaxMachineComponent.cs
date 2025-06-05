@@ -60,12 +60,6 @@ public sealed partial class FaxMachineComponent : Component
     public bool ReceiveNukeCodes { get; set; } = false;
 
     /// <summary>
-    /// Sound to play when fax has been emagged
-    /// </summary>
-    [DataField]
-    public SoundSpecifier EmagSound = new SoundCollectionSpecifier("sparks");
-
-    /// <summary>
     /// Sound to play when fax printing new message
     /// </summary>
     [DataField]

@@ -1,6 +1,6 @@
 - type: entity
   name: forensic scanner
-  parent: BaseItem
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: ForensicScanner
   description: A handheld device that can scan objects for fingerprints and fibers.
   components:
@@ -57,3 +57,13 @@
   - type: GuideHelp
     guides:
     - Forensics
+
+- type: entity
+  parent: ForensicReportPaper
+  id: PaperAccessLogs
+  name: access logs
+  description: A printout from the detective's trusty LogProbe.
+  components:
+  - type: PaperVisuals
+    headerImagePath: null
+    headerMargin: 0.0, 0.0, 0.0, 0.0

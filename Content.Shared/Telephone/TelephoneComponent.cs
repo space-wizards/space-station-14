@@ -1,4 +1,5 @@
 using Content.Shared.Chat;
+using Content.Shared.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -93,6 +94,12 @@ public sealed partial class TelephoneComponent : Component
     public bool UnlistedNumber = false;
 
     /// <summary>
+    /// Speech is relayed through this entity instead of the telephone
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public Entity<SpeechComponent>? Speaker = null;
+
+    /// <summary>
     /// Telephone number for this device
     /// </summary>
     /// <remarks>
@@ -183,7 +190,7 @@ public readonly record struct TelephoneMessageReceivedEvent(string Message, MsgC
 public struct TelephoneCallOptions
 {
     public bool IgnoreRange;    // The source can always reach its target
-    public bool ForceConnect;   // The source immediately starts a call with the receiver, potentially interrupting a call that is already in progress 
+    public bool ForceConnect;   // The source immediately starts a call with the receiver, potentially interrupting a call that is already in progress
     public bool ForceJoin;      // The source smoothly joins a call in progress, or starts a normal call with the receiver if there is none
     public bool MuteSource;     // Chatter from the source is not transmitted - could be used for eavesdropping when combined with 'ForceJoin'
     public bool MuteReceiver;   // Chatter from the receiver is not transmitted - useful for broadcasting messages to multiple receivers
@@ -215,7 +222,7 @@ public enum TelephoneVolume : byte
 [Serializable, NetSerializable]
 public enum TelephoneRange : byte
 {
-    Grid,       // Can only reach telephones that are on the same grid 
+    Grid,       // Can only reach telephones that are on the same grid
     Map,        // Can reach any telephone that is on the same map
     Unlimited,  // Can reach any telephone, across any distance
 }

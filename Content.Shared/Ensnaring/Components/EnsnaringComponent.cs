@@ -39,6 +39,12 @@ public sealed partial class EnsnaringComponent : Component
     public float StaminaDamage = 55f;
 
     /// <summary>
+    /// How many times can the ensnare be applied to the same target?
+    /// </summary>
+    [DataField]
+    public float MaxEnsnares = 1;
+
+    /// <summary>
     /// Should this ensnare someone when thrown?
     /// </summary>
     [DataField]

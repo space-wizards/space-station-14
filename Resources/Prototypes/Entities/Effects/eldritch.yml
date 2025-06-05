@@ -1,0 +1,25 @@
+﻿- type: entity
+  id: EffectVoidBlink
+  name: void blink
+  categories: [ HideSpawnMenu ]
+  save: false
+  components:
+  # TODO: PointLight is temp until I can make a shader & overlay for negative light or until this can support it
+  - type: PointLight
+    radius: 3
+    energy: 1
+    softness: 10
+    color: "#301934"
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    sprite: Objects/Magic/Eldritch/eldritch_actions.rsi
+    drawdepth: Effects
+    noRot: true
+    layers:
+    - state: "voidblink"
+  - type: TimedDespawn
+    lifetime: 1
+  - type: Tag
+    tags:
+    - HideContextMenu
