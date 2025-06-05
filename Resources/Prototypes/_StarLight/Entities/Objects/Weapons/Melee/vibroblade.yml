@@ -8,7 +8,7 @@
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Melee/crusher_sword.rsi
   - type: MeleeWeapon
-    attackRate: 1.7
+    attackRate: 1.2
     range: 1.25
     damage:
       types:
@@ -45,7 +45,7 @@
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Melee/cc_crusher_sword.rsi
   - type: MeleeWeapon
-    attackRate: 2.5
+    attackRate: 2.0
     range: 1.5
     damage:
       types:
