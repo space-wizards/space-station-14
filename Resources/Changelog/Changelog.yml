@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Liltenhead! Thank you for over 2 years of update videos, and congrats
-      on the 100th video!
-    type: Add
-  id: 8112
-  time: '2025-03-27T17:19:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36104
 - author: metalgearsloth
   changes:
   - message: Rewrote how mob movement works to make movement more flexible in code.
@@ -3925,3 +3917,11 @@
   id: 8623
   time: '2025-06-05T23:27:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37828
+- author: august-sun
+  changes:
+  - message: Added individual Bulldog drum magazines for sale in the syndicate uplink.
+      Ammo types available are pellets and slugs.
+    type: Add
+  id: 8624
+  time: '2025-06-05T23:35:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37917
