@@ -306,6 +306,9 @@
             "name": "eng_weld_door"
         },
         {
+            "name": "eng_evac_door"
+        },
+        {
             "name": "fire"
         },
         {

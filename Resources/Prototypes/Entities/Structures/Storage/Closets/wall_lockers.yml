@@ -176,3 +176,16 @@
     stateDoorClosed: med_door
   - type: AccessReader
     access: [["Medical"]]
+
+- type: entity
+  id: LockerWallEvacRepair
+  parent: BaseWallLocker
+  name: evac repair wall locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: eng
+    stateDoorOpen: eng_open
+    stateDoorClosed: eng_evac_door
+  - type: AccessReader
+    access: [["Engineering"]]
