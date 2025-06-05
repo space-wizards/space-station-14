@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Administration;
-using Content.Shared.Access.Components;
+using Content.Server.Administration.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
@@ -59,5 +60,17 @@ public sealed class RenameCommand : LocalizedEntityCommands
 
         entityUid = EntityUid.Invalid;
         return false;
+    }
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            var players = _playerManager.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
+
+            return CompletionResult.FromHintOptions(players, Help);
+        }
+
+        return CompletionResult.Empty;
     }
 }
