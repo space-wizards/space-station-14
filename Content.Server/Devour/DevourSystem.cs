@@ -27,17 +27,17 @@ public sealed class DevourSystem : SharedDevourSystem
 
         var ichorInjection = new Solution(component.Chemical, component.HealRate);
 
-        // If the devoured thing has the capacity for life, add it to the stomach
-        if (component.ShouldStoreDevoured && args.Args.Target is not null && HasComp<MobStateComponent>(args.Args.Target))
-        {
-            ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
-        }
-
         // Grant ichor if the devoured thing meets the dragon's food preference
         if (component.FoodPreference == FoodPreference.All ||
             (component.FoodPreference == FoodPreference.Humanoid && HasComp<HumanoidAppearanceComponent>(args.Args.Target)))
         {
             _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);
+        }
+
+        // If the devoured thing has the capacity for life, add it to the stomach
+        if (component.ShouldStoreDevoured && args.Args.Target is not null && HasComp<MobStateComponent>(args.Args.Target))
+        {
+            ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
         }
         //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
         //If it's not alive, it must be a structure
