@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Vortebo
-  changes:
-  - message: Relic station revamped
-    type: Tweak
-  id: 8105
-  time: '2025-03-24T16:36:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35507
 - author: slarticodefast
   changes:
   - message: Adjusted thermal regulation again so you no longer overheat in hardsuits.
@@ -3928,3 +3921,10 @@
   id: 8616
   time: '2025-06-05T12:52:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38080
+- author: Orsoniks
+  changes:
+  - message: Added more in-hand sprites for food items
+    type: Add
+  id: 8617
+  time: '2025-06-05T21:06:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38024
