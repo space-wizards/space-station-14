@@ -4,7 +4,7 @@ meta:
   engineVersion: 260.2.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 06/05/2025 04:05:47
+  time: 06/05/2025 04:18:17
   entityCount: 2985
 maps:
 - 1
@@ -9080,7 +9080,7 @@ entities:
       pos: -8.5,2.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5748.1294
+      secondsUntilStateChange: -5774.0405
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -18452,6 +18452,22 @@ entities:
     - type: Transform
       pos: 3.5,8.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        1172:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
+        1173:
+        - - Left
+          - Reverse
+        - - Right
+          - Forward
+        - - Middle
+          - Off
   - uid: 2552
     components:
     - type: Transform
