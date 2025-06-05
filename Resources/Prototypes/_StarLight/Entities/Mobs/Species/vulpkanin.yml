@@ -54,8 +54,8 @@
             sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
             state: shoes
   - type: ContentEye
-    targetZoom: "1.5, 1.5"
-    maxZoom: "1.5, 1.5"
+    targetZoom: "1.125, 1.125"
+    maxZoom: "1.125, 1.125"
   - type: Speech
     allowedEmotes: ['Howl', 'Growl', 'Bark', 'Yip', 'Whine']
   - type: Vocal
