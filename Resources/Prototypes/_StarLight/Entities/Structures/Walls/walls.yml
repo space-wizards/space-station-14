@@ -105,6 +105,8 @@
     key: walls
     base: state
   - type: Appearance
+  - type: Pierceable
+    level: Rock
   - type: Ricochetable
     chance: 0.75
   - type: Destructible
