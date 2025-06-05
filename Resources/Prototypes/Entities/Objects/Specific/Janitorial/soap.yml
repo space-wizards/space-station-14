@@ -67,9 +67,8 @@
     solution: soap
   - type: BadFood
   - type: CleansForensics
-  - type: Residue
-    residueAdjective: residue-slippery
-    residueColor: residue-green
+    agentAdjective: cleaning-agent-slippery
+    agentColor: cleaning-agent-green
 
 - type: entity
   name: soap
@@ -92,9 +91,8 @@
         reagents:
         - ReagentId: SoapReagent
           Quantity: 100
-  - type: Residue
-    residueAdjective: residue-slippery
-    residueColor: residue-grey
+  - type: CleansForensics
+    agentColor: cleaning-agent-grey
 
 - type: entity
   name: soap
@@ -110,9 +108,8 @@
     fillBaseName: deluxe-
   - type: Item
     heldPrefix: deluxe
-  - type: Residue
-    residueAdjective: residue-slippery
-    residueColor: residue-brown
+  - type: CleansForensics
+    agentColor: cleaning-agent-brown
 
 - type: entity
   name: soap
@@ -138,9 +135,7 @@
       - punishment
   - type: CleansForensics
     cleanDelay: 8.0
-  - type: Residue
-    residueAdjective: residue-slippery
-    residueColor: residue-red
+    agentColor: cleaning-agent-red
 
 - type: entity
   name: soaplet
@@ -203,9 +198,8 @@
     flavors:
       - clean
       - meaty
-  - type: Residue
-    residueAdjective: residue-slippery
-    residueColor: residue-red
+  - type: CleansForensics
+    agentColor: cleaning-agent-red
 
 - type: entity
   name: omega soap
@@ -232,9 +226,8 @@
         reagents:
         - ReagentId: SoapReagent
           Quantity: 240
-  - type: Residue
-    residueAdjective: residue-slippery
-    residueColor: residue-blue
+  - type: CleansForensics
+    agentColor: cleaning-agent-blue
 
 - type: entity
   name: soap
@@ -251,9 +244,7 @@
     sprite: Objects/Specific/Janitorial/soap.rsi
     storedRotation: -90
   - type: CleansForensics
-  - type: Residue
-    residueAdjective: residue-slippery
-    residueColor: residue-grey
+    agentColor: cleaning-agent-grey
   - type: Tag
     tags:
     - Soap
