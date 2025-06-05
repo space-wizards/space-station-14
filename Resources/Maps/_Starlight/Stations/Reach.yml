@@ -14590,20 +14590,15 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2236:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2237:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2238:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2239:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2240:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: LockerAtmosphericsFilledHardsuit
   entities:
   - uid: 1964
@@ -17034,8 +17029,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         102:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 2340
     components:
     - type: Transform
@@ -17051,8 +17045,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         103:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 2342
     components:
     - type: Transform
@@ -17062,20 +17055,15 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2241:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2242:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2243:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2244:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2245:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 2343
     components:
     - type: Transform
@@ -17085,8 +17073,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         103:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignAtmos
   entities:
   - uid: 2344
