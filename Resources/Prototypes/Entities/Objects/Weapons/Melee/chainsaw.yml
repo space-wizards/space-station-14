@@ -5,14 +5,20 @@
   description: A very large chainsaw. Usually you use this for cutting down trees... usually.
   components:
   - type: Wieldable
-    wieldSound: !type:SoundPathSpecifier
-      path: /Audio/Weapons/chainsawwield.ogg
-      params:
-        volume: -3
-  - type: Sharp
+    wieldSound: null
   - type: Sprite
     sprite: Objects/Weapons/Melee/chainsaw.rsi
-    state: icon
+    layers:
+    - state: icon
+    - state: icon-on
+      visible: true
+      map: ["enum.ToggleableVisuals.Layer"]
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
   - type: MeleeWeapon
     autoAttack: true
     angle: 0
@@ -20,22 +26,72 @@
     attackRate: 4
     damage:
       types:
-        Slash: 2
-        Blunt: 2
-        Structural: 4
+        Blunt: 1
     soundHit:
+      collection: MetalThud
+      params:
+        volume: -5
+        maxDistance: 10
+  - type: Item
+    size: Large
+    sprite: Objects/Weapons/Melee/chainsaw.rsi
+  - type: ItemToggle
+    onUse: false # wielding events control it instead
+    onActivate: false
+    soundActivate:
+      path: /Audio/Weapons/chainsawwield.ogg
+      params:
+        variation: 0.125
+        volume: -3
+    soundDeactivate:
+      path: /Audio/Weapons/chainsawwield.ogg
+      params:
+        variation: 0.125
+        volume: -3
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Weapons/chainsawidle.ogg
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
       path: /Audio/Weapons/chainsaw.ogg
       params:
-        volume: -3
-  - type: IncreaseDamageOnWield
-    damage:
+        variation: 0.250
+        volume: -4
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Weapons/chainsaw.ogg
+      params:
+        variation: 0.250
+        volume: -4
+    deactivatedSoundOnHitNoDamage:
+      collection: MetalThud
+      params:
+        variation: 0.250
+        volume: -4
+    activatedDamage:
       types:
-        Slash: 4
-        Structural: 4
-  - type: Item
-    size: Normal
-    sprite: Objects/Weapons/Melee/chainsaw.rsi
-  - type: DisarmMalus
+        Blunt: 2
+        Slash: 10
+        Structural: 25
+  - type: ItemToggleSize
+    activatedSize: Ginormous
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.9 #You try disarming a chainsaw wielding maniac
+    - type: Execution
+      doAfterDuration: 4.0
+  - type: ToggleableVisuals
+    spriteLayer: on
+    inhandVisuals:
+      left:
+      - state: wielded-inhand-left
+      right:
+      - state: wielded-inhand-right
+  - type: Welder
+    fuelConsumption: 2
+    fuelLitCost: 10
+    tankSafe: true
   - type: RefillableSolution
     solution: Welder
   - type: SolutionContainerManager
@@ -47,3 +103,4 @@
         maxVol: 300
   - type: UseDelay
     delay: 1
+  - type: Appearance

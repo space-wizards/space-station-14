@@ -1,14 +1,17 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Made by Jesse for ss14",
+    "copyright": "Made by Jesse for ss14, edited by Redbookcase on Github.",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
+		{
+            "name": "icon"
+        },
         {
-            "name": "icon",
+            "name": "icon-on",
             "delays": [
                 [
                     0.05,
@@ -20,28 +23,14 @@
         },
         {
             "name": "inhand-left",
-            "directions": 4,
-            "delays": [
-                [
-                    0.03,
-                    0.03
-                ],
-                [
-                    0.03,
-                    0.03
-                ],
-                [
-                    0.03,
-                    0.03
-                ],
-                [
-                    0.03,
-                    0.03
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-left",
             "directions": 4,
             "delays": [
                 [
@@ -63,7 +52,7 @@
             ]
         },
         {
-            "name": "wielded-inhand-left",
+            "name": "wielded-inhand-left-on",
             "directions": 4,
             "delays": [
                 [
@@ -105,7 +94,28 @@
                     0.03
                 ]
             ]
+        },
+        {
+            "name": "wielded-inhand-right-on",
+            "directions": 4,
+            "delays": [
+                [
+                    0.03,
+                    0.03
+                ],
+                [
+                    0.03,
+                    0.03
+                ],
+                [
+                    0.03,
+                    0.03
+                ],
+                [
+                    0.03,
+                    0.03
+                ]
+            ]
         }
     ]
-
 }
