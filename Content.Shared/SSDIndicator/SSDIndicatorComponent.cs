@@ -18,6 +18,10 @@ public sealed partial class SSDIndicatorComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
+    public bool ShouldSleep = true;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<SsdIconPrototype> Icon = "SSDIcon";
 
     /// <summary>
