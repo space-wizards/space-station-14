@@ -6815,4 +6815,18 @@ Entries:
   id: 942
   time: '2025-06-05T06:41:22.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/773
+- author: Cyanogen, InanimateIJK
+  changes:
+  - message: Vibroblades
+    type: Add
+  id: 943
+  time: '2025-06-05T17:06:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/769
+- author: Cyanogen, InanimateIJK
+  changes:
+  - message: CentComm web vest
+    type: Add
+  id: 944
+  time: '2025-06-05T17:06:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/769
 
