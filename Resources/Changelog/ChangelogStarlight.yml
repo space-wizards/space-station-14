@@ -6792,4 +6792,19 @@ Entries:
   id: 939
   time: '2025-06-04T03:04:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/763
+- author: walksantora
+  changes:
+  - message: The rare paper in captains locker now has a ghost role and a ghost warp.
+    type: Tweak
+  id: 940
+  time: '2025-06-05T05:37:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/762
+- author: walksantora
+  changes:
+  - message: The rare paper in captains locker now actually requires 9 seperate mindshielded
+      entities
+    type: Fix
+  id: 941
+  time: '2025-06-05T05:37:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/762
 
