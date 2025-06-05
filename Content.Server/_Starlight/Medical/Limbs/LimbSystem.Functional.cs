@@ -61,7 +61,10 @@ public sealed partial class LimbSystem : SharedLimbSystem
                     {
                         if (TryComp(containedEnt, out BodyPartComponent? innerPart)
                             && innerPart.PartType == BodyPartType.Hand)
+                        {
                             _hands.AddHand(body, slotFullId, limb.Comp.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
+                            AddLimbVisual(body, (containedEnt, innerPart));
+                        }
                     }
                 }
                 break;
@@ -71,6 +74,20 @@ public sealed partial class LimbSystem : SharedLimbSystem
             case BodyPartType.Leg:
                 if (limb.Comp.Children.Keys.Count == 0)
                     _body.TryCreatePartSlot(limb, limb.Comp.Symmetry == BodyPartSymmetry.Left ? "left foot" : "right foot", BodyPartType.Foot, out var slotId);
+
+                foreach (var slotId in limb.Comp.Children.Keys)
+                {
+                    if (slotId is null) continue;
+                    var slotFullId = BodySystem.GetPartSlotContainerId(slotId);
+                    var child = _containers.GetContainer(limb, slotFullId);
+
+                    foreach (var containedEnt in child.ContainedEntities)
+                    {
+                        if (TryComp(containedEnt, out BodyPartComponent? innerPart)
+                            && innerPart.PartType == BodyPartType.Foot)
+                            AddLimbVisual(body, (containedEnt, innerPart));
+                    }
+                }
                 break;
             case BodyPartType.Foot:
                 break;

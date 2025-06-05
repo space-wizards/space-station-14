@@ -6561,4 +6561,307 @@ Entries:
   id: 908
   time: '2025-06-01T05:06:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/696
+- author: Conflee
+  changes:
+  - message: Changed Asteroid durability from 120 to 60, halving the mining time so
+      Mining Specialists can feasibly do their job again.
+    type: Tweak
+  id: 909
+  time: '2025-06-02T04:23:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/744
+- author: Cyanogen
+  changes:
+  - message: Made cat ears not contra
+    type: Tweak
+  id: 910
+  time: '2025-06-02T11:03:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/745
+- author: deltaVelocity
+  changes:
+  - message: Increased the PKA's base range to ~6.5 tiles, from Wizden-nerfed 5.5.
+      With modkit, range is now ~9.5 tiles.
+    type: Tweak
+  id: 911
+  time: '2025-06-02T11:06:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/741
+- author: Aedler
+  changes:
+  - message: Added Radio Chimes. Starlight QOL & Immersion development № 1
+    type: Add
+  id: 912
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Added Radio Chimes to Captain, Security, CE, HoS, BrigMedic, Nukie Commander,
+      Nukie Operative, Nukie Agent, Ninja, QM, BSO, CMO, RD, Wizard, DeathSquad and
+      CC.
+    type: Add
+  id: 913
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Added Radio Chime to Station AI.
+    type: Add
+  id: 914
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Added Radio Chimes disable setting under Audio.
+    type: Add
+  id: 915
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Chimes are now synchronized to TTS.
+    type: Tweak
+  id: 916
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: Aedler
+  changes:
+  - message: Replaced some of the headsets in loadouts to support chimes.
+    type: Tweak
+  id: 917
+  time: '2025-06-02T11:12:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/563
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed "Diona are slow as shit"
+    type: Fix
+  id: 918
+  time: '2025-06-02T20:14:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/750
+- author: Conflee
+  changes:
+  - message: Added Trieste-NT and Reflection lobby art (By Conflee)
+    type: Add
+  id: 919
+  time: '2025-06-02T20:25:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/747
+- author: Conflee
+  changes:
+  - message: Added Echoes in the Deep lobby song (By nightyshade in the Trieste Discord)
+    type: Add
+  id: 920
+  time: '2025-06-02T20:25:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/747
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed a bug where projectiles would ricochet in random directions off
+      reflectors.
+    type: Fix
+  id: 921
+  time: '2025-06-02T20:37:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/746
+- author: Conflee
+  changes:
+  - message: Added Saltern, updated with Department Economy, Genpop, and all Starlight
+      stuff again.
+    type: Add
+  id: 922
+  time: '2025-06-02T20:42:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/735
+- author: Aedler
+  changes:
+  - message: Belt textures now overlap outerclothing so you can see your chestrigs.
+    type: Tweak
+  id: 923
+  time: '2025-06-02T20:46:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/731
+- author: walksanatora
+  changes:
+  - message: Syndicate borg modules can now be produced expensively in emagged exosuit
+      fabs. a shadow factory must be armed.
+    type: Add
+  id: 924
+  time: '2025-06-02T20:53:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/748
+- author: STARLIGHT TEAM
+  changes:
+  - message: Abyss mobs now blink again.
+    type: Fix
+  id: 925
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Removed a Syndicate mission that was accidentally set.
+    type: Fix
+  id: 926
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Mission difficulties now follow a normal distribution centered around
+      medium difficulty.
+    type: Tweak
+  id: 927
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Difficult-tier missions are now only available starting from the 30-minute
+      mark.
+    type: Tweak
+  id: 928
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: The Abyss Core is now classified as an artifact for R&D, with a massive
+      research multiplier.
+    type: Tweak
+  id: 929
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added a new Impossible-level expedition, available from the 60-minute
+      mark. Do not go on it. You will die.
+    type: Add
+  id: 930
+  time: '2025-06-03T00:01:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/749
+- author: IQlvlZero, Walksanator, Conf
+  changes:
+  - message: added moff cake
+    type: Add
+  id: 931
+  time: '2025-06-03T00:06:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/721
+- author: InanimateIJK
+  changes:
+  - message: Timefracture, a track by Bad History is added to the lobby and round-end
+      sound collection.
+    type: Add
+  id: 932
+  time: '2025-06-03T01:57:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/754
+- author: Happyrobot33
+  changes:
+  - message: Added CC Outpost G24 (Conf).
+    type: Add
+  id: 933
+  time: '2025-06-03T02:04:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/753
+- author: Happyrobot33
+  changes:
+  - message: Added CC Outpost SC17 (Trep Maul).
+    type: Add
+  id: 934
+  time: '2025-06-03T02:04:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/753
+- author: Happyrobot33
+  changes:
+  - message: Added randomization to centcomm map selection, currently 2 maps in the
+      CC map pool. Selected round start.
+    type: Add
+  id: 935
+  time: '2025-06-03T02:04:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/753
+- author: Happyrobot33
+  changes:
+  - message: Fixed oversight with escape pod docking system.
+    type: Fix
+  id: 936
+  time: '2025-06-03T02:04:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/753
+- author: STARLIGHT TEAM
+  changes:
+  - message: Cyber arms now spawn with the hand attached by default.
+    type: Add
+  id: 937
+  time: '2025-06-03T02:36:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/738
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added a button that lets admins replace their right arm with a Reaper
+      arm, for easier surgical work.
+    type: Add
+  id: 938
+  time: '2025-06-03T02:36:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/738
+- author: Cyanogen
+  changes:
+  - message: Gave slime people built-in beer goggles
+    type: Add
+  id: 939
+  time: '2025-06-04T03:04:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/763
+- author: walksantora
+  changes:
+  - message: The rare paper in captains locker now has a ghost role and a ghost warp.
+    type: Tweak
+  id: 940
+  time: '2025-06-05T05:37:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/762
+- author: walksantora
+  changes:
+  - message: The rare paper in captains locker now actually requires 9 seperate mindshielded
+      entities
+    type: Fix
+  id: 941
+  time: '2025-06-05T05:37:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/762
+- author: InanimateIJK
+  changes:
+  - message: Tracks 'Timefracture' and 'Echos in the Deep' have their proper metadata
+      established & should show in the lobby.
+    type: Fix
+  id: 942
+  time: '2025-06-05T06:41:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/773
+- author: Cyanogen, InanimateIJK
+  changes:
+  - message: Vibroblades
+    type: Add
+  id: 943
+  time: '2025-06-05T17:06:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/769
+- author: Cyanogen, InanimateIJK
+  changes:
+  - message: CentComm web vest
+    type: Add
+  id: 944
+  time: '2025-06-05T17:06:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/769
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins no longer take twice as much airloss damage
+    type: Remove
+  id: 945
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins no longer heal half as fast from airloss
+    type: Remove
+  id: 946
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins now have a higher vision range
+    type: Tweak
+  id: 947
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins now have night vision
+    type: Add
+  id: 948
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: PubliclyExecutedPig
+  changes:
+  - message: Lobster has actually good genpop now sorta
+    type: Tweak
+  id: 949
+  time: '2025-06-05T19:43:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/774
 

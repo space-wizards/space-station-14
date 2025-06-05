@@ -24,6 +24,31 @@
         - DragonSpawn
         - NinjaSpawn
         - ParadoxCloneSpawn
+    - type: Tag
+      tags:
+        - GhostOnlyWarp
+        - Document
+        - Paper
+    - type: WarpPoint
+      follow: true
+      location: the end of Q
+      blacklist:
+        tags:
+        - GhostOnlyWarp
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-chaospaper-name
+      description: ghost-role-information-chaospaper-description
+      rules: ghost-role-information-freeagent-rules
+      allowSpeech: true
+      reregister: true
+      mindRoles: 
+        - MindRoleGhostRoleFreeAgent
+    - type: ShowMindShieldIcons # gotta know your targets.
+    - type: Speech
+    - type: TextToSpeech
+    - type: GhostTakeoverAvailable
+    - type: MobState
 
 
 - type: entity
@@ -47,3 +72,27 @@
         - UnknownShuttleHonki
         - WizardSpawn
         - NinjaSpawn #spawns less cause there is also less people to take said roles. and I deem these to be the less "chaotic" ones
+    - type: Tag
+      tags:
+        - GhostOnlyWarp
+        - Document
+        - Paper
+    - type: WarpPoint
+      follow: true
+      location: the end of Q
+      blacklist:
+        tags:
+        - GhostOnlyWarp
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-chaospaper-name
+      description: ghost-role-information-chaospaper-description
+      rules: ghost-role-information-freeagent-rules
+      allowSpeech: true
+      reregister: true
+      mindRoles: 
+        - MindRoleGhostRoleFreeAgent
+    - type: ShowMindShieldIcons # gotta know your targets.
+    - type: Speech
+    - type: GhostTakeoverAvailable
+    - type: MobState

@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using Content.Client.Administration.Managers;
@@ -42,6 +42,7 @@ using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Toolshed.TypeParsers;
 using Robust.Shared.Utility;
+using Content.Client._Starlight.Radio.Systems;
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
@@ -60,6 +61,7 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
 
+    [UISystemDependency] private readonly RadioChimeSystem? _chime = default;// 🌟Starlight🌟
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
     [UISystemDependency] private readonly CollectiveMindSystem? _collectiveMind = default!;
@@ -879,6 +881,8 @@ public sealed class ChatUIController : UIController
         {
             History.Add((_timing.CurTick, msg));
             MessageAdded?.Invoke(msg);
+
+            _chime?.PlayChime(msg.Chime); // 🌟Starlight🌟
 
             if (!msg.Read)
             {

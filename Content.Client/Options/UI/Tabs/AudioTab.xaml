@@ -20,6 +20,7 @@
                 <CheckBox Name="EventMusicCheckBox" Text="{Loc 'ui-options-event-music'}" />
                 <CheckBox Name="AdminSoundsCheckBox" Text="{Loc 'ui-options-admin-sounds'}" />
                 <CheckBox Name="BwoinkSoundCheckBox" Text="{Loc 'ui-options-bwoink-sound'}" />
+                <CheckBox Name="RadioChimeMuteCheckBox" Text="{Loc 'ui-options-radio-chime-mute'}" /> <!--🌟Starlight🌟-->
 
                 
                 <Label Text="{Loc 'ui-options-tts-label'}"

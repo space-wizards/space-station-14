@@ -20,7 +20,7 @@ public sealed partial class NPCUseActionOnTargetComponent : Component
     /// Action that's going to attempt to be used.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId<EntityWorldTargetActionComponent> ActionId;
+    public EntProtoId ActionId;
 
     [DataField]
     public EntityUid? ActionEnt;
