@@ -3,6 +3,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.StationAi;
 
+/// <summary>
+/// Attached to entities that grant vision to the station AI, such as cameras.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStationAiSystem))]
 public sealed partial class StationAiVisionComponent : Component
 {
@@ -23,6 +26,12 @@ public sealed partial class StationAiVisionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool NeedsPower = false;
+
+    /// <summary>
+    /// Determines whether the entity needs to be anchored to provide vision to the station AI.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool NeedsAnchoring = false;
 
     /// <summary>
     /// Vision range in tiles.

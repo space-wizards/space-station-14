@@ -87,6 +87,9 @@ public sealed class StationAiVisionSystem : EntitySystem
             if (seed.Comp.NeedsPower && !_power.IsPowered(seed.Owner))
                 continue;
 
+            if (seed.Comp.NeedsAnchoring && !Transform(seed.Owner).Anchored)
+                continue;
+
             _job.Data.Add(seed);
         }
 
@@ -169,6 +172,9 @@ public sealed class StationAiVisionSystem : EntitySystem
                 continue;
 
             if (seed.Comp.NeedsPower && !_power.IsPowered(seed.Owner))
+                continue;
+
+            if (seed.Comp.NeedsAnchoring && !Transform(seed.Owner).Anchored)
                 continue;
 
             _job.Data.Add(seed);

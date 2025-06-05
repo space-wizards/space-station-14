@@ -18,7 +18,7 @@
     powerLoad: 300
   - type: StationAiVision
     range: 1
-    needsPower: true
+    needsAnchoring: true
   - type: Sprite
     sprite: Structures/Machines/holopad.rsi
     drawdepth: HighFloorObjects
