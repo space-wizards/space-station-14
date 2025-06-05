@@ -25,7 +25,7 @@
     blockingWireType: ExCable
     blacklist:
       tags:
-        - ExCable
+      - ExCable
     overTile: true
   - type: Appearance
   - type: Extractable

@@ -133,8 +133,8 @@
       amount: 9
   - type: Sprite
     layers:
-      - state: box_security
-      - state: forensic
+    - state: box_security
+    - state: forensic
 
 - type: entity
   name: detonator box
@@ -154,5 +154,5 @@
     - id: VoiceTrigger
   - type: Sprite
     layers:
-      - state: box_security
-      - state: trigger
+    - state: box_security
+    - state: trigger

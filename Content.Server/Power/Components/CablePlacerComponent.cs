@@ -20,6 +20,9 @@ namespace Content.Server.Power.Components
         [DataField("blockingWireType")]
         public CableType BlockingCableType = CableType.HighVoltage;
 
+        /// <summary>
+        /// Blacklist for things the cable cannot be placed over. For things that arent cables with CableTypes.
+        /// </summary>
         [DataField]
         public EntityWhitelist Blacklist = new();
 
