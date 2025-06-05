@@ -20,6 +20,13 @@
   maxCount: 10
 
 - type: stack
+  id: Tourniquet
+  name: stack-tourniquet
+  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: tourniquet}
+  spawn: Tourniquet
+  maxCount: 5
+
+- type: stack
   id: Brutepack
   name: stack-brutepack
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: gauze }

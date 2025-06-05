@@ -117,6 +117,7 @@ stack-inflatable-door = inflatable door
 stack-ointment = ointment
 stack-aloe-cream = aloe cream
 stack-gauze = gauze
+stack-tourniquet = tourniquet
 stack-brutepack = brutepack
 stack-bloodpack = bloodpack
 stack-medicated-suture = medicated-suture

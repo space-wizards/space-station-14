@@ -296,6 +296,7 @@
   parent: BaseHealingItem
   id: Tourniquet
   name: tourniquet
+  suffix: Full
   description: Stops bleeding! Hopefully.
   components:
     - type: Tag
@@ -310,11 +311,12 @@
         - Biological
       damage:
         groups:
-          Brute: 5 # Tourniquets HURT!
         types:
-          Asphyxiation: 5 # Essentially Stopping all blood reaching a part of your body
-      bloodlossModifier: -10 # Tourniquets stop bleeding
-      delay: 0.5
+          Slash: -2
+          Piercing: -2
+      bloodlossModifier: -5 # stops bleeding. sort of!
+      delay: 2
+      selfHealPenaltyMultiplier: 2 # helping yourself isn't as hard as other topicals
       healingBeginSound:
         path: "/Audio/Items/Medical/brutepack_begin.ogg"
         params:
@@ -325,6 +327,17 @@
         params:
           volume: 1.0
           variation: 0.125
+    - type: Stack
+      stackType: Tourniquet
+      count: 5
+
+- type: entity
+  parent: Tourniquet
+  suffix: Single
+  id: Tourniquet1
+  components:
+  - type: Stack
+    count: 1
 
 - type: entity
   name: roll of gauze
