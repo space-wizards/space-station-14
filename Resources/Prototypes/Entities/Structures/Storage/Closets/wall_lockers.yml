@@ -21,8 +21,6 @@
     stateBaseClosed: emergency
     stateDoorOpen: emergency_open
     stateDoorClosed: emergency_door
-  - type: Paintable
-    group: WallLockerEmergency
 
 - type: entity
   parent: BaseWallCloset
@@ -35,8 +33,6 @@
     stateBaseClosed: n2
     stateDoorOpen: n2_open
     stateDoorClosed: n2_door
-  - type: Paintable
-    group: WallLockerEmergency
 
 - type: entity
   id: ClosetWallFire
@@ -182,3 +178,16 @@
     access: [["Medical"]]
   - type: Paintable
     group: null # Looks bad when repainted
+
+- type: entity
+  parent: BaseWallLocker
+  id: LockerWallEvacRepair
+  name: evac repair wall locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: eng
+    stateDoorOpen: eng_open
+    stateDoorClosed: eng_evac_door
+  - type: AccessReader
+    access: [["Engineering"]]

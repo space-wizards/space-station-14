@@ -34,10 +34,6 @@ public sealed class JetpackSystem : SharedJetpackSystem
     {
         Appearance.TryGetData<bool>(uid, JetpackVisuals.Enabled, out var enabled, args.Component);
 
-        var state = "icon" + (enabled ? "-on" : "");
-        if (args.Sprite != null)
-            _sprite.LayerSetRsiState((uid, args.Sprite), 0, state);
-
         if (TryComp<ClothingComponent>(uid, out var clothing))
             _clothing.SetEquippedPrefix(uid, enabled ? "on" : null, clothing);
     }

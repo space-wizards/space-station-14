@@ -37,6 +37,14 @@ namespace Content.Shared.Movement.Components
 
         public MoveButtons HeldMoveButtons = MoveButtons.None;
 
+        /// <summary>
+        /// Does our input indicate actual movement, and not just modifiers?
+        /// </summary>
+        /// <remarks>
+        /// This can be useful to filter out input from just pressing the walk button with no directions, for example.
+        /// </remarks>
+        public bool HasDirectionalMovement => (HeldMoveButtons & MoveButtons.AnyDirection) != MoveButtons.None;
+
         // I don't know if we even need this networked? It's mostly so conveyors can calculate properly.
         /// <summary>
         /// Direction to move this tick.
