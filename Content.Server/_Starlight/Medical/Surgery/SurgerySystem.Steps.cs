@@ -49,7 +49,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
     private void OnStepAttachComplete(Entity<SurgeryStepAttachLimbEffectComponent> ent, ref SurgeryStepEvent args)
     {
-        if (GetSingleton(args.SurgeryProto) is not { } surgery
+        if (!_entity.TryGetSingleton(args.SurgeryProto, out var surgery)
             || !TryComp<SurgeryLimbSlotConditionComponent>(surgery, out var slotComp))
             return;
 
@@ -168,7 +168,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     {
         if (_entity.TryEntity<TransformComponent, HumanoidAppearanceComponent, BodyComponent>(args.Body, out var body) 
             && _entity.TryEntity<TransformComponent, MetaDataComponent, BodyPartComponent>(args.Part, out var limb))
-            _limbSystem.Amputatate(body.Value, limb.Value);
+            _limbSystem.Amputatate(body, limb);
     }
 
     private void CustomLimbRemoved(Entity<CustomLimbMarkerComponent> ent, ref ComponentRemove args)

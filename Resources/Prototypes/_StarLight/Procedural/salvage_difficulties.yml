@@ -7,6 +7,7 @@
   modifierBudget: 1
   color: "#9FED5896"
   recommendedPlayers: 1
+  probability: 0.3
 
 - type: salvageDifficulty
   id: Moderate
@@ -16,6 +17,7 @@
   modifierBudget: 2
   color: "#52B4E996"
   recommendedPlayers: 2
+  probability: 0.5
 
 - type: salvageDifficulty
   id: Challenging
@@ -25,6 +27,7 @@
   modifierBudget: 3
   color: "#9FED5896"
   recommendedPlayers: 3
+  probability: 1
 
 - type: salvageDifficulty
   id: Difficult
@@ -34,12 +37,16 @@
   modifierBudget: 1
   color: "#EFB34196"
   recommendedPlayers: 4
+  delay: 1800 # 30 mins
+  probability: 0.5
 
-#- type: salvageDifficulty
-#  id: Impossible
-#  lootPrototype: "SalvageLootImpossible"
-#  lootBudget: 675
-#  mobBudget: 463
-#  modifierBudget: 1
-#  color: "#DE3A3A96"
-#  recommendedPlayers: 6
+- type: salvageDifficulty
+  id: Impossible
+  lootPrototype: "SalvageLootImpossible"
+  lootBudget: 675
+  mobBudget: 463
+  modifierBudget: 1
+  color: "#DE3A3A96"
+  recommendedPlayers: 6
+  delay: 3600 # 60 mins
+  probability: 0.3

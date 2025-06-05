@@ -2,9 +2,9 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
+using Content.Shared.Procedural;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
-using Content.Shared.Procedural;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage.Expeditions;
 using Robust.Shared.Audio;
@@ -140,13 +140,20 @@ public sealed partial class SalvageSystem
         component.Missions.Clear();
         var difficulties = _prototypeManager.GetInstances<SalvageDifficultyPrototype>();
 
+        // 🌟Starlight🌟
+        var available = difficulties
+#if !DEBUG
+            .Where(d => d.Value.Delay <= _timing.CurTime)
+#endif
+            .ToDictionary(x => x.Value.ID, x => x.Value.Probability);
+
         for (var i = 0; i < MissionLimit; i++)
         {
             var mission = new SalvageMissionParams
             {
                 Index = component.NextIndex,
                 Seed = _random.Next(),
-                Difficulty = difficulties.Values[_random.Next(difficulties.Count)].ID,
+                Difficulty = _random.Pick(available), // 🌟Starlight🌟
             };
 
             component.Missions[component.NextIndex++] = mission;
