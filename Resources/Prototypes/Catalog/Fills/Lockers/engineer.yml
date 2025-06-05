@@ -257,11 +257,11 @@
   id: FillLockerEvacRepair
   table: !type:AllSelector
     children:
+    - id: BoxInflatable
+    - id: HolofanProjector
     - id: MetalFoamGrenade
       amount: !type:ConstantNumberSelector
         value: 3
     - id: AirGrenade
       amount: !type:ConstantNumberSelector
         value: 3
-    - id: BoxInflatable
-    - id: HolofanProjector
