@@ -15,6 +15,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Store;
+using Content.Shared.Store.Events;
 using Robust.Shared.Maths;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -74,6 +75,8 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         SubscribeLocalEvent<DragonRiftComponent, ComponentStartup>(OnRiftStartup);
         SubscribeLocalEvent<RevSupplyRiftComponent, ComponentStartup>(OnRevRiftStartup);
         SubscribeLocalEvent<RevSupplyRiftComponent, ComponentShutdown>(OnRevRiftShutdown);
+        SubscribeLocalEvent<StorePurchaseAttemptEvent>(OnStorePurchaseAttempt);
+        SubscribeLocalEvent<StorePurchaseCompletedEvent>(OnStorePurchaseCompleted);
     }
     
     /// <summary>
@@ -93,6 +96,40 @@ public sealed class RevSupplyRiftSystem : EntitySystem
     public void SetRiftProcessing(bool isProcessing)
     {
         _isProcessingRift = isProcessing;
+    }
+    
+    /// <summary>
+    /// Handles the StorePurchaseAttemptEvent for revolutionary supply rifts.
+    /// </summary>
+    private void OnStorePurchaseAttempt(ref StorePurchaseAttemptEvent args)
+    {
+        // Only handle the revolutionary supply rift listing
+        if (args.ListingId != RevSupplyRiftListingId)
+            return;
+        
+        // Check if there's already an active rift being processed or placed
+        if (IsRiftBeingProcessed())
+        {
+            // A rift is already being processed, so cancel this purchase
+            args.Cancel = true;
+            return;
+        }
+        
+        // Mark that we're processing a rift purchase
+        SetRiftProcessing(true);
+    }
+    
+    /// <summary>
+    /// Handles the StorePurchaseCompletedEvent for revolutionary supply rifts.
+    /// </summary>
+    private void OnStorePurchaseCompleted(ref StorePurchaseCompletedEvent args)
+    {
+        // Only handle the revolutionary supply rift listing
+        if (args.ListingId != RevSupplyRiftListingId)
+            return;
+        
+        // Mark that we're done processing a rift purchase
+        SetRiftProcessing(false);
     }
 
     private void OnRiftStartup(EntityUid uid, DragonRiftComponent component, ComponentStartup args)

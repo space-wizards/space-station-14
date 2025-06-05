@@ -15,6 +15,7 @@ using Content.Shared.PDA.Ringer;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.Store.Conditions;
+using Content.Shared.Store.Events;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -145,47 +146,13 @@ public sealed partial class StoreSystem
 
         var buyer = msg.Actor;
         
-        // STARLIGHT START: Special handling for RevSupplyRiftListing to prevent spam-clicking
-        if (listing.ID == "RevSupplyRiftListing")
-        {
-            // Check if there's already an active rift being processed or placed
-            if (_revSupplyRift.IsRiftBeingProcessed())
-            {
-                // A rift is already being processed, so cancel this purchase
-                return;
-            }
-            
-            // Mark that we're processing a rift purchase
-            _revSupplyRift.SetRiftProcessing(true);
-        }
+        // STARLIGHT: Raise an event to allow other systems to potentially cancel this purchase
+        var purchaseAttemptEvent = new StorePurchaseAttemptEvent(listing.ID, uid, buyer);
+        RaiseLocalEvent(ref purchaseAttemptEvent);
         
-        // Check if this is a stock-limited listing and prevent spam-clicking
-        if (listing.Conditions != null)
-        {
-            foreach (var condition in listing.Conditions)
-            {
-                if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
-                {
-                    // Get the StockLimitedProcessingComponent
-                    if (!TryComp<StockLimitedProcessingComponent>(uid, out var processingComp))
-                    {
-                        processingComp = EnsureComp<StockLimitedProcessingComponent>(uid);
-                    }
-                    
-                    // Check if this listing is already being processed
-                    if (processingComp.ProcessingListings.TryGetValue(listing.ID, out var isProcessing) && isProcessing)
-                    {
-                        // This listing is already being processed, so cancel this purchase
-                        return;
-                    }
-                    
-                    // Mark that we're processing this listing
-                    processingComp.ProcessingListings[listing.ID] = true;
-                    break;
-                }
-            }
-        }
-        // STARLIGHT END
+        // STARLIGHT: If the event handler requested cancellation, cancel the purchase
+        if (purchaseAttemptEvent.Cancel)
+            return;
 
         //verify that we can actually buy this listing and it wasn't added
         if (!ListingHasCategory(listing, component.Categories))
@@ -361,27 +328,9 @@ public sealed partial class StoreSystem
         };
         RaiseLocalEvent(ref buyFinished);
         
-        // STARLIGHT START: If this was a supply rift purchase, mark processing as complete
-        if (listing.ID == "RevSupplyRiftListing")
-        {
-            _revSupplyRift.SetRiftProcessing(false);
-        }
-        
-        // If this was a stock-limited listing, mark processing as complete
-        if (listing.Conditions != null && TryComp<StockLimitedProcessingComponent>(uid, out var stockProcessingComp))
-        {
-            foreach (var condition in listing.Conditions)
-            {
-                if (condition is Content.Shared.Store.Conditions.StockLimitedListingCondition)
-                {
-                    // Mark that we're done processing this listing
-                    stockProcessingComp.ProcessingListings[listing.ID] = false;
-                    break;
-                }
-            }
-        }
-
-        // STARLIGHT END
+        // STARLIGHT: Raise an event to notify other systems that a purchase was completed
+        var purchaseCompletedEvent = new StorePurchaseCompletedEvent(listing.ID, uid, buyer);
+        RaiseLocalEvent(ref purchaseCompletedEvent);
 
         UpdateUserInterface(buyer, uid, component);
         
