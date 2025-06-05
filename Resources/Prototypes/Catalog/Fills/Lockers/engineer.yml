@@ -234,9 +234,9 @@
         value: 2
 
 - type: entity
+  parent: LockerEvacRepair
   id: LockerEvacRepairFilled
   suffix: Filled
-  parent: LockerEvacRepair
   components:
   - type: EntityTableContainerFill
     containers:
@@ -246,7 +246,6 @@
 - type: entity
   parent: LockerWallEvacRepair
   id: LockerWallEvacRepairFilled
-  name: evac repair wall locker
   suffix: Filled
   components:
   - type: EntityTableContainerFill

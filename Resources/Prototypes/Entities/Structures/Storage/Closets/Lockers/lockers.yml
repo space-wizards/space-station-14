@@ -157,8 +157,8 @@
 
 # Evac Repair
 - type: entity
-  id: LockerEvacRepair
   parent: LockerBase
+  id: LockerEvacRepair
   name: evac repair locker
   components:
   - type: Appearance

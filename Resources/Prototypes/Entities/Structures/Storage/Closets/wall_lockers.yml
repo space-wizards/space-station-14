@@ -178,8 +178,8 @@
     access: [["Medical"]]
 
 - type: entity
-  id: LockerWallEvacRepair
   parent: BaseWallLocker
+  id: LockerWallEvacRepair
   name: evac repair wall locker
   components:
   - type: Appearance
