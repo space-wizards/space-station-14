@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Adjusted thermal regulation again so you no longer overheat in hardsuits.
-    type: Fix
-  id: 8106
-  time: '2025-03-24T23:55:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36062
 - author: Velcroboy, ErhardSteinhauer, whatston3, MilonPL, Beck, ArtisticRoomba, ScarKy0
   changes:
   - message: Smuggler stashes! Will get spawned as a round start event and can also
@@ -3928,3 +3921,11 @@
   id: 8617
   time: '2025-06-05T21:06:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38024
+- author: chromiumboy
+  changes:
+  - message: Holopads now provide less visual coverage to station AIs (1 tile radius,
+      down from 7.5). Holopads must also be anchored to the floor to provide vision.
+    type: Tweak
+  id: 8618
+  time: '2025-06-05T23:15:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38059
