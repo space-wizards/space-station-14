@@ -11,6 +11,7 @@
   - type: Tag
     tags:
     - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -26,6 +27,7 @@
   - type: Tag
     tags:
     - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -41,6 +43,7 @@
   - type: Tag
     tags:
     - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -56,6 +59,7 @@
   - type: Tag
     tags:
     - Apron
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterStorageBase
