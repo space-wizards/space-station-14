@@ -1,5 +1,6 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Movement.Systems;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
 using Robust.Client.Placement;
@@ -93,7 +94,10 @@ namespace Content.Client.Sandbox
                 && EntityManager.TryGetComponent(uid, out MetaDataComponent? comp)
                 && !comp.EntityDeleted)
             {
-                if (comp.EntityPrototype == null || comp.EntityPrototype.HideSpawnMenu || comp.EntityPrototype.Abstract)
+                if (comp.EntityPrototype == null
+                    || comp.EntityPrototype.Abstract
+                    // Make sure we allow copying non-primary layer pipes
+                    || comp.EntityPrototype.HideSpawnMenu && !HasComp<AtmosPipeLayersComponent>(uid))
                     return false;
 
                 if (_placement.Eraser)
