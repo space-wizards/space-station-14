@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: slarticodefast
   changes:
-  - message: Ghosts of paradox clones now have a name modifier so they can be distinguished
-      by other ghosts.
-    type: Tweak
-  id: 8108
-  time: '2025-03-26T15:30:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35940
-- author: slarticodefast
-  changes:
   - message: Paradox clones of nuclear operatives and head revolutionaries now have
       the corresponding faction icon and need to be killed for a crew major victory.
     type: Fix
@@ -3926,3 +3918,10 @@
   id: 8619
   time: '2025-06-05T23:19:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37928
+- author: Gentleman-Bird
+  changes:
+  - message: Fixed the "create soap" recipe so it can actually be made
+    type: Fix
+  id: 8620
+  time: '2025-06-05T23:20:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37923
