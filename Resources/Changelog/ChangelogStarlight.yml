@@ -6785,4 +6785,48 @@ Entries:
   id: 938
   time: '2025-06-03T02:36:10.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/738
+- author: Cyanogen
+  changes:
+  - message: Gave slime people built-in beer goggles
+    type: Add
+  id: 939
+  time: '2025-06-04T03:04:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/763
+- author: walksantora
+  changes:
+  - message: The rare paper in captains locker now has a ghost role and a ghost warp.
+    type: Tweak
+  id: 940
+  time: '2025-06-05T05:37:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/762
+- author: walksantora
+  changes:
+  - message: The rare paper in captains locker now actually requires 9 seperate mindshielded
+      entities
+    type: Fix
+  id: 941
+  time: '2025-06-05T05:37:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/762
+- author: InanimateIJK
+  changes:
+  - message: Tracks 'Timefracture' and 'Echos in the Deep' have their proper metadata
+      established & should show in the lobby.
+    type: Fix
+  id: 942
+  time: '2025-06-05T06:41:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/773
+- author: Cyanogen, InanimateIJK
+  changes:
+  - message: Vibroblades
+    type: Add
+  id: 943
+  time: '2025-06-05T17:06:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/769
+- author: Cyanogen, InanimateIJK
+  changes:
+  - message: CentComm web vest
+    type: Add
+  id: 944
+  time: '2025-06-05T17:06:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/769
 
