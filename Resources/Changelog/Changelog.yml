@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: ViceEmargo
-  changes:
-  - message: Botanist's leather gloves must now be equipped in order to pick up Death
-      Nettles.
-    type: Add
-  - message: Death Nettles will now pierce hardsuits, injecting 5 units of reagent.
-    type: Tweak
-  - message: Death Nettles will now "wilt" after 5 hits.
-    type: Add
-  - message: Fly Amanita has been changed to contain less Amatoxin.
-    type: Tweak
-  id: 8114
-  time: '2025-03-29T09:35:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25253
 - author: chromiumboy
   changes:
   - message: Sentry turrets can potentially be found guarding sensitive areas of the
@@ -3926,3 +3912,16 @@
   id: 8625
   time: '2025-06-05T23:36:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37591
+- author: K-Dynamic
+  changes:
+  - message: Rifle crates with two Lecters and four magazines can be ordered from
+      Cargo for 8000 spesos.
+    type: Add
+  - message: Lethal Weapons gift event now includes a Rifle crate.
+    type: Tweak
+  - message: SMG crates are properly described and no longer reference 'semiautomatic
+      rifles.'
+    type: Tweak
+  id: 8626
+  time: '2025-06-05T23:40:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35535
