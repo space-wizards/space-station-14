@@ -16,8 +16,9 @@ public sealed partial class SpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
     [DataField(required: true)]
     public Dictionary<EntProtoId, MinMax> Spawn = new();
 
-    protected override void GetSpawns(DestructibleSystem system, EntityUid owner)
+    protected override Dictionary<EntProtoId, int> GetSpawns(DestructibleSystem system, EntityUid owner)
     {
+        Dictionary<EntProtoId, int> toSpawn = new();
         foreach (var (entityId, minMax) in Spawn)
         {
             var count = minMax.Min >= minMax.Max
@@ -27,7 +28,9 @@ public sealed partial class SpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
             if (count == 0)
                 continue;
 
-            SpawnEntities(entityId, count, system, owner);
+            toSpawn.Add(entityId, count);
         }
+
+        return toSpawn;
     }
 }

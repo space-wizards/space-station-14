@@ -73,61 +73,68 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
 
         for (var i = 0; i < executions; i++)
         {
-            GetSpawns(system, owner);
+            var toSpawn = GetSpawns(system, owner);
+            SpawnEntities(toSpawn, system, owner);
         }
     }
 
-    // Children override this and call <see cref="SpawnEntities"/> there.
-    protected abstract void GetSpawns(DestructibleSystem system, EntityUid owner);
+    // Children override this to get the spawns.
+    protected abstract Dictionary<EntProtoId, int> GetSpawns(DestructibleSystem system, EntityUid owner);
 
     /// <summary>
     ///     The actual spawning is done here.
     /// </summary>
-    protected void SpawnEntities(EntProtoId toSpawn, int count, DestructibleSystem system, EntityUid owner)
+    protected void SpawnEntities(Dictionary<EntProtoId, int> spawnDict, DestructibleSystem system, EntityUid owner)
     {
+        if (spawnDict.Count == 0)
+            return;
+
         // Offset function
         var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
 
-        // Spawn delayed
-        if (SpawnAfter > 0)
+        foreach (var (toSpawn, count) in spawnDict)
         {
-            // if it fails to get the spawner, this won't ever work so just return
-            if (!system.PrototypeManager.TryIndex("TemporaryEntityForTimedDespawnSpawners", out var tempSpawnerProto))
-                return;
+            // Spawn delayed
+            if (SpawnAfter > 0)
+            {
+                // if it fails to get the spawner, this won't ever work so just return
+                if (!system.PrototypeManager.TryIndex("TemporaryEntityForTimedDespawnSpawners", out var tempSpawnerProto))
+                    return;
 
-            // spawn the spawner
-            var spawner = system.EntityManager.SpawnEntity(tempSpawnerProto.ID, Position.Offset(getRandomVector()));
-            // assign it a lifetime
-            system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
-            timedDespawnComponent.Lifetime = SpawnAfter;
-            // and assign the entity that it will spawn when despawned
-            system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
-            system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), toSpawn);
-        }
+                // spawn the spawner
+                var spawner = system.EntityManager.SpawnEntity(tempSpawnerProto.ID, Position.Offset(getRandomVector()));
+                // assign it a lifetime
+                system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
+                timedDespawnComponent.Lifetime = SpawnAfter;
+                // and assign the entity that it will spawn when despawned
+                system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
+                system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), toSpawn);
+            }
 
-        // Spawn as a stack
-        else if (EntityPrototypeHelpers.HasComponent<StackComponent>(toSpawn, system.PrototypeManager, system.ComponentFactory))
-        {
-            // If in a container spawn there, otherwise offset and spawn on the floor
-            var spawned = SpawnInContainer && system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(owner)
-                ? system.EntityManager.SpawnNextToOrDrop(toSpawn, owner)
-                : system.EntityManager.SpawnEntity(toSpawn, Position.Offset(getRandomVector()));
-            system.StackSystem.SetCount(spawned, count);
-
-            CopyForensics(spawned, system, owner);
-        }
-
-        // Spawn as individual items
-        else
-        {
-            for (var i = 0; i < count; i++)
+            // Spawn as a stack
+            else if (EntityPrototypeHelpers.HasComponent<StackComponent>(toSpawn, system.PrototypeManager))
             {
                 // If in a container spawn there, otherwise offset and spawn on the floor
                 var spawned = SpawnInContainer && system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(owner)
                     ? system.EntityManager.SpawnNextToOrDrop(toSpawn, owner)
                     : system.EntityManager.SpawnEntity(toSpawn, Position.Offset(getRandomVector()));
+                system.StackSystem.SetCount(spawned, count);
 
                 CopyForensics(spawned, system, owner);
+            }
+
+            // Spawn as individual items
+            else
+            {
+                for (var i = 0; i < count; i++)
+                {
+                    // If in a container spawn there, otherwise offset and spawn on the floor
+                    var spawned = SpawnInContainer && system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(owner)
+                        ? system.EntityManager.SpawnNextToOrDrop(toSpawn, owner)
+                        : system.EntityManager.SpawnEntity(toSpawn, Position.Offset(getRandomVector()));
+
+                    CopyForensics(spawned, system, owner);
+                }
             }
         }
     }
