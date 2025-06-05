@@ -96,9 +96,6 @@ uplink-magazine-bulldog-pellet-desc = Shotgun magazine with 8 shells filled with
 uplink-magazine-bulldog-slug-name = Drum magazine (.50 slug)
 uplink-magazine-bulldog-slug-desc = Shotgun magazine with 8 shells filled with slugs. Compatible with the Bulldog.
 
-uplink-magazine-bulldog-incendiary-name = Drum magazine (.50 incendiary)
-uplink-magazine-bulldog-incendiary-desc = Shotgun magazine with 8 shells filled with incendiary pellets. Compatible with the Bulldog.
-
 uplink-pistol-magazine-caseless-name = Pistol Magazine (.25 caseless)
 uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 cartridges. Compatible with the Cobra.
 
