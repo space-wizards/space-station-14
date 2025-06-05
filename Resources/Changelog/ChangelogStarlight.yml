@@ -6807,4 +6807,12 @@ Entries:
   id: 941
   time: '2025-06-05T05:37:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/762
+- author: InanimateIJK
+  changes:
+  - message: Tracks 'Timefracture' and 'Echos in the Deep' have their proper metadata
+      established & should show in the lobby.
+    type: Fix
+  id: 942
+  time: '2025-06-05T06:41:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/773
 
