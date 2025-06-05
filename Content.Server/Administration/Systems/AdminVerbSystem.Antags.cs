@@ -175,7 +175,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Specific/Hydroponics/apple.rsi"), "produce"),
             Act = () =>
             {
-                _mind.TryGetMind(targetPlayer.UserId, out var playerMind, out var comp);
+                _mind.TryGetMind(targetPlayer.UserId, out var playerMind, out _);
                 if (playerMind != null)
                 {
                     _role.MindAddRole((EntityUid)playerMind, "MindRoleGhostRoleFreeAgent");
@@ -194,7 +194,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/kitchen_knife.rsi"), "icon"),
             Act = () =>
             {
-                _mind.TryGetMind(targetPlayer.UserId, out var playerMind, out var comp);
+                _mind.TryGetMind(targetPlayer.UserId, out var playerMind, out _);
                 if (playerMind != null)
                 {
                     _role.MindAddRole((EntityUid)playerMind, "MindRoleGhostRoleSoloAntagonist");
