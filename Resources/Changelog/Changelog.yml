@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Unrevivable now lets you be cloned again
-    type: Tweak
-  id: 8103
-  time: '2025-03-22T14:42:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36008
 - author: RedBookcase
   changes:
   - message: Fixed some unintended changes to Salvage gear.
@@ -3928,3 +3921,10 @@
   id: 8614
   time: '2025-06-04T10:53:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32782
+- author: spanky-spanky
+  changes:
+  - message: Evac repair lockers, which contain equipment to repair shuttle bombing.
+    type: Add
+  id: 8615
+  time: '2025-06-05T06:08:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38075
