@@ -97,8 +97,6 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         
         // Clear the original descriptions dictionary
         _originalDescriptions.Clear();
-        
-        Logger.InfoS("rev-supply-rift", "Reset rift destroyed flag for new round");
     }
     
     /// <summary>
