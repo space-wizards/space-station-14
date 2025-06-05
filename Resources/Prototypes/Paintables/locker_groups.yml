@@ -15,6 +15,7 @@
     doctor: LockerMedical
     electrical: LockerElectricalSupplies
     engineer: LockerEngineer
+    evac: LockerEvacRepair
     hop: LockerHeadOfPersonnel
     hos: LockerHeadOfSecurity
     mime: LockerMime
@@ -46,6 +47,7 @@
     doctor: LockerMedical
     electrical: LockerElectricalSupplies
     engineer: LockerEngineer
+    evac: LockerEvacRepair
     hop: LockerHeadOfPersonnel
     hos: LockerHeadOfSecurity
     medicine: LockerMedicine
@@ -74,7 +76,7 @@
     tool: ClosetTool
 
 - type: paintableGroup
-  id: WallLocker
+  id: WallCloset
   cost: 2
   defaultStyle: basic
   styles:
@@ -82,20 +84,23 @@
     basic: ClosetWall
     black: ClosetWallBlack
     blue: ClosetWallBlue
+    evac: LockerWallEvacRepair
     fire: ClosetWallFire
     green: ClosetWallGreen
     grey: ClosetWallGrey
     medical: LockerWallMedical
     mixed: ClosetWallMixed
+    nitrogen: ClosetWallEmergencyN2
     orange: ClosetWallOrange
+    oxygen: ClosetWallEmergency
     pink: ClosetWallPink
     white: ClosetWallWhite
     yellow: ClosetWallYellow
 
 - type: paintableGroup
-  id: WallLockerEmergency
+  id: WallLocker
   cost: 2
-  defaultStyle: oxygen
+  defaultStyle: medical
   styles:
-    nitrogen: ClosetWallEmergencyN2
-    oxygen: ClosetWallEmergency
+    evac: LockerWallEvacRepair
+    medical: LockerWallMedical

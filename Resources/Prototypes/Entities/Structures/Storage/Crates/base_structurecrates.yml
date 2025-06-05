@@ -155,4 +155,4 @@
     reflectProb: 0.2
     spread: 90
   - type: Paintable
-    group: CrateSteelSec
+    group: CrateSecure

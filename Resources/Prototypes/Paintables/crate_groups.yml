@@ -21,7 +21,7 @@
     oxygen: CrateInternals
 
 - type: paintableGroup
-  id: CrateSteelSec
+  id: CrateSecure
   cost: 2
   defaultStyle: basic
   styles:

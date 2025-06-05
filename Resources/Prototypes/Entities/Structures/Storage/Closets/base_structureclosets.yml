@@ -203,7 +203,7 @@
     containers:
     - entity_storage
   - type: Paintable
-    group: WallLocker
+    group: WallCloset
 
 #Wall locker
 - type: entity
@@ -227,6 +227,8 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Paintable
+    group: WallLocker
 
 #Base suit storage unit
 #I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.

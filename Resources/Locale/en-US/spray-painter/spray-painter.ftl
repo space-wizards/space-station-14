@@ -54,12 +54,12 @@ spray-painter-tab-group-airlockglass = Glass
 
 spray-painter-tab-group-cratesteel = Steel
 spray-painter-tab-group-crateplastic = Plastic
-spray-painter-tab-group-cratesteelsec = Secure
+spray-painter-tab-group-cratesecure = Secure
 
 spray-painter-tab-group-closet = Unlocked
 spray-painter-tab-group-locker = Secure
-spray-painter-tab-group-walllocker = Wallmount
-spray-painter-tab-group-walllockeremergency = Emergency
+spray-painter-tab-group-wallcloset = Unlocked (Wall)
+spray-painter-tab-group-walllocker = Secure (Wall)
 
 # Airlocks
 spray-painter-style-airlockstandard-atmospherics = Atmospheric
@@ -72,10 +72,10 @@ spray-painter-style-airlockstandard-freezer = Freezer
 spray-painter-style-airlockstandard-hydroponics = Hydroponics
 spray-painter-style-airlockstandard-maintenance = Maintenance
 spray-painter-style-airlockstandard-medical = Medical
+spray-painter-style-airlockstandard-salvage = Salvage
 spray-painter-style-airlockstandard-science = Science
 spray-painter-style-airlockstandard-security = Security
 spray-painter-style-airlockstandard-virology = Virology
-spray-painter-style-airlockstandard-salvage = Salvage
 
 spray-painter-style-airlockglass-atmospherics = Atmospherics
 spray-painter-style-airlockglass-basic = Basic
@@ -86,10 +86,10 @@ spray-painter-style-airlockglass-engineering = Engineering
 spray-painter-style-airlockglass-hydroponics = Hydroponics
 spray-painter-style-airlockglass-maintenance = Maintenance
 spray-painter-style-airlockglass-medical = Medical
+spray-painter-style-airlockglass-salvage = Salvage
 spray-painter-style-airlockglass-science = Science
 spray-painter-style-airlockglass-security = Security
 spray-painter-style-airlockglass-virology = Virology
-spray-painter-style-airlockglass-salvage = Salvage
 
 # Lockers
 spray-painter-style-locker-atmospherics = Atmospherics
@@ -104,6 +104,7 @@ spray-painter-style-locker-cmo = CMO
 spray-painter-style-locker-doctor = Doctor
 spray-painter-style-locker-electrical = Electrical
 spray-painter-style-locker-engineer = Engineer
+spray-painter-style-locker-evac = Evac repair
 spray-painter-style-locker-hop = HOP
 spray-painter-style-locker-hos = HOS
 spray-painter-style-locker-medicine = Medicine
@@ -129,6 +130,7 @@ spray-painter-style-closet-cmo = CMO
 spray-painter-style-closet-doctor = Doctor
 spray-painter-style-closet-electrical = Electrical
 spray-painter-style-closet-engineer = Engineer
+spray-painter-style-closet-evac = Evac repair
 spray-painter-style-closet-hop = HOP
 spray-painter-style-closet-hos = HOS
 spray-painter-style-closet-medicine = Medicine
@@ -142,36 +144,39 @@ spray-painter-style-closet-scientist = Scientist
 spray-painter-style-closet-security = Security
 spray-painter-style-closet-welding = Welding
 
-spray-painter-style-closet-tool = Tools
-spray-painter-style-closet-radiation = Radiation suit
-spray-painter-style-closet-fire = Fire-safety
-spray-painter-style-closet-bomb = Bomb suit
-spray-painter-style-closet-bomb-janitor = Janitorial bomb suit
 spray-painter-style-closet-biohazard = Biohazard
 spray-painter-style-closet-biohazard-science = Biohazard (science)
 spray-painter-style-closet-biohazard-virology = Biohazard (virology)
 spray-painter-style-closet-biohazard-security = Biohazard (security)
 spray-painter-style-closet-biohazard-janitor = Biohazard (janitor)
+spray-painter-style-closet-bomb = Bomb suit
+spray-painter-style-closet-bomb-janitor = Janitorial bomb suit
 spray-painter-style-closet-chef = Chef
+spray-painter-style-closet-fire = Fire-safety
 spray-painter-style-closet-janitor = Janitor
 spray-painter-style-closet-legal = Lawyer
+spray-painter-style-closet-radiation = Radiation suit
+spray-painter-style-closet-tool = Tools
 
-spray-painter-style-walllocker-basic = Basic
-spray-painter-style-walllocker-fire = Fire-safety
-spray-painter-style-walllocker-blue = Blue
-spray-painter-style-walllocker-pink = Pink
-spray-painter-style-walllocker-black = Black
-spray-painter-style-walllocker-green = Green
-spray-painter-style-walllocker-orange = Orange
-spray-painter-style-walllocker-yellow = Yellow
-spray-painter-style-walllocker-white = White
-spray-painter-style-walllocker-grey = Grey
-spray-painter-style-walllocker-mixed = Mixed
-spray-painter-style-walllocker-atmospherics = Atmospherics
+spray-painter-style-wallcloset-atmospherics = Atmospherics
+spray-painter-style-wallcloset-basic = Basic
+spray-painter-style-wallcloset-black = Black
+spray-painter-style-wallcloset-blue = Blue
+spray-painter-style-wallcloset-evac = Evac repair
+spray-painter-style-wallcloset-fire = Fire-safety
+spray-painter-style-wallcloset-green = Green
+spray-painter-style-wallcloset-grey = Grey
+spray-painter-style-wallcloset-medical = Medical
+spray-painter-style-wallcloset-mixed = Mixed
+spray-painter-style-wallcloset-nitrogen = Nitrogen
+spray-painter-style-wallcloset-orange = Orange
+spray-painter-style-wallcloset-oxygen = Oxygen
+spray-painter-style-wallcloset-pink = Pink
+spray-painter-style-wallcloset-white = White
+spray-painter-style-wallcloset-yellow = Yellow
+
+spray-painter-style-walllocker-evac = Evac repair
 spray-painter-style-walllocker-medical = Medical
-
-spray-painter-style-walllockeremergency-oxygen = Oxygen
-spray-painter-style-walllockeremergency-nitrogen = Nitrogen
 
 # Crates
 spray-painter-style-cratesteel-basic = Basic
@@ -188,17 +193,17 @@ spray-painter-style-crateplastic-hydroponics = Hydroponics
 spray-painter-style-crateplastic-medical = Medical
 spray-painter-style-crateplastic-oxygen = Oxygen
 
-spray-painter-style-cratesteelsec-basic = Basic
-spray-painter-style-cratesteelsec-chemistry = Chemistry
-spray-painter-style-cratesteelsec-command = Command
-spray-painter-style-cratesteelsec-engineering = Engineering
-spray-painter-style-cratesteelsec-hydroponics = Hydroponics
-spray-painter-style-cratesteelsec-medical = Medical
-spray-painter-style-cratesteelsec-plasma = Plasma
-spray-painter-style-cratesteelsec-private = Private
-spray-painter-style-cratesteelsec-science = Science
-spray-painter-style-cratesteelsec-secgear = Secgear
-spray-painter-style-cratesteelsec-weapon = Weapon
+spray-painter-style-cratesecure-basic = Basic
+spray-painter-style-cratesecure-chemistry = Chemistry
+spray-painter-style-cratesecure-command = Command
+spray-painter-style-cratesecure-engineering = Engineering
+spray-painter-style-cratesecure-hydroponics = Hydroponics
+spray-painter-style-cratesecure-medical = Medical
+spray-painter-style-cratesecure-plasma = Plasma
+spray-painter-style-cratesecure-private = Private
+spray-painter-style-cratesecure-science = Science
+spray-painter-style-cratesecure-secgear = Secgear
+spray-painter-style-cratesecure-weapon = Weapon
 
 # Canisters
 spray-painter-style-canisters-air = Air
