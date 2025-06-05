@@ -13,6 +13,7 @@ public sealed class ObjectiveOnSignSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -35,6 +36,9 @@ public sealed class ObjectiveOnSignSystem : EntitySystem
             return; // no charges left. dont run the component
 
         var signer = args.Signer;
+        
+        if (!_whitelistSystem.CheckBoth(signer, component.Blacklist, component.Whitelist))
+            return;
 
         if (!TryComp<ActorComponent>(signer, out var actor))
             return;

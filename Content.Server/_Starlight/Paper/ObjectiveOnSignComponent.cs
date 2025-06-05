@@ -1,3 +1,4 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Component = Robust.Shared.GameObjects.Component;
 
@@ -35,7 +36,19 @@ public sealed partial class ObjectiveOnSignComponent : Component
     /// </summary>
     [DataField]
     public bool Append = false;
-    
+
+    /// <summary>
+    /// whitelist the entity must pass to be allowed to get objectives
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist = null;
+
+    /// <summary>
+    /// blacklist the entity must fail to be allowed to get objectives
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist = null;
+
 
     /// <summary>
     /// is the faxable component kept? this is for admeme protos
