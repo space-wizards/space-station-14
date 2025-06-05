@@ -697,7 +697,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 EntityManager.SpawnEntity("Ash", coordinates);
                 
                 // Delete the implanter
-                EntityManager.DeleteEntity(entity);
+                EntityManager.QueueDeleteEntity(entity);
             }
         }
     }
