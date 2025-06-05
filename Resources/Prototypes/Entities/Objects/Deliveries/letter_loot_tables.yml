@@ -10,7 +10,6 @@
       - id: MailSpamLetter
       - id: MailSpamLetter
       - id: MailSpamLetter
-      - id: MailSpamLetter
       - !type:NestedSelector
         tableId: MailAntagSpamLetter # Starlight, behold, antag on signing papers.
 
