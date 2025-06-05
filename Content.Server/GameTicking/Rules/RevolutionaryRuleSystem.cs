@@ -672,7 +672,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 EntityManager.SpawnEntity("Ash", coordinates);
                 
                 // Delete the rift
-                EntityManager.DeleteEntity(entity);
+                EntityManager.QueueDeleteEntity(entity);
             }
         }
         
