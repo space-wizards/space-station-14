@@ -6864,4 +6864,11 @@ Entries:
   id: 949
   time: '2025-06-05T19:43:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/774
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed radio chimes.
+    type: Fix
+  id: 950
+  time: '2025-06-05T22:07:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/770
 
