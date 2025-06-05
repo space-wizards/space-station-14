@@ -396,6 +396,8 @@
   - type: RandomMetadata
     nameSegments:
     - NamesXenoborg
+  - type: NameIdentifier
+    group: Xenoborg
   - type: Sprite
     sprite: Mobs/Silicon/chassis.rsi
   - type: MobThresholds
