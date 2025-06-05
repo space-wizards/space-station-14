@@ -346,6 +346,9 @@
   id: ConveyorAssembly
 
 - type: Tag
+  id: Cooked
+
+- type: Tag
   id: CoordinatesDisk
 
 - type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
@@ -431,6 +434,9 @@
 
 - type: Tag
   id: CubanCarp
+
+- type: Tag
+  id: Cutlet
 
 - type: Tag
   id: DeathAcidifier
@@ -1132,6 +1138,9 @@
 
 - type: Tag
   id: Radio
+
+- type: Tag
+  id: Raw
 
 - type: Tag
   id: RawMaterial
