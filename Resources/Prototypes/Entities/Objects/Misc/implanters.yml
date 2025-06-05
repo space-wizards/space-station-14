@@ -247,6 +247,7 @@
       implant: DnaScramblerImplant
 
 - type: entity
+
   id: HoloparasiteImplanter
   name: holoparasite implanter
   parent: BaseImplantOnlyImplanterSyndi
@@ -261,6 +262,13 @@
   components:
     - type: Implanter
       implant: HoloClownImplant
+
+  id: ChameleonControllerImplanter
+  suffix: chameleon controller
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: ChameleonControllerImplant
 
 #Nuclear Operative/Special implanters
 
