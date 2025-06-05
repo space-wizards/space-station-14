@@ -14,7 +14,13 @@ public sealed partial class DynamicRuleComponent : Component
     /// The total budget for antags.
     /// </summary>
     [DataField]
-    public int Budget;
+    public float Budget;
+
+    /// <summary>
+    /// The amount of budget accumulated every second.
+    /// </summary>
+    [DataField]
+    public float BudgetPerSecond = 0.04167f;
 
     /// <summary>
     /// The range the budget can initialize at
@@ -32,13 +38,13 @@ public sealed partial class DynamicRuleComponent : Component
     /// Minimum delay between rules
     /// </summary>
     [DataField]
-    public TimeSpan MinRuleInterval = TimeSpan.FromMinutes(20);
+    public TimeSpan MinRuleInterval = TimeSpan.FromMinutes(15);
 
     /// <summary>
     /// Maximum delay between rules
     /// </summary>
     [DataField]
-    public TimeSpan MaxRuleInterval = TimeSpan.FromMinutes(35);
+    public TimeSpan MaxRuleInterval = TimeSpan.FromMinutes(30);
 
     /// <summary>
     /// A table of rules that are picked from.
@@ -51,17 +57,4 @@ public sealed partial class DynamicRuleComponent : Component
     /// </summary>
     [DataField]
     public List<EntityUid> Rules = new();
-}
-
-/// <summary>
-/// Component that tracks how much a rule "costs" for Dynamic
-/// </summary>
-[RegisterComponent]
-public sealed partial class DynamicRuleCostComponent : Component
-{
-    /// <summary>
-    /// The amount of budget a rule takes up
-    /// </summary>
-    [DataField(required: true)]
-    public int Cost;
 }

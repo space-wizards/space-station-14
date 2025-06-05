@@ -1,13 +1,21 @@
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.GameTicking.Rules;
 using Robust.Shared.Prototypes;
+using Serilog;
 
 namespace Content.Shared.EntityTable.Conditions;
 
+/// <summary>
+/// Condition that only succeeds if a table supplies a sufficient "cost" to a given
+/// </summary>
 public sealed partial class HasBudgetCondition : EntityTableCondition
 {
     public const string BudgetContextKey = "Budget";
 
+    /// <summary>
+    /// Used for determining the cost for the budget.
+    /// If null, attempts to fetch the cost from the attached selector.
+    /// </summary>
     [DataField]
     public int? CostOverride;
 
@@ -16,7 +24,7 @@ public sealed partial class HasBudgetCondition : EntityTableCondition
         IPrototypeManager proto,
         EntityTableContext ctx)
     {
-        if (!ctx.TryGetData<int>(BudgetContextKey, out var budget))
+        if (!ctx.TryGetData<float>(BudgetContextKey, out var budget))
             return false;
 
         if (root is not EntSelector && CostOverride == null)
@@ -32,7 +40,10 @@ public sealed partial class HasBudgetCondition : EntityTableCondition
         else
         {
             if (!proto.Index(entSelector!.Id).TryGetComponent(out DynamicRuleCostComponent? costComponent, entMan.ComponentFactory))
+            {
+                Log.Error($"Rule {entSelector.Id} does not have a DynamicRuleCostComponent.");
                 return false;
+            }
 
             cost = costComponent.Cost;
         }

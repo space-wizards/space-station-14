@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Content.Shared.EntityTable;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Random;
