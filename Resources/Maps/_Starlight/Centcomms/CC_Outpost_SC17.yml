@@ -34612,29 +34612,21 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         5364:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5365:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5366:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5367:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5368:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5369:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5370:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5371:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: LockableButtonCentcomm
   entities:
   - uid: 4563
@@ -34646,20 +34638,15 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         320:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         319:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         318:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         316:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         315:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 4564
     components:
     - type: Transform
@@ -34668,8 +34655,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         307:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 4565
     components:
     - type: Transform
@@ -34679,80 +34665,55 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         5351:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5350:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5349:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5348:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5359:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5360:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5361:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5347:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5346:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5344:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5345:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5343:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5342:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5341:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5340:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5339:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5338:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5337:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5356:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5357:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5358:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5355:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5354:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5353:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5352:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 4566
     components:
     - type: Transform
@@ -34762,14 +34723,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         304:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         306:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         305:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 4567
     components:
     - type: Transform
@@ -34779,20 +34737,15 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         320:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         319:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         318:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         316:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         315:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 4568
     components:
     - type: Transform
@@ -34842,14 +34795,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         5362:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         5363:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         309:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: LockableButtonCommand
   entities:
   - uid: 4570
@@ -34861,8 +34811,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         158:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: LockableButtonJanitor
   entities:
   - uid: 4571
@@ -34874,11 +34823,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         308:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         312:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: LockerBoozeFilled
   entities:
   - uid: 4572
@@ -39561,8 +39508,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         307:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 5373
     components:
     - type: Transform
@@ -39572,8 +39518,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         313:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 5374
     components:
     - type: Transform
@@ -39583,11 +39528,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         308:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         312:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 5375
     components:
     - type: Transform
@@ -39596,8 +39539,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         158:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignAtmos
   entities:
   - uid: 5376
