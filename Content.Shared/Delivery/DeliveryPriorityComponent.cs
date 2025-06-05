@@ -12,16 +12,22 @@ namespace Content.Shared.Delivery;
 public sealed partial class DeliveryPriorityComponent : Component
 {
     /// <summary>
-    /// The highest the random multiplier can go.
+    /// The multiplier to apply when delivered in time.
     /// </summary>
     [DataField]
-    public float InTimeMultiplierOffset = 0.2f;
+    public float InTimeMultiplierOffset = 0.25f;
 
     /// <summary>
-    /// The lowest the random multiplier can go.
+    /// The multiplier to apply when delivered late.
     /// </summary>
     [DataField]
-    public float ExpiredMultiplierOffset = -0.1f;
+    public float ExpiredMultiplierOffset = -0.15f;
+
+    /// <summary>
+    /// Whether this delivery was delivered on time.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Delivered;
 
     /// <summary>
     /// Whether this priority delivery has already ran out of time or not.
