@@ -157,7 +157,7 @@
     layers:
     - state: green
     - state: purple_snake
-      sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+      sprite: Mobs/Animals/purple_snake.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobPurpleSnake
@@ -171,7 +171,7 @@
     layers:
     - state: green
     - state: small_purple_snake
-      sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+      sprite: Mobs/Animals/purple_snake.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobSmallPurpleSnake

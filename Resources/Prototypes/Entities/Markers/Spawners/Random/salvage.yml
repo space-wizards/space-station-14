@@ -95,7 +95,7 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Mobs/Aliens/Xenos/spacetick.rsi
+        - sprite: Mobs/Animals/spacetick.rsi
           state: icon
     - type: ConditionalSpawner
       prototypes:

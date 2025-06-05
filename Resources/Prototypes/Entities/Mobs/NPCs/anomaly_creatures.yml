@@ -1,0 +1,1215 @@
+- type: entity
+  abstract: true
+  id: MobElementalBase
+  components:
+  - type: LagCompensation
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 3
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: MovedByPressure
+  - type: Physics
+    bodyType: KinematicController # Same for all inheritors
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+  - type: Pullable
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Dead
+  - type: Stamina
+    critThreshold: 120
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:TriggerBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Input
+    context: "human"
+  - type: InputMover
+  - type: MobMover
+  - type: ZombieImmune
+  - type: ProtectedFromStepTriggers
+
+# Rock Anomaly
+- type: entity
+  abstract: true
+  id: MobOreCrab
+  name: ore crab
+  parent: [ MobElementalBase, MobCombat ]
+  components:
+  - type: Sprite
+    sprite: Mobs/Elemental/orecrab.rsi
+    state: uranium_crab
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    damage:
+      types:
+        Blunt: 6
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 2.5
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Damageable
+    damageContainer: StructuralInorganic
+
+- type: entity
+  parent: MobOreCrab
+  id: MobQuartzCrab
+  description: An ore crab made from Quartz.
+  suffix: Quartz
+  components:
+  - type: Sprite
+    state: quartz_crab
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SpaceQuartz1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobOreCrab
+  id: MobIronCrab
+  description: An ore crab made from iron.
+  suffix: Iron
+  components:
+  - type: Sprite
+    state: iron_crab
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1.5
+    baseSprintSpeed : 2
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SteelOre1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobOreCrab
+  id: MobCoalCrab
+  description: An ore crab made from coal.
+  suffix: Coal
+  components:
+  - type: Sprite
+    state: coal_crab
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 2.5
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 1.0
+    baseSprintSpeed : 1.5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Coal1:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobOreCrab
+  id: MobUraniumCrab
+  description: An ore crab made from uranium.
+  suffix: Uranium
+  components:
+  - type: FactionException
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: RadiationSource
+    intensity: 2
+    slope: 0.3
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          UraniumOre1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PointLight
+    radius: 2
+    energy: 3
+    color: "#06DF24"
+
+- type: entity
+  parent: MobOreCrab
+  id: MobBananiumCrab
+  description: An ore crab made from bananium.
+  suffix: Bananium
+  components:
+  - type: Sprite
+    state: bananium_crab
+  - type: FactionException
+  - type: NPCRetaliation
+    attackMemoryLength: 10
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BananiumOre1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Slippery
+    slipData:
+      launchForwardsMultiplier: 2
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        hard: false
+        layer:
+        - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 20
+        mask:
+        - MobMask
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 3
+
+- type: entity
+  parent: MobOreCrab
+  id: MobSilverCrab
+  description: An ore crab made from silver.
+  suffix: Silver
+  components:
+  - type: Sprite
+    state: silver_crab
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 70
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SilverOre1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: MobOreCrab
+  id: MobGoldCrab
+  description: An ore crab made from gold.
+  suffix: Gold
+  components:
+  - type: Sprite
+    state: gold_crab
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 70
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GoldOre1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+# Chemical Anomaly
+- type: entity
+  name: reagent slime
+  id: ReagentSlime
+  suffix: Water
+  parent: [ MobAdultSlimes, MobCombat ]
+  description: It consists of a liquid, and it wants to dissolve you in itself.
+  components:
+  - type: GhostRole
+    prob: 0
+    description: ghost-role-information-angry-slimes-description
+    rules: ghost-role-information-angry-slimes-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+    raffle:
+      settings: short
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#75b1f0"
+  - type: PointLight
+    radius: 2.0
+    energy: 3.5
+    color: "#75b1f0" # Edited through the LiquidAnomalySystem
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Dead
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      50: 0.4
+  - type: Bloodstream
+    bloodReagent: Water
+    chemicalMaxVolume: 100
+  - type: StatusEffects
+    allowed:
+    - SlowedDown
+    - Electrocution
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    animation: WeaponArcBite
+    damage:
+      types:
+        Slash: 8
+  - type: MeleeChemicalInjector
+    solution: bloodstream
+    transferAmount: 5
+  - type: DamageStateVisuals
+    rotate: true
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: Tag
+    tags:
+    - FootstepSound
+    - CannotSuicide
+    - DoorBumpOpener
+  - type: NoSlip
+  - type: ZombieImmune
+  - type: ExaminableSolution
+    solution: bloodstream
+  - type: InjectableSolution
+    solution: bloodstream
+  - type: DrainableSolution
+    solution: bloodstream
+
+- type: entity
+  name: Reagent Slime Spawner
+  id: ReagentSlimeSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Mobs/Aliens/elemental.rsi
+      state: alive
+  - type: RandomSpawner
+    prototypes:
+    - ReagentSlime
+    - ReagentSlimeBeer
+    - ReagentSlimePax
+    - ReagentSlimeNocturine
+    - ReagentSlimeTHC
+    - ReagentSlimeBicaridine
+    - ReagentSlimeToxin
+    - ReagentSlimeNapalm
+    - ReagentSlimeOmnizine
+    - ReagentSlimeMuteToxin
+    - ReagentSlimeNorepinephricAcid
+    - ReagentSlimeEphedrine
+    - ReagentSlimeRobustHarvest
+    chance: 1
+
+- type: entity
+  id: ReagentSlimeBeer
+  parent: ReagentSlime
+  suffix: Beer
+  components:
+  - type: Bloodstream
+    bloodReagent: Beer
+  - type: PointLight
+    color: "#cfa85f"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#cfa85f"
+
+- type: entity
+  id: ReagentSlimePax
+  parent: ReagentSlime
+  suffix: Pax
+  components:
+  - type: Bloodstream
+    bloodReagent: Pax
+  - type: PointLight
+    color: "#AAAAAA"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#AAAAAA"
+  - type: MeleeChemicalInjector
+    solution: bloodstream
+    transferAmount: 1
+
+- type: entity
+  id: ReagentSlimeNocturine
+  parent: ReagentSlime
+  suffix: Nocturine
+  components:
+  - type: Bloodstream
+    bloodReagent: Nocturine
+  - type: PointLight
+    color: "#128e80"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#128e80"
+  - type: MeleeChemicalInjector
+    solution: bloodstream
+    transferAmount: 3
+
+- type: entity
+  id: ReagentSlimeTHC
+  parent: ReagentSlime
+  suffix: THC
+  components:
+  - type: Bloodstream
+    bloodReagent: THC
+  - type: PointLight
+    color: "#808080"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#808080"
+
+- type: entity
+  id: ReagentSlimeBicaridine
+  parent: ReagentSlime
+  suffix: Bicaridine
+  components:
+  - type: Bloodstream
+    bloodReagent: Bicaridine
+  - type: PointLight
+    color: "#ffaa00"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#ffaa00"
+
+- type: entity
+  id: ReagentSlimeToxin
+  parent: ReagentSlime
+  suffix: Toxin
+  components:
+  - type: Bloodstream
+    bloodReagent: Toxin
+  - type: PointLight
+    color: "#cf3600"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#cf3600"
+
+- type: entity
+  id: ReagentSlimeNapalm
+  parent: ReagentSlime
+  suffix: Napalm
+  components:
+  - type: Bloodstream
+    bloodReagent: Napalm
+  - type: PointLight
+    color: "#FA00AF"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#FA00AF"
+
+- type: entity
+  id: ReagentSlimeOmnizine
+  parent: ReagentSlime
+  suffix: Omnizine
+  components:
+  - type: Bloodstream
+    bloodReagent: Omnizine
+  - type: PointLight
+    color: "#fcf7f9"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#fcf7f9"
+
+- type: entity
+  id: ReagentSlimeMuteToxin
+  parent: ReagentSlime
+  suffix: Mute Toxin
+  components:
+  - type: Bloodstream
+    bloodReagent: MuteToxin
+  - type: PointLight
+    color: "#0f0f0f"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#0f0f0f"
+
+- type: entity
+  id: ReagentSlimeNorepinephricAcid
+  parent: ReagentSlime
+  suffix: Norepinephric Acid
+  components:
+  - type: Bloodstream
+    bloodReagent: NorepinephricAcid
+  - type: PointLight
+    color: "#96a8b5"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#96a8b5"
+
+- type: entity
+  id: ReagentSlimeEphedrine
+  parent: ReagentSlime
+  suffix: Ephedrine
+  components:
+  - type: Bloodstream
+    bloodReagent: Ephedrine
+  - type: PointLight
+    color: "#D2FFFA"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#D2FFFA"
+
+- type: entity
+  id: ReagentSlimeRobustHarvest
+  parent: ReagentSlime
+  suffix: Robust Harvest
+  components:
+  - type: Bloodstream
+    bloodReagent: RobustHarvest
+  - type: PointLight
+    color: "#3e901c"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+      color: "#3e901c"
+
+#Flesh Anomaly
+- type: entity
+  parent: [ SimpleMobBase, MobCombat ]
+  id: BaseMobFlesh
+  name: aberrant flesh
+  description: A shambling mass of flesh, animated through anomalous energy.
+  abstract: true
+  components:
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: NPCImprintingOnSpawnBehaviour
+    spawnFriendsSearchRadius: 10
+    whitelist:
+      components:
+      - Anomaly # Friendly to inner anomaly host
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Flesh
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/flesh.rsi
+  - type: MovementAlwaysTouching
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1
+    baseSprintSpeed: 1.5
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      75: Dead
+  - type: Stamina
+    critThreshold: 50
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: Bloodstream
+    bloodMaxVolume: 100
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 6
+  - type: ReplacementAccent
+    accent: genericAggressive
+
+- type: entity
+  parent: BaseMobFlesh
+  id: MobFleshJared
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: jared
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: jared
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 8
+
+- type: entity
+  parent: BaseMobFlesh
+  id: MobFleshGolem
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: golem
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: golem
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 8
+
+- type: entity
+  parent: BaseMobFlesh
+  id: MobFleshClamp
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: clamp
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: clamp
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2.5
+
+- type: entity
+  parent: BaseMobFlesh
+  id: MobFleshLover
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: lover
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: lover
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2.5
+
+- type: entity
+  parent: BaseMobFlesh
+  id: MobAbomination
+  name: abomination
+  description: A rejected clone, in constant pain and seeking revenge.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Demons/abomination.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: abomination
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: abomination
+      Dead:
+        Base: dead
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 2.5
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Blunt: 10
+
+- type: entity
+  parent: [ SimpleSpaceMobBase, MobCombat ]
+  id: BaseMobFleshSalvage #This one is immune to space!
+  name: aberrant flesh
+  suffix: "Salvage Ruleset"
+  description: A shambling mass of flesh, animated through anomalous energy.
+  abstract: true
+  components:
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Flesh
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/flesh.rsi
+  - type: MovementAlwaysTouching
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1
+    baseSprintSpeed: 1.5
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      75: Dead
+  - type: Stamina
+    critThreshold: 50
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: Bloodstream
+    bloodMaxVolume: 100
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 6
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: SalvageMobRestrictions
+
+- type: entity
+  parent: BaseMobFleshSalvage
+  id: MobFleshJaredSalvage
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: jared
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: jared
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 8
+
+- type: entity
+  parent: BaseMobFleshSalvage
+  id: MobFleshGolemSalvage
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: golem
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: golem
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      50: Dead
+  - type: MeleeWeapon
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+    angle: 0
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 8
+
+- type: entity
+  parent: BaseMobFleshSalvage
+  id: MobFleshClampSalvage
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: clamp
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: clamp
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2.5
+
+- type: entity
+  parent: BaseMobFleshSalvage
+  id: MobFleshLoverSalvage
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: lover
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: lover
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      30: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2.5
+
+# Light Anomaly
+- type: entity
+  id: MobLivingLight
+  parent: [ BaseMob, MobCombat ]
+  abstract: true
+  name: luminous person
+  description: A blinding figure of pure light, seemingly intangible.
+  components:
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+    blackboard:
+      NavClimb: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: NPCImprintingOnSpawnBehaviour
+    spawnFriendsSearchRadius: 10
+    whitelist:
+      components:
+      - Anomaly # Friendly to inner anomaly host
+  - type: MovementIgnoreGravity
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 3.5
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Elemental/living_light/luminous_person.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: luminous_person
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: MobState
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      20: 0.5
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: luminous_person
+        BaseUnshaded: glow
+      Dead:
+        Base: dead
+        BaseUnshaded: dead_glow
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - Corporeal
+    - Electrocution
+    - StaminaModifier
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 60
+        mask:
+        - MobMask
+        layer:
+        - Opaque
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: LivingLight
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damageCap: 20
+    damage:
+      types:
+        Heat: -0.2
+  - type: NoSlip
+  - type: Pullable
+  - type: ZombieImmune
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: GhostTakeoverAvailable
+  - type: PointLight
+    radius: 3.0
+    energy: 4.5
+    color: "#6270bb"
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBells
+  - type: Speech
+    speechVerb: Ghost
+  - type: Tag
+    tags:
+    - FootstepSound
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+
+- type: entity
+  id: MobLuminousPerson
+  parent: MobLivingLight
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 10
+    animation: WeaponArcFist
+  - type: StaminaDamageOnHit
+    damage: 16
+
+- type: entity
+  id: MobLuminousObject
+  parent: MobLivingLight
+  name: luminous object
+  description: A small glowing object that causes burns on the skin with its glow.
+  components:
+  - type: Sprite
+    sprite: Mobs/Elemental/living_light/luminous_object.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: luminous_object
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: luminous_object
+        BaseUnshaded: glow
+      Dead:
+        Base: dead
+        BaseUnshaded: dead_glow
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 6
+
+- type: entity
+  id: MobLuminousEntity
+  parent: MobLivingLight
+  name: luminous entity
+  description: A blinding translucent entity, the bright eye seems dangerous and scalding.
+  components:
+  - type: Sprite
+    sprite: Mobs/Elemental/living_light/luminous_entity.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: luminous_entity
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: luminous_entity
+        BaseUnshaded: glow
+      Dead:
+        Base: dead
+        BaseUnshaded: dead_glow
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 5
+  - type: HitscanBatteryAmmoProvider
+    proto: RedLaser
+    fireCost: 140
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 50
+  - type: Gun
+    fireRate: 0.3
+    useKey: false
+    showExamineText: false
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+    soundEmpty:
+      path: /Audio/Items/Lighters/lighter_off.ogg

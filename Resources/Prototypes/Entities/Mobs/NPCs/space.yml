@@ -372,6 +372,202 @@
     - type: SalvageMobRestrictions
 
 - type: entity
+  name: space adder
+  parent: SimpleSpaceMobBase
+  id: MobPurpleSnake
+  description: A menacing purple snake from Kepler-283c.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/purple_snake.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: purple_snake
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: purple_snake
+      Critical:
+        Base: dead_purple_snake
+      Dead:
+        Base: dead_purple_snake
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSnake
+      amount: 4
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 5
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 50
+  - type: MeleeChemicalInjector
+    solution: melee
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 25
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepSnake
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+
+- type: entity
+  name: space adder
+  parent: MobPurpleSnake
+  id: MobSmallPurpleSnake
+  suffix: small
+  description: A smaller version of the menacing purple snake from Kepler-283c.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Animals/purple_snake.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: small_purple_snake
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: small_purple_snake
+      Critical:
+        Base: dead_small_purple_snake
+      Dead:
+        Base: dead_small_purple_snake
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatSnake
+      amount: 2
+  - type: SolutionTransfer
+    maxTransferAmount: 1
+
+- type: entity
+  name: space tick
+  id: MobTick
+  parent: SimpleSpaceMobBase
+  description: It's a space tick, watch out for its nasty bite. CentComm reports that 90 percent of cargo leg amputations are due to space tick bites.
+  components:
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
+    factions:
+    - Xeno
+    - SimpleHostile
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: Mobs/Animals/spacetick.rsi
+      scale: 0.8, 0.8
+  - type: Physics
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 6
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.20
+        density: 20
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      15: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 30
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+  - type: Stamina
+    critThreshold: 15
+  - type: MovementAlwaysTouching
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 1
+  - type: Bloodstream
+    bloodMaxVolume: 50
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      groups:
+        Brute: 2
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 5
+  - type: MeleeChemicalInjector
+    solution: melee
+  - type: ReplacementAccent
+    accent: genericAggressive
+  - type: Speech
+    speechVerb: SmallMob
+  - type: NonSpreaderZombie
+
+- type: entity
+  id: MobTickSalvage
+  parent: MobTick
+  suffix: "Salvage Ruleset"
+  components:
+  - type: SalvageMobRestrictions
+
+- type: entity
   parent: SimpleSpaceMobBase
   id: MobSnail
   name: snail
