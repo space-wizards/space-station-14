@@ -139,6 +139,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    /// <summary>
+    /// Toggles whether clicking on the floor paints a decal or not.
+    /// </summary>
     private void TogglePaintDecals(Entity<SprayPainterComponent> ent, EntityUid user)
     {
         if (!_timing.IsFirstTimePredicted)
@@ -152,6 +155,10 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Audio.PlayPredicted(ent.Comp.SoundSwitchDecalMode, ent, user, ent.Comp.SoundSwitchDecalMode.Params.WithPitchScale(pitch));
     }
 
+    /// <summary>
+    /// Handles spray paint interactions with an object.
+    /// An object must belong to a spray paintable group to be painted, and the painter must have sufficient ammo to paint it.
+    /// </summary>
     private void OnPaintableInteract(Entity<PaintableComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -205,6 +212,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
             $"{ToPrettyString(args.User):user} is painting {ToPrettyString(ent):target} to '{selectedStyle}' at {Transform(ent).Coordinates:targetlocation}");
     }
 
+    /// <summary>
+    /// Prints out if an object has been painted recently.
+    /// </summary>
     private void OnPainedExamined(Entity<PaintedComponent> ent, ref ExaminedEvent args)
     {
         // If the paint's dried, it isn't detectable.
@@ -218,6 +228,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
     #region UI
 
+    /// <summary>
+    /// Sets the style that a particular type of paintable object (e.g. lockers) should be painted in.
+    /// </summary>
     private void OnSetPaintable(Entity<SprayPainterComponent> ent, ref SprayPainterSetPaintableStyleMessage args)
     {
         if (!ent.Comp.StylesByGroup.ContainsKey(args.Group))
@@ -228,17 +241,26 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         UpdateUi(ent);
     }
 
+    /// <summary>
+    /// Changes the color to paint pipes in.
+    /// </summary>
     private void OnSetPipeColor(Entity<SprayPainterComponent> ent, ref SprayPainterSetPipeColorMessage args)
     {
         SetPipeColor(ent, args.Key);
     }
 
+    /// <summary>
+    /// Tracks the tab the spray painter was on.
+    /// </summary>
     private void OnTabChanged(Entity<SprayPainterComponent> ent, ref SprayPainterTabChangedMessage args)
     {
         ent.Comp.SelectedTab = args.Index;
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Sets the decal prototype to paint.
+    /// </summary>
     private void OnSetDecal(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalMessage args)
     {
         ent.Comp.SelectedDecal = args.DecalPrototype;
@@ -246,6 +268,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         UpdateUi(ent);
     }
 
+    /// <summary>
+    /// Sets the angle to paint decals at.
+    /// </summary>
     private void OnSetDecalAngle(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalAngleMessage args)
     {
         ent.Comp.SelectedDecalAngle = args.Angle;
@@ -253,6 +278,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         UpdateUi(ent);
     }
 
+    /// <summary>
+    /// Enables or disables snap-to-grid when painting decals.
+    /// </summary>
     private void OnSetDecalSnap(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalSnapMessage args)
     {
         ent.Comp.SnapDecals = args.Snap;
@@ -260,6 +288,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         UpdateUi(ent);
     }
 
+    /// <summary>
+    /// Sets the decal to paint on the ground.
+    /// </summary>
     private void OnSetDecalColor(Entity<SprayPainterComponent> ent, ref SprayPainterSetDecalColorMessage args)
     {
         ent.Comp.SelectedDecalColor = args.Color;

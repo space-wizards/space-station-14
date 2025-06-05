@@ -33,7 +33,7 @@ public sealed partial class SprayPainterComponent : Component
     public int PipeChargeCost = 1;
 
     /// <summary>
-    /// The currently selected color by its key.
+    /// Pipe color chosen to spray with.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string PickedColor = DefaultPickedColor;

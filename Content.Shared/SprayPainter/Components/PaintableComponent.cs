@@ -12,7 +12,7 @@ public sealed partial class PaintableComponent : Component
 {
     /// <summary>
     /// Group of styles this airlock can be painted with, e.g. glass, standard or external.
-    /// Define to null to make an entity unpaintable.
+    /// Set to null to make an entity unpaintable.
     /// </summary>
     [DataField(required: true)]
     public ProtoId<PaintableGroupPrototype>? Group;

@@ -13,7 +13,7 @@ public sealed partial class PaintableGroupPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    /// The time required to paint an object from a given group.
+    /// The time required to paint an object from a given group, in seconds.
     /// </summary>
     [DataField]
     public float Time = 2.0f;
@@ -44,7 +44,6 @@ public sealed partial class PaintableGroupPrototype : IPrototype
 }
 
 [Serializable, NetSerializable]
-[Flags]
 public enum PaintableVisuals
 {
     /// <summary>

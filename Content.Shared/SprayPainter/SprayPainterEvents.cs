@@ -59,12 +59,21 @@ public sealed class SprayPainterSetPipeColorMessage(string? key) : BoundUserInte
 [Serializable, NetSerializable]
 public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
 {
+    /// <summary>
+    /// The prototype to use to repaint this object.
+    /// </summary>
     [DataField]
     public string Prototype;
 
+    /// <summary>
+    /// The group ID of the object being painted.
+    /// </summary>
     [DataField]
     public string Group;
 
+    /// <summary>
+    /// The cost, in charges, to paint this object.
+    /// </summary>
     [DataField]
     public int Cost;
 
@@ -81,6 +90,9 @@ public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
 [Serializable, NetSerializable]
 public sealed partial class SprayPainterPipeDoAfterEvent : DoAfterEvent
 {
+    /// <summary>
+    /// Color of the pipe to set.
+    /// </summary>
     [DataField]
     public Color Color;
 
