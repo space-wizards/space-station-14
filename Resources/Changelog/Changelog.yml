@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Further improved item copying for paradox clones.
-    type: Tweak
-  id: 8110
-  time: '2025-03-26T16:13:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35993
-- author: Centronias
-  changes:
-  - message: Raw meatballs, like steaks, can now be cooked in the microwave or on
-      a grill.
-    type: Add
-  id: 8111
-  time: '2025-03-27T06:26:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36003
 - author: SlamBamActionman
   changes:
   - message: Liltenhead! Thank you for over 2 years of update videos, and congrats
@@ -3924,3 +3909,19 @@
   id: 8621
   time: '2025-06-05T23:23:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37890
+- author: ArtisticRoomba
+  changes:
+  - message: Most syndicate contraband have been given sell prices (depending on the
+      "power" of the item) to discourage powergaming and encourage Security's interaction
+      with Departmental Economy.
+    type: Add
+  id: 8622
+  time: '2025-06-05T23:26:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37835
+- author: RedBookcase
+  changes:
+  - message: The running and walking speed debuffs on equipped gear have been standardized.
+    type: Tweak
+  id: 8623
+  time: '2025-06-05T23:27:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37828
