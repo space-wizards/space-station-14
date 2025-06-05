@@ -32,8 +32,10 @@ public sealed class GameruleOnSignSytem : EntitySystem
         if (component.Remaining <= 0)
             return; // we allready ran this component so no need to check again anymore.
         var signer = args.Signer;
+        if (component.SignedEntityUids.Contains(signer))
+            return; // they allready signed it so prevent re-signing it.
         if (!_whitelistSystem.CheckBoth(signer, component.Blacklist, component.Whitelist))
-            return;
+                return;
         component.Remaining--;
         component.SignedEntityUids.Add(signer);
 
