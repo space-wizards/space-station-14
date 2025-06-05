@@ -260,8 +260,6 @@
     - id: BoxInflatable
     - id: HolofanProjector
     - id: MetalFoamGrenade
-      amount: !type:ConstantNumberSelector
-        value: 3
+      amount: 3
     - id: AirGrenade
-      amount: !type:ConstantNumberSelector
-        value: 3
+      amount: 3
