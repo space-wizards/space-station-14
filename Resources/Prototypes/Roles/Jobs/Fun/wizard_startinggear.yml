@@ -8,7 +8,7 @@
     outerClothing: ClothingOuterWizard
     shoes: ClothingShoesWizard
     id: WizardPDA
-    ears: ClothingHeadsetAltWizard
+    ears: ClothingHeadsetAltWizard #Starlight
     belt: ClothingBeltWand
     pocket1: WizardTeleportScroll
     pocket2: WizardsGrimoire
