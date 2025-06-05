@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: slarticodefast
   changes:
-  - message: Paradox clones of nuclear operatives and head revolutionaries now have
-      the corresponding faction icon and need to be killed for a crew major victory.
-    type: Fix
-  id: 8109
-  time: '2025-03-26T15:34:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35910
-- author: slarticodefast
-  changes:
   - message: Further improved item copying for paradox clones.
     type: Tweak
   id: 8110
@@ -3925,3 +3917,10 @@
   id: 8620
   time: '2025-06-05T23:20:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37923
+- author: Hitlinemoss
+  changes:
+  - message: The security mime mask has been added to the SecDrobe's manager inventory.
+    type: Add
+  id: 8621
+  time: '2025-06-05T23:23:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37890
