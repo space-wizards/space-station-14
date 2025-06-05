@@ -5822,12 +5822,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         4635:
-        - - Start
-          - Close
-        - - Timer
-          - AutoClose
-        - - Timer
-          - Open
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
   - uid: 333
     components:
     - type: Transform
@@ -5836,12 +5833,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         4634:
-        - - Start
-          - Close
-        - - Timer
-          - AutoClose
-        - - Timer
-          - Open
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
   - uid: 334
     components:
     - type: Transform
@@ -5850,12 +5844,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         4633:
-        - - Start
-          - Close
-        - - Timer
-          - AutoClose
-        - - Timer
-          - Open
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
   - uid: 335
     components:
     - type: Transform
@@ -5864,12 +5855,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         4632:
-        - - Start
-          - Close
-        - - Timer
-          - AutoClose
-        - - Timer
-          - Open
+        - Start: Close
+        - Timer: AutoClose
+        - Timer: Open
 - proto: Bucket
   entities:
   - uid: 336
@@ -17400,11 +17388,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2357:
-        - - CloningPodSender
-          - CloningPodReceiver
+        - CloningPodSender: CloningPodReceiver
         4602:
-        - - MedicalScannerSender
-          - MedicalScannerReceiver
+        - MedicalScannerSender: MedicalScannerReceiver
 - proto: ComputerComms
   entities:
   - uid: 2480
@@ -34755,35 +34741,25 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         65:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
         64:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
         62:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
         63:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
         66:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
         67:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
         55:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
         158:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
         159:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
         54:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
 - proto: LockableButtonChiefEngineer
   entities:
   - uid: 4569
@@ -42252,26 +42228,17 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2499:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         2500:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         2501:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
   - uid: 5800
     components:
     - type: Transform
@@ -42287,47 +42254,29 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2515:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
         2516:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
         2512:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
         2513:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
         2514:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
         5063:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
   - uid: 5802
     components:
     - type: Transform
@@ -42336,89 +42285,53 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2522:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         2524:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         2523:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         2526:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         2521:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         2525:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         2519:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         2518:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         2517:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         2520:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         317:
-        - - Left
-          - Open
-        - - Right
-          - Open
-        - - Middle
-          - Close
+        - Left: Open
+        - Right: Open
+        - Middle: Close
         314:
-        - - Left
-          - Open
-        - - Right
-          - Open
-        - - Middle
-          - Close
+        - Left: Open
+        - Right: Open
+        - Middle: Close
 - proto: UniversalIDCard
   entities:
   - uid: 4595
