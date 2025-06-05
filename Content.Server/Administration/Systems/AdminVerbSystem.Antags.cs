@@ -186,6 +186,25 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(freeAgent);
 
+        var genericAntagName = Loc.GetString("admin-verb-text-make-generic-antag");
+        Verb genericAntag = new()
+        {
+            Text = genericAntagName,
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/kitchen_knife.rsi"), "icon"),
+            Act = () =>
+            {
+                _mind.TryGetMind(targetPlayer.UserId, out var playerMind, out var comp);
+                if (playerMind != null)
+                {
+                    _role.MindAddRole((EntityUid)playerMind, "MindRoleGhostRoleSoloAntagonist");
+                }
+            },
+            Impact = LogImpact.High,
+            Message = string.Join(": ", genericAntagName, Loc.GetString("admin-verb-make-generic-antag")),
+        };
+        args.Verbs.Add(genericAntag);
+
         var paradoxCloneName = Loc.GetString("admin-verb-text-make-paradox-clone");
         Verb paradox = new()
         {
