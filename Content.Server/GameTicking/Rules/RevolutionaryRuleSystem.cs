@@ -650,7 +650,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             if (EntityManager.EntityExists(uplink))
             {
-                EntityManager.DeleteEntity(uplink);
+                EntityManager.QueueDeleteEntity(uplink);
             }
         }
         
