@@ -20,7 +20,7 @@
       steps:
       - component: PayloadTrigger
         store: payloadTrigger
-        name: Trigger
+        name: construction-graph-component-payload-trigger
         doAfter: 0.5
 
   - node: detonatorWithTrigger
