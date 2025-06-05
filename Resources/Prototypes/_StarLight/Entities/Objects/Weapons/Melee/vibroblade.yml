@@ -27,7 +27,7 @@
     - 0,0,0,3
   - type: Tag
     tags:
-    - CaptainSabre
+    - PrototypeVibroblade
   - type: DisarmMalus
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-inanimate
@@ -64,7 +64,7 @@
     - 0,0,0,3
   - type: Tag
     tags:
-    - CaptainSabre
+    - CentcommVibroblade
   - type: DisarmMalus
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-inanimate
