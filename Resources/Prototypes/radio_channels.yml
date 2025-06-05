@@ -67,7 +67,7 @@
   name: chat-radio-syndicate
   keycode: 't'
   frequency: 1213
-  color: "#8f4a4b"
+  color: "#b52424"
   longRange: true
 
 - type: radioChannel
@@ -83,7 +83,7 @@
   name: chat-radio-binary
   keycode: 'b'
   frequency: 1001
-  color: "#5ed7aa"
+  color: "#00a2ff"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
 
@@ -95,3 +95,20 @@
   color: "#f6ce64"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
+
+- type: radioChannel
+  id: Xenoborg
+  name: chat-radio-xenoborg
+  keycode: 'x'
+  frequency: 2002
+  color: "#2288ff"
+  # long range since I don't wanna make a special xenoborg telecomm server
+  longRange: true
+
+- type: radioChannel
+  id: Mothership
+  name: chat-radio-mothership
+  keycode: 'z'
+  frequency: 2003
+  color: "#ff2222"
+  # long range since I don't wanna make a special xenoborg telecomm server

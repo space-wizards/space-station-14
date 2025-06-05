@@ -66,3 +66,35 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobMailTech
+  groups:
+  - GroupTankHarness
+  - CargoTechnicianHead
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianBackpack
+  - CargoTechnicianOuterClothing
+  - CargoTechnicianShoes
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobBrigmedic
+  groups:
+    - BrigmedicHead
+    - BrigmedicJumpsuit
+    - BrigmedicBackpack
+    - BrigmedicOuterClothing
+    - BrigmedicBelt
+    - BrigmedicGloves
+    - BrigmedicEyewear
+    - SecurityShoes
+    - SecurityNonLethalWeapon
+    - SecuritySidearm
+    - SurvivalSecurity
+    - Trinkets
+    - SecurityStar
+    - GroupSpeciesBreathToolSecurity

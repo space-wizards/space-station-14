@@ -9,9 +9,11 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Humanoid;
+using Content.Shared.Traits.Assorted;
 using Microsoft.CodeAnalysis;
 using Content.Server._Starlight.Medical.Limbs;
 using Content.Server.Administration.Systems;
+
 
 namespace Content.Server.Starlight.Medical.Surgery;
 // Based on the RMC14.
@@ -47,7 +49,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
     private void OnStepAttachComplete(Entity<SurgeryStepAttachLimbEffectComponent> ent, ref SurgeryStepEvent args)
     {
-        if (GetSingleton(args.SurgeryProto) is not { } surgery
+        if (!_entity.TryGetSingleton(args.SurgeryProto, out var surgery)
             || !TryComp<SurgeryLimbSlotConditionComponent>(surgery, out var slotComp))
             return;
 
@@ -132,8 +134,14 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     }
 
     private void OnStepEmoteEffectComplete(Entity<SurgeryStepEmoteEffectComponent> ent, ref SurgeryStepEvent args)
-        => _chat.TryEmoteWithChat(args.Body, ent.Comp.Emote);
+    {
         
+        if (!HasComp<PainNumbnessComponent>(args.Body))
+        {
+             _chat.TryEmoteWithChat(args.Body, ent.Comp.Emote);
+        }
+    }
+
     private void OnStepSpawnComplete(Entity<SurgeryStepSpawnEffectComponent> ent, ref SurgeryStepEvent args)
     {
         if (TryComp(args.Body, out TransformComponent? xform))
@@ -160,7 +168,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     {
         if (_entity.TryEntity<TransformComponent, HumanoidAppearanceComponent, BodyComponent>(args.Body, out var body) 
             && _entity.TryEntity<TransformComponent, MetaDataComponent, BodyPartComponent>(args.Part, out var limb))
-            _limbSystem.Amputatate(body.Value, limb.Value);
+            _limbSystem.Amputatate(body, limb);
     }
 
     private void CustomLimbRemoved(Entity<CustomLimbMarkerComponent> ent, ref ComponentRemove args)

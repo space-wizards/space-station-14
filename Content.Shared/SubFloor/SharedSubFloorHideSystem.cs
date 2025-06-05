@@ -122,13 +122,16 @@ namespace Content.Shared.SubFloor
 
         private void OnTileChanged(ref TileChangedEvent args)
         {
-            if (args.OldTile.IsEmpty)
-                return; // Nothing is anchored here anyways.
+            foreach (var change in args.Changes)
+            {
+                if (change.OldTile.IsEmpty)
+                    continue; // Nothing is anchored here anyways.
 
-            if (args.NewTile.Tile.IsEmpty)
-                return; // Anything that was here will be unanchored anyways.
+                if (change.NewTile.IsEmpty)
+                    continue; // Anything that was here will be unanchored anyways.
 
-            UpdateTile(args.NewTile.GridUid, args.Entity.Comp, args.NewTile.GridIndices);
+                UpdateTile(args.Entity, args.Entity.Comp, change.GridIndices);
+            }
         }
 
         /// <summary>

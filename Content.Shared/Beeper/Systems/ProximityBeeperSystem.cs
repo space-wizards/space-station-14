@@ -25,14 +25,8 @@ public sealed class ProximityBeeperSystem : EntitySystem
     {
         if (!TryComp<BeeperComponent>(owner, out var beeper))
             return;
-        if (args.Target == null)
-        {
-            _beeper.SetMute(owner, true, beeper);
-            return;
-        }
 
-        _beeper.SetIntervalScaling(owner, args.Distance / args.Detector.Range, beeper);
-        _beeper.SetMute(owner, false, beeper);
+        _beeper.SetIntervalScaling(owner, args.Distance / args.Detector.Comp.Range, beeper);
     }
 
     private void OnNewProximityTarget(EntityUid owner, ProximityBeeperComponent proxBeeper, ref NewProximityTargetEvent args)

@@ -1,14 +1,14 @@
 - type: gameMap
   id: Starboard
   mapName: 'Starboard'
-  mapPath: /Maps/_Starlight/Stations/starboard.yml
-  minPlayers: 60
+  mapPath: /Maps/_Starlight/Stations/Starboard.yml
+  minPlayers: 90
   stations:
     Starboard:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Starboard {1}'
+          mapNameTemplate: '{0} Starboard Depot {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'DS'
@@ -33,7 +33,7 @@
             TechnicalAssistant: [ 2, 4 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 2, 3 ]
+            Chemist: [ 2, 2 ]
             MedicalDoctor: [ 4, 6 ]
             MedicalIntern: [ 2, 4 ]
             Paramedic: [ 2, 2 ]
@@ -41,11 +41,12 @@
             Psychologist: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
-            Scientist: [ 4, 7 ]
+            Scientist: [ 5, 7 ]
             ResearchAssistant: [ 2, 4 ]
+            Roboticist: [ 2, 3 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
-            Warden: [ 1, 1 ]
+            Warden: [ 2, 2 ]
             Detective: [ 1, 1 ]
             SecurityOfficer: [ 6, 10 ]
             SecurityCadet: [ 4, 6 ]
@@ -53,8 +54,9 @@
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 4 ]
-            CargoTechnician: [ 6, 8 ]
+            CargoTechnician: [ 6, 7 ]
             MiningSpecialist: [ 1, 2]
+            MailTech: [ 2, 3 ]
             #civillian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]

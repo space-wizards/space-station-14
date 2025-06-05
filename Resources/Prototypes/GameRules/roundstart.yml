@@ -124,7 +124,7 @@
   - type: GameRule
     minPlayers: 20
   - type: LoadMapRule
-    mapPath: /Maps/Nonstations/nukieplanet.yml
+    mapPath: /Maps/_Starlight/nukieplanet.yml
   - type: AntagSelection
     selectionTime: PrePlayerSpawn
     definitions:
@@ -132,9 +132,6 @@
       fallbackRoles: [ Nukeops, NukeopsMedic ]
       spawnerPrototype: SpawnPointNukeopsCommander
       startingGear: SyndicateCommanderGearFull
-      blacklist:
-        tags:
-          - Resomi
       roleLoadout:
       - RoleSurvivalNukie
       components:
@@ -152,9 +149,6 @@
       fallbackRoles: [ Nukeops, NukeopsCommander ]
       spawnerPrototype: SpawnPointNukeopsMedic
       startingGear: SyndicateOperativeMedicFull
-      blacklist:
-        tags:
-          - Resomi
       roleLoadout:
       - RoleSurvivalNukie
       components:
@@ -174,9 +168,6 @@
       max: 3
       playerRatio: 10
       startingGear: SyndicateOperativeGearFull
-      blacklist:
-        tags:
-          - Resomi
       roleLoadout:
       - RoleSurvivalNukie
       components:
@@ -464,3 +455,5 @@
       orGroup: puddleMess
     - id: SmugglerStashVariationPass
       prob: 0.90
+    - id: SolarPanelDamageVariationPass
+    - id: SolarPanelEmptyVariationPass

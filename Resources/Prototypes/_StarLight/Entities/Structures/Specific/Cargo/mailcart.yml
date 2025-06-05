@@ -1,0 +1,84 @@
+# Janicart
+- type: entity
+  name: mail trolley
+  id: MailTrolley
+  parent: [BaseStructureDynamic, StructureWheeled]
+  description: Perfect for all your package delivery needs.
+  components:
+    - type: Sprite
+      noRot: true
+      sprite: _Starlight/Objects/Specific/Cargo/mail_cart.rsi
+      layers:
+      - state: cart
+      - map: [ "enum.StorageContainerVisualLayers.Fill" ]
+        visible: false
+    - type: Rotatable
+    - type: InteractionOutline
+    - type: Storage
+      maxItemSize: Huge
+      grid:
+      - 0,0,19,7
+      quickInsert: true
+      whitelist:
+        components:
+        - Delivery
+        sizes:
+        - Huge #this is here to allow ONLY packages onboard
+        requireAll: true
+      blacklist:
+        sizes: #disallow anything that isnt huge
+        - Large
+        - Normal
+        - Small
+        - Tiny
+    - type: StorageContainerVisuals
+      maxFillLevels: 3
+      fillBaseName: cart_boxes
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.3
+          density: 250
+          layer:
+          - MobLayer
+          mask:
+          - MobMask
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 400
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:EmptyAllContainersBehaviour
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+    - type: Appearance
+    - type: UserInterface
+      interfaces:
+        enum.StorageUiKey.Key:
+          type: StorageBoundUserInterface
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          ents: []
+    - type: DnaSubstanceTrace
+#    - type: ItemToggle #needs a custom component to handle this as being a ONLY right click verb from what I can tell
+#      onActivate: false #allows opening the UI via E
+#    - type: ComponentToggler
+#      components:
+    #- type: MagnetPickup #disabled for now, needs a new component or heavy edits to the existing one
+    #  slotFlags: None

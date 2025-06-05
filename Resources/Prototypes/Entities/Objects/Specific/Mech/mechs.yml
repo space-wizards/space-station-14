@@ -195,6 +195,10 @@
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
+    equipmentWhitelist:
+      tags:
+      - IndustrialMech
+      - RipleyMKIIUpgradeKit
     baseState: base
     openState: base-open
     brokenState: base-broken
@@ -217,6 +221,10 @@
     radius: 3
     energy: 5
     enabled: false
+  - type: Construction
+    graph: RipleyMKIIUpgrade
+    node: start
+    defaultTarget: ripleymkii
 
 - type: entity
   id: MechRipleyBattery
@@ -246,6 +254,10 @@
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
+    equipmentWhitelist:
+      tags:
+      - IndustrialMech
+      - PaddyUpgradeKit
     baseState: base
     openState: base-open
     brokenState: base-broken
@@ -271,6 +283,10 @@
     radius: 3
     energy: 5
     enabled: false
+  - type: Construction
+    graph: PaddyUpgrade
+    node: start
+    defaultTarget: paddy
 
 - type: entity
   id: MechRipley2Battery
@@ -287,27 +303,31 @@
 # Paddy
 - type: entity
   id: MechPaddy
-  parent: [ BaseMech, CombatMech, BaseSecurityContraband ]
+  parent: [ BaseMech, CombatMech, IndustrialMech, BaseSecurityContraband ]
   name: Paddy
-  description: Autonomous Power Loader Unit Subtype Paddy. A Modified MK-I Ripley design intended for light security use.
+  description: Autonomous Power Loader Unit Subtype Paddy. A Modified MK-II Ripley design intended for light security use.
   components:
   - type: Sprite
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/Mechs/Basic/paddy.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
-      state: paddy
-    - state: paddy_sirens
+      state: base
+    - state: base-sirens
       map: [ "enum.MechVisualLayers.Siren" ]
       shader: unshaded
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
-    baseState: paddy
-    openState: paddy-open
-    brokenState: paddy-broken
+    equipmentWhitelist:
+      tags:
+      - CombatMech
+      - IndustrialMech
+    baseState: base
+    openState: base-open
+    brokenState: base-broken
     mechToPilotDamageMultiplier: 0.60
     airtight: true
     pilotWhitelist:
@@ -582,7 +602,7 @@
 # Gygax
 - type: entity
   id: MechGygax
-  parent: [ BaseMech, CombatMech, BaseRestrictedContraband ]
+  parent: [ BaseMech, CombatMech, BaseSecurityContraband ]
   name: Gygax
   description: While lightly armored, the Gygax has incredible mobility thanks to its ability that lets it smash through walls at high speeds.
   components:
@@ -615,6 +635,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 2.6
+  - type: MechThrusters
   - type: PointLight
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
@@ -637,7 +658,7 @@
 # Durand
 - type: entity
   id: MechDurand
-  parent: [ BaseMech, CombatMech, BaseRestrictedContraband ]
+  parent: [ BaseMech, CombatMech, BaseSecurityContraband ]
   name: Durand
   description: A slow but beefy combat exosuit that is extra scary in confined spaces due to its punches. Xenos hate it!
   components:

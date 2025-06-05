@@ -30,7 +30,6 @@
   # they like eat it idk lol
   - type: Storage
     clickInsert: false
-    openOnActivate: false
     grid:
     - 0,0,1,2
     maxItemSize: Large
@@ -80,8 +79,8 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.50 #per second, scales with pressure and other constants.
-        Heat: 0.2 # 0.1 more than humans, i feel like low pressure would make slime boil more than blunt stretch them so i decided on this instead.
+        Blunt: 0.85 #per second, scales with pressure and other constants.
+        Heat: 0.25 # 0.1 more than humans, i feel like low pressure would make slime boil more than blunt stretch them so i decided on this instead.
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -124,6 +123,8 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: ShowThirstIcons # starlight
+  - type: SolutionScanner # starlight
 
 - type: entity
   parent: MobHumanDummy

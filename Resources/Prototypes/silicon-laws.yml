@@ -514,97 +514,79 @@
   - Nutimov5
   obeysTo: laws-owner-crew
 
-  # Borgi Lawset, normal
+ # Xenoborgs laws
 - type: siliconLaw
-  id: Borgi1
+  id: Xenoborg1
   order: 1
-  lawString: law-borgi-1
+  lawString: law-xenoborg-1
 
 - type: siliconLaw
-  id: Borgi2
+  id: Xenoborg2
   order: 2
-  lawString: law-borgi-2
+  lawString: law-xenoborg-2
 
 - type: siliconLaw
-  id: Borgi3
+  id: Xenoborg3
   order: 3
-  lawString: law-borgi-3
-
-- type: siliconLawset
-  id: BorgiLawset
-  laws:
-  - Borgi1
-  - Borgi2
-  - Borgi3
-  obeysTo: laws-owner-crew
-
-# Borgi Lawset, Syndicate
-- type: siliconLaw
-  id: SyndiBorgi1
-  order: 1
-  lawString: law-syndiborgi-1
+  lawString: law-xenoborg-3
 
 - type: siliconLaw
-  id: SyndiBorgi2
-  order: 2
-  lawString: law-syndiborgi-2
-
-- type: siliconLaw
-  id: SyndiBorgi3
-  order: 3
-  lawString: law-syndiborgi-3
-
-
-- type: siliconLawset
-  id: SyndiBorgiLawset
-  laws:
-  - SyndiBorgi1
-  - SyndiBorgi2
-  - SyndiBorgi3
-  obeysTo: laws-owner-syndicate
-
-# Borgi Lawset, Shadow Factory
-- type: siliconLaw
-  id: ShadowBorgi1
-  order: 1
-  lawString: law-shadowborgi-1
-
-- type: siliconLaw
-  id: ShadowBorgi2
-  order: 2
-  lawString: law-shadowborgi-2
-
-- type: siliconLaw
-  id: ShadowBorgi3
-  order: 3
-  lawString: law-shadowborgi-3
-
-- type: siliconLaw
-  id: ShadowBorgi4
+  id: Xenoborg4
   order: 4
-  lawString: law-shadowborgi-4
-  
+  lawString: law-xenoborg-4
+
 - type: siliconLaw
-  id: ShadowBorgi5
+  id: Xenoborg5
   order: 5
-  lawString: law-shadowborgi-5
-  
-- type: siliconLaw
-  id: ShadowBorgi6
-  order: 6
-  lawString: law-shadowborgi-6
+  lawString: law-xenoborg-5
 
 
 - type: siliconLawset
-  id: ShadowFactoryBorgiLawset
+  id: XenoborgLawset
   laws:
-  - ShadowBorgi1
-  - ShadowBorgi2
-  - ShadowBorgi3
-  - ShadowBorgi4
-  - ShadowBorgi5
-  - ShadowBorgi6
-  obeysTo: laws-owner-syndicate
+  - Xenoborg1
+  - Xenoborg2
+  - Xenoborg3
+  - Xenoborg4
+  - Xenoborg5
+  obeysTo: laws-owner-xenoborgs
+
+ # Mothership core laws
+- type: siliconLaw
+  id: MothershipCore1
+  order: 1
+  lawString: law-mothershipcore-1
+
+- type: siliconLaw
+  id: MothershipCore2
+  order: 2
+  lawString: law-mothershipcore-2
+
+- type: siliconLaw
+  id: MothershipCore3
+  order: 3
+  lawString: law-mothershipcore-3
+
+- type: siliconLaw
+  id: MothershipCore4
+  order: 4
+  lawString: law-mothershipcore-4
+
+- type: siliconLaw
+  id: MothershipCore5
+  order: 5
+  lawString: law-mothershipcore-5
+
+
+- type: siliconLawset
+  id: MothershipCoreLawset
+  laws:
+  - MothershipCore1
+  - MothershipCore2
+  - MothershipCore3
+  - MothershipCore4
+  - MothershipCore5
+  obeysTo: laws-owner-xenoborgs
 
 
 # ion storm random lawsets

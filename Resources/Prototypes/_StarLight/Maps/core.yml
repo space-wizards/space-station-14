@@ -5,7 +5,7 @@
   minPlayers: 35
   maxPlayers: 80
   stations:
-    Core:
+    StarlightCore:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -57,6 +57,7 @@
             CargoTechnician: [ 3, 3 ]
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 5, 5 ]
+            MailTech: [ 1, 2 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]

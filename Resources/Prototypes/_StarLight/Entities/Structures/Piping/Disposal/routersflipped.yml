@@ -1,0 +1,921 @@
+- type: entity
+  id: DisposalRouterFlippedCommand
+  parent: DisposalRouterFlipped   
+  suffix: Flipped, Command
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Command"]
+
+
+- type: entity
+  id: DisposalRouterFlippedBridge
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Bridge
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Bridge"]
+
+
+- type: entity
+  id: DisposalRouterFlippedVault
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Vault
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Vault"]
+
+
+- type: entity
+  id: DisposalRouterFlippedGateway
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Gateway
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Gateway"]
+
+
+- type: entity
+  id: DisposalRouterFlippedCaptain
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Captain
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Captain"]
+
+
+- type: entity
+  id: DisposalRouterFlippedHoP
+  parent: DisposalRouterFlipped
+  suffix: Flipped, HoP
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["HoP"]
+
+
+- type: entity
+  id: DisposalRouterFlippedSecurity
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Security
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Security"]
+
+
+- type: entity
+  id: DisposalRouterFlippedBrig
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Brig
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Brig"]
+
+
+- type: entity
+  id: DisposalRouterFlippedBrigMed
+  parent: DisposalRouterFlipped
+  suffix: Flipped, BrigMed
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["BrigMed"]
+
+
+- type: entity
+  id: DisposalRouterFlippedWarden
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Warden
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Warden"]
+
+
+- type: entity
+  id: DisposalRouterFlippedHoS
+  parent: DisposalRouterFlipped
+  suffix: Flipped, HoS
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["HoS"]
+
+
+- type: entity
+  id: DisposalRouterFlippedArmory
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Armory
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Armory"]
+
+
+- type: entity
+  id: DisposalRouterFlippedPerma
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Perma
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Perma"]
+
+
+- type: entity
+  id: DisposalRouterFlippedDetective
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Detective
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Detective"]
+
+
+- type: entity
+  id: DisposalRouterFlippedCourtroom
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Courtroom
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Courtroom"]
+
+
+- type: entity
+  id: DisposalRouterFlippedLaw
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Law
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Law"]
+
+
+- type: entity
+  id: DisposalRouterFlippedSecurityCheckpoint
+  parent: DisposalRouterFlipped
+  suffix: Flipped, SecurityCheckpoint
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["SecurityCheckpoint"]
+
+
+- type: entity
+  id: DisposalRouterFlippedMedical
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Medical
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Medical"]
+
+
+- type: entity
+  id: DisposalRouterFlippedMedbay
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Medbay
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Medbay"]
+
+
+- type: entity
+  id: DisposalRouterFlippedChemistry
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Chemistry
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Chemistry"]
+
+
+- type: entity
+  id: DisposalRouterFlippedCryogenics
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Cryogenics
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Cryogenics"]
+
+
+- type: entity
+  id: DisposalRouterFlippedCMO
+  parent: DisposalRouterFlipped
+  suffix: Flipped, CMO
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["CMO"]
+
+
+- type: entity
+  id: DisposalRouterFlippedMorgue
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Morgue
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Morgue"]
+
+
+- type: entity
+  id: DisposalRouterFlippedSurgery
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Surgery
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Surgery"]
+
+
+- type: entity
+  id: DisposalRouterFlippedPsychology
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Psychology
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Psychology"]
+
+
+- type: entity
+  id: DisposalRouterFlippedClinic
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Clinic
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Clinic"]
+
+
+- type: entity
+  id: DisposalRouterFlippedScience
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Science
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Science"]
+
+
+- type: entity
+  id: DisposalRouterFlippedR&D
+  parent: DisposalRouterFlipped
+  suffix: Flipped, R&D
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["R&D"]
+
+
+- type: entity
+  id: DisposalRouterFlippedRD
+  parent: DisposalRouterFlipped
+  suffix: Flipped, RD
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["RD"]
+
+
+- type: entity
+  id: DisposalRouterFlippedRobotics
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Robotics
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Robotics"]
+
+
+- type: entity
+  id: DisposalRouterFlippedArtifact
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Artifact
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Artifact"]
+
+
+- type: entity
+  id: DisposalRouterFlippedAnomaly
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Anomaly
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Anomaly"]
+
+
+- type: entity
+  id: DisposalRouterFlippedSupply
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Supply
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Supply"]
+
+
+- type: entity
+  id: DisposalRouterFlippedCargo
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Cargo
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Cargo"]
+
+
+- type: entity
+  id: DisposalRouterFlippedCargoBay
+  parent: DisposalRouterFlipped
+  suffix: Flipped, CargoBay
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["CargoBay"]
+
+
+- type: entity
+  id: DisposalRouterFlippedQM
+  parent: DisposalRouterFlipped
+  suffix: Flipped, QM
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["QM"]
+
+
+- type: entity
+  id: DisposalRouterFlippedSalvage
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Salvage
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Salvage"]
+
+
+- type: entity
+  id: DisposalRouterFlippedEngineering
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Engineering
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Engineering"]
+
+
+- type: entity
+  id: DisposalRouterFlippedCE
+  parent: DisposalRouterFlipped
+  suffix: Flipped, CE
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["CE"]
+
+
+- type: entity
+  id: DisposalRouterFlippedAME
+  parent: DisposalRouterFlipped
+  suffix: Flipped, AME
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["AME"]
+
+
+- type: entity
+  id: DisposalRouterFlippedGravityGenerator
+  parent: DisposalRouterFlipped
+  suffix: Flipped, GravityGenerator
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["GravityGenerator"]
+
+
+- type: entity
+  id: DisposalRouterFlippedAnchor
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Anchor
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Anchor"]
+
+
+- type: entity
+  id: DisposalRouterFlippedParticleAccelerator
+  parent: DisposalRouterFlipped
+  suffix: Flipped, ParticleAccelerator
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["ParticleAccelerator"]
+
+
+- type: entity
+  id: DisposalRouterFlippedTelecomms
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Telecomms
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Telecomms"]
+
+
+- type: entity
+  id: DisposalRouterFlippedAtmos
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Atmos
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Atmos"]
+
+
+- type: entity
+  id: DisposalRouterFlippedTEG
+  parent: DisposalRouterFlipped
+  suffix: Flipped, TEG
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["TEG"]
+
+
+- type: entity
+  id: DisposalRouterFlippedTechVault
+  parent: DisposalRouterFlipped
+  suffix: Flipped, TechVault
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["TechVault"]
+
+
+- type: entity
+  id: DisposalRouterFlippedService
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Service
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Service"]
+
+
+- type: entity
+  id: DisposalRouterFlippedKitchen
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Kitchen
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Kitchen"]
+
+
+- type: entity
+  id: DisposalRouterFlippedBar
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Bar
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Bar"]
+
+
+- type: entity
+  id: DisposalRouterFlippedBotany
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Botany
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Botany"]
+
+
+- type: entity
+  id: DisposalRouterFlippedJanitor
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Janitor
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Janitor"]
+
+
+- type: entity
+  id: DisposalRouterFlippedAI
+  parent: DisposalRouterFlipped
+  suffix: Flipped, AI
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["AI"]
+
+
+- type: entity
+  id: DisposalRouterFlippedAISatellite
+  parent: DisposalRouterFlipped
+  suffix: Flipped, AISatellite
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["AISatellite"]
+
+
+- type: entity
+  id: DisposalRouterFlippedAICore
+  parent: DisposalRouterFlipped
+  suffix: Flipped, AICore
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["AICore"]
+
+
+- type: entity
+  id: DisposalRouterFlippedAIUpload
+  parent: DisposalRouterFlipped
+  suffix: Flipped, AIUpload
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["AIUpload"]
+
+
+- type: entity
+  id: DisposalRouterFlippedAIPower
+  parent: DisposalRouterFlipped
+  suffix: Flipped, AIPower
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["AIPower"]
+
+
+- type: entity
+  id: DisposalRouterFlippedArrivals
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Arrivals
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Arrivals"]
+
+
+- type: entity
+  id: DisposalRouterFlippedEvac
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Evac
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Evac"]
+
+
+- type: entity
+  id: DisposalRouterFlippedDockingArm
+  parent: DisposalRouterFlipped
+  suffix: Flipped, DockingArm
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["DockingArm"]
+
+
+- type: entity
+  id: DisposalRouterFlippedEVAStorage
+  parent: DisposalRouterFlipped
+  suffix: Flipped, EVAStorage
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["EVAStorage"]
+
+
+- type: entity
+  id: DisposalRouterFlippedChapel
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Chapel
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Chapel"]
+
+
+- type: entity
+  id: DisposalRouterFlippedLibrary
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Library
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Library"]
+
+
+- type: entity
+  id: DisposalRouterFlippedReporter
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Reporter
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Reporter"]
+
+
+- type: entity
+  id: DisposalRouterFlippedTheater
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Theater
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Theater"]
+
+
+- type: entity
+  id: DisposalRouterFlippedDorms
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Dorms
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Dorms"]
+
+
+- type: entity
+  id: DisposalRouterFlippedTools
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Tools
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Tools"]
+
+
+- type: entity
+  id: DisposalRouterFlippedDisposals
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Disposals
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Disposals"]
+
+
+- type: entity
+  id: DisposalRouterFlippedCryosleep
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Cryosleep
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Cryosleep"]
+
+
+- type: entity
+  id: DisposalRouterFlippedVox
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Vox
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["Vox"]
+
+
+- type: entity
+  id: DisposalRouterFlippedWildcard
+  parent: DisposalRouterFlipped
+  suffix: Flipped, Wildcard
+  components:
+  - type: DisposalRouter
+    degrees:
+    - 0
+    - 90
+    - 180
+    tags: ["*"]

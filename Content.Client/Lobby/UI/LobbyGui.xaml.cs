@@ -29,10 +29,15 @@ namespace Content.Client.Lobby.UI
             LeaveButton.OnPressed += _ => _consoleHost.ExecuteCommand("disconnect");
             OptionsButton.OnPressed += _ => UserInterfaceManager.GetUIController<OptionsUIController>().ToggleWindow();
             
+            CollapseButton.OnPressed += _ => TogglePanel(false);
+            ExpandButton.OnPressed += _ => TogglePanel(true);
+
+            //Starlight start
             _serverName = _configurationManager.GetCVar(StarlightCCVars.ServerName);
             _configurationManager.OnValueChanged(StarlightCCVars.ServerName, OnServerNameChanged, true);
             
             ServerName.Text = Loc.GetString("ui-lobby-welcome", ("name", _serverName));
+            //Starlight end
         }
 
         public void SwitchState(LobbyGuiState state)
@@ -67,6 +72,12 @@ namespace Content.Client.Lobby.UI
         {
             ServerName.Text = Loc.GetString("ui-lobby-welcome", ("name", serverName));
             _serverName = serverName;
+        }
+
+        private void TogglePanel(bool value)
+        {
+            RightSide.Visible = value;
+            ExpandPanel.Visible = !value;
         }
 
         public enum LobbyGuiState : byte

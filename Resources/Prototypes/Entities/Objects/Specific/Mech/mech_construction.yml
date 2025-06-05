@@ -105,7 +105,7 @@
   description: The right arm of the Clarke. It belongs on the chassis of the mech.
   components:
   - type: Sprite
-    state: clarke_l_arm
+    state: clarke_r_arm
   - type: Tag
     tags:
     - ClarkeRArm
@@ -117,7 +117,7 @@
   description: The left arm of the Clarke. It belongs on the chassis of the mech.
   components:
   - type: Sprite
-    state: clarke_r_arm
+    state: clarke_l_arm
   - type: Tag
     tags:
     - ClarkeLArm
@@ -137,7 +137,7 @@
 - type: entity
   id: ClarkeChassis
   parent: BaseClarkePart
-  name: calrke chassis
+  name: clarke chassis
   description: An in-progress construction of the Clarke mech.
   components:
   - type: Appearance
@@ -597,10 +597,6 @@
   - type: Appearance
   - type: ItemMapper
     mapLayers:
-      ripleymkii_upgrade_kit+o:
-        whitelist:
-          tags:
-          - RipleyMKIIUpgradeKit
       ripleymkii_l_arm+o:
         whitelist:
           tags:
@@ -624,7 +620,6 @@
   - type: MechAssembly
     finishedPrototype: RipleyMKIIChassis
     requiredParts:
-      RipleyMKIIUpgradeKit: false
       RipleyLArm: false
       RipleyRArm: false
       RipleyLLeg: false

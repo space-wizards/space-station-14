@@ -20,7 +20,13 @@
   id: JobBlueShield
 
 - type: playTimeTracker
+  id: JobConsortiumBlueShield
+
+- type: playTimeTracker
   id: JobMiningSpecialist
 
 - type: playTimeTracker
   id: JobSurgeon
+  
+- type: playTimeTracker
+  id: JobMailTech

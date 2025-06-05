@@ -44,7 +44,7 @@ public abstract partial class SharedSurgerySystem
                 Dirty(args.Target.Value, dirtyPart, Comp<MetaDataComponent>(args.Target.Value));
             return;
         }
-        
+
         if (!_random.Prob(args.SuccessRate))
         {
             if (_net.IsClient) return;
@@ -208,7 +208,7 @@ public abstract partial class SharedSurgerySystem
         if (GetEntity(args.Entity) is not { Valid: true } body
             || GetEntity(args.Part) is not { Valid: true } targetPart
             || !IsSurgeryValid(body, targetPart, args.Surgery, args.Step, out var surgery, out var part, out var step)
-            || GetSingleton(args.Step) is not { } stepEnt
+            || !_entitySystem.TryGetSingleton(args.Step, out var stepEnt)
             || !TryComp(stepEnt, out SurgeryStepComponent? stepComp)
             || !CanPerformStep(user, body, part.Comp.PartType, step, true, out _, out _, out var validTools))
         {
@@ -222,8 +222,13 @@ public abstract partial class SharedSurgerySystem
             return;
         }
 
+        if (_net.IsServer && TryComp(step, out MetaDataComponent? meta))
+        {
+            var surgeonName = MetaData(user).EntityName;
+            _popup.PopupEntity($"{surgeonName.ToLower()} starts {meta.EntityName.ToLower()}", part, PopupType.LargeCaution);
+        }
+
         var duration = stepComp.Duration;
-        
         float SmallestSuccessRate = 1f;
 
         foreach (var tool in validTools)
@@ -231,7 +236,7 @@ public abstract partial class SharedSurgerySystem
             {
                 duration *= toolComp.Speed;
                 if (toolComp.StartSound != null) _audio.PlayPvs(toolComp.StartSound, tool);
-                
+
                 if(toolComp.SuccessRate < SmallestSuccessRate)
                     SmallestSuccessRate = toolComp.SuccessRate;
             }
@@ -264,7 +269,7 @@ public abstract partial class SharedSurgerySystem
         {
             foreach (var requirementId in requirementsIds)
             {
-                if (GetSingleton(requirementId) is { } requirement 
+                if (!_entitySystem.TryGetSingleton(requirementId, out var requirement)
                     && GetNextStep(body, part, requirement, requirements) is { } requiredNext 
                     && IsSurgeryValid(body, part, requirementId, requiredNext.Surgery.Comp.Steps[requiredNext.Step], out _, out _, out _))
                     return requiredNext;
@@ -290,7 +295,7 @@ public abstract partial class SharedSurgerySystem
         {
             foreach (var requirement in requirements)
             {
-                if (GetSingleton(requirement) is not { } requiredEnt 
+                if (!_entitySystem.TryGetSingleton(requirement, out var requiredEnt)
                     || !TryComp(requiredEnt, out SurgeryComponent? requiredComp) 
                     || !PreviousStepsComplete(body, part, (requiredEnt, requiredComp), step) 
                     && IsSurgeryValid(body, part, requirement, step, out _, out _, out _))

@@ -5,7 +5,7 @@
   minPlayers: 0
   maxPlayers: 12
   stations:
-    Reach:
+    StarlightReach:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -39,3 +39,4 @@
             Scientist: [ 1, 1 ]
             Assistant: [ -1, -1 ]
             SalvageSpecialist: [ 2, 4 ]
+            #MailTech: [ 2, 3 ]

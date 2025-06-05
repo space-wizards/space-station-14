@@ -51,7 +51,7 @@ public sealed class RehydratableSystem : EntitySystem
 
         _xform.AttachToGridOrMap(target);
         var ev = new GotRehydratedEvent(target);
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(uid, ref ev, true); // Starlight: made it broadcast so EoR creatures can be pacified
 
         // prevent double hydration while queued
         RemComp<RehydratableComponent>(uid);

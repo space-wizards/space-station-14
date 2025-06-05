@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore, Bighorn and Demonic are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas. Body_underbelly made by Nairod(github) for SS14. Large drawn by Ubaser. Wagging tail by SonicDC. Splotch modified from Sharp by KittenColony(github). Frills neckfull come from: https://github.com/Bubberstation/Bubberstation/commit/8bc6b83404803466a560b694bf22ef3c0ac266a2",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297, while Argali, Ayrshire, Myrsore, Bighorn and Demonic are drawn by Ubaser, and Kobold Ears are drawn by Pigeonpeas. Back fin by alzore_ (Discord), Aquatic tail modified from smooth tail by alzore_ (discord). Body_underbelly made by Nairod(github) for SS14. Large drawn by Ubaser. Wagging tail by SonicDC. Splotch modified from Sharp by KittenColony(github). Frills neckfull come from: https://github.com/Bubberstation/Bubberstation/commit/8bc6b83404803466a560b694bf22ef3c0ac266a2",
   "size": {
     "x": 32,
     "y": 32
@@ -25,6 +25,10 @@
     },
     {
       "name": "tail_ltiger_front",
+      "directions": 4
+    },
+    {
+      "name": "tail_aquatic_front",
       "directions": 4
     },
     {
@@ -56,6 +60,10 @@
       "directions": 4
     },
     {
+      "name": "tail_aquatic_behind",
+      "directions": 4
+    },
+    {
       "name": "tail_smooth_primary",
       "directions": 4
     },
@@ -81,6 +89,10 @@
     },
     {
       "name": "tail_ltiger",
+      "directions": 4
+    },
+    {
+      "name": "tail_aquatic",
       "directions": 4
     },
     {
@@ -474,6 +486,84 @@
       ]
     },
     {
+      "name": "tail_aquatic_wagging",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
       "name": "snout_round",
       "directions": 4
     },
@@ -603,6 +693,10 @@
     },
     {
       "name": "body_backspikes",
+      "directions": 4
+    },
+    {
+      "name": "body_fin",
       "directions": 4
     },
     {
