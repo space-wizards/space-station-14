@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using Content.Shared.CCVar;
 using Content.Shared.Instruments;
@@ -12,7 +13,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Instruments;
 
-public sealed class InstrumentSystem : SharedInstrumentSystem
+public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
     [Dependency] private readonly IClientNetManager _netManager = default!;
     [Dependency] private readonly IMidiManager _midiManager = default!;
@@ -252,7 +253,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     }
 
-    public bool OpenMidi(EntityUid uid, ReadOnlySpan<byte> data, InstrumentComponent? instrument = null)
+    public bool OpenMidi(EntityUid uid, byte[] data, InstrumentComponent? instrument = null)
     {
         if (!Resolve(uid, ref instrument))
             return false;
@@ -263,6 +264,8 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return false;
 
         SetMaster(uid, null);
+        TrySetChannels(uid, data);
+
         instrument.MidiEventBuffer.Clear();
         instrument.Renderer.OnMidiEvent += instrument.MidiEventBuffer.Add;
         return true;

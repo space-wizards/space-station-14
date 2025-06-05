@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
 using Content.Shared.Interaction;
 using Robust.Client.Audio.Midi;
@@ -103,7 +104,13 @@ namespace Content.Client.Instruments.UI
             _channelsMenu ??= new ChannelsMenu(this);
             EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument);
 
-            _channelsMenu.Populate(instrument);
+            ActiveInstrumentComponent? activeInstrument = null;
+            if (instrument is { Master: not null })
+                EntMan.TryGetComponent(instrument.Master, out activeInstrument);
+            else
+                EntMan.TryGetComponent(Owner, out activeInstrument);
+
+            _channelsMenu.Populate(instrument, activeInstrument);
             _channelsMenu.OpenCenteredRight();
         }
 

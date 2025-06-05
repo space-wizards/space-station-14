@@ -38,7 +38,13 @@ public abstract partial class SharedInstrumentComponent : Component
 /// Component that indicates that musical instrument was activated (ui opened).
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ActiveInstrumentComponent : Component;
+[AutoGenerateComponentState]
+public sealed partial class ActiveInstrumentComponent : Component
+{
+    [DataField]
+    [AutoNetworkedField]
+    public List<string?> Channels = new();
+}
 
 [Serializable, NetSerializable]
 public sealed class InstrumentComponentState : ComponentState
@@ -143,4 +149,20 @@ public sealed class InstrumentMidiEventEvent : EntityEventArgs
 public enum InstrumentUiKey
 {
     Key,
+}
+
+/// <summary>
+/// Sets the MIDI channels on an instrument.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class InstrumentSetChannelsEvent : EntityEventArgs
+{
+    public NetEntity Uid { get; }
+    public List<string?> Channels { get; set; }
+
+    public InstrumentSetChannelsEvent(NetEntity uid, List<string?> channels)
+    {
+        Uid = uid;
+        Channels = channels;
+    }
 }
