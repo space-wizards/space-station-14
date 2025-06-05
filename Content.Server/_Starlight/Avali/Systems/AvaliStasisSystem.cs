@@ -29,6 +29,7 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
 
     private void OnMobStateChanged(MobStateChangedEvent args)
     {
+        // If the entity has a stasis component, and the new mob state is dead, exit stasis.
         if (TryComp<AvaliStasisComponent>(args.Target, out var comp))
         {
             if (args.NewMobState == MobState.Dead && comp.IsInStasis)
@@ -133,6 +134,7 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
 
     private void OnDamageChanged(EntityUid uid, AvaliStasisComponent component, DamageChangedEvent args)
     {
+            // If the entity has a mob state component, and the damage changed event is not healing, apply the resistance.
             if (TryComp<MobStateComponent>(uid, out var mobState))
             {
                 var currentState = mobState.CurrentState;
@@ -193,6 +195,9 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         }
     }
 
+    /// <summary>
+    /// Gets the healing values for the stasis effect based on the mob state.
+    /// </summary>
     private AvaliStasisHealingValues GetHealingValues(MobState state, AvaliStasisComponent comp)
     {
         return state switch
@@ -206,6 +211,9 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
     }
 }
 
+/// <summary>
+/// A struct that contains the healing values for the stasis effect.
+/// </summary>
 sealed class AvaliStasisHealingValues(
     float bluntHeal,
     float slashHeal,
