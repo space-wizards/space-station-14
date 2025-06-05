@@ -12,7 +12,7 @@
           mapNameTemplate: '{0} Reach Transport {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'SC'
+            prefixCreator: 'RT'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency.yml
         - type: StationJobs
