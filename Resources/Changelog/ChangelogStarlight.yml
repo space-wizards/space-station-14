@@ -6871,4 +6871,11 @@ Entries:
   id: 950
   time: '2025-06-05T22:07:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/770
+- author: STARLIGHT TEAM
+  changes:
+  - message: The Elder now always spawns on the Impossible mission.
+    type: Fix
+  id: 951
+  time: '2025-06-05T22:08:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/771
 
