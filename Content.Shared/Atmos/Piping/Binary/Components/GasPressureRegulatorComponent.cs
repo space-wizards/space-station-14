@@ -10,7 +10,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState(true, true), AutoGenerateComponentPause]
-public sealed partial class GasPressureReliefValveComponent : Component
+public sealed partial class GasPressureRegulatorComponent : Component
 {
     /// <summary>
     /// Determines whether the valve is open or closed.
@@ -33,7 +33,7 @@ public sealed partial class GasPressureReliefValveComponent : Component
     public string OutletName = "outlet";
 
     /// <summary>
-    /// The max transfer rate of the valve.
+    /// The max transfer rate of the pressure regulator.
     /// </summary>
     [GuidebookData]
     [DataField]
@@ -47,9 +47,9 @@ public sealed partial class GasPressureReliefValveComponent : Component
     public TimeSpan NextUiUpdate = TimeSpan.Zero;
 
     /// <summary>
-    /// Sets the opening threshold of the valve.
+    /// Sets the opening threshold of the pressure regulator.
     /// </summary>
-    /// <example> If set to 500 kPa, the valve will only
+    /// <example> If set to 500 kPa, the regulator will only
     /// open if the pressure in the inlet side is above
     /// 500 kPa. </example>
     [DataField, AutoNetworkedField]
@@ -64,21 +64,21 @@ public sealed partial class GasPressureReliefValveComponent : Component
     #region UI/Examine Info
 
     /// <summary>
-    /// The current flow rate of the valve.
+    /// The current flow rate of the pressure regulator.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField, AutoNetworkedField]
     public float FlowRate;
 
     /// <summary>
-    /// Current inlet pressure the valve.
+    /// Current inlet pressure the pressure regulator.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField, AutoNetworkedField]
     public float InletPressure;
 
     /// <summary>
-    /// Current outlet pressure of the valve.
+    /// Current outlet pressure of the pressure regulator.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField, AutoNetworkedField]

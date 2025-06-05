@@ -6,7 +6,7 @@ namespace Content.Shared.Atmos.Piping.Binary.Components;
 /// Represents the unique key for the UI.
 /// </summary>
 [Serializable, NetSerializable]
-public enum GasPressureReliefValveUiKey : byte
+public enum GasPressureRegulatorUiKey : byte
 {
     Key,
 }
@@ -16,7 +16,7 @@ public enum GasPressureReliefValveUiKey : byte
 /// </summary>
 /// <param name="pressure">The new pressure threshold value.</param>
 [Serializable, NetSerializable]
-public sealed class GasPressureReliefValveChangeThresholdMessage(float pressure) : BoundUserInterfaceMessage
+public sealed class GasPressureRegulatorChangeThresholdMessage(float pressure) : BoundUserInterfaceMessage
 {
     /// <summary>
     /// Gets the new threshold pressure value.

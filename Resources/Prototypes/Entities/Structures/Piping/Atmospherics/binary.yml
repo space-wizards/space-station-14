@@ -157,8 +157,8 @@
 
 - type: entity
   parent: GasBinaryBase
-  id: GasPressureReliefValve
-  name: pressure relief valve
+  id: GasPressureRegulator
+  name: pressure regulator
   description: A valve that releases gas when the pressure exceeds a certain threshold.
   placement:
     mode: SnapgridCenter
@@ -175,30 +175,30 @@
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpPressureValve
+    - state: pumpPressureRegulator
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.PressureReliefValveVisuals.State:
+      enum.PressureRegulatorVisuals.State:
         enabled:
-          True: { state: pumpPressureValveOn }
-          False: { state: pumpPressureValve }
+          True: { state: pumpPressureRegulatorOn }
+          False: { state: pumpPressureRegulator }
   - type: PipeColorVisuals
-  - type: GasPressureReliefValve
+  - type: GasPressureRegulator
     enabled: false
     threshold: 4500
   - type: Construction
     graph: GasBinary
-    node: reliefvalve
+    node: pressureregulator
   - type: ActivatableUI
-    key: enum.GasPressureReliefValveUiKey.Key
+    key: enum.GasPressureRegulatorUiKey.Key
     blockSpectators: true
   - type: ActivatableUIRequiresAnchor
   - type: UserInterface
     interfaces:
-      enum.GasPressureReliefValveUiKey.Key:
-        type: GasPressureReliefValveBoundUserInterface
+      enum.GasPressureRegulatorUiKey.Key:
+        type: GasPressureRegulatorBoundUserInterface
   - type: AmbientSound
     enabled: false
     volume: -9
@@ -209,7 +209,7 @@
     navMapBlip: GasFlowRegulator
   - type: GuideHelp
     guides:
-    - PressureReliefValve
+    - PressureRegulator
 
 - type: entity
   parent: GasBinaryBase

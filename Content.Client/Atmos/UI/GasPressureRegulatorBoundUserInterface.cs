@@ -5,22 +5,22 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI;
 
-public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, Enum uiKey)
+public sealed class GasPressureRegulatorBoundUserInterface(EntityUid owner, Enum uiKey)
     : BoundUserInterface(owner, uiKey)
 {
-    private GasPressureReliefValveWindow? _window;
+    private GasPressureRegulatorWindow? _window;
 
     protected override void Open()
     {
         base.Open();
 
-        _window = this.CreateWindow<GasPressureReliefValveWindow>();
+        _window = this.CreateWindow<GasPressureRegulatorWindow>();
 
         _window.SetEntity(Owner);
 
         _window.ThresholdPressureChanged += OnThresholdChanged;
 
-        if (EntMan.TryGetComponent(Owner, out GasPressureReliefValveComponent? comp))
+        if (EntMan.TryGetComponent(Owner, out GasPressureRegulatorComponent? comp))
             _window.SetThresholdPressureInput(comp.Threshold);
 
         Update();
@@ -33,7 +33,7 @@ public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, En
 
         _window.Title = Identity.Name(Owner, EntMan);
 
-        if (!EntMan.TryGetComponent(Owner, out GasPressureReliefValveComponent? comp))
+        if (!EntMan.TryGetComponent(Owner, out GasPressureRegulatorComponent? comp))
             return;
 
         _window.SetThresholdPressureLabel(comp.Threshold);
@@ -53,6 +53,6 @@ public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, En
         // Autofill to zero if the user inputs an invalid value.
         _window?.SetThresholdPressureInput(sentThreshold);
 
-        SendPredictedMessage(new GasPressureReliefValveChangeThresholdMessage(sentThreshold));
+        SendPredictedMessage(new GasPressureRegulatorChangeThresholdMessage(sentThreshold));
     }
 }

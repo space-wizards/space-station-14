@@ -33,7 +33,7 @@ namespace Content.Shared.Atmos.Piping
     }
 
     [Serializable, NetSerializable]
-    public enum PressureReliefValveVisuals : byte
+    public enum PressureRegulatorVisuals : byte
     {
         State,
     }

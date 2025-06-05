@@ -22,7 +22,7 @@
         amount: 2
         doAfter: 1
 
-    - to: reliefvalve
+    - to: pressureregulator
       steps:
       - material: Steel
         amount: 2
@@ -112,8 +112,8 @@
       - tool: Welding
         doAfter: 1
 
-  - node: reliefvalve
-    entity: GasPressureReliefValve
+  - node: pressureregulator
+    entity: GasPressureRegulator
     edges:
     - to: start
       conditions:

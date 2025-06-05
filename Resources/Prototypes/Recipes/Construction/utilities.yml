@@ -569,10 +569,10 @@
     - !type:NoUnstackableInTile
 
 - type: construction
-  id: GasPressureReliefValve
+  id: GasPressureRegulator
   graph: GasBinary
   startNode: start
-  targetNode: reliefvalve
+  targetNode: pressureregulator
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false

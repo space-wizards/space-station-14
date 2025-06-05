@@ -7,14 +7,14 @@ using Robust.Shared.Timing;
 namespace Content.Client.Atmos.UI;
 
 /// <summary>
-/// Client-side UI for controlling a gas pressure relief valve.
+/// Client-side UI for controlling a pressure regulator.
 /// </summary>
 [GenerateTypedNameReferences]
-public sealed partial class GasPressureReliefValveWindow : FancyWindow
+public sealed partial class GasPressureRegulatorWindow : FancyWindow
 {
     private float _flowRate;
 
-    public GasPressureReliefValveWindow()
+    public GasPressureRegulatorWindow()
     {
         RobustXamlLoader.Load(this);
 
