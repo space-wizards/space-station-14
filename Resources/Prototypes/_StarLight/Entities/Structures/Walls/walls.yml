@@ -106,7 +106,7 @@
     base: state
   - type: Appearance
   - type: Ricochetable
-    chance: 1
+    chance: 0.75
   - type: Destructible
     thresholds:
     - trigger:
