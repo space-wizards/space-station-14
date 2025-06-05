@@ -35,4 +35,3 @@
           weight: 1
         rolls: !type:ConstantNumberSelector
           value: 1
-        rng: SovietCrateRNG
