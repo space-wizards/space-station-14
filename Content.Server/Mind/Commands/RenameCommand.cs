@@ -65,11 +65,7 @@ public sealed class RenameCommand : LocalizedEntityCommands
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-        {
-            var players = _playerManager.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
-
-            return CompletionResult.FromHintOptions(players, Help);
-        }
+            return CompletionResult.FromOptions(CompletionHelper.SessionNames());
 
         return CompletionResult.Empty;
     }
