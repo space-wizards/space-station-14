@@ -1,5 +1,5 @@
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.NodeContainer.Nodes;
+using Content.Shared.NodeContainer.NodeGroups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 
