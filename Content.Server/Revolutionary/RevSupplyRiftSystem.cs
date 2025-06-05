@@ -1,5 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Dragon;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.NPC;
 using Content.Server.NPC.Systems;
@@ -9,6 +10,7 @@ using Content.Server.Store.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Dragon;
 using Content.Shared.FixedPoint;
+using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -77,6 +79,26 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         SubscribeLocalEvent<RevSupplyRiftComponent, ComponentShutdown>(OnRevRiftShutdown);
         SubscribeLocalEvent<StorePurchaseAttemptEvent>(OnStorePurchaseAttempt);
         SubscribeLocalEvent<StorePurchaseCompletedEvent>(OnStorePurchaseCompleted);
+        
+        // Subscribe to the round restart cleanup event to reset the rift destroyed flag
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+    }
+    
+    /// <summary>
+    /// Handles the RoundRestartCleanupEvent to reset the rift destroyed flag.
+    /// This ensures that revolutionaries can place rifts in the new round.
+    /// </summary>
+    private void OnRoundRestart(RoundRestartCleanupEvent ev)
+    {
+        // Reset the rift destroyed flag
+        _riftDestroyed = false;
+        _activeRift = null;
+        _isProcessingRift = false;
+        
+        // Clear the original descriptions dictionary
+        _originalDescriptions.Clear();
+        
+        Logger.InfoS("rev-supply-rift", "Reset rift destroyed flag for new round");
     }
     
     /// <summary>
@@ -106,6 +128,14 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         // Only handle the revolutionary supply rift listing
         if (args.ListingId != RevSupplyRiftListingId)
             return;
+        
+        // Check if a rift has been destroyed
+        if (_riftDestroyed)
+        {
+            // A rift has been destroyed, so cancel this purchase
+            args.Cancel = true;
+            return;
+        }
         
         // Check if there's already an active rift being processed or placed
         if (IsRiftBeingProcessed())
@@ -514,6 +544,39 @@ public sealed class RevSupplyRiftSystem : EntitySystem
         }
 
         Logger.InfoS("rev-supply-rift", "Enabled supply rift listing in all uplinks");
+    }
+    
+    /// <summary>
+    /// Checks if a rift has been destroyed and updates the listing accordingly.
+    /// This is called by the StoreSystem whenever listings are refreshed.
+    /// </summary>
+    /// <param name="storeComp">The store component being refreshed</param>
+    public void CheckRiftDestroyedAndUpdateListing(StoreComponent storeComp)
+    {
+        // If no rift has been destroyed, we don't need to do anything
+        if (!_riftDestroyed)
+            return;
+            
+        // Find the supply rift listing
+        foreach (var listing in storeComp.FullListingsCatalog)
+        {
+            if (listing.ID == RevSupplyRiftListingId)
+            {
+                // Store the original description if we haven't already
+                if (!_originalDescriptions.TryGetValue(storeComp.Owner, out _))
+                {
+                    _originalDescriptions[storeComp.Owner] = listing.Description ?? "";
+                }
+                
+                // Update the description with the destroyed message
+                listing.Description = Loc.GetString("rev-supply-rift-destroyed");
+                
+                // Disable the listing permanently
+                listing.Unavailable = true;
+                
+                break;
+            }
+        }
     }
 
     /// <summary>

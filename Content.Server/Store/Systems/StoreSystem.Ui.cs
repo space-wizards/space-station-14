@@ -93,6 +93,10 @@ public sealed partial class StoreSystem
     {
         if (!Resolve(store, ref component))
             return;
+            
+        // STARLIGHT: Check if a rift has been destroyed and update the listing accordingly
+        // This ensures the rift listing remains unavailable even when the UI is refreshed
+        _revSupplyRift.CheckRiftDestroyedAndUpdateListing(component);
 
         //this is the person who will be passed into logic for all listing filtering.
         if (user != null) //if we have no "buyer" for this update, then don't update the listings
