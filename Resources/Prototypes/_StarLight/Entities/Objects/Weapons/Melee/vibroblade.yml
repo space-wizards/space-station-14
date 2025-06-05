@@ -12,7 +12,7 @@
     range: 1.25
     damage:
       types:
-        Blunt: 10
+        Slash: 10
         Piercing: 10
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
@@ -49,7 +49,7 @@
     range: 1.5
     damage:
       types:
-        Blunt: 15
+        Slash: 15
         Piercing: 15
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
