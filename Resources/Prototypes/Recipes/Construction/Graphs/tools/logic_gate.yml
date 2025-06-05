@@ -40,13 +40,18 @@
         icon:
           sprite: Objects/Tools/multitool.rsi
           state: icon
-        name: a multitool
+        name: construction-graph-tag-multitool
       - material: Cable
         amount: 2
         doAfter: 1
     - to: memory_cell
       steps:
-      - material: Capacitor
+      - tag: MicroManipulatorStockPart
+        icon:
+          sprite: Objects/Misc/stock_parts.rsi
+          state: micro_mani
+        name: construction-graph-tag-manipulator
+      - material: Manipulator
         amount: 1
       - material: Cable
         amount: 2
@@ -98,7 +103,7 @@
         doAfter: 2
       completed:
       - !type:SpawnPrototype
-        prototype: CapacitorStockPart
+        prototype: MicroManipulatorStockPart
       - !type:SpawnPrototype
         prototype: CableApcStack1
         amount: 2

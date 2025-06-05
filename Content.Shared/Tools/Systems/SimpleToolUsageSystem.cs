@@ -66,12 +66,13 @@ public sealed partial class SimpleToolUsageSystem : EntitySystem
         if (attemptEv.Cancelled)
             return;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfter, new SimpleToolDoAfterEvent(), ent, tool)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, ent.Comp.DoAfter, new SimpleToolDoAfterEvent(), ent, ent, tool)
         {
             BreakOnDamage = true,
             BreakOnDropItem = true,
             BreakOnMove = true,
             BreakOnHandChange = true,
+            NeedHand = true,
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs);

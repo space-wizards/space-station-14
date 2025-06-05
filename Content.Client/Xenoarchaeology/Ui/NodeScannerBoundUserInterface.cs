@@ -1,4 +1,3 @@
-using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Xenoarchaeology.Ui;
@@ -18,15 +17,6 @@ public sealed class NodeScannerBoundUserInterface(EntityUid owner, Enum uiKey) :
 
         _scannerDisplay = this.CreateWindow<NodeScannerDisplay>();
         _scannerDisplay.SetOwner(Owner);
-        _scannerDisplay.OnClose += Close;
-    }
-
-    /// <summary>
-    /// Update UI state based on corresponding component.
-    /// </summary>
-    public void Update(Entity<NodeScannerComponent> ent)
-    {
-        _scannerDisplay?.Update(ent);
     }
 
     /// <inheritdoc />
