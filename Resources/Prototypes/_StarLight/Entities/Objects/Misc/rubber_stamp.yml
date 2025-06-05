@@ -39,3 +39,31 @@
     - type: Sprite
       sprite: _Starlight/Objects/Misc/stamps.rsi
       state: stamp-iaa
+
+- type: entity
+  name: Blueshield Officer's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampBSO
+  suffix: DO NOT MAP
+  components:
+  - type: Stamp
+    stampedName: "Blueshield Officer"
+    stampedColor: "#004281"
+    stampState: "paper_stamp-bso"
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/stamps.rsi
+    state: stamp-bso
+    
+- type: entity
+  name: Brigmedic's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampBrigmedic
+  suffix: DO NOT MAP
+  components:
+    - type: Stamp
+      stampedName: "Brigmedic"
+      stampedColor: "#ae2e33"
+      stampState: "paper_stamp-brigmedic"
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/stamps.rsi
+      state: stamp-brigmedic
