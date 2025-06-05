@@ -6829,4 +6829,39 @@ Entries:
   id: 944
   time: '2025-06-05T17:06:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/769
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins no longer take twice as much airloss damage
+    type: Remove
+  id: 945
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins no longer heal half as fast from airloss
+    type: Remove
+  id: 946
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins now have a higher vision range
+    type: Tweak
+  id: 947
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins now have night vision
+    type: Add
+  id: 948
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: PubliclyExecutedPig
+  changes:
+  - message: Lobster has actually good genpop now sorta
+    type: Tweak
+  id: 949
+  time: '2025-06-05T19:43:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/774
 
