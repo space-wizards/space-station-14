@@ -208,6 +208,14 @@
 
 - type: entity
   parent: LockerWallBasePrisoner
+  id: LockerWallPrisoner5
+  suffix: 5
+  components:
+  - type: EntityStorageVisuals
+    stateDoorClosed: genpop_door_5
+
+- type: entity
+  parent: LockerWallBasePrisoner
   id: LockerWallPrisoner6
   suffix: 6
   components:
