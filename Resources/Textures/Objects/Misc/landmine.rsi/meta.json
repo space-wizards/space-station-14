@@ -14,7 +14,7 @@
       "name": "landmine-unshaded",
       "delays": [
         [
-          0.4,
+          0.75,
           0.15,
           0.1
         ]
