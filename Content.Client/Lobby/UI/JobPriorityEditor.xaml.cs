@@ -200,12 +200,12 @@ public sealed partial class JobPriorityEditor : BoxContainer
                             continue;
                         }
 
-                        if (selectedJobPrio != JobPriority.High || (JobPriority) other.Selected != JobPriority.High)
-                            continue;
-
-                        // Lower any other high priorities to medium.
-                        other.Select((int)JobPriority.Medium);
-                        SelectedJobPriorities[jobId] = JobPriority.Medium;
+                        if (selectedJobPrio == JobPriority.High && (JobPriority) other.Selected == JobPriority.High)
+                        {
+                            // Lower any other high priorities to medium.
+                            other.Select((int)JobPriority.Medium);
+                            SelectedJobPriorities[jobId] = JobPriority.Medium;
+                        }
                     }
 
                     UpdateJobPriorities();
