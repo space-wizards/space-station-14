@@ -109,6 +109,38 @@
     },
     {
       "name": "sheetyellow"
+    },
+    {
+      "name": "outer-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "outer-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inner-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inner-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "detail-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "detail-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "rainbow-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "rainbow-inhand-left",
+      "directions": 4
     }
   ]
 }
