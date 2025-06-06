@@ -327,7 +327,6 @@
     access: [["Command"], ["Research"]]
   - type: ShowJobIcons
   - type: ShowCrewIcons
-    includeCrewBorder: true
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
@@ -388,7 +387,6 @@
     chance: 1
   - type: ShowJobIcons
   - type: ShowCrewIcons
-    includeCrewBorder: true
 
 - type: entity
   parent: BaseBorgChassisNotIonStormable

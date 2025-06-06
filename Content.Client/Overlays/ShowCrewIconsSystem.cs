@@ -10,7 +10,6 @@ public sealed class ShowCrewIconsSystem : EquipmentHudSystem<ShowCrewIconsCompon
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-    public bool IncludeCrewBorder = false;
     public bool UncertainCrewBorder = false;
 
     private static readonly ProtoId<SecurityIconPrototype> CrewBorder = "CrewBorderIcon";
@@ -27,13 +26,9 @@ public sealed class ShowCrewIconsSystem : EquipmentHudSystem<ShowCrewIconsCompon
     {
         base.UpdateInternal(component);
 
-        IncludeCrewBorder = false;
         UncertainCrewBorder = false;
         foreach (var comp in component.Components)
         {
-            if (comp.IncludeCrewBorder)
-                IncludeCrewBorder = true;
-
             if (comp.UncertainCrewBorder)
                 UncertainCrewBorder = true;
         }
@@ -49,18 +44,15 @@ public sealed class ShowCrewIconsSystem : EquipmentHudSystem<ShowCrewIconsCompon
         if (!IsActive)
             return;
 
-        if (IncludeCrewBorder)
+        if (!UncertainCrewBorder)
         {
-            if (!UncertainCrewBorder)
-            {
-                if (iconPrototype.IsCrewJob && _prototype.TryIndex<SecurityIconPrototype>(CrewBorder, out var crewBorderIconPrototype))
-                    ev.StatusIcons.Add(crewBorderIconPrototype);
-            }
-            else
-            {
-                if (_prototype.TryIndex<SecurityIconPrototype>(CrewUncertainBorder, out var crewBorderIconPrototype))
-                    ev.StatusIcons.Add(crewBorderIconPrototype);
-            }
+            if (iconPrototype.IsCrewJob && _prototype.TryIndex<SecurityIconPrototype>(CrewBorder, out var crewBorderIconPrototype))
+                ev.StatusIcons.Add(crewBorderIconPrototype);
+        }
+        else
+        {
+            if (_prototype.TryIndex<SecurityIconPrototype>(CrewUncertainBorder, out var crewBorderIconPrototype))
+                ev.StatusIcons.Add(crewBorderIconPrototype);
         }
     }
 }
