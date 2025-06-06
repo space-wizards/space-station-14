@@ -48,7 +48,7 @@ public sealed class StatusIconOverlay : Overlay
             if (xform.MapID != args.MapId || !sprite.Visible)
                 continue;
 
-            var bounds = comp.Bounds ?? sprite.Bounds;
+            var bounds = comp.Bounds ?? _sprite.GetLocalBounds((uid, sprite));
 
             var worldPos = _transform.GetWorldPosition(xform, xformQuery);
 
@@ -86,7 +86,7 @@ public sealed class StatusIconOverlay : Overlay
                 if (proto.LocationPreference == StatusIconLocationPreference.Left ||
                     proto.LocationPreference == StatusIconLocationPreference.None && countL <= countR)
                 {
-                    if (accOffsetL + texture.Height > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
+                    if (accOffsetL + texture.Height > _sprite.GetLocalBounds((uid, sprite)).Height * EyeManager.PixelsPerMeter)
                         break;
                     if (proto.Layer == StatusIconLayer.Base)
                     {
@@ -99,7 +99,7 @@ public sealed class StatusIconOverlay : Overlay
                 }
                 else
                 {
-                    if (accOffsetR + texture.Height > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
+                    if (accOffsetR + texture.Height > _sprite.GetLocalBounds((uid, sprite)).Height * EyeManager.PixelsPerMeter)
                         break;
                     if (proto.Layer == StatusIconLayer.Base)
                     {
@@ -121,6 +121,7 @@ public sealed class StatusIconOverlay : Overlay
             }
 
             handle.UseShader(null);
+            handle.SetTransform(Matrix3x2.Identity);
         }
     }
 }

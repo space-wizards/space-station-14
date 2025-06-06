@@ -24,3 +24,13 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: MusicianChameleonOutfit
+  job: Musician
+  equipment:
+    head: ClothingHeadHatTophat
+    mask: ClothingMaskBreath
+    neck: ClothingNeckHeadphones
+    outerClothing: ClothingOuterWinterMusician
+    gloves: ClothingHandsGlovesColorBlack

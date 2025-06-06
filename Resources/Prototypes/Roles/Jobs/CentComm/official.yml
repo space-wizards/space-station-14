@@ -24,9 +24,18 @@
     head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesColorBlack
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterArmorCentcommCarapace
     id: CentcomPDA
     ears: ClothingHeadsetAltCentCom
     belt: WeaponPistolN1984
     pocket1: BoxFolderBlack
     pocket2: PenCentcom
+
+
+- type: chameleonOutfit
+  id: CentralCommandOfficialOutfit
+  job: CentralCommandOfficial
+  hasMindShield: true
+  equipment:
+    neck: ClothingNeckScarfStripedCentcom
+    mask: ClothingMaskGasCentcom

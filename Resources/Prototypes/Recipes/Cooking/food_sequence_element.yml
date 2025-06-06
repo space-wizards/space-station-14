@@ -67,6 +67,17 @@
   - Cooked
   - Meat
 
+# Cooked Patty
+
+- type: foodSequenceElement
+  id: MeatPatty
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: patty
+  tags:
+  - Cooked
+  - Meat
+
 # Dragon Steak
 
 - type: foodSequenceElement
