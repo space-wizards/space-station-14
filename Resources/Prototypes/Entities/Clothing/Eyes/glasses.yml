@@ -128,6 +128,8 @@
     sprite: Clothing/Eyes/Glasses/outlawglasses.rsi
   - type: VisionCorrection
   - type: IdentityBlocker
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingEyesBase
@@ -293,7 +295,7 @@
   - type: FlashImmunity
   - type: EyeProtection
     protectionTime: 5
-  - type: BlackAndWhiteOverlay
+  - type: NoirOverlay
   - type: Tag
     tags:
     - HamsterWearable
