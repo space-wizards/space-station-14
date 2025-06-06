@@ -1,48 +1,13 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Robust.Shared.Utility;
+using Content.Shared.Instruments;
 
 namespace Content.Client.Instruments.MidiParser;
 
 public static class MidiParser
 {
-    // Based on https://www.ccarh.org/courses/253/handout/gminstruments/
+    // Based on
     // Maybe localize? Idk.
-    private static readonly string[] GeneralMidiInstruments =
-    [
-        "Acoustic Grand Piano", "Bright Acoustic Piano", "Electric Grand Piano", "Honky-tonk Piano",
-        "Rhodes Piano", "Chorused Piano", "Harpsichord", "Clavinet",
-        "Celesta", "Glockenspiel", "Music Box", "Vibraphone",
-        "Marimba", "Xylophone", "Tubular Bells", "Dulcimer",
-        "Hammond Organ", "Percussive Organ", "Rock Organ", "Church Organ",
-        "Reed Organ", "Accordion", "Harmonica", "Tango Accordion",
-        "Acoustic Nylon Guitar", "Acoustic Steel Guitar", "Electric Jazz Guitar", "Electric Clean Guitar",
-        "Electric Muted Guitar", "Overdriven Guitar", "Distortion Guitar", "Guitar Harmonics",
-        "Acoustic Bass", "Fingered Electric Bass", "Plucked Electric Bass", "Fretless Bass",
-        "Slap Bass 1", "Slap Bass 2", "Synth Bass 1", "Synth Bass 2",
-        "Violin", "Viola", "Cello", "Contrabass",
-        "Tremolo Strings", "Pizzicato Strings", "Orchestral Harp", "Timpani",
-        "String Ensemble 1", "String Ensemble 2", "Synth Strings 1", "Synth Strings 2",
-        "Choir \"Aah\"", "Voice \"Ooh\"", "Synth Choir", "Orchestra Hit",
-        "Trumpet", "Trombone", "Tuba", "Muted Trumpet",
-        "French Horn", "Brass Section", "Synth Brass 1", "Synth Brass 2",
-        "Soprano Sax", "Alto Sax", "Tenor Sax", "Baritone Sax",
-        "Oboe", "English Horn", "Bassoon", "Clarinet",
-        "Piccolo", "Flute", "Recorder", "Pan Flute",
-        "Bottle Blow", "Shakuhachi", "Whistle", "Ocarina",
-        "Square Wave Lead", "Sawtooth Wave Lead", "Calliope Lead", "Chiff Lead",
-        "Charang Lead", "Voice Lead", "Fiths Lead", "Bass Lead",
-        "New Age Pad", "Warm Pad", "Polysynth Pad", "Choir Pad",
-        "Bowed Pad", "Metallic Pad", "Halo Pad", "Sweep Pad",
-        "Rain Effect", "Soundtrack Effect", "Crystal Effect", "Atmosphere Effect",
-        "Brightness Effect", "Goblins Effect", "Echoes Effect", "Sci-Fi Effect",
-        "Sitar", "Banjo", "Shamisen", "Koto",
-        "Kalimba", "Bagpipe", "Fiddle", "Shanai",
-        "Tinkle Bell", "Agogo", "Steel Drums", "Woodblock",
-        "Taiko Drum", "Melodic Tom", "Synth Drum", "Reverse Cymbal",
-        "Guitar Fret Noise", "Breath Noise", "Seashore", "Bird Tweet",
-        "Telephone Ring", "Helicopter", "Applause", "Gunshot",
-    ];
 
     // Thanks again to http://www.somascape.org/midi/tech/mfile.html
     public static bool TryGetMidiTracks(
@@ -61,12 +26,11 @@ public static class MidiParser
             return false;
         }
 
-        var headerLength = stream.ReadInt32();
+        var headerLength = stream.ReadUInt32();
         // MIDI specs define that the header is 6 bytes, we only look at the 6 bytes, if its more, we skip ahead.
-        DebugTools.Assert(headerLength == 6, $"Invalid header length, expected 6, got {headerLength}");
 
         stream.Skip(2); // format
-        var trackCount = stream.ReadInt16();
+        var trackCount = stream.ReadUInt16();
         stream.Skip(2); // time div
 
         // We now skip ahead if we still have any header length left
@@ -85,7 +49,7 @@ public static class MidiParser
 
             var track = new MidiTrack();
 
-            var trackLength = stream.ReadInt32();
+            var trackLength = stream.ReadUInt32();
             var trackEnd = stream.StreamPosition + trackLength;
             var hasMidiEvent = false;
             byte? lastStatusByte = null;
@@ -144,10 +108,10 @@ public static class MidiParser
                         var text = Encoding.ASCII.GetString(metaData, 0, (int)metaLength);
                         switch (metaType)
                         {
-                            case 0x03 when track.TrackName != null:
+                            case 0x03 when track.TrackName == null:
                                 track.TrackName = text;
                                 break;
-                            case 0x04 when track.InstrumentName != null:
+                            case 0x04 when track.InstrumentName == null:
                                 track.InstrumentName = text;
                                 break;
                         }
@@ -178,8 +142,8 @@ public static class MidiParser
                                 var programNumber = stream.ReadByte();
                                 if (track.ProgramName == null)
                                 {
-                                    if (programNumber < GeneralMidiInstruments.Length)
-                                        track.ProgramName = GeneralMidiInstruments[programNumber];
+                                    if (programNumber < Enum.GetValues<MidiInstrument>().Length)
+                                        track.ProgramName = Loc.GetString($"instruments-component-menu-midi-channel-{((MidiInstrument)programNumber).GetStringRep()}");
                                 }
                                 break;
                             }

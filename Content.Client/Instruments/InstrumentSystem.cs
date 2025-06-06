@@ -24,6 +24,8 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     public int MaxMidiEventsPerBatch { get; private set; }
     public int MaxMidiEventsPerSecond { get; private set; }
 
+    public event Action? OnChannelsUpdated;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -39,6 +41,15 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
         SubscribeLocalEvent<InstrumentComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<InstrumentComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<ActiveInstrumentComponent, AfterAutoHandleStateEvent>(OnActiveInstrumentAfterHandleState);
+    }
+
+    private void OnActiveInstrumentAfterHandleState(Entity<ActiveInstrumentComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        // Called in a timer so that the components update client side for resolving them in TryComps.
+
+        if (OnChannelsUpdated != null)
+            Timer.Spawn(1, OnChannelsUpdated.Invoke);
     }
 
     private void OnHandleState(EntityUid uid, SharedInstrumentComponent component, ref ComponentHandleState args)
@@ -251,6 +262,12 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         instrument.Renderer.OnMidiEvent += instrument.MidiEventBuffer.Add;
         return true;
 
+    }
+
+    [Obsolete("Use overload that takes in byte[] instead.")]
+    public bool OpenMidi(EntityUid uid, ReadOnlySpan<byte> data, InstrumentComponent? instrument = null)
+    {
+        return OpenMidi(uid, data.ToArray(), instrument);
     }
 
     public bool OpenMidi(EntityUid uid, byte[] data, InstrumentComponent? instrument = null)

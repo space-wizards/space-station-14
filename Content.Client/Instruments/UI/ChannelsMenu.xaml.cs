@@ -4,7 +4,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Audio.Midi;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Instruments.UI;
@@ -12,17 +11,41 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public sealed partial class ChannelsMenu : DefaultWindow
 {
+    [Dependency] private readonly IEntityManager _entityManager = null!;
+
     private readonly InstrumentBoundUserInterface _owner;
 
     public ChannelsMenu(InstrumentBoundUserInterface owner) : base()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
         _owner = owner;
 
         ChannelList.OnItemSelected += OnItemSelected;
         ChannelList.OnItemDeselected += OnItemDeselected;
         AllButton.OnPressed += OnAllPressed;
         ClearButton.OnPressed += OnClearPressed;
+        DisplayTrackNames.OnPressed += OnDisplayTrackNamesPressed;
+
+        _owner.Instruments.OnChannelsUpdated += UpdateChannelList;
+    }
+
+    private void OnDisplayTrackNamesPressed(BaseButton.ButtonEventArgs obj)
+    {
+        DisplayTrackNames.SetClickPressed(!DisplayTrackNames.Pressed);
+        Populate();
+    }
+
+    private void UpdateChannelList()
+    {
+        Populate(); // This is kind of in-efficent because we don't filter for which instrument updated its channels, but idc
+    }
+
+    protected override void ExitedTree()
+    {
+        base.ExitedTree();
+
+        _owner.Instruments.OnChannelsUpdated -= UpdateChannelList;
     }
 
     private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
@@ -53,20 +76,61 @@ public sealed partial class ChannelsMenu : DefaultWindow
         }
     }
 
-    public void Populate(InstrumentComponent? instrument, ActiveInstrumentComponent? activeInstrument)
+    /// <summary>
+    /// Walks up the tree of instrument masters to find the truest master of them all.
+    /// </summary>
+    private ActiveInstrumentComponent ResolveActiveInstrument(InstrumentComponent? comp)
+    {
+        comp ??= _entityManager.GetComponent<InstrumentComponent>(_owner.Owner);
+
+        var instrument = new Entity<InstrumentComponent>(_owner.Owner, comp);
+
+        while (true)
+        {
+            if (instrument.Comp.Master == null)
+                break;
+
+            instrument = new Entity<InstrumentComponent>((EntityUid)instrument.Comp.Master,
+                _entityManager.GetComponent<InstrumentComponent>((EntityUid)instrument.Comp.Master));
+        }
+
+        return _entityManager.GetComponent<ActiveInstrumentComponent>(instrument.Owner);
+    }
+
+    public void Populate()
     {
         ChannelList.Clear();
+        var instrument = _entityManager.GetComponent<InstrumentComponent>(_owner.Owner);
+        var activeInstrument = ResolveActiveInstrument(instrument);
 
         for (int i = 0; i < RobustMidiEvent.MaxChannels; i++)
         {
             var label = _owner.Loc.GetString("instrument-component-channel-name",
                 ("number", i));
             if (activeInstrument != null
-                && activeInstrument.Channels.TryGetValue(i, out var resolvedMidiChannel)
+                && activeInstrument.Tracks.TryGetValue(i, out var resolvedMidiChannel)
                 && resolvedMidiChannel != null
                 )
             {
-                label = resolvedMidiChannel;
+                if (DisplayTrackNames.Pressed)
+                {
+                    label = resolvedMidiChannel switch
+                    {
+                        { TrackName: not null, InstrumentName: not null } =>
+                            $"{i} {resolvedMidiChannel.TrackName} ({resolvedMidiChannel.InstrumentName})",
+                        { TrackName: not null } => $"{i} {resolvedMidiChannel.TrackName}",
+                        _ => label,
+                    };
+                }
+                else
+                {
+                    label = resolvedMidiChannel switch
+                    {
+                        { ProgramName: not null } =>
+                            $"{i} {resolvedMidiChannel.ProgramName}",
+                        _ => label,
+                    };
+                }
             }
 
             var item = ChannelList.AddItem(label, null, true, i);

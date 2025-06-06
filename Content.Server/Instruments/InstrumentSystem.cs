@@ -145,7 +145,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
             return;
 
-        activeInstrument.Channels = msg.Channels.ToList();
+        activeInstrument.Tracks = msg.Tracks;
         Dirty(uid, activeInstrument);
     }
 

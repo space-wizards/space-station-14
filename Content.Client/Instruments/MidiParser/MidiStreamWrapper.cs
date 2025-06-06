@@ -55,9 +55,9 @@ public sealed class MidiStreamWrapper
     }
 
     /// <summary>
-    /// Reads a 4 byte big-endian int.
+    /// Reads a 4 byte big-endian uint.
     /// </summary>
-    public uint ReadInt32()
+    public uint ReadUInt32()
     {
         var bytes = ReadBytes(4);
         return (uint)((bytes[0] << 24) |
@@ -67,9 +67,9 @@ public sealed class MidiStreamWrapper
     }
 
     /// <summary>
-    /// Reads a 2 byte big-endian short.
+    /// Reads a 2 byte big-endian ushort.
     /// </summary>
-    public ushort ReadInt16()
+    public ushort ReadUInt16()
     {
         var bytes = ReadBytes(2);
         return (ushort)((bytes[0] << 8) | bytes[1]);
@@ -77,11 +77,7 @@ public sealed class MidiStreamWrapper
 
     public string ReadString(int count)
     {
-        var bytes = new byte[count];
-        var read = _stream.Read(bytes, 0, count);
-        if (read != count)
-            throw new Exception("Unexpected end of stream");
-
+        var bytes = ReadBytes(count);
         return Encoding.UTF8.GetString(bytes, 0, count);
     }
 

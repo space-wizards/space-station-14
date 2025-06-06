@@ -22,7 +22,7 @@ public sealed partial class InstrumentSystem
             return false;
         }
 
-        var resolvedTracks = new List<string?>();
+        var resolvedTracks = new List<MidiTrack?>();
         for (var index = 0; index < tracks.Length; index++)
         {
             var midiTrack = tracks[index];
@@ -32,26 +32,20 @@ public sealed partial class InstrumentSystem
             switch (midiTrack)
             {
                 case { TrackName: not null, ProgramName: not null }:
-                    resolvedTracks.Add($"{midiTrack.TrackName} ({midiTrack.ProgramName})");
-                    break;
                 case { TrackName: not null, InstrumentName: not null }:
-                    resolvedTracks.Add($"{midiTrack.TrackName} ({midiTrack.InstrumentName})");
-                    break;
                 case { TrackName: not null }:
-                    resolvedTracks.Add($"{midiTrack.TrackName}");
-                    break;
                 case { ProgramName: not null }:
-                    resolvedTracks.Add($"{midiTrack.ProgramName}");
+                    resolvedTracks.Add(midiTrack);
                     break;
                 default:
-                    resolvedTracks.Add(null);
+                    resolvedTracks.Add(null); // Used so the channel still displays as MIDI Channel X and doesn't just take the next valid one in the UI
                     break;
             }
 
             Log.Debug($"Channel name: {resolvedTracks.Last()}");
         }
 
-        RaiseNetworkEvent(new InstrumentSetChannelsEvent(GetNetEntity(uid), resolvedTracks));
+        RaiseNetworkEvent(new InstrumentSetChannelsEvent(GetNetEntity(uid), resolvedTracks.ToArray()));
         Log.Debug($"Resolved {resolvedTracks.Count} channels.");
 
         return true;

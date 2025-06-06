@@ -102,15 +102,7 @@ namespace Content.Client.Instruments.UI
         public void OpenChannelsMenu()
         {
             _channelsMenu ??= new ChannelsMenu(this);
-            EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument);
-
-            ActiveInstrumentComponent? activeInstrument = null;
-            if (instrument is { Master: not null })
-                EntMan.TryGetComponent(instrument.Master, out activeInstrument);
-            else
-                EntMan.TryGetComponent(Owner, out activeInstrument);
-
-            _channelsMenu.Populate(instrument, activeInstrument);
+            _channelsMenu.Populate();
             _channelsMenu.OpenCenteredRight();
         }
 
