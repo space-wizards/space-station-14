@@ -15,6 +15,22 @@
     },
     {
       "name": "door_remotescreencolour"
+    },
+    {
+      "name": "base-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "base-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "color-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "color-inhand-left",
+      "directions": 4
     }
   ]
 }
