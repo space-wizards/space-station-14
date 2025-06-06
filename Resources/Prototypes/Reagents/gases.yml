@@ -370,7 +370,7 @@
           shouldHave: false
         key: ForcedSleep
         component: ForcedSleeping
-        time: 3
+        time: 12
         type: Add
       - !type:HealthChange
         conditions:
