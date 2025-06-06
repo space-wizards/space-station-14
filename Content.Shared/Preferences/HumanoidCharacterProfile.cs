@@ -77,7 +77,7 @@ namespace Content.Shared.Preferences
         [DataField]
         public ProtoId<SpeciesPrototype> Species { get; set; } = SharedHumanoidAppearanceSystem.DefaultSpecies;
 
-        [DataField]
+        [DataField] // Starlight
         public string CustomSpecieName { get; set; } = "";
 
         [DataField]
@@ -133,7 +133,7 @@ namespace Content.Shared.Preferences
             string voice,
             string flavortext,
             string species,
-            string customspeciename,
+            string customspeciename, // Starlight
             int age,
             Sex sex,
             Gender gender,
@@ -149,7 +149,7 @@ namespace Content.Shared.Preferences
             Voice = voice;
             FlavorText = flavortext;
             Species = species;
-            CustomSpecieName = customspeciename;
+            CustomSpecieName = customspeciename; // Starlight
             Age = age;
             Sex = sex;
             Gender = gender;
@@ -182,7 +182,7 @@ namespace Content.Shared.Preferences
                 other.Voice,
                 other.FlavorText,
                 other.Species,
-                other.CustomSpecieName,
+                other.CustomSpecieName, // Starlight
                 other.Age,
                 other.Sex,
                 other.Gender,
@@ -260,7 +260,7 @@ namespace Content.Shared.Preferences
 
             var name = GetName(species, gender);
 
-            var customspeciename = "";
+            var customspeciename = ""; // Starlight
 
             return new HumanoidCharacterProfile()
             {
@@ -269,7 +269,7 @@ namespace Content.Shared.Preferences
                 Age = age,
                 Gender = gender,
                 Species = species,
-                CustomSpecieName = customspeciename,
+                CustomSpecieName = customspeciename, // Starlight
                 Appearance = HumanoidCharacterAppearance.Random(species, sex),
             };
         }
@@ -307,10 +307,12 @@ namespace Content.Shared.Preferences
         {
             return new(this) { Species = species };
         }
+        // Starlight - Start
         public HumanoidCharacterProfile WithCustomSpecieName(string customspeciename)
         {
             return new(this) { CustomSpecieName = customspeciename };
         }
+        // Starlight - End
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
             return new(this) { Appearance = appearance };
@@ -480,7 +482,7 @@ namespace Content.Shared.Preferences
             if (Sex != other.Sex) return false;
             if (Gender != other.Gender) return false;
             if (Species != other.Species) return false;
-            if (CustomSpecieName != other.CustomSpecieName) return false;
+            if (CustomSpecieName != other.CustomSpecieName) return false; // Starlight
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
@@ -558,6 +560,7 @@ namespace Content.Shared.Preferences
                 name = GetName(Species, gender);
             }
 
+            // Starlight - Start
             var customspeciename =
             !speciesPrototype.CustomName
             || string.IsNullOrEmpty(CustomSpecieName)
@@ -565,6 +568,7 @@ namespace Content.Shared.Preferences
                 : CustomSpecieName.Length > maxNameLength
                     ? FormattedMessage.RemoveMarkup(CustomSpecieName)[..maxNameLength]
                     : FormattedMessage.RemoveMarkup(CustomSpecieName);
+             // Starlight - End
 
             string flavortext;
             var maxFlavorTextLength = configManager.GetCVar(CCVars.MaxFlavorTextLength);
@@ -624,7 +628,7 @@ namespace Content.Shared.Preferences
                          .ToList();
 
             Name = name;
-            CustomSpecieName = customspeciename;
+            CustomSpecieName = customspeciename; // Starlight
             FlavorText = flavortext;
             Age = age;
             Sex = sex;
@@ -736,7 +740,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(Name);
             hashCode.Add(FlavorText);
             hashCode.Add(Species);
-            hashCode.Add(CustomSpecieName);
+            hashCode.Add(CustomSpecieName); // Starlight
             hashCode.Add(Age);
             hashCode.Add((int)Sex);
             hashCode.Add((int)Gender);

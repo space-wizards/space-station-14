@@ -78,6 +78,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     public EntProtoId DollPrototype { get; private set; } = default!;
 
     /// <summary>
+    /// Starlight
     /// Allow Custom Specie Name for this Specie.
     /// </summary>
     [DataField]

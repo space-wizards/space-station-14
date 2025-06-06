@@ -58,6 +58,7 @@ namespace Content.Server.Database
                 .HasIndex(p => new {p.Slot, PrefsId = p.PreferenceId})
                 .IsUnique();
 
+            // Starlight - Start
             modelBuilder.Entity<StarLightModel.StarLightProfile>(entity =>
             {
                 entity.HasOne(e => e.Profile)
@@ -71,6 +72,7 @@ namespace Content.Server.Database
                 entity.Property(e => e.CustomSpecieName)
                     .HasMaxLength(32);
             });
+            // Starlight - End
 
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})

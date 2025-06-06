@@ -44,7 +44,7 @@ namespace Content.IntegrationTests.Tests.Preferences
                 Name = "Charlie Charlieson",
                 FlavorText = "The biggest boy around.",
                 Species = "Human",
-                CustomSpecieName = "",
+                CustomSpecieName = "", // Starlight
                 Age = 21,
                 Appearance = new(
                     "Afro",

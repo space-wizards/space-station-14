@@ -50,8 +50,8 @@ namespace Content.Server.Database
                 .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
                 .Include(p => p.Profiles).ThenInclude(h => h.Traits)
-                .Include(p => p.Profiles)
-                    .ThenInclude(h => h.StarLightProfile)
+                .Include(p => p.Profiles) // Starlight
+                    .ThenInclude(h => h.StarLightProfile) // Starlight
                 .Include(p => p.Profiles)
                     .ThenInclude(h => h.Loadouts)
                     .ThenInclude(l => l.Groups)
@@ -103,7 +103,7 @@ namespace Content.Server.Database
             }
 
             var oldProfile = db.DbContext.Profile
-                .Include(p => p.StarLightProfile)
+                .Include(p => p.StarLightProfile) // Starlight
                 .Include(p => p.Preference)
                 .Where(p => p.Preference.UserId == userId.UserId)
                 .Include(p => p.Jobs)
@@ -268,7 +268,7 @@ namespace Content.Server.Database
                 profile.Voice,
                 profile.FlavorText,
                 profile.Species,
-                profile.StarLightProfile?.CustomSpecieName ?? "",
+                profile.StarLightProfile?.CustomSpecieName ?? "", // Starlight
                 profile.Age,
                 sex,
                 gender,
