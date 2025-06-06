@@ -98,6 +98,8 @@ public sealed partial class JobPriorityEditor : BoxContainer
         {
             var departmentName = Loc.GetString(department.Name);
 
+            // If a department category hasn't yet been created in _jobCategories,
+            // start a new one.
             if (!_jobCategories.TryGetValue(department.ID, out var category))
             {
                 category = new BoxContainer
