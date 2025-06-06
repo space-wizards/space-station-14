@@ -1,6 +1,6 @@
-﻿using Content.Server.Objectives.Systems;
+﻿using Content.Server._Starlight.Objectives.Systems;
 
-namespace Content.Server.Objectives.Components;
+namespace Content.Server._Starlight.Objectives.Components;
 
 /// <summary>
 /// Requires that a target at least dies once.  
