@@ -77,14 +77,6 @@
   color: "#967101"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
-  
-- type: radioChannel # TODO move to _Starlight folder?
-  id: Expedition
-  name: chat-radio-expedition
-  frequency: 1550
-  color: "#967101" # TODO update color ? salvage pink maybe, or color from spationaut suit
-  # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
-  longRange: true
 
 - type: radioChannel
   id: Binary
