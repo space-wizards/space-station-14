@@ -69,6 +69,9 @@
   - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
+  - type: Item
+    sprite: Objects/Power/light_bulb.rsi
+    heldPrefix: normal
 
 - type: entity
   parent: BaseLightbulb
@@ -110,6 +113,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Item
+    sprite: Objects/Power/light_tube.rsi
+    heldPrefix: normal
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
@@ -207,6 +213,9 @@
   - type: LightBulb
     startingState: Broken
     bulb: Bulb
+  - type: Item
+    sprite: Objects/Power/light_bulb.rsi
+    heldPrefix: broken
 
 - type: entity
   parent: BaseLightbulb
@@ -260,6 +269,9 @@
   components:
   - type: LightBulb
     startingState: Broken
+  - type: Item
+    sprite: Objects/Power/light_tube.rsi
+    heldPrefix: broken
 
 - type: entity
   parent: BaseLightTube
