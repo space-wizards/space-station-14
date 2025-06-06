@@ -21,6 +21,7 @@
     - id: AstroNavCartridge
     - id: ClothingHandsKnuckleDustersQM
     - id: MailTeleporterMachineCircuitboard
+    - id: RadioHandheldExpedition
 
 - type: entity
   id: LockerQuarterMasterFilled
