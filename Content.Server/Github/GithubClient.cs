@@ -34,6 +34,9 @@ public sealed class GithubClient
 
     #region Header constants
 
+    private const string ProductName = "SpaceStation14GithubApi";
+    private const string ProductVersion = "1";
+
     private const string AcceptHeader = "Accept";
     private const string AcceptHeaderType = "application/vnd.github+json";
 
@@ -83,8 +86,11 @@ public sealed class GithubClient
                 { AuthHeader, AuthHeaderBearer + _authToken },
                 { VersionHeader, VersionNumber },
             },
-            Timeout = TimeSpan.FromSeconds(15)
+            Timeout = TimeSpan.FromSeconds(15),
         };
+
+        newClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(ProductName, ProductVersion));
+
         Interlocked.Exchange(ref _httpClient, newClient);
     }
 
