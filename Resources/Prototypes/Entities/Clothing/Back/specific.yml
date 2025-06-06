@@ -79,6 +79,7 @@
 - type: entity
   parent: ClothingBackpackWaterTank
   id: ClothingBackpackWaterTankFlamethrower
+  suffix: flamethrower
   components:
   - type: Label
     currentLabel: reagent-name-napalm
