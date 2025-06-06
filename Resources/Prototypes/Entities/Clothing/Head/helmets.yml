@@ -27,11 +27,11 @@
         Piercing: 0.9
         Heat: 0.9
 
-#Basic Helmet (Security Helmet)
+#Security Helmet
 - type: entity
   parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
   id: ClothingHeadHelmetBasic
-  name: helmet
+  name: security helmet
   description: Standard security gear. Protects the head from impacts.
   components:
   - type: Sprite
@@ -45,6 +45,13 @@
   - type: HideLayerClothing
     layers:
       Hair: HEAD
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-lower-visor-verb
+    foldVerbText: fold-raise-visor-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: visorless
+    foldedHeldPrefix: visorless
 
 #Mercenary Helmet
 - type: entity
