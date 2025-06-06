@@ -217,6 +217,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Cluwne
   jobName: job-name-cluwne
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
