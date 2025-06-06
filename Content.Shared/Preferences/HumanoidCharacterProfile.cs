@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Content.Shared.CCVar;
+using Content.Shared.Starlight.CCVar; // Starlight
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
@@ -26,6 +27,7 @@ namespace Content.Shared.Preferences
     public sealed partial class HumanoidCharacterProfile : ICharacterProfile
     {
         private static readonly Regex RestrictedNameRegex = new(@"[^A-Za-z0-9 '\-,]"); //Starlight edit, allow commas
+        private static readonly Regex RestrictedCustomSpecieNameRegex = new(@"[^A-Za-z0-9 '\-,]|\B\s+|\s+\B"); //Starlight
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
 
         /// <summary>
@@ -385,7 +387,7 @@ namespace Content.Shared.Preferences
         {
             return new(this)
             {
-                _antagPreferences = new (antagPreferences),
+                _antagPreferences = new(antagPreferences),
             };
         }
 
@@ -563,13 +565,29 @@ namespace Content.Shared.Preferences
             // Starlight - Start
             var customspeciename =
             !speciesPrototype.CustomName
-            || string.IsNullOrEmpty(CustomSpecieName)
+            || string.IsNullOrWhiteSpace(CustomSpecieName)
                 ? ""
                 : CustomSpecieName.Length > maxNameLength
-                    ? FormattedMessage.RemoveMarkup(CustomSpecieName)[..maxNameLength]
-                    : FormattedMessage.RemoveMarkup(CustomSpecieName);
+                    ? CustomSpecieName[..maxNameLength]
+                    : CustomSpecieName;
 
-            // TODO: Add Checks here to make sure its FUCKING VALID!
+            if (!string.IsNullOrWhiteSpace(CustomSpecieName) && configManager.GetCVar(StarlightCCVars.RestrictedCustomSpecieNames))
+            {
+                customspeciename = RestrictedCustomSpecieNameRegex.Replace(customspeciename, string.Empty);
+
+                var speciesPrototypes = prototypeManager.EnumeratePrototypes<SpeciesPrototype>();
+                foreach (var specieNames in speciesPrototypes)
+                {
+                    if (specieNames == speciesPrototype)
+                        continue;
+
+                    if (Loc.GetString(specieNames.Name).ToLower() == customspeciename.ToLower())
+                    {
+                        customspeciename = "";
+                        break;
+                    }
+                }
+            }
             // Starlight - End
 
             string flavortext;
