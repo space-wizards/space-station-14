@@ -50,14 +50,14 @@ public sealed partial class JobPriorityEditor : BoxContainer
         {
             SelectedJobPriorities = _preferencesManager.Preferences?.JobPriorities.ShallowClone() ??  new Dictionary<ProtoId<JobPrototype>, JobPriority>();
             UpdateJobPriorities();
-            SetDirty();
+            CheckDirty();
         };
 
         SaveButton.OnPressed += args =>
         {
             Save?.Invoke(SelectedJobPriorities);
             UpdateJobPriorities();
-            SetDirty();
+            CheckDirty();
         };
 
         RefreshJobs();
@@ -170,7 +170,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
                 {
                     selector.LockRequirements(reason);
                     SelectedJobPriorities[job.ID] = JobPriority.Never;
-                    SetDirty();
+                    CheckDirty();
                 }
                 else
                 {
@@ -201,7 +201,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
                     }
 
                     UpdateJobPriorities();
-                    SetDirty();
+                    CheckDirty();
                 };
 
                 _jobPriorities.Add((job.ID, selector));
@@ -211,7 +211,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
         }
 
         UpdateJobPriorities();
-        SetDirty();
+        CheckDirty();
     }
 
     /// <summary>
@@ -228,7 +228,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
     /// <summary>
     /// Check if the selected priorities are different from the saved ones
     /// </summary>
-    private void SetDirty()
+    private void CheckDirty()
     {
         // If it equals default then reset the button.
         var savedJobPriorities = _preferencesManager.Preferences?.JobPriorities ?? new Dictionary<ProtoId<JobPrototype>, JobPriority>();
@@ -296,7 +296,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
     {
         SelectedJobPriorities = _preferencesManager.Preferences?.JobPriorities.ShallowClone() ??  new Dictionary<ProtoId<JobPrototype>, JobPriority>();
         UpdateJobPriorities();
-        SetDirty();
+        CheckDirty();
     }
 
     /// <summary>
@@ -307,7 +307,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
     {
         SelectedJobPriorities = jobPriorities?.ShallowClone() ?? new Dictionary<ProtoId<JobPrototype>, JobPriority>();
         UpdateJobPriorities();
-        SetDirty();
+        CheckDirty();
     }
 }
 
