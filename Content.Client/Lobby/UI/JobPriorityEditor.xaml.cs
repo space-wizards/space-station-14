@@ -88,14 +88,9 @@ public sealed partial class JobPriorityEditor : BoxContainer
         var firstCategory = true;
 
         // Get all displayed departments
-        var departments = new List<DepartmentPrototype>();
-        foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
-        {
-            if (department.EditorHidden)
-                continue;
-
-            departments.Add(department);
-        }
+        var departments = _prototypeManager.EnumeratePrototypes<DepartmentPrototype>()
+            .Where(dep => !dep.EditorHidden)
+            .ToList();
 
         departments.Sort(DepartmentUIComparer.Instance);
 
