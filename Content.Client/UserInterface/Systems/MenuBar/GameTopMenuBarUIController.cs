@@ -5,9 +5,7 @@ using Content.Client.UserInterface.Systems.Bwoink;
 using Content.Client.UserInterface.Systems.Character;
 using Content.Client.UserInterface.Systems.Crafting;
 using Content.Client.UserInterface.Systems.Emotes;
-using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Client.UserInterface.Systems.Guidebook;
-using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.UserInterface.Systems.Sandbox;
 using Robust.Client.UserInterface.Controllers;
 
@@ -15,7 +13,6 @@ namespace Content.Client.UserInterface.Systems.MenuBar;
 
 public sealed class GameTopMenuBarUIController : UIController, IOnStateChanged<GameplayState>
 {
-    [Dependency] private readonly EscapeUIController _escape = default!;
     [Dependency] private readonly AdminUIController _admin = default!;
     [Dependency] private readonly CharacterUIController _character = default!;
     [Dependency] private readonly CraftingUIController _crafting = default!;
@@ -25,32 +22,8 @@ public sealed class GameTopMenuBarUIController : UIController, IOnStateChanged<G
     [Dependency] private readonly GuidebookUIController _guidebook = default!;
     [Dependency] private readonly EmotesUIController _emotes = default!;
 
-    private GameTopMenuBar? MenuBar => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>();
-
-    public void OnStateEntered(GameplayState state)
-    {
-        if (MenuBar == null)
-            return;
-
-        MenuBar.EscapeButton.OnPressed += _ => _escape.ToggleWindow();
-
-        _guidebook.LoadButton();
-        _admin.LoadButton();
-        _character.LoadButton();
-        _crafting.LoadButton();
-        _ahelp.LoadButton();
-        _action.LoadButton();
-        _sandbox.LoadButton();
-        _emotes.LoadButton();
-    }
-
     public void OnStateExited(GameplayState state)
     {
-        if (MenuBar == null)
-            return;
-
-        MenuBar.EscapeButton.Pressed = false;
-        
         _guidebook.UnloadButton();
         _admin.UnloadButton();
         _character.UnloadButton();
@@ -59,5 +32,17 @@ public sealed class GameTopMenuBarUIController : UIController, IOnStateChanged<G
         _action.UnloadButton();
         _sandbox.UnloadButton();
         _emotes.UnloadButton();
+    }
+
+    public void OnStateEntered(GameplayState state)
+    {
+        _guidebook.LoadButton();
+        _admin.LoadButton();
+        _character.LoadButton();
+        _crafting.LoadButton();
+        _ahelp.LoadButton();
+        _action.LoadButton();
+        _sandbox.LoadButton();
+        _emotes.LoadButton();
     }
 }
