@@ -25,11 +25,23 @@ public sealed partial class JobPriorityEditor : BoxContainer
     private readonly IPrototypeManager _prototypeManager;
     private readonly JobRequirementsManager _requirements;
 
+    /// <summary>
+    /// A dictionary to map Department names / Categories to a box that holds individual job priority selector controls
+    /// </summary>
     private readonly Dictionary<string, BoxContainer> _jobCategories = new();
+    /// <summary>
+    /// A list holding each RequirementsSelector and the name of the job it is setting the priority for.
+    /// </summary>
     private readonly List<(string, RequirementsSelector)> _jobPriorities = new();
 
+    /// <summary>
+    /// The currently edited job priorities dictionary that matches the format of PlayerPreferences job priorities.
+    /// </summary>
     public Dictionary<ProtoId<JobPrototype>, JobPriority> SelectedJobPriorities { get; private set; } = new();
 
+    /// <summary>
+    /// Event that is invoked when the player clicks "Save"
+    /// </summary>
     public event Action<Dictionary<ProtoId<JobPrototype>, JobPriority>>? Save;
 
     /// <summary>
