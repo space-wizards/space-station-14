@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Killerqu00
-  changes:
-  - message: Uncuffing someone with combat mode on will shove them down.
-    type: Add
-  id: 8116
-  time: '2025-03-29T20:09:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35193
 - author: metalgearsloth
   changes:
   - message: Jetpacks emit particles more frequently.
@@ -3922,3 +3915,10 @@
   id: 8627
   time: '2025-06-05T23:45:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34444
+- author: RedBookcase
+  changes:
+  - message: Added Scrap Armor and Scrap Helmets.
+    type: Add
+  id: 8628
+  time: '2025-06-06T00:13:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37601
