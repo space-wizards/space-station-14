@@ -29,10 +29,11 @@ public sealed partial class JobPriorityEditor : BoxContainer
     /// A dictionary to map Department names / Categories to a box that holds individual job priority selector controls
     /// </summary>
     private readonly Dictionary<string, BoxContainer> _jobCategories = new();
+
     /// <summary>
     /// A list holding each RequirementsSelector and the name of the job it is setting the priority for.
     /// </summary>
-    private readonly List<(string, RequirementsSelector)> _jobPriorities = new();
+    private readonly List<(ProtoId<JobPrototype>, RequirementsSelector)> _jobPriorities = new();
 
     /// <summary>
     /// The currently edited job priorities dictionary that matches the format of PlayerPreferences job priorities.
