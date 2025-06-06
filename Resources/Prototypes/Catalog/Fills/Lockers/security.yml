@@ -109,6 +109,7 @@
       - id: ClothingUniformJumpskirtOfLife
       - id: ClothingShoesBootsMagSec
       - id: BedsheetBrigmedicStrange
+      - id: RubberStampBrigmedic
       - id: MedkitFilled
       - id: MedkitCombatFilled
         prob: 0.6
