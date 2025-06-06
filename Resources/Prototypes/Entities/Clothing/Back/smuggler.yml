@@ -37,7 +37,7 @@
   id: ClothingBackpackSatchelSmuggler
   name: smuggler's satchel
   suffix: Empty
-  description: A dingy, suspicious looking satchel.
+  description: A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi
@@ -48,7 +48,7 @@
   id: ClothingBackpackSatchelSmugglerUnanchored
   name: smuggler's satchel
   suffix: Empty, Unanchored
-  description: A dingy, suspicious looking satchel.
+  description: A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi
