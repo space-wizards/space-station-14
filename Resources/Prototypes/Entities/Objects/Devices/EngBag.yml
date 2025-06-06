@@ -1,11 +1,11 @@
 - type: entity
-  name: engineer bag
-  id: EngBag
+  name: construction bag
+  id: construction bag
   parent: BaseStorageItem
-  description: A bag to easily move electrical.
+  description: convenient bag for transporting building materials.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Atmos/ing_bag.rsi
+    sprite: Objects/Specific/Atmos/construction_bag.rsi
     state: icon
   - type: Item
     size: Ginormous
