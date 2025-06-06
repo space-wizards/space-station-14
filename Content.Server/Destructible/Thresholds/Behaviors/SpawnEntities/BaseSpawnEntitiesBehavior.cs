@@ -16,12 +16,15 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 /// <summary>
 ///     Base functionality for spawning entities on destruction.
 /// </summary>
+/// <remarks>
+///     Spawned entities with <see cref="StackComponent"/> will spawned stacked, up to their stack limit.
+/// </remarks>
 [Serializable]
 [DataDefinition]
 public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
 {
     /// <summary>
-    ///     Time in seconds to wait before spawning entities.
+    ///     Time in seconds to wait before spawning entities. Useful for when your entity also explodes.
     /// </summary>
     /// <remarks>
     ///     If this is greater than 0 it overrides
@@ -31,8 +34,7 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
     public float SpawnAfter;
 
     /// <summary>
-    ///     How far from the destroyed entity to spawn.
-    ///     Creates a random <see cref="Vector2"/> of ((-Offset, Offset), (-Offset, Offset)).
+    ///     How far from the destroyed entity to spawn, using ((-Offset, Offset), (-Offset, Offset)).
     /// </summary>
     [DataField]
     public float Offset { get; set; } = 0.5f;
@@ -55,14 +57,9 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
     [DataField]
     public float ForensicsChance = .4f;
 
-    /// <summary>
-    ///     Set by <see cref="Execute"/>.
-    /// </summary>
-    public MapCoordinates Position;
-
     public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
     {
-        Position = system.EntityManager.System<TransformSystem>().GetMapCoordinates(owner);
+        var position = system.EntityManager.System<TransformSystem>().GetMapCoordinates(owner);
 
         // How many items in the owner stack
         var executions = 1;
@@ -71,74 +68,102 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
             executions = stack.Count;
         }
 
+        // Get spawns from child overrides and pass to spawn function
         for (var i = 0; i < executions; i++)
-        {
-            var toSpawn = GetSpawns(system, owner);
-            SpawnEntities(toSpawn, system, owner);
-        }
+            ExecuteSpawns(GetSpawns(system, owner), position, system, owner);
     }
 
-    // Children override this to get the spawns.
+    /// <summary>
+    ///     Abstract function overridden by children.
+    /// </summary>
+    /// <returns> Prototypes to spawn and how many. </returns>
     protected abstract Dictionary<EntProtoId, int> GetSpawns(DestructibleSystem system, EntityUid owner);
 
     /// <summary>
-    ///     The actual spawning is done here.
+    ///     Handles the logic for how to spawn entites.
     /// </summary>
-    protected void SpawnEntities(Dictionary<EntProtoId, int> spawnDict, DestructibleSystem system, EntityUid owner)
+    protected void ExecuteSpawns(Dictionary<EntProtoId, int> spawnDict, MapCoordinates position, DestructibleSystem system, EntityUid owner)
     {
         if (spawnDict.Count == 0)
             return;
-
-        // Offset function
-        var getRandomVector = () => new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
 
         foreach (var (toSpawn, count) in spawnDict)
         {
             // Spawn delayed
             if (SpawnAfter > 0)
-            {
-                // if it fails to get the spawner, this won't ever work so just return
-                if (!system.PrototypeManager.TryIndex("TemporaryEntityForTimedDespawnSpawners", out var tempSpawnerProto))
-                    return;
-
-                // spawn the spawner
-                var spawner = system.EntityManager.SpawnEntity(tempSpawnerProto.ID, Position.Offset(getRandomVector()));
-                // assign it a lifetime
-                system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
-                timedDespawnComponent.Lifetime = SpawnAfter;
-                // and assign the entity that it will spawn when despawned
-                system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
-                system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), toSpawn);
-            }
+                for (var i = 0; i < count; i++)
+                    SpawnDelayed(toSpawn, position, system);
 
             // Spawn as a stack
             else if (EntityPrototypeHelpers.HasComponent<StackComponent>(toSpawn, system.PrototypeManager))
             {
-                // If in a container spawn there, otherwise offset and spawn on the floor
-                var spawned = SpawnInContainer && system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(owner)
-                    ? system.EntityManager.SpawnNextToOrDrop(toSpawn, owner)
-                    : system.EntityManager.SpawnEntity(toSpawn, Position.Offset(getRandomVector()));
-                system.StackSystem.SetCount(spawned, count);
+                var spawned = SpawnAndTransform(toSpawn, position, system, owner);
 
-                CopyForensics(spawned, system, owner);
+                // Set stack count
+                var stackCount = system.EntityManager.GetComponent<StackComponent>(spawned).Count * count;
+                system.StackSystem.SetCount(spawned, stackCount);
             }
 
             // Spawn as individual items
             else
             {
                 for (var i = 0; i < count; i++)
-                {
-                    // If in a container spawn there, otherwise offset and spawn on the floor
-                    var spawned = SpawnInContainer && system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(owner)
-                        ? system.EntityManager.SpawnNextToOrDrop(toSpawn, owner)
-                        : system.EntityManager.SpawnEntity(toSpawn, Position.Offset(getRandomVector()));
-
-                    CopyForensics(spawned, system, owner);
-                }
+                    SpawnAndTransform(toSpawn, position, system, owner);
             }
         }
     }
 
+    /// <summary>
+    ///     Delayed spawning is done here. Entities spawned this way can't be in containers or have forensics.
+    /// </summary>
+    private void SpawnDelayed(EntProtoId toSpawn, MapCoordinates position, DestructibleSystem system)
+    {
+        // if it fails to get the spawner, this won't ever work so just return
+        if (!system.PrototypeManager.TryIndex("TemporaryEntityForTimedDespawnSpawners", out var tempSpawnerProto))
+            return;
+
+        // spawn the spawner
+        var spawner = system.EntityManager.SpawnEntity(tempSpawnerProto.ID, position.Offset(GetOffsetVector(system)));
+
+        // assign it a lifetime
+        system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
+        timedDespawnComponent.Lifetime = SpawnAfter;
+
+        // and assign the entity that it will spawn when despawned
+        system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
+        system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), toSpawn);
+
+    }
+
+    /// <summary>
+    ///     Regular spawning is done here.
+    /// </summary>
+    private EntityUid SpawnAndTransform(EntProtoId toSpawn, MapCoordinates position, DestructibleSystem system, EntityUid owner)
+    {
+        // If in a container spawn there, otherwise offset and spawn on the floor
+        var spawned = SpawnInContainer && system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(owner)
+            ? system.EntityManager.SpawnNextToOrDrop(toSpawn, owner)
+            : system.EntityManager.SpawnEntity(toSpawn, position.Offset(GetOffsetVector(system)));
+
+        // If spawned isn't in a container, give it a random rotation so that everything doesn't spawn at the same angle.
+        if (!system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(spawned))
+            system.EntityManager.GetComponent<TransformComponent>(spawned).LocalRotation = system.Random.NextAngle();
+
+        CopyForensics(spawned, system, owner);
+        return spawned;
+    }
+
+    /// <summary>
+    ///     Create a random offset for spawning.
+    /// </summary>
+    private Vector2 GetOffsetVector(DestructibleSystem system)
+    {
+        return new Vector2(system.Random.NextFloat(-Offset, Offset), system.Random.NextFloat(-Offset, Offset));
+    }
+
+    /// <summary>
+    ///     Checks if forensics should be transfered and calls <see cref="ForensicsSystem"/> to do the transfering.
+    /// </summary>
     private void CopyForensics(EntityUid spawned, DestructibleSystem system, EntityUid owner)
     {
         if (!TransferForensics ||

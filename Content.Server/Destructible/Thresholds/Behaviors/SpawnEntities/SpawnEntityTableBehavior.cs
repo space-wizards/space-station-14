@@ -9,7 +9,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 /// </summary>
 [Serializable]
 [DataDefinition]
-public sealed partial class EntityTableSpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
+public sealed partial class SpawnEntityTableBehavior : BaseSpawnEntitiesBehavior
 {
     /// <summary>
     ///     Entity table to spawn from.

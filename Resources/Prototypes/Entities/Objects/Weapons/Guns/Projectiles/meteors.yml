@@ -117,7 +117,7 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
-      - !type:EntityTableSpawnEntitiesBehavior
+      - !type:SpawnEntityTableBehavior
         spawn: !type:NestedSelector
           tableId: MeteorSpawnAsteroidWallTable
           rolls: !type:RangeNumberSelector
@@ -159,7 +159,7 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
-      - !type:EntityTableSpawnEntitiesBehavior
+      - !type:SpawnEntityTableBehavior
         spawn: !type:NestedSelector
           tableId: MeteorSpawnAsteroidWallTable
           rolls: !type:RangeNumberSelector
@@ -188,7 +188,7 @@
         sound:
           collection: MetalBreak
       - !type:ExplodeBehavior
-      - !type:EntityTableSpawnEntitiesBehavior
+      - !type:SpawnEntityTableBehavior
         spawn: !type:NestedSelector
           tableId: MeteorSpawnAsteroidWallTable
           rolls: !type:RangeNumberSelector

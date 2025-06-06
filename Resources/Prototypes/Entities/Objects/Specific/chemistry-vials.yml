@@ -91,11 +91,11 @@
           params:
             volume: -4
       - !type:SpillBehavior { }
-      - !type:BinomialSpawnEntitiesBehavior
+      - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
-            trials: 1
-            chance: 0.25
+            min: 0
+            max: 1
         transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
