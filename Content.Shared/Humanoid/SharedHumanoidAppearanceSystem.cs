@@ -110,7 +110,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     private void OnExamined(EntityUid uid, HumanoidAppearanceComponent component, ExaminedEvent args)
     {
         var identity = Identity.Entity(uid, EntityManager);
-        var species = GetSpeciesRepresentation(component.Species, component.CustomSpecieName).ToLower();
+        var species = GetSpeciesRepresentation(component.Species, component.CustomSpecieName).ToLower(); // Starlight edit
         var age = GetAgeRepresentation(component.Species, component.Age);
 
         args.PushText(Loc.GetString("humanoid-appearance-component-examine", ("user", identity), ("age", age), ("species", species)));
@@ -451,7 +451,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         humanoid.Age = profile.Age;
 
-        humanoid.CustomSpecieName = profile.CustomSpecieName;
+        humanoid.CustomSpecieName = profile.CustomSpecieName; // Starlight
 
         Dirty(uid, humanoid);
     }
@@ -539,10 +539,10 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     /// <summary>
     /// Takes ID of the species prototype, returns UI-friendly name of the species.
     /// </summary>
-    public string GetSpeciesRepresentation(string speciesId, string? customespeciename)
+    public string GetSpeciesRepresentation(string speciesId, string? customespeciename) // Starlight - Edit
     {
-        if (!string.IsNullOrEmpty(customespeciename))
-            return Loc.GetString(customespeciename);
+        if (!string.IsNullOrEmpty(customespeciename)) // Starlight
+            return Loc.GetString(customespeciename); // Starlight
             
         if (_proto.TryIndex<SpeciesPrototype>(speciesId, out var species))
         {
