@@ -168,21 +168,6 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         return accessList;
     }
 
-    private List<HashSet<ProtoId<AccessLevelPrototype>>> ConvertAccessListToHashSet(List<ProtoId<AccessLevelPrototype>> accessList)
-    {
-        List<HashSet<ProtoId<AccessLevelPrototype>>> accessHashsets = new List<HashSet<ProtoId<AccessLevelPrototype>>>();
-
-        if (accessList != null && accessList.Any())
-        {
-            foreach (ProtoId<AccessLevelPrototype> access in accessList)
-            {
-                accessHashsets.Add(new HashSet<ProtoId<AccessLevelPrototype>>() { access });
-            }
-        }
-
-        return accessHashsets;
-    }
-
     /// <summary>
     /// Called whenever an access button is pressed, adding or removing that access requirement from the target access reader.
     /// </summary>
@@ -244,12 +229,10 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         _adminLogger.Add(LogType.Action, LogImpact.High,
             $"{ToPrettyString(player):player} has modified {ToPrettyString(accessReaderEnt.Value):entity} with the following allowed access level holders: [{string.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
 
-        accessReaderEnt.Value.Comp.AccessLists = ConvertAccessListToHashSet(newAccessList);
+        _accessReader.SetAccesses(accessReaderEnt.Value, newAccessList);
 
         var ev = new OnAccessOverriderAccessUpdatedEvent(player);
         RaiseLocalEvent(component.TargetAccessReaderId, ref ev);
-
-        Dirty(accessReaderEnt.Value);
     }
 
     /// <summary>

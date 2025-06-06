@@ -17,7 +17,7 @@ namespace Content.Server.Speech.Muting
         {
             base.Initialize();
             SubscribeLocalEvent<MutedComponent, SpeakAttemptEvent>(OnSpeakAttempt);
-            SubscribeLocalEvent<MutedComponent, EmoteEvent>(OnEmote, before: new[] { typeof(VocalSystem) });
+            SubscribeLocalEvent<MutedComponent, EmoteEvent>(OnEmote, before: new[] { typeof(VocalSystem), typeof(MumbleAccentSystem) });
             SubscribeLocalEvent<MutedComponent, ScreamActionEvent>(OnScreamAction, before: new[] { typeof(VocalSystem) });
         }
 
