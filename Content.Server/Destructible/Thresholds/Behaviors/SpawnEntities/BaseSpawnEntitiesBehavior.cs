@@ -46,6 +46,13 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
     public bool SpawnInContainer;
 
     /// <summary>
+    ///     Spawned items will have a random rotation.
+    /// </summary>
+    [DataField]
+    public bool SpawnRotated = true;
+
+
+    /// <summary>
     ///     Spawned items will try to copy the forensics of the destroyed entity.
     /// </summary>
     [DataField]
@@ -123,7 +130,7 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
             return;
 
         // spawn the spawner
-        var spawner = system.EntityManager.SpawnEntity(tempSpawnerProto.ID, position.Offset(GetOffsetVector(system)));
+        var spawner = system.EntityManager.Spawn(tempSpawnerProto.ID, position.Offset(GetOffsetVector(system)));
 
         // assign it a lifetime
         system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
@@ -143,10 +150,10 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
         // If in a container spawn there, otherwise offset and spawn on the floor
         var spawned = SpawnInContainer && system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(owner)
             ? system.EntityManager.SpawnNextToOrDrop(toSpawn, owner)
-            : system.EntityManager.SpawnEntity(toSpawn, position.Offset(GetOffsetVector(system)));
+            : system.EntityManager.Spawn(toSpawn, position.Offset(GetOffsetVector(system)), null, Angle.Zero);
 
-        // If spawned isn't in a container, give it a random rotation so that everything doesn't spawn at the same angle.
-        if (!system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(spawned))
+        // If spawned isn't in a container, give it a random rotation so that everything doesn't have the same angle.
+        if (SpawnRotated && !system.EntityManager.System<SharedContainerSystem>().IsEntityInContainer(spawned))
             system.EntityManager.GetComponent<TransformComponent>(spawned).LocalRotation = system.Random.NextAngle();
 
         CopyForensics(spawned, system, owner);
