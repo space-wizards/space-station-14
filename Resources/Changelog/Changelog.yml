@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Thieves now start with the thieving satchel instead of their toolbox.
-      The satchel will get all the selected kits spawned inside of it.
-    type: Add
-  - message: Thief Chameleon kit now comes with a backpack and a bonus pair of chameleon
-      gloves. Be careful, they aren't thieving gloves and can be tough to tell apart!
-    type: Tweak
-  - message: Updated smuggler stachel's description to reflect what it's used for.
-    type: Tweak
-  - message: Thieving satchel and toolbox now correctly play a sound when their kits
-      are selected.
-    type: Fix
-  id: 8120
-  time: '2025-03-31T22:32:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36201
 - author: Tayrtahn
   changes:
   - message: Electric grills no longer appear powered when cycled while disconnected
@@ -3918,3 +3902,10 @@
   id: 8631
   time: '2025-06-06T22:13:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38116
+- author: spanky-spanky
+  changes:
+  - message: Landmines now light up in the dark!
+    type: Tweak
+  id: 8632
+  time: '2025-06-06T23:01:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38092
