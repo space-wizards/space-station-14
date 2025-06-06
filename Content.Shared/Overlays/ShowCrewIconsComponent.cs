@@ -7,7 +7,7 @@ namespace Content.Shared.Overlays;
 ///     This component allows you to see a crew border icon above mobs.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
-public sealed partial class ShowCrewBorderIconsComponent : Component
+public sealed partial class ShowCrewIconsComponent : Component
 {
     /// <summary>
     /// If true, the HUD will include a green border around jobs that are considered crew according to <see cref="JobIconPrototype.IsCrewJob"/>.

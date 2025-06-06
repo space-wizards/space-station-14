@@ -11,7 +11,7 @@ namespace Content.Client.Access;
 public sealed class JobStatusSystem : EntitySystem
 {
     [Dependency] private readonly ShowJobIconsSystem _showJobIcons = default!;
-    [Dependency] private readonly ShowCrewBorderIconsSystem _showCrewBorder = default!;
+    [Dependency] private readonly ShowCrewIconsSystem _showCrew = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
@@ -26,14 +26,14 @@ public sealed class JobStatusSystem : EntitySystem
 
     private void OnGetStatusIconsEvent(Entity<JobStatusComponent> entity, ref GetStatusIconsEvent ev)
     {
-        if (_showJobIcons.IsActive || _showCrewBorder.IsActive)
+        if (_showJobIcons.IsActive || _showCrew.IsActive)
         {
             var iconId = GetEntityJobIcon(entity);
 
             if (_prototype.TryIndex<JobIconPrototype>(iconId, out var iconPrototype))
             {
                 _showJobIcons.TryShowIcon(iconPrototype, ref ev);
-                _showCrewBorder.TryShowIcon(iconPrototype, ref ev);
+                _showCrew.TryShowIcon(iconPrototype, ref ev);
 
             }
             else

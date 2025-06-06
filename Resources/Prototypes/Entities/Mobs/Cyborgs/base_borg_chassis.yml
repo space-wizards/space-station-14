@@ -326,7 +326,7 @@
   - type: AccessReader
     access: [["Command"], ["Research"]]
   - type: ShowJobIcons
-  - type: ShowCrewBorderIcons
+  - type: ShowCrewIcons
     includeCrewBorder: true
   - type: InteractionPopup
     interactSuccessSound:
@@ -387,7 +387,7 @@
   - type: IonStormTarget
     chance: 1
   - type: ShowJobIcons
-  - type: ShowCrewBorderIcons
+  - type: ShowCrewIcons
     includeCrewBorder: true
 
 - type: entity

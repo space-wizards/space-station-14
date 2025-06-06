@@ -306,7 +306,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         while (query.MoveNext(out var update))
         {
-            if (TryComp<ShowCrewBorderIconsComponent>(update, out var crewIconComp))
+            if (TryComp<ShowCrewIconsComponent>(update, out var crewIconComp))
             {
                 crewIconComp.UncertainCrewBorder = DefaultCrewLawset != provider.Laws;
                 Dirty(update, crewIconComp);

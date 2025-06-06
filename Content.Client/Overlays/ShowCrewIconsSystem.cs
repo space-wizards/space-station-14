@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
 
-public sealed class ShowCrewBorderIconsSystem : EquipmentHudSystem<ShowCrewBorderIconsComponent>
+public sealed class ShowCrewIconsSystem : EquipmentHudSystem<ShowCrewIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
@@ -20,10 +20,10 @@ public sealed class ShowCrewBorderIconsSystem : EquipmentHudSystem<ShowCrewBorde
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ShowCrewBorderIconsComponent, AfterAutoHandleStateEvent>(OnHandleState);
+        SubscribeLocalEvent<ShowCrewIconsComponent, AfterAutoHandleStateEvent>(OnHandleState);
     }
 
-    protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowCrewBorderIconsComponent> component)
+    protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowCrewIconsComponent> component)
     {
         base.UpdateInternal(component);
 
@@ -39,7 +39,7 @@ public sealed class ShowCrewBorderIconsSystem : EquipmentHudSystem<ShowCrewBorde
         }
     }
 
-    private void OnHandleState(Entity<ShowCrewBorderIconsComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnHandleState(Entity<ShowCrewIconsComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         RefreshOverlay();
     }
