@@ -10,7 +10,7 @@ namespace Content.Shared.Overlays;
 public sealed partial class ShowCrewIconsComponent : Component
 {
     /// <summary>
-    /// If true while <see cref="IncludeCrewBorder"/> is true, the HUD will include a yellow border around all icons, to indicate crew uncertainty.
+    /// If true, the HUD will include a yellow border around all icons, to indicate crew uncertainty.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool UncertainCrewBorder = false;
