@@ -43,8 +43,8 @@ public sealed class AccessReaderSystem : EntitySystem
         SubscribeLocalEvent<AccessReaderComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
+        SubscribeLocalEvent<AccessReaderComponent, AccessReaderConfigurationAttemptEvent>(OnConfigurationAttempt);
 
-        SubscribeLocalEvent<AccessReaderComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<AccessReaderComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<AccessReaderComponent, ComponentHandleState>(OnHandleState);
     }
@@ -54,9 +54,9 @@ public sealed class AccessReaderSystem : EntitySystem
         if (!GetMainAccessReader(ent, out var mainAccessReader))
             return;
 
-        // If this list is null the component failed to initialize correctly
+        // If there is no copy of the  original settings, copy the current access settings
         if (mainAccessReader.Value.Comp.AccessListsOriginal == null)
-            return;
+            mainAccessReader.Value.Comp.AccessListsOriginal = new(mainAccessReader.Value.Comp.AccessLists);
 
         var accessHasBeenModified = mainAccessReader.Value.Comp.AccessLists.Count != mainAccessReader.Value.Comp.AccessListsOriginal.Count;
 
@@ -98,32 +98,16 @@ public sealed class AccessReaderSystem : EntitySystem
         args.PushMarkup(originalSettingsMessage);
     }
 
-    private void OnInit(Entity<AccessReaderComponent> ent, ref ComponentInit args)
-    {
-        // Clones AccessLists into AccessListsOriginal so we always retain
-        // an unmodified copy of the original access settings.
-        if (ent.Comp.AccessListsOriginal != null)
-            return;
-
-        ent.Comp.AccessListsOriginal = new();
-
-        foreach (var accessHashSet in ent.Comp.AccessLists)
-        {
-            var accessSubset = new HashSet<ProtoId<AccessLevelPrototype>>();
-
-            foreach (var access in accessHashSet)
-            {
-                accessSubset.Add(access);
-            }
-
-            ent.Comp.AccessListsOriginal.Add(accessSubset);
-        }
-    }
-
     private void OnGetState(EntityUid uid, AccessReaderComponent component, ref ComponentGetState args)
     {
-        args.State = new AccessReaderComponentState(component.Enabled, component.DenyTags, component.AccessLists,
-            _recordsSystem.Convert(component.AccessKeys), component.AccessLog, component.AccessLogLimit);
+        args.State = new AccessReaderComponentState(
+            component.Enabled,
+            component.DenyTags,
+            component.AccessLists,
+            component.AccessListsOriginal,
+            _recordsSystem.Convert(component.AccessKeys),
+            component.AccessLog,
+            component.AccessLogLimit);
     }
 
     private void OnHandleState(EntityUid uid, AccessReaderComponent component, ref ComponentHandleState args)
@@ -142,6 +126,7 @@ public sealed class AccessReaderSystem : EntitySystem
         }
 
         component.AccessLists = new(state.AccessLists);
+        component.AccessListsOriginal = state.AccessListsOriginal == null ? null : new(state.AccessListsOriginal);
         component.DenyTags = new(state.DenyTags);
         component.AccessLog = new(state.AccessLog);
         component.AccessLogLimit = state.AccessLogLimit;
@@ -174,6 +159,14 @@ public sealed class AccessReaderSystem : EntitySystem
         accessReader.Value.Comp.AccessLists.Clear();
         accessReader.Value.Comp.AccessLog.Clear();
         Dirty(uid, reader);
+    }
+
+    private void OnConfigurationAttempt(Entity<AccessReaderComponent> ent, ref AccessReaderConfigurationAttemptEvent args)
+    {
+        // The first time that the access list of the reader is modified,
+        // make a copy of the original settings
+        if (ent.Comp.AccessListsOriginal == null)
+            ent.Comp.AccessListsOriginal = new(ent.Comp.AccessLists);
     }
 
     /// <summary>
@@ -430,6 +423,12 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="ent">The access reader entity which is having its access permissions cleared.</param>
     public void ClearAccesses(Entity<AccessReaderComponent> ent)
     {
+        var ev = new AccessReaderConfigurationAttemptEvent();
+        RaiseLocalEvent(ent, ev);
+
+        if (ev.Cancelled)
+            return;
+
         ent.Comp.AccessLists.Clear();
 
         Dirty(ent);
@@ -443,6 +442,12 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="accesses">The list of access permissions replacing the original one.</param>
     public void SetAccesses(Entity<AccessReaderComponent> ent, List<HashSet<ProtoId<AccessLevelPrototype>>> accesses)
     {
+        var ev = new AccessReaderConfigurationAttemptEvent();
+        RaiseLocalEvent(ent, ev);
+
+        if (ev.Cancelled)
+            return;
+
         ent.Comp.AccessLists.Clear();
 
         AddAccesses(ent, accesses);
@@ -451,6 +456,12 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <inheritdoc cref = "SetAccesses"/>
     public void SetAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
     {
+        var ev = new AccessReaderConfigurationAttemptEvent();
+        RaiseLocalEvent(ent, ev);
+
+        if (ev.Cancelled)
+            return;
+
         ent.Comp.AccessLists.Clear();
 
         AddAccesses(ent, accesses);
@@ -463,6 +474,12 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="accesses">The list of access permissions being added.</param>
     public void AddAccesses(Entity<AccessReaderComponent> ent, List<HashSet<ProtoId<AccessLevelPrototype>>> accesses)
     {
+        var ev = new AccessReaderConfigurationAttemptEvent();
+        RaiseLocalEvent(ent, ev);
+
+        if (ev.Cancelled)
+            return;
+
         foreach (var access in accesses)
         {
             AddAccess(ent, access, false);
@@ -475,6 +492,12 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <inheritdoc cref = "AddAccesses"/>
     public void AddAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
     {
+        var ev = new AccessReaderConfigurationAttemptEvent();
+        RaiseLocalEvent(ent, ev);
+
+        if (ev.Cancelled)
+            return;
+
         foreach (var access in accesses)
         {
             AddAccess(ent, access, false);
@@ -492,6 +515,15 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="dirty">If true, the component will be  marked as changed afterward.</param>
     public void AddAccess(Entity<AccessReaderComponent> ent, HashSet<ProtoId<AccessLevelPrototype>> access, bool dirty = true)
     {
+        if (dirty)
+        {
+            var ev = new AccessReaderConfigurationAttemptEvent();
+            RaiseLocalEvent(ent, ev);
+
+            if (ev.Cancelled)
+                return;
+        }
+
         ent.Comp.AccessLists.Add(access);
 
         if (!dirty)
@@ -514,6 +546,12 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="accesses">The list of access permissions being removed.</param>
     public void RemoveAccesses(Entity<AccessReaderComponent> ent, List<HashSet<ProtoId<AccessLevelPrototype>>> accesses)
     {
+        var ev = new AccessReaderConfigurationAttemptEvent();
+        RaiseLocalEvent(ent, ev);
+
+        if (ev.Cancelled)
+            return;
+
         foreach (var access in accesses)
         {
             RemoveAccess(ent, access, false);
@@ -526,6 +564,12 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <inheritdoc cref = "RemoveAccesses"/>
     public void RemoveAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
     {
+        var ev = new AccessReaderConfigurationAttemptEvent();
+        RaiseLocalEvent(ent, ev);
+
+        if (ev.Cancelled)
+            return;
+
         foreach (var access in accesses)
         {
             RemoveAccess(ent, access, false);
@@ -543,6 +587,15 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="dirty">If true, the component will be marked as changed afterward.</param>
     public void RemoveAccess(Entity<AccessReaderComponent> ent, HashSet<ProtoId<AccessLevelPrototype>> access, bool dirty = true)
     {
+        if (dirty)
+        {
+            var ev = new AccessReaderConfigurationAttemptEvent();
+            RaiseLocalEvent(ent, ev);
+
+            if (ev.Cancelled)
+                return;
+        }
+
         for (int i = ent.Comp.AccessLists.Count - 1; i >= 0; i--)
         {
             if (ent.Comp.AccessLists[i].SetEquals(access))
