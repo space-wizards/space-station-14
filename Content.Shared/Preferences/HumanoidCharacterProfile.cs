@@ -568,7 +568,9 @@ namespace Content.Shared.Preferences
                 : CustomSpecieName.Length > maxNameLength
                     ? FormattedMessage.RemoveMarkup(CustomSpecieName)[..maxNameLength]
                     : FormattedMessage.RemoveMarkup(CustomSpecieName);
-             // Starlight - End
+
+            // TODO: Add Checks here to make sure its FUCKING VALID!
+            // Starlight - End
 
             string flavortext;
             var maxFlavorTextLength = configManager.GetCVar(CCVars.MaxFlavorTextLength);

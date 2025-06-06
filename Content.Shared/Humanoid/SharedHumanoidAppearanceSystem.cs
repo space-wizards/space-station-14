@@ -540,12 +540,12 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     /// Takes ID of the species prototype, returns UI-friendly name of the species.
     /// </summary>
     public string GetSpeciesRepresentation(string speciesId, string? customespeciename) // Starlight - Edit
-    {
-        if (!string.IsNullOrEmpty(customespeciename)) // Starlight
-            return Loc.GetString(customespeciename); // Starlight
-            
+    {       
         if (_proto.TryIndex<SpeciesPrototype>(speciesId, out var species))
         {
+            if (!string.IsNullOrEmpty(customespeciename)) // Starlight
+                return Loc.GetString(customespeciename) + " (" + Loc.GetString(species.Name) + ")" ; // Starlight
+
             return Loc.GetString(species.Name);
         }
 

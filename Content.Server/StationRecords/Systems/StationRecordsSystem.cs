@@ -100,7 +100,7 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
         /// Starlight - Start
         string specie = profile.Species;
         if (!string.IsNullOrEmpty(profile.CustomSpecieName))
-            specie = profile.CustomSpecieName;
+            specie = profile.CustomSpecieName + " (" + profile.Species + ")";
         /// Starlight - End
 
         CreateGeneralRecord(station, idUid.Value, profile.Name, profile.Age, specie, profile.Gender, jobId, fingerprintComponent?.Fingerprint, dnaComponent?.DNA, profile, records); // Starlight Edited (profile.Species -> specie)
