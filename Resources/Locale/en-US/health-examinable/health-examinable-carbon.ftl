@@ -2,7 +2,7 @@ health-examinable-carbon-none = There are no obvious wounds to be seen.
 
 health-examinable-carbon-Slash-8 = [color=yellow]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } a superficial cut.[/color]
 health-examinable-carbon-Slash-15 = [color=yellow]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } some small cuts.[/color]
-health-examinable-carbon-Slash-30 = [color=orange]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } a few decent gashes.[/color]
+health-examinable-carbon-Slash-30 = [color=orange]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } a few sizeable gashes.[/color]
 health-examinable-carbon-Slash-50 = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } deep gashes across { POSS-ADJ($target) } body.[/color]
 health-examinable-carbon-Slash-75 = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } jagged, deep lacerations running across { POSS-ADJ($target) } body.[/color]
 health-examinable-carbon-Slash-100 = [color=red]{ CAPITALIZE(POSS-ADJ($target)) } body looks bloody and mauled.[/color]
