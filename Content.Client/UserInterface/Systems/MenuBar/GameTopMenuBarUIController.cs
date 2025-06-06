@@ -50,6 +50,7 @@ public sealed class GameTopMenuBarUIController : UIController, IOnStateChanged<G
             return;
 
         MenuBar.EscapeButton.Pressed = false;
+        
         _guidebook.UnloadButton();
         _admin.UnloadButton();
         _character.UnloadButton();
