@@ -3,7 +3,7 @@
   parent: BaseItem
   id: BaseWhistle
   name: whistle
-  description: Someone forgot to turn off kettle?
+  description: Did someone forget to turn the kettle off?
   components:
   - type: Item
     sprite: Objects/Fun/whistles.rsi
@@ -32,7 +32,6 @@
 - type: entity
   parent: BaseWhistle
   id: SecurityWhistle
-  description: Sound of it make you feel fear.
   components:
   - type: Sprite
     state: sec
@@ -40,6 +39,24 @@
     equippedPrefix: sec
   - type: Whistle
     distance: 5
+
+- type: entity
+  parent: BaseWhistle
+  id: WardenWhistle
+  name: warden's whistle
+  description: An artisanal whistle made of tempered steel. Impose your authority and get everyone's attention.
+  components:
+  - type: Sprite
+    state: ward
+  - type: Clothing
+    equippedPrefix: ward
+  - type: EmitSoundOnUse
+    sound:
+      collection: WardenWhistle
+  - type: Whistle
+    distance: 8
+  - type: StealTarget
+    stealGroup: WardenWhistle
 
 - type: entity
   parent: [BaseWhistle, BaseMinorContraband]

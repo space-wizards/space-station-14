@@ -180,11 +180,11 @@
     state: security
 
 - type: stealTargetGroup
-  id: ClothingHeadHatWarden
-  name: steal-target-groups-clothing-head-hat-warden
+  id: WardenWhistle
+  name: steal-target-groups-warden-whistle
   sprite:
-    sprite: Clothing/Head/Hats/warden.rsi
-    state: icon
+    sprite: Objects/Fun/whistles.rsi
+    state: ward
 
 - type: stealTargetGroup
   id: ClothingOuterHardsuitVoidParamed

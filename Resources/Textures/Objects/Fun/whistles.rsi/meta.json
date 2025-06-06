@@ -23,6 +23,13 @@
       "name": "sec"
     },
     {
+      "name": "ward-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "ward"
+    },
+    {
       "name": "trench-equipped-NECK",
       "directions": 4
     },

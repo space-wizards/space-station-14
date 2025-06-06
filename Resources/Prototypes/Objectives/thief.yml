@@ -179,10 +179,10 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: ClothingHeadHatWardenStealObjective
+  id: WardenWhistleStealObjective
   components:
   - type: StealCondition
-    stealGroup: ClothingHeadHatWarden
+    stealGroup: WardenWhistle
   - type: Objective
     difficulty: 1.2
 
