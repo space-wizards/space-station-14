@@ -6,10 +6,10 @@
   components:
     - type: TelecomExempt
     - type: RadioMicrophone
-      broadcastChannel: Expeditionary
+      broadcastChannel: Expedition
     - type: RadioSpeaker
       channels:
-        - Expeditionary
+        - Expedition
     - type: Speech
       speechVerb: Robotic
     - type: Sprite
