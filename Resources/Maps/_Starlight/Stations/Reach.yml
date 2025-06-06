@@ -4,8 +4,8 @@ meta:
   engineVersion: 260.2.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 06/05/2025 04:18:17
-  entityCount: 2985
+  time: 06/05/2025 23:54:12
+  entityCount: 2991
 maps:
 - 1
 grids:
@@ -1666,16 +1666,16 @@ entities:
       parent: 2
     - type: DeviceList
       devices:
-      - 1366
-      - 1339
-      - 1340
-      - 1341
-      - 1363
-      - 1338
       - 1779
       - 1801
       - 1777
       - 1800
+      - 1366
+      - 1338
+      - 1363
+      - 1341
+      - 1340
+      - 1339
   - uid: 9
     components:
     - type: Transform
@@ -1726,6 +1726,7 @@ entities:
       - 1356
       - 1354
       - 1355
+      - 1342
   - uid: 12
     components:
     - type: Transform
@@ -8908,88 +8909,118 @@ entities:
       rot: 3.141592653589793 rad
       pos: 7.5,3.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1317
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-8.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1318
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -16.5,-0.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1319
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -23.5,-1.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1320
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,9.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1321
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,9.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1322
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,12.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1323
     components:
     - type: Transform
       pos: 17.5,1.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1324
     components:
     - type: Transform
       pos: 9.5,-2.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1325
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,-0.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1326
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -20.5,2.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1327
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,7.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1328
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,3.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1329
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,15.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
   - uid: 1330
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,3.5
       parent: 2
+    - type: Battery
+      startingCharge: 30000
 - proto: EmergencyRollerBedSpawnFolded
   entities:
   - uid: 1331
@@ -9076,20 +9107,18 @@ entities:
     - type: Transform
       pos: -8.5,2.5
       parent: 2
-    - type: Door
-      secondsUntilStateChange: -5774.0405
-      state: Closing
     - type: DeviceNetwork
       deviceLists:
       - 8
       - 7
-    - type: Firelock
-      emergencyCloseCooldown: 21800.7448679
   - uid: 1342
     components:
     - type: Transform
       pos: 2.5,6.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 11
   - uid: 1343
     components:
     - type: Transform
@@ -9134,16 +9163,25 @@ entities:
     - type: Transform
       pos: -0.5,11.5
       parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
   - uid: 1350
     components:
     - type: Transform
       pos: -0.5,10.5
       parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
   - uid: 1351
     components:
     - type: Transform
       pos: -0.5,7.5
       parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
   - uid: 1352
     components:
     - type: Transform
@@ -9180,6 +9218,9 @@ entities:
     - type: Transform
       pos: -0.5,8.5
       parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
   - uid: 1358
     components:
     - type: Transform
@@ -14368,13 +14409,6 @@ entities:
     - type: Transform
       pos: 4.6859074,-10.602916
       parent: 2
-- proto: HolopadCargoBayLongRange
-  entities:
-  - uid: 1931
-    components:
-    - type: Transform
-      pos: 1.5,9.5
-      parent: 2
 - proto: HolopadCommandBridgeLongRange
   entities:
   - uid: 1932
@@ -17787,27 +17821,43 @@ entities:
     - type: Transform
       pos: 17.5,-4.5
       parent: 2
-- proto: SurveillanceCameraRouterSecurity
+- proto: SurveillanceCameraCommand
   entities:
-  - uid: 2449
+  - uid: 2456
     components:
     - type: Transform
-      pos: 14.5,-2.5
-      parent: 2
-- proto: SurveillanceCameraSecurity
-  entities:
-  - uid: 2450
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 21.5,2.5
+      pos: 21.5,-3.5
       parent: 2
     - type: SurveillanceCamera
       setupAvailableNetworks:
-      - SurveillanceCameraSecurity
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: Captain's Quarters
+  - uid: 2460
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 21.5,3.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
       nameSet: True
       id: Bridge
-  - uid: 2451
+- proto: SurveillanceCameraEngineering
+  entities:
+  - uid: 2934
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,-10.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos
+  - uid: 2989
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
@@ -17815,98 +17865,100 @@ entities:
       parent: 2
     - type: SurveillanceCamera
       setupAvailableNetworks:
-      - SurveillanceCameraSecurity
+      - SurveillanceCameraEngineering
       nameSet: True
       id: Engineering
-  - uid: 2452
+  - uid: 2990
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -6.5,1.5
+      rot: 1.5707963267948966 rad
+      pos: -20.5,1.5
       parent: 2
     - type: SurveillanceCamera
       setupAvailableNetworks:
-      - SurveillanceCameraSecurity
+      - SurveillanceCameraEngineering
       nameSet: True
-      id: Bar
+      id: Power
+- proto: SurveillanceCameraGeneral
+  entities:
+  - uid: 2450
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -2.5,-10.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Evac
   - uid: 2453
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 4.5,-13.5
+      pos: 5.5,13.5
       parent: 2
     - type: SurveillanceCamera
       setupAvailableNetworks:
-      - SurveillanceCameraSecurity
-      nameSet: True
-      id: Atmosia
-  - uid: 2454
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 6.5,-6.5
-      parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraSecurity
-      nameSet: True
-      id: Disposals
-  - uid: 2455
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 4.5,1.5
-      parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraSecurity
-      nameSet: True
-      id: Medbay
-  - uid: 2456
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 5.5,12.5
-      parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraSecurity
+      - SurveillanceCameraGeneral
       nameSet: True
       id: Arrivals
   - uid: 2457
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 0.5,9.5
+      pos: -1.5,-1.5
       parent: 2
     - type: SurveillanceCamera
       setupAvailableNetworks:
-      - SurveillanceCameraSecurity
+      - SurveillanceCameraGeneral
       nameSet: True
-      id: Cargo Bay
+      id: Hallway [Central]
+  - uid: 2991
+    components:
+    - type: Transform
+      pos: 9.5,3.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Hallway [North]
+- proto: SurveillanceCameraMedical
+  entities:
   - uid: 2458
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -1.5,9.5
+      pos: 9.5,-4.5
       parent: 2
     - type: SurveillanceCamera
       setupAvailableNetworks:
-      - SurveillanceCameraSecurity
+      - SurveillanceCameraMedical
       nameSet: True
-      id: Science
-  - uid: 2459
+      id: Medbay
+- proto: SurveillanceCameraRouterSecurity
+  entities:
+  - uid: 2449
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -1.5,-4.5
+      pos: 14.5,-2.5
+      parent: 2
+- proto: SurveillanceCameraScience
+  entities:
+  - uid: 2452
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,11.5
       parent: 2
     - type: SurveillanceCamera
       setupAvailableNetworks:
-      - SurveillanceCameraSecurity
+      - SurveillanceCameraScience
       nameSet: True
-      id: Abeam to Starboard
-  - uid: 2460
+      id: Science
+- proto: SurveillanceCameraSecurity
+  entities:
+  - uid: 2454
     components:
     - type: Transform
       pos: 18.5,7.5
@@ -17916,6 +17968,74 @@ entities:
       - SurveillanceCameraSecurity
       nameSet: True
       id: Genpop
+  - uid: 2455
+    components:
+    - type: Transform
+      pos: 14.5,-4.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Armory
+  - uid: 2459
+    components:
+    - type: Transform
+      pos: 18.5,-0.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSecurity
+      nameSet: True
+      id: Security
+- proto: SurveillanceCameraService
+  entities:
+  - uid: 2986
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-6.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraService
+      nameSet: True
+      id: Janitor
+  - uid: 2987
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -7.5,1.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraService
+      nameSet: True
+      id: Lounge
+  - uid: 2988
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -12.5,3.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraService
+      nameSet: True
+      id: Botany
+- proto: SurveillanceCameraSupply
+  entities:
+  - uid: 2451
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,12.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Cargo
 - proto: SyringeInaprovaline
   entities:
   - uid: 2461
@@ -20507,15 +20627,12 @@ entities:
       parent: 2
 - proto: WindoorSecureUranium
   entities:
-  - uid: 2934
+  - uid: 1931
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,11.5
       parent: 2
-    - type: AccessReader
-      access:
-      - Research
 - proto: WindoorServiceLocked
   entities:
   - uid: 2935
