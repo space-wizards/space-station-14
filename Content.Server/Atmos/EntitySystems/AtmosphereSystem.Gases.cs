@@ -357,7 +357,6 @@ namespace Content.Server.Atmos.EntitySystems
             var quadraticB = molesRatio - volumeRatio + heatCapacityRatio * (temperatureRatio + volumeRatio);
             var quadraticC = heatCapacityRatio * (molesRatio * temperatureRatio - volumeRatio);
 
-            // Round to avoid the FLOATING POINT ERROR-INATOR!
             return (-quadraticB + MathF.Sqrt(quadraticB * quadraticB - 4 * quadraticA * quadraticC)) / (2 * quadraticA);
         }
 
