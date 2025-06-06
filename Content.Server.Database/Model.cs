@@ -58,6 +58,20 @@ namespace Content.Server.Database
                 .HasIndex(p => new {p.Slot, PrefsId = p.PreferenceId})
                 .IsUnique();
 
+            modelBuilder.Entity<StarLightModel.StarLightProfile>(entity =>
+            {
+                entity.HasOne(e => e.Profile)
+                    .WithOne(p => p.StarLightProfile)
+                    .HasForeignKey<StarLightModel.StarLightProfile>(e => e.ProfileId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.ProfileId)
+                    .IsUnique();
+
+                entity.Property(e => e.CustomSpeciesName)
+                    .HasMaxLength(32);
+            });
+
             modelBuilder.Entity<Antag>()
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
                 .IsUnique();
@@ -403,7 +417,6 @@ namespace Content.Server.Database
         public int Slot { get; set; }
         [Column("char_name")] public string CharacterName { get; set; } = null!;
         public string FlavorText { get; set; } = null!;
-        public string CustomSpecieName { get; set; } = null!; // StarLight
         public string Voice { get; set; } = null!;
         public int Age { get; set; }
         public string Sex { get; set; } = null!;
@@ -417,7 +430,7 @@ namespace Content.Server.Database
         public string FacialHairColor { get; set; } = null!;
         public bool FacialHairGlowing { get; set; } = false; //starlight
         public string EyeColor { get; set; } = null!;
-        public bool EyeGlowing { get; set;} = false; //starlight
+        public bool EyeGlowing { get; set; } = false; //starlight
         public string SkinColor { get; set; } = null!;
         public int SpawnPriority { get; set; } = 0;
         public List<Job> Jobs { get; } = new();
@@ -430,6 +443,8 @@ namespace Content.Server.Database
 
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
+        
+        public StarLightModel.StarLightProfile? StarLightProfile { get; set; }
     }
 
     public class Job

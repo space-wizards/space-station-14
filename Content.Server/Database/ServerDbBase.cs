@@ -51,6 +51,8 @@ namespace Content.Server.Database
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
                 .Include(p => p.Profiles).ThenInclude(h => h.Traits)
                 .Include(p => p.Profiles)
+                    .ThenInclude(h => h.StarLightProfile)
+                .Include(p => p.Profiles)
                     .ThenInclude(h => h.Loadouts)
                     .ThenInclude(l => l.Groups)
                     .ThenInclude(group => group.Loadouts)
@@ -101,6 +103,7 @@ namespace Content.Server.Database
             }
 
             var oldProfile = db.DbContext.Profile
+                .Include(p => p.StarLightProfile)
                 .Include(p => p.Preference)
                 .Where(p => p.Preference.UserId == userId.UserId)
                 .Include(p => p.Jobs)
@@ -265,7 +268,7 @@ namespace Content.Server.Database
                 profile.Voice,
                 profile.FlavorText,
                 profile.Species,
-                profile.CustomSpecieName, // StarLight
+                profile.StarLightProfile?.CustomSpeciesName ?? "",
                 profile.Age,
                 sex,
                 gender,
@@ -306,7 +309,8 @@ namespace Content.Server.Database
             profile.Voice = humanoid.Voice;
             profile.FlavorText = humanoid.FlavorText;
             profile.Species = humanoid.Species;
-            profile.CustomSpecieName = humanoid.CustomSpecieName; // Startlight
+            profile.StarLightProfile ??= new StarLightModel.StarLightProfile(); // Starlight
+            profile.StarLightProfile.CustomSpeciesName = humanoid.CustomSpeciesName; // Starlight
             profile.Age = humanoid.Age;
             profile.Sex = humanoid.Sex.ToString();
             profile.Gender = humanoid.Gender.ToString();
