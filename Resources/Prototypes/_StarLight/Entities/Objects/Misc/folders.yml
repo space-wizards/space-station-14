@@ -2,7 +2,7 @@
   id: BoxFolderNanoTrasenClipboard
   parent: BoxFolderClipboard
   name: NanoTrasen clipboard
-  description: A stylish clipboard adorned with NanoTrasen colors.
+  description: A stylish clipboard in NanoTrasen colors.
   components:
     - type: Sprite
       sprite: _Starlight/Objects/Misc/nt-clipboard.rsi
