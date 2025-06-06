@@ -73,10 +73,10 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         if (TryComp<MindComponent>(mindId, out var mind))
         {
             var owner = mind.OwnedEntity;
-            if (TryComp<ShowJobIconsComponent>(owner, out var jobIconComp))
+            if (TryComp<ShowCrewBorderIconsComponent>(owner, out var crewIconComp))
             {
-                jobIconComp.UncertainCrewBorder = true;
-                Dirty(owner.Value, jobIconComp);
+                crewIconComp.UncertainCrewBorder = true;
+                Dirty(owner.Value, crewIconComp);
             }
         }
     }
@@ -86,10 +86,10 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         if (TryComp<MindComponent>(mindId, out var mind))
         {
             var owner = mind.OwnedEntity;
-            if (TryComp<ShowJobIconsComponent>(owner, out var jobIconComp))
+            if (TryComp<ShowCrewBorderIconsComponent>(owner, out var crewIconComp))
             {
-                jobIconComp.UncertainCrewBorder = false;
-                Dirty(owner.Value, jobIconComp);
+                crewIconComp.UncertainCrewBorder = false;
+                Dirty(owner.Value, crewIconComp);
             }
         }
     }
