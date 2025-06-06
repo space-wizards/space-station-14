@@ -307,7 +307,7 @@ namespace Content.Shared.Preferences
         {
             return new(this) { Species = species };
         }
-        public HumanoidCharacterProfile WithCustomSpeciesName(string customspeciename)
+        public HumanoidCharacterProfile WithCustomSpecieName(string customspeciename)
         {
             return new(this) { CustomSpecieName = customspeciename };
         }

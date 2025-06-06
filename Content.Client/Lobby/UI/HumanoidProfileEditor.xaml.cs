@@ -1325,7 +1325,7 @@ namespace Content.Client.Lobby.UI
 
         private void SetCustomSpecieName(string customname)
         {
-            Profile = Profile?.WithCustomSpeciesName(customname);
+            Profile = Profile?.WithCustomSpecieName(customname);
             SetDirty();
         }
 

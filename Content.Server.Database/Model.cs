@@ -68,7 +68,7 @@ namespace Content.Server.Database
                 entity.HasIndex(e => e.ProfileId)
                     .IsUnique();
 
-                entity.Property(e => e.CustomSpeciesName)
+                entity.Property(e => e.CustomSpecieName)
                     .HasMaxLength(32);
             });
 
