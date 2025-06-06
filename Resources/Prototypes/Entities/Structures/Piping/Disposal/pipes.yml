@@ -153,11 +153,11 @@
 
 - type: entity
   parent: DisposalTagger
-  id: DisposalTaggerWaste
-  suffix: waste
+  id: DisposalTaggerTrash
+  suffix: trash
   components:
   - type: DisposalTagger
-    tag: Waste
+    tag: Trash
 
 - type: entity
   id: DisposalSignaller
@@ -282,12 +282,12 @@
 
 - type: entity
   parent: DisposalRouter
-  id: DisposalRouterWaste
-  suffix: waste
+  id: DisposalRouterTrash
+  suffix: trash
   components:
   - type: DisposalRouter
     tags:
-    - Waste
+    - Trash
 
 - type: entity
   id: DisposalRouterFlipped
@@ -332,12 +332,12 @@
 
 - type: entity
   parent: DisposalRouterFlipped
-  id: DisposalRouterFlippedWaste
-  suffix: flipped, waste
+  id: DisposalRouterFlippedTrash
+  suffix: flipped, trash
   components:
   - type: DisposalRouter
     tags:
-    - Waste
+    - Trash
 
 - type: entity
   id: DisposalJunction
