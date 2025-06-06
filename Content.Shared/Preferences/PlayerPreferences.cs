@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -18,10 +19,11 @@ namespace Content.Shared.Preferences
     {
         private Dictionary<int, ICharacterProfile> _characters;
 
-        public PlayerPreferences(IEnumerable<KeyValuePair<int, ICharacterProfile>> characters, Color adminOOCColor, Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
+        public PlayerPreferences(IEnumerable<KeyValuePair<int, ICharacterProfile>> characters, Color adminOOCColor, List<ProtoId<ConstructionPrototype>> constructionFavorites,  Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
         {
             _characters = new Dictionary<int, ICharacterProfile>(characters);
             AdminOOCColor = adminOOCColor;
+            ConstructionFavorites = constructionFavorites;
             JobPriorities = SanitizeJobPriorities(jobPriorities);
         }
 
@@ -43,6 +45,11 @@ namespace Content.Shared.Preferences
         public Dictionary<ProtoId<JobPrototype>, JobPriority> JobPriorities { get; set; }
 
         public Color AdminOOCColor { get; set; }
+
+        /// <summary>
+        ///    List of favorite items in the construction menu.
+        /// </summary>
+        public List<ProtoId<ConstructionPrototype>> ConstructionFavorites { get; set; } = [];
 
         public int IndexOfCharacter(ICharacterProfile profile)
         {

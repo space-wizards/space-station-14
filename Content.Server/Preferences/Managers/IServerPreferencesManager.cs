@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Shared.Network;
@@ -23,6 +24,7 @@ namespace Content.Server.Preferences.Managers
         bool HavePreferencesLoaded(ICommonSession session);
 
         Task SetProfile(NetUserId userId, int slot, ICharacterProfile profile);
+        Task SetConstructionFavorites(NetUserId userId, List<ProtoId<ConstructionPrototype>> favorites);
         Task SetJobPriorities(NetUserId userId, Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities);
         Task DeleteProfile(NetUserId userId, int slot);
     }

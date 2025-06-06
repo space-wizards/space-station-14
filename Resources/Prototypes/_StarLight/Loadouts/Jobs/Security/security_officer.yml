@@ -1,0 +1,31 @@
+﻿
+# Non-Lethal Weapons
+- type: loadout
+  id: SecurityDominator
+  equipment:
+    pocket1: WeaponDominator
+
+- type: loadout
+  id: SecurityTaser
+  equipment:
+    pocket1: WeaponAdvancedTaser
+
+# Sidearm Options
+- type: loadout
+  id: SecurityMk58
+  dummyEntity: WeaponPistolMk58
+  storage:
+    back:
+      - WeaponPistolMk58
+      - MagazinePistolSP
+
+- type: loadout
+  id: SecurityPistolDP
+  effects:
+    - !type:GroupLoadoutEffect
+      proto: SeniorOfficer
+  dummyEntity: WeaponPistolDP
+  storage:
+    back:
+      - WeaponPistolDP
+      - MagazinePistol40SP

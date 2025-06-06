@@ -1,4 +1,4 @@
-- type: mealRecipe
+- type: microwaveMealRecipe
   id: RecipeAloeCream
   name: aloe cream recipe
   result: AloeCream
@@ -7,7 +7,7 @@
   solids:
     FoodAloe: 1
 
-- type: mealRecipe
+- type: microwaveMealRecipe
   id: RecipeMedicatedSuture
   name: medicated suture recipe
   result: MedicatedSuture
@@ -21,7 +21,7 @@
     TranexamicAcid: 20
     Cryptobiolin: 20
 
-- type: mealRecipe
+- type: microwaveMealRecipe
   id: RecipeRegenerativeMesh
   name: regenerative mesh recipe
   result: RegenerativeMesh

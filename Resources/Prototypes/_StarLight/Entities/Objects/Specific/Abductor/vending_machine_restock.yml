@@ -1,0 +1,15 @@
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockAbductorDispenser
+  name: alien dispenser restock
+  description: A box filled with weird organs. Load it into a alien dispenser to begin.
+  components:
+    - type: VendingMachineRestock
+      canRestock:
+        - AbductorGlandInventory
+    - type: Sprite
+      layers:
+        - state: base
+        - state: green_bit
+          shader: unshaded
+        - state: refill_medical

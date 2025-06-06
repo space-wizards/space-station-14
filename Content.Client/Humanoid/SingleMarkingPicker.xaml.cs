@@ -39,6 +39,8 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     /// </summary>
     public Action<(int slot, Marking marking)>? OnColorChanged;
 
+    public Action<(int slot, Marking marking)>? OnGlowingChanged; //starlight
+
     // current selected slot
     private int _slot = -1;
     private int Slot
@@ -148,6 +150,22 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         {
             PopulateList(args.Text);
         };
+
+        //starlight start
+        Glowing.OnToggled += args =>
+        {
+            if (_markings == null
+            || _markings.Count == 0
+            || !_markingManager.TryGetMarking(_markings[Slot], out var proto))
+            {
+                return;
+            }
+
+            var marking = _markings[Slot];
+            marking.IsGlowing = args.Pressed;
+            OnGlowingChanged!((_slot, marking));
+        };
+        //starlight end
     }
 
     public void UpdateData(List<Marking> markings, string species, int totalPoints)
@@ -241,6 +259,8 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
             ColorSelectorContainer.AddChild(selector);
         }
+
+        Glowing.Pressed = marking.IsGlowing; //starlight
     }
 
     private void SelectMarking(ItemList.ItemListSelectedEventArgs args)

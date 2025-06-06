@@ -14,6 +14,7 @@ using Content.Shared.Shuttles.Systems;
 using Content.Shared.UserInterface;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Content.Shared.DeviceNetwork.Components;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Shared.Shuttles.Components; //starlight
 
@@ -200,6 +201,7 @@ public sealed partial class EmergencyShuttleSystem
 
         var podLaunchQuery = EntityQueryEnumerator<EscapePodComponent, ShuttleComponent>();
 
+        int timeDelay = 0; //starlight, used to stagger arrival times
         while (podLaunchQuery.MoveNext(out var uid, out var pod, out var shuttle))
         {
             var stationUid = _station.GetOwningStation(uid);
@@ -213,7 +215,7 @@ public sealed partial class EmergencyShuttleSystem
             }
 
             // Don't dock them. If you do end up doing this then stagger launch.
-            _shuttle.FTLToDock(uid, shuttle, centcomm.Entity.Value, hyperspaceTime: TransitTime + 1); //starlight edit, add seconds onto the transit time to ENSURE the emergency shuttle tries to find a dock first
+            _shuttle.FTLToDock(uid, shuttle, centcomm.Entity.Value, hyperspaceTime: TransitTime + 1 + timeDelay++); //starlight edit, add seconds onto the transit time to ENSURE the emergency shuttle tries to find a dock first
             RemCompDeferred<EscapePodComponent>(uid);
         }
 

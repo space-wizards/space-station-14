@@ -74,7 +74,9 @@
   parent: SyndicateOperativeGearFull
   equipment:
     neck: SyndicateWhistle
+    ears: ClothingHeadsetAltSyndicateCommander #Starlight
     outerClothing: ClothingOuterHardsuitSyndieCommander
+    id: CommanderPDA
   inhand:
   - NukeOpsDeclarationOfWar
 
@@ -85,6 +87,7 @@
   equipment:
     eyes: ClothingEyesHudSyndicateAgent
     outerClothing: ClothingOuterHardsuitSyndieMedic
+    ears: ClothingHeadsetAltSyndicateAgent #Starlight
     shoes: ClothingShoesBootsMagSyndie
     id: SyndiAgentPDA
     belt: ClothingBeltMilitaryWebbingMedFilled

@@ -1,6 +1,19 @@
 - type: lobbyBackground
   id: Positivity
   background: /Textures/_Starlight/LobbyScreens/positivity.webp
+
 - type: lobbyBackground
   id: IPCsaster
   background: /Textures/_Starlight/LobbyScreens/IPCsaster.webp
+
+- type: lobbyBackground
+  id: Reflection
+  background: /Textures/_Starlight/LobbyScreens/reflection.webp
+
+- type: lobbyBackground
+  id: TriesteNT
+  background: /Textures/_Starlight/LobbyScreens/trieste-nt.webp
+
+- type: lobbyBackground
+  id: LingKiller
+  background: /Textures/_Starlight/LobbyScreens/thelingkiller.webp
