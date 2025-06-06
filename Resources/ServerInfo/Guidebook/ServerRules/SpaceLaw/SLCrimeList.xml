@@ -253,6 +253,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+	Paradoxical Existence
       </Box>
     </ColorBox>
     <ColorBox>
@@ -923,6 +924,26 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         5-06
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Paradoxical Existence
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        To create or perpetuate a spacetime paradox by mere existence.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+        Containment is reccomended over execution unless there is absolute certainty over the nature of the offender. Clones made by spacetime paradoxes usually explosively solve themselves after a period of time.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
+	5-07
       </Box>
     </ColorBox>
   </Table>

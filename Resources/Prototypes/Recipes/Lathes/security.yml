@@ -198,6 +198,15 @@
     Plastic: 200
     Steel: 100
 
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: Tourniquet
+  result: Tourniquet1
+  completetime: 1.5
+  materials:
+    Plastic: 25
+    Steel: 10
+
 ## Weapons
 
 # Melee
