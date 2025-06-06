@@ -8,21 +8,21 @@
   },
   "states": [
     {
-      "name": "expeditionhandy"
+      "name": "walkietalkie"
     },
     {
-      "name": "expeditionhandy-inhand-left",
+      "name": "walkietalkie-inhand-left",
       "directions": 4
     },
     {
-      "name": "expeditionhandy-inhand-right",
+      "name": "walkietalkie-inhand-right",
       "directions": 4
     },
     {
-      "name": "expeditionhandy-off"
+      "name": "walkietalkie-off"
     },
     {
-      "name": "expeditionhandy-on"
+      "name": "walkietalkie-on"
     }
   ]
 }
