@@ -74,7 +74,7 @@ public partial class RadiationSystem
             foreach (var source in _sources)
             {
                 // send ray towards destination entity
-                if (Irradiate(source, destUid, destTrs, destWorld, debug) is not {} ray)
+                if (Irradiate(source, destUid, destTrs, destWorld, debug) is not { } ray)
                     continue;
 
                 // add rads to total rad exposure
@@ -156,7 +156,7 @@ public partial class RadiationSystem
         // if source and destination on the same grid it's possible that
         // between them can be another grid (ie. shuttle in center of donut station)
         // however we can do simplification and ignore that case
-        if (GridcastSimplifiedSameGrid && destTrs.GridUid is {} gridUid && source.GridUid == gridUid)
+        if (GridcastSimplifiedSameGrid && destTrs.GridUid is { } gridUid && source.GridUid == gridUid)
         {
             if (!_gridQuery.TryGetComponent(gridUid, out var gridComponent))
                 return ray;
@@ -222,12 +222,12 @@ public partial class RadiationSystem
             : Vector2.Transform(ray.Destination, grid.Comp2.InvLocalMatrix);
 
         Vector2i sourceGrid = new(
-            (int) Math.Floor(srcLocal.X / grid.Comp1.TileSize),
-            (int) Math.Floor(srcLocal.Y / grid.Comp1.TileSize));
+            (int)Math.Floor(srcLocal.X / grid.Comp1.TileSize),
+            (int)Math.Floor(srcLocal.Y / grid.Comp1.TileSize));
 
         Vector2i destGrid = new(
-            (int) Math.Floor(dstLocal.X / grid.Comp1.TileSize),
-            (int) Math.Floor(dstLocal.Y / grid.Comp1.TileSize));
+            (int)Math.Floor(dstLocal.X / grid.Comp1.TileSize),
+            (int)Math.Floor(dstLocal.Y / grid.Comp1.TileSize));
 
         // iterate tiles in grid line from source to destination
         var line = new GridLineEnumerator(sourceGrid, destGrid);

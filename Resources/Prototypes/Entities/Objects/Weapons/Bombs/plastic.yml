@@ -38,7 +38,7 @@
 - type: entity
   name: composition C-4
   description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
-  parent: [BasePlasticExplosive, BaseSyndicateContraband]
+  parent: [BasePlasticExplosive, BaseMajorContraband]
   id: C4
   components:
   - type: Sprite
@@ -64,7 +64,7 @@
   - type: TimerStartOnSignal
   - type: DeviceLinkSink
     ports:
-      - Timer
+    - Timer
   - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
     explosionType: DemolitionCharge
     totalIntensity: 60
@@ -79,6 +79,8 @@
   - type: HolidayRsiSwap
     sprite:
       festive: Objects/Weapons/Bombs/c4gift.rsi
+  - type: StaticPrice
+    price: 625 # 5000 for a bundle of 8
 
 - type: entity
   name: seismic charge
@@ -102,10 +104,10 @@
         volume: -6
     startOnStick: false
     canToggleStartOnStick: true
-  - type: TriggerOnSignal
+  - type: TimerStartOnSignal
   - type: DeviceLinkSink
     ports:
-    - Trigger
+    - Timer
   - type: Explosive
     explosionType: Cryo
     totalIntensity: 120
