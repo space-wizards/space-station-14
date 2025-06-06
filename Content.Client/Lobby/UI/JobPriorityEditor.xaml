@@ -4,9 +4,11 @@
     Orientation="Vertical">
 
     <!-- Save and reset buttons up top -->
-    <BoxContainer Orientation="Horizontal" MaxHeight="100" HorizontalAlignment="Center" Margin="0 20">
-        <Button Name="SaveButton" StyleClasses="ButtonBig" Margin="10 0" Text="{Loc 'humanoid-profile-editor-save-button'}"/>
-        <Button Name="ResetButton" StyleClasses="ButtonBig" Margin="10 0" Text="{Loc 'humanoid-profile-editor-reset-button'}"/>
+    <BoxContainer Orientation="Horizontal" SetHeight="64" HorizontalAlignment="Center" Margin="0 5">
+        <Button Name="SaveButton" StyleClasses="ButtonBig" Margin="10 0" MinSize="120 40"
+                Text="{Loc 'humanoid-profile-editor-save-button'}"/>
+        <Button Name="ResetButton" StyleClasses="ButtonBig" Margin="10 0" MinSize="120 40"
+                Text="{Loc 'humanoid-profile-editor-reset-button'}"/>
     </BoxContainer>
 
     <!-- We stuff the priority selectors in here -->
