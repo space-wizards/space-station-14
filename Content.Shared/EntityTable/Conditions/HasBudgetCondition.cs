@@ -1,7 +1,6 @@
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.GameTicking.Rules;
 using Robust.Shared.Prototypes;
-using Serilog;
 
 namespace Content.Shared.EntityTable.Conditions;
 
@@ -41,7 +40,8 @@ public sealed partial class HasBudgetCondition : EntityTableCondition
         {
             if (!proto.Index(entSelector!.Id).TryGetComponent(out DynamicRuleCostComponent? costComponent, entMan.ComponentFactory))
             {
-                Log.Error($"Rule {entSelector.Id} does not have a DynamicRuleCostComponent.");
+                var log = Logger.GetSawmill("HasBudgetCondition");
+                log.Error($"Rule {entSelector.Id} does not have a DynamicRuleCostComponent.");
                 return false;
             }
 
