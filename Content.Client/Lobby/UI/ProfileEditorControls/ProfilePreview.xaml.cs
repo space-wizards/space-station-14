@@ -65,7 +65,7 @@ public sealed partial class ProfilePreview : BoxContainer
     private void SetPreviewRotation(Direction direction)
     {
         if (direction == Direction.Invalid)
-            throw new InvalidEnumArgumentException();
+            throw new Exception("Invalid direction");
         // I didn't write this code but it's pretty wacky...
         // It looks like OnRotateLeft/Right will increment or decrement the direction of _previewRotation, which includes
         // all 8 directions, but then this function basically truncates that to four directions, and multiplies by two
