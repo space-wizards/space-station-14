@@ -34,7 +34,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
     [DataField, AutoNetworkedField]
     public int Age = 18;
 
-    [DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField] // Starlight
     public string CustomSpecieName = "";
 
     /// <summary>
