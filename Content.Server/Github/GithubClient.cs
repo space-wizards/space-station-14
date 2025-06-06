@@ -32,6 +32,8 @@ public sealed class GithubClient
 
     private ISawmill _sawmill = default!;
 
+    private const int ErrorResponseMaxLogSize = 200;
+
     #region Header constants
 
     private const string ProductName = "SpaceStation14GithubApi";
@@ -116,7 +118,21 @@ public sealed class GithubClient
 
         var response = await _httpClient.SendAsync(httpRequestMessage, ct);
 
-        _sawmill.Info("Made a github api request to: '{uri}', status is {status}", httpRequestMessage.RequestUri, response.StatusCode);
+        var message = $"Made a github api request to: '{httpRequestMessage.RequestUri}', status is {response.StatusCode}";
+        if (response.IsSuccessStatusCode)
+        {
+            _sawmill.Info(message);
+        }
+        else
+        {
+            _sawmill.Error(message);
+            var responseText = await response.Content.ReadAsStringAsync(ct);
+
+            if (responseText.Length > ErrorResponseMaxLogSize)
+                responseText = responseText.Substring(0, ErrorResponseMaxLogSize);
+
+            _sawmill.Error(responseText);
+        }
     }
 
     /// <summary>
