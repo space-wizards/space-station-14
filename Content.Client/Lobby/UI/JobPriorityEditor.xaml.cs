@@ -94,7 +94,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
 
         departments.Sort(DepartmentUIComparer.Instance);
 
-        var items = new[]
+        var selectorPriorities = new[]
         {
             ("humanoid-profile-editor-job-priority-never-button", (int) JobPriority.Never),
             ("humanoid-profile-editor-job-priority-low-button", (int) JobPriority.Low),
@@ -171,7 +171,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
                 };
                 var jobIcon = _prototypeManager.Index(job.Icon);
                 icon.Texture = jobIcon.Icon.Frame0();
-                selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
+                selector.Setup(selectorPriorities, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
 
                 // This shouldn't depend on any character specific properties, so pass null
                 if (!_requirements.IsAllowed(job, null, out var reason))
