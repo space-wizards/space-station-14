@@ -5,7 +5,6 @@ using Content.Client.UserInterface.Systems.Bwoink;
 using Content.Client.UserInterface.Systems.Character;
 using Content.Client.UserInterface.Systems.Crafting;
 using Content.Client.UserInterface.Systems.Emotes;
-using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.UserInterface.Systems.Sandbox;
@@ -20,7 +19,6 @@ public sealed class GameTopMenuBarUIController : UIController, IOnStateChanged<G
     [Dependency] private readonly AHelpUIController _ahelp = default!;
     [Dependency] private readonly CharacterUIController _character = default!;
     [Dependency] private readonly CraftingUIController _crafting = default!;
-    [Dependency] private readonly EscapeUIController _escape = default!;
     [Dependency] private readonly EmotesUIController _emotes = default!;
     [Dependency] private readonly GuidebookUIController _guidebook = default!;
     [Dependency] private readonly SandboxUIController _sandbox = default!;
@@ -43,8 +41,6 @@ public sealed class GameTopMenuBarUIController : UIController, IOnStateChanged<G
 
     public void OnStateEntered(GameplayState state)
     {
-        MenuBar.EscapeButton.OnPressed += _ => _escape.ToggleWindow();
-
         _guidebook.LoadButton();
         _admin.LoadButton();
         _character.LoadButton();
