@@ -15,6 +15,48 @@
       HeadSide : HEAD
 
 - type: entity
+  parent: [ClothingHeadHelmetBase, BaseFoldable]
+  id: ClothingHeadHelmetFoldableBase
+  abstract: true
+  components:
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: fold-lower-visor-verb
+    foldVerbText: fold-raise-visor-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: visorless
+    foldedHeldPrefix: visorless
+  - type: Sprite
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+      visible: true
+    - state: icon-visorless
+      map: ["foldedLayer"]
+      visible: false
+
+- type: entity
+  parent: ClothingHeadHelmetFoldableBase
+  id: ClothingHeadHelmetFoldableBaseVisorless
+  abstract: true
+  suffix: visorless
+  components:
+  - type: Foldable
+    folded: true
+  - type: Clothing
+    equippedPrefix: visorless
+  - type: Item
+    heldPrefix: visorless
+  - type: Sprite
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+      visible: false
+    - state: icon-visorless
+      map: ["foldedLayer"]
+      visible: true
+
+- type: entity
   parent: ClothingHeadHelmetBase
   id: ClothingHeadHelmetArmoredBase
   abstract: true
@@ -29,7 +71,7 @@
 
 #Security Helmet
 - type: entity
-  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetArmoredBase, ClothingHeadHelmetFoldableBase, BaseSecurityContraband]
   id: ClothingHeadHelmetBasic
   name: security helmet
   description: Standard security gear. Protects the head from impacts.
@@ -45,13 +87,11 @@
   - type: HideLayerClothing
     layers:
       Hair: HEAD
-  - type: Foldable
-    canFoldInsideContainer: true
-    unfoldVerbText: fold-lower-visor-verb
-    foldVerbText: fold-raise-visor-verb
-  - type: FoldableClothing
-    foldedEquippedPrefix: visorless
-    foldedHeldPrefix: visorless
+
+- type: entity
+  parent: [ClothingHeadHelmetFoldableBaseVisorless, ClothingHeadHelmetBasic]
+  id: ClothingHeadHelmetBasicVisorless
+  name: security helmet
 
 #Mercenary Helmet
 - type: entity
