@@ -185,6 +185,12 @@ namespace Content.Client.Lobby.UI
 
             #endregion Name
 
+            #region Custom Specie Name
+
+            CCustomSpecieNameEdit.OnTextChanged += args => { SetCustomSpecieName(args.Text); };
+
+            #endregion CustomSpecieName
+
             #region Appearance
 
             TabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
@@ -234,6 +240,7 @@ namespace Content.Client.Lobby.UI
                 SetSpecies(_species[args.Id].ID);
                 UpdateHairPickers();
                 OnSkinColorOnValueChanged();
+                UpdateCustomSpecieNameEdit();
             };
 
             #region Skin
@@ -838,6 +845,7 @@ namespace Content.Client.Lobby.UI
             JobOverride = null;
 
             UpdateNameEdit();
+            UpdateCustomSpecieNameEdit();
             UpdateFlavorTextEdit();
             UpdateSexControls();
             UpdateGenderControls();
@@ -1315,6 +1323,12 @@ namespace Content.Client.Lobby.UI
             _entManager.System<MetaDataSystem>().SetEntityName(PreviewDummy, newName);
         }
 
+        private void SetCustomSpecieName(string customname)
+        {
+            Profile = Profile?.WithCustomSpeciesName(customname);
+            SetDirty();
+        }
+
         private void SetSpawnPriority(SpawnPriorityPreference newSpawnPriority)
         {
             Profile = Profile?.WithSpawnPriorityPreference(newSpawnPriority);
@@ -1337,6 +1351,13 @@ namespace Content.Client.Lobby.UI
         private void UpdateNameEdit()
         {
             NameEdit.Text = Profile?.Name ?? "";
+        }
+
+        private void UpdateCustomSpecieNameEdit()
+        {
+            var species = _species.Find(x => x.ID == Profile?.Species) ?? _species.First();
+            CCustomSpecieNameEdit.Text = string.IsNullOrEmpty(Profile?.CustomSpecieName) ? Loc.GetString(species.Name) : Profile.CustomSpecieName;
+            CCustomSpecieName.Visible = species.CustomName;
         }
 
         private void UpdateFlavorTextEdit()
