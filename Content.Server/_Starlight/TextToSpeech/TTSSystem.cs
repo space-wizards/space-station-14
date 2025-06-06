@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Content.Server._Starlight.Radio.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Starlight.TextToSpeech;
 using Content.Shared.Humanoid;
@@ -19,6 +20,7 @@ namespace Content.Server.Starlight.TTS;
 public sealed partial class TTSSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
+    [Dependency] private readonly RadioChimeSystem _chime = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ITTSManager _ttsManager = default!;
@@ -84,9 +86,7 @@ public sealed partial class TTSSystem : EntitySystem
             || args.Message.Length > MaxChars)
             return;
 
-        var chime = TryComp<RadioChimeComponent>(args.Source, out var chimeComponent)
-            ? chimeComponent.Sound
-            : default;
+        _chime.TryGetSenderHeadsetChime(args.Source, out var chime);
 
         if (!TryComp(args.Source, out TextToSpeechComponent? senderComponent)
             || senderComponent.VoicePrototypeId is not string voiceId)

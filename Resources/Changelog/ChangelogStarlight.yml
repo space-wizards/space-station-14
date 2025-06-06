@@ -6807,4 +6807,75 @@ Entries:
   id: 941
   time: '2025-06-05T05:37:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/762
+- author: InanimateIJK
+  changes:
+  - message: Tracks 'Timefracture' and 'Echos in the Deep' have their proper metadata
+      established & should show in the lobby.
+    type: Fix
+  id: 942
+  time: '2025-06-05T06:41:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/773
+- author: Cyanogen, InanimateIJK
+  changes:
+  - message: Vibroblades
+    type: Add
+  id: 943
+  time: '2025-06-05T17:06:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/769
+- author: Cyanogen, InanimateIJK
+  changes:
+  - message: CentComm web vest
+    type: Add
+  id: 944
+  time: '2025-06-05T17:06:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/769
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins no longer take twice as much airloss damage
+    type: Remove
+  id: 945
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins no longer heal half as fast from airloss
+    type: Remove
+  id: 946
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins now have a higher vision range
+    type: Tweak
+  id: 947
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: Cyanogen
+  changes:
+  - message: Vulpkanins now have night vision
+    type: Add
+  id: 948
+  time: '2025-06-05T17:45:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/755
+- author: PubliclyExecutedPig
+  changes:
+  - message: Lobster has actually good genpop now sorta
+    type: Tweak
+  id: 949
+  time: '2025-06-05T19:43:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/774
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed radio chimes.
+    type: Fix
+  id: 950
+  time: '2025-06-05T22:07:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/770
+- author: STARLIGHT TEAM
+  changes:
+  - message: The Elder now always spawns on the Impossible mission.
+    type: Fix
+  id: 951
+  time: '2025-06-05T22:08:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/771
 
