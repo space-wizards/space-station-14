@@ -642,6 +642,11 @@ ClothingNeckCloakMiner: null
 MatterBinStockPart: MicroManipulatorStockPart
 CapacitorStockPart: MicroManipulatorStockPart
 
+# 2025-05-26 Turrets
+WeaponEnergyTurretStation: WeaponEnergyTurretSecurity
+WeaponEnergyTurretStationControlPanel: WeaponEnergyTurretSecurityControlPanel
+WeaponEnergyTurretStationMachineCircuitboard: WeaponEnergyTurretSecurityMachineCircuitboard
+
 # 2025-05-30
 SpawnHonkBot: SpawnMobHonkBot
 

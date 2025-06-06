@@ -57,6 +57,8 @@
     - SuitEVA
     - MonkeyWearable
     - WhitelistChameleon
+  - type: StaticPrice
+    price: 1000 # Helmet is 500
 
 - type: entity
   parent: SuitEVAPackage
