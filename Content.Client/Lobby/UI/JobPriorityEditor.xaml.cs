@@ -104,8 +104,6 @@ public sealed partial class JobPriorityEditor : BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
                     Name = department.ID,
-                    ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
-                        ("departmentName", departmentName))
                 };
 
                 if (firstCategory)
