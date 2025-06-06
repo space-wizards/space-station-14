@@ -349,6 +349,16 @@
   group: market
 
 - type: cargoProduct
+  id: FunPlants
+  icon:
+    sprite: Structures/Furniture/potted_plants.rsi
+    state: random
+  product: CratePlants
+  cost: 1000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
   id: FunBiggerChess
   icon:
     sprite: Objects/Fun/Tabletop/chess_pieces.rsi

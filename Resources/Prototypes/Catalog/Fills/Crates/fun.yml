@@ -43,6 +43,49 @@
     - id: PlushieArachind
     - id: PlushiePenguin
 
+- type: entityTable
+  id: AllPottedPlantsTable
+  table: !type:GroupSelector
+    children:
+    - id: PottedPlant0
+    - id: PottedPlant1
+    - id: PottedPlant2
+    - id: PottedPlant3
+    - id: PottedPlant4
+    - id: PottedPlant5
+    - id: PottedPlant6
+    - id: PottedPlant7
+    - id: PottedPlant8
+    - id: PottedPlant10
+    - id: PottedPlant11
+    - id: PottedPlant12
+    - id: PottedPlant13
+    - id: PottedPlant14
+    - id: PottedPlant15
+    - id: PottedPlant16
+    - id: PottedPlant17
+    - id: PottedPlant18
+    - id: PottedPlant19
+    - id: PottedPlant20
+    - id: PottedPlant21
+    - id: PottedPlant22
+    - id: PottedPlant23
+    - id: PottedPlant24
+    - id: PottedPlant26
+
+- type: entity
+  id: CratePlants
+  parent: CrateGenericSteel
+  name: plant crate
+  description: A variety pack of potted plants to spruce up your station!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: AllPottedPlantsTable
+        rolls: !type:ConstantNumberSelector
+          value: 5
+
 - type: entity
   id: CrateFunPlushie
   parent: CrateGenericSteel
