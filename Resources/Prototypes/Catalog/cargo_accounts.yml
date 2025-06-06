@@ -4,6 +4,7 @@
   code: cargo-account-cargo-code
   color: "#b48b57"
   radioChannel: Supply
+  acquisitionSlip: PaperAcquisitionSlipCargo
 
 - type: cargoAccount
   id: Engineering
@@ -11,6 +12,7 @@
   code: cargo-account-engineering-code
   color: "#ff733c"
   radioChannel: Engineering
+  acquisitionSlip: PaperAcquisitionSlipEngineering
 
 - type: cargoAccount
   id: Medical
@@ -18,6 +20,7 @@
   code: cargo-account-medical-code
   color: "#57b8f0"
   radioChannel: Medical
+  acquisitionSlip: PaperAcquisitionSlipMedical
 
 - type: cargoAccount
   id: Science
@@ -25,6 +28,7 @@
   code: cargo-account-science-code
   color: "#cd7ccd"
   radioChannel: Science
+  acquisitionSlip: PaperAcquisitionSlipScience
 
 - type: cargoAccount
   id: Security
@@ -32,6 +36,7 @@
   code: cargo-account-security-code
   color: "#ff4242"
   radioChannel: Security
+  acquisitionSlip: PaperAcquisitionSlipSecurity
 
 - type: cargoAccount
   id: Service
@@ -39,4 +44,4 @@
   code: cargo-account-service-code
   color: "#539c00"
   radioChannel: Service
-
+  acquisitionSlip: PaperAcquisitionSlipService
