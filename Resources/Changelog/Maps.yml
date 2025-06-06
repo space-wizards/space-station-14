@@ -293,4 +293,48 @@
   id: 35
   time: '2025-05-30T12:52:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37961
+- author: Boaz1111
+  changes:
+  - message: Marathon has Genpop now.
+    type: Add
+  id: 36
+  time: '2025-06-01T19:38:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37687
+- author: Mixelz
+  changes:
+  - message: On Plasma, added Genpop, Salv Job Board & AI Turrets! Along with several
+      other fixes & rebalanced maints loot.
+    type: Add
+  id: 37
+  time: '2025-06-03T04:30:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38028
+- author: JpegOfAFrog
+  changes:
+  - message: On Plasma Station evacuation shuttle, gas holding tanks are now filled
+      when the shuttle arrives.
+    type: Tweak
+  id: 38
+  time: '2025-06-03T05:58:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37768
+- author: Spessmann
+  changes:
+  - message: On Convex, added AI turrets to the AI core
+    type: Add
+  id: 39
+  time: '2025-06-03T23:08:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38053
+- author: spanky-spanky
+  changes:
+  - message: On Omega, sentry turrets have been added to the AI core and vault.
+    type: Add
+  id: 40
+  time: '2025-06-04T20:37:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38066
+- author: spanky-spanky
+  changes:
+  - message: On Fland, added sentry turrets to the AI, vault, and armory.
+    type: Add
+  id: 41
+  time: '2025-06-04T21:41:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38068
 Order: 1
