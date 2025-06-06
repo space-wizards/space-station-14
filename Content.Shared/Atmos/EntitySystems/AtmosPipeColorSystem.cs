@@ -41,11 +41,8 @@ public sealed class AtmosPipeColorSystem : EntitySystem
 
         if (TryComp<AtmosPipeColorComponent>(item.Owner, out var colorSync))
         {
-            if (colorSync != null)
-            {
-                colorSync.Color = color;
-                Dirty(item.Owner, colorSync);
-            }
+            colorSync.Color = color;
+            Dirty(item.Owner, colorSync);
         }
 
         _appearance.SetData(item.Owner, PipeColorVisuals.Color, color, appearance);
