@@ -9,16 +9,14 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/chainsaw.rsi
     layers:
-    - state: icon
-    - state: icon-on
-      visible: true
+    - state: chainsaw-off
       map: ["enum.ToggleableVisuals.Layer"]
   - type: GenericVisualizer
     visuals:
       enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
-          True: { visible: true }
-          False: { visible: false }
+          True: { state: chainsaw-on }
+          False: { state: chainsaw-off }
   - type: MeleeWeapon
     autoAttack: true
     angle: 0
@@ -81,26 +79,6 @@
       malus: 0.9 #You try disarming a chainsaw wielding maniac
     - type: Execution
       doAfterDuration: 4.0
-  - type: ToggleableVisuals
-    spriteLayer: on
-    inhandVisuals:
-      left:
-      - state: wielded-inhand-left
-      right:
-      - state: wielded-inhand-right
-  - type: Welder
-    fuelConsumption: 2
-    fuelLitCost: 10
-    tankSafe: true
-  - type: RefillableSolution
-    solution: Welder
-  - type: SolutionContainerManager
-    solutions:
-      Welder:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 300
-        maxVol: 300
   - type: UseDelay
     delay: 1
   - type: Appearance
