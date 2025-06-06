@@ -1,3 +1,4 @@
+using Content.Client.Gameplay;
 using Content.Client.UserInterface.Systems.Actions;
 using Content.Client.UserInterface.Systems.Admin;
 using Content.Client.UserInterface.Systems.Bwoink;
@@ -5,7 +6,6 @@ using Content.Client.UserInterface.Systems.Character;
 using Content.Client.UserInterface.Systems.Crafting;
 using Content.Client.UserInterface.Systems.Emotes;
 using Content.Client.UserInterface.Systems.EscapeMenu;
-using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.UserInterface.Systems.Sandbox;
@@ -13,7 +13,7 @@ using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.UserInterface.Systems.MenuBar;
 
-public sealed class GameTopMenuBarUIController : UIController
+public sealed class GameTopMenuBarUIController : UIController, IOnStateChanged<GameplayState>
 {
     [Dependency] private readonly EscapeUIController _escape = default!;
     [Dependency] private readonly AdminUIController _admin = default!;
@@ -25,33 +25,15 @@ public sealed class GameTopMenuBarUIController : UIController
     [Dependency] private readonly GuidebookUIController _guidebook = default!;
     [Dependency] private readonly EmotesUIController _emotes = default!;
 
-    private GameTopMenuBar? GameTopMenuBar => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>();
+    private GameTopMenuBar? MenuBar => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>();
 
-    public override void Initialize()
+    public void OnStateEntered(GameplayState state)
     {
-        base.Initialize();
+        if (MenuBar == null)
+            return;
 
-        var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
-        gameplayStateLoad.OnScreenLoad += LoadButtons;
-        gameplayStateLoad.OnScreenUnload += UnloadButtons;
-    }
+        MenuBar.EscapeButton.OnPressed += _ => _escape.ToggleWindow();
 
-    public void UnloadButtons()
-    {
-        _escape.UnloadButton();
-        _guidebook.UnloadButton();
-        _admin.UnloadButton();
-        _character.UnloadButton();
-        _crafting.UnloadButton();
-        _ahelp.UnloadButton();
-        _action.UnloadButton();
-        _sandbox.UnloadButton();
-        _emotes.UnloadButton();
-    }
-
-    public void LoadButtons()
-    {
-        _escape.LoadButton();
         _guidebook.LoadButton();
         _admin.LoadButton();
         _character.LoadButton();
@@ -60,5 +42,21 @@ public sealed class GameTopMenuBarUIController : UIController
         _action.LoadButton();
         _sandbox.LoadButton();
         _emotes.LoadButton();
+    }
+
+    public void OnStateExited(GameplayState state)
+    {
+        if (MenuBar == null)
+            return;
+
+        MenuBar.EscapeButton.Pressed = false;
+        _guidebook.UnloadButton();
+        _admin.UnloadButton();
+        _character.UnloadButton();
+        _crafting.UnloadButton();
+        _ahelp.UnloadButton();
+        _action.UnloadButton();
+        _sandbox.UnloadButton();
+        _emotes.UnloadButton();
     }
 }
