@@ -186,10 +186,10 @@ public sealed class ItemGridPiece : Control, IEntityControl
             handle.SetTransform(pos, iconRotation);
             var box = new UIBox2(root, root + sprite.Size * scale);
 
-            if (_entityManager.TryGetComponent<SpriteComponent>(Entity, out var spriteComp))
-                handle.DrawTextureRect(sprite, box, spriteComp.Color);
-            else
-                handle.DrawTextureRect(sprite, box);
+            var ev = new BeforeRenderInGridEvent(new Color(255, 255, 255));
+            _entityManager.EventBus.RaiseLocalEvent(Entity, ev);
+
+            handle.DrawTextureRect(sprite, box, ev.Color);
 
             handle.SetTransform(GlobalPixelPosition, Angle.Zero);
         }
@@ -301,6 +301,16 @@ public sealed class ItemGridPiece : Control, IEntityControl
     }
 
     public EntityUid? UiEntity => Entity;
+}
+
+public sealed class BeforeRenderInGridEvent : EntityEventArgs
+{
+    public Color Color { get; set; }
+
+    public BeforeRenderInGridEvent(Color color)
+    {
+        Color = color;
+    }
 }
 
 public enum ItemGridPieceMarks
