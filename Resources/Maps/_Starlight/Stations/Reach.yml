@@ -4,8 +4,8 @@ meta:
   engineVersion: 260.2.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 06/05/2025 23:54:12
-  entityCount: 2991
+  time: 06/06/2025 00:43:12
+  entityCount: 2995
 maps:
 - 1
 grids:
@@ -135,6 +135,23 @@ entities:
       chunkCollection:
         version: 2
         nodes:
+        - node:
+            color: '#DE3A3A96'
+            id: ArrowsGreyscale
+          decals:
+            1101: 17,7
+        - node:
+            angle: 3.141592653589793 rad
+            color: '#DE3A3A96'
+            id: ArrowsGreyscale
+          decals:
+            1102: 19,5
+        - node:
+            angle: 4.71238898038469 rad
+            color: '#DE3A3A96'
+            id: ArrowsGreyscale
+          decals:
+            1103: 17,4
         - node:
             color: '#404040FF'
             id: BrickTileWhiteBox
@@ -1586,11 +1603,10 @@ entities:
       parent: 2
     - type: DeviceList
       devices:
-      - 1804
       - 1773
-      - 1805
-      - 1358
+      - 1804
       - 1342
+      - 1358
       - 1351
       - 1357
       - 1350
@@ -1604,14 +1620,14 @@ entities:
     - type: DeviceList
       devices:
       - 1772
-      - 1783
-      - 1788
       - 1818
-      - 1351
-      - 1357
-      - 1350
-      - 1349
+      - 1788
+      - 1783
       - 1359
+      - 2992
+      - 2993
+      - 2994
+      - 2995
   - uid: 5
     components:
     - type: Transform
@@ -1645,19 +1661,18 @@ entities:
     - type: DeviceList
       devices:
       - 1781
-      - 1363
-      - 1340
-      - 1341
-      - 1802
-      - 1338
-      - 1339
-      - 1364
-      - 1365
       - 1816
       - 1755
-      - 1367
-      - 1368
+      - 1365
+      - 1364
+      - 1339
+      - 1340
+      - 1341
+      - 1363
+      - 1338
       - 1369
+      - 1368
+      - 1367
   - uid: 8
     components:
     - type: Transform
@@ -1805,9 +1820,9 @@ entities:
       devices:
       - 1778
       - 1799
-      - 1364
-      - 1365
       - 1366
+      - 1365
+      - 1364
 - proto: AirCanister
   entities:
   - uid: 19
@@ -9065,6 +9080,90 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 10
+  - uid: 1349
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,11.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 3
+  - uid: 1350
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,10.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 3
+  - uid: 1351
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,7.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 3
+  - uid: 1357
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,8.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 3
+  - uid: 2992
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,7.5
+      parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
+      - invalid
+      deviceLists:
+      - 4
+  - uid: 2993
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,8.5
+      parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
+      - invalid
+      deviceLists:
+      - 4
+  - uid: 2994
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,10.5
+      parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
+      - invalid
+      deviceLists:
+      - 4
+  - uid: 2995
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -1.5,11.5
+      parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
+      - invalid
+      deviceLists:
+      - 4
 - proto: FirelockGlass
   entities:
   - uid: 1337
@@ -9119,6 +9218,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 11
+      - 3
   - uid: 1343
     components:
     - type: Transform
@@ -9158,30 +9258,6 @@ entities:
     - type: Transform
       pos: 8.5,-1.5
       parent: 2
-  - uid: 1349
-    components:
-    - type: Transform
-      pos: -0.5,11.5
-      parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-  - uid: 1350
-    components:
-    - type: Transform
-      pos: -0.5,10.5
-      parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
-  - uid: 1351
-    components:
-    - type: Transform
-      pos: -0.5,7.5
-      parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
   - uid: 1352
     components:
     - type: Transform
@@ -9213,24 +9289,25 @@ entities:
     - type: Transform
       pos: 6.5,6.5
       parent: 2
-  - uid: 1357
-    components:
-    - type: Transform
-      pos: -0.5,8.5
-      parent: 2
-    - type: DeviceNetwork
-      configurators:
-      - invalid
   - uid: 1358
     components:
     - type: Transform
       pos: 0.5,6.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 3
   - uid: 1359
     components:
     - type: Transform
       pos: -1.5,6.5
       parent: 2
+    - type: DeviceNetwork
+      configurators:
+      - invalid
+      - invalid
+      deviceLists:
+      - 4
   - uid: 1360
     components:
     - type: Transform
@@ -9274,8 +9351,8 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 18
       - 7
+      - 18
   - uid: 1365
     components:
     - type: Transform
@@ -9283,8 +9360,8 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 18
       - 7
+      - 18
   - uid: 1366
     components:
     - type: Transform
@@ -13281,6 +13358,9 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
+      configurators:
+      - invalid
+      - invalid
       deviceLists:
       - 4
     - type: AtmosPipeColor
@@ -13290,6 +13370,9 @@ entities:
     - type: Transform
       pos: 0.5,8.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 3
     - type: VentCrawTube
       connected: True
     - type: AtmosPipeColor
@@ -13412,6 +13495,9 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
+      configurators:
+      - invalid
+      - invalid
       deviceLists:
       - 4
     - type: AtmosPipeColor
@@ -13471,6 +13557,9 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
+      configurators:
+      - invalid
+      - invalid
       deviceLists:
       - 4
     - type: AtmosPipeColor
@@ -13641,9 +13730,6 @@ entities:
       parent: 2
     - type: VentCrawTube
       connected: True
-    - type: DeviceNetwork
-      deviceLists:
-      - 7
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 1803
@@ -13665,6 +13751,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,8.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 3
     - type: VentCrawTube
       connected: True
     - type: AtmosPipeColor
@@ -13676,9 +13765,6 @@ entities:
       parent: 2
     - type: VentCrawTube
       connected: True
-    - type: DeviceNetwork
-      deviceLists:
-      - 3
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 1806
@@ -13829,6 +13915,9 @@ entities:
     - type: VentCrawTube
       connected: True
     - type: DeviceNetwork
+      configurators:
+      - invalid
+      - invalid
       deviceLists:
       - 4
     - type: AtmosPipeColor
