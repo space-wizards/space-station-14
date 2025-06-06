@@ -7,14 +7,14 @@
     MinWidth="512"
     MinSize="512 256">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Horizontal"  >
+        <BoxContainer Orientation="Horizontal">
             <PanelContainer
                 Name="IngredientsPanel"
                 Access="Public"
                 MinSize="300 128"
                 Margin="5 5">
                 <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E" />
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
                 </PanelContainer.PanelOverride>
                 <ItemList
                     Name="IngredientsList"
@@ -30,6 +30,14 @@
                     <!-- Ingredients are added here by code -->
                 </ItemList>
             </PanelContainer>
+            <!-- Starlight-start: moved to add working stop button -->
+            <PanelContainer Name="DisableCookingPanelOverlay"
+                            MouseFilter="Stop">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E66"/>
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+            <!-- Starlight-end -->
             <BoxContainer
                 Orientation="Vertical"
                 MinWidth="170"
@@ -44,12 +52,20 @@
                         ModulateSelfOverride="#FF0000"
                         MinSize="100 128">
                         <BoxContainer Orientation="Vertical">
+                            <!-- Starlight-start -->
+                            <Label
+                                Name="CurrentCookTimeInfoLabel"
+                                Access="Public"
+                                Align="Center"
+                                Modulate="#FFFFFF"
+                                VAlign="Center"/>
+                            <!-- Starlight-end -->
                             <Label
                                 Name="CookTimeInfoLabel"
                                 Access="Public"
                                 Align="Center"
                                 Modulate="#FFFFFF"
-                                VAlign="Center" />
+                                VAlign="Center"/>
                             <BoxContainer  Orientation="Vertical">
                                 <Button
                                     Name="InstantCookButton"
@@ -58,7 +74,7 @@
                                     StyleClasses="OpenLeft"
                                     ToggleMode="True"
                                     Margin="0 0 2 0"
-                                    TextAlign="Center" />
+                                    TextAlign="Center"/>
                                 <GridContainer
                                     Name="CookTimeButtonVbox"
                                     HSeparationOverride="1"
@@ -73,20 +89,37 @@
                                     Orientation="Vertical"
                                     Align="Center"
                                     SizeFlagsStretchRatio="3">
-                                    <Control MinSize="0 15" />
-                                    <Button
-                                        Name="StartButton"
-                                        Access="Public"
-                                        Text="{Loc 'microwave-menu-start-button'}"
-                                        StyleClasses="ButtonColorGreen"
-                                        TextAlign="Center" />
-                                    <Button
-                                        Name="EjectButton"
-                                        Access="Public"
-                                        Text="{Loc 'microwave-menu-eject-all-text'}"
-                                        ToolTip="{Loc 'microwave-menu-eject-all-tooltip'}"
-                                        StyleClasses="ButtonColorRed"
-                                        TextAlign="Center" />
+                                    <Control MinSize="0 15"/>
+                                    <!-- Starlight-start -->
+                                    <BoxContainer Orientation="Horizontal"
+                                                  Align="Center"
+                                                  SeparationOverride="4">
+                                        <PanelContainer SizeFlagsStretchRatio="1">
+                                            <BoxContainer SeparationOverride="0">
+                                                <Button
+                                                    Name="StartButton"
+                                                    Access="Public"
+                                                    Text="{Loc 'microwave-menu-start-button'}"
+                                                    StyleClasses="ButtonColorGreen"
+                                                    TextAlign="Center"/>
+                                                <Button
+                                                    Name="StopButton"
+                                                    Access="Public"
+                                                    Text="{Loc 'microwave-menu-stop-button'}"
+                                                    StyleClasses="ButtonColorRed"
+                                                    TextAlign="Center"/>
+                                            </BoxContainer>
+                                        </PanelContainer>
+                                        <Button
+                                            Name="EjectButton"
+                                            Access="Public"
+                                            Text="{Loc 'microwave-menu-eject-all-text'}"
+                                            ToolTip="{Loc 'microwave-menu-eject-all-tooltip'}"
+                                            StyleClasses="ButtonColorRed"
+                                            TextAlign="Center"
+                                            SizeFlagsStretchRatio="1"/>
+                                    </BoxContainer>
+                                    <!-- Starlight-end -->
                                 </BoxContainer>
                             </BoxContainer>
                         </BoxContainer>
@@ -94,20 +127,25 @@
                 </PanelContainer>
             </BoxContainer>
         </BoxContainer>
-         <!-- Footer -->
+        <!-- Footer -->
         <BoxContainer Orientation="Vertical">
-            <PanelContainer StyleClasses="LowDivider" />
-            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
-                <Label Text="{Loc 'microwave-menu-footer-flavor-left'}" StyleClasses="WindowFooterText" />
-                <Label Text="{Loc 'microwave-menu-footer-flavor-right'}" StyleClasses="WindowFooterText"
-                       HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
-                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered" VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            <PanelContainer StyleClasses="LowDivider"/>
+            <BoxContainer Orientation="Horizontal"
+                          Margin="10 2 5 0"
+                          VerticalAlignment="Bottom">
+                <Label Text="{Loc 'microwave-menu-footer-flavor-left'}"
+                       StyleClasses="WindowFooterText"/>
+                <Label Text="{Loc 'microwave-menu-footer-flavor-right'}"
+                       StyleClasses="WindowFooterText"
+                       HorizontalAlignment="Right"
+                       HorizontalExpand="True"
+                       Margin="0 0 5 0"/>
+                <TextureRect StyleClasses="NTLogoDark"
+                             Stretch="KeepAspectCentered"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Right"
+                             SetSize="19 19"/>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-    <PanelContainer Name="DisableCookingPanelOverlay" MouseFilter="Stop">
-        <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BackgroundColor="#1B1B1E66" />
-        </PanelContainer.PanelOverride>
-    </PanelContainer>
 </controls:FancyWindow>

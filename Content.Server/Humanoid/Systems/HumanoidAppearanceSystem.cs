@@ -40,6 +40,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         targetHumanoid.Species = sourceHumanoid.Species;
         targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
         targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
+        targetHumanoid.EyeGlowing = sourceHumanoid.EyeGlowing; //starlight
         targetHumanoid.Age = sourceHumanoid.Age;
         SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
@@ -122,6 +123,8 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
             marking.SetColor(i, markings[index].MarkingColors[i]);
         }
 
+        marking.IsGlowing = markings[index].IsGlowing; //starlight
+
         humanoid.MarkingSet.Replace(category, index, marking);
         Dirty(uid, humanoid);
     }
@@ -152,4 +155,21 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 
         Dirty(uid, humanoid);
     }
+
+    //starlight start
+    public void SetMarkingGlowing(EntityUid uid, MarkingCategories category, int index, bool glowing,
+        HumanoidAppearanceComponent? humanoid = null)
+    {
+        if (index < 0
+            || !Resolve(uid, ref humanoid)
+            || !humanoid.MarkingSet.TryGetCategory(category, out var markings)
+            || index >= markings.Count)
+        {
+            return;
+        }
+
+        markings[index].IsGlowing = glowing;
+        Dirty(uid, humanoid);
+    }
+    //starlight end
 }

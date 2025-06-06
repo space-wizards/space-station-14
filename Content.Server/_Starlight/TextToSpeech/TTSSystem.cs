@@ -1,12 +1,15 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Content.Server._Starlight.Radio.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Starlight.TextToSpeech;
 using Content.Shared.Humanoid;
+using Content.Shared.Radio.Components;
 using Content.Shared.Starlight;
 using Content.Shared.Starlight.CCVar;
 using Content.Shared.Starlight.TextToSpeech;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -17,6 +20,7 @@ namespace Content.Server.Starlight.TTS;
 public sealed partial class TTSSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
+    [Dependency] private readonly RadioChimeSystem _chime = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ITTSManager _ttsManager = default!;
@@ -50,6 +54,7 @@ public sealed partial class TTSSystem : EntitySystem
         SubscribeLocalEvent<TransformSpeechEvent>(OnTransformSpeech);
         SubscribeLocalEvent<TextToSpeechComponent, EntitySpokeEvent>(OnEntitySpoke);
         SubscribeLocalEvent<RadioSpokeEvent>(OnRadioReceiveEvent);
+        SubscribeLocalEvent<CollectiveMindSpokeEvent>(OnCollectiveMindReceiveEvent);
         SubscribeLocalEvent<AnnouncementSpokeEvent>(OnAnnouncementSpoke);
     }
 
@@ -81,15 +86,35 @@ public sealed partial class TTSSystem : EntitySystem
             || args.Message.Length > MaxChars)
             return;
 
+        _chime.TryGetSenderHeadsetChime(args.Source, out var chime);
+
         if (!TryComp(args.Source, out TextToSpeechComponent? senderComponent)
             || senderComponent.VoicePrototypeId is not string voiceId)
         {
-            HandleRadio(args.Receivers, args.Message, 92);
+            HandleRadio(args.Receivers, args.Message, 92, chime);
         }
         else
         {
             var voice = _prototypeManager.TryIndex(voiceId, out VoicePrototype? proto) ? proto.Voice : 1;
-            HandleRadio(args.Receivers, args.Message, voice);
+            HandleRadio(args.Receivers, args.Message, voice, chime);
+        }
+    }
+
+    private void OnCollectiveMindReceiveEvent(CollectiveMindSpokeEvent args)
+    {
+        if (!_isEnabled
+            || args.Message.Length > MaxChars)
+            return;
+
+        if (!TryComp(args.Source, out TextToSpeechComponent? senderComponent)
+            || senderComponent.VoicePrototypeId is not string voiceId)
+        {
+            HandleCollectiveMind(args.Receivers, args.Message, 92);
+        }
+        else
+        {
+            var voice = _prototypeManager.TryIndex(voiceId, out VoicePrototype? proto) ? proto.Voice : 1;
+            HandleCollectiveMind(args.Receivers, args.Message, voice);
         }
     }
 
@@ -229,7 +254,16 @@ public sealed partial class TTSSystem : EntitySystem
         }
     }
 
-    private async void HandleRadio(EntityUid[] uIds, string message, int voice)
+    private async void HandleRadio(EntityUid[] uIds, string message, int voice, SoundSpecifier? chime)
+    {
+        var soundData = await GenerateTTS(message, voice, isRadio: true);
+        if (soundData is null)
+            return;
+
+        RaiseNetworkEvent(new PlayTTSEvent { IsRadio = true, Chime = chime, Data = soundData }, Filter.Entities(uIds).RemovePlayers(_ignoredRecipients));
+    }
+
+    private async void HandleCollectiveMind(EntityUid[] uIds, string message, int voice)
     {
         var soundData = await GenerateTTS(message, voice, isRadio: true);
         if (soundData is null)

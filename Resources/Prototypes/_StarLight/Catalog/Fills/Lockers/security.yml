@@ -131,6 +131,8 @@
         amount: 2
       - id: ClothingHandsGlovesCombat
         amount: 2
+      - id: ClothingHeadsetSecurityWarden
+        amount: 2
       - id: ClothingShoesBootsJack
         amount: 2
       - id: ClothingOuterCoatWarden

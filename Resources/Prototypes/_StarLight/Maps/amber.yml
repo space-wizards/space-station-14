@@ -5,7 +5,7 @@
   minPlayers: 7
   maxPlayers: 50
   stations:
-    Amber:
+    StarlightAmber:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -57,6 +57,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 2, 3 ]
             CargoTechnician: [ 2, 3 ]
+            MailTech: [ 1, 2 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]

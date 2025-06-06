@@ -34,7 +34,7 @@
     nameGeneration: food-sequence-taco-gen
     contentSeparator: ", "
   - type: Appearance
-  
+
 # Old tacos
 
 - type: entity
@@ -164,6 +164,33 @@
         - ReagentId: Nutriment
           Quantity: 14
         - ReagentId: Vitamin
+          Quantity: 6
+
+- type: entity
+  name: draco
+  parent: FoodTacoBase
+  id: FoodTacoDragon
+  description: A dragon taco, which is technically also a fish taco.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - spicy
+  - type: Food
+  - type: Sprite
+    state: dragontaco
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 32
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 14
+        - ReagentId: Vitamin
+          Quantity: 4
+        - ReagentId: Ichor
+          Quantity: 4
+        - ReagentId: CapsaicinOil
           Quantity: 6
 
 - type: entity

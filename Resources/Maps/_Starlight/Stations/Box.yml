@@ -473,7 +473,7 @@ entities:
     - type: Fixtures
       fixtures: {}
     - type: BecomesStation
-      id: Boxstation
+      id: StarlightBox
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
@@ -10393,7 +10393,7 @@ entities:
     - type: Joint
       joints:
         docking46345: !type:WeldJoint
-          bodyB: 28457
+          bodyB: 28464
           bodyA: 2
           id: docking46345
           localAnchorB: -0.5,-1
@@ -10433,7 +10433,7 @@ entities:
     - type: ContainedSolution
       containerName: food
       container: 4
-  - uid: 28457
+  - uid: 28464
     components:
     - type: MetaData
     - type: Transform
@@ -10473,7 +10473,7 @@ entities:
     - type: Joint
       joints:
         docking46345: !type:WeldJoint
-          bodyB: 28457
+          bodyB: 28464
           bodyA: 2
           id: docking46345
           localAnchorB: -0.5,-1
@@ -13776,7 +13776,7 @@ entities:
       pos: 24.5,16.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -95344.766
+      secondsUntilStateChange: -95419.01
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14115,7 +14115,7 @@ entities:
       state: Open
     - type: Docking
       dockJointId: docking46345
-      dockedWith: 28458
+      dockedWith: 28465
     - type: DeviceLinkSource
       linkedPorts:
         295:
@@ -14149,11 +14149,11 @@ entities:
         - DoorStatus: Close
     - type: DeviceLinkSink
       invokeCounter: 1
-  - uid: 28458
+  - uid: 28465
     components:
     - type: Transform
       pos: -0.5,-0.5
-      parent: 28457
+      parent: 28464
     - type: Door
       changeAirtight: False
       state: Open
@@ -15321,7 +15321,7 @@ entities:
       pos: 9.5,25.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -8601.263
+      secondsUntilStateChange: -8675.505
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -17681,11 +17681,11 @@ entities:
     - type: Transform
       pos: -77.5,7.5
       parent: 2
-  - uid: 28459
+  - uid: 28466
     components:
     - type: Transform
       pos: -0.5,-0.5
-      parent: 28457
+      parent: 28464
 - proto: AtmosFixBlockerMarker
   entities:
   - uid: 930
@@ -88457,7 +88457,7 @@ entities:
       pos: 18.5,-13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2575.7744
+      secondsUntilStateChange: -2650.0166
       state: Closing
   - uid: 13810
     components:
@@ -88465,7 +88465,7 @@ entities:
       pos: 18.5,-14.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2611.4746
+      secondsUntilStateChange: -2685.7168
       state: Closing
   - uid: 13811
     components:
@@ -88633,7 +88633,7 @@ entities:
       pos: -34.5,-14.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -89533.305
+      secondsUntilStateChange: -89607.55
       state: Closing
   - uid: 13838
     components:
@@ -134290,14 +134290,14 @@ entities:
       bodyType: Static
 - proto: GunSafeRifleLecter
   entities:
-  - uid: 19304
+  - uid: 19303
     components:
     - type: Transform
       pos: -0.5,37.5
       parent: 2
 - proto: GunSafeSubMachineGunDrozd
   entities:
-  - uid: 19303
+  - uid: 19304
     components:
     - type: Transform
       pos: 0.5,37.5
@@ -165221,6 +165221,18 @@ entities:
     - type: Transform
       pos: 53.5,-31.5
       parent: 2
+  - uid: 28457
+    components:
+    - type: Transform
+      pos: -14.5,-51.5
+      parent: 2
+- proto: TelecomServerFilledLaw
+  entities:
+  - uid: 28458
+    components:
+    - type: Transform
+      pos: -14.5,-55.5
+      parent: 2
 - proto: TeslaCoil
   entities:
   - uid: 24179
@@ -185634,6 +185646,35 @@ entities:
     components:
     - type: Transform
       pos: 25.540077,32.58242
+      parent: 2
+- proto: WeaponEnergyTurretAI
+  entities:
+  - uid: 28459
+    components:
+    - type: Transform
+      pos: -0.5,-23.5
+      parent: 2
+  - uid: 28460
+    components:
+    - type: Transform
+      pos: -3.5,-17.5
+      parent: 2
+  - uid: 28461
+    components:
+    - type: Transform
+      pos: 2.5,-17.5
+      parent: 2
+  - uid: 28462
+    components:
+    - type: Transform
+      pos: -0.5,-12.5
+      parent: 2
+- proto: WeaponEnergyTurretStation
+  entities:
+  - uid: 28463
+    components:
+    - type: Transform
+      pos: 4.5,38.5
       parent: 2
 - proto: WeaponLaserCarbine
   entities:

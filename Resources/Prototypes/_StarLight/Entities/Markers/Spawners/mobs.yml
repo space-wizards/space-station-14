@@ -12,3 +12,16 @@
   - type: ConditionalSpawner
     prototypes:
       - MobCorgiClownIan
+
+- type: entity
+  name: smart subwoofer borgi spawner
+  id: SpawnSmartSubwoofer
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - SmartSubWooferVulnerable

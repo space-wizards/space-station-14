@@ -7,13 +7,13 @@
         - to: medsecHud
           steps:
             - tag: HudMedical
-              name: medical hud
+              name: construction-graph-tag-medical-hud
               icon:
                 sprite: Clothing/Eyes/Hud/med.rsi
                 state: icon
               doAfter: 5
             - tag: HudSecurity
-              name: security hud
+              name: construction-graph-tag-security-hud
               icon:
                 sprite: Clothing/Eyes/Hud/sec.rsi
                 state: icon
@@ -22,7 +22,7 @@
               amount: 5
               doAfter: 5
             - tag: Radio
-              name: radio
+              name: construction-graph-tag-radio
               icon:
                 sprite: Objects/Devices/communication.rsi
                 state: walkietalkie

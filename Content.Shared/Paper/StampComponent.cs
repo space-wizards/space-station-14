@@ -12,17 +12,34 @@ namespace Content.Shared.Paper;
 [DataDefinition, Serializable, NetSerializable]
 public partial struct StampDisplayInfo
 {
-    StampDisplayInfo(string s)
-    {
-        StampedName = s;
-    }
-
+    // StampDisplayInfo(string s)
+    // {
+    //     StampedName = s;
+    // } 0 references
     [DataField("stampedName")]
     public string StampedName;
 
     [DataField("stampedColor")]
     public Color StampedColor;
+
+    // Umbra: Stamp type.
+    [DataField("type")]
+    public StampType Type = StampType.RubberStamp;
+    
+    // 🌟Starlight edit🌟
+    [DataField("font")]
+    public string? Font { get; set; } = "/Fonts/NotoSans/NotoSans-Regular.ttf"; // Default font :3
 };
+
+/// UMBRA
+/// <summary>
+/// Stamp "types". Currently, rubber stamp and signatures.
+/// </summary>
+public enum StampType
+{
+    RubberStamp,
+    Signature
+}
 
 [RegisterComponent]
 public sealed partial class StampComponent : Component

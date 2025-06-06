@@ -4,7 +4,7 @@
       "x": 32,
       "y": 32
     },
-    "copyright": "Taken from tgstation. Resprite BlueShield Closet by CatBG (Discord:catbg)",
+    "copyright": "Taken from tgstation. Resprite BlueShield Closet by CatBG (Discord:catbg), Miner by Conflee",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
@@ -39,6 +39,15 @@
         },
         {
             "name": "sparking"
+        },
+        {
+            "name": "miner"
+        },
+        {
+            "name": "miner_door"
+        },
+        {
+            "name": "miner_open"
         }
     ]
 }

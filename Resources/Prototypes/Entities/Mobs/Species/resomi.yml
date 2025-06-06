@@ -31,6 +31,18 @@
     alternateState: Resomi_burning
   - type: HumanoidAppearance
     species: Resomi
+  - type: Fixtures
+    fixtures: 
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 100
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: Hunger
   - type: Puller
     needsHands: false
@@ -48,8 +60,8 @@
       170: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.7 
-      55: 0.5
+      51: 0.7  #Basicly 60% and 80% 
+      68: 0.5
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
@@ -127,6 +139,11 @@
         sizeMaps:
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
             state: suitStorage
       belt:
         sizeMaps:
@@ -183,6 +200,11 @@
         sizeMaps:
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
             state: suitStorage
       belt:
         sizeMaps:
@@ -196,7 +218,7 @@
       Unsexed: UnisexResomi
   - type: Speech
     speechVerb: Resomi
-    allowedEmotes: ['Chirp']
+    allowedEmotes: ['Chirp', 'Hisses', 'Purr', 'Growl']
   - type: Tag
     tags:
     - CanPilot
@@ -264,6 +286,11 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: mask
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
       suitstorage:
         sizeMaps:
           32:
@@ -320,6 +347,11 @@
           32:
             sprite: Mobs/Species/Resomi/displacement.rsi
             state: mask
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Resomi/displacement.rsi
+            state: outerClothing
       suitstorage:
         sizeMaps:
           32:

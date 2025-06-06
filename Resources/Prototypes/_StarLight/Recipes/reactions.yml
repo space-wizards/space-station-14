@@ -1,0 +1,15 @@
+- type: reaction
+  id: CreateMothBatter
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Flour:
+      amount: 15
+    Fiber:
+      amount: 15
+    Sugar:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodMothBatter

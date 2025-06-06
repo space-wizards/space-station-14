@@ -1,0 +1,9 @@
+- type: entity
+  parent: SeedBase
+  name: packet of organ tree seeds
+  id: OrganTreeSeeds
+  components:
+  - type: Seed
+    seedId: organTree
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Hydroponics/organtree.rsi

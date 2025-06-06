@@ -87,7 +87,7 @@
       visualState: kill
       magState: kill
       heldPrefix: kill4
-  
+
 - type: entity
   name: miniature energy gun
   parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
@@ -117,7 +117,7 @@
       fireCost: 200
       conditions:
       - !type:AlertLevelCondition
-        alertLevels: 
+        alertLevels:
         - blue
   - type: MagazineVisuals
     magState: mag
@@ -154,7 +154,7 @@
       isLooped: true
   - type: ToggleableLightVisuals
     spriteLayer: light
-    
+
 - type: entity
   name: dominator
   parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
@@ -190,7 +190,7 @@
       magState: stun
       conditions:
       - !type:AlertLevelCondition
-        alertLevels: 
+        alertLevels:
         - blue
         - violet
         - yellow
@@ -201,17 +201,17 @@
       magState: lethal
       conditions:
       - !type:AlertLevelCondition
-        alertLevels: 
+        alertLevels:
         - violet
         - yellow
         - red
         - gamma
-        
+
 - type: entity
   name: X-01 multiphase energy gun
   parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
   id: WeaponMultiphaseGun
-  description: This is an expensive, modern version of the antique laser pistol. This weapon has several unique fire modes. But it don't have ability to slowly reload over time.
+  description: This is an expensive, modern version of the antique laser pistol, with several unique fire modes.
   components:
   - type: Appearance
   - type: Sprite
@@ -261,7 +261,10 @@
   - type: Battery
     maxCharge: 1500
     startingCharge: 1500
-      
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 20
+
 - type: entity
   parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
   id: WeaponIonRifle
@@ -302,7 +305,7 @@
   - type: EyeCursorOffset
     maxOffset: 8
     pvsIncrease: 0.3
-  
+
 - type: entity
   parent: BaseWeaponBattery
   id: WeaponIonCarbine
@@ -336,7 +339,7 @@
     zeroVisible: true
   - type: Appearance
   - type: EmpImmune
-  
+
 - type: entity
   name: immolator laser gun
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
@@ -360,7 +363,7 @@
     fireCost: 62.5
   - type: StaticPrice
     price: 300
-    
+
 - type: entity
   parent: BaseWeaponBatterySmall
   id: WeaponDecloner
@@ -384,7 +387,7 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
-  
+
 - type: entity
   name: m1911
   parent: BaseWeaponBatterySmall
@@ -425,10 +428,10 @@
     - proto: DestroyBolt
       fireCost: 100
       magState: destroy
-      
+
 - type: entity
   name: pulse pistol
-  parent: BaseWeaponBatterySmall 
+  parent: BaseWeaponBatterySmall
   id: WeaponPulsePistol
   description: An extremely compact version of the pulse carabine.
   components:
@@ -471,7 +474,7 @@
   - type: Battery
     maxCharge: 2600
     startingCharge: 2600
-    
+
 - type: entity
   name: PDW-9 taser pistol
   parent: BaseWeaponBatterySmall
@@ -513,7 +516,7 @@
   - type: Battery
     maxCharge: 1500
     startingCharge: 1500
-    
+
 - type: entity
   parent: BaseWeaponBatterySmall
   id: WeaponAlien
@@ -549,7 +552,7 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
-  
+
 - type: entity
   parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
   id: WeaponEnergySniper
@@ -640,7 +643,7 @@
   - type: Battery
     maxCharge: 3300
     startingCharge: 3300
-    
+
 - type: entity
   name: pulse rifle
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
@@ -694,7 +697,7 @@
   - type: Battery
     maxCharge: 2640
     startingCharge: 2640
-    
+
 - type: entity
   name: ANNIHILATOR
   parent: WeaponPulseCarbine

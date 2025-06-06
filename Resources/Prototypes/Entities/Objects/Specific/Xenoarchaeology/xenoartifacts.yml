@@ -1,0 +1,63 @@
+- type: entity
+  id: BaseXenoArtifact
+  parent: BaseMob # we use this since it can technically get inhabited
+  name: artifact
+  description: A strange artifact from time unknown. Looks like a good time.
+  abstract: true
+  noSpawn: true
+  components:
+  # Visual
+  - type: Appearance
+  - type: InteractionOutline
+  - type: UserInterface #needs to be here for certain effects
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+      enum.IntercomUiKey.Key:
+        type: IntercomBoundUserInterface
+  - type: GuideHelp
+    guides:
+    - Xenoarchaeology
+  # gameplay interactions
+  - type: XenoArtifact
+    effectsTable: !type:NestedSelector
+      tableId: XenoArtifactEffectsDefaultTable
+  - type: Damageable
+  - type: Actions
+  - type: Physics
+    bodyType: Dynamic
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.25
+    baseSprintSpeed: 0.5
+  - type: UseDelay
+  - type: StealTarget
+    stealGroup: XenoArtifact
+  - type: ContainerContainer
+    containers:
+      node-container: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
+  # These components are needed for certain triggers to work.
+  - type: RadiationReceiver
+  - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+      Acidic: [Touch]
+
+- type: entity
+  id: ActionArtifactActivate
+  name: Activate Artifact
+  description: Activate yourself, causing chaos to those near you.
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+      state: ano29
+    useDelay: 300
+    event: !type:ArtifactSelfActivateEvent

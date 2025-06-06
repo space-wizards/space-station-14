@@ -76,6 +76,20 @@
       Steel: 100
 
 - type: entity
+  parent: FireExtinguisher
+  id: BorgFireExtinguisher
+  name: maneuvering jet
+  description: Based on fire extinguisher technology, the maneuvering jet is... well yes, its just a bigger fire extinguisher.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 200
+        reagents:
+        - ReagentId: Water
+          Quantity: 200
+
+- type: entity
   name: extinguisher spray
   id: ExtinguisherSpray
   parent: Vapor
@@ -125,3 +139,17 @@
     materialComposition:
       Steel: 50
       Glass: 40
+
+# used for a engi xenoborg module
+- type: entity
+  parent: [ FireExtinguisher, BaseXenoborgContraband ]
+  id: SelfRechargingFireExtinguisher
+  name: self-recharging fire extinguisher
+  description: It extinguishes fires. it slowly refills with water.
+  components:
+  - type: SolutionRegeneration
+    solution: spray
+    generated:
+      reagents:
+      - ReagentId: Water
+        Quantity: 1
