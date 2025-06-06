@@ -31,7 +31,7 @@ public sealed class GasPressureRegulatorSystem : SharedGasPressureRegulatorSyste
         base.Initialize();
 
         SubscribeLocalEvent<GasPressureRegulatorComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<GasPressureRegulatorComponent, AtmosDeviceUpdateEvent>(OnReliefValveUpdated);
+        SubscribeLocalEvent<GasPressureRegulatorComponent, AtmosDeviceUpdateEvent>(OnPressureRegulatorUpdated);
         SubscribeLocalEvent<GasPressureRegulatorComponent, MapInitEvent>(OnMapInit);
     }
 
@@ -77,7 +77,7 @@ public sealed class GasPressureRegulatorSystem : SharedGasPressureRegulatorSyste
     /// </summary>
     /// <param name="ent"> the <see cref="Entity{T}" /> of the pressure regulator</param>
     /// <param name="args"> Args provided to us via <see cref="AtmosDeviceUpdateEvent" /></param>
-    private void OnReliefValveUpdated(Entity<GasPressureRegulatorComponent> ent,
+    private void OnPressureRegulatorUpdated(Entity<GasPressureRegulatorComponent> ent,
         ref AtmosDeviceUpdateEvent args)
     {
         if (!_nodeContainer.TryGetNodes(ent.Owner,
