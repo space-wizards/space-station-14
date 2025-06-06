@@ -104,7 +104,6 @@
 - type: entity
   parent: Jug
   id: JugPyraDerma
-  categories: [ HideSpawnMenu ]
   suffix: pyra & derma
   components:
   - type: Label
@@ -121,7 +120,6 @@
 - type: entity
   parent: Jug
   id: JugTrico
-  categories: [ HideSpawnMenu ]
   suffix: tricordazine
   components:
   - type: Label
@@ -136,7 +134,6 @@
 - type: entity
   parent: Jug
   id: JugBlood
-  categories: [ HideSpawnMenu ]
   suffix: blood
   components:
   - type: Label
@@ -151,7 +148,6 @@
 - type: entity
   parent: Jug
   id: JugWater
-  categories: [ HideSpawnMenu ]
   suffix: water
   components:
   - type: Label

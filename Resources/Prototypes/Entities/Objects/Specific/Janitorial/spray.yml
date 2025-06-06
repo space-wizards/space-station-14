@@ -83,7 +83,7 @@
           Quantity: 100
 
 - type: entity
-  name: space cleaner
+  name: spray bottle (space cleaner)
   description: BLAM!-brand non-foaming space cleaner!
   id: SprayBottleSpaceCleaner
   parent: SprayBottle
@@ -100,11 +100,10 @@
     tags:
       - Spray
 
-# Moffstation - Begin (ERT Overhaul: Equipment)
 - type: entity
   parent: MegaSprayBottle
   id: MegaSprayBottleSpaceCleaner
-  name: mega space cleaner
+  name: mega spray bottle (space cleaner)
   description: BLAM!-brand non-foaming space cleaner, now in a bigger package for those huge blood puddles!
   suffix: ""
   components:
@@ -115,7 +114,6 @@
         reagents:
         - ReagentId: SpaceCleaner
           Quantity: 250
-# Moffstation - End
 
 - type: entity
   parent: SprayBottle
