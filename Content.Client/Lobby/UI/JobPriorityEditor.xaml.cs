@@ -148,9 +148,9 @@ public sealed partial class JobPriorityEditor : BoxContainer
 
             var jobs = department.Roles.Select(jobId => _prototypeManager.Index(jobId))
                 .Where(job => job.SetPreference)
-                .ToArray();
+                .ToList();
 
-            Array.Sort(jobs, JobUIComparer.Instance);
+            jobs.Sort(JobUIComparer.Instance);
 
             foreach (var job in jobs)
             {
