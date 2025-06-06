@@ -4,42 +4,23 @@
   parent: [ RadioHandheld, BaseCargoContraband ]
   id: RadioHandheldExpedition
   components:
-    - type: TelecomExempt
-    - type: RadioMicrophone
-      broadcastChannel: Expedition
-    - type: RadioSpeaker
-      channels:
-        - Expedition
-    - type: Speech
-      speechVerb: Robotic
-    - type: Sprite
-      sprite: _Starlight/Objects/Devices/expeditionhandy.rsi
-      layers:
-        - state: expeditionhandy
-        - state: expeditionhandy-on
-      state: expeditionhandy
-    - type: Item
-      sprite: _Starlight/Objects/Devices/expeditionhandy.rsi
-      heldPrefix: expeditionhandy
-    - type: Tag
-      tags:
-        - Radio
-
-# TODO update from handheld radio to this one in \Resources\Prototypes\Catalog\Fills\Lockers\cargo.yml
-- type: entity
-  name: supply radio
-  description: A handy cargo radio. Works off-station!
-  parent: [ RadioHandheld, BaseCargoContraband ]
-  id: RadioHandheldCargo
-  components:
-    - type: RadioMicrophone
-      broadcastChannel: Supply
-      listenRange: 1
-    - type: RadioSpeaker
-      channels:
-        - Supply
-    - type: Sprite
-      sprite: _Starlight/Objects/Devices/supplyhandy.rsi
-    - type: Item
-      sprite: _Starlight/Objects/Devices/supplyhandy.rsi
-      heldPrefix: walkietalkie
+  - type: TelecomExempt
+  - type: RadioMicrophone
+    broadcastChannel: Expedition
+  - type: RadioSpeaker
+    channels:
+    - Expedition
+  - type: Speech
+    speechVerb: Robotic
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/expeditionhandy.rsi
+    layers:
+    - state: walkietalkie
+    - state: walkietalkie-on
+    state: walkietalkie
+  - type: Item
+    sprite: _Starlight/Objects/Devices/expeditionhandy.rsi
+    heldPrefix: walkietalkie
+  - type: Tag
+    tags:
+    - Radio
