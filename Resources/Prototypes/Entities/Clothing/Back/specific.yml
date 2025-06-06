@@ -81,7 +81,7 @@
   id: ClothingBackpackWaterTankFlamethrower
   components:
   - type: Label
-      currentLabel: reagent-name-napalm
+    currentLabel: reagent-name-napalm
   - type: SolutionContainerManager
     solutions:
       tank:
