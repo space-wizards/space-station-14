@@ -527,6 +527,24 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileIronsandConcrete
+  name: stack-ironsand-concrete-tile
+  spawn: FloorTileItemIronsandConcrete
+  maxCount: 30
+
+- type: stack
+  id: FloorTileIronsandConcreteMono
+  name: stack-ironsand-concrete-mono-tile
+  spawn: FloorTileItemIronsandConcreteMono
+  maxCount: 30
+
+- type: stack
+  id: FloorTileIronsandConcreteSmooth
+  name: stack-ironsand-concrete-smooth
+  spawn: FloorTileItemIronsandConcreteSmooth
+  maxCount: 30
+
+- type: stack
   id: FloorTileSilver
   name: stack-silver-floor-tile
   spawn: FloorTileItemSilver
