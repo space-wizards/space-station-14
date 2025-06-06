@@ -298,16 +298,5 @@ public sealed partial class JobPriorityEditor : BoxContainer
         UpdateJobPriorities();
         CheckDirty();
     }
-
-    /// <summary>
-    /// Load the given priorities into the editor
-    /// </summary>
-    /// <param name="jobPriorities"></param>
-    public void LoadJobPriorities(Dictionary<ProtoId<JobPrototype>,JobPriority>? jobPriorities)
-    {
-        SelectedJobPriorities = jobPriorities?.ShallowClone() ?? new Dictionary<ProtoId<JobPrototype>, JobPriority>();
-        UpdateJobPriorities();
-        CheckDirty();
-    }
 }
 
