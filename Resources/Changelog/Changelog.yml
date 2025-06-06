@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Jetpacks emit particles more frequently.
-    type: Tweak
-  id: 8117
-  time: '2025-03-30T04:06:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36093
 - author: beck-thompson
   changes:
   - message: Stethoscopes now automatically start doafters and also can tell if a
@@ -3922,3 +3915,12 @@
   id: 8628
   time: '2025-06-06T00:13:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37601
+- author: Samuka
+  changes:
+  - message: Fire bombs are now minor contra
+    type: Tweak
+  - message: Pipe bombs are now minor contra
+    type: Tweak
+  id: 8629
+  time: '2025-06-06T02:28:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38088
