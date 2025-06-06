@@ -1,5 +1,5 @@
 bloodstream-component-looks-pale = [color=bisque]{CAPITALIZE(SUBJECT($target))} {CONJUGATE-BASIC($target, "look", "looks")} pale.[/color]
-bloodstream-component-slight-bleeding = [color=lightred]{CAPITALIZE(SUBJECT($target))} {CONJUGATE-BE($target)} dripping blood.[/color]
+bloodstream-component-slight-bleeding = [color=red]{CAPITALIZE(SUBJECT($target))} {CONJUGATE-BE($target)} dripping blood.[/color]
 bloodstream-component-bleeding = [color=red]{CAPITALIZE(SUBJECT($target))} {CONJUGATE-BE($target)} bleeding.[/color]
 bloodstream-component-strong-bleeding = [color=red]{CAPITALIZE(SUBJECT($target))} {CONJUGATE-BE($target)} heavily bleeding.[/color]
 bloodstream-component-massive-bleeding = [color=crimson]Blood is spraying out of { POSS-ADJ($target) } body![/color]
