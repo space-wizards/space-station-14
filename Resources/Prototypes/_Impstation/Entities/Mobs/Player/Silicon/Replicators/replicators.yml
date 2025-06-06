@@ -126,7 +126,7 @@
   - type: Stamina
     critThreshold: 120
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Replicator1
   - type: PassiveDamage # passive healing
     allowedStates:
@@ -275,7 +275,7 @@
       Dead:
         Base: dead_level2
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Replicator2
   - type: Body
     prototype: Replicator2
@@ -332,7 +332,7 @@
       Dead:
         Base: dead_level2
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Replicator2
   - type: Body
     prototype: Replicator2
@@ -390,7 +390,7 @@
   - type: NoSlip
   - type: Magboots
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Replicator3
   - type: Speech
     speechVerb: Robotic
