@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Items thrown when someone slips now tend to scatter in the direction
-      they are moving, and respect the item's mass.
-    type: Tweak
-  id: 8119
-  time: '2025-03-31T22:00:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36232
 - author: ScarKy0
   changes:
   - message: Thieves now start with the thieving satchel instead of their toolbox.
@@ -3919,3 +3911,10 @@
   id: 8630
   time: '2025-06-06T21:07:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38113
+- author: themias
+  changes:
+  - message: Increased the chance of throwing trash into a disposal unit
+    type: Tweak
+  id: 8631
+  time: '2025-06-06T22:13:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38116
