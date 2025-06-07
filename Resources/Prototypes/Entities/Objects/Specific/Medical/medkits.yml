@@ -1,3 +1,4 @@
+## General Medkits
 - type: entity
   name: first aid kit
   description: It's an emergency medical kit for those serious boo-boos.
@@ -13,6 +14,8 @@
     - 0,0,3,1
   - type: Item
     size: Large
+    shape:
+    - 0,0,2,1
     sprite: Objects/Specific/Medical/firstaidkits.rsi
     heldPrefix: firstaid
   - type: PhysicalComposition
@@ -22,6 +25,18 @@
     tags:
     - Medkit
 
+## Specific Medkits
+- type: entity
+  name: brute trauma treatment kit
+  description: "A first aid kit for when you get toolboxed."
+  parent: Medkit
+  id: MedkitBrute
+  components:
+  - type: Sprite
+    state: brute
+  - type: Item
+    heldPrefix: brute
+
 - type: entity
   name: burn treatment kit
   description: "A specialized medical kit for when the toxins lab spontaneously burns down."
@@ -29,20 +44,9 @@
   id: MedkitBurn
   components:
   - type: Sprite
-    state: burnkit
+    state: burn
   - type: Item
-    heldPrefix: burnkit
-
-- type: entity
-  name: toxin treatment kit
-  description: "Used to treat toxic blood content."
-  parent: Medkit
-  id: MedkitToxin
-  components:
-  - type: Sprite
-    state: toxinkit
-  - type: Item
-    heldPrefix: toxinkit
+    heldPrefix: burn
 
 - type: entity
   name: oxygen deprivation treatment kit
@@ -51,31 +55,20 @@
   id: MedkitO2
   components:
   - type: Sprite
-    state: o2kit
+    state: airloss
   - type: Item
-    heldPrefix: o2kit
+    heldPrefix: airloss
 
 - type: entity
-  name: brute trauma treatment kit
-  description: "A first aid kit for when you get toolboxed."
+  name: toxin treatment kit
+  description: "Used to treat toxic blood content."
   parent: Medkit
-  id: MedkitBrute
+  id: MedkitToxin
   components:
   - type: Sprite
-    state: brutekit
+    state: poison
   - type: Item
-    heldPrefix: brutekit
-
-- type: entity
-  name: advanced first aid kit
-  description: "An advanced kit to help deal with advanced wounds."
-  parent: Medkit
-  id: MedkitAdvanced
-  components:
-  - type: Sprite
-    state: advkit
-  - type: Item
-    heldPrefix: advkit
+    heldPrefix: poison
 
 - type: entity
   name: radiation treatment kit
@@ -84,19 +77,32 @@
   id: MedkitRadiation
   components:
   - type: Sprite
-    state: radkit
+    state: radiation
   - type: Item
-    heldPrefix: radkit
+    heldPrefix: radiation
+
+## Superior Medkits
+- type: entity
+  name: advanced first aid kit
+  description: "An advanced kit to help deal with advanced wounds."
+  parent: Medkit
+  id: MedkitAdvanced
+  components:
+  - type: Sprite
+    state: advanced
+  - type: Item
+    heldPrefix: advanced
+    shape:
+    - 0,0,1,1
 
 - type: entity
   name: combat medical kit
   description: "For the big weapons among us."
-  parent: Medkit
+  parent: MedkitAdvanced
   id: MedkitCombat
   components:
   - type: Sprite
-    state: blackkit
+    state: combat
   - type: Item
-    heldPrefix: blackkit
+    heldPrefix: combat
     size: Normal
-
