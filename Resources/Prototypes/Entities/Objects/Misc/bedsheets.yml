@@ -14,6 +14,7 @@
     noRot: true
   - type: Item
     size: Small
+    sprite: Objects/Misc/bedsheets.rsi
   - type: Clothing
     quickEquip: true
     slots:
@@ -31,6 +32,16 @@
   components:
   - type: Sprite
     state: sheetblack
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#424242"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#424242"
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/black.rsi
 
@@ -43,6 +54,16 @@
     state: sheetblue
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/blue.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#94ABD8"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#94ABD8"
 
 - type: entity
   id: BedsheetBrown
@@ -53,6 +74,16 @@
     state: sheetbrown
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/brown.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#674C3C"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#674C3C"
 
 - type: entity
   id: BedsheetCaptain
@@ -66,6 +97,20 @@
     sprite: Clothing/Neck/Bedsheets/captain.rsi
   - type: StealTarget
     stealGroup: HeadBedsheet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#38519A"
+      - state: detail-inhand-left
+        color: "#FCF95A"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#38519A"
+      - state: detail-inhand-right
+        color: "#FCF95A"
 
 - type: entity
   id: BedsheetCE
@@ -79,6 +124,20 @@
     sprite: Clothing/Neck/Bedsheets/ce.rsi
   - type: StealTarget
     stealGroup: HeadBedsheet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#EDD249"
+      - state: detail-inhand-left
+        color: "#86D13F"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#EDD249"
+      - state: detail-inhand-right
+        color: "#86D13F"
 
 - type: entity
   id: BedsheetCentcom
@@ -92,6 +151,20 @@
     sprite: Clothing/Neck/Bedsheets/centcom.rsi
   - type: StealTarget
     stealGroup: HeadBedsheet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#009300"
+      - state: detail-inhand-left
+        color: "#FFFF0D"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#009300"
+      - state: detail-inhand-right
+        color: "#FFFF0D"
 
 - type: entity
   id: BedsheetClown
@@ -103,6 +176,8 @@
     state: sheetclown
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/rainbow.rsi
+  - type: Item
+    heldPrefix: rainbow
 
 - type: entity
   id: BedsheetCMO
@@ -116,6 +191,18 @@
     sprite: Clothing/Neck/Bedsheets/cmo.rsi
   - type: StealTarget
     stealGroup: HeadBedsheet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+      - state: detail-inhand-left
+        color: "#8EA8D7"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+      - state: detail-inhand-right
+        color: "#8EA8D7"
 
 - type: entity
   id: BedsheetCosmos
@@ -138,6 +225,20 @@
     state: sheetcult
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/cult.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#9A9685"
+      - state: detail-inhand-left
+        color: "#C01D14"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#9A9685"
+      - state: detail-inhand-right
+        color: "#C01D14"
 
 - type: entity
   id: BedsheetGreen
@@ -148,6 +249,16 @@
     state: sheetgreen
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/green.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#96E44B"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#96E44B"
 
 - type: entity
   id: BedsheetGrey
@@ -158,6 +269,16 @@
     state: sheetgrey
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/grey.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#BCBCBC"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#BCBCBC"
 
 - type: entity
   id: BedsheetHOP
@@ -171,6 +292,20 @@
     sprite: Clothing/Neck/Bedsheets/hop.rsi
   - type: StealTarget
     stealGroup: HeadBedsheet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#1C91D1"
+      - state: detail-inhand-left
+        color: "#FFFF0D"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#1C91D1"
+      - state: detail-inhand-right
+        color: "#FFFF0D"
 
 - type: entity
   id: BedsheetHOS
@@ -184,6 +319,20 @@
     sprite: Clothing/Neck/Bedsheets/hos.rsi
   - type: StealTarget
     stealGroup: HeadBedsheet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#B13933"
+      - state: detail-inhand-left
+        color: "#FFFF0D"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#B13933"
+      - state: detail-inhand-right
+        color: "#FFFF0D"
 
 - type: entity
   id: BedsheetIan
@@ -194,6 +343,20 @@
     state: sheetian
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/ian.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#FFFFFF"
+      - state: detail-inhand-left
+        color: "#FABD6A"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#FFFFFF"
+      - state: detail-inhand-right
+        color: "#FABD6A"
 
 - type: entity
   id: BedsheetMedical
@@ -205,17 +368,45 @@
     state: sheetmedical
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/medical.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#FFFFFF"
+      - state: detail-inhand-left
+        color: "#8EA8D7"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#FFFFFF"
+      - state: detail-inhand-right
+        color: "#8EA8D7"
 
 - type: entity
   id: BedsheetMime
   parent: BedsheetBase
   name: mime's bedsheet
-  description: A very soothing striped blanket.  All the noise just seems to fade out when you're under the covers in this.
+  description: A very soothing striped blanket. All the noise just seems to fade out when you're under the covers in this.
   components:
   - type: Sprite
     state: sheetmime
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/mime.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#FFFFFF"
+      - state: detail-inhand-left
+        color: "#000000"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#FFFFFF"
+      - state: detail-inhand-right
+        color: "#000000"
 
 - type: entity
   id: BedsheetNT
@@ -227,6 +418,20 @@
     state: sheetNT
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/NT.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#415CA5"
+      - state: detail-inhand-left
+        color: "#FDFDFD"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#415CA5"
+      - state: detail-inhand-right
+        color: "#FDFDFD"
 
 - type: entity
   id: BedsheetOrange
@@ -237,6 +442,16 @@
     state: sheetorange
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/orange.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#F0B74C"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#F0B74C"
 
 - type: entity
   id: BedsheetPurple
@@ -247,6 +462,16 @@
     state: sheetpurple
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/purple.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#A989BC"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#A989BC"
 
 - type: entity
   id: BedsheetQM
@@ -259,6 +484,20 @@
     sprite: Clothing/Neck/Bedsheets/qm.rsi
   - type: StealTarget
     stealGroup: HeadBedsheet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#CA7415"
+      - state: detail-inhand-left
+        color: "#FDFDFD"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#CA7415"
+      - state: detail-inhand-right
+        color: "#FDFDFD"
 
 - type: entity
   id: BedsheetRainbow
@@ -269,6 +508,8 @@
     state: sheetrainbow
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/rainbow.rsi
+  - type: Item
+    heldPrefix: rainbow
 
 - type: entity
   id: BedsheetRD
@@ -282,6 +523,20 @@
     sprite: Clothing/Neck/Bedsheets/rd.rsi
   - type: StealTarget
     stealGroup: HeadBedsheet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#5C226C"
+      - state: detail-inhand-left
+        color: "#FFFF0D"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#5C226C"
+      - state: detail-inhand-right
+        color: "#FFFF0D"
 
 - type: entity
   id: BedsheetBrigmedic
@@ -293,6 +548,20 @@
     state: sheetbrigmedic
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/brigmedic.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#D34C4C"
+      - state: detail-inhand-left
+        color: "#FFFFFF"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#D34C4C"
+      - state: detail-inhand-right
+        color: "#FFFFFF"
 
 - type: entity
   id: BedsheetRed
@@ -303,6 +572,16 @@
     state: sheetred
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/red.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#D89088"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#D89088"
 
 - type: entity
   id: BedsheetSyndie
@@ -314,6 +593,20 @@
     state: sheetsyndie
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/syndie.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#9F1811"
+      - state: detail-inhand-left
+        color: "#FFFF0D"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#9F1811"
+      - state: detail-inhand-right
+        color: "#FFFF0D"
 
 - type: entity
   id: BedsheetUSA
@@ -324,6 +617,20 @@
     state: sheetUSA
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/USA.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#D30000"
+      - state: detail-inhand-left
+        color: "#001ECE"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#D30000"
+      - state: detail-inhand-right
+        color: "#001ECE"
 
 - type: entity
   id: BedsheetWhite
@@ -336,6 +643,14 @@
       amount: 1
   - type: Sprite
     state: sheetwhite
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/white.rsi
 
@@ -349,6 +664,20 @@
     state: sheetwiz
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/wiz.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#3066B8"
+      - state: detail-inhand-left
+        color: "#D6D6D6"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#3066B8"
+      - state: detail-inhand-right
+        color: "#D6D6D6"
 
 - type: entity
   id: BedsheetYellow
@@ -357,5 +686,15 @@
   components:
   - type: Sprite
     state: sheetyellow
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: outer-inhand-left
+      - state: inner-inhand-left
+        color: "#E6D165"
+      right:
+      - state: outer-inhand-right
+      - state: inner-inhand-right
+        color: "#E6D165"
   - type: Clothing
     sprite: Clothing/Neck/Bedsheets/yellow.rsi

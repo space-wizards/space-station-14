@@ -9,6 +9,7 @@
     sprite: Objects/Devices/door_remote.rsi
   - type: Item
     storedRotation: -90
+    sprite: Objects/Devices/door_remote.rsi
   - type: Access
   - type: DoorRemote
   - type: StealTarget
@@ -29,6 +30,16 @@
   - type: Access
     groups:
     - Command
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-inhand-left
+      - state: color-inhand-left
+        color: "#e6e600"
+      right:
+      - state: base-inhand-right
+      - state: color-inhand-right
+        color: "#e6e600"
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
@@ -45,6 +56,16 @@
   - type: Access
     groups:
     - Security
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-inhand-left
+      - state: color-inhand-left
+        color: "#cb0000"
+      right:
+      - state: base-inhand-right
+      - state: color-inhand-right
+        color: "#cb0000"
 
 - type: entity
   parent: [DoorRemoteDefault, BaseSecurityCommandContraband]
@@ -61,6 +82,16 @@
   - type: Access
     groups:
     - Armory
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-inhand-left
+      - state: color-inhand-left
+        color: "#e80000"
+      right:
+      - state: base-inhand-right
+      - state: color-inhand-right
+        color: "#e80000"
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
@@ -77,6 +108,16 @@
   - type: Access
     groups:
     - Service
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-inhand-left
+      - state: color-inhand-left
+        color: "#58c800"
+      right:
+      - state: base-inhand-right
+      - state: color-inhand-right
+        color: "#58c800"
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
@@ -93,6 +134,16 @@
   - type: Access
     groups:
     - Research
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-inhand-left
+      - state: color-inhand-left
+        color: "#a53aaa"
+      right:
+      - state: base-inhand-right
+      - state: color-inhand-right
+        color: "#a53aaa"
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
@@ -109,6 +160,16 @@
   - type: Access
     groups:
     - Cargo
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-inhand-left
+      - state: color-inhand-left
+        color: "#b18644"
+      right:
+      - state: base-inhand-right
+      - state: color-inhand-right
+        color: "#b18644"
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
@@ -125,6 +186,16 @@
   - type: Access
     groups:
     - Medical
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-inhand-left
+      - state: color-inhand-left
+        color: "#68aed6"
+      right:
+      - state: base-inhand-right
+      - state: color-inhand-right
+        color: "#68aed6"
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
@@ -141,6 +212,16 @@
   - type: Access
     groups:
     - Engineering
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-inhand-left
+      - state: color-inhand-left
+        color: "#ffa62b"
+      right:
+      - state: base-inhand-right
+      - state: color-inhand-right
+        color: "#ffa62b"
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
@@ -164,6 +245,16 @@
     - SyndicateAgent
     - Wizard
     - Xenoborg
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-inhand-left
+      - state: color-inhand-left
+        color: "#2eba22"
+      right:
+      - state: base-inhand-right
+      - state: color-inhand-right
+        color: "#2eba22"
 
 - type: entity
   parent: [ DoorRemoteDefault, BaseXenoborgContraband ]
@@ -180,3 +271,13 @@
   - type: Access
     tags:
     - Xenoborg
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-inhand-left
+      - state: color-inhand-left
+        color: "#2eba22"
+      right:
+      - state: base-inhand-right
+      - state: color-inhand-right
+        color: "#2eba22"
