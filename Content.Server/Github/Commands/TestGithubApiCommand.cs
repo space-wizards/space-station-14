@@ -1,9 +1,5 @@
-using System.Linq;
-using System.Net;
-using System.Net.Http.Json;
 using Content.Server.Administration;
 using Content.Server.Github.Requests;
-using Content.Server.Github.Responses;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
