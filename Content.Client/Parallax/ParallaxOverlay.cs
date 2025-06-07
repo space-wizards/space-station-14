@@ -1,8 +1,6 @@
 using System.Numerics;
 using Content.Client.Parallax.Managers;
 using Content.Shared.CCVar;
-using Content.Shared.Parallax.Biomes;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -19,7 +17,6 @@ public sealed class ParallaxOverlay : Overlay
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IParallaxManager _manager = default!;
-    private readonly SharedMapSystem _mapSystem;
     private readonly ParallaxSystem _parallax;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
@@ -28,13 +25,12 @@ public sealed class ParallaxOverlay : Overlay
     {
         ZIndex = ParallaxSystem.ParallaxZIndex;
         IoCManager.InjectDependencies(this);
-        _mapSystem = _entManager.System<SharedMapSystem>();
         _parallax = _entManager.System<ParallaxSystem>();
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        if (args.MapId == MapId.Nullspace || _entManager.HasComponent<BiomeComponent>(_mapSystem.GetMapOrInvalid(args.MapId)))
+        if (args.MapId == MapId.Nullspace)
             return false;
 
         return true;

@@ -32,7 +32,10 @@ public sealed partial class DungeonJob
             if (!_anchorable.TileFree((_gridUid, _grid), neighbor, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
-            tiles.Add((neighbor, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
+            var tile = _tile.GetVariantTile((ContentTileDefinition)tileDef, random);
+            tiles.Add((neighbor, tile));
+            AddLoadedTile(neighbor, tile);
+            DebugTools.Assert(dungeon.AllTiles.Contains(neighbor));
         }
 
         foreach (var index in dungeon.CorridorExteriorTiles)
@@ -43,7 +46,10 @@ public sealed partial class DungeonJob
             if (!_anchorable.TileFree((_gridUid, _grid), index, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
                 continue;
 
-            tiles.Add((index, _tile.GetVariantTile((ContentTileDefinition)tileDef, random)));
+            var tile = _tile.GetVariantTile((ContentTileDefinition)tileDef, random);
+            tiles.Add((index, tile));
+            AddLoadedTile(index, tile);
+            DebugTools.Assert(dungeon.AllTiles.Contains(index));
         }
 
         _maps.SetTiles(_gridUid, _grid, tiles);
@@ -82,18 +88,21 @@ public sealed partial class DungeonJob
             }
 
             if (isCorner)
-                _entManager.SpawnEntity(cornerWall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
+            {
+                var uid = _entManager.SpawnEntity(cornerWall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
+                AddLoadedEntity(index.Index, uid);
+            }
 
             if (!isCorner)
-                _entManager.SpawnEntity(wall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
-
-            if (i % 20 == 0)
             {
-                await SuspendDungeon();
-
-                if (!ValidateResume())
-                    return;
+                var uid = _entManager.SpawnEntity(wall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
+                AddLoadedEntity(index.Index, uid);
             }
+
+            await SuspendDungeon();
+
+            if (!ValidateResume())
+                return;
         }
     }
 }
