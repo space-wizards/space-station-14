@@ -296,6 +296,9 @@
     roleType: TeamAntagonist
     subtype: role-subtype-initial-infected
   - type: InitialInfectedRole
+  - type: NpcFactionMember
+    factions:
+    - Zombie
 
 - type: entity
   parent: MindRoleGhostRoleTeamAntagonistFlock
@@ -307,3 +310,6 @@
     exclusiveAntag: true
     subtype: role-subtype-zombie
   - type: ZombieRole
+  - type: NpcFactionMember
+    factions:
+      - Zombie
