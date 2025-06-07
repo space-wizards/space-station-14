@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Instruments;
+using Robust.Shared.Audio.Midi;
 
 namespace Content.Client.Instruments;
 
@@ -45,7 +46,7 @@ public sealed partial class InstrumentSystem
             Log.Debug($"Channel name: {resolvedTracks.Last()}");
         }
 
-        RaiseNetworkEvent(new InstrumentSetChannelsEvent(GetNetEntity(uid), resolvedTracks.ToArray()));
+        RaiseNetworkEvent(new InstrumentSetChannelsEvent(GetNetEntity(uid), resolvedTracks.Take(RobustMidiEvent.MaxChannels).ToArray()));
         Log.Debug($"Resolved {resolvedTracks.Count} channels.");
 
         return true;

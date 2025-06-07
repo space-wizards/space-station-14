@@ -1,9 +1,11 @@
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
@@ -18,6 +20,7 @@ using Robust.Shared.Console;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Instruments;
 
@@ -32,6 +35,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+    [Dependency] private readonly IAdminLogManager _admingLogSystem = default!;
 
     private const float MaxInstrumentBandRange = 10f;
 
@@ -144,6 +148,22 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
         if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
             return;
+
+        if (msg.Tracks.Length > RobustMidiEvent.MaxChannels)
+        {
+            DebugTools.Assert($"Tried to send tracks over the limit! Received: {msg.Tracks.Length}; Limit: {RobustMidiEvent.MaxChannels}");
+            return;
+        }
+
+        var tracksString = string.Join("\n",
+            msg.Tracks
+            .Where(t => t != null)
+            .Select(t => t!.ToString()));
+
+        _admingLogSystem.Add(
+            LogType.Midi,
+            LogImpact.Low,
+            $"{ToPrettyString(args.SenderSession.AttachedEntity)} set the midi channels for {ToPrettyString(uid)} to {tracksString}");
 
         activeInstrument.Tracks = msg.Tracks;
         Dirty(uid, activeInstrument);
