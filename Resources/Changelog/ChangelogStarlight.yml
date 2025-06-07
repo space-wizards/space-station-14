@@ -6864,4 +6864,66 @@ Entries:
   id: 949
   time: '2025-06-05T19:43:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/774
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed radio chimes.
+    type: Fix
+  id: 950
+  time: '2025-06-05T22:07:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/770
+- author: STARLIGHT TEAM
+  changes:
+  - message: The Elder now always spawns on the Impossible mission.
+    type: Fix
+  id: 951
+  time: '2025-06-05T22:08:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/771
+- author: walksanatora
+  changes:
+  - message: removed the "Syndicate Borgi Factory" warp point that teleports you to
+      a unloaded map.
+    type: Fix
+  id: 952
+  time: '2025-06-07T09:12:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/786
+- author: Conflee
+  changes:
+  - message: Changed Deathsquad Poster into NanoTrasen Special Forces Poster, to reflect
+      our lore
+    type: Tweak
+  id: 953
+  time: '2025-06-07T09:13:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/783
+- author: Conflee
+  changes:
+  - message: Changed Cybersun 600 Poster into Cybersun 500 Poster, to reflect our
+      lore
+    type: Tweak
+  id: 954
+  time: '2025-06-07T09:13:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/783
+- author: FoxxoTrystan
+  changes:
+  - message: The ability to have a custom specie name!
+    type: Add
+  id: 955
+  time: '2025-06-07T09:18:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/781
+- author: Aedler
+  changes:
+  - message: Changed the sound of knuckledusters to be more brutal.
+    type: Tweak
+  id: 956
+  time: '2025-06-07T09:20:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/730
+- author: Conflee
+  changes:
+  - message: Added Space Hazard Suits. Replaces the Basic Hardsuit, which was removed
+      upstream. One spawns in every Mining Specialist Locker, and a crate with 1 Suit,
+      1 O2 Tank, 1 N2 Tank, and 1 Breath Mask can be purchased under 'Emergency' for
+      3500 Spesos. A good buy for Singuloose / SM Delam.
+    type: Add
+  id: 957
+  time: '2025-06-07T09:31:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/743
 
