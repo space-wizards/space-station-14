@@ -26,7 +26,7 @@ public sealed partial class ThievingComponent : Component
     /// <summary>
     /// Variable pointing at the Alert modal
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<AlertPrototype> StealthyAlertProtoId = "Stealthy";
 
     public override bool SessionSpecific => true;
