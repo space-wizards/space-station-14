@@ -218,8 +218,8 @@
     - SemiAuto
     burstFireRate: 16
   - type: GunWieldBonus
-    minAngle: -25
-    maxAngle: -21
+    minAngle: -28
+    maxAngle: -25
   - type: ItemSlots
     slots:
       gun_magazine:
