@@ -1,0 +1,113 @@
+- type: localizedDataset
+  id: CatAccent
+  values:
+    prefix: accent-words-cat-
+    count: 6
+
+- type: localizedDataset
+  id: DogAccent
+  values:
+    prefix: accent-words-dog-
+    count: 5
+
+- type: localizedDataset
+  id: MouseAccent
+  values:
+    prefix: accent-words-mouse-
+    count: 7
+
+- type: localizedDataset
+  id: MothroachAccent
+  values:
+    prefix: accent-words-mothroach-
+    count: 5
+
+- type: localizedDataset
+  id: MumbleAccent
+  values:
+    prefix: accent-words-mumble-
+    count: 3
+
+- type: localizedDataset
+  id: SiliconAccent
+  values:
+    prefix: accent-words-silicon-
+    count: 4
+
+- type: localizedDataset
+  id: XenoAccent
+  values:
+    prefix: accent-words-xeno-
+    count: 4
+
+- type: localizedDataset
+  id: ZombieAccent
+  values:
+    prefix: accent-words-zombie-
+    count: 10
+
+- type: localizedDataset
+  id: ZombieMothAccent
+  values:
+    prefix: accent-words-zombie-moth-
+    count: 6
+
+- type: localizedDataset
+  id: GenericAggressiveAccent
+  values:
+    prefix: accent-words-generic-aggressive-
+    count: 4
+
+- type: localizedDataset
+  id: DuckAccent
+  values:
+    prefix: accent-words-duck-
+    count: 4
+
+- type: localizedDataset
+  id: ChickenAccent
+  values:
+    prefix: accent-words-chicken-
+    count: 4
+
+- type: localizedDataset
+  id: PigAccent
+  values:
+    prefix: accent-words-pig-
+    count: 4
+
+- type: localizedDataset
+  id: KangarooAccent
+  values:
+    prefix: accent-words-kangaroo-
+    count: 4
+
+- type: localizedDataset
+  id: SlimesAccent
+  values:
+    prefix: accent-words-slimes-
+    count: 5
+
+- type: localizedDataset
+  id: CrabAccent
+  values:
+    prefix: accent-words-crab-
+    count: 6
+
+- type: localizedDataset
+  id: KoboldAccent
+  values:
+    prefix: accent-words-kobold-
+    count: 9
+
+- type: localizedDataset
+  id: NymphAccent
+  values:
+    prefix: accent-words-nymph-
+    count: 4
+
+- type: localizedDataset
+  id: TomatoAccent
+  values:
+    prefix: accent-words-tomato-
+    count: 5
