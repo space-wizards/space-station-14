@@ -246,6 +246,7 @@
 - type: entity
   id: ReactionFlash
   categories: [ HideSpawnMenu ]
+  save: false
   components:
   - type: PointLight
     enabled: true
