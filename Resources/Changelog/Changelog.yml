@@ -1,57 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: Stethoscopes now automatically start doafters and also can tell if a
-      patient is losing oxygen damage or gaining it.
-    type: Add
-  - message: Moths can no longer eat stethoscopes.
-    type: Fix
-  - message: Stethoscopes action button now works properly.
-    type: Fix
-  id: 8118
-  time: '2025-03-31T02:27:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36210
-- author: Tayrtahn
-  changes:
-  - message: Items thrown when someone slips now tend to scatter in the direction
-      they are moving, and respect the item's mass.
-    type: Tweak
-  id: 8119
-  time: '2025-03-31T22:00:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36232
-- author: ScarKy0
-  changes:
-  - message: Thieves now start with the thieving satchel instead of their toolbox.
-      The satchel will get all the selected kits spawned inside of it.
-    type: Add
-  - message: Thief Chameleon kit now comes with a backpack and a bonus pair of chameleon
-      gloves. Be careful, they aren't thieving gloves and can be tough to tell apart!
-    type: Tweak
-  - message: Updated smuggler stachel's description to reflect what it's used for.
-    type: Tweak
-  - message: Thieving satchel and toolbox now correctly play a sound when their kits
-      are selected.
-    type: Fix
-  id: 8120
-  time: '2025-03-31T22:32:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36201
-- author: Tayrtahn
-  changes:
-  - message: Electric grills no longer appear powered when cycled while disconnected
-      from power.
-    type: Fix
-  - message: Interactions with electric grills are now predicted.
-    type: Tweak
-  id: 8121
-  time: '2025-04-01T16:43:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36241
-- author: MisterImp
-  changes:
-  - message: A new recipe has been added for pizza made with world peas, world peazza.
-    type: Add
-  id: 8122
-  time: '2025-04-01T23:26:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35191
 - author: Fildrance
   changes:
   - message: fixed missing deconstruct on RCD
@@ -3924,3 +3871,38 @@
   id: 8629
   time: '2025-06-06T02:28:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38088
+- author: Minemoder
+  changes:
+  - message: Shark plushies now bite.
+    type: Tweak
+  id: 8630
+  time: '2025-06-06T21:07:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38113
+- author: themias
+  changes:
+  - message: Increased the chance of throwing trash into a disposal unit
+    type: Tweak
+  id: 8631
+  time: '2025-06-06T22:13:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38116
+- author: spanky-spanky
+  changes:
+  - message: Landmines now light up in the dark!
+    type: Tweak
+  id: 8632
+  time: '2025-06-06T23:01:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38092
+- author: slarticodefast
+  changes:
+  - message: Fixed wallmount vending machines dispensing in the wrong direction.
+    type: Fix
+  id: 8633
+  time: '2025-06-06T23:08:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38112
+- author: hoshizora-sayo
+  changes:
+  - message: Added proper name to the chameleon controller implanter
+    type: Add
+  id: 8634
+  time: '2025-06-07T02:29:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38117
