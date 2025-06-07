@@ -1,18 +1,24 @@
-using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.SprayPainter.Components;
+namespace Content.Shared.SprayPainter.AtmosPipes;
 
+/// <summary>
+/// This component describes how an entity is used to change the appearance of atmos pipes, and the state of the
+/// entity's selected pipe style.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class SprayPainterComponent : Component
+public sealed partial class AtmosPipePainterComponent : Component
 {
+    /// <summary>
+    /// The sound to play when painting a pipe.
+    /// </summary>
     [DataField]
     public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Effects/spray2.ogg");
 
-    [DataField]
-    public TimeSpan AirlockSprayTime = TimeSpan.FromSeconds(3);
-
+    /// <summary>
+    /// The duration of the do after for painting a pipe.
+    /// </summary>
     [DataField]
     public TimeSpan PipeSprayTime = TimeSpan.FromSeconds(1);
 
@@ -27,11 +33,4 @@ public sealed partial class SprayPainterComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<string, Color> ColorPalette = new();
-
-    /// <summary>
-    /// Airlock style index selected.
-    /// After prototype reload this might not be the same style but it will never be out of bounds.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public int Index;
 }
