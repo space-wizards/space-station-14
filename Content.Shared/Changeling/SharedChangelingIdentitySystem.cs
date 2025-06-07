@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Forensics.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -20,6 +21,20 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
 
         SubscribeLocalEvent<ChangelingIdentityComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChangelingIdentityComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<ChangelingIdentityComponent, MindAddedMessage>(OnMindSwapSpell);
+        SubscribeLocalEvent<ChangelingIdentityComponent, MindRemovedMessage>(OnMindSwapVictim);
+    }
+
+    private void OnMindSwapVictim(Entity<ChangelingIdentityComponent> ent, ref MindRemovedMessage args)
+    {
+        CleanupPvsOverride(ent, args.Container.Owner);
+    }
+
+    private void OnMindSwapSpell(Entity<ChangelingIdentityComponent> ent, ref MindAddedMessage args)
+    {
+        if(!TryComp<ActorComponent>(args.Container.Owner, out var actor))
+            return;
+        HandOverPvsOverride(actor.PlayerSession, ent.Comp);
     }
 
     private void OnMapInit(Entity<ChangelingIdentityComponent> ent, ref MapInitEvent args)
@@ -28,7 +43,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     }
     private void OnShutdown(Entity<ChangelingIdentityComponent> ent, ref ComponentShutdown args)
     {
-        CleanupPvsOverride(ent);
+        CleanupPvsOverride(ent, ent.Owner);
         CleanupChangelingNullspaceIdentities(ent);
     }
 
@@ -95,10 +110,11 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     /// <summary>
     /// Cleanup all Pvs Overrides for the owner of the ChangelingIdentity
     /// </summary>
-    /// <param name="ent">the Changeling</param>
-    protected void CleanupPvsOverride(Entity<ChangelingIdentityComponent> ent)
+    /// <param name="ent">the Changeling itself</param>
+    /// <param name="entityUid">Who specifically to cleanup from, usually just the same owner, but in the case of a mindswap we want to clean up the victim</param>
+    protected void CleanupPvsOverride(Entity<ChangelingIdentityComponent> ent, EntityUid entityUid)
     {
-        if(!TryComp<ActorComponent>(ent.Owner, out var actor))
+        if(!TryComp<ActorComponent>(entityUid, out var actor))
             return;
 
         foreach (var identity in ent.Comp.ConsumedIdentities)
