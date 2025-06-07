@@ -547,6 +547,9 @@
   id: Enzyme
 
 - type: Tag
+  id: EvilGlove
+
+- type: Tag
   id: ExplosivePassable
 
 - type: Tag
