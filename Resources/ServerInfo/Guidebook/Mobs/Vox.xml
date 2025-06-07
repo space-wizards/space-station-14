@@ -16,13 +16,10 @@
 
   In addition to regular foods, Vox can also eat various snack packaging, banana peels, eggshells, and raw meat without any ill effects. They also like to drink welding fuel.
 
-  Vox [color=#1e90ff]slowly recover from low levels of poison damage[/color] on their own,
-  so long as they are careful not to exceed 20 poison damage.
-  This allows them to endure breathing station air for up to thirty seconds at a time without lasting damage,
-  letting them quickly eat, drink, take oral medication, and so on.
-  A thirty second oxygen exposure takes them two minutes to recover from.
-  If their health does not seem to improve within a minute of oxygen exposure, they should seek medical attention.
-
+  Vox [color=#1e90ff]passively recover more damage types[/color] than other species,
+  Vox also passively recover damage at under [color="31e90ff]50 total points[/color], unlike other species' [color=#ffa500]20 total.[/color]
+  This allows them to endure breathing in a standard station atmosphere for 90 or so seconds, which takes them roughly 260 seconds to recover from,
+  letting them quickly eat, drink, take oral medication, and so on; as well as recovering from miscellaneous damages on their own.
   Vox deal Slash damage with their unarmed attack.
 
 </Document>
