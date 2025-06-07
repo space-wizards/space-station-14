@@ -125,6 +125,34 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     /// <summary>
+    /// Tries to pick up an entity into a hand, forcing to drop an item if its not free
+    /// By default it does check if it's possible to drop items
+    /// </summary>
+    public bool TryForcePickup(
+        EntityUid uid,
+        EntityUid entity,
+        Hand hand,
+        bool checkActionBlocker = true,
+        bool animate = true,
+        HandsComponent? handsComp = null,
+        ItemComponent? item = null)
+    {
+        if (!Resolve(uid, ref handsComp, false))
+            return false;
+
+        if (TryPickup(uid, entity, hand, checkActionBlocker, animate, handsComp, item))
+            return true;
+
+        if (TryDrop(uid, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp) &&
+            TryPickup(uid, entity, hand, checkActionBlocker, animate, handsComp, item))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     ///     Tries to pick up an entity into any hand, forcing to drop an item if there are no free hands
     ///     By default it does check if it's possible to drop items
     /// </summary>
