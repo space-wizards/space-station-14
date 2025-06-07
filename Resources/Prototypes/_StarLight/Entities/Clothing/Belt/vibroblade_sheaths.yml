@@ -1,0 +1,63 @@
+- type: entity
+  parent: [ClothingBeltBase, ClothingSlotBase, BaseCentcommContraband]
+  id: CentcommVibrobladeSheath
+  name: CentComm vibroblade sheath
+  description: Vulcan Industries believed that maintenance of the Vibroweapons should be delayed as much as possible and the quality of the blades to be at top notch at all times; for the Corporate Consortium, specially designed sheaths were made where the subsonic piercing qualities would have it degradation slowed when not at use.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/cc_crusher_belt.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/cc_crusher_belt.rsi
+  - type: Item
+    size: Ginormous
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - CentcommVibroblade
+  - type: ItemMapper
+    mapLayers:
+      sheath-sword:
+        whitelist:
+          tags:
+          - CentcommVibroblade
+  - type: Appearance
+
+- type: entity
+  parent: [ClothingBeltBase, ClothingSlotBase, BaseCommandContraband]
+  id: PrototypeVibrobladeSheath
+  name: Prototype vibroblade sheath
+  description: Vulcan Industries believed that maintenance of the Vibroweapons should be delayed as much as possible and the quality of the blades to be at top notch at all times, even for the prototypes of the final weapons that were to be completed and shipped out. This sheath was designed to fit one of the final prototype designs that Vulcan Industries would conceptalize and produce.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/crusher_belt.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/crusher_belt.rsi
+  - type: Item
+    size: Ginormous
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - PrototypeVibroblade
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - PrototypeVibroblade
+  - type: Appearance

@@ -332,6 +332,7 @@
   - type: EmagLatheRecipes
     emagStaticPacks:
     - StarlightMechWeapon
+    - StarlightSyndicateModules
   - type: MaterialStorage
     whitelist:
       tags:

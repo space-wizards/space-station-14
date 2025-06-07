@@ -86,12 +86,16 @@
       spawned:
       - id: AbyssCore
         amount: 1
+    - type: NPCUseActionOnTarget
+      actionId: ActionMobBlink
 
 - type: entity
   name: worm
   parent: [ SimpleSpaceMobBase, MobCombat ]
   id: MobWorm
   components:
+    - type: NPCUseActionOnTarget
+      actionId: ActionMobBlink
     - type: Sprite
       sprite: _Starlight/Mobs/Abyss/worm.rsi
       layers:
