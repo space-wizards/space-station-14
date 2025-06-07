@@ -21,7 +21,7 @@
 
 - type: entity
   name: explosive payload
-  parent: BasePayload
+  parent: [ BasePayload, BaseSecurityContraband ]
   id: ExplosivePayload
   components:
   - type: Sprite
@@ -51,7 +51,7 @@
 
 - type: entity
   name: chemical payload
-  parent: BasePayload
+  parent: [ BasePayload, BaseMedicalScienceContraband ]
   id: ChemicalPayload
   description: A chemical payload. Has space to store two beakers. In combination with a trigger and a case, this can be used to initiate chemical reactions.
   components:
@@ -87,7 +87,7 @@
 
 - type: entity
   name: flash payload
-  parent: BasePayload
+  parent: [ BasePayload, BaseSecurityScienceCommandContraband ]
   id: FlashPayload
   description: A single-use flash payload.
   components:
