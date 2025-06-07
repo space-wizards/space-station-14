@@ -6933,4 +6933,12 @@ Entries:
   id: 958
   time: '2025-06-07T10:17:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/668
+- author: Aedler
+  changes:
+  - message: Fixed a minor delay of radio chimes audio playing considering the system
+      was migrated client-side. (You probably won't notice this anyways.)
+    type: Fix
+  id: 959
+  time: '2025-06-07T15:09:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/787
 
