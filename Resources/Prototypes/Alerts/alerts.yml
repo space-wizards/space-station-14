@@ -26,7 +26,7 @@
     - alertType: Magboots
     - alertType: Rooted
     - alertType: Pacified
-    - alertType: Stealthy   # Moffstation - Togglable thieving
+    - alertType: Stealthy
 
 - type: entity
   id: AlertSpriteView
@@ -439,20 +439,18 @@
   name: alerts-pacified-name
   description: alerts-pacified-desc
 
-# Moffstation - Start - Thieving alert
 - type: alert
   id: Stealthy
   clickEvent: !type:ToggleThievingEvent
   icons:
-  - sprite: /Textures/_Moffstation/Interface/Alerts/stealthy.rsi
+  - sprite: /Textures/Interface/Alerts/stealthy.rsi
     state: stealthy-off
-  - sprite: /Textures/_Moffstation/Interface/Alerts/stealthy.rsi
+  - sprite: /Textures/Interface/Alerts/stealthy.rsi
     state: stealthy-on
   name: alerts-stealthy-name
   description: alerts-stealthy-desc
   minSeverity: 0
   maxSeverity: 1
-# Moffstation - End
 
 - type: alert
   id: Adrenaline
