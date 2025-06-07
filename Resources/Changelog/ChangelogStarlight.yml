@@ -6941,4 +6941,11 @@ Entries:
   id: 959
   time: '2025-06-07T15:09:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/787
+- author: PubliclyExecutedPig
+  changes:
+  - message: The energy shotgun no longer self recharges. You'll thank me eventually
+    type: Remove
+  id: 960
+  time: '2025-06-07T15:21:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/788
 
