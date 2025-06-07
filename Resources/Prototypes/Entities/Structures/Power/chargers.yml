@@ -161,7 +161,6 @@
     sprite: Structures/Power/recharger.rsi
   - type: Machine
     board: WeaponCapacitorRechargerCircuitboard
-  # no powercellslot since stun baton etc arent powercells
   - type: ItemSlots
     slots:
       charger_slot:
