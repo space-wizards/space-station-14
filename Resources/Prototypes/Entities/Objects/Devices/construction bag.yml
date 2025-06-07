@@ -1,6 +1,6 @@
 - type: entity
   name: construction bag
-  id: constructionBag
+  id: ConstructionBag
   parent: BaseStorageItem
   description: convenient bag for transporting building materials.
   components:
