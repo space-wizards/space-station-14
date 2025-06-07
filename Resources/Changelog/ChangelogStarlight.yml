@@ -6926,4 +6926,11 @@ Entries:
   id: 957
   time: '2025-06-07T09:31:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/743
+- author: PubliclyExecutedPig
+  changes:
+  - message: Barratry Station has returned
+    type: Add
+  id: 958
+  time: '2025-06-07T10:17:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/668
 
