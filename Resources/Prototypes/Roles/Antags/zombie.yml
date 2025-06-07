@@ -8,10 +8,6 @@
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 3600 # 1h
-  components:
-  - type: NpcFactionMember
-    factions:
-    - Zombie
 
 - type: antag
   id: Zombie
@@ -20,8 +16,4 @@
   setPreference: false
   objective: roles-antag-zombie-objective
   guides: [ Zombies ]
-  components:
-  - type: NpcFactionMember
-    factions:
-    - Zombie
 
