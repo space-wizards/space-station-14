@@ -56,7 +56,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: IconSmooth
-    key: walls
+    key: door
     mode: NoSprite
   - type: Occluder
   - type: BlockWeather
