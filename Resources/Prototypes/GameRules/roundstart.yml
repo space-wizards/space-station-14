@@ -341,9 +341,6 @@
       - type: ZombifyOnDeath
       - type: IncurableZombie
       - type: InitialInfected
-      - type: NPCFactionMember
-        Factions:
-        - Zombie
       mindRoles:
       - MindRoleInitialInfected
 
