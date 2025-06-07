@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -73,4 +74,10 @@ public sealed partial class RootableComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier RootSound = new SoundPathSpecifier("/Audio/Voice/Diona/diona_salute.ogg");
+
+    /// <summary>
+    /// Slots that, if filled, blocks rooting.
+    /// </summary>
+    [DataField]
+    public SlotFlags BlockingSlot = SlotFlags.FEET;
 }

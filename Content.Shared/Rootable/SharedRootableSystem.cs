@@ -5,8 +5,11 @@ using Content.Shared.Alert;
 using Content.Shared.Coordinates;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Gravity;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Slippery;
 using Content.Shared.Toggleable;
 using Robust.Shared.Audio.Systems;
@@ -26,7 +29,9 @@ public abstract class SharedRootableSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -46,6 +51,7 @@ public abstract class SharedRootableSystem : EntitySystem
         SubscribeLocalEvent<RootableComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<RootableComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<RootableComponent, ToggleActionEvent>(OnRootableToggle);
+        SubscribeLocalEvent<RootableComponent, IsEquippingAttemptEvent>(OnEquippingAttempt);
         SubscribeLocalEvent<RootableComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RootableComponent, IsWeightlessEvent>(OnIsWeightless);
         SubscribeLocalEvent<RootableComponent, SlipAttemptEvent>(OnSlipAttempt);
@@ -75,16 +81,47 @@ public abstract class SharedRootableSystem : EntitySystem
         args.Handled = TryToggleRooting((entity, entity));
     }
 
+    private void OnEquippingAttempt(Entity<RootableComponent> ent, ref IsEquippingAttemptEvent args)
+    {
+        if (args.Cancelled || !ent.Comp.Rooted)
+            return;
+
+        if (!args.SlotFlags.HasFlag(ent.Comp.BlockingSlot))
+            return;
+
+        args.Reason = Loc.GetString("rootable-popup-fail-equip");
+        args.Cancel();
+    }
+
     private void OnMobStateChanged(Entity<RootableComponent> entity, ref MobStateChangedEvent args)
     {
         if (entity.Comp.Rooted)
             TryToggleRooting((entity, entity));
     }
 
+    public bool CanRoot(Entity<RootableComponent> ent, out string reason)
+    {
+        reason = string.Empty;
+        var slotEnumerator = _inventory.GetSlotEnumerator(ent.Owner, ent.Comp.BlockingSlot);
+        while (slotEnumerator.NextItem(out var item))
+        {
+            reason = Loc.GetString("rootable-popup-fail-action", ("blocker", item));
+            return false;
+        }
+
+        return true;
+    }
+
     public bool TryToggleRooting(Entity<RootableComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
             return false;
+
+        if (!CanRoot((entity, entity.Comp), out var reason))
+        {
+            _popup.PopupClient(reason, entity.Owner, entity.Owner);
+            return false;
+        }
 
         entity.Comp.Rooted = !entity.Comp.Rooted;
         _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
