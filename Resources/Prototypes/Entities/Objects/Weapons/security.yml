@@ -41,10 +41,10 @@
     angle: 60
     animation: WeaponArcThrust
   - type: StaminaDamageOnHit
-    damage: 35
+    damage: 40
     sound: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnCollide
-    damage: 35
+    damage: 40
     sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
