@@ -23,6 +23,8 @@
         Heat: 0.80
   - type: ExplosionResistance
     damageCoefficient: 0.90
+  - type: StaminaResistance
+    damageCoefficient: 0.8
 
 #Standard armor vest, allowed for security and bartenders
 - type: entity
@@ -112,6 +114,8 @@
         Caustic: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.65
+  - type: StaminaResistance
+    damageCoefficient: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
@@ -160,6 +164,8 @@
         Heat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: StaminaResistance
+    damageCoefficient: 0.8
   - type: StaticPrice
     price: 1500
 
@@ -188,6 +194,8 @@
         Caustic: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: StaminaResistance
+    damageCoefficient: 0.8
   - type: FireProtection
     reduction: 0.85
   - type: StaticPrice
@@ -241,8 +249,8 @@
         Caustic: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.35
-  #- type: StaminaResistance
-  #  damageCoefficient: 0.45
+  - type: StaminaResistance
+    damageCoefficient: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
@@ -316,6 +324,8 @@
         Caustic: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: StaminaResistance
+    damageCoefficient: 0.6
   - type: GroupExamine
 
 - type: entity
@@ -423,7 +433,7 @@
         Heat: 0.9
         Radiation: 0.8
   - type: ClothingSpeedModifier
-    walkModifier: 0.65
+    walkModifier: 0.7
     sprintModifier: 0.65
   - type: HeldSpeedModifier
   - type: ExplosionResistance
@@ -450,7 +460,6 @@
         Piercing: 0.4
   - type: ClothingSpeedModifier
     walkModifier: 0.8
-    sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: ExplosionResistance
     damageCoefficient: 0.4
