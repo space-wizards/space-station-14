@@ -25,6 +25,8 @@
         amount: 2
       - id: RemoteSignaller
         amount: 2
+      - id: Binoculars
+      - id: WardenWhistle
 
 - type: entity
   id: LockerWardenFilled
