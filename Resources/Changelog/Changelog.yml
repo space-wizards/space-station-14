@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MisterImp
-  changes:
-  - message: A new recipe has been added for pizza made with world peas, world peazza.
-    type: Add
-  id: 8122
-  time: '2025-04-01T23:26:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35191
 - author: Fildrance
   changes:
   - message: fixed missing deconstruct on RCD
@@ -3906,3 +3899,10 @@
   id: 8633
   time: '2025-06-06T23:08:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38112
+- author: hoshizora-sayo
+  changes:
+  - message: Added proper name to the chameleon controller implanter
+    type: Add
+  id: 8634
+  time: '2025-06-07T02:29:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38117
