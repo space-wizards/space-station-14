@@ -39,8 +39,13 @@ jobs:
 
           # Check for missing EOF newline
           if [ -f "$file" ] && [ -s "$file" ]; then
-            last_char=$(tail -c 1 "$file")
-            if [ "$last_char" != "" ] && [ "$last_char" != $'\n' ]; then
+            # I know it looks really dumb adding an x to the output here but it's required because
+            # command substitution will strip ALL trailing newlines, but we're exactly interested in trailing newlines!
+            # We can trick it by ensuring that the output of the command substitution does not end in a newline, thus
+            # preserving any newlines before the 'x'.
+            # See https://bash-hackers.gabe565.com/syntax/expansion/cmdsubst/
+            last_char=$(tail -c 1 "$file"; echo -n "x")
+            if [ "$last_char" != "x" ] && [ "$last_char" != $'\nx' ]; then
               echo "::error file=$file::Missing newline at end of file"
               has_missing_eof_newline=1
             fi
