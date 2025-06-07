@@ -908,8 +908,6 @@
     interactSuccessString: petting-success-soft-floofy
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/cow_moo.ogg
   - type: Perishable
     molsPerSecondPerUnitMass: 0.0015
   - type: NpcFactionMember
@@ -1069,21 +1067,13 @@
     attributes:
       gender: female # Here because of UdderComponent
   - type: Speech
-    speechSounds: Goat
     speechVerb: Goat
-  - type: Vocal
-    sounds:
-      Female: Goat
-      Male: Goat
-      Unsexed: Goat
   - type: BleatingAccent
   - type: InteractionPopup
     successChance: 0.2
     interactSuccessString: petting-success-goat
     interactFailureString: petting-failure-goat
     interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/goat_bah.ogg
   - type: NpcFactionMember
     factions:
     - Passive
@@ -1547,8 +1537,6 @@
     interactSuccessString: petting-success-monkey
     interactFailureString: petting-failure-monkey
     interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/lizard_happy.ogg
     interactFailureSound:
       path: /Audio/Items/wirecutter.ogg
   - type: MobThresholds
@@ -2039,8 +2027,6 @@
     interactSuccessString: petting-success-reptile
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/lizard_happy.ogg
   - type: Bloodstream
     bloodMaxVolume: 150
   - type: Damageable
@@ -2263,8 +2249,6 @@
     interactSuccessString: petting-success-bird
     interactFailureString: petting-failure-generic
     interactSuccessSpawn: EffectHearts
-    interactSuccessSound:
-      path: /Audio/Animals/penguin_squawk.ogg
   - type: Tag
     tags:
     - VimPilot
