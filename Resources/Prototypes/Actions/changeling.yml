@@ -13,7 +13,6 @@
       state: item_recall
   - type: InstantAction
     event: !type:OnItemActionEvent
-  - type: ItemSlots
   - type: ItemAction
     spawnedPrototype: ArmBlade
     itemSlot:

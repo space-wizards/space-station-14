@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
@@ -78,6 +79,8 @@ public partial class SharedItemActionSystem : EntitySystem
         if (ent.Comp.SummoningAction is not { } action)
             return;
 
+        Log.Debug("Shutting down." + ent);
+
         // If the item is somehow destroyed, re-add it to the action.
         PopulateActionItem(action, out _);
     }
@@ -86,13 +89,14 @@ public partial class SharedItemActionSystem : EntitySystem
     {
         Log.Debug("Populating");
         item = null;
+
         if (!Resolve(uid, ref comp) || TerminatingOrDeleted(uid))
             return;
 
         Log.Debug("Spawning predicted");
         // Client crashes if unpredicted spawn is used.
         // But the client will never be able to use the item fast enough for it to cause issues anyways.
-        if (!PredictedTrySpawnInContainer(comp.SpawnedPrototype, uid, ItemActionComponent.Container, out var summoned))
+        if (!TrySpawnInContainer(comp.SpawnedPrototype, uid, ItemActionComponent.Container, out var summoned))
             return;
 
         item = summoned;
