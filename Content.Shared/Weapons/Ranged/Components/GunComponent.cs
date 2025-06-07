@@ -62,7 +62,10 @@ public sealed partial class GunComponent : Component
     [DataField, AutoNetworkedField]
     public float ImpulseStrength = 25f;
 
-    [AutoNetworkedField]
+    /// <summary>
+    /// For custom values applied to knockback when firing in zero grav.
+    /// </summary>
+    [DataField,AutoNetworkedField]
     public float ImpulseStrengthModified;
 
     /// <summary>
