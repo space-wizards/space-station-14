@@ -75,9 +75,6 @@
     damageContainer: Biological
     damageModifierSet: Vulpkanin
   - type: Wagging
-  - type: NightVision
-  - type: FlashModifier
-    modifier: 1.5
 
 - type: entity
   save: false
