@@ -139,7 +139,7 @@ namespace Content.Client.Lobby
 
         public void UpdateConstructionFavorites(List<ProtoId<ConstructionPrototype>> favorites)
         {
-            Preferences = new PlayerPreferences(Preferences.Characters, Preferences.AdminOOCColor, favorites, Preferences.jobPriorities);
+            Preferences = new PlayerPreferences(Preferences.Characters, Preferences.AdminOOCColor, favorites, Preferences.JobPriorities);
             var msg = new MsgUpdateConstructionFavorites
             {
                 Favorites = favorites

@@ -187,7 +187,7 @@ namespace Content.Server.Database
 
             return new PlayerPreferences(
                 new[] {new KeyValuePair<int, ICharacterProfile>(0, defaultProfile)},
-                Color.FromHex(prefs.AdminOOCColor)
+                Color.FromHex(prefs.AdminOOCColor),
                 [],
                 priorities
                 );
