@@ -14,7 +14,7 @@ public sealed partial class JointVisualsComponent : Component
     public SpriteSpecifier Sprite = default!;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("target"), AutoNetworkedField]
-    public NetEntity? Target;
+    public EntityUid? Target;
 
     /// <summary>
     /// Offset from Body A.
