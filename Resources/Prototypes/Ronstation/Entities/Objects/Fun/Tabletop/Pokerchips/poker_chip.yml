@@ -1,0 +1,70 @@
+- type: entity
+  parent: BaseItem
+  id: PokerChipBase
+  name: PokerChip
+  description: Raise or fold?
+  abstract: true
+  components:
+    - type: Item
+      size: Tiny
+
+- type: entity
+  parent: PokerChipBase
+  id: PokerChipRed
+  name: red pokerchip
+  components:
+    - type: Sprite
+      sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchips.rsi
+      state: pokerchip_red
+    - type: Stack
+      stackType: Pokerchips_Red
+      count: 40
+
+- type: entity
+  parent: PokerChipBase
+  id: PokerChipBlue
+  name: blue pokerchip
+  components:
+    - type: Sprite
+      sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchips.rsi
+      state: pokerchip_blue
+    - type: Stack
+      stackType: Pokerchips_Blue
+      count: 40
+
+- type: entity
+  parent: PokerChipBase
+  id: PokerChipWhite
+  name: white pokerchip
+  components:
+    - type: Sprite
+      sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchips.rsi
+      state: pokerchip_white
+    - type: Stack
+      stackType: Pokerchips_White
+      count: 40
+
+- type: entity
+  parent: PokerChipBase
+  id: PokerChipGreen
+  name: green pokerchip
+  components:
+    - type: Sprite
+      sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchips.rsi
+      state: pokerchip_green
+    - type: Stack
+      stackType: Pokerchips_Green
+      count: 40
+
+- type: entity
+  parent: PokerChipBase
+  id: PokerChipBlack
+  name: black pokerchip
+  components:
+    - type: Sprite
+      sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchips.rsi
+      state: pokerchip_black
+    - type: Stack
+      stackType: Pokerchips_Black
+      count: 24
+

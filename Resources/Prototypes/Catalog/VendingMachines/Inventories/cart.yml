@@ -16,6 +16,7 @@
     EncryptionKeyScience: 2
     EncryptionKeySecurity: 1
     EncryptionKeyService: 3
+    CardBoxNanotrasen: 1
   contrabandInventory:
     BalloonNT: 2
     LuxuryPen: 1

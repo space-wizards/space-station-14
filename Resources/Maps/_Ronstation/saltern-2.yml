@@ -31463,7 +31463,7 @@ entities:
     - type: Transform
       pos: 40.5,-16.5
       parent: 2
-- proto: CardPokerMiscellaneousJokerClown
+- proto: CardScJokerNanotrasen
   entities:
   - uid: 4195
     components:
@@ -31471,7 +31471,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -20.5,-22.5
       parent: 2
-- proto: CardPokerMiscellaneousJokerMime
+- proto: CardScJokerSyndicate
   entities:
   - uid: 4196
     components:

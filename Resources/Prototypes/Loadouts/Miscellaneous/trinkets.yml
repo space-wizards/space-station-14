@@ -397,3 +397,10 @@
   storage:
     back:
     - TowelColorMime
+
+# misc
+- type: loadout
+  id: CardBoxPokerFilled
+  storage:
+    back:
+    - CardBoxPokerFilled
