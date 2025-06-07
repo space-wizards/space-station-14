@@ -21,6 +21,15 @@ public sealed partial class GraphicsTab : Control
 
         Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
+
+        Control.AddOptionSlider(
+            CCVars.DisplaySharpening,
+            SharpeningSlider,
+            0,
+            20,
+            (_, value) => Loc.GetString("ui-options-sharpening-value", ("value", value))
+        );
+
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
 
         Control.AddOptionDropDown(
