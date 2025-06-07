@@ -13,9 +13,6 @@
   - type: Appearance
   - type: Charger
     slotId: charger_slot
-    blacklist:
-      tags:
-      - PotatoBattery
   - type: Anchorable
     delay: 1
   - type: Destructible
@@ -109,6 +106,9 @@
           tags:
           - PowerCell
           - PowerCellSmall
+        blacklist:
+          tags:
+          - PotatoBattery
 
 - type: entity
   parent: [ BaseItemRecharger, ConstructibleMachine ]
@@ -171,6 +171,9 @@
           - ProjectileBatteryAmmoProvider
           - Stunbaton
           - PowerCell
+        blacklist:
+          tags:
+          - PotatoBattery
 
 - type: entity
   parent: BaseItemRecharger
@@ -194,6 +197,9 @@
           - ProjectileBatteryAmmoProvider
           - Stunbaton
           - PowerCell
+        blacklist:
+          tags:
+          - PotatoBattery
 
 - type: entity
   parent: BaseItemRecharger
@@ -219,6 +225,9 @@
           - HitscanBatteryAmmoProvider
           - ProjectileBatteryAmmoProvider
           - Stunbaton
+        blacklist:
+          tags:
+          - PotatoBattery
 
 - type: entity
   parent: BaseRecharger
