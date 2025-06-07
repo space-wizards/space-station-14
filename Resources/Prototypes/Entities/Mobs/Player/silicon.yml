@@ -94,7 +94,7 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
   - type: ShowJobIcons
-    includeCrewBorder: true
+  - type: ShowCrewIcons
 
 # Ai
 - type: entity
