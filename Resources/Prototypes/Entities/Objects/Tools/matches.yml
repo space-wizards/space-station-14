@@ -19,6 +19,17 @@
     tags:
     - Matchstick
     - Trash
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
+  - type: Food
+    requiresSpecialDigestion: true
   - type: SpaceGarbage
   - type: Sprite
     sprite: Objects/Tools/matches.rsi
@@ -107,4 +118,15 @@
   - type: Tag
     tags:
     - Trash
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
+  - type: Food
+    requiresSpecialDigestion: true
   - type: SpaceGarbage
