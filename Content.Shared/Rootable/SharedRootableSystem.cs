@@ -51,7 +51,7 @@ public abstract class SharedRootableSystem : EntitySystem
         SubscribeLocalEvent<RootableComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<RootableComponent, EndCollideEvent>(OnEndCollide);
         SubscribeLocalEvent<RootableComponent, ToggleActionEvent>(OnRootableToggle);
-        SubscribeLocalEvent<RootableComponent, IsEquippingAttemptEvent>(OnEquippingAttempt);
+        SubscribeLocalEvent<RootableComponent, IsEquippingTargetAttemptEvent>(OnEquippingAttempt);
         SubscribeLocalEvent<RootableComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RootableComponent, IsWeightlessEvent>(OnIsWeightless);
         SubscribeLocalEvent<RootableComponent, SlipAttemptEvent>(OnSlipAttempt);
@@ -81,7 +81,7 @@ public abstract class SharedRootableSystem : EntitySystem
         args.Handled = TryToggleRooting((entity, entity));
     }
 
-    private void OnEquippingAttempt(Entity<RootableComponent> ent, ref IsEquippingAttemptEvent args)
+    private void OnEquippingAttempt(Entity<RootableComponent> ent, ref IsEquippingTargetAttemptEvent args)
     {
         if (args.Cancelled || !ent.Comp.Rooted)
             return;
