@@ -799,7 +799,7 @@
 
 - type: entity
   name: Pun Pun
-  parent: MobMonkey
+  parent: MobBaseMonkey
   id: MobMonkeyPunpun
   description: A prominent representative of monkeys with unlimited access to alcohol.
   components:
@@ -827,6 +827,118 @@
     - AnomalyHost
   - type: Loadout
     prototypes: [ MobMonkeyGear ]
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Clumsy # Pun has the shakes
+    gunShootFailDamage:
+      types:
+        Blunt: 5
+        Piercing: 4
+      groups:
+        Burn: 3
+
+- type: entity
+  name: Yip Yap
+  parent: MobBaseKobold
+  id: MobKoboldYip
+  description: A junior barkeeping assistant who loves a warm and cozy bar almost as much as he loves a firey whiskey.
+  components:
+  - type: GhostRole
+    prob: 1
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-yipyap-name
+    description: ghost-role-information-yipyap-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 3
+    - id: DrinkWhiskeyBottleFull
+      amount: 1
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - VimPilot
+    - AnomalyHost
+  - type: Loadout
+    prototypes: [ MobYipYapGear ]
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/kobold.rsi
+      state: kobold
+    - map: [ "outline" ]
+      sprite: Mobs/Animals/kobold.rsi
+      state: outline
+    - map: [ "horns" ]
+      sprite: Mobs/Customization/reptilian_parts.rsi
+      state: horns_floppy_kobold_ears
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "ears" ]
+    - map: [ "id" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+  - type: Clumsy # Yip has the shakes
+    gunShootFailDamage:
+      types:
+        Blunt: 5
+        Piercing: 4
+      groups:
+        Burn: 3
+
+
+- type: entity
+  name: Wa Wa
+  parent: MobBaseEmotionalSupportScurret # Use the base here as the non-abstract one has a forced name and random colour.
+  id: MobScurretWaWa
+  description: A junior barkeeping assistant. Look at it. It's a scurret in a top hat. The universe has peaked. Loves vodka, hates rain.
+  components:
+  - type: GhostRole
+    prob: 1
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-wawa-name
+    description: ghost-role-information-wawa-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat # It somehow tastes like vodka
+      amount: 4
+    - id: DrinkVodkaBottleFull
+      amount: 1
+  - type: Tag
+    tags:
+    - CannotSuicide # He cannot escape his torment
+    - DoorBumpOpener
+    - FootstepSound
+    - CanPilot
+    - VimPilot
+    - AnomalyHost
+  - type: Loadout
+    prototypes: [ MobWaWaGear ]
   - type: Grammar
     attributes:
       proper: true
