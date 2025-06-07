@@ -6948,4 +6948,12 @@ Entries:
   id: 960
   time: '2025-06-07T15:21:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/788
+- author: Conflee
+  changes:
+  - message: 'Saltern: Fixed missing pipe, uncolored pipes, and missing wire. Added
+      more Security Cameras. Moved Service Request Computer into Bar.'
+    type: Fix
+  id: 961
+  time: '2025-06-07T15:23:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/757
 
