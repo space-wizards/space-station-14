@@ -392,45 +392,14 @@
   name: double-bladed energy sword
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. Specially designed for syndicate cyborgs.
   components: # could add energy-draining like the L6C
-  - type: ItemToggle
-    soundActivate:
-      path: /Audio/Weapons/ebladeon.ogg
-      params:
-        volume: 3
-    soundDeactivate:
-      path: /Audio/Weapons/ebladeoff.ogg
-      params:
-        volume: 3
   - type: ItemToggleMeleeWeapon
-    activatedSoundOnSwing:
-      path: /Audio/Weapons/eblademiss.ogg
-      params:
-        volume: 3
-        variation: 0.250
     activatedDamage:
       types:
         Slash: 12
         Heat: 12
         Structural: 15
-  - type: ItemToggleActiveSound
-    activeSound:
-      path: /Audio/Weapons/ebladehum.ogg
-      params:
-        volume: 3
-  - type: ComponentToggler
-    components:
-    - type: Sharp
-    - type: DisarmMalus
-      malus: 0.7
-    - type: Execution
-      doAfterDuration: 4.0
   - type: MeleeWeapon
-    wideAnimationRotation: -135
     attackRate: 1.5
-    angle: 100
-    damage:
-      types:
-        Blunt: 4.5
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
     layers:
@@ -441,7 +410,6 @@
       shader: unshaded
       map: [ "blade" ]
   - type: Item
-    size: Small
     sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
   - type: Reflect
     reflectProb: .75
