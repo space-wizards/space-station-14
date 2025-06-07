@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.ItemAction;
@@ -12,7 +12,8 @@ namespace Content.Shared.ItemAction;
 public partial class SharedItemActionSystem : EntitySystem
 {
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -26,7 +27,7 @@ public partial class SharedItemActionSystem : EntitySystem
 
     private void OnActionInit(Entity<ItemActionComponent> ent, ref MapInitEvent args)
     {
-        _slots.AddItemSlot(ent.Owner, ItemActionComponent.ItemSlotId, ent.Comp.ItemSlot);
+        _containers.EnsureContainer<Container>(ent, ItemActionComponent.Container);
 
         PopulateActionItem(ent.Owner, out _);
     }
@@ -58,7 +59,8 @@ public partial class SharedItemActionSystem : EntitySystem
             {
                 Log.Debug("Attempting to hide");
                 RemComp<UnremoveableComponent>(ent.Comp.ActionItemUid.Value);
-                _slots.Insert(ent.Owner, ent.Comp.ItemSlot, ent.Comp.ActionItemUid.Value, args.Performer);
+                var container = _containers.GetContainer(ent, ItemActionComponent.Container);
+                _containers.Insert(ent.Comp.ActionItemUid.Value, container);
                 ent.Comp.Summoned = false;
             }
             else
@@ -82,17 +84,20 @@ public partial class SharedItemActionSystem : EntitySystem
 
     private void PopulateActionItem(EntityUid uid, [NotNullWhen(true)] out EntityUid? item, ItemActionComponent? comp = null)
     {
+        Log.Debug("Populating");
         item = null;
         if (!Resolve(uid, ref comp) || TerminatingOrDeleted(uid))
             return;
 
+        Log.Debug("Spawning predicted");
         // Client crashes if unpredicted spawn is used.
         // But the client will never be able to use the item fast enough for it to cause issues anyways.
-        if (!PredictedTrySpawnInContainer(comp.SpawnedPrototype, uid, ItemActionComponent.ItemSlotId, out var summoned))
+        if (!PredictedTrySpawnInContainer(comp.SpawnedPrototype, uid, ItemActionComponent.Container, out var summoned))
             return;
 
         item = summoned;
 
+        Log.Debug("Checking unremovable");
         if (comp.Unremovable)
         {
             comp.ActionItemUid = summoned;
@@ -105,6 +110,7 @@ public partial class SharedItemActionSystem : EntitySystem
             Dirty(summoned.Value, summonedComp);
 
             DirtyField(uid, comp, nameof(ItemActionComponent.ActionItemUid));
+            Log.Debug("Summoned and dirtied and all that");
         }
     }
 }

@@ -1,5 +1,3 @@
-using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -39,11 +37,5 @@ public sealed partial class ItemActionComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? ActionItemUid;
 
-    /// <summary>
-    /// The item slot used to store the item.
-    /// </summary>
-    [DataField]
-    public ItemSlot ItemSlot = new ();
-
-    public const string ItemSlotId = "item-action-item-slot";
+    public const string Container = "item-action-item-container";
 }
