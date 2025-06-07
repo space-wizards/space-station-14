@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Construction.UI
 {
@@ -38,10 +39,16 @@ namespace Content.Client.Construction.UI
         event EventHandler<bool> BuildButtonToggled;
         event EventHandler<bool> EraseButtonToggled;
         event EventHandler ClearAllGhosts;
+        event EventHandler PreviousRecipeButtonPressed;
+        event EventHandler NextRecipeButtonPressed;
 
         void ClearRecipeInfo();
         void SetRecipeInfo(string name, string description, EntityPrototype? targetPrototype, bool isItem, bool isFavorite);
         void ResetPlacement();
+        bool TrySelectCategoryById(int categoryDisplayId);
+        bool TrySelectRecipeById(ProtoId<ConstructionPrototype> recipeProtoId);
+        void TogglePreviousRecipeButton(bool toggle);
+        void ToggleNextRecipeButton(bool toggle);
 
         #region Window Control
 
@@ -124,12 +131,7 @@ namespace Content.Client.Construction.UI
 
             SearchBar.OnTextChanged += _ =>
                 PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[OptionCategories.SelectedId]));
-            OptionCategories.OnItemSelected += obj =>
-            {
-                OptionCategories.SelectId(obj.Id);
-                SearchBar.SetText(string.Empty);
-                PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[obj.Id]));
-            };
+            OptionCategories.OnItemSelected += obj => OnSelectCategory(obj.Id);
 
             BuildButton.Text = Loc.GetString("construction-menu-place-ghost");
             BuildButton.OnToggled += args => BuildButtonToggled?.Invoke(this, args.Pressed);
@@ -137,6 +139,9 @@ namespace Content.Client.Construction.UI
             ClearButton.OnPressed += _ => ClearAllGhosts?.Invoke(this, EventArgs.Empty);
             EraseButton.Text = Loc.GetString("construction-menu-eraser-mode");
             EraseButton.OnToggled += args => EraseButtonToggled?.Invoke(this, args.Pressed);
+
+            PreviousRecipeButton.OnPressed += _ => PreviousRecipeButtonPressed?.Invoke(this, EventArgs.Empty);
+            NextRecipeButton.OnPressed += _ => NextRecipeButtonPressed?.Invoke(this, EventArgs.Empty);
 
             FavoriteButton.OnPressed += args => RecipeFavorited?.Invoke(this, EventArgs.Empty);
 
@@ -150,6 +155,8 @@ namespace Content.Client.Construction.UI
         public event EventHandler? RecipeFavorited;
         public event EventHandler<bool>? BuildButtonToggled;
         public event EventHandler<bool>? EraseButtonToggled;
+        public event EventHandler? PreviousRecipeButtonPressed;
+        public event EventHandler? NextRecipeButtonPressed;
 
         public void ResetPlacement()
         {
@@ -185,5 +192,68 @@ namespace Content.Client.Construction.UI
         }
 
         public sealed record ConstructionMenuListData(ConstructionPrototype Prototype, EntityPrototype TargetPrototype) : ListData;
+
+        /// <summary>
+        /// Handle category selection.
+        /// </summary>
+        private void OnSelectCategory(int categoryDisplayId)
+        {
+            OptionCategories.SelectId(categoryDisplayId);
+            SearchBar.SetText(string.Empty);
+            PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[categoryDisplayId]));
+        }
+
+        /// <summary>
+        /// Attempts to select a category by its display ID.
+        /// </summary>
+        /// <returns>Whether it was successful.</returns>
+        public bool TrySelectCategoryById(int categoryDisplayId)
+        {
+            // do nothing if category is already selected
+            if (OptionCategories.SelectedId == categoryDisplayId)
+            {
+                return true;
+            }
+
+            OnSelectCategory(categoryDisplayId);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Attempts to select a recipe by its ID.
+        /// </summary>
+        /// <returns>Whether it was successful.</returns>
+        public bool TrySelectRecipeById(ProtoId<ConstructionPrototype> recipeProtoId)
+        {
+            if (!Recipes.Data.TryFirstOrDefault(
+                    data => ((ConstructionMenuListData)data).Prototype.ID == recipeProtoId,
+                    out var matchingData
+                ))
+            {
+                return false;
+            }
+
+            Recipes.Select(matchingData);
+            return true;
+        }
+
+        /// <summary>
+        /// Toggles previous recipe button on/off.
+        /// </summary>
+        /// <param name="toggle">Desired toggle state.</param>
+        public void TogglePreviousRecipeButton(bool toggle)
+        {
+            PreviousRecipeButton.Disabled = !toggle;
+        }
+
+        /// <summary>
+        /// Toggles next recipe button on/off.
+        /// </summary>
+        /// <param name="toggle">Desired toggle state.</param>
+        public void ToggleNextRecipeButton(bool toggle)
+        {
+            NextRecipeButton.Disabled = !toggle;
+        }
     }
 }
