@@ -6886,4 +6886,20 @@ Entries:
   id: 952
   time: '2025-06-07T09:12:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/786
+- author: Conflee
+  changes:
+  - message: Changed Deathsquad Poster into NanoTrasen Special Forces Poster, to reflect
+      our lore
+    type: Tweak
+  id: 953
+  time: '2025-06-07T09:13:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/783
+- author: Conflee
+  changes:
+  - message: Changed Cybersun 600 Poster into Cybersun 500 Poster, to reflect our
+      lore
+    type: Tweak
+  id: 954
+  time: '2025-06-07T09:13:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/783
 
