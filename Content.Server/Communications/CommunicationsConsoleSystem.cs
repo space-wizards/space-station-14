@@ -138,7 +138,7 @@ namespace Content.Server.Communications
 
             if (stationUid != null)
             {
-                if (TryComp(stationUid.Value, out AlertLevelComponent? alertComp) &&
+                if (TryComp(stationUid.Value, out Shared.AlertLevel.AlertLevelComponent? alertComp) &&
                     alertComp.AlertLevels != null)
                 {
                     if (alertComp.IsSelectable)
