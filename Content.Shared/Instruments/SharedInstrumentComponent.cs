@@ -191,4 +191,31 @@ public sealed class MidiTrack
     {
         return $"Track Name: {TrackName}; Instrument Name: {InstrumentName}; Program Name: {ProgramName}";
     }
+
+    /// <summary>
+    /// Truncates the fields based on the limit inputted into this method.
+    /// </summary>
+    public void TruncateFields(int limit)
+    {
+        if (InstrumentName != null)
+            InstrumentName = Truncate(InstrumentName, limit);
+
+        if (TrackName != null)
+            TrackName = Truncate(TrackName, limit);
+
+        if (ProgramName != null)
+            ProgramName = Truncate(ProgramName, limit);
+    }
+
+    private const string Postfix = "…";
+    // TODO: Make a general method to use in RT? idk if we have that.
+    private string Truncate(string input, int limit)
+    {
+        if (string.IsNullOrEmpty(input) || limit <= 0 || input.Length <= limit)
+            return input;
+
+        var truncatedLength = limit - Postfix.Length;
+
+        return input.Substring(0, truncatedLength) + Postfix;
+    }
 }

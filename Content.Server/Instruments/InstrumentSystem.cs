@@ -5,6 +5,7 @@ using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Instruments;
@@ -165,7 +166,14 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             LogImpact.Low,
             $"{ToPrettyString(args.SenderSession.AttachedEntity)} set the midi channels for {ToPrettyString(uid)} to {tracksString}");
 
+        // Truncate any track names too long.
+        foreach (var t in msg.Tracks)
+        {
+            t?.TruncateFields(_cfg.GetCVar(CCVars.MidiMaxChannelNameLength));
+        }
+
         activeInstrument.Tracks = msg.Tracks;
+
         Dirty(uid, activeInstrument);
     }
 
