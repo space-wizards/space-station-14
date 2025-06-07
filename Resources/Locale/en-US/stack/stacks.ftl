@@ -232,3 +232,7 @@ stack-astro-snow-floor = astro-snow floor
 stack-large-wood-floor = large wood floor
 stack-red-circuit-floor = red-circuit floor
 stack-asteroid-astro-sand-floor = asteroid astro-sand floor
+stack-marble-floor = marble floor
+stack-dark-marble-floor = dark marble floor
+stack-plasma-marble-floor = plasmarble floor
+stack-uranium-marble-floor = uranium marble floor
