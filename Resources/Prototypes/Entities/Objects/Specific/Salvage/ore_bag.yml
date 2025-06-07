@@ -33,6 +33,11 @@
   name: integrated ore bag
   description: A large ore bag built into the frame of a mining cyborg.
   components:
-    - type: Storage
-      grid:
-      - 0,0,9,5
+  - type: MagnetPickup
+    magnetInHands: true
+  - type: Storage
+    grid:
+    - 0,0,9,5
+  - type: Dumpable
+    delayPerItem: 0
+    multiplier: 0
