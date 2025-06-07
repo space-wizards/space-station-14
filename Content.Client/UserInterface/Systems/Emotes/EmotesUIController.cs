@@ -21,7 +21,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    
+
     private MenuButton? EmotesButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EmotesButton;
     private SimpleRadialMenu? _menu;
 
@@ -126,7 +126,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         if (_menu == null)
             return;
 
-        _menu.Dispose();
+        _menu.Close();
         _menu = null;
     }
 
@@ -135,7 +135,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
         var player = _playerManager.LocalSession?.AttachedEntity;
 
-        Dictionary<EmoteCategory, List<RadialMenuOption>> emotesByCategory = new(); 
+        Dictionary<EmoteCategory, List<RadialMenuOption>> emotesByCategory = new();
         foreach (var emote in emotePrototypes)
         {
             if(emote.Category == EmoteCategory.Invalid)
