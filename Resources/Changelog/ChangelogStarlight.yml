@@ -6902,4 +6902,11 @@ Entries:
   id: 954
   time: '2025-06-07T09:13:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/783
+- author: FoxxoTrystan
+  changes:
+  - message: The ability to have a custom specie name!
+    type: Add
+  id: 955
+  time: '2025-06-07T09:18:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/781
 
