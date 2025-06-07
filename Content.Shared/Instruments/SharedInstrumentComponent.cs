@@ -38,7 +38,13 @@ public abstract partial class SharedInstrumentComponent : Component
 /// Component that indicates that musical instrument was activated (ui opened).
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ActiveInstrumentComponent : Component;
+[AutoGenerateComponentState(true)]
+public sealed partial class ActiveInstrumentComponent : Component
+{
+    [DataField]
+    [AutoNetworkedField]
+    public MidiTrack?[] Tracks = [];
+}
 
 [Serializable, NetSerializable]
 public sealed class InstrumentComponentState : ComponentState
@@ -143,4 +149,46 @@ public sealed class InstrumentMidiEventEvent : EntityEventArgs
 public enum InstrumentUiKey
 {
     Key,
+}
+
+/// <summary>
+/// Sets the MIDI channels on an instrument.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class InstrumentSetChannelsEvent : EntityEventArgs
+{
+    public NetEntity Uid { get; }
+    public MidiTrack?[] Tracks { get; set; }
+
+    public InstrumentSetChannelsEvent(NetEntity uid, MidiTrack?[] tracks)
+    {
+        Uid = uid;
+        Tracks = tracks;
+    }
+}
+
+/// <summary>
+/// Represents a single midi track with the track name, instrument name and bank instrument name extracted.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MidiTrack
+{
+    /// <summary>
+    /// The first specified Track Name
+    /// </summary>
+    public string? TrackName;
+    /// <summary>
+    /// The first specified instrument name
+    /// </summary>
+    public string? InstrumentName;
+
+    /// <summary>
+    /// The first program change resolved to the name.
+    /// </summary>
+    public string? ProgramName;
+
+    public override string ToString()
+    {
+        return $"Track Name: {TrackName}; Instrument Name: {InstrumentName}; Program Name: {ProgramName}";
+    }
 }
