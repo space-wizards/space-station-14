@@ -553,8 +553,8 @@
         - MobState
     damage:
       types:
-        Blunt: 20
-        Slash: 8
+        Blunt: 22
+        Slash: 6
   - type: Projectile
     impactEffect: BulletImpactEffectKinetic
     damage:
@@ -576,8 +576,8 @@
         - MobState
     damage:
       types:
-        Blunt: 6
-        Slash: 6
+        Blunt: 4
+        Slash: 8
 
 - type: entity
   parent: BaseBullet

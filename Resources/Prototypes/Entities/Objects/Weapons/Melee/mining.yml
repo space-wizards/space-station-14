@@ -222,11 +222,8 @@
     count: 1
   - type: LeechOnMarker
     leech:
-      types:
-        Blunt: 4
-        Slash: 12
-        Piercing: 4
-  - type: MeleeWeapon
+      groups:
+        Brute: -21
   - type: Tag
     tags:
       - Pickaxe
