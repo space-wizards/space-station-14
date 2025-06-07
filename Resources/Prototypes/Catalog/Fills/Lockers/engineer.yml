@@ -202,7 +202,7 @@
     - id: RCD
     - id: RCDAmmo
     - id: MetalFoamGrenade
-    - id: construction bag
+    - id: ConstructionBag
       prob: 0.5
 
 - type: entityTable
@@ -213,7 +213,7 @@
     - id: OxygenTankFilled
     - id: ClothingShoesBootsMag
     - id: ClothingMaskBreath
-    - id: construction bag
+    - id: ConstructionBag
       prob: 0.2
 
 - type: entity
