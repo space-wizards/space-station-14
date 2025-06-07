@@ -1424,6 +1424,33 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("server_unban", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.StarLightModel+StarLightProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("star_light_profile_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CustomSpecieName")
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("custom_specie_name");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("integer")
+                        .HasColumnName("profile_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_star_light_profile");
+
+                    b.HasIndex("ProfileId")
+                        .IsUnique();
+
+                    b.ToTable("star_light_profile", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
                 {
                     b.Property<int>("Id")
@@ -2060,6 +2087,18 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Ban");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.StarLightModel+StarLightProfile", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithOne("StarLightProfile")
+                        .HasForeignKey("Content.Server.Database.StarLightModel+StarLightProfile", "ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_star_light_profile_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -2164,6 +2203,8 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.Navigation("Jobs");
 
                     b.Navigation("Loadouts");
+
+                    b.Navigation("StarLightProfile");
 
                     b.Navigation("Traits");
                 });

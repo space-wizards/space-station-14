@@ -4,8 +4,8 @@ meta:
   engineVersion: 260.2.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 06/03/2025 11:30:57
-  entityCount: 676
+  time: 06/06/2025 00:23:08
+  entityCount: 677
 maps: []
 grids:
 - 1
@@ -330,7 +330,7 @@ entities:
       pos: -0.5,11.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -4168.0547
+      secondsUntilStateChange: -4399.784
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2940,6 +2940,15 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,5.5
       parent: 1
+- proto: HolopadBluespace
+  entities:
+  - uid: 677
+    components:
+    - type: MetaData
+      name: Borgi Factory Holopad
+    - type: Transform
+      pos: -7.5,8.5
+      parent: 1
 - proto: hydroponicsTray
   entities:
   - uid: 421
@@ -3535,7 +3544,7 @@ entities:
       pos: -6.5,11.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -9702.616
+      secondsUntilStateChange: -9934.346
       state: Opening
 - proto: SpawnSmartSubwoofer
   entities:

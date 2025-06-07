@@ -61,6 +61,12 @@
                                                    ToolTip="{Loc 'humanoid-profile-editor-guidebook-button-tooltip'}"/>
                                     <OptionButton Name="SpeciesButton" HorizontalAlignment="Right" />
                                 </BoxContainer>
+                                <!-- Species // Starlight -->
+                                <BoxContainer Name="CCustomSpecieName" HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-customspeciename-label'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <LineEdit Name="CCustomSpecieNameEdit" MinSize="270 0" HorizontalAlignment="Right" />
+                                </BoxContainer>
                                 <!-- Age -->
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-age-label'}" />
