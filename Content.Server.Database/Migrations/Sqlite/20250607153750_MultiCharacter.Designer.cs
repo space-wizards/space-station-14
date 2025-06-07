@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20250428125216_MultiCharacter")]
+    [Migration("20250607153750_MultiCharacter")]
     partial class MultiCharacter
     {
         /// <inheritdoc />
@@ -763,42 +763,42 @@ namespace Content.Server.Database.Migrations.Sqlite
 
                     b.ToTable("player", (string)null);
                 });
-            
+
             modelBuilder.Entity("Content.Server.Database.PlayerDataDTO", b =>
-            {
-                b.Property<Guid>("UserId")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("TEXT")
-                    .HasColumnName("user_id");
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("user_id");
 
-                b.Property<int>("Balance")
-                    .HasColumnType("INTEGER")
-                    .HasColumnName("balance");
+                    b.Property<int>("Balance")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("balance");
 
-                b.Property<string>("DiscordId")
-                    .HasColumnType("TEXT")
-                    .HasColumnName("discord_id");
+                    b.Property<string>("DiscordId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("discord_id");
 
-                b.Property<int>("Flags")
-                    .HasColumnType("INTEGER")
-                    .HasColumnName("flags");
+                    b.Property<int>("Flags")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("flags");
 
-                b.Property<string>("GhostTheme")
-                    .HasColumnType("TEXT")
-                    .HasColumnName("ghost_theme");
+                    b.Property<string>("GhostTheme")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ghost_theme");
 
-                b.Property<string>("Title")
-                    .HasColumnType("TEXT")
-                    .HasColumnName("title");
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("title");
 
-                b.HasKey("UserId")
-                    .HasName("PK_player_data");
+                    b.HasKey("UserId")
+                        .HasName("PK_player_data");
 
-                b.HasIndex("DiscordId")
-                    .HasDatabaseName("IX_player_data_discord_id");
+                    b.HasIndex("DiscordId")
+                        .HasDatabaseName("IX_player_data_discord_id");
 
-                b.ToTable("player_data", (string)null);
-            });
+                    b.ToTable("player_data", (string)null);
+                });
 
             modelBuilder.Entity("Content.Server.Database.Preference", b =>
                 {
@@ -811,6 +811,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("admin_ooc_color");
+
+                    b.PrimitiveCollection<string>("ConstructionFavorites")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("construction_favorites");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT")
@@ -850,10 +855,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("eye_color");
 
+                    b.Property<bool>("EyeGlowing")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("eye_glowing");
+
                     b.Property<string>("FacialHairColor")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("facial_hair_color");
+
+                    b.Property<bool>("FacialHairGlowing")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("facial_hair_glowing");
 
                     b.Property<string>("FacialHairName")
                         .IsRequired()
@@ -874,6 +887,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("hair_color");
+
+                    b.Property<bool>("HairGlowing")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("hair_glowing");
 
                     b.Property<string>("HairName")
                         .IsRequired()
@@ -910,7 +927,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("species");
-                    
+
                     b.Property<string>("Voice")
                         .IsRequired()
                         .HasColumnType("TEXT")
