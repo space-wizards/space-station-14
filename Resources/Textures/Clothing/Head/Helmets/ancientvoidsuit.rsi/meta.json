@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/tree/fb2d71495bfe81446159ef528534193d09dd8d34, sprite repaletted by Flareguy for space-station-14",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/tree/fb2d71495bfe81446159ef528534193d09dd8d34, sprite repaletted by Flareguy for space-station-14 | vulpkanin version taken from Paradise station at https://github.com/ParadiseSS13/Paradise/commit/f0fa4e1fd809482fbc104a310aa34cebf7df157d",
   "size": {
     "x": 32,
     "y": 32
@@ -20,6 +20,10 @@
     },
     {
       "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-vulpkanin",
       "directions": 4
     }
   ]
