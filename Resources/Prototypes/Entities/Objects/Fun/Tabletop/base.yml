@@ -18,6 +18,7 @@
   id: BaseTabletopPiece # Board piece
   parent: BaseItem
   abstract: true
+  suffix: Tabletop
   components:
   - type: TabletopDraggable
   - type: Sprite
