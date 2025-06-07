@@ -16,24 +16,9 @@ public sealed partial class ThievingSystem : EntitySystem
         SubscribeLocalEvent<ThievingComponent, BeforeStripEvent>(OnBeforeStrip);
         SubscribeLocalEvent<ThievingComponent, InventoryRelayedEvent<BeforeStripEvent>>((e, c, ev) =>
             OnBeforeStrip(e, c, ev.Args));
-        SubscribeLocalEvent<ThievingComponent, ComponentGetStateAttemptEvent>(OnThievingCompGetStateAttempt);
         SubscribeLocalEvent<ThievingComponent, ToggleThievingEvent>(OnToggleStealthy);
         SubscribeLocalEvent<ThievingComponent, ComponentInit>(OnCompInit);
         SubscribeLocalEvent<ThievingComponent, ComponentRemove>(OnCompRemoved);
-
-    }
-
-    private void OnThievingCompGetStateAttempt(Entity<ThievingComponent> ent, ref ComponentGetStateAttemptEvent args)
-    {
-        // Replays might troll people so don't block the send
-        if (args.Player?.AttachedEntity is not { } uid)
-            return;
-
-        if (HasComp<ThievingComponent>(uid))
-            return;
-
-        // Get mogged
-        args.Cancelled = true;
     }
 
     private void OnBeforeStrip(EntityUid uid, ThievingComponent component, BeforeStripEvent args)

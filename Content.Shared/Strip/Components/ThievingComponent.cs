@@ -29,7 +29,12 @@ public sealed partial class ThievingComponent : Component
     [DataField]
     public ProtoId<AlertPrototype> StealthyAlertProtoId = "Stealthy";
 
-    public override bool SessionSpecific => true;
+    /// <summary>
+    /// Prevent component replication to clients other than the owner,
+    /// doesn't affect prediction.
+    /// Get mogged.
+    /// </summary>
+    public override bool SendOnlyToOwner => true;
 }
 
 /// <summary>
