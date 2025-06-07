@@ -224,7 +224,7 @@
     FoodMeatFish: 1
     FoodCheeseSlice: 1
 
-- type: microwaveMealRecipe
+- type: microwaveMealRecipe #added to metamorph recipes
   id: RecipeFiveBurger
   name: five alarm burger recipe
   result: FoodBurgerFive
@@ -622,6 +622,30 @@
   group: Savory
   solids:
     FoodOnionSlice: 1
+
+#Eggs
+
+- type: microwaveMealRecipe
+  id: RecipeOmelette
+  name: omelette recipe
+  result: FoodMealOmelette
+  time: 10
+  group: Eggs
+  solids:
+    FoodCheeseSlice: 1
+  reagents:
+    Egg: 6
+
+- type: microwaveMealRecipe
+  id: RecipeFriedEgg
+  name: fried egg recipe
+  result: FoodMealFriedegg
+  time: 10
+  group: Eggs
+  reagents:
+    Egg: 6
+    TableSalt: 1
+    Blackpepper: 1
 
 #Pizzas TODO: contruction graph based pizza
 - type: microwaveMealRecipe
@@ -1259,12 +1283,11 @@
   time: 15
   group: Pie
   reagents:
-    Gold: 10
     Sugar: 5
     Milk: 5
   solids:
     FoodDoughPie: 1
-    FoodApple: 2 #in absence of the real gapple i'm substituting one apple with 10u gold (one ingot)
+    FoodGoldenApple: 2
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
@@ -1885,9 +1908,8 @@
   result: FoodMealQueso
   time: 15
   group: Soup
-  #todo Add blackpepper
-  #reagents:
-    #blackpepper: 5
+  reagents:
+    Blackpepper: 5
   solids:
     FoodChiliPepper: 1
     FoodCheeseSlice: 2
@@ -2395,3 +2417,37 @@
     FoodBreadCottonSlice: 2
     FoodCheeseSlice: 1
     FoodButterSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCannoli
+  name: cannoli recipe
+  result: FoodBakedCannoli
+  time: 10
+  group: Dessert
+  solids:
+    FoodDoughFlat: 1
+    FoodSnackChocolateBar: 1
+  reagents:
+    Cream: 5
+
+- type: microwaveMealRecipe
+  id: RecipeCornedBeef
+  name: corned beef and cabbage recipe
+  result: FoodMealCornedbeef
+  time: 15
+  group: Savory
+  solids:
+    FoodMeat: 1
+    FoodCabbage: 1
+
+- type: microwaveMealRecipe
+  id: RecipePretzel
+  name: poppy pretzel recipe
+  result: FoodBakedPretzel
+  group: Breads
+  time: 10
+  solids:
+    FoodDoughRope: 1
+    PoppySeeds: 1
+  reagents:
+    SodaWater: 5
