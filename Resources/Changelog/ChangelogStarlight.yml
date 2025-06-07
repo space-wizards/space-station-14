@@ -6956,4 +6956,11 @@ Entries:
   id: 961
   time: '2025-06-07T15:23:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/757
+- author: Happyrobot33
+  changes:
+  - message: Removed nightvision from vulpkanins.
+    type: Remove
+  id: 962
+  time: '2025-06-07T19:33:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/775
 
