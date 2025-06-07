@@ -64,8 +64,7 @@
         mask:
         - FullTileMask
         layer:
-        - WallLayer
-        density: 2000
+        - GlassLayer
 
 - type: entity
   id: PlasmaReinforcedWindowDirectional
