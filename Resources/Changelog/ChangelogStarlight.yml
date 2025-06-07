@@ -6916,4 +6916,14 @@ Entries:
   id: 956
   time: '2025-06-07T09:20:17.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/730
+- author: Conflee
+  changes:
+  - message: Added Space Hazard Suits. Replaces the Basic Hardsuit, which was removed
+      upstream. One spawns in every Mining Specialist Locker, and a crate with 1 Suit,
+      1 O2 Tank, 1 N2 Tank, and 1 Breath Mask can be purchased under 'Emergency' for
+      3500 Spesos. A good buy for Singuloose / SM Delam.
+    type: Add
+  id: 957
+  time: '2025-06-07T09:31:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/743
 
