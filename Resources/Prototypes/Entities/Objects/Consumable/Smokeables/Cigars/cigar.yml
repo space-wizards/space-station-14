@@ -1,6 +1,3 @@
-- type: Tag
-  id: Cigar
-
 - type: entity
   id: Cigar
   parent: BaseCigar
@@ -12,8 +9,9 @@
     state: unlit-icon
   - type: Tag
     tags:
-      - Cigar
-      - Trash
+    - CigarBombHarmlessCrafter
+    - Cigar
+    - Trash
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
     slots: [ mask ]
@@ -38,9 +36,9 @@
         maxVol: 20
   - type: Tag
     tags:
-      - Cigar
-      - Trash
-      - Burnt
+    - Cigar
+    - Trash
+    - Burnt
 
 - type: entity
   id: CigarGold
@@ -71,3 +69,8 @@
     solutions:
       smokable:
         maxVol: 20
+  - type: Tag
+    tags:
+    - Cigar
+    - Trash
+    - Burnt
