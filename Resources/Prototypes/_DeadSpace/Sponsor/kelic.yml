@@ -8,14 +8,20 @@
   entity: HypoKelic
   sponsorOnly: true
   whitelistJobs: [ChiefMedicalOfficer, MedicalDoctor, Chemist]
+
+- type: sponsorLoadout
+  id: KelicWeaponCrusher
+  entity: WeaponCrusherKelic
+  sponsorOnly: true
+  whitelistJobs: [SalvageSpecialist, SeniorSalvageSpecialist]
   
 # Backpack
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackKelic
-  name: потрёпанная сумка
+  name: сумка с функцией РИГ "MS-06"
   description: Компактная, износостойкая сумка, специально созданная для скафандра MS-06. 
-  categories: [ HideSpawnMenu ]
+#  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/Kelic/backpack.rsi
@@ -24,12 +30,10 @@
   - type: Storage
     maxItemSize: Huge
     grid:
-    - 0,0,15,5
+    - 0,0,19,9
   - type: StorageFill
     contents:
       - id: ClothingNeckKelic 
-      - id: ClothingOuterHardsuitKelic 
-      - id: JetpackVoidFilledKelic 
       - id: ClothingBeltKelic 
       - id: ClothingShoesBootsMagKelic
       - id: ClothingHandsGlovesCombatKelic
@@ -39,15 +43,28 @@
       - id: ClothingMaskGasKelic
       - id: MedkitFilled
       - id: SynthesizerInstrument
+      - id: PDAKelic
+      - id: ClothingHandsRingDiamondKelic
+      - id: ClothingHandsRingRubinoKelic
+      - id: DoubleEmergencyOxygenTankFilled
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterHardsuitKelic
+    requiredSlot: BACK
+    slot: outerClothing
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+      storagebase: !type:Container
+        ents: []
 
 # Belt
 - type: entity
   parent: ClothingBeltChiefEngineer
   id: ClothingBeltKelic
-  name: пояс исследователя
-  description: Универсальный пояс с множеством карманов, специально созданный для длительных путешествий.
+  name: RX-79 «Core Belt»
+  description: Лёгкий композитный пояс, надёжно удерживает инструменты и равномерно распределяет вес.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -134,20 +151,11 @@
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
-# Jetpack
-- type: entity
-  id: JetpackVoidFilledKelic
-  parent: JetpackVoidFilled
-  name: пустотный реактивный ранец
-  description: Прыжковый ранец, модифицированный для открытого космоса.
-  suffix: Filled
-  categories: [ HideSpawnMenu ]
-
 # Gloves
 - type: entity
   parent: ClothingHandsGlovesCombat
   id: ClothingHandsGlovesCombatKelic
-  name: старые перчатки исследователя
+  name: укреплённые перчатки
   description: Укреплённые перчатки из высокопрочных материалов, обеспечивающие защиту в работе с опасными объектами.
   categories: [ HideSpawnMenu ]
   components:
@@ -160,7 +168,7 @@
 
 # Magboots
 - type: entity
-  parent: ClothingShoesBootsMagAdv
+  parent: ClothingShoesBootsMagSyndie
   id: ClothingShoesBootsMagKelic
   name: магнитные сапоги с оранжевыми вставками
   description: Сапоги с заметными оранжевыми вставками, предназначенными для быстрого распознавания. На подошве штамп "MS-06".
@@ -172,12 +180,23 @@
     sprite: _DeadSpace/Sponsor/Kelic/magboots.rsi
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 2 minutes of thrust
+      volume: 5
+      temperature: 293.15
+      moles:
+        - 2.051379050 # oxygen
 
 # Glasses
 - type: entity
-  parent: ClothingEyesGlassesMeson
+  parent: [ClothingEyesGlassesMeson, ShowSecurityIcons]
   id: ClothingEyesGlassesKelic
-  name: визор с оранжевой вставкой
+  name: AX-X0 «Nightpiercer»
   description: Стекла слегка поцарапаны, оправа крепкая.
   categories: [ HideSpawnMenu ]
   components:
@@ -242,10 +261,11 @@
 
 # Hypospray
 - type: entity
+  id: HypoKelic
   name: гипоспрей исследователя
   parent: BaseItem
   description: Гипоспрей для полевого пользования из не самых дорогих компонентов.
-  id: HypoKelic
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/Kelic/hypo.rsi
@@ -264,3 +284,81 @@
     onlyAffectsMobs: false
   - type: UseDelay
     delay: 0.5
+
+# Crusher
+- type: entity
+  id: WeaponCrusherKelic
+  parent: WeaponCrusher
+  name: RX-78-KP «Knuckle Phoenix»
+  description: RX-серии. Микро-актуаторы Minovsky-класса концентрируют кинетический импульс прямо в кулаке, позволяя дробить сталь, превращая кулак в штурмовой таран, сохраняя при этом хирургическую точность пальцев.
+#  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/crusher.rsi
+    layers:
+    - state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Kelic/crusher.rsi
+    size: Normal
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/crusher.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+
+# PDA
+- type: entity
+  parent: BaseMedicalPDA
+  id: PDAKelic
+  name: КПК MS-06
+  description: КПК в фирменных цветах спонсора, выделяется усиленным корпусом, рассчитанным на суровые условия станции.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Sponsor/Kelic/pda.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/pda.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - AstroNavCartridge
+
+# Rings
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsRingDiamondKelic
+  name: обручальное кольцо с алмазом
+  description: Кольцо из чистой платины, в центре которого находится алмаз. На кольце виднеется гравировка "Эйрин".
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/ring_eirin.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/ring_eirin.rsi
+  - type: Item
+    size: Tiny
+  - type: StaticPrice
+    price: 1000
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsRingRubinoKelic
+  name: кольцо с рубином
+  description: Кольцо из чистой платины, в центре которого находится рубин. На кольце виднеется гравировка "Келик".
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/ring_kelik.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/ring_kelik.rsi
+  - type: Item
+    size: Tiny
+  - type: StaticPrice
+    price: 1000
