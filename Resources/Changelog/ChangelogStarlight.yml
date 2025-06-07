@@ -6909,4 +6909,11 @@ Entries:
   id: 955
   time: '2025-06-07T09:18:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/781
+- author: Aedler
+  changes:
+  - message: Changed the sound of knuckledusters to be more brutal.
+    type: Tweak
+  id: 956
+  time: '2025-06-07T09:20:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/730
 
