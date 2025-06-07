@@ -30,6 +30,7 @@
       - XenoborgModuleGeneric
       - XenoborgModuleEngi
       - BorgModuleEngineering
+      - BorgModuleGeneric
   - type: ContainerFill
     containers:
       borg_brain:
@@ -106,7 +107,7 @@
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Machines/warning_buzzer.ogg
+          path: /Audio/Machines/warning_buzzer_xenoborg.ogg
           params:
             volume: 5
     - trigger:
