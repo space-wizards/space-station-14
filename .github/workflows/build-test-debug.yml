@@ -16,6 +16,7 @@ jobs:
         os: [ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
+    container: registry.gitlab.steamos.cloud/steamrt/sniper/sdk
 
     steps:
     - name: Checkout Master

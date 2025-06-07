@@ -31,6 +31,7 @@ jobs:
     name: Test Packaging
     if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
+    container: registry.gitlab.steamos.cloud/steamrt/sniper/sdk
 
     steps:
       - name: Checkout Master
