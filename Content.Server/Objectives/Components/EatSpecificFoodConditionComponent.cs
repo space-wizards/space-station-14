@@ -1,7 +1,5 @@
-using Content.Server.Objectives.Systems;
-using Content.Shared.Ninja.Systems;
-using Content.Shared.Tag;
-using Robust.Shared.Prototypes;
+using Content.Shared.Objectives.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Components;
 
@@ -12,14 +10,24 @@ namespace Content.Server.Objectives.Components;
 public sealed partial class EatSpecificFoodConditionComponent : Component
 {
     /// <summary>
-    ///
+    /// Which <see cref="FoodObjectiveTagComponent"/> this condition should target.
     /// </summary>
     [DataField(required: true)]
-    public string GroupTag;
+    public string FoodObjectiveTag;
 
-    [DataField(required: true)]
-    public LocId DescriptionText;
-
+    /// Text and sprites for the condition.
     [DataField]
-    public string ChosenTag;
+    public LocId Name = string.Empty;
+    [DataField]
+    public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
+    [DataField]
+    public LocId DescriptionText = string.Empty;
+    [DataField]
+    public LocId DescriptionTextMultiple = string.Empty;
+
+    /// <summary>
+    /// The amount of chosen food eaten.
+    /// </summary>
+    [DataField]
+    public int FoodEaten;
 }

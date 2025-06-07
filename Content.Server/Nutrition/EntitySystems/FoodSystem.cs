@@ -30,10 +30,13 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Server.Objectives.Components;
 using Content.Shared.Containers.ItemSlots;
 using Robust.Server.GameObjects;
 using Content.Shared.Whitelist;
 using Content.Shared.Destructible;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Components;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -60,6 +63,7 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public const float MaxFeedDistance = 1.0f;
 
@@ -272,6 +276,8 @@ public sealed class FoodSystem : EntitySystem
             return;
         }
 
+        // All checks have passed: Eating will now commence!
+
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
         _stomach.TryTransferSolution(stomachToUse!.Value.Owner, split, stomachToUse);
 
@@ -297,6 +303,15 @@ public sealed class FoodSystem : EntitySystem
         }
 
         _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-1f).WithVariation(0.20f));
+
+        // Post-eating functionality
+
+        // Check for any food-eating objectives
+        if (_mind.TryGetObjectiveComp<EatSpecificFoodConditionComponent>(args.Target.Value, out var objective))
+        {
+            if (TryComp<FoodObjectiveTagComponent>(entity, out var foodTag) && foodTag.Tags.Contains(objective.ChosenTag))
+                objective.FoodEaten++;
+        }
 
         // Try to break all used utensils
         foreach (var utensil in utensils)
