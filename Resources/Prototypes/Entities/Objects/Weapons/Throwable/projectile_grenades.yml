@@ -13,7 +13,13 @@
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:TriggerBehavior
+      - !type:TimerStartBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: ContainerContainer
     containers:
       cluster-payload: !type:Container
