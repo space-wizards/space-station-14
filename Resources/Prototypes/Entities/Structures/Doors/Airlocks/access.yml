@@ -1190,20 +1190,6 @@
     containers:
       board: [ DoorElectronicsExternal ]
 
-- type: entity
-  parent: AirlockGlassShuttle
-  id: AirlockExternalGlassShuttleEscape
-  suffix: External, Escape 3x4, Glass, Docking
-  components:
-  - type: GridFill
-    addComponents:
-    - type: IFF
-      flags:
-      - HideLabel
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsExternal ]
-
 #HighSecDoors
 - type: entity
   parent: HighSecDoor
