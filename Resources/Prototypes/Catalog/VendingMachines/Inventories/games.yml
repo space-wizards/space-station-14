@@ -17,6 +17,7 @@
     MysteryFigureBox: 2
     BooksBag: 3
     CardBoxPokerFilled: 4
+    BriefcasePokerSet: 1
   contrabandInventory:
     Basketball: 1
     FoodSnackBoritos: 3
