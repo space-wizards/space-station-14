@@ -1,5 +1,7 @@
-using Content.Server.Storage.Components;
+using Content.Shared.Storage.Components;
+using Content.Shared.Hands;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -29,6 +31,10 @@ public sealed class MagnetPickupSystem : EntitySystem
         base.Initialize();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         SubscribeLocalEvent<MagnetPickupComponent, MapInitEvent>(OnMagnetMapInit);
+        SubscribeLocalEvent<MagnetPickupComponent, GotEquippedEvent>(OnMagnetEquipped);
+        SubscribeLocalEvent<MagnetPickupComponent, GotUnequippedEvent>(OnMagnetUnequipped);
+        SubscribeLocalEvent<MagnetPickupComponent, GotEquippedHandEvent>(OnMagnetHandEquipped);
+        SubscribeLocalEvent<MagnetPickupComponent, GotUnequippedHandEvent>(OnMagnetHandUnequipped);
     }
 
     private void OnMagnetMapInit(EntityUid uid, MagnetPickupComponent component, MapInitEvent args)
@@ -49,11 +55,8 @@ public sealed class MagnetPickupSystem : EntitySystem
 
             comp.NextScan += ScanDelay;
 
-            if (!_inventory.TryGetContainingSlot((uid, xform, meta), out var slotDef))
-                continue;
-
-            if ((slotDef.SlotFlags & comp.SlotFlags) == 0x0)
-                continue;
+            if (!comp.InRightPlace)
+                continue; // only pickup equipped correctly
 
             // No space
             if (!_storage.HasSpace((uid, storage)))
@@ -95,5 +98,28 @@ public sealed class MagnetPickupSystem : EntitySystem
                 playedSound = true;
             }
         }
+    }
+    private void OnMagnetEquipped(Entity<MagnetPickupComponent> ent, ref GotEquippedEvent args)
+    {
+        ent.Comp.InRightPlace = (ent.Comp.SlotFlags & args.SlotFlags) == args.SlotFlags;
+        Dirty(ent);
+    }
+
+    private void OnMagnetUnequipped(Entity<MagnetPickupComponent> ent, ref GotUnequippedEvent args)
+    {
+        ent.Comp.InRightPlace = false;
+        Dirty(ent);
+    }
+
+    private void OnMagnetHandEquipped(Entity<MagnetPickupComponent> ent, ref GotEquippedHandEvent args)
+    {
+        ent.Comp.InRightPlace = ent.Comp.MagnetInHands;
+        Dirty(ent);
+    }
+
+    private void OnMagnetHandUnequipped(Entity<MagnetPickupComponent> ent, ref GotUnequippedHandEvent args)
+    {
+        ent.Comp.InRightPlace = false;
+        Dirty(ent);
     }
 }
