@@ -1268,3 +1268,32 @@
     proto: BulletDisablerSmg
     count: 3 #bit stronger than a disabler if you hit your shots you goober, still not a 2 hit stun though
     spread: 9
+
+- type: entity
+  name : flamethrower fireball
+  id: BulletFlamethrower
+  parent: BaseBulletIncendiary
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles3.rsi
+    layers:
+    - state: fireball
+      shader: unshaded
+  - type: Ammo
+    muzzleFlash: null
+  - type: Projectile
+    impactEffect: BulletImpactEffectFlamer
+    damage:
+      types:
+        Blunt: 0
+        Heat: 3
+    soundHit:
+      path: /Audio/Effects/lightburn.ogg
+    forceSound: true
+  - type: IgniteOnCollide
+    fireStacks: 0.12
+  - type: IgnitionSource
+    temperature: 700
