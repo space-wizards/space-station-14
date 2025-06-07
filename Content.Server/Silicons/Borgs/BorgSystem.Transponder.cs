@@ -1,4 +1,10 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Robotics;
@@ -14,6 +20,10 @@ namespace Content.Server.Silicons.Borgs;
 public sealed partial class BorgSystem
 {
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
     private void InitializeTransponder()
     {
@@ -28,7 +38,7 @@ public sealed partial class BorgSystem
         var query = EntityQueryEnumerator<BorgTransponderComponent, BorgChassisComponent, DeviceNetworkComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var comp, out var chassis, out var device, out var meta))
         {
-            if (comp.NextDisable is {} nextDisable && now >= nextDisable)
+            if (comp.NextDisable is { } nextDisable && now >= nextDisable)
                 DoDisable((uid, comp, chassis, meta));
 
             if (now < comp.NextBroadcast)
@@ -38,13 +48,37 @@ public sealed partial class BorgSystem
             if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
                 charge = battery.CurrentCharge / battery.MaxCharge;
 
-            var hasBrain = chassis.BrainEntity != null && !comp.FakeDisabled;
+            var hpPercent = 1f;
+
+            // gaze upon the horrible if ladder
+            if (_entityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
+            {
+                if (_entityManager.TryGetComponent<MobStateComponent>(uid, out var mobState))
+                {
+                    if (_entityManager.TryGetComponent<MobThresholdsComponent>(uid, out var mobThresholds))
+                    {
+                        if (CalcProgress(uid, mobState, damageable, mobThresholds) is not { } deathProgress)
+                            hpPercent = 0f;
+                        else
+                        {
+                            if (deathProgress.inCrit)
+                                hpPercent = 0f;
+                            else
+                                hpPercent = deathProgress.ratio;
+                        }
+                    }
+                }
+            }
+
+            // checks if it has a brain and if the brain is not a empty MMI (gives false anyway if the fake disable is true)
+            var hasBrain = CheckBrain(chassis.BrainEntity) && !comp.FakeDisabled;
             var canDisable = comp.NextDisable == null && !comp.FakeDisabling;
             var data = new CyborgControlData(
                 comp.Sprite,
                 comp.Name,
                 meta.EntityName,
                 charge,
+                hpPercent,
                 chassis.ModuleCount,
                 hasBrain,
                 canDisable);
@@ -70,7 +104,7 @@ public sealed partial class BorgSystem
             return;
         }
 
-        if (ent.Comp2.BrainEntity is not {} brain)
+        if (ent.Comp2.BrainEntity is not { } brain)
             return;
 
         var message = Loc.GetString(ent.Comp1.DisabledPopup, ("name", Name(ent, ent.Comp3)));
@@ -150,5 +184,59 @@ public sealed partial class BorgSystem
     public void SetTransponderName(Entity<BorgTransponderComponent> ent, string name)
     {
         ent.Comp.Name = name;
+    }
+
+    /// <summary>
+    /// Returns a ratio between 0 and 1, and whether the entity is in crit.
+    /// </summary>
+    private (float ratio, bool inCrit)? CalcProgress(EntityUid uid, MobStateComponent component, DamageableComponent dmg, MobThresholdsComponent thresholds)
+    {
+        if (_mobStateSystem.IsAlive(uid, component))
+        {
+            if (dmg.HealthBarThreshold != null && dmg.TotalDamage < dmg.HealthBarThreshold)
+                return null;
+
+            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold, thresholds) &&
+                !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholds))
+                return (1, false);
+
+            var ratio = 1 - ((FixedPoint2)(dmg.TotalDamage / threshold)).Float();
+            return (ratio, false);
+        }
+
+        if (_mobStateSystem.IsCritical(uid, component))
+        {
+            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var critThreshold, thresholds) ||
+                !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold, thresholds))
+            {
+                return (1, true);
+            }
+
+            var ratio = 1 - ((dmg.TotalDamage - critThreshold) / (deadThreshold - critThreshold)).Value.Float();
+
+            return (ratio, true);
+        }
+
+        return (0, true);
+    }
+
+    /// <summary>
+    /// Returns true if the borg has a brain and fakeDisabled is false
+    /// </summary>
+    private bool CheckBrain(EntityUid? brainEntity)
+    {
+        if (brainEntity == null)
+            return false;
+
+        EntityUid realBrainEntity = brainEntity.Value;
+        if (_entityManager.HasComponent<ItemSlotsComponent>(realBrainEntity) && _itemSlotsSystem.TryGetSlot(realBrainEntity, "brain_slot", out var slot) && slot != null)
+        {
+            if (slot.ContainerSlot != null)
+                return slot.ContainerSlot.ContainedEntity != null;
+            else
+                return false;
+        }
+        else
+            return true;
     }
 }
