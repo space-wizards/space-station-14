@@ -13,6 +13,8 @@ whistle-desc = Want me to lead a final charge?
 banner-name = Revolutionary banner
 banner-desc = Dying with purpose, comrade.
 soviet-encryption-key-conversion-desc = Share your status report tovarisch.
+aps-name = Stechkin APS
+aps-desc = To a brigadier of your choosing, or yourself.
 
 # Telebonds
 # Weapons

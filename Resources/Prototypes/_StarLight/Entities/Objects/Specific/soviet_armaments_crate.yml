@@ -20,17 +20,15 @@
       entity_storage: !type:GroupSelector
         children:
         - id: WeaponSniperMosin
-          weight: 6
+          weight: 8
         - id: WeaponPistolMakarov
-          weight: 4
+          weight: 6
         - id: SpearUranium
-          weight: 1
-        - id: MedkitFilled
           weight: 3
+        - id: MedkitFilled
+          weight: 5
         - id: ClothingOuterSovietCoat
-          weight: 4
-        - id: WeaponPistolAPS
-          weight: 2
+          weight: 6
         - id: WeaponLightMachineGunDP28
           weight: 1
         rolls: !type:ConstantNumberSelector

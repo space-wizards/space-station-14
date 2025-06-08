@@ -75,6 +75,16 @@
   categories:
   - RevUplinkPassive
 
+- type: listing
+  id: SNKVDAPS
+  name: aps-name
+  description: aps-desc
+  productEntity: WeaponPistolAPS
+  cost:
+    Conversion: 55
+  categories:
+  - RevUplinkPassive
+
 ### Telebonds category
 # Weapons, some modern some discontinued like the PPSH
 # The AKMS is candidate of discontinued weapons, but it's just a better DP28 right now.
