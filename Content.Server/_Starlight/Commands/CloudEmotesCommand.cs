@@ -51,11 +51,9 @@ public sealed class CloudEmoteCommand : LocalizedCommands
             return;
         }
 
-        if (!_entityManager.TryGetComponent<MobStateComponent>(player.AttachedEntity.Value, out var mobState))
-            return;
-
-        if (mobState.CurrentState != MobState.Alive)
-            return;
+        if (_entityManager.TryGetComponent<MobStateComponent>(player.AttachedEntity.Value, out var mobState))
+            if (mobState.CurrentState != MobState.Alive)
+                return;
 
         var msg = new CloudEmotesMessage(_entityManager.GetNetEntity(player.AttachedEntity.Value), emote);
         _net.SendSystemNetworkMessage(msg);
