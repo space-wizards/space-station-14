@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Fixed Hospitality Director not having Brig access as all other heads
-      do.
-    type: Fix
-  id: 1277
-  time: '2025-03-13T05:03:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1910
 - author: Sha-Seng
   changes:
   - message: Lightened the base color of thaven ear piercings
@@ -4203,3 +4195,12 @@
   id: 1776
   time: '2025-06-08T05:06:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2609
+- author: ruddygreat
+  changes:
+  - message: Mass scanner interfaces will now show every entity with an active jetpack.
+    type: Add
+  - message: Syndicate jetpacks are now stealthy.
+    type: Tweak
+  id: 1777
+  time: '2025-06-08T11:49:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2589
