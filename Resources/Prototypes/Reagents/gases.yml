@@ -370,7 +370,7 @@
           shouldHave: false
         key: ForcedSleep
         component: ForcedSleeping
-        time: 12
+        time: 12 # Starlight change
         type: Add
       - !type:HealthChange
         conditions:
