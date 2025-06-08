@@ -23,6 +23,11 @@
   equipment:
     outerClothing: ClothingOuterCoatFieldJacket #imp
 
+- type: loadout
+  id: ClothingHeadDeerstalker
+  equipment:
+    head: ClothingHeadDeerstalker #imp
+    
 # Firearms
 - type: loadout
   id: SecurityRevolverInspector
