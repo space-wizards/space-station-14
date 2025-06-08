@@ -28,3 +28,7 @@
     arc: 360
   - type: Physics
     canCollide: false
+  - type: PointLight
+    radius: 1.8
+    energy: 1.6
+    color: "#b89f25"

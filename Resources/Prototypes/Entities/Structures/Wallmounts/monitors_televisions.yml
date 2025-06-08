@@ -15,9 +15,9 @@
   - type: Computer
     board: ComputerTelevisionCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 3.1 #imp
     energy: 1.6
-    color: "#b89f25"
+    color: "#B89F25FF" #imp
   - type: Fixtures
     fixtures:
       fix1:
@@ -95,7 +95,7 @@
     graph: WallmountTelescreen
     node: Telescreen
   - type: PointLight
-    radius: 1.5
+    radius: 1.8 #imp
     energy: 1.6
     color: "#b89f25"
   - type: DeviceNetwork
@@ -174,6 +174,7 @@
         enum.SurveillanceCameraMonitorUiKey.Key:
           type: SurveillanceCameraMonitorBoundUserInterface
   - type: PointLight
-    radius: 1.5
+    radius: 6 #imp
     energy: 1.6
-    color: "#b89f25"
+    color: "#809fff" #imp
+    castShadows: true #imp

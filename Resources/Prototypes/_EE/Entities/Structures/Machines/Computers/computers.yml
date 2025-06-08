@@ -19,7 +19,7 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: PointLight
-    radius: 1.5
+    radius: 2.4
     energy: 1.6
     color: "#0f704b"
   - type: GenericVisualizer

@@ -88,6 +88,9 @@
       interfaces:
         enum.StationMapUiKey.Key:
           type: StationMapBoundUserInterface
+    - type: PointLight #imp
+      range: 1.5
+      color: "#58e873"
 
 - type: entity
   id: StationMapAssembly

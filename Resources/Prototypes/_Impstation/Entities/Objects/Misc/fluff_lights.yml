@@ -1,0 +1,15 @@
+#gold desk lamp but smaller light and sodium glow; cozy shit
+- type: entity
+  name: desk lamp
+  id: LampGoldWarm
+  suffix: warm
+  parent: LampGold
+  description: A light emitting device that would look great on a desk. This one has a warmer glow from a replacement bulb.
+  components:
+  - type: PointLight
+    color: "#FFAF38FF"
+    enabled: false
+    radius: 3
+    energy: 0.5
+    softnes: 1
+    netsync: false

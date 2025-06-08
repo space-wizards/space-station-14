@@ -133,7 +133,7 @@
   - type: WorldLoader
     radius: 256
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#43ccb5"
   - type: ItemSlots
@@ -203,7 +203,7 @@
   - type: WorldLoader
     radius: 1536
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#c94242"
   - type: Computer
@@ -233,7 +233,7 @@
   - type: RadarConsole
     maxRange: 256
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#43ccb5"
   - type: Computer
@@ -313,7 +313,7 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#c9c042"
   - type: Computer
@@ -355,7 +355,7 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#1f8c28"
   - type: Computer
@@ -405,7 +405,7 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#1f8c28"
   - type: Computer
@@ -438,7 +438,7 @@
     key: enum.CharacterRecordConsoleKey.Key
  # End CD - Character Records
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#1f8c28"
   - type: Computer
@@ -466,7 +466,7 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#006400"
   - type: Computer
@@ -527,7 +527,7 @@
   - type: AccessReader
     access: [["Research"]]
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#b53ca1"
   - type: GuideHelp
@@ -576,7 +576,7 @@
   - type: Computer
     board: AnalysisComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#b53ca1"
   - type: GuideHelp
@@ -636,7 +636,7 @@
   - type: Computer
     board: IDComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#3c5eb5"
   - type: Tag
@@ -660,7 +660,7 @@
   - type: Computer
     board: BodyScannerComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#1f8c28"
 
@@ -699,7 +699,7 @@
   - type: Computer
     board: CommsComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#3c5eb5"
   - type: Damageable
@@ -735,7 +735,7 @@
   - type: Computer
     board: SyndicateCommsComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#f71713"
 
@@ -768,7 +768,7 @@
   - type: Computer
     board: WizardCommsComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#F317F3"
 
@@ -800,7 +800,7 @@
   - type: Computer
     board: CentcommCommsComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#00FF00"
 
@@ -834,7 +834,7 @@
   - type: Computer
     board: SolarControlComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#e6e227"
   - type: GuideHelp
@@ -875,7 +875,7 @@
   - type: Computer
     board: RadarConsoleCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#e6e227"
 
@@ -909,7 +909,7 @@
   - type: Computer
     board: CargoShuttleComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#b89f25"
   - type: AccessReader
@@ -953,7 +953,7 @@
   - type: Computer
     board: CargoRequestComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#b89f25"
   - type: AccessReader
@@ -1168,7 +1168,7 @@
   - type: Computer
     board: CargoBountyComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#b89f25"
   - type: AccessReader
@@ -1242,7 +1242,7 @@
   - type: Computer
     board: CloningConsoleComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#1f8c28"
   - type: DeviceLinkSource
@@ -1313,7 +1313,7 @@
     - type: Computer
       board: SalvageExpeditionsComputerCircuitboard
     - type: PointLight
-      radius: 1.5
+      radius: 2.4 #imp
       energy: 1.6
       color: "#b89f25"
     - type: AccessReader
@@ -1434,7 +1434,7 @@
   - type: Computer
     board: CargoSaleComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#b89f25"
   - type: GuideHelp
@@ -1500,7 +1500,7 @@
         - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
           state: generic_panel_open
     - type: PointLight
-      radius: 1.5
+      radius: 2.4 #imp
       energy: 1.6
       color: "#43ccb5"
     - type: Computer
