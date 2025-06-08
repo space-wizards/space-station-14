@@ -223,7 +223,7 @@
 - type: entity
   id: EngineeringBorgChassisDerelict
   parent: BaseBorgChassisDerelict
-  name: derelict engineering cyborg
+  name: derelict engineer cyborg
   description: A man-machine hybrid that assists the engineering department. This one seems to have chunks of strange crystals pockmarking its surface.
   components:
   - type: Sprite
@@ -233,6 +233,10 @@
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
+    - state: engineer_derelict_crystal #This layer and the layer below are duplicated in order to create a more mellow unshaded layer. See https://github.com/space-wizards/space-station-14/pull/37869 for more info on the method.
+      shader: unshaded
+    - state: engineer_derelict_crystal
+      shader: shaded
     - state: engineer_l
       shader: unshaded
       map: ["light"]
