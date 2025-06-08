@@ -3060,6 +3060,33 @@
   url: https://github.com/space-wizards/space-station-14/pull/37069
 - author: ScarKy0
   changes:
+  - message: Added Stelloxadone! A cryochemical used to treat poison and radiation
+      damage in living patients as well as corpses, though it comes at a cost of genetic
+      damage.
+    type: Add
+  id: 8520
+  time: '2025-05-18T09:11:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37131
+- author: ScarKy0
+  changes:
+  - message: Cryoxadone now works on the dead.
+    type: Tweak
+  - message: Cryoxadone has been reworked. It no longer heals basic damage types.
+      Instead it heals asphyxiation, bloodloss and increases blood level.
+    type: Tweak
+  id: 8521
+  time: '2025-05-18T09:11:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37132
+- author: ScarKy0
+  changes:
+  - message: Added Traumoxadone! A cryochemical used to treat brute damage in living
+      patients as well as corpses.
+    type: Add
+  id: 8522
+  time: '2025-05-18T09:11:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37236
+- author: ScarKy0
+  changes:
   - message: Aloxadone has been tweaked. The recipe has been altered to be simplier
       to make and the healing values have been increased.
     type: Tweak
