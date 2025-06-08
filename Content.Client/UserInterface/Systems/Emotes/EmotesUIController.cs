@@ -34,7 +34,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             [EmoteCategory.General] = ("emote-menu-category-general", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Head/Soft/mimesoft.rsi/icon.png"))),
             [EmoteCategory.Hands] = ("emote-menu-category-hands", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Hands/Gloves/latex.rsi/icon.png"))),
             [EmoteCategory.Vocal] = ("emote-menu-category-vocal", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Emotes/vocal.png"))),
-            [EmoteCategory.Cloud] = ("emote-menu-category-cloud", new SpriteSpecifier.Rsi(new ResPath("/Textures/_Starlight/Effects/cloud_emotes.rsi"), "emote_mark")),
+            [EmoteCategory.Cloud] = ("emote-menu-category-cloud", new SpriteSpecifier.Rsi(new ResPath("/Textures/_Starlight/Effects/cloud_emotes.rsi"), "emote_mark")), // Starlight
         };
 
     public void OnStateEntered(GameplayState state)
@@ -212,6 +212,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(prototype.ID));
     }
 
+    // Starlight
     private void HandleCloudRadialButtonClick(CloudEmotePrototype prototype)
     {
         _consoleHost.ExecuteCommand($"cloudemote \"{CommandParsing.Escape(prototype.ID)}\"");

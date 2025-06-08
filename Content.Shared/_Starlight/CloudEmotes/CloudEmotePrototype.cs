@@ -10,10 +10,10 @@ public sealed partial class CloudEmotePrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField]
+    [DataField(required: true)]
     public float AnimationTime = 3f;
 
-    [DataField]
+    [DataField(required: true)]
     public SoundSpecifier? Sound;
 
     [DataField(required: true)]
