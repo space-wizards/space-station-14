@@ -1191,7 +1191,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatCowboyBrown
   name: brown cowboy hat
-  description: "This hat ain't big enough for the two of us.""
+  description: "This hat ain't big enough for the two of us."
   components:
     - type: Sprite
       sprite: Clothing/Head/Hats/cowboyhatbrown.rsi
