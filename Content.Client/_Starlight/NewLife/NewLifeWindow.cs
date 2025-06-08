@@ -4,21 +4,17 @@ using Content.Client.Lobby.UI;
 using Content.Client.Players.PlayTimeTracking;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client._Starlight.NewLife;
 
 public sealed partial class NewLifeWindow : DefaultWindow
 {
     private readonly IClientPreferencesManager _preferencesManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
-
 
     private readonly Dictionary<NetEntity, Dictionary<string, List<JobButton>>> _jobButtons = new();
     private readonly Dictionary<NetEntity, Dictionary<string, BoxContainer>> _jobCategories = new();
-    private HashSet<int> _usedSlots = new();
-
+    private HashSet<int> _usedSlots = [];
 
     public readonly LateJoinGui LateJoinGui = default!;
     
@@ -27,11 +23,14 @@ public sealed partial class NewLifeWindow : DefaultWindow
         _preferencesManager = preferencesManager;
         
         SetSize = new Vector2(685, 560);
+        MinSize = new Vector2(685, 560);
         LateJoinGui = new LateJoinGui();
         IoCManager.InjectDependencies(this);
         Title = Loc.GetString("ghost-new-life-window-title");
 
         LateJoinGui.Contents.Orphan();
+        LateJoinGui.Contents.Margin = new Thickness(0, 25, 0, 0);
+        LateJoinGui.SelectedId += (_) => Close();
         AddChild(LateJoinGui.Contents);
         _jobRequirements.Updated += RemoveUsedCharacters;
     }

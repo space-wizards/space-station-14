@@ -50,7 +50,7 @@ namespace Content.Client.Lobby.UI
 
         private int? _selectedSlot;
         
-        public BoxContainer CharList => CharacterList; 
+        public BoxContainer CharList => CharacterList;
 
         public LateJoinGui()
         {
