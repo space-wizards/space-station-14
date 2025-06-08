@@ -1,0 +1,16 @@
+- type: entity
+  parent: BasePhoneInstrument
+  id: WizardPhone
+  name: fancy purple phone
+  description: While appearing to be a mundane phone, this arcane focus taps the user directly into the Spellmind of the Space Wizards Federation.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/wizardphone.rsi
+    state: icon
+  - type: Prayable
+    sentMessage: prayer-popup-notify-wizard-sent
+    notificationPrefix: prayer-chat-notify-wizard
+    verb: prayer-verbs-call
+    verbImage: null
+  - type: FloatingVisuals
+    animationKey: anomalyfloat
