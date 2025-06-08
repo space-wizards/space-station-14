@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared._Starlight.CloudEmotes;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Player;
 
 namespace Content.Server._Starlight.Commands;
 
@@ -56,6 +57,8 @@ public sealed class CloudEmoteCommand : LocalizedCommands
                 return;
 
         var msg = new CloudEmotesMessage(_entityManager.GetNetEntity(player.AttachedEntity.Value), emote);
-        _net.SendSystemNetworkMessage(msg);
+        var filter = Filter.Pvs(player.AttachedEntity.Value);
+        foreach (var session in filter.Recipients)
+            _net.SendSystemNetworkMessage(msg, session.Channel);
     }
 }
