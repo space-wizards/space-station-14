@@ -4,8 +4,8 @@ meta:
   engineVersion: 255.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/03/2025 04:52:10
-  entityCount: 19486
+  time: 06/07/2025 23:53:42
+  entityCount: 19488
 maps:
 - 1
 grids:
@@ -7635,7 +7635,6 @@ entities:
       - 8670
       - 8814
       - 8676
-      - 8678
       - 8677
       - 8389
       - 12781
@@ -7883,7 +7882,6 @@ entities:
       - 6613
       - 8676
       - 8677
-      - 8678
       - 262
   - uid: 18869
     components:
@@ -9605,6 +9603,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -36.5,-30.5
       parent: 2
+  - uid: 4861
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,-29.5
+      parent: 2
   - uid: 7093
     components:
     - type: Transform
@@ -9667,6 +9671,12 @@ entities:
     components:
     - type: Transform
       pos: -56.5,-26.5
+      parent: 2
+  - uid: 19465
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 2.5,-18.5
       parent: 2
 - proto: AirlockMaintMedLocked
   entities:
@@ -38186,12 +38196,6 @@ entities:
     - type: Transform
       pos: 11.70682,-11.332994
       parent: 2
-  - uid: 16788
-    components:
-    - type: Transform
-      rot: 0.6108652381980153 rad
-      pos: 0.5546459,-14.430194
-      parent: 2
   - uid: 16789
     components:
     - type: Transform
@@ -42871,11 +42875,23 @@ entities:
       parent: 2
 - proto: ComputerMedicalRecords
   entities:
+  - uid: 5240
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 4.5,-27.5
+      parent: 2
   - uid: 5275
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-22.5
+      parent: 2
+  - uid: 5284
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 34.5,-29.5
       parent: 2
   - uid: 5516
     components:
@@ -51495,6 +51511,13 @@ entities:
     - type: Transform
       pos: -16.34428,-41.91539
       parent: 2
+- proto: DVSmartFridge
+  entities:
+  - uid: 6287
+    components:
+    - type: Transform
+      pos: 20.5,-76.5
+      parent: 2
 - proto: EggSpider
   entities:
   - uid: 6031
@@ -52894,7 +52917,6 @@ entities:
       - 6976
       - 6977
       - 6978
-      - 8678
       - 8677
       - 8676
   - uid: 6349
@@ -53230,7 +53252,6 @@ entities:
       devices:
       - 8676
       - 8677
-      - 8678
       - 262
   - uid: 16808
     components:
@@ -56276,18 +56297,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 19.5,-76.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 18864
-      - 16807
-      - 9239
-      - 6348
-  - uid: 8678
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 20.5,-76.5
       parent: 2
     - type: DeviceNetwork
       deviceLists:
@@ -83369,11 +83378,6 @@ entities:
     - type: Transform
       pos: -54.43746,-47.408054
       parent: 2
-  - uid: 6665
-    components:
-    - type: Transform
-      pos: 6.486392,-28.369644
-      parent: 2
 - proto: HandLabeler
   entities:
   - uid: 1805
@@ -84806,10 +84810,10 @@ entities:
       parent: 2
 - proto: LockerParamedicFilled
   entities:
-  - uid: 3697
+  - uid: 6665
     components:
     - type: Transform
-      pos: 4.5,-27.5
+      pos: 6.5,-28.5
       parent: 2
 - proto: LockerQuarterMasterFilled
   entities:
@@ -85532,12 +85536,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 33.5,-29.5
-      parent: 2
-  - uid: 5284
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 34.5,-29.5
       parent: 2
   - uid: 5285
     components:
@@ -86377,6 +86375,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 32.5,-41.5
+      parent: 2
+  - uid: 3697
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 19.5,-76.5
       parent: 2
   - uid: 5976
     components:
@@ -88919,6 +88923,11 @@ entities:
     components:
     - type: Transform
       pos: 33.5,-52.5
+      parent: 2
+  - uid: 8678
+    components:
+    - type: Transform
+      pos: 32.5,-33.5
       parent: 2
   - uid: 9345
     components:
@@ -104027,6 +104036,16 @@ entities:
       - SurveillanceCameraService
       nameSet: True
       id: Janitorial
+  - uid: 19464
+    components:
+    - type: Transform
+      pos: 32.5,-35.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraService
+      nameSet: True
+      id: Bartender's Room
 - proto: SurveillanceCameraSupply
   entities:
   - uid: 4688
@@ -104278,12 +104297,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 19.5,-76.5
       parent: 2
-  - uid: 4861
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 20.5,-76.5
-      parent: 2
   - uid: 5008
     components:
     - type: Transform
@@ -104375,12 +104388,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 15.5,-15.5
-      parent: 2
-  - uid: 5240
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 6.5,-28.5
       parent: 2
   - uid: 5247
     components:
@@ -124620,11 +124627,6 @@ entities:
     components:
     - type: Transform
       pos: 19.5,-76.5
-      parent: 2
-  - uid: 6287
-    components:
-    - type: Transform
-      pos: 20.5,-76.5
       parent: 2
   - uid: 8491
     components:
