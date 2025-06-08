@@ -125,7 +125,7 @@
   id: JetpackBlackFilled
   parent: JetpackBlack
   name: jetpack
-  suffix: Filled
+  suffix: Filled, Stealthy #imp edit - added stealthy
   components:
   - type: GasTank
     outputPressure: 42.6
@@ -136,6 +136,7 @@
       moles:
         - 1.025689525 # oxygen
         - 1.025689525 # nitrogen
+  - type: RadarBlipStealth #imp edit - hide this specific proto from mass scanners. fine to use on this proto because it's only given to traitors / syndies / ninjas who should be stealthy.
 
 #Empty captain
 - type: entity
