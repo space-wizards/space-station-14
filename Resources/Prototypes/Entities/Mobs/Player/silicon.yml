@@ -383,7 +383,7 @@
       borg_module:
         - BorgModuleOperative
         - BorgModuleL6C
-        - BorgModuleEsword
+        - BorgModuleDoubleEsword
   - type: ItemSlots
     slots:
       cell_slot:
@@ -453,6 +453,42 @@
     - PlayerBorgSyndicateSaboteurGhostRole
 
 - type: entity
+  id: PlayerEngineeringBorgDerelict
+  parent: EngineeringBorgChassisDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleFireExtinguisher
+      - BorgModuleConstruction
+      - BorgModuleRCD
+      - BorgModuleCable
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
+
+- type: entity
+  id: PlayerEngineeringBorgDerelictGhostRole
+  parent: PlayerEngineeringBorgDerelict
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-engineering-cyborg-name
+    description: ghost-role-information-derelict-engineering-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
   id: PlayerBorgDerelict
   parent: BorgChassisDerelict
   suffix: Battery, Module
@@ -484,3 +520,143 @@
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerJanitorBorgDerelict
+  parent: JanitorBorgChassisDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleFireExtinguisher
+      - BorgModuleCleaning
+      - BorgModuleCustodial
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
+
+- type: entity
+  id: PlayerJanitorBorgDerelictGhostRole
+  parent: PlayerJanitorBorgDerelict
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-janitor-cyborg-name
+    description: ghost-role-information-derelict-janitor-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerMedicalBorgDerelict
+  parent: MedicalBorgChassisDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleFireExtinguisher
+      - BorgModuleChemical
+      - BorgModuleTopicals
+      - BorgModuleRescue
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
+
+- type: entity
+  id: PlayerMedicalBorgDerelictGhostRole
+  parent: PlayerMedicalBorgDerelict
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-medical-cyborg-name
+    description: ghost-role-information-derelict-medical-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerMiningBorgDerelict
+  parent: MiningBorgChassisDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleTool #No fire extinguisher, traversal is better
+      - BorgModuleMining
+      - BorgModuleTraversal
+      - BorgModuleAppraisal
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
+
+- type: entity
+  id: PlayerMiningBorgDerelictGhostRole
+  parent: PlayerMiningBorgDerelict
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-mining-cyborg-name
+    description: ghost-role-information-derelict-mining-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerSyndicateAssaultBorgDerelict
+  parent: SyndicateAssaultBorgChassisDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleOperative
+      - BorgModuleC20r
+      - BorgModuleEsword
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+  - type: RandomMetadata
+    nameSegments: [NamesDeathCommando]
+
+- type: entity
+  id: PlayerBorgSyndicateDerelictGhostRole
+  parent: PlayerSyndicateAssaultBorgDerelict
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-syndicate-assault-cyborg-name
+    description: ghost-role-information-derelict-syndicate-assault-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable

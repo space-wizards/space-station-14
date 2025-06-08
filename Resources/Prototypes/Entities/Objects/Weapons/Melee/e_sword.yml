@@ -384,6 +384,13 @@
     spread: 75
 
 # Borgs
+
+- type: entity
+  suffix: For Borgs
+  parent: EnergySword
+  id: CyborgEnergySword
+  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Specially designed for syndicate cyborgs.
+
 - type: entity
   suffix: One-Handed, For Borgs
   parent: EnergySwordDouble
