@@ -60,6 +60,7 @@ public sealed class TileRulesSystem : EntitySystem
 
         foreach (var rule in rules.Rules)
         {
+            // Only if a rule NEEDs a list of intersecting entities -- and if we need to re-evaluate them, then do so.
             if (rule.TakesIntersecting && reEvaluateIntersecting)
             {
                 _lookup.GetLocalEntitiesIntersecting(tileParentUid, position, intersectingEntities, DefaultIntersectionEnlargement, LookupFlags.Uncontained);
