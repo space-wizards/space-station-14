@@ -16,12 +16,12 @@ health-examinable-carbon-Blunt-75 = [color=red]{ CAPITALIZE(SUBJECT($target)) } 
 health-examinable-carbon-Blunt-100 = [color=red]{ CAPITALIZE(POSS-ADJ($target)) } body is disfigured and extensively beaten.[/color]
 health-examinable-carbon-Blunt-200 = [color=crimson]{ CAPITALIZE(POSS-ADJ($target)) } body is absolutely smashed to a pulp![/color]
 
-health-examinable-carbon-Piercing-8 = [color=yellow]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } a minor wound.[/color]
-health-examinable-carbon-Piercing-15 = [color=yellow]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } some wounds.[/color]
-health-examinable-carbon-Piercing-30 = [color=orange]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } multiple deep wounds.[/color]
-health-examinable-carbon-Piercing-50 = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } major deep wounds across { POSS-ADJ($target) } body.[/color]
-health-examinable-carbon-Piercing-75 = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } extensive, deep ragged wounds across { POSS-ADJ($target) } body.[/color]
-health-examinable-carbon-Piercing-100 = [color=red]{ CAPITALIZE(POSS-ADJ($target)) } body is completely covered in massive, gaping wounds.[/color]
+health-examinable-carbon-Piercing-8 = [color=yellow]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } a minor puncture wound.[/color]
+health-examinable-carbon-Piercing-15 = [color=yellow]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } some puncture wounds.[/color]
+health-examinable-carbon-Piercing-30 = [color=orange]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } multiple deep puncture wounds.[/color]
+health-examinable-carbon-Piercing-50 = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } major deep punctures across { POSS-ADJ($target) } body.[/color]
+health-examinable-carbon-Piercing-75 = [color=red]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } extensive, deep ragged tears across { POSS-ADJ($target) } body.[/color]
+health-examinable-carbon-Piercing-100 = [color=red]{ CAPITALIZE(POSS-ADJ($target)) } body is completely covered in massive, gaping holes.[/color]
 health-examinable-carbon-Piercing-200 = [color=crimson]{ CAPITALIZE(POSS-ADJ($target)) } body looks torn apart![/color]
 
 health-examinable-carbon-Asphyxiation-30 = [color=lightblue]{ CAPITALIZE(POSS-ADJ($target)) } lips are turning blue.[/color]
