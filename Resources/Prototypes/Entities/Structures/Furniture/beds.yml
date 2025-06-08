@@ -116,7 +116,7 @@
   parent: Bed
   id: Mattress
   name: mattress
-  description: Better sleep in that then on the floor i guess.
+  description: Better sleep in that then on the floor, I guess. #imp
   components:
   - type: Sprite
     state: mattress

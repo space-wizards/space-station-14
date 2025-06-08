@@ -2454,7 +2454,7 @@
   name: snake
   parent: SimpleMobBase
   id: MobSnake
-  description: Hissss! Bites aren't poisonous.
+  description: Hisss! Bites aren't venomous. #imp poisonous isn't venomous. Also matches snake hissing length
   components:
   - type: VentCrawler
     enterDelay: 2

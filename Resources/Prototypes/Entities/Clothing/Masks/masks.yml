@@ -488,7 +488,7 @@
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityContraband ]
   id: ClothingMaskGasSwat
-  name: swat gas mask
+  name: SWAT gas mask #imp capitalizing SWAT
   description: A elite issue Security gas mask.
   components:
   - type: Sprite
