@@ -2,7 +2,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatBeaverHat
   name: beaver hat
-  description: 'Gentlemen?'
+  description: "Gentlemen?"
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/beaver_hat.rsi
