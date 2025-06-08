@@ -55,7 +55,7 @@ public sealed class ClouldEmotesSystem : EntitySystem
 
         Timer.Spawn(TimeSpan.FromSeconds(0.2f + cloudEmote.AnimationTime), () => _sprite.LayerSetSprite((uid, sprite), CloudEmotesKey.Key, EmoteEnd));
 
-        Timer.Spawn(TimeSpan.FromSeconds(0.2f + cloudEmote.AnimationTime + 0.2f), () => _sprite.RemoveLayer((uid, sprite), layer));
+        Timer.Spawn(TimeSpan.FromSeconds(0.4f + cloudEmote.AnimationTime), () => _sprite.RemoveLayer((uid, sprite), layer));
     }
 
     private enum CloudEmotesKey
