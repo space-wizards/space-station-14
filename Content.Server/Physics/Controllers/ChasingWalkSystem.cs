@@ -1,11 +1,14 @@
-using System.Linq;
-using System.Numerics;
 using Content.Server.Physics.Components;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
-using Robust.Shared.Physics.Systems;
+using Content.Shared.Movement.Pulling.Components; // imp
+using Content.Shared.Movement.Pulling.Systems; // imp
+using Content.Shared.Projectiles; // imp
+using Content.Shared.Throwing; // imp
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
+using System.Numerics;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -19,6 +22,9 @@ public sealed class ChasingWalkSystem : VirtualController
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly ThrowingSystem _throw = default!; // imp
+    [Dependency] private readonly SharedProjectileSystem _projectile = default!; //imp
+    [Dependency] private readonly PullingSystem _pulling = default!; // imp
 
     private readonly HashSet<Entity<IComponent>> _potentialChaseTargets = new();
 
@@ -99,7 +105,34 @@ public sealed class ChasingWalkSystem : VirtualController
         var delta = pos2 - pos1;
         var speed = delta.Length() > 0 ? delta.Normalized() * component.Speed : Vector2.Zero;
 
-        _physics.SetLinearVelocity(uid, speed);
-        _physics.SetBodyStatus(uid, physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
+        if (!component.Throw) // imp - everything after this is ours
+        {
+            if (component.BreakPulling && TryComp<PullableComponent>(uid, out var pullable))
+                _pulling.TryStopPull(uid, pullable);
+            _physics.SetLinearVelocity(uid, speed);
+            _physics.SetBodyStatus(uid, physics, BodyStatus.InAir); //If this is not done, from the explosion up close, the tesla will "Fall" to the ground, and almost stop moving.
+        }
+        else
+        {
+            // if the entity is currently embedded in something, detach it and "throw" it gently *away* from the target
+            if (TryComp<EmbeddableProjectileComponent>(uid, out var embeddable) && embeddable.Target != null)
+            {
+                // calculate the direction *away* from the embed target
+                var pos3 = _transform.GetWorldPosition(embeddable.Target.Value);
+                delta = pos3 - pos1;
+                speed = delta.Length() > 0 ? delta.Normalized() * component.Speed * -1 : Vector2.Zero;
+
+                // detach
+                _projectile.EmbedDetach(uid, embeddable);
+                if (component.BreakPulling && TryComp<PullableComponent>(uid, out var pullable))
+                    _pulling.TryStopPull(uid, pullable);
+
+                // use physicssystem like above because otherwise it just gets stuck in the target forever
+                _physics.SetLinearVelocity(uid, speed / 5);
+                _physics.SetBodyStatus(uid, physics, BodyStatus.InAir);
+            }
+            else
+                _throw.TryThrow(uid, speed, component.Speed);
+        }
     }
 }

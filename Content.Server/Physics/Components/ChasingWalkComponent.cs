@@ -78,4 +78,18 @@ public sealed partial class ChasingWalkComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? ChasingEntity;
+
+    /// <summary>
+    /// imp - if true, uses ThrowingSystem to throw the item instead of PhysicsSystem.
+    /// uses the component's speed as throwing strength.
+    /// this is for if you want an object with this component to damage people on impact.
+    /// </summary>
+    [DataField]
+    public bool Throw;
+
+    /// <summary>
+    /// Imp. Whether or not the walker will break pull joints upon impulse.
+    /// </summary>
+    [DataField]
+    public bool BreakPulling;
 }

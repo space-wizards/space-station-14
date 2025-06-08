@@ -1,0 +1,42 @@
+- type: entity
+  id: EvilKnife
+  name: malicious knife
+  parent: KitchenKnife
+  components:
+    - type: Physics
+      bodyType: Dynamic
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.25,0.25"
+          density: 0.1
+          mask:
+          - InteractImpassable
+          layer:
+          - InteractImpassable
+    - type: RandomWalk
+      throw: true
+      breakPulling: true
+      minSpeed: 20
+      minStepCooldown: 15
+      maxStepCooldown: 15
+    - type: ChasingWalk
+      chasingComponent:
+      - type: Identity
+      throw: true
+      breakPulling: true
+      minSpeed: 20
+      maxSpeed: 20
+      maxChaseRadius: 5
+      changeVectorMaxInterval: 5
+    - type: MovementIgnoreGravity
+      gravityState: true
+    - type: Tag
+      tags:
+      - Knife
+      - KitchenKnife
+      - DoorBumpOpener
+    - type: DamageOtherOnHit
+      staminaCost: 0
