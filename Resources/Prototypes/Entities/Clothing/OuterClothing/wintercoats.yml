@@ -722,9 +722,10 @@
 
 ################################################################
 - type: entity
-  parent: [ClothingOuterArmorWarden, ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
+  parent: [ClothingOuterArmorWarden, ClothingOuterWinterCoatToggleable, BaseSecurityContraband, BaseClothingWithBodycam]
   id: ClothingOuterWinterWarden
   name: warden's armored winter coat
+  suffix: bodycam
   description: A sturdy, utilitarian winter coat designed to protect a warden from any brig-bound threats and hypothermic events.
   components:
   - type: Sprite
@@ -736,9 +737,10 @@
 ################################################################
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
+  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband, BaseClothingWithBodycam]
   id: ClothingOuterWinterWardenUnarmored
   name: warden's winter coat
+  suffix: bodycam
   description: A sturdy coat, a warm coat, but not an armored coat.
   components:
   - type: Sprite
