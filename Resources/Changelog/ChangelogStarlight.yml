@@ -6963,4 +6963,25 @@ Entries:
   id: 962
   time: '2025-06-07T19:33:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/775
+- author: InanimateIJK, ItsAbby, Haplogynae, Ramblinger
+  changes:
+  - message: Added NT Osprey, Friends Forever, Against The Xeno Lobby Art.
+    type: Add
+  id: 963
+  time: '2025-06-08T09:16:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/791
+- author: InanimateIJK, ItsAbby, Haplogynae, Ramblinger
+  changes:
+  - message: Added Hull Rupture, 762 Treatise Lobby/EoR Tracks.
+    type: Add
+  id: 964
+  time: '2025-06-08T09:16:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/791
+- author: InanimateIJK, ItsAbby, Haplogynae, Ramblinger
+  changes:
+  - message: Removed Among Us Lobby Art.
+    type: Remove
+  id: 965
+  time: '2025-06-08T09:16:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/791
 
