@@ -192,7 +192,7 @@
   parent: [ ClothingHeadBase ]
   id: ClothingHeadHatBeretMerc
   name: mercenary beret
-  description: An Olive beret with a badge depicting a jackal on a rock.
+  description: An olive beret with a badge depicting a jackal on a rock.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_merc.rsi
@@ -1015,7 +1015,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatMagician
   name: magician's tophat
-  description: A magician's tophat.
+  description: A magician's top hat.
   components:
   - type: Icon
     sprite: Clothing/Head/Hats/magician.rsi
