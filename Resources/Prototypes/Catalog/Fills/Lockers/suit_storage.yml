@@ -119,13 +119,15 @@
 - type: entity
   id: SuitStorageSec
   parent: SuitStorageBase
-  suffix: Security
+  suffix: Security, Double
   components:
   - type: StorageFill
     contents:
         - id: OxygenTankFilled
+        - id: NitrogenTankFilled
         - id: ClothingOuterHardsuitSecurity
-        - id: ClothingMaskBreath
+          amount: 2
+        - id: JetpackSecurity
   - type: AccessReader
     access: [["Security"]]
 
