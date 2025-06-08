@@ -198,6 +198,17 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
         private readonly TimeSpan _curTime;
         private readonly float _maxY;
 
+        /// <summary>
+        /// A reusable array of vertices for drawing the graph.
+        /// </summary>
+        private Vector2[] _vertices;
+
+        /// <summary>
+        /// A precomputed capacity for the vertex array. We do this to avoid resizing it too often.
+        /// </summary>
+        /// <remarks>Previously we were allocating a Vector2[25000] every single draw call. :)</remarks>
+        private int _vertexCapacity;
+
         public GraphView(Queue<SensorSample> samples, TimeSpan startTime, TimeSpan curTime, float maxY)
         {
             _samples = samples;
@@ -205,6 +216,10 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
             _curTime = curTime;
             _maxY = maxY;
             RectClipContent = true;
+
+            // Pre-estimate vertex capacity based on the sample count we've been given.
+            _vertexCapacity = Math.Max(6 * (samples.Count - 1), 0); // Ensure no negative capacity
+            _vertices = new Vector2[_vertexCapacity];
         }
 
         protected override void Draw(DrawingHandleScreen handle)
@@ -212,9 +227,6 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
             base.Draw(handle);
 
             var window = (float) (_curTime - _startTime).TotalSeconds;
-
-            // TODO: omg this is terrible don't fucking hardcode this size to something uncached huge omfg.
-            var vertices = new Vector2[25000];
             var countVtx = 0;
 
             var lastPoint = new Vector2(float.NaN, float.NaN);
@@ -232,18 +244,31 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
                 {
                     handle.DrawLine(lastPoint, newPoint, Color.White);
 
-                    vertices[countVtx++] = lastPoint;
-                    vertices[countVtx++] = lastPoint with { Y = PixelHeight };
-                    vertices[countVtx++] = newPoint;
-                    vertices[countVtx++] = newPoint;
-                    vertices[countVtx++] = lastPoint with { Y = PixelHeight };
-                    vertices[countVtx++] = newPoint with { Y = PixelHeight };
+                    // Ensure the array has enough capacity (hopefully shouldn't happen with proper pre-allocation)
+                    if (countVtx + 6 > _vertexCapacity)
+                    {
+                        ExpandVertexCapacity();
+                    }
+
+                    _vertices[countVtx++] = lastPoint;
+                    _vertices[countVtx++] = lastPoint with { Y = PixelHeight };
+                    _vertices[countVtx++] = newPoint;
+                    _vertices[countVtx++] = newPoint;
+                    _vertices[countVtx++] = lastPoint with { Y = PixelHeight };
+                    _vertices[countVtx++] = newPoint with { Y = PixelHeight };
                 }
 
                 lastPoint = newPoint;
             }
 
-            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, vertices.AsSpan(0, countVtx), Color.White.WithAlpha(0.1f));
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, _vertices.AsSpan(0, countVtx), Color.White.WithAlpha(0.1f));
+        }
+
+        private void ExpandVertexCapacity()
+        {
+            // Double the size of the vertex array to accommodate more vertices if needed
+            _vertexCapacity *= 2;
+            Array.Resize(ref _vertices, _vertexCapacity);
         }
     }
 }
