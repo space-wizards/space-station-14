@@ -44,7 +44,7 @@ public sealed class SolutionCommand : ToolshedCommand
         _solutionContainer ??= GetSys<SharedSolutionContainerSystem>();
 
         // Convert float to FixedPoint2
-        FixedPoint2 amountFixed = FixedPoint2.New(amount);
+        var amountFixed = FixedPoint2.New(amount);
 
         if (amountFixed > 0)
         {
