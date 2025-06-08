@@ -25,3 +25,7 @@
 - type: lobbyBackground
   id: FriendsForever
   background: /Textures/_Starlight/LobbyScreens/friendsforever.webp
+
+- type: lobbyBackground
+  id: AgainstTheXeno
+  background: /Textures/_Starlight/LobbyScreens/againstthexeno.webp
