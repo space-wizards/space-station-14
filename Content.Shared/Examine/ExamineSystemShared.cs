@@ -296,8 +296,6 @@ namespace Content.Shared.Examine
     /// </summary>
     public sealed class ExaminedEvent : EntityEventArgs, IInventoryRelayEvent
     {
-        public SlotFlags TargetSlots => SlotFlags.All;
-
         /// <summary>
         ///     The message that will be displayed as the examine text.
         ///     You should use <see cref="PushMarkup"/> and similar instead to modify this,
@@ -330,6 +328,11 @@ namespace Content.Shared.Examine
         ///     Entity being examined, for broadcast event purposes.
         /// </summary>
         public EntityUid Examined { get; }
+
+        /// <summary>
+        ///     The inventory slots which this event will be relayed to.
+        /// </summary>
+        public SlotFlags TargetSlots => ~SlotFlags.POCKET; // anything but the pockets
 
         private bool _hasDescription;
 
