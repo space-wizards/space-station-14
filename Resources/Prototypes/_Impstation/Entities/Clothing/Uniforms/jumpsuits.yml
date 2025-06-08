@@ -407,3 +407,48 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - ClothMade
+    
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformSailorSuit
+  name: sailor suit
+  description: Wrong kind of ship!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/sailoruniform.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/sailoruniform.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - ClothMade
+
+- type: entity
+  parent: [ClothingUniformBase, Tier3Contraband]
+  id: ClothingUniformBurglarJumpsuit
+  name: suspicious crime jumpsuit
+  description: The wearer of this is one sneaky snitch...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/burglarjumpsuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/burglarjumpsuit.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - ClothMade
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCentcommContraband]
+  id: ClothingUniformImpishOutfit
+  name: impish outfit
+  description: 
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Other/impishoutfit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Other/impishoutfit.rsi
+  - type: Tag
+    tags:
+    - ClothMade

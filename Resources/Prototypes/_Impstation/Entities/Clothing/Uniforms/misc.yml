@@ -1,0 +1,15 @@
+﻿#do i genuinely gotta make an entire yml for thog don't care???
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformCavemanHides
+  name: caveman's hides
+  description: Thog don't caaaare...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Other/caveman.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Other/caveman.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon

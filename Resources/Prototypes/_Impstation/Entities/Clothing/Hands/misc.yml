@@ -1,0 +1,13 @@
+﻿- type: entity
+  parent: [ClothingHandsBase, BaseCentcommContraband]
+  id: ClothingHandsImpishWristbands
+  name: impish wristbands
+  description: 
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Hands/Misc/impishwristbands.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Hands/Misc/impishwristbands.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon

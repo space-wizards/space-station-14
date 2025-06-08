@@ -130,6 +130,7 @@
     - Hair
     - Snout
   - type: Inventory
+    speciesId: apid
     templateId: apid
     displacements:
       jumpsuit:
