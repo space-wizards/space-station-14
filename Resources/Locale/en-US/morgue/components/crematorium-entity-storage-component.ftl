@@ -4,6 +4,8 @@ crematorium-entity-storage-component-on-examine-details-empty = The content ligh
 crematorium-entity-storage-component-is-cooking-safety-message = Safety first, not while it's active!
 crematorium-entity-storage-component-suicide-message = You cremate yourself!
 crematorium-entity-storage-component-suicide-message-others = {$victim} is cremating {$victim}!
+#imp
+crematorium-entity-storage-component-interact-using-no-power = It has no power!
 
 # CremateVerb
 cremate-verb-get-data-text = Cremate
