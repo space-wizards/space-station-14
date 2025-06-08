@@ -12,8 +12,8 @@
       sprite: Interface/Actions/changeling.rsi
       state: armblade
   - type: InstantAction
-    event: !type:OnItemActionEvent
-  - type: ItemAction
+    event: !type:OnRetractableItemActionEvent
+  - type: RetractableItemAction
     spawnedPrototype: ArmBlade
     spawnSounds:
       collection: gib # Placeholder

@@ -15,9 +15,11 @@
     attackRate: 0.75
     damage:
       types:
-        Slash: 25
-        Piercing: 15
+        Slash: 15
+        Piercing: 10
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/armblade.rsi
   - type: Prying
+    pryPowered: true
+    force: true
