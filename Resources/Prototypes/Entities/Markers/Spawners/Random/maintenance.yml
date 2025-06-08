@@ -420,3 +420,396 @@
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: InsulsTable
+
+- type: entityTable
+  id: RandomFuelTank
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 100
+      children:
+      - id: WeldingFuelTankFull
+        weight: 10
+      - id: WaterTankFull
+        weight: 10
+      - id: WeldingFuelTankHighCapacity
+        weight: 1
+      - id: WaterTankHighCapacity
+        weight: 1
+
+- type: entity
+  name: Liquid Tank Spawner
+  id: RandomTankSpawner
+  parent: MarkerBase
+  suffix: 50
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Storage/tanks.rsi
+      state: rainbow_tank
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: RandomFuelTank
+      prob: 0.5
+
+- type: entity
+  name: Liquid Tank Spawner
+  id: RandomTankSpawner100
+  parent: MarkerBase
+  suffix: 100
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Storage/tanks.rsi
+      state: rainbow_tank
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: RandomFuelTank
+
+- type: entityTable
+  id: MaintLocker50
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 100
+      children:
+      - id: ClosetMaintenanceFilledRandom
+        weight: 1
+
+- type: entity
+  name: Maint Locker Spawner
+  id: MaintLockerSpawner50
+  parent: MarkerBase
+  suffix: 50
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Storage/closet.rsi
+      state: generic_icon
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: MaintLocker50
+      prob: 0.5
+
+- type: entityTable
+  id: MaintLockerRandom
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 100
+      children:
+      - id: ClosetMaintenanceFilledRandom
+        weight: 20
+      - id: LockerElectricalSuppliesFilled
+        weight: 3
+      - id: LockerWeldingSuppliesFilled
+        weight: 3
+      - id: ClosetToolFilled
+        weight: 3
+      - id: ClosetEmergencyFilledRandom
+        weight: 1
+      - id: ClosetEmergencyN2FilledRandom
+        weight: 1
+      - id: ClosetFireFilled
+        weight: 0.3
+
+- type: entity
+  name: Random Maint Locker Spawner
+  id: RandomMaintLockerSpawner50
+  parent: MarkerBase
+  suffix: 50
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Storage/closet.rsi
+      state: rainbow_locker
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: MaintLockerRandom
+      prob: 0.5
+
+- type: entity
+  name: Random Maint Locker Spawner
+  id: RandomMaintLockerSpawner100
+  parent: MarkerBase
+  suffix: 100
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Storage/closet.rsi
+      state: rainbow_locker
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: MaintLockerRandom
+
+- type: entity
+  id: ToolboxMechanicalMaints
+  name: mechanical toolbox
+  suffix: Maints
+  parent: ToolboxMechanical
+  components:
+  - type: StorageFill
+    contents:
+    - id: CrowbarOrange
+      prob: 0.8
+    - id: Wrench
+      prob: 0.7
+    - id: Welder
+      prob: 0.5
+    - id: Wirecutter
+      prob: 0.6
+    - id: Screwdriver
+      prob: 0.6
+    - id: FlashlightLantern
+      prob: 0.2
+    - id: ClothingHeadHatHardhatBlue
+      prob: 0.2
+      orGroup: mainttoolboxhats
+    - id: ClothingHeadHatCone
+      prob: 0.2
+      orGroup: mainttoolboxhats
+    - id: HandheldGPSBasic
+      prob: 0.2
+    - id: DrinkSpaceGlue
+      prob: 0.05
+    - id: RadioHandheld
+      prob: 0.2
+    - id: SheetSteel10
+      prob: 0.1
+      orGroup: mainttoolboxdrink
+    - id: DrinkBeerCan
+      prob: 0.02
+      orGroup: mainttoolboxdrink
+    - id: DrinkSpaceMountainWindCan
+      prob: 0.05
+      orGroup: mainttoolboxdrink
+    - id: FoodSnackRaisins
+      prob: 0.05
+      orGroup: mainttoolboxsnack
+    - id: FoodSnackSemki
+      prob: 0.05
+      orGroup: mainttoolboxsnack
+    - id: FoodSnackCnDs
+      prob: 0.05
+      orGroup: mainttoolboxsnack
+
+- type: entity
+  id: ToolboxElectricalMaints
+  name: electrical toolbox
+  suffix: Maints
+  parent: ToolboxElectrical
+  components:
+  - type: StorageFill
+    contents:
+    - id: CrowbarOrange
+      prob: 0.8
+    - id: CableMVStack10
+      prob: 0.5
+    - id: CableApcStack10
+      prob: 0.5
+    - id: Wirecutter
+      prob: 0.6
+    - id: Screwdriver
+      prob: 0.6
+    - id: FlashlightLantern
+      prob: 0.2
+    - id: trayScanner
+      prob: 0.2
+    - id: ClothingHandsGlovesColorYellowBudget
+      prob: 0.1
+      orGroup: mainttoolboxgloves
+    - id: ClothingHandsGlovesFingerlessInsulated
+      prob: 0.1
+      orGroup: mainttoolboxgloves
+    - id: ClothingHandsGlovesColorYellow
+      prob: 0.05
+      orGroup: mainttoolboxgloves
+    - id: DrinkSpaceGlue
+      prob: 0.05
+    - id: RadioHandheld
+      prob: 0.2
+    - id: SheetSteel10
+      prob: 0.1
+      orGroup: mainttoolboxdrink
+    - id: DrinkBeerCan
+      prob: 0.02
+      orGroup: mainttoolboxdrink
+    - id: DrinkSpaceMountainWindCan
+      prob: 0.05
+      orGroup: mainttoolboxdrink
+    - id: FoodSnackRaisins
+      prob: 0.05
+      orGroup: mainttoolboxsnack
+    - id: FoodSnackSemki
+      prob: 0.05
+      orGroup: mainttoolboxsnack
+    - id: FoodSnackCnDs
+      prob: 0.05
+      orGroup: mainttoolboxsnack
+
+- type: entityTable
+  id: RandomToolbox
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 100
+      children:
+      - id: ToolboxEmergencyFilled
+        weight: 1
+      - id: ToolboxArtisticFilled
+        weight: 1
+      - id: ToolboxMechanicalMaints
+        weight: 1
+      - id: ToolboxElectricalMaints
+        weight: 1
+
+- type: entity
+  name: Random Toolbox Spawner
+  id: RandomToolboxSpawner50
+  parent: MarkerBase
+  suffix: 50
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Tools/Toolboxes/rainbow_toolbox.rsi
+      state: rainbow_toolbox
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: RandomToolbox
+      prob: 0.5
+
+- type: entity
+  name: Random Toolbox Spawner
+  id: RandomToolboxSpawner
+  parent: MarkerBase
+  suffix: 100
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Tools/Toolboxes/rainbow_toolbox.rsi
+      state: rainbow_toolbox
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: RandomToolbox
+
+- type: entityTable
+  id: RandomChair
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 100
+      children:
+      - id: Chair
+        weight: 10
+      - id: ChairFolding
+        weight: 5
+      - id: Stool
+        weight: 3
+      - id: ChairWood
+        weight: 3
+      - id: ChairGreyscale
+        weight: 1
+
+- type: entity
+  name: Random Chair Spawner
+  id: RandomChairSpawner
+  parent: MarkerBase
+  suffix: 100
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Furniture/chairs.rsi
+      state: rainbow_chair
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: RandomChair
+
+- type: entity
+  name: Random Chair Spawner
+  id: RandomChairSpawner50
+  parent: MarkerBase
+  suffix: 50
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Furniture/chairs.rsi
+      state: rainbow_chair
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: RandomChair
+      prob: 0.5
+
+- type: entityTable
+  id: RandomCanTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 100
+      children:
+      - id: StorageCanister
+        weight: 10
+      - id: OxygenCanister
+        weight: 7
+      - id: NitrogenCanister
+        weight: 7
+      - id: PlasmaCanister
+        weight: 4
+      - id: NitrousOxideCanister
+        weight: 3
+      - id: AmmoniaCanister
+        weight: 3
+      - id: CarbonDioxideCanister
+        weight: 2
+      - id: TritiumCanister
+        weight: 2
+      - id: FrezonCanister
+        weight: 2
+
+- type: entity
+  name: Random Canister Spawner
+  id: RandomCanisterSpawner
+  parent: MarkerBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Structures/Storage/canister.rsi
+      state: can-rainbow
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: RandomCanTable
