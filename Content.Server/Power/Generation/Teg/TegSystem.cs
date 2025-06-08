@@ -90,6 +90,14 @@ public sealed class TegSystem : EntitySystem
         SubscribeLocalEvent<TegGeneratorComponent, ExaminedEvent>(GeneratorExamined);
 
         _nodeContainerQuery = GetEntityQuery<NodeContainerComponent>();
+
+        // Downright diabolical and evil, but the TegSystem on the client does the same thing.
+        SubscribeLocalEvent<TegCirculatorComponent, ExaminedEvent>(CirculatorExamined);
+    }
+
+    private void CirculatorExamined(Entity<TegCirculatorComponent> ent, ref ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString("teg-circulator-examine-temperature", ("temp", Math.Round(ent.Comp.CirculatorTemperature, 2))));
     }
 
     private void GeneratorExamined(EntityUid uid, TegGeneratorComponent component, ExaminedEvent args)
@@ -136,6 +144,13 @@ public sealed class TegSystem : EntitySystem
         var cA = _atmosphere.GetHeatCapacity(airA, true);
         var cB = _atmosphere.GetHeatCapacity(airB, true);
 
+        var circAComp = Comp<TegCirculatorComponent>(circA);
+        var circBComp = Comp<TegCirculatorComponent>(circB);
+
+        // We transfer heat between the circulator and the gas flowing through it.
+        PerformCirculatorHeatExchange(cA, airA, circAComp, args.dt);
+        PerformCirculatorHeatExchange(cB, airB, circBComp, args.dt);
+
         // Shift ramp position based on demand and generation from previous tick.
         var curRamp = component.RampPosition;
         var lastDraw = supplier.CurrentSupply;
@@ -145,21 +160,22 @@ public sealed class TegSystem : EntitySystem
 
         var electricalEnergy = 0f;
 
+        var circATemp = circAComp.CirculatorTemperature;
+        var circBTemp = circBComp.CirculatorTemperature;
+
+        var circA_C = circAComp.HeatCapacity;
+        var circB_C = circBComp.HeatCapacity;
+
+        // TODO: Think of a better way to turn off the TEG.
         if (airA.Pressure > 0 && airB.Pressure > 0)
         {
-            var hotA = airA.Temperature > airB.Temperature;
+            var Thot = MathF.Max(circATemp, circBTemp);
+            var Tcold = MathF.Min(circATemp, circBTemp);
 
-            // Calculate thermal and electrical energy transfer between the two sides.
-            // Assume temperature equalizes, i.e. Ta*cA + Tb*cB = Tf*(cA+cB)
-            var Tf = (airA.Temperature * cA + airB.Temperature * cB) / (cA + cB);
-            // The maximum energy we can extract is (Ta - Tf)*cA, which is equal to (Tf - Tb)*cB
-            var Wmax = MathF.Abs(airA.Temperature - Tf) * cA;
-
+            // Establish our base thermal efficiency.
             var N = component.ThermalEfficiency;
 
             // Calculate Carnot efficiency
-            var Thot = hotA ? airA.Temperature : airB.Temperature;
-            var Tcold = hotA ? airB.Temperature : airA.Temperature;
             var Nmax = 1 - Tcold / Thot;
             N = MathF.Min(N, Nmax); // clamp by Carnot efficiency
 
@@ -168,22 +184,32 @@ public sealed class TegSystem : EntitySystem
             var dT = Thot - Tcold;
             N *= MathF.Tanh(dT/700); // https://www.wolframalpha.com/input?i=tanh(x/700)+from+0+to+1000
 
-            var transfer = Wmax * N;
-            electricalEnergy = transfer * component.PowerFactor;
-            var outTransfer = transfer * (1 - component.ThermalEfficiency);
+            // Calculate maximum amount of energy to generate this tick based on ramping above.
+            // This clamps the thermal energy transfer as well.
+            var targetEnergy = curRamp / args.dt;
+            var transferMax = targetEnergy / (N * component.PowerFactor);
+
+            // Numerically limited heat transfer is described as:
+            // Q = ΔT * (C_A * C_B / C_A + C_B)
+            // Limit transfer to the maximum amount of energy we can generate this tick.
+            var transfer = Math.Min(dT * ((circA_C * circB_C) / (circA_C + circB_C)), transferMax);
+
+            electricalEnergy = transfer * N * component.PowerFactor;
+
+            var outTransfer = transfer * (1 - N);
 
             // Adjust thermal energy in transferred gas mixtures.
-            if (hotA)
+            if (circATemp > circBTemp)
             {
                 // A -> B
-                airA.Temperature -= transfer / cA;
-                airB.Temperature += outTransfer / cB;
+                circAComp.CirculatorTemperature -= transfer / circA_C;
+                circBComp.CirculatorTemperature += outTransfer / circB_C;
             }
             else
             {
                 // B -> A
-                airA.Temperature += outTransfer / cA;
-                airB.Temperature -= transfer / cB;
+                circAComp.CirculatorTemperature += outTransfer / circA_C;
+                circBComp.CirculatorTemperature -= transfer / circB_C;
             }
         }
 
@@ -193,13 +219,7 @@ public sealed class TegSystem : EntitySystem
         var power = electricalEnergy / args.dt;
 
         // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
-        // Also apply an exponential moving average to smooth out fluttering, as it was causing
-        // seizures.
-        supplier.MaxSupply = component.PowerSmoothingFactor * (power * component.RampFactor) +
-                             (1 - component.PowerSmoothingFactor) * supplier.MaxSupply;
-
-        var circAComp = Comp<TegCirculatorComponent>(circA);
-        var circBComp = Comp<TegCirculatorComponent>(circB);
+        supplier.MaxSupply = power * component.RampFactor;
 
         circAComp.LastPressureDelta = δpA;
         circAComp.LastMolesTransferred = airA.TotalMoles;
@@ -359,6 +379,25 @@ public sealed class TegSystem : EntitySystem
         return (new GasMixture(), δp);
     }
 
+    /// <summary>
+    /// Preforms heat exchange between the circulator and the gas flowing through it.
+    /// </summary>
+    /// <param name="heatCapacity">The heat capacity of the circulator gas.</param>
+    /// <param name="air">The GasMixture of the gas currently in the circulator.</param>
+    /// <param name="comp">Comp of the <see cref="TegCirculatorComponent"/></param>
+    /// <param name="dt">Atmos delta time</param>
+    private static void PerformCirculatorHeatExchange(float heatCapacity,
+        GasMixture air,
+        TegCirculatorComponent comp,
+        float dt)
+    {
+        // Heat transfer is calculated as
+        var dQ = comp.ConductivityConstant * (air.Temperature - comp.CirculatorTemperature) * dt;
+
+        comp.CirculatorTemperature += dQ / comp.HeatCapacity;
+        air.Temperature -= dQ / heatCapacity;
+    }
+
     private (PipeNode inlet, PipeNode outlet) GetPipes(EntityUid uidCirculator)
     {
         var nodeContainer = _nodeContainerQuery.GetComponent(uidCirculator);
@@ -407,10 +446,13 @@ public sealed class TegSystem : EntitySystem
     {
         var (inlet, outlet) = GetPipes(circulator);
 
+        var comp = Comp<TegCirculatorComponent>(circulator);
+
         return new TegSensorData.Circulator(
             inlet.Air.Pressure,
             outlet.Air.Pressure,
             inlet.Air.Temperature,
-            outlet.Air.Temperature);
+            outlet.Air.Temperature,
+            comp.CirculatorTemperature);
     }
 }
