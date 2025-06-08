@@ -84,6 +84,9 @@
     Conversion: 55
   categories:
   - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
 
 ### Telebonds category
 # Weapons, some modern some discontinued like the PPSH
