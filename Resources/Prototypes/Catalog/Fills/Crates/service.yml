@@ -322,6 +322,8 @@
           prob: 0.1
         - id: FoodPacketRaisinsTrash
           prob: 0.1
+        - id: DonkPocketBasicSleeve
+          prob: 0.1
           # Cans
         - id: FoodTinBeansTrash
           prob: 0.15
