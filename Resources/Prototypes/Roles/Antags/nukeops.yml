@@ -8,6 +8,7 @@
   - !type:OverallPlaytimeRequirement
     time: 18000 # 5h
   guides: [ NuclearOperatives ]
+  previewStartingGear: SyndicateOperativeGearFull
 
 - type: antag
   id: NukeopsMedic
@@ -22,6 +23,7 @@
     role: JobChemist
     time: 10800 # 3h
   guides: [ NuclearOperatives ]
+  previewStartingGear: SyndicateOperativeMedicFull
 
 - type: antag
   id: NukeopsCommander
@@ -37,6 +39,7 @@
     time: 18000 # 5h
   # should be changed to nukie playtime when thats tracked (wyci)
   guides: [ NuclearOperatives ]
+  previewStartingGear: SyndicateCommanderGearFull
 
 - type: startingGear
   id: SyndicateOperativeGearFullNoUplink
@@ -71,6 +74,7 @@
   parent: SyndicateOperativeGearFull
   equipment:
     neck: SyndicateWhistle
+    ears: ClothingHeadsetAltSyndicateCommander #Starlight
     outerClothing: ClothingOuterHardsuitSyndieCommander
     id: CommanderPDA
   inhand:
@@ -83,6 +87,7 @@
   equipment:
     eyes: ClothingEyesHudSyndicateAgent
     outerClothing: ClothingOuterHardsuitSyndieMedic
+    ears: ClothingHeadsetAltSyndicateAgent #Starlight
     shoes: ClothingShoesBootsMagSyndie
     id: SyndiAgentPDA
     belt: ClothingBeltMilitaryWebbingMedFilled

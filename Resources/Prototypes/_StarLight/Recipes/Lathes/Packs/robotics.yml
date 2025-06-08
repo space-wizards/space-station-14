@@ -65,3 +65,10 @@
     - WeaponMechCombatDisabler
     - WeaponMechCombatFlashbangLauncher
     - WeaponMechCombatMissileRack8
+
+- type: latheRecipePack
+  id: StarlightSyndicateModules
+  recipes:
+    - BorgModuleMartyr
+    - BorgModuleSyndicateWeapon
+    - BorgModuleL6C

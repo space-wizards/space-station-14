@@ -13,6 +13,7 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Server.Administration.Systems;
 
 namespace Content.Server.Starlight.Medical.Surgery;
 // Based on the RMC14.
@@ -26,6 +27,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ContainerSystem _containers = default!;
+    [Dependency] private readonly StarlightEntitySystem _entitySystem = default!;
 
     private readonly List<EntProtoId> _surgeries = [];
     public override void Initialize()
@@ -70,7 +72,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
         foreach (var surgery in _surgeries)
         {
-            if (GetSingleton(surgery) is not { } surgeryEnt
+            if (!_entitySystem.TryGetSingleton(surgery, out var surgeryEnt)
                 || !TryComp(surgeryEnt, out SurgeryComponent? surgeryComp)
                 || (surgeryComp.Requirement.Count() > 0 && !progress.CompletedSurgeries.Any(x => surgeryComp.Requirement.Contains(x))))
                 continue;

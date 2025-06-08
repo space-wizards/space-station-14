@@ -36,6 +36,13 @@ using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Server.Silicons.Laws;
+using Content.Shared.Humanoid;
+using Content.Shared.Movement.Components;
+using Content.Shared.Silicons.Laws.Components;
+using Robust.Server.Player;
+using Content.Shared.Silicons.StationAi;
+using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Administration.Systems
@@ -67,6 +74,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly AdminFrozenSystem _freeze = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
+        [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -145,7 +153,7 @@ namespace Content.Server.Administration.Systems
 
                             var stationUid = _stations.GetOwningStation(args.Target);
 
-                            var profile = _gameTicker.GetPlayerProfile(targetActor.PlayerSession);
+                            var profile = _humanoidAppearance.GetBaseProfile(args.Target);
                             var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
 
                             if (_mindSystem.TryGetMind(args.Target, out var mindId, out var mindComp))
@@ -170,8 +178,7 @@ namespace Content.Server.Administration.Systems
                             }
 
                             var stationUid = _stations.GetOwningStation(args.Target);
-
-                            var profile = _gameTicker.GetPlayerProfile(targetActor.PlayerSession);
+                            var profile = _humanoidAppearance.GetBaseProfile(args.Target);
                             _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
                         },
                         ConfirmationPopup = true,
