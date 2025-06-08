@@ -22,4 +22,3 @@
     sprite: Objects/Weapons/Melee/armblade.rsi
   - type: Prying
     pryPowered: true
-    force: true
