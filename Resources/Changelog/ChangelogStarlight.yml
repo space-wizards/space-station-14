@@ -7066,4 +7066,12 @@ Entries:
   id: 976
   time: '2025-06-08T21:02:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/790
+- author: Conflee
+  changes:
+  - message: Added Kiloton Station, a new mid-high pop station based roughly on Kilostation
+      from SS13
+    type: Add
+  id: 977
+  time: '2025-06-08T22:56:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/789
 
