@@ -285,7 +285,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// </summary>
         /// <param name="excludeUserAudio">If true, will exclude the user when playing sound. Does nothing client-side.
         /// Useful for predicted interactions</param>
-        public void Insert(EntityUid uid,
+        private void Insert(EntityUid uid,
             ItemSlot slot,
             EntityUid item,
             EntityUid? user,
