@@ -23,8 +23,6 @@ public sealed class GameTopMenuBarUIController : UIController, IOnStateChanged<G
     [Dependency] private readonly GuidebookUIController _guidebook = default!;
     [Dependency] private readonly SandboxUIController _sandbox = default!;
 
-    private GameTopMenuBar? MenuBar => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>();
-
     public void OnStateExited(GameplayState state)
     {
         _guidebook.UnloadButton();
@@ -47,9 +45,8 @@ public sealed class GameTopMenuBarUIController : UIController, IOnStateChanged<G
         _action.LoadButton();
         _sandbox.LoadButton();
         _emotes.LoadButton();
-        if (MenuBar == null)
-            return;
 
-        MenuBar.EscapeButton.Pressed = false;
+        var menuBar = UIManager.GetActiveUIWidget<GameTopMenuBar>();
+        menuBar.EscapeButton.Pressed = false;
     }
 }
