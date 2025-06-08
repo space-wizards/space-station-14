@@ -47,24 +47,23 @@ public sealed class TileRulesSystem : EntitySystem
 
     /// <summary>
     /// Checks if a given set of <see cref="TileRule"/>s is valid. Optionally takes
-    ///     a list of entities intersecting the tile, resolving it with
-    ///     <see cref="DefaultIntersectionEnlargement"/> as long as at least one rule
-    ///     needs to evaluate any intersecting entities.
+    ///     a list of entities intersecting the tile, that should be resolved with
+    ///     <see cref="DefaultIntersectionEnlargement"/>.
     /// </summary>
     /// <param name="tileParentUid">The <see cref="EntityUid"/> (such as map or grid) that contains the specified tile.</param>
     /// <seealso cref="TileRule.TakesIntersecting"/>
     public bool IsTrue(EntityUid tileParentUid, TileRulesPrototype rules, TileRef tile, Vector2i position, HashSet<EntityUid>? intersectingEntities = null)
     {
-        // `intersectingEntities` will always be resolved, as long as at least one rule needs it.
-        var tookIntersectingEntities = false;
+        // If we were already provided with an array of intersecting entities, we don't need to evaluate it again.
+        var reEvaluateIntersecting = intersectingEntities == null;
         intersectingEntities ??= new();
 
         foreach (var rule in rules.Rules)
         {
-            if (rule.TakesIntersecting && !tookIntersectingEntities)
+            if (rule.TakesIntersecting && reEvaluateIntersecting)
             {
                 _lookup.GetLocalEntitiesIntersecting(tileParentUid, position, intersectingEntities, DefaultIntersectionEnlargement, LookupFlags.Uncontained);
-                tookIntersectingEntities = true;
+                reEvaluateIntersecting = false;
             }
 
             if (!rule.Check(EntityManager, tileParentUid, tile, position, intersectingEntities))
