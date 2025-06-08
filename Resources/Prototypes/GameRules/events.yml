@@ -512,9 +512,6 @@
         color: Plum
         sound: "/Audio/Ambience/Antag/zombie_start.ogg"
       components:
-      - type: NpcFactionMember
-        factions:
-        - Zombie
       - type: PendingZombie #less time to prepare than normal
         minInitialInfectedGrace: 300
         maxInitialInfectedGrace: 450
