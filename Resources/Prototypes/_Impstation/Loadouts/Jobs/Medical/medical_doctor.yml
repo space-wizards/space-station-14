@@ -25,7 +25,7 @@
   id: VirologyJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtVirology
-    
+
 - type: loadout
   id: GeneticsJumpsuit
   equipment:
@@ -35,21 +35,27 @@
   id: GeneticsJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtGenetics
-    
-    
+
+
 # Outer Clothing
 - type: loadout
   id: BomberMedical
   equipment:
     outerClothing: ClothingOuterCoatBomberMedical
-    
+
 - type: loadout
   id: GeneticsWinterCoat
   equipment:
     outerClothing: ClothingOuterWinterGen
-    
+
 - type: loadout
   id: VirologyWinterCoat
   equipment:
     outerClothing: ClothingOuterWinterViro
 
+# Eyewear
+
+- type: loadout
+  id: MedicalGlassesHud
+  equipment:
+    eyes: ClothingEyesGlassesHudMedical

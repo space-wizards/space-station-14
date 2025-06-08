@@ -1545,6 +1545,7 @@
   loadouts:
   - MedicalHud
   - MedicalEyePatchHud
+  - MedicalGlassesHud #imp
   - Glasses
   - GlassesJamjar
   - GlassesJensen
