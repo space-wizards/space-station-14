@@ -2,7 +2,6 @@
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;
-using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Client.Console;
@@ -26,7 +25,7 @@ public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly InfoUIController _info = default!;
     [Dependency] private readonly OptionsUIController _options = default!;
 
-    private MenuButton Button => UIManager.GetActiveUIWidget<GameTopMenuBar>().EscapeButton;
+    private MenuButton EscapeButton => UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().EscapeButton;
 
     private Options.UI.EscapeMenu? _escapeWindow;
 
@@ -35,8 +34,8 @@ public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayS
         DebugTools.Assert(_escapeWindow == null);
 
         _escapeWindow = UIManager.CreateWindow<Options.UI.EscapeMenu>();
-        _escapeWindow.OnOpen += () => Button.SetClickPressed(true);
-        _escapeWindow.OnClose += () => Button.SetClickPressed(false);
+        _escapeWindow.OnOpen += () => EscapeButton.SetClickPressed(true);
+        _escapeWindow.OnClose += () => EscapeButton.SetClickPressed(false);
 
         _escapeWindow.ChangelogButton.OnPressed += _ =>
         {
