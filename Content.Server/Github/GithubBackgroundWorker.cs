@@ -53,7 +53,7 @@ public sealed class GithubBackgroundWorker(GithubClient client)
     /// <param name="request">The request to make.</param>
     /// <param name="ct">Request cancellation token.</param>
     /// <returns>The direct HTTP response from the API. If null the request could not be made.</returns>
-    private async Task SendRequest(IGithubRequest request, CancellationToken ct)
+    private async Task SendRequest<T>(T request, CancellationToken ct) where T : IGithubRequest
     {
         if (!_enabled)
         {
