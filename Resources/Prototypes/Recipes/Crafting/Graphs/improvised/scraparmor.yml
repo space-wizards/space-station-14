@@ -1,0 +1,50 @@
+- type: constructionGraph
+  id: scraparmor
+  start: start
+  graph:
+    - node: start
+      edges:
+      - to: wiredapron
+        steps:
+        - tag: Apron
+          icon:
+            sprite: Clothing/OuterClothing/Misc/apronbotanist.rsi
+            state: icon
+          name: construction-graph-tag-apron
+        - material: Cable
+          amount: 15
+          doAfter: 10
+
+    - node: wiredapron
+      entity: WiredApronBase
+      edges:
+      - to: steelapron
+        steps:
+        - material: Steel
+          amount: 30
+          doAfter: 15
+
+    - node: steelapron
+      entity: SteelApronBase
+      edges:
+      - to: weldedsteelapron
+        steps:
+        - tool: Welding
+          doAfter: 20
+
+    - node: weldedsteelapron
+      entity: WeldedSteelApronBase
+      edges:
+      - to: scraparmorfinished
+        steps:
+        - tag: UtilityBelt
+          icon:
+            sprite: Clothing/Belt/utility.rsi
+            state: icon
+          name: construction-graph-tag-utility-belt
+        - material: Cable
+          amount: 15
+          doAfter: 15
+
+    - node: scraparmorfinished
+      entity: ClothingOuterArmorScrap
