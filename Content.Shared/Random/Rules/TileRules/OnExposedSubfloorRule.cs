@@ -4,7 +4,7 @@ using Robust.Shared.Map;
 namespace Content.Shared.Random.Rules.TileRules;
 
 /// <summary>
-/// Rule for whether a specific tile is an exposed (sub)floor (e.g. under-tile plating or lattice, but not on space itself).
+/// Rule for whether a specific tile is a subfloor by tile definition (e.g. under-tile plating or lattice, but not space itself).
 /// </summary>
 public sealed partial class OnExposedSubfloorTileRule : TileRule
 {

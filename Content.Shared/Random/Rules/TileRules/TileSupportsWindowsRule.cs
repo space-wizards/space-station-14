@@ -6,7 +6,7 @@ namespace Content.Shared.Random.Rules.TileRules;
 
 /// <summary>
 /// Rule for whether a window can be placed on a specific tile, based on whether an
-///     entity on that tiles has  a<see cref="SharedCanBuildWindowOnTopComponent"/>.
+///     entity on that tiles has a <see cref="SharedCanBuildWindowOnTopComponent"/>.
 /// </summary>
 public sealed partial class TileSupportsWindowsRule : TileRule
 {
