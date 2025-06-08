@@ -34,7 +34,11 @@ public abstract partial class TileRule
     /// <summary>Checks whether this rule is valid, based on a tile and it's parent grid or map.</summary>
     /// <remarks>Always pure.</remarks>
     /// <param name="tileParentUid">The <see cref="EntityUid"/> (such as map or grid) that contains the specified tile.</param>
-    /// <param name="intersectingEntities">The entities intersecting with the tile, with an enlargement of <see cref="TileRulesSystem.IntersectionOffset"/>.</param>
+    /// <param name="intersectingEntities">
+    /// The entities intersecting with the tile, with an enlargement of <see cref="TileRulesSystem.IntersectionOffset"/>.
+    ///     Will not be guaranteed to have been evaluated (i.e., it would've stayed empty) unless <see cref="TakesIntersecting"/>
+    ///     is true.
+    /// </param>
     public abstract bool Check(EntityManager entManager, EntityUid tileParentUid, TileRef tile, Vector2i position, HashSet<EntityUid> intersectingEntities);
 }
 
