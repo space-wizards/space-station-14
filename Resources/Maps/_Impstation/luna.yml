@@ -58138,17 +58138,6 @@ entities:
     - type: Transform
       pos: -2.5,29.5
       parent: 2
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - invalid
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 2725
     components:
     - type: Transform

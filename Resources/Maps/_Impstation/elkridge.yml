@@ -80602,9 +80602,6 @@ entities:
     - type: Transform
       pos: -23.5,25.5
       parent: 2
-    - type: ItemPlacer
-      placedEntities:
-      - invalid
 - proto: MachineCentrifuge
   entities:
   - uid: 3969
