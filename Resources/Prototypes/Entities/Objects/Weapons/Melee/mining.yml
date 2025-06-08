@@ -147,19 +147,20 @@
     capacity: 1
     count: 1
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1
     wideAnimationRotation: -135
     damage:
       types:
         Blunt: 6
-        Slash: 2
+        Slash: 4
     soundHit:
       collection: MetalThud
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Slash: 4
+        Blunt: 6
+        Slash: 2
         Structural: 30
   - type: GunRequiresWield
   - type: DisarmMalus
@@ -228,14 +229,15 @@
     tags:
       - Pickaxe
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 4
-        Slash: 4
+        Blunt: 3
+        Slash: 7
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Slash: 4
+        Blunt: 2
+        Slash: 6
         Structural: 20
