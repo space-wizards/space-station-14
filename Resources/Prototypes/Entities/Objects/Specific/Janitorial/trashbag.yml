@@ -75,7 +75,7 @@
   - type: Storage
     grid:
     - 0,0,19,9 # 200 storage total
-    areaInsertRadius: 30
+    # areaInsertRadius: 30 # todo - fix SharedStorageSystem.cs so radius isn't hard-limited by interaction range
     areaPickupLimit: 50
 
 - type: entity
