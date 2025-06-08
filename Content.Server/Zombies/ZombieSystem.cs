@@ -45,7 +45,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedRoleSystem _role = default!;
 
-        public ProtoId<NpcFactionPrototype> Faction = "Zombie";
+        public readonly ProtoId<NpcFactionPrototype> Faction = "Zombie";
 
         public const SlotFlags ProtectiveSlots =
             SlotFlags.FEET |
