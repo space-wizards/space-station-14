@@ -31,7 +31,11 @@ public abstract partial class TileRule
     [DataField]
     public bool Inverted;
 
-    /// <summary>Checks whether this rule is valid, based on a tile and it's parent grid or map.</summary>
+    /// <summary>
+    /// Checks whether this rule is valid, based on a tile and it's parent grid or map. If <paramref name="intersectingEntities"/>
+    ///     is in use to check if this rule is true, then <see cref="TakesIntersecting"/> should be true, otherwise the set of
+    ///     intersecting entities may not have been evaluated.
+    /// </summary>
     /// <remarks>Always pure.</remarks>
     /// <param name="tileParentUid">The <see cref="EntityUid"/> (such as map or grid) that contains the specified tile.</param>
     /// <param name="intersectingEntities">
