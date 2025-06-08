@@ -5,6 +5,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client._Starlight;
 
@@ -13,6 +14,9 @@ public sealed class ClouldEmotesSystem : EntitySystem
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private SpriteSpecifier EmoteStart = new SpriteSpecifier.Rsi(new ResPath("_Starlight/Effects/cloud_emotes.rsi"), "emote_start");
+    private SpriteSpecifier EmoteEnd = new SpriteSpecifier.Rsi(new ResPath("_Starlight/Effects/cloud_emotes.rsi"), "emote_end");
 
     public override void Initialize()
     {
@@ -39,7 +43,7 @@ public sealed class ClouldEmotesSystem : EntitySystem
 
         var adj = _sprite.GetLocalBounds((uid, sprite)).Height / 2 + ((1.0f / 32) * 6.0f);
 
-        var layer = _sprite.AddLayer((uid, sprite), cloudEmote.Icon);
+        var layer = _sprite.AddLayer((uid, sprite), EmoteStart);
         _sprite.LayerMapSet((uid, sprite), CloudEmotesKey.Key, layer);
 
         _sprite.LayerSetOffset((uid, sprite), layer, new Vector2(0.0f, adj));
@@ -47,7 +51,11 @@ public sealed class ClouldEmotesSystem : EntitySystem
 
         _audio.PlayEntity(cloudEmote.Sound, Filter.Local(), uid, true);
 
-        Timer.Spawn(TimeSpan.FromSeconds(cloudEmote.AnimationTime), () => _sprite.RemoveLayer((uid, sprite), layer));
+        Timer.Spawn(TimeSpan.FromSeconds(0.2f), () => _sprite.LayerSetSprite((uid, sprite), CloudEmotesKey.Key, cloudEmote.Icon));
+
+        Timer.Spawn(TimeSpan.FromSeconds(0.2f + cloudEmote.AnimationTime), () => _sprite.LayerSetSprite((uid, sprite), CloudEmotesKey.Key, EmoteEnd));
+
+        Timer.Spawn(TimeSpan.FromSeconds(0.2f + cloudEmote.AnimationTime + 0.2f), () => _sprite.RemoveLayer((uid, sprite), layer));
     }
 
     private enum CloudEmotesKey

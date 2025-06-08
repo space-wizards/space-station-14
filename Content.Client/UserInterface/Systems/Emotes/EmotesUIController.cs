@@ -1,11 +1,13 @@
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
+using Content.Shared._Starlight.CloudEmotes; // Starlight
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Input;
 using Content.Shared.Speech;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
+using Robust.Client.Console; // Starlight
 using Robust.Client.Player;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
@@ -21,17 +23,19 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    
+    [Dependency] private readonly IClientConsoleHost _consoleHost = default!; // Starlight
+
     private MenuButton? EmotesButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.EmotesButton;
     private SimpleRadialMenu? _menu;
 
     private static readonly Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)> EmoteGroupingInfo
         = new Dictionary<EmoteCategory, (string Tooltip, SpriteSpecifier Sprite)>
-    {
-        [EmoteCategory.General] = ("emote-menu-category-general", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Head/Soft/mimesoft.rsi/icon.png"))),
-        [EmoteCategory.Hands] = ("emote-menu-category-hands", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Hands/Gloves/latex.rsi/icon.png"))),
-        [EmoteCategory.Vocal] = ("emote-menu-category-vocal", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Emotes/vocal.png"))),
-    };
+        {
+            [EmoteCategory.General] = ("emote-menu-category-general", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Head/Soft/mimesoft.rsi/icon.png"))),
+            [EmoteCategory.Hands] = ("emote-menu-category-hands", new SpriteSpecifier.Texture(new ResPath("/Textures/Clothing/Hands/Gloves/latex.rsi/icon.png"))),
+            [EmoteCategory.Vocal] = ("emote-menu-category-vocal", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Emotes/vocal.png"))),
+            [EmoteCategory.Cloud] = ("emote-menu-category-cloud", new SpriteSpecifier.Rsi(new ResPath("/Textures/_Starlight/Effects/cloud_emotes.rsi"), "emote_mark")),
+        };
 
     public void OnStateEntered(GameplayState state)
     {
@@ -135,10 +139,10 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
         var player = _playerManager.LocalSession?.AttachedEntity;
 
-        Dictionary<EmoteCategory, List<RadialMenuOption>> emotesByCategory = new(); 
+        Dictionary<EmoteCategory, List<RadialMenuOption>> emotesByCategory = new();
         foreach (var emote in emotePrototypes)
         {
-            if(emote.Category == EmoteCategory.Invalid)
+            if (emote.Category == EmoteCategory.Invalid)
                 continue;
 
             // only valid emotes that have ways to be triggered by chat and player have access / no restriction on
@@ -167,6 +171,25 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             list.Add(actionOption);
         }
 
+        // Starlight - Start
+        var cloudprototypes = _prototypeManager.EnumeratePrototypes<CloudEmotePrototype>();
+        foreach (var emote in cloudprototypes)
+        {
+            if (!emotesByCategory.TryGetValue(EmoteCategory.Cloud, out var list))
+            {
+                list = new List<RadialMenuOption>();
+                emotesByCategory.Add(EmoteCategory.Cloud, list);
+            }
+
+            var actionOption = new RadialMenuActionOption<CloudEmotePrototype>(HandleCloudRadialButtonClick, emote)
+            {
+                Sprite = emote.Icon,
+                ToolTip = Loc.GetString(emote.ID)
+            };
+            list.Add(actionOption);
+        }
+        // Starlight - End
+
         var models = new RadialMenuOption[emotesByCategory.Count];
         var i = 0;
         foreach (var (key, list) in emotesByCategory)
@@ -187,5 +210,10 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
     private void HandleRadialButtonClick(EmotePrototype prototype)
     {
         _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(prototype.ID));
+    }
+
+    private void HandleCloudRadialButtonClick(CloudEmotePrototype prototype)
+    {
+        _consoleHost.ExecuteCommand($"cloudemote \"{CommandParsing.Escape(prototype.ID)}\"");
     }
 }

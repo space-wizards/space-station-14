@@ -3,6 +3,8 @@ using Robust.Shared.Console;
 using Content.Shared.Administration;
 using Robust.Shared.Prototypes;
 using Content.Shared._Starlight.CloudEmotes;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server._Starlight.Commands;
 
@@ -21,7 +23,7 @@ public sealed class CloudEmoteCommand : LocalizedCommands
         {
             return CompletionResult.FromHintOptions(
                 CompletionHelper.PrototypeIDs<CloudEmotePrototype>(),
-                Loc.GetString("cmd-emote-hint-1"));
+                Loc.GetString("cmd-cloudemote-hint-1"));
         }
 
         return CompletionResult.Empty;
@@ -45,9 +47,15 @@ public sealed class CloudEmoteCommand : LocalizedCommands
         var emote = args[0];
         if (!_prototypeManager.TryIndex<CloudEmotePrototype>(emote, out var _))
         {
-            shell.WriteLine(LocalizationManager.GetString("cmd-emote-invalid-emote"));
+            shell.WriteLine(LocalizationManager.GetString("cmd-cloudemote-invalid-emote"));
             return;
         }
+
+        if (!_entityManager.TryGetComponent<MobStateComponent>(player.AttachedEntity.Value, out var mobState))
+            return;
+
+        if (mobState.CurrentState != MobState.Alive)
+            return;
 
         var msg = new CloudEmotesMessage(_entityManager.GetNetEntity(player.AttachedEntity.Value), emote);
         _net.SendSystemNetworkMessage(msg);

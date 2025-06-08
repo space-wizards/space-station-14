@@ -3,5 +3,21 @@
   animationTime: 3
   sound: /Audio/_Starlight/Effects/CloudEmotes/pop.ogg
   icon:
-    sprite: Effects/cloud_emotes.rsi
+    sprite: _Starlight/Effects/cloud_emotes.rsi
     state: emote_mark
+
+- type: cloudEmote
+  id: Lenny
+  animationTime: 3
+  sound: /Audio/_Starlight/Effects/CloudEmotes/pop.ogg
+  icon:
+    sprite: _Starlight/Effects/cloud_emotes.rsi
+    state: emote_lenny
+
+- type: cloudEmote
+  id: Nervous
+  animationTime: 3
+  sound: /Audio/_Starlight/Effects/CloudEmotes/pop.ogg
+  icon:
+    sprite: _Starlight/Effects/cloud_emotes.rsi
+    state: emote_nervous
