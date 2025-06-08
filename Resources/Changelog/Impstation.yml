@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Removed the 'ensure fellow traitor stays alive' objective outside of
-      Spy vs Spy.
-    type: Remove
-  id: 1269
-  time: '2025-03-10T23:05:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1875
 - author: Ecramox
   changes:
   - message: Added the R.A.D, and put it in the Nuclear Commander and Lone Op's loadouts
@@ -4217,3 +4209,10 @@
   id: 1768
   time: '2025-06-08T04:09:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2665
+- author: sev7ves
+  changes:
+  - message: Added a door alarm wire to high sec doors
+    type: Add
+  id: 1769
+  time: '2025-06-08T04:10:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2586
