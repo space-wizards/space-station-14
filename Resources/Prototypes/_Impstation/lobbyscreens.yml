@@ -25,7 +25,7 @@
 - type: lobbyBackground
   id: KaasiDoshi
   background: /Textures/_Impstation/LobbyScreens/KAASI_DOSHI.webp
-  name: KAASI DOSHI
+  name: CAPTAIN'S BURDEN
   artist: GooseyTeeth
 
 - type: lobbyBackground
