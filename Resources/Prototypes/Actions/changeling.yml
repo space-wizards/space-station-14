@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseAction
-  id: ActionItemActionArmBlade
+  id: ActionRetractableItemArmBlade
   name: Arm Blade
   description: Mark a held item to later summon into your hand.
   components:
