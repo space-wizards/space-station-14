@@ -4,11 +4,11 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 /// <summary>
-///     Spawns entities with an even distribution between min and max (inclusive).
+///     Spawn entities with an even distribution between min and max (inclusive).
 /// </summary>
 [Serializable]
 [DataDefinition]
-[Obsolete("This is being depreciated. Use SpawnEntityTableBehavior instead!")]
+[Obsolete("This is being replaced. Use SpawnEntityTableBehavior or SimpleSpawnEntitiesBehavior instead!")]
 public sealed partial class SpawnEntitiesBehavior : BaseSpawnEntitiesBehavior
 {
     /// <summary>

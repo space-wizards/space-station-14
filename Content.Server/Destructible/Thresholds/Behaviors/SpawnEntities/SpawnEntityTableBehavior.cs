@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 /// <summary>
-///     Spawns entities using an entity table.
+///     Destruction behavior to spawns entities using an entity table.
 /// </summary>
 [Serializable]
 [DataDefinition]
@@ -20,8 +20,10 @@ public sealed partial class SpawnEntityTableBehavior : BaseSpawnEntitiesBehavior
     protected override Dictionary<EntProtoId, int> GetSpawns(DestructibleSystem system, EntityUid owner)
     {
         Dictionary<EntProtoId, int> toSpawn = new();
+
         var table = system.EntityManager.System<EntityTableSystem>().GetSpawns(Spawn);
 
+        // Consolidate table to properly spawn stacks
         foreach (var entityId in table)
             toSpawn[entityId] = toSpawn.GetValueOrDefault(entityId) + 1;
 

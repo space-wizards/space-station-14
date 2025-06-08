@@ -14,7 +14,7 @@ using Robust.Shared.Spawners;
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 /// <summary>
-///     Base functionality for spawning entities on destruction.
+///     Base destruction behavior for spawning entities.
 /// </summary>
 /// <remarks>
 ///     Spawned entities with <see cref="StackComponent"/> will spawned stacked, up to their stack limit.
@@ -24,11 +24,10 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
 {
     /// <summary>
-    ///     Time in seconds to wait before spawning entities. Useful for when your entity also explodes.
+    ///     Time in seconds to wait before spawning entities. Useful when your entity also explodes.
     /// </summary>
     /// <remarks>
-    ///     If this is greater than 0 it overrides
-    ///     <see cref="SpawnInContainer"/> and <see cref="TransferForensics"/>.
+    ///     When greater than 0 this overrides <see cref="SpawnInContainer"/> and <see cref="TransferForensics"/>.
     /// </remarks>
     [DataField]
     public float SpawnAfter;
@@ -102,6 +101,7 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
                     SpawnDelayed(toSpawn, position, system);
 
             // Spawn as a stack
+            // TODO don't lose stacks if the spawned item goes over the stack
             else if (EntityPrototypeHelpers.HasComponent<StackComponent>(toSpawn, system.PrototypeManager))
             {
                 var spawned = SpawnAndTransform(toSpawn, position, system, owner);
@@ -125,9 +125,8 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
     /// </summary>
     private void SpawnDelayed(EntProtoId toSpawn, MapCoordinates position, DestructibleSystem system)
     {
-        // if it fails to get the spawner, this won't ever work so just return
         if (!system.PrototypeManager.TryIndex("TemporaryEntityForTimedDespawnSpawners", out var tempSpawnerProto))
-            return;
+            return; // if it fails to get the spawner, this won't ever work so just return
 
         // spawn the spawner
         var spawner = system.EntityManager.Spawn(tempSpawnerProto.ID, position.Offset(GetOffsetVector(system)));
@@ -136,10 +135,9 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
         system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
         timedDespawnComponent.Lifetime = SpawnAfter;
 
-        // and assign the entity that it will spawn when despawned
+        // and assign the entity the spawner will spawn
         system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
         system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), toSpawn);
-
     }
 
     /// <summary>

@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 /// <summary>
-///     Spawns the given entities.
+///     Spawn the given entities.
 /// </summary>
 [Serializable]
 [DataDefinition]
