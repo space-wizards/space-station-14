@@ -317,7 +317,7 @@
 - type: entity
   id: MiningBorgChassisDerelict
   parent: BaseBorgChassisDerelict
-  name: derelict mining cyborg
+  name: derelict salvage cyborg
   description: A man-machine hybrid that assists the cargo department. This one has seen the wrong side of a gibtonite chunk.
   components:
   - type: Sprite

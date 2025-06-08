@@ -253,8 +253,8 @@ ghost-role-information-derelict-janitor-cyborg-description = You are a janitor c
 ghost-role-information-derelict-medical-cyborg-name = Derelict Medical Cyborg
 ghost-role-information-derelict-medical-cyborg-description = You are a medical cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
 
-ghost-role-information-derelict-mining-cyborg-name = Derelict Mining Cyborg
-ghost-role-information-derelict-mining-cyborg-description = You are a mining cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
+ghost-role-information-derelict-mining-cyborg-name = Derelict Salvage Cyborg
+ghost-role-information-derelict-mining-cyborg-description = You are a salvage cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
 
 ghost-role-information-derelict-syndicate-assault-cyborg-name = Derelict Syndicate Assault Cyborg
 ghost-role-information-derelict-syndicate-assault-cyborg-description = You are an early model syndicate assault cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
