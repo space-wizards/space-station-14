@@ -11,6 +11,3 @@ fold-flip-verb = Flip
 
 fold-zip-verb = Zip up
 fold-unzip-verb = Unzip
-
-fold-lower-visor-verb = Lower visor
-fold-raise-visor-verb = Raise visor

@@ -15,48 +15,6 @@
       HeadSide : HEAD
 
 - type: entity
-  parent: [ClothingHeadHelmetBase, BaseFoldable]
-  id: ClothingHeadHelmetFoldableBase
-  abstract: true
-  components:
-  - type: Foldable
-    canFoldInsideContainer: true
-    unfoldVerbText: fold-lower-visor-verb
-    foldVerbText: fold-raise-visor-verb
-  - type: FoldableClothing
-    foldedEquippedPrefix: visorless
-    foldedHeldPrefix: visorless
-  - type: Sprite
-    layers:
-    - state: icon
-      map: [ "unfoldedLayer" ]
-      visible: true
-    - state: icon-visorless
-      map: ["foldedLayer"]
-      visible: false
-
-- type: entity
-  parent: ClothingHeadHelmetFoldableBase
-  id: ClothingHeadHelmetFoldableBaseVisorless
-  abstract: true
-  suffix: visorless
-  components:
-  - type: Foldable
-    folded: true
-  - type: Clothing
-    equippedPrefix: visorless
-  - type: Item
-    heldPrefix: visorless
-  - type: Sprite
-    layers:
-    - state: icon
-      map: [ "unfoldedLayer" ]
-      visible: false
-    - state: icon-visorless
-      map: ["foldedLayer"]
-      visible: true
-
-- type: entity
   parent: ClothingHeadHelmetBase
   id: ClothingHeadHelmetArmoredBase
   abstract: true
@@ -71,28 +29,48 @@
 
 #Security Helmet
 - type: entity
-  parent: [ClothingHeadHelmetArmoredBase, ClothingHeadHelmetFoldableBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
   id: ClothingHeadHelmetBasic
   name: security helmet
   description: Standard security gear. Protects the head from impacts.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/security.rsi
+    layers:
+    - state: icon
+    - state: icon-visor
+      visible: false
+      map: [ "visor" ]
   - type: Clothing
     sprite: Clothing/Head/Helmets/security.rsi
+    equippedPrefix: raised
+  - type: Item
+    heldPrefix: raised
+  - type: ToggleableVisuals
+    spriteLayer: visor
+    clothingVisuals:
+      head:
+      - state: lowered-equipped-HELMET
+      head-vox:
+      - state: lowered-equipped-HELMET-vox
+    inhandVisuals:
+      left:
+      - state: lowered-inhand-left
+      right:
+      - state: lowered-inhand-right
+  - type: Appearance
   - type: Tag
     tags:
     - WhitelistChameleon
     - SecurityHelmet
+  - type: ItemToggle
+    predictable: false
+    verbToggleOn: item-toggle-lower-visor
+    verbToggleOff: item-toggle-raise-visor
   - type: HideLayerClothing
     slots: []
     layers:
       Hair: HEAD
-
-- type: entity
-  parent: [ClothingHeadHelmetFoldableBaseVisorless, ClothingHeadHelmetBasic]
-  id: ClothingHeadHelmetBasicVisorless
-  name: security helmet
 
 #Mercenary Helmet
 - type: entity
