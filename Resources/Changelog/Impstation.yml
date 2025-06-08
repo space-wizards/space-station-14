@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Lightened the base color of thaven ear piercings
-    type: Tweak
-  id: 1278
-  time: '2025-03-13T05:02:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1915
 - author: Darkmajia
   changes:
   - message: Trash no longer has a chance to spawn inside the supermatter at roundstart.
@@ -4204,3 +4197,15 @@
   id: 1777
   time: '2025-06-08T11:49:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2589
+- author: TuttlePants
+  changes:
+  - message: Bounty hunters can now target nukies and head revolutionaries.
+    type: Tweak
+  - message: Bounty hunters no longer target nonhumanoid antagonists. Sorry, dragon
+      slayers.
+    type: Tweak
+  - message: Bounty hunters also no longer target the dead.
+    type: Fix
+  id: 1778
+  time: '2025-06-08T11:56:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2629
