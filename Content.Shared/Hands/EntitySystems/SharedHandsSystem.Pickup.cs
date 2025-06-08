@@ -140,16 +140,9 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!Resolve(uid, ref handsComp, false))
             return false;
 
-        if (TryPickup(uid, entity, hand, checkActionBlocker, animate, handsComp, item))
-            return true;
+        TryDrop(uid, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp);
 
-        if (TryDrop(uid, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp) &&
-            TryPickup(uid, entity, hand, checkActionBlocker, animate, handsComp, item))
-        {
-            return true;
-        }
-
-        return false;
+        return TryPickup(uid, entity, hand, checkActionBlocker, animate, handsComp, item);
     }
 
     /// <summary>
