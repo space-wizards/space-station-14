@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Silver Heart Locket for style choices
-    type: Add
-  - message: Rings have hand and neck sprites now
-    type: Tweak
-  id: 1268
-  time: '2025-03-10T22:58:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1880
 - author: hivehum
   changes:
   - message: Removed the 'ensure fellow traitor stays alive' objective outside of
@@ -4218,3 +4209,11 @@
   id: 1767
   time: '2025-06-08T04:03:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2602
+- author: kipdotnet
+  changes:
+  - message: Apid salvagers now start with a special, fully accurate PKA variant,
+      to make up for not being able to wield a normal one properly.
+    type: Tweak
+  id: 1768
+  time: '2025-06-08T04:09:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2665
