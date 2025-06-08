@@ -1,7 +1,8 @@
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Actions;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
@@ -14,6 +15,8 @@ public partial class SharedItemActionSystem : EntitySystem
 {
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -38,38 +41,46 @@ public partial class SharedItemActionSystem : EntitySystem
         if (_hands.GetActiveHand(args.Performer) is not {} userHand)
             return;
 
-        Log.Debug("Initial setup");
+        if (_actions.GetAction(ent.Owner) is not { } action)
+            return;
+
+        if (action.Comp.AttachedEntity == null)
+            return;
+
         if (!ent.Comp.Unremovable)
         {
-            Log.Debug("Removable population");
             PopulateActionItem(ent.Owner, out var spawned);
 
             if (spawned == null)
                 return;
 
-            Log.Debug("Picked up");
             _hands.TryForcePickup(args.Performer, spawned.Value, userHand, checkActionBlocker: false);
             args.Handled = true;
             return;
         }
 
-        Log.Debug("Unremovable");
         if (ent.Comp.Unremovable && ent.Comp.ActionItemUid != null)
         {
             if (ent.Comp.Summoned)
             {
-                Log.Debug("Attempting to hide");
                 RemComp<UnremoveableComponent>(ent.Comp.ActionItemUid.Value);
                 var container = _containers.GetContainer(ent, ItemActionComponent.Container);
                 _containers.Insert(ent.Comp.ActionItemUid.Value, container);
+                _audio.PlayPredicted(ent.Comp.RetractSounds, action.Comp.AttachedEntity.Value, action.Comp.AttachedEntity.Value);
                 ent.Comp.Summoned = false;
+                Dirty(ent);
+
+                args.Handled = true;
             }
             else
             {
-                Log.Debug("Attempting to pick up");
                 _hands.TryForcePickup(args.Performer, ent.Comp.ActionItemUid.Value, userHand, checkActionBlocker: false);
+                _audio.PlayPredicted(ent.Comp.SpawnSounds, action.Comp.AttachedEntity.Value, action.Comp.AttachedEntity.Value);
                 EnsureComp<UnremoveableComponent>(ent.Comp.ActionItemUid.Value);
                 ent.Comp.Summoned = true;
+                Dirty(ent);
+
+                args.Handled = true;
             }
         }
     }
@@ -79,29 +90,22 @@ public partial class SharedItemActionSystem : EntitySystem
         if (ent.Comp.SummoningAction is not { } action)
             return;
 
-        Log.Debug("Shutting down." + ent);
-
         // If the item is somehow destroyed, re-add it to the action.
         PopulateActionItem(action, out _);
     }
 
     private void PopulateActionItem(EntityUid uid, [NotNullWhen(true)] out EntityUid? item, ItemActionComponent? comp = null)
     {
-        Log.Debug("Populating");
         item = null;
 
-        if (!Resolve(uid, ref comp) || TerminatingOrDeleted(uid))
+        if (!Resolve(uid, ref comp, false) || TerminatingOrDeleted(uid))
             return;
 
-        Log.Debug("Spawning predicted");
-        // Client crashes if unpredicted spawn is used.
-        // But the client will never be able to use the item fast enough for it to cause issues anyways.
         if (!TrySpawnInContainer(comp.SpawnedPrototype, uid, ItemActionComponent.Container, out var summoned))
             return;
 
         item = summoned;
 
-        Log.Debug("Checking unremovable");
         if (comp.Unremovable)
         {
             comp.ActionItemUid = summoned;
@@ -113,8 +117,7 @@ public partial class SharedItemActionSystem : EntitySystem
 
             Dirty(summoned.Value, summonedComp);
 
-            DirtyField(uid, comp, nameof(ItemActionComponent.ActionItemUid));
-            Log.Debug("Summoned and dirtied and all that");
+            Dirty(uid, comp);
         }
     }
 }

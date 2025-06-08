@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -30,6 +31,18 @@ public sealed partial class ItemActionComponent : Component
     /// </summary>
     [DataField(required: true)]
     public EntProtoId SpawnedPrototype;
+
+    /// <summary>
+    /// Sound collection to play when the item is summoned.
+    /// </summary>
+    [DataField]
+    public SoundCollectionSpecifier? SpawnSounds;
+
+    /// <summary>
+    /// Sound collection to play when the summoned item is retracted back into the action.
+    /// </summary>
+    [DataField]
+    public SoundCollectionSpecifier? RetractSounds;
 
     /// <summary>
     /// The item managed by the action. Will be summoned and hidden as the action is used.

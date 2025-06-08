@@ -5,16 +5,18 @@
   description: Mark a held item to later summon into your hand.
   components:
   - type: Action
-    useDelay: 10
+    useDelay: 2
     raiseOnAction: true
     itemIconStyle: BigAction
     icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: item_recall
+      sprite: Interface/Actions/changeling.rsi
+      state: armblade
   - type: InstantAction
     event: !type:OnItemActionEvent
   - type: ItemAction
     spawnedPrototype: ArmBlade
-    itemSlot:
-      insertSound: null
-      ejectSound: null
+    spawnSounds:
+      collection: gib # Placeholder
+    retractSounds:
+      collection: gib # Placeholder
+
