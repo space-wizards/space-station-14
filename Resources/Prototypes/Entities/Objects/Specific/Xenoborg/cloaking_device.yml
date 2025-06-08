@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseItem, BaseXenoborgContraband ]
+  parent: [ BaseItem, BaseForeignContraband ]
   id: CloakingDevice
   name: cloaking device
   description: A device that allows xenoborgs to go invisible.

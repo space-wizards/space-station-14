@@ -290,7 +290,7 @@
       sprite: Clothing/Ears/Headsets/freelance.rsi
 
 - type: entity
-  parent: [ClothingHeadset, BaseMagicalContraband]
+  parent: [ClothingHeadset, BaseForeignContraband]
   id: ClothingHeadsetWizard
   name: wizard headset
   description: A headset used by the dreaded space wizards.

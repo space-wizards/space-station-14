@@ -199,7 +199,7 @@
   - type: ShowSyndicateIcons
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSyndicateContraband]
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseForeignContraband]
   id: ClothingEyesHudSyndicate
   name: syndicate visor
   description: The syndicate's professional head-up display, designed for better detection of humanoids and their subsequent elimination.
@@ -211,7 +211,7 @@
   - type: ShowSyndicateIcons
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSyndicateContraband]
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseForeignContraband]
   id: ClothingEyesHudSyndicateAgent
   name: syndicate medical visor
   description: The Syndicate Corpsman's professional heads-up display, designed for quick diagnosis of their team's status.

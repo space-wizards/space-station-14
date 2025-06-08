@@ -418,7 +418,7 @@
       Hair: HEAD
 
 - type: entity
-  parent: [ BaseSyndicateContraband, ClothingHeadHelmetBase ]
+  parent: [ BaseForeignContraband, ClothingHeadHelmetBase ]
   id: ClothingHeadHelmetRaid
   name: syndicate raid helmet
   description: An armored helmet for use with the syndicate raid suit. Very stylish.

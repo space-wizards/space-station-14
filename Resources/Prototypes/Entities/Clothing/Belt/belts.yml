@@ -596,7 +596,7 @@
     - 0,0,3,1
 
 - type: entity
-  parent: [ClothingBeltStorageBase, BaseSyndicateContraband]
+  parent: [ClothingBeltStorageBase, BaseForeignContraband]
   id: ClothingBeltSyndieHolster
   name: syndicate shoulder holster
   description: A deep shoulder holster capable of holding many types of ballistics.
@@ -653,7 +653,7 @@
     sprite: Clothing/Belt/salvagewebbing.rsi
 
 - type: entity
-  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSyndicateContraband]
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseForeignContraband]
   id: ClothingBeltMilitaryWebbing
   name: chest rig
   description: A set of tactical webbing worn by Syndicate boarding parties.
@@ -709,7 +709,7 @@
     sprite: Clothing/Belt/suspenders_black.rsi
 
 - type: entity
-  parent: [ ClothingBeltStorageBase, BaseMagicalContraband ]
+  parent: [ ClothingBeltStorageBase, BaseForeignContraband ]
   id: ClothingBeltWand
   name: wand belt
   description: A belt designed to hold various rods of power. A veritable fanny pack of exotic magic.

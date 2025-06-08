@@ -166,7 +166,7 @@
     - Xenoborg
 
 - type: entity
-  parent: [ DoorRemoteDefault, BaseXenoborgContraband ]
+  parent: [ DoorRemoteDefault, BaseForeignContraband ]
   id: DoorRemoteXenoborg
   name: xenoborg door remote
   components:

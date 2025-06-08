@@ -82,7 +82,7 @@
 
 - type: entity
   name: Cybersun pen
-  parent: [BaseAdvancedPen, BaseSyndicateContraband]
+  parent: [BaseAdvancedPen, BaseForeignContraband]
   id: CyberPen
   description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. So powerful, it's even able to rewrite officially stamped documents should the need arise.
   components:
@@ -124,7 +124,7 @@
 
 - type: entity
   name: wizard's magical pen
-  parent: [ PenEmbeddable, BaseMagicalContraband ]
+  parent: [ PenEmbeddable, BaseForeignContraband ]
   id: PenWiz
   description: A luxurious fountain pen. Seems to have a magical crystal eraser.
   components:

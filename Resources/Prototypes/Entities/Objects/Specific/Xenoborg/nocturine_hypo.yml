@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BorgHypo, BaseXenoborgContraband ]
+  parent: [ BorgHypo, BaseForeignContraband ]
   id: NocturineHypo
   name: nocturine hypo
   description: A self-refilling injector for rapid administration of nocturine to victms.

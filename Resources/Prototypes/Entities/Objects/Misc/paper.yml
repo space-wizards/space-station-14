@@ -368,7 +368,7 @@
   - type: NukeCodePaper
 
 - type: entity
-  parent: [Paper, BaseSyndicateContraband] # eat or burn your damn piece of paper damn thieves
+  parent: [Paper, BaseForeignContraband] # eat or burn your damn piece of paper damn thieves
   id: TraitorCodePaper
   name: syndicate codeword
   description: A leaked codeword to possibly get in touch with the Syndicate.
@@ -377,7 +377,7 @@
   - type: TraitorCodePaper
 
 - type: entity
-  parent: [Paper, BaseSyndicateContraband]
+  parent: [Paper, BaseForeignContraband]
   id: AllTraitorCodesPaper
   name: syndicate codewords registry
   description: A registry of all active Syndicate codewords.

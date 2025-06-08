@@ -1,26 +1,11 @@
-﻿# used by the unique items of xenoborgs (like modules and stuff)
+﻿# any item used by foreign invaders (e.g non-stealth syndicate stuff, wizards' magical items, ninja gear, xenoborg modules),
+# i.e stuff that crew members are not to use without explicit CentComm approval barring extreme life-or-death situations
 - type: entity
-  id: BaseXenoborgContraband
+  id: BaseForeignContraband
   abstract: true
   components:
   - type: Contraband
-    severity: Major # placeholder until they make a better severity
-
-# any type of magical items used by wizards and similiar
-- type: entity
-  id: BaseMagicalContraband
-  abstract: true
-  components:
-  - type: Contraband
-    severity: Magical
-
-# non-stealth syndicate stuff
-- type: entity
-  id: BaseSyndicateContraband
-  abstract: true
-  components:
-  - type: Contraband
-    severity: Syndicate
+    severity: Foreign
 
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity

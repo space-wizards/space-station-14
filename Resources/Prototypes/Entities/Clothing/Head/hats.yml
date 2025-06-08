@@ -692,7 +692,7 @@
 
 - type: entity
   abstract: true
-  parent: [ ClothingHeadBase, BaseMagicalContraband ]
+  parent: [ ClothingHeadBase, BaseForeignContraband ]
   id: ClothingHeadHatWizardBase
   components:
   - type: WizardClothes
@@ -737,7 +737,7 @@
     sprite: Clothing/Head/Hats/truckershat.rsi
 
 - type: entity
-  parent: [ ClothingHeadBase, BaseSyndicateContraband ]
+  parent: [ ClothingHeadBase, BaseForeignContraband ]
   id: ClothingHeadPyjamaSyndicateBlack
   name: syndicate black pyjama hat
   description: For keeping that traitor head of yours warm.
@@ -753,7 +753,7 @@
       HeadSide : HEAD
 
 - type: entity
-  parent: [ ClothingHeadBase, BaseSyndicateContraband ]
+  parent: [ ClothingHeadBase, BaseForeignContraband ]
   id: ClothingHeadPyjamaSyndicatePink
   name: syndicate pink pyjama hat
   description: For keeping that traitor head of yours warm.
@@ -769,7 +769,7 @@
       HeadSide : HEAD
 
 - type: entity
-  parent: [ ClothingHeadBase, BaseSyndicateContraband ]
+  parent: [ ClothingHeadBase, BaseForeignContraband ]
   id: ClothingHeadPyjamaSyndicateRed
   name: syndicate red pyjama hat
   description: For keeping that traitor head of yours warm.
@@ -968,7 +968,7 @@
         Caustic: 0.95
 
 - type: entity
-  parent: [ClothingHeadBase, BaseSyndicateContraband]
+  parent: [ClothingHeadBase, BaseForeignContraband]
   id: ClothingHeadHatSyndie
   name: syndicate hat
   description: A souvenir hat from "Syndieland", their production has already been closed.

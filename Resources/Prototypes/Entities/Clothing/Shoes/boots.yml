@@ -161,7 +161,7 @@
     sprite: Clothing/Shoes/Boots/winterbootssec.rsi
 
 - type: entity
-  parent: [ClothingShoesBaseWinterBoots, BaseSyndicateContraband]
+  parent: [ClothingShoesBaseWinterBoots, BaseForeignContraband]
   id: ClothingShoesBootsWinterSyndicate
   name: syndicate's winter boots
   description: Durable heavy boots, looks like merch from "Syndieland".

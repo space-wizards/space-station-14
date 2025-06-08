@@ -70,7 +70,7 @@
 
 - type: entity
   name: viper
-  parent: [BaseWeaponPistol, BaseSyndicateContraband]
+  parent: [BaseWeaponPistol, BaseForeignContraband]
   id: WeaponPistolViper
   description: A common handgun illegally modified by the Syndicate. The Viper sports a selector switch between semi-auto and ‘rock and roll’. The standard sidearm for any soldier who fights under the three serpents. Feeds from .35 pistol magazines.
   components:
@@ -105,7 +105,7 @@
 
 - type: entity
   name: echis
-  parent: [ BaseItem, BaseSyndicateContraband ]
+  parent: [ BaseItem, BaseForeignContraband ]
   id: WeaponPistolEchis
   description: A cyborg-mounted weapon system based on the Viper pistol. Creates ammunition on the fly from an internal fabricator, which slowly self-charges.
   components:
@@ -140,7 +140,7 @@
 
 - type: entity
   name: cobra
-  parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
+  parent: [ BaseWeaponPistol, BaseForeignContraband ]
   id: WeaponPistolCobra
   description: Integrally suppressed semi-automatic pistol used by the Syndicate, firing caseless subsonic rounds. Favored by any agent who likes to keep things quiet and leave no evidence behind. Feeds from .25 pistol magazines.
   components:

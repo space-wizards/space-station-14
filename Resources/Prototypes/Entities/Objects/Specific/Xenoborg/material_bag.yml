@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseStorageItem, BaseXenoborgContraband ]
+  parent: [ BaseStorageItem, BaseForeignContraband ]
   id: MaterialBag
   name: material bag
   description: A robust bag for xenoborgs to carry large amounts of materials.

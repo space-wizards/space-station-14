@@ -204,7 +204,7 @@
     accent: MobsterAccent
 
 - type: entity
-  parent: [ ClothingHeadBase, BaseSyndicateContraband ]
+  parent: [ ClothingHeadBase, BaseForeignContraband ]
   id: ClothingHeadHatCatEars
   name: cat ears
   description: "NYAH!"

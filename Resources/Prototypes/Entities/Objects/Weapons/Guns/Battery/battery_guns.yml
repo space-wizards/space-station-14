@@ -706,7 +706,7 @@
 
 - type: entity
   name: experimental C.H.I.M.P. handcannon
-  parent: [WeaponPistolCHIMP, BaseSyndicateContraband]
+  parent: [WeaponPistolCHIMP, BaseForeignContraband]
   id: WeaponPistolCHIMPUpgraded
   description: This C.H.I.M.P. seems to have a greater punch than is usual...
   components:
@@ -850,12 +850,12 @@
 
 - type: entity
   name: xenoborg laser gun
-  parent: [ WeaponAdvancedLaser, BaseXenoborgContraband ]
+  parent: [ WeaponAdvancedLaser, BaseForeignContraband ]
   id: XenoborgLaserGun
 
 - type: entity
   name: xenoborg heavy laser gun
-  parent: [ WeaponAdvancedLaser, BaseXenoborgContraband ]
+  parent: [ WeaponAdvancedLaser, BaseForeignContraband ]
   id: XenoborgHeavyLaserGun
   components:
   - type: HitscanBatteryAmmoProvider

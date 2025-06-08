@@ -759,7 +759,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterWarden
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSyndicateContraband]
+  parent: [ClothingOuterWinterCoatToggleable, BaseForeignContraband]
   id: ClothingOuterWinterSyndieCap
   name: syndicate's winter coat
   description: "The syndicate's winter coat is made of durable fabric, with gilded patterns, and coarse wool."
@@ -784,7 +784,7 @@
 
 ##############################################################
 - type: entity
-  parent: [ BaseSyndicateContraband, ClothingOuterWinterWarden ]
+  parent: [ BaseForeignContraband, ClothingOuterWinterWarden ]
   id: ClothingOuterWinterSyndieCapArmored
   name: syndicate's armored winter coat
   description: "The syndicate's armored winter coat is made of durable fabric, with gilded patterns, and coarse wool."
@@ -798,7 +798,7 @@
 ##############################################################
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSyndicateContraband]
+  parent: [ClothingOuterWinterCoatToggleable, BaseForeignContraband]
   id: ClothingOuterWinterSyndie
   name: syndicate's winter coat
   description: Insulated winter coat, looks like a merch from "Syndieland".

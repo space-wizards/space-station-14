@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: WeaponWandBase
   abstract: true
-  parent: [ BaseItem, BaseMagicalContraband ]
+  parent: [ BaseItem, BaseForeignContraband ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/wands.rsi

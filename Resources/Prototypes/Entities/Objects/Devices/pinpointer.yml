@@ -52,7 +52,7 @@
   name: syndicate pinpointer
   description: Produced specifically for nuclear operative missions, get that disk!
   id: PinpointerSyndicateNuclear
-  parent: [ PinpointerBase, BaseSyndicateContraband ]
+  parent: [ PinpointerBase, BaseForeignContraband ]
   components:
   - type: Sprite
     layers:
@@ -110,7 +110,7 @@
     targetName: the station
 
 - type: entity
-  parent: [ PinpointerBase, BaseXenoborgContraband ]
+  parent: [ PinpointerBase, BaseForeignContraband ]
   id: PinpointerMothership
   name: core pinpointer
   suffix: Mothership
