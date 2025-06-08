@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sageu111
-  changes:
-  - message: woke shit IDK
-    type: Add
-  id: 1276
-  time: '2025-03-12T03:26:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1907
 - author: DinnerCalzone
   changes:
   - message: Fixed Hospitality Director not having Brig access as all other heads
@@ -4202,3 +4195,11 @@
   id: 1775
   time: '2025-06-08T04:23:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2628
+- author: ThatKidConnor
+  changes:
+  - message: Added deerstalker in detective's loadout & detdrobe to match with your
+      smoking pipe, it's elementary!
+    type: Add
+  id: 1776
+  time: '2025-06-08T05:06:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2609
