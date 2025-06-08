@@ -74,7 +74,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
         base.Initialize();
 
         InitializeBolts();
-
         SubscribeLocalEvent<DoorComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DoorComponent, ComponentRemove>(OnRemove);
 

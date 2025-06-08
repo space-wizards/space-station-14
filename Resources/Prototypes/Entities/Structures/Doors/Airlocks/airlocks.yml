@@ -113,6 +113,7 @@
     department: Command
   - type: Wires
     layoutId: AirlockCommand
+  - type: DoorAlarm #imp change
 
 - type: entity
   parent: Airlock
@@ -290,6 +291,7 @@
     securityLevel: medSecurity
   - type: Wires
     layoutId: AirlockCommand
+  - type: DoorAlarm #imp change
 
 - type: entity
   parent: AirlockGlass
