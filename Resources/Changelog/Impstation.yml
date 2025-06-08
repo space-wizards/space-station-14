@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: All Kammerer models now make an iconic rack sound when you shoot. Pump-action
-      shotguns live forever!
-    type: Add
-  - message: A few weapons have slightly tweaked descriptions for wording or to match
-      their new sprites!
-    type: Tweak
-  - message: Unique weapon rack sounds, C20-R empty beeps, special disabler tweaks,
-      stun kammerers matching their lethal counterparts, and burstfire on SMGs should
-      once again be back in the game.
-    type: Fix
-  id: 1264
-  time: '2025-03-10T18:47:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1872
-- author: FlippenPage
-  changes:
-  - message: Monkeys can now wear most clothing. It also fits them properly!
-    type: Tweak
-  id: 1265
-  time: '2025-03-10T18:54:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1874
 - author: Tyranex
   changes:
   - message: Added a new basic mining module for salvage cyborg!
@@ -4215,3 +4193,32 @@
   id: 1763
   time: '2025-06-04T08:31:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2663
+- author: so many people
+  changes:
+  - message: Another upstream merge. Check the upstream changelog, and please report
+      any bugs you run into!
+    type: Add
+  - message: Departmental economy is real.
+    type: Add
+  - message: Many stations now feature the genpop prison system.
+    type: Add
+  - message: Atlas and Cluster have been derotated.
+    type: Remove
+  - message: No more stocks.
+    type: Remove
+  - message: Some Xenoarcheology effects and triggers have entered cryogenic stasis.
+    type: Remove
+  - message: Drones can no longer use maps or midis (FOR NOW. FIX COMING SOON).
+    type: Remove
+  - message: Heretic's mansus link channel now uses 'l' instead of 'z'.
+    type: Tweak
+  id: 1764
+  time: '2025-06-08T02:45:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2648
+- author: Sha-Seng
+  changes:
+  - message: updated legacy kaasi lobby art per feedback
+    type: Tweak
+  id: 1765
+  time: '2025-06-08T02:52:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2673
