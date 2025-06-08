@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Trash no longer has a chance to spawn inside the supermatter at roundstart.
-    type: Fix
-  id: 1279
-  time: '2025-03-13T05:03:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1911
 - author: formlessnameless
   changes:
   - message: Revert upstream disabler buffs.
@@ -4209,3 +4202,10 @@
   id: 1778
   time: '2025-06-08T11:56:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2629
+- author: Pinkbat5
+  changes:
+  - message: Medhud glasses are now also selectable in Medical Doctor and CMO loadouts.
+    type: Fix
+  id: 1779
+  time: '2025-06-08T11:57:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2681
