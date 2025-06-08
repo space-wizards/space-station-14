@@ -1,0 +1,15 @@
+- type: entity
+  name: nanotrasen representative's pen
+  parent: [PenEmbeddable, BaseCommandContraband]
+  id: PenNTR
+  description: The NT representative's own version of the centcomm pen, just not as sharp.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/pens.rsi
+      layers:
+        - state: pen_ntr
+    - type: Tag
+      tags:
+        - WriteIgnoreStamps
+        - Write
+        - Pen
