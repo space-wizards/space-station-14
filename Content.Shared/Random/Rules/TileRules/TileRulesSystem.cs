@@ -25,7 +25,7 @@ public sealed partial class TileRulesPrototype : IPrototype
 public abstract partial class TileRule
 {
     /// <summary>Does this rule take intersecting entities as an input when checking it?</summary>
-    // This is done so that intersecting entities aren't calculated for every single TileRule, but only for those that actually need it.
+    // This is done so that intersecting entities aren't evaluated for every single TileRule, but only for those that actually need it.
     public virtual bool TakesIntersecting => false;
 
     [DataField]
@@ -49,7 +49,7 @@ public sealed class TileRulesSystem : EntitySystem
     /// Checks if a given set of <see cref="TileRule"/>s is valid. Optionally takes
     ///     a list of entities intersecting the tile, resolving it with
     ///     <see cref="DefaultIntersectionEnlargement"/> as long as at least one rule
-    ///     needs to calculate any intersecting entities.
+    ///     needs to evaluate any intersecting entities.
     /// </summary>
     /// <param name="tileParentUid">The <see cref="EntityUid"/> (such as map or grid) that contains the specified tile.</param>
     /// <seealso cref="TileRule.TakesIntersecting"/>
