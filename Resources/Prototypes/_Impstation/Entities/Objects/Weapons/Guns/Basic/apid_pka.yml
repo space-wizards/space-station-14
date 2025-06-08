@@ -1,0 +1,62 @@
+- type: entity
+  id: WeaponProtoKineticAcceleratorApid
+  parent: BaseItem
+  name: QG-280 service accelerator
+  description: Downsized from a standard accelerator, the QueensGuard-280 is a workhorse rifle for apid conscripts. It's a little on the lighter side, but still fires straight.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Basic/apid_kinetic_accelerator.rsi
+    layers:
+      - state: icon
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    sprite: _Impstation/Objects/Weapons/Guns/Basic/apid_kinetic_accelerator.rsi
+    size: Small
+    storedRotation: -90
+  - type: Wieldable
+  - type: Gun
+    fireRate: 4 # imp: 0.5 -> 4, fire rate handled with recharge instead
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+    soundEmpty: # imp edit
+      path: /Audio/_Impstation/Weapons/Guns/Empty/dry_fire.ogg
+  - type: AmmoCounter
+  - type: Appearance
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 2 # imp: 0.75 -> 2
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: BasicEntityAmmoProvider
+    proto: BulletKinetic
+    capacity: 1
+    count: 1
+  - type: UseDelay
+    delay: 1
+
+  - type: MeleeWeapon #weapon melee
+    range: 0.8
+    attackRate: 0.6
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      collection: WeakHit
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_foley.ogg
+    resetOnHandSelected: false
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 10
+    damage:
+      types:
+        Blunt: 8
+  - type: StaminaDamageOnHit
+    damage: 10 #slight stagger, but still like 10 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5

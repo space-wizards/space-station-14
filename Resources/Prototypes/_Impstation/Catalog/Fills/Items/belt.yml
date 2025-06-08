@@ -67,7 +67,7 @@
       - id: WeaponTetherGun
       - id: MiningDrill
       - id: Wrench
-      - id: WeaponProtoKineticAccelerator
+      - id: WeaponProtoKineticAcceleratorApid
       - id: EmergencyMedipen
       - id: SyringeSaline
       - id: FireExtinguisherMini
