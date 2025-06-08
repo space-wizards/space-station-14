@@ -58,3 +58,73 @@
     - id: FoodGummyWorm
       prob: 0.01
 
+- type: entity
+  parent: CrateGeneric
+  id: CrateAnniversary
+  name: anniversary crate
+  description: You feel like a year has passed since you last saw this crate.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Storage/anniversarycrate.rsi
+    layers:
+    - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      sprite: Structures/Storage/Crates/labels.rsi
+      offset: "0.0,-0.09375"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: Icon
+    sprite: _Impstation/Objects/Storage/anniversarycrate.rsi
+    state: crate_icon
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateDoorOpen: crate_open
+    stateDoorClosed: crate_door
+
+- type: entity
+  id: CrateAnniversaryFilled
+  parent: CrateAnniversary
+  name: anniversary crate
+  suffix: filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: PlushieImp
+    - id: PlushieGnomeChild
+    - id: BongCommemorative
+      orGroup: RandomBong
+    - id: BongBongy
+      orGroup: RandomBong
+    - id: BongGay
+      orGroup: RandomBong
+    - id: BongSlime
+      orGroup: RandomBong
+    - id: BongSpace
+      orGroup: RandomBong
+    - id: BongWhiteCell
+      orGroup: RandomBong
+    - id: BongWizard
+      orGroup: RandomBong
+    - id: PlushieJumboGray
+    - id: ImpstationMemorialBlunt
+      orGroup: Memorial1
+    - id: ImpstationMemorialJoint
+      orGroup: Memorial1
+    - id: ImpstationMemorialBlunt
+      orGroup: Memorial2
+    - id: ImpstationMemorialJoint
+      orGroup: Memorial2
+    - id: PlushieFinfin
+      prob: 0.8
+      orGroup: FinFin
+    - id: MobFinfin # this might asphyxiate him but its funny so
+      prob: 0.15
+      orGroup: FinFin
+    - id: ToyFigurineGoldenFinfin
+      prob: 0.05
+      orGroup: FinFin

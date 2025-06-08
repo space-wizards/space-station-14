@@ -901,10 +901,11 @@
 - type: entity
   parent: PosterBase
   id: PosterLegitNoERP
-  name: "No ERP"
-  description: "This poster reminds the crew that Eroticism and Pornography are banned on Nanotrasen stations."
+  name: "Yes ERP"
+  description: "This poster reminds the crew that Eroticism and Pornography are banned on Nanotrasen stations, but also we are supportive of gay rights, so you get an exception for just this month." # imp
   components:
   - type: Sprite
+    sprite: _Floof/Structures/Wallmounts/posters.rsi # IMP YOU HAVE TO DELETE THIS AFTER JUNE
     state: poster34_legit
 
 - type: entity

@@ -45,3 +45,15 @@
           Quantity: 10
         - ReagentId: Nutriment
           Quantity: 10
+
+- type: entity
+  name: Where is Gumbo?
+  parent: FoodRiceGumbo
+  id: FoodWhereIsGumbo
+  components:
+  - type: FlavorProfile
+    flavors:
+    - spaceshroom # tastes mysterious
+  - type: Sprite
+    layers:
+    - state: bowl

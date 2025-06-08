@@ -1,0 +1,113 @@
+﻿- type: entity
+  id: BaseBong # overengineering in case i actually bother making these function
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Smokeables/Bongs/bongs.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: _Impstation/Objects/Consumable/Smokeables/Bongs/bongs.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+
+- type: entity
+  id: BongCommemorative
+  parent: BaseBong
+  name: commemorative glass vase
+  description: A fully legal and completely decorative sculpture meant to evoke the highs of life.
+
+- type: entity
+  id: BongBongy
+  parent: BaseBong
+  name: Bongy the Buffoon Bong # proper noun. thats its name
+  description: Bongy! You know it! You saw it on television! Don't tell anyone.
+  components:
+  - type: Sprite
+    state: bongy
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: bongy-inhand
+      right:
+      - state: bongy-inhand
+  - type: MultiHandedItem
+
+- type: entity
+  id: BongGay
+  parent: BaseBong
+  name: gay vase
+  description: Huh? Oh yeah. Gay rights or whatever.
+  components:
+  - type: Sprite
+    state: gay
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: gay-inhand-left
+      right:
+      - state: gay-inhand-right
+
+- type: entity
+  id: BongSlime
+  parent: BaseBong
+  name: slong (slime bong)
+  description: Really unpleasant texture. Eugh?
+  components:
+  - type: Sprite
+    state: slime
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: slime-inhand-left
+      right:
+      - state: slime-inhand-right
+
+- type: entity
+  id: BongSpace
+  parent: BaseBong
+  name: space vase
+  description: People fond of this vase always seem to be 'spacing out'. Which could mean nothing.
+  components:
+  - type: Sprite
+    state: space
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: space-inhand-left
+      right:
+      - state: space-inhand-right
+
+- type: entity
+  id: BongWhiteCell
+  parent: BaseBong
+  name: "'White Cell' decorative vase"
+  description: Emblazoned with a decal of a whitewashed anime character. Really brings the room together.
+  components:
+  - type: Sprite
+    state: whitecell
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: whitecell-inhand-left
+      right:
+      - state: whitecell-inhand-right
+
+- type: entity
+  id: BongWizard
+  parent: BaseBong
+  name: wizard vase
+  description: The wizzerrrrrrrrrrrrrrrrrrrr.
+  components:
+  - type: Sprite
+    state: wizard
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: wizard-inhand-left
+      right:
+      - state: wizard-inhand-right

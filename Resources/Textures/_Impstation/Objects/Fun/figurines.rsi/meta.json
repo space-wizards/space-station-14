@@ -1,12 +1,15 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "crew, centcomm, nukie sprites by RosySaturniidae, silicon sprites by crocodilecarousel with tweaks from RosySaturniidae, salvage figure purpled by mousesweater",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "crew, centcomm, nukie sprites by RosySaturniidae, silicon sprites by crocodilecarousel with tweaks from RosySaturniidae, salvage figure purpled by mousesweater, goldenfin by crocodilecarousel",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
     "states": [
+        {
+            "name": "brigmedic"
+        },
         {
             "name": "cburn"
         },
@@ -17,46 +20,25 @@
             "name": "chrono"
         },
         {
-            "name": "deathsquad"
+            "name": "cosmiccultist"
         },
         {
-            "name": "ertchaplain"
-        },
-        {
-            "name": "ertengineer"
-        },
-        {
-            "name": "ertjanitor"
-        },
-        {
-            "name": "ertleader"
-        },
-        {
-            "name": "ertmedic"
-        },
-        {
-            "name": "ertsecurity"
+            "name": "cosmiccultist_unshaded"
         },
         {
             "name": "courier"
         },
         {
-            "name": "brigmedic"
+            "name": "cyborg_assault"
         },
         {
-            "name": "nukie"
+            "name": "cyborg_assault_unshaded"
         },
         {
-            "name": "nukie_commander"
+            "name": "cyborg_corpsman"
         },
         {
-            "name": "nukie_elite"
-        },
-        {
-            "name": "nukie_agent"
-        },
-        {
-            "name": "nukie_juggernaut"
+            "name": "cyborg_corpsman_unshaded"
         },
         {
             "name": "cyborg_default"
@@ -83,6 +65,12 @@
             "name": "cyborg_medical_unshaded"
         },
         {
+            "name": "cyborg_saboteur"
+        },
+        {
+            "name": "cyborg_saboteur_unshaded"
+        },
+        {
             "name": "cyborg_salvage"
         },
         {
@@ -95,37 +83,52 @@
             "name": "cyborg_service_unshaded"
         },
         {
-            "name": "cyborg_assault"
+            "name": "deathsquad"
         },
         {
-            "name": "cyborg_assault_unshaded"
+            "name": "ertchaplain"
         },
         {
-            "name": "cyborg_corpsman"
+            "name": "ertengineer"
         },
         {
-            "name": "cyborg_corpsman_unshaded"
+            "name": "ertjanitor"
         },
         {
-            "name": "cyborg_saboteur"
+            "name": "ertleader"
         },
         {
-            "name": "cyborg_saboteur_unshaded"
+            "name": "ertmedic"
+        },
+        {
+            "name": "ertsecurity"
+        },
+        {
+            "name": "goldenfin"
+        },
+        {
+            "name": "nukie"
+        },
+        {
+            "name": "nukie_agent"
+        },
+        {
+            "name": "nukie_commander"
+        },
+        {
+            "name": "nukie_elite"
+        },
+        {
+            "name": "nukie_juggernaut"
+        },
+        {
+            "name": "salvage"
         },
         {
             "name": "station_ai"
         },
         {
             "name": "station_ai_unshaded"
-        },
-        {
-            "name": "cosmiccultist"
-        },
-        {
-            "name": "cosmiccultist_unshaded"
-        },
-        {
-            "name": "salvage"
         }
     ]
 }

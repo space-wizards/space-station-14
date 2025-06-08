@@ -805,7 +805,7 @@
   parent: BasePlushie
   id: PlushieIba
   name: pie-stained doll
-  description: A plush toy of a jovial slime, it smells faintly of bananas. 
+  description: A plush toy of a jovial slime, it smells faintly of bananas.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Fun/toys.rsi
@@ -847,3 +847,152 @@
       head:
       - state: iba-equipped-HELMET
         offset: "0, 0.06"
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieJumboGray
+  name: jumbo gray plushie
+  description: Put cheego embinum jorl keb misery.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie_gray_jumbo
+  - type: Item
+    size: Large
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    inhandVisuals:
+      left:
+      - state: plushie_gray_jumbo-inhand
+      right:
+      - state: plushie_gray_jumbo-inhand
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+      params:
+        pitch: 0.5
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Impstation/Voice/Gray/gray_cry.ogg
+      params:
+        pitch: 0.5
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+      params:
+        pitch: 0.5
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+      params:
+        pitch: 0.5
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+      params:
+        pitch: 0.5
+  - type: Food
+    requiresSpecialDigestion: false
+    useSound:
+      path: /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+      params:
+        pitch: 0.5
+  - type: HeldSpeedModifier
+    walkModifier: 0.5
+    sprintModifier: 0.5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 15
+    soundHit: /Audio/_Impstation/Voice/Gray/gray_cough.ogg
+    staminaCost: 50
+  - type: MultiHandedItem
+
+- type: entity
+  parent: BaseItem # cant parent BasePlushie because i dont want the EmitSoundOnUse
+  id: PlushieGnomeChild
+  name: gnome child plushie
+  description: A soft toy depicting a strange fantasy child. You seem to recall some social media buzz about this thing.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    state: plushie_gnome
+  - type: Item
+    size: Large
+    sprite: _Impstation/Objects/Fun/toys.rsi
+    inhandVisuals:
+      left:
+      - state: plushie_gnome-inhand-left
+      right:
+      - state: plushie_gnome-inhand-right
+  - type: UseDelay
+    delay: 5
+  - type: TriggerOnActivate
+  - type: TriggerOnSignal
+  - type: SpeakOnTrigger
+    pack: GnomeChild
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: Tag
+    tags:
+    - Payload
+    - ClothMade
+    - Plushie
+  - type: EmitSoundOnCollide
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnLand
+    sound:
+      collection: ToyFall
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+  - type: StaticPrice
+    price: 5
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      collection: ToySqueak
+    delay: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot { }
+  - type: Speech
+    speechVerb: Default
+    speechSounds: Plushie
+  - type: SecretStash
+    secretStashName: secret-stash-plushie
+    blacklist:
+      components:
+      - SecretStash
+      - NukeDisk
+      tags:
+      - QuantumSpinInverter
+      - FakeNukeDisk
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: Slicing
+    name: secret-stash-plushie
+  - type: StealTarget
+    stealGroup: Plushie
+  - type: DamageOtherOnHit
