@@ -1,0 +1,7 @@
+- type: cloudEmote
+  id: Mark
+  animationTime: 3
+  sound: /Audio/_Starlight/Effects/CloudEmotes/pop.ogg
+  icon:
+    sprite: Effects/cloud_emotes.rsi
+    state: emote_mark
