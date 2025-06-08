@@ -1,52 +1,4 @@
 ﻿Entries:
-- author: Ecramox
-  changes:
-  - message: Added the R.A.D, and put it in the Nuclear Commander and Lone Op's loadouts
-    type: Add
-  id: 1270
-  time: '2025-03-10T23:43:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1889
-- author: DinnerCalzone
-  changes:
-  - message: All job icons for the Service department jobs have been resprited to
-      be matching. Except for the jobs in the Theatre sub-department, which have been
-      resprited to not be matching.
-    type: Tweak
-  id: 1271
-  time: '2025-03-11T05:04:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1871
-- author: Darkmajia
-  changes:
-  - message: The supermatter has a grace period at roundstart, absorbing 10x less
-      gas until it's powered.
-    type: Tweak
-  id: 1272
-  time: '2025-03-11T07:41:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1895
-- author: AvianMaiden
-  changes:
-  - message: Chainlink fence gates sound a little different.
-    type: Tweak
-  - message: A few new Station AI names!
-    type: Add
-  id: 1273
-  time: '2025-03-11T14:31:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1869
-- author: AvianMaiden
-  changes:
-  - message: Unique sprites for all types of shotgun shell projectiles! Stun slugs
-      now look different from buckshot!
-    type: Add
-  - message: Descriptions to each type of shotgun shell. (Shotgun shell naming conventions
-      are now all the same too!)
-    type: Add
-  - message: Slightly lowered the light given off by incendiary projectiles.
-    type: Tweak
-  - message: The cargo Enforcer order now lists the correct number of shell boxes.
-    type: Fix
-  id: 1274
-  time: '2025-03-11T14:32:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1885
 - author: AvianMaiden
   changes:
   - message: Descriptions to all magazines and bullets! (Naming conventions should
@@ -4216,3 +4168,44 @@
   id: 1769
   time: '2025-06-08T04:10:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2586
+- author: ThatKidConnor
+  changes:
+  - message: Gave the syndicat a recolour resembling Impstation Bloodred hardsuits.
+    type: Tweak
+  id: 1770
+  time: '2025-06-08T04:16:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2646
+- author: DinnerCalzone, hivehum, crocodilecarousel, ATDoop
+  changes:
+  - message: A number of things have been added to celebrate Impstation's anniversary
+      on June 16th! An anniversary crate can be ordered from cargo!
+    type: Add
+  id: 1771
+  time: '2025-06-08T04:15:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2637
+- author: Oberonics
+  changes:
+  - message: Cremators across all stations are now electrically powered. How they
+      worked before is classified.
+    type: Tweak
+  id: 1772
+  time: '2025-06-08T04:12:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2502
+- author: AvianMaiden
+  changes:
+  - message: Slime/Gastro blinks work with directional audio now. Kode babies harm
+      your ears less upon death.
+    type: Tweak
+  id: 1773
+  time: '2025-06-08T04:14:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2639
+- author: animal-collective
+  changes:
+  - message: thaven have the bangs-less version of the Mean Girl hair now
+    type: Add
+  - message: made some adjustments to shading of all the Shaggy hairstyles for humanoids
+      and thaven
+    type: Tweak
+  id: 1774
+  time: '2025-06-08T04:13:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2640
