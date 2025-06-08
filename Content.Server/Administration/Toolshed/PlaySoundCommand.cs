@@ -18,31 +18,18 @@ public sealed class PlaySoundCommand : ToolshedCommand
     private SharedAudioSystem? _audioSystem;
 
     [CommandImplementation("at")]
-    public EntityUid? PlaySoundAt([PipedArgument] EntityCoordinates target,
-        ResPath resPath,
-        float volume = 0)
-    {
-        _audioSystem ??= GetSys<SharedAudioSystem>();
-
-        var audioParams = AudioParams.Default.WithVolume(volume);
-        var sound = new SoundPathSpecifier(resPath, audioParams);
-        return _audioSystem.PlayPvs(sound, target)?.Entity;
-    }
-
-    [CommandImplementation("at")]
     public IEnumerable<EntityUid?> PlaySoundAt([PipedArgument] IEnumerable<EntityCoordinates> targets,
         ResPath resPath,
         float volume = 0)
     {
-        return targets.Select(x => PlaySoundAt(x, resPath, volume));
-    }
+        return targets.Select(x =>
+        {
+            _audioSystem ??= GetSys<SharedAudioSystem>();
 
-    [CommandImplementation("on")]
-    public EntityUid? PlaySoundOn([PipedArgument] EntityUid target,
-        ResPath resPath,
-        float volume = 0)
-    {
-        return PlaySoundAt(Transform(target).Coordinates, resPath, volume);
+            var audioParams = AudioParams.Default.WithVolume(volume);
+            var sound = new SoundPathSpecifier(resPath, audioParams);
+            return _audioSystem.PlayPvs(sound, x)?.Entity;
+        });
     }
 
     [CommandImplementation("on")]
@@ -50,15 +37,7 @@ public sealed class PlaySoundCommand : ToolshedCommand
         ResPath resPath,
         float volume = 0)
     {
-        return targets.Select(x => PlaySoundOn(x, resPath, volume));
-    }
-
-    [CommandImplementation("attached")]
-    public EntityUid? PlaySoundAttached([PipedArgument] EntityUid target,
-        ResPath resPath,
-        float volume = 0)
-    {
-        return PlaySoundAt(target.ToCoordinates(), resPath, volume);
+        return PlaySoundAt(targets.Select(x => Transform(x).Coordinates), resPath, volume);
     }
 
     [CommandImplementation("attached")]
@@ -66,6 +45,6 @@ public sealed class PlaySoundCommand : ToolshedCommand
         ResPath resPath,
         float volume = 0)
     {
-        return targets.Select(x => PlaySoundAttached(x, resPath, volume));
+        return PlaySoundAt(targets.Select(x => x.ToCoordinates()), resPath, volume);
     }
 }
