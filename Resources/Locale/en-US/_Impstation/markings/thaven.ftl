@@ -625,6 +625,8 @@ marking-ShaggyLongerThaven = Shaggy (Longer)
 
 marking-SusieThaven = Mean Girl (Bangs)
 
+marking-SusieNoBangsThaven = Mean Girl
+
 # HeadSide
 
 marking-ThavenEars1 = Small Ears

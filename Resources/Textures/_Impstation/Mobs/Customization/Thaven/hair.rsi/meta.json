@@ -840,15 +840,19 @@
             "directions": 4
         },
         {
-            "name": "thavenshaggy",
+            "name": "shaggythaven",
             "directions": 4
         },
         {
-            "name": "thavenshaggylonger",
+            "name": "shaggylongerthaven",
             "directions": 4
         },
         {
             "name": "susiethaven",
+            "directions": 4
+        },
+        {
+            "name": "susienobangsthaven",
             "directions": 4
         },
         {
