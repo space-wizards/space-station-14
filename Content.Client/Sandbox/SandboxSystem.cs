@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Movement.Systems;
 using Content.Shared.Atmos.Components;
@@ -7,6 +8,7 @@ using Robust.Client.Placement;
 using Robust.Client.Placement.Modes;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Sandbox
 {
@@ -19,6 +21,8 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly ContentEyeSystem _contentEye = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+
+        private static readonly ProtoId<EntityCategoryPrototype> HideSpawnMenuAllowCopy = "HideSpawnMenuAllowCopy";
 
         private bool _sandboxEnabled;
         public bool SandboxAllowed { get; private set; }
@@ -94,10 +98,14 @@ namespace Content.Client.Sandbox
                 && EntityManager.TryGetComponent(uid, out MetaDataComponent? comp)
                 && !comp.EntityDeleted)
             {
-                if (comp.EntityPrototype == null
-                    || comp.EntityPrototype.Abstract
-                    // Make sure we allow copying non-primary layer pipes
-                    || comp.EntityPrototype.HideSpawnMenu && !HasComp<AtmosPipeLayersComponent>(uid))
+                if (comp.EntityPrototype == null || comp.EntityPrototype.Abstract)
+                    return false;
+
+                // Ignore if we're marked as HideSpawnMenu if we have HideSpawnMenuAllowCopy
+                var allowCopy = comp.EntityPrototype.Categories
+                    .Select(x => x.ID)
+                    .Contains(HideSpawnMenuAllowCopy.Id);
+                if (comp.EntityPrototype.HideSpawnMenu && !allowCopy)
                     return false;
 
                 if (_placement.Eraser)
