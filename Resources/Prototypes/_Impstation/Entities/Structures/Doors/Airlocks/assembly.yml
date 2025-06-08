@@ -7,7 +7,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/warden.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyArmoryGlass
@@ -26,7 +26,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyBarGlass
@@ -45,7 +45,7 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/security.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyBrigGlass
@@ -64,7 +64,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/captain.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyBarCaptain
@@ -83,7 +83,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/ce.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyBarChiefEngineer
@@ -102,7 +102,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/chapel.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyChapelGlass
@@ -111,7 +111,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi
     state: "assembly"
-    
+
 #Clown
 - type: entity
   parent: AirlockAssembly
@@ -121,7 +121,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/clown.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyClownGlass
@@ -140,7 +140,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/cmo.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyBarChiefMedicalOfficer
@@ -159,7 +159,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/courier.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyCourierGlass
@@ -178,7 +178,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/detective.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyDetectiveGlass
@@ -197,7 +197,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/hd.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyBarHospitalityDirector
@@ -216,7 +216,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/hop.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyBarHeadOfPersonnel
@@ -235,7 +235,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/hos.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyBarHeadOfSecurity
@@ -254,7 +254,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/janitor.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyJanitorGlass
@@ -273,7 +273,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/kitchen.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyKitchenGlass
@@ -292,7 +292,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/lawyer.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyLawyerGlass
@@ -301,7 +301,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi
     state: "assembly"
-    
+
 #Librarian
 - type: entity
   parent: AirlockAssembly
@@ -311,7 +311,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/librarian.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyLibrarianGlass
@@ -330,7 +330,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/medsci.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMedicalScienceGlass
@@ -339,7 +339,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/medsci.rsi
     state: "assembly"
-    
+
 #Mime
 - type: entity
   parent: AirlockAssembly
@@ -349,7 +349,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/mime.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMimeGlass
@@ -368,7 +368,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/morgue.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMorgueGlass
@@ -387,7 +387,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/musician.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyMusicianGlass
@@ -406,7 +406,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/qm.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyBarQuartermaster
@@ -425,7 +425,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/rd.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyBarResearchDirector
@@ -444,7 +444,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/reporter.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyReporterGlass
@@ -452,25 +452,6 @@
   components:
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/reporter.rsi
-    state: "assembly"
-
-#Salvage
-- type: entity
-  parent: AirlockAssembly
-  id: AirlockAssemblySalvage
-  suffix: Salvage
-  components:
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi
-    state: "assembly"
-    
-- type: entity
-  parent: AirlockAssembly
-  id: AirlockAssemblySalvagerGlass
-  suffix: Salvage, Glass
-  components:
-  - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Glass/salvage.rsi
     state: "assembly"
 
 #Service
@@ -482,7 +463,7 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyServiceGlass
@@ -501,7 +482,7 @@
   - type: Sprite
     sprite: _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
     state: "assembly"
-    
+
 - type: entity
   parent: AirlockAssembly
   id: AirlockAssemblyTheatreGlass

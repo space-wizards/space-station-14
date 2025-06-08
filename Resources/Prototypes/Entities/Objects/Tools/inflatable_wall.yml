@@ -19,6 +19,7 @@
       doAfter: 1
       removeOnInteract: true
     - type: Clickable
+    - type: PhysicalComposition
     - type: Tag
       tags:
         - DroneUsable
@@ -45,6 +46,7 @@
       doAfter: 1
       removeOnInteract: true
     - type: Clickable
+    - type: PhysicalComposition
     - type: Tag
       tags:
         - DroneUsable

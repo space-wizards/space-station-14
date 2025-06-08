@@ -1,3 +1,4 @@
+using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Radio;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -28,4 +29,11 @@ public sealed partial class ShipyardConsoleComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<RadioChannelPrototype> Channel = "Supply";
+
+    // Imp add- departmental economy
+    /// <summary>
+    /// The account that this console pulls from for ordering.
+    /// </summary>
+    [DataField]
+    public ProtoId<CargoAccountPrototype> Account = "Cargo";
 }

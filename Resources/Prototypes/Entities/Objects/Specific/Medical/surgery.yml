@@ -211,7 +211,7 @@
   - type: ThrowingAngle
     angle: 90
   # end imp edits #
-        
+
 
   # - type: entity
   #   name: bone setter
@@ -314,8 +314,8 @@
 - type: entity
   name: advanced circular saw
   id: SawAdvanced
-  parent: [ SawElectric, Tier3Contraband ]
-  description: You think you can cut anything with it.
+  parent: [ SawElectric, Tier3Contraband ] # imp contraband
+  description: Interdyne's state-of-the-art surgical saw. Guaranteed to stay spotless and sterile, no matter how messy the job.
   components:
   - type: Sprite
     state: advanced

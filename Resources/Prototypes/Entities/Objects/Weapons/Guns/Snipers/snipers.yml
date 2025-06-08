@@ -42,7 +42,7 @@
 
 - type: entity
   name: Kardashev-Mosin
-  parent: [BaseWeaponSniper, BaseGunWieldable, Tier3Contraband]
+  parent: [ BaseWeaponSniper, BaseGunWieldable, Tier3Contraband ] # imp contraband
   id: WeaponSniperMosin
   description: A weapon for hunting, or endless trench warfare, featuring a bayonet for going over the top. Uses .30 rifle ammo. #imp
   components:
@@ -87,7 +87,7 @@
 
 - type: entity
   name: Lindwyrm #imp
-  parent: [BaseWeaponSniper, BaseGunWieldable, Tier3Contraband]
+  parent: [ BaseWeaponSniper, BaseGunWieldable, Tier3Contraband ] # imp contraband
   id: WeaponSniperHristov
   description: A portable anti-materiel rifle, originally intended for destroying the engine blocks of moving vehicles. Uses .60 anti-materiel ammo. #imp
   components:
@@ -145,7 +145,7 @@
 
 - type: entity
   name: musket
-  parent: [ BaseWeaponSniper, BaseGunWieldable, BaseMinorContraband ]
+  parent: [ BaseWeaponSniper, BaseGunWieldable, BaseMajorContraband ]
   id: Musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
@@ -208,16 +208,19 @@
 
 - type: entity
   name: flintlock pistol
-  parent: [BaseWeaponSniper, BaseMinorContraband]
+  parent: [BaseWeaponSniper, BaseMajorContraband]
   id: WeaponPistolFlintlock
-  description: A pirate's companion. Yarrr! Uses .60 anti-materiel ammo.
+  description: A pirate's companion. Yarrr! Uses .45 magnum ammo.
   components:
   - type: Gun
     minAngle: 0
     maxAngle: 30 #miss him entirely because the barrel is smoothbore
   - type: Item
     size: Small
-    storedRotation: 90
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedRotation: 0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: Clothing
@@ -228,9 +231,9 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeAntiMateriel
+        - CartridgeMagnum # changed from Anti-material rifle rounds because it's a flintlock pistol not a Hristov
     capacity: 1
-    proto: CartridgeAntiMateriel
+    proto: CartridgeMagnum
   - type: StaticPrice
     price: 0
 #imp edit begin; weapon melee
@@ -254,3 +257,12 @@
         Blunt: 5
 #imp edit end
 
+- type: entity
+  name: flintlock pistol
+  parent: WeaponPistolFlintlock
+  id: WeaponPistolFlintlockEmpty
+  description: A pirate's companion. Yarrr! Uses .45 magnum ammo.
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null

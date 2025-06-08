@@ -7,9 +7,6 @@
         "y": 32
     },
     "states": [
-        {
-            "name": "cart-stonk"
-        },
 		{
             "name": "cart-chat"
         },

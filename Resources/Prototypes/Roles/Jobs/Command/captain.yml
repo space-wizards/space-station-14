@@ -6,18 +6,18 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 54000 # 15 hours
+      time: 54000 # 15 hours, imp
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 54000 # 15 hours
+      time: 54000 # 15 hours, imp
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 54000 # 15 hours, imp
     - !type:DepartmentTimeRequirement
       department: Security
       time: 54000 # 15 hours
     - !type:DepartmentTimeRequirement #imp
       department: Cargo
-      time: 54000 # 15 hours
-    - !type:DepartmentTimeRequirement #imp
-      department: Science
       time: 54000 # 15 hours
     - !type:DepartmentTimeRequirement
       department: Command

@@ -27,6 +27,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker.rsi
     state: icon
+  - type: Item
+    sprite: Objects/Consumable/Drinks/shaker.rsi
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:

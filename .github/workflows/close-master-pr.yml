@@ -10,6 +10,11 @@ jobs:
     if: ${{github.head_ref == 'master' || github.head_ref == 'main' || github.head_ref == 'develop'}}
 
     steps:
+    - uses: superbrothers/close-pull-request@v3
+      with:
+        comment: "Thank you for your contribution! It appears you created a PR from your master branch, this is [something you should avoid doing](https://jmeridth.com/posts/do-not-issue-pull-requests-from-your-master-branch/), and thus this PR has been automatically closed. \n \n We suggest you follow [our git usage documentation](https://docs.spacestation14.com/en/general-development/setup/git-for-the-ss14-developer.html). \n \n You can move your current work from the master branch to another branch by following [these commands](https://ohshitgit.com/#accidental-commit-master). And then you may recreate your PR using the new branch."
+
+    # steps:
     # - uses: superbrothers/close-pull-request@v3
     #   with:
     #     comment: 'Thank you for contributing to the Space Station 14 repository.

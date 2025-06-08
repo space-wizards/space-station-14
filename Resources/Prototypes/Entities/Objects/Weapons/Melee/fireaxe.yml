@@ -62,7 +62,7 @@
 - type: entity
   id: FireAxeFlaming
   name: fire axe
-  parent: [Tier3Contraband, FireAxe]
+  parent: [ Tier3Contraband, FireAxe ] # imp contraband
   description: Why fight fire with an axe when you can fight with fire and axe? Now featuring rugged rubberized handle!
   components:
   - type: MeleeWeapon

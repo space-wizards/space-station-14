@@ -3,7 +3,7 @@
   mapName: 'Refsdal'
   mapPath: /Maps/_Impstation/refsdal.yml
   minPlayers: 0
-  maxPlayers: 25
+  maxPlayers: 23
   stations:
     Refsdal:
       stationProto: StandardNanotrasenStation

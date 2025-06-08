@@ -439,6 +439,224 @@
     price: 75
 
 - type: entity
+  id: CrateBaseLockBox
+  parent: CrateBaseSecure
+  name: lock box
+  description: "A secure lock box. Funds from its sale will be distributed back to the department. Just remember: Cargo always takes a cut."
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Storage/Crates/lockbox.rsi #imp edit
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+      enum.StorageVisuals.Open:
+        lid_overlay:
+          True: { visible: false }
+          False: { visible: true }
+      #imp edit start
+        lid_overlay_lip:
+          True: { visible: true }
+          False: { visible: false }
+      #imp edit end
+  - type: OverrideSell
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.4,0.3,0.19"
+        density: 50
+        mask:
+        - CrateMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
+
+- type: entity
+  id: CrateLockBoxEngineering
+  parent: CrateBaseLockBox
+  name: engineering lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#EFB341" #imp edit, color in departmental palette
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#EFB341" #imp edit, color in departmental palette
+      map: [ lid_overlay ]
+    # imp edit start
+    - state: overlay-open
+      color: "#EFB341"
+      map: [ lid_overlay_lip ]
+    # imp edit end
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: _Impstation/Structures/Storage/Crates/labels.rsi #imp edit
+      offset: "-0.5,0" #imp edit
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Engineering
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  id: CrateLockBoxMedical
+  parent: CrateBaseLockBox
+  name: medical lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#52B4E9" #imp edit, color in departmental palette
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#52B4E9" #imp edit, color in departmental palette
+      map: [ lid_overlay ]
+    # imp edit start
+    - state: overlay-open
+      color: "#52B4E9"
+      map: [ lid_overlay_lip ]
+    # imp edit end
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: _Impstation/Structures/Storage/Crates/labels.rsi #imp edit
+      offset: "-0.5,0" #imp edit
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Medical
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  id: CrateLockBoxScience
+  parent: CrateBaseLockBox
+  name: science lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#D381C9" #imp edit, color in departmental palette
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#D381C9"
+      map: [ lid_overlay ]
+    # imp edit start
+    - state: overlay-open
+      color: "#D381C9"
+      map: [ lid_overlay_lip ]
+    # imp edit end
+    - state: welded #imp edit, color in departmental palette
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: _Impstation/Structures/Storage/Crates/labels.rsi #imp edit
+      offset: "-0.5,0" #imp edit
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Science
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  id: CrateLockBoxSecurity
+  parent: CrateBaseLockBox
+  name: security lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#DE3A3A" #imp edit, color in departmental palette
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#DE3A3A" #imp edit, color in departmental palette
+      map: [ lid_overlay ]
+    # imp edit start
+    - state: overlay-open
+      color: "#DE3A3A"
+      map: [ lid_overlay_lip ]
+    # imp edit end
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: _Impstation/Structures/Storage/Crates/labels.rsi #imp edit
+      offset: "-0.5,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Security
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  id: CrateLockBoxService
+  parent: CrateBaseLockBox
+  name: service lock box
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#9FED58" #imp edit, color in departmental palette
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: overlay-closed
+      color: "#9FED58" #imp edit, color in departmental palette
+      map: [ lid_overlay ]
+    # imp edit start
+    - state: overlay-open
+      color: "#9FED58"
+      map: [ lid_overlay_lip ]
+    # imp edit end
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: paper
+      sprite: _Impstation/Structures/Storage/Crates/labels.rsi #imp edit
+      offset: "-0.5,0" #imp edit
+      map: ["enum.PaperLabelVisuals.Layer"]
+  - type: OverrideSell
+    overrideAccount: Service
+  - type: AccessReader
+    access: [["Service"]]
+
+- type: entity
   parent: CrateGeneric
   id: CratePirate
   name: pirate chest

@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace Content.Server._DV.Cargo.Systems;
 
-public sealed class LogisticStatsSystem : SharedCargoSystem
+public sealed class LogisticStatsSystem : EntitySystem
 {
 
     [PublicAPI]

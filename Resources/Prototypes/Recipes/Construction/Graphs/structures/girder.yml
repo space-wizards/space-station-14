@@ -134,7 +134,7 @@
               amount: 2
               doAfter: 2
 
-        - to: shuttleInteriorWall
+        - to: shuttleInteriorWall # imp
           completed:
             - !type:SnapToGrid
               southRotation: true
@@ -280,10 +280,10 @@
             - tool: Prying
               doAfter: 5
 
-    - node: shuttleInteriorWall
+    - node: shuttleInteriorWall # imp
       entity: WallShuttleInterior
       edges:
-        - to: miningInteriorWall #imp
+        - to: miningInteriorWall
           completed:
             - !type:SnapToGrid
               southRotation: true
@@ -354,9 +354,6 @@
               doAfter: 1
 
         - to: diagonalshuttleWall
-          completed:
-            - !type:SnapToGrid
-              southRotation: false
           conditions:
             - !type:EntityAnchored { }
           steps:

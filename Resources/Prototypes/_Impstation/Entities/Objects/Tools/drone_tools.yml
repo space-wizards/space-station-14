@@ -81,7 +81,6 @@
     state: icon
   - type: LimitedCharges
     maxCharges: 10
-    charges: 10
   - type: AutoRecharge
     rechargeDuration: 10
   - type: RCD
@@ -111,7 +110,6 @@
     state: icon
   - type: LimitedCharges
     maxCharges: 20
-    charges: 20
   - type: AutoRecharge
     rechargeDuration: 5
   - type: RCD
@@ -148,7 +146,6 @@
   components:
   - type: LimitedCharges
     maxCharges: 50
-    charges: 50
   - type: AutoRecharge
     rechargeDuration: 0.1
 

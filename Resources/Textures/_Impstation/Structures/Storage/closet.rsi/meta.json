@@ -237,6 +237,36 @@
           "name": "generic_open"
       },
       {
+          "name": "genpop"
+      },
+      {
+          "name": "genpop_door_1"
+      },
+      {
+          "name": "genpop_door_2"
+      },
+      {
+          "name": "genpop_door_3"
+      },
+      {
+          "name": "genpop_door_4"
+      },
+      {
+          "name": "genpop_door_5"
+      },
+      {
+          "name": "genpop_door_6"
+      },
+      {
+          "name": "genpop_door_7"
+      },
+      {
+          "name": "genpop_door_8"
+      },
+      {
+          "name": "genpop_open"
+      },
+      {
           "name": "green_door"
       },
       {

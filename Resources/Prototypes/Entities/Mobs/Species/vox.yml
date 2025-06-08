@@ -7,20 +7,11 @@
   - type: Hunger
   - type: Thirst
   - type: Icon
-    sprite: Mobs/Species/Vox/parts.rsi 
+    sprite: Mobs/Species/Vox/parts.rsi
     state: vox_m
   - type: Body
     prototype: Vox
     requiredLegs: 2
-  - type: HumanoidAppearance
-    species: Vox
-    hideLayersOnEquip: #imp
-    - HeadSide
-    - Hair
-    - Tail
-    - FacialHair
-    undergarmentTop: UndergarmentTopTanktopVox
-    undergarmentBottom: UndergarmentBottomBoxersVox
     #- type: VoxAccent # Not yet coded
   - type: Speech
     speechVerb: Vox
@@ -50,7 +41,7 @@
     damage:
       types:
         Heat: -0.07
-        Poison: -0.2
+        Poison: -0.2 # needs to be less than the PendingZombieComponent does or they never become zombies by the disease.
       groups:
         Brute: -0.07
   - type: DamageVisuals
@@ -117,6 +108,21 @@
       sprite: "Effects/creampie.rsi"
       state: "creampie_vox" # Not default
       visible: false
+  - type: HumanoidAppearance
+    hideLayersOnEquip: #imp
+    - HeadSide
+    - Hair
+    - Tail
+    - FacialHair
+    species: Vox
+    undergarmentTop: UndergarmentTopTanktopVox
+    undergarmentBottom: UndergarmentBottomBoxersVox
+    markingsDisplacement:
+      Hair:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: hair
   - type: Inventory
     speciesId: vox
     displacements:
@@ -176,6 +182,12 @@
     species: Vox
     undergarmentTop: UndergarmentTopTanktopVox
     undergarmentBottom: UndergarmentBottomBoxersVox
+    markingsDisplacement:
+      Hair:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Vox/displacement.rsi
+            state: hair
   - type: Body
     prototype: Vox
   - type: Inventory

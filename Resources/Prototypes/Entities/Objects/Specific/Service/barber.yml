@@ -24,6 +24,9 @@
         Piercing: 6
     soundHit:
       path: "/Audio/Weapons/bladeslice.ogg"
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200
   # imp edits #
   - type: DamageOtherOnHit
   - type: EmbeddableProjectile

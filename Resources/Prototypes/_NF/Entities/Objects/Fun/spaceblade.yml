@@ -301,8 +301,9 @@
   - type: Sprite
     state: clown # imp
   - type: Slippery
-    paralyzeTime: 0.5
-    launchForwardsMultiplier: 0.5
+    slipData:
+      paralyzeTime: 0.5
+      launchForwardsMultiplier: 0.5
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake

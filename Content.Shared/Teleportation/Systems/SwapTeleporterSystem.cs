@@ -24,13 +24,13 @@ namespace Content.Shared.Teleportation.Systems;
 public sealed class SwapTeleporterSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
 
@@ -152,13 +152,12 @@ public sealed class SwapTeleporterSystem : EntitySystem
         comp.TeleportTime = null;
 
         Dirty(uid, comp);
-        if (comp.LinkedEnt is not { } linkedEnt)
-        {
+        // We can't run the teleport logic on the client due to PVS range issues.
+        if (_net.IsClient || comp.LinkedEnt is not { } linkedEnt)
             return;
-        }
 
         // can't predict if either entity doesn't exist on the client / is outside of PVS
-        if (_netMan.IsClient)
+        if (_net.IsClient)
         {
             if (!Exists(uid) || Transform(uid).MapID == MapId.Nullspace || !Exists(linkedEnt) || Transform(linkedEnt).MapID == MapId.Nullspace)
                 return;
@@ -166,11 +165,10 @@ public sealed class SwapTeleporterSystem : EntitySystem
 
         var teleEnt = GetTeleportingEntity((uid, xform));
         var otherTeleEnt = GetTeleportingEntity((linkedEnt, Transform(linkedEnt)));
+        var teleXform = Transform(teleEnt);
+        var otherTeleXform = Transform(otherTeleEnt);
 
-        _container.TryGetOuterContainer(teleEnt, Transform(teleEnt), out var cont);
-        _container.TryGetOuterContainer(otherTeleEnt, Transform(otherTeleEnt), out var otherCont);
-
-        if (!CanTeleport(teleEnt,otherTeleEnt)) // Logic moved upon request
+        if (!CanSwapTeleport((teleEnt, teleXform), (otherTeleEnt, otherTeleXform)))
         {
             _popup.PopupEntity(Loc.GetString("swap-teleporter-popup-teleport-fail",
                 ("entity", Identity.Entity(linkedEnt, EntityManager))),
@@ -214,25 +212,24 @@ public sealed class SwapTeleporterSystem : EntitySystem
         _transform.SwapPositions(teleEnt, otherTeleEnt);
     }
 
-    public bool CanTeleport(EntityUid teleEnt, EntityUid otherTeleEnt)
+    /// <summary>
+    /// Checks if two entities are able to swap positions via the teleporter.
+    /// </summary>
+    private bool CanSwapTeleport(
+        Entity<TransformComponent> entity1,
+        Entity<TransformComponent> entity2)
     {
-        _container.TryGetOuterContainer(teleEnt, Transform(teleEnt), out var cont);
-        _container.TryGetOuterContainer(otherTeleEnt, Transform(otherTeleEnt), out var otherCont);
+        _container.TryGetOuterContainer(entity1, entity1, out var container1);
+        _container.TryGetOuterContainer(entity2, entity2, out var container2);
 
-        // Checks if the objects can actually be swapped with respect to containers
+        if (container2 != null && !_container.CanInsert(entity1, container2) ||
+            container1 != null && !_container.CanInsert(entity2, container1))
+            return false;
 
-        bool containerBlocked = otherCont != null && !_container.CanInsert(teleEnt, otherCont) ||
-            cont != null && !_container.CanInsert(otherTeleEnt, cont);
+        if (IsPaused(entity1) || IsPaused(entity2))
+            return false;
 
-        // Prevents teleporting to the polymorph zone or the cryosleep zone.
-
-        bool pausedMap = _map.IsPaused(Transform(teleEnt).MapID) || _map.IsPaused(Transform(otherTeleEnt).MapID);
-
-        // Room for more logic in case more situations come up in the future
-
-        // Bring it all together
-
-        return !(containerBlocked || pausedMap);
+        return true;
     }
 
     /// <remarks>

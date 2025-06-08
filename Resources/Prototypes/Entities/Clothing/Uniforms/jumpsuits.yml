@@ -379,7 +379,18 @@
     sprite: Clothing/Uniforms/Jumpsuit/hos_parade.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
+  id: ClothingUniformJumpsuitCommandGeneric
+  name: command jumpsuit
+  description: A generic Command-colored jumpsuit not associated with any particular department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/commandgeneric.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/commandgeneric.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitHydroponics
   name: hydroponics jumpsuit
   description: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.

@@ -11,7 +11,7 @@
       time: 21600 #6 hrs, imp. why tf was this so low?
     - !type:RoleTimeRequirement
       role: JobMedicalDoctor
-      time: 21600 #6 hrs
+      time: 21600 #6 hrs, imp
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 72000 #20 hrs, imp

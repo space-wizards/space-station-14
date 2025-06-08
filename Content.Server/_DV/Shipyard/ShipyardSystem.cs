@@ -8,7 +8,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Utility;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server._DV.Shipyard;
 
@@ -72,7 +71,7 @@ public sealed class ShipyardSystem : EntitySystem
         if (!Resolve(station, ref station.Comp))
             return null;
 
-        if (_station.GetLargestGrid(station.Comp) is not {} grid)
+        if (_station.GetLargestGrid(station.Comp) is not { } grid)
         {
             Log.Error($"Station {ToPrettyString(station):station} had no largest grid to FTL to");
             return null;

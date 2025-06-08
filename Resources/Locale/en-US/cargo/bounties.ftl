@@ -92,6 +92,7 @@ bounty-description-carrot-fries = Night sight can mean life or death! A shipment
 bounty-description-carp = Admiral Pavlov has gone on strike ever since Central Command confiscated her "pet." She is demanding a space carp as a replacement, dead or alive.
 bounty-description-clown-costume = Due to a recent issue at a space carp petting zoo, we've unfortunately lost Bonobobonobo the Clown. Send us a new costume so the kids can see him once more.
 bounty-description-corn = After the recent destruction of Space Ohio, our corn imports are down 80%. Send us some so we can make up for it.
+# imp edit. thats not a typo.
 bounty-description-crayon = Dr Jones' kid ate all our crayons again. Please send us yours.
 bounty-description-cuban-carp = To celebrate the birth of Castro XXVII, ship one cuban carp to CentComm.
 bounty-description-donk-pocket =  URGENT MESSAGE FROM Donk Co: Consumer Safety Recall on DONK-POCKETS products issued within the last (50) years. Contents contain lizard biomatter. Please return for a full refund.

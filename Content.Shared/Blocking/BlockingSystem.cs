@@ -11,11 +11,10 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
-using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
-using Robust.Shared.Timing;
+using Robust.Shared.Player; // imp
+using Robust.Shared.Timing; // imp
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Blocking;
@@ -27,9 +26,8 @@ public sealed partial class BlockingSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!; // imp
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!; // imp
 
     public override void Initialize()
     {
@@ -141,22 +139,19 @@ public sealed partial class BlockingSystem : EntitySystem
         var msgUser = Loc.GetString("action-popup-blocking-user", ("shield", shieldName));
         var msgOther = Loc.GetString("action-popup-blocking-other", ("blockerName", blockerName), ("shield", shieldName));
 
-        if (ent.Comp.BlockingToggleAction != null)
+        // Don't allow someone to block if they're not holding the shield
+        if (!_handsSystem.IsHolding(user, ent, out _))
         {
-            // Don't allow someone to block if they're not holding the shield
-            if (!_handsSystem.IsHolding(user, ent, out _))
-            {
-                CantBlockError(user);
-                return;
-            }
+            CantBlockError(user);
+            return;
+        }
 
-            _actionsSystem.SetToggled(ent.Comp.BlockingToggleActionEntity, true);
-            if (_gameTiming.IsFirstTimePredicted)
-            {
-                _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
-                if (_gameTiming.InPrediction)
-                    _popupSystem.PopupEntity(msgUser, user, user);
-            }
+        _actionsSystem.SetToggled(ent.Comp.BlockingToggleActionEntity, true);
+        if (_gameTiming.IsFirstTimePredicted)
+        {
+            _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
+            if (_gameTiming.InPrediction)
+                _popupSystem.PopupEntity(msgUser, user, user);
         }
 
         ent.Comp.IsBlocking = true;
@@ -170,7 +165,7 @@ public sealed partial class BlockingSystem : EntitySystem
     private void CantBlockError(EntityUid user)
     {
         var msgError = Loc.GetString("action-popup-blocking-user-cant-block");
-        _popupSystem.PopupEntity(msgError, user, user);
+        _popupSystem.PopupClient(msgError, user, user);
     }
 
     // imp - changed this whole thing to remove fixtures/anchoring and replace with slowdown
@@ -185,7 +180,7 @@ public sealed partial class BlockingSystem : EntitySystem
         var msgUser = Loc.GetString("action-popup-blocking-disabling-user", ("shield", shieldName));
         var msgOther = Loc.GetString("action-popup-blocking-disabling-other", ("blockerName", blockerName), ("shield", shieldName));
 
-        if (ent.Comp.BlockingToggleAction != null && TryComp<BlockingUserComponent>(user, out _))
+        if (TryComp<BlockingUserComponent>(user, out _))
         {
             _actionsSystem.SetToggled(ent.Comp.BlockingToggleActionEntity, false);
             if (_gameTiming.IsFirstTimePredicted)
@@ -251,7 +246,7 @@ public sealed partial class BlockingSystem : EntitySystem
 
     private void OnVerbExamine(EntityUid uid, BlockingComponent component, GetVerbsEvent<ExamineVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess || !_net.IsServer)
+        if (!args.CanInteract || !args.CanAccess)
             return;
 
         var fraction = component.IsBlocking ? component.ActiveBlockFraction : component.PassiveBlockFraction;

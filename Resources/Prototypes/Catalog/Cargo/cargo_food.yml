@@ -77,3 +77,43 @@
   cost: 2400
   category: cargoproduct-category-name-food
   group: market
+
+- type: cargoProduct
+  id: FoodCookGetmore
+  icon:
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: raisins
+  product: CrateFoodGetMore
+  cost: 750
+  category: cargoproduct-category-name-food
+  group: market
+
+- type: cargoProduct
+  id: FoodHappyHonkMeals
+  icon:
+    sprite: Objects/Consumable/Food/burger.rsi
+    state: bigbite
+  product: CrateFoodHappyHonkBigBite
+  cost: 1400
+  category: cargoproduct-category-name-food
+  group: market
+
+- type: cargoProduct
+  id: FoodIceCream
+  icon:
+    sprite: Objects/Consumable/Food/frozen.rsi
+    state: sandwich
+  product: CrateFoodIceCream
+  cost: 1200
+  category: cargoproduct-category-name-food
+  group: market
+
+- type: cargoProduct
+  id: FoodSnowcone
+  icon:
+    sprite: Objects/Consumable/Food/frozen.rsi
+    state: cone
+  product: CrateFoodSnowcone
+  cost: 1100
+  category: cargoproduct-category-name-food
+  group: market

@@ -3,7 +3,11 @@
   name: reagent-name-space-grease
   parent: BasePyrotechnic
   desc: reagent-desc-space-grease
-  slippery: true
+  slipData:
+    paralyzeTime: 3
+    launchForwardsMultiplier: 2
+    requiredSlipSpeed: 1
+    superSlippery: true
   physicalDesc: reagent-physical-desc-space-grease
   flavor: funny
   color: "#77b58e"
@@ -13,10 +17,6 @@
   - !type:FlammableTileReaction
     temperatureMultiplier: 5
   - !type:SpillTileReaction
-    paralyzeTime: 3
-    launchForwardsMultiplier: 2
-    requiredSlipSpeed: 1
-    superSlippery: true
   reactiveEffects:
     Flammable:
       methods: [ Touch ]

@@ -38,18 +38,6 @@
     path: /Audio/_Impstation/Animals/spooky_horse.ogg
 
 - type: reaction
-  id: Calimotxo
-  requiredMixerCategories:
-    - Stir
-  reactants:
-    Wine:
-      amount: 1
-    Cola:
-      amount: 1
-  products:
-    Calimotxo: 2
-
-- type: reaction
   id: LoveTap
   requiredMixerCategories:
     - Stir

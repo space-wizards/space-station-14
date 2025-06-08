@@ -57,6 +57,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly GrammarSystem _grammar = default!; // imp
 
 
@@ -114,9 +115,10 @@ public sealed partial class BorgSystem : SharedBorgSystem
         if (component.BrainEntity == null && brain != null &&
             _whitelistSystem.IsWhitelistPassOrNull(component.BrainWhitelist, used))
         {
-            if (_mind.TryGetMind(used, out _, out var mind) && mind.Session != null)
+            if (_mind.TryGetMind(used, out _, out var mind) &&
+                _player.TryGetSessionById(mind.UserId, out var session))
             {
-                if (!CanPlayerBeBorged(mind.Session))
+                if (!CanPlayerBeBorged(session))
                 {
                     Popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), used, args.User);
                     return;
@@ -264,10 +266,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
             container.ID != chassisComponent.BrainContainerId)
             return;
 
-        if (!_mind.TryGetMind(uid, out var mindId, out var mind) || mind.Session == null)
+        if (!_mind.TryGetMind(uid, out var mindId, out var mind) ||
+            !_player.TryGetSessionById(mind.UserId, out var session))
             return;
 
-        if (!CanPlayerBeBorged(mind.Session))
+        if (!CanPlayerBeBorged(session))
         {
             Popup.PopupEntity(Loc.GetString("borg-player-not-allowed-eject"), uid);
             Container.RemoveEntity(containerEnt, uid);
