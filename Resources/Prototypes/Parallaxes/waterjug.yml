@@ -1,9 +1,9 @@
-- type: parallax
-  id: CoreStation
+﻿- type: parallax
+  id: WaterjugStation
   layers:
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Parallaxes/space_map2.png"
+        path: "/Textures/Parallaxes/AspidParallaxBG.png"
       slowness: 0.998046875
       scale: "1, 1"
     - texture:
@@ -32,6 +32,10 @@
       slowness: 0.998046875
       scale: "1, 1"
       tiled: false
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/Asteroids.png"
+      slowness: 0.968046875
   layersLQ:
     - texture:
         !type:GeneratedParallaxTextureSource
