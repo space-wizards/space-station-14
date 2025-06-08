@@ -12,8 +12,7 @@ namespace Content.Client.UserInterface.Systems.MenuBar.Widgets
         {
             RobustXamlLoader.Load(this);
 
-            var escape = UserInterfaceManager.GetUIController<EscapeUIController>();
-            EscapeButton.OnPressed += _ => escape.ToggleWindow();
+            EscapeButton.OnPressed += _ => UserInterfaceManager.GetUIController<EscapeUIController>().ToggleWindow();
         }
     }
 }
