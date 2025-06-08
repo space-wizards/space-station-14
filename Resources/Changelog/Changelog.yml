@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: Fildrance
-  changes:
-  - message: fixed missing deconstruct on RCD
-    type: Fix
-  id: 8123
-  time: '2025-04-02T16:11:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36255
-- author: qwerltaz
-  changes:
-  - message: Dragon rifts now shine a different color depending on charge progress.
-    type: Add
-  id: 8124
-  time: '2025-04-02T18:37:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36216
-- author: aada
-  changes:
-  - message: Diphenhydramine now causes light drowsiness.
-    type: Tweak
-  id: 8125
-  time: '2025-04-03T06:29:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36212
-- author: sowelipililimute
-  changes:
-  - message: You can now more easily interact with objects behind faded ones, and
-      you can look behind fadeable objects in your FOV by hovering them with your
-      mouse pointer
-    type: Add
-  id: 8126
-  time: '2025-04-03T06:58:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35863
 - author: whatston3
   changes:
   - message: Fancy tables and curtains now respect carpet stacks.
@@ -3933,3 +3903,31 @@
   id: 8634
   time: '2025-06-07T02:29:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38117
+- author: K-Dynamic
+  changes:
+  - message: Disablers now hold 16 shots instead of 20
+    type: Tweak
+  id: 8635
+  time: '2025-06-07T13:05:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36019
+- author: perryprog
+  changes:
+  - message: Diamonds can now be ejected from lathes and material silos.
+    type: Fix
+  id: 8636
+  time: '2025-06-07T17:36:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38132
+- author: slarticodefast
+  changes:
+  - message: Fixed the stripping UI layout when having more than 2 hands.
+    type: Fix
+  id: 8637
+  time: '2025-06-07T22:23:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37577
+- author: Nox38
+  changes:
+  - message: Space Carp ghost roles no longer have a raffle!
+    type: Tweak
+  id: 8638
+  time: '2025-06-08T02:49:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38101
