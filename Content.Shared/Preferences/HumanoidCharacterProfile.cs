@@ -537,9 +537,6 @@ namespace Content.Shared.Preferences
                 var speciesPrototypes = prototypeManager.EnumeratePrototypes<SpeciesPrototype>();
                 foreach (var specieNames in speciesPrototypes)
                 {
-                    if (specieNames == speciesPrototype)
-                        continue;
-
                     if (Loc.GetString(specieNames.Name).ToLower() == customspeciename.ToLower())
                     {
                         customspeciename = "";
