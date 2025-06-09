@@ -18,6 +18,8 @@
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
+    friction: 0
+    bodyStatus: InAir
   - type: TileFrictionModifier
     modifier: 0
   - type: PointLight
@@ -33,6 +35,9 @@
         density: 1
         hard: false
         layer:
+        - Impassable
+        - Opaque
+        mask:
         - Impassable
         - Opaque
   - type: WarpPoint

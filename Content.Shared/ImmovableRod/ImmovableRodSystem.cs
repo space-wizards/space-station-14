@@ -29,18 +29,14 @@ public abstract class SharedImmovableRodSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ImmovableRodComponent, StartCollideEvent>(OnCollide);
-        SubscribeLocalEvent<ImmovableRodComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<ImmovableRodComponent, ComponentStartup>(OnMapInit);
         SubscribeLocalEvent<ImmovableRodComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnMapInit(EntityUid uid, ImmovableRodComponent component, MapInitEvent args)
+    private void OnMapInit(EntityUid uid, ImmovableRodComponent component, ComponentStartup args)
     {
         if (!TryComp<PhysicsComponent>(uid, out var physics))
             return;
-
-        _physics.SetLinearDamping(uid, physics, 0f);
-        _physics.SetFriction(uid, physics, 0f);
-        _physics.SetBodyStatus(uid, physics, BodyStatus.InAir);
 
         var (worldPos, worldRot) = _transform.GetWorldPositionRotation(uid);
         var vel = worldRot.ToWorldVec() * component.MaxSpeed;
@@ -83,21 +79,21 @@ public abstract class SharedImmovableRodSystem : EntitySystem
 
     private void HandleRodCollision(Entity<ImmovableRodComponent> rod, Entity<ImmovableRodComponent> target)
     {
-        if (rod.Comp is {SpawnOnRodCollision: not null, HasCollidedWithRod: false} && !target.Comp.HasCollidedWithRod)
+        if (rod.Comp is { SpawnOnRodCollision: not null, HasCollidedWithRod: false } && !target.Comp.HasCollidedWithRod)
         {
             var coords = Transform(target).Coordinates;
             var popup = Loc.GetString(rod.Comp.OnRodCollisionPopup);
 
             _popup.PopupCoordinates(popup, coords, PopupType.LargeCaution);
 
-            SpawnAtPosition(rod.Comp.SpawnOnRodCollision, coords);
+            PredictedSpawnAtPosition(rod.Comp.SpawnOnRodCollision, coords);
         }
 
         rod.Comp.HasCollidedWithRod = true;
         target.Comp.HasCollidedWithRod = true;
 
-        Del(rod);
-        Del(target);
+        QueueDel(rod);
+        QueueDel(target);
     }
 
     private void HandleMobCollision(Entity<ImmovableRodComponent> ent, StartCollideEvent args)
