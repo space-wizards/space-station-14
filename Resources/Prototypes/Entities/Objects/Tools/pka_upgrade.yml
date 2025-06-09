@@ -76,5 +76,8 @@
   - type: GunUpgrade
     tags: [ GunUpgradeReloadSpeed ]
     examineText: gun-upgrade-examine-text-reload
-  - type: GunUpgradeFireRate
-    coefficient: 1.5
+  #imp edit - removed in favour of the recharge time comp because we handle PKA rof by recharge time instead of rof
+  #- type: GunUpgradeFireRate
+  #  coefficient: 1.5
+  - type: GunUpgradeAmmoRechargeTime
+    coefficient: 0.667 # 1/1.5 because recharge time is sec / recharge while rof is shots / sec
