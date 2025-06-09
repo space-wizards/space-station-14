@@ -199,7 +199,7 @@ namespace Content.IntegrationTests.Tests.Construction
                 {
                     // Make sure that each name only has one use
                     Assert.That(recipeList, Has.Count.EqualTo(1),
-                        $"Multiple construction prototypes have the display name {displayName}: {string.Join(", ", recipeList)}");
+                        $"Multiple construction prototypes have the display name '{displayName}': {string.Join(", ", recipeList)}");
                 }
             });
 
