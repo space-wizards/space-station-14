@@ -66,7 +66,7 @@ public sealed class UtensilSystem : EntitySystem
 
         if (_robustRandom.Prob(component.BreakChance))
         {
-            _audio.PlayPvs(component.BreakSound, userUid, AudioParams.Default.WithVolume(-2f));
+            _audio.PlayPredicted(component.BreakSound, userUid, userUid, AudioParams.Default.WithVolume(-2f));
             EntityManager.DeleteEntity(uid);
         }
     }
