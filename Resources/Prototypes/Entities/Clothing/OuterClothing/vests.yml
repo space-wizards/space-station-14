@@ -29,9 +29,9 @@
         shader: shaded
         #same trick here
   - type: Reflect
-    reflectProb: 0.05
+    reflectProb: 0.02
     reflects:
-      - Energy
+    - Energy
     reflectingInHands: false
   - type: Tag
     tags:
