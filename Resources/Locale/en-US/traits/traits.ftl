@@ -62,3 +62,6 @@ trait-spanish-desc = Hola señor, donde esta la biblioteca.
 
 trait-painnumbness-name = Numb
 trait-painnumbness-desc = You lack any sense of feeling pain, being unaware of how hurt you may be.
+
+trait-touchy-name = Touchy
+trait-touchy-desc = You're more hands on than most, and must be within arms reach of something to examine it.
