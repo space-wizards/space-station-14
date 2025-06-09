@@ -349,7 +349,7 @@ public abstract class SharedStackSystem : EntitySystem
         SetCount(ent.Owner, cast.Count, ent.Comp);
     }
 
-    private void OnStackExamined(Entity<StackComponent> ent, ExaminedEvent args)
+    private void OnStackExamined(Entity<StackComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
