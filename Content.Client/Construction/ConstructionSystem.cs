@@ -76,6 +76,35 @@ namespace Content.Client.Construction
             return false;
         }
 
+        /// <summary>
+        /// Attempts to get the display name used for the given construction prototype.
+        /// This will be <see cref="ConstructionPrototype.Name"/> if it is not null, or the resulting entity's name as a fallback.
+        /// </summary>
+        /// <param name="constructionProtoId">ID of the construction prototype.</param>
+        /// <param name="name">Display name for the construction prototype.</param>
+        /// <returns>true if it was possible to get a name, otherwise false.</returns>
+        public bool TryGetRecipeName(ProtoId<ConstructionPrototype> constructionProtoId, [NotNullWhen(true)] out string? name)
+        {
+            name = null;
+
+            if (!PrototypeManager.TryIndex(constructionProtoId, out var recipe))
+                return false;
+
+            name ??= recipe.Name;
+
+            if (name != null)
+                return true;
+
+            if (!TryGetRecipePrototype(constructionProtoId, out var targetProtoId))
+                return false;
+
+            if (!PrototypeManager.TryIndex(targetProtoId, out var entProto))
+                return false;
+
+            name = entProto.Name;
+            return true;
+        }
+
         private void WarmupRecipesCache()
         {
             foreach (var constructionProto in PrototypeManager.EnumeratePrototypes<ConstructionPrototype>())
