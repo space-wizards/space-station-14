@@ -189,6 +189,52 @@
     bloodMaxVolume: 0.1
   - type: ZombieImmune
 
+- type: entity
+  name: capybara
+  parent: [ SimpleMobBase, StripableInventoryBase ]
+  id: MobCapybara
+  description: The largest living rodent.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: capybara
+      sprite: Mobs/Animals/capybara.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 10
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Inventory
+    speciesId: capybara
+    templateId: capybara
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: capybara
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatCapybara
+      amount: 3
+  - type: InteractionPopup
+    successChance: 0.8
+    interactSuccessString: petting-success-generic
+    interactFailureString: petting-failure-generic
+    interactSuccessSpawn: EffectHearts
+  - type: Bloodstream
+    bloodMaxVolume: 50
 
 - type: entity
   name: chicken
