@@ -1265,3 +1265,15 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  id: Bonfire
+  graph: Bonfire
+  startNode: start
+  targetNode: bonfire
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

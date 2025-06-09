@@ -2,8 +2,78 @@
   id: Bonfire
   parent: BaseStructure
   name: bonfire
+  suffix: Unlit
   description: What can be better than a late evening under the sky with guitar and friends?
   components:
+  - type: Appearance
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Decoration/bonfire.rsi
+    layers:
+      - state: bonfire
+  - type: Flammable
+    fireSpread: true
+    alwaysCombustible: true
+    canResistFire: false
+    damage:
+      types:
+        Heat: 1
+    firestackFade: 0
+    firestacksOnIgnite: 1
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire2
+    maxLightRadius: 2
+    maxLightEnergy: 1
+    lightColor: "#FFC90C"
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Log:
+            min: 1
+            max: 3
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTypeTrigger
+        damage: 4
+        damageType: Heat
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BonfireLit:
+            min: 1
+            max: 1
+        offset: 0
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Bonfire
+    node: bonfire
+
+- type: entity
+  id: BonfireLit
+  parent: BaseStructure
+  name: bonfire
+  description: What can be better than a late evening under the sky with guitar and friends?
+  components:
+  - type: Appearance
   - type: Sprite
     noRot: true
     sprite: Structures/Decoration/bonfire.rsi
@@ -19,12 +89,15 @@
     damageModifierSet: Wood
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: AmbientSound
     volume: -5
     range: 5
@@ -34,7 +107,7 @@
 
 - type: entity
   id: LegionnaireBonfire
-  parent: Bonfire
+  parent: BonfireLit
   name: legionnaire bonfire
   description: There, in the land of lava and ash, place to to cook marshmallow and potato.
   components:
