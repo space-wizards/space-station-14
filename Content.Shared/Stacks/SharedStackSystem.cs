@@ -188,25 +188,32 @@ public abstract class SharedStackSystem : EntitySystem
         RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
     }
 
-    /// <summary>
-    ///     Try to use an amount of items on this stack. Returns whether this succeeded.
-    /// </summary>
+    [Obsolete("Use Entity<T>")]
     public bool Use(EntityUid uid, int amount, StackComponent? stack = null)
     {
-        if (!Resolve(uid, ref stack))
+        return Use((uid, stack), amount);
+    }
+
+    /// <summary>
+    ///     Try to use an amount of items on this stack.
+    /// </summary>
+    /// <returns>True if the stacks were used.</returns>
+    public bool Use(Entity<StackComponent?> ent, int amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return false;
 
         // Check if we have enough things in the stack for this...
-        if (stack.Count < amount)
+        if (ent.Comp.Count < amount)
         {
             // Not enough things in the stack, return false.
             return false;
         }
 
         // We do have enough things in the stack, so remove them and change.
-        if (!stack.Unlimited)
+        if (!ent.Comp.Unlimited)
         {
-            SetCount(uid, stack.Count - amount, stack);
+            SetCount(ent.Owner, ent.Comp.Count - amount, ent.Comp);
         }
 
         return true;
@@ -252,24 +259,25 @@ public abstract class SharedStackSystem : EntitySystem
         return merged;
     }
 
+    [Obsolete("Use Entity<T>")]
+    public int GetCount(EntityUid uid, StackComponent? component = null)
+    {
+        return GetCount((uid, component));
+    }
+
     /// <summary>
     /// Gets the amount of items in a stack. If it cannot be stacked, returns 1.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    /// <returns></returns>
-    public int GetCount(EntityUid uid, StackComponent? component = null)
+    public int GetCount(Entity<StackComponent?> ent)
     {
-        return Resolve(uid, ref component, false) ? component.Count : 1;
+        return Resolve(ent.Owner, ref ent.Comp, false) ? ent.Comp.Count : 1;
     }
 
     /// <summary>
     /// Gets the max count for a given entity prototype
     /// </summary>
-    /// <param name="entityId"></param>
-    /// <returns></returns>
     [PublicAPI]
-    public int GetMaxCount(string entityId)
+    public int GetMaxCount(EntProtoId entityId)
     {
         var entProto = _prototype.Index<EntityPrototype>(entityId);
         entProto.TryGetComponent<StackComponent>(out var stackComp, EntityManager.ComponentFactory);
@@ -279,8 +287,6 @@ public abstract class SharedStackSystem : EntitySystem
     /// <summary>
     /// Gets the max count for a given entity
     /// </summary>
-    /// <param name="uid"></param>
-    /// <returns></returns>
     [PublicAPI]
     public int GetMaxCount(EntityUid uid)
     {
@@ -298,8 +304,6 @@ public abstract class SharedStackSystem : EntitySystem
     /// value (unlimimted).
     /// </p>
     /// </remarks>
-    /// <param name="component"></param>
-    /// <returns></returns>
     public int GetMaxCount(StackComponent? component)
     {
         if (component == null)

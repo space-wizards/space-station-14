@@ -49,7 +49,7 @@ public sealed class StackSystem : SharedStackSystem
             return null;
 
         // Try to remove the amount of things we want to split from the original stack...
-        if (!Use(uid, amount, stack))
+        if (!Use((uid, stack), amount))
             return null;
 
         // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...

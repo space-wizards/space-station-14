@@ -265,7 +265,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             {
                                 _container.Remove(item, component.Storage);
                             }
-                            _stack.Use(item, 1, stackComp);
+                            _stack.Use((item, stackComp), 1);
                             break;
                         }
                         else

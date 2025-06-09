@@ -73,7 +73,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
                 return;
 
             var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == msg.Material).Value;
-            var sheetsToExtract = Math.Min(msg.SheetsToExtract, _stackSystem.GetMaxCount(material.StackEntity));
+            var sheetsToExtract = Math.Min(msg.SheetsToExtract, _stackSystem.GetMaxCount(material.StackEntity.Value));
 
             volume = sheetsToExtract * volumePerSheet;
         }
