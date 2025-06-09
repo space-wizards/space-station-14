@@ -1,12 +1,11 @@
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Shared.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics;
 using Content.Server.Inventory;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -14,7 +13,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
-using Content.Shared.EntityEffects;
+using Content.Shared.EntityEffects.Effects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -24,7 +23,6 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -65,7 +63,6 @@ public sealed class DrinkSystem : SharedDrinkSystem
         // run after openable so its always open -> drink
         SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse, before: [typeof(ServerInventorySystem)], after: [typeof(OpenableSystem)]);
         SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
-        SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
         SubscribeLocalEvent<DrinkComponent, ConsumeDoAfterEvent>(OnDoAfter);
     }
 
@@ -158,76 +155,6 @@ public sealed class DrinkSystem : SharedDrinkSystem
     }
 
     /// <summary>
-    /// Tries to feed the drink item to the target entity
-    /// </summary>
-    private bool TryDrink(EntityUid user, EntityUid target, DrinkComponent drink, EntityUid item)
-    {
-        if (!HasComp<BodyComponent>(target))
-            return false;
-
-        if (!_body.TryGetBodyOrganEntityComps<StomachComponent>(target, out var stomachs))
-            return false;
-
-        if (_openable.IsClosed(item, user))
-            return true;
-
-        if (!_solutionContainer.TryGetSolution(item, drink.Solution, out _, out var drinkSolution) || drinkSolution.Volume <= 0)
-        {
-            if (drink.IgnoreEmpty)
-                return false;
-
-            _popup.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", item)), item, user);
-            return true;
-        }
-
-        if (_food.IsMouthBlocked(target, user))
-            return true;
-
-        if (!_interaction.InRangeUnobstructed(user, item, popup: true))
-            return true;
-
-        var forceDrink = user != target;
-
-        if (forceDrink)
-        {
-            var userName = Identity.Entity(user, EntityManager);
-
-            _popup.PopupEntity(Loc.GetString("drink-component-force-feed", ("user", userName)), user, target);
-
-            // logging
-            _adminLogger.Add(LogType.ForceFeed, LogImpact.High, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(item):drink} {SharedSolutionContainerSystem.ToPrettyString(drinkSolution)}");
-        }
-        else
-        {
-            // log voluntary drinking
-            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is drinking {ToPrettyString(item):drink} {SharedSolutionContainerSystem.ToPrettyString(drinkSolution)}");
-        }
-
-        var flavors = _flavorProfile.GetLocalizedFlavorsMessage(user, drinkSolution);
-
-        var doAfterEventArgs = new DoAfterArgs(EntityManager,
-            user,
-            forceDrink ? drink.ForceFeedDelay : drink.Delay,
-            new ConsumeDoAfterEvent(drink.Solution, flavors),
-            eventTarget: item,
-            target: target,
-            used: item)
-        {
-            BreakOnHandChange = false,
-            BreakOnMove = forceDrink,
-            BreakOnDamage = true,
-            MovementThreshold = 0.01f,
-            DistanceThreshold = 1.0f,
-            // do-after will stop if item is dropped when trying to feed someone else
-            // or if the item started out in the user's own hands
-            NeedHand = forceDrink || _hands.IsHolding(user, item),
-        };
-
-        _doAfter.TryStartDoAfter(doAfterEventArgs);
-        return true;
-    }
-
-    /// <summary>
     ///     Raised directed at a victim when someone has force fed them a drink.
     /// </summary>
     private void OnDoAfter(Entity<DrinkComponent> entity, ref ConsumeDoAfterEvent args)
@@ -241,7 +168,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
         if (args.Used is null || !_solutionContainer.TryGetSolution(args.Used.Value, args.Solution, out var soln, out var solution))
             return;
 
-        if (_openable.IsClosed(args.Used.Value, args.Target.Value))
+        if (_openable.IsClosed(args.Used.Value, args.Target.Value, predicted: true))
             return;
 
         // TODO this should really be checked every tick.
@@ -329,37 +256,5 @@ public sealed class DrinkSystem : SharedDrinkSystem
 
         if (!forceDrink && solution.Volume > 0)
             args.Repeat = true;
-    }
-
-    private void AddDrinkVerb(Entity<DrinkComponent> entity, ref GetVerbsEvent<AlternativeVerb> ev)
-    {
-        if (entity.Owner == ev.User ||
-            !ev.CanInteract ||
-            !ev.CanAccess ||
-            !TryComp<BodyComponent>(ev.User, out var body) ||
-            !_body.TryGetBodyOrganEntityComps<StomachComponent>((ev.User, body), out var stomachs))
-            return;
-
-        // Make sure the solution exists
-        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solution))
-            return;
-
-        // no drinking from living drinks, have to kill them first.
-        if (_mobState.IsAlive(entity))
-            return;
-
-        var user = ev.User;
-        AlternativeVerb verb = new()
-        {
-            Act = () =>
-            {
-                TryDrink(user, user, entity.Comp, entity);
-            },
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/drink.svg.192dpi.png")),
-            Text = Loc.GetString("drink-system-verb-drink"),
-            Priority = 2
-        };
-
-        ev.Verbs.Add(verb);
     }
 }
