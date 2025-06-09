@@ -10,7 +10,7 @@ namespace Content.Shared.RetractableItemAction;
 /// <summary>
 /// System for handling retractable items, such as armblades.
 /// </summary>
-public partial class RetractableItemActionSystem : EntitySystem
+public sealed class RetractableItemActionSystem : EntitySystem
 {
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
@@ -46,23 +46,26 @@ public partial class RetractableItemActionSystem : EntitySystem
         if (action.Comp.AttachedEntity == null)
             return;
 
+        if (ent.Comp.ActionItemUid == null)
+            return;
+
         if (_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid))
         {
-            RemComp<UnremoveableComponent>(ent.Comp.ActionItemUid);
+            RemComp<UnremoveableComponent>(ent.Comp.ActionItemUid.Value);
             var container = _containers.GetContainer(ent, RetractableItemActionComponent.Container);
-            _containers.Insert(ent.Comp.ActionItemUid, container);
+            _containers.Insert(ent.Comp.ActionItemUid.Value, container);
             _audio.PlayPredicted(ent.Comp.RetractSounds, action.Comp.AttachedEntity.Value, action.Comp.AttachedEntity.Value);
         }
         else
         {
-            _hands.TryForcePickup(args.Performer, ent.Comp.ActionItemUid, userHand, checkActionBlocker: false);
+            _hands.TryForcePickup(args.Performer, ent.Comp.ActionItemUid.Value, userHand, checkActionBlocker: false);
             _audio.PlayPredicted(ent.Comp.SpawnSounds, action.Comp.AttachedEntity.Value, action.Comp.AttachedEntity.Value);
 
             // Mispredicts allowing you to drop for a very brief moment, however without it it throws a ResetPredictedEntities exception.
             // I have no idea what causes it or how to fix it.
             // My only guess is that prediction doesn't like moving an item that becomes unremovable in the same frame.
             if (_net.IsServer)
-                EnsureComp<UnremoveableComponent>(ent.Comp.ActionItemUid);
+                EnsureComp<UnremoveableComponent>(ent.Comp.ActionItemUid.Value);
         }
 
         args.Handled = true;

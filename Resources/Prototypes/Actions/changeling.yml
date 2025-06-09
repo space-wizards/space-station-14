@@ -2,7 +2,7 @@
   parent: BaseAction
   id: ActionRetractableItemArmBlade
   name: Arm Blade
-  description: Mark a held item to later summon into your hand.
+  description: Shed your flesh and reform it into a fleshy blade.
   components:
   - type: Action
     useDelay: 2

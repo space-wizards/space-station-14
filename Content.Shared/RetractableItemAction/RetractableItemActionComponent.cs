@@ -7,7 +7,7 @@ namespace Content.Shared.RetractableItemAction;
 /// <summary>
 /// Used for storing an unremovable item within an action and summoning it into your hand on use.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), Access(typeof(RetractableItemActionSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(RetractableItemActionSystem))]
 public sealed partial class RetractableItemActionComponent : Component
 {
     /// <summary>
@@ -32,7 +32,7 @@ public sealed partial class RetractableItemActionComponent : Component
     /// The item managed by the action. Will be summoned and hidden as the action is used.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid ActionItemUid;
+    public EntityUid? ActionItemUid;
 
     public const string Container = "item-action-item-container";
 }
