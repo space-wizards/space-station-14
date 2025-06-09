@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added a special coat to the salvage loadout for decapoids to use.
-    type: Add
-  id: 1287
-  time: '2025-03-13T05:19:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1890
 - author: Tyranex
   changes:
   - message: Readded the scream button for cyborgs.
@@ -4208,3 +4201,10 @@
   id: 1786
   time: '2025-06-09T00:56:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2691
+- author: DinnerCalzone
+  changes:
+  - message: Wall rechargers charge rate has been reduced to match standard rechargers.
+    type: Tweak
+  id: 1787
+  time: '2025-06-09T01:03:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2680
