@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: whatston3
-  changes:
-  - message: Fancy tables and curtains now respect carpet stacks.
-    type: Fix
-  id: 8127
-  time: '2025-04-03T14:45:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33721
-- author: YuNii
-  changes:
-  - message: Stop ghosts from being logged to airlocks
-    type: Fix
-  id: 8128
-  time: '2025-04-03T22:24:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36261
-- author: K-Dynamic
-  changes:
-  - message: Proto-Kinetic Accelerators and PTK-800 Shuttle Gun recipes are now available
-      to the security techfab when researched by science.
-    type: Add
-  id: 8129
-  time: '2025-04-04T13:12:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34566
 - author: lzk228
   changes:
   - message: Fix ability to use implants on borgs and bots.
@@ -3931,3 +3909,29 @@
   id: 8638
   time: '2025-06-08T02:49:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38101
+- author: archee1
+  changes:
+  - message: Seismic Charges are now marked as cargo/sec contraband
+    type: Tweak
+  - message: Modular grenade payloads such as explosive or flash payloads, are now
+      properly marked as their relative department's contraband.
+    type: Tweak
+  - message: Improvised explosives are now considered minor contraband.
+    type: Tweak
+  id: 8639
+  time: '2025-06-09T01:05:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37521
+- author: Orsoniks
+  changes:
+  - message: Reworked the Health examination text
+    type: Tweak
+  id: 8640
+  time: '2025-06-09T07:31:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38126
+- author: TiniestShark
+  changes:
+  - message: Mecha parts now require two hands to pick up.
+    type: Tweak
+  id: 8641
+  time: '2025-06-09T07:40:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38162
