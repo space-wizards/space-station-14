@@ -33,27 +33,31 @@ public sealed class BodycamSystem: SharedBodycamSystem
         Dirty(uid, comp);
     }
 
+    // The surveillance camera system will automatically try and turn cameras back on after being emp-ed
+    // But we want our bodycams to stay off until someone manually flicks it back on
+    // So we cancel the event to automatically reactivate the camera
     private void OnEmpReactivate(EntityUid uid, BodycamComponent comp, ref SurveillanceCameraReactivateAfterEmpAttemptEvent args)
     {
         args.Cancelled = true;
     }
 
     /// <inheritdoc cref="SharedBodycamSystem.SwitchOn"/>
-    protected override void SwitchOn(EntityUid uid, BodycamComponent comp, EntityUid user)
+    protected override bool SwitchOn(EntityUid uid, BodycamComponent comp, EntityUid user)
     {
-        if (comp.Wearer == null || HasComp<EmpDisabledComponent>(uid))
-            return;
-
-        base.SwitchOn(uid, comp, user);
+        if (!base.SwitchOn(uid, comp, user))
+            return false;
         _camera.SetActive(uid, true);
-        var bodycamName = Loc.GetString("bodycam-name", ("wearer", Identity.Name(comp.Wearer.Value, EntityManager)));
+        var bodycamName = Loc.GetString("bodycam-name", ("wearer", Identity.Name(comp.Wearer!.Value, EntityManager))); // we know wearer will never be null if we got this far
         _camera.SetName(uid, bodycamName);
+        return true;
     }
 
     /// <inheritdoc cref="SharedBodycamSystem.SwitchOff"/>
-    protected override void SwitchOff(EntityUid uid, BodycamComponent comp, EntityUid user, bool causedByPlayer)
+    protected override bool SwitchOff(EntityUid uid, BodycamComponent comp, EntityUid? user, EntityUid? unequipper)
     {
-        base.SwitchOff(uid, comp, user, causedByPlayer);
+        if (!base.SwitchOff(uid, comp, user, unequipper))
+            return false;
         _camera.SetActive(uid, false);
+        return true;
     }
 }
