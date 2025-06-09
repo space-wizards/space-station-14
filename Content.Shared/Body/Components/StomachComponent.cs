@@ -1,13 +1,14 @@
-using Content.Server.Body.Systems;
-using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Whitelist;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Body.Components
+namespace Content.Shared.Body.Components
 {
-    [RegisterComponent, Access(typeof(StomachSystem), typeof(FoodSystem))]
+    [RegisterComponent, NetworkedComponent, Access(typeof(StomachSystem), typeof(FoodSystem))]
     public sealed partial class StomachComponent : Component
     {
         /// <summary>
@@ -32,7 +33,7 @@ namespace Content.Server.Body.Components
         ///     What solution should this stomach push reagents into, on the body?
         /// </summary>
         [DataField]
-        public string BodySolutionName = BloodstreamComponent.DefaultChemicalsSolutionName;
+        public string BodySolutionName = "chemicals";
 
         /// <summary>
         ///     Time between reagents being ingested and them being
