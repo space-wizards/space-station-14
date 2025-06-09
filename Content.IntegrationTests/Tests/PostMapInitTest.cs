@@ -83,7 +83,7 @@ namespace Content.IntegrationTests.Tests
             "Convex",
             "Relic",
             "dm01-entryway",
-            "Xeno",
+            "Exo",
         };
 
         /// <summary>
