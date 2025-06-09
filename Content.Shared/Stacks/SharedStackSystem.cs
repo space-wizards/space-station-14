@@ -50,54 +50,6 @@ public abstract class SharedStackSystem : EntitySystem
             .RemovePath(nameof(StackComponent.Count));
     }
 
-    private void OnStackInteractUsing(Entity<StackComponent> ent, ref InteractUsingEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!TryComp<StackComponent>(args.Used, out var recipientStack))
-            return;
-
-        // Transfer stacks from ent to args
-        if (!TryMergeStacks((ent.Owner, ent.Comp), (args.Used, recipientStack), out var transferred))
-            return; // if nothing transfered, leave without a pop-up
-
-        args.Handled = true;
-
-        // interaction is done, the rest is just generating a pop-up
-        if (!_gameTiming.IsFirstTimePredicted)
-            return;
-
-        var popupPos = args.ClickLocation;
-        var userCoords = Transform(args.User).Coordinates;
-
-        if (!popupPos.IsValid(EntityManager))
-        {
-            popupPos = userCoords;
-        }
-
-        switch (transferred)
-        {
-            case > 0:
-                Popup.PopupCoordinates($"+{transferred}", popupPos, Filter.Local(), false);
-
-                if (GetAvailableSpace(recipientStack) == 0)
-                {
-                    Popup.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
-                        popupPos.Offset(new Vector2(0, -0.5f)), Filter.Local(), false);
-                }
-
-                break;
-
-            case 0 when GetAvailableSpace(recipientStack) == 0:
-                Popup.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local(), false);
-                break;
-        }
-
-        var localRotation = Transform(args.Used).LocalRotation;
-        _storage.PlayPickupAnimation(args.Used, popupPos, userCoords, localRotation, args.User);
-    }
-
     /// <summary>
     /// Moves stacks from the donor to the recipient.
     /// Deletes the donor if its stacks are 0 or less.
@@ -127,11 +79,7 @@ public abstract class SharedStackSystem : EntitySystem
         return transferred > 0;
     }
 
-    [Obsolete("Use Entity<T>")]
-    public void TryMergeToHands(EntityUid item, EntityUid user, StackComponent? itemStack = null, HandsComponent? hands = null)
-    {
-        TryMergeToHands((item, itemStack), (user, hands));
-    }
+    #region Public API
 
     /// <summary>
     ///     If the given item is a stack, this attempts to find a matching stack in the users hand, and merge with that.
@@ -140,6 +88,7 @@ public abstract class SharedStackSystem : EntitySystem
     ///     If the interaction fails to fully merge the stack, or if this is just not a stack, it will instead try
     ///     to place it in the user's hand normally.
     /// </remarks>
+    [PublicAPI]
     public void TryMergeToHands(Entity<StackComponent?> item, Entity<HandsComponent?> user)
     {
         if (!Resolve(user.Owner, ref user.Comp, false))
@@ -164,6 +113,13 @@ public abstract class SharedStackSystem : EntitySystem
         Hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
     }
 
+    [Obsolete("Use Entity<T>")]
+    public void TryMergeToHands(EntityUid item, EntityUid user, StackComponent? itemStack = null, HandsComponent? hands = null)
+    {
+        TryMergeToHands((item, itemStack), (user, hands));
+    }
+
+    // TODO
     public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -188,16 +144,11 @@ public abstract class SharedStackSystem : EntitySystem
         RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
     }
 
-    [Obsolete("Use Entity<T>")]
-    public bool Use(EntityUid uid, int amount, StackComponent? stack = null)
-    {
-        return Use((uid, stack), amount);
-    }
-
     /// <summary>
     ///     Try to use an amount of items on this stack.
     /// </summary>
     /// <returns>True if the stacks were used.</returns>
+    [PublicAPI]
     public bool Use(Entity<StackComponent?> ent, int amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
@@ -220,9 +171,9 @@ public abstract class SharedStackSystem : EntitySystem
     }
 
     [Obsolete("Use Entity<T>")]
-    public bool TryMergeToContacts(EntityUid uid, StackComponent? stack = null, TransformComponent? xform = null)
+    public bool Use(EntityUid uid, int amount, StackComponent? stack = null)
     {
-        return TryMergeToContacts((uid, stack, xform));
+        return Use((uid, stack), amount);
     }
 
     /// <summary>
@@ -230,6 +181,7 @@ public abstract class SharedStackSystem : EntitySystem
     /// Deletes donor if all stacks are used.
     /// </summary>
     /// <returns>True if donor moved stacks to contacts.</returns>
+    [PublicAPI]
     public bool TryMergeToContacts(Entity<StackComponent?, TransformComponent?> donor)
     {
         if (!Resolve(donor, ref donor.Comp1, ref donor.Comp2, false))
@@ -260,23 +212,30 @@ public abstract class SharedStackSystem : EntitySystem
     }
 
     [Obsolete("Use Entity<T>")]
+    public bool TryMergeToContacts(EntityUid uid, StackComponent? stack = null, TransformComponent? xform = null)
+    {
+        return TryMergeToContacts((uid, stack, xform));
+    }
+
+    /// <summary>
+    /// Gets the amount of items in a stack. If it cannot be stacked, returns 1.
+    /// </summary>
+    [PublicAPI]
+    public int GetCount(Entity<StackComponent?> ent)
+    {
+        return Resolve(ent.Owner, ref ent.Comp, false) ? ent.Comp.Count : 1;
+    }
+
+    [Obsolete("Use Entity<T>")]
     public int GetCount(EntityUid uid, StackComponent? component = null)
     {
         return GetCount((uid, component));
     }
 
     /// <summary>
-    /// Gets the amount of items in a stack. If it cannot be stacked, returns 1.
-    /// </summary>
-    public int GetCount(Entity<StackComponent?> ent)
-    {
-        return Resolve(ent.Owner, ref ent.Comp, false) ? ent.Comp.Count : 1;
-    }
-
-    /// <summary>
     /// Gets the max count for a given entity prototype
     /// </summary>
-    [PublicAPI]
+    [PublicAPI]    // TODO
     public int GetMaxCount(EntProtoId entityId)
     {
         var entProto = _prototype.Index<EntityPrototype>(entityId);
@@ -287,7 +246,7 @@ public abstract class SharedStackSystem : EntitySystem
     /// <summary>
     /// Gets the max count for a given entity
     /// </summary>
-    [PublicAPI]
+    [PublicAPI]    // TODO
     public int GetMaxCount(EntityUid uid)
     {
         return GetMaxCount(CompOrNull<StackComponent>(uid));
@@ -304,6 +263,7 @@ public abstract class SharedStackSystem : EntitySystem
     /// value (unlimimted).
     /// </p>
     /// </remarks>
+    ///              // TODO
     public int GetMaxCount(StackComponent? component)
     {
         if (component == null)
@@ -325,7 +285,7 @@ public abstract class SharedStackSystem : EntitySystem
     /// </summary>
     /// <param name="component"></param>
     /// <returns></returns>
-    [PublicAPI]
+    [PublicAPI]             // TODO
     public int GetAvailableSpace(StackComponent component)
     {
         return GetMaxCount(component) - component.Count;
@@ -334,6 +294,7 @@ public abstract class SharedStackSystem : EntitySystem
     /// <summary>
     /// Tries to add one stack to another. May have some leftover count in the inserted entity.
     /// </summary>
+    ///               // TODO
     public bool TryAdd(EntityUid insertEnt, EntityUid targetEnt, StackComponent? insertStack = null, StackComponent? targetStack = null)
     {
         if (!Resolve(insertEnt, ref insertStack) || !Resolve(targetEnt, ref targetStack))
@@ -346,6 +307,7 @@ public abstract class SharedStackSystem : EntitySystem
     /// <summary>
     /// Tries to add one stack to another. May have some leftover count in the inserted entity.
     /// </summary>
+    ///              // TODO
     public bool TryAdd(EntityUid insertEnt, EntityUid targetEnt, int count, StackComponent? insertStack = null, StackComponent? targetStack = null)
     {
         if (!Resolve(insertEnt, ref insertStack) || !Resolve(targetEnt, ref targetStack))
@@ -365,6 +327,9 @@ public abstract class SharedStackSystem : EntitySystem
         SetCount(insertEnt, insertStack.Count - change, insertStack);
         return true;
     }
+
+    #endregion
+    #region Event Handlers
 
     private void OnStackStarted(EntityUid uid, StackComponent component, ComponentStartup args)
     {
@@ -408,6 +373,55 @@ public abstract class SharedStackSystem : EntitySystem
             )
         );
     }
+
+    private void OnStackInteractUsing(Entity<StackComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<StackComponent>(args.Used, out var recipientStack))
+            return;
+
+        // Transfer stacks from ground to hand
+        if (!TryMergeStacks((ent.Owner, ent.Comp), (args.Used, recipientStack), out var transferred))
+            return; // if nothing transfered, leave without a pop-up
+
+        args.Handled = true;
+
+        // interaction is done, the rest is just generating a pop-up
+        if (!_gameTiming.IsFirstTimePredicted)
+            return;
+
+        var popupPos = args.ClickLocation;
+        var userCoords = Transform(args.User).Coordinates;
+
+        if (!popupPos.IsValid(EntityManager))
+        {
+            popupPos = userCoords;
+        }
+
+        switch (transferred)
+        {
+            case > 0:
+                Popup.PopupCoordinates($"+{transferred}", popupPos, Filter.Local(), false);
+
+                if (GetAvailableSpace(recipientStack) == 0)
+                {
+                    Popup.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
+                        popupPos.Offset(new Vector2(0, -0.5f)), Filter.Local(), false);
+                }
+
+                break;
+
+            case 0 when GetAvailableSpace(recipientStack) == 0:
+                Popup.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local(), false);
+                break;
+        }
+
+        var localRotation = Transform(args.Used).LocalRotation;
+        _storage.PlayPickupAnimation(args.Used, popupPos, userCoords, localRotation, args.User);
+    }
+    #endregion
 }
 
 /// <summary>
