@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Revert upstream disabler buffs.
-    type: Fix
-  id: 1280
-  time: '2025-03-13T05:02:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1919
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: The Daito, Nemesis, and Mk 92HB firing sounds have been changed to more
-      ethically acquired sources.
-    type: Tweak
-  id: 1281
-  time: '2025-03-12T23:03:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1864
 - author: DinnerCalzone
   changes:
   - message: The final (I think) batch of unique airlock sprites have been added to
@@ -4209,3 +4194,18 @@
   id: 1779
   time: '2025-06-08T11:57:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2681
+- author: hivehum
+  changes:
+  - message: Station AI and Chemist have had their role time requirements reduced.
+    type: Tweak
+  id: 1780
+  time: '2025-06-09T00:42:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2688
+- author: Stonylogray
+  changes:
+  - message: High Command has scrounged up some change for the war effort. War declaration
+      provides 25 extra TC per operative, up from 20.
+    type: Tweak
+  id: 1781
+  time: '2025-06-09T00:43:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2684
