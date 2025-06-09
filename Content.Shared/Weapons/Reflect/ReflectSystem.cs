@@ -47,7 +47,7 @@ public sealed class ReflectSystem : EntitySystem
         SubscribeLocalEvent<ReflectComponent, GotUnequippedEvent>(OnReflectUnequipped);
         SubscribeLocalEvent<ReflectComponent, GotEquippedHandEvent>(OnReflectHandEquipped);
         SubscribeLocalEvent<ReflectComponent, GotUnequippedHandEvent>(OnReflectHandUnequipped);
-        SubscribeLocalEvent<ReflectComponent, ArmorExamineEvent>(OnExamine);
+        SubscribeLocalEvent<ReflectComponent, GetVerbsEvent<ExamineVerb>>(OnExamine);
     }
 
     private void OnReflectUserCollide(Entity<ReflectComponent> ent, ref ProjectileReflectAttemptEvent args)
@@ -205,9 +205,9 @@ public sealed class ReflectSystem : EntitySystem
     }
 
     #region Examine
-    private void OnExamine(Entity<ReflectComponent> ent, ref ArmorExamineEvent args)
+    private void OnExamine(Entity<ReflectComponent> ent, ref GetVerbsEvent<ExamineVerb> args)
     {
-        var value = MathF.Round((1f - ent.Comp.ReflectProb) * 100, 1);
+        var value = MathF.Round(ent.Comp.ReflectProb * 100, 1);
 
         if (value == 0 || ent.Comp.Reflects == ReflectType.None)
             return;
@@ -218,19 +218,20 @@ public sealed class ReflectSystem : EntitySystem
         switch (ent.Comp.Reflects)
         {
             case ReflectType.Energy | ReflectType.NonEnergy:
-                type = Loc.GetString(ent.Comp.BothTypeLoc);
-                args.Msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineLoc, ("value", value), ("type", type)));
+                type = Loc.GetString("reflect-examine-type-both");
+                args.Msg.AddMarkupOrThrow(Loc.GetString("reflect-examine", ("value", value), ("type", type)));
                 break;
 
             case ReflectType.Energy:
-                type = Loc.GetString(ent.Comp.EnergyTypeLoc);
-                args.Msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineLoc, ("value", value), ("type", type)));
+                type = Loc.GetString("reflect-examine-type-energy");
+                args.Msg.AddMarkupOrThrow(Loc.GetString("reflect-examine", ("value", value), ("type", type)));
                 break;
 
             case ReflectType.NonEnergy:
-                type = Loc.GetString(ent.Comp.NonEnergyTypeLoc);
-                args.Msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineLoc, ("value", value), ("type", type)));
+                type = Loc.GetString("reflect-examine-type-nonenergy");
+                args.Msg.AddMarkupOrThrow(Loc.GetString("reflect-examine", ("value", value), ("type", type)));
                 break;
+
         }
     }
     #endregion
