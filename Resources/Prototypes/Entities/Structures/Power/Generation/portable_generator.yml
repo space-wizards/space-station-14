@@ -75,7 +75,9 @@
             - !type:DoActsBehavior
               acts: ["Destruction"]
     - type: GuideHelp
-      guides: [ PortableGenerator, Power ]
+      guides:
+      - PortableGenerator
+      - Power
 
     # Core functionality
     - type: PortableGenerator

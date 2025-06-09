@@ -1,7 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.EntityEffects.Effects;
+using Content.Shared.EntityEffects.Effects;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -228,7 +228,7 @@ public sealed class SmokeSystem : EntitySystem
             var xform = Transform(uid);
             _physics.SetBodyType(uid, BodyType.Dynamic, fixtures, body, xform);
             _physics.SetCanCollide(uid, true, manager: fixtures, body: body);
-            _broadphase.RegenerateContacts(uid, body, fixtures, xform);
+            _broadphase.RegenerateContacts((uid, body, fixtures, xform));
         }
 
         var timer = EnsureComp<TimedDespawnComponent>(uid);

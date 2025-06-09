@@ -1,4 +1,4 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: SodaInventory
   startingInventory:
     DrinkColaCan: 3
@@ -9,6 +9,8 @@
     DrinkLemonLimeCan: 3
     DrinkLemonLimeCranberryCan: 3
     DrinkFourteenLokoCan: 3
+  contrabandInventory:
+    DrinkColaBottleFull: 2
   emaggedInventory:
     DrinkNukieCan: 3
     DrinkChangelingStingCan: 3

@@ -18,9 +18,19 @@
     containers:
       cluster-payload: !type:Container
   - type: ProjectileGrenade
+  - type: AnimationPlayer
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: icon }
+  - type: Tag
+    tags:
+    - HandGrenade
 
 - type: entity
-  parent: [ProjectileGrenadeBase, BaseRestrictedContraband]
+  parent: [ProjectileGrenadeBase, BaseSecurityContraband]
   id: GrenadeStinger
   name: stinger grenade
   description: Nothing to see here, please disperse.
@@ -33,18 +43,12 @@
   - type: ProjectileGrenade
     fillPrototype: PelletClusterRubber
     capacity: 30
-  - type: FlashOnTrigger
-    range: 7
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: SpawnOnTrigger
     proto: GrenadeFlashEffect
   - type: OnUseTimerTrigger
-    beepSound:
-      path: "/Audio/Effects/beep1.ogg"
-      params:
-        volume: 5
     initialBeepDelay: 0
     beepInterval: 2
     delay: 3.5
@@ -77,6 +81,8 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   parent: [ProjectileGrenadeBase, BaseSyndicateContraband]
@@ -103,3 +109,5 @@
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: StaticPrice
+    price: 1500

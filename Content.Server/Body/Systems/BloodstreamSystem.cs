@@ -1,9 +1,8 @@
 using Content.Server.Body.Components;
-using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.Forensics;
 using Content.Server.Popups;
 using Content.Shared.Alert;
+using Content.Shared.Body.Events;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
@@ -11,8 +10,10 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Drunk;
+using Content.Shared.EntityEffects.Effects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Forensics;
+using Content.Shared.Forensics.Components;
 using Content.Shared.HealthExaminable;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -39,7 +40,6 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-    [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
 
     public override void Initialize()
     {
@@ -192,17 +192,8 @@ public sealed class BloodstreamSystem : EntitySystem
         bloodSolution.MaxVolume = entity.Comp.BloodMaxVolume;
         tempSolution.MaxVolume = entity.Comp.BleedPuddleThreshold * 4; // give some leeway, for chemstream as well
 
-        // Ensure blood that should have DNA has it; must be run here, in case DnaComponent has not yet been initialized
-
-        if (TryComp<DnaComponent>(entity.Owner, out var donorComp) && donorComp.DNA == String.Empty)
-        {
-            donorComp.DNA = _forensicsSystem.GenerateDNA();
-
-            var ev = new GenerateDnaEvent { Owner = entity.Owner, DNA = donorComp.DNA };
-            RaiseLocalEvent(entity.Owner, ref ev);
-        }
-
         // Fill blood solution with BLOOD
+        // The DNA string might not be initialized yet, but the reagent data gets updated in the GenerateDnaEvent subscription
         bloodSolution.AddReagent(new ReagentId(entity.Comp.BloodReagent, GetEntityBloodData(entity.Owner)), entity.Comp.BloodMaxVolume - bloodSolution.Volume);
     }
 
@@ -257,17 +248,29 @@ public sealed class BloodstreamSystem : EntitySystem
     /// </summary>
     private void OnHealthBeingExamined(Entity<BloodstreamComponent> ent, ref HealthBeingExaminedEvent args)
     {
-        // Shows profusely bleeding at half the max bleed rate.
-        if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount / 2)
+        // Shows massively bleeding at 0.75x the max bleed rate.
+        if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount * 0.75f)
         {
             args.Message.PushNewline();
-            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-profusely-bleeding", ("target", ent.Owner)));
+            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-massive-bleeding", ("target", ent.Owner)));
         }
-        // Shows bleeding message when bleeding, but less than profusely.
-        else if (ent.Comp.BleedAmount > 0)
+        // Shows bleeding message when bleeding above half the max rate, but less than massively.
+        else if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount * 0.5f)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-strong-bleeding", ("target", ent.Owner)));
+        }
+        // Shows bleeding message when bleeding above 0.25x the max rate, but less than half the max.
+        else if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount * 0.25f)
         {
             args.Message.PushNewline();
             args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-bleeding", ("target", ent.Owner)));
+        }
+        // Shows bleeding message when bleeding below 0.25x the max cap
+        else if (ent.Comp.BleedAmount > 0)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-slight-bleeding", ("target", ent.Owner)));
         }
 
         // If the mob's blood level is below the damage threshhold, the pale message is added.
@@ -491,6 +494,8 @@ public sealed class BloodstreamSystem : EntitySystem
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
             }
         }
+        else
+            Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
     }
 
     /// <summary>
@@ -501,13 +506,10 @@ public sealed class BloodstreamSystem : EntitySystem
         var bloodData = new List<ReagentData>();
         var dnaData = new DnaData();
 
-        if (TryComp<DnaComponent>(uid, out var donorComp))
-        {
+        if (TryComp<DnaComponent>(uid, out var donorComp) && donorComp.DNA != null)
             dnaData.DNA = donorComp.DNA;
-        } else
-        {
+        else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
-        }
 
         bloodData.Add(dnaData);
 

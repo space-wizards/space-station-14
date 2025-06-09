@@ -1,4 +1,4 @@
-﻿# Configuration preset used on Wizard's Den Lizard
+# Configuration preset used on Wizard's Den Lizard
 
 # Nothing specific yet
 
@@ -11,3 +11,4 @@ panic_bunker.custom_reason = ""
 
 [hub]
 tags = "lang:en,region:am_n_w,rp:low"
+

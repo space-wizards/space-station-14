@@ -23,7 +23,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
             if (_enableShuttlePosition)
             {
-                _overlay = new EmergencyShuttleOverlay(EntityManager);
+                _overlay = new EmergencyShuttleOverlay(EntityManager.TransformQuery, XformSystem);
                 overlayManager.AddOverlay(_overlay);
                 RaiseNetworkEvent(new EmergencyShuttleRequestPositionMessage());
             }
@@ -57,23 +57,26 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 /// </summary>
 public sealed class EmergencyShuttleOverlay : Overlay
 {
-    private IEntityManager _entManager;
+    private readonly EntityQuery<TransformComponent> _transformQuery;
+    private readonly SharedTransformSystem _transformSystem;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     public EntityUid? StationUid;
     public Box2? Position;
 
-    public EmergencyShuttleOverlay(IEntityManager entManager)
+    public EmergencyShuttleOverlay(EntityQuery<TransformComponent> transformQuery, SharedTransformSystem transformSystem)
     {
-        _entManager = entManager;
+        _transformQuery = transformQuery;
+        _transformSystem = transformSystem;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (Position == null || !_entManager.TryGetComponent<TransformComponent>(StationUid, out var xform)) return;
+        if (Position == null || !_transformQuery.TryGetComponent(StationUid, out var xform))
+            return;
 
-        args.WorldHandle.SetTransform(xform.WorldMatrix);
+        args.WorldHandle.SetTransform(_transformSystem.GetWorldMatrix(xform));
         args.WorldHandle.DrawRect(Position.Value, Color.Red.WithAlpha(100));
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
     }
