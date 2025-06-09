@@ -3773,13 +3773,6 @@
   id: 8597
   time: '2025-06-01T15:48:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38000
-- author: ToastEnjoyer
-  changes:
-  - message: C-4 is now listed under major contraband instead of syndicate.
-    type: Tweak
-  id: 8598
-  time: '2025-06-01T21:09:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38004
 - author: chromiumboy
   changes:
   - message: Atmospheric pipes can now be built on three different sublayers, allowing
