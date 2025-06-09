@@ -3,10 +3,7 @@
 namespace Content.Shared.Examine;
 
 /// <summary>
-/// This is used for the touchy trait.
+/// While an entity has this component, it'll only be able to examine things within interaction range.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class TouchyComponent : Component
-{
-
-}
+public sealed partial class TouchyComponent : Component;
