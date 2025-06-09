@@ -1,9 +1,9 @@
 ## Plushies
 
 - type: entity
+  abstract: true
   parent: [BaseItem, BaseStash]
   id: BasePlushie
-  abstract: true
   components:
   - type: EmitSoundOnUse
     sound:
@@ -83,6 +83,11 @@
     state: icon
     noRot: true
   - type: Item
+  - type: Physics
+    angularDamping: 0.02
+    linearDamping: 0.02
+    fixedRotation: true
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
       fix1:
@@ -94,11 +99,6 @@
         - ItemMask
         restitution: 0.98
         friction: 0.01
-  - type: Physics
-    angularDamping: 0.02
-    linearDamping: 0.02
-    fixedRotation: true
-    bodyType: Dynamic
   - type: TileFrictionModifier
     modifier: 0.1
   - type: RandomWalk
@@ -117,8 +117,8 @@
 - type: entity
   parent: PlushieGhost
   id: PlushieGhostRevenant
-  name: revenant soft toy
   categories: [ DoNotMap ]
+  name: revenant soft toy
   description: So soft it almost makes you want to take a nap...
   components:
   - type: Sprite
@@ -436,8 +436,8 @@
 - type: entity
   parent: PlushieLizard
   id: PlushieRainbowLizard #Weh but gay
-  description: An adorable stuffed toy that resembles a lizardperson of every color. You just might trip while staring at it...
   name: rainbow lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson of every color. You just might trip while staring at it...
   components:
   - type: Sprite
     state: rainbowlizardplush
@@ -470,7 +470,7 @@
     scale: -1, 1
 
 - type: entity
-  parent: BasePlushie
+  parent: PlushieLizard
   id: PlushieSpaceLizard #ᵂᵉʰ!
   name: space lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson in an EVA suit. Made by CentComm as a token initiative to combat speciesism in space environments. "Welcome your new colleges as you do this plush, with open arms!"
@@ -504,20 +504,6 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/muffled_weh.ogg
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: JuiceThatMakesYouWeh
-        Quantity: 30
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 10
-        - ReagentId: JuiceThatMakesYouWeh
-          Quantity: 10
   - type: Clothing
     sprite: Objects/Fun/Plushies/lizard.rsi
     slots:
