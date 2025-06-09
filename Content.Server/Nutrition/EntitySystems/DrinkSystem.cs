@@ -168,7 +168,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
         if (args.Used is null || !_solutionContainer.TryGetSolution(args.Used.Value, args.Solution, out var soln, out var solution))
             return;
 
-        if (_openable.IsClosed(args.Used.Value, args.Target.Value))
+        if (_openable.IsClosed(args.Used.Value, args.Target.Value, predicted: true))
             return;
 
         // TODO this should really be checked every tick.

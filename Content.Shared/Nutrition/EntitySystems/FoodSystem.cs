@@ -109,7 +109,7 @@ public sealed class FoodSystem : EntitySystem
         if (HasComp<UnremoveableComponent>(food))
             return (false, false);
 
-        if (_openable.IsClosed(food, user))
+        if (_openable.IsClosed(food, user, predicted: true))
             return (false, true);
 
         if (!_solutionContainer.TryGetSolution(food, foodComp.Solution, out _, out var foodSolution))

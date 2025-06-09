@@ -50,7 +50,7 @@ public abstract partial class SharedDrinkSystem : EntitySystem
     protected void OnExamined(Entity<DrinkComponent> entity, ref ExaminedEvent args)
     {
         TryComp<OpenableComponent>(entity, out var openable);
-        if (_openable.IsClosed(entity.Owner, null, openable) || !args.IsInDetailsRange || !entity.Comp.Examinable)
+        if (_openable.IsClosed(entity.Owner, null, openable, true) || !args.IsInDetailsRange || !entity.Comp.Examinable)
             return;
 
         var empty = IsEmpty(entity, entity.Comp);
@@ -153,7 +153,7 @@ public abstract partial class SharedDrinkSystem : EntitySystem
         if (!_body.TryGetBodyOrganEntityComps<StomachComponent>(target, out var stomachs))
             return false;
 
-        if (_openable.IsClosed(item, user))
+        if (_openable.IsClosed(item, user, predicted: true))
             return true;
 
         if (!_solutionContainer.TryGetSolution(item, drink.Solution, out _, out var drinkSolution) || drinkSolution.Volume <= 0)
