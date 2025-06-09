@@ -6,7 +6,6 @@ using Content.Client.UserInterface.Systems.Character;
 using Content.Client.UserInterface.Systems.Crafting;
 using Content.Client.UserInterface.Systems.Emotes;
 using Content.Client.UserInterface.Systems.Guidebook;
-using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.UserInterface.Systems.Sandbox;
 using Robust.Client.UserInterface.Controllers;
 
@@ -45,8 +44,5 @@ public sealed class GameTopMenuBarUIController : UIController, IOnStateChanged<G
         _action.LoadButton();
         _sandbox.LoadButton();
         _emotes.LoadButton();
-
-        var menuBar = UIManager.GetActiveUIWidget<GameTopMenuBar>();
-        menuBar.EscapeButton.Pressed = false;
     }
 }

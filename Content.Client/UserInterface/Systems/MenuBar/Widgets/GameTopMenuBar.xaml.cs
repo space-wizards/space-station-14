@@ -14,5 +14,12 @@ namespace Content.Client.UserInterface.Systems.MenuBar.Widgets
 
             EscapeButton.OnPressed += _ => UserInterfaceManager.GetUIController<EscapeUIController>().ToggleWindow();
         }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            EscapeButton.Pressed = false;
+        }
     }
 }
