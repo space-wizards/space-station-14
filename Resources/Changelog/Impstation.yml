@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tyranex
-  changes:
-  - message: Readded the scream button for cyborgs.
-    type: Fix
-  id: 1288
-  time: '2025-03-13T05:22:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1920
 - author: Sha-Seng
   changes:
   - message: You can now eat the rat king
@@ -4208,3 +4201,16 @@
   id: 1787
   time: '2025-06-09T01:03:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2680
+- author: britno
+  changes:
+  - message: Added Irwizine, a chemical that pacifies normally hostile creatures with
+      15u of accumilation. Perfect for putting together exhibits with deadly beasts!
+    type: Add
+  - message: Added the Muldoon tranquilizer rifle, a scoped gun that only shoots Irwizine
+      and Chloral Hydrate darts.
+    type: Add
+  - message: Gave the zookeeper the Muldoon and some darts at the start of the round.
+    type: Tweak
+  id: 1788
+  time: '2025-06-09T01:35:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2555
