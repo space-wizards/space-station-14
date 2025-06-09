@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheBlueYowie
-  changes:
-  - message: Aligned Adv. Mineral Scanner rotation in inventory
-    type: Tweak
-  id: 8131
-  time: '2025-04-04T15:56:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36294
 - author: Tayrtahn
   changes:
   - message: Fixed ninjas being unable to hack criminal records consoles.
@@ -3909,3 +3902,11 @@
   id: 8642
   time: '2025-06-09T14:36:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38164
+- author: sowelipililimute
+  changes:
+  - message: Departmental request computers now send their orders directly to Cargo,
+      instead of requiring paper slips be brought to Cargo for insertion
+    type: Tweak
+  id: 8643
+  time: '2025-06-09T15:11:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37943
