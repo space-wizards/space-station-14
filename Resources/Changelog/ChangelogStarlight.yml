@@ -7074,4 +7074,11 @@ Entries:
   id: 977
   time: '2025-06-08T22:56:51.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/789
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed Late join UI not closing when selecting a job.
+    type: Fix
+  id: 978
+  time: '2025-06-09T11:58:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/792
 
