@@ -48,10 +48,10 @@ public partial class RetractableItemActionSystem : EntitySystem
 
         if (_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid))
         {
-                RemComp<UnremoveableComponent>(ent.Comp.ActionItemUid);
-                var container = _containers.GetContainer(ent, RetractableItemActionComponent.Container);
-                _containers.Insert(ent.Comp.ActionItemUid, container);
-                _audio.PlayPredicted(ent.Comp.RetractSounds, action.Comp.AttachedEntity.Value, action.Comp.AttachedEntity.Value);
+            RemComp<UnremoveableComponent>(ent.Comp.ActionItemUid);
+            var container = _containers.GetContainer(ent, RetractableItemActionComponent.Container);
+            _containers.Insert(ent.Comp.ActionItemUid, container);
+            _audio.PlayPredicted(ent.Comp.RetractSounds, action.Comp.AttachedEntity.Value, action.Comp.AttachedEntity.Value);
         }
         else
         {
