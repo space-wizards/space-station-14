@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Armor;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -15,6 +16,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Content.Shared.Verbs;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -45,6 +47,7 @@ public sealed class ReflectSystem : EntitySystem
         SubscribeLocalEvent<ReflectComponent, GotUnequippedEvent>(OnReflectUnequipped);
         SubscribeLocalEvent<ReflectComponent, GotEquippedHandEvent>(OnReflectHandEquipped);
         SubscribeLocalEvent<ReflectComponent, GotUnequippedHandEvent>(OnReflectHandUnequipped);
+        SubscribeLocalEvent<ReflectComponent, ArmorExamineEvent>(OnExamine);
     }
 
     private void OnReflectUserCollide(Entity<ReflectComponent> ent, ref ProjectileReflectAttemptEvent args)
@@ -200,4 +203,35 @@ public sealed class ReflectSystem : EntitySystem
         ent.Comp.InRightPlace = false;
         Dirty(ent);
     }
+
+    #region Examine
+    private void OnExamine(Entity<ReflectComponent> ent, ref ArmorExamineEvent args)
+    {
+        var value = MathF.Round((1f - ent.Comp.ReflectProb) * 100, 1);
+
+        if (value == 0 || ent.Comp.Reflects == ReflectType.None)
+            return;
+
+        string type;
+
+        args.Msg.PushNewline();
+        switch (ent.Comp.Reflects)
+        {
+            case ReflectType.Energy | ReflectType.NonEnergy:
+                type = Loc.GetString(ent.Comp.BothTypeLoc);
+                args.Msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineLoc, ("value", value), ("type", type)));
+                break;
+
+            case ReflectType.Energy:
+                type = Loc.GetString(ent.Comp.EnergyTypeLoc);
+                args.Msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineLoc, ("value", value), ("type", type)));
+                break;
+
+            case ReflectType.NonEnergy:
+                type = Loc.GetString(ent.Comp.NonEnergyTypeLoc);
+                args.Msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineLoc, ("value", value), ("type", type)));
+                break;
+        }
+    }
+    #endregion
 }

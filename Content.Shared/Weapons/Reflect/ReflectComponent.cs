@@ -54,6 +54,33 @@ public sealed partial class ReflectComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? SoundOnReflect = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg", AudioParams.Default.WithVariation(0.05f));
+
+    #region Locs
+    /// <summary>
+    /// Probability for a projectile to be reflected.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string ExamineLoc = "reflect-examine-value";
+
+    /// <summary>
+    /// Probability for a projectile to be reflected.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string EnergyTypeLoc = "reflect-examine-energy-type";
+
+    /// <summary>
+    /// Probability for a projectile to be reflected.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string NonEnergyTypeLoc = "reflect-examine-nonenergy-type";
+
+    /// <summary>
+    /// Probability for a projectile to be reflected.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string BothTypeLoc = "reflect-examine-both-type";
+
+    #endregion
 }
 
 [Flags, Serializable, NetSerializable]
