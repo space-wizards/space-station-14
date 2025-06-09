@@ -5,6 +5,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.ImmovableRod;
 
+/// <summary>
+/// Marker for entities that represent unstoppable object,
+/// that crushes through obstacles and mobs.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ImmovableRodComponent : Component
 {

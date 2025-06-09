@@ -18,7 +18,6 @@
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
-    friction: 0
     bodyStatus: InAir
   - type: TileFrictionModifier
     modifier: 0

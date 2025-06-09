@@ -11,6 +11,9 @@ using Content.Shared.Damage.Systems;
 
 namespace Content.Shared.ImmovableRod;
 
+/// <summary>
+/// System for initializing and controlling collisions of entities, marked with <see cref="ImmovableRodComponent"/>.
+/// </summary>
 public abstract class SharedImmovableRodSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
