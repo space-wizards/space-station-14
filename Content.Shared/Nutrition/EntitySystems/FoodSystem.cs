@@ -128,7 +128,7 @@ public sealed class FoodSystem : EntitySystem
         // Check for used storage on the food item
         if (TryComp<StorageComponent>(food, out var storageState) && storageState.Container.ContainedEntities.Any())
         {
-            _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
+            _popup.PopupClient(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
             return (false, true);
         }
 
@@ -137,7 +137,7 @@ public sealed class FoodSystem : EntitySystem
         {
             if (itemSlots.Slots.Any(slot => slot.Value.HasItem))
             {
-                _popup.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
+                _popup.PopupClient(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
                 return (false, true);
             }
         }
@@ -146,7 +146,7 @@ public sealed class FoodSystem : EntitySystem
 
         if (GetUsesRemaining(food, foodComp) <= 0)
         {
-            _popup.PopupEntity(Loc.GetString("food-system-try-use-food-is-empty", ("entity", food)), user, user);
+            _popup.PopupClient(Loc.GetString("food-system-try-use-food-is-empty", ("entity", food)), user, user);
             DeleteAndSpawnTrash(foodComp, food, user);
             return (false, true);
         }
@@ -164,7 +164,7 @@ public sealed class FoodSystem : EntitySystem
         if (!_transform.GetMapCoordinates(user).InRange(_transform.GetMapCoordinates(target), MaxFeedDistance))
         {
             var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-            _popup.PopupEntity(message, user, user);
+            _popup.PopupClient(message, user, user);
             return (false, true);
         }
 
@@ -261,7 +261,7 @@ public sealed class FoodSystem : EntitySystem
         if (stomachToUse == null)
         {
             _solutionContainer.TryAddSolution(soln.Value, split);
-            _popup.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other", ("target", args.Target.Value)) : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Target.Value, args.User);
+            _popup.PopupClient(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other", ("target", args.Target.Value)) : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Target.Value, args.User);
             return;
         }
 
@@ -276,14 +276,14 @@ public sealed class FoodSystem : EntitySystem
             var userName = Identity.Entity(args.User, EntityManager);
             _popup.PopupEntity(Loc.GetString("food-system-force-feed-success", ("user", userName), ("flavors", flavors)), entity.Owner, entity.Owner);
 
-            _popup.PopupEntity(Loc.GetString("food-system-force-feed-success-user", ("target", targetName)), args.User, args.User);
+            _popup.PopupClient(Loc.GetString("food-system-force-feed-success-user", ("target", targetName)), args.User, args.User);
 
             // log successful force feed
             _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity.Owner):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(entity.Owner):food}");
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString(entity.Comp.EatMessage, ("food", entity.Owner), ("flavors", flavors)), args.User, args.User);
+            _popup.PopupClient(Loc.GetString(entity.Comp.EatMessage, ("food", entity.Owner), ("flavors", flavors)), args.User, args.User);
 
             // log successful voluntary eating
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(entity.Owner):food}");
@@ -477,7 +477,7 @@ public sealed class FoodSystem : EntitySystem
         // If "required" field is set, try to block eating without proper utensils used
         if (component.UtensilRequired && (usedTypes & component.Utensil) != component.Utensil)
         {
-            _popup.PopupEntity(Loc.GetString("food-you-need-to-hold-utensil", ("utensil", component.Utensil ^ usedTypes)), user, user);
+            _popup.PopupClient(Loc.GetString("food-you-need-to-hold-utensil", ("utensil", component.Utensil ^ usedTypes)), user, user);
             return false;
         }
 
@@ -526,7 +526,7 @@ public sealed class FoodSystem : EntitySystem
         RaiseLocalEvent(uid, attempt, false);
         if (attempt.Cancelled && attempt.Blocker != null && popupUid != null)
         {
-            _popup.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", attempt.Blocker.Value)),
+            _popup.PopupClient(Loc.GetString("food-system-remove-mask", ("entity", attempt.Blocker.Value)),
                 uid, popupUid.Value);
         }
 

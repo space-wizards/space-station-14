@@ -161,7 +161,7 @@ public abstract partial class SharedDrinkSystem : EntitySystem
             if (drink.IgnoreEmpty)
                 return false;
 
-            _popup.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", item)), item, user);
+            _popup.PopupClient(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", item)), item, user);
             return true;
         }
 
