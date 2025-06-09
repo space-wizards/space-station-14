@@ -9,8 +9,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: [honks.]
   chatTriggers:
     - honk
@@ -28,8 +28,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: [rings.]
   chatTriggers:
     - ring
@@ -48,8 +48,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: [pews.]
   chatTriggers:
     - pew
@@ -66,8 +66,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: [bangs.]
   chatTriggers:
     - bang
@@ -85,8 +85,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: [beeps.]
   chatTriggers:
     - beep
@@ -104,8 +104,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: [revs.]
   chatTriggers:
     - rev
@@ -123,8 +123,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: [caws.]
   chatTriggers:
     - caw
@@ -144,8 +144,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: [snarls.]
   chatTriggers:
     - snarl

@@ -225,6 +225,7 @@
     - DoorBumpOpener
     - FootstepSound
     - CanPilot
+    - SiliconEmotes
   - type: Emoting
   - type: GuideHelp
     guides:

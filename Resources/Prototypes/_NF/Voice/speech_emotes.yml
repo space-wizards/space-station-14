@@ -8,8 +8,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: ["chat-emote-msg-goblin-muttering"]
   chatTriggers:
     - mutter
@@ -27,8 +27,8 @@
     components:
     - Vocal
   blacklist:
-    components:
-    - BorgChassis
+    tags:
+    - SiliconEmotes
   chatMessages: ["chat-emote-msg-goblin-throat-singing"]
   chatTriggers:
     - sing
