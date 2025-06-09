@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: The supermatter's gas absorption has been slowed down to increase the
-      amount of time before it requires gas refilling.
-    type: Tweak
-  - message: The supermatter emits slightly more radiation to increase its base power
-      production.
-    type: Tweak
-  id: 1292
-  time: '2025-03-13T14:24:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1928
 - author: Kandiyaki
   changes:
   - message: The guidebook now actually tells you that you can make extra codex cicatrix.
@@ -4217,3 +4206,11 @@
   id: 1791
   time: '2025-06-09T05:12:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2696
+- author: DinnerCalzone
+  changes:
+  - message: The mail teleporter sprite has been changed to use the sprite from upstream
+      to better match its functionality.
+    type: Tweak
+  id: 1792
+  time: '2025-06-09T06:26:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2697
