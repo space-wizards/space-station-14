@@ -68,3 +68,12 @@
   recipes:
   - WeaponShotgunEnforcerBeanbag
   - WeaponShotgunKammererBeanbag
+  - WeaponRifleTranq
+  - TranqDart
+  - IrwizineDart
+
+# Emagged
+
+# - type: latheRecipePack
+#   id: ImpSecEmagged
+#   recipes:

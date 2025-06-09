@@ -1,0 +1,57 @@
+- type: entity
+  parent: [ BaseCartridge, BaseRestrictedZookeeperContraband ]
+  id: TranqDart
+  name: Tranquilizer Dart
+  description: A dart designed to be loaded into a tranquiliser rifle. This one contains a chemical that enduces drowsiness, but takes time to accumulate.
+  components:
+  - type: Tag
+    tags:
+    - Dart
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+    proto: ChemDartProjectile
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Casings/darttranq.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: ChemicalAmmo
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 7
+  - type: SolutionTransfer
+    maxTransferAmount: 7
+  - type: SpentAmmoVisuals
+    state: "tranquilizer"
+
+- type: entity
+  parent: [ BaseCartridge, BaseRestrictedZookeeperContraband ]
+  id: IrwizineDart
+  name: Irwizine Dart
+  description: A dart designed to be loaded into a tranquiliser rifle. This one contains a chemical that pacifies aggressive creatures, for when they can't be put to sleep. Takes multiple successive hits to work.
+  components:
+  - type: Tag
+    tags:
+    - Dart
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+    proto: ChemDartProjectile
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Casings/dartirwizine.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: ChemicalAmmo
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        reagents:
+        - ReagentId: Irwizine
+          Quantity: 9
+  - type: SolutionTransfer
+    maxTransferAmount: 9
+  - type: SpentAmmoVisuals
+    state: "tranquilizer"

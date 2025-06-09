@@ -272,3 +272,13 @@
     maxTotalIntensity: 250
     tileBreakScale: 0.00001
 
+- type: reaction
+  id: Irwizine
+  impact: Medium
+  reactants:
+    CarpoToxin:
+      amount: 1
+    Pax:
+      amount: 1
+  products:
+    Irwizine: 2

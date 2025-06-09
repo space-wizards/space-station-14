@@ -428,3 +428,8 @@
   id: wizard
   flavorType: Complex
   description: flavor-complex-wizard
+
+- type: flavor
+  id: irwizine
+  flavorType: Complex
+  description: flavor-complex-irwizine

@@ -46,3 +46,13 @@
   components:
   - type: Contraband
     severity: TierXContraband
+
+# Zookeeper Contraband: Dart Guns and the like
+- type: entity
+  id: BaseRestrictedZookeeperContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ Zookeeper ]
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel, HospitalityDirector ]

@@ -1,0 +1,27 @@
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseBullet
+  id: ChemDartProjectile
+  name: Dart
+  components:
+  - type: Sprite
+    sprite: /Textures/_Impstation/Objects/Weapons/Guns/Projectiles/kineticprojectiles.rsi #imp
+    layers:
+    - state: hypo #imp
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 15
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
+  - type: SolutionInjectOnProjectileHit
+    transferAmount: 15
+    solution: ammo
+  - type: InjectableSolution
+    solution: ammo
