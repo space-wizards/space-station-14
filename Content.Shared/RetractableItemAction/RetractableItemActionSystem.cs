@@ -37,7 +37,7 @@ public partial class RetractableItemActionSystem : EntitySystem
 
     private void OnRetractableItemAction(Entity<RetractableItemActionComponent> ent, ref OnRetractableItemActionEvent args)
     {
-        if (_hands.GetActiveHand(args.Performer) is not {} userHand)
+        if (_hands.GetActiveHand(args.Performer) is not { } userHand)
             return;
 
         if (_actions.GetAction(ent.Owner) is not { } action)
@@ -77,26 +77,26 @@ public partial class RetractableItemActionSystem : EntitySystem
             return;
 
         // If the item is somehow destroyed, re-add it to the action.
-        PopulateActionItem(action);
+        PopulateActionItem(action.Owner);
     }
 
-    private void PopulateActionItem(EntityUid uid, RetractableItemActionComponent? comp = null)
+    private void PopulateActionItem(Entity<RetractableItemActionComponent?> ent)
     {
-        if (!Resolve(uid, ref comp, false) || TerminatingOrDeleted(uid))
+        if (!Resolve(ent.Owner, ref ent.Comp, false) || TerminatingOrDeleted(ent))
             return;
 
-        if (!PredictedTrySpawnInContainer(comp.SpawnedPrototype, uid, RetractableItemActionComponent.Container, out var summoned))
+        if (!PredictedTrySpawnInContainer(ent.Comp.SpawnedPrototype, ent.Owner, RetractableItemActionComponent.Container, out var summoned))
             return;
 
-        comp.ActionItemUid = summoned.Value;
+        ent.Comp.ActionItemUid = summoned.Value;
 
         // Mark the unremovable item so it can be added back into the action.
         var summonedComp = AddComp<ActionRetractableItemComponent>(summoned.Value);
 
-        summonedComp.SummoningAction = uid;
+        summonedComp.SummoningAction = ent.Owner;
 
         Dirty(summoned.Value, summonedComp);
 
-        Dirty(uid, comp);
+        Dirty(ent);
     }
 }
