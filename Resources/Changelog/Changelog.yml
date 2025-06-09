@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Fixed ninjas being unable to hack criminal records consoles.
-    type: Fix
-  id: 8132
-  time: '2025-04-04T17:46:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36299
-- author: ScarKy0
-  changes:
-  - message: Players now require 1h of playtime before selecting any antagonist role.
-    type: Tweak
-  id: 8133
-  time: '2025-04-04T20:24:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36276
 - author: aada
   changes:
   - message: SyndieJuice now comes with 10 units of liquid plasma.
@@ -3544,13 +3530,6 @@
   id: 8597
   time: '2025-06-01T15:48:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38000
-- author: ToastEnjoyer
-  changes:
-  - message: C-4 is now listed under major contraband instead of syndicate.
-    type: Tweak
-  id: 8598
-  time: '2025-06-01T21:09:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38004
 - author: chromiumboy
   changes:
   - message: Atmospheric pipes can now be built on three different sublayers, allowing
@@ -3910,3 +3889,26 @@
   id: 8643
   time: '2025-06-09T15:11:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37943
+- author: Disp-Dev
+  changes:
+  - message: Two new recipes have been added, Full English and Full American breakfast.
+    type: Add
+  id: 8644
+  time: '2025-06-09T22:33:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37279
+- author: cnv41
+  changes:
+  - message: Fixed a minor typo in coffin description.
+    type: Fix
+  id: 8645
+  time: '2025-06-09T22:33:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38193
+- author: ArtisticRoomba
+  changes:
+  - message: Convex, Loop, Meta, and Omega have been removed from the map rotation
+      pool to make way for new maps. Thank you Spessmann for Convex, TytosB for Loop,
+      Nox38 for her recent Meta overhauls, and Emisse for Omega.
+    type: Remove
+  id: 8646
+  time: '2025-06-09T22:37:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38190
