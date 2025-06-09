@@ -29,7 +29,7 @@
         shader: shaded
         #same trick here
   - type: Reflect
-    reflectProb: 0.3
+    reflectProb: 0.05
     reflects:
       - Energy
     reflectingInHands: false
