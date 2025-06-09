@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Tyranex
-  changes:
-  - message: Fixed the mining module not appearing in the exofab after it was researched
-    type: Fix
-  id: 1294
-  time: '2025-03-13T21:31:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1933
 - author: AftrLite, DarkMajia, RuddyGreat, AvianMaiden
   changes:
   - message: A new MidRoundAntag GhostRole, the Astral Ascendant!
@@ -4213,3 +4206,10 @@
   id: 1793
   time: '2025-06-09T06:40:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2678
+- author: meridiadottxt
+  changes:
+  - message: added Eclipse Starport, an 80-pop map from Harmony!
+    type: Add
+  id: 1794
+  time: '2025-06-09T06:42:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2687
