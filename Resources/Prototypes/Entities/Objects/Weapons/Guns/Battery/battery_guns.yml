@@ -105,7 +105,7 @@
   name: svalinn laser pistol
   parent: [ BaseWeaponPowerCellSmall, BaseSecurityContraband ]
   id: WeaponLaserSvalinn
-  description: A cheap and widely used laser pistol. Prone to overheating when rapidly fired, losing accuracy.
+  description: A cheap and widely used laser pistol, firing in bursts. Becomes inaccurate after sustained fire.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
