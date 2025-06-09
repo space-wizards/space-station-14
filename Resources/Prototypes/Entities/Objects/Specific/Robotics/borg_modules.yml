@@ -898,8 +898,8 @@
 
 #syndicate modules
 - type: entity
-  id: BorgModuleSyndicateWeapon
   parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
+  id: BorgModuleSyndicateWeapon
   name: weapon cyborg module
   components:
   - type: Sprite
@@ -932,8 +932,8 @@
         color: "#7B0F12"
 
 - type: entity
-  id: BorgModuleOperative
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
+  id: BorgModuleOperative
   name: operative cyborg module
   description: A module that comes with a crowbar, an Emag, an Access Breaker and a syndicate pinpointer.
   components:
@@ -951,8 +951,8 @@
       icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-operative-module }
 
 - type: entity
-  id: BorgModuleEsword
   parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
+  id: BorgModuleEsword
   name: energy sword cyborg module
   description: A weapons module that comes with an energy sword.
   components:
@@ -985,8 +985,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-desword-module }
 
 - type: entity
-  id: BorgModuleL6C
   parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule, BaseSyndicateContraband ]
+  id: BorgModuleL6C
   name: L6C ROW cyborg module
   description: A weapons module that comes with a L6C.
   components:
@@ -1002,8 +1002,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-l6c-module }
 
 - type: entity
-  id: BorgModuleC20r
   parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule, BaseSyndicateContraband ]
+  id: BorgModuleC20r
   name: C20-r ROW cyborg module
   description: A weapons module that comes with a burst-fire C-20r.
   components:
@@ -1019,8 +1019,8 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-c20r-module }
 
 - type: entity
-  id: BorgModuleMartyr
   parent: [ BaseBorgModule, BaseProviderBorgModule, BaseSyndicateContraband ]
+  id: BorgModuleMartyr
   name: martyr cyborg module
   description: "A module that comes with an explosive you probably don't want to handle yourself."
   components:

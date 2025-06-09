@@ -453,8 +453,8 @@
     - PlayerBorgSyndicateSaboteurGhostRole
 
 - type: entity
-  id: PlayerEngineeringBorgDerelict
   parent: EngineeringBorgChassisDerelict
+  id: PlayerEngineeringBorgDerelict
   suffix: Battery, Module
   components:
   - type: ContainerFill
@@ -476,8 +476,8 @@
     nameSegments: [NamesBorg]
 
 - type: entity
-  id: PlayerEngineeringBorgDerelictGhostRole
   parent: PlayerEngineeringBorgDerelict
+  id: PlayerEngineeringBorgDerelictGhostRole
   suffix: Ghost role
   components:
   - type: GhostRole
@@ -489,8 +489,8 @@
   - type: GhostTakeoverAvailable
 
 - type: entity
-  id: PlayerBorgDerelict
   parent: BorgChassisDerelict
+  id: PlayerBorgDerelict
   suffix: Battery, Module
   components:
   - type: ContainerFill
@@ -509,8 +509,8 @@
     nameSegments: [NamesBorg]
 
 - type: entity
-  id: PlayerBorgDerelictGhostRole
   parent: PlayerBorgDerelict
+  id: PlayerBorgDerelictGhostRole
   suffix: Ghost role
   components:
     - type: GhostRole
@@ -522,8 +522,8 @@
     - type: GhostTakeoverAvailable
 
 - type: entity
-  id: PlayerJanitorBorgDerelict
   parent: JanitorBorgChassisDerelict
+  id: PlayerJanitorBorgDerelict
   suffix: Battery, Module
   components:
   - type: ContainerFill
@@ -544,8 +544,8 @@
     nameSegments: [NamesBorg]
 
 - type: entity
-  id: PlayerJanitorBorgDerelictGhostRole
   parent: PlayerJanitorBorgDerelict
+  id: PlayerJanitorBorgDerelictGhostRole
   suffix: Ghost role
   components:
   - type: GhostRole
@@ -557,8 +557,8 @@
   - type: GhostTakeoverAvailable
 
 - type: entity
-  id: PlayerMedicalBorgDerelict
   parent: MedicalBorgChassisDerelict
+  id: PlayerMedicalBorgDerelict
   suffix: Battery, Module
   components:
   - type: ContainerFill
@@ -580,8 +580,8 @@
     nameSegments: [NamesBorg]
 
 - type: entity
-  id: PlayerMedicalBorgDerelictGhostRole
   parent: PlayerMedicalBorgDerelict
+  id: PlayerMedicalBorgDerelictGhostRole
   suffix: Ghost role
   components:
   - type: GhostRole
@@ -593,8 +593,8 @@
   - type: GhostTakeoverAvailable
 
 - type: entity
-  id: PlayerMiningBorgDerelict
   parent: MiningBorgChassisDerelict
+  id: PlayerMiningBorgDerelict
   suffix: Battery, Module
   components:
   - type: ContainerFill
@@ -615,8 +615,8 @@
     nameSegments: [NamesBorg]
 
 - type: entity
-  id: PlayerMiningBorgDerelictGhostRole
   parent: PlayerMiningBorgDerelict
+  id: PlayerMiningBorgDerelictGhostRole
   suffix: Ghost role
   components:
   - type: GhostRole
@@ -628,8 +628,8 @@
   - type: GhostTakeoverAvailable
 
 - type: entity
-  id: PlayerSyndicateAssaultBorgDerelict
   parent: SyndicateAssaultBorgChassisDerelict
+  id: PlayerSyndicateAssaultBorgDerelict
   suffix: Battery, Module
   components:
   - type: ContainerFill
@@ -649,8 +649,8 @@
     nameSegments: [NamesDeathCommando]
 
 - type: entity
-  id: PlayerBorgSyndicateDerelictGhostRole
   parent: PlayerSyndicateAssaultBorgDerelict
+  id: PlayerBorgSyndicateDerelictGhostRole
   suffix: Ghost role
   components:
   - type: GhostRole

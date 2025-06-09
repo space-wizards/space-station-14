@@ -221,8 +221,8 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
-  id: EngineeringBorgChassisDerelict
   parent: BaseBorgChassisDerelict
+  id: EngineeringBorgChassisDerelict
   name: derelict engineer cyborg
   description: A man-machine hybrid that assists the engineering department. This one seems to have chunks of strange crystals pockmarking its surface.
   components:
@@ -251,8 +251,8 @@
     noMindState: engineer_e_r
 
 - type: entity
-  id: JanitorBorgChassisDerelict
   parent: BaseBorgChassisDerelict
+  id: JanitorBorgChassisDerelict
   name: derelict janitor cyborg
   description: A man-machine hybrid that assists the service department. It's a bigger mess than anything it can clean up.
   components:
@@ -285,8 +285,8 @@
     noMindState: janitor_e_r
 
 - type: entity
-  id: MedicalBorgChassisDerelict
   parent: BaseBorgChassisDerelict
+  id: MedicalBorgChassisDerelict
   name: derelict medical cyborg
   description: A man-machine hybrid that assists the medical department. This one's needles don't look very sanitary.
   components:
@@ -319,8 +319,8 @@
     noMindState: medical_e_r
 
 - type: entity
-  id: MiningBorgChassisDerelict
   parent: BaseBorgChassisDerelict
+  id: MiningBorgChassisDerelict
   name: derelict salvage cyborg
   description: A man-machine hybrid that assists the cargo department. This one has seen the wrong side of a gibtonite chunk.
   components:
@@ -353,8 +353,8 @@
     noMindState: miner_e_r
 
 - type: entity
-  id: SyndicateAssaultBorgChassisDerelict
   parent: BaseBorgChassisSyndicateDerelict
+  id: SyndicateAssaultBorgChassisDerelict
   name: derelict syndicate assault cyborg
   description: A lean, mean killing machine with access to a variety of deadly modules. This one is more rust-orange than blood-red.
   components:
