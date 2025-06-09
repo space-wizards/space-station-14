@@ -25,6 +25,9 @@ namespace Content.Server.Stack
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
         }
 
+        /// <summary>
+        /// Sets the entity's count, and deletes it if it's 0 or less.
+        /// </summary>
         public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
         {
             if (!Resolve(uid, ref component, false))
@@ -94,6 +97,20 @@ namespace Content.Server.Stack
             return entity;
         }
 
+        // TODO
+        // ///
+        // public EntityUid SpawnNextToOrDrop(int amount, ProtoId<StackPrototype> id, EntityUid source)
+        // {
+        //     var proto = _prototypeManager.Index(id);
+        //     return SpawnNextToOrDrop(amount, proto, source);
+        // }
+
+        // ///
+        // public EntityUid SpawnNextToOrDrop(int amount, StackPrototype id, EntityUid source)
+        // {
+        //     // TODO
+        // }
+
         /// <summary>
         ///     Say you want to spawn 97 units of something that has a max stack count of 30.
         ///     This would spawn 3 stacks of 30 and 1 stack of 7.
@@ -119,6 +136,9 @@ namespace Content.Server.Stack
 
             return spawnedEnts;
         }
+
+        // TODO
+        // List<EntityUid> SpawnNexrToOrDropMultiple(string entityPrototype, int amount, EntityUid source)
 
         /// <inheritdoc cref="SpawnMultiple(string,int,EntityCoordinates)"/>
         public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityUid target)
