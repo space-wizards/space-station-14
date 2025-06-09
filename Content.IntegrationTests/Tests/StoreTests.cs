@@ -129,8 +129,8 @@ public sealed class StoreTests
 
                     var prototypeCost = prototype.Cost[UplinkSystem.TelecrystalCurrencyPrototype];
                     var discountDownTo = prototype.DiscountDownTo[UplinkSystem.TelecrystalCurrencyPrototype];
-                    Assert.That(plainDiscountedCost.Value, Is.GreaterThanOrEqualTo(discountDownTo.Value), "Expected discounted cost to be greater then DiscountDownTo value.");
-                    Assert.That(plainDiscountedCost.Value, Is.LessThan(prototypeCost.Value), "Expected discounted cost to be lower then prototype cost.");
+                    Assert.That(plainDiscountedCost.Value, Is.GreaterThanOrEqualTo(discountDownTo.Value), $"Expected discounted cost of '{nameof(discountedListingItem.ID)}' to be greater then DiscountDownTo value."); // imp- tell us name of proto
+                    Assert.That(plainDiscountedCost.Value, Is.LessThan(prototypeCost.Value), $"Expected discounted cost of '{nameof(discountedListingItem.ID)}' to be lower then prototype cost."); // imp- tell us name of proto
 
 
                     var buyMsg = new StoreBuyListingMessage(discountedListingItem.ID){Actor = human};
@@ -141,10 +141,10 @@ public sealed class StoreTests
                     Assert.That(
                         discountedListingItem.IsCostModified,
                         Is.False,
-                        $"Expected item cost to not be modified after Buying discounted item."
+                        $"Expected item cost to not be modified after Buying discounted item '{nameof(discountedListingItem.ID)}'." // imp- tell us name of proto
                     );
                     var costAfterBuy = discountedListingItem.Cost[UplinkSystem.TelecrystalCurrencyPrototype];
-                    Assert.That(costAfterBuy.Value, Is.EqualTo(prototypeCost.Value), "Expected cost after discount refund to be equal to prototype cost.");
+                    Assert.That(costAfterBuy.Value, Is.EqualTo(prototypeCost.Value), $"Expected cost after discount refund to be equal to prototype '{nameof(discountedListingItem.ID)}' cost."); // imp- tell us name of proto
 
                     var refundMsg = new StoreRequestRefundMessage { Actor = human };
                     server.EntMan.EventBus.RaiseComponentEvent(pda, storeComponent, refundMsg);
@@ -169,7 +169,7 @@ public sealed class StoreTests
                         $"Expected item cost to not be modified after Buying discounted item (even after refund was done)."
                     );
                     var costAfterRefund = discountedListingItem.Cost[UplinkSystem.TelecrystalCurrencyPrototype];
-                    Assert.That(costAfterRefund.Value, Is.EqualTo(prototypeCost.Value), "Expected cost after discount refund to be equal to prototype cost.");
+                    Assert.That(costAfterRefund.Value, Is.EqualTo(prototypeCost.Value), $"Expected cost after discount refund of '{nameof(discountedListingItem.ID)}' to be equal to prototype cost."); // imp- tell us name of proto
                 });
             }
 
