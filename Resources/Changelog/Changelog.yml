@@ -3903,3 +3903,12 @@
   id: 8645
   time: '2025-06-09T22:33:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38193
+- author: ArtisticRoomba
+  changes:
+  - message: Convex, Loop, Meta, and Omega have been removed from the map rotation
+      pool to make way for new maps. Thank you Spessmann for Convex, TytosB for Loop,
+      Nox38 for her recent Meta overhauls, and Emisse for Omega.
+    type: Remove
+  id: 8646
+  time: '2025-06-09T22:37:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38190
