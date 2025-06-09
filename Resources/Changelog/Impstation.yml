@@ -1,24 +1,4 @@
 ﻿Entries:
-- author: AftrLite, DarkMajia, RuddyGreat, AvianMaiden
-  changes:
-  - message: A new MidRoundAntag GhostRole, the Astral Ascendant!
-    type: Add
-  - message: Code Octarine now has a unique claxon!
-    type: Add
-  - message: Cosmic Cult 1.1.0b (Beta)
-    type: Tweak
-  id: 1295
-  time: '2025-03-13T22:39:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1886
-- author: jtfg-dev
-  changes:
-  - message: Adjusted wording on cyborg and cyborg-related descriptions to reflect
-      the wonderful spectrum of different cultures that can be unceremoniously preserved
-      in a metal skin.
-    type: Tweak
-  id: 1296
-  time: '2025-03-13T22:59:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1913
 - author: Darkmajia
   changes:
   - message: Eight beautiful new sounds can be heard after the end of a round. You
@@ -4213,3 +4193,17 @@
   id: 1794
   time: '2025-06-09T06:42:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2687
+- author: hivehum
+  changes:
+  - message: Traitors are more likely to roll more than two objectives.
+    type: Tweak
+  id: 1795
+  time: '2025-06-09T23:05:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2701
+- author: hivehum
+  changes:
+  - message: The gnome child is normal and not large.
+    type: Tweak
+  id: 1796
+  time: '2025-06-09T23:05:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2700
