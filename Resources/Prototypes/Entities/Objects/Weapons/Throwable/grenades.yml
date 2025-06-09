@@ -42,7 +42,7 @@
 - type: entity
   name: explosive grenade
   description: Grenade that creates a small but devastating explosion.
-  parent: [GrenadeBase, BaseForeignContraband]
+  parent: [GrenadeBase, BaseExtremeContraband]
   id: ExGrenade
   components:
   - type: ExplodeOnTrigger
@@ -108,7 +108,7 @@
 - type: entity
   name: syndicate minibomb
   description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
-  parent: [GrenadeBase, BaseForeignContraband]
+  parent: [GrenadeBase, BaseExtremeContraband]
   id: SyndieMiniBomb
   components:
   - type: Sprite
@@ -171,7 +171,7 @@
 
 
 - type: entity
-  parent: [ GrenadeBase, BaseForeignContraband ]
+  parent: [ GrenadeBase, BaseExtremeContraband ]
   id: SingularityGrenade
   name: singularity grenade
   description: Grenade that simulates the power of a singularity, pulling things in a heap.
@@ -360,7 +360,7 @@
 - type: entity
   name: EMP grenade
   description: A grenade designed to wreak havoc on electronic systems.
-  parent: [GrenadeBase, BaseForeignContraband]
+  parent: [GrenadeBase, BaseExtremeContraband]
   id: EmpGrenade
   components:
   - type: Sprite
@@ -379,7 +379,7 @@
 - type: entity
   name: holy hand grenade
   description: O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
-  parent: [GrenadeBase, BaseForeignContraband]
+  parent: [GrenadeBase, BaseExtremeContraband]
   id: HolyHandGrenade
   components:
   - type: Sprite
@@ -527,7 +527,7 @@
 - type: entity
   name: syndicate trickybomb
   description: A syndicate-manufactured explosive used to make an excellent distraction.
-  parent: [GrenadeDummy, BaseForeignContraband]
+  parent: [GrenadeDummy, BaseExtremeContraband]
   id: SyndieTrickyBomb
   components:
   - type: Sprite

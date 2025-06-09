@@ -92,7 +92,7 @@
       disposable: false
 
 - type: entity
-  parent: [BaseHardBomb, BaseForeignContraband]
+  parent: [BaseHardBomb, BaseExtremeContraband]
   id: SyndicateBomb
   name: syndicate bomb
   description: A bomb for Syndicate operatives and agents alike. The real deal, no more training, get to it!

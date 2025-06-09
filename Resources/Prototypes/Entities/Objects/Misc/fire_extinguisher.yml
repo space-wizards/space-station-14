@@ -142,7 +142,7 @@
 
 # used for a engi xenoborg module
 - type: entity
-  parent: [ FireExtinguisher, BaseForeignContraband ]
+  parent: [ FireExtinguisher, BaseExtremeContraband ]
   id: SelfRechargingFireExtinguisher
   name: self-recharging fire extinguisher
   description: It extinguishes fires. it slowly refills with water.

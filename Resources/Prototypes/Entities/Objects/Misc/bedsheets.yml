@@ -306,7 +306,7 @@
 
 - type: entity
   id: BedsheetSyndie
-  parent: [ BedsheetBase, BaseForeignContraband ]
+  parent: [ BedsheetBase, BaseExtremeContraband ]
   name: syndicate bedsheet
   description: It has a syndicate emblem and it has an aura of evil.
   components:

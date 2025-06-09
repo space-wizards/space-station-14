@@ -75,7 +75,7 @@
 
 - type: entity
   name: energy sword
-  parent: [BaseMeleeWeaponEnergy, BaseForeignContraband]
+  parent: [BaseMeleeWeaponEnergy, BaseExtremeContraband]
   id: EnergySword
   description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
@@ -95,7 +95,7 @@
 
 - type: entity
   name: energy dagger
-  parent: [BaseMeleeWeaponEnergy, BaseForeignContraband]
+  parent: [BaseMeleeWeaponEnergy, BaseExtremeContraband]
   id: EnergyDaggerLoud
   description: A not as loud and dangerous dagger with a beam made of pure, concentrated plasma. This one is completely undisguised.
   components:
@@ -196,7 +196,7 @@
     - type: Execution
       doAfterDuration: 4.0
     - type: Contraband
-      severity: Foreign
+      severity: Extreme
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -227,7 +227,7 @@
     - Write
 
 - type: entity
-  parent: [BaseItem, BaseForeignContraband]
+  parent: [BaseItem, BaseExtremeContraband]
   id: EnergyDaggerBox
   name: e-dagger box
   suffix: E-Dagger
@@ -270,7 +270,7 @@
 
 - type: entity
   name: double-bladed energy sword
-  parent: [BaseMeleeWeaponEnergy, BaseForeignContraband]
+  parent: [BaseMeleeWeaponEnergy, BaseExtremeContraband]
   id: EnergySwordDouble
   description: Syndicate Command Interns thought that having one blade on the energy sword was not enough. This can be stored in pockets.
   components:
@@ -397,7 +397,7 @@
     freeHandsRequired: 0 # because borg has no off-hand to wield with.  Without this, it will be unable to activate the esword
 
 - type: entity
-  parent: [ EnergyDaggerLoud, BaseForeignContraband ]
+  parent: [ EnergyDaggerLoud, BaseExtremeContraband ]
   id: EnergyDaggerLoudBlue
   suffix: blue
   components:

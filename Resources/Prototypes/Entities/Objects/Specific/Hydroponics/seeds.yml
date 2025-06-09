@@ -529,7 +529,7 @@
       sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
 
 - type: entity
-  parent: [SeedBase, BaseForeignContraband]
+  parent: [SeedBase, BaseExtremeContraband]
   name: packet of gatfruit seeds
   description: "These are no peashooters."
   id: GatfruitSeeds

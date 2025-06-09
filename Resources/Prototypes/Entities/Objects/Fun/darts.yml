@@ -191,7 +191,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: [ BaseItem, BaseForeignContraband ]
+  parent: [ BaseItem, BaseExtremeContraband ]
   id: HypoDartBox
   name: hypodart box
   suffix: HypoDart

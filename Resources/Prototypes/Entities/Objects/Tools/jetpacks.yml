@@ -114,7 +114,7 @@
 #Empty black
 - type: entity
   id: JetpackBlack
-  parent: [BaseJetpack, BaseForeignContraband]
+  parent: [BaseJetpack, BaseExtremeContraband]
   name: jetpack
   suffix: Empty
   components:
@@ -296,7 +296,7 @@
 
 # Infinite jetpack
 - type: entity
-  parent: [ JetpackBlack, BaseForeignContraband ]
+  parent: [ JetpackBlack, BaseExtremeContraband ]
   id: JetpackXenoborg
   name: xenoborg jetpack
   suffix: Infinite

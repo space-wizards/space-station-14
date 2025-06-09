@@ -39,7 +39,7 @@
 
 - type: entity
   id: AnimationStaff
-  parent: [ BaseItem, BaseForeignContraband ]
+  parent: [ BaseItem, BaseExtremeContraband ]
   name: staff of animation
   description: Brings inanimate objects to life!
   components:

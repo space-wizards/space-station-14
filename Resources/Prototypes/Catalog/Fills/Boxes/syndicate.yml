@@ -1,6 +1,6 @@
 - type: entity
   id: ElectricalDisruptionKit
-  parent: [BoxCardboard, BaseForeignContraband]
+  parent: [BoxCardboard, BaseExtremeContraband]
   name: electrical disruption kit
   suffix: Filled
   components:
@@ -12,7 +12,7 @@
           amount: 1
 
 - type: entity
-  parent: [BoxVial, BaseForeignContraband]
+  parent: [BoxVial, BaseExtremeContraband]
   id: ChemicalSynthesisKit
   name: chemical synthesis kit
   description: A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
@@ -33,7 +33,7 @@
       - id: SyringeStimulants
 
 - type: entity
-  parent: [BoxCardboard, BaseForeignContraband]
+  parent: [BoxCardboard, BaseExtremeContraband]
   id: ThrowingKnivesKit
   name: throwing knives kit
   description: A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims.
@@ -52,7 +52,7 @@
 
 - type: entity
   name: deathrattle implant box
-  parent: [BoxCardboard, BaseForeignContraband]
+  parent: [BoxCardboard, BaseExtremeContraband]
   id: BoxDeathRattleImplants
   description: Six deathrattle implants for the whole squad.
   components:
@@ -69,7 +69,7 @@
         amount: 6
 
 - type: entity
-  parent: [BoxCardboard, BaseForeignContraband]
+  parent: [BoxCardboard, BaseExtremeContraband]
   id: CombatBakeryKit
   name: combat bakery kit
   description: A kit of clandestine baked weapons.

@@ -56,7 +56,7 @@
     stealGroup: Bible
 
 - type: entity
-  parent: [Bible, BaseForeignContraband]
+  parent: [Bible, BaseExtremeContraband]
   name: necronomicon
   description: "There's a note: Klatuu, Verata, Nikto -- Don't forget it again!"
   id: BibleNecronomicon

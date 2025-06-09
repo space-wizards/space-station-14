@@ -520,7 +520,7 @@
 
 - type: entity
   name: hyperzine injector
-  parent: [ChemicalMedipen, BaseForeignContraband]
+  parent: [ChemicalMedipen, BaseExtremeContraband]
   id: Stimpack
   description: Contains enough hyperzine for you to have the chemical's effect for 30 seconds. Use it when you're sure you're ready to throw down.
   components:
@@ -564,7 +564,7 @@
 
 - type: entity
   name: hyperzine microinjector
-  parent: [ChemicalMedipen, BaseForeignContraband]
+  parent: [ChemicalMedipen, BaseExtremeContraband]
   id: StimpackMini
   description: A microinjector of hyperzine that give you about 15 seconds of the chemical's effects.
   components:
@@ -603,7 +603,7 @@
 
 - type: entity
   name: combat medipen
-  parent: [ChemicalMedipen, BaseForeignContraband]
+  parent: [ChemicalMedipen, BaseExtremeContraband]
   id: CombatMedipen
   description: A single-use medipen containing chemicals that regenerate most types of damage.
   components:
@@ -671,7 +671,7 @@
     handle: false # don't want the sound to stop the self-inject from triggering
 
 - type: entity
-  parent: [ BaseItem, BaseForeignContraband ]
+  parent: [ BaseItem, BaseExtremeContraband ]
   id: HypopenBox
   name: hypopen box
   description: A small box containing a hypopen. Packaging disintegrates when opened, leaving no evidence behind.

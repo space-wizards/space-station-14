@@ -211,7 +211,7 @@
 
 - type: entity
   name: syndicate rubber stamp
-  parent: [RubberStampBase, BaseForeignContraband]
+  parent: [RubberStampBase, BaseExtremeContraband]
   id: RubberStampSyndicate
   categories: [ DoNotMap ]
   components:
@@ -303,7 +303,7 @@
 
 - type: entity
   name: wizard's rubber stamp
-  parent: [RubberStampBase, BaseForeignContraband]
+  parent: [RubberStampBase, BaseExtremeContraband]
   id: RubberStampWizard
   description: A chaotic wizard stamp for serving unchaotic paperwork, how ironic.
   categories: [ DoNotMap ]

@@ -1,11 +1,12 @@
-﻿# any item used by foreign invaders (e.g non-stealth syndicate stuff, wizards' magical items, ninja gear, xenoborg modules),
-# i.e stuff that crew members are not to use without explicit CentComm approval barring extreme life-or-death situations
+﻿# any item that crew members are not to use without explicit CentComm approval outside of extreme life-or-death situations
+# covers the items used by foreign invaders (e.g non-stealth syndicate stuff, wizards' magical items, xenoborg modules)
+# theoretically could also cover items restricted to Central Command only, though that'd need to be implemented later
 - type: entity
-  id: BaseForeignContraband
+  id: BaseExtremeContraband
   abstract: true
   components:
   - type: Contraband
-    severity: Foreign
+    severity: Extreme
 
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity

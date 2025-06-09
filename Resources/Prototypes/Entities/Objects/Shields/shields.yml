@@ -320,7 +320,7 @@
 
 - type: entity
   name: mirror shield
-  parent: [ BaseShield, BaseForeignContraband ]
+  parent: [ BaseShield, BaseExtremeContraband ]
   id: MirrorShield
   description: Eerily glows red... you hear the geometer whispering
   components:
@@ -368,7 +368,7 @@
 
 - type: entity
   name: energy shield
-  parent: [BaseItem, BaseForeignContraband]
+  parent: [BaseItem, BaseExtremeContraband]
   id: EnergyShield
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:

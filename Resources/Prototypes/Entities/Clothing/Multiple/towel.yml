@@ -734,7 +734,7 @@
 - type: entity
   id: TowelColorSyndicate
   name: syndicate towel
-  parent: [ BaseTowel, BaseForeignContraband ]
+  parent: [ BaseTowel, BaseExtremeContraband ]
   components:
   - type: Sprite
     layers:

@@ -75,7 +75,7 @@
       path: "/Audio/Machines/door_lock_off.ogg"
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseForeignContraband]
+  parent: [ScatteringGrenadeBase, BaseExtremeContraband]
   id: ClusterGrenade
   name: clustergrenade
   description: Why use one grenade when you can use three at once!
@@ -102,7 +102,7 @@
     price: 2500
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseForeignContraband]
+  parent: [ScatteringGrenadeBase, BaseExtremeContraband]
   id: ClusterBananaPeel
   name: cluster banana peel
   description: Splits into 6 explosive banana peels after throwing, guaranteed fun!
@@ -124,7 +124,7 @@
       path: "/Audio/Items/bikehorn.ogg"
 
 - type: entity
-  parent: [SoapSyndie, ScatteringGrenadeBase, BaseForeignContraband]
+  parent: [SoapSyndie, ScatteringGrenadeBase, BaseExtremeContraband]
   id: SlipocalypseClusterSoap
   name: slipocalypse clustersoap
   description: Spreads small pieces of syndicate soap over an area upon landing on the floor.

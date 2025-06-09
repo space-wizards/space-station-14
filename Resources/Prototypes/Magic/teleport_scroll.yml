@@ -2,7 +2,7 @@
   id: WizardTeleportScroll
   name: teleport scroll
   suffix: Wizard
-  parent: [ BaseItem, BaseForeignContraband ]
+  parent: [ BaseItem, BaseExtremeContraband ]
   components:
   - type: UserInterface
     interfaces:

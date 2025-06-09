@@ -184,7 +184,7 @@
 
 - type: entity
   abstract: true
-  parent: [ ClothingOuterBase, AllowSuitStorageClothingGasTanks, BaseForeignContraband ]
+  parent: [ ClothingOuterBase, AllowSuitStorageClothingGasTanks, BaseExtremeContraband ]
   id: ClothingOuterWizardBase
   components:
   - type: WizardClothes

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseItem, BaseForeignContraband]
+  parent: [BaseItem, BaseExtremeContraband]
   id: AccessBreakerUnlimited
   suffix: Unlimited
   name: authentication disruptor

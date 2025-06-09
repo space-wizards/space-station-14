@@ -21,7 +21,7 @@
   id: GrandTheft
   examineText: contraband-examine-text-GrandTheft
 
-# This is clear foreign contraband (syndicate, magical, etc) and is illegal to own/use IC.
+# This is clear extreme contraband (syndicate, magical, etc) and is illegal to own/use IC.
 - type: contrabandSeverity
-  id: Foreign
-  examineText: contraband-examine-text-Foreign
+  id: Extreme
+  examineText: contraband-examine-text-Extreme

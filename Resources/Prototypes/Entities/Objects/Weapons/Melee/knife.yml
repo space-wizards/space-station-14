@@ -271,7 +271,7 @@
 
 - type: entity
   name: throwing knife
-  parent: [BaseKnife, BaseForeignContraband]
+  parent: [BaseKnife, BaseExtremeContraband]
   id: ThrowingKnife
   description: This blood-red knife is very aerodynamic and easy to throw, but good luck trying to fight someone hand-to-hand.
   components:

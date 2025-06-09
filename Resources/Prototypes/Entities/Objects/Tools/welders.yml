@@ -202,7 +202,7 @@
     color: orange
 
 - type: entity
-  parent: [ Welder, BaseForeignContraband ]
+  parent: [ Welder, BaseExtremeContraband ]
   id: RefuelingWelder
   name: refuling welding tool
   description: "An slow welder that can refuel itself over time."

@@ -603,7 +603,7 @@
 
 - type: entity
   id: HappyHonkNukie
-  parent: [HappyHonk, BaseForeignContraband]
+  parent: [HappyHonk, BaseExtremeContraband]
   name: robust nukie meal
   description: A sus meal with a potentially explosive surprise.
   suffix: Toy Unsafe

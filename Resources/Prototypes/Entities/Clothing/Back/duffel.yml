@@ -158,7 +158,7 @@
       sprite: Clothing/Back/Duffels/salvage.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseForeignContraband]
+  parent: [ClothingBackpackDuffel, BaseExtremeContraband]
   id: ClothingBackpackDuffelSyndicate
   name: syndicate duffel bag
   description: A large duffel bag for holding various traitor goods.

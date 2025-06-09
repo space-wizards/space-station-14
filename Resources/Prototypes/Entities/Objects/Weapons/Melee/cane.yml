@@ -28,7 +28,7 @@
 
 - type: entity
   name: cane blade
-  parent: [BaseItem, BaseForeignContraband]
+  parent: [BaseItem, BaseExtremeContraband]
   id: CaneBlade
   description: A sharp blade with a cane shaped hilt.
   components:

@@ -76,7 +76,7 @@
     </ColorBox>
     <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession: Foreign (P)
+        Possession: Extreme (P)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -570,17 +570,17 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession/Use of Foreign Contraband
+        Possession/Use of Extreme Contraband
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make, hold, or use foreign contraband.
+        To make, hold, or use extreme contraband.
       </Box>
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Foreign contraband may only be used in emergencies, and only to prevent death or gross bodily harm.
+        Extreme contraband may only be used in emergencies, and only to prevent death or gross bodily harm.
       </Box>
     </ColorBox>
     <ColorBox>
