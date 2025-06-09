@@ -188,8 +188,26 @@ namespace Content.IntegrationTests.Tests.Construction
                 if (!constructionSys.TryGetRecipeName(recipe.ID, out var name))
                     continue;
 
-                // Track this use
                 var users = nameUsers.GetOrNew(name);
+
+                // Don't track this if it's a mirror of one we're already tracking
+                if (recipe.Mirror is { } mirrorProto && users.Contains(mirrorProto))
+                    continue;
+
+                // Don't track this if it's an alternative version of one we're already tracking
+                var isAlternative = false;
+                foreach (var alterativeProto in recipe.AlternativePrototypes)
+                {
+                    if (users.Contains(alterativeProto))
+                    {
+                        isAlternative = true;
+                        break;
+                    }
+                }
+                if (isAlternative)
+                    continue;
+
+                // Track this use
                 users.Add(recipe);
             }
 
