@@ -21,7 +21,7 @@
         amount: 0.05
       - !type:AdjustReagent
         reagent: Caffeine
-        amount: 0.03
+        amount: 0.5
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/coffeeglass.rsi
     state: icon_empty
@@ -114,7 +114,7 @@
         type: Remove
       - !type:AdjustReagent
         reagent: Caffeine
-        amount: 0.02
+        amount: 0.2
 
 - type: reagent
   id: GreenTea
@@ -173,7 +173,7 @@
         type: Remove
       - !type:AdjustReagent
         reagent: Caffeine
-        amount: 0.02
+        amount: 0.2
 
 - type: reagent
   id: IcedGreenTea

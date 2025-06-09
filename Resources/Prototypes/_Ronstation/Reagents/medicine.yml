@@ -169,4 +169,5 @@
         - !type:ChemVomit
           conditions:
             - !type:ReagentThreshold
-              min: 12 
+              min: 12
+          probability: 0.15

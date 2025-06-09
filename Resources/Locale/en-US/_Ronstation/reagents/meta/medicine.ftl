@@ -11,4 +11,4 @@ reagent-name-tetracordrazine = tetracordrazine
 reagent-desc-tetracordrazine = A potent stabilizing agent, effectively heals brute, burn, and poison damage on the brink of death; and slightly patches up life threatening wounds. Causes sizeable genetic damage on overdose and in relatively good condition.
 
 reagent-name-spessacillin = spessacillin
-reagent-desc-spessacillin = A naturally sourced toxin treatment discovered in a catastrophic industrial accident. Don't worry about it, helps the cough go away.
+reagent-desc-spessacillin = A naturally sourced poison treatment discovered in a catastrophic industrial accident. Don't worry about it, helps the cough go away.
