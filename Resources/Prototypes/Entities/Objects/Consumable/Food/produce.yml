@@ -205,6 +205,9 @@
   - type: Item
     heldPrefix: produce
   - type: SolutionContainerManager
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: MeleeWeapon
     damage:
       types:
@@ -1769,6 +1772,9 @@
         reagents:
         - ReagentId: Razorium
           Quantity: 15
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/glasstle.rsi
   - type: Produce
