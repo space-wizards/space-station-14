@@ -6,9 +6,6 @@ namespace Content.Client.Instruments.MidiParser;
 
 public static class MidiParser
 {
-    // Based on
-    // Maybe localize? Idk.
-
     // Thanks again to http://www.somascape.org/midi/tech/mfile.html
     public static bool TryGetMidiTracks(
         byte[] data,
