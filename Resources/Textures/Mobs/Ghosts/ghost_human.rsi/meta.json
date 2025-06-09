@@ -32,6 +32,10 @@
           "directions": 4
       },
       {
+          "name": "ghost_shock",
+          "directions": 4
+      },
+      {
           "name": "ghost_radiation",
           "directions": 4
       },

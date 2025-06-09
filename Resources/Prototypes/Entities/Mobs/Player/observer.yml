@@ -56,6 +56,7 @@
           ghost_piercing: { state: ghost_piercing }
           ghost_heat: { state: ghost_heat }
           ghost_cold: { state: ghost_cold }
+          ghost_shock: { state: ghost_shock }
           ghost_radiation: { state: ghost_radiation }
           ghost_cellular: { state: ghost_cellular }
           ghost_poison: { state: ghost_poison }
@@ -72,6 +73,7 @@
     skipChecks: true
   - type: Ghost
   - type: GhostSpriteState
+    prefix: "ghost_"
   - type: GhostHearing
   - type: ShowElectrocutionHUD
   - type: IntrinsicRadioReceiver
