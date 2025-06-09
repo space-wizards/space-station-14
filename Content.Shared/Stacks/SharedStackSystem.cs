@@ -244,9 +244,10 @@ public abstract class SharedStackSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the max count for a given entity prototype
+    /// Gets the max stack count for a given entity prototype.
+    /// Returns 1 if there's no <see cref="StackComponent"/>.
     /// </summary>
-    [PublicAPI]    // TODO
+    [PublicAPI]
     public int GetMaxCount(EntProtoId entityId)
     {
         var entProto = _prototype.Index<EntityPrototype>(entityId);
@@ -255,9 +256,10 @@ public abstract class SharedStackSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the max count for a given entity
+    /// Gets the max stack count for a given entity.
+    /// Returns 1 if there's no <see cref="StackComponent"/>.
     /// </summary>
-    [PublicAPI]    // TODO
+    [PublicAPI]
     public int GetMaxCount(EntityUid uid)
     {
         return GetMaxCount(CompOrNull<StackComponent>(uid));
@@ -274,7 +276,7 @@ public abstract class SharedStackSystem : EntitySystem
     /// value (unlimimted).
     /// </p>
     /// </remarks>
-    ///              // TODO
+    [PublicAPI]
     public int GetMaxCount(StackComponent? component)
     {
         if (component == null)
@@ -283,20 +285,14 @@ public abstract class SharedStackSystem : EntitySystem
         if (component.MaxCountOverride != null)
             return component.MaxCountOverride.Value;
 
-        if (string.IsNullOrEmpty(component.StackTypeId))
-            return 1;
-
-        var stackProto = _prototype.Index<StackPrototype>(component.StackTypeId);
-
+        var stackProto = _prototype.Index(component.StackTypeId);
         return stackProto.MaxCount ?? int.MaxValue;
     }
 
     /// <summary>
     /// Gets the remaining space in a stack.
     /// </summary>
-    /// <param name="component"></param>
-    /// <returns></returns>
-    [PublicAPI]             // TODO
+    [PublicAPI]
     public int GetAvailableSpace(StackComponent component)
     {
         return GetMaxCount(component) - component.Count;
