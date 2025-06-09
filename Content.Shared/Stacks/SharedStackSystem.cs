@@ -50,23 +50,21 @@ namespace Content.Shared.Stacks
                 .RemovePath(nameof(StackComponent.Count));
         }
 
-        private void OnStackInteractUsing(EntityUid uid, StackComponent stack, InteractUsingEvent args)
+        private void OnStackInteractUsing(Entity<StackComponent> ent, ref InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (!TryComp(args.Used, out StackComponent? recipientStack))
+            if (!TryComp<StackComponent>(args.Used, out var recipientStack))
                 return;
 
-            var localRotation = Transform(args.Used).LocalRotation;
-
-            if (!TryMergeStacks(uid, args.Used, out var transfered, stack, recipientStack))
-                return;
+            // Transfer stacks from ent to args
+            if (!TryMergeStacks((ent.Owner, ent.Comp), (args.Used, recipientStack), out var transferred))
+                return; // if nothing transfered, leave without a pop-up
 
             args.Handled = true;
 
             // interaction is done, the rest is just generating a pop-up
-
             if (!_gameTiming.IsFirstTimePredicted)
                 return;
 
@@ -78,10 +76,10 @@ namespace Content.Shared.Stacks
                 popupPos = userCoords;
             }
 
-            switch (transfered)
+            switch (transferred)
             {
                 case > 0:
-                    Popup.PopupCoordinates($"+{transfered}", popupPos, Filter.Local(), false);
+                    Popup.PopupCoordinates($"+{transferred}", popupPos, Filter.Local(), false);
 
                     if (GetAvailableSpace(recipientStack) == 0)
                     {
@@ -96,17 +94,24 @@ namespace Content.Shared.Stacks
                     break;
             }
 
+            var localRotation = Transform(args.Used).LocalRotation;
             _storage.PlayPickupAnimation(args.Used, popupPos, userCoords, localRotation, args.User);
         }
 
-        private bool TryMergeStacks(
-            EntityUid donor,
-            EntityUid recipient,
-            out int transferred,
-            StackComponent? donorStack = null,
-            StackComponent? recipientStack = null)
+        /// <summary>
+        /// Moves stacks from the donor to the recipient.
+        /// Deletes the donor if its stacks are 0 or less.
+        /// </summary>
+        /// <param name="transferred">How many stacks moved.</param>
+        /// <returns>True if transfered is greater than 0.</returns>
+        private bool TryMergeStacks(Entity<StackComponent?> donorEnt,
+                                    Entity<StackComponent?> recipientEnt,
+                                    out int transferred)
         {
+            var (donor, donorStack) = donorEnt;
+            var (recipient, recipientStack) = recipientEnt;
             transferred = 0;
+
             if (donor == recipient)
                 return false;
 
@@ -122,6 +127,12 @@ namespace Content.Shared.Stacks
             return transferred > 0;
         }
 
+        [Obsolete("Use Entity<T>")]
+        public void TryMergeToHands(EntityUid item, EntityUid user, StackComponent? itemStack = null, HandsComponent? hands = null)
+        {
+            TryMergeToHands((item, itemStack), (user, hands));
+        }
+
         /// <summary>
         ///     If the given item is a stack, this attempts to find a matching stack in the users hand, and merge with that.
         /// </summary>
@@ -129,32 +140,28 @@ namespace Content.Shared.Stacks
         ///     If the interaction fails to fully merge the stack, or if this is just not a stack, it will instead try
         ///     to place it in the user's hand normally.
         /// </remarks>
-        public void TryMergeToHands(
-            EntityUid item,
-            EntityUid user,
-            StackComponent? itemStack = null,
-            HandsComponent? hands = null)
+        public void TryMergeToHands(Entity<StackComponent?> item, Entity<HandsComponent?> user)
         {
-            if (!Resolve(user, ref hands, false))
+            if (!Resolve(user.Owner, ref user.Comp, false))
                 return;
 
-            if (!Resolve(item, ref itemStack, false))
+            if (!Resolve(item.Owner, ref item.Comp, false))
             {
                 // This isn't even a stack. Just try to pickup as normal.
-                Hands.PickupOrDrop(user, item, handsComp: hands);
+                Hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
                 return;
             }
 
             // This is shit code until hands get fixed and give an easy way to enumerate over items, starting with the currently active item.
-            foreach (var held in Hands.EnumerateHeld(user, hands))
+            foreach (var held in Hands.EnumerateHeld(user.Owner, user.Comp))
             {
-                TryMergeStacks(item, held, out _, donorStack: itemStack);
+                TryMergeStacks(item, held, out _);
 
-                if (itemStack.Count == 0)
+                if (item.Comp.Count == 0)
                     return;
             }
 
-            Hands.PickupOrDrop(user, item, handsComp: hands);
+            Hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
         }
 
         public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
@@ -205,29 +212,37 @@ namespace Content.Shared.Stacks
             return true;
         }
 
-        /// <summary>
-        /// Tries to merge a stack into any of the stacks it is touching.
-        /// </summary>
-        /// <returns>Whether or not it was successfully merged into another stack</returns>
+        [Obsolete("Use Entity<T>")]
         public bool TryMergeToContacts(EntityUid uid, StackComponent? stack = null, TransformComponent? xform = null)
         {
-            if (!Resolve(uid, ref stack, ref xform, false))
+            return TryMergeToContacts((uid, stack, xform));
+        }
+
+        /// <summary>
+        /// Donor entity merges stacks with contacting entities.
+        /// Deletes donor if all stacks are used.
+        /// </summary>
+        /// <returns>True if donor moved stacks to contacts.</returns>
+        public bool TryMergeToContacts(Entity<StackComponent?, TransformComponent?> donor)
+        {
+            if (!Resolve(donor, ref donor.Comp1, ref donor.Comp2, false))
                 return false;
 
+            var (uid, stack, xform) = (donor.Owner, donor.Comp1, donor.Comp2); // sue me
             var map = xform.MapID;
             var bounds = _physics.GetWorldAABB(uid);
             var intersecting = new HashSet<Entity<StackComponent>>();
             _entityLookup.GetEntitiesIntersecting(map, bounds, intersecting, LookupFlags.Dynamic | LookupFlags.Sundries);
 
             var merged = false;
-            foreach (var otherStack in intersecting)
+            foreach (var recipientStack in intersecting)
             {
-                var otherEnt = otherStack.Owner;
+                var otherEnt = recipientStack.Owner;
                 // if you merge a ton of stacks together, you will end up deleting a few by accident.
                 if (TerminatingOrDeleted(otherEnt) || EntityManager.IsQueuedForDeletion(otherEnt))
                     continue;
 
-                if (!TryMergeStacks(uid, otherEnt, out _, stack, otherStack))
+                if (!TryMergeStacks((uid, stack), (otherEnt, recipientStack), out _))
                     continue;
                 merged = true;
 

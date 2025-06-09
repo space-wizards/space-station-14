@@ -230,7 +230,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
             _materialStorage.TryChangeMaterialAmount(reclaimer, storedMaterial, -amountConsumed, storage);
             foreach (var stack in stacks)
             {
-                _stack.TryMergeToContacts(stack);
+                _stack.TryMergeToContacts((stack, null, null));
             }
         }
     }

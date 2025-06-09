@@ -229,7 +229,7 @@ namespace Content.Server.Lathe
                 if (comp.CurrentRecipe.Result is { } resultProto)
                 {
                     var result = Spawn(resultProto, Transform(uid).Coordinates);
-                    _stack.TryMergeToContacts(result);
+                    _stack.TryMergeToContacts((result, null, null));
                 }
 
                 if (comp.CurrentRecipe.ResultReagents is { } resultReagents &&

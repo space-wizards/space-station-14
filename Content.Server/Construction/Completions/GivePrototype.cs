@@ -34,7 +34,7 @@ public sealed partial class GivePrototype : IGraphAction
 
             foreach (var item in stacks)
             {
-                stackSystem.TryMergeToHands(item, userUid.Value, hands: handsComp);
+                stackSystem.TryMergeToHands(item, (userUid.Value, handsComp));
             }
         }
         else

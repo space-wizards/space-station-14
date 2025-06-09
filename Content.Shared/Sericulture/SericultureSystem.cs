@@ -96,7 +96,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         {
             var newEntity = Spawn(comp.EntityProduced, Transform(uid).Coordinates);
 
-            _stackSystem.TryMergeToHands(newEntity, uid);
+            _stackSystem.TryMergeToHands((newEntity, null), (uid, null));
         }
 
         args.Repeat = true;
