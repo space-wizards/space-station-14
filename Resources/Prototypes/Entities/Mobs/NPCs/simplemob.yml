@@ -109,7 +109,7 @@
     - Drowsiness
     - Adrenaline
   - type: Bloodstream
-    bloodMaxVolume: 150
+    bloodReferenceVolume: 150
   - type: MobPrice
     price: 150
   - type: FloatingVisuals
