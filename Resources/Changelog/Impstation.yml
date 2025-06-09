@@ -1,46 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: The final (I think) batch of unique airlock sprites have been added to
-      differentiate them by who may access them.
-    type: Add
-  id: 1282
-  time: '2025-03-13T05:04:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1908
-- author: DinnerCalzone
-  changes:
-  - message: Hummingbird Station now features the supermatter engine.
-    type: Add
-  - message: Suppy, engineering's pet suppermatter chunk, has been added to maps with
-      supermatter.
-    type: Add
-  - message: The default supermatter setup has been changed, which will keep the supermatter
-      crystal stable for far longer.
-    type: Tweak
-  id: 1283
-  time: '2025-03-13T05:05:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1899
-- author: honeyed-lemons
-  changes:
-  - message: Fixes the human male body being a pixel high on the side sprites
-    type: Fix
-  id: 1284
-  time: '2025-03-13T05:06:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1921
-- author: jtfg-dev
-  changes:
-  - message: Added ticket pads into the SecTech vending machine.
-    type: Tweak
-  id: 1285
-  time: '2025-03-13T05:06:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1912
-- author: Jellvisk
-  changes:
-  - message: It's now harder for you to accidentally eat your crayons as you're drawing.
-    type: Tweak
-  id: 1286
-  time: '2025-03-13T05:11:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1922
 - author: kipdotnet
   changes:
   - message: Added a special coat to the salvage loadout for decapoids to use.
@@ -4209,3 +4167,44 @@
   id: 1781
   time: '2025-06-09T00:43:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2684
+- author: meridiadottxt
+  changes:
+  - message: added material silo to science and lockboxes to every department on gate
+      (i forgor to do it before)
+    type: Add
+  - message: all departments now run on their own independent power source again
+    type: Fix
+  id: 1782
+  time: '2025-06-09T00:56:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2692
+- author: hivehum
+  changes:
+  - message: CMOs start with one survival box now. Don't get greedy.
+    type: Remove
+  id: 1783
+  time: '2025-06-09T00:56:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2689
+- author: hivehum
+  changes:
+  - message: Kodepiia, grays, and thaven are no longer discriminated against by bloodthirsty
+      artifacts.
+    type: Fix
+  id: 1784
+  time: '2025-06-09T00:57:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2690
+- author: jtfg-dev
+  changes:
+  - message: The new pins added in the upstream merge can now be seen on full display!
+    type: Fix
+  - message: The brave knight Gollylad now shows his/her/their pride.
+    type: Add
+  id: 1785
+  time: '2025-06-09T00:55:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2686
+- author: hivehum
+  changes:
+  - message: Tck'tck can beep again!
+    type: Fix
+  id: 1786
+  time: '2025-06-09T00:56:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2691
