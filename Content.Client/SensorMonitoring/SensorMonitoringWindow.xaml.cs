@@ -25,6 +25,29 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
     private TimeSpan _retentionTime;
     private readonly Dictionary<int, SensorData> _sensorData = new();
 
+    /// <summary>
+    /// <para>A shared array used to store vertices for drawing graphs in <see cref="GraphView"/>.
+    /// Prevents excessive allocations by reusing the same array across multiple graph views.</para>
+    /// <para>This effectively makes it so that each <see cref="SensorMonitoringWindow"/> has its own pooled array.</para>
+    /// </summary>
+    private Vector2[] _sharedVertices = [];
+
+    /// <summary>
+    /// Retrieves a shared array of vertices, ensuring that it has at least the requested size.
+    /// Assigns a new array of the requested size if the current shared array is smaller than the requested size.
+    /// </summary>
+    /// <param name="requestedSize">The minimum number of vertices required in the shared array.</param>
+    /// <returns>An array of <see cref="System.Numerics.Vector2"/> representing the shared vertices.</returns>
+    /// <remarks>This does not prevent other threads from accessing the same shared pool.</remarks>
+    public Vector2[] GetSharedVertices(int requestedSize)
+    {
+        if (_sharedVertices.Length < requestedSize)
+        {
+            _sharedVertices = new Vector2[requestedSize];
+        }
+        return _sharedVertices;
+    }
+
     public SensorMonitoringWindow()
     {
         RobustXamlLoader.Load(this);
@@ -145,7 +168,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
                     }
                 });
 
-                Asdf.AddChild(new GraphView(stream.Samples, startTime, curTime, maxValue * 1.1f) { MinHeight = 150 });
+                Asdf.AddChild(new GraphView(stream.Samples, startTime, curTime, maxValue * 1.1f, this) { MinHeight = 150 });
                 Asdf.AddChild(new PanelContainer { StyleClasses = { StyleBase.ClassLowDivider } });
             }
         }
@@ -193,23 +216,25 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
 
     private sealed class GraphView : Control
     {
-        // Shared static buffer for all instances of GraphView to reduce allocations.
-        // Need to use this because ArrayPool violates sandbox.
-        private static Vector2[] _sharedVertices = [];
-        private static readonly object SharedVerticesLock = new();
-
         private readonly Queue<SensorSample> _samples;
         private readonly TimeSpan _startTime;
         private readonly TimeSpan _curTime;
         private readonly float _maxY;
+        private readonly SensorMonitoringWindow _parentWindow;
+        private readonly object _bufferLock = new();
 
-        public GraphView(Queue<SensorSample> samples, TimeSpan startTime, TimeSpan curTime, float maxY)
+        public GraphView(Queue<SensorSample> samples,
+            TimeSpan startTime,
+            TimeSpan curTime,
+            float maxY,
+            SensorMonitoringWindow parentWindow)
         {
             _samples = samples;
             _startTime = startTime;
             _curTime = curTime;
             _maxY = maxY;
             RectClipContent = true;
+            _parentWindow = parentWindow;
         }
 
         protected override void Draw(DrawingHandleScreen handle)
@@ -220,18 +245,12 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
             var countVtx = 0;
 
             var lastPoint = new Vector2(float.NaN, float.NaN);
+            var requiredVertices = 6 * (_samples.Count - 1);
 
-            // Lock the shared buffer to ensure thread safety.
-            lock (SharedVerticesLock)
+            // We're now performing operations on the shared vertices array.
+            lock (_bufferLock)
             {
-                // Expand the shared buffer *as needed*.
-                // We don't use Array.Resize here because it would allocate and copy over
-                // garbage data that we don't need.
-                var requiredVertices = 6 * (_samples.Count - 1);
-                if (_sharedVertices.Length < requiredVertices)
-                {
-                    _sharedVertices = new Vector2[requiredVertices];
-                }
+                var vertices = _parentWindow.GetSharedVertices(requiredVertices);
 
                 foreach (var (time, sample) in _samples)
                 {
@@ -246,18 +265,19 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
                     {
                         handle.DrawLine(lastPoint, newPoint, Color.White);
 
-                        _sharedVertices[countVtx++] = lastPoint;
-                        _sharedVertices[countVtx++] = lastPoint with { Y = PixelHeight };
-                        _sharedVertices[countVtx++] = newPoint;
-                        _sharedVertices[countVtx++] = newPoint;
-                        _sharedVertices[countVtx++] = lastPoint with { Y = PixelHeight };
-                        _sharedVertices[countVtx++] = newPoint with { Y = PixelHeight };
+                        vertices[countVtx++] = lastPoint;
+                        vertices[countVtx++] = lastPoint with { Y = PixelHeight };
+                        vertices[countVtx++] = newPoint;
+                        vertices[countVtx++] = newPoint;
+                        vertices[countVtx++] = lastPoint with { Y = PixelHeight };
+                        vertices[countVtx++] = newPoint with { Y = PixelHeight };
                     }
 
                     lastPoint = newPoint;
                 }
-
-                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, _sharedVertices.AsSpan(0, countVtx), Color.White.WithAlpha(0.1f));
+                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList,
+                    vertices.AsSpan(0, countVtx),
+                    Color.White.WithAlpha(0.1f));
             }
         }
     }
