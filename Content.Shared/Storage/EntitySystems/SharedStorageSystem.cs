@@ -1175,7 +1175,7 @@ public abstract class SharedStorageSystem : EntitySystem
             if (!_stackQuery.TryGetComponent(ent, out var containedStack))
                 continue;
 
-            if (!_stack.TryAdd(insertEnt, ent, insertStack, containedStack))
+            if (!_stack.TryMergeStacks((insertEnt, insertStack), (ent, containedStack), out var _))
                 continue;
 
             stackedEntity = ent;

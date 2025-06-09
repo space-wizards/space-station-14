@@ -50,15 +50,20 @@ public abstract class SharedStackSystem : EntitySystem
             .RemovePath(nameof(StackComponent.Count));
     }
 
+    #region Public API
+
     /// <summary>
-    /// Moves stacks from the donor to the recipient.
-    /// Deletes the donor if its stacks are 0 or less.
+    /// Moves as many stacks as we can from the donor to the recipient.
+    /// Deletes the donor if it ran out of stacks.
     /// </summary>
     /// <param name="transferred">How many stacks moved.</param>
-    /// <returns>True if transfered is greater than 0.</returns>
-    private bool TryMergeStacks(Entity<StackComponent?> donorEnt,
+    /// <param name="amount">Number of stacks to move from the donor.</param>
+    /// <returns>True if transferred is greater than 0.</returns>
+    [PublicAPI]
+    public bool TryMergeStacks(Entity<StackComponent?> donorEnt,
                                 Entity<StackComponent?> recipientEnt,
-                                out int transferred)
+                                out int transferred,
+                                int? amount = null)
     {
         var (donor, donorStack) = donorEnt;
         var (recipient, recipientStack) = recipientEnt;
@@ -70,16 +75,22 @@ public abstract class SharedStackSystem : EntitySystem
         if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
             return false;
 
-        if (string.IsNullOrEmpty(recipientStack.StackTypeId) || !recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
+        if (recipientStack.StackTypeId != donorStack.StackTypeId)
             return false;
 
+        // The most we can transfer
         transferred = Math.Min(donorStack.Count, GetAvailableSpace(recipientStack));
+        if (transferred <= 0)
+            return false;
+
+        // transfer only as much as we want
+        if (amount != null && amount > 0)
+            transferred = Math.Min(transferred, (int)amount);
+
         SetCount(donor, donorStack.Count - transferred, donorStack);
         SetCount(recipient, recipientStack.Count + transferred, recipientStack);
-        return transferred > 0;
+        return true;
     }
-
-    #region Public API
 
     /// <summary>
     ///     If the given item is a stack, this attempts to find a matching stack in the users hand, and merge with that.
@@ -113,7 +124,7 @@ public abstract class SharedStackSystem : EntitySystem
         Hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
     }
 
-    [Obsolete("Use Entity<T>")]
+    [Obsolete("Obsolete, Use Entity<T>")]
     public void TryMergeToHands(EntityUid item, EntityUid user, StackComponent? itemStack = null, HandsComponent? hands = null)
     {
         TryMergeToHands((item, itemStack), (user, hands));
@@ -170,7 +181,7 @@ public abstract class SharedStackSystem : EntitySystem
         return true;
     }
 
-    [Obsolete("Use Entity<T>")]
+    [Obsolete("Obsolete, Use Entity<T>")]
     public bool Use(EntityUid uid, int amount, StackComponent? stack = null)
     {
         return Use((uid, stack), amount);
@@ -211,7 +222,7 @@ public abstract class SharedStackSystem : EntitySystem
         return merged;
     }
 
-    [Obsolete("Use Entity<T>")]
+    [Obsolete("Obsolete, Use Entity<T>")]
     public bool TryMergeToContacts(EntityUid uid, StackComponent? stack = null, TransformComponent? xform = null)
     {
         return TryMergeToContacts((uid, stack, xform));
@@ -226,7 +237,7 @@ public abstract class SharedStackSystem : EntitySystem
         return Resolve(ent.Owner, ref ent.Comp, false) ? ent.Comp.Count : 1;
     }
 
-    [Obsolete("Use Entity<T>")]
+    [Obsolete("Obsolete, Use Entity<T>")]
     public int GetCount(EntityUid uid, StackComponent? component = null)
     {
         return GetCount((uid, component));
@@ -294,38 +305,19 @@ public abstract class SharedStackSystem : EntitySystem
     /// <summary>
     /// Tries to add one stack to another. May have some leftover count in the inserted entity.
     /// </summary>
-    ///               // TODO
+    [Obsolete("Obsolete, use TryMergeStacks()")]
     public bool TryAdd(EntityUid insertEnt, EntityUid targetEnt, StackComponent? insertStack = null, StackComponent? targetStack = null)
     {
-        if (!Resolve(insertEnt, ref insertStack) || !Resolve(targetEnt, ref targetStack))
-            return false;
-
-        var count = insertStack.Count;
-        return TryAdd(insertEnt, targetEnt, count, insertStack, targetStack);
+        return TryMergeStacks((insertEnt, insertStack), (targetEnt, targetStack), out var _);
     }
 
     /// <summary>
     /// Tries to add one stack to another. May have some leftover count in the inserted entity.
     /// </summary>
-    ///              // TODO
+    [Obsolete("Obsolete, use TryMergeStacks()")]
     public bool TryAdd(EntityUid insertEnt, EntityUid targetEnt, int count, StackComponent? insertStack = null, StackComponent? targetStack = null)
     {
-        if (!Resolve(insertEnt, ref insertStack) || !Resolve(targetEnt, ref targetStack))
-            return false;
-
-        if (insertStack.StackTypeId != targetStack.StackTypeId)
-            return false;
-
-        var available = GetAvailableSpace(targetStack);
-
-        if (available <= 0)
-            return false;
-
-        var change = Math.Min(available, count);
-
-        SetCount(targetEnt, targetStack.Count + change, targetStack);
-        SetCount(insertEnt, insertStack.Count - change, insertStack);
-        return true;
+        return TryMergeStacks((insertEnt, insertStack), (targetEnt, targetStack), out var _, count);
     }
 
     #endregion
