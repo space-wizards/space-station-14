@@ -101,14 +101,26 @@ public abstract partial class BaseSpawnEntitiesBehavior : IThresholdBehavior
                     SpawnDelayed(toSpawn, position, system);
 
             // Spawn as a stack
-            // TODO don't lose stacks if the spawned item goes over the stack
             else if (EntityPrototypeHelpers.HasComponent<StackComponent>(toSpawn, system.PrototypeManager))
             {
-                var spawned = SpawnAndTransform(toSpawn, position, system, owner);
+                var entProto = system.PrototypeManager.Index<EntityPrototype>(toSpawn);
 
-                // Set stack count
-                var stackCount = system.EntityManager.GetComponent<StackComponent>(spawned).Count * count;
-                system.StackSystem.SetCount(spawned, stackCount);
+                // Find how many stacks we need to spawn
+                entProto.TryGetComponent<StackComponent>(out var stackComp, system.EntityManager.ComponentFactory);
+                var stacksToSpawn = stackComp!.Count * count; // nullability guarded in the else if
+
+                // If we have more than a max stack, spawn a max stack
+                var maxStackCount = system.StackSystem.GetMaxCount(stackComp);
+                while (stacksToSpawn > maxStackCount)
+                {
+                    var spawned = SpawnAndTransform(toSpawn, position, system, owner);
+                    system.StackSystem.SetCount(spawned, maxStackCount);
+                    stacksToSpawn -= maxStackCount;
+                }
+
+                // Lastly, spawn the rest of the stack
+                var lastSpawned = SpawnAndTransform(toSpawn, position, system, owner);
+                system.StackSystem.SetCount(lastSpawned, stacksToSpawn);
             }
 
             // Spawn as individual items
