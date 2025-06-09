@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by LandsharkRAWR for Impstation",
+  "copyright": "Recoloured from medpatch.rsi by Pinkbat5. equipped-EYES-vox recoloured from capeyepatch.rsi.",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-EYES",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-moth",
       "directions": 4
     },
     {

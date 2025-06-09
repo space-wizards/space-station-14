@@ -94,6 +94,7 @@
   - GlassesColorfulGreen
   - GlassesColorfulPurple
   - GlassesColorfulYellow
+  - EyePatch
   # imp edit end
   - GlassesJamjar
   - GlassesJensen
@@ -1547,6 +1548,16 @@
   - MedicalEyePatchHud
   - MedicalGlassesHud #imp
   - Glasses
+  # imp edit start - its in the middle for alphabetizing reasons sorry
+  - GlassesCheapSunglasses
+  - GlassesColorfulPink
+  - GlassesColorfulRed
+  - GlassesColorfulBlue
+  - GlassesColorfulGreen
+  - GlassesColorfulPurple
+  - GlassesColorfulYellow
+  - EyePatch
+  # imp edit end
   - GlassesJamjar
   - GlassesJensen
 

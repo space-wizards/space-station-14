@@ -5,15 +5,14 @@
   description: "An awesome eyepatch to protect eyes that may or may not actually be damaged."
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Eyes/Misc/capeyepatch.rsi
+    sprite: _Impstation/Clothing/Eyes/Hud/capeyepatch.rsi
   - type: Clothing
-    sprite: _Impstation/Clothing/Eyes/Misc/capeyepatch.rsi
+    sprite: _Impstation/Clothing/Eyes/Hud/capeyepatch.rsi
   - type: EyeProtection
     protectionTime: 5
   - type: Tag
     tags:
     - WhitelistChameleon
-    - Eyepatch
     - CaptainsEyepatch
 
 - type: entity
@@ -30,4 +29,34 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-    - Eyepatch
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesDoubleEyepatch
+  name: double eyepatch
+  description: Signature wear of the dread pirate Blindbeard.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Eyes/Misc/doubleeyepatch.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Eyes/Misc/doubleeyepatch.rsi
+  - type: Blindfold
+  - type: Construction
+    graph: DoubleEyepatch
+    node: doubleeyepatch
+  - type: FlashImmunity
+
+- type: entity
+  parent: [ClothingEyesHudCommand, ClothingHeadEyeBaseFlippable]
+  id: ClothingEyesEyepatchHudCommand
+  name: administration hud eyepatch
+  description: A heads-up display that scans the humanoids in view and provides accurate data about their ID status. For true patriots.
+  components:
+  - type: Construction
+    graph: AdminHudCommandEyepatch
+    node: adminhudcommandeyepatch
+  - type: Sprite
+    sprite: _Impstation/Clothing/Eyes/Hud/commandpatch.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Eyes/Hud/commandpatch.rsi
+  - type: Tag

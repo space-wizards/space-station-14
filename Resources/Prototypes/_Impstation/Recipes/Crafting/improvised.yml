@@ -88,3 +88,16 @@
   icon:
     sprite: _Impstation/Objects/Misc/makeshift_loader.rsi
     state: icon
+
+- type: construction
+  name: double eyepatch
+  id: doubleeyepatch
+  graph: DoubleEyepatch
+  startNode: start
+  targetNode: doubleeyepatch
+  category: construction-category-tools
+  objectType: Item
+  description: Two eyepatches, for twice the swashbuckling.
+  icon:
+    sprite: _Impstation/Clothing/Eyes/Misc/doubleeyepatch.rsi
+    state: icon

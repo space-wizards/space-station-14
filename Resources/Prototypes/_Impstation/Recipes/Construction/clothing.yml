@@ -43,5 +43,18 @@
   targetNode: adminhudcaptainseyepatch
   category: construction-category-clothing
   description: Remove the administrative chip from your standard-issue glasses and place it in your eyepatch. Which works, for some reason.
-  icon: { sprite: _Impstation/Clothing/Eyes/Misc/capeyepatch.rsi, state: icon }
+  icon: { sprite: _Impstation/Clothing/Eyes/Hud/capeyepatch.rsi, state: icon }
+  objectType: Item
+
+# crafting admin eyepatch from eyepatch and admin hud
+
+- type: construction
+  name: administration hud eyepatch
+  id: ClothingEyesEyepatchHudCommand
+  graph: AdminHudCommandEyepatch
+  startNode: start
+  targetNode: adminhudcommandeyepatch
+  category: construction-category-clothing
+  description: Remove the administrative chip from your administrative hud and place it in your eyepatch. Makes you into a true patriot.
+  icon: { sprite: _Impstation/Clothing/Eyes/Hud/commandpatch.rsi, state: icon }
   objectType: Item

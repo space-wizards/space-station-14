@@ -76,6 +76,9 @@
   id: HolyArrow
 
 - type: Tag
+  id: HudAdmin
+
+- type: Tag
   id: JanitorialWelder
 
 - type: Tag

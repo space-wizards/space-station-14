@@ -1,0 +1,22 @@
+﻿- type: constructionGraph
+  id: AdminHudCommandEyepatch
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: adminhudcommandeyepatch
+      steps:
+      - tag: HudAdmin
+        name: administration hud
+        icon:
+          sprite: Clothing/Eyes/Hud/command.rsi
+          state: icon
+        doAfter: 1
+      - tag: Eyepatch
+        name: eyepatch
+        icon:
+          sprite: Clothing/Eyes/Misc/eyepatch.rsi
+          state: icon
+        doAfter: 1
+  - node: adminhudcommandeyepatch
+    entity: ClothingEyesEyepatchHudCommand
