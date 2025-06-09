@@ -277,7 +277,7 @@
       prob: 0.05
       orGroup: Pizza
     - id: KnifePlastic
-  
+
 - type: entity
   name: pizza box
   parent: FoodBoxPizzaFilled
@@ -513,10 +513,6 @@
   - type: Item
     sprite: Objects/Storage/Happyhonk/clown.rsi
     heldPrefix: box
-  - type: Storage
-    maxItemSize: Normal
-    grid:
-    - 0,0,3,3
   - type: Tag
     tags:
     - Trash
@@ -796,8 +792,14 @@
         amount: 1
       - id: FoodMealFriesCheesy
         amount: 1
-      - id: DrinkColaBottleFull
-        amount: 1
+      - id: DrinkColaCan
+        orGroup: DrinkPool
+      - id: DrinkLemonLimeCan
+        orGroup: DrinkPool
+      - id: DrinkLemonLimeCranberryCan
+        orGroup: DrinkPool
+      - id: DrinkIcedTeaCan
+        orGroup: DrinkPool
       - id: FoodPieAppleSlice
         amount: 1
       - id: ToyMouse
