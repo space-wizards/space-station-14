@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Revenant;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -439,6 +440,10 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
     private void OnEmpDisabledRemoved(EntityUid uid, SurveillanceCameraComponent component, ref EmpDisabledRemoved args)
     {
+        var ev = new SurveillanceCameraReactivateAfterEmpAttemptEvent();
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Cancelled)
+            return;
         SetActive(uid, true);
     }
 }
@@ -466,3 +471,6 @@ public sealed class SurveillanceCameraDeactivateEvent : EntityEventArgs
 
 [ByRefEvent]
 public record struct SurveillanceCameraSetActiveAttemptEvent(bool Cancelled);
+
+[ByRefEvent]
+public record struct SurveillanceCameraReactivateAfterEmpAttemptEvent(bool Cancelled);

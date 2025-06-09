@@ -15,6 +15,7 @@ public sealed class BodycamSystem: SharedBodycamSystem
         base.Initialize();
         SubscribeLocalEvent<BodycamComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BodycamComponent, EmpPulseEvent>(OnEmp);
+        SubscribeLocalEvent<BodycamComponent, SurveillanceCameraReactivateAfterEmpAttemptEvent>(OnEmpReactivate);
     }
 
     private void OnMapInit(EntityUid uid, BodycamComponent comp, MapInitEvent args)
@@ -30,6 +31,11 @@ public sealed class BodycamSystem: SharedBodycamSystem
         args.Disabled = true;
         comp.State = BodycamState.Disabled;
         Dirty(uid, comp);
+    }
+
+    private void OnEmpReactivate(EntityUid uid, BodycamComponent comp, ref SurveillanceCameraReactivateAfterEmpAttemptEvent args)
+    {
+        args.Cancelled = true;
     }
 
     /// <inheritdoc cref="SharedBodycamSystem.SwitchOn"/>
