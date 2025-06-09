@@ -157,11 +157,27 @@
             "name": "pinpointer-station"
         },
         {
-            "name": "inhand-left",
+            "name": "inhand-left-base",
             "directions": 4
         },
         {
-            "name": "inhand-right",
+            "name": "inhand-left-stripe",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-top",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-base",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-stripe",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-top",
             "directions": 4
         }
     ]
