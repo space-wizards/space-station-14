@@ -5,15 +5,15 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/9ea3eccbe22e18d24653949067f3d7dd12194ea9/icons/obj/stationobjs.dmi, directional sprites made by DinnerCalzone (github)",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/9ea3eccbe22e18d24653949067f3d7dd12194ea9/icons/obj/stationobjs.dmi, edited by DinnerCalzone(github).",
     "states": [
         {
-            "name": "empty",
-			"directions": 4
+            "name": "empty"
+
         },
         {
-            "name": "full",
-			"directions": 4
+            "name": "full"
+
         },
         {
             "name": "light-off",
@@ -25,54 +25,17 @@
         },
         {
             "name": "light-empty",
-			"directions": 4,
             "delays": [
                 [
                     1,
                     0.2
-                ],
-				[
-                    1,
-                    0.2
-                ],
-				[
-                    1,
-                    0.2
-                ],
-				[
-                    1,
-                    0.2
                 ]
-
-
             ]
         },
         {
             "name": "light-charging",
-			"directions": 4,
             "delays": [
                 [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ],
-				[
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ],
-				[
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ],
-				[
                     0.1,
                     0.1,
                     0.1,
@@ -83,21 +46,8 @@
         },
         {
             "name": "light-charged",
-			"directions": 4,
             "delays": [
                 [
-                    0.2,
-                    0.1
-                ],
-				[
-                    0.2,
-                    0.1
-                ],
-				[
-                    0.2,
-                    0.1
-                ],
-				[
                     0.2,
                     0.1
                 ]

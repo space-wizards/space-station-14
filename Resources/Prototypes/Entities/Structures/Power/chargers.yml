@@ -194,7 +194,7 @@
           - PotatoBattery
 
 - type: entity
-  #parent: BaseItemRecharger imp edit
+  parent: BaseItemRecharger
   id: WallWeaponCapacitorRecharger
   name: wall recharger
   #imp edit start
@@ -216,8 +216,7 @@
       shader: "unshaded"
   - type: WallMount
   - type: Charger
-    slotId: charger_slot #imp edit
-    chargeRate: 25
+    #chargeRate: 25 #imp edit, sets it to base chargeRate, same as normal recharger
   - type: ItemSlots
     slots:
       charger_slot:
@@ -227,61 +226,18 @@
           - HitscanBatteryAmmoProvider
           - ProjectileBatteryAmmoProvider
           - Stunbaton
-  #imp edit start, behold my frankenstein
-  #BaseStructure
-  - type: Clickable
-  #BaseMachine
-  - type: InteractionOutline
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
-  #BaseMachinePowered
-  - type: ApcPowerReceiver
-    powerLoad: 1000
-  - type: ExtensionCableReceiver
-  - type: LightningTarget
-    priority: 1
-  #ConstructableMachine
-  - type: Animateable
+  # imp start
   - type: Machine
     board: WeaponCapacitorRechargerCircuitboard
   - type: Construction
     graph: WallWeaponCapacitorRecharger
     node: wall_recharger
-    containers:
-    - machine_parts
-    - machine_board
-  #BaseRecharger
-  - type: Transform
-    anchored: true
-  - type: Appearance
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 80
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 40
-      behaviors:
-      - !type:EmptyAllContainersBehaviour
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-  - type: StaticPrice
-    price: 75
-  - type: PowerChargerVisuals
-  - type: ContainerContainer
-    containers:
-      charger_slot: !type:ContainerSlot
-      machine_board: !type:Container
-      machine_parts: !type:Container
-  - type: RequireProjectileTarget
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+    fixtures: {} #kills the fixtures to make directionality work
+  # imp end
 
 - type: entity
   parent: BaseRecharger

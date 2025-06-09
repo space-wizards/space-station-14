@@ -27,9 +27,9 @@
         amount: 5
       - !type:DeleteEntity {}
       steps:
-      - tool: Welding
+      - tool: Screwing
         doAfter: 2
-  
+
   - node: wires
     entity: WallWeaponCapacitorRechargerAssembly
     actions:
@@ -47,7 +47,7 @@
         amount: 2
       steps:
       - tool: Cutting
-        doAfter: 1  
+        doAfter: 1
 
   - node: wires_mv
     entity: WallWeaponCapacitorRechargerAssembly
@@ -81,7 +81,7 @@
     - to: wall_recharger
       steps:
       - tool: Screwing
-        doAfter: 2  
+        doAfter: 2
 
   - node: wall_recharger
     entity: WallWeaponCapacitorRecharger
@@ -95,5 +95,5 @@
         pickup: true
         emptyAtUser: true
       steps:
-      - tool: Prying
-        doAfter: 1
+      - tool: Screwing
+        doAfter: 2
