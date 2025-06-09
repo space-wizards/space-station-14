@@ -1,8 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Events;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
+using Content.Shared.Strip.Components;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -29,10 +32,51 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<DoAfterComponent, ActionAttemptDoAfterEvent>(OnActionDoAfterAttempt);
         SubscribeLocalEvent<DoAfterComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<DoAfterComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
+    }
+
+    private void OnActionDoAfterAttempt(Entity<DoAfterComponent> ent, ref ActionAttemptDoAfterEvent args)
+    {
+        // relay to user
+        if (!TryComp<DoAfterComponent>(args.User, out var userDoAfter))
+            return;
+
+        var actionDoAfter = ent.Comp;
+
+        // TODO: Attempt Start delay (aka casting delay) and repeat delay (shorter)
+        var delay = actionDoAfter.Delay;
+
+        var actionDoAfterEvent = new ActionDoAfterEvent(args.requestEvent)
+        {
+            Repeat = actionDoAfter.Repeat,
+        };
+
+        // TODO: Should add a raise on used in the attemptactiondoafterevent or something to add a conditional item or w/e
+
+        // TODO: Should probably make an "AttemptActionDoAfter" event to trigger this instead of action attempt event
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay, actionDoAfterEvent, ent.Owner, args.User)
+        {
+            AttemptFrequency = actionDoAfter.AttemptFrequency,
+            Broadcast = actionDoAfter.Broadcast,
+            Hidden = actionDoAfter.Hidden,
+            NeedHand = actionDoAfter.NeedHand,
+            BreakOnHandChange = actionDoAfter.BreakOnHandChange,
+            BreakOnDropItem = actionDoAfter.BreakOnDropItem,
+            BreakOnMove = actionDoAfter.BreakOnMove,
+            BreakOnWeightlessMove = actionDoAfter.BreakOnWeightlessMove,
+            MovementThreshold = actionDoAfter.MovementThreshold,
+            DistanceThreshold = actionDoAfter.DistanceThreshold,
+            BreakOnDamage = actionDoAfter.BreakOnDamage,
+            DamageThreshold = actionDoAfter.DamageThreshold,
+            RequireCanInteract = actionDoAfter.RequireCanInteract
+        };
+
+        TryStartDoAfter(doAfterArgs, userDoAfter);
     }
 
     private void OnUnpaused(EntityUid uid, DoAfterComponent component, ref EntityUnpausedEvent args)
