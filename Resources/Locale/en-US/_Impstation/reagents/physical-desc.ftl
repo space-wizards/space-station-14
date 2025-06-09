@@ -12,3 +12,5 @@ reagent-physical-desc-rodent = mousy
 reagent-physical-desc-lovepotion = romantic
 reagent-physical-desc-irwizine = Oceanian
 reagent-physical-desc-sad = sad
+reagent-physical-desc-nervous = nervous
+reagent-physical-desc-reallynervous = really nervous

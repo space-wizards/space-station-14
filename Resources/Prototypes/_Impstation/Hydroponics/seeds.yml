@@ -167,3 +167,57 @@
   potency: 5
   idealLight: 8
   nutrientConsumption: 0.40
+
+- type: seed
+  id: butterflyorchid
+  name: seeds-butterflyorchid-name
+  noun: seeds-noun-seeds
+  displayName: seeds-butterflyorchid-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/butterfly_orchid.rsi
+  packetPrototype: ButterflyOrchidSeeds
+  productPrototypes:
+  - FoodButterflyOrchid
+  mutationPrototypes:
+  - butterorchid
+  - biggerflyorchid
+  lifespan: 25 
+  maturation: 10
+  production: 4
+  growthStages: 4
+  yield: 3
+  potency: 10
+  nutrientConsumption: 0.40
+
+- type: seed
+  id: biggerflyorchid
+  name: seeds-biggerflyorchid-name
+  noun: seeds-noun-seeds
+  displayName: seeds-biggerflyorchid-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/biggerfly_orchid.rsi
+  packetPrototype: BiggerflyOrchidSeeds
+  productPrototypes:
+  - FoodBiggerflyOrchid
+  lifespan: 35 
+  maturation: 15
+  production: 4
+  growthStages: 4
+  yield: 3
+  potency: 25
+  nutrientConsumption: 0.40
+
+- type: seed
+  id: butterorchid
+  name: seeds-butterorchid-name
+  noun: seeds-noun-seeds
+  displayName: seeds-butterorchid-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/butter_orchid.rsi
+  packetPrototype: ButterOrchidSeeds
+  productPrototypes:
+  - FoodButter
+  lifespan: 25 
+  maturation: 10
+  production: 4
+  growthStages: 4
+  yield: 3
+  potency: 10
+  nutrientConsumption: 0.40

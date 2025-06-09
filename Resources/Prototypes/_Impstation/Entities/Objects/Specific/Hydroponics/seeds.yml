@@ -71,3 +71,33 @@
     seedId: agentgrain
   - type: Sprite
     sprite: _Impstation/Objects/Specific/Hydroponics/agentgrain.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of butterfly orchid seeds
+  id: ButterflyOrchidSeeds
+  components:
+    - type: Seed
+      seedId: butterflyorchid
+    - type: Sprite
+      sprite: _Impstation/Objects/Specific/Hydroponics/butterfly_orchid.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of biggerfly orchid seeds
+  id: BiggerflyOrchidSeeds
+  components:
+    - type: Seed
+      seedId: biggerflyorchid
+    - type: Sprite
+      sprite: _Impstation/Objects/Specific/Hydroponics/biggerfly_orchid.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of butter orchid seeds
+  id: ButterOrchidSeeds
+  components:
+    - type: Seed
+      seedId: butterorchid
+    - type: Sprite
+      sprite: _Impstation/Objects/Specific/Hydroponics/butter_orchid.rsi

@@ -314,3 +314,67 @@
   - type: Tag
     tags:
     - Fruit
+
+- type: entity
+  name: butterfly orchid bunch
+  parent: FoodProduceBase
+  id: FoodButterflyOrchid
+  description: It looks as if there are many butterflies flying around it. It gives a touch of spring.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - honey
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: ButterfliesReagent
+          Quantity: 5
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/butterfly_orchid.rsi
+    state: produce
+  - type: Produce
+    seedId: butterflyorchid
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: ButterfliesReagent
+        Quantity: 15
+  - type: Tag
+    tags:
+    - Flower
+
+- type: entity
+  name: biggerfly orchid bunch
+  parent: FoodProduceBase
+  id: FoodBiggerflyOrchid
+  description: It looks as if there are many butterflies flying around it. They're large.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - honey
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: ButterfliesBiggerReagent
+          Quantity: 10
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/biggerfly_orchid.rsi
+    state: produce
+  - type: Produce
+    seedId: biggerflyorchid
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: ButterfliesBiggerReagent
+        Quantity: 15
+  - type: Tag
+    tags:
+    - Flower

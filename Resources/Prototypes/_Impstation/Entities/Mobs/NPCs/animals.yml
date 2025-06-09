@@ -335,3 +335,31 @@
       groups:
         Genetic: 5
     canGib: false
+
+- type: entity
+  name: butterfly
+  parent: [ MobButterfly ]
+  id: MobButterflyBigger
+  description: Despite popular misconceptions, it's not actually made of butter. Also, it's big.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 4
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: butterflybigger
+      sprite: _Impstation/Mobs/Animals/butterflybigger.rsi
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          butterflybigger: Rainbow
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: butterflybigger
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
