@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: You can now eat the rat king
-    type: Tweak
-  id: 1289
-  time: '2025-03-13T05:24:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1897
 - author: AvianMaiden
   changes:
   - message: Shotgun shell boxes now look correct
@@ -4214,3 +4207,11 @@
   id: 1788
   time: '2025-06-09T01:35:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2555
+- author: DinnerCalzone
+  changes:
+  - message: The time between being able to knock on the same window, blast door,
+      or shutter has increased to be less annoying.
+    type: Tweak
+  id: 1789
+  time: '2025-06-09T02:02:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2694
