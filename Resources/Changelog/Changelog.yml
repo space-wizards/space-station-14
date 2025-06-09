@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: whatston3
-  changes:
-  - message: Fancy tables and curtains now respect carpet stacks.
-    type: Fix
-  id: 8127
-  time: '2025-04-03T14:45:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33721
 - author: YuNii
   changes:
   - message: Stop ghosts from being logged to airlocks
@@ -3904,3 +3897,15 @@
   id: 8638
   time: '2025-06-08T02:49:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38101
+- author: archee1
+  changes:
+  - message: Seismic Charges are now marked as cargo/sec contraband
+    type: Tweak
+  - message: Modular grenade payloads such as explosive or flash payloads, are now
+      properly marked as their relative department's contraband.
+    type: Tweak
+  - message: Improvised explosives are now considered minor contraband.
+    type: Tweak
+  id: 8639
+  time: '2025-06-09T01:05:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37521
