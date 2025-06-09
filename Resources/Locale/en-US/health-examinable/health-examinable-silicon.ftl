@@ -24,7 +24,7 @@ health-examinable-silicon-Piercing-75 = [color=#a37f7f]{ CAPITALIZE(POSS-ADJ($ta
 health-examinable-silicon-Piercing-100 = [color=#a37f7f]{ CAPITALIZE(POSS-ADJ($target)) } chassis is shredded.[/color]
 health-examinable-silicon-Piercing-200 = [color=#b56060]{ CAPITALIZE(POSS-ADJ($target)) } chassis is thoroughly mangled![/color]
 
-health-examinable-silicon-Heat-8 = [color=a3a3a3]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } superficial burn on { POSS-ADJ($target) } plating.[/color]
+health-examinable-silicon-Heat-8 = [color=a3a3a3]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } a superficial burn on { POSS-ADJ($target) } plating.[/color]
 health-examinable-silicon-Heat-15 = [color=a3a3a3]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } some burns on { POSS-ADJ($target) } plating.[/color]
 health-examinable-silicon-Heat-30 = [color=#baa482]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } multiple burns across { POSS-ADJ($target) } chassis.[/color]
 health-examinable-silicon-Heat-50 = [color=#baa482]{ CAPITALIZE(POSS-ADJ($target)) } chassis is heavily charred.[/color]
