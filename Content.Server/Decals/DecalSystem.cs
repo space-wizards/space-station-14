@@ -160,18 +160,22 @@ namespace Content.Server.Decals
 
         private void OnTileChanged(ref TileChangedEvent args)
         {
+            if (!TryComp(args.Entity, out DecalGridComponent? grid))
+                return;
+
+            var toDelete = new HashSet<uint>();
+
             foreach (var change in args.Changes)
             {
                 if (!change.NewTile.IsSpace(_tileDefMan))
-                    return;
-
-                if (!TryComp(args.Entity, out DecalGridComponent? grid))
-                    return;
+                    continue;
 
                 var indices = GetChunkIndices(change.GridIndices);
-                var toDelete = new HashSet<uint>();
+
                 if (!grid.ChunkCollection.ChunkCollection.TryGetValue(indices, out var chunk))
-                    return;
+                    continue;
+
+                toDelete.Clear();
 
                 foreach (var (uid, decal) in chunk.Decals)
                 {
@@ -183,7 +187,7 @@ namespace Content.Server.Decals
                 }
 
                 if (toDelete.Count == 0)
-                    return;
+                    continue;
 
                 foreach (var decalId in toDelete)
                 {

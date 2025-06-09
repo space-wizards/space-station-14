@@ -125,10 +125,10 @@ namespace Content.Shared.SubFloor
             foreach (var change in args.Changes)
             {
                 if (change.OldTile.IsEmpty)
-                    return; // Nothing is anchored here anyways.
+                    continue; // Nothing is anchored here anyways.
 
                 if (change.NewTile.IsEmpty)
-                    return; // Anything that was here will be unanchored anyways.
+                    continue; // Anything that was here will be unanchored anyways.
 
                 UpdateTile(args.Entity, args.Entity.Comp, change.GridIndices);
             }
@@ -225,6 +225,7 @@ namespace Content.Shared.SubFloor
         ScannerRevealed,
     }
 
+    [Serializable, NetSerializable]
     public enum SubfloorLayers : byte
     {
         FirstLayer
