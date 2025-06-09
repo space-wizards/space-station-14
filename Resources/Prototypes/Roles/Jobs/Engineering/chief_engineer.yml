@@ -14,7 +14,7 @@
       department: Engineering
       time: 72000 #20 hrs, imp
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs
+      time: 144000 #40 hrs, imp
   weight: 10
   startingGear: ChiefEngineerGear
   icon: "JobIconChiefEngineer"

@@ -8,7 +8,7 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobBorg
-    time: 36000 # 10 hrs, imp
+    time: 18000 # 5 hrs, imp
   canBeAntag: false
   joinNotifyCrew: true
   icon: JobIconStationAi
