@@ -2,9 +2,6 @@
   id: ClothingRobesGoblin
 
 - type: Tag
-  id: PlantAnalyzer
-
-- type: Tag
   id: PrizeTicket
 
 - type: Tag

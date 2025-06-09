@@ -21,7 +21,6 @@
 - type: Tag
   id: AllowBiomeLoading # Entities with this tag will load terrain, even if a ghost.
 
-
 - type: Tag
   id: AllowGhostShownByEvent
 
@@ -87,6 +86,9 @@
 
 - type: Tag
   id: BodyBag
+
+- type: Tag
+  id: Boll
 
 - type: Tag
   id: Book
@@ -373,6 +375,9 @@
   id: CottonBoll
 
 - type: Tag
+  id: CottonBurger
+
+- type: Tag
   id: Cow
 
 - type: Tag
@@ -404,6 +409,9 @@
 
 - type: Tag
   id: CrayonYellow
+
+- type: Tag
+  id: Creamsicle
 
 - type: Tag
   id: Crowbar
@@ -657,6 +665,15 @@
 
 - type: Tag
   id: GuideEmbeded
+
+- type: Tag
+  id: GunUpgradeDamage
+
+- type: Tag
+  id: GunUpgradeRange
+
+- type: Tag
+  id: GunUpgradeReloadSpeed
 
 - type: Tag
   id: Hamster
@@ -1026,6 +1043,9 @@
   id: Pancake
 
 - type: Tag
+  id: ParcelWrapBlacklist
+
+- type: Tag
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
@@ -1063,6 +1083,12 @@
 
 - type: Tag
   id: Pizza
+
+- type: Tag
+  id: PKAUpgrade
+
+- type: Tag
+  id: PlantAnalyzer
 
 - type: Tag
   id: PlantBGone

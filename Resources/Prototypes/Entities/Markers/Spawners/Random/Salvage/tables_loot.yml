@@ -257,6 +257,12 @@
       children:
       - id: JetpackBlueFilled
       - id: JetpackBlackFilled
+    - !type:GroupSelector
+      children:
+      - id: PKAUpgradeDamage
+      - id: PKAUpgradeRange
+      - id: PKAUpgradeFireRate
+
 
 - type: entityTable
   id: RandomGeneratorTable

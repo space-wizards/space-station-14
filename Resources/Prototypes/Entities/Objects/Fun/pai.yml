@@ -95,6 +95,7 @@
     whitelist:
       components:
         - SecretStash
+        - WrappedParcel
   - type: DamageOtherOnHit # imp
     damage:
       types:

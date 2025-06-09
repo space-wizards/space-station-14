@@ -35,6 +35,13 @@
     count: 1
   - type: UseDelay
     delay: 1
+  - type: UpgradeableGun
+    whitelist:
+      tags:
+      - PKAUpgrade
+  - type: ContainerContainer
+    containers:
+      upgrades: !type:Container
 
   - type: MeleeWeapon #weapon melee
     range: 0.8

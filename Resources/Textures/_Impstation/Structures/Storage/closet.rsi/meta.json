@@ -4,14 +4,13 @@
     "x": 32,
     "y": 32
   },
-  "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/pull/85491. Resprited for 32x32 dimensions by AftrLife(github). aa, bio_jan, and janitor sprites by DinnerCalzone(github). Business Door resprite by MintyTheBinty. griffy locker by Widgetbeck. Contraband and belongings locker by AvianMaiden based on pre-existing ones.",
+  "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/pull/85491. Resprited for 32x32 dimensions by AftrLife(github). aa, bio_jan, and janitor sprites by DinnerCalzone(github). Business Door resprite by MintyTheBinty. griffy locker by Widgetbeck. Contraband and belongings locker by AvianMaiden based on pre-existing ones. sci bio locker is a resprited bio viro locker by Alpha-Two (github)",
   "license": "CC-BY-SA-3.0",
   "states": [
       {
           "name": "aa"
       },
       {
-
           "name": "aa_door"
       },
       {
@@ -58,6 +57,15 @@
       },
       {
           "name": "bio_jan_open"
+      },
+      {
+          "name": "bio_sci"
+      },
+      {
+          "name": "bio_sci_door"
+      },
+      {
+          "name": "bio_sci_open"
       },
       {
           "name": "bio_open"

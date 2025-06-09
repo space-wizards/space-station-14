@@ -40,6 +40,14 @@
     steps: 7
     zeroVisible: false
   - type: Appearance
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-ammo
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-ammo
 
 - type: entity
   id: SpeedLoaderMagnumEmpty
@@ -60,6 +68,12 @@
       # AvianMaiden here. It's funny. Mix and match. Fuck with people. Smiles.
       - state: base-6
         map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag
 
 - type: entity
   id: SpeedLoaderMagnumIncendiary
@@ -90,6 +104,18 @@
     steps: 7
     zeroVisible: false
   - type: Appearance
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-ammo
+      - state: inhand-left-stripe
+        color: "#ea5800"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-ammo
+      - state: inhand-right-stripe
+        color: "#ea5800"
 
 - type: entity
   id: SpeedLoaderMagnumAP
@@ -111,6 +137,18 @@
     steps: 7
     zeroVisible: false
   - type: Appearance
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-ammo
+      - state: inhand-left-stripe
+        color: "#540000"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-ammo
+      - state: inhand-right-stripe
+        color: "#540000"
 
 - type: entity
   id: SpeedLoaderMagnumUranium
@@ -132,3 +170,15 @@
     steps: 7
     zeroVisible: false
   - type: Appearance
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-ammo
+      - state: inhand-left-stripe
+        color: "#00cd42"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-ammo
+      - state: inhand-right-stripe
+        color: "#00cd42"
