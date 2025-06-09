@@ -174,6 +174,8 @@
     state: plural
   - type: Clothing
     equippedPrefix: plural
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-plural
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -211,6 +213,8 @@
     state: fluid
   - type: Clothing
     equippedPrefix: fluid
+  - type: WearerGetsExamineText # imp
+    thingType: obvious-type-pride-gf
 
 - type: entity
   parent: ClothingNeckPinBase
