@@ -30,7 +30,7 @@
                 <Control MinHeight="5"/>
                 <ScrollContainer HorizontalExpand="True"
                                  VerticalExpand="True"
-                                 SizeFlagsStretchRatio="2">
+                                 SizeFlagsStretchRatio="1"> <!-- imp edit - reduced to 1 to make the ui less bad-->
                     <BoxContainer Name="Products"
                                   Orientation="Vertical"
                                   HorizontalExpand="True"
