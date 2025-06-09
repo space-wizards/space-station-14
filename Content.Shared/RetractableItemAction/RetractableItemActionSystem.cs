@@ -60,12 +60,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
         {
             _hands.TryForcePickup(args.Performer, ent.Comp.ActionItemUid.Value, userHand, checkActionBlocker: false);
             _audio.PlayPredicted(ent.Comp.SpawnSounds, action.Comp.AttachedEntity.Value, action.Comp.AttachedEntity.Value);
-
-            // Mispredicts allowing you to drop for a very brief moment, however without it it throws a ResetPredictedEntities exception.
-            // I have no idea what causes it or how to fix it.
-            // My only guess is that prediction doesn't like moving an item that becomes unremovable in the same frame.
-            if (_net.IsServer)
-                EnsureComp<UnremoveableComponent>(ent.Comp.ActionItemUid.Value);
+            EnsureComp<UnremoveableComponent>(ent.Comp.ActionItemUid.Value);
         }
 
         args.Handled = true;
