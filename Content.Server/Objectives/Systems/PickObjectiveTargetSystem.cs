@@ -2,6 +2,8 @@ using Content.Server.Objectives.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Roles.Jobs; // imp
+using Content.Shared.NukeOps; // imp
+using Content.Shared.Revolutionary.Components; //imp
 using Content.Server.GameTicking.Rules;
 using Content.Server.Revolutionary.Components;
 using Robust.Shared.Player; // imp
@@ -329,12 +331,18 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
         }
 
         var antags = _traitorRule.GetOtherAntagMindsAliveAndConnected(args.Mind).Select(t => t.Id).ToHashSet(); // Imp edit -  just get entity
+        var allHumans = _mind.GetAliveHumans(args.MindId).Select(p => p.Owner).ToHashSet();
+
+        // add nukies and headrevs to the list. If there's anything else we want to whitelist it'd probably be better to have a method make the check instead
+        foreach (var person in allHumans)
+        {
+            if (TryComp<MindComponent>(person, out var mind) && mind.OwnedEntity is { } owned && (HasComp<NukeOperativeComponent>(owned) || HasComp<HeadRevolutionaryComponent>(owned)))
+                antags.Add(person);
+        }
 
         // failed to roll an antag as a target
         if (antags.Count == 0)
         {
-
-            var allHumans = _mind.GetAliveHumans(args.MindId).Select(p => p.Owner).ToHashSet();
             //fallback to target a random head
             foreach (var person in allHumans)
             {

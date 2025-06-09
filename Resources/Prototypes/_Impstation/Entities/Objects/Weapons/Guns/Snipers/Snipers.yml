@@ -1,0 +1,28 @@
+- type: entity
+  name: Muldoon
+  parent: [ BaseWeaponSniper, BaseGunWieldable, BaseRestrictedZookeeperContraband ]
+  id: WeaponRifleTranq
+  description: A tranquilizer rifle designed to administer drugs to dangerous animals. Only takes pre-loaded darts. Not to be used on human targets.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Snipers/tranqrifle.rsi
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Snipers/tranqrifle.rsi
+  - type: GunRequiresWield
+  - type: Gun
+    fireRate: 0.4
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/tranqshot.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - Dart
+    capacity: 1
+    proto: TranqDart
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 3
+    pvsIncrease: 0.3

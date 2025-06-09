@@ -50,7 +50,7 @@
     node: SofaRight
 
 - type: entity
-  name: sofa
+  #name: sofa  #imp so that the naming style is kept consistent
   id: BenchSofaCorner
   suffix: Corner
   parent: BenchSofaMiddle
@@ -97,7 +97,7 @@
     node: SofaCorpRight
 
 - type: entity
-  name: grey sofa
+  #name: grey sofa #imp so that the naming style is kept consistent
   id: BenchSofaCorpCorner
   suffix: Corner
   parent: BenchSofaCorpMiddle

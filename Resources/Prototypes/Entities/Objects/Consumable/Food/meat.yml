@@ -537,6 +537,7 @@
     tags:
     - Raw
     - Meat
+  - type: RandomWalk # imp - twitchy.
 
 - type: entity
   name: meatwheat clump

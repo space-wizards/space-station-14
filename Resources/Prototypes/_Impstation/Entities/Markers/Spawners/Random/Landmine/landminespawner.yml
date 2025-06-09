@@ -1,0 +1,157 @@
+- type: entity
+  id: LandmineSpawner75
+  parent: MarkerBase
+  name: Landmine Spawner (75%)
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/landmine.rsi
+      state: landmine-inactive
+  - type: RandomSpawner
+    prototypes:
+    - LandMineExplosive
+    chance: 0.75
+
+- type: entity
+  id: LandmineSpawner50
+  parent: MarkerBase
+  name: Landmine Spawner (50%)
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/landmine.rsi
+      state: landmine-inactive
+  - type: RandomSpawner
+    prototypes:
+    - LandMineExplosive
+    chance: 0.5
+
+- type: entity
+  id: LandmineSpawner25
+  parent: MarkerBase
+  name: Landmine Spawner (25%)
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/landmine.rsi
+      state: landmine-inactive
+  - type: RandomSpawner
+    prototypes:
+    - LandMineExplosive
+    chance: 0.25
+
+- type: entity
+  id: LandmineSpawner10
+  parent: MarkerBase
+  name: Landmine Spawner (10%)
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/landmine.rsi
+      state: landmine-inactive
+  - type: RandomSpawner
+    prototypes:
+    - LandMineExplosive
+    chance: 0.1
+
+- type: entity
+  id: LandmineSpawner1
+  parent: MarkerBase
+  name: Landmine Spawner (1%)
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/landmine.rsi
+      state: landmine-inactive
+  - type: RandomSpawner
+    prototypes:
+    - LandMineExplosive
+    chance: 0.01
+
+- type: entity
+  id: LandmineSpawnerUltraRare
+  parent: MarkerBase
+  name: Landmine Spawner (0.1%)
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/landmine.rsi
+      state: landmine-inactive
+  - type: RandomSpawner
+    prototypes:
+    - LandMineExplosive
+    chance: 0.001
+
+- type: entity
+  id: LandmineOrDudSpawner1
+  parent: MarkerBase
+  name: Landmine or Dud Spawner (1% for Explosive Landmine)
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/landmine.rsi
+      state: landmine-inactive
+  - type: RandomSpawner
+    rarePrototypes:
+    - LandMineModular
+    rareChance: 0.99
+    prototypes:
+    - LandMineExplosive
+
+- type: entity
+  id: LandmineOrDudSpawner10
+  parent: MarkerBase
+  name: Landmine or Dud Spawner (10% for Explosive Landmine)
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/landmine.rsi
+      state: landmine-inactive
+  - type: RandomSpawner
+    rarePrototypes:
+    - LandMineModular
+    rareChance: 0.90
+    prototypes:
+    - LandMineExplosive
+
+- type: entity
+  id: LandmineOrDudSpawner25
+  parent: MarkerBase
+  name: Landmine or Dud Spawner (25% for Explosive Landmine)
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/landmine.rsi
+      state: landmine-inactive
+  - type: RandomSpawner
+    rarePrototypes:
+    - LandMineModular
+    rareChance: 0.75
+    prototypes:
+    - LandMineExplosive
+
+- type: entity
+  id: LandmineOrDudSpawner50
+  parent: MarkerBase
+  name: Landmine or Dud Spawner (50% for Explosive Landmine)
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Misc/landmine.rsi
+      state: landmine-inactive
+  - type: RandomSpawner
+    rarePrototypes:
+    - LandMineModular
+    rareChance: 0.50
+    prototypes:
+    - LandMineExplosive

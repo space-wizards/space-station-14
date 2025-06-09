@@ -435,3 +435,9 @@ accent-nocontractions-words-replace-144 = is not
 
 accent-nocontractions-words-145 = aint
 accent-nocontractions-words-replace-145 = is not
+
+accent-nocontractions-words-146 = doesn't
+accent-nocontractions-words-replace-146 = does not
+
+accent-nocontractions-words-147 = doesnt
+accent-nocontractions-words-replace-147 = does not

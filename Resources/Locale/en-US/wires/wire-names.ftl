@@ -73,3 +73,5 @@ wire-name-bomb-bolt = BOLT
 wire-name-speech = SPKR
 wire-name-listen = MIC
 wire-name-log = LOG
+#imp change
+wire-name-door-alarm = PISK

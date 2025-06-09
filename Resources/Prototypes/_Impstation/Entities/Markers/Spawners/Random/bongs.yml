@@ -1,0 +1,21 @@
+﻿# idk. this could be a mapping resource.
+
+- type: entity
+  id: BongSpawner
+  parent: MarkerBase
+  name: bong spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: _Impstation/Objects/Consumable/Smokeables/Bongs/bongs.rsi
+      state: icon
+  - type: RandomSpawner
+    prototypes:
+    - BongCommemorative
+    - BongBongy
+    - BongGay
+    - BongSlime
+    - BongSpace
+    - BongWhiteCell
+    - BongWizard

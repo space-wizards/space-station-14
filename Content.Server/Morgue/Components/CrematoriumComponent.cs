@@ -1,4 +1,5 @@
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Components;
 
 namespace Content.Server.Morgue.Components;
 
@@ -19,4 +20,13 @@ public sealed partial class CrematoriumComponent : Component
 
     [DataField("cremateFinishSound")]
     public SoundSpecifier CremateFinishSound = new SoundPathSpecifier("/Audio/Machines/ding.ogg");
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Powered; // imp
+
+    /// <summary>
+    /// Stores entity of <see cref="CrematingSoundEntity"/> to allow ending it early when power is interrupted.
+    /// </summary>
+    [DataField]
+    public (EntityUid, AudioComponent)? CrematingSoundEntity; // imp
 }

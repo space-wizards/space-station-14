@@ -49,6 +49,19 @@ public sealed partial class RandomWalkComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public bool StepOnStartup = false;
 
+    /// <summary>
+    /// imp. whether this random walker should break pulling joints upon impulse.
+    /// </summary>
+    [DataField]
+    public bool BreakPulling;
+
+    /// <summary>
+    /// imp. if true, uses ThrowingSystem instead of PhysicsSystem.
+    /// uses speed settings for throw strength.
+    /// </summary>
+    [DataField]
+    public bool Throw;
+
     #region Update Timing
 
     /// <summary>

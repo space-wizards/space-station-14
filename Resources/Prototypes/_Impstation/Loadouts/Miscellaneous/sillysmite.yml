@@ -28,3 +28,43 @@
   equipment:
     head: ClothingHeadHalo
     neck: ClothingNeckAngelWings
+
+# caveman
+- type: startingGear
+  id: CaveMan
+  equipment:
+    jumpsuit: ClothingUniformCavemanHides
+
+# sailor
+- type: startingGear
+  id: Sailor
+  equipment:
+    jumpsuit: ClothingUniformSailorSuit
+    neck: ClothingNeckSailorAscot
+    head: ClothingHeadSailorCap
+    shoes: ClothingShoesBootsLaceup
+
+# burglar
+- type: startingGear
+  id: Burglar
+  equipment:
+    jumpsuit: ClothingUniformBurglarJumpsuit
+    mask: ClothingMaskBurglar
+    shoes: ClothingShoesBootsLaceup
+
+# mira mimi imp
+- type: startingGear
+  id: MimiImpishSimple
+  equipment:
+    neck: ClothingNeckImpishAccessories
+    head: ClothingHeadImpishHorns
+
+- type: startingGear
+  id: MimiImpishFull
+  equipment:
+    jumpsuit: ClothingUniformImpishOutfit
+    head: ClothingHeadImpishHorns
+    neck: ClothingNeckImpishAccessories
+    gloves: ClothingHandsImpishWristbands
+    shoes: ClothingShoesImpishShoes
+    back: ClothingBackpackImpishBackpack

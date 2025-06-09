@@ -355,3 +355,18 @@
     state: icon
   - type: SpeakOnTrigger
     pack: FigurinesCrewLing
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineGoldenFinfin
+  name: golden finfin figure
+  description: An imprint on its underside indicates this figurine is made of solid gold. But you wouldn't do that, would you? To your best friend?
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/figurines.rsi
+    state: goldenfin
+  - type: PhysicalComposition
+    materialComposition:
+      Gold: 100
+  - type: SpeakOnTrigger
+    pack: FigurinesFinfin

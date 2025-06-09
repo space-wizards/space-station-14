@@ -1,0 +1,84 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprited by crocodilecarousel (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bongy"
+        },
+        {
+            "name": "bongy-inhand",
+            "directions": 4
+        },
+        {
+            "name": "gay"
+        },
+        {
+            "name": "gay-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "gay-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "slime"
+        },
+        {
+            "name": "slime-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "slime-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "space"
+        },
+        {
+            "name": "space-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "space-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "whitecell"
+        },
+        {
+            "name": "whitecell-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "whitecell-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "wizard"
+        },
+        {
+            "name": "wizard-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wizard-inhand-right",
+            "directions": 4
+        }
+    ]
+}

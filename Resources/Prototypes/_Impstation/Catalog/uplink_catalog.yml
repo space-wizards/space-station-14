@@ -26,7 +26,7 @@
   productEntity: WeaponPistolZipperAP
   discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 22
+    Telecrystal: 18
   cost:
     Telecrystal: 20
   categories:
@@ -166,7 +166,7 @@
     Telecrystal: 2
   categories:
   - UplinkChemicals
-  
+
 - type: listing
   id: UplinkMixedRejectsCarton
   name: uplink-mixed-rejects-carton-name

@@ -1,197 +1,4 @@
 ﻿Entries:
-- author: MintyTheBinty
-  changes:
-  - message: New uniforms and medals for the recent wing of the ERT Positivity Force.
-    type: Add
-  id: 1267
-  time: '2025-03-10T22:04:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1866
-- author: Sha-Seng
-  changes:
-  - message: Silver Heart Locket for style choices
-    type: Add
-  - message: Rings have hand and neck sprites now
-    type: Tweak
-  id: 1268
-  time: '2025-03-10T22:58:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1880
-- author: hivehum
-  changes:
-  - message: Removed the 'ensure fellow traitor stays alive' objective outside of
-      Spy vs Spy.
-    type: Remove
-  id: 1269
-  time: '2025-03-10T23:05:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1875
-- author: Ecramox
-  changes:
-  - message: Added the R.A.D, and put it in the Nuclear Commander and Lone Op's loadouts
-    type: Add
-  id: 1270
-  time: '2025-03-10T23:43:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1889
-- author: DinnerCalzone
-  changes:
-  - message: All job icons for the Service department jobs have been resprited to
-      be matching. Except for the jobs in the Theatre sub-department, which have been
-      resprited to not be matching.
-    type: Tweak
-  id: 1271
-  time: '2025-03-11T05:04:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1871
-- author: Darkmajia
-  changes:
-  - message: The supermatter has a grace period at roundstart, absorbing 10x less
-      gas until it's powered.
-    type: Tweak
-  id: 1272
-  time: '2025-03-11T07:41:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1895
-- author: AvianMaiden
-  changes:
-  - message: Chainlink fence gates sound a little different.
-    type: Tweak
-  - message: A few new Station AI names!
-    type: Add
-  id: 1273
-  time: '2025-03-11T14:31:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1869
-- author: AvianMaiden
-  changes:
-  - message: Unique sprites for all types of shotgun shell projectiles! Stun slugs
-      now look different from buckshot!
-    type: Add
-  - message: Descriptions to each type of shotgun shell. (Shotgun shell naming conventions
-      are now all the same too!)
-    type: Add
-  - message: Slightly lowered the light given off by incendiary projectiles.
-    type: Tweak
-  - message: The cargo Enforcer order now lists the correct number of shell boxes.
-    type: Fix
-  id: 1274
-  time: '2025-03-11T14:32:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1885
-- author: AvianMaiden
-  changes:
-  - message: Descriptions to all magazines and bullets! (Naming conventions should
-      be standardized too!)
-    type: Add
-  - message: Unique sprites for .25 caseless ammo and grenade projectiles! The L6
-      SAW also now sports a bloodred magazine!
-    type: Add
-  - message: 'New names for Syndicate long guns! Introducing: the L6 "Nidhogg" SAW,
-      C-20R "Gorgon", the Basilisk-11, the Lindwyrm (Hristov), and the Hydra (Bulldog)!'
-    type: Add
-  id: 1275
-  time: '2025-03-12T02:43:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1904
-- author: sageu111
-  changes:
-  - message: woke shit IDK
-    type: Add
-  id: 1276
-  time: '2025-03-12T03:26:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1907
-- author: DinnerCalzone
-  changes:
-  - message: Fixed Hospitality Director not having Brig access as all other heads
-      do.
-    type: Fix
-  id: 1277
-  time: '2025-03-13T05:03:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1910
-- author: Sha-Seng
-  changes:
-  - message: Lightened the base color of thaven ear piercings
-    type: Tweak
-  id: 1278
-  time: '2025-03-13T05:02:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1915
-- author: Darkmajia
-  changes:
-  - message: Trash no longer has a chance to spawn inside the supermatter at roundstart.
-    type: Fix
-  id: 1279
-  time: '2025-03-13T05:03:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1911
-- author: formlessnameless
-  changes:
-  - message: Revert upstream disabler buffs.
-    type: Fix
-  id: 1280
-  time: '2025-03-13T05:02:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1919
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: The Daito, Nemesis, and Mk 92HB firing sounds have been changed to more
-      ethically acquired sources.
-    type: Tweak
-  id: 1281
-  time: '2025-03-12T23:03:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1864
-- author: DinnerCalzone
-  changes:
-  - message: The final (I think) batch of unique airlock sprites have been added to
-      differentiate them by who may access them.
-    type: Add
-  id: 1282
-  time: '2025-03-13T05:04:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1908
-- author: DinnerCalzone
-  changes:
-  - message: Hummingbird Station now features the supermatter engine.
-    type: Add
-  - message: Suppy, engineering's pet suppermatter chunk, has been added to maps with
-      supermatter.
-    type: Add
-  - message: The default supermatter setup has been changed, which will keep the supermatter
-      crystal stable for far longer.
-    type: Tweak
-  id: 1283
-  time: '2025-03-13T05:05:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1899
-- author: honeyed-lemons
-  changes:
-  - message: Fixes the human male body being a pixel high on the side sprites
-    type: Fix
-  id: 1284
-  time: '2025-03-13T05:06:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1921
-- author: jtfg-dev
-  changes:
-  - message: Added ticket pads into the SecTech vending machine.
-    type: Tweak
-  id: 1285
-  time: '2025-03-13T05:06:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1912
-- author: Jellvisk
-  changes:
-  - message: It's now harder for you to accidentally eat your crayons as you're drawing.
-    type: Tweak
-  id: 1286
-  time: '2025-03-13T05:11:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1922
-- author: kipdotnet
-  changes:
-  - message: Added a special coat to the salvage loadout for decapoids to use.
-    type: Add
-  id: 1287
-  time: '2025-03-13T05:19:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1890
-- author: Tyranex
-  changes:
-  - message: Readded the scream button for cyborgs.
-    type: Fix
-  id: 1288
-  time: '2025-03-13T05:22:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1920
-- author: Sha-Seng
-  changes:
-  - message: You can now eat the rat king
-    type: Tweak
-  id: 1289
-  time: '2025-03-13T05:24:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1897
 - author: AvianMaiden
   changes:
   - message: Shotgun shell boxes now look correct
@@ -4218,3 +4025,193 @@
   id: 1766
   time: '2025-06-08T02:53:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2644
+- author: widgetbeck
+  changes:
+  - message: Raw spider legs are twitchy.
+    type: Add
+  id: 1767
+  time: '2025-06-08T04:03:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2602
+- author: kipdotnet
+  changes:
+  - message: Apid salvagers now start with a special, fully accurate PKA variant,
+      to make up for not being able to wield a normal one properly.
+    type: Tweak
+  id: 1768
+  time: '2025-06-08T04:09:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2665
+- author: sev7ves
+  changes:
+  - message: Added a door alarm wire to high sec doors
+    type: Add
+  id: 1769
+  time: '2025-06-08T04:10:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2586
+- author: ThatKidConnor
+  changes:
+  - message: Gave the syndicat a recolour resembling Impstation Bloodred hardsuits.
+    type: Tweak
+  id: 1770
+  time: '2025-06-08T04:16:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2646
+- author: DinnerCalzone, hivehum, crocodilecarousel, ATDoop
+  changes:
+  - message: A number of things have been added to celebrate Impstation's anniversary
+      on June 16th! An anniversary crate can be ordered from cargo!
+    type: Add
+  id: 1771
+  time: '2025-06-08T04:15:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2637
+- author: Oberonics
+  changes:
+  - message: Cremators across all stations are now electrically powered. How they
+      worked before is classified.
+    type: Tweak
+  id: 1772
+  time: '2025-06-08T04:12:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2502
+- author: AvianMaiden
+  changes:
+  - message: Slime/Gastro blinks work with directional audio now. Kode babies harm
+      your ears less upon death.
+    type: Tweak
+  id: 1773
+  time: '2025-06-08T04:14:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2639
+- author: animal-collective
+  changes:
+  - message: thaven have the bangs-less version of the Mean Girl hair now
+    type: Add
+  - message: made some adjustments to shading of all the Shaggy hairstyles for humanoids
+      and thaven
+    type: Tweak
+  id: 1774
+  time: '2025-06-08T04:13:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2640
+- author: Mousetrinity
+  changes:
+  - message: grug is home now, along with a few other silly clothing options
+    type: Add
+  id: 1775
+  time: '2025-06-08T04:23:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2628
+- author: ThatKidConnor
+  changes:
+  - message: Added deerstalker in detective's loadout & detdrobe to match with your
+      smoking pipe, it's elementary!
+    type: Add
+  id: 1776
+  time: '2025-06-08T05:06:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2609
+- author: ruddygreat
+  changes:
+  - message: Mass scanner interfaces will now show every entity with an active jetpack.
+    type: Add
+  - message: Syndicate jetpacks are now stealthy.
+    type: Tweak
+  id: 1777
+  time: '2025-06-08T11:49:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2589
+- author: TuttlePants
+  changes:
+  - message: Bounty hunters can now target nukies and head revolutionaries.
+    type: Tweak
+  - message: Bounty hunters no longer target nonhumanoid antagonists. Sorry, dragon
+      slayers.
+    type: Tweak
+  - message: Bounty hunters also no longer target the dead.
+    type: Fix
+  id: 1778
+  time: '2025-06-08T11:56:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2629
+- author: Pinkbat5
+  changes:
+  - message: Medhud glasses are now also selectable in Medical Doctor and CMO loadouts.
+    type: Fix
+  id: 1779
+  time: '2025-06-08T11:57:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2681
+- author: hivehum
+  changes:
+  - message: Station AI and Chemist have had their role time requirements reduced.
+    type: Tweak
+  id: 1780
+  time: '2025-06-09T00:42:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2688
+- author: Stonylogray
+  changes:
+  - message: High Command has scrounged up some change for the war effort. War declaration
+      provides 25 extra TC per operative, up from 20.
+    type: Tweak
+  id: 1781
+  time: '2025-06-09T00:43:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2684
+- author: meridiadottxt
+  changes:
+  - message: added material silo to science and lockboxes to every department on gate
+      (i forgor to do it before)
+    type: Add
+  - message: all departments now run on their own independent power source again
+    type: Fix
+  id: 1782
+  time: '2025-06-09T00:56:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2692
+- author: hivehum
+  changes:
+  - message: CMOs start with one survival box now. Don't get greedy.
+    type: Remove
+  id: 1783
+  time: '2025-06-09T00:56:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2689
+- author: hivehum
+  changes:
+  - message: Kodepiia, grays, and thaven are no longer discriminated against by bloodthirsty
+      artifacts.
+    type: Fix
+  id: 1784
+  time: '2025-06-09T00:57:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2690
+- author: jtfg-dev
+  changes:
+  - message: The new pins added in the upstream merge can now be seen on full display!
+    type: Fix
+  - message: The brave knight Gollylad now shows his/her/their pride.
+    type: Add
+  id: 1785
+  time: '2025-06-09T00:55:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2686
+- author: hivehum
+  changes:
+  - message: Tck'tck can beep again!
+    type: Fix
+  id: 1786
+  time: '2025-06-09T00:56:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2691
+- author: DinnerCalzone
+  changes:
+  - message: Wall rechargers charge rate has been reduced to match standard rechargers.
+    type: Tweak
+  id: 1787
+  time: '2025-06-09T01:03:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2680
+- author: britno
+  changes:
+  - message: Added Irwizine, a chemical that pacifies normally hostile creatures with
+      15u of accumilation. Perfect for putting together exhibits with deadly beasts!
+    type: Add
+  - message: Added the Muldoon tranquilizer rifle, a scoped gun that only shoots Irwizine
+      and Chloral Hydrate darts.
+    type: Add
+  - message: Gave the zookeeper the Muldoon and some darts at the start of the round.
+    type: Tweak
+  id: 1788
+  time: '2025-06-09T01:35:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2555
+- author: DinnerCalzone
+  changes:
+  - message: The time between being able to knock on the same window, blast door,
+      or shutter has increased to be less annoying.
+    type: Tweak
+  id: 1789
+  time: '2025-06-09T02:02:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2694

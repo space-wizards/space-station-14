@@ -242,6 +242,10 @@
     - Slime
     - AmmoniaBlood
     - ZombieBlood
+    # imp below
+    - ShimmeringBlood
+    - BloodKodepiia
+    - GrayBlood
 
 - type: xenoArchTrigger
   id: TriggerThrow

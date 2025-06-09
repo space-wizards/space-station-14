@@ -1276,6 +1276,7 @@
   loadouts:
   - DetectiveFedora
   - DetectiveFedoraGrey
+  - ClothingHeadDeerstalker #imp
 
 - type: loadoutGroup
   id: DetectiveNeck
@@ -1544,6 +1545,7 @@
   loadouts:
   - MedicalHud
   - MedicalEyePatchHud
+  - MedicalGlassesHud #imp
   - Glasses
   - GlassesJamjar
   - GlassesJensen

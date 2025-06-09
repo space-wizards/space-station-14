@@ -453,6 +453,9 @@
   id: CubanCarp
 
 - type: Tag
+  id: Dart
+
+- type: Tag
   id: DeathAcidifier
 
 - type: Tag
@@ -1423,6 +1426,9 @@
 
 - type: Tag
   id: ToySidearm
+
+- type: Tag
+  id: TranquilizerDart
 
 - type: Tag
   id: Trash

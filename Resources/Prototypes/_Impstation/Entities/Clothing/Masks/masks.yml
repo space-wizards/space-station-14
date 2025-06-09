@@ -95,3 +95,18 @@
   - type: Tag
     tags:
     - ClownMask
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskBurglar
+  name: suspicious mask
+  description: You couldn't possibly guess the wearer's motives
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Mask/burglarmask.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Mask/burglarmask.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - ClothMade

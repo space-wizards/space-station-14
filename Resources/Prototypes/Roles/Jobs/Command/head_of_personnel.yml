@@ -11,13 +11,13 @@
       department: Medical
       time: 36000 # 10 hours, imp
     - !type:DepartmentTimeRequirement
-      department: Science
-      time: 36000 # 10 hours, imp
-    - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 # 10 hrs
+      time: 36000 # 10 hrs, imp
     - !type:DepartmentTimeRequirement #imp
       department: Cargo
+      time: 36000 # 10 hrs
+    - !type:DepartmentTimeRequirement #imp
+      department: Science
       time: 36000 # 10 hrs
     - !type:DepartmentTimeRequirement
       department: Command

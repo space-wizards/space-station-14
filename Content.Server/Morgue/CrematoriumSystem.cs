@@ -16,6 +16,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Content.Shared.Power;
 
 namespace Content.Server.Morgue;
 
@@ -38,6 +39,9 @@ public sealed class CrematoriumSystem : EntitySystem
         SubscribeLocalEvent<CrematoriumComponent, GetVerbsEvent<AlternativeVerb>>(AddCremateVerb);
         SubscribeLocalEvent<CrematoriumComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
         SubscribeLocalEvent<ActiveCrematoriumComponent, StorageOpenAttemptEvent>(OnAttemptOpen);
+
+        SubscribeLocalEvent<CrematoriumComponent, PowerChangedEvent>(OnPowerChanged); // imp
+        SubscribeLocalEvent<ActiveCrematoriumComponent, PowerChangedEvent>(OnActivePowerChanged); // imp
     }
 
     private void OnExamine(EntityUid uid, CrematoriumComponent component, ExaminedEvent args)
@@ -103,7 +107,7 @@ public sealed class CrematoriumSystem : EntitySystem
         _audio.PlayPvs(component.CremateStartSound, uid);
         _appearance.SetData(uid, CrematoriumVisuals.Burning, true);
 
-        _audio.PlayPvs(component.CrematingSound, uid);
+        component.CrematingSoundEntity = _audio.PlayPvs(component.CrematingSound, uid); // imp
 
         AddComp<ActiveCrematoriumComponent>(uid);
         return true;
@@ -114,8 +118,11 @@ public sealed class CrematoriumSystem : EntitySystem
         if (!Resolve(uid, ref component, ref storage))
             return false;
 
-        if (storage.Open || storage.Contents.ContainedEntities.Count < 1)
+        if (storage.Open || storage.Contents.ContainedEntities.Count < 1 || component.Powered == false) // imp
+        {
+            _popup.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), uid); // imp
             return false;
+        }
 
         return Cremate(uid, component, storage);
     }
@@ -142,6 +149,7 @@ public sealed class CrematoriumSystem : EntitySystem
 
         _entityStorage.OpenStorage(uid, storage);
         _audio.PlayPvs(component.CremateFinishSound, uid);
+        component.CrematingSoundEntity = null; // imp
     }
 
     private void OnSuicideByEnvironment(EntityUid uid, CrematoriumComponent component, SuicideByEnvironmentEvent args)
@@ -191,5 +199,26 @@ public sealed class CrematoriumSystem : EntitySystem
             if (act.Accumulator >= crem.CookTime)
                 FinishCooking(uid, crem);
         }
+    }
+    //imp
+    private void OnPowerChanged(Entity<CrematoriumComponent> entity, ref PowerChangedEvent args)
+    {
+        entity.Comp.Powered = args.Powered;
+    }
+
+    //imp
+    private void OnActivePowerChanged(Entity<ActiveCrematoriumComponent> entity, ref PowerChangedEvent args)
+    {
+        if (!TryComp<CrematoriumComponent>(entity, out var crematoriumComponent))
+            return;
+
+        if (!args.Powered)
+        {
+            _audio.Stop(crematoriumComponent.CrematingSoundEntity?.Item1, crematoriumComponent.CrematingSoundEntity?.Item2);
+            crematoriumComponent.CrematingSoundEntity = null;
+            _appearance.SetData(entity.Owner, CrematoriumVisuals.Burning, false);
+            RemComp<ActiveCrematoriumComponent>(entity.Owner);
+        }
+
     }
 }

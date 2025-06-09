@@ -434,3 +434,16 @@
   group: Dessert
   solids:
     HopTart: 1
+
+- type: microwaveMealRecipe
+  id: RecipeWhereIsGumbo
+  name: where is gumbo recipe
+  result: FoodWhereIsGumbo
+  time: 15
+  group: Savory
+  reagents:
+    Nothing: 10
+  solids:
+    FoodRiceBoiled: 1
+    FoodMeatCutlet: 3
+    FoodChiliPepper: 2

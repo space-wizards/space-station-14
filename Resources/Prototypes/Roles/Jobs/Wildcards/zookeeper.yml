@@ -14,7 +14,7 @@
     holiday: MonkeyDay
     prototype: MonkeyCubeBox
 
-- type: startingGear
+- type: startingGear #imp
   id: ZookeeperGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSafari
@@ -22,6 +22,14 @@
     shoes: ClothingShoesColorWhite
     id: ZookeeperPDA
     ears: ClothingHeadsetService
-  #storage:
-    #back:
-    #- Stuff
+  inhand:
+    - WeaponRifleTranq
+  storage:
+    back: 
+    - TranqDart
+    - TranqDart
+    - TranqDart
+    - IrwizineDart
+    - IrwizineDart
+    - IrwizineDart
+    - IrwizineDart

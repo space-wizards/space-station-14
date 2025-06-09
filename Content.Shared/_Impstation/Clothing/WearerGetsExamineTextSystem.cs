@@ -41,6 +41,7 @@ public sealed class WearerGetsExamineTextSystem : EntitySystem
         var obviousExamine = EnsureComp<ExtraExamineTextComponent>(args.Equipee);
         obviousExamine.Lines.TryAdd(entity.Owner,  //using try so that we don't cause an error if we move something from slot to slot
             ConstructExamineText(entity, !isCorrectSlot, args.Equipee));
+        Dirty(args.Equipee, obviousExamine);
     }
 
 
@@ -73,9 +74,10 @@ public sealed class WearerGetsExamineTextSystem : EntitySystem
         if (entity.Comp.Wearer is not { } wearer)
             return;
 
-        if (TryComp(wearer, out ExtraExamineTextComponent? obviousExamine))
+        if (TryComp<ExtraExamineTextComponent>(wearer, out var obviousExamine))
         {
             obviousExamine.Lines.Remove(entity.Owner);
+            Dirty(wearer, obviousExamine);
         }
 
         entity.Comp.Wearer = null;

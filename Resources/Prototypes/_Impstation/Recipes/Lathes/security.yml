@@ -308,3 +308,30 @@
     Plasma: 200
     Cloth: 100
     Plastic: 100
+
+- type: latheRecipe
+  parent: BaseWeaponRecipe
+  id: WeaponRifleTranq
+  result: WeaponRifleTranq
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plastic: 500
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: IrwizineDart
+  result: IrwizineDart
+  materials:
+    Steel: 50
+    Glass: 50
+    Plasma: 300
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: TranqDart
+  result: TranqDart
+  materials:
+    Steel: 50
+    Glass: 50
+    Plasma: 100

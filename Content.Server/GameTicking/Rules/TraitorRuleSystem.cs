@@ -42,6 +42,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
 
+    [Dependency] private readonly SharedMindSystem _mind = default!; //imp edit
+
     public AntagSelectionPlayerPool? CurrentAntagPool = null;
     public bool ForceAllPossible = false;
 
@@ -284,7 +286,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return traitors;
     }
 
-// imp edit for Bounty Hunter
+// imp addition
     public List<(EntityUid Id, MindComponent Mind)> GetOtherAntagMindsAliveAndConnected(MindComponent ourMind)
     {
         List<(EntityUid Id, MindComponent Mind)> allAntags = new();
@@ -305,14 +307,15 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     private List<(EntityUid Id, MindComponent Mind)> GetOtherAntagMindsAliveAndConnected(MindComponent ourMind, Entity<AntagObjectivesComponent> rule)
     {
         var antags = new List<(EntityUid Id, MindComponent Mind)>();
-        foreach (var mind in _antag.GetAntagMinds(rule.Owner))
+        foreach (var mind in _mind.GetAliveHumans(rule.Owner))
         {
-            if (mind.Comp == ourMind)
-                continue;
 
+            var mindEntity = mind.Comp.Owner;
             antags.Add((mind, mind));
         }
 
         return antags;
     }
+
+//end imp edit
 }

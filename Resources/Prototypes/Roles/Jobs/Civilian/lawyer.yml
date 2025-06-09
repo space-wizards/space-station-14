@@ -6,9 +6,9 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 36000 # 10 hrs, imp
-    - !type:RoleTimeRequirement
+    - !type:RoleTimeRequirement # imp
       role: JobSecurityOfficer
-      time: 7200 #2 hrs, imp
+      time: 7200 #2 hrs
   startingGear: LawyerGear
   icon: "JobIconLawyer"
   supervisors: job-supervisors-hd

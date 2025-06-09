@@ -134,6 +134,7 @@
     staminaCost: 25
     soundHit:
       path: /Audio/Weapons/smash.ogg
+  - type: RadarBlipStealth #imp edit. hide this jetpack from mass scanners.
 
 - type: entity
   id: ActionToggleMagboots

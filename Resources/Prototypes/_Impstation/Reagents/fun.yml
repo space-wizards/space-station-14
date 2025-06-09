@@ -187,6 +187,23 @@
         amount: -0.5
 
 - type: reagent
+  id: Irwizine
+  name: reagent-name-irwizine
+  desc: reagent-desc-irwizine
+  physicalDesc: reagent-physical-desc-irwizine
+  flavor: irwizine
+  color: "#fff174"
+  recognizable: true
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:FactionChange
+        faction: Passive
+        conditions:
+        - !type:ReagentThreshold
+          min: 15
+
+- type: reagent
   id: Sadness
   name: reagent-name-sadness
   desc: reagent-desc-sadness
@@ -205,4 +222,3 @@
       effects:
       - !type:Emote
         emote: Crying
-        force: true

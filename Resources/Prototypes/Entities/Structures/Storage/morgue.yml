@@ -143,3 +143,8 @@
           False: { visible: false }
   - type: Transform
     anchored: true
+  - type: ApcPowerReceiver # imp
+    powerLoad: 1000
+  - type: ExtensionCableReceiver # imp
+  - type: LightningTarget # imp
+    priority: 1

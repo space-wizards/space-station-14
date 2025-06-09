@@ -172,6 +172,7 @@
         offset: "0, 0.15" #this shit is so fiddly and i don't understand it at all
     sprite: _Impstation/Clothing/Head/Hats/circusclownhat.rsi
 
+
 - type: entity
   parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatBeretHD
@@ -263,4 +264,49 @@
   - type: Armor
   - type: Tag
     tags:
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadDeerstalker
+  name: deerstalker
+  description: Heavily modified to stalk clues instead.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/deerstalker.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/deerstalker.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadSailorCap
+  name: sailor's hat
+  description: You aren't immune to seasickness wearing this, but it'll make you look cooler when heaving on the boat!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/sailorcap.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/sailorcap.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - ClothMade
+
+- type: entity
+  parent: [ClothingHeadBase, BaseCentcommContraband]
+  id: ClothingHeadImpishHorns
+  name: impish horns
+  description: 
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/impishhorns.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/impishhorns.rsi
+  - type: Tag
+    tags:
+    - ClothMade
     - WhitelistChameleon

@@ -2421,7 +2421,7 @@
   speciesRestriction: [ Thaven ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
-    state: thavenshaggy
+    state: shaggythaven
 
 - type: marking
   id: ShaggyLongerThaven
@@ -2430,7 +2430,7 @@
   speciesRestriction: [ Thaven ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
-    state: thavenshaggylonger
+    state: shaggylongerthaven
 
 - type: marking
   id: SusieThaven
@@ -2440,6 +2440,15 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
     state: susiethaven
+
+- type: marking
+  id: SusieNoBangsThaven
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [ Thaven ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/hair.rsi
+    state: susienobangsthaven
 
 # HeadSide
 

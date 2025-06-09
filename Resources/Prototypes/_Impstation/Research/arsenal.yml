@@ -14,6 +14,20 @@
   - HyperBurstConversionKit
   - MagazinePistolP2Extended
   - MagazinePistolP2ExtendedEmpty
+  
+- type: technology
+  id: TranqDartResearch
+  name: research-technology-tranquilizer
+  icon:
+    sprite: _Impstation/Objects/Weapons/Guns/Snipers/tranqrifle.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 6000
+  recipeUnlocks:
+  - WeaponRifleTranq
+  - TranqDart
+  - IrwizineDart
 
 - type: technology
   id: AdvancedMunitions

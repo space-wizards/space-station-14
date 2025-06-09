@@ -9,7 +9,7 @@
       time: 21600 #6 hrs, imp
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 21600 #6 hrs
+      time: 21600 #6 hrs, imp
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 72000 #20 hours, imp

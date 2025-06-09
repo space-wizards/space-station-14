@@ -98,3 +98,4 @@ flavor-complex-service = like service access
 flavor-complex-syndicateagent = like syndicate agent access
 flavor-complex-theatre = like theatre access
 flavor-complex-wizard = like wizard access
+flavor-complex-irwizine = like wrestling an alligator

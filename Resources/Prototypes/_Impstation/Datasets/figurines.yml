@@ -159,3 +159,15 @@
   values:
     prefix: figurines-crewling-
     count: 9
+
+- type: localizedDataset
+  id: GnomeChild
+  values:
+    prefix: gnome-child-
+    count: 23
+
+- type: localizedDataset
+  id: FigurinesFinfin
+  values:
+    prefix: accent-words-finfin- # hey it let me do this so
+    count: 4

@@ -57,3 +57,22 @@
         - ReagentId: Sadness
           Quantity: 20
 
+- type: entity
+  id: ImpstationMemorialBlunt
+  parent: MemorialBlunt
+  name: impstation memorial blunt # overwritten by random metadata once spawned so only matters for admins
+  description: I get high on your memory...
+  components:
+  - type: RandomMetadata
+    nameSegments: [NamesImpstation]
+    nameFormat: sad-blunt
+
+- type: entity
+  id: ImpstationMemorialJoint
+  parent: MemorialJoint
+  name: impstation memorial joint
+  description: I get high on your memory...
+  components:
+  - type: RandomMetadata
+    nameSegments: [NamesImpstation]
+    nameFormat: sad-blunt
