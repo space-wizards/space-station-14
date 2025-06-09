@@ -78,26 +78,6 @@
     icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: artistic-module }
 
 - type: entity
-  id: BorgModulePaper
-  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
-  name: bureaucracy cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: service
-    - state: icon-pen
-  - type: ItemBorgModule
-    items:
-    - Pen
-    - BooksBag
-    - HandLabeler
-    - RubberStampApproved
-    - RubberStampDenied
-    - RubberStampBorg
-  - type: BorgModuleIcon
-    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: bureaucracy-module }
-
-- type: entity
   id: BorgModuleBartender
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
   name: bartender cyborg module
@@ -113,23 +93,5 @@
     - BarSpoon
     - BorgIceBucket
     - Pitcher
-    - BorgDropper
   - type: BorgModuleIcon
     icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: bartender-module }
-
-- type: entity
-  id: BorgModuleBasicMining
-  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
-  name: basic mining cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: cargo
-    - state: icon-mining-basic
-  - type: ItemBorgModule
-    items:
-    - BorgPickaxe
-    - OreBag
-    - RadioHandheld
-  - type: BorgModuleIcon
-    icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: basic-mining-module }

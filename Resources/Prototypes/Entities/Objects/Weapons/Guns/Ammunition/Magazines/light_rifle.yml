@@ -40,7 +40,6 @@
   name: "L6 SAW magazine box (.20 rifle)" #imp
   description: A 100-round .20 rifle box magazine of disintegrating links, designed for a belt-fed light machine gun. #imp
   parent: BaseMagazineLightRifle
-  description: Box containing a 100-round belt of linked .30 rifle rounds, used by light machine guns such as the L6. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: Tag
     tags:
@@ -65,7 +64,6 @@
   name: "magazine (.30 rifle)"
   description: A 23-round .30 rifle magazine, marked as live-fire ammo. #imp
   parent: BaseMagazineLightRifle
-  description: Curved 30-round double stack magazine for combat rifles. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifle
@@ -92,7 +90,6 @@
   description: A 23-round .30 rifle magazine with no apparent markings. #imp
   suffix: empty
   parent: MagazineLightRifle
-  description: Curved 30-round double stack magazine for combat rifles.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -114,7 +111,6 @@
   name: "magazine (.30 rifle practice)"
   description: A 23-round .30 rifle magazine, marked as practice ammo. #imp
   parent: BaseMagazineLightRifle
-  description: Curved 30-round double stack magazine for combat rifles. Intended to hold non-harmful chalk ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRiflePractice
@@ -140,7 +136,6 @@
   name: "magazine (.30 rifle uranium)"
   description: A 23-round .30 rifle magazine, marked as uranium ammo. #imp
   parent: BaseMagazineLightRifle
-  description: Curved 30-round double stack magazine for combat rifles. Intended to hold exotic uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleUranium
@@ -166,7 +161,6 @@
   name: "magazine (.30 rifle incendiary)"
   description: A 23-round .30 rifle magazine, marked as incendiary ammo. #imp
   parent: MagazineLightRifle
-  description: Curved 30-round double stack magazine for combat rifles. Intended to hold self-igniting incendiary ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleIncendiary

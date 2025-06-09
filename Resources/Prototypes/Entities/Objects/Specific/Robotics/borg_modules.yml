@@ -369,6 +369,7 @@
     - Shovel
     - MineralScannerUnpowered
     - BorgOreBag
+    - RadioHandheld # imp
   - type: BorgModuleIcon
     icon: { sprite: _Impstation/Interface/Actions/actions_borg.rsi, state: mining-module } #imp edit
 
@@ -445,7 +446,7 @@
     - SheetGlassLingering0
     - SheetRGlassLingering0
     - SheetRPGlassLingering0
-    - SheetPlasteelLingering0
+    #- SheetPlasteelLingering0 #imp
     - PartRodMetalLingering0
     - FloorTileItemSteelLingering0
     - FloorTileItemWhiteLingering0
@@ -687,6 +688,7 @@
     - HandLabeler
     - RubberStampApproved
     - RubberStampDenied
+    - RubberStampBorg # imp
     - BorgDropper
     - BorgVial
   - type: BorgModuleIcon

@@ -83,15 +83,15 @@
 
   defaultModules:
   - BorgModuleTool
+  - BorgModuleMining
   - BorgModuleTraversal
-  - BorgModuleBasicMining # imp
   - BorgModuleAppraisal
 
   radioChannels:
   - Supply
   - Science
 
-  addComponents:
+  addComponents: # imp
   - type: Magboots
 
   # Visual
@@ -214,7 +214,7 @@
   - BorgModuleTool
   - BorgModuleMusique
   - BorgModuleBartender # imp
-  - BorgModulePaper # imp
+  - BorgModuleService
   - BorgModuleClowning
   - BorgModuleGardening
   - BorgModuleHarvesting
