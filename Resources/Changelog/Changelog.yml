@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: SyndieJuice now comes with 10 units of liquid plasma.
-    type: Add
-  id: 8134
-  time: '2025-04-05T03:22:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36280
 - author: SlamBamActionman
   changes:
   - message: The storage implant's storage has been changed to a new pattern with
@@ -3912,3 +3905,10 @@
   id: 8646
   time: '2025-06-09T22:37:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38190
+- author: nabegator
+  changes:
+  - message: hi-viz vest now has a 2% chance to reflect lasers
+    type: Tweak
+  id: 8647
+  time: '2025-06-09T23:03:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38180
