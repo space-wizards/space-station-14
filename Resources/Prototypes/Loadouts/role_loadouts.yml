@@ -559,7 +559,7 @@
   - ChiefMedicalOfficerBackpack #imp
   - SurvivalCommand #imp
   - MedicalEyewear
-  - SurvivalMedical
+  # - SurvivalMedical # imp
   - Trinkets
   - GroupSpeciesBreathToolMedical
   - GroupTankHarnessCommandWithOuterwear
