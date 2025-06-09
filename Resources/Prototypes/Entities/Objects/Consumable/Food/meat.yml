@@ -162,11 +162,8 @@
         reagents:
         - ReagentId: CarpoToxin
           Quantity: 5
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: CarpoToxin
-        Quantity: 5
+        - ReagentId: Rezamine
+          Quantity: 2
   - type: Item
     inhandVisuals:
       left:

@@ -29,15 +29,16 @@
   color: "#2cc98a"
   metabolisms:
     Narcotic:
-      metabolismRate: 0.75
+      metabolismRate: 0.2
       effects:
       - !type:MovespeedModifier
-        walkSpeedModifier: 1.2
-        sprintSpeedModifier: 1.2
+        walkSpeedModifier: 1.15
+        sprintSpeedModifier: 1.15
+        time: 6
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
-            min: 20
+            min: 15
         damage:
           types:
             Poison: 1
@@ -45,25 +46,25 @@
       - !type:Jitter
         conditions:
           - !type:ReagentThreshold
-            min: 20
+            min: 8
       - !type:GenericStatusEffect
         key: Stun
-        time: 3
+        time: 1
         type: Remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 3
+        time: 1
         type: Remove
       - !type:GenericStatusEffect
         key: StaminaModifier
         component: StaminaModifier
-        time: 3
+        time: 5
         type: Add
       - !type:GenericStatusEffect
         key: ForcedSleep
-        time: 3
+        time: 5
         type: Remove
       - !type:AdjustReagent
         probability: 0.2
         reagent: Nutriment
-        amount: 0.10
+        amount: 0.5

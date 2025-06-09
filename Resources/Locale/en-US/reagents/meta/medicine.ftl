@@ -77,7 +77,7 @@ reagent-name-tranexamic-acid = tranexamic acid
 reagent-desc-tranexamic-acid = A blood-clotting medicine used to prevent profuse bleeding. Causes heavier bleeding on overdose. Commonly found in small doses within emergency medipens.
 
 reagent-name-tricordrazine = tricordrazine
-reagent-desc-tricordrazine = A wide-spectrum stimulant, originally derived from cordrazine. Treats minor damage of all basic health types as long as the user is not heavily wounded. Best used as an additive to other chemicals.
+reagent-desc-tricordrazine = A wide-spectrum stimulant, acting on many parts of the body. Treats minor damage of all basic types as long as the patient is not heavily wounded. Best used as an additive to other chemicals.
 
 reagent-name-lipozine = lipozine
 reagent-desc-lipozine = A chemical that accelerates metabolism, causing the user to hunger faster.

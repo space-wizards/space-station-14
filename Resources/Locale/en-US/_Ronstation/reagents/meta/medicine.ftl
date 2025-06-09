@@ -1,11 +1,14 @@
-reagent-name-rezadone = rezadone
-reagent-desc-rezadone = A powder derived from fish toxin, effectively restores burns as well as treat minor wounds. Overdose will cause intense nausea and minor toxin damage.
+reagent-name-rezamine = rezamine
+reagent-desc-rezamine = A subtsance naturally occuring in carp flesh, takes a while to metabolize due to it's complex structure, patches up miscelaneous wounds from workplace hazards. Overdose afflicts you with the ick.
 
 reagent-name-pentetic-acid = pentetic acid
-reagent-desc-pentetic-acid = Reduces toxin and radiation damage while purging other chemicals from the body.
+reagent-desc-pentetic-acid = Aggresively undoes heat damage, while getting cold & shock damage in the process, with a caustic aftermath. Leaves a harsh caustic burn on overdose.
 
-reagent-name-cordrazine = cordrazine
-reagent-desc-cordrazine = Reduces brute, toxin and airloss damage while in critical condition. Overdose causes cellular scrambling and possible delirium.
+reagent-name-hexetic-acid = hexetic acid
+reagent-desc-hexetic-acid = Angrily restores piercing damage, closing up slash wounds as a side effect, with a caustic attitude. Leaves a harsh caustic burn on overdose.
 
-reagent-name-spaceacillin = spaceacillin
-reagent-desc-spaceacillin = Provides limited resistance against disease and parasites. Not used as much due to the extinction of most pathogens.
+reagent-name-tetracordrazine = tetracordrazine
+reagent-desc-tetracordrazine = A potent stabilizing agent, effectively heals brute, burn, and poison damage on the brink of death; and slightly patches up life threatening wounds. Causes sizeable genetic damage on overdose and in relatively good condition.
+
+reagent-name-spessacillin = spessacillin
+reagent-desc-spessacillin = A naturally sourced toxin treatment discovered in a catastrophic industrial accident. Don't worry about it, helps the cough go away.

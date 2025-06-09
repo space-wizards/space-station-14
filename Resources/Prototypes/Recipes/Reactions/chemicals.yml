@@ -65,12 +65,10 @@
 - type: reaction
   id: PolytrinicAcid
   reactants:
-    SulfuricAcid:
-      amount: 1
-    Plasma:
-      amount: 1
-    Potassium:
-      amount: 1
+    PenteticAcid:
+      amount: 2
+    HexeticAcid:
+      amount: 2
   products:
     PolytrinicAcid: 3
 

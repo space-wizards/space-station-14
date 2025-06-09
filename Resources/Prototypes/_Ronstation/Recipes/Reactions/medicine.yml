@@ -1,53 +1,61 @@
 - type: reaction
-  id: Rezadone
+  id: Rezamine
   reactants:
     CarpoToxin:
       amount: 1
-    Spaceacillin:
-      amount: 1
     Copper:
       amount: 1
+    Ammonia:
+      amount: 1
   products:
-    Rezadone: 3
+    Rezamine: 2
 
 - type: reaction
   id: PenteticAcid
   reactants:
-    WeldingFuel:
+    Benzene:
+      amount: 1
+    Fluorine:
       amount: 1
     Chlorine:
       amount: 1
-    Ammonia:
-      amount: 1
-    Sodium:
-      amount: 1
-    Cyanide:
-      amount: 1
-    Formaldehyde:
+    Ash:
       amount: 1
   products:
-    PenteticAcid: 3
+    PenteticAcid: 2
 
 - type: reaction
-  minTemp: 353
-  id: Cordrazine
+  id: HexeticAcid
   reactants:
-    Bromine:
+    Benzene:
+      amount: 1
+    Fluorine:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Fersilicite:
+      amount: 1
+  products:
+    HexeticAcid: 2
+
+- type: reaction
+  id: Tetracordrazine
+  reactants:
+    Benzene:
       amount: 1
     Inaprovaline:
       amount: 1
     Lithium:
       amount: 1
   products:
-    Cordrazine: 2
+    Tetracordrazine: 2
 
 - type: reaction
-  minTemp: 316
-  id: Spaceacillin
+  id: Spessacillin
   reactants:
     Amatoxin:
       amount: 2
     Ethanol:
       amount: 1
   products:
-    Spaceacillin: 3
+    Spessacillin: 6

@@ -3,62 +3,87 @@
   name: reagent-name-pentetic-acid
   group: Medicine
   desc: reagent-desc-pentetic-acid
-  physicalDesc: reagent-physical-desc-powdery
-  color: "#E6FFF0"
-  worksOnTheDead: true
+  physicalDesc: reagent-physical-desc-abrasive
+  color: "#B0D0F0"
   metabolisms:
     Medicine:
-      metabolismRate: 0.6
-      effects:
-      - !type:HealthChange
-        probability: 0.70
-        damage:
-          groups:
-            Toxin: -4
-      - !type:HealthChange
-        probability: 0.30
-        damage:
-          groups:
-            Burn: 0.5
-            Brute: 0.5
-      - !type:ChemCleanBloodstream
-        cleanseRate: 5
-
-- type: reagent
-  id: Rezadone
-  name: reagent-name-rezadone
-  group: Medicine
-  desc: reagent-desc-rezadone
-  physicalDesc: reagent-physical-desc-powdery
-  flavor: fishy
-  color: "#669900"
-  worksOnTheDead: true
-  metabolisms:
-    Medicine:
-      metabolismRate: 0.4
+      metabolismRate: 3.0
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Brute: -1
-            Burn: -1
           types:
-            Cellular: -0.10
+            Heat: -8.0
+            Cold: -4.0
+            Shock: -4.0 # there's like 5 sources of shock damage in the whole ass game but Maybe In The Future this will be useful
+            Caustic: 1.0
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 13.0
         damage:
-          groups:
-            Toxin: 1
+          types:
+            Caustic: 8.0
+      - !type:Jitter
+
+- type: reagent
+  id: HexeticAcid
+  name: reagent-name-hexetic-acid
+  group: Medicine
+  desc: reagent-desc-hexetic-acid
+  physicalDesc: reagent-physical-desc-acrid
+  color: "#F0B0B0"
+  metabolisms:
+    Medicine:
+      metabolismRate: 3.0
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Piercing: -8.0
+            Slash: -4.0
+            Caustic: 1.0
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 13.0
+        damage:
+          types:
+            Caustic: 8.0
+      - !type:Jitter        
+
+- type: reagent
+  id: Rezamine
+  name: reagent-name-rezamine
+  group: Medicine
+  desc: reagent-desc-rezamine
+  physicalDesc: reagent-physical-desc-gloopy
+  flavor: fishy
+  color: "#669900"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -0.5
+            Slash: -1.0
+            Piercing: -0.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 16
+        damage:
+          types:
+            Poison: 0.5
       - !type:Jitter
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 8
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 13
         type: Local
         visualType: Medium
         messages: [ "generic-reagent-effect-nauseous" ]
@@ -66,19 +91,20 @@
       - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 16
+        probability: 0.2
 
 - type: reagent
-  id: Cordrazine
-  name: reagent-name-cordrazine
+  id: Tetracordrazine
+  name: reagent-name-tetracordrazine
   group: Medicine
-  desc: reagent-desc-cordrazine
+  desc: reagent-desc-tetracordrazine
   physicalDesc: reagent-physical-desc-viscous
   flavor: medicine
   color: "#942222"
   metabolisms:
     Medicine:
-      metabolismRate: 0.6
+      metabolismRate: 0.5
       effects:
         - !type:HealthChange
           conditions:
@@ -86,32 +112,43 @@
             mobstate: Critical
           damage:
             groups:
-              Brute: -0.5
+              Brute: -3.0
+              Burn: -4.0
             types:
-              Asphyxiation: -1
-              Poison: -0.5
+              Poison: -1.0
         - !type:HealthChange
           conditions:
           - !type:MobStateCondition
             mobstate: Alive
+          - !type:TotalDamage
+            min: 50
           damage:
             groups:
-              Brute: -0.1
-              Burn: -0.1
+              Brute: -1.5
+              Burn: -2.0
+            types:
+              Poison: -0.5
+        - !type:HealthChange
+          conditions:
+          - !type:TotalDamage
+            max: 50
+          damage:
+            types:
+              Cellular: 0.75
         - !type:HealthChange
           conditions:
           - !type:ReagentThreshold
-            min: 20
+            min: 11
           damage:
             types:
-              Cellular: 0.5
+              Cellular: 0.75
 
 - type: reagent
-  id: Spaceacillin
-  name: reagent-name-spaceacillin
+  id: Spessacillin
+  name: reagent-name-spessacillin
   group: Medicine
-  desc: reagent-desc-spaceacillin
-  physicalDesc: reagent-physical-desc-viscous
+  desc: reagent-desc-spessacillin
+  physicalDesc: reagent-physical-desc-bubbling
   flavor: medicine
   color: "#E1F2E6"
   metabolisms:
@@ -120,6 +157,16 @@
       effects:
         - !type:HealthChange
           damage:
-            groups:
-              Toxin: -0.6
-              Burn: -0.3
+            types:
+              Poison: -1.0
+        - !type:HealthChange
+          conditions:
+          - !type:ReagentThreshold
+            min: 12
+          damage:
+            types:
+              Slash: 0.2
+        - !type:ChemVomit
+          conditions:
+            - !type:ReagentThreshold
+              min: 12 
