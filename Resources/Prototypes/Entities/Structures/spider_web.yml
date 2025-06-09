@@ -87,7 +87,7 @@
     sprintSpeedModifier: 0.5
     ignoreWhitelist:
       components:
-          - IgnoreSpiderWeb
+      - IgnoreSpiderWeb
 
 - type: entity
   id: SpiderWebClown
