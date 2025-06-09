@@ -3,6 +3,7 @@ contraband-examine-text-Restricted = [color=yellow]This item is departmentally r
 contraband-examine-text-Restricted-department = [color=yellow]This item is restricted to {$departments}, and may be considered contraband.[/color]
 contraband-examine-text-Major = [color=red]This item is considered major contraband.[/color]
 contraband-examine-text-GrandTheft = [color=red]This item is a highly valuable target for Syndicate agents![/color]
+contraband-examine-text-Extreme = [color=red]This item is highly illegal extreme contraband![/color]
 contraband-examine-text-Syndicate = [color=crimson]This item is highly illegal Syndicate contraband![/color]
 contraband-examine-text-Magical = [color=#b337b3]This item is highly illegal Magical contraband![/color]
 
