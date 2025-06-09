@@ -28,7 +28,7 @@
   - type: StealCondition
     verifyMapExistence: false
   - type: Objective
-    difficulty: 2.75
+    difficulty: 2 # imp - increase chance of multiple objectives
   - type: ObjectiveLimit
     limit: 2 # there is usually only 1 of each steal objective, have 2 max for drama
 
@@ -41,7 +41,7 @@
   description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
   components:
   - type: Objective
-    difficulty: 1.3
+    difficulty: 0.5 # imp - increase chance of multiple objectives + escape
     icon:
       sprite: Structures/Furniture/chairs.rsi
       state: shuttle
@@ -187,7 +187,7 @@
     stealGroup: ClothingOuterHardsuitRd
   - type: Objective
     # This item must be worn or stored in a slowing duffelbag, very hard to hide.
-    difficulty: 3
+    difficulty: 2.5 # imp - increase chance of multiple objectives
 
 - type: entity
   parent: BaseRDStealObjective
@@ -204,7 +204,7 @@
   components:
   - type: Objective
     # HoS will have this on them a lot of the time so..
-    difficulty: 3
+    difficulty: 2.5 # imp - increase chance of multiple objectives
   - type: NotJobRequirement
     job: HeadOfSecurity
   - type: StealCondition
@@ -258,7 +258,7 @@
   components:
   - type: Objective
     # sorry ce but your jordans are not as high security as the caps gear
-    difficulty: 3.5
+    difficulty: 3 # imp - increase chance of multiple objectives
   - type: NotJobRequirement
     job: Captain
 
