@@ -1,5 +1,5 @@
 - type: parallax
-  id: XenoStation
+  id: ExoStation
   layers:
     - texture:
         !type:ImageParallaxTextureSource

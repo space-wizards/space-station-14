@@ -89,7 +89,7 @@ entities:
     - type: Broadphase
     - type: OccluderTree
     - type: Parallax
-      parallax: XenoStation
+      parallax: ExoStation
   - uid: 2
     components:
     - type: MetaData
@@ -6617,7 +6617,7 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: BecomesStation
-      id: Xeno
+      id: Exo
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 19232

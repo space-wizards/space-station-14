@@ -31,7 +31,7 @@ entities:
   - uid: 2
     components:
     - type: MetaData
-      name: NT Evac Xeno
+      name: NT Evac Exo
     - type: Transform
       pos: -0.515625,-0.5078182
       parent: invalid
