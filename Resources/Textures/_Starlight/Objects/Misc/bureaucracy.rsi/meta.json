@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "paper_stamp-bso and paper_stamp-brigmedic made by Killer Tamashi (Discord). No source found for the NTR nor BSO stamps, I assume rinari did it.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "paper_stamp-magistrate"
+    },
+    {
+      "name": "paper_stamp-ntrep"
+    },
+    {
+      "name": "paper_stamp-bso"
+    },
+    {
+      "name": "paper_stamp-brigmedic"
+    }
+  ]
+}
