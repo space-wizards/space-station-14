@@ -319,44 +319,44 @@ public abstract class SharedStackSystem : EntitySystem
     #endregion
     #region Event Handlers
 
-    private void OnStackStarted(EntityUid uid, StackComponent component, ComponentStartup args)
+    private void OnStackStarted(Entity<StackComponent> ent, ref ComponentStartup args)
     {
         // on client, lingering stacks that start at 0 need to be darkened
         // on server this does nothing
-        SetCount(uid, component.Count, component);
+        SetCount(ent.Owner, ent.Comp.Count, ent.Comp);
 
-        if (!TryComp(uid, out AppearanceComponent? appearance))
+        if (!TryComp(ent.Owner, out AppearanceComponent? appearance))
             return;
 
-        Appearance.SetData(uid, StackVisuals.Actual, component.Count, appearance);
-        Appearance.SetData(uid, StackVisuals.MaxCount, GetMaxCount(component), appearance);
-        Appearance.SetData(uid, StackVisuals.Hide, false, appearance);
+        Appearance.SetData(ent.Owner, StackVisuals.Actual, ent.Comp.Count, appearance);
+        Appearance.SetData(ent.Owner, StackVisuals.MaxCount, GetMaxCount(ent.Comp), appearance);
+        Appearance.SetData(ent.Owner, StackVisuals.Hide, false, appearance);
     }
 
-    private void OnStackGetState(EntityUid uid, StackComponent component, ref ComponentGetState args)
+    private void OnStackGetState(Entity<StackComponent> ent, ref ComponentGetState args)
     {
-        args.State = new StackComponentState(component.Count, component.MaxCountOverride, component.Lingering);
+        args.State = new StackComponentState(ent.Comp.Count, ent.Comp.MaxCountOverride, ent.Comp.Lingering);
     }
 
-    private void OnStackHandleState(EntityUid uid, StackComponent component, ref ComponentHandleState args)
+    private void OnStackHandleState(Entity<StackComponent> ent, ref ComponentHandleState args)
     {
         if (args.Current is not StackComponentState cast)
             return;
 
-        component.MaxCountOverride = cast.MaxCount;
-        component.Lingering = cast.Lingering;
+        ent.Comp.MaxCountOverride = cast.MaxCount;
+        ent.Comp.Lingering = cast.Lingering;
         // This will change the count and call events.
-        SetCount(uid, cast.Count, component);
+        SetCount(ent.Owner, cast.Count, ent.Comp);
     }
 
-    private void OnStackExamined(EntityUid uid, StackComponent component, ExaminedEvent args)
+    private void OnStackExamined(Entity<StackComponent> ent, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
         args.PushMarkup(
             Loc.GetString("comp-stack-examine-detail-count",
-                ("count", component.Count),
+                ("count", ent.Comp.Count),
                 ("markupCountColor", "lightgray")
             )
         );
