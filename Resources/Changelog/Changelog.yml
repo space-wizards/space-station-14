@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Fix ability to use implants on borgs and bots.
-    type: Fix
-  id: 8130
-  time: '2025-04-04T15:36:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36218
 - author: TheBlueYowie
   changes:
   - message: Aligned Adv. Mineral Scanner rotation in inventory
@@ -3908,3 +3901,11 @@
   id: 8641
   time: '2025-06-09T07:40:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38162
+- author: DrSmugleaf
+  changes:
+  - message: Fixed eating and drinking verbs showing up after a short delay and their
+      effect being delayed.
+    type: Fix
+  id: 8642
+  time: '2025-06-09T14:36:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38164
