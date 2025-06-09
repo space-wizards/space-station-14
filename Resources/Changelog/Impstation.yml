@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: Shotgun shell boxes now look correct
-    type: Fix
-  id: 1290
-  time: '2025-03-13T06:05:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1918
 - author: bigsantino1
   changes:
   - message: Salvage magnet announcement no longer happens twice.
@@ -4215,3 +4208,10 @@
   id: 1789
   time: '2025-06-09T02:02:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2694
+- author: mqole
+  changes:
+  - message: Another upstream merge. Surprise!
+    type: Add
+  id: 1790
+  time: '2025-06-09T05:08:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2695
