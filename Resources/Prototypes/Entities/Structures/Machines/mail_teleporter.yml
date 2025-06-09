@@ -16,11 +16,14 @@
         layer:
         - MachineLayer
   - type: Sprite
-    sprite: _Impstation/Structures/mailtelepad.rsi
+    sprite: Structures/mailbox.rsi
     snapCardinals: true
     layers:
-    - state: base
-    - state: lit
+    - state: icon
+    - state: contents
+      map: [ "enum.DeliverySpawnerVisualLayers.Contents" ]
+      visible: false
+    - state: unlit
       shader: unshaded
       visible: false
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]
