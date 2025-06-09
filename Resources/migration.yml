@@ -661,3 +661,7 @@ FishingRodPlasma: null
 # 2025-05-31
 # impstation: remove DV stock cartridge
 StockTradingCartridge: null
+
+# 2025-06-09 (nice)
+# imp borg module swaps
+BorgModulePaper: BorgModuleService

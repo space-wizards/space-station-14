@@ -10,7 +10,7 @@
       borg_module:
         - BorgModuleDisabler
         - BorgModuleAdvancedTool
-        - BorgModuleGrapplingGun
+        - BorgModuleTraversal
         - BorgModuleMusique
   - type: ItemSlots
     slots:
