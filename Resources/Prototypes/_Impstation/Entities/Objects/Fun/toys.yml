@@ -908,7 +908,7 @@
   - type: MultiHandedItem
 
 - type: entity
-  parent: BaseItem # cant parent BasePlushie because i dont want the EmitSoundOnUse
+  parent: BaseFigurine # actually a plushie but this saves me some yaml
   id: PlushieGnomeChild
   name: gnome child plushie
   description: A soft toy depicting a strange fantasy child. You seem to recall some social media buzz about this thing.
@@ -917,27 +917,15 @@
     sprite: _Impstation/Objects/Fun/toys.rsi
     state: plushie_gnome
   - type: Item
-    size: Large
+    size: Normal
     sprite: _Impstation/Objects/Fun/toys.rsi
     inhandVisuals:
       left:
       - state: plushie_gnome-inhand-left
       right:
       - state: plushie_gnome-inhand-right
-  - type: UseDelay
-    delay: 5
-  - type: TriggerOnActivate
-  - type: TriggerOnSignal
   - type: SpeakOnTrigger
     pack: GnomeChild
-  - type: DeviceNetwork
-    deviceNetId: Wireless
-    receiveFrequencyId: BasicDevice
-  - type: WirelessNetworkConnection
-    range: 200
-  - type: DeviceLinkSink
-    ports:
-    - Trigger
   - type: Tag
     tags:
     - Payload
