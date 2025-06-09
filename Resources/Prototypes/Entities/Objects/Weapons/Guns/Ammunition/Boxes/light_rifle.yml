@@ -84,6 +84,7 @@
   parent: BaseMagazineBoxLightRifle
   description: A box made for 60 rounds of .30 rifle ammunition, labeled as incendiary bullets. #imp
   name: ammunition box (.30 rifle incendiary)
+  description: A cardboard box of .30 rifle rounds. Intended to hold self-igniting incendiary ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleIncendiary

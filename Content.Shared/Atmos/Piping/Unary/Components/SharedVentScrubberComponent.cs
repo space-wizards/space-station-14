@@ -62,7 +62,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             FilterGases = new(GasVentScrubberData.DefaultFilterGases),
             PumpDirection = ScrubberPumpDirection.Siphoning,
             VolumeRate = 200f,
-            WideNet = false
+            WideNet = true
         };
 
         public static GasVentScrubberData ReplaceModePreset = new GasVentScrubberData

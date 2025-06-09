@@ -3,6 +3,7 @@
   name: "stripper clip (.30 rifle)" #imp
   description: A 5-round .30 rifle stripper clip. #imp
   parent: [ BaseItem, BaseSecurityContraband ]
+  description: 5-round 'stripper clip' for quickly reloading the Kardashev-Mosin. Holds 5 rounds of .30 rifle.
   components:
   - type: Tag
     tags:

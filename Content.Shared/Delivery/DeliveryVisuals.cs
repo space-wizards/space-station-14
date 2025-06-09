@@ -9,9 +9,16 @@ public enum DeliveryVisuals : byte
     IsTrash,
     IsBroken,
     IsFragile,
-    IsPriority,
-    IsPriorityInactive,
+    PriorityState,
     JobIcon,
+}
+
+[Serializable, NetSerializable]
+public enum DeliveryPriorityState : byte
+{
+    Off,
+    Active,
+    Inactive,
 }
 
 [Serializable, NetSerializable]

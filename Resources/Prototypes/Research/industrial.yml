@@ -28,7 +28,6 @@
   recipeUnlocks:
   - RadarConsoleCircuitboard
   - HandHeldMassScanner
-  - BorgModuleGPS
 
 - type: technology
   id: AdvancedPowercells
@@ -195,8 +194,9 @@
     - OreBagOfHolding
     - MiningDrillDiamond
     - AdvancedMineralScannerEmpty
-    - Fulton
-    - FultonBeacon
+    - BorgModuleAdvancedMining
+    - Fulton # imp
+    - FultonBeacon # imp
 
 # Tier 3
 

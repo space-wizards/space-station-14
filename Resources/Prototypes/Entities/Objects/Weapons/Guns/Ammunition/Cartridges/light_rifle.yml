@@ -23,6 +23,7 @@
   name: cartridge (.30 rifle)
   description: A full-power cartridge that boasts superior lethality and range but with a greater size than an intermediate cartridge. Typically used in precision rifles. #imp
   parent: BaseCartridgeLightRifle
+  description: A classic intermediate cartridge used by many combat rifles and LMGs. Standard kinetic ammunition is common and useful in most situations.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifle
@@ -32,6 +33,7 @@
   name: cartridge (.30 rifle practice)
   description: A precision rifle cartridge with a wax projectile to simulate the real deal. Can be used for force-on-force training but still stings like a bitch. Eye protection recommended. #imp
   parent: BaseCartridgeLightRifle
+  description: A classic intermediate cartridge used by many combat rifles and LMGs. Chalk ammunition is generally non-harmful, used for practice.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRiflePractice
@@ -48,6 +50,7 @@
   name: cartridge (.30 rifle incendiary)
   description: A precision rifle cartridge tipped with a softer projectile containing a pyrophoric compound, setting targets ablaze. #imp
   parent: BaseCartridgeLightRifle
+  description: A classic intermediate cartridge used by many combat rifles and LMGs. Incendiary ammunition contains a self-igniting compound that sets the target ablaze.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleIncendiary
@@ -64,6 +67,7 @@
   name: cartridge (.30 rifle uranium)
   description: A precision rifle cartridge with a heavier depleted uranium projectile, delivering radiation poisoning at the cost of worse penetration. #imp
   parent: BaseCartridgeLightRifle
+  description: A classic intermediate cartridge used by many combat rifles and LMGs. Uranium ammunition replaces the lead core of the bullet with fissile material, irradiating the target from the inside.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRifleUranium

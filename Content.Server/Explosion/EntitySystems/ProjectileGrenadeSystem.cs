@@ -79,7 +79,7 @@ public sealed class ProjectileGrenadeSystem : EntitySystem
             var direction = angle.ToVec().Normalized();
             var velocity = _random.NextVector2(component.MinVelocity, component.MaxVelocity);
             EnsureComp<TargetedProjectileComponent>(contentUid); // imp - ensure projectile is a TargetedProjectile with no target to hit crawling players
-            _gun.ShootProjectile(contentUid, direction, velocity, uid, null);
+            _gun.ShootProjectile(contentUid, direction, velocity, null);
         }
     }
 

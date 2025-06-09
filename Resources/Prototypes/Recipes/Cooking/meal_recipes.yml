@@ -7,6 +7,15 @@
   solids:
     FoodDoughSlice: 1 # one third of a standard bread dough recipe
 
+- type: microwaveMealRecipe
+  id: RecipeCottonBun
+  name: cotton bun recipe
+  result: FoodCottonBun
+  time: 5
+  group: Breads
+  solids:
+    FoodDoughCottonSlice: 1
+
 #Bagels
 - type: microwaveMealRecipe
   id: RecipeBagel
