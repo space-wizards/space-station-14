@@ -2212,6 +2212,15 @@
     sounds:
       Unsexed: Parrot
   - type: ParrotAccent
+  - type: Inventory
+    templateId: parrot
+    speciesId: parrot
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-bird

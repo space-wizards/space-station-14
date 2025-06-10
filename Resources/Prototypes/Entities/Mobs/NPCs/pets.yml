@@ -858,3 +858,17 @@
 #  - type: AlwaysRevolutionaryConvertible
   - type: StealTarget
     stealGroup: AnimalTropico
+
+- type: entity
+  name: Poly the parrot
+  parent: MobParrot
+  id: MobPolyParrot
+  description: An expert in quantum cracker theory
+  components:
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Loadout
+    prototypes: [ MobPolyGear ]
+
