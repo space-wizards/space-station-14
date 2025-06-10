@@ -33,6 +33,16 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
         MouseFilter = MouseFilterMode.Stop;
     }
 
+    public GuideLawsetEmbed(string lawset) : this()
+    {
+        GenerateControl(_prototype.Index<SiliconLawsetPrototype>(lawset));
+    }
+
+    public GuideLawsetEmbed(SiliconLawsetPrototype lawset) : this()
+    {
+        GenerateControl(lawset);
+    }
+
     private void GenerateControl(SiliconLawsetPrototype lawset)
     {
         RepresentedPrototype = lawset;

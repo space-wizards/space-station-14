@@ -45,7 +45,6 @@
   text: "/ServerInfo/Guidebook/Science/Robotics.xml"
   children:
   - Cyborgs
-  - Lawsets
 
 - type: guideEntry
   id: ArtifactReports
@@ -56,8 +55,3 @@
   id: Cyborgs
   name: guide-entry-cyborgs
   text: "/ServerInfo/Guidebook/Science/Cyborgs.xml"
-
-- type: guideEntry
-  id: Lawsets
-  name: guide-entry-lawsets
-  text: "/ServerInfo/Guidebook/Science/Lawsets.xml"

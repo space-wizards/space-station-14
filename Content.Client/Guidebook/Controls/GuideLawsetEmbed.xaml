@@ -11,6 +11,7 @@
             <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
                 <BoxContainer Name="LawsetContainer" Orientation="Vertical" HorizontalExpand="True">
                     <RichTextLabel Name="LawsetName" VerticalAlignment="Top" HorizontalExpand="True" HorizontalAlignment="Center"/>
+                    <!--RichTextLabels containing the individual laws are inserted here-->
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
