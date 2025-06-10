@@ -23,7 +23,7 @@
   - type: Tag
     tags:
     - VoxFood
-    - Bagel
+    - Bagel # imp
 
 - type: entity
   id: FoodBagel

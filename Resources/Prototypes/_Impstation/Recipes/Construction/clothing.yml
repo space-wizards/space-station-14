@@ -58,3 +58,14 @@
   description: Remove the administrative chip from your administrative hud and place it in your eyepatch. Makes you into a true patriot.
   icon: { sprite: _Impstation/Clothing/Eyes/Hud/commandpatch.rsi, state: icon }
   objectType: Item
+
+- type: construction
+  name: hemp sack with eyeholes
+  id: SackHead
+  graph: SackHead
+  startNode: start
+  targetNode: eyesack
+  category: construction-category-clothing
+  description: A hemp sack with eyeholes in it.
+  icon: { sprite: Clothing/Head/Helmets/hempsack.rsi, state: icon }
+  objectType: Item

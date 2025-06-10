@@ -13,7 +13,7 @@
           shader: unshaded # }
           state: watervapour
     - type: AtmosFixMarker
-      mode: 8
+      mode: 9
 
 - type: entity
   parent: AtmosFixWaterVaporMarker
@@ -22,4 +22,4 @@
   description: "Water Vapor @ 101 kPa, 20C"
   components:
   - type: AtmosFixMarker
-    mode: 9
+    mode: 10
