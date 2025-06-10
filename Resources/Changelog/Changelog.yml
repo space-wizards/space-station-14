@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: The storage implant's storage has been changed to a new pattern with
-      6 grid slots.
-    type: Tweak
-  id: 8135
-  time: '2025-04-05T09:38:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36272
 - author: PhilIngham
   changes:
   - message: Fixed the Chemical Synthesis Kit claiming to have toxin inside when it
@@ -3912,3 +3904,11 @@
   id: 8647
   time: '2025-06-09T23:03:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38180
+- author: ArtisticRoomba
+  changes:
+  - message: Spacing damage has been brought back to its unnerfed value, as Atmospherics
+      and Engineering now have better tools to combat spacing.
+    type: Tweak
+  id: 8648
+  time: '2025-06-10T00:05:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38196
