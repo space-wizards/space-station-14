@@ -33,6 +33,10 @@ public sealed partial class PlayerTab : Control
     private bool _showDisconnected;
     private bool _playerlistButtonStyle;
 
+    private AdminPlayerTabColorOption _playerTabColorSetting;
+    private AdminPlayerTabRoleTypeOption _playerTabRoleSetting;
+    private AdminPlayerTabSymbolOption _playerTabSymbolSetting;
+
     public event Action<GUIBoundKeyEventArgs, ListData>? OnEntryKeyBindDown;
 
     public PlayerTab()
@@ -49,6 +53,10 @@ public sealed partial class PlayerTab : Control
         _config.OnValueChanged(CCVars.AdminPlayerlistHighlightedCharacterColor, PlayerListSettingsChanged);
         _config.OnValueChanged(CCVars.AdminPlayerlistRoleTypeColor, PlayerListSettingsChanged);
         _config.OnValueChanged(CCVars.AdminPlayerlistButtonStyling, PlayerListButtonStylingChanged, true);
+        _config.OnValueChanged(CCVars.AdminPlayerTabRoleSetting, RoleSettingChanged, true);
+        _config.OnValueChanged(CCVars.AdminPlayerTabColorSetting, ColorSettingChanged, true);
+        _config.OnValueChanged(CCVars.AdminPlayerTabSymbolSetting, SymbolSettingChanged, true);
+
 
         OverlayButton.OnPressed += OverlayButtonPressed;
         ShowDisconnectedButton.OnPressed += ShowDisconnectedPressed;
@@ -115,8 +123,27 @@ public sealed partial class PlayerTab : Control
 
     #region ListContainer
 
-    private void PlayerListSettingsChanged(bool _)
+    private void RoleSettingChanged(string s)
     {
+        if (!Enum.TryParse<AdminPlayerTabRoleTypeOption>(s, out var format))
+            format = AdminPlayerTabRoleTypeOption.Subtype;
+        _playerTabRoleSetting = format;
+        RefreshPlayerList(_adminSystem.PlayerList);
+    }
+
+    private void ColorSettingChanged(string s)
+    {
+        if (!Enum.TryParse<AdminPlayerTabColorOption>(s, out var format))
+            format = AdminPlayerTabColorOption.Both;
+        _playerTabColorSetting = format;
+        RefreshPlayerList(_adminSystem.PlayerList);
+    }
+
+    private void SymbolSettingChanged(string s)
+    {
+        if (!Enum.TryParse<AdminPlayerTabSymbolOption>(s, out var format))
+            format = AdminPlayerTabSymbolOption.Specific;
+        _playerTabSymbolSetting = format;
         RefreshPlayerList(_adminSystem.PlayerList);
     }
 
@@ -152,7 +179,12 @@ public sealed partial class PlayerTab : Control
         if (data is not PlayerListData { Info: var player})
             return;
 
-        var entry = new PlayerTabEntry(player, new StyleBoxFlat(button.Index % 2 == 0 ? _altColor : _defaultColor));
+        var entry = new PlayerTabEntry(
+            player,
+            new StyleBoxFlat(button.Index % 2 == 0 ? _altColor : _defaultColor),
+            _playerTabColorSetting,
+            _playerTabRoleSetting,
+            _playerTabSymbolSetting);
         button.AddChild(entry);
         button.ToolTip = $"{player.Username}, {player.CharacterName}, {player.IdentityName}, {player.StartingJob}";
 
