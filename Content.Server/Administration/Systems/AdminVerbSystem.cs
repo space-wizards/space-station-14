@@ -155,7 +155,7 @@ namespace Content.Server.Administration.Systems
 
                             var stationUid = _stations.GetOwningStation(args.Target);
 
-                            var pref = _prefsManager.GetPreferences(p.UserId);
+                            var pref = _prefsManager.GetPreferences(targetActor.PlayerSession.UserId);
                             var profile = pref.GetRandomEnabledProfile();
                             var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
 
