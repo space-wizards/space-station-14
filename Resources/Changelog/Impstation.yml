@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: The guidebookshelf (to be mapped in libraries) that contain all guidebooks
-      in the game
-    type: Add
-  id: 1304
-  time: '2025-03-14T04:34:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1938
 - author: honeyed-lemons
   changes:
   - message: Courier slots on all maps has been reduced to one
@@ -4205,3 +4197,11 @@
   id: 1803
   time: '2025-06-10T23:35:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2380
+- author: Jellvisk
+  changes:
+  - message: Floor lights! Of varying designs, based on what tube you put in the...
+      METAMORPHIC HOLE.
+    type: Add
+  id: 1804
+  time: '2025-06-10T23:43:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2513
