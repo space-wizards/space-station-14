@@ -38,6 +38,9 @@ namespace Content.Shared.Verbs
         public static readonly VerbCategory Admin =
             new("verb-categories-admin", "/Textures/Interface/character.svg.192dpi.png");
 
+        public static readonly VerbCategory Spawn =
+            new("admin-player-actions-respawn", "/Textures/Interface/emotes.svg.192dpi.png"); // Starlight
+
         public static readonly VerbCategory Antag =
             new("verb-categories-antag", "/Textures/Interface/VerbIcons/antag-e_sword-temp.192dpi.png", iconsOnly: true) { Columns = 5 };
 
