@@ -190,22 +190,10 @@ namespace Content.IntegrationTests.Tests.Construction
 
                 var users = nameUsers.GetOrNew(name);
 
-                // Don't track this if it's a mirror of one we're already tracking
-                if (recipe.Mirror is { } mirrorProto && users.Contains(mirrorProto))
+                // We don't care about recipes that aren't shown in the menu
+                if (recipe.Hide)
                     continue;
 
-                // Don't track this if it's an alternative version of one we're already tracking
-                var isAlternative = false;
-                foreach (var alterativeProto in recipe.AlternativePrototypes)
-                {
-                    if (users.Contains(alterativeProto))
-                    {
-                        isAlternative = true;
-                        break;
-                    }
-                }
-                if (isAlternative)
-                    continue;
 
                 // Track this use
                 users.Add(recipe);
