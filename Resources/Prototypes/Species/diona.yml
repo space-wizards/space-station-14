@@ -58,7 +58,7 @@
       points: 1
       required: false
     Chest:
-      points: 2 #imp
+      points: 2
       required: false
     Legs:
       points: 2

@@ -40,8 +40,8 @@
     contents:
       - id: WeaponShotgunBulldog
       - id: MagazineShotgun
-      - id: MagazineShotgun
-      - id: MagazineShotgun
+        amount: 3
+      - id: MagazineShotgunSlug
 #     - id: ThermalImagingGoggles
 
 - type: entity
@@ -136,6 +136,8 @@
         amount: 4
       - id: MagazineShotgun
         amount: 4
+      - id: MagazineShotgunSlug
+        amount: 1
       - id: MagazineLightRifleBox
         amount: 2
       - id: MagazineBR
@@ -234,7 +236,7 @@
   - type: StorageFill
     contents:
       - id: ClothingHeadHelmetSyndicate
-      - id: ClothingOuterHardsuitSyndicate
+      - id: ClothingOuterEVASuitSyndicate
       - id: ClothingMaskGasSyndicate
       - id: ClothingHandsGlovesColorYellowBudget
       - id: DoubleEmergencyOxygenTankFilled

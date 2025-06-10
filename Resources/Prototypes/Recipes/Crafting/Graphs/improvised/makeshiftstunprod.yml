@@ -9,19 +9,19 @@
             - material: MetalRod
               amount: 1
             - tag: PowerCellSmall
-              name: power cell small
+              name: construction-graph-tag-power-cell-small
               icon:
                 sprite: Objects/Power/power_cells.rsi
                 state: small
             - tag: Cablecuffs
-              name: makeshift handcuffs
               icon:
                 sprite: Objects/Misc/cablecuffs.rsi
                 state: cuff
-                color: forestgreen
-              doAfter: 1
+                color: forestgreen # imp
+              name: construction-graph-tag-cuffs
+              doAfter: 1 # imp
             - tag: Igniter
-              name: igniter
+              name: construction-graph-tag-igniter
               icon:
                 sprite: Objects/Devices/igniter.rsi
                 state: icon

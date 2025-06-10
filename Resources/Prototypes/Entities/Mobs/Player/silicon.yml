@@ -132,56 +132,6 @@
         # anyway it's just a quality of life thing.
         showEnts: True
 
-# Boards
-- type: entity # imp. there is no base lawboard by default
-  abstract: true
-  id: BaseLawBoard
-  parent: BaseElectronics
-  components:
-  - type: StealTarget
-    stealGroup: AILawBoard
-
-- type: entity
-  id: AsimovCircuitBoard
-  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
-  name: law board (Crewsimov)
-  description: An electronics board containing the Crewsimov lawset. This is the default for all station silicons. #imp
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: Crewsimov
-  - type: DetailedInspect # imp
-    verbMessage: verbs-detailed-inspect-lawset
-    tickEntries: false
-    numberedEntries: true
-    examineText:
-      - law-crewsimov-1
-      - law-crewsimov-2
-      - law-crewsimov-3
-
-- type: entity
-  id: CorporateCircuitBoard
-  parent: BaseLawBoard
-  name: law board (Corporate)
-  description: An electronics board containing the Corporate lawset. Minimize expenses. Maximize potential revenue. #imp
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/module.rsi
-    state: std_mod
-  - type: SiliconLawProvider
-    laws: Corporate
-  - type: DetailedInspect # imp
-    verbMessage: verbs-detailed-inspect-lawset
-    tickEntries: false
-    numberedEntries: true
-    examineText:
-      - law-corporate-1
-      - law-corporate-2
-      - law-corporate-3
-      - law-corporate-4
-
 # Items
 - type: entity
   id: Intellicard

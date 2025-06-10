@@ -40,15 +40,8 @@ public sealed partial class BorgSystem
 
     private void OnEjectBatteryBuiMessage(EntityUid uid, BorgChassisComponent component, BorgEjectBatteryBuiMessage args)
     {
-        if (!TryComp<PowerCellSlotComponent>(uid, out var slotComp) ||
-            !Container.TryGetContainer(uid, slotComp.CellSlotId, out var container) ||
-            !container.ContainedEntities.Any())
-        {
-            return;
-        }
-
-        var ents = Container.EmptyContainer(container);
-        _hands.TryPickupAnyHand(args.Actor, ents.First());
+        if (TryEjectPowerCell(uid, component, out var ents))
+            _hands.TryPickupAnyHand(args.Actor, ents.First());
     }
 
     private void OnSetNameBuiMessage(EntityUid uid, BorgChassisComponent component, BorgSetNameBuiMessage args)

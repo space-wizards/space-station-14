@@ -17,8 +17,8 @@
 
 #Syndicate EVA
 - type: entity
-  parent: [ ClothingOuterEVASuitBase, Tier1Contraband ]
-  id: ClothingOuterHardsuitSyndicate # TODO: rename to ClothingOuterEVASuitSyndicate
+  parent: [ ClothingOuterEVASuitBase, Tier1Contraband ] # imp contraband
+  id: ClothingOuterEVASuitSyndicate
   name: syndicate EVA suit
   description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
   components:
@@ -58,7 +58,7 @@
       toggleable-clothing: !type:ContainerSlot {}
 #  - type: Tag #imp
 #    tags:
-#    - MonkeyWearable 
+#    - MonkeyWearable
 
 #Prisoner EVA
 - type: entity

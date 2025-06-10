@@ -21,10 +21,8 @@ namespace Content.Server.Forensics
     {
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!; // imp
-        [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // imp edit
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly ForensicsSystem _forensics = default!;
         [Dependency] private readonly LabelSystem _label = default!;
 

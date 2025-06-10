@@ -1096,7 +1096,7 @@
   - type: PointLight
     color: "#afe837"
   - type: AccessReader
-    access: [["Service"]]
+    access: [["Service"], ["Theatre"]]
 
 - type: entity
   id: ComputerCargoBounty

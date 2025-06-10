@@ -35,6 +35,8 @@ public partial class ChatBox : UIWidget
         ChatInput.Input.OnTextEntered += OnTextEntered;
         ChatInput.Input.OnKeyBindDown += OnInputKeyBindDown;
         ChatInput.Input.OnTextChanged += OnTextChanged;
+        ChatInput.Input.OnFocusEnter += OnFocusEnter;
+        ChatInput.Input.OnFocusExit += OnFocusExit;
         ChatInput.ChannelSelector.OnChannelSelect += OnChannelSelect;
         ChatInput.FilterButton.Popup.OnChannelFilter += OnChannelFilter;
         ChatInput.FilterButton.Popup.OnNewHighlights += OnNewHighlights;
@@ -181,7 +183,19 @@ public partial class ChatBox : UIWidget
         _controller.NotifyChatTextChange();
     }
 
-    private void OnHighlightsReceived(string highlights)
+    private void OnFocusEnter(LineEditEventArgs args)
+    {
+        // Warn typing indicator about focus
+        _controller.NotifyChatFocus(true);
+    }
+
+    private void OnFocusExit(LineEditEventArgs args)
+    {
+        // Warn typing indicator about focus
+        _controller.NotifyChatFocus(false);
+    }
+
+    private void OnHighlightsReceived(string highlights) // imp
     {
         ChatInput.FilterButton.Popup.SetHighlights(highlights);
     }

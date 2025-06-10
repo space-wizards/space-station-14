@@ -2,6 +2,7 @@ name: Publish
 
 concurrency:
   group: publish
+  cancel-in-progress: true
 
 on:
   workflow_dispatch:
@@ -48,6 +49,7 @@ jobs:
         GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
 
     - name: Publish changelog (Discord)
+      continue-on-error: true
       run: Tools/actions_changelogs_since_last_run.py
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -55,6 +57,7 @@ jobs:
         DISCORD_ROLE_ID: ${{ vars.DISCORD_ROLE_ID }}
 
     - name: Publish changelog (RSS)
+      continue-on-error: true
       run: Tools/actions_changelog_rss.py
       env:
         CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}

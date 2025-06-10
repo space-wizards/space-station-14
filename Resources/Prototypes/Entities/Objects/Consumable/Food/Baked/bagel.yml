@@ -22,7 +22,8 @@
           Quantity: 5
   - type: Tag
     tags:
-      - Bagel
+    - VoxFood
+    - Bagel
 
 - type: entity
   id: FoodBagel

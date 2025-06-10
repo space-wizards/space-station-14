@@ -6,20 +6,20 @@
       edges:
         - to: medsecHud
           steps:
-            - tag: HudSecurity
-              name: security hud
-              icon:
-                sprite: Clothing/Eyes/Hud/sec.rsi
-                state: icon
-              doAfter: 5
             - tag: HudMedical
-              name: medical hud
+              name: construction-graph-tag-medical-hud
               icon:
                 sprite: Clothing/Eyes/Hud/med.rsi
                 state: icon
               doAfter: 5
+            - tag: HudSecurity
+              name: construction-graph-tag-security-hud
+              icon:
+                sprite: Clothing/Eyes/Hud/sec.rsi
+                state: icon
+              doAfter: 5
             - tag: Sunglasses #imp
-              name: sun glasses
+              name: construction-graph-tag-sun-glasses
               icon:
                 sprite: Clothing/Eyes/Glasses/sunglasses.rsi
                 state: icon
@@ -27,7 +27,13 @@
             - material: Cable
               amount: 5
               doAfter: 5
-            - material: Capacitor #imp but low key this is a bugfix
+            - tag: Radio
+              name: construction-graph-tag-radio
+              icon:
+                sprite: Objects/Devices/communication.rsi
+                state: walkietalkie
+              doAfter: 5
+            - material: Capacitor
               amount: 2
               doAfter: 5
     - node: medsecHud

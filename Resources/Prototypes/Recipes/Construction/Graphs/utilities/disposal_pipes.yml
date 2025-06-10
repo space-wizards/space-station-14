@@ -46,6 +46,11 @@
       - material: Steel
         amount: 2
         doAfter: 1
+    - to: xJunction
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
     - to: bend
       steps:
       - material: Steel
@@ -157,6 +162,22 @@
       steps:
       - tool: Screwing
         doAfter: 1
+  - node: yJunction
+    entity: DisposalYJunction
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+    - to: junctionflipped
+      steps:
+      - tool: Screwing
+        doAfter: 1
   - node: junctionflipped
     entity: DisposalJunctionFlipped
     edges:
@@ -169,12 +190,12 @@
       steps:
       - tool: Welding
         doAfter: 1
-    - to: yJunction
+    - to: xJunction
       steps:
       - tool: Screwing
         doAfter: 1
-  - node: yJunction
-    entity: DisposalYJunction
+  - node: xJunction
+    entity: DisposalXJunction
     edges:
     - to: start
       completed:
@@ -189,10 +210,7 @@
       steps:
       - tool: Screwing
         doAfter: 1
-    - to: junctionflipped
-      steps:
-      - tool: Screwing
-        doAfter: 1
+  # DisposalBend
   - node: bend
     entity: DisposalBend
     edges:

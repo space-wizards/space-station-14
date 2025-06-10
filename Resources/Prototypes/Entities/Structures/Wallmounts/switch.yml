@@ -154,6 +154,7 @@
     - type: Sprite
       drawdepth: HighFloorObjects
       sprite: _Impstation/Structures/conveyor.rsi # imp
+      noRot: true
       layers:
         - state: switch-off
           map: ["enabled", "enum.TwoWayLeverState.Middle"]

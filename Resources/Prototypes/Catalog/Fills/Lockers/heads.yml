@@ -19,6 +19,7 @@
     - id: RubberStampDenied
     - id: RubberStampQm
     - id: AstroNavCartridge
+    - id: ClothingHandsKnuckleDustersQM
     - id: MailTeleporterMachineCircuitboard
     - id: PersonalAILearnerCargo #impspecial
 
@@ -54,6 +55,10 @@
     - id: SpaceCash1000
     - id: WeaponDisabler
     - id: ClothingEyesGlassesCommand
+    - id: HeadSkeleton # A skull to accompany your skeleton crew
+      conditions:
+      - !type:PlayerCountCondition
+        max: 15
     - id: TicketPad #imp special
     - id: PersonalAILearnerCommand #impspecial
 
