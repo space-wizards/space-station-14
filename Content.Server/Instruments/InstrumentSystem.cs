@@ -152,7 +152,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
         if (msg.Tracks.Length > RobustMidiEvent.MaxChannels)
         {
-            DebugTools.Assert($"Tried to send tracks over the limit! Received: {msg.Tracks.Length}; Limit: {RobustMidiEvent.MaxChannels}");
+            Log.Warning($"{args.SenderSession.UserId.ToString()} - Tried to send tracks over the limit! Received: {msg.Tracks.Length}; Limit: {RobustMidiEvent.MaxChannels}");
             return;
         }
 
@@ -162,7 +162,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             .Select(t => t!.ToString()));
 
         _admingLogSystem.Add(
-            LogType.Midi,
+            LogType.Instrument,
             LogImpact.Low,
             $"{ToPrettyString(args.SenderSession.AttachedEntity)} set the midi channels for {ToPrettyString(uid)} to {tracksString}");
 

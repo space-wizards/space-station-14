@@ -12,7 +12,7 @@ public sealed class MidiStreamWrapper
 
     public MidiStreamWrapper(byte[] data)
     {
-        _stream = new MemoryStream(data);
+        _stream = new MemoryStream(data, writable: false);
         _buffer = new byte[4];
     }
 

@@ -25,8 +25,13 @@ public sealed partial class ChannelsMenu : DefaultWindow
         ChannelList.OnItemDeselected += OnItemDeselected;
         AllButton.OnPressed += OnAllPressed;
         ClearButton.OnPressed += OnClearPressed;
-        DisplayTrackNames.OnPressed += OnDisplayTrackNamesPressed;
+    }
 
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+
+        DisplayTrackNames.OnPressed += OnDisplayTrackNamesPressed;
         _owner.Instruments.OnChannelsUpdated += UpdateChannelList;
     }
 
@@ -109,16 +114,21 @@ public sealed partial class ChannelsMenu : DefaultWindow
                 ("number", i));
             if (activeInstrument != null
                 && activeInstrument.Tracks.TryGetValue(i, out var resolvedMidiChannel)
-                && resolvedMidiChannel != null
-                )
+                && resolvedMidiChannel != null)
             {
                 if (DisplayTrackNames.Pressed)
                 {
                     label = resolvedMidiChannel switch
                     {
                         { TrackName: not null, InstrumentName: not null } =>
-                            $"{i} {resolvedMidiChannel.TrackName} ({resolvedMidiChannel.InstrumentName})",
-                        { TrackName: not null } => $"{i} {resolvedMidiChannel.TrackName}",
+                            Loc.GetString("instruments-component-channels-multi",
+                                ("channel", i),
+                                ("name", resolvedMidiChannel.TrackName),
+                                ("other", resolvedMidiChannel.InstrumentName)),
+                        { TrackName: not null } =>
+                            Loc.GetString("instruments-component-channels-single",
+                            ("channel", i),
+                            ("name", resolvedMidiChannel.TrackName)),
                         _ => label,
                     };
                 }
@@ -127,7 +137,9 @@ public sealed partial class ChannelsMenu : DefaultWindow
                     label = resolvedMidiChannel switch
                     {
                         { ProgramName: not null } =>
-                            $"{i} {resolvedMidiChannel.ProgramName}",
+                            Loc.GetString("instruments-component-channels-single",
+                                ("channel", i),
+                                ("name", resolvedMidiChannel.ProgramName)),
                         _ => label,
                     };
                 }

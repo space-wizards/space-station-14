@@ -44,12 +44,23 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         SubscribeLocalEvent<ActiveInstrumentComponent, AfterAutoHandleStateEvent>(OnActiveInstrumentAfterHandleState);
     }
 
+    private bool _isUpdateQueued = false;
+
     private void OnActiveInstrumentAfterHandleState(Entity<ActiveInstrumentComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        // Called in a timer so that the components update client side for resolving them in TryComps.
+        // Called in the update loop so that the components update client side for resolving them in TryComps.
+        _isUpdateQueued = true;
+    }
 
-        if (OnChannelsUpdated != null)
-            Timer.Spawn(1, OnChannelsUpdated.Invoke);
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+
+        if (!_isUpdateQueued)
+            return;
+
+        _isUpdateQueued = false;
+        OnChannelsUpdated?.Invoke();
     }
 
     private void OnHandleState(EntityUid uid, SharedInstrumentComponent component, ref ComponentHandleState args)
