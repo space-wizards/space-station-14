@@ -400,6 +400,18 @@
     itemIconStyle: BigAction
 
 - type: entity
+  parent: BaseToggleAction
+  id: ActionToggleRootable
+  name: Rootable
+  description: Begin or stop being rooted to the floor.
+  components:
+  - type: Action
+    icon: Interface/Actions/rooting.png
+    iconOn: Interface/Actions/rooting.png
+    itemIconStyle: NoItem
+    useDelay: 1
+
+- type: entity
   id: ActionChameleonController
   name: Control clothing
   description: Change your entire outfit fast!
