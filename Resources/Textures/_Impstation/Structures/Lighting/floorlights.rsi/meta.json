@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by Jellvisk.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "broken"
+    },
+    {
+      "name": "burned"
+    },
+    {
+      "name": "empty"
+    },
+    {
+      "name": "base"
+    },
+    {
+      "name": "baseGlow"
+    },
+    {
+      "name": "blue"
+    },
+    {
+      "name": "blueGlow"
+    },
+    {
+      "name": "cyan"
+    },
+    {
+      "name": "cyanGlow"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "greenGlow"
+    },
+    {
+      "name": "pink"
+    },
+    {
+      "name": "pinkGlow"
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "redGlow"
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "orangeGlow"
+    },
+    {
+      "name": "yellow"
+    },
+    {
+      "name": "yellowGlow"
+    },
+    {
+      "name": "black"
+    },
+    {
+      "name": "blackGlow"
+    },
+    {
+      "name": "led"
+    },
+    {
+      "name": "ledGlow"
+    },
+    {
+      "name": "exterior"
+    },
+    {
+      "name": "exteriorGlow"
+    },
+    {
+      "name": "sodium"
+    },
+    {
+      "name": "sodiumGlow"
+    },
+    {
+      "name": "old"
+    },
+    {
+      "name": "oldGlow"
+    },
+    {
+      "name": "uv"
+    },
+    {
+      "name": "uvGlow"
+    },
+    {
+      "name": "sun"
+    }
+  ]
+}

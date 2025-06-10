@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
 using Content.Server.Temperature.Components;
+using Content.Shared._Impstation.Construction.Steps;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
@@ -41,6 +42,7 @@ namespace Content.Server.Construction
                 new []{typeof(EncryptionKeySystem)});
             SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
             SubscribeLocalEvent<ConstructionComponent, PartAssemblyPartInsertedEvent>(EnqueueEvent);
+            SubscribeLocalEvent<ConstructionComponent, EntRemovedFromContainerMessage>(EnqueueEvent); // imp
         }
 
         /// <summary>
@@ -415,6 +417,18 @@ namespace Content.Server.Construction
                         break;
 
                     if (partAssemblyStep.Condition(uid, EntityManager))
+                        return HandleResult.True;
+                    return HandleResult.False;
+                }
+
+                case EntityRemoveConstructionGraphStep removeStep: //imp
+                {
+                    if (ev is not EntRemovedFromContainerMessage entRemoved)
+                        break;
+
+                    var toRemove = entRemoved.Entity;
+
+                    if (removeStep.EntityValid(toRemove, EntityManager, _factory)) // Does the removed entity have the desired tag?
                         return HandleResult.True;
                     return HandleResult.False;
                 }

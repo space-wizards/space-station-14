@@ -62,6 +62,7 @@
   - type: Tag
     tags:
     - Trash
+    - LightBulb #imp
   - type: PhysicalComposition
     materialComposition:
       Glass: 25
@@ -110,6 +111,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag # imp
+    tags:
+    - LightTube
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
@@ -130,6 +134,7 @@
     tags:
     - LightBulb
     - Trash
+    - LightNormal #imp
 
 - type: entity
   parent: BaseLightbulb
@@ -149,6 +154,7 @@
     tags:
     - LightBulb
     - Trash
+    - LightLed #imp
 
 - type: entity
   parent: BaseLightbulb
@@ -166,6 +172,7 @@
     tags:
     - LightBulb
     - Trash
+    - LightDim #imp
 
 - type: entity
   parent: BaseLightbulb
@@ -183,6 +190,7 @@
     tags:
     - LightBulb
     - Trash
+    - LightWarm #imp
 
 - type: entity
   parent: LightBulb
@@ -196,6 +204,11 @@
     lightEnergy: 0.3 # old incandescents just arent as bright
     lightRadius: 6
     lightSoftness: 1.1
+  - type: Tag
+    tags:
+    - LightBulb
+    - Trash
+    - LightOld #imp
 
 - type: entity
   suffix: Broken
@@ -207,6 +220,11 @@
   - type: LightBulb
     startingState: Broken
     bulb: Bulb
+  - type: Tag
+    tags:
+    - LightBulb
+    - Trash
+    - Broken #imp
 
 - type: entity
   parent: BaseLightbulb
@@ -224,6 +242,7 @@
     tags:
     - LightBulb
     - Trash
+    - LightService #imp
 
 - type: entity
   parent: BaseLightTube
@@ -237,6 +256,10 @@
     lightRadius: 10
     lightSoftness: 1
     PowerUse: 25
+  - type: Tag #imp
+    tags:
+      - LightNormal
+      - LightTube
 
 - type: entity
   parent: LightTube
@@ -250,6 +273,10 @@
     lightRadius: 10
     lightSoftness: 1
     PowerUse: 10
+  - type: Tag #imp
+    tags:
+      - LightOld
+      - LightTube
 
 - type: entity
   suffix: Broken
@@ -260,6 +287,11 @@
   components:
   - type: LightBulb
     startingState: Broken
+  - type: Tag #imp
+    tags:
+      - Broken
+      - Trash
+      - LightTube
 
 - type: entity
   parent: BaseLightTube
@@ -274,6 +306,10 @@
     lightSoftness: 0.9
     BurningTemperature: 350
     PowerUse: 12
+  - type: Tag #imp
+    tags:
+      - LightLed
+      - LightTube
 
 - type: entity
   parent: BaseLightTube
@@ -288,6 +324,10 @@
     lightSoftness: 0.5
     BurningTemperature: 350
     PowerUse: 100
+  - type: Tag #imp
+    tags:
+      - LightExterior
+      - LightTube
 
 - type: entity
   parent: BaseLightTube
@@ -302,6 +342,10 @@
     lightSoftness: 0.5
     BurningTemperature: 350
     PowerUse: 100
+  - type: Tag #imp
+    tags:
+      - LightSodium
+      - LightTube
 
 - type: entity
   parent: BaseLightTube
@@ -331,6 +375,10 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalCyan
+  - type: Tag #imp
+    tags:
+      - LightCyan
+      - LightTube
 
 - type: entity
   parent: BaseLightTubeCrystal
@@ -346,6 +394,10 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalBlue
+  - type: Tag #imp
+    tags:
+      - LightBlue
+      - LightTube
 
 - type: entity
   parent: BaseLightTubeCrystal
@@ -361,6 +413,10 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalYellow
+  - type: Tag #imp
+    tags:
+      - LightYellow
+      - LightTube
 
 - type: entity
   parent: BaseLightTubeCrystal
@@ -376,6 +432,10 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalPink
+  - type: Tag #imp
+    tags:
+      - LightPink
+      - LightTube
 
 - type: entity
   parent: BaseLightTubeCrystal
@@ -391,6 +451,10 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalOrange
+  - type: Tag #imp
+    tags:
+      - LightOrange
+      - LightTube
 
 - type: entity
   parent: BaseLightTubeCrystal
@@ -409,6 +473,10 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalBlack
+  - type: Tag #imp
+    tags:
+      - LightBlack
+      - LightTube
 
 - type: entity
   parent: BaseLightTubeCrystal
@@ -424,6 +492,10 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalRed
+  - type: Tag #imp
+    tags:
+      - LightRed
+      - LightTube
 
 - type: entity
   parent: LightTubeCrystalCyan
@@ -439,6 +511,10 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalGreen
+  - type: Tag #imp
+    tags:
+      - LightGreen
+      - LightTube
 
 
 - type: entity
@@ -471,6 +547,11 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalCyan
+  - type: Tag #imp
+    tags:
+    - LightBulb
+    - Trash
+    - LightCyan
 
 - type: entity
   parent: BaseLightbulbCrystal
@@ -486,6 +567,11 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalBlue
+  - type: Tag #imp
+    tags:
+    - LightBulb
+    - Trash
+    - LightBlue
 
 - type: entity
   parent: BaseLightbulbCrystal
@@ -501,6 +587,11 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalYellow
+  - type: Tag #imp
+    tags:
+    - LightBulb
+    - Trash
+    - LightYellow
 
 - type: entity
   parent: BaseLightbulbCrystal
@@ -516,6 +607,11 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalPink
+  - type: Tag #imp
+    tags:
+    - LightBulb
+    - Trash
+    - LightPink
 
 - type: entity
   parent: BaseLightbulbCrystal
@@ -531,6 +627,11 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalOrange
+  - type: Tag #imp
+    tags:
+    - LightBulb
+    - Trash
+    - LightOrange
 
 - type: entity
   parent: BaseLightbulbCrystal
@@ -549,6 +650,11 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalBlack
+  - type: Tag #imp
+    tags:
+    - LightBulb
+    - Trash
+    - LightBlack
 
 - type: entity
   parent: BaseLightbulbCrystal
@@ -564,6 +670,11 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalRed
+  - type: Tag #imp
+    tags:
+    - LightBulb
+    - Trash
+    - LightRed
 
 - type: entity
   parent: BaseLightbulbCrystal
@@ -579,3 +690,8 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalGreen
+  - type: Tag #imp
+    tags:
+    - LightBulb
+    - Trash
+    - LightGreen

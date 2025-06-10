@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization;
+﻿using Content.Shared._Impstation.Construction.Steps;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
@@ -44,6 +45,11 @@ namespace Content.Shared.Construction.Steps
             if (node.Has("assemblyId") || node.Has("guideString"))
             {
                 return typeof(PartAssemblyConstructionGraphStep);
+            }
+
+            if (node.Has("remove")) // imp
+            {
+                return typeof(EntityRemoveConstructionGraphStep);
             }
 
             return null;

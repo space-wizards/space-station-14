@@ -11,3 +11,45 @@
     lightSoftness: 0.9
     BurningTemperature: 320
     PowerUse: 100
+  - type: Tag
+    tags:
+    - LightUv
+    - LightTube
+
+- type: entity
+  parent: BaseLightTube
+  name: sun in a tube
+  description: Engraved on the side- "DO NOT PUT IN HOLES".
+  suffix: Admeme # this tube is just a joke for the floor lights. don't ever make this craftable please. i am not responsible for any admin that uses this.
+  categories: [ DoNotMap ]
+  id: SunLightTube
+  components:
+  - type: LightBulb
+    color: "#cc3516"
+    lightEnergy: 50
+    lightRadius: 20
+    lightSoftness: 0.1
+    BurningTemperature: 30000 #it's just a little hot
+    PowerUse: 1
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 300
+    canCreateVacuum: true
+  - type: Contraband
+    severity: TierXContraband
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - LightTube
+    - SunTube
