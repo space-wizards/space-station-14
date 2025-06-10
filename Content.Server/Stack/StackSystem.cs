@@ -28,16 +28,22 @@ public sealed class StackSystem : SharedStackSystem
     /// <summary>
     /// Sets the entity's count, and deletes it if it's 0 or less.
     /// </summary>
-    public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
+    public override void SetCount(Entity<StackComponent?> ent, int amount)
     {
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        base.SetCount(uid, amount, component);
+        base.SetCount(ent, amount);
 
         // Queue delete stack if count reaches zero.
-        if (component.Count <= 0 && !component.Lingering)
-            QueueDel(uid);
+        if (ent.Comp.Count <= 0 && !ent.Comp.Lingering)
+            QueueDel(ent.Owner);
+    }
+
+    [Obsolete("Obsolete, Use Entity<T>")]
+    public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
+    {
+        SetCount((uid, component), amount);
     }
 
     /// <summary>
@@ -63,7 +69,7 @@ public sealed class StackSystem : SharedStackSystem
         if (TryComp(entity, out StackComponent? stackComp))
         {
             // Set the split stack's count.
-            SetCount(entity, amount, stackComp);
+            SetCount((entity, stackComp), amount);
             // Don't let people dupe unlimited stacks
             stackComp.Unlimited = false;
         }
@@ -93,7 +99,7 @@ public sealed class StackSystem : SharedStackSystem
         var stack = Comp<StackComponent>(entity);
 
         // And finally, set the correct amount!
-        SetCount(entity, amount, stack);
+        SetCount((entity, stack), amount);
         return entity;
     }
 
@@ -131,7 +137,7 @@ public sealed class StackSystem : SharedStackSystem
         {
             var entity = SpawnAtPosition(entityPrototype, spawnPosition);
             spawnedEnts.Add(entity);
-            SetCount(entity, count);
+            SetCount((entity, null), count);
         }
 
         return spawnedEnts;
@@ -157,7 +163,7 @@ public sealed class StackSystem : SharedStackSystem
         {
             var entity = SpawnNextToOrDrop(entityPrototype, target);
             spawnedEnts.Add(entity);
-            SetCount(entity, count);
+            SetCount((entity, null), count);
         }
 
         return spawnedEnts;

@@ -21,35 +21,49 @@ public sealed class StackSystem : SharedStackSystem
         Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent));
     }
 
-    public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
+
+    /// <summary>
+    ///     Sets a stack to an amount. Server will delete ent if stack count is 0.
+    ///     Client sets the visuals for a lingering stack.
+    /// </summary>
+    /// <remarks>
+    ///     Will not set the amount higher than the stack's max size.
+    /// </remarks>
+    public override void SetCount(Entity<StackComponent?> ent, int amount)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        base.SetCount(uid, amount, component);
+        base.SetCount(ent, amount);
 
-        if (component.Lingering &&
-            TryComp<SpriteComponent>(uid, out var sprite))
+        if (ent.Comp.Lingering &&
+            TryComp<SpriteComponent>(ent.Owner, out var sprite))
         {
             // tint the stack gray and make it transparent if it's lingering.
-            var color = component.Count == 0 && component.Lingering
+            var color = ent.Comp.Count == 0 && ent.Comp.Lingering
                 ? Color.DarkGray.WithAlpha(0.65f)
                 : Color.White;
 
             for (var i = 0; i < sprite.AllLayers.Count(); i++)
             {
-                _sprite.LayerSetColor((uid, sprite), i, color);
+                _sprite.LayerSetColor((ent.Owner, sprite), i, color);
             }
         }
 
         // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
-        if (component.Count <= 0 && !component.Lingering)
+        if (ent.Comp.Count <= 0 && !ent.Comp.Lingering)
         {
-            Xform.DetachEntity(uid, Transform(uid));
+            Xform.DetachEntity(ent.Owner, Transform(ent.Owner));
             return;
         }
 
-        component.UiUpdateNeeded = true;
+        ent.Comp.UiUpdateNeeded = true;
+    }
+
+    [Obsolete("Obsolete, Use Entity<T>")]
+    public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
+    {
+        SetCount((uid, component), amount);
     }
 
     private void OnAppearanceChange(EntityUid uid, StackComponent comp, ref AppearanceChangeEvent args)

@@ -87,8 +87,8 @@ public abstract class SharedStackSystem : EntitySystem
         if (amount != null && amount > 0)
             transferred = Math.Min(transferred, (int)amount);
 
-        SetCount(donor, donorStack.Count - transferred, donorStack);
-        SetCount(recipient, recipientStack.Count + transferred, recipientStack);
+        SetCount(donorEnt, donorStack.Count - transferred);
+        SetCount(recipientEnt, recipientStack.Count + transferred);
         return true;
     }
 
@@ -130,29 +130,43 @@ public abstract class SharedStackSystem : EntitySystem
         TryMergeToHands((item, itemStack), (user, hands));
     }
 
-    // TODO
-    public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
+    /// <summary>
+    ///     Sets a stack to an amount. Server will delete ent if stack count is 0.
+    /// </summary>
+    /// <remarks>
+    ///     Will not set the amount higher than the stack's max size.
+    /// </remarks>
+    public virtual void SetCount(Entity<StackComponent?> ent, int amount)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
+        var (stackEnt, stackComp) = (ent.Owner, ent.Comp);
+
         // Do nothing if amount is already the same.
-        if (amount == component.Count)
+        if (amount == stackComp.Count)
             return;
 
         // Store old value for event-raising purposes...
-        var old = component.Count;
+        var old = stackComp.Count;
 
         // Clamp the value.
-        amount = Math.Min(amount, GetMaxCount(component));
+        amount = Math.Min(amount, GetMaxCount(stackComp));
         amount = Math.Max(amount, 0);
 
         // Server-side override deletes the entity if count == 0
-        component.Count = amount;
-        Dirty(uid, component);
+        stackComp.Count = amount;
+        Dirty(ent);
 
-        Appearance.SetData(uid, StackVisuals.Actual, component.Count);
-        RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
+        Appearance.SetData(stackEnt, StackVisuals.Actual, stackComp.Count);
+        RaiseLocalEvent(stackEnt, new StackCountChangedEvent(old, stackComp.Count));
+    }
+
+    // TODO
+    [Obsolete("Obsolete, Use Entity<T>")]
+    public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
+    {
+        SetCount((uid, component), amount);
     }
 
     /// <summary>
@@ -175,7 +189,7 @@ public abstract class SharedStackSystem : EntitySystem
         // We do have enough things in the stack, so remove them and change.
         if (!ent.Comp.Unlimited)
         {
-            SetCount(ent.Owner, ent.Comp.Count - amount, ent.Comp);
+            SetCount(ent, ent.Comp.Count - amount);
         }
 
         return true;
@@ -323,7 +337,7 @@ public abstract class SharedStackSystem : EntitySystem
     {
         // on client, lingering stacks that start at 0 need to be darkened
         // on server this does nothing
-        SetCount(ent.Owner, ent.Comp.Count, ent.Comp);
+        SetCount(ent.AsNullable(), ent.Comp.Count);
 
         if (!TryComp(ent.Owner, out AppearanceComponent? appearance))
             return;
@@ -346,7 +360,7 @@ public abstract class SharedStackSystem : EntitySystem
         ent.Comp.MaxCountOverride = cast.MaxCount;
         ent.Comp.Lingering = cast.Lingering;
         // This will change the count and call events.
-        SetCount(ent.Owner, cast.Count, ent.Comp);
+        SetCount(ent.AsNullable(), cast.Count);
     }
 
     private void OnStackExamined(Entity<StackComponent> ent, ref ExaminedEvent args)
