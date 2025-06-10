@@ -1,4 +1,4 @@
-﻿using Content.Client.Actions;
+using Content.Client.Actions;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -20,7 +20,6 @@ public sealed class SaveActionsCommand : IConsoleCommand
             shell.WriteLine(Help);
             return;
         }
-
         try
         {
             EntitySystem.Get<ActionsSystem>().SaveActionAssignments(args[0]);
