@@ -154,6 +154,24 @@
           0.4
         ]
       ]
+    },
+    {
+      "name": "pressure_unlit",
+      "delays": [
+        [
+          0.8,
+          0.4
+        ]
+      ]
+    },
+    {
+      "name": "temperature_unlit",
+      "delays": [
+        [
+          0.8,
+          0.4
+        ]
+      ]
     }
   ]
 }

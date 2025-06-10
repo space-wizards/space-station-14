@@ -159,3 +159,29 @@
   - type: Construction
     graph: ImprovisedArrowUranium
     node: ImprovisedArrowUranium
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowImprovisedCarp
+  name: carp tooth arrow
+  description: The salvager's preferred arrow. Kill your enemies with the teeth of their families.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: purple
+    - state: rod
+      color: darkgray
+    - state: tip
+      color: white
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 30
+  - type: Construction
+    graph: ImprovisedArrowCarp
+    node: ImprovisedArrowCarp

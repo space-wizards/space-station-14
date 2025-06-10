@@ -33,6 +33,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         if (!EntityManager.HasComponent<DamageableComponent>(uid))
             return;
 
+        //TODO: This should solve after physics solves
         var speed = args.OurBody.LinearVelocity.Length();
 
         if (speed < component.MinimumSpeed)

@@ -1,20 +1,20 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Server.Kitchen.Components;
-using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Body.Components;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Body.Components;
 using Content.Shared.Database;
-using Content.Shared.Interaction;
-using Content.Shared.Nutrition.Components;
-using Content.Shared.Popups;
-using Content.Shared.Storage;
-using Content.Shared.Verbs;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
-using Content.Shared.Hands.Components;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Popups;
+using Content.Shared.Storage;
+using Content.Shared.Verbs;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
@@ -124,7 +124,7 @@ public sealed class SharpSystem : EntitySystem
         if (hasBody)
             popupType = PopupType.LargeCaution;
 
-        _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", args.Args.Target.Value), ("knife", uid)),
+        _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", args.Args.Target.Value), ("knife", Identity.Entity(uid, EntityManager))),
             popupEnt, args.Args.User, popupType);
 
         if (hasBody)
@@ -152,10 +152,10 @@ public sealed class SharpSystem : EntitySystem
         var disabled = false;
         string? message = null;
 
-        // if the user has hands
-        // and the item they're holding doesn't have the SharpComponent
+        // if the held item doesn't have SharpComponent
+        // and the user doesn't have SharpComponent
         // disable the verb
-        if (!TryComp<SharpComponent>(args.Using, out var usingSharpComp) && args.Hands != null)
+        if (!TryComp<SharpComponent>(args.Using, out var usingSharpComp) && userSharpComp == null)
         {
             disabled = true;
             message = Loc.GetString("butcherable-need-knife",
