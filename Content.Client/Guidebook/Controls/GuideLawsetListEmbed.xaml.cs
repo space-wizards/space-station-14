@@ -12,6 +12,9 @@ using Content.Shared.Silicons.Laws;
 
 namespace Content.Client.Guidebook.Controls;
 
+/// <summary>
+/// Control for iterating and embedding every SiliconLawsetPrototype into the guidebook.
+/// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
 public sealed partial class GuideLawsetListEmbed : BoxContainer, IDocumentTag
 {
