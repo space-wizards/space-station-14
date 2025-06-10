@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Thaven now have a fishy chat bubble!
-    type: Add
-  - message: Thaven have new organs - and they can eat raw meat and are immune to
-      carpotoxin
-    type: Add
-  - message: Thaven and carps/dragons have new blood you can drink and make the new
-      Fever Dream cocktail with
-    type: Add
-  - message: Thaven can now breathe any gas without harmful effects
-    type: Tweak
-  id: 1302
-  time: '2025-03-14T01:42:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1883
 - author: AftrLite
   changes:
   - message: Cosmic Cult 1.1.1b (Beta)
@@ -4216,3 +4201,10 @@
   id: 1801
   time: '2025-06-10T23:28:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2706
+- author: meridiadottxt, hivehum
+  changes:
+  - message: Submarine, a new 60-pop map from Delta-V!
+    type: Add
+  id: 1802
+  time: '2025-06-10T23:31:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2685
