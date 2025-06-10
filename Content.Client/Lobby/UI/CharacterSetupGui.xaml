@@ -41,12 +41,14 @@
             <BoxContainer Orientation="Horizontal" VerticalExpand="True" SeparationOverride="0">
 
                 <!-- This box holds all the character pickers and job priority button, the left side of the window  -->
-                <BoxContainer MinSize="400 0" Margin="5 5 0 0" Orientation="Vertical">
+                <BoxContainer MinSize="400 0" Margin="5 0 0 0" Orientation="Vertical">
 
                     <!-- Button to edit job priorities -->
                     <Button Name="JobPrioritiesButton"
-                            HorizontalExpand="True"
                             Text="{Loc 'character-setup-gui-edit-job-priorities-button'}"
+                            MaxWidth="300"
+                            MinHeight="64"
+                            Margin="0 5"
                             StyleClasses="ButtonBig"/>
 
                     <!-- Horizontal rule -->
@@ -57,7 +59,7 @@
                     </PanelContainer>
 
                     <!-- This is the box where we stuff the character picker buttons into -->
-                    <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                    <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="0 5 0 0">
                         <BoxContainer Name="Characters" Orientation="Vertical" />
                     </ScrollContainer>
                 </BoxContainer> <!-- End "Left side of the window" -->
