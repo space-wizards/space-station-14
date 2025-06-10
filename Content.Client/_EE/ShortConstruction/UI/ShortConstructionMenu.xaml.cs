@@ -17,7 +17,7 @@ namespace Content.Client._EE.ShortConstruction.UI;
 
 //This was originally a PR for Einstein's Engines, submitted by Github user VMSolidus.
 //https://github.com/Simple-Station/Einstein-Engines/pull/861
-//It has been modified to work within the Imp Station 14 server fork by Honeyed_Lemons.
+//It has been modified to work within the Imp Station 14 server fork by Honeyed_Lemons. (and mqole (hi!))
 
 public sealed class ShortConstructionMenu : RadialMenu
 {
@@ -52,7 +52,9 @@ public sealed class ShortConstructionMenu : RadialMenu
         {
             if (_playerManager.LocalSession == null)
                 return;
-            if (!_protoManager.TryIndex(protoId, out var proto))
+            if (!_protoManager.TryIndex(protoId, out var proto) ||
+                proto.Name == null ||
+                !_protoManager.TryIndex(proto.ID, out var entProto))
                 continue;
 
             var button = new RadialMenuTextureButtonWithSector
@@ -65,7 +67,7 @@ public sealed class ShortConstructionMenu : RadialMenu
             {
                 VerticalAlignment = Control.VAlignment.Center,
                 HorizontalAlignment = Control.HAlignment.Center,
-                Texture = _spriteSystem.Frame0(proto.Icon),
+                Texture = _spriteSystem.Frame0(entProto),
                 TextureScale = new Vector2(1.5f, 1.5f)
             };
 
