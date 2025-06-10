@@ -35,6 +35,9 @@
       "name": "cargo_tech"
     },
     {
+      "name": "cargo_trainee"
+    },
+    {
       "name": "cburn"
     },
     {
@@ -170,7 +173,7 @@
       "name": "scientist"
     },
     {
-      "name": "security_cadet" 
+      "name": "security_cadet"
     },
     {
       "name": "security_officer"
