@@ -86,7 +86,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
             var atLeastOneEnabled = prefs.GetAllEnabledProfilesForJob(job).Count != 0;
             var icon = new TextureRect
             {
-                TextureScale = new Vector2(prio == JobPriority.High ? 8 : 3),
+                TextureScale = new Vector2(2),
                 VerticalAlignment = VAlignment.Center,
                 HorizontalAlignment = HAlignment.Center,
                 TooltipSupplier = _ => CreateJobTooltip(job),
@@ -99,6 +99,21 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
             icon.Texture = _sprite.Frame0(jobIcon.Icon);
 
             iconContainers[(int)prio].AddChild(icon);
+        }
+
+        for (var i = 1; i < 4; i++)
+        {
+            var size = iconContainers[i].ChildCount switch
+            {
+                1 => 8,
+                > 1 and <= 4 => 4,
+                > 4 and <= 16 => 2,
+                > 16 and <= 64 => 1,
+                > 64 and <= 128 => 0.5f,
+                _ => 0.3f,
+            };
+            foreach (var icon in iconContainers[i].Children)
+                ((TextureRect)icon).TextureScale = new Vector2(size);
         }
     }
 

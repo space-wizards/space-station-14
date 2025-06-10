@@ -17,10 +17,10 @@
                           SeparationOverride="6">
 
                 <!-- Jobs with "Never" priority -->
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" SetSize="300 112">
                     <Label Text="{Loc 'humanoid-profile-editor-job-priority-never-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="0 6"/>
                     <!-- We stuff the job icons into this GridContainer -->
-                    <GridContainer Name="NeverBox" MaxGridWidth="140" HorizontalAlignment="Center"/>
+                    <GridContainer Name="NeverBox" MaxGridWidth="300" HorizontalAlignment="Center"/>
                 </BoxContainer>
 
                 <!-- Vertical rule -->
@@ -31,9 +31,9 @@
                 </PanelContainer>
 
                 <!-- Jobs with "Low" priority -->
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical" SetSize="80 112">
                     <Label Text="{Loc 'humanoid-profile-editor-job-priority-low-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="6"/>
-                    <GridContainer Name="LowBox" MaxGridWidth="140" HorizontalAlignment="Center"/>
+                    <GridContainer Name="LowBox" MaxGridWidth="80" HorizontalAlignment="Center"/>
                 </BoxContainer>
 
                 <!-- Vertical rule -->
@@ -44,9 +44,9 @@
                 </PanelContainer>
 
                 <!-- Jobs with "Medium" priority -->
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical" SetSize="80 112">
                     <Label Text="{Loc 'humanoid-profile-editor-job-priority-medium-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="0 6"/>
-                    <GridContainer Name="MediumBox" MaxGridWidth="140" HorizontalAlignment="Center"/>
+                    <GridContainer Name="MediumBox" MaxGridWidth="80" HorizontalAlignment="Center"/>
                 </BoxContainer>
 
                 <!-- Vertical rule -->
@@ -57,7 +57,7 @@
                 </PanelContainer>
 
                 <!-- THE job with "HIGH" priority -->
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical" SetSize="80 112">
                     <Label Text="{Loc 'humanoid-profile-editor-job-priority-high-button'}" HorizontalAlignment="Center" StyleClasses="LabelBig" Margin="0 6"/>
                     <!-- There can only be one high priority job, so bigger boxcontainer instead of a grid -->
                     <BoxContainer Name="HighBox" HorizontalAlignment="Center" VerticalAlignment="Center"/>
