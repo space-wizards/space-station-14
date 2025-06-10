@@ -307,7 +307,7 @@ namespace Content.Client.Construction.UI
             if (button.Parent is not PanelContainer buttonPanel)
                 return;
 
-            button.Modulate = select ? Color.Green : Color.Transparent;
+            button.Children.Single().Modulate = select ? Color.Green : Color.White;
             var buttonColor = select ? StyleNano.ButtonColorDefault : Color.Transparent;
             buttonPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = buttonColor };
         }
