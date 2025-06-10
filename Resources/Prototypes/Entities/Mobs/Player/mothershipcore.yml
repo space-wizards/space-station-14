@@ -11,7 +11,7 @@
   - StripableInventoryBase
   id: MothershipCore
   name: mothership core
-  description: A sentient machine that can produce xenoborgs. Without this the xenoborgs are doomed.
+  description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
   components:
   - type: Appearance
   - type: WiresVisuals
