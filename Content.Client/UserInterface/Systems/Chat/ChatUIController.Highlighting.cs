@@ -47,7 +47,7 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
         _config.OnValueChanged(CCVars.ChatHighlightsColor, (value) => { _highlightsColor = value; }, true);
 
         // Load highlights if any were saved.
-        string highlights = _config.GetCVar(CCVars.ChatHighlights);
+        var highlights = _config.GetCVar(CCVars.ChatHighlights);
 
         if (!string.IsNullOrEmpty(highlights))
         {
@@ -89,12 +89,12 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
 
         // We first subdivide the highlights based on newlines to prevent replacing
         // a valid "\n" tag and adding it to the final regex.
-        string[] splittedHighlights = newHighlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        var splittedHighlights = newHighlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
-        for (int i = 0; i < splittedHighlights.Length; i++)
+        for (var i = 0; i < splittedHighlights.Length; i++)
         {
             // Replace every "\" character with a "\\" to prevent "\n", "\0", etc...
-            string keyword = splittedHighlights[i].Replace(@"\", @"\\");
+            var keyword = splittedHighlights[i].Replace(@"\", @"\\");
 
             // Escape the keyword to prevent special characters like "(" and ")" to be considered valid regex.
             keyword = Regex.Escape(keyword);
@@ -137,7 +137,7 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
         var (_, job, _, _, entityName) = data;
 
         // Mark this entity's name as our character name for the "UpdateHighlights" function.
-        string newHighlights = "@" + entityName;
+        var newHighlights = "@" + entityName;
 
         // Subdivide the character's name based on spaces or hyphens so that every word gets highlighted.
         if (newHighlights.Count(c => (c == ' ' || c == '-')) == 1)
@@ -149,7 +149,7 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
             newHighlights = newHighlights.Split('-')[0] + "\n@" + newHighlights.Split('-')[^1];
 
         // Convert the job title to kebab-case and use it as a key for the loc file.
-        string jobKey = job.Replace(' ', '-').ToLower();
+        var jobKey = job.Replace(' ', '-').ToLower();
 
         if (_loc.TryGetString($"highlights-{jobKey}", out var jobMatches))
             newHighlights += '\n' + jobMatches.Replace(", ", "\n");
