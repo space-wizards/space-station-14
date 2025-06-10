@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 259.0.0
+  engineVersion: 262.0.0
   forkId: ""
   forkVersion: ""
-  time: 05/17/2025 04:43:40
-  entityCount: 19392
+  time: 06/10/2025 13:34:21
+  entityCount: 19391
 maps:
 - 1
 grids:
@@ -84,7 +84,6 @@ entities:
     - type: Map
       mapPaused: True
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: Parallax
@@ -5157,10 +5156,10 @@ entities:
             0: 55551
           8,-16:
             0: 271
-            4: 17408
+            2: 17408
           8,-15:
             1: 4096
-            4: 4
+            2: 4
           8,-14:
             0: 32752
           8,-13:
@@ -5829,8 +5828,8 @@ entities:
             0: 65535
           9,-16:
             0: 15
-            5: 4352
-            2: 17408
+            3: 4352
+            4: 17408
           10,-20:
             0: 65280
           10,-19:
@@ -5841,8 +5840,8 @@ entities:
             0: 65535
           10,-16:
             0: 15
-            2: 4352
-            6: 17408
+            4: 4352
+            5: 17408
           11,-20:
             0: 65024
           11,-19:
@@ -5854,7 +5853,7 @@ entities:
           11,-16:
             0: 15
             1: 35840
-            2: 4352
+            4: 4352
           12,-20:
             0: 65280
           12,-19:
@@ -5887,7 +5886,7 @@ entities:
             0: 61183
           12,-16:
             0: 3
-            2: 2184
+            4: 2184
             1: 8960
           13,-20:
             0: 65024
@@ -5900,7 +5899,7 @@ entities:
           13,-21:
             1: 16177
           13,-16:
-            2: 819
+            4: 819
             1: 8
           14,-20:
             0: 61704
@@ -6103,7 +6102,7 @@ entities:
             0: 59392
           11,-15:
             1: 32904
-            2: 1
+            4: 1
           12,-14:
             0: 62926
           11,-14:
@@ -6115,7 +6114,7 @@ entities:
             0: 61262
           12,-12:
             0: 43215
-            3: 4352
+            6: 4352
           13,-15:
             0: 65280
             1: 4
@@ -6213,12 +6212,12 @@ entities:
             1: 63624
           11,-12:
             0: 4508
-            3: 52224
+            6: 52224
           12,-11:
-            3: 4369
+            6: 4369
             0: 52424
           11,-11:
-            3: 52428
+            6: 52428
             0: 4371
           12,-10:
             0: 17748
@@ -6437,14 +6436,14 @@ entities:
           11,-3:
             1: 12288
           9,-15:
-            5: 1
-            2: 4
+            3: 1
+            4: 4
             1: 32768
           9,-14:
             0: 36848
           10,-15:
-            2: 1
-            6: 4
+            4: 1
+            5: 4
           10,-14:
             0: 65520
           -8,-24:
@@ -6540,10 +6539,55 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+          - 6666.982
           - 0
           - 0
           - 0
           - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -6567,56 +6611,12 @@ entities:
           - 0
           - 0
           - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: BecomesStation
       id: Exo
+    - type: ImplicitRoof
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 19232
@@ -6630,182 +6630,122 @@ entities:
     components:
     - type: Transform
       parent: 6660
-    - type: EntityTargetAction
-      container: 6660
 - proto: ActionToggleInternals
   entities:
   - uid: 7333
     components:
     - type: Transform
       parent: 5264
-    - type: InstantAction
-      container: 5264
   - uid: 7690
     mapInit: true
     paused: true
     components:
     - type: Transform
       parent: 7689
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7689
   - uid: 7694
     mapInit: true
     paused: true
     components:
     - type: Transform
       parent: 7691
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7691
   - uid: 7698
     mapInit: true
     paused: true
     components:
     - type: Transform
       parent: 7697
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7697
   - uid: 7990
     mapInit: true
     paused: true
     components:
     - type: Transform
       parent: 7692
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7692
   - uid: 7999
     components:
     - type: Transform
       parent: 6652
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 6652
   - uid: 8006
     components:
     - type: Transform
       parent: 5265
-    - type: InstantAction
-      container: 5265
   - uid: 17935
     mapInit: true
     paused: true
     components:
     - type: Transform
       parent: 17933
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 17933
   - uid: 18388
     components:
     - type: Transform
       parent: 18387
-    - type: InstantAction
-      container: 18387
   - uid: 18754
     components:
     - type: Transform
       parent: 18753
-    - type: InstantAction
-      container: 18753
   - uid: 18756
     components:
     - type: Transform
       parent: 18755
-    - type: InstantAction
-      container: 18755
 - proto: ActionToggleJetpack
   entities:
   - uid: 7315
     components:
     - type: Transform
       parent: 5264
-    - type: InstantAction
-      container: 5264
   - uid: 7882
     components:
     - type: Transform
       parent: 5265
-    - type: InstantAction
-      container: 5265
   - uid: 17934
     mapInit: true
     paused: true
     components:
     - type: Transform
       parent: 17933
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 17933
 - proto: ActionToggleLight
   entities:
   - uid: 517
     components:
     - type: Transform
       parent: 33
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 33
   - uid: 2230
     mapInit: true
     paused: true
     components:
     - type: Transform
       parent: 2223
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 2223
   - uid: 3844
     mapInit: true
     paused: true
     components:
     - type: Transform
       parent: 17536
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 17536
   - uid: 5672
     components:
     - type: Transform
       parent: 5675
-    - type: InstantAction
-      container: 5675
   - uid: 5847
     components:
     - type: Transform
       parent: 5846
-    - type: InstantAction
-      container: 5846
   - uid: 5849
     components:
     - type: Transform
       parent: 5848
-    - type: InstantAction
-      container: 5848
   - uid: 8005
     components:
     - type: Transform
       parent: 8004
-    - type: InstantAction
-      container: 8004
   - uid: 14817
     components:
     - type: Transform
       parent: 16318
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 16318
   - uid: 15464
     mapInit: true
     paused: true
     components:
     - type: Transform
       parent: 15463
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 15463
 - proto: AirAlarm
   entities:
   - uid: 364
@@ -9896,7 +9836,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -89426.44
+      secondsUntilStateChange: -89435.1
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -37216,13 +37156,6 @@ entities:
     - type: Transform
       pos: -20.555466,-37.371918
       parent: 2
-- proto: CapacitorStockPart
-  entities:
-  - uid: 17358
-    components:
-    - type: Transform
-      pos: -32.45135,-29.305899
-      parent: 2
 - proto: CarbonDioxideCanister
   entities:
   - uid: 3939
@@ -42718,13 +42651,6 @@ entities:
     components:
     - type: Transform
       pos: 68.37186,-17.557957
-      parent: 2
-- proto: ClothingNeckCloakMiner
-  entities:
-  - uid: 14690
-    components:
-    - type: Transform
-      pos: -61.52881,-25.470669
       parent: 2
 - proto: ClothingNeckCloakMoth
   entities:
@@ -83593,13 +83519,6 @@ entities:
     - type: Transform
       pos: 80.49108,-26.808891
       parent: 2
-- proto: MatterBinStockPart
-  entities:
-  - uid: 17879
-    components:
-    - type: Transform
-      pos: 33.547714,-15.508676
-      parent: 2
 - proto: MedicalBed
   entities:
   - uid: 466
@@ -83779,6 +83698,16 @@ entities:
     components:
     - type: Transform
       pos: 33.374638,-15.933382
+      parent: 2
+  - uid: 17358
+    components:
+    - type: Transform
+      pos: -32.45135,-29.305899
+      parent: 2
+  - uid: 17879
+    components:
+    - type: Transform
+      pos: 33.547714,-15.508676
       parent: 2
 - proto: MicrophoneInstrument
   entities:
@@ -93152,6 +93081,12 @@ entities:
     - type: Transform
       pos: 67.5,-34.5
       parent: 2
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
 - proto: SecurityWhistle
   entities:
   - uid: 12805
@@ -103429,6 +103364,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: 15.5,-57.5
       parent: 2
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
 - proto: UniformScrubsColorBlue
   entities:
   - uid: 19025
