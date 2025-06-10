@@ -217,8 +217,8 @@ namespace Content.Client.Construction.UI
                 var itemButton = new ContainerButton()
                 {
                     VerticalAlignment = Control.VAlignment.Center,
-                    Name = recipe.TargetPrototype.Name,
-                    ToolTip = recipe.TargetPrototype.Name,
+                    Name = recipe.Prototype.Name,
+                    ToolTip = recipe.Prototype.Name,
                     ToggleMode = true,
                     Children = { protoView },
                 };
