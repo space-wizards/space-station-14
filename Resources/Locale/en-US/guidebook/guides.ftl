@@ -82,7 +82,6 @@ guide-entry-traversal-distorter = Traversal Distorter
 guide-entry-machine-upgrading = Machine Upgrading
 guide-entry-robotics = Robotics
 guide-entry-cyborgs = Cyborgs
-guide-entry-lawsets = AI Lawsets
 guide-entry-security = Security
 guide-entry-forensics = Forensics
 guide-entry-defusal = Large Bomb Defusal
@@ -128,6 +127,7 @@ guide-entry-salad-recipes = Salads
 guide-entry-medicinal-recipes = Medicinal
 guide-entry-other-recipes = Other
 guide-entry-secret-recipes = Secret
+guide-entry-lawsets = Silicon Lawsets
 
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives
