@@ -337,4 +337,12 @@
   id: 41
   time: '2025-06-04T21:41:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38068
+- author: spanky-spanky
+  changes:
+  - message: Most emergency shuttles have been lightly overhauled to mitigate spacing
+      damage.
+    type: Tweak
+  id: 42
+  time: '2025-06-09T22:56:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38186
 Order: 1
