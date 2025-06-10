@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: The Crusher Dagger has had it's damage reduced from 15 to 12 Slashing.
-    type: Tweak
-  - message: The Crusher and Crusher Glaive can now be worn on the back and suit storage
-      slots.
-    type: Add
-  id: 8138
-  time: '2025-04-06T06:48:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35914
 - author: K-Dynamic
   changes:
   - message: Normalised ziptie box; reduced ziptie box storage from 4x5 to 3x3 (item
@@ -3911,3 +3901,10 @@
   id: 8650
   time: '2025-06-10T19:31:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37040
+- author: themias
+  changes:
+  - message: Returned the cooldown for bike horn implants
+    type: Fix
+  id: 8651
+  time: '2025-06-10T21:40:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38237
