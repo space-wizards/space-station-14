@@ -4,8 +4,8 @@ meta:
   engineVersion: 255.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/03/2025 01:26:52
-  entityCount: 21541
+  time: 06/10/2025 05:12:49
+  entityCount: 21542
 maps:
 - 1
 grids:
@@ -5915,7 +5915,7 @@ entities:
           -9,-12:
             0: 51336
             1: 12288
-            8: 34
+            5: 34
           -8,-11:
             0: 46011
           -9,-11:
@@ -5996,7 +5996,7 @@ entities:
             0: 32631
           -9,-13:
             0: 32768
-            8: 8192
+            5: 8192
             1: 48
           -7,-16:
             0: 28672
@@ -6242,12 +6242,12 @@ entities:
           -10,-6:
             0: 34952
           -12,-12:
-            5: 170
+            6: 170
             1: 61440
           -13,-12:
             0: 2184
             1: 36864
-            5: 17
+            6: 17
           -12,-11:
             0: 65520
           -13,-11:
@@ -6257,30 +6257,30 @@ entities:
           -13,-10:
             0: 65535
           -12,-13:
-            5: 40960
+            6: 40960
             1: 240
           -11,-12:
             1: 61440
-            6: 34
-            7: 136
+            7: 34
+            8: 136
           -11,-11:
             0: 65520
           -11,-10:
             0: 65535
           -11,-13:
-            6: 8192
-            7: 32768
+            7: 8192
+            8: 32768
             1: 240
           -10,-12:
             1: 61440
-            5: 34
+            6: 34
             4: 136
           -10,-11:
             0: 65520
           -10,-10:
             0: 65535
           -10,-13:
-            5: 8192
+            6: 8192
             4: 32768
             1: 240
           -12,0:
@@ -6324,7 +6324,7 @@ entities:
           -13,-13:
             1: 144
             0: 34816
-            5: 4096
+            6: 4096
           -11,-16:
             0: 61168
           -11,-15:
@@ -6375,9 +6375,9 @@ entities:
             0: 65535
           -14,-13:
             1: 240
-            5: 61440
+            6: 61440
           -14,-12:
-            5: 255
+            6: 255
             1: 61440
           -13,-17:
             0: 57297
@@ -6959,6 +6959,21 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
           - 0
           - 0
           - 0
@@ -6995,21 +7010,6 @@ entities:
           - 0
           - 0
           - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
           - 0
           - 0
           - 0
@@ -10051,7 +10051,7 @@ entities:
       pos: -36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -104136.66
+      secondsUntilStateChange: -104199.164
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -10403,7 +10403,7 @@ entities:
       pos: 33.5,-43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -232473.78
+      secondsUntilStateChange: -232536.3
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11114,7 +11114,7 @@ entities:
       pos: 37.5,-46.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -54809.19
+      secondsUntilStateChange: -54871.7
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11739,7 +11739,7 @@ entities:
       pos: -8.5,-0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -46932.816
+      secondsUntilStateChange: -46995.324
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -52431,14 +52431,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 67.5,-0.5
       parent: 2
-- proto: ComputerCargoShuttle
-  entities:
-  - uid: 18572
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -29.5,-19.5
-      parent: 2
 - proto: ComputerComms
   entities:
   - uid: 3925
@@ -52708,6 +52700,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -36.5,-15.5
+      parent: 2
+  - uid: 18572
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -29.5,-19.5
       parent: 2
 - proto: ComputerSolarControl
   entities:
@@ -100882,15 +100880,15 @@ entities:
     - type: Transform
       pos: 75.5,-13.5
       parent: 2
-  - uid: 18365
-    components:
-    - type: Transform
-      pos: -33.6066,-35.42736
-      parent: 2
   - uid: 20697
     components:
     - type: Transform
       pos: 28.375166,24.970215
+      parent: 2
+  - uid: 21487
+    components:
+    - type: Transform
+      pos: -33.09764,-35.273544
       parent: 2
 - proto: IngotGold1
   entities:
@@ -114094,6 +114092,11 @@ entities:
     components:
     - type: Transform
       pos: -26.5,-32.5
+      parent: 2
+  - uid: 18365
+    components:
+    - type: Transform
+      pos: -33.926384,-35.47667
       parent: 2
   - uid: 20660
     components:
