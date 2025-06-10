@@ -87,8 +87,7 @@ public sealed partial class ParrotSystem : EntitySystem
 
     private void Learn(Entity<ParrotComponent> entity, string incomingMessage, EntityUid source)
     {
-        // too early to learn
-        if (_random.Prob(entity.Comp.LearnChance))
+        if (!_random.Prob(entity.Comp.LearnChance))
             return;
 
         // ignore speakers with ParrotComponent or things get silly
