@@ -218,17 +218,17 @@ public sealed class ReflectSystem : EntitySystem
         switch (ent.Comp.Reflects)
         {
             case ReflectType.Energy | ReflectType.NonEnergy:
-                type = Loc.GetString("reflect-examine-type-both");
+                type = "both";
                 args.PushMarkup(Loc.GetString("reflect-examine", ("value", value), ("type", type)));
                 break;
 
             case ReflectType.Energy:
-                type = Loc.GetString("reflect-examine-type-energy");
+                type = "energy";
                 args.PushMarkup(Loc.GetString("reflect-examine", ("value", value), ("type", type)));
                 break;
 
             case ReflectType.NonEnergy:
-                type = Loc.GetString("reflect-examine-type-nonenergy");
+                type = "nonenergy";
                 args.PushMarkup(Loc.GetString("reflect-examine", ("value", value), ("type", type)));
                 break;
         }
