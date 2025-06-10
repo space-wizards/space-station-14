@@ -35,6 +35,9 @@ public sealed partial class ParrotComponent : Component
     [DataField]
     public float LearnCooldown = 60f;
 
+    /// <summary>
+    /// Next time at which the parrot can attempt to learn something
+    /// </summary>
     [DataField]
     public TimeSpan NextLearnInterval = TimeSpan.FromSeconds(0.0f);
 
