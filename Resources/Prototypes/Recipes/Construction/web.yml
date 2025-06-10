@@ -1,4 +1,5 @@
 - type: construction
+  id: WallWeb
   graph: WebStructures
   startNode: start
   targetNode: wall

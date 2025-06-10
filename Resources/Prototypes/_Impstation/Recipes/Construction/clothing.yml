@@ -14,7 +14,6 @@
   startNode: start
   targetNode: utilityBlack
   category: construction-category-clothing
-rsi, state: icon }
   objectType: Item
 
 # adding ahud to prestige glasses

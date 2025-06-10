@@ -2,6 +2,7 @@
   id: replicator
   spritePath: /Textures/_Impstation/Mobs/Replicator/replicator.rsi
   typingState: replicator0
+  idleState: replicator0 # TODO: new idle state
 
 - type: speechSounds
   id: Replicator

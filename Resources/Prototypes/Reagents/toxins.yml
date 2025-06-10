@@ -789,3 +789,17 @@
         conditions:
         - !type:OrganType
           type: Vox
+      # imp edit start
+      - !type:SatiateHunger
+          conditions:
+            - !type:OrganType
+              type: Rat
+      - !type:HealthChange
+          conditions:
+          - !type:OrganType
+            type: Rat
+            shouldHave: false
+          damage:
+            types:
+              Poison: 0.5
+      # imp edit end

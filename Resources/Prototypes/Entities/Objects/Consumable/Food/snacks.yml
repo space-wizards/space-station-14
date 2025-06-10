@@ -621,15 +621,6 @@
       Steel: 50
       Plastic: 50
   - type: SpaceGarbage
-  - type: Food
-    requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-          - ReagentId: Trash
-            Quantity: 10
   - type: StaticPrice
     price: 0
   - type: SolutionContainerManager
@@ -638,7 +629,7 @@
         maxVol: 10
         reagents:
         - ReagentId: ToxinTrash
-          Quantity: 5
+          Quantity: 10 # imp 5 > 10
   - type: Food
     requiresSpecialDigestion: true
 
