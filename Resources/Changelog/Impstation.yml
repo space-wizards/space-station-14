@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Sha-Seng
   changes:
-  - message: Thaven moods have been adjusted slightly.
-    type: Tweak
-  id: 1301
-  time: '2025-03-14T01:41:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1774
-- author: Sha-Seng
-  changes:
   - message: Thaven now have a fishy chat bubble!
     type: Add
   - message: Thaven have new organs - and they can eat raw meat and are immune to
@@ -4203,3 +4196,23 @@
   id: 1800
   time: '2025-06-10T22:35:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2715
+- author: DinnerCalzone
+  changes:
+  - message: The soap and bleach reagents can now clean decals and puddles similar
+      to space cleaner. Soap is half as efficient as space cleaner and bleach is twice
+      as efficient as space cleaner.
+    type: Add
+  - message: Bulk soap crates can now be purchaed from Cargo for $250.
+    type: Add
+  - message: Cleanade crates now cost $500 to purchase down from $800.
+    type: Tweak
+  - message: Removed the soap cargo bounty.
+    type: Remove
+  - message: Soap and cleanades can no longer be produced from lathes.
+    type: Remove
+  - message: The mop bucket recipe in the service techfab has been replaced with a
+      rehydratable mop bucket cube recipe.
+    type: Tweak
+  id: 1801
+  time: '2025-06-10T23:28:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2706
