@@ -670,3 +670,7 @@ StockTradingCartridge: null
 # 2025-06-09 (nice)
 # imp borg module swaps
 BorgModulePaper: BorgModuleService
+
+# 2025-06-09
+# impstation: migrate our cleanade crate to upstream implementation
+CrateServiceCleanades: CrateServiceCleanerGrenades

@@ -1,0 +1,14 @@
+- type: entity
+  name: soap box
+  parent: BoxCardboard
+  id: BoxSoapNT
+  description: A box full of Nanotrasen brand soap. Smells like plasma.
+  components:
+  - type: StorageFill
+    contents:
+    - id: SoapNT
+      amount: 4
+  - type: Sprite
+    layers:
+    - state: box
+    - state: soap

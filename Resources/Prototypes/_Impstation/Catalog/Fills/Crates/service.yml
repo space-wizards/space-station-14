@@ -1,12 +1,12 @@
 - type: entity
-  id: CrateServiceCleanades
+  id: CrateServiceSoap
   parent: CratePlastic
-  name: janitorial cleanades crate
+  name: bulk soap crate
   description: And Nanotrasen(tm) said, let there be soap. And there was soap.
   components:
   - type: StorageFill
     contents:
-      - id: BoxCleanerGrenades
+      - id: BoxSoapNT
         amount: 2
 
 - type: entity

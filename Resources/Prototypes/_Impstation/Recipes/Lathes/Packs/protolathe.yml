@@ -14,7 +14,6 @@
   id: ImpProtoDynamic
   recipes:
   - Drone
-  - CleanerGrenade
 #  - FishingRod # disabled until there is something to fish
   - ExosuitFabricatorMachineCircuitboard
   - ClothingEyesNightVisionGoggles # EE

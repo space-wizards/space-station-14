@@ -1,10 +1,10 @@
 - type: cargoProduct
-  id: ServiceJanitorialCleanades
+  id: ServiceJanitorialSoap
   icon:
-    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    state: icon
-  product: CrateServiceCleanades
-  cost: 800
+    sprite: Objects/Specific/Janitorial/soap.rsi
+    state: nt-4
+  product: CrateServiceSoap
+  cost: 250
   category: cargoproduct-category-name-service
   group: market
 

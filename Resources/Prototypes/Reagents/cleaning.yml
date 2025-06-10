@@ -23,6 +23,34 @@
       - !type:Emote
         emote: Scream
         probability: 0.15
+  #imp edit start
+  # TODO uncomment once pepper cough changes are merged from upstream
+  #reactiveEffects:
+  #  Acidic:
+  #    methods: [ Touch ]
+  #    effects:
+  #    - !type:HealthChange
+  #      damage:
+  #        types: #want to make this a nuisance but not nearly as harmful as ingesting
+  #          Poison: .2
+  #          Caustic: .2
+  #      conditions:
+  #      - !type:Breathing
+  #      - !type:Internals
+  #        usingInternals: false
+  #    - !type:Emote
+  #      emote: Cough
+  #      showInGuidebook: true
+  #      conditions:
+  #      - !type:Breathing
+  #      - !type:Internals
+  #        usingInternals: false
+  tileReactions:
+  - !type:CleanTileReaction
+    cleanCost: .125 #cleans reagents in puddles at a 1:8 ratio, twice as efficient as space cleaner
+  - !type:CleanDecalsReaction
+    cleanCost: .125 #default amount is already very efficient, but I want bleach to be the super cleaner
+  # imp edit end
 
 - type: reagent
   id: SpaceCleaner
@@ -67,6 +95,13 @@
       #  - !type:ReagentThreshold
       #    min: 6
       #  probability: 0.20
+  #imp edit start
+  tileReactions:
+  - !type:CleanTileReaction
+    cleanCost: .5 #cleans reagents in puddles at a 1:2 ratio, 1/2 as efficient as space cleaner
+  - !type:CleanDecalsReaction
+    cleanCost: .5 #1/2 the efficiency of space cleaner, still cleans 10 decals with one spray bottle spray
+  #imp edit end
 
 - type: reagent
   id: SpaceLube

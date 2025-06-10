@@ -1,25 +1,15 @@
 - type: latheRecipe
-  id: CleanerGrenade
-  result: CleanerGrenade
-  completetime: 2
-  materials:
-    Steel: 300
-    Plastic: 200
-    Glass: 100
-    Plasma: 200
-
-- type: latheRecipe
-  id: SoapNT
-  result: SoapNT
-  completetime: 2
-  materials:
-    Plastic: 200
-    Plasma: 200
-
-- type: latheRecipe
   parent: Welder
   id: WelderJanitorial
   result: WelderJanitorial
   icon:
     sprite: _Impstation/Objects/Tools/welder_janitorial.rsi
     state: icon
+
+- type: latheRecipe
+  id: MopBucketCube
+  result: MopBucketCube
+  completetime: 2
+  materials: #matches mop bucket lathe recipe cost
+    Steel: 100
+    Plastic: 100

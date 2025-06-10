@@ -20,8 +20,7 @@
   id: CleanPack
   recipes:
     - Plunger
-    - MopBucket
-    - SoapNT
+    - MopBucketCube
     - WelderJanitorial
 
 - type: latheRecipePack
@@ -89,7 +88,6 @@
     - AdvMopItem
     - WeaponSprayNozzle
     - ClothingBackpackWaterTank
-    - CleanerGrenade
 
 #- type: latheRecipePack # disabled until there is something to fish
 #  id: ServiceMiscPackDynamic
