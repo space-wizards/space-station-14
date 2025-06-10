@@ -7081,4 +7081,11 @@ Entries:
   id: 978
   time: '2025-06-09T11:58:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/792
+- author: FoxxoTrystan
+  changes:
+  - message: Reworks Cloud Emotes; they can now be used in the emote menu!
+    type: Tweak
+  id: 979
+  time: '2025-06-10T21:07:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/793
 
