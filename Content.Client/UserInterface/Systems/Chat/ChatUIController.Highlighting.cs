@@ -107,7 +107,7 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
             // that make sure the words to match are separated by spaces or punctuation.
             // NOTE: The reason why we don't use \b tags is that \b doesn't match reverse slash characters "\" so
             // a pre-sanitized (see 1.) string like "\[test]" wouldn't get picked up by the \b.
-            if (keyword.Count(c => (c == '"')) > 0)
+            if (keyword.Any(c => c == '"'))
             {
                 // Matches the last double quote character.
                 keyword = StartDoubleQuote.Replace(keyword, "(?!\\w)");
