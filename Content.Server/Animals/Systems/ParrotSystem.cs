@@ -88,7 +88,7 @@ public sealed partial class ParrotSystem : EntitySystem
     private void Learn(Entity<ParrotComponent> entity, string incomingMessage, EntityUid source)
     {
         // too early to learn
-        if (_random.NextFloat() > entity.Comp.LearnChance)
+        if (_random.Prob(entity.Comp.LearnChance))
             return;
 
         // ignore speakers with ParrotComponent or things get silly
@@ -164,7 +164,7 @@ public sealed partial class ParrotSystem : EntitySystem
 
         var message = _random.Pick(entity.Comp.SpeechMemory);
 
-        // choose between radio and chat
+        // coin flip choice between radio and chat
         if (_random.Prob(0.5f))
         {
             _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, ChatTransmitRange.Normal);
