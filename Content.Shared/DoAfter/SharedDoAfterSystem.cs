@@ -51,7 +51,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // TODO: Attempt Start delay (aka casting delay) and repeat delay (shorter)
         var delay = actionDoAfter.Delay;
 
-        var actionDoAfterEvent = new ActionDoAfterEvent(args.Performer, args.OriginalUseDelay);
+        var actionDoAfterEvent = new ActionDoAfterEvent(args.Performer, args.OriginalUseDelay, args.Input);
 
         // TODO: Should add a raise on used in the attemptactiondoafterevent or something to add a conditional item or w/e
 

@@ -110,7 +110,10 @@ public abstract class SharedActionsSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        PerformAction(args.Performer, ent);
+        // TODO: Needs a way to cancel DoAfter if there are no charges left
+
+        // Validate again for charges, blockers, etc
+        TryPerformAction(args.Input, args.Performer, skipDoActionRequest: true);
     }
 
     private void OnActionMapInit(Entity<ActionComponent> ent, ref MapInitEvent args)
@@ -292,20 +295,29 @@ public abstract class SharedActionsSystem : EntitySystem
     #region Execution
     /// <summary>
     ///     When receiving a request to perform an action, this validates whether the action is allowed. If it is, it
-    ///     will raise the relevant <see cref="InstantActionEvent"/>
+    ///     will raise the relevant action event
     /// </summary>
     private void OnActionRequest(RequestPerformActionEvent ev, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not { } user)
             return;
 
+        TryPerformAction(ev, user);
+    }
+
+    /// <summary>
+    /// <see cref="OnActionRequest"/>
+    /// </summary>
+    /// <param name="skipDoActionRequest">Should this skip the initial doaction request?</param>
+    private bool TryPerformAction(RequestPerformActionEvent ev, EntityUid user, bool skipDoActionRequest = false)
+    {
         if (!_actionsQuery.TryComp(user, out var component))
-            return;
+            return false;
 
         var actionEnt = GetEntity(ev.Action);
 
         if (!TryComp(actionEnt, out MetaDataComponent? metaData))
-            return;
+            return false;
 
         var name = Name(actionEnt, metaData);
 
@@ -314,25 +326,25 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Action,
                 $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {name}.");
-            return;
+            return false;
         }
 
         if (GetAction(actionEnt) is not {} action)
-            return;
+            return false;
 
         DebugTools.Assert(action.Comp.AttachedEntity == user);
         if (!action.Comp.Enabled)
-            return;
+            return false;
 
         var curTime = GameTiming.CurTime;
         if (IsCooldownActive(action, curTime))
-            return;
+            return false;
 
         // check for action use prevention
         var attemptEv = new ActionAttemptEvent(user);
         RaiseLocalEvent(action, ref attemptEv);
         if (attemptEv.Cancelled)
-            return;
+            return false;
 
         // Validate request by checking action blockers and the like
         var provider = action.Comp.Container ?? user;
@@ -344,19 +356,20 @@ public abstract class SharedActionsSystem : EntitySystem
         };
         RaiseLocalEvent(action, ref validateEv);
         if (validateEv.Invalid)
-            return;
+            return false;
 
         Entity<ActionsComponent?> performer = (user, component);
 
-        if (HasComp<DoAfterComponent>(action))
+        if (HasComp<DoAfterComponent>(action) && !skipDoActionRequest)
         {
-            var attemptDoAfterEv = new ActionAttemptDoAfterEvent(performer, action.Comp.UseDelay);
+            var attemptDoAfterEv = new ActionAttemptDoAfterEvent(performer, action.Comp.UseDelay, ev);
             RaiseLocalEvent(action, ref attemptDoAfterEv);
-            return;
+            return false;
         }
 
         // All checks passed. Perform the action!
         PerformAction(performer, action);
+        return true;
     }
 
     private void OnValidate(Entity<ActionComponent> ent, ref ActionValidateEvent args)
@@ -568,8 +581,6 @@ public abstract class SharedActionsSystem : EntitySystem
     public void PerformAction(Entity<ActionsComponent?> performer, Entity<ActionComponent> action, BaseActionEvent? actionEvent = null, bool predicted = true)
     {
         var handled = false;
-
-        var toggledBefore = action.Comp.Toggled;
 
         // Note that attached entity and attached container are allowed to be null here.
         if (action.Comp.AttachedEntity != null && action.Comp.AttachedEntity != performer)
