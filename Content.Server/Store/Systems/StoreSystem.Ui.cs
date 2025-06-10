@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
-using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
 using Content.Shared.Database;
@@ -9,6 +8,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;
 using Content.Shared.PDA.Ringer;
+using Content.Shared.Stacks;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.UserInterface;
@@ -28,7 +28,7 @@ public sealed partial class StoreSystem
     [Dependency] private readonly ActionUpgradeSystem _actionUpgrade = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
+    [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     private void InitializeUi()

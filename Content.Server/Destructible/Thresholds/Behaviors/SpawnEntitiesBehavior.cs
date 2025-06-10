@@ -1,6 +1,5 @@
 using System.Numerics;
 using Content.Server.Forensics;
-using Content.Server.Stack;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;

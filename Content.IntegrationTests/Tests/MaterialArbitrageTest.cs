@@ -6,7 +6,6 @@ using Content.Server.Construction.Components;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Lathe;
-using Content.Server.Stack;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
@@ -56,7 +55,7 @@ public sealed class MaterialArbitrageTest
         var protoManager = server.ResolveDependency<IPrototypeManager>();
 
         var pricing = entManager.System<PricingSystem>();
-        var stackSys = entManager.System<StackSystem>();
+        var stackSys = entManager.System<SharedStackSystem>();
         var mapSystem = server.System<SharedMapSystem>();
         var latheSys = server.System<LatheSystem>();
         var compFact = server.ResolveDependency<IComponentFactory>();
