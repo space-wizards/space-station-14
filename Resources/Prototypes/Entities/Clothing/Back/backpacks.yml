@@ -192,7 +192,7 @@
 
 #ERT
 - type: entity
-  parent: [ ClothingBackpackSyndicate, BaseCentcommContraband ]
+  parent: [ ClothingBackpack, BaseCentcommContraband ]
   id: ClothingBackpackERTLeader
   name: ERT leader backpack
   description: A spacious backpack with lots of pockets, worn by the Leader of an Emergency Response Team.
@@ -201,7 +201,7 @@
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
     grid:
-    - 0,0,10,3
+    - 0,0,8,3
 
 - type: entity
   parent: ClothingBackpackERTLeader
