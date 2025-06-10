@@ -150,7 +150,7 @@ namespace Content.Server.Administration.Systems
 
                         args.Verbs.Add(new Verb()
                         {
-                            Text = Loc.GetString("admin-player-actions-spawn", ("name", profile.Name)),
+                            Text = profile.Name,
                             Category = VerbCategory.Spawn,
                             Act = () =>
                             {
