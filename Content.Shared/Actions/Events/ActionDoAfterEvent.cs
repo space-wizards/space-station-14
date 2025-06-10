@@ -1,4 +1,5 @@
-﻿using Content.Shared.DoAfter;
+﻿using Content.Shared.Actions.Components;
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Actions.Events;
@@ -9,11 +10,15 @@ namespace Content.Shared.Actions.Events;
 [Serializable, NetSerializable]
 public sealed partial class ActionDoAfterEvent : DoAfterEvent
 {
-    public readonly RequestPerformActionEvent RequestEvent;
+    [NonSerialized]
+    public readonly Entity<ActionsComponent?> Performer;
 
-    public ActionDoAfterEvent(RequestPerformActionEvent requestEvent)
+    public readonly TimeSpan? OriginalUseDelay;
+
+    public ActionDoAfterEvent(Entity<ActionsComponent?> performer, TimeSpan? originalUseDelay)
     {
-        RequestEvent = requestEvent;
+        Performer = performer;
+        OriginalUseDelay = originalUseDelay;
     }
 
     public override DoAfterEvent Clone() => this;

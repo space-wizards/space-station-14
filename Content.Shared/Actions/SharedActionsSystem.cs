@@ -36,6 +36,8 @@ public abstract class SharedActionsSystem : EntitySystem
     private EntityQuery<ActionsComponent> _actionsQuery;
     private EntityQuery<MindComponent> _mindQuery;
 
+    private const int DoAfterRepeatUseDelay = 0;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -82,11 +84,33 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnActionDoAfterAttempt(Entity<ActionComponent> ent, ref ActionDoAfterEvent args)
     {
+        Entity<ActionComponent?>? action = (ent, ent);
+
+        if (TryComp<DoAfterComponent>(ent, out var doAfterComponent))
+        {
+            // If this doafter is on repeat and was cancelled, start use delay as expected
+            if (args.Cancelled && doAfterComponent.Repeat)
+            {
+                SetUseDelay(action, args.OriginalUseDelay);
+                RemoveCooldown(action);
+                StartUseDelay(action);
+                UpdateAction(ent);
+                return;
+            }
+
+            args.Repeat = doAfterComponent.Repeat;
+
+            // Set the use delay to 0 so this can repeat properly
+            if (doAfterComponent.Repeat)
+            {
+                SetUseDelay(action, TimeSpan.FromSeconds(DoAfterRepeatUseDelay));
+            }
+        }
+
         if (args.Cancelled)
             return;
 
-        // Run validations again
-        TryPerformAction(args.RequestEvent, args.User, skipDoAfter: true);
+        PerformAction(args.Performer, ent);
     }
 
     private void OnActionMapInit(Entity<ActionComponent> ent, ref MapInitEvent args)
@@ -272,21 +296,16 @@ public abstract class SharedActionsSystem : EntitySystem
     /// </summary>
     private void OnActionRequest(RequestPerformActionEvent ev, EntitySessionEventArgs args)
     {
-        TryPerformAction(ev, args.SenderSession.AttachedEntity);
-    }
-
-    public bool TryPerformAction(RequestPerformActionEvent ev, EntityUid? sessionUser, bool skipDoAfter = false)
-    {
-        if (sessionUser is not { } user)
-            return false;
+        if (args.SenderSession.AttachedEntity is not { } user)
+            return;
 
         if (!_actionsQuery.TryComp(user, out var component))
-            return false;
+            return;
 
         var actionEnt = GetEntity(ev.Action);
 
         if (!TryComp(actionEnt, out MetaDataComponent? metaData))
-            return false;
+            return;
 
         var name = Name(actionEnt, metaData);
 
@@ -295,25 +314,25 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             _adminLogger.Add(LogType.Action,
                 $"{ToPrettyString(user):user} attempted to perform an action that they do not have: {name}.");
-            return false;
+            return;
         }
 
         if (GetAction(actionEnt) is not {} action)
-            return false;
+            return;
 
         DebugTools.Assert(action.Comp.AttachedEntity == user);
         if (!action.Comp.Enabled)
-            return false;
+            return;
 
         var curTime = GameTiming.CurTime;
         if (IsCooldownActive(action, curTime))
-            return false;
+            return;
 
         // check for action use prevention
         var attemptEv = new ActionAttemptEvent(user);
         RaiseLocalEvent(action, ref attemptEv);
         if (attemptEv.Cancelled)
-            return false;
+            return;
 
         // Validate request by checking action blockers and the like
         var provider = action.Comp.Container ?? user;
@@ -325,18 +344,19 @@ public abstract class SharedActionsSystem : EntitySystem
         };
         RaiseLocalEvent(action, ref validateEv);
         if (validateEv.Invalid)
-            return false;
+            return;
 
-        if (HasComp<DoAfterComponent>(action) && !skipDoAfter)
+        Entity<ActionsComponent?> performer = (user, component);
+
+        if (HasComp<DoAfterComponent>(action))
         {
-            var attemptDoAfterEv = new ActionAttemptDoAfterEvent(user, ev);
+            var attemptDoAfterEv = new ActionAttemptDoAfterEvent(performer, action.Comp.UseDelay);
             RaiseLocalEvent(action, ref attemptDoAfterEv);
-            return false;
+            return;
         }
 
         // All checks passed. Perform the action!
-        PerformAction((user, component), action);
-        return true;
+        PerformAction(performer, action);
     }
 
     private void OnValidate(Entity<ActionComponent> ent, ref ActionValidateEvent args)
@@ -571,6 +591,7 @@ public abstract class SharedActionsSystem : EntitySystem
         ev.Performer = performer;
         ev.Action = action;
 
+        // TODO: This is where we'd add support for event lists
         if (!action.Comp.RaiseOnUser && action.Comp.Container is {} container && !_mindQuery.HasComp(container))
             target = container;
 
@@ -584,12 +605,11 @@ public abstract class SharedActionsSystem : EntitySystem
             return; // no interaction occurred.
 
         // play sound, start cooldown
-        if (ev?.Toggle == true)
+        if (ev.Toggle)
             SetToggled((action, action), !action.Comp.Toggled);
 
         _audio.PlayPredicted(action.Comp.Sound, performer, predicted ? performer : null);
 
-        // TODO: move to ActionCooldown ActionPerformedEvent?
         RemoveCooldown((action, action));
         StartUseDelay((action, action));
 

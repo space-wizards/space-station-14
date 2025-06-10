@@ -43,7 +43,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     private void OnActionDoAfterAttempt(Entity<DoAfterComponent> ent, ref ActionAttemptDoAfterEvent args)
     {
         // relay to user
-        if (!TryComp<DoAfterComponent>(args.User, out var userDoAfter))
+        if (!TryComp<DoAfterComponent>(args.Performer, out var userDoAfter))
             return;
 
         var actionDoAfter = ent.Comp;
@@ -51,15 +51,11 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // TODO: Attempt Start delay (aka casting delay) and repeat delay (shorter)
         var delay = actionDoAfter.Delay;
 
-        var actionDoAfterEvent = new ActionDoAfterEvent(args.requestEvent)
-        {
-            Repeat = actionDoAfter.Repeat,
-        };
+        var actionDoAfterEvent = new ActionDoAfterEvent(args.Performer, args.OriginalUseDelay);
 
         // TODO: Should add a raise on used in the attemptactiondoafterevent or something to add a conditional item or w/e
 
-        // TODO: Should probably make an "AttemptActionDoAfter" event to trigger this instead of action attempt event
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay, actionDoAfterEvent, ent.Owner, args.User)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.Performer, delay, actionDoAfterEvent, ent.Owner, args.Performer)
         {
             AttemptFrequency = actionDoAfter.AttemptFrequency,
             Broadcast = actionDoAfter.Broadcast,
