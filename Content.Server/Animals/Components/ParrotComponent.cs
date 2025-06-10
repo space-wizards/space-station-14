@@ -68,6 +68,15 @@ public sealed partial class ParrotComponent : Component
     [DataField]
     public float MaxSpeakInterval = 8.0f * 60f;
 
+    /// <summary>
+    /// Next time at which the parrot speaks
+    /// </summary>
     [DataField]
     public TimeSpan NextSpeakInterval = TimeSpan.FromSeconds(0.0f);
+
+    /// <summary>
+    /// Odds of the parrot attempting to speak on the radio.
+    /// </summary>
+    [DataField]
+    public float RadioAttemptChance = 0.5f;
 }

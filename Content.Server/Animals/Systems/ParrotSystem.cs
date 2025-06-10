@@ -164,15 +164,11 @@ public sealed partial class ParrotSystem : EntitySystem
         var message = _random.Pick(entity.Comp.SpeechMemory);
 
         // coin flip choice between radio and chat
-        if (_random.Prob(0.5f))
-        {
-            _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, ChatTransmitRange.Normal);
-        }
-        else
-        {
-            TrySpeakRadio(entity, message);
-        }
+        // if talking on the radio doesn't work, will fall back to regular chat
+        if (_random.Prob(entity.Comp.RadioAttemptChance) && TrySpeakRadio(entity, message))
+            return;
 
+        _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, ChatTransmitRange.Normal);
     }
 
     private bool TrySpeakRadio(Entity<ParrotComponent> entity, string message)
