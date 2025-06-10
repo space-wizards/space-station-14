@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Fixed players being unable to interact with or open any machine UI if
-      the machine is unpowered (ex. wirepanels).
-    type: Fix
-  id: 8137
-  time: '2025-04-05T21:05:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36319
 - author: RedBookcase
   changes:
   - message: The Crusher Dagger has had it's damage reduced from 15 to 12 Slashing.
@@ -3911,3 +3903,11 @@
   id: 8649
   time: '2025-06-10T04:47:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38093
+- author: BramvanZijp
+  changes:
+  - message: Added Stamina Damage resistance to the raid/hard-suits used by Nuclear
+      Operatives and Emergency Response Teams. [TEST MERGE]
+    type: Tweak
+  id: 8650
+  time: '2025-06-10T19:31:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37040
