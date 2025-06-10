@@ -348,14 +348,39 @@
 - type: entity
   parent: ClothingBackpackDuffelERT
   id: ClothingBackpackDuffelERTFilledEngineering
-  name: ERT engineer supplies
+  name: ERT engineer bag
   description: "Contains everything required for repairing a station that doesn't fit in the backpack."
   components:
   - type: StorageFill
     contents:
     - id: SheetSteel
       amount: 2
-    - id: SheetPlasteel
-      amount: 2
     - id: SheetGlass
+      amount: 2
+    - id: SheetPlasteel
+    - id: SheetPlasma
+    - id: MetalFoamGrenade
+    - id: AirGrenade
+    - id: RCDAmmo
+      amount: 2
+    - id: CableApcStack
+      amount: 2
+    - id: CableMVStack
+    - id: CableHVStack
+
+- type: entity
+  parent: ClothingBackpackDuffelERT
+  id: ClothingBackpackDuffelERTFilledAmmo
+  name: ERT ammo bag
+  description: "Contains spare ammunition for ERT forces. Usually carried by riflemen."
+  components:
+  - type: StorageFill
+    contents:
+    - id: Handcuffs
+      amount: 2
+    - id: MagazineBoxPistol
+      amount: 2
+    - id: MagazineBoxRifle
+      amount: 2
+    - id: BoxLethalshot
       amount: 2
