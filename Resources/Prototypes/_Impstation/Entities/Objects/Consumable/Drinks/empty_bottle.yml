@@ -16,8 +16,6 @@
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: icon-
     inHandsMaxFillLevels: 2
     inHandsFillBaseName: -fill-
   - type: Sealable
