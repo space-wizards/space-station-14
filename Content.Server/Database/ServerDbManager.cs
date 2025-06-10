@@ -343,6 +343,12 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region BasicTelemetry
+
+        Task<int> AddTelemetryData(int round, string campaign, string metadata);
+
+        #endregion
+
         #region DB Notifications
 
         void SubscribeToNotifications(Action<DatabaseNotification> handler);
@@ -1050,6 +1056,12 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.CleanIPIntelCache(range));
+        }
+
+        public Task<int> AddTelemetryData(int round, string campaign, string metadata)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddTelemetryData(round, campaign, metadata));
         }
 
         public void SubscribeToNotifications(Action<DatabaseNotification> handler)

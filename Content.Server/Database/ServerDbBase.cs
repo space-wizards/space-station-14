@@ -1822,6 +1822,27 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
+        #region Basic Telemetry
+
+        public async Task<int> AddTelemetryData(int round, string campaign, string metadata)
+        {
+            await using var db = await GetDb();
+
+            var entry = new BasicTelemetry
+            {
+                CreatedAt = DateTime.UtcNow,
+                RoundNumber = round,
+                Campaign = campaign,
+                Metadata = metadata,
+            };
+            db.DbContext.BasicTelemetry.Add(entry);
+            await db.DbContext.SaveChangesAsync();
+
+            return entry.Id;
+        }
+
+        #endregion
+
         public abstract Task SendNotification(DatabaseNotification notification);
 
         // SQLite returns DateTime as Kind=Unspecified, Npgsql actually knows for sure it's Kind=Utc.
