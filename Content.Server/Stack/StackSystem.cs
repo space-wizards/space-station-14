@@ -191,16 +191,19 @@ public sealed class StackSystem : SharedStackSystem
         return amounts;
     }
 
-    private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
+    private void OnStackAlternativeInteract(Entity<StackComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null || stack.Count == 1)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.Count == 1)
             return;
+
+        var (uid, stack) = ent;
+        var user = args.User; // Can't pass ref events into verbs
 
         AlternativeVerb halve = new()
         {
             Text = Loc.GetString("comp-stack-split-halve"),
             Category = VerbCategory.Split,
-            Act = () => UserSplit(uid, args.User, stack.Count / 2, stack),
+            Act = () => UserSplit(ent, user, stack.Count / 2),
             Priority = 1
         };
         args.Verbs.Add(halve);
@@ -215,7 +218,7 @@ public sealed class StackSystem : SharedStackSystem
             {
                 Text = amount.ToString(),
                 Category = VerbCategory.Split,
-                Act = () => UserSplit(uid, args.User, amount, stack),
+                Act = () => UserSplit(ent, user, amount),
                 // we want to sort by size, not alphabetically by the verb text.
                 Priority = priority
             };
@@ -226,27 +229,22 @@ public sealed class StackSystem : SharedStackSystem
         }
     }
 
-    private void UserSplit(EntityUid uid, EntityUid userUid, int amount,
-        StackComponent? stack = null,
-        TransformComponent? userTransform = null)
+    private void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
     {
-        if (!Resolve(uid, ref stack))
-            return;
-
-        if (!Resolve(userUid, ref userTransform))
+        if (!Resolve(user.Owner, ref user.Comp, false))
             return;
 
         if (amount <= 0)
         {
-            Popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), userUid, PopupType.Medium);
+            Popup.PopupCursor(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
             return;
         }
 
-        if (Split(uid, amount, userTransform.Coordinates, stack) is not {} split)
+        if (Split(stack.Owner, amount, user.Comp.Coordinates, stack) is not {} split)
             return;
 
-        Hands.PickupOrDrop(userUid, split);
+        Hands.PickupOrDrop(user.Owner, split);
 
-        Popup.PopupCursor(Loc.GetString("comp-stack-split"), userUid);
+        Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
     }
 }

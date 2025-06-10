@@ -21,7 +21,6 @@ public sealed class StackSystem : SharedStackSystem
         Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent));
     }
 
-
     /// <summary>
     ///     Sets a stack to an amount. Server will delete ent if stack count is 0.
     ///     Client sets the visuals for a lingering stack.
@@ -66,8 +65,10 @@ public sealed class StackSystem : SharedStackSystem
         SetCount((uid, component), amount);
     }
 
-    private void OnAppearanceChange(EntityUid uid, StackComponent comp, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(Entity<StackComponent> ent, ref AppearanceChangeEvent args)
     {
+        var (uid, comp) = ent;
+
         if (args.Sprite == null || comp.LayerStates.Count < 1)
             return;
 
