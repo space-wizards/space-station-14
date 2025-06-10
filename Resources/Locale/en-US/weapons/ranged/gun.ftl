@@ -42,6 +42,8 @@ gun-chamber-rack = Rack
 
 # MagazineAmmoProvider
 gun-magazine-examine = It has [color={$color}]{$count}[/color] shots remaining.
+gun-magazine-ammo-type = It contains [color={$color}]{$type}[/color].
+gun-magazine-empty = Magazine is empty.
 
 # RevolverAmmoProvider
 gun-revolver-empty = Empty revolver
