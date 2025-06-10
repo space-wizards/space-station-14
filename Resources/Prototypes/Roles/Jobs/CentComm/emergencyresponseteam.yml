@@ -144,14 +144,13 @@
   storage:
     back:
     - WeaponPistolMk58
+    - MagazinePistol
+    - MagazinePistol
     - CrowbarRed
-    - Lantern
-    - Lantern
-    - Lantern
-    - Lantern
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
     - FoodBakedBunHotX
     - FlippoEngravedLighter
-    - FoodBakedBunHotX
     - FoodBakedBunHotX
     - Candle
     - Candle
@@ -163,10 +162,10 @@
     belt:
     - Bible
     - Lantern
+    - Lantern
+    - Lantern
     - JugBlood
     - JugWater
-    - MagazinePistol
-    - MagazinePistol
 
 #- type: startingGear
 #  parent: ERTChaplainGearEVA
@@ -262,28 +261,23 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTEngineer
     back: ClothingBackpackERTEngineer
-    shoes: ClothingShoesBootsMagAdv
+    shoes: ClothingShoesBootsMagERT
     mask: ClothingMaskGasERT
-    eyes: ClothingEyesGlassesMeson
+    eyes: ClothingEyesHudDiagnostic
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTEngineer
     id: ERTEngineerPDA
-    ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltChiefEngineerFilled
-    pocket1: Flare
-    pocket2: GasAnalyzer
+    ears: ClothingHeadsetCentCom
+    belt: ClothingBeltMilitaryWebbingERT
+    pocket2: CombatKnife
   storage:
     back:
-    - trayScanner
+    - WeaponPistolMk58
+    - MagazinePistol
+    - MagazinePistol
     - RCD
     - RCDAmmo
     - RCDAmmo
-    - CableMVStack
-    - CableHVStack
-    - CableApcStack
-    - SheetPlasteel
-    - SheetSteel
-    - SheetGlass
 
 - type: chameleonOutfit
   id: ERTEngineerChameleonOutfit
