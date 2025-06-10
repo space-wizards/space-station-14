@@ -85,6 +85,12 @@
     size: Tiny
   - type: StaticPrice
     price: 750
+    #imp edit - restore physical composition
+  - type: PhysicalComposition
+    materialComposition: # big mats if you don't sell it
+      Steel: 500
+      Glass: 1000
+      Silver: 300
 
 - type: entity
   parent: BaseItem
@@ -152,6 +158,10 @@
     size: Tiny
   - type: StaticPrice
     price: 75
+  #imp edit - restore physical composition
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
 
 - type: entity
   parent: TreasureCoinIron
@@ -160,7 +170,12 @@
   - type: Sprite
     state: coin_silver
   - type: StaticPrice
-    price: 125
+    price: 150 #imp edit - increase price to 150 to give some extra incentive to maybe sell them
+  #imp edit - restore physical composition
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100 # coins are fake on the inside
+      Silver: 200
 
 - type: entity
   parent: TreasureCoinIron
@@ -170,6 +185,12 @@
     state: coin_gold
   - type: StaticPrice
     price: 175
+  #imp edit - restore physical composition
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Gold: 200
+
 
 - type: entity
   parent: TreasureCoinIron
@@ -179,6 +200,11 @@
     state: coin_adamantine
   - type: StaticPrice
     price: 250
+  #imp edit - restore physcial composition
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+      Diamond: 5
 
 - type: entity
   parent: TreasureCoinIron
@@ -188,4 +214,8 @@
     state: coin_diamond
   - type: StaticPrice
     price: 500
-
+  #imp edit - restore physcial composition
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+      Diamond: 15
