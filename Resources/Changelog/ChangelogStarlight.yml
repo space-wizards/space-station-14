@@ -7095,4 +7095,75 @@ Entries:
   id: 980
   time: '2025-06-10T22:45:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/808
+- author: Conflee
+  changes:
+  - message: Kiloton - Added Tesla generator. Death
+    type: Add
+  id: 981
+  time: '2025-06-10T22:48:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/806
+- author: Conflee
+  changes:
+  - message: Kiloton - Added medical cubby south of Arcade, far east side of the station
+    type: Add
+  id: 982
+  time: '2025-06-10T22:48:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/806
+- author: Conflee
+  changes:
+  - message: Kiloton - Added sink to kitchen
+    type: Add
+  id: 983
+  time: '2025-06-10T22:48:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/806
+- author: Conflee
+  changes:
+  - message: Kiloton - Added an extra Youtool Vender to Engie
+    type: Add
+  id: 984
+  time: '2025-06-10T22:48:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/806
+- author: Conflee
+  changes:
+  - message: Kiloton - Moved Rad Collectors inside
+    type: Tweak
+  id: 985
+  time: '2025-06-10T22:48:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/806
+- author: Conflee
+  changes:
+  - message: Kiloton - Now uses Delta EVAC Shuttle, same as Fland
+    type: Tweak
+  id: 986
+  time: '2025-06-10T22:48:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/806
+- author: Conflee
+  changes:
+  - message: Kiloton - Adjusted some job counts very slightly
+    type: Tweak
+  id: 987
+  time: '2025-06-10T22:48:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/806
+- author: Conflee
+  changes:
+  - message: Kiloton - Added Chem to Brigmed, and a second Brigmedic
+    type: Tweak
+  id: 988
+  time: '2025-06-10T22:48:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/806
+- author: Conflee
+  changes:
+  - message: Kiloton - Fixed 2 missing wires in Arrivals
+    type: Fix
+  id: 989
+  time: '2025-06-10T22:48:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/806
+- author: Conflee
+  changes:
+  - message: Kiloton - Fixed 2 missing wires in AI Core, which left some random consoles
+      unpowered
+    type: Fix
+  id: 990
+  time: '2025-06-10T22:48:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/806
 
