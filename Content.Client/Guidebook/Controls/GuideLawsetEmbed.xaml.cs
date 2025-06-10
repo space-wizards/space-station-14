@@ -46,6 +46,11 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
     private void GenerateControl(SiliconLawsetPrototype lawset)
     {
         RepresentedPrototype = lawset;
+        // Setting it here makes it easier for a later system to change it later
+        NameBackground.PanelOverride = new StyleBoxFlat
+        {
+            BackgroundColor = Color.DarkCyan
+        };
         LawsetName.SetMarkup($"[bold]{Loc.GetString(lawset.Name ?? lawset.ID)}[/bold]");
         int i = 1;
         foreach (string lawID in lawset.Laws)
