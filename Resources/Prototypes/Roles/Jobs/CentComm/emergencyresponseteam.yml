@@ -46,23 +46,34 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeader
-    shoes: ClothingShoesBootsMagAdv
+    shoes: ClothingShoesBootsMagERT
     mask: ClothingMaskGasERT
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesHudMedSec
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTLeader
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolN1984
-    pocket2: FlashlightSeclite
+    belt: ClothingBeltMilitaryWebbingERT
+    neck: Whistle
+    pocket2: CombatKnife
+    suitstorage: WeaponDisablerSMG
   storage:
     back:
-    - WeaponDisabler
-    - MedicatedSuture
-    - RegenerativeMesh
-    - BoxZiptie
+    - WeaponPistolN1984
+    - Binoculars
+    - MedkitCombatFilled
+    - PhoneInstrument
+    - HoloprojectorField
+    - EmergencyMedipen
+    - PunctAutoInjector
+    - TelescopicShield
+    belt:
     - CrowbarRed
+    - PinpointerNuclear
+    - MedkitCombatFilled
+    - Handcuffs
+    - Handcuffs
+    - MagazineMagnum
     - MagazineMagnum
 
 - type: startingGear
