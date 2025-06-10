@@ -148,7 +148,7 @@ namespace Content.Shared.Examine
                 if (MobStateSystem.IsCritical(examiner, mobState) || TryComp<BlindableComponent>(examiner, out var blind) && blind.IsBlind)
                     return CritExamineRange;
 
-                if (TryComp<TouchyComponent>(examiner, out var touchyComponent))
+                if (HasComp<TouchyComponent>(examiner))
                     return InteractionRange;
 
                 if (TryComp<BlurryVisionComponent>(examiner, out var blurry))
