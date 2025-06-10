@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Cosmic Cult 1.1.1b (Beta)
-    type: Tweak
-  - message: Fixes towards various issues in cc1.1.0b (Incl. Less player-induced atmos
-      floods.)
-    type: Fix
-  id: 1303
-  time: '2025-03-14T04:33:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1942
 - author: Sha-Seng
   changes:
   - message: The guidebookshelf (to be mapped in libraries) that contain all guidebooks
@@ -4208,3 +4198,10 @@
   id: 1802
   time: '2025-06-10T23:31:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2685
+- author: eviltori
+  changes:
+  - message: lawyer is no longer in service, and answers to the HOP.
+    type: Tweak
+  id: 1803
+  time: '2025-06-10T23:35:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2380
