@@ -779,13 +779,13 @@ public sealed partial class AdminVerbSystem
             {
                 // List of overlay components to toggle
                 var overlaysPresent = false;
-                overlaysPresent |= HasComp<ShowHealthBarsComponent>(args.Target);
-                overlaysPresent |= HasComp<ShowHealthIconsComponent>(args.Target);
-                overlaysPresent |= HasComp<ShowJobIconsComponent>(args.Target);
-                overlaysPresent |= HasComp<ShowMindShieldIconsComponent>(args.Target);
-                overlaysPresent |= HasComp<ShowSyndicateIconsComponent>(args.Target);
-                overlaysPresent |= HasComp<ShowCriminalRecordIconsComponent>(args.Target);
-                overlaysPresent |= HasComp<ShowContrabandDetailsComponent>(args.Target);
+                overlaysPresent |= TryComp<ShowHealthBarsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowHealthIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowJobIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowMindShieldIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowSyndicateIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowCriminalRecordIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowContrabandDetailsComponent>(args.Target, out _);
 
                 if (overlaysPresent)
                 {
