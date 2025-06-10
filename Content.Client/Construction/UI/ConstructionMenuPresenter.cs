@@ -38,7 +38,7 @@ namespace Content.Client.Construction.UI
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
-        private Dictionary<string, ContainerButton> _recipeButtons = new();
+        private readonly Dictionary<string, ContainerButton> _recipeButtons = new();
         private string _selectedCategory = string.Empty;
 
         private const string FavoriteCatName = "construction-category-favorites";
@@ -235,7 +235,7 @@ namespace Content.Client.Construction.UI
 
                     if (buttonToggledEventArgs.Pressed &&
                         _selected != null &&
-                        _recipeButtons.TryGetValue(_selected.Name!, out var oldButton))
+                        _recipeButtons.TryGetValue(_selected.ID, out var oldButton))
                     {
                         oldButton.Pressed = false;
                         SelectGridButton(oldButton, false);
@@ -245,7 +245,7 @@ namespace Content.Client.Construction.UI
                 };
 
                 recipesGrid.AddChild(itemButtonPanelContainer);
-                _recipeButtons[recipe.Prototype.Name!] = itemButton;
+                _recipeButtons[recipe.Prototype.ID] = itemButton;
                 var isCurrentButtonSelected = _selected == recipe.Prototype;
                 itemButton.Pressed = isCurrentButtonSelected;
                 SelectGridButton(itemButton, isCurrentButtonSelected);
