@@ -34,7 +34,8 @@
   #- Visitor
   #- Zookeeper
   #- ServiceWorker
-  # end imp edit, a department of one
+  # end imp edit, a department of TWO!!!
+  - Lawyer
   - Passenger
 
 - type: department

@@ -203,7 +203,6 @@
   - type: Contraband
     allowedDepartments: [ Security ]
     allowedJobs: [ Lawyer ]
-    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel, HospitalityDirector ] #imp edit
 
 - type: entity
   id: BaseJanitorContraband

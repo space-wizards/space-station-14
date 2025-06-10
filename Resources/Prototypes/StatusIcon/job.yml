@@ -145,7 +145,7 @@
   parent: JobIcon
   id: JobIconLawyer
   icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
+    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi # imp
     state: Lawyer
   jobName: job-name-lawyer
 

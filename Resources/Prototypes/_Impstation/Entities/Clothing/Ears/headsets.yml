@@ -165,13 +165,12 @@
   parent: [ClothingHeadset, BaseRestrictedLawyerContraband]
   id: ClothingHeadsetLawyer
   name: lawyer headset
-  description: Lets you shout at security while also letting your boss shout at you.
+  description: Lets you shout at anyone you want for any reason.
   components:
   - type: ContainerFill
     containers:
       key_slots:
       - EncryptionKeySecurity
-      - EncryptionKeyService
       - EncryptionKeyCommon
   - type: Sprite
     sprite: Clothing/Ears/Headsets/security.rsi

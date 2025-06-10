@@ -11,9 +11,9 @@
       time: 7200 #2 hrs
   startingGear: LawyerGear
   icon: "JobIconLawyer"
-  supervisors: job-supervisors-hd
+  supervisors: job-supervisors-hop
   access:
-  - Service
+  # - Service imp
   - Lawyer
   - Brig
   - Maintenance
