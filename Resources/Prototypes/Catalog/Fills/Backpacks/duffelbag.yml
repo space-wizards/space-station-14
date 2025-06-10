@@ -344,3 +344,18 @@
       - id: EmpImplanter
       - id: ClothingShoesBootsMagSyndie
       - id: AgentIDCard
+
+- type: entity
+  parent: ClothingBackpackDuffelERT
+  id: ClothingBackpackDuffelERTFilledEngineering
+  name: ERT engineer supplies
+  description: "Contains everything required for repairing a station that doesn't fit in the backpack."
+  components:
+  - type: StorageFill
+    contents:
+    - id: SheetSteel
+      amount: 2
+    - id: SheetPlasteel
+      amount: 2
+    - id: SheetGlass
+      amount: 2

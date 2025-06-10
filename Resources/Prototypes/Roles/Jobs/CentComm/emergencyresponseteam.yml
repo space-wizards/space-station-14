@@ -45,47 +45,51 @@
   storage:
     back:
     - WeaponPistolN1984
-    - Binoculars
-    - MedkitCombatFilled
-    - PhoneInstrument
-    - HoloprojectorField
-    - EmergencyMedipen
-    - PunctAutoInjector
-    - TelescopicShield
-    belt:
+    - MagazineMagnum
+    - MagazineMagnum
     - CrowbarRed
+    - Binoculars
     - PinpointerNuclear
+    - HoloprojectorField # End of first line
+    - EmergencyMedipen # End of second line
     - MedkitCombatFilled
+    - MedkitCombatFilled
+    belt:
+    - Stunbaton
     - Handcuffs
     - Handcuffs
-    - MagazineMagnum
-    - MagazineMagnum
+    - PhoneInstrument
+    - TelescopicShield
 
 - type: startingGear
   parent: ERTLeaderGearEVA
   id: ERTLeaderGearArmed
   equipment:
     suitstorage: WeaponRifleLecter
+    pocket2: WeaponDisabler
   storage:
     back:
     - WeaponPistolN1984
     - MagazineMagnum
     - MagazineMagnum
-    - Binoculars
-    - Handcuffs
-    - EmergencyMedipen
-    - Handcuffs
-    - PunctAutoInjector
-    - PhoneInstrument
-    - HoloprojectorField
-    belt:
     - CrowbarRed
+    - Binoculars
     - PinpointerNuclear
+    - HoloprojectorField # End of first line
+    - EmergencyMedipen # End of second line
     - MedkitCombatFilled
-    - MagazineRifle
-    - MagazineRifle
+    - MedkitCombatFilled
+    - PhoneInstrument
     - MagazineRifleIncendiary
     - MagazineRifleUranium
+    belt:
+    - Truncheon
+    - Handcuffs
+    - Handcuffs
+    - SmokeGrenade
+    - GrenadeShrapnel
+    - MagazineRifle
+    - MagazineRifle
 
 - type: chameleonOutfit
   id: ERTLeaderChameleonOutfit
@@ -150,13 +154,17 @@
     - FoodBakedBunHotX
     - FoodBakedBunHotX
     - FoodBakedBunHotX
+    - FoodBakedBunHotX # End of first row
     - FlippoEngravedLighter
     - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX # End of second row
     - Candle
     - Candle
     - Candle
-    - CandleBlue
     - CandleRed
+    - CandleBlack
     - CandleGreen
     - CandlePurple
     belt:
@@ -166,38 +174,6 @@
     - Lantern
     - JugBlood
     - JugWater
-
-#- type: startingGear
-#  parent: ERTChaplainGearEVA
-#  id: ERTChaplainGearArmed
-#  equipment:
-#    suitstorage: ClaymoreHoly # Todo: Add holy claymore (needs sprites for wield and holy damage)
-#  storage:
-#    back:
-#    - WeaponPistolMk58
-#    - CrowbarRed
-#    - SmokeGrenade
-#    - HolyHandGrenade
-#    - Lantern
-#    - Lantern
-#    - FoodBakedBunHotX
-#    - FlippoEngravedLighter
-#    - FoodBakedBunHotX
-#    - FoodBakedBunHotX
-#    - Candle
-#    - Candle
-#    - Candle
-#    - CandleBlue
-#    - CandleRed
-#    - CandleGreen
-#    - CandlePurple
-#    belt:
-#    - Bible
-#    - Lantern
-#    - JugBlood
-#    - JugWater
-#    - MagazinePistol
-#    - MagazinePistol
 
 - type: chameleonOutfit
   id: ERTChaplainChameleonOutfit
@@ -270,14 +246,33 @@
     ears: ClothingHeadsetCentCom
     belt: ClothingBeltMilitaryWebbingERT
     pocket2: CombatKnife
+  inhand:
+
   storage:
     back:
     - WeaponPistolMk58
     - MagazinePistol
     - MagazinePistol
+    - AccessConfigurator
+    - GasAnalyzer
+    - trayScanner
+    - RCDAmmo
+    - RCDAmmo # End of first line
+    - EmergencyMedipen # End of second line
+    - MetalFoamGrenade
+    - MetalFoamGrenade
+    - AirGrenade
+    - AirGrenade
+    - SheetSteel
+    - CableApcStack
+    - MiningDrill
+    belt:
+    - JawsOfLife
+    - PowerDrill
+    - WelderIndustrialAdvanced
+    - Multitool
+    - HolofanProjector
     - RCD
-    - RCDAmmo
-    - RCDAmmo
 
 - type: chameleonOutfit
   id: ERTEngineerChameleonOutfit
