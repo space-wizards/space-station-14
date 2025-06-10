@@ -16,6 +16,10 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
 {
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
+    private static readonly Regex StartDoubleQuote = new("\"$");
+    private static readonly Regex EndDoubleQuote = new("^\"|(?<=^@)\"");
+    private static readonly Regex StartAtSign = new("^@");
+
     /// <summary>
     ///     The list of words to be highlighted in the chatbox.
     /// </summary>
@@ -105,14 +109,14 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
             if (keyword.Count(c => (c == '"')) > 0)
             {
                 // Matches the last double quote character.
-                keyword = Regex.Replace(keyword, "\"$", "(?!\\w)");
+                keyword = StartDoubleQuote.Replace(keyword, "(?!\\w)");
                 // When matching for the first double quote character we also consider the possibility
                 // of the double quote being preceded by a @ character.
-                keyword = Regex.Replace(keyword, "^\"|(?<=^@)\"", "(?<!\\w)");
+                keyword = EndDoubleQuote.Replace(keyword, "(?<!\\w)");
             }
 
             // Make sure any name tagged as ours gets highlighted only when others say it.
-            keyword = Regex.Replace(keyword, "^@", "(?<=(?<=/name.*)|(?<=,.*\"\".*))");
+            keyword = StartAtSign.Replace(keyword, "(?<=(?<=/name.*)|(?<=,.*\"\".*))");
 
             _highlights.Add(keyword);
         }
