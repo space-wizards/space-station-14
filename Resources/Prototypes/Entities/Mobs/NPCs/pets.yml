@@ -865,6 +865,8 @@
   id: MobPolyParrot
   description: An expert in quantum cracker theory
   components:
+  - type: Parrot
+    learnChance: 0.1 # poly is cleverer than the other parrots okay
   - type: Grammar
     attributes:
       proper: true
