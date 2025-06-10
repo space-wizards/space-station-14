@@ -172,13 +172,15 @@
     - 0,0,8,4
 
 - type: entity
-  parent: [BaseCentcommContraband, ClothingBackpackDuffelSyndicate]
+  parent: [ClothingBackpackDuffel, BaseCentcommContraband]
   id: ClothingBackpackDuffelERT
   name: ERT duffel bag
-  description: A larger duffel bag used by Nanotrasen's Emergency Response Teams.
+  description: A armored duffel bag used by Nanotrasen's Emergency Response Teams.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/ert.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicate
