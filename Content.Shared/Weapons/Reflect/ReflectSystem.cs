@@ -213,25 +213,12 @@ public sealed class ReflectSystem : EntitySystem
         if (!_toggle.IsActivated(ent.Owner) || value == 0 || ent.Comp.Reflects == ReflectType.None)
             return;
 
-        string type;
+        var type = ent.Comp.Reflects.ToString();
 
-        switch (ent.Comp.Reflects)
-        {
-            case ReflectType.Energy | ReflectType.NonEnergy:
-                type = "both";
-                args.PushMarkup(Loc.GetString("reflect-examine", ("value", value), ("type", type)));
-                break;
-
-            case ReflectType.Energy:
-                type = "energy";
-                args.PushMarkup(Loc.GetString("reflect-examine", ("value", value), ("type", type)));
-                break;
-
-            case ReflectType.NonEnergy:
-                type = "nonenergy";
-                args.PushMarkup(Loc.GetString("reflect-examine", ("value", value), ("type", type)));
-                break;
-        }
+        // SOOOOOOOOOOO, DEPENDING ON THE HOW FTL SELECTOR WORKS THIS IS ONLY WAY TO DO IT PROPERLY.
+        // YES. THIS SENDS TO THE SELECTOR NON-CAMEL CASE SHIT AND REMOVES ANY ", " SO
+        // "Energy, Nonenergy" turs into "EnergyNonenergy"
+        args.PushMarkup(Loc.GetString("reflect-examine", ("value", value), ("type", type.Replace(", ", null))));
     }
     #endregion
 }
