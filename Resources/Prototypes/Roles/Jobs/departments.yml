@@ -5,6 +5,7 @@
   color: "#A46106"
   roles:
   - CargoTechnician
+  - CargoTrainee
   - Quartermaster
   - SalvageSpecialist
 

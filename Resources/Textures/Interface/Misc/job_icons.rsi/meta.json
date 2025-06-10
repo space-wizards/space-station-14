@@ -68,6 +68,9 @@
             "name": "CargoTechnician"
         },
         {
+            "name": "CargoTrainee"
+        },
+        {
             "name": "Scientist"
         },
         {

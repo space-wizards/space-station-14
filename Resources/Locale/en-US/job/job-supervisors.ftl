@@ -7,6 +7,7 @@ job-supervisors-cmo = the Chief Medical Officer
 job-supervisors-rd = the Research Director
 job-supervisors-qm = the Quartermaster
 job-supervisors-service = Chefs, Botanists, the Bartender, and the Head of Personnel
+job-supervisors-cargo = Cargo Technicians, Salvage Specialists, and the Quartermaster
 job-supervisors-engineering = Station Engineers, Atmospheric Technicians, and the Chief Engineer
 job-supervisors-medicine = Medical Doctors, Paramedics, Chemists, and the Chief Medical Officer
 job-supervisors-security = Security Officers, the Warden, and the Head of Security

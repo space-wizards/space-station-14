@@ -38,6 +38,7 @@ job-name-salvagespec = Salvage Specialist
 job-name-station-ai = Station AI
 job-name-qm = Quartermaster
 job-name-cargotech = Cargo Technician
+job-name-cargotrainee = Cargo Trainee
 job-name-chef = Chef
 job-name-clown = Clown
 job-name-ertleader = ERT Leader

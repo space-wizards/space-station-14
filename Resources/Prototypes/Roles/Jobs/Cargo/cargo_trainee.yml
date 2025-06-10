@@ -1,38 +1,41 @@
 - type: job
-  id: CargoTechnician
-  name: job-name-cargotech
-  description: job-description-cargotech
-  playTimeTracker: JobCargoTechnician
+  id: CargoTrainee
+  name: job-name-cargotrainee
+  description: job-description-cargotrainee
+  playTimeTracker: JobCargoTrainee
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 9000 # 2.5 hrs
-  startingGear: CargoTechGear
-  icon: "JobIconCargoTechnician"
-  supervisors: job-supervisors-qm
+      time: 18000 #5 hrs
+      inverted: true # stop playing trainee if you're good at cargo!
+  startingGear: CargoTraineeGear
+  icon: "JobIconCargoTrainee"
+  supervisors: job-supervisors-cargo
+  canBeAntag: false
   access:
   - Cargo
   - Maintenance
-  extendedAccess:
-  - Salvage
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: BoxingDay
     prototype: BoxCardboard
 
 - type: startingGear
-  id: CargoTechGear
+  id: CargoTraineeGear
   equipment:
-    id: CargoPDA
+    shoes: ClothingShoesColorBlack
+    id: CargoTraineePDA
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
+    # we don't have an ingame cargo guidebook yet...
+    # pocket2: (whatever a potential future cargo guidebook is called)
   #storage:
     #back:
     #- Stuff
 
 - type: chameleonOutfit
-  id: CargoTechnicianChameleonOutfit
-  job: CargoTechnician
+  id: CargoTraineeChameleonOutfit
+  job: CargoTrainee
   equipment:
     head: ClothingHeadHatCargosoft
     eyes: ClothingEyesGlassesCheapSunglasses

@@ -182,6 +182,25 @@
 
 - type: entity
   parent: BasePDA
+  id: CargoTraineePDA
+  name: cargo trainee PDA
+  description: Why isn't it orange?
+  components:
+  - type: Pda
+    id: CargoTraineeIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-interncargo
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#e39751"
+  - type: Icon
+    state: pda-interncargo
+
+- type: entity
+  parent: BasePDA
   id: TechnicalAssistantPDA
   name: technical assistant PDA
   description: Why isn't it yellow?
