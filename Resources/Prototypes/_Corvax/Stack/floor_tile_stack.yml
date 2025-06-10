@@ -47,6 +47,12 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileItemWoodParquet
+  name: parquet-wood-floor
+  spawn: FloorTileItemWoodChessRed
+  maxCount: 30
+
+- type: stack
   id: FloorTileItemWoodParquetBlack
   name: parquet-black-wood-floor
   spawn: FloorTileItemWoodParquetBlack

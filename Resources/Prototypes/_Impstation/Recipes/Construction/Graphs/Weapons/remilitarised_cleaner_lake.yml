@@ -8,6 +8,7 @@
           steps:
             - tag: WeaponCleanerLakeUpgradeKit
               doAfter: 2
+              name: construction-graph-tag-upgrade-kit-cleaner-lake
 
     - node: upgraded
       entity: WeaponLauncherCleanerLakeRemilitarised

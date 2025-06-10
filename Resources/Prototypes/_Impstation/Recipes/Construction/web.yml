@@ -15,7 +15,6 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: web bookshelf
   id: BookshelfWeb
   graph: WebStructures
   startNode: start

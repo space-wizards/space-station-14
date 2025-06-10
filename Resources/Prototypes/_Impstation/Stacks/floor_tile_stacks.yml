@@ -21,3 +21,15 @@
   name: stack-shoveled-astro-cave-floor
   spawn: FloorTileItemAstroCave
   maxCount: 30
+
+- type: stack
+  id: FloorTileTechmaintDark
+  name: stack-dark-techmaint-floor
+  spawn: FloorTileItemTechmaintDark
+  maxCount: 30
+
+- type: stack
+  id: FloorTileXeno
+  name: stack-xeno-floor
+  spawn: FloorTileItemXeno
+  maxCount: 30

@@ -15,4 +15,4 @@
       prototypes:
       - id: MagicInstantEffectSpaceGrease
   - type: SpeakOnAction
-    speech: action-speech-spell-spacegrease
+    sentence: action-speech-spell-spacegrease

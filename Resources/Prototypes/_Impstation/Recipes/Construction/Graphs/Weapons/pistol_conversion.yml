@@ -8,10 +8,12 @@
           steps:
             - tag: ConversionKitFA
               doAfter: 2
+              name: construction-graph-tag-conversion-kit-fa
         - to: convert-hyperburst
           steps:
             - tag: ConversionKitHB
               doAfter: 2
+              name: construction-graph-tag-conversion-kit-hb
 
     - node: convert-fullauto
       entity: WeaponPistolMk93

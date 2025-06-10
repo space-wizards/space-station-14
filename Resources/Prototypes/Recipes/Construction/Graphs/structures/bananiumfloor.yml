@@ -27,14 +27,16 @@
               doAfter: 5
             - tool: Welding
               doAfter: 5
-        - to: BlessedBananiumFloor
+        - to: BlessedBananiumFloor # imp
           completed:
             - !type:SnapToGrid
               southRotation: true
           steps:
             - tag: BananaPeel
+              name: construction-graph-tag-banana-peel
               doAfter: 2
 
+    # imp add
     - node: BlessedBananiumFloor
       entity: FloorSuperBananiumEntity
       edges:

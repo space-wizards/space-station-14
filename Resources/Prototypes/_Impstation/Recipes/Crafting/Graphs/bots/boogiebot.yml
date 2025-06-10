@@ -26,13 +26,13 @@
         icon:
           sprite: Objects/Specific/Robotics/cyborg_parts.rsi
           state: borg_l_leg
-        name: borg leg
+        name: construction-graph-tag-borg-leg
         doAfter: 2
       - tag: BorgLeg
         icon:
           sprite: Objects/Specific/Robotics/cyborg_parts.rsi
           state: borg_r_leg
-        name: borg leg
+        name: construction-graph-tag-borg-leg
         doAfter: 2
   - node: bot
     entity: MobBoogieBot

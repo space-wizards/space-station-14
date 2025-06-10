@@ -8,10 +8,12 @@
           steps:
             - tag: WeaponSurvivalRifleUpgradeRifleKit
               doAfter: 2
+              name: construction-graph-tag-survival-rifle-rifle
         - to: upgraded_smg
           steps:
             - tag: WeaponSurvivalRifleUpgradeSMGKit
               doAfter: 2
+              name: construction-graph-tag-survival-rifle-smg
 
     - node: upgraded_rifle
       entity: WeaponRifleSurvivalRifle
