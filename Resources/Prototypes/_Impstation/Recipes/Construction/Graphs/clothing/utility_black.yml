@@ -12,13 +12,13 @@
             prototype: SprayPainter
           steps:
             - tag: BeltUtility
-              name: utility belt
+              name: construction-graph-tag-belt-utility
               icon:
                 sprite: Clothing/Belt/utility.rsi
                 state: icon
               doAfter: 5
             - tag: SprayPainter
-              name: spray painter
+              name: construction-graph-tag-spray-painter
               icon:
                 sprite: Objects/Tools/spray_painter.rsi
                 state: spray_painter

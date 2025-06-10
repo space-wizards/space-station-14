@@ -51875,11 +51875,6 @@ entities:
     - type: Transform
       pos: -8.433568,-5.5107408
       parent: 60
-  - uid: 60213
-    components:
-    - type: Transform
-      pos: 238.36444,73.83216
-      parent: 943
 - proto: CarbonDioxideCanister
   entities:
   - uid: 15245

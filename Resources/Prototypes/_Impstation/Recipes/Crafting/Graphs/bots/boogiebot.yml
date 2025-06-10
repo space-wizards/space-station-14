@@ -10,29 +10,29 @@
         icon:
           sprite: Objects/Misc/module.rsi
           state: generic
-        name: jukebox machine board
+        name: construction-graph-jukebox-board
       - tag: ComputerTelevisionCircuitboard
         icon:
           sprite: Objects/Misc/module.rsi
           state: cpuboard
-        name: television board
+        name: construction-graph-tag-television-board
       - tag: ProximitySensor
         icon:
           sprite: Objects/Misc/proximity_sensor.rsi
           state: icon
-        name: proximity sensor
+        name: construction-graph-tag-proximity-sensor
         doAfter: 2
       - tag: BorgLeg
         icon:
           sprite: Objects/Specific/Robotics/cyborg_parts.rsi
           state: borg_l_leg
-        name: borg leg
+        name: construction-graph-tag-borg-leg
         doAfter: 2
       - tag: BorgLeg
         icon:
           sprite: Objects/Specific/Robotics/cyborg_parts.rsi
           state: borg_r_leg
-        name: borg leg
+        name: construction-graph-tag-borg-leg
         doAfter: 2
   - node: bot
     entity: MobBoogieBot

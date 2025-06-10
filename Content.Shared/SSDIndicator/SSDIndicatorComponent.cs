@@ -1,4 +1,4 @@
-﻿using Content.Shared.StatusIcon;
+using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -9,7 +9,7 @@ namespace Content.Shared.SSDIndicator;
 ///     Shows status icon when player in SSD
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class SSDIndicatorComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
@@ -21,7 +21,20 @@ public sealed partial class SSDIndicatorComponent : Component
     public ProtoId<SsdIconPrototype> Icon = "SSDIcon";
 
     /// <summary>
-    /// imp. used to keep track of whether or not a body has *ever* had a player attached to it, after the player has left. 
+    ///     When the entity should fall asleep
+    /// </summary>
+    [DataField, AutoPausedField, Access(typeof(SSDIndicatorSystem))]
+    public TimeSpan FallAsleepTime = TimeSpan.Zero;
+
+    /// <summary>
+    ///     Required to don't remove forced sleep from other sources
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public bool ForcedSleepAdded = false;
+
+    /// <summary>
+    /// imp. used to keep track of whether or not a body has *ever* had a player attached to it, after the player has left.
     /// used in GhostSystem.GetPlayerWarps
     /// </summary>
     [AutoNetworkedField]

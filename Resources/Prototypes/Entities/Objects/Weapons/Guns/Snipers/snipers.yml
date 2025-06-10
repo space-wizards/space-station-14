@@ -258,10 +258,8 @@
 #imp edit end
 
 - type: entity
-  name: flintlock pistol
   parent: WeaponPistolFlintlock
   id: WeaponPistolFlintlockEmpty
-  description: A pirate's companion. Yarrr! Uses .45 magnum ammo.
   suffix: Empty
   components:
   - type: BallisticAmmoProvider

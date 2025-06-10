@@ -16,6 +16,9 @@
   id: BorgModuleTckTck
 
 - type: Tag
+  id: Butterfly
+
+- type: Tag
   id: Cablecuffs
 
 - type: Tag
@@ -173,6 +176,3 @@
 
 - type: Tag
   id: WeaponSurvivalRifleUpgradeSMGKit
-
-- type: Tag
-  id: Butterfly

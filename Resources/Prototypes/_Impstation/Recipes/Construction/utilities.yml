@@ -1,14 +1,9 @@
 - type: construction
-  name: wall recharger
   id: WallWeaponCapacitorRecharger
   graph: WallWeaponCapacitorRecharger
   startNode: start
   targetNode: wall_recharger
   category: construction-category-structures
-  description: A wall-mounted recharger for battery-based weaponry.
-  icon:
-    sprite: Structures/Power/wall_recharger.rsi
-    state: full
   placementMode: SnapgridCenter
   objectType: Structure
   canRotate: true

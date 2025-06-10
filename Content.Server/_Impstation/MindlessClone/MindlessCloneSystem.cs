@@ -225,7 +225,8 @@ public sealed class MindlessCloneSystem : EntitySystem
         if (comp.SpeakOnSpawn && !_mobState.IsIncapacitated(uid))
         {
             // enable the typing indicator for the duration of the DoAfter.
-            _appearance.SetData(uid, TypingIndicatorVisuals.IsTyping, true);
+            // TODO: give this better functionality with upstream #29349
+            _appearance.SetData(uid, TypingIndicatorVisuals.State, 2);
 
             var choices = _prototypeManager.Index(comp.PhrasesToPick).Values;
             comp.NextPhrase = _random.Pick(choices);
@@ -268,7 +269,8 @@ public sealed class MindlessCloneSystem : EntitySystem
         }
 
         // disable the typing indicator, as "typing" has now finished.
-        _appearance.SetData(uid, TypingIndicatorVisuals.IsTyping, false);
+        // TODO: give this better functionality with upstream #29349
+        _appearance.SetData(uid, TypingIndicatorVisuals.State, 0);
     }
 
     /// <summary>

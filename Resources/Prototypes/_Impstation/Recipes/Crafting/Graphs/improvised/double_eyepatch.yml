@@ -7,12 +7,12 @@
       - to: doubleeyepatch
         steps:
         - tag: Eyepatch
-          name: eyepatch
+          name: construction-graph-tag-eyepatch
           icon:
             sprite: Clothing/Eyes/Misc/eyepatch.rsi
             state: icon
         - tag: Eyepatch
-          name: eyepatch
+          name: construction-graph-tag-eyepatch
           icon:
             sprite: Clothing/Eyes/Misc/eyepatch.rsi
             state: icon

@@ -20,7 +20,6 @@ public sealed class PacificationSystem : EntitySystem
     [Dependency] private readonly SharedCombatModeSystem _combatSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly StaminaSystem _stamina = default!;
 
     public override void Initialize()
     {

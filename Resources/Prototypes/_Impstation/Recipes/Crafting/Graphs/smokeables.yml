@@ -10,7 +10,7 @@
         icon:
           sprite: Objects/Materials/materials.rsi
           state: ash
-        name: your vaporized loved one
+        name: construction-graph-tag-memorial-ash # just go with it
       - material: PaperRolling
       - material: GroundCannabis
         doAfter: 2
@@ -29,7 +29,7 @@
         icon:
           sprite: Objects/Materials/materials.rsi
           state: ash
-        name: your vaporized loved one
+        name: construction-graph-tag-memorial-ash
       - material: LeavesTobaccoDried
       - material: GroundCannabis
         doAfter: 2

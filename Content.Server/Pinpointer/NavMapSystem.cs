@@ -200,6 +200,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         beacon.Text = args.Text;
         beacon.Color = args.Color;
         beacon.Enabled = args.Enabled;
+        Dirty(ent, beacon);
 
         UpdateBeaconEnabledVisuals((ent, beacon));
         UpdateNavMapBeaconData(ent, beacon);

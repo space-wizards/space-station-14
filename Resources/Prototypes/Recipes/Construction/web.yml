@@ -1,14 +1,9 @@
 - type: construction
-  name: web wall
   id: WallWeb
   graph: WebStructures
   startNode: start
   targetNode: wall
   category: construction-category-structures
-  description: A fairly weak yet silky smooth wall.
-  icon:
-    sprite: Structures/Walls/web.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -20,37 +15,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: web window-weave
-  id: WebWindow
-  graph: WebStructures
-  startNode: start
-  targetNode: window
-  category: construction-category-structures
-  description: A very thin weave that you can see through.
-  icon:
-    sprite: Structures/Web/windowweave.rsi
-    state: icon
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  entityWhitelist:
-    tags:
-    - SpiderCraft
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: web table
   id: TableWeb
   graph: WebStructures
   startNode: start
   targetNode: table
   category: construction-category-furniture
-  description: Essential for any serious web development.
-  icon:
-    sprite: Structures/Furniture/Tables/web.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -62,16 +31,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: web bed
   id: WebBed
   graph: WebStructures
   startNode: start
   targetNode: bed
   category: construction-category-furniture
-  description: Fun fact, you eating spiders in your sleep is false.
-  icon:
-    sprite: Structures/Web/bed.rsi
-    state: icon
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -83,16 +47,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: web chair
   id: ChairWeb
   graph: WebStructures
   startNode: start
   targetNode: chair
   category: construction-category-furniture
-  description: You want to get serious about web development? Get this chair!
-  icon:
-    sprite: Structures/Web/chair.rsi
-    state: icon
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -101,16 +60,11 @@
     - SpiderCraft
 
 - type: construction
-  name: web crate
   id: CrateWeb
   graph: WebStructures
   startNode: start
   targetNode: crate
   category: construction-category-storage
-  description: For containment of food and other things. Not as durable as a normal crate, and can't be welded shut.
-  icon:
-    sprite: _Impstation/Structures/Storage/Crates/web.rsi # imp
-    state: icon
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -120,16 +74,11 @@
     - SpiderCraft
 
 - type: construction
-  name: web door
   id: WebDoor
   graph: WebStructures
   startNode: start
   targetNode: door
   category: construction-category-structures
-  description: A manual door made from web, normally placed right before a pit or trap.
-  icon:
-    sprite: Structures/Doors/web_door.rsi
-    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -138,85 +87,3 @@
     - SpiderCraft
   conditions:
     - !type:TileNotBlocked
-
-- type: construction
-  name: web bookshelf
-  id: BookshelfWeb
-  graph: WebStructures
-  startNode: start
-  targetNode: bookshelf
-  category: construction-category-furniture
-  description: Mostly filled with cobwebs.
-  icon:
-    sprite: Structures/Furniture/bookshelf.rsi
-    state: WEB-base
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
-  entityWhitelist:
-    tags:
-    - SpiderCraft
-  conditions:
-    - !type:TileNotBlocked
-
-- type: construction
-  name: traditional cobweb decoration
-  id: Cobweb1
-  graph: WebStructures
-  startNode: start
-  targetNode: cobweb1
-  category: construction-category-furniture
-  description: A traditional decoration favored by all spiders.
-  icon:
-    sprite: Structures/Decoration/cobweb.rsi
-    state: cobweb1
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-  entityWhitelist:
-    tags:
-    - SpiderCraft
-
-- type: construction
-  name: bold cobweb decoration
-  id: Cobweb2
-  graph: WebStructures
-  startNode: start
-  targetNode: cobweb2
-  category: construction-category-furniture
-  description: Considered by most to be tacky compared to more traditional designs.
-  icon:
-    sprite: Structures/Decoration/cobweb.rsi
-    state: cobweb2
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
-  entityWhitelist:
-    tags:
-    - SpiderCraft
-
-- type: construction
-  name: web wall decoration
-  id: WebWallDecor
-  graph: WebStructures
-  startNode: start
-  targetNode: walldecor
-  category: construction-category-furniture
-  description: An easy way to make any space feel like a nest.
-  icon:
-    sprite: Objects/Misc/spiderweb.rsi
-    state: spider_web_decor
-  objectType: Structure
-  placementMode: SnapgridCenter
-  entityWhitelist:
-    tags:
-    - SpiderCraft
-  canRotate: true
-  canBuildInImpassable: true
-  conditions:
-  - !type:WallmountCondition

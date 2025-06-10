@@ -7,7 +7,7 @@
     - to: eyesack
       steps:
       - tag: HempSack
-        name: a sack made from hemp cloth
+        name: construction-graph-tag-hemp-sack
         icon:
          sprite: Clothing/Head/Helmets/hempsack.rsi
          state: icon

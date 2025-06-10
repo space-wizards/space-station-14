@@ -72,12 +72,14 @@ public sealed class ParrotSpeechSystem : EntitySystem
         {
             component.NextMessage = _random.Pick(component.LearnedPhrases);
             component.NextFakeTypingSend = _timing.CurTime + TimeSpan.FromSeconds(0.1 * component.NextMessage.Length);
-            _appearance.SetData(uid, TypingIndicatorVisuals.IsTyping, true);
+            // TODO: give this better functionality with upstream #29349
+            _appearance.SetData(uid, TypingIndicatorVisuals.State, 2);
         }
         else if (_timing.CurTime > component.NextFakeTypingSend)
         {
             SendMessage(uid, component);
-            _appearance.SetData(uid, TypingIndicatorVisuals.IsTyping, false);
+            // TODO: give this better functionality with upstream #29349
+            _appearance.SetData(uid, TypingIndicatorVisuals.State, 0);
 
             // and reset.
             component.NextFakeTypingSend = null;

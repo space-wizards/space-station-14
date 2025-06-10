@@ -289,6 +289,7 @@ public sealed class HTNSystem : EntitySystem
             count++;
             updates++;
         }
+
         // only reset our counter back to 0 if we finish iterating.
         // otherwise it lets us know where we left off.
         count = 0;

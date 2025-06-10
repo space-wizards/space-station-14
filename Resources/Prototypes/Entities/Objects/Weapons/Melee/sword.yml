@@ -205,6 +205,8 @@
     - Back
     - Belt
   - type: Reflect
+    slotFlags:
+    - NONE
   - type: ThrowingAngle # imp
     angle: 300
 

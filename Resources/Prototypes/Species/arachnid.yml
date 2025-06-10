@@ -78,7 +78,7 @@
       points: 1
       required: false
     Chest:
-      points: 4
+      points: 4 # imp
       required: false
     Legs:
       points: 8 #impspecial

@@ -16,6 +16,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Cargo.Systems
@@ -24,6 +25,7 @@ namespace Content.Server.Cargo.Systems
     {
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly EmagSystem _emag = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         private void InitializeConsole()
         {
@@ -431,7 +433,11 @@ namespace Content.Server.Cargo.Systems
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
         {
-            _audio.PlayPvs(_audio.ResolveSound(component.ErrorSound), uid);
+            if (_timing.CurTime >= component.NextDenySoundTime)
+            {
+                component.NextDenySoundTime = _timing.CurTime + component.DenySoundDelay;
+                _audio.PlayPvs(_audio.ResolveSound(component.ErrorSound), uid);
+            }
         }
 
         private static CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, CargoProductPrototype cargoProduct, int id, ProtoId<CargoAccountPrototype> account)

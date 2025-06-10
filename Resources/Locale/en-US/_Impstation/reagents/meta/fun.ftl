@@ -23,7 +23,6 @@ reagent-name-irwizine = irwizine
 reagent-desc-irwizine = A chemical that harmlessly pacifies hostile beasts with 15u of accumulation. Useful for zookeepers looking to put together an exhibit.
 
 reagent-name-sadness = sadness
-
 reagent-desc-sadness = The pure concept of sadness, in a liquid form. Even looking at it makes you tear up.
 
 reagent-name-butterflies = butterflies

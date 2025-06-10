@@ -17,7 +17,7 @@
       - state: mag-unshaded-0
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
-  - type: Appearance 
+  - type: Appearance
   - type: Clothing
     sprite: _Impstation/Objects/Weapons/Guns/Battery/blaster.rsi
     quickEquip: false
@@ -38,7 +38,7 @@
   - type: MagazineAmmoProvider
   - type: ItemSlots
     slots:
-      gun_magazine:
+      cell_slot:
         name: Magazine
         startingItem: PowerCellBlaster
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg

@@ -47,7 +47,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobstate = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
     [Dependency] private readonly DamageableSystem _dmg = default!;
-    [Dependency] private readonly StaminaSystem _stam = default!;
+    [Dependency] private readonly SharedStaminaSystem _stam = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly SharedAudioSystem _aud = default!;
     [Dependency] private readonly DoAfterSystem _doafter = default!;

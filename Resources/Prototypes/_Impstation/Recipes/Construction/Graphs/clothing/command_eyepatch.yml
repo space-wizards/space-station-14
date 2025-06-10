@@ -7,13 +7,13 @@
     - to: adminhudcommandeyepatch
       steps:
       - tag: HudAdmin
-        name: administration hud
+        name: construction-graph-tag-administration-hud
         icon:
           sprite: Clothing/Eyes/Hud/command.rsi
           state: icon
         doAfter: 1
       - tag: Eyepatch
-        name: eyepatch
+        name: construction-graph-tag-eyepatch
         icon:
           sprite: Clothing/Eyes/Misc/eyepatch.rsi
           state: icon

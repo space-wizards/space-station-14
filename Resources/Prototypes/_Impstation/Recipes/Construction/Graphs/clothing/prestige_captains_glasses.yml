@@ -7,13 +7,13 @@
     - to: adminhudcaptainsvisor
       steps:
       - tag: CaptainsVisor
-        name: the captain's visor
+        name: construction-graph-tag-captains-visor
         icon:
           sprite: _Impstation/Clothing/Eyes/Glasses/captainvisor.rsi
           state: icon
         doAfter: 1
       - tag: AdministrationGlasses
-        name: administration glasses
+        name: construction-graph-tag-administration-glasses
         icon:
           sprite: Clothing/Eyes/Glasses/commandglasses.rsi
           state: icon
@@ -30,13 +30,13 @@
     - to: adminhudcaptainseyepatch
       steps:
       - tag: CaptainsEyepatch
-        name: the captain's eyepatch
+        name: construction-graph-tag-captains-eyepatch
         icon:
           sprite: _Impstation/Clothing/Eyes/Hud/capeyepatch.rsi
           state: icon
         doAfter: 1
       - tag: AdministrationGlasses
-        name: administration glasses
+        name: construction-graph-tag-administration-glasses
         icon:
           sprite: Clothing/Eyes/Glasses/commandglasses.rsi
           state: icon

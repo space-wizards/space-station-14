@@ -16,4 +16,3 @@ tiles-wood-red = red wood floor
 tiles-wood-large-red = large red wood floor
 tiles-wood-parquet-red = parquet red wood floor
 tiles-wood-chess-red = chess red wood floor
-

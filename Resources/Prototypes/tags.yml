@@ -1466,6 +1466,9 @@
 - type: Tag
   id: VoiceTrigger
 
+- type: Tag # Eating fix tag
+  id: VoxFood
+
 - type: Tag
   id: Wall
 
@@ -1540,5 +1543,20 @@
 
 - type: Tag
   id: WriteIgnoreStamps
+
+- type: Tag
+  id: XenoborgModuleEngi
+
+- type: Tag
+  id: XenoborgModuleGeneric
+
+- type: Tag
+  id: XenoborgModuleHeavy
+
+- type: Tag
+  id: XenoborgModuleScout
+
+- type: Tag
+  id: XenoborgModuleStealth
 
 # ALPHABETICAL

@@ -10,6 +10,7 @@
   - type: Tag
     tags:
       - FoodSnack
+      - VoxFood
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
   - type: SolutionContainerManager
@@ -569,7 +570,6 @@
     sound:
       path: /Audio/Effects/unwrap.ogg
 
-
 - type: entity
   id: FoodSnackMREBrownieOpen
   parent: FoodSnackBase
@@ -594,6 +594,9 @@
           Quantity: 1 # imp
         - ReagentId: CocoaPowder # imp
           Quantity: 1
+  - type: Tag
+    tags:
+    - VoxFood
 
 # Trash
 
@@ -618,17 +621,17 @@
       Steel: 50
       Plastic: 50
   - type: SpaceGarbage
-  - type: Food
-    requiresSpecialDigestion: true
+  - type: StaticPrice
+    price: 0
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
         reagents:
-          - ReagentId: Trash
-            Quantity: 10
-  - type: StaticPrice
-    price: 0
+        - ReagentId: ToxinTrash
+          Quantity: 10 # imp 5 > 10
+  - type: Food
+    requiresSpecialDigestion: true
 
 - type: entity
   categories: [ HideSpawnMenu ]

@@ -10,7 +10,7 @@
             amount: 2
             doAfter: 5
           - tag: Bowl
-            name: bowl
+            name: construction-graph-tag-bowl
             icon:
               sprite: Objects/Consumable/Food/bowl.rsi
               state: bowl

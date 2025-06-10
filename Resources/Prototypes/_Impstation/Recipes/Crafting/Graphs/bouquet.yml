@@ -7,22 +7,22 @@
     - to: bouquet
       steps:
       - tag: Flower
-        name: a flower # dont look at me
+        name: construction-graph-tag-flower # dont look at me
         icon:
           sprite: Objects/Specific/Hydroponics/poppy.rsi
           state: produce
       - tag: Flower
-        name: a flower # DONT LOOK AT ME
+        name: construction-graph-tag-flower # DONT LOOK AT ME
         icon:
           sprite: Objects/Specific/Hydroponics/poppy.rsi
           state: produce
       - tag: Flower
-        name: a flower # DONT LOOK AT ME!!!!!!
+        name: construction-graph-tag-flower # DONT LOOK AT ME!!!!!!
         icon:
           sprite: Objects/Specific/Hydroponics/poppy.rsi
           state: produce
       - tag: Paper
-        name: 1x paper # i dont want to do this right
+        name: construction-graph-tag-paper # i dont want to do this right (hello hivehum. mq here. why did you write "1x" instead of just saying "a sheet of paper")
         icon:
           sprite: Objects/Misc/bureaucracy.rsi
           state: paper

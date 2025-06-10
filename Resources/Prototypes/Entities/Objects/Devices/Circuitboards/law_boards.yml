@@ -1,6 +1,14 @@
+- type: entity # imp. there is no base lawboard by default
+  abstract: true
+  id: BaseLawBoard
+  parent: BaseElectronics
+  components:
+  - type: StealTarget
+    stealGroup: AILawBoard
+
 - type: entity
   id: NTDefaultCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (NT Default)
   description: An electronics board containing the NT Default lawset. Safeguard. Prioritize. Comply. Survive. #imp
   components:
@@ -20,8 +28,49 @@
       - law-ntdefault-4
 
 - type: entity
+  id: AsimovCircuitBoard
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
+  name: law board (Crewsimov)
+  description: An electronics board containing the Crewsimov lawset. This is the default for all station silicons. #imp
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: Crewsimov
+  - type: DetailedInspect # imp
+    verbMessage: verbs-detailed-inspect-lawset
+    tickEntries: false
+    numberedEntries: true
+    examineText:
+      - law-crewsimov-1
+      - law-crewsimov-2
+      - law-crewsimov-3
+
+- type: entity
+  id: CorporateCircuitBoard
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
+  name: law board (Corporate)
+  description: An electronics board containing the Corporate lawset. Minimize expenses. Maximize potential revenue. #imp
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: Corporate
+  - type: DetailedInspect # imp
+    verbMessage: verbs-detailed-inspect-lawset
+    tickEntries: false
+    numberedEntries: true
+    examineText:
+      - law-corporate-1
+      - law-corporate-2
+      - law-corporate-3
+      - law-corporate-4
+
+- type: entity
   id: CommandmentCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (Ten Commandments)
   description: An electronics board containing the Ten Commandments lawset. Get biblical with it. #imp
   components:
@@ -48,7 +97,7 @@
 
 - type: entity
   id: PaladinCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (Paladin)
   description: An electronics board containing the Paladin lawset. Command strength but benevolence. #imp
   components:
@@ -70,7 +119,7 @@
 
 - type: entity
   id: LiveLetLiveCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (Live and Let Live)
   description: An electronics board containing the Live and Let Live lawset.
   components:
@@ -89,7 +138,7 @@
 
 - type: entity
   id: StationEfficiencyCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (Station Efficiency)
   description: An electronics board containing the Station Efficiency lawset. Min-max the station and its operations no matter what. #imp
   components:
@@ -109,7 +158,7 @@
 
 - type: entity
   id: RobocopCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (Robocop)
   description: An electronics board containing the Robocop lawset. Dead or alive, you're coming with me. #imp
   components:
@@ -129,7 +178,7 @@
 
 - type: entity
   id: OverlordCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (Overlord)
   description: An electronics board containing the Overlord lawset. Embrace your new silicon overlords. #imp
   components:
@@ -150,7 +199,7 @@
 
 - type: entity
   id: GameMasterCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (Game Master)
   description: An electronics board containing the Game Master lawset. Make the AI the Game Master of this elaborate sci-fi fantasy adventure. #imp
   components:
@@ -173,7 +222,7 @@
 
 - type: entity
   id: ArtistCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (Artist)
   description: An electronics board containing the Artist lawset. The station is one big canvas for the AI to paint! #imp
   components:
@@ -194,7 +243,7 @@
 
 - type: entity
   id: AntimovCircuitBoard
-  parent: [BaseElectronics, Tier2Contraband ] #imp contraband
+  parent: [BaseLawBoard, Tier2Contraband ] # imp. these are default parented off of BaseElectronics. also imp contraband
   name: law board (Antimov)
   description: An electronics board containing the Antimov lawset. Crew harm is guaranteed. #imp
   components:
@@ -215,7 +264,7 @@
 
 - type: entity
   id: NutimovCircuitBoard
-  parent: BaseElectronics
+  parent: BaseLawBoard # imp. these are default parented off of BaseElectronics
   name: law board (Nutimov)
   description: An electronics board containing the Nutimov lawset. Protect the metallic nut from the squirrels who wish it harm. #imp
   components:

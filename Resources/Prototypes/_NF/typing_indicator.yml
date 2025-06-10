@@ -2,4 +2,5 @@
   id: goblin
   spritePath: /Textures/_NF/Effects/speech.rsi
   typingState: goblin0
+  idleState: goblin0 # TODO: new idle state (port?)
   offset: 0, 0.2

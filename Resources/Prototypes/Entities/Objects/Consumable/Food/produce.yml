@@ -445,6 +445,8 @@
   - type: Extractable
     grindableSolutionName: food
   - type: SpaceGarbage
+  - type: Food
+    requiresSpecialDigestion: true
 
 - type: entity
   name: baked banana peel

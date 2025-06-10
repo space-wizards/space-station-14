@@ -126,6 +126,18 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier ScanSound = new SoundCollectionSpecifier("CargoBeep");
+
+    /// <summary>
+    /// The time at which the console will be able to play the deny sound.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextDenySoundTime = TimeSpan.Zero;
+
+    /// <summary>
+    /// The time between playing the deny sound.
+    /// </summary>
+    [DataField]
+    public TimeSpan DenySoundDelay = TimeSpan.FromSeconds(2);
 }
 
 /// <summary>

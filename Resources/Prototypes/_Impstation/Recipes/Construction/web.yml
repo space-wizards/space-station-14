@@ -1,0 +1,77 @@
+- type: construction
+  id: WebWindow
+  graph: WebStructures
+  startNode: start
+  targetNode: window
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BookshelfWeb
+  graph: WebStructures
+  startNode: start
+  targetNode: bookshelf
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: Cobweb1
+  graph: WebStructures
+  startNode: start
+  targetNode: cobweb1
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+
+- type: construction
+  id: Cobweb2
+  graph: WebStructures
+  startNode: start
+  targetNode: cobweb2
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+
+- type: construction
+  id: WebWallDecor
+  graph: WebStructures
+  startNode: start
+  targetNode: walldecor
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition

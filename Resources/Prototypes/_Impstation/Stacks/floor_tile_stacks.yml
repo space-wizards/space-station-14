@@ -1,23 +1,35 @@
 - type: stack
   id: FloorTileApid
-  name: apid hex tile
+  name: stack-apid-hex-tile
   spawn: FloorTileItemApid
   maxCount: 30
 
 - type: stack
   id: FloorTileCraftedAsphalt
-  name: asphalt floor floor
+  name: stack-asphalt-floor
   spawn: FloorTileItemCraftedAsphalt
   maxCount: 30
 
 - type: stack
   id: FloorTileShoveledAstroSnow
-  name: shoveled astro-snow floor
+  name: stack-shoveled-astro-snow-floor
   spawn: FloorTileItemShoveledAstroSnow
   maxCount: 30
 
 - type: stack
   id: FloorTileAstroCave
-  name: shoveled astro-snow floor
+  name: stack-shoveled-astro-cave-floor
   spawn: FloorTileItemAstroCave
+  maxCount: 30
+
+- type: stack
+  id: FloorTileTechmaintDark
+  name: stack-dark-techmaint-floor
+  spawn: FloorTileItemTechmaintDark
+  maxCount: 30
+
+- type: stack
+  id: FloorTileXeno
+  name: stack-xeno-floor
+  spawn: FloorTileItemXeno
   maxCount: 30

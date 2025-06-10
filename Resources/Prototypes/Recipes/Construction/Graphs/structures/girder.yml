@@ -683,7 +683,7 @@
             icon:
               sprite: Objects/Misc/glowstick.rsi
               state: glowstick_base
-            name: 1x glowstick
+            name: construction-graph-tag-glowstick
             doAfter: 2
         - to: shuttleWall
           completed:
