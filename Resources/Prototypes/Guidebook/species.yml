@@ -55,4 +55,4 @@
 - type: guideEntry
   id: Vox
   name: species-name-vox
-  text: "/ServerInfo/Guidebook/Mobs/Vox.xml"
+  text: "_Impstation/ServerInfo/Guidebook/Mobs/Vox.xml" # imp
