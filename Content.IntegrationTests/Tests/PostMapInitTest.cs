@@ -125,6 +125,7 @@ namespace Content.IntegrationTests.Tests
             "Plasma",
             "Reach",
             "Saltern",
+            "Submarine",
             "Train",
             "Xeno",
             "dm01-entryway",

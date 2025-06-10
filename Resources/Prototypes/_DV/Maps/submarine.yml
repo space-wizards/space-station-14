@@ -1,0 +1,71 @@
+- type: gameMap
+  id: Submarine
+  mapName: 'Submarine'
+  mapPath: /Maps/_Impstation/submarine.yml
+  minPlayers: 60
+  maxPlayers: 90
+  stations:
+    Submarine:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Submarine {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'DV'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/_DV/Shuttles/NTES_Propeller.yml
+        - type: StationJobs
+          availableJobs:
+            # command - 9
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            AdministrativeAssistant: [ 1, 1 ] # imp
+            ChiefEngineer: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            HospitalityDirector: [ 1, 1 ] # imp
+            Quartermaster: [ 1, 1 ]
+            # service - 18
+            Bartender: [ 2, 2 ]
+            Botanist: [ 3, 3 ]
+            Chaplain: [ 1, 1 ]
+            Chef: [ 2, 2 ]
+            Clown: [ 1, 1 ]
+            Janitor: [ 2, 2 ]
+            Librarian: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            Reporter: [ 2, 2 ]
+            Zookeeper: [ 1, 1 ]
+            Boxer: [1, 1]
+            # engineering - 7-11
+            AtmosphericTechnician: [ 3, 3 ]
+            StationEngineer: [ 4, 4 ]
+            TechnicalAssistant: [ 4, 4 ]
+            # medical - 8-12
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 4, 4 ]
+            MedicalIntern: [ 3, 3 ]
+            Paramedic: [ 2, 2 ]
+            Psychologist: [ 1, 1 ]
+            # science - 7-11
+            Borg: [ 2, 2 ]
+            ResearchAssistant: [ 3, 3 ]
+            Scientist: [ 4, 4 ]
+            StationAi: [ 1, 1 ]
+            # security - 10-14
+            Brigmedic: [ 1, 1 ] # imp
+            Detective: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]
+            SecurityCadet: [ 3, 3 ]
+            SecurityOfficer: [ 6, 6 ]
+            Warden: [ 1, 1 ]
+            # supply - 14
+            CargoTechnician: [ 6, 6 ]
+            Courier: [ 2, 2 ] # imp
+            SalvageSpecialist: [ 3, 3 ]
+            SupplyAssistant: [ 3, 3 ] # imp
+            # civilian
+            Passenger: [ -1, -1 ]
