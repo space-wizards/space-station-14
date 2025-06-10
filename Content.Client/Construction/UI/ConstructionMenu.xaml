@@ -29,6 +29,10 @@
             </Control>
             <ItemList Name="RecipeStepList" Access="Public" VerticalExpand="True" Margin="0 0 0 5"/>
             <BoxContainer Orientation="Vertical">
+                <BoxContainer Orientation="Horizontal" VerticalExpand="True" SizeFlagsStretchRatio="0.5">
+                    <Button Name="PreviousRecipeButton" HorizontalExpand="True" Disabled="True" Text="{Loc construction-menu-previous-recipe}" />
+                    <Button Name="NextRecipeButton" HorizontalExpand="True" Disabled="True" Text="{Loc construction-menu-next-recipe}" />
+                </BoxContainer>
                 <Button Name="BuildButton" Disabled="True" ToggleMode="True"
                         VerticalExpand="True" SizeFlagsStretchRatio="0.5"/>
                 <BoxContainer Orientation="Horizontal" VerticalExpand="True" SizeFlagsStretchRatio="0.5">
