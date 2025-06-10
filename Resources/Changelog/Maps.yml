@@ -323,4 +323,36 @@
   id: 39
   time: '2025-06-03T23:08:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38053
+- author: spanky-spanky
+  changes:
+  - message: On Omega, sentry turrets have been added to the AI core and vault.
+    type: Add
+  id: 40
+  time: '2025-06-04T20:37:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38066
+- author: spanky-spanky
+  changes:
+  - message: On Fland, added sentry turrets to the AI, vault, and armory.
+    type: Add
+  id: 41
+  time: '2025-06-04T21:41:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38068
+- author: spanky-spanky
+  changes:
+  - message: Most emergency shuttles have been lightly overhauled to mitigate spacing
+      damage.
+    type: Tweak
+  id: 42
+  time: '2025-06-09T22:56:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38186
+- author: ArtisticRoomba
+  changes:
+  - message: Amber AI core LV powernet has been atomized, so each room gets its own
+      APC. Previously if you toggled the APC while the AI turrets were on it would
+      cause endless seizure-inducing flickering, so this is a tempfix until the proper
+      cause is found.
+    type: Tweak
+  id: 43
+  time: '2025-06-10T09:36:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38209
 Order: 1
