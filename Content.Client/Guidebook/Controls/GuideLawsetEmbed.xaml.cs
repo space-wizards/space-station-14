@@ -20,7 +20,7 @@ namespace Content.Client.Guidebook.Controls;
 /// Control for embedding an AI Lawset in a guidebook
 /// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
-public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag
+public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISearchableControl, IPrototypeRepresentationControl
 {
     private ISawmill _logging = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -35,6 +35,7 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag
 
     private void GenerateControl(SiliconLawsetPrototype lawset)
     {
+        RepresentedPrototype = lawset;
         LawsetName.SetMarkup($"[bold]{Loc.GetString(lawset.Name ?? lawset.ID)}[/bold]");
         int i = 1;
         foreach (string lawID in lawset.Laws)
@@ -50,7 +51,8 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag
                 // be brought up in review
                 locLawString = Loc.GetString(lawPrototype?.LawString ?? string.Empty);
                 RichTextLabel lawN = new();
-                lawN.SetMarkup($"Law {i}: {"locLawString"}\n");
+                lawN.HorizontalExpand = true;
+                lawN.SetMarkup($"[bold]Law {i}:[/bold] {locLawString}");
                 LawsetContainer.AddChild(lawN);
             }
             i++;
@@ -76,5 +78,15 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag
 
         control = this;
         return true;
+    }
+
+    public bool CheckMatchesSearch(string query)
+    {
+        return this.ChildrenContainText(query);
+    }
+
+    public void SetHiddenState(bool state, string query)
+    {
+        Visible = CheckMatchesSearch(query) ? state : !state;
     }
 }
