@@ -68,18 +68,6 @@ bounty-item-microwave-machine-board = Microwave machine board
 bounty-item-flash = Flash
 bounty-item-tooth-space-carp = Space carp tooth
 bounty-item-tooth-sharkminnow = Sharkminnow tooth
-bounty-item-regenerative-mesh = Regenerative mesh
-bounty-item-jugs = Chemical jugs
-bounty-item-crushers = Crusher weapon
-bounty-item-aloe-cream = Aloe cream
-bounty-item-bagels = Bagels
-bounty-item-bear-hide = Space bear hide
-bounty-item-muffins = Muffins
-bounty-item-suppermatter = Suppermatter
-bounty-item-crystal = Crystals
-bounty-item-mime-hardsuit = Mime hardsuit
-bounty-item-spider-meat = Slab of spider meat
-
 
 bounty-description-artifact = Nanotrasen is in some hot water for stealing artifacts from non-spacefaring planets. Return one and we'll compensate you for it.
 # imp edit; lower-case t
@@ -155,14 +143,3 @@ bounty-description-microwave-machine-board = Mr. Giggles thought it'd be funny t
 bounty-description-flashes = GREETINGS \[Station] WE REQUIRE 6 FLASHES DUE TO A NORMAL \[TrainingExercise] WITH SECURITY. EVERYTHING IS \[Normal].
 bounty-description-tooth-space-carp = Some lads from "down unda" need some teeth to make their traditional apparel. Send them a few from some space carp.
 bounty-description-tooth-sharkminnow = The chef is claiming that the teeth of sharkminnows are some kind of high-quality knife. I don't know what they're on about, but they want a set. Send it to them.
-bounty-description-regenerative-mesh = Some idiot sent us real laser guns instead of the practice ones! Send us some of those fancy burn meds, on the double!
-bounty-description-jugs = Due to an alarmingly high variety of chemicals being produced and utilized, several medical branches are without enough containers for distribution. Send us some!
-bounty-description-crushers = Kru’Kle The Ninth likes crushing things. Crush also like crusher. Give Kru’Kle Crusher so Crush can have crush and like Kru’Kle.
-bounty-description-aloe-cream = A colony of Thaven are recovering from a dragon attack, and are currently rejecting more modern chemicals. Please provide an efficient Neolithic solution that will still prove effective.
-bounty-description-bagels = It's breakfast time.
-bounty-description-bear-hide = The Space Chicago Space Bears' mascot costumes were destroyed in a fire, and there's going to be a riot if Spacey The Bear can't make an appearance at the big game.
-bounty-description-muffins = We've got a load of civilians here from the syndicate who just lost their homes in a raid. Send us some muffins for our complimentary Apology Service.
-bounty-description-suppermatter = OH MY GOD NANOTRASEN HAS FINALLY MADE THE TECH AVAILABLE I CAN FINALLY POWER THE STATION PLEASE SEND IT TO ME NOW BEFORE WE GO OFFLINE PERMANENTLY
-bounty-description-crystal = The station-standard fluorescent lights are so dull, it's making the clown depressed. Send us some color, please?
-bounty-description-mime-hardsuit = ERROR: Automatic transcription failed! No data provided.
-bounty-description-spider-meat = H-hey... My mom disappeared on your station... Can you look for her? Um... If you find her, could you send her back home? Thanks... *sniffle*

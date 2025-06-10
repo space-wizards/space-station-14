@@ -1,3 +1,23 @@
 bounty-item-lemo = Lemo
+bounty-item-regenerative-mesh = Regenerative mesh
+bounty-item-crushers = Crusher weapon
+bounty-item-aloe-cream = Aloe cream
+bounty-item-bagels = Bagels
+bounty-item-bear-hide = Space bear hide
+bounty-item-muffins = Muffins
+bounty-item-suppermatter = Suppermatter
+bounty-item-crystal = Crystals
+bounty-item-mime-hardsuit = Mime hardsuit
+bounty-item-spider-meat = Slab of spider meat
 
 bounty-description-lemo = Nanotrasen's terraforming of the planet Teo is behind schedule. We need further Lemo fruit to quell swelling demand in this sector.
+bounty-description-regenerative-mesh = Some idiot sent us real laser guns instead of the practice ones! Send us some of those fancy burn meds, on the double!
+bounty-description-crushers = Kru’Kle The Ninth likes crushing things. Crush also like crusher. Give Kru’Kle Crusher so Crush can have crush and like Kru’Kle.
+bounty-description-aloe-cream = A colony of Thaven are recovering from a dragon attack, and are currently rejecting more modern chemicals. Please provide an efficient Neolithic solution that will still prove effective.
+bounty-description-bagels = It's breakfast time.
+bounty-description-bear-hide = The Space Chicago Space Bears' mascot costumes were destroyed in a fire, and there's going to be a riot if Spacey The Bear can't make an appearance at the big game.
+bounty-description-muffins = We've got a load of civilians here from the syndicate who just lost their homes in a raid. Send us some muffins for our complimentary Apology Service.
+bounty-description-suppermatter = OH MY GOD NANOTRASEN HAS FINALLY MADE THE TECH AVAILABLE I CAN FINALLY POWER THE STATION PLEASE SEND IT TO ME NOW BEFORE WE GO OFFLINE PERMANENTLY
+bounty-description-crystal = The station-standard fluorescent lights are so dull, it's making the clown depressed. Send us some color, please?
+bounty-description-mime-hardsuit = ERROR: Automatic transcription failed! No data provided.
+bounty-description-spider-meat = H-hey... My mom disappeared on your station... Can you look for her? Um... If you find her, could you send her back home? Thanks... *sniffle*
