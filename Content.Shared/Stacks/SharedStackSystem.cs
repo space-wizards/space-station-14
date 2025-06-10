@@ -119,7 +119,7 @@ namespace Content.Shared.Stacks
 
         public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component, false))
                 return;
 
             // Do nothing if amount is already the same.
