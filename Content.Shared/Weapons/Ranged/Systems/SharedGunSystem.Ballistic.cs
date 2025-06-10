@@ -8,7 +8,7 @@ using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes; // 🌟Starlight🌟
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -16,7 +16,7 @@ public abstract partial class SharedGunSystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!; // 🌟Starlight🌟
 
 
     protected virtual void InitializeBallistic()
