@@ -1,10 +1,7 @@
 - type: construction
-  name: cloth wraps
   id: ClothingClothWrap
   graph: ClothingClothWrap
   startNode: start
   targetNode: shoes
   category: construction-category-clothing
-  description: A roll of treated canvas used for wrapping claws or paws.
-  icon: { sprite: _Starlight/Clothing/clothWrap.rsi, state: icon }
   objectType: Item
