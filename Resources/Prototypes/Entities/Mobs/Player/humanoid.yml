@@ -191,6 +191,31 @@
       prototypes: [ ERTChaplainGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
 
+#- type: entity
+#  parent: RandomHumanoidSpawnerERTChaplainEVA
+#  id: RandomHumanoidSpawnerERTChaplainArmed
+#  name: ERT paladin
+#  suffix: ERTRole, Armed, EVA
+#  components:
+#  - type: Sprite
+#    sprite: Markers/jobs.rsi
+#    state: ertchaplainarmed # Todo: Add job sprites
+#  - type: RandomHumanoidSpawner
+#    settings: ERTChaplainArmed
+#
+#- type: randomHumanoidSettings
+#  id: ERTChaplainArmed
+#  parent: ERTChaplain
+#  components:
+#  - type: RandomMetadata
+#    nameSegments:
+#    - NamesMilitaryFirst # Todo: Add 'paladin' name
+#    - NamesMilitaryLast
+#    nameFormat: name-format-ert
+#  - type: Loadout
+#    prototypes: [ ERTChaplainGearArmed ]
+#    roleLoadout: [ RoleSurvivalEVA ]
+
 ## ERT Janitor
 
 - type: entity
