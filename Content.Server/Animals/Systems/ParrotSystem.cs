@@ -164,9 +164,16 @@ public sealed partial class ParrotSystem : EntitySystem
 
         var message = _random.Pick(entity.Comp.SpeechMemory);
 
-        _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, ChatTransmitRange.Normal);
+        // choose between radio and chat
+        if (_random.Prob(0.5f))
+        {
+            _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, ChatTransmitRange.Normal);
+        }
+        else
+        {
+            TrySpeakRadio(entity, message);
+        }
 
-        TrySpeakRadio(entity, message);
     }
 
     private bool TrySpeakRadio(Entity<ParrotComponent> entity, string message)
@@ -179,16 +186,16 @@ public sealed partial class ParrotSystem : EntitySystem
 
         // accentuate for radio. squawk. this isn't great, obviously
         // also results in a different accent result between chat parrot and radio parrot
+        // if this ends up being such that the radio is chosen alongside chat
         if (TryComp<ParrotAccentComponent>(entity, out var accentComponent))
         {
             var accentedEntity = new Entity<ParrotAccentComponent>(entity, accentComponent);
             message = _parrotAccent.Accentuate(accentedEntity, message);
         }
 
-        foreach (var channel in radio.Channels)
-        {
-            _radio.SendRadioMessage(entity, message, _proto.Index<RadioChannelPrototype>(channel), item.Value);
-        }
+        // choose random channel
+        var channel = _random.Pick(radio.Channels);
+        _radio.SendRadioMessage(entity, message, _proto.Index<RadioChannelPrototype>(channel), item.Value);
 
         return true;
     }
