@@ -16,6 +16,8 @@
     canCollide: false
   - type: DragInsertContainer
     containerId: storage
+  - type: ExitContainerOnMove
+    containerId: storage
   - type: ContainerContainer
     containers:
       storage: !type:ContainerSlot

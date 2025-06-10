@@ -1,6 +1,7 @@
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Movement.Events;
 using Robust.Shared.Containers;
+using Content.Shared.Bed.Sleep;
 
 namespace Content.Shared.Containers;
 
@@ -23,6 +24,10 @@ public sealed class ExitContainerOnMoveSystem : EntitySystem
             return;
 
         if (!_container.TryGetContainer(ent, comp.ContainerId, out var container, containerManager) || !container.Contains(args.Entity))
+            return;
+
+        //🌟Starlight🌟 Prevent sleping entities from exiting containers
+        if (TryComp<SleepingComponent>(args.Entity, out _))
             return;
 
         _climb.ForciblySetClimbing(args.Entity, ent);
