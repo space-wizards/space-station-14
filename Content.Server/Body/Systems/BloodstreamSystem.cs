@@ -134,16 +134,8 @@ public sealed class BloodstreamSystem : EntitySystem
                 // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
                 TryModifyBloodLevel(uid, (-bloodstream.BleedAmount), bloodstream);
 
-                if (!HasComp<HemophiliaComponent>(uid))
-                {
-                    // Bleed rate is reduced by the bleed reduction amount in the bloodstream component.
-                    TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
-                }
-                else
-                {
-                    TryModifyBleedAmount(uid, -bloodstream.HemophiliacBleedReductionAmount, bloodstream);
-                }
-            }
+                // The rate in which stacks are reduced. Think of it like the rate at which your blood clots
+                TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
 
             // deal bloodloss damage if their blood level is below a threshold.
             var bloodPercentage = GetBloodLevelPercentage(uid, bloodstream);
