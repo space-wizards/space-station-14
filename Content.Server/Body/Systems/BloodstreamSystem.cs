@@ -19,6 +19,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Speech.EntitySystems;
+using Content.Shared.Traits.Assorted;
 using Robust.Server.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -132,8 +133,16 @@ public sealed class BloodstreamSystem : EntitySystem
             {
                 // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
                 TryModifyBloodLevel(uid, (-bloodstream.BleedAmount), bloodstream);
-                // Bleed rate is reduced by the bleed reduction amount in the bloodstream component.
-                TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
+
+                if (!HasComp<HemophiliaComponent>(uid))
+                {
+                    // Bleed rate is reduced by the bleed reduction amount in the bloodstream component.
+                    TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
+                }
+                else
+                {
+                    TryModifyBleedAmount(uid, -bloodstream.HemophiliacBleedReductionAmount, bloodstream);
+                }
             }
 
             // deal bloodloss damage if their blood level is below a threshold.

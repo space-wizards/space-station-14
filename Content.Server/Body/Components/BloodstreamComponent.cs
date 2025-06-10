@@ -51,6 +51,12 @@ namespace Content.Server.Body.Components
         public float BleedReductionAmount = 0.33f;
 
         /// <summary>
+        ///     How much should bleeding be reduced every update interval for the hemophilia trait?
+        /// </summary>
+        [DataField]
+        public float HemophiliacBleedReductionAmount = 0.10f;
+
+        /// <summary>
         ///     How high can <see cref="BleedAmount"/> go?
         /// </summary>
         [DataField]
