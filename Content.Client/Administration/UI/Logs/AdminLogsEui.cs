@@ -1,5 +1,9 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
+using System.Text;
+using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Eui;
+using Content.Client.Humanoid;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
@@ -15,6 +19,12 @@ public sealed class AdminLogsEui : BaseEui
 {
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+    [Dependency] private readonly IFileDialogManager _dialogManager = default!;
+    [Dependency] private readonly ILogManager _log = default!;
+
+    private ISawmill _sawmill;
+
+    private bool _currentlyExportingLogs = false;
 
     public AdminLogsEui()
     {
@@ -26,6 +36,9 @@ public sealed class AdminLogsEui : BaseEui
         LogsControl.RefreshButton.OnPressed += _ => RequestLogs();
         LogsControl.NextButton.OnPressed += _ => NextLogs();
         LogsControl.PopOutButton.OnPressed += _ => PopOut();
+        LogsControl.ExportLogs.OnPressed += _ => ExportLogs();
+
+        _sawmill = _log.GetSawmill("profile.editor");
     }
 
     private WindowRoot? Root { get; set; }
@@ -72,6 +85,68 @@ public sealed class AdminLogsEui : BaseEui
         LogsControl.NextButton.Disabled = true;
         var request = new NextLogsRequest();
         SendMessage(request);
+    }
+
+    private async void ExportLogs()
+    {
+        if (_currentlyExportingLogs)
+            return;
+
+        _currentlyExportingLogs = true;
+        LogsControl.ExportLogs.Disabled = true;
+
+        var file = await _dialogManager.SaveFile(new FileDialogFilters(new FileDialogFilters.Group("csv")));
+
+        if (file == null)
+            return;
+
+        try
+        {
+            await using var writer = new StreamWriter(file.Value.fileStream);
+            var textFile = new StringBuilder();
+            foreach (var child in LogsControl.LogsContainer.Children)
+            {
+                if (child is not AdminLogLabel log || !child.Visible)
+                    continue;
+
+                var entry = new StringBuilder();
+
+                // I swear to god if someone adds ,s or "s to the other fields...
+                entry.Append(log.Log.Date);
+                entry.Append(',');
+                entry.Append(log.Log.Id);
+                entry.Append(',');
+                entry.Append(log.Log.Impact);
+                entry.Append(',');
+                // Message
+                entry.Append('"');
+                entry.Append(log.Log.Message.Replace("\"", "\\\""));
+                entry.Append('"');
+                // End of message
+                entry.Append(',');
+
+                for (var i = 0; i < log.Log.Players.Length; i++)
+                {
+                    entry.Append(log.Log.Players[i] + (i == log.Log.Players.Length - 1 ? "" : " "));
+                }
+
+                entry.Append(',');
+                entry.Append(log.Log.Type);
+
+                textFile.AppendLine(entry.ToString());
+            }
+            await writer.WriteLineAsync(textFile.ToString());
+        }
+        catch (Exception exc)
+        {
+            _sawmill.Error($"Error when exporting admin log:\n{exc.StackTrace}");
+        }
+        finally
+        {
+            await file.Value.fileStream.DisposeAsync();
+            _currentlyExportingLogs = false;
+            LogsControl.ExportLogs.Disabled = false;
+        }
     }
 
     private void PopOut()
