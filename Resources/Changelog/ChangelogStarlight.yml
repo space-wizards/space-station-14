@@ -7088,4 +7088,11 @@ Entries:
   id: 979
   time: '2025-06-10T21:07:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/793
+- author: STARLIGHT TEAM
+  changes:
+  - message: Dynamic job icon sizing in the lobby.
+    type: Fix
+  id: 980
+  time: '2025-06-10T22:45:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/808
 
