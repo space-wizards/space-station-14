@@ -10,6 +10,7 @@ using Content.Server.Speech.EntitySystems;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Radio;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
@@ -24,6 +25,7 @@ public sealed partial class ParrotSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
@@ -45,6 +47,9 @@ public sealed partial class ParrotSystem : EntitySystem
         StartListening(entity);
     }
 
+    /// <summary>
+    /// Start listening for new sentences to memorize
+    /// </summary>
     private void StartListening(Entity<ParrotComponent> entity)
     {
         if (entity.Comp.Listening)
@@ -55,6 +60,9 @@ public sealed partial class ParrotSystem : EntitySystem
         EnsureComp<ActiveListenerComponent>(entity);
     }
 
+    /// <summary>
+    /// StartListening overload for update cycle
+    /// </summary>
     private void StartListening(EntityUid uid, ParrotComponent parrot)
     {
         if (parrot.Listening)
@@ -65,6 +73,9 @@ public sealed partial class ParrotSystem : EntitySystem
         EnsureComp<ActiveListenerComponent>(uid);
     }
 
+    /// <summary>
+    /// Stop listening
+    /// </summary>
     private void StopListening(Entity<ParrotComponent> entity)
     {
         if (!entity.Comp.Listening)
@@ -75,18 +86,28 @@ public sealed partial class ParrotSystem : EntitySystem
         RemCompDeferred<ActiveListenerComponent>(entity);
     }
 
+    /// <summary>
+    /// Listen callback for when a nearby chat message is received
+    /// </summary>
     private void OnListen(Entity<ParrotComponent> entity, ref ListenEvent args)
     {
-        Learn(entity, args.Message, args.Source);
+        TryLearn(entity, args.Message, args.Source);
     }
 
+    /// <summary>
+    /// Callback for when a radio message is received
+    /// </summary>
     private void OnRadioReceive(Entity<ParrotComponent> entity, ref RadioReceiveEvent args)
     {
-        Learn(entity, args.Message, args.MessageSource);
+        TryLearn(entity, args.Message, args.MessageSource);
     }
 
-    private void Learn(Entity<ParrotComponent> entity, string incomingMessage, EntityUid source)
+    /// <summary>
+    /// Try to learn a new message
+    /// </summary>
+    private void TryLearn(Entity<ParrotComponent> entity, string incomingMessage, EntityUid source)
     {
+        // fail to learn "Urist mctider is stabbing me". Succeed in learning "nuh uh"
         if (!_random.Prob(entity.Comp.LearnChance))
             return;
 
@@ -108,6 +129,9 @@ public sealed partial class ParrotSystem : EntitySystem
         RaiseLocalEvent(entity, ref learnEvent);
     }
 
+    /// <summary>
+    /// Callback for when a parrot succeeds in learning a new message
+    /// </summary>
     private void OnLearn(Entity<ParrotComponent> entity, ref ParrotLearnEvent args)
     {
         // set new time for learn interval
@@ -122,11 +146,10 @@ public sealed partial class ParrotSystem : EntitySystem
             entity.Comp.NextSpeakInterval = _gameTiming.CurTime + randomSpeakInterval;
         }
 
+        // raise an event that we're trying to learn something
         var tryLearnEvent = new ParrotTryLearnEvent(args.Message, args.Teacher);
         RaiseLocalEvent(entity, ref tryLearnEvent);
 
-        // expect to be canceled if dead or something
-        // potentially also if poly has more elaborate learning stuff
         if (tryLearnEvent.Cancelled)
             return;
 
@@ -144,26 +167,36 @@ public sealed partial class ParrotSystem : EntitySystem
             entity.Comp.SpeechMemory[replaceIdx] = args.Message;
         }
 
-
+        // if there is no cooldown, don't stop listening
         if (entity.Comp.LearnCooldown == 0.0f)
             return;
 
         StopListening(entity);
     }
 
+    /// <summary>
+    /// Callback for when a parrot wants to say something
+    /// </summary>
     private void OnSpeak(Entity<ParrotComponent> entity, ref ParrotSpeakEvent args)
     {
-        if (!HasComp<SpeechComponent>(entity))
+        // can't talk if you don't have a speech component
+        if (!TryComp<SpeechComponent>(entity, out var speech))
             return;
 
+        // or if the speech component is disabled
+        if (!speech.Enabled)
+            return;
+
+        // set a new time for the speak interval
         var intervalSeconds = _random.NextFloat(entity.Comp.MinSpeakInterval, entity.Comp.MaxSpeakInterval);
         var randomSpeakInterval = TimeSpan.FromSeconds(intervalSeconds);
 
         entity.Comp.NextSpeakInterval = _gameTiming.CurTime + randomSpeakInterval;
 
+        // get a random message from the memory
         var message = _random.Pick(entity.Comp.SpeechMemory);
 
-        // coin flip choice between radio and chat
+        // choice between radio and chat
         // if talking on the radio doesn't work, will fall back to regular chat
         if (_random.Prob(entity.Comp.RadioAttemptChance) && TrySpeakRadio(entity, message))
             return;
@@ -171,6 +204,9 @@ public sealed partial class ParrotSystem : EntitySystem
         _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, ChatTransmitRange.Normal);
     }
 
+    /// <summary>
+    /// Attempts to speak on the radio. Returns false if there is no radio or some other weird stuff happens
+    /// </summary>
     private bool TrySpeakRadio(Entity<ParrotComponent> entity, string message)
     {
         if (!_inventory.TryGetSlotEntity(entity, "ears", out var item))
@@ -202,6 +238,10 @@ public sealed partial class ParrotSystem : EntitySystem
         var query = EntityQueryEnumerator<ParrotComponent>();
         while (query.MoveNext(out var uid, out var parrot))
         {
+            // can't do anything when crit
+            if (_mobState.IsIncapacitated(uid))
+                return;
+
             if (!parrot.Listening && currentGameTime > parrot.NextLearnInterval)
                 StartListening(uid, parrot);
 
