@@ -10,7 +10,7 @@
             amount: 3
             doAfter: 5
           - tag: Chopsticks
-            name: chopsticks
+            name: construction-graph-tag-chopsticks
             icon:
               sprite: Objects/Misc/chopstick.rsi
               state: icon

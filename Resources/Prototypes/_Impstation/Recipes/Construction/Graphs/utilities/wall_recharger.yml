@@ -60,7 +60,7 @@
         doAfter: 1
       - tag: WeaponCapacitorRechargerCircuitboard
         store: machine_board
-        name: "recharger machine board"
+        name: construction-graph-tag-recharger-machine-board
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "charger_APC"

@@ -1,43 +1,31 @@
 - type: construction
-  name: directional uranium window
   id: UraniumWindowDirectional
   graph: WindowDirectional
   startNode: start
   targetNode: uraniumWindowDirectional
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Clear, with a green tint.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/directional.rsi
-    state: uranium_window
   objectType: Structure
   placementMode: SnapgridCenter
 
 - type: construction
-  name: directional reinforced uranium window
   id: UraniumReinforcedWindowDirectional
   graph: WindowDirectional
   startNode: start
   targetNode: uraniumReinforcedWindowDirectional
   category: construction-category-structures
   canBuildInImpassable: true
-  description: Clear and even tougher, with a green tint.
   conditions:
     - !type:EmptyOrWindowValidInTile
     - !type:NoWindowsInTile
-  icon:
-    sprite: Structures/Windows/directional.rsi
-    state: uranium_reinforced_window
   objectType: Structure
   placementMode: SnapgridCenter
 
 - type: construction
   id: Bonfire
-  name: bonfire
-  description: What can be better than a late evening under the sky with guitar and friends?
   graph: Bonfire
   startNode: start
   targetNode: bonfire
@@ -45,40 +33,27 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: Structures/Decoration/bonfire.rsi
-    state: bonfire
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: reinforced secret door
   id: SecretReinf
   graph: SecretReinf
   startNode: start
   targetNode: reinfSecretDoor
   category: construction-category-structures
-  description: A secret door for the wall.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
-  icon:
-    sprite: _Impstation/Structures/Doors/secret_reinf.rsi
-    state: closed
   conditions:
     - !type:TileNotBlocked
 
 - type: construction
-  name: mining wall
   id: MiningWall
   graph: Girder
   startNode: start
   targetNode: miningWall
   category: construction-category-structures
-  description: Rugged and heat-resistant.
-  icon:
-    sprite: Structures/Walls/mining.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -87,16 +62,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: interior mining wall
   id: InteriorMiningWall
   graph: Girder
   startNode: start
   targetNode: miningInteriorWall
   category: construction-category-structures
-  description: Rugged and heat-resistant.
-  icon:
-    sprite: _Impstation/Structures/Walls/mininginterior.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -105,16 +75,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: diagonal mining wall
   id: DiagonalMiningWall
   graph: Girder
   startNode: start
   targetNode: diagonalMiningWall
   category: construction-category-structures
-  description: Rugged and heat-resistant.
-  icon:
-    sprite: Structures/Walls/mining_diagonal.rsi
-    state: state0
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true
@@ -123,16 +88,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: tech wall
   id: TechWall
   graph: Girder
   startNode: start
   targetNode: techWall
   category: construction-category-structures
-  description: Technical!
-  icon:
-    sprite: _Impstation/Structures/Walls/techwall.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -141,16 +101,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: lit tech wall
   id: TechWallUnshaded
   graph: Girder
   startNode: start
   targetNode: techWallUnshaded
   category: construction-category-structures
-  description: Technically not radioactive!
-  icon:
-    sprite: _Impstation/Structures/Walls/techwall.rsi
-    state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -159,16 +114,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: diagonal tech wall
   id: DiagonalTechWall
   graph: Girder
   startNode: start
   targetNode: diagonalTechWall
   category: construction-category-structures
-  description: Technical!
-  icon:
-    sprite: _Impstation/Structures/Walls/techwall_diagonal.rsi
-    state: state0
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true

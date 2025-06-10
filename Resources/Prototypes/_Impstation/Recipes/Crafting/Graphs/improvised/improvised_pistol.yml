@@ -10,17 +10,17 @@
         icon:
           sprite: Objects/Misc/pens.rsi
           state: pen
-        name: Pen
+        name: construction-graph-tag-pen
       - tag: ModularReceiver
         icon:
           sprite: Objects/Misc/modular_receiver.rsi
           state: icon
-        name: modular receiver
+        name: construction-graph-tag-modular-receiver
       - tag: MakeshiftLoader
         icon:
           sprite: _Impstation/Objects/Misc/makeshift_loader.rsi
           state: icon
-        name: makeshift loader
+        name: construction-graph-tag-makeshift-loader
       - material: Steel
         amount: 5
       - material: Cloth

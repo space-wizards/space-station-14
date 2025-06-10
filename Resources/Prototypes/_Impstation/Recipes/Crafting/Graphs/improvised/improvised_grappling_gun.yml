@@ -10,13 +10,13 @@
         icon:
           sprite: Structures/Piping/Atmospherics/pipe.rsi
           state: pipeStraight
-        name: a pipe
+        name: construction-graph-tag-pipe
       - tag: Handcuffs
         icon:
           sprite: Objects/Misc/cablecuffs.rsi
           state: cuff
           color: red
-        name: cuffs
+        name: construction-graph-tag-cuffs
       - material: Cable
         amount: 15
       - material: Steel
@@ -31,7 +31,7 @@
         icon:
           sprite: Objects/Specific/Janitorial/plunger.rsi
           state: plunger
-        name: a plunger
+        name: construction-graph-tag-plunger
         doAfter: .5
   - node: hook
     entity: WeaponGrapplingGunImprovisedStep2
@@ -45,7 +45,7 @@
         icon:
           sprite: Objects/Tanks/generic.rsi
           state: icon
-        name: any gas tank
+        name: construction-graph-tag-gas-tank
         doAfter: .5
   - node: doohickey
     entity: WeaponGrapplingGunImprovised
