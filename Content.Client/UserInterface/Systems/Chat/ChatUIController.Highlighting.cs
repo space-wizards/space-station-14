@@ -14,6 +14,7 @@ namespace Content.Client.UserInterface.Systems.Chat;
 /// </summary>
 public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSystem>
 {
+    [Dependency] private readonly ILocalizationManager _loc = default!;
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     private static readonly Regex StartDoubleQuote = new("\"$");
@@ -150,7 +151,7 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
         // Convert the job title to kebab-case and use it as a key for the loc file.
         string jobKey = job.Replace(' ', '-').ToLower();
 
-        if (Loc.TryGetString($"highlights-{jobKey}", out var jobMatches))
+        if (_loc.TryGetString($"highlights-{jobKey}", out var jobMatches))
             newHighlights += '\n' + jobMatches.Replace(", ", "\n");
 
         UpdateHighlights(newHighlights);
