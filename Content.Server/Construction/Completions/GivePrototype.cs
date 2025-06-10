@@ -1,3 +1,4 @@
+using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -25,7 +26,7 @@ public sealed partial class GivePrototype : IGraphAction
 
         if (EntityPrototypeHelpers.HasComponent<StackComponent>(Prototype))
         {
-            var stackSystem = entityManager.EntitySysManager.GetEntitySystem<SharedStackSystem>();
+            var stackSystem = entityManager.EntitySysManager.GetEntitySystem<StackSystem>();
             var stacks = stackSystem.SpawnMultiple(Prototype, Amount, userUid ?? uid);
 
             if (userUid is null || !entityManager.TryGetComponent(userUid, out HandsComponent? handsComp))

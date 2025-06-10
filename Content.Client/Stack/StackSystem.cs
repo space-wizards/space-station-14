@@ -35,10 +35,6 @@ public sealed class StackSystem : SharedStackSystem
 
         base.SetCount(ent, amount);
 
-        // base.SetCount might be deleting this
-        if (EntityManager.IsQueuedForDeletion(ent))
-            return;
-
         if (ent.Comp.Lingering &&
             TryComp<SpriteComponent>(ent.Owner, out var sprite))
         {
@@ -51,6 +47,13 @@ public sealed class StackSystem : SharedStackSystem
             {
                 _sprite.LayerSetColor((ent.Owner, sprite), i, color);
             }
+        }
+
+        // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
+        if (ent.Comp.Count <= 0 && !ent.Comp.Lingering)
+        {
+            Xform.DetachEntity(ent.Owner, Transform(ent.Owner));
+            return;
         }
 
         ent.Comp.UiUpdateNeeded = true;

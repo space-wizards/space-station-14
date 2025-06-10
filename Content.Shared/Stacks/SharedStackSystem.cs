@@ -5,10 +5,8 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage.EntitySystems;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -16,25 +14,19 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Stacks;
 
-/// <summary>
-///     Entity system that handles everything relating to stacks.
-///     This is a good example for learning how to code in an ECS manner.
-/// </summary>
 [UsedImplicitly]
 public abstract class SharedStackSystem : EntitySystem
 {
-    [Dependency] private readonly   IGameTiming _gameTiming = default!;
-    [Dependency] private readonly   IPrototypeManager _prototype = default!;
-    [Dependency] private readonly   IViewVariablesManager _vvm = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IViewVariablesManager _vvm = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedHandsSystem Hands = default!;
     [Dependency] protected readonly SharedTransformSystem Xform = default!;
-    [Dependency] private readonly   EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly   SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private readonly   SharedStorageSystem _storage = default!;
-
-    public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
+    [Dependency] private readonly SharedStorageSystem _storage = default!;
 
     public override void Initialize()
     {
@@ -45,7 +37,6 @@ public abstract class SharedStackSystem : EntitySystem
         SubscribeLocalEvent<StackComponent, ComponentStartup>(OnStackStarted);
         SubscribeLocalEvent<StackComponent, ExaminedEvent>(OnStackExamined);
         SubscribeLocalEvent<StackComponent, InteractUsingEvent>(OnStackInteractUsing);
-        SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
 
         _vvm.GetTypeHandler<StackComponent>()
             .AddPath(nameof(StackComponent.Count), (_, comp) => comp.Count, SetCount);
@@ -169,10 +160,6 @@ public abstract class SharedStackSystem : EntitySystem
 
         Appearance.SetData(stackEnt, StackVisuals.Actual, stackComp.Count);
         RaiseLocalEvent(stackEnt, new StackCountChangedEvent(old, stackComp.Count));
-
-        // Queue delete stack if count reaches zero.
-        if (ent.Comp.Count <= 0 && !ent.Comp.Lingering)
-            PredictedQueueDel(ent.Owner);
     }
 
     // TODO
@@ -344,137 +331,6 @@ public abstract class SharedStackSystem : EntitySystem
     }
 
     #endregion
-    #region Spawning
-
-    /// <summary>
-    ///     Try to split this stack into two. Returns a non-null <see cref="Robust.Shared.GameObjects.EntityUid"/> if successful.
-    /// </summary>
-    public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, StackComponent? stack = null)
-    {
-        if (!Resolve(uid, ref stack))
-            return null;
-
-        // Try to remove the amount of things we want to split from the original stack...
-        if (!Use((uid, stack), amount))
-            return null;
-
-        // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
-        var prototype = _prototype.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
-            ? stackType.Spawn.ToString()
-            : Prototype(uid)?.ID;
-
-        // Set the output parameter in the event instance to the newly split stack.
-        var entity = PredictedSpawnAtPosition(prototype, spawnPosition);
-
-        if (TryComp(entity, out StackComponent? stackComp))
-        {
-            // Set the split stack's count.
-            SetCount((entity, stackComp), amount);
-            // Don't let people dupe unlimited stacks
-            stackComp.Unlimited = false;
-        }
-
-        var ev = new StackSplitEvent(entity);
-        RaiseLocalEvent(uid, ref ev);
-
-        return entity;
-    }
-
-    /// <summary>
-    ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
-    /// </summary>
-    public EntityUid Spawn(int amount, ProtoId<StackPrototype> id, EntityCoordinates spawnPosition)
-    {
-        var proto = _prototype.Index(id);
-        return Spawn(amount, proto, spawnPosition);
-    }
-
-    /// <summary>
-    ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
-    /// </summary>
-    public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
-    {
-        // Set the output result parameter to the new stack entity...
-        var entity = PredictedSpawnAtPosition(prototype.Spawn, spawnPosition);
-        var stack = Comp<StackComponent>(entity);
-
-        // And finally, set the correct amount!
-        SetCount((entity, stack), amount);
-        return entity;
-    }
-
-    /// <summary>
-    ///     Say you want to spawn 97 units of something that has a max stack count of 30.
-    ///     This would spawn 3 stacks of 30 and 1 stack of 7.
-    /// </summary>
-    public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityCoordinates spawnPosition)
-    {
-        if (amount <= 0)
-        {
-            Log.Error(
-                $"Attempted to spawn an invalid stack: {entityPrototype}, {amount}. Trace: {Environment.StackTrace}");
-            return new();
-        }
-
-        var spawns = CalculateSpawns(entityPrototype, amount);
-
-        var spawnedEnts = new List<EntityUid>();
-        foreach (var count in spawns)
-        {
-            var entity = PredictedSpawnAtPosition(entityPrototype, spawnPosition);
-            spawnedEnts.Add(entity);
-            SetCount((entity, null), count);
-        }
-
-        return spawnedEnts;
-    }
-
-    /// <inheritdoc cref="SpawnMultiple(string,int,EntityCoordinates)"/>
-    public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityUid target)
-    {
-        if (amount <= 0)
-        {
-            Log.Error(
-                $"Attempted to spawn an invalid stack: {entityPrototype}, {amount}. Trace: {Environment.StackTrace}");
-            return new();
-        }
-
-        var spawns = CalculateSpawns(entityPrototype, amount);
-
-        var spawnedEnts = new List<EntityUid>();
-        foreach (var count in spawns)
-        {
-            var entity = PredictedSpawnNextToOrDrop(entityPrototype, target);
-            spawnedEnts.Add(entity);
-            SetCount((entity, null), count);
-        }
-
-        return spawnedEnts;
-    }
-
-    /// <summary>
-    /// Calculates how many stacks to spawn that total up to <paramref name="amount"/>.
-    /// </summary>
-    /// <param name="entityPrototype">The stack to spawn.</param>
-    /// <param name="amount">The amount of pieces across all stacks.</param>
-    /// <returns>The list of stack counts per entity.</returns>
-    private List<int> CalculateSpawns(string entityPrototype, int amount)
-    {
-        var proto = _prototype.Index<EntityPrototype>(entityPrototype);
-        proto.TryGetComponent<StackComponent>(out var stack, EntityManager.ComponentFactory);
-        var maxCountPerStack = GetMaxCount(stack);
-        var amounts = new List<int>();
-        while (amount > 0)
-        {
-            var countAmount = Math.Min(maxCountPerStack, amount);
-            amount -= countAmount;
-            amounts.Add(countAmount);
-        }
-
-        return amounts;
-    }
-
-    #endregion
     #region Event Handlers
 
     private void OnStackStarted(Entity<StackComponent> ent, ref ComponentStartup args)
@@ -535,6 +391,8 @@ public abstract class SharedStackSystem : EntitySystem
         args.Handled = true;
 
         // interaction is done, the rest is just generating a pop-up
+        if (!_gameTiming.IsFirstTimePredicted)
+            return;
 
         var popupPos = args.ClickLocation;
         var userCoords = Transform(args.User).Coordinates;
@@ -547,80 +405,23 @@ public abstract class SharedStackSystem : EntitySystem
         switch (transferred)
         {
             case > 0:
-                Popup.PopupClient($"+{transferred}", popupPos, args.User);
+                Popup.PopupCoordinates($"+{transferred}", popupPos, Filter.Local(), false);
 
                 if (GetAvailableSpace(recipientStack) == 0)
                 {
-                    Popup.PopupClient(Loc.GetString("comp-stack-becomes-full"),
-                        popupPos.Offset(new Vector2(0, -0.5f)), args.User);
+                    Popup.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
+                        popupPos.Offset(new Vector2(0, -0.5f)), Filter.Local(), false);
                 }
 
                 break;
 
             case 0 when GetAvailableSpace(recipientStack) == 0:
-                Popup.PopupClient(Loc.GetString("comp-stack-already-full"), popupPos, args.User);
+                Popup.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local(), false);
                 break;
         }
 
         var localRotation = Transform(args.Used).LocalRotation;
         _storage.PlayPickupAnimation(args.Used, popupPos, userCoords, localRotation, args.User);
-    }
-
-    private void OnStackAlternativeInteract(Entity<StackComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
-    {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.Count == 1)
-            return;
-
-        var (uid, stack) = ent;
-        var user = args.User; // Can't pass ref events into verbs
-
-        AlternativeVerb halve = new()
-        {
-            Text = Loc.GetString("comp-stack-split-halve"),
-            Category = VerbCategory.Split,
-            Act = () => UserSplit(ent, user, stack.Count / 2),
-            Priority = 1
-        };
-        args.Verbs.Add(halve);
-
-        var priority = 0;
-        foreach (var amount in DefaultSplitAmounts)
-        {
-            if (amount >= stack.Count)
-                continue;
-
-            AlternativeVerb verb = new()
-            {
-                Text = amount.ToString(),
-                Category = VerbCategory.Split,
-                Act = () => UserSplit(ent, user, amount),
-                // we want to sort by size, not alphabetically by the verb text.
-                Priority = priority
-            };
-
-            priority--;
-
-            args.Verbs.Add(verb);
-        }
-    }
-
-    private void UserSplit(Entity<StackComponent> stack, Entity<TransformComponent?> user, int amount)
-    {
-        if (!Resolve(user.Owner, ref user.Comp, false))
-            return;
-
-        if (amount <= 0)
-        {
-            Popup.PopupPredictedCursor(Loc.GetString("comp-stack-split-too-small"), user.Owner, PopupType.Medium);
-            return;
-        }
-
-        if (Split(stack.Owner, amount, user.Comp.Coordinates, stack) is not {} split)
-            return;
-
-        Hands.PickupOrDrop(user.Owner, split);
-
-        Popup.PopupPredictedCursor(Loc.GetString("comp-stack-split"), user.Owner);
     }
     #endregion
 }

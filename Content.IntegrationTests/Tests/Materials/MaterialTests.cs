@@ -1,4 +1,5 @@
 #nullable enable
+using Content.Server.Stack;
 using Content.Shared.Stacks;
 using Content.Shared.Materials;
 using Robust.Shared.GameObjects;
@@ -11,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Materials
     /// so we need some test coverage for them.
     /// </summary>
     [TestFixture]
-    [TestOf(typeof(SharedStackSystem))]
+    [TestOf(typeof(StackSystem))]
     [TestOf(typeof(MaterialPrototype))]
     public sealed class MaterialPrototypeSpawnsStackMaterialTest
     {
