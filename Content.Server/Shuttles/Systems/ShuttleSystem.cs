@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Buckle.Systems;
-using Content.Server.Doors.Systems;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Shuttles.Components;
@@ -10,10 +9,7 @@ using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
-using Content.Shared.GameTicking;
 using Content.Shared.Light.Components;
-using Content.Shared.Inventory;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Systems;
@@ -21,7 +17,6 @@ using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.EntitySerialization.Systems;
@@ -53,7 +48,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly DockingSystem _dockSystem = default!;
     [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
@@ -73,8 +67,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     private EntityQuery<MapGridComponent> _gridQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
-
-    public const float TileDensityMultiplier = 0.5f;
 
     public override void Initialize()
     {
@@ -97,22 +89,12 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         SubscribeLocalEvent<ShuttleComponent, FTLCompletedEvent>(OnFTLCompleted);
 
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
-        SubscribeLocalEvent<FixturesComponent, GridFixtureChangeEvent>(OnGridFixtureChange);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
         UpdateHyperspace();
-    }
-
-    private void OnGridFixtureChange(EntityUid uid, FixturesComponent manager, GridFixtureChangeEvent args)
-    {
-        foreach (var fixture in args.NewFixtures)
-        {
-            _physics.SetDensity(uid, fixture.Key, fixture.Value, TileDensityMultiplier, false, manager);
-            _fixtures.SetRestitution(uid, fixture.Key, fixture.Value, 0.1f, false, manager);
-        }
     }
 
     private void OnGridInit(GridInitializeEvent ev)

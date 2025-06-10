@@ -140,10 +140,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 14
+          Quantity: 22
         - ReagentId: Vitamin
           Quantity: 6
 
@@ -159,10 +159,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 14
+          Quantity: 22
         - ReagentId: Vitamin
           Quantity: 6
 
@@ -207,6 +207,15 @@
       - onion
   - type: Sprite
     state: softtaco
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 18
   - type: Tag
     tags:
       - Meat
