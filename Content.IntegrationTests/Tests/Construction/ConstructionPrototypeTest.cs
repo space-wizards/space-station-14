@@ -204,7 +204,7 @@ namespace Content.IntegrationTests.Tests.Construction
                 foreach (var (displayName, recipeList) in nameUsers)
                 {
                     // Make sure that each name only has one use
-                    Assert.That(recipeList, Has.Count.EqualTo(1),
+                    Assert.That(recipeList, Has.Count.AtMost(1),
                         $"Multiple construction prototypes have the display name '{displayName}': {string.Join(", ", recipeList)}");
                 }
             });
