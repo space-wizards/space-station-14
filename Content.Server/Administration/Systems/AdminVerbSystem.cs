@@ -1,12 +1,15 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
 using Content.Server.Disposal.Tube;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
-using Content.Server.Mind.Commands;
 using Content.Server.Mind;
+using Content.Server.Mind.Commands;
 using Content.Server.Prayer;
+using Content.Server.Preferences.Managers;
+using Content.Server.Silicons.Laws;
 using Content.Server.Silicons.Laws;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
@@ -17,32 +20,30 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
-using System.Linq;
-using Content.Server.Silicons.Laws;
-using Content.Shared.Humanoid;
-using Content.Shared.Movement.Components;
-using Content.Shared.Silicons.Laws.Components;
-using Robust.Server.Player;
-using Content.Shared.Silicons.StationAi;
-using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Administration.Systems
@@ -75,6 +76,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
         [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
+        [Dependency] private readonly IServerPreferencesManager _prefsManager = default!; // Starlight
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -153,7 +155,8 @@ namespace Content.Server.Administration.Systems
 
                             var stationUid = _stations.GetOwningStation(args.Target);
 
-                            var profile = _humanoidAppearance.GetBaseProfile(args.Target);
+                            var pref = _prefsManager.GetPreferences(p.UserId);
+                            var profile = pref.GetRandomEnabledProfile();
                             var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
 
                             if (_mindSystem.TryGetMind(args.Target, out var mindId, out var mindComp))
