@@ -24,7 +24,7 @@ public sealed partial class ChatUIController : IOnSystemChanged<CharacterInfoSys
     /// <summary>
     ///     The list of words to be highlighted in the chatbox.
     /// </summary>
-    private List<string> _highlights = new();
+    private readonly List<string> _highlights = new();
 
     /// <summary>
     ///     The string holding the hex color used to highlight words.
