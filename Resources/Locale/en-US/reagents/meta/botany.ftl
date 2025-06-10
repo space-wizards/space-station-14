@@ -23,4 +23,4 @@ reagent-name-diethylamine = diethylamine
 reagent-desc-diethylamine = A very potent fertilizer, treats plants with nutrients, eliminates pests, and sometimes it can even speed up growth.
 
 reagent-name-sedin = sedin
-reagent-desc-sedin = A modified version of diethylamine that can restore seeds on plants at the cost of potency.
+reagent-desc-sedin = An unstable, reactive substance, that can restore seeds on plants at the cost of potency.

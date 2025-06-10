@@ -171,3 +171,78 @@
             - !type:ReagentThreshold
               min: 12
           probability: 0.15
+
+- type: reagent
+  id: Arcticine
+  name: reagent-name-arcticine
+  group: Medicine
+  desc: reagent-desc-arcticine
+  physicalDesc: reagent-physical-desc-frosty
+  slipData:
+    requiredSlipSpeed: 3.5
+  flavor: cold
+  color: "#b3f1ff"
+  worksOnTheDead: true
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: IceCrust
+    maxOnTileWhitelist:
+      tags: [ Ice ]
+  - !type:ExtinguishTileReaction { }
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistance: false
+        damage:
+          types:
+            Cold: 0.05
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 160.0
+        amount: -30000
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 0.1
+      - !type:HealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Alive
+        damage:
+          types:
+            Heat: -2.0
+      - !type:HealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Critical
+        damage:
+          types:
+            Heat: -1.0
+      - !type:HealthChange
+        conditions:
+        - !type:MobStateCondition
+          mobstate: Dead
+        damage:
+          types:
+            Heat: -0.5
+      - !type:PopupMessage
+        probability: 0.05
+        visualType: MediumCaution
+        messages: [ "fresium-effect-freeze-insides" ]
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          min: 160.0
+        amount: -80000.0

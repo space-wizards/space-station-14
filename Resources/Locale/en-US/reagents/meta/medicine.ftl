@@ -47,7 +47,7 @@ reagent-name-leporazine = leporazine
 reagent-desc-leporazine = A chemical used to stabilize body temperature and rapidly cure cold damage. Great for unprotected EVA travel, but prevents the use of cryogenic tubes.
 
 reagent-name-barozine = barozine
-reagent-desc-barozine = A potent chemical that prevents pressure damage. Causes extreme stress on the body.
+reagent-desc-barozine = A gnarly chemical which reacts with blood and crystalizes into hard pillar like structures, propping up your skin against hazardous pressure. Overdose makes said structures start ripping you apart.
 
 reagent-name-phalanximine = phalanximine
 reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer. Causes moderate radiation poisoning, acid burns, and vomiting on organics. Can potentially remove the death gene on plants.

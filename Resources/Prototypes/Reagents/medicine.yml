@@ -510,8 +510,8 @@
         messages: [ "leporazine-effect-temperature-adjusting" ]
         probability: 0.2
       - !type:AdjustReagent
-        reagent: Fresium
-        amount: -5
+        reagent: Arcticine
+        amount: -10.0
 
 - type: reagent
   id: Barozine
@@ -523,24 +523,25 @@
   color: "#ff867d"
   metabolisms:
     Medicine:
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
-        probability: 0.3
         damage:
           types:
-            Heat: 0.5
+            Piercing: 0.2
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold
-            min: 30
+            min: 25
         damage:
           types:
-            Poison: 3
+            Piercing: 1
+            Bloodloss: 1
       - !type:ChemVomit
         probability: 0.15
         conditions:
           - !type:ReagentThreshold
-            min: 30
+            min: 25
       - !type:GenericStatusEffect
         key: PressureImmunity
         component: PressureImmunity
@@ -1257,6 +1258,9 @@
             Heat: -4.0
             Shock: -4.0
             Caustic: -1.5
+      - !type:AdjustReagent
+        reagent: Arcticine
+        amount: -10.0
 
 - type: reagent
   id: Traumoxadone

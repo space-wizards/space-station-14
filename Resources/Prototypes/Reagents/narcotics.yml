@@ -126,11 +126,11 @@
             Poison: 0.4
       - !type:GenericStatusEffect
         key: Stun
-        time: 5.0
+        time: 2.0
         type: remove
       - !type:GenericStatusEffect
         key: KnockedDown
-        time: 5.0
+        time: 2.0
         type: Remove
       - !type:GenericStatusEffect
         key: SeeingRainbows

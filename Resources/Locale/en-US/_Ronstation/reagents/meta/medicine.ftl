@@ -12,3 +12,6 @@ reagent-desc-tetracordrazine = A potent stabilizing agent, effectively heals bru
 
 reagent-name-spessacillin = spessacillin
 reagent-desc-spessacillin = A naturally sourced poison treatment discovered in a catastrophic industrial accident. Don't worry about it, helps the cough go away.
+
+reagent-name-arcticine = arcticine
+reagent-desc-arcticine = A compound that slows the vibration of molecules directly, or in simpler terms, lowers a body's temperature. Treats burns while inflicting frostbite directly. Works regardless of the patient being alive or dead.

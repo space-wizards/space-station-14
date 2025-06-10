@@ -59,3 +59,30 @@
       amount: 1
   products:
     Spessacillin: 6
+
+- type: reaction
+  id: Barozine
+  reactants:
+    Bruizine:
+      amount: 1
+    Copper:
+      amount: 1
+    Ethanol:
+      amount: 1
+  products:
+    Barozine: 1
+
+- type: reaction
+  id: Arcticine
+  reactants:
+    Copper:
+      amount: 3
+    Phenol:
+      amount: 3
+    Radium:
+      amount: 1
+    Plasma:
+      amount: 1
+      catalyst: true
+  products:
+    Arcticine: 2

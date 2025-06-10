@@ -110,39 +110,12 @@
   id: FlashFreezeIce
   quantized: true
   reactants:
-    Fresium:
+    Arcticine:
       amount: 1
     Water:
       amount: 1
-  effects:
-  - !type:CreateGas
-    gas: Frezon
   products:
     Ice: 5
-
-- type: reaction
-  id: Fresium
-  priority: 20
-  maxTemp: 300
-  reactants:
-    Frezon:
-      amount: 3
-    Plasma:
-      amount: 1
-      catalyst: true
-    Nitrogen:
-      amount: 2
-    Cryoxadone:
-      amount: 0.22
-    TableSalt:
-      amount: 0.08
-    Water:
-      amount: 1.5
-  effects:
-  - !type:CreateGas
-    gas: Nitrogen
-  products:
-    Fresium: 5
 
 - type: reaction
   id: FiberBreakdown

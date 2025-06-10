@@ -24,14 +24,15 @@
 - type: reaction
   id: Sedin
   reactants:
-    Cryoxadone:
-      amount: 1
     RobustHarvest:
       amount: 3
-    Diethylamine: 
-      amount: 3
+    Diethylamine:
+      amount: 2
+    UnstableMutagen:
+      amount: 1
+      catalyst: true
   products:
-    Sedin: 1
+    Sedin: 2
 
 - type: reaction
   id: Left4Zed
