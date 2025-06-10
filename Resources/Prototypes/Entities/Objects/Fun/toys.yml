@@ -721,6 +721,7 @@
     wideAnimationRotation: 90
     soundHit:
       path: /Audio/Items/Toys/rawr.ogg
+    animation: WeaponArcBite
   - type: Item
     heldPrefix: blue
     storedRotation: -90
