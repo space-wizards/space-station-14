@@ -866,7 +866,8 @@
   description: An expert in quantum cracker theory
   components:
   - type: Parrot
-    learnChance: 0.1 # poly is cleverer than the other parrots okay
+    minSpeakInterval: 120 # poly is chattier
+    maxSpeakInterval: 240
   - type: Grammar
     attributes:
       proper: true

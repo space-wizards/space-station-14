@@ -2213,10 +2213,10 @@
       Unsexed: Parrot
   - type: ParrotAccent
   - type: Parrot
-    learnChance: 1.0 # set to 0.05
-    learnCooldown: 1.0 # set to 60
-    minSpeakInterval: 2.0 # set to 240 / 4 mins
-    maxSpeakInterval: 5.0 # set to 480 / 8 mins
+    learnChance: 0.4
+    learnCooldown: 60
+    minSpeakInterval: 240
+    maxSpeakInterval: 480
   - type: Inventory
     templateId: parrot
     speciesId: parrot
