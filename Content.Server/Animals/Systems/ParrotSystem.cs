@@ -127,7 +127,7 @@ public sealed partial class ParrotSystem : EntitySystem
         RaiseLocalEvent(entity, ref tryLearnEvent);
 
         // expect to be canceled if dead or something
-        // potentiall also if poly has more elaborate learning stuff
+        // potentially also if poly has more elaborate learning stuff
         if (tryLearnEvent.Cancelled)
             return;
 
@@ -176,6 +176,14 @@ public sealed partial class ParrotSystem : EntitySystem
 
         if (!TryComp<ActiveRadioComponent>(item.Value, out var radio))
             return false;
+
+        // accentuate for radio. squawk. this isn't great, obviously
+        // also results in a different accent result between chat parrot and radio parrot
+        if (TryComp<ParrotAccentComponent>(entity, out var accentComponent))
+        {
+            var accentedEntity = new Entity<ParrotAccentComponent>(entity, accentComponent);
+            message = _parrotAccent.Accentuate(accentedEntity, message);
+        }
 
         foreach (var channel in radio.Channels)
         {
