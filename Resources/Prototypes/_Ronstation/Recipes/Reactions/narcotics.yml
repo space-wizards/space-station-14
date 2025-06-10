@@ -11,3 +11,15 @@
       amount: 1
   products:
     Kronkaine: 3
+
+- type: reaction
+  id: Synaptizine
+  reactants:
+    AmmoniaBlood:
+      amount: 1
+    Ethanol:
+      amount: 1
+    Lithium:
+      amount: 1
+  products:
+    Synaptizine: 1

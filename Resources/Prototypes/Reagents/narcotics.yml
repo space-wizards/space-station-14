@@ -109,6 +109,35 @@
           min: 30
 
 - type: reagent
+  id: Synaptizine
+  name: reagent-name-synaptizine
+  group: Narcotics
+  desc: reagent-desc-synaptizine
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: sharp
+  color: "#d49a2f"
+  metabolisms:
+    Narcotic:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.4
+      - !type:GenericStatusEffect
+        key: Stun
+        time: 5.0
+        type: remove
+      - !type:GenericStatusEffect
+        key: KnockedDown
+        time: 5.0
+        type: Remove
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        time: 15.0
+        type: Add
+
+- type: reagent
   id: Stimulants
   name: reagent-name-stimulants
   group: Narcotics

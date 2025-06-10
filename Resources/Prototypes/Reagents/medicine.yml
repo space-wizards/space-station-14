@@ -728,34 +728,6 @@
         amount: -3
 
 - type: reagent
-  id: Synaptizine
-  name: reagent-name-synaptizine
-  group: Medicine
-  desc: reagent-desc-synaptizine
-  physicalDesc: reagent-physical-desc-pungent
-  flavor: medicine
-  color: "#d49a2f"
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 2
-      - !type:GenericStatusEffect
-        key: Stun
-        time: 3.0
-        type: Remove
-      - !type:GenericStatusEffect
-        key: KnockedDown
-        time: 3.0
-        type: Remove
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        time: 15.0
-        type: Remove
-
-- type: reagent
   id: TranexamicAcid
   name: reagent-name-tranexamic-acid
   group: Medicine

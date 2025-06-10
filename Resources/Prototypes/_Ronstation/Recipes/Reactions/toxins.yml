@@ -1,0 +1,11 @@
+- type: reaction
+  id: Mechanotoxin
+  reactants:
+    CopperBlood:
+      amount: 2
+    Impedrezene:
+      amount: 2
+    Phenol:
+      amount: 1
+  products:
+    Mechanotoxin: 1
