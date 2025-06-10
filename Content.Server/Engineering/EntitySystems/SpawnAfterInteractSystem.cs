@@ -1,5 +1,4 @@
 using Content.Server.Engineering.Components;
-using Content.Server.Stack;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -15,7 +14,7 @@ namespace Content.Server.Engineering.EntitySystems
     public sealed class SpawnAfterInteractSystem : EntitySystem
     {
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly SharedStackSystem _stackSystem = default!;
         [Dependency] private readonly TurfSystem _turfSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedMapSystem _maps = default!;

@@ -1,5 +1,4 @@
-﻿using Content.Server.Stack;
-using Content.Shared.Construction;
+﻿using Content.Shared.Construction;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
@@ -28,7 +27,7 @@ namespace Content.Server.Construction.Completions
             {
                 var stackEnt = entityManager.SpawnEntity(Prototype, coordinates);
                 var stack = entityManager.GetComponent<StackComponent>(stackEnt);
-                entityManager.EntitySysManager.GetEntitySystem<StackSystem>().SetCount((stackEnt, stack), Amount);
+                entityManager.EntitySysManager.GetEntitySystem<SharedStackSystem>().SetCount((stackEnt, stack), Amount);
             }
             else
             {
