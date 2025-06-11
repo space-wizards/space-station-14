@@ -28,113 +28,113 @@
     - to: smallFloorLight
       steps:
       - allTags: [LightBulb, LightNormal]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
     - to: smallFloorLightLed
       steps:
       - allTags: [LightBulb, LightLed]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
     - to: smallFloorLightDim
       steps:
       - allTags: [LightBulb, LightDim]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
     - to: smallFloorLightWarm
       steps:
       - allTags: [LightBulb, LightWarm]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
     - to: smallFloorLightCyan
       steps:
       - allTags: [LightBulb, LightCyan]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
     - to: smallFloorLightBlue
       steps:
       - allTags: [LightBulb, LightBlue]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
     - to: smallFloorLightYellow
       steps:
       - allTags: [LightBulb, LightYellow]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
     - to: smallFloorLightPink
       steps:
       - allTags: [LightBulb, LightPink]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
     - to: smallFloorLightOrange
       steps:
       - allTags: [LightBulb, LightOrange]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
     - to: smallFloorLightBlack
       steps:
       - allTags: [LightBulb, LightBlack]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
     - to: smallFloorLightRed
       steps:
       - allTags: [LightBulb, LightRed]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
     - to: smallFloorLightGreen
       steps:
       - allTags: [LightBulb, LightGreen]
-        name: "add bulb."
+        name: construction-graph-tag-light-bulb
 #tubes
     - to: floorLight
       steps:
       - allTags: [LightTube, LightNormal]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightLed
       steps:
       - allTags: [LightTube, LightLed]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightExterior
       steps:
       - allTags: [LightTube, LightExterior]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightSodium
       steps:
       - allTags: [LightTube, LightSodium]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightOld
       steps:
       - allTags: [LightTube, LightOld]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightUv
       steps:
       - allTags: [LightTube, LightUv]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightCyan
       steps:
       - allTags: [LightTube, LightCyan]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightBlue
       steps:
       - allTags: [LightTube, LightBlue]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightYellow
       steps:
       - allTags: [LightTube, LightYellow]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightPink
       steps:
       - allTags: [LightTube, LightPink]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightOrange
       steps:
       - allTags: [LightTube, LightOrange]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightBlack
       steps:
       - allTags: [LightTube, LightBlack]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightRed
       steps:
       - allTags: [LightTube, LightRed]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
     - to: floorLightGreen
       steps:
       - allTags: [LightTube, LightGreen]
-        name: "add tube."
+        name: construction-graph-tag-light-tube
 #admeme (you can't get the tube with the proper tag in-game without admin intervention)
     - to: floorLightSun
       steps:
       - allTags: [LightTube, SunTube]
-        name: "add the sun."
+        name: construction-graph-tag-light-sun
 #tube to hole
   - node: floorLight
     entity: PoweredFloorLight
@@ -142,98 +142,98 @@
     - to: metamorphicLightHole
       steps:
       - remove: LightNormal
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightLed
     entity: PoweredFloorLightLed
     edges:
     - to: metamorphicLightHole
       steps:
-        - remove: LightLed
-          name: "the tube."
+      - remove: LightLed
+        name: construction-graph-tag-light-tube
   - node: floorLightExterior
     entity: PoweredFloorLightExterior
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightExterior
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightSodium
     entity: PoweredFloorLightSodium
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightSodium
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightOld
     entity: PoweredFloorLightOld
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightOld
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightUv
     entity: PoweredFloorLightUv
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightUv
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightCyan
     entity: PoweredFloorLightCyan
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightCyan
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightBlue
     entity: PoweredFloorLightBlue
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightBlue
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightYellow
     entity: PoweredFloorLightYellow
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightYellow
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightPink
     entity: PoweredFloorLightPink
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightPink
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightOrange
     entity: PoweredFloorLightOrange
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightOrange
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightBlack
     entity: PoweredFloorLightBlack
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightBlack
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightRed
     entity: PoweredFloorLightRed
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightRed
-        name: "the tube."
+        name: construction-graph-tag-light-tube
   - node: floorLightGreen
     entity: PoweredFloorLightGreen
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightGreen
-        name: "the tube."
+        name: construction-graph-tag-light-tube
 #bulbs to hole
   - node: smallFloorLight
     entity: PoweredSmallFloorLight
@@ -241,84 +241,84 @@
     - to: metamorphicLightHole
       steps:
       - remove: LightNormal
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
   - node: smallFloorLightLed
     entity: PoweredSmallFloorLightLed
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightLed
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
   - node: smallFloorLightDim
     entity: PoweredSmallFloorLightDim
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightDim
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
   - node: smallFloorLightWarm
     entity: PoweredSmallFloorLightWarm
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightWarm
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
   - node: smallFloorLightCyan
     entity: PoweredSmallFloorLightCyan
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightCyan
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
   - node: smallFloorLightBlue
     entity: PoweredSmallFloorLightBlue
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightBlue
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
   - node: smallFloorLightYellow
     entity: PoweredSmallFloorLightYellow
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightYellow
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
   - node: smallFloorLightPink
     entity: PoweredSmallFloorLightPink
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightPink
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
   - node: smallFloorLightOrange
     entity: PoweredSmallFloorLightOrange
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightOrange
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
   - node: smallFloorLightBlack
     entity: PoweredSmallFloorLightBlack
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightBlack
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
   - node: smallFloorLightRed
     entity: PoweredSmallFloorLightRed
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightRed
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
   - node: smallFloorLightGreen
     entity: PoweredSmallFloorLightGreen
     edges:
     - to: metamorphicLightHole
       steps:
       - remove: LightGreen
-        name: "the bulb."
+        name: construction-graph-tag-light-bulb
 #admemes
   - node: floorLightSun
     entity: SunFloorLight
@@ -326,4 +326,4 @@
     - to: metamorphicLightHole
       steps:
       - remove: SunTube
-        name: "the sun. at your own risk."
+        name: construction-graph-tag-light-sun

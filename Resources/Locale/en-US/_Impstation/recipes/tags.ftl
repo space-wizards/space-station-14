@@ -37,9 +37,11 @@ construction-graph-tag-chopsticks = chopsticks
 construction-graph-tag-gas-tank = any gas tank
 construction-graph-tag-glowstick = a glowstick
 construction-graph-tag-hemp-sack = a sack made from hemp cloth
+construction-graph-tag-light-tube = light tube
 construction-graph-tag-makeshift-loader = makeshift loader
 construction-graph-tag-plunger = a plunger
 construction-graph-tag-spray-painter = spray painter
 
 # unique
 construction-graph-tag-memorial-ash = your vaporized loved one
+construction-graph-tag-light-sun = the sun
