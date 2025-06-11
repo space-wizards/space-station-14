@@ -7,6 +7,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
@@ -21,6 +22,7 @@ namespace Content.Server.Animals.Systems;
 
 public sealed partial class ParrotSystem : EntitySystem
 {
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = null!;
     [Dependency] private readonly ChatSystem _chat = null!;
     [Dependency] private readonly IAdminLogManager _adminLogger = null!;
     [Dependency] private readonly IGameTiming _gameTiming = null!;
@@ -112,7 +114,7 @@ public sealed partial class ParrotSystem : EntitySystem
     /// </summary>
     private void TryLearn(Entity<ParrotComponent> entity, string incomingMessage, EntityUid source)
     {
-        // can't learn when crit or dead
+        // can't learn when unconscious
         if (_mobState.IsIncapacitated(entity))
             return;
 
@@ -209,7 +211,7 @@ public sealed partial class ParrotSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to speak on the radio. Returns false if there is no radio or some other weird stuff happens
+    /// Attempts to speak on the radio. Returns false if there is no radio
     /// </summary>
     private bool TrySpeakRadio(Entity<ParrotComponent> entity, string message)
     {
@@ -242,9 +244,9 @@ public sealed partial class ParrotSystem : EntitySystem
         var query = EntityQueryEnumerator<ParrotComponent>();
         while (query.MoveNext(out var uid, out var parrot))
         {
-            // can't talk when crit or dead
-            if (_mobState.IsIncapacitated(uid))
-                return;
+            // don't talk if unable to speak
+            if (!_actionBlocker.CanSpeak(uid))
+                continue;
 
             // no need to continue to speak if there is nothing to say
             if (parrot.SpeechMemory.Count == 0)
@@ -258,15 +260,3 @@ public sealed partial class ParrotSystem : EntitySystem
         }
     }
 }
-
-/// <summary>
-/// Event that is fired when a parrot tries to learn, after a successful learn roll but before anything is added to memory
-/// </summary>
-[ByRefEvent]
-public record struct ParrotTryLearnEvent(string Message, EntityUid Teacher);
-
-/// <summary>
-/// Event that is fired when a parrot has learned a new message
-/// </summary>
-[ByRefEvent]
-public readonly record struct ParrotLearnEvent(string Message, EntityUid Teacher);
