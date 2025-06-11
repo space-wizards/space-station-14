@@ -45,23 +45,73 @@
   parent: BaseItem
   id: TechnologyDisk
   name: technology disk
-  description: A disk for the R&D server containing research technology.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     layers:
     - state: datadisk_base
-      map: ["enum.DamageStateVisualLayers.Base"]
+      map: [ "base" ]
     - state: datadisk_label
-  - type: RandomSprite
-    available:
-    - enum.DamageStateVisualLayers.Base:
-        datadisk_base: Sixteen
-  - type: TechnologyDisk
-  - type: StaticPrice
-    price: 100
+    - state: datadisk_t2_marks
+      shader: unshaded
+      map: [ "t2_marks" ]
+      visible: false
+    - state: datadisk_t2_border
+      map: [ "t2_border" ]
+      visible: false
+    - state: datadisk_t3_marks
+      map: [ "t3_marks" ]
+      shader: unshaded
+      visible: false
+    - state: datadisk_t3_border
+      map: [ "t3_border" ]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TechDiskVisuals.Discipline:
+        base:
+          Industrial: { color: "#eeac34" }
+          Arsenal: { color: "#dc373b" }
+          Experimental: { color: "#9a6ef0" }
+          CivilianServices: { color: "#7ecd48" }
+
+      enum.TechDiskVisuals.Tier:
+        t2_marks:
+          2: { visible: true }
+        t2_border:
+          2: { visible: true }
+        t3_marks:
+          3: { visible: true }
+        t3_border:
+          3: { visible: true }
   - type: StealTarget
     stealGroup: TechnologyDisk
+  - type: TechnologyDisk
+
+- type: entity
+  parent: TechnologyDisk
+  id: TechnologyDiskT1
+  suffix: Tier 1
+  components:
+  - type: TechnologyDisk
+    tier: 1
+
+- type: entity
+  parent: TechnologyDisk
+  id: TechnologyDiskT2
+  suffix: Tier 2
+  components:
+  - type: TechnologyDisk
+    tier: 2
+
+- type: entity
+  parent: TechnologyDisk
+  id: TechnologyDiskT3
+  suffix: Tier 3
+  components:
+  - type: TechnologyDisk
+    tier: 3
 
 - type: entity
   parent: TechnologyDisk

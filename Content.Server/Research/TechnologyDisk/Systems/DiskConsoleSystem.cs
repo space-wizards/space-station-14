@@ -5,6 +5,7 @@ using Content.Shared.Research;
 using Content.Shared.Research.Components;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Research.TechnologyDisk.Systems;
