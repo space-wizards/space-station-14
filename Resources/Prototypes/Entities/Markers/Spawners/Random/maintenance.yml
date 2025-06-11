@@ -88,6 +88,7 @@
       - id: ClothingShoesTourist
       - id: ClothingUniformJumpsuitLoungewear
       - id: ClothingHeadHatCowboyRed
+      - id: ClothingNeckOldMantle # Starlight
     # Uncommon Group
     - !type:GroupSelector
       weight: 23
@@ -152,8 +153,10 @@
         - id: ClothingNeckLesbianPin
         - id: ClothingNeckNonBinaryPin
         - id: ClothingNeckPansexualPin
+        - id: ClothingNeckPluralPin
         - id: ClothingNeckOmnisexualPin
         - id: ClothingNeckGenderqueerPin
+        - id: ClothingNeckGenderfluidPin
         - id: ClothingNeckTransPin
         - id: ClothingNeckAutismPin
         - id: ClothingNeckGoldAutismPin
@@ -295,6 +298,7 @@
       - id: PetCarrier
       - id: DrinkMopwataBottleRandom
       - id: SpectralLocator
+      - id: WehpetInstrument
       - id: LidSalami
         weight: 0.05
 
@@ -354,6 +358,7 @@
       - id: Shiv
       - id: SawImprov
       - id: HydroponicsToolMiniHoe
+      - id: ClothingHandsKnuckleDusters
 
 - type: entity
   name: Maint Loot Spawner

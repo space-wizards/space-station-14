@@ -7,7 +7,7 @@
     - to: ripleymkii
       steps:
       - tag: RipleyMKIIUpgradeKit
-        name: Exosuit Upgrade Kit
+        name: construction-graph-tag-exosuit-upgrade-kit
         doAfter: 5
   - node: ripleymkii
     actions:

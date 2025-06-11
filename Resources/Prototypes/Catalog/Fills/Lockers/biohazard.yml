@@ -41,7 +41,7 @@
  - type: entity
    id: ClosetL3ScienceFilled
    suffix: Filled, Science
-   parent: ClosetL3Virology
+   parent: ClosetL3Science
    components:
    - type: StorageFill
      contents:

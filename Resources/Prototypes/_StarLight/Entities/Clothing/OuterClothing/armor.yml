@@ -21,7 +21,7 @@
     damageCoefficient: 0.80
   - type: Item
     size: Normal
-    
+
 - type: entity
   parent: ClothingOuterArmorBasic
   id: ClothingOuterArmorAbductor
@@ -143,3 +143,33 @@
         Slash: 0.85
         Piercing: 0.85
         Heat: 0.55
+
+
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseCentcommContraband]
+  id: ClothingOuterVestWebEliteCentcomm
+  name: central command web vest
+  description: A synthetic armor vest redesignated for use by the Corporate Consortium, webbing and heat resistant fibers included.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Vests/cc_webvest.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Vests/cc_webvest.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.7
+        Heat: 0.3
+        Radiation: 0.5
+        Caustic: 0.5
+    staminaModifier: 0.35
+    ingoreKnockdown: true
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: FireProtection
+    reduction: 0.85

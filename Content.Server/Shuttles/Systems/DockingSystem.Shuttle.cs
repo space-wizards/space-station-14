@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.Shuttles.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -80,7 +81,7 @@ public sealed partial class DockingSystem
             return false;
 
         shuttleDockedAABB = matty.TransformBox(shuttleAABB);
-        gridRotation = (targetGridRotation + offsetAngle).Reduced();
+        gridRotation = offsetAngle.Reduced();
         return true;
     }
 
@@ -126,7 +127,8 @@ public sealed partial class DockingSystem
     public DockingConfig? GetDockingConfigAt(EntityUid shuttleUid,
         EntityUid targetGrid,
         EntityCoordinates coordinates,
-        Angle angle)
+        Angle angle,
+        bool fallback = true)
     {
         var gridDocks = GetDocks(targetGrid);
         var shuttleDocks = GetDocks(shuttleUid);
@@ -139,6 +141,11 @@ public sealed partial class DockingSystem
             {
                 return config;
             }
+        }
+
+        if (fallback && configs.Count > 0)
+        {
+            return configs.First();
         }
 
         return null;
@@ -269,6 +276,29 @@ public sealed partial class DockingSystem
                 }
             }
         }
+
+        //starlight start
+        //this MIGHT be expensive, but query all actively FTLing entities and check if the target is one of the docks we consider valid.
+        //if it is, remove it from the list
+        var query = EntityQueryEnumerator<FTLComponent>();
+        List<DockingConfig> configsToRemove = new();
+        while (query.MoveNext(out var uid, out var ftlComp))
+        {
+            //skip ourself
+            if (uid == shuttleUid)
+                continue;
+            
+            foreach (var config in validDockConfigs)
+            {
+                if (ftlComp.TargetCoordinates == config.Coordinates)
+                {
+                    configsToRemove.Add(config);
+                }
+            }
+        }
+
+        validDockConfigs.RemoveAll(x => configsToRemove.Contains(x));
+        //starlight end
 
         return validDockConfigs;
     }

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "by Litogin",
+  "copyright": "by Litogin, outer by deltaVelocity",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,14 @@
   "states": [
     {
       "name": "jumpsuit",
+      "directions": 4
+    },
+    {
+      "name": "outerClothing",
+      "directions": 4
+    },
+    {
+      "name": "head",
       "directions": 4
     },
     {

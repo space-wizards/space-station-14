@@ -12,7 +12,7 @@
       - id: HandheldGPSBasic
       - id: RadioHandheld
       - id: AppraisalTool
-      - id: ClothingOuterHardsuitBasic
+      - id: ClothingOuterHardsuitSpaceHazard
       - id: Flare
       - id: JetpackMiniFilled
       - id: Pickaxe

@@ -14,7 +14,7 @@
 #stack
 - type: stack
   id: Abyssium
-  name: abyssium bar
+  name: stack-abyssium-bar
   icon: { sprite: _Starlight/Objects/Materials/ingots.rsi, state: abyssium }
   spawn: IngotAbyssium1
   maxCount: 10

@@ -36,6 +36,7 @@ namespace Content.Client.Cargo.UI
             {
                  var product = protoManager.Index<EntityPrototype>(order.ProductId);
                  var productName = product.Name;
+                 var account = protoManager.Index(order.Account);
 
                  var row = new CargoOrderRow
                  {
@@ -47,7 +48,9 @@ namespace Content.Client.Cargo.UI
                              "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
                              ("productName", productName),
                              ("orderAmount", order.OrderQuantity - order.NumDispatched),
-                             ("orderRequester", order.Requester))
+                             ("orderRequester", order.Requester),
+                             ("accountColor", account.Color),
+                             ("account", Loc.GetString(account.Code)))
                      },
                      Description = {Text = Loc.GetString("cargo-console-menu-order-reason-description",
                          ("reason", order.Reason))}

@@ -33,6 +33,16 @@
   - type: Inventory
     speciesId: vulpkanin
     displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: head
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: outerClothing
       jumpsuit:
         sizeMaps:
           32:
@@ -47,7 +57,7 @@
     targetZoom: "1.125, 1.125"
     maxZoom: "1.125, 1.125"
   - type: Speech
-    allowedEmotes: ['Howl', 'Growl', 'Bark', 'Yip']
+    allowedEmotes: ['Howl', 'Growl', 'Bark', 'Yip', 'Whine']
   - type: Vocal
     sounds:
       Male: MaleVulpkanin
@@ -64,13 +74,6 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Vulpkanin
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 2.0
-    damageRecovery:
-      types:
-        Asphyxiation: -2.0
   - type: Wagging
 
 - type: entity

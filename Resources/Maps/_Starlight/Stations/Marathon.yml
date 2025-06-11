@@ -7559,7 +7559,7 @@ entities:
           - 0
         chunkSize: 4
     - type: BecomesStation
-      id: Marathon
+      id: StarlightMarathon
     - type: OccluderTree
     - type: Shuttle
     - type: RadiationGridResistance
