@@ -1,37 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Fixed players being unable to interact with or open any machine UI if
-      the machine is unpowered (ex. wirepanels).
-    type: Fix
-  id: 8137
-  time: '2025-04-05T21:05:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36319
-- author: RedBookcase
-  changes:
-  - message: The Crusher Dagger has had it's damage reduced from 15 to 12 Slashing.
-    type: Tweak
-  - message: The Crusher and Crusher Glaive can now be worn on the back and suit storage
-      slots.
-    type: Add
-  id: 8138
-  time: '2025-04-06T06:48:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35914
-- author: K-Dynamic
-  changes:
-  - message: Normalised ziptie box; reduced ziptie box storage from 4x5 to 3x3 (item
-      shape unchanged), reduced zipties from 10 to 9, removed handcuff whitelist
-    type: Tweak
-  id: 8139
-  time: '2025-04-08T08:23:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35057
-- author: Nyxilath
-  changes:
-  - message: Vial Recipe to lathes
-    type: Add
-  id: 8140
-  time: '2025-04-08T09:37:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36380
 - author: TiniestShark
   changes:
   - message: BRB sign can now be worn in the Neck slot.
@@ -3938,3 +3905,33 @@
   id: 8649
   time: '2025-06-10T04:47:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38093
+- author: BramvanZijp
+  changes:
+  - message: Added Stamina Damage resistance to the raid/hard-suits used by Nuclear
+      Operatives and Emergency Response Teams. [TEST MERGE]
+    type: Tweak
+  id: 8650
+  time: '2025-06-10T19:31:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37040
+- author: themias
+  changes:
+  - message: Returned the cooldown for bike horn implants
+    type: Fix
+  id: 8651
+  time: '2025-06-10T21:40:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38237
+- author: eoineoineoin
+  changes:
+  - message: Technology disks will now show the tech they contain in their name.
+    type: Add
+  id: 8652
+  time: '2025-06-11T01:15:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38157
+- author: hoshizora-sayo
+  changes:
+  - message: Fixed mops, rags, and towels being unable to be properly emptied into
+      drains
+    type: Fix
+  id: 8653
+  time: '2025-06-11T04:54:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38252

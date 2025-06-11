@@ -330,6 +330,7 @@
   components:
   - type: Action
     icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
+    useDelay: 1
 
 - type: entity
   parent: BaseAction
