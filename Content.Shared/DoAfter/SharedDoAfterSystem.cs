@@ -48,7 +48,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         var actionDoAfter = ent.Comp;
 
-        // TODO: Attempt Start delay (aka casting delay) and repeat delay (shorter)
         var delay = actionDoAfter.Delay;
 
         var actionDoAfterEvent = new ActionDoAfterEvent(args.Performer, args.OriginalUseDelay, args.Input);
@@ -161,6 +160,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         comp.NextId = state.NextId;
+        comp.DelayReduction = state.DelayReduction;
         DebugTools.Assert(!comp.DoAfters.ContainsKey(comp.NextId));
 
         if (comp.DoAfters.Count == 0)

@@ -9,11 +9,23 @@ namespace Content.Shared.DoAfter;
 [Access(typeof(SharedDoAfterSystem))]
 public sealed partial class DoAfterComponent : Component
 {
-    [DataField("nextId")]
+    /// <summary>
+    /// The id of the next doafter
+    /// </summary>
+    [DataField]
     public ushort NextId;
 
-    [DataField("doAfters")]
+    /// <summary>
+    /// collection of id + doafter
+    /// </summary>
+    [DataField]
     public Dictionary<ushort, DoAfter> DoAfters = new();
+
+    /// <summary>
+    /// What should the delay be reduced to after completion?
+    /// </summary>
+    [DataField]
+    public TimeSpan? DelayReduction;
 
     // This region of fields are for setting parameters for a do after
     // Eventually DoAfterArgs should be completely merged with this class
@@ -124,10 +136,12 @@ public sealed class DoAfterComponentState : ComponentState
 {
     public readonly ushort NextId;
     public readonly Dictionary<ushort, DoAfter> DoAfters;
+    public readonly TimeSpan? DelayReduction;
 
     public DoAfterComponentState(IEntityManager entManager, DoAfterComponent component)
     {
         NextId = component.NextId;
+        DelayReduction = component.DelayReduction;
 
         // Cursed test bugs - See CraftingTests.CancelCraft
         // The following is wrapped in an if DEBUG. This is tests don't (de)serialize net messages and just copy objects
