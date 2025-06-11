@@ -9,29 +9,12 @@
 
 - type: latheRecipe
   abstract: true
-  id: BaseModulesRecipe
-  categories:
-  - Modules
-  completetime: 2
-
-- type: latheRecipe
-  abstract: true
   parent: BaseRoboticsRecipe
   id: BaseBorgLimbRecipe
   completetime: 2
   materials:
     Steel: 250
     Glass: 100
-
-- type: latheRecipe
-  abstract: true
-  parent: BaseModulesRecipe
-  id: BaseBorgModuleRecipe
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
   abstract: true
