@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d, modified with fill sprites by SlamBamActionman (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -18,6 +18,24 @@
     },
     {
       "name": "hypo"
+    },
+    {
+      "name": "hypo_fill1"
+    },
+    {
+      "name": "hypo_fill2"
+    },
+    {
+      "name": "hypo_fill3"
+    },
+    {
+      "name": "hypo_fill4"
+    },
+    {
+      "name": "hypo_fill5"
+    },
+    {
+      "name": "hypo_fill6"
     },
     {
       "name": "inhand-left",

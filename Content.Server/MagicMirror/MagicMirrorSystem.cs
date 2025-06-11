@@ -11,6 +11,7 @@ using Content.Shared.MagicMirror;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.MagicMirror;
 
@@ -26,6 +27,8 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+
+    private static readonly ProtoId<TagPrototype> HidesHairTag = "HidesHair";
 
     public override void Initialize()
     {
@@ -59,7 +62,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             _popup.PopupEntity(
                 component.Target == message.Actor
                     ? Loc.GetString("magic-mirror-blocked-by-hat-self")
-                    : Loc.GetString("magic-mirror-blocked-by-hat-self-target"),
+                    : Loc.GetString("magic-mirror-blocked-by-hat-self-target", ("target", Identity.Entity(message.Actor, EntityManager))),
                 message.Actor,
                 message.Actor,
                 PopupType.Medium);
@@ -95,7 +98,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("magic-mirror-change-slot-target", ("user", Identity.Entity(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
         }
 
         component.DoAfter = doAfterId;
@@ -175,7 +178,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("magic-mirror-change-color-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("magic-mirror-change-color-target", ("user", Identity.Entity(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
         }
 
         component.DoAfter = doAfterId;
@@ -253,7 +256,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("magic-mirror-remove-slot-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("magic-mirror-remove-slot-target", ("user", Identity.Entity(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
         }
 
         component.DoAfter = doAfterId;
@@ -331,7 +334,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         }
         else
         {
-            _popup.PopupEntity(Loc.GetString("magic-mirror-add-slot-target", ("user", Identity.Name(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("magic-mirror-add-slot-target", ("user", Identity.Entity(message.Actor, EntityManager))), component.Target.Value, component.Target.Value, PopupType.Medium);
         }
 
         component.DoAfter = doAfterId;
@@ -391,7 +394,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             var slots = _inventory.GetSlotEnumerator((target, inventoryComp), SlotFlags.WITHOUT_POCKET);
             while (slots.MoveNext(out var slot))
             {
-                if (slot.ContainedEntity != null && _tagSystem.HasTag(slot.ContainedEntity.Value, "HidesHair"))
+                if (slot.ContainedEntity != null && _tagSystem.HasTag(slot.ContainedEntity.Value, HidesHairTag))
                 {
                     return true;
                 }

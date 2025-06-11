@@ -330,7 +330,12 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 var cachedInfo = adminSys.GetCachedPlayerInfo(new NetUserId(id));
                 if (cachedInfo != null && cachedInfo.Antag)
                 {
-                    logMessage += " [ANTAG: " + cachedInfo.CharacterName + "]";
+                    var subtype = Loc.GetString(cachedInfo.Subtype ?? cachedInfo.RoleProto.Name);
+                    logMessage = Loc.GetString(
+                        "admin-alert-antag-label",
+                        ("message", logMessage),
+                        ("name", cachedInfo.CharacterName),
+                        ("subtype", subtype));
                 }
             }
 
