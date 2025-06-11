@@ -68,6 +68,10 @@ public sealed partial class ParrotSystem : EntitySystem
     /// </summary>
     private void TryLearn(Entity<ParrotComponent> entity, string incomingMessage, EntityUid source)
     {
+        // can't learn when crit or dead
+        if (_mobState.IsIncapacitated(entity))
+            return;
+
         // fail to learn "Urist mctider is stabbing me". Succeed in learning "nuh uh"
         if (!_random.Prob(entity.Comp.LearnChance))
             return;
@@ -192,7 +196,7 @@ public sealed partial class ParrotSystem : EntitySystem
         var query = EntityQueryEnumerator<ParrotComponent>();
         while (query.MoveNext(out var uid, out var parrot))
         {
-            // can't do anything when crit
+            // can't talk when crit or dead
             if (_mobState.IsIncapacitated(uid))
                 return;
 
