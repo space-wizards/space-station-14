@@ -153,7 +153,10 @@ public sealed class BloodstreamSystem : EntitySystem
                 // Apply dizziness as a symptom of bloodloss.
                 // The effect is applied in a way that it will never be cleared without being healthy.
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
-                _drunkSystem.TryApplyDrunkenness(uid,(float)bloodstream.UpdateInterval.TotalSeconds * 2, applySlur: false);
+                _drunkSystem.TryApplyDrunkenness
+                    (uid,
+                    (float)bloodstream.UpdateInterval.TotalSeconds * 2,
+                    applySlur: false);
                 _stutteringSystem.DoStutter(uid, bloodstream.UpdateInterval * 2, refresh: false);
 
                 // storing the drunk and stutter time so we can remove it independently from other effects additions
@@ -162,7 +165,10 @@ public sealed class BloodstreamSystem : EntitySystem
             else if (!_mobStateSystem.IsDead(uid))
             {
                 // If they're healthy, we'll try and heal some bloodloss instead.
-                _damageableSystem.TryChangeDamage(uid, bloodstream.BloodlossHealDamage * bloodPercentage, ignoreResistances: true, interruptsDoAfters: false);
+                _damageableSystem.TryChangeDamage(
+                    uid,
+                    bloodstream.BloodlossHealDamage * bloodPercentage, ignoreResistances: true,
+                    interruptsDoAfters: false);
 
                 // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level
                 _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.StatusTime.TotalSeconds);
