@@ -52564,9 +52564,6 @@ entities:
       pos: 33.5,55.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 1920
@@ -52575,9 +52572,6 @@ entities:
       pos: 31.5,55.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 2188
@@ -52586,9 +52580,6 @@ entities:
       pos: 34.5,50.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 2607
@@ -52597,9 +52588,6 @@ entities:
       pos: 27.5,49.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 2762
@@ -52608,9 +52596,6 @@ entities:
       pos: 21.5,57.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 2764
@@ -52619,9 +52604,6 @@ entities:
       pos: 20.5,57.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 2766
@@ -52630,9 +52612,6 @@ entities:
       pos: 19.5,49.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 2767
@@ -52641,9 +52620,6 @@ entities:
       pos: 23.5,49.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 7555
@@ -52652,9 +52628,6 @@ entities:
       pos: 25.5,57.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 7622
@@ -52663,9 +52636,6 @@ entities:
       pos: 37.5,49.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 7628
@@ -52674,9 +52644,6 @@ entities:
       pos: 42.5,47.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 7629
@@ -52685,9 +52652,6 @@ entities:
       pos: 50.5,49.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
   - uid: 7630
@@ -52696,9 +52660,6 @@ entities:
       pos: 49.5,50.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
-      - invalid
       deviceLists:
       - 8332
 - proto: WeaponEnergyTurretAIControlPanel
