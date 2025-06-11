@@ -112,8 +112,8 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBaseClosed: bio_sci
-    stateDoorOpen: bio_sci_open
+    stateBaseClosed: bio #imp edit
+    stateDoorOpen: bio_open #imp edit
     stateDoorClosed: bio_sci_door
 
 # Virology variant
@@ -124,7 +124,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: bio_viro
-    stateDoorOpen: bio_viro_open
+    stateDoorOpen: bio_open #imp edit
     stateDoorClosed: bio_viro_door
 
 # Security variant
@@ -135,7 +135,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: bio_sec
-    stateDoorOpen: bio_sec_open
+    stateDoorOpen: bio_open #imp edit
     stateDoorClosed: bio_sec_door
 
 # Janitor variant
@@ -146,7 +146,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: bio_jan
-    stateDoorOpen: bio_jan_open
+    stateDoorOpen: bio_open #imp edit
     stateDoorClosed: bio_jan_door
 
 # Maintenance closet
