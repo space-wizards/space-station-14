@@ -99,7 +99,7 @@
     - type: InteractionPopup
       successChance: 0
       interactFailureString: petting-failure-generic
-      InteractFailureSound:
+      interactFailureSound:
         path: /Audio/_Starlight/Voice/gorilla.ogg
     - type: Tag
       tags:
