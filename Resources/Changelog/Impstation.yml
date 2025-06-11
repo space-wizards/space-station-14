@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: rainyatrium
-  changes:
-  - message: four new ponchos (neck or outerwear slot), three available via autodrobe.
-      salvagers & quartermasters have new roundstart cosmetic options
-    type: Add
-  - message: six oversized puffer coats, five available via winterdrobe. mime has
-      a new roundstart cosmetic option
-    type: Add
-  id: 1308
-  time: '2025-03-14T07:10:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1946
-- author: Darkmajia
-  changes:
-  - message: I'll get the admin and ban you forever!
-    type: Add
-  id: 1309
-  time: '2025-03-14T17:34:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1948
 - author: crocodilecarousel
   changes:
   - message: Slimes can use hotkeys to open their slime storage.
@@ -4201,3 +4183,18 @@
   id: 1807
   time: '2025-06-11T03:04:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2718
+- author: DinnerCalzone
+  changes:
+  - message: The science biohazard locker sprite has been reverted, the generic biohazard
+      locker sprite has received a new sprite.
+    type: Add
+  id: 1808
+  time: '2025-06-11T13:06:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2725
+- author: DinnerCalzone
+  changes:
+  - message: The evil skull once again haunts Hummingbird Station.
+    type: Add
+  id: 1809
+  time: '2025-06-11T13:07:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2724
