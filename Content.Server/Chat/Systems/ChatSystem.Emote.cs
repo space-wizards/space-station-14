@@ -207,7 +207,7 @@ public partial class ChatSystem
                                          //on the client it works just fine
                                          //but NOT serverside
                                          //cause that would be too easy
-            } 
+            }
             if (speech.AllowedEmotes.Contains(emote.ID))
                 return true;
             //#endregion starlight

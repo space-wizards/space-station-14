@@ -186,7 +186,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             TrySendInGameOOCMessage(source, message, InGameOOCChatType.Dead, range == ChatTransmitRange.HideChat, shell, player);
             return;
         }
-        
+
         //I despise this being here but there doesnt seem to be a cleaner way to watch for tags or complete component removals
         if (TryComp<CollectiveMindComponent>(source, out var collective))
             _collectiveMind.UpdateCollectiveMind(source, collective);
@@ -252,7 +252,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 return;
             }
         }
-        
+
         if (desiredType == InGameICChatType.CollectiveMind)
         {
             if (TryProccessCollectiveMindMessage(source, message, out var modMessage, out var channel))
@@ -521,7 +521,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 receivers.Add(uid);
             }
         }
-        
+
         var Number = $"{sourceCollectiveMindComp.Minds[collectiveMind].MindId}";
 
         var admins = _adminManager.ActiveAdmins
@@ -549,8 +549,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             source,
             false,
             true,
-            collectiveMind.Color); 
-            
+            collectiveMind.Color);
+
         // FOR ADMINS
         _chatManager.ChatMessageToMany(ChatChannel.CollectiveMind,
             FormattedMessage.EscapeText(message),
@@ -562,7 +562,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             collectiveMind.Color);
 
         //raise event so TTS and other related things work
-        var ev = new CollectiveMindSpokeEvent{
+        var ev = new CollectiveMindSpokeEvent
+        {
             Source = source,
             Message = message,
             Receivers = receivers.ToArray()

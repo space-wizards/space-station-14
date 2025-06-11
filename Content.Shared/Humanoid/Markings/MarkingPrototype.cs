@@ -47,7 +47,7 @@ namespace Content.Shared.Humanoid.Markings
         [DataField("emotes")]
         public List<MarkingEmoteData>? Emotes = null;
         //# endregion starlight
-        
+
         public Marking AsMarking()
         {
             return new Marking(ID, Sprites.Count);
