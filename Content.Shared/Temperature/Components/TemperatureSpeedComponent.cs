@@ -1,19 +1,26 @@
+using System.Linq;
 using Content.Shared.Temperature.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Temperature.Components;
 
 /// <summary>
 /// This is used for an entity that varies in speed based on current temperature.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedTemperatureSystem)), AutoGenerateComponentState, AutoGenerateComponentPause]
-public sealed partial class TemperatureSpeedComponent : Component
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedTemperatureSystem)), AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
+public sealed partial class TemperatureSpeedComponent : Component, ISerializationHooks
 {
     /// <summary>
     /// Pairs of temperature thresholds to applied slowdown values.
     /// </summary>
     [DataField]
     public Dictionary<float, float> Thresholds = new();
+
+    /// <summary>
+    /// Threshold values with respective move speed modifiers, in descending order of threshold values.
+    /// </summary>
+    public (float ThresholdValue, float Modifier)[] OrderedThresholds;
 
     /// <summary>
     /// The current speed modifier from <see cref="Thresholds"/> we reached.
@@ -27,4 +34,12 @@ public sealed partial class TemperatureSpeedComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan? NextSlowdownUpdate;
+
+    /// <inheritdoc />
+    public void AfterDeserialization()
+    {
+        OrderedThresholds = Thresholds.Select(x => (x.Key, x.Value))
+                                      .OrderByDescending(x => x.Key)
+                                      .ToArray();
+    }
 }
