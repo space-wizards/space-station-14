@@ -234,7 +234,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         args.Handled = true;
         QueueDel(uid);
     }
-    
+
     private void OnMagillitisSerumImplantImplant(EntityUid uid, SubdermalImplantComponent component, UseMagillitisSerumImplantEvent args)
     {
         if (component.ImplantedEntity is not { } ent)

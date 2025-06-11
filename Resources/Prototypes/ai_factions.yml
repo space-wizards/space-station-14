@@ -19,29 +19,29 @@
 - type: npcFaction
   id: NanoTrasen
   hostile:
-  - SimpleHostile
-  - Syndicate
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Xeno
-  - Zombie
-  - Revolutionary
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
-  - Wizard
-  - Xenoborg
-  - Dragon
-  - Gorilla
+    - SimpleHostile
+    - Syndicate
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Xeno
+    - Zombie
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Xenoborg
+    - Dragon
+    - Gorilla
 
 - type: npcFaction
   id: Mouse
   hostile:
-  - PetsNT
-  - Abyss
-  - AllHostile
-  - Wizard
+    - PetsNT
+    - Abyss
+    - AllHostile
+    - Wizard
 
 - type: npcFaction
   id: Passive
@@ -49,37 +49,37 @@
 - type: npcFaction
   id: PetsNT
   hostile:
-  - Mouse
-  - SimpleHostile
-  - Zombie
-  - Xeno
-  - Abyss
-  - AllHostile
-  - Wizard
-  - Dragon
-  - HonkHostile
-  - Gorilla
+    - Mouse
+    - SimpleHostile
+    - Zombie
+    - Xeno
+    - Abyss
+    - AllHostile
+    - Wizard
+    - Dragon
+    - HonkHostile
+    - Gorilla
 
 - type: npcFaction
   id: SimpleHostile
   hostile:
-  - NanoTrasen
-  - Syndicate
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Passive
-  - PetsNT
-  - Zombie
-  - Revolutionary
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
-  - Wizard
-  - Xenoborg
-  - Dragon
-  - Xeno
-  - Gorilla
+    - NanoTrasen
+    - Syndicate
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Passive
+    - PetsNT
+    - Zombie
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Xenoborg
+    - Dragon
+    - Xeno
+    - Gorilla
 
 - type: npcFaction
   id: SimpleNeutral
@@ -87,177 +87,177 @@
 - type: npcFaction
   id: Syndicate
   hostile:
-  - NanoTrasen
-  - SimpleHostile
-  - Xeno
-  - PetsNT
-  - Zombie
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
-  - Wizard
-  - Xenoborg
-  - Dragon
-  - Gorilla
+    - NanoTrasen
+    - SimpleHostile
+    - Xeno
+    - PetsNT
+    - Zombie
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Xenoborg
+    - Dragon
+    - Gorilla
 
 - type: npcFaction
   id: Xeno
   hostile:
-  - NanoTrasen
-  - Syndicate
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Passive
-  - PetsNT
-  - Zombie
-  - Revolutionary
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
-  - Wizard
-  - Dragon
-  - Xenoborg
-  - Gorilla
+    - NanoTrasen
+    - Syndicate
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Passive
+    - PetsNT
+    - Zombie
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Dragon
+    - Xenoborg
+    - Gorilla
 
 - type: npcFaction
   id: Zombie
   hostile:
-  - NanoTrasen
-  - SimpleNeutral
-  - SimpleHostile
-  - Syndicate
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Passive
-  - PetsNT
-  - Revolutionary
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
-  - Wizard
-  - Dragon
-  - Xenoborg
-  - Gorilla
+    - NanoTrasen
+    - SimpleNeutral
+    - SimpleHostile
+    - Syndicate
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Passive
+    - PetsNT
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Dragon
+    - Xenoborg
+    - Gorilla
 
 - type: npcFaction
   id: Revolutionary
   hostile:
-  - NanoTrasen
-  - Zombie
-  - SimpleHostile
-  - Dragon
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
-  - Gorilla
-  
+    - NanoTrasen
+    - Zombie
+    - SimpleHostile
+    - Dragon
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Gorilla
+
 - type: npcFaction
   id: Changeling
   hostile:
-  - NanoTrasen
-  - Syndicate
-  - Zombie
-  - Revolutionary
-  - AllHostile
-  - Gorilla
-  
+    - NanoTrasen
+    - Syndicate
+    - Zombie
+    - Revolutionary
+    - AllHostile
+    - Gorilla
+
 - type: npcFaction
   id: Vampire
   hostile:
-  - NanoTrasen
-  - Syndicate
-  - Zombie
-  - Revolutionary
-  - Xeno
-  - Changeling
-  - AllHostile
-  - Gorilla
-  
+    - NanoTrasen
+    - Syndicate
+    - Zombie
+    - Revolutionary
+    - Xeno
+    - Changeling
+    - AllHostile
+    - Gorilla
+
 - type: npcFaction
   id: HonkHostile
   hostile:
-  - NanoTrasen
-  - Syndicate
-  - Passive
-  - PetsNT
-  - Zombie
-  - AllHostile
-  - Wizard
-  - Xenoborg
-  - Gorilla
+    - NanoTrasen
+    - Syndicate
+    - Passive
+    - PetsNT
+    - Zombie
+    - AllHostile
+    - Wizard
+    - Xenoborg
+    - Gorilla
 
 - type: npcFaction
   id: HonkNeutral
   hostile:
-  - SimpleHostile
-  - Syndicate
-  - Xeno
-  - Zombie
-  - AllHostile
-  - Gorilla
-  
+    - SimpleHostile
+    - Syndicate
+    - Xeno
+    - Zombie
+    - AllHostile
+    - Gorilla
+
 - type: npcFaction
   id: AllHostile
   hostile:
-  - NanoTrasen
-  - Dragon
-  - Mouse
-  - Passive
-  - PetsNT
-  - SimpleHostile
-  - SimpleNeutral
-  - Syndicate
-  - Xeno
-  - Zombie
-  - Revolutionary
-  - HonkNeutral
-  - HonkHostile
-  - Vampire
-  - Changeling
-  - Wizard
-  - Xenoborg
-  - Gorilla
+    - NanoTrasen
+    - Dragon
+    - Mouse
+    - Passive
+    - PetsNT
+    - SimpleHostile
+    - SimpleNeutral
+    - Syndicate
+    - Xeno
+    - Zombie
+    - Revolutionary
+    - HonkNeutral
+    - HonkHostile
+    - Vampire
+    - Changeling
+    - Wizard
+    - Xenoborg
+    - Gorilla
 
 - type: npcFaction
   id: Wizard
   hostile:
-  - NanoTrasen
-  - Dragon
-  - Mouse
-  - Passive
-  - PetsNT
-  - SimpleHostile
-  - SimpleNeutral
-  - Syndicate
-  - Xeno
-  - Zombie
-  - Revolutionary
-  - AllHostile
-  - Xenoborg
-  - Gorilla
+    - NanoTrasen
+    - Dragon
+    - Mouse
+    - Passive
+    - PetsNT
+    - SimpleHostile
+    - SimpleNeutral
+    - Syndicate
+    - Xeno
+    - Zombie
+    - Revolutionary
+    - AllHostile
+    - Xenoborg
+    - Gorilla
 
 - type: npcFaction
   id: Xenoborg
   hostile:
-  # they have brains
-  - NanoTrasen
-  - Syndicate
-  - DungeonSyndicate
-  - DungeonSoviet
-  - Zombie
-  - Revolutionary
-  - Wizard
+    # they have brains
+    - NanoTrasen
+    - Syndicate
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Zombie
+    - Revolutionary
+    - Wizard
 
-  - Xeno # rivalry
+    - Xeno # rivalry
 
-  # cause they are hostile to them
-  - SimpleHostile 
-  - AllHostile
+    # cause they are hostile to them
+    - SimpleHostile
+    - AllHostile
