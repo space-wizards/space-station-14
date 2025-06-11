@@ -1344,7 +1344,7 @@
           True: {state: icon-on}
           False: {state: icon}
   - type: ItemToggle
-    predictable: false
+    predictable: true
     soundActivate:
       path: /Audio/Items/flashlight_on.ogg
     soundDeactivate:
