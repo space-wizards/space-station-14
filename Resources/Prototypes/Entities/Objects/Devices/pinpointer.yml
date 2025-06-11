@@ -22,6 +22,19 @@
     state: pinpointer
   - type: Item
     sprite: Objects/Devices/pinpointer.rsi
+    inhandVisuals:
+      left:
+      - state: inhand-left-base
+        color: "#8e1518"
+      - state: inhand-left-stripe
+        color: "#8e1518"
+      - state: inhand-left-top
+      right:
+      - state: inhand-right-base
+        color: "#8e1518"
+      - state: inhand-right-stripe
+        color: "#8e1518"
+      - state: inhand-right-top
   - type: Pinpointer
   - type: Appearance
   - type: GenericVisualizer
@@ -62,6 +75,20 @@
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-base
+        color: "#202020"
+      - state: inhand-left-stripe
+        color: "#6c0014"
+      - state: inhand-left-top
+      right:
+      - state: inhand-right-base
+        color: "#202020"
+      - state: inhand-right-stripe
+        color: "#6c0014"
+      - state: inhand-right-top
   - type: Icon
     state: pinpointer-syndicate
   - type: Pinpointer
@@ -82,6 +109,20 @@
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-base
+        color: "#606060"
+      - state: inhand-left-stripe
+        color: "#606060"
+      - state: inhand-left-top
+      right:
+      - state: inhand-right-base
+        color: "#606060"
+      - state: inhand-right-stripe
+        color: "#606060"
+      - state: inhand-right-top
   - type: Icon
     state: pinpointer-way
   - type: Pinpointer
@@ -103,6 +144,20 @@
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-base
+        color: "#3a3a3a"
+      - state: inhand-left-stripe
+        color: "#3a3a3a"
+      - state: inhand-left-top
+      right:
+      - state: inhand-right-base
+        color: "#3a3a3a"
+      - state: inhand-right-stripe
+        color: "#3a3a3a"
+      - state: inhand-right-top
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
@@ -124,6 +179,20 @@
       map: ["enum.PinpointerLayers.Screen"]
       shader: unshaded
       visible: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-base
+        color: "#3a3a3a"
+      - state: inhand-left-stripe
+        color: "#3a3a3a"
+      - state: inhand-left-top
+      right:
+      - state: inhand-right-base
+        color: "#3a3a3a"
+      - state: inhand-right-stripe
+        color: "#3a3a3a"
+      - state: inhand-right-top
   - type: Icon
     state: pinpointer-station
   - type: Pinpointer
