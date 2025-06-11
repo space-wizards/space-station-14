@@ -19,13 +19,16 @@ namespace Content.Client.Guidebook.Controls;
 public sealed partial class GuideLawsetListEmbed : BoxContainer, IDocumentTag
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+
     private ISawmill _logging = default!;
+
     public GuideLawsetListEmbed()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         MouseFilter = MouseFilterMode.Stop;
     }
+
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
     {
         control = null;

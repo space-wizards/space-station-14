@@ -73,6 +73,7 @@ public sealed partial class SiliconLawsetPrototype : IPrototype
     /// </summary>    
     [DataField]
     public LocId? Name = null;
+
     /// <summary>
     /// List of law prototype ids in this lawset.
     /// </summary>

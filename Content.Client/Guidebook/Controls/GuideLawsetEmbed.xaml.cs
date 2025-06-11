@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Client.Guidebook.Richtext;
 using Content.Client.Message;
 using Content.Client.UserInterface.ControlExtensions;
@@ -22,7 +21,9 @@ namespace Content.Client.Guidebook.Controls;
 public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISearchableControl, IPrototypeRepresentationControl
 {
     private ISawmill _logging = default!;
+
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+
     public IPrototype? RepresentedPrototype { get; private set; }
 
     public GuideLawsetEmbed()
@@ -54,21 +55,17 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
         int i = 1;
         foreach (string lawID in lawset.Laws)
         {
+            SiliconLawPrototype lawPrototype = _prototype.Index<SiliconLawPrototype>(lawID);
             string locLawString = string.Empty;
-            if (!_prototype.TryIndex(lawID, out SiliconLawPrototype? lawPrototype))
-            {
-                _logging.Error($"Specified SiliconLawPrototype \"{lawID}\" is not a valid Law prototype");
-            }
-            else
-            {
-                // This should never be null, I'm assuming there's a better way of doing this that will
-                // be brought up in review
-                locLawString = Loc.GetString(lawPrototype?.LawString ?? string.Empty);
-                RichTextLabel lawN = new();
-                lawN.HorizontalExpand = true;
-                lawN.SetMarkup($"[bold]Law {i}:[/bold] {locLawString}");
-                LawsetContainer.AddChild(lawN);
-            }
+
+            locLawString = Loc.GetString(lawPrototype.LawString);
+
+            RichTextLabel lawN = new();
+            lawN.HorizontalExpand = true;
+            string locLawStatement = Loc.GetString("laws-number-wrapper", ("lawnumber", i), ("lawstring", locLawString));
+            lawN.SetMarkup(locLawStatement);
+            LawsetContainer.AddChild(lawN);
+
             i++;
         }
     }
