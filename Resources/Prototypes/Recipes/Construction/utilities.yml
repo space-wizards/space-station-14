@@ -277,6 +277,7 @@
 # ATMOS PIPES
 - type: construction
   id: GasPipeHalf
+  name: construction-recipe-gas-pipe-half
   graph: GasPipe
   startNode: start
   targetNode: half
@@ -359,6 +360,7 @@
 
 - type: construction
   id: GasPipeBend
+  name: construction-recipe-gas-pipe-bend
   graph: GasPipe
   startNode: start
   targetNode: bend
@@ -400,6 +402,7 @@
 
 - type: construction
   id: GasPipeTJunction
+  name: construction-recipe-gas-pipe-t-junction
   graph: GasPipe
   startNode: start
   targetNode: tjunction
@@ -441,6 +444,7 @@
 
 - type: construction
   id: GasPipeFourway
+  name: construction-recipe-gas-pipe-fourway
   graph: GasPipe
   startNode: start
   targetNode: fourway
@@ -621,6 +625,7 @@
 
 - type: construction
   id: HeatExchangerBend
+  name: construction-recipe-heat-exchanger-bend
   graph: GasBinary
   startNode: start
   targetNode: bendradiator
