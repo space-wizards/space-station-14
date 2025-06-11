@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Fixed power cells and power cages counting for laser gun cargo bounties.
-    type: Fix
-  id: 8146
-  time: '2025-04-10T13:55:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36431
 - author: chromiumboy
   changes:
   - message: Large objects, such as crates, can once again be dragged over holopads
@@ -3908,3 +3901,10 @@
   id: 8658
   time: '2025-06-11T20:20:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38089
+- author: Nox38
+  changes:
+  - message: launchers must now be wielded before firing.
+    type: Tweak
+  id: 8659
+  time: '2025-06-11T20:28:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38110
