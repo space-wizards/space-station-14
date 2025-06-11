@@ -20,9 +20,9 @@ namespace Content.Client.Guidebook.Controls;
 [UsedImplicitly, GenerateTypedNameReferences]
 public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISearchableControl, IPrototypeRepresentationControl
 {
-    private ISawmill _logging = default!;
-
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+
+    private ISawmill _logging = default!;
 
     public IPrototype? RepresentedPrototype { get; private set; }
 
@@ -49,7 +49,7 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
         // Setting it here makes it easier for a later system to change it later
         NameBackground.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = Color.DarkCyan
+            BackgroundColor = Color.DarkBlue
         };
         LawsetName.SetMarkup($"[bold]{Loc.GetString(lawset.Name ?? lawset.ID)}[/bold]");
         int i = 1;
@@ -60,8 +60,11 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
 
             locLawString = Loc.GetString(lawPrototype.LawString);
 
-            RichTextLabel lawN = new();
-            lawN.HorizontalExpand = true;
+            RichTextLabel lawN = new()
+            {
+                HorizontalExpand = true,
+                Margin = new(0, 5, 0, 1)
+            };
             string locLawStatement = Loc.GetString("laws-number-wrapper", ("lawnumber", i), ("lawstring", locLawString));
             lawN.SetMarkup(locLawStatement);
             LawsetContainer.AddChild(lawN);
