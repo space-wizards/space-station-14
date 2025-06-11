@@ -185,5 +185,10 @@ namespace Content.Server.Body.Components
     }
 }
 
+/// <summary>
+/// Modifies the blood clotting speed.
+/// Low values slow clotting while High values speed up clotting
+/// </summary>
+/// <param name="BleedStackReductionAmount"></param>
 [ByRefEvent]
 public record struct BleedStackReduceEvent(float BleedStackReductionAmount);
