@@ -72,6 +72,16 @@
       tags:
         - MindTransferTarget
         - Head
+    # imp edit start, for inhands
+    - type: Item
+      size: Normal
+      sprite: _Impstation/Objects/Specific/Xenoarchaeology/skull_artifact.rsi
+      inhandVisuals:
+        left:
+        - state: ano01-inhand-left
+        right:
+        - state: ano01-inhand-right
+    # imp edit end
 
 - type: entity
   id: LeftArmSkeleton

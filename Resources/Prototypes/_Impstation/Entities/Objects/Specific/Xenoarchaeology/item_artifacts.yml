@@ -1,18 +1,25 @@
 ﻿- type: entity
-  parent: [ BaseItem, BaseXenoArtifact ]
+  parent: [ BaseItem, BaseXenoArtifactItem ]
   id: EvilSkullArtifactItem
   name: evil skull
   suffix: Hummingbird thief objective
   description: Beware.
   components:
   - type: Sprite
-    sprite: Mobs/Species/Skeleton/parts.rsi
-    state: skull_icon
-  - type: XenoArtifact
-    forceActivationSoundSpecifier: !type:SoundPathSpecifier
-      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+    sprite: _Impstation/Objects/Specific/Xenoarchaeology/skull_artifact.rsi
+    state: ano01
   - type: Item
     size: Normal
+    sprite: _Impstation/Objects/Specific/Xenoarchaeology/skull_artifact.rsi
+  - type: RandomArtifactSprite
+    maxSprite: 1
+  - type: RandomSprite
+    available:
+    - enum.ArtifactsVisualLayers.UnlockingEffect:
+        ano01_on: ""
+  - type: XenoArtifact
+    forceActivationSoundSpecifier:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
   - type: Speech
     speechSounds: Alto
     speechVerb: Skeleton

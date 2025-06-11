@@ -1,0 +1,8 @@
+- type: entity
+  parent: Morgue
+  id: MorgueEvilSkullSpawn
+  suffix: evil skull spawn, Hummingbird thief objective
+  components:
+  - type: StorageFill
+    contents:
+      - id: EvilSkullArtifactItem
