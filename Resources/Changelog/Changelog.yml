@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: Fixed empty handheld mass scanners being 2x2.
-    type: Fix
-  id: 8145
-  time: '2025-04-10T10:44:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36340
 - author: ArtisticRoomba
   changes:
   - message: Fixed power cells and power cages counting for laser gun cargo bounties.
@@ -3907,3 +3900,11 @@
   id: 8657
   time: '2025-06-11T20:03:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37709
+- author: Princess-Cheeseballs
+  changes:
+  - message: Basilisk projectile speed and movement speed has been reduced and is
+      slightly weaker
+    type: Tweak
+  id: 8658
+  time: '2025-06-11T20:20:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38089
