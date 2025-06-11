@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Normalised ziptie box; reduced ziptie box storage from 4x5 to 3x3 (item
-      shape unchanged), reduced zipties from 10 to 9, removed handcuff whitelist
-    type: Tweak
-  id: 8139
-  time: '2025-04-08T08:23:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35057
 - author: Nyxilath
   changes:
   - message: Vial Recipe to lathes
@@ -3908,3 +3900,10 @@
   id: 8651
   time: '2025-06-10T21:40:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38237
+- author: eoineoineoin
+  changes:
+  - message: Technology disks will now show the tech they contain in their name.
+    type: Add
+  id: 8652
+  time: '2025-06-11T01:15:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38157
