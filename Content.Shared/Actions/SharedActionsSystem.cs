@@ -121,7 +121,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (TryPerformAction(args.Input, args.Performer, skipDoActionRequest: true))
             return;
 
-        // TODO: This fixes the mispredicting but it doesn't fix the extra repeat
+        // This fixes the mispredicting but it doesn't fix the extra repeat
         if (_netMan.IsClient)
             return;
 
