@@ -11,6 +11,6 @@ public sealed class BasicGameplayMetricsSystem : SharedBasicGameplayMetricsSyste
 
     public override void RecordMetric(string campaign, string metadata)
     {
-        _db.AddTelemetryData(_ticker.RoundId, campaign, metadata);
+        _db.RecordGameplayMetric(_ticker.RoundId, campaign, metadata);
     }
 }
