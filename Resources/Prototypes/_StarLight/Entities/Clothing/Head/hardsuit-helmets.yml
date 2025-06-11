@@ -81,3 +81,24 @@
           Slash: 0.9
           Piercing: 0.9
           Heat: 0.9
+#Space Hazard Suit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitSpaceHazard
+  name: space hazard helmet
+  description: Keeps the cold sulfuric embrace of space out.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/spacehazard.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/spacehazard.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.6
