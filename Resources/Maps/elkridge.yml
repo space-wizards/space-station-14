@@ -4,8 +4,8 @@ meta:
   engineVersion: 262.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/11/2025 09:49:46
-  entityCount: 18616
+  time: 06/11/2025 10:16:16
+  entityCount: 18627
 maps:
 - 1
 grids:
@@ -14180,15 +14180,8 @@ entities:
     - type: MetaData
       name: airlock (HoS's Bedroom)
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: 1.5,-37.5
       parent: 2
-    - type: Door
-      secondsUntilStateChange: -31385.268
-      state: Opening
-    - type: DeviceLinkSource
-      lastSignals:
-        DoorStatus: True
 - proto: AirlockHydroGlassLocked
   entities:
   - uid: 250
@@ -14545,12 +14538,6 @@ entities:
     - type: Transform
       pos: 47.5,5.5
       parent: 2
-    - type: Door
-      secondsUntilStateChange: -530061.25
-      state: Opening
-    - type: DeviceLinkSource
-      lastSignals:
-        DoorStatus: True
   - uid: 8130
     components:
     - type: MetaData
@@ -96581,6 +96568,16 @@ entities:
     - type: Transform
       pos: 18.5,10.5
       parent: 2
+  - uid: 14200
+    components:
+    - type: Transform
+      pos: -10.5,-9.5
+      parent: 2
+  - uid: 14241
+    components:
+    - type: Transform
+      pos: -14.5,-4.5
+      parent: 2
   - uid: 14448
     components:
     - type: Transform
@@ -97230,6 +97227,51 @@ entities:
     components:
     - type: Transform
       pos: -5.5,-5.5
+      parent: 2
+  - uid: 18619
+    components:
+    - type: Transform
+      pos: -15.5,-7.5
+      parent: 2
+  - uid: 18620
+    components:
+    - type: Transform
+      pos: -17.5,-8.5
+      parent: 2
+  - uid: 18621
+    components:
+    - type: Transform
+      pos: -20.5,-2.5
+      parent: 2
+  - uid: 18622
+    components:
+    - type: Transform
+      pos: -16.5,-1.5
+      parent: 2
+  - uid: 18623
+    components:
+    - type: Transform
+      pos: -12.5,-1.5
+      parent: 2
+  - uid: 18624
+    components:
+    - type: Transform
+      pos: -20.5,-10.5
+      parent: 2
+  - uid: 18625
+    components:
+    - type: Transform
+      pos: -20.5,-13.5
+      parent: 2
+  - uid: 18626
+    components:
+    - type: Transform
+      pos: -14.5,-13.5
+      parent: 2
+  - uid: 18627
+    components:
+    - type: Transform
+      pos: -11.5,2.5
       parent: 2
 - proto: RandomProduce
   entities:
