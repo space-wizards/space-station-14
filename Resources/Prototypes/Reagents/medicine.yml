@@ -416,12 +416,13 @@
   color: "#422912"
   metabolisms:
     Medicine:
+      metabolismRate: 0.25
       effects:
       - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
-          min: 4
-        probability: 0.3
+          min: 2
+        probability: 0.7
 
 - type: reagent
   id: Inaprovaline
