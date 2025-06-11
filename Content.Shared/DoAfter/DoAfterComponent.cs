@@ -5,6 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.DoAfter;
 
+// TODO: This needs a rework to modern standards & a check if autogeneratestate would work
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedDoAfterSystem))]
 public sealed partial class DoAfterComponent : Component
