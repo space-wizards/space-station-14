@@ -7,6 +7,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
+using Content.Shared.Clothing;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
@@ -33,10 +34,13 @@ public sealed partial class ParrotSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<ParrotComponent, ComponentInit>(OnParrotInit);
+        SubscribeLocalEvent<ParrotComponent, ComponentInit>(OnParrotInit, after: [typeof(LoadoutSystem)]);
 
         SubscribeLocalEvent<ParrotComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<ParrotComponent, RadioReceiveEvent>(OnRadioReceive);
+
+        SubscribeLocalEvent<ParrotComponent, ClothingDidEquippedEvent>(OnClothingEquipped);
+        SubscribeLocalEvent<ParrotComponent, ClothingDidUnequippedEvent>(OnClothingUnequipped);
 
         SubscribeLocalEvent<ParrotComponent, ParrotLearnEvent>(OnLearn);
         SubscribeLocalEvent<ParrotComponent, ParrotSpeakEvent>(OnSpeak);
@@ -45,6 +49,19 @@ public sealed partial class ParrotSystem : EntitySystem
     private void OnParrotInit(Entity<ParrotComponent> entity, ref ComponentInit args)
     {
         EnsureComp<ActiveListenerComponent>(entity).Range = entity.Comp.ListenRange;
+
+        // get starting radio on entity
+        if (!_inventory.TryGetSlotEntity(entity, "ears", out var item))
+            return;
+
+        if (!TryComp<ActiveRadioComponent>(item.Value, out var radio))
+            return;
+
+        var radioEntity = new Entity<ActiveRadioComponent>(item.Value, radio);
+
+        entity.Comp.ActiveRadio = radioEntity;
+
+        CopyParrotRadioChannels(entity, radioEntity);
     }
 
     /// <summary>
@@ -63,6 +80,35 @@ public sealed partial class ParrotSystem : EntitySystem
         TryLearn(entity, args.Message, args.MessageSource);
     }
 
+    private void OnClothingEquipped(Entity<ParrotComponent> entity, ref ClothingDidEquippedEvent args)
+    {
+        if (!TryComp<ActiveRadioComponent>(args.Clothing, out var radio))
+            return;
+
+        var newActiveRadio = new Entity<ActiveRadioComponent>(args.Clothing.Owner, radio);
+
+        entity.Comp.ActiveRadio = newActiveRadio;
+
+        CopyParrotRadioChannels(entity, newActiveRadio);
+    }
+
+    private void OnClothingUnequipped(Entity<ParrotComponent> entity, ref ClothingDidUnequippedEvent args)
+    {
+        if (args.Clothing != entity.Comp.ActiveRadio)
+            return;
+
+        EnsureComp<ActiveRadioComponent>(entity, out var parrotRadio);
+
+        parrotRadio.Channels = [];
+    }
+
+    private void CopyParrotRadioChannels(Entity<ParrotComponent> entity, Entity<ActiveRadioComponent> copyFrom)
+    {
+        EnsureComp<ActiveRadioComponent>(entity, out var parrotRadio);
+
+        parrotRadio.Channels = copyFrom.Comp.Channels;
+    }
+
     /// <summary>
     /// Try to learn a new message
     /// </summary>
@@ -70,6 +116,10 @@ public sealed partial class ParrotSystem : EntitySystem
     {
         // can't learn when crit or dead
         if (_mobState.IsIncapacitated(entity))
+            return;
+
+        // ignore yourself
+        if (source.Equals(entity))
             return;
 
         // fail to learn "Urist mctider is stabbing me". Succeed in learning "nuh uh"
@@ -172,10 +222,10 @@ public sealed partial class ParrotSystem : EntitySystem
     /// </summary>
     private bool TrySpeakRadio(Entity<ParrotComponent> entity, string message)
     {
-        if (!_inventory.TryGetSlotEntity(entity, "ears", out var item))
+        if (entity.Comp.ActiveRadio is null)
             return false;
 
-        if (!TryComp<ActiveRadioComponent>(item.Value, out var radio))
+        if (!TryComp<ActiveRadioComponent>(entity.Comp.ActiveRadio, out var radio))
             return false;
 
         // accentuate for radio. squawk. this isn't great, obviously
@@ -189,7 +239,7 @@ public sealed partial class ParrotSystem : EntitySystem
 
         // choose random channel
         var channel = _random.Pick(radio.Channels);
-        _radio.SendRadioMessage(entity, message, _proto.Index<RadioChannelPrototype>(channel), item.Value);
+        _radio.SendRadioMessage(entity, message, _proto.Index<RadioChannelPrototype>(channel), entity);
 
         return true;
     }

@@ -83,4 +83,10 @@ public sealed partial class ParrotComponent : Component
     /// </summary>
     [DataField]
     public float RadioAttemptChance = 0.3f;
+
+    /// <summary>
+    /// Current radio of the parrot
+    /// </summary>
+    [DataField]
+    public EntityUid? ActiveRadio;
 }

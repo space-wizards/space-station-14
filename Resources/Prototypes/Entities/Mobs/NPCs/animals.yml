@@ -2212,6 +2212,7 @@
     sounds:
       Unsexed: Parrot
   - type: ActiveListener
+  - type: ActiveRadio
   - type: ParrotAccent
   - type: Parrot
     learnChance: 0.4
