@@ -1,8 +1,10 @@
+using Content.Server.Telemetry;
 using Content.Shared.Destructible;
 using Content.Shared.Mining;
 using Content.Shared.Mining.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Telemetry;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -15,6 +17,7 @@ public sealed class MiningSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly BasicTelemetrySystem _telemetry = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -40,6 +43,8 @@ public sealed class MiningSystem : EntitySystem
         {
             Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.2f)));
         }
+
+        _telemetry.AddTelemetryData(Campaigns.MiningOre, $"{proto.ID},{toSpawn}");
     }
 
     private void OnMapInit(EntityUid uid, OreVeinComponent component, MapInitEvent args)

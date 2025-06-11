@@ -23,9 +23,13 @@ using System.Numerics;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Server.IdentityManagement;
+using Content.Server.Telemetry;
 using Content.Shared.DetailExaminable;
+using Content.Shared.Item;
 using Content.Shared.Store.Components;
+using Content.Shared.Telemetry;
 using Robust.Shared.Collections;
+using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Implants;
@@ -45,6 +49,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private readonly BasicTelemetrySystem _telemetry = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private HashSet<Entity<MapGridComponent>> _targetGrids = [];
@@ -60,7 +65,27 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         SubscribeLocalEvent<SubdermalImplantComponent, ActivateImplantEvent>(OnActivateImplantEvent);
         SubscribeLocalEvent<SubdermalImplantComponent, UseScramImplantEvent>(OnScramImplant);
         SubscribeLocalEvent<SubdermalImplantComponent, UseDnaScramblerImplantEvent>(OnDnaScramblerImplant);
+        SubscribeLocalEvent<SubdermalImplantComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+        SubscribeLocalEvent<SubdermalImplantComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+    }
 
+    private void OnEntInserted(Entity<SubdermalImplantComponent> entity, ref EntInsertedIntoContainerMessage args)
+    {
+        ItemInsertedOrRemoved("Inserted", args.Entity, entity.Owner);
+    }
+
+    private void OnEntRemoved(Entity<SubdermalImplantComponent> entity, ref EntRemovedFromContainerMessage args)
+    {
+        ItemInsertedOrRemoved("Removed", args.Entity, entity.Owner);
+    }
+
+    private void ItemInsertedOrRemoved(string status, EntityUid item, EntityUid owner)
+    {
+        var metaData = MetaData(item);
+        if (metaData.EntityPrototype == null || !HasComp<ItemComponent>(item))
+            return;
+
+        _telemetry.AddTelemetryData(Campaigns.StorageImplant, $"{status},{metaData.EntityPrototype.ID},{owner}");
     }
 
     private void OnStoreRelay(EntityUid uid, StoreComponent store, ImplantRelayEvent<AfterInteractUsingEvent> implantRelay)
