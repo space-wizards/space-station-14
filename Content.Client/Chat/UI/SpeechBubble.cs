@@ -103,7 +103,7 @@ namespace Content.Client.Chat.UI
             bubble.Measure(Vector2Helpers.Infinity);
             ContentSize = bubble.DesiredSize;
             _verticalOffsetAchieved = -ContentSize.Y;
-            _deathTime = _timing.CurTime + TotalTime;
+            _deathTime = _timing.RealTime + TotalTime;
         }
 
         protected abstract Control BuildBubble(ChatMessage message, string speechStyleClass, Color? fontColor = null);
@@ -112,7 +112,7 @@ namespace Content.Client.Chat.UI
         {
             base.FrameUpdate(args);
 
-            var timeLeft = (float)(_deathTime - _timing.CurTime).TotalSeconds;
+            var timeLeft = (float)(_deathTime - _timing.RealTime).TotalSeconds;
             if (_entityManager.Deleted(_senderEntity) || timeLeft <= 0)
             {
                 // Timer spawn to prevent concurrent modification exception.
@@ -180,9 +180,9 @@ namespace Content.Client.Chat.UI
         /// </summary>
         public void FadeNow()
         {
-            if (_deathTime > _timing.CurTime)
+            if (_deathTime > _timing.RealTime)
             {
-                _deathTime = _timing.CurTime + FadeTime;
+                _deathTime = _timing.RealTime + FadeTime;
             }
         }
 
