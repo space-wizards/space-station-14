@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: CrateLockBoxEngineering
   icon:
-    sprite: Structures/Storage/Crates/lockbox.rsi
+    sprite: _Impstation/Structures/Storage/Crates/lockbox.rsi #imp edit
     state: icon
   product: CrateLockBoxEngineering
   cost: 100
@@ -11,7 +11,7 @@
 - type: cargoProduct
   id: CrateLockBoxMedical
   icon:
-    sprite: Structures/Storage/Crates/lockbox.rsi
+    sprite: _Impstation/Structures/Storage/Crates/lockbox.rsi #imp edit
     state: icon
   product: CrateLockBoxMedical
   cost: 100
@@ -21,7 +21,7 @@
 - type: cargoProduct
   id: CrateLockBoxScience
   icon:
-    sprite: Structures/Storage/Crates/lockbox.rsi
+    sprite: _Impstation/Structures/Storage/Crates/lockbox.rsi #imp edit
     state: icon
   product: CrateLockBoxScience
   cost: 100
@@ -31,7 +31,7 @@
 - type: cargoProduct
   id: CrateLockBoxSecurity
   icon:
-    sprite: Structures/Storage/Crates/lockbox.rsi
+    sprite: _Impstation/Structures/Storage/Crates/lockbox.rsi #imp edit
     state: icon
   product: CrateLockBoxSecurity
   cost: 100
@@ -41,7 +41,7 @@
 - type: cargoProduct
   id: CrateLockBoxService
   icon:
-    sprite: Structures/Storage/Crates/lockbox.rsi
+    sprite: _Impstation/Structures/Storage/Crates/lockbox.rsi #imp edit
     state: icon
   product: CrateLockBoxService
   cost: 100
