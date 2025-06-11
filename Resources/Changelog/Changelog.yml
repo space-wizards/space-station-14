@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nyxilath
-  changes:
-  - message: Vial Recipe to lathes
-    type: Add
-  id: 8140
-  time: '2025-04-08T09:37:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36380
 - author: TiniestShark
   changes:
   - message: BRB sign can now be worn in the Neck slot.
@@ -3907,3 +3900,11 @@
   id: 8652
   time: '2025-06-11T01:15:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38157
+- author: hoshizora-sayo
+  changes:
+  - message: Fixed mops, rags, and towels being unable to be properly emptied into
+      drains
+    type: Fix
+  id: 8653
+  time: '2025-06-11T04:54:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38252
