@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheBlueYowie
-  changes:
-  - message: NutriMax now contains a sterile swab dispenser instead of individual
-      swabs
-    type: Tweak
-  id: 8142
-  time: '2025-04-08T21:54:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36399
 - author: ColonelThirtyTwo
   changes:
   - message: Spider clan charges are now marked as contraband
@@ -3908,3 +3900,10 @@
   id: 8654
   time: '2025-06-11T14:01:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38219
+- author: ScarKy0
+  changes:
+  - message: Reinforced plasma windows no longer block laser shots.
+    type: Fix
+  id: 8655
+  time: '2025-06-11T15:36:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38041
