@@ -2181,7 +2181,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: parrot
-      sprite: Mobs/Animals/parrot.rsi
+      sprite: Mobs/Animals/parrot/parrot.rsi
+  - type: SyncSprite
   - type: Fixtures
     fixtures:
       fix1:
@@ -2215,13 +2216,19 @@
   - type: ActiveRadio
   - type: ParrotAccent
   - type: Parrot
-    learnChance: 0.4
-    learnCooldown: 60
-    minSpeakInterval: 240
-    maxSpeakInterval: 480
+    learnChance: 1
+    learnCooldown: 1
+    minSpeakInterval: 5
+    maxSpeakInterval: 5
   - type: Inventory
     templateId: parrot
     speciesId: parrot
+    displacements:
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/parrot/displacement.rsi
+            state: ears
   - type: InventorySlots
   - type: Strippable
   - type: UserInterface
