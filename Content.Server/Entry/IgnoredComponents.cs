@@ -20,7 +20,8 @@ namespace Content.Server.Entry
             "LightFade",
             "HolidayRsiSwap",
             "OptionsVisualizer",
-            "MapInvisible"
+            "MapInvisible",
+            "MultipartMachineGhost"
         };
     }
 }
