@@ -158,8 +158,8 @@
 - type: entity
   parent: GasBinaryBase
   id: GasPressureRegulator
-  name: pressure regulator
-  description: A valve that releases gas when the pressure exceeds a certain threshold.
+  name: inlet pressure regulator
+  description: A valve that releases gas when the inlet pressure exceeds a certain threshold.
   placement:
     mode: SnapgridCenter
   components:

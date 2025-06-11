@@ -1,6 +1,6 @@
 ﻿<Document>
-  # Pressure Regulator
-  The Pressure Regulator is a passive device that allows gas to escape from a [textlink="pipenet" link="PipeNetworks"] when the pressure exceeds a certain threshold.
+  # Inlet Pressure Regulator
+  The Inlet Pressure Regulator is a passive device that allows gas to escape from a [textlink="pipenet" link="PipeNetworks"] when the pressure exceeds a certain threshold.
 
   <Box>
     <GuideEntityEmbed Entity="GasPressureRegulator"/>
@@ -19,5 +19,5 @@
   The valve can also be used to vent off ready-to-use, hot gas from a burn chamber.
   For example, it may be undesirable to allow a burn chamber to drop below a specific pressure for a long time, as this may cause the gas to cool down too much and thin out, which would cause a flameout.
 
-  A pressure regulator can be used to vent off excess gas, while keeping the pressure in the burn chamber above a certain threshold, which may help in sustaining a fire in the chamber.
+  An inlet pressure regulator can be used to vent off excess gas, while keeping the pressure in the burn chamber above a certain threshold, which may help in sustaining a fire in the chamber.
 </Document>
