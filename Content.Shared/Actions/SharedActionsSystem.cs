@@ -15,6 +15,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -31,6 +32,8 @@ public abstract class SharedActionsSystem : EntitySystem
     [Dependency] private   readonly SharedAudioSystem _audio = default!;
     [Dependency] private   readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private   readonly SharedTransformSystem _transform = default!;
+    [Dependency] private   readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private   readonly INetManager _netMan = default!;
 
     private EntityQuery<ActionComponent> _actionQuery;
     private EntityQuery<ActionsComponent> _actionsQuery;
@@ -84,36 +87,46 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnActionDoAfterAttempt(Entity<ActionComponent> ent, ref ActionDoAfterEvent args)
     {
+        if (!TryComp<DoAfterComponent>(ent, out var actionDoAfter))
+            return;
+
         Entity<ActionComponent?>? action = (ent, ent);
 
-        if (TryComp<DoAfterComponent>(ent, out var doAfterComponent))
+        // If this doafter is on repeat and was cancelled, start use delay as expected
+        if (args.Cancelled && actionDoAfter.Repeat)
         {
-            // If this doafter is on repeat and was cancelled, start use delay as expected
-            if (args.Cancelled && doAfterComponent.Repeat)
-            {
-                SetUseDelay(action, args.OriginalUseDelay);
-                RemoveCooldown(action);
-                StartUseDelay(action);
-                UpdateAction(ent);
-                return;
-            }
+            SetUseDelay(action, args.OriginalUseDelay);
+            RemoveCooldown(action);
+            StartUseDelay(action);
+            UpdateAction(ent);
+            return;
+        }
 
-            args.Repeat = doAfterComponent.Repeat;
+        args.Repeat = actionDoAfter.Repeat;
 
-            // Set the use delay to 0 so this can repeat properly
-            if (doAfterComponent.Repeat)
-            {
-                SetUseDelay(action, TimeSpan.FromSeconds(DoAfterRepeatUseDelay));
-            }
+        // Set the use delay to 0 so this can repeat properly
+        if (actionDoAfter.Repeat)
+        {
+            SetUseDelay(action, TimeSpan.FromSeconds(DoAfterRepeatUseDelay));
         }
 
         if (args.Cancelled)
             return;
 
-        // TODO: Needs a way to cancel DoAfter if there are no charges left
+        // Post original doafter, reduce the time on it now for other casts if ables
+        if (actionDoAfter.DelayReduction != null)
+            args.Args.Delay = actionDoAfter.DelayReduction.Value;
 
         // Validate again for charges, blockers, etc
-        TryPerformAction(args.Input, args.Performer, skipDoActionRequest: true);
+        if (TryPerformAction(args.Input, args.Performer, skipDoActionRequest: true))
+            return;
+
+        // TODO: This fixes the mispredicting but it doesn't fix the extra repeat
+        if (_netMan.IsClient)
+            return;
+
+        // Cancel this doafter if we can't validate the action
+        _doAfter.Cancel(args.DoAfter.Id, force: true);
     }
 
     private void OnActionMapInit(Entity<ActionComponent> ent, ref MapInitEvent args)
