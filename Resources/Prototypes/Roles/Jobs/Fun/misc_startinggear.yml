@@ -104,7 +104,7 @@
     id: PunPunIDCard
 
 - type: startingGear
-  id: MobPolyGear
+  id: MobPollyGear
   equipment:
     ears: ClothingHeadsetEngineering
 

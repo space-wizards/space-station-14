@@ -860,18 +860,18 @@
     stealGroup: AnimalTropico
 
 - type: entity
-  name: Poly the parrot
+  name: Polly the parrot
   parent: MobParrot
-  id: MobPolyParrot
+  id: MobPollyParrot
   description: An expert in quantum cracker theory
   components:
   - type: Parrot
-    minSpeakInterval: 120 # poly is chattier
+    minSpeakInterval: 120 # polly is chattier
     maxSpeakInterval: 240
   - type: Grammar
     attributes:
       proper: true
       gender: male
   - type: Loadout
-    prototypes: [ MobPolyGear ]
+    prototypes: [ MobPollyGear ]
 

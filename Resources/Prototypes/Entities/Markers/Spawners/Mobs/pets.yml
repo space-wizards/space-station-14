@@ -220,8 +220,8 @@
 
 - type: entity
   parent: MarkerBase
-  id: SpawnMobPolyParrot
-  name: Poly the parrot Spawner
+  id: SpawnMobPollyParrot
+  name: Polly the parrot Spawner
   suffix: CE pet
   components:
   - type: Sprite
@@ -231,7 +231,7 @@
       sprite: Mobs/Animals/parrot.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobPolyParrot
+    - MobPollyParrot
 
 - type: entity
   parent: MarkerBase
