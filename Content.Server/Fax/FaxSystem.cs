@@ -28,6 +28,8 @@ using Robust.Shared.Player;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.Power;
 using Content.Shared.DeviceNetwork.Components;
+using Robust.Shared.Prototypes;
+using Content.Shared.Tools;
 
 namespace Content.Server.Fax;
 
@@ -49,6 +51,8 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly FaxecuteSystem _faxecute = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+
+    private static readonly ProtoId<ToolQualityPrototype> ScrewingQuality = "Screwing";
 
     private const string PaperSlotId = "Paper";
 
@@ -209,7 +213,7 @@ public sealed class FaxSystem : EntitySystem
     {
         if (args.Handled ||
             !TryComp<ActorComponent>(args.User, out var actor) ||
-            !_toolSystem.HasQuality(args.Used, "Screwing")) // Screwing because Pulsing already used by device linking
+            !_toolSystem.HasQuality(args.Used, ScrewingQuality)) // Screwing because Pulsing already used by device linking
             return;
 
         _quickDialog.OpenDialog(actor.PlayerSession,
