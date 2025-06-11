@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ColonelThirtyTwo
-  changes:
-  - message: Spider clan charges are now marked as contraband
-    type: Fix
-  id: 8143
-  time: '2025-04-09T22:32:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36421
 - author: Beck Thompson
   changes:
   - message: Inflatable barrier disassembly is not not laggy anymore.
@@ -3907,3 +3900,10 @@
   id: 8655
   time: '2025-06-11T15:36:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38041
+- author: Simyon264
+  changes:
+  - message: The MIDI Channel Selector now shows the instrument name of the track!
+    type: Tweak
+  id: 8656
+  time: '2025-06-11T18:32:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38083
