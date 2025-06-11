@@ -1,0 +1,15 @@
+- type: entity
+  id: ActionActivateMagillitisSerumImplant
+  name: Magillitis Serum
+  description: An experimental biochip which causes irreversable rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    charges: 1
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: _Starlight/Actions/implants.rsi
+      state: gorilla_rampage
+    event: !type:UseMagillitisSerumImplantEvent

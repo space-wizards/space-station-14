@@ -3,6 +3,10 @@
 # ItemIdFrom: ItemIdTo - Change item
 # ItemIdFrom: null - Removes item from map
 
+# 2025-06-11
+
+CrateNPCGorilla: null
+
 # 2025-05-19
 
 AbductorDispencer: VendingMachineAbductorDispenser
