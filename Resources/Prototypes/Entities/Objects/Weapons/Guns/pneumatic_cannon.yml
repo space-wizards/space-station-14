@@ -103,6 +103,40 @@
     containers:
       storagebase: !type:Container
         ents: []
+
+- type: entity
+  name: experimental pie cannon
+  parent: BaseWeaponBattery
+  id: BorgLauncherCreamPie
+  description: Deliver a generous portion of cream directly to the crew! Automatically bakes pies over time.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
+    layers:
+    - state: piecannon
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg
+    clumsyProof: true
+  - type: ProjectileBatteryAmmoProvider
+    proto: FoodPieBananaCream
+    fireCost: 30
+  - type: Battery
+    maxCharge: 90
+    startingCharge: 90
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 1
+  - type: AmmoCounter
+  - type: Item
+    size: Normal
         
 - type: entity
   name: syringe gun
