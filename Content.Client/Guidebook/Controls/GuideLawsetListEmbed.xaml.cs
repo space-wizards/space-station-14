@@ -20,8 +20,6 @@ public sealed partial class GuideLawsetListEmbed : BoxContainer, IDocumentTag
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
-    private ISawmill _logging = default!;
-
     public GuideLawsetListEmbed()
     {
         RobustXamlLoader.Load(this);

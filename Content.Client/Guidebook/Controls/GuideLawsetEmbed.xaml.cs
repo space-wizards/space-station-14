@@ -49,7 +49,7 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
         // Setting it here makes it easier for a later system to change it later
         NameBackground.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = Color.DarkBlue
+            BackgroundColor = new(22, 22, 140)
         };
         LawsetName.SetMarkup($"[bold]{Loc.GetString(lawset.Name ?? lawset.ID)}[/bold]");
         var i = 1;
