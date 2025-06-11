@@ -34,7 +34,6 @@
       - !type:MovespeedModifier
         walkSpeedModifier: 1.15
         sprintSpeedModifier: 1.15
-        time: 6
       - !type:HealthChange
         conditions:
           - !type:ReagentThreshold

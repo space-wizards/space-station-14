@@ -49,7 +49,7 @@
         damage:
           types:
             Caustic: 8.0
-      - !type:Jitter        
+      - !type:Jitter
 
 - type: reagent
   id: Rezamine
@@ -195,7 +195,6 @@
       effects:
       - !type:HealthChange
         scaleByQuantity: true
-        ignoreResistance: false
         damage:
           types:
             Cold: 0.05
