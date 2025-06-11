@@ -25,6 +25,9 @@
       collection: MetalThud
   - type: Spillable
     solution: absorbed
+    spillWhenThrown: false
+  - type: DrainableSolution
+    solution: absorbed
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -34,6 +37,7 @@
     size: Large
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Absorbent
+    useAbsorberSolution: true
   - type: SolutionContainerManager
     solutions:
       absorbed:
@@ -79,6 +83,9 @@
          collection: MetalThud
     - type: Spillable
       solution: absorbed
+      spillWhenThrown: false
+    - type: DrainableSolution
+      solution: absorbed
     - type: Wieldable
     - type: IncreaseDamageOnWield
       damage:
@@ -89,6 +96,7 @@
       sprite: Objects/Specific/Janitorial/advmop.rsi
     - type: Absorbent
       pickupAmount: 100
+      useAbsorberSolution: true
     - type: UseDelay
       delay: 1.0
     - type: SolutionRegeneration
@@ -311,6 +319,9 @@
       fillBaseName: fill-
     - type: Spillable
       solution: absorbed
+      spillWhenThrown: false
+    - type: DrainableSolution
+      solution: absorbed
     - type: MeleeWeapon
       soundNoDamage:
         path: "/Audio/Effects/Fluids/splat.ogg"
@@ -322,6 +333,7 @@
       sprite: Objects/Specific/Janitorial/rag.rsi
     - type: Absorbent
       pickupAmount: 15
+      useAbsorberSolution: true
     - type: Construction
       graph: Rag
       node: rag
