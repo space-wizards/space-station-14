@@ -33,7 +33,7 @@ public sealed class GasAnalyzerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GasAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<GasAnalyzerComponent, GasAnalyzerDisableMessage>(OnDisabledMessage);
+        SubscribeLocalEvent<GasAnalyzerComponent, BoundUIClosedEvent>(OnBoundUIClosed);
         SubscribeLocalEvent<GasAnalyzerComponent, DroppedEvent>(OnDropped);
         SubscribeLocalEvent<GasAnalyzerComponent, UseInHandEvent>(OnUseInHand);
     }
@@ -130,9 +130,13 @@ public sealed class GasAnalyzerSystem : EntitySystem
     /// <summary>
     /// Disables the analyzer when the user closes the UI
     /// </summary>
-    private void OnDisabledMessage(Entity<GasAnalyzerComponent> entity, ref GasAnalyzerDisableMessage message)
+    private void OnBoundUIClosed(Entity<GasAnalyzerComponent> entity, ref BoundUIClosedEvent args)
     {
-        DisableAnalyzer(entity);
+        if (HasComp<ActiveGasAnalyzerComponent>(entity.Owner)
+            && !_userInterface.IsUiOpen(entity.Owner, args.UiKey))
+        {
+            DisableAnalyzer(entity);
+        }
     }
 
     /// <summary>
