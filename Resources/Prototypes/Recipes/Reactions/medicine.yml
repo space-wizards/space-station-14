@@ -520,7 +520,7 @@
 - type: reaction
   id: Pyrazine
   impact: Medium
-  minTemp: 540
+  minTemp: 400
   reactants:
     Leporazine:
       amount: 1
@@ -534,7 +534,7 @@
 - type: reaction
   id: Insuzine
   impact: Medium
-  minTemp: 433
+  minTemp: 400
   reactants:
     Leporazine:
       amount: 1
