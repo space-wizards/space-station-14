@@ -82,6 +82,11 @@ public sealed partial class ParrotSystem : EntitySystem
 
         var message = incomingMessage.Trim();
 
+        // ignore messages containing tildes. This is a crude way to ignore whispers or people talking on radio
+        // near a parrot
+        if (message.Contains('~'))
+            return;
+
         if (string.IsNullOrWhiteSpace(message))
             return;
 
