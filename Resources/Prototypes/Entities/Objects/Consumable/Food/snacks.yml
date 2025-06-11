@@ -547,6 +547,13 @@
     tags:
     - FoodSnack
     - ReptilianFood
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 2
+    soundHit:
+      collection: WeakHit
 
 # Trash
 

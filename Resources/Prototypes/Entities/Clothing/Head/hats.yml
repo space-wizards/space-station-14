@@ -1319,7 +1319,7 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadPropeller
+  id: ClothingHeadPropellerHat
   name: propeller hat
   description: You're the bestest boy.
   components:
