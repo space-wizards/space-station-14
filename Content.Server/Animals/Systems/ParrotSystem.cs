@@ -44,46 +44,7 @@ public sealed partial class ParrotSystem : EntitySystem
 
     private void OnParrotInit(Entity<ParrotComponent> entity, ref ComponentInit args)
     {
-        StartListening(entity);
-    }
-
-    /// <summary>
-    /// Start listening for new sentences to memorize
-    /// </summary>
-    private void StartListening(Entity<ParrotComponent> entity)
-    {
-        if (entity.Comp.Listening)
-            return;
-
-        entity.Comp.Listening = true;
-
-        EnsureComp<ActiveListenerComponent>(entity);
-    }
-
-    /// <summary>
-    /// StartListening overload for update cycle
-    /// </summary>
-    private void StartListening(EntityUid uid, ParrotComponent parrot)
-    {
-        if (parrot.Listening)
-            return;
-
-        parrot.Listening = true;
-
-        EnsureComp<ActiveListenerComponent>(uid);
-    }
-
-    /// <summary>
-    /// Stop listening
-    /// </summary>
-    private void StopListening(Entity<ParrotComponent> entity)
-    {
-        if (!entity.Comp.Listening)
-            return;
-
-        entity.Comp.Listening = false;
-
-        RemCompDeferred<ActiveListenerComponent>(entity);
+        EnsureComp<ActiveListenerComponent>(entity).Range = entity.Comp.ListenRange;
     }
 
     /// <summary>
@@ -112,8 +73,8 @@ public sealed partial class ParrotSystem : EntitySystem
             return;
 
         // ignore speakers with ParrotComponent or things get silly
-        if (HasComp<ParrotComponent>(source))
-            return;
+        // if (HasComp<ParrotComponent>(source))
+        //     return;
 
         var message = incomingMessage.Trim();
 
@@ -135,7 +96,7 @@ public sealed partial class ParrotSystem : EntitySystem
     private void OnLearn(Entity<ParrotComponent> entity, ref ParrotLearnEvent args)
     {
         // set new time for learn interval
-        entity.Comp.NextLearnInterval = _gameTiming.CurTime + TimeSpan.FromSeconds(entity.Comp.LearnCooldown);
+        entity.Comp.NextLearnInterval = _gameTiming.CurTime + entity.Comp.LearnCooldown;
 
         // reset next speak interval if this is the first thing the parrot learnt
         if (entity.Comp.SpeechMemory.Count == 0)
@@ -159,19 +120,12 @@ public sealed partial class ParrotSystem : EntitySystem
         if (entity.Comp.SpeechMemory.Count < entity.Comp.MaxSpeechMemory)
         {
             entity.Comp.SpeechMemory.Add(args.Message);
-        }
-        // too much in brain. remove something :(
-        else
-        {
-            var replaceIdx = _random.Next(entity.Comp.SpeechMemory.Count);
-            entity.Comp.SpeechMemory[replaceIdx] = args.Message;
-        }
-
-        // if there is no cooldown, don't stop listening
-        if (entity.Comp.LearnCooldown == 0.0f)
             return;
+        }
 
-        StopListening(entity);
+        // too much in brain. remove something :(
+        var replaceIdx = _random.Next(entity.Comp.SpeechMemory.Count);
+        entity.Comp.SpeechMemory[replaceIdx] = args.Message;
     }
 
     /// <summary>
@@ -242,9 +196,6 @@ public sealed partial class ParrotSystem : EntitySystem
             if (_mobState.IsIncapacitated(uid))
                 return;
 
-            if (!parrot.Listening && currentGameTime > parrot.NextLearnInterval)
-                StartListening(uid, parrot);
-
             // no need to continue to speak if there is nothing to say
             if (parrot.SpeechMemory.Count == 0)
                 continue;
@@ -259,14 +210,23 @@ public sealed partial class ParrotSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Event that is fired when a parrot tries to learn, after a successful learn roll but before anything is added to memory
+/// </summary>
 [ByRefEvent]
 public record struct ParrotTryLearnEvent(string Message, EntityUid Teacher)
 {
     public bool Cancelled = false;
 };
 
+/// <summary>
+/// Event that is fired when a parrot has learned a new message
+/// </summary>
 [ByRefEvent]
 public readonly record struct ParrotLearnEvent(string Message, EntityUid Teacher);
 
+/// <summary>
+/// Event that is fired when a parrot tries to speak
+/// </summary>
 [ByRefEvent]
 public readonly record struct ParrotSpeakEvent();

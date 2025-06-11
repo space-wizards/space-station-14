@@ -9,6 +9,7 @@ public sealed partial class ParrotComponent : Component
     /// <summary>
     /// List of speech entries this entity has learned
     /// </summary>
+    [DataField]
     public List<string> SpeechMemory = new();
 
     /// <summary>
@@ -33,7 +34,7 @@ public sealed partial class ParrotComponent : Component
     /// Time in seconds before another attempt can be made at learning a phrase
     /// </summary>
     [DataField]
-    public float LearnCooldown = 60f;
+    public TimeSpan LearnCooldown = TimeSpan.FromSeconds(60f);
 
     /// <summary>
     /// Next time at which the parrot can attempt to learn something
@@ -81,5 +82,5 @@ public sealed partial class ParrotComponent : Component
     /// Odds of the parrot attempting to speak on the radio.
     /// </summary>
     [DataField]
-    public float RadioAttemptChance = 0.5f;
+    public float RadioAttemptChance = 0.3f;
 }
