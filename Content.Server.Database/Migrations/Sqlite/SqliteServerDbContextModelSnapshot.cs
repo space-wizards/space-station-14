@@ -532,37 +532,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("ban_template", (string)null);
                 });
 
-            modelBuilder.Entity("Content.Server.Database.BasicTelemetry", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("basic_telemetry_id");
-
-                    b.Property<string>("Campaign")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("campaign");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Metadata")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("metadata");
-
-                    b.Property<int>("RoundNumber")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("round_number");
-
-                    b.HasKey("Id")
-                        .HasName("PK_basic_telemetry");
-
-                    b.ToTable("basic_telemetry", (string)null);
-                });
-
             modelBuilder.Entity("Content.Server.Database.Blacklist", b =>
                 {
                     b.Property<Guid>("UserId")
