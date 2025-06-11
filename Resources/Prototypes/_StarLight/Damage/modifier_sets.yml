@@ -7,7 +7,7 @@
 - type: damageModifierSet
   id: TerrorSpider
   coefficients:
-    Blunt: 0.4 
+    Blunt: 0.4
     Slash: 1.1
     Piercing: 0.9
     Heat: 1.6

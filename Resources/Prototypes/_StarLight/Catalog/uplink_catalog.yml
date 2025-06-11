@@ -9,14 +9,14 @@
   cost:
     Telecrystal: 12
   categories:
-  - UplinkJob
+    - UplinkJob
   conditions:
-  - !type:BuyerJobCondition
-    whitelist:
-    - AtmosphericTechnician
-    
+    - !type:BuyerJobCondition
+      whitelist:
+        - AtmosphericTechnician
+
 # Weapons
-    
+
 - type: listing
   id: uplinkWeaponMiniEnergyCrossbow
   name: uplink-mini-energy-crossbow-name
@@ -28,7 +28,7 @@
   cost:
     Telecrystal: 12
   categories:
-  - UplinkWeaponry
+    - UplinkWeaponry
   conditions:
     - !type:ListingLimitedStockCondition
       stock: 1
@@ -36,26 +36,30 @@
       blacklist:
         tags:
           - NukeOpsUplink
-          
+
 - type: listing
   id: uplinkWeaponShotgunMinotaur
   name: uplink-minotaur-name
   description: uplink-minotaur-desc
   productEntity: ClothingBackpackDuffelSyndicateFilledMinotaurShotgun
-  icon: { sprite: /Textures/_Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi, state: icon }
+  icon:
+    {
+      sprite: /Textures/_Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi,
+      state: icon,
+    }
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 15
   cost:
     Telecrystal: 20
   categories:
-  - UplinkWeaponry
+    - UplinkWeaponry
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
         tags:
           - NukeOpsUplink
-          
+
 - type: listing
   id: uplinkWeaponPistolDeagle
   name: uplink-deagle-name
@@ -67,8 +71,8 @@
   cost:
     Telecrystal: 8
   categories:
-  - UplinkWeaponry
-  
+    - UplinkWeaponry
+
 - type: listing
   id: uplinkWeaponPistolStechkin
   name: uplink-stechkin-name
@@ -80,21 +84,24 @@
   cost:
     Telecrystal: 6
   categories:
-  - UplinkWeaponry
-  
+    - UplinkWeaponry
+
 # Ammo
 
 - type: listing
   id: UplinkPistolMagnumMagazine
   name: uplink-pistol-magnum-magazine-name
   description: uplink-pistol-magnum-magazine-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: sp }
+  icon:
+    {
+      sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi,
+      state: sp,
+    }
   productEntity: MagazineMagnum
   cost:
     Telecrystal: 1
   categories:
-  - UplinkAmmo
-
+    - UplinkAmmo
 
 # Cybernetics
 
@@ -102,33 +109,45 @@
   id: UplinkCyberEyeNightVision
   name: uplink-nightvision-eyes
   description: uplink-nightvision-eyes-desc
-  icon: { sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi, state: eyes_night }
+  icon:
+    {
+      sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi,
+      state: eyes_night,
+    }
   productEntity: CyberEyeNightVision
   discountDownTo:
     Telecrystal: 2
   cost:
     Telecrystal: 4
   categories:
-  - UplinkCybernetics
+    - UplinkCybernetics
 
 - type: listing
   id: UplinkCyberEyeThermal
   name: uplink-thermalvision-eyes
   description: uplink-thermalvision-eyes-desc
-  icon: { sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi, state: eyes_thermal }
+  icon:
+    {
+      sprite: /Textures/_Starlight/Objects/Specific/Medical/implants.rsi,
+      state: eyes_thermal,
+    }
   productEntity: CyberEyeThermal
   discountDownTo:
     Telecrystal: 4
   cost:
     Telecrystal: 8
   categories:
-  - UplinkCybernetics
+    - UplinkCybernetics
 
 - type: listing
   id: UplinkMantisBladeArm
   name: uplink-mantis-blade-arms-name
   description: uplink-mantis-blade-arms-desc
-  icon: { sprite: /Textures/_Starlight/Objects/Weapons/Melee/cybermantisblade.rsi, state: cybermantisblade }
+  icon:
+    {
+      sprite: /Textures/_Starlight/Objects/Weapons/Melee/cybermantisblade.rsi,
+      state: cybermantisblade,
+    }
   productEntity: ClothingBackpackDufelSyndicateFilledMantisBladeArms
   discountCategory: rareDiscounts
   discountDownTo:
@@ -136,17 +155,17 @@
   cost:
     Telecrystal: 15
   categories:
-  - UplinkCybernetics
+    - UplinkCybernetics
 
 - type: listing
   id: UplinkEnergyDomeSyndie
   name: uplink-energy-dome-name
   description: uplink-energy-dome-desc
   productEntity: EnergyDomeGeneratorPersonalSyndie
-  cost: 
+  cost:
     Telecrystal: 10
   categories:
-  - UplinkWearables
+    - UplinkWearables
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
@@ -165,10 +184,10 @@
   cost:
     Telecrystal: 6
   categories:
-  - UplinkJob
+    - UplinkJob
   conditions:
-  - !type:BuyerJobCondition
-    whitelist:
-    - ResearchAssistant
-    - Scientist
-    - ResearchDirector
+    - !type:BuyerJobCondition
+      whitelist:
+        - ResearchAssistant
+        - Scientist
+        - ResearchDirector
