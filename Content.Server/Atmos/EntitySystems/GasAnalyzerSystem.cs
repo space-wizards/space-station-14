@@ -121,7 +121,7 @@ public sealed class GasAnalyzerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Disables the analyzer when the user closes the UI
+    /// Enables the analyzer when the user opens the UI
     /// </summary>
     private void OnBoundUIOpened(Entity<GasAnalyzerComponent> entity, ref BoundUIOpenedEvent args)
     {
