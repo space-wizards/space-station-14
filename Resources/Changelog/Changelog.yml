@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: Large objects, such as crates, can once again be dragged over holopads
-    type: Fix
-  id: 8147
-  time: '2025-04-10T14:18:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36341
 - author: JuneSzalkowska
   changes:
   - message: Added cooked dragon steak and dragon cutlets.
@@ -3908,3 +3901,12 @@
   id: 8659
   time: '2025-06-11T20:28:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38110
+- author: Boaz1111
+  changes:
+  - message: Various species can now have the same scars as humans do, with exceptions.
+    type: Add
+  - message: A smaller variant of the eye scars has been added.
+    type: Add
+  id: 8660
+  time: '2025-06-11T21:56:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35645
