@@ -75,4 +75,11 @@ public sealed partial class TegGeneratorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("volumeMax")]
     public float VolumeMax = -4;
+
+    /// <summary>
+    /// The absolute difference in temperatures between the hot and cold side of the TEG
+    /// required to start generating power.
+    /// </summary>
+    [DataField]
+    public float TemperatureTolerance = 1f;
 }

@@ -183,6 +183,7 @@
     - type: AtmosUnsafeUnanchor
     - type: PipeRestrictOverlap
     - type: TegCirculator
+      heatCapacity: 10000
       conductivityConstant: 500
     - type: StealTarget
       stealGroup: Teg

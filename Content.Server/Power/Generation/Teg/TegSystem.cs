@@ -166,11 +166,12 @@ public sealed class TegSystem : EntitySystem
         var circA_C = circAComp.HeatCapacity;
         var circB_C = circBComp.HeatCapacity;
 
-        // TODO: Think of a better way to turn off the TEG.
-        if (airA.Pressure > 0 && airB.Pressure > 0)
+        var dT = Math.Abs(circATemp - circBTemp);
+
+        // Don't bother doing anything if the \deltaT is too small.
+        if (dT > 1)
         {
-            var Thot = MathF.Max(circATemp, circBTemp);
-            var Tcold = MathF.Min(circATemp, circBTemp);
+            var (Thot, Tcold) = circATemp > circBTemp ? (circATemp, circBTemp) : (circBTemp, circATemp);
 
             // Establish our base thermal efficiency.
             var N = component.ThermalEfficiency;
@@ -181,7 +182,6 @@ public sealed class TegSystem : EntitySystem
 
             // Reduce efficiency at low temperature differences to encourage burn chambers (instead
             // of just feeding the TEG room temperature gas from an infinite gas miner).
-            var dT = Thot - Tcold;
             N *= MathF.Tanh(dT/700); // https://www.wolframalpha.com/input?i=tanh(x/700)+from+0+to+1000
 
             // Calculate maximum amount of energy to generate this tick based on ramping above.
@@ -391,6 +391,10 @@ public sealed class TegSystem : EntitySystem
         TegCirculatorComponent comp,
         float dt)
     {
+        // Prevent heat transfer if there isn't any gas in the circulator.
+        if (air.TotalMoles == 0)
+            return;
+
         // Heat transfer is calculated as
         var dQ = comp.ConductivityConstant * (air.Temperature - comp.CirculatorTemperature) * dt;
 
