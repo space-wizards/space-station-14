@@ -41,6 +41,14 @@ station-ai-icon-smiley = All smiles
 
 station-ai-hologram-female = Female appearance
 station-ai-hologram-male = Male appearance
+station-ai-hologram-lizard = Lizard appearance
+station-ai-hologram-moth = Moth appearance
+station-ai-hologram-arachnid = Arachnid appearance
+station-ai-hologram-vox = Vox appearance
+station-ai-hologram-nymph = Diona Nymph Appearance
 station-ai-hologram-face = Disembodied head
 station-ai-hologram-cat = Cat form
 station-ai-hologram-dog = Corgi form
+station-ai-hologram-weh = Weh! Hew!
+station-ai-hologram-clown = Clown Form. Honk!
+station-ai-hologram-mothroach = Mothroach Form
