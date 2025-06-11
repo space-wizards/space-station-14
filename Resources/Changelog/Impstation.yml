@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Sharkminnow Eyes marking for thaven
-    type: Add
-  id: 1312
-  time: '2025-03-15T02:26:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1957
 - author: Kandiyaki, Axionyx
   changes:
   - message: heretics should be able to buy knowledge again.
@@ -4198,3 +4191,11 @@
   id: 1811
   time: '2025-06-11T19:33:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2729
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: The Blaster Pistol works exactly as it did before, with proper magazine
+      visuals and everything.
+    type: Fix
+  id: 1812
+  time: '2025-06-11T21:16:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2731
