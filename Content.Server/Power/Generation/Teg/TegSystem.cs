@@ -169,7 +169,7 @@ public sealed class TegSystem : EntitySystem
         var dT = Math.Abs(circATemp - circBTemp);
 
         // Don't bother doing anything if the \deltaT is too small.
-        if (dT > 1)
+        if (dT > component.TemperatureTolerance)
         {
             var (Thot, Tcold) = circATemp > circBTemp ? (circATemp, circBTemp) : (circBTemp, circATemp);
 
@@ -221,6 +221,7 @@ public sealed class TegSystem : EntitySystem
         // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
         supplier.MaxSupply = power * component.RampFactor;
 
+        // TODO: Check if this and the surrounding logic is correct. Gas leak happens here.
         circAComp.LastPressureDelta = δpA;
         circAComp.LastMolesTransferred = airA.TotalMoles;
         circBComp.LastPressureDelta = δpB;
