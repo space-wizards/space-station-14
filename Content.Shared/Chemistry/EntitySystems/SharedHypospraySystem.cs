@@ -46,7 +46,7 @@ public abstract class SharedHypospraySystem : EntitySystem
     private void ToggleMode(Entity<HyposprayComponent> entity, EntityUid user)
     {
         SetMode(entity, !entity.Comp.OnlyAffectsMobs);
-        string msg = entity.Comp.OnlyAffectsMobs ? "hypospray-verb-mode-inject-mobs-only" : "hypospray-verb-mode-inject-all";
+        string msg = (entity.Comp.OnlyAffectsMobs && entity.Comp.CanContainerDraw) ? "hypospray-verb-mode-inject-mobs-only" : "hypospray-verb-mode-inject-all";
         _popup.PopupClient(Loc.GetString(msg), entity, user);
     }
 

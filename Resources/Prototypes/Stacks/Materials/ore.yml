@@ -5,6 +5,7 @@
   spawn: GoldOre1
   maxCount: 30
 
+
 - type: stack
   id: DiamondOre
   name: stack-name-rough-diamond

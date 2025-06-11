@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 14400 #4 hrs
+      time: 9000 #2.5 hrs
   startingGear: DoctorGear
   icon: "JobIconMedicalDoctor"
   supervisors: job-supervisors-cmo
@@ -28,3 +28,14 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: MedicalDoctorChameleonOutfit
+  job: MedicalDoctor
+  equipment:
+    head: ClothingHeadNurseHat
+    eyes: ClothingEyesHudMedical
+    mask: ClothingMaskSterile
+    neck: ClothingNeckStethoscope
+    outerClothing: ClothingOuterCoatLab
+    gloves: ClothingHandsGlovesLatex
