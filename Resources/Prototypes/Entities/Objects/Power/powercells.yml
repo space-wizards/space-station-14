@@ -34,6 +34,9 @@
   - type: Appearance
   - type: PowerCellVisuals
   - type: Riggable
+  - type: HitscanBatteryAmmoProvider #imp
+    proto: RedLightLaser #imp
+    fireCost: 50 #imp
 
 - type: entity
   name: potato battery
@@ -289,6 +292,9 @@
   - type: Tag
     tags:
       - PowerCage
+  - type: HitscanBatteryAmmoProvider #imp
+    proto: RedShuttleLaser #imp
+    fireCost: 150 #imp
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8

@@ -62,12 +62,10 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
-  - type: HitscanBatteryAmmoProvider
-    proto: RedLightLaser
-    fireCost: 50
+  - type: MagazineAmmoProvider #imp, removed HitscanBatteryAmmoProvider to replace with this.
   - type: ItemSlots
     slots:
-      cell_slot:
+      gun_magazine: #imp
         name: Magazine
         startingItem: PowerCellSmall
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
@@ -76,14 +74,12 @@
           tags:
             - PowerCell
             - PowerCellSmall
-  - type: PowerCellSlot
-    cellSlotId: cell_slot
   - type: Appearance
   - type: StaticPrice
     price: 500
   - type: ContainerContainer
     containers:
-      cell_slot: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot #imp
 #imp edit begin; weapon melee
   - type: MeleeWeapon
     range: 0.8
@@ -142,10 +138,10 @@
     - Belt
 
 - type: entity
-  name: svalinn laser pistol
+  name: Svalinn laser pistol #imp
   parent: [ BaseWeaponPowerCellSmall, BaseSecurityContraband ]
   id: WeaponLaserSvalinn
-  description: A cheap and widely-used laser pistol.
+  description: A cheap and widely-used laser pistol with an interchangeable power cell. #imp
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi

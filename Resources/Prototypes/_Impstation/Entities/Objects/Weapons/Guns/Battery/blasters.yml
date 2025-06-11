@@ -12,9 +12,9 @@
       - state: base-unshaded
         map: ["enum.GunVisualLayers.BaseUnshaded"]
         shader: unshaded
-      - state: mag-0
+      - state: mag-4
         map: ["enum.GunVisualLayers.Mag"]
-      - state: mag-unshaded-0
+      - state: mag-unshaded-4
         map: ["enum.GunVisualLayers.MagUnshaded"]
         shader: unshaded
   - type: Appearance
@@ -38,7 +38,7 @@
   - type: MagazineAmmoProvider
   - type: ItemSlots
     slots:
-      cell_slot:
+      gun_magazine:
         name: Magazine
         startingItem: PowerCellBlaster
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg

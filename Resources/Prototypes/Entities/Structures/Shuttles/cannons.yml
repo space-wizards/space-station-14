@@ -56,7 +56,7 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-      cell_slot: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot #imp
   - type: Destructible
     thresholds:
     - trigger:
@@ -80,11 +80,9 @@
     zeroVisible: true
   - type: Machine
     board: ShuttleGunSvalinnMachineGunCircuitboard
-  - type: PowerCellSlot
-    cellSlotId: cell_slot
   - type: ItemSlots
     slots:
-      cell_slot:
+      gun_magazine: #imp
         name: Magazine
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
@@ -92,9 +90,7 @@
           tags:
             - PowerCell
             - PowerCellSmall
-  - type: HitscanBatteryAmmoProvider
-    proto: RedLightLaser
-    fireCost: 50
+  - type: MagazineAmmoProvider #imp, removed HitscanBatteryAmmoProvider to replace with this.
 
 - type: entity
   id: ShuttleGunPerforator
@@ -114,7 +110,7 @@
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-      cell_slot: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot #imp
   - type: Destructible
     thresholds:
     - trigger:
@@ -137,20 +133,16 @@
     zeroVisible: true
   - type: Machine
     board: ShuttleGunPerforatorCircuitboard
-  - type: PowerCellSlot
-    cellSlotId: cell_slot
   - type: ItemSlots
     slots:
-      cell_slot:
+      gun_magazine: #imp
         name: Magazine
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
           tags:
             - PowerCage
-  - type: HitscanBatteryAmmoProvider
-    proto: RedShuttleLaser
-    fireCost: 150
+  - type: MagazineAmmoProvider #imp, removed HitscanBatteryAmmoProvider to replace with this.
 
 # ---- Launchers ----
 # naming: EXP (Explosion) + conventional power + suffix (g for Grenade, c for RPG Cartridge) + Name
