@@ -17,10 +17,9 @@
           emergencyShuttlePath: /Maps/_DV/Shuttles/NTES_Propeller.yml
         - type: StationJobs
           availableJobs:
-            # command - 9
+            # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
-            AdministrativeAssistant: [ 1, 1 ] # imp
             ChiefEngineer: [ 1, 1 ]
             ChiefMedicalOfficer: [ 1, 1 ]
             ResearchDirector: [ 1, 1 ]

@@ -20,7 +20,6 @@
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             HospitalityDirector: [ 1, 1 ] # imp
-            AdministrativeAssistant : [ 1, 1 ] # imp
             Bartender: [ 2, 2 ]
             Botanist: [ 3, 3 ]
             Chef: [ 2, 2 ]
