@@ -31,6 +31,8 @@
     - HighRiskItem
   - type: StealTarget
     stealGroup: HandheldCrewMonitor
+  - type: ItemToggle
+    onActivate: false
 
 - type: entity
   id: HandheldCrewMonitorEmpty

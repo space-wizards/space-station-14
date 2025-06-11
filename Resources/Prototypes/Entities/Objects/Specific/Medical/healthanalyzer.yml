@@ -25,6 +25,7 @@
         type: HealthAnalyzerBoundUserInterface
   - type: ItemToggle
     onUse: false
+    onActivate: false
   - type: HealthAnalyzer
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
