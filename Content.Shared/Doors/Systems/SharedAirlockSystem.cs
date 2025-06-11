@@ -1,7 +1,9 @@
 using Content.Shared.Doors.Components;
+using Content.Shared.Interaction;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Wires;
 using Robust.Shared.Timing;
 
@@ -13,7 +15,7 @@ public abstract class SharedAirlockSystem : EntitySystem
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedDoorSystem DoorSystem = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem UISystem = default!;
     [Dependency] private   readonly SharedWiresSystem _wiresSystem = default!;
 
     public override void Initialize()
@@ -22,11 +24,46 @@ public abstract class SharedAirlockSystem : EntitySystem
 
         SubscribeLocalEvent<AirlockComponent, BeforeDoorClosedEvent>(OnBeforeDoorClosed);
         SubscribeLocalEvent<AirlockComponent, DoorStateChangedEvent>(OnStateChanged);
-        SubscribeLocalEvent<AirlockComponent, DoorBoltsChangedEvent>(OnBoltsChanged);
+        SubscribeLocalEvent<AirlockComponent, DoorBoltChangedEvent>(OnBoltsChanged);
         SubscribeLocalEvent<AirlockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
         SubscribeLocalEvent<AirlockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
         SubscribeLocalEvent<AirlockComponent, GetPryTimeModifierEvent>(OnGetPryMod);
         SubscribeLocalEvent<AirlockComponent, BeforePryEvent>(OnBeforePry);
+
+        SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnAirlockActivate);
+        SubscribeLocalEvent<AirlockComponent, InteractUsingEvent>(OnAirlockInteractUsing);
+    }
+
+    private void OnAirlockActivate(Entity<AirlockComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (args.Handled || !args.Complex)
+            return;
+
+        if (ent.Comp.KeepOpenIfClicked && ent.Comp.AutoClose)
+        {
+            ent.Comp.AutoClose = false;
+            Dirty(ent);
+        }
+    }
+
+    private void OnAirlockInteractUsing(Entity<AirlockComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled || !_wiresSystem.CanWireAct(args.Used))
+            return;
+
+        args.Handled = true;
+
+        if (TryComp<WiresPanelComponent>(ent.Owner, out var panel) &&
+            panel.Open)
+        {
+            if (TryComp<WiresPanelSecurityComponent>(ent.Owner, out var wiresPanelSecurity) &&
+                !wiresPanelSecurity.WiresAccessible)
+            {
+                return;
+            }
+
+            UISystem.TryToggleUi(ent.Owner, WiresUiKey.Key, args.User);
+        }
     }
 
     private void OnBeforeDoorClosed(EntityUid uid, AirlockComponent airlock, BeforeDoorClosedEvent args)
@@ -71,11 +108,13 @@ public abstract class SharedAirlockSystem : EntitySystem
         }
     }
 
-    private void OnBoltsChanged(EntityUid uid, AirlockComponent component, DoorBoltsChangedEvent args)
+    private void OnBoltsChanged(EntityUid uid, AirlockComponent component, DoorBoltChangedEvent args)
     {
         // If unbolted, reset the auto close timer
-        if (!args.BoltsDown)
+        if (!args.Bolted)
             UpdateAutoClose(uid, component);
+        else
+            DoorSystem.SetNextStateChange(uid, null);
     }
 
     private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, BeforeDoorOpenedEvent args)
