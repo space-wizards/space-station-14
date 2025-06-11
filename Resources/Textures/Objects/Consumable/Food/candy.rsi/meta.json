@@ -41,6 +41,17 @@
     },
     {
       "name": "orange"
+    },
+    {
+      "name": "swirl_lollipop"
+    },
+    {
+      "name": "swirl_lollipop-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "swirl_lollipop-inhand-left",
+      "directions": 4
     }
   ]
 }
