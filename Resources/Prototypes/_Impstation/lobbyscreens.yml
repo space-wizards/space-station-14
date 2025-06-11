@@ -117,3 +117,9 @@
   background: /Textures/_Impstation/LobbyScreens/smoko.webp
   name: Smoko?
   artist: Wowls
+
+- type: lobbyBackground
+  id: dontbedaft
+  background: /Textures/_Impstation/LobbyScreens/dont_be_daft.webp
+  name: Don't Be Daft
+  artist: astral_amy
