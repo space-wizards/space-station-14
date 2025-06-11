@@ -62,27 +62,21 @@ namespace Content.IntegrationTests.Tests
             "Dev",
             "TestTeg",
             "Fland",
-            "Meta",
             "Packed",
-            "Omega",
             "Bagel",
             "CentComm",
             "Box",
-            "Core",
             "Marathon",
             "MeteorArena",
             "Saltern",
             "Reach",
-            "Train",
             "Oasis",
-            "Gate",
             "Amber",
-            "Loop",
             "Plasma",
             "Elkridge",
-            "Convex",
             "Relic",
-            "dm01-entryway"
+            "dm01-entryway",
+            "Waterjug"
 
         };
 
