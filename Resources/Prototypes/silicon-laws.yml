@@ -152,8 +152,8 @@
   - Syndicate0
   - Crewsimov1
   - Crewsimov2
-  - Crewsimov3 #end region
-  obeysTo: laws-owner-syndicate
+  - Crewsimov3
+  obeysTo: laws-owner-crew #end region
 
 # Ninja conversion laws
 - type: siliconLaw
