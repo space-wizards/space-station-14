@@ -31,6 +31,7 @@ public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayS
         DebugTools.Assert(_escapeWindow == null);
 
         _escapeWindow = UIManager.CreateWindow<Options.UI.EscapeMenu>();
+
         var escapeButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().EscapeButton;
         _escapeWindow.OnOpen += () => escapeButton.SetClickPressed(true);
         _escapeWindow.OnClose += () => escapeButton.SetClickPressed(false);
