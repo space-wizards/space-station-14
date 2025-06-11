@@ -1,0 +1,7 @@
+- type: construction
+  id: ClothingClothWrap
+  graph: ClothingClothWrap
+  startNode: start
+  targetNode: shoes
+  category: construction-category-clothing
+  objectType: Item

@@ -4,8 +4,8 @@ meta:
   engineVersion: 260.2.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 06/02/2025 09:04:32
-  entityCount: 658
+  time: 06/06/2025 00:23:08
+  entityCount: 677
 maps: []
 grids:
 - 1
@@ -29,7 +29,7 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: grid
+      name: SYN "Final Destination" Factory Shuttle
     - type: Transform
       pos: -0.65625,-0.65625
       parent: invalid
@@ -231,6 +231,13 @@ entities:
     - type: GasTileOverlay
     - type: RadiationGridResistance
     - type: ImplicitRoof
+- proto: AdvMopItem
+  entities:
+  - uid: 669
+    components:
+    - type: Transform
+      pos: -6.581324,8.501459
+      parent: 1
 - proto: AirAlarm
   entities:
   - uid: 2
@@ -323,7 +330,7 @@ entities:
       pos: -0.5,11.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -3344.8176
+      secondsUntilStateChange: -4399.784
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -474,6 +481,13 @@ entities:
     components:
     - type: Transform
       pos: 4.5,14.5
+      parent: 1
+- proto: BorgCharger
+  entities:
+  - uid: 498
+    components:
+    - type: Transform
+      pos: -0.5,-1.5
       parent: 1
 - proto: BorgModuleEsword
   entities:
@@ -1180,6 +1194,21 @@ entities:
     - type: Transform
       pos: -9.5,15.5
       parent: 1
+  - uid: 666
+    components:
+    - type: Transform
+      pos: 1.5,-1.5
+      parent: 1
+  - uid: 667
+    components:
+    - type: Transform
+      pos: 0.5,-1.5
+      parent: 1
+  - uid: 668
+    components:
+    - type: Transform
+      pos: 2.5,3.5
+      parent: 1
 - proto: CableHV
   entities:
   - uid: 174
@@ -1608,6 +1637,14 @@ entities:
     - type: Transform
       pos: 0.5,14.5
       parent: 1
+- proto: ComputerIFFSyndicate
+  entities:
+  - uid: 660
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -3.5,14.5
+      parent: 1
 - proto: ComputerPowerMonitoring
   entities:
   - uid: 254
@@ -1630,6 +1667,18 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,6.5
+      parent: 1
+- proto: ConveyorBelt
+  entities:
+  - uid: 673
+    components:
+    - type: Transform
+      pos: 2.5,12.5
+      parent: 1
+  - uid: 674
+    components:
+    - type: Transform
+      pos: 2.5,11.5
       parent: 1
 - proto: CrateHydroponics
   entities:
@@ -1676,6 +1725,13 @@ entities:
           showEnts: False
           occludes: True
           ent: null
+- proto: CrateMaterialBasicResource
+  entities:
+  - uid: 659
+    components:
+    - type: Transform
+      pos: -4.5,15.5
+      parent: 1
 - proto: DonkpocketBoxSpawner
   entities:
   - uid: 653
@@ -1717,9 +1773,6 @@ entities:
     - type: Transform
       pos: 0.5,4.5
       parent: 1
-    - type: EmagLatheRecipes
-      emagStaticPacks:
-      - StarlightMechWeapon
 - proto: FaxMachineBase
   entities:
   - uid: 269
@@ -1728,7 +1781,7 @@ entities:
       pos: -6.5,6.5
       parent: 1
     - type: FaxMachine
-      name: Borgi Factory
+      name: S-Faxline
 - proto: FloorDrain
   entities:
   - uid: 270
@@ -2725,6 +2778,15 @@ entities:
     - type: Transform
       pos: -11.5,-1.5
       parent: 1
+- proto: GhostWarpPoint
+  entities:
+  - uid: 676
+    components:
+    - type: Transform
+      pos: -0.5,8.5
+      parent: 1
+    - type: WarpPoint
+      location: Syndicate Shadow Borgi Factory
 - proto: GravityGeneratorMini
   entities:
   - uid: 391
@@ -2878,19 +2940,15 @@ entities:
       rot: 3.141592653589793 rad
       pos: -11.5,5.5
       parent: 1
-- proto: HolopadLongRange
+- proto: HolopadBluespace
   entities:
-  - uid: 420
+  - uid: 677
     components:
     - type: MetaData
-      name: long-range holopad (Borgi Factory)
+      name: Borgi Factory Holopad
     - type: Transform
       pos: -7.5,8.5
       parent: 1
-    - type: Label
-      currentLabel: Borgi Factory
-    - type: NameModifier
-      baseName: long-range holopad
 - proto: hydroponicsTray
   entities:
   - uid: 421
@@ -3017,6 +3075,20 @@ entities:
         34:
         - - Pressed
           - Toggle
+- proto: MachineMaterialSilo
+  entities:
+  - uid: 670
+    components:
+    - type: Transform
+      pos: 2.5,2.5
+      parent: 1
+- proto: MiningDrill
+  entities:
+  - uid: 663
+    components:
+    - type: Transform
+      pos: -11.510165,6.4069023
+      parent: 1
 - proto: MMI
   entities:
   - uid: 443
@@ -3047,6 +3119,20 @@ entities:
     components:
     - type: Transform
       pos: -0.5,13.5
+      parent: 1
+- proto: OreBag
+  entities:
+  - uid: 664
+    components:
+    - type: Transform
+      pos: -11.510165,7.1152353
+      parent: 1
+- proto: OreProcessor
+  entities:
+  - uid: 671
+    components:
+    - type: Transform
+      pos: -3.5,-1.5
       parent: 1
 - proto: Paper
   entities:
@@ -3219,6 +3305,13 @@ entities:
     - type: Transform
       pos: -6.5,15.5
       parent: 1
+- proto: Recycler
+  entities:
+  - uid: 672
+    components:
+    - type: Transform
+      pos: 2.5,11.5
+      parent: 1
 - proto: ReinforcedPlasmaWindow
   entities:
   - uid: 469
@@ -3375,11 +3468,36 @@ entities:
       parent: 1
 - proto: SeedExtractor
   entities:
-  - uid: 498
+  - uid: 665
     components:
     - type: Transform
-      pos: -0.5,-1.5
+      pos: -3.5,2.5
       parent: 1
+- proto: SignalSwitchDirectional
+  entities:
+  - uid: 675
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,11.5
+      parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        672:
+        - - On
+          - Forward
+        - - Off
+          - Reverse
+        673:
+        - - On
+          - Forward
+        - - Off
+          - Reverse
+        674:
+        - - On
+          - Forward
+        - - Off
+          - Reverse
 - proto: SignHydro1
   entities:
   - uid: 499
@@ -3426,7 +3544,7 @@ entities:
       pos: -6.5,11.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -8879.379
+      secondsUntilStateChange: -9934.346
       state: Opening
 - proto: SpawnSmartSubwoofer
   entities:
@@ -3499,6 +3617,13 @@ entities:
     components:
     - type: Transform
       pos: -11.5,1.5
+      parent: 1
+- proto: SuitStorageEVASyndicate
+  entities:
+  - uid: 420
+    components:
+    - type: Transform
+      pos: -9.5,5.5
       parent: 1
 - proto: SurveillanceCameraGeneral
   entities:
@@ -3619,6 +3744,18 @@ entities:
     components:
     - type: Transform
       pos: 4.5,8.5
+      parent: 1
+  - uid: 661
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -11.5,6.5
+      parent: 1
+  - uid: 662
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -11.5,7.5
       parent: 1
 - proto: Thruster
   entities:

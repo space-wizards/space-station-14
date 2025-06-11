@@ -164,4 +164,12 @@
     - type: RuleGrids
     - type: LoadMapRule
       gridPath: /Maps/_Starlight/Shuttles/NT-Experimental-Botany-shuttle.yml
-    
+      
+# Karma's Syndie Research Outpost      
+- type: entity
+  parent: BaseGameRule
+  id: SyndieResearchOutpostEvent
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      mapPath: /Maps/_Starlight/EventMaps/research_outpost_map.yml
