@@ -31,7 +31,6 @@ public sealed partial class PlayerTab : Control
     private Header _headerClicked = Header.Username;
     private bool _ascending = true;
     private bool _showDisconnected;
-    private bool _playerlistButtonStyle;
 
     private AdminPlayerTabColorOption _playerTabColorSetting;
     private AdminPlayerTabRoleTypeOption _playerTabRoleSetting;
@@ -49,10 +48,6 @@ public sealed partial class PlayerTab : Control
         _adminSystem.OverlayEnabled += OverlayEnabled;
         _adminSystem.OverlayDisabled += OverlayDisabled;
 
-        _config.OnValueChanged(CCVars.AdminPlayerlistSeparateSymbols, PlayerListSettingsChanged);
-        _config.OnValueChanged(CCVars.AdminPlayerlistHighlightedCharacterColor, PlayerListSettingsChanged);
-        _config.OnValueChanged(CCVars.AdminPlayerlistRoleTypeColor, PlayerListSettingsChanged);
-        _config.OnValueChanged(CCVars.AdminPlayerlistButtonStyling, PlayerListButtonStylingChanged, true);
         _config.OnValueChanged(CCVars.AdminPlayerTabRoleSetting, RoleSettingChanged, true);
         _config.OnValueChanged(CCVars.AdminPlayerTabColorSetting, ColorSettingChanged, true);
         _config.OnValueChanged(CCVars.AdminPlayerTabSymbolSetting, SymbolSettingChanged, true);
@@ -147,16 +142,6 @@ public sealed partial class PlayerTab : Control
         RefreshPlayerList(_adminSystem.PlayerList);
     }
 
-    private void PlayerListButtonStylingChanged(bool button)
-    {
-        if(button)
-            ListHeader.Margin = new Thickness(15, 0);
-        else
-            ListHeader.Margin = new Thickness(0);
-
-        _playerlistButtonStyle = button;
-    }
-
     private void RefreshPlayerList(IReadOnlyList<PlayerInfo> players)
     {
         _players = players;
@@ -187,9 +172,7 @@ public sealed partial class PlayerTab : Control
             _playerTabSymbolSetting);
         button.AddChild(entry);
         button.ToolTip = $"{player.Username}, {player.CharacterName}, {player.IdentityName}, {player.StartingJob}";
-
-        if (!_playerlistButtonStyle)
-            button.StyleClasses.Clear();
+        button.StyleClasses.Clear();
     }
 
     /// <summary>

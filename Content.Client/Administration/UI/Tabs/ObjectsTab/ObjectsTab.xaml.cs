@@ -131,9 +131,9 @@ public sealed partial class ObjectsTab : Control
         var entry = new ObjectsTabEntry(_admin, info.Name, info.Entity, new StyleBoxFlat { BackgroundColor = backgroundColor });
         entry.OnTeleport += TeleportTo;
         entry.OnDelete += Delete;
-        button.ToolTip = $"{info.Name}, {info.Entity}";
-
         button.AddChild(entry);
+        button.ToolTip = $"{info.Name}, {info.Entity}";
+        button.StyleClasses.Clear();
     }
 
     private bool DataFilterCondition(string filter, ListData listData)
