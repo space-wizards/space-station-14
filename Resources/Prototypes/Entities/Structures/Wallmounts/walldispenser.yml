@@ -97,7 +97,7 @@
     state: pepper
   - type: SolutionContainerManager
     solutions:
-      food:
+      tank:
         reagents:
         - ReagentId: Blackpepper
           Quantity: 500
