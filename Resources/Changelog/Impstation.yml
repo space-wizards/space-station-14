@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: hivehum, DVDPlayer, RosySaturniidae and Delta-V
-  changes:
-  - message: Added eight new items to the Syndicate uplink, straight from Delta-V
-      Sector.
-    type: Add
-  id: 1311
-  time: '2025-03-15T01:23:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1863
 - author: Sha-Seng
   changes:
   - message: Sharkminnow Eyes marking for thaven
@@ -4198,3 +4190,11 @@
   id: 1810
   time: '2025-06-11T15:40:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2728
+- author: mqole
+  changes:
+  - message: Administrative Assistants have been recalled due to mass workplace coffee
+      incidents.
+    type: Remove
+  id: 1811
+  time: '2025-06-11T19:33:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2729
