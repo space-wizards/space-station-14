@@ -46,7 +46,7 @@ public sealed partial class ParrotComponent : Component
     /// The number of speech entries that are remembered
     /// </summary>
     [DataField]
-    public int MaxSpeechMemory = 10;
+    public int MaxSpeechMemory = 50;
 
     /// <summary>
     /// Minimum length of a speech entry
