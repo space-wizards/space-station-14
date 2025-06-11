@@ -11,3 +11,18 @@
     Slash: 1.1
     Piercing: 0.9
     Heat: 1.6
+
+- type: damageModifierSet
+  id: Gorilla
+  coefficients:
+    Asphyxiation: 1.5
+    Heat: 1.5
+    Cellular: 0
+    Poison: 1.5
+
+- type: damageModifierSet
+  id: GorillaRampaging
+  coefficients:
+    Blunt: 1.25
+    Cellular: 0
+    Poison: 1.5

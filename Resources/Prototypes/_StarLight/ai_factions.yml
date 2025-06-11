@@ -15,6 +15,7 @@
   - Vampire
   - Changeling
   - AllHostile
+  - Gorilla
 
 - type: npcFaction
   id: DungeonSoviet
@@ -31,6 +32,7 @@
   - Vampire
   - Changeling
   - AllHostile
+  - Gorilla
 
 - type: npcFaction
   id: DungeonSyndicate
@@ -47,3 +49,24 @@
   - Vampire
   - Changeling
   - AllHostile
+  - Gorilla
+
+- type: npcFaction
+  id: Gorilla
+  hostile:
+  - NanoTrasen
+  - Dragon
+  - PetsNT
+  - SimpleHostile
+  - Syndicate
+  - Xeno
+  - Zombie
+  - Revolutionary
+  - HonkNeutral
+  - HonkHostile
+  - Vampire
+  - Changeling
+  - Wizard
+  - Abyss
+  - DungeonSoviet
+  - DungeonSyndicate

@@ -14,6 +14,7 @@
     - Changeling
     - AllHostile
     - Wizard
+    - Gorilla
 
 - type: npcFaction
   id: NanoTrasen
@@ -32,6 +33,7 @@
   - Wizard
   - Xenoborg
   - Dragon
+  - Gorilla
 
 - type: npcFaction
   id: Mouse
@@ -56,6 +58,7 @@
   - Wizard
   - Dragon
   - HonkHostile
+  - Gorilla
 
 - type: npcFaction
   id: SimpleHostile
@@ -76,6 +79,7 @@
   - Xenoborg
   - Dragon
   - Xeno
+  - Gorilla
 
 - type: npcFaction
   id: SimpleNeutral
@@ -97,6 +101,7 @@
   - Wizard
   - Xenoborg
   - Dragon
+  - Gorilla
 
 - type: npcFaction
   id: Xeno
@@ -116,6 +121,7 @@
   - Wizard
   - Dragon
   - Xenoborg
+  - Gorilla
 
 - type: npcFaction
   id: Zombie
@@ -136,6 +142,7 @@
   - Wizard
   - Dragon
   - Xenoborg
+  - Gorilla
 
 - type: npcFaction
   id: Revolutionary
@@ -150,6 +157,7 @@
   - Vampire
   - Changeling
   - AllHostile
+  - Gorilla
   
 - type: npcFaction
   id: Changeling
@@ -159,6 +167,7 @@
   - Zombie
   - Revolutionary
   - AllHostile
+  - Gorilla
   
 - type: npcFaction
   id: Vampire
@@ -170,6 +179,7 @@
   - Xeno
   - Changeling
   - AllHostile
+  - Gorilla
   
 - type: npcFaction
   id: HonkHostile
@@ -182,6 +192,7 @@
   - AllHostile
   - Wizard
   - Xenoborg
+  - Gorilla
 
 - type: npcFaction
   id: HonkNeutral
@@ -191,6 +202,7 @@
   - Xeno
   - Zombie
   - AllHostile
+  - Gorilla
   
 - type: npcFaction
   id: AllHostile
@@ -212,6 +224,7 @@
   - Changeling
   - Wizard
   - Xenoborg
+  - Gorilla
 
 - type: npcFaction
   id: Wizard
@@ -229,6 +242,7 @@
   - Revolutionary
   - AllHostile
   - Xenoborg
+  - Gorilla
 
 - type: npcFaction
   id: Xenoborg
