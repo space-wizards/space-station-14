@@ -866,6 +866,7 @@
   description: An expert in quantum cracker theory
   components:
   - type: Parrot
+    learnChance: 0.5 # polly is smarter
     minSpeakInterval: 120 # polly is chattier
     maxSpeakInterval: 240
   - type: Grammar

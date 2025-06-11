@@ -8,7 +8,6 @@ using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Clothing;
-using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
@@ -22,15 +21,15 @@ namespace Content.Server.Animals.Systems;
 
 public sealed partial class ParrotSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly RadioSystem _radio = default!;
-    [Dependency] private readonly ParrotAccentSystem _parrotAccent = default!;
+    [Dependency] private readonly ChatSystem _chat = null!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = null!;
+    [Dependency] private readonly IGameTiming _gameTiming = null!;
+    [Dependency] private readonly IPrototypeManager _proto = null!;
+    [Dependency] private readonly InventorySystem _inventory = null!;
+    [Dependency] private readonly IRobustRandom _random = null!;
+    [Dependency] private readonly MobStateSystem _mobState = null!;
+    [Dependency] private readonly ParrotAccentSystem _parrotAccent = null!;
+    [Dependency] private readonly RadioSystem _radio = null!;
 
     public override void Initialize()
     {
@@ -43,9 +42,6 @@ public sealed partial class ParrotSystem : EntitySystem
 
         SubscribeLocalEvent<ParrotComponent, ClothingDidEquippedEvent>(OnClothingEquipped);
         SubscribeLocalEvent<ParrotComponent, ClothingDidUnequippedEvent>(OnClothingUnequipped);
-
-        SubscribeLocalEvent<ParrotComponent, ParrotLearnEvent>(OnLearn);
-        SubscribeLocalEvent<ParrotComponent, ParrotSpeakEvent>(OnSpeak);
     }
 
     private void OnParrotInit(Entity<ParrotComponent> entity, ref ComponentInit args)
@@ -120,17 +116,21 @@ public sealed partial class ParrotSystem : EntitySystem
         if (_mobState.IsIncapacitated(entity))
             return;
 
+        // can't learn too soon after having already learnt something else
+        if (_gameTiming.CurTime < entity.Comp.NextLearnInterval)
+            return;
+
         // ignore yourself
         if (source.Equals(entity))
             return;
 
-        // fail to learn "Urist mctider is stabbing me". Succeed in learning "nuh uh"
-        if (!_random.Prob(entity.Comp.LearnChance))
+        // ignore speakers with ParrotComponent or things get silly
+        if (entity.Comp.IgnoreOtherParrots && HasComp<ParrotComponent>(source))
             return;
 
-        // ignore speakers with ParrotComponent or things get silly
-        // if (HasComp<ParrotComponent>(source))
-        //     return;
+        // decide if this message passes a learn chance
+        if (!_random.Prob(entity.Comp.LearnChance))
+            return;
 
         var message = incomingMessage.Trim();
 
@@ -146,15 +146,13 @@ public sealed partial class ParrotSystem : EntitySystem
         if (message.Length < entity.Comp.MinEntryLength || message.Length > entity.Comp.MaxEntryLength)
             return;
 
-        // actually fire the learning event
-        var learnEvent = new ParrotLearnEvent(message, source);
-        RaiseLocalEvent(entity, ref learnEvent);
+        Learn(entity, message, source);
     }
 
     /// <summary>
     /// Callback for when a parrot succeeds in learning a new message
     /// </summary>
-    private void OnLearn(Entity<ParrotComponent> entity, ref ParrotLearnEvent args)
+    private void Learn(Entity<ParrotComponent> entity, string message, EntityUid teacher)
     {
         // set new time for learn interval
         entity.Comp.NextLearnInterval = _gameTiming.CurTime + entity.Comp.LearnCooldown;
@@ -162,37 +160,29 @@ public sealed partial class ParrotSystem : EntitySystem
         // reset next speak interval if this is the first thing the parrot learnt
         if (entity.Comp.SpeechMemory.Count == 0)
         {
-            var intervalSeconds = _random.NextFloat(entity.Comp.MinSpeakInterval, entity.Comp.MaxSpeakInterval);
-            var randomSpeakInterval = TimeSpan.FromSeconds(intervalSeconds);
+            var randomSpeakInterval = _random.Next(entity.Comp.MinSpeakInterval, entity.Comp.MaxSpeakInterval);
 
             entity.Comp.NextSpeakInterval = _gameTiming.CurTime + randomSpeakInterval;
         }
 
-        // raise an event that we're trying to learn something
-        var tryLearnEvent = new ParrotTryLearnEvent(args.Message, args.Teacher);
-        RaiseLocalEvent(entity, ref tryLearnEvent);
-
-        if (tryLearnEvent.Cancelled)
-            return;
-
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Parroting entity {ToPrettyString(entity):entity} learned the phrase \"{args.Message}\" from {ToPrettyString(args.Teacher):speaker}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Parroting entity {ToPrettyString(entity):entity} learned the phrase \"{message}\" from {ToPrettyString(teacher):speaker}");
 
         // can fit more in peanut brain :)
         if (entity.Comp.SpeechMemory.Count < entity.Comp.MaxSpeechMemory)
         {
-            entity.Comp.SpeechMemory.Add(args.Message);
+            entity.Comp.SpeechMemory.Add(message);
             return;
         }
 
         // too much in brain. remove something :(
         var replaceIdx = _random.Next(entity.Comp.SpeechMemory.Count);
-        entity.Comp.SpeechMemory[replaceIdx] = args.Message;
+        entity.Comp.SpeechMemory[replaceIdx] = message;
     }
 
     /// <summary>
     /// Callback for when a parrot wants to say something
     /// </summary>
-    private void OnSpeak(Entity<ParrotComponent> entity, ref ParrotSpeakEvent args)
+    private void Speak(Entity<ParrotComponent> entity)
     {
         // can't talk if you don't have a speech component
         if (!TryComp<SpeechComponent>(entity, out var speech))
@@ -203,8 +193,7 @@ public sealed partial class ParrotSystem : EntitySystem
             return;
 
         // set a new time for the speak interval
-        var intervalSeconds = _random.NextFloat(entity.Comp.MinSpeakInterval, entity.Comp.MaxSpeakInterval);
-        var randomSpeakInterval = TimeSpan.FromSeconds(intervalSeconds);
+        var randomSpeakInterval = _random.Next(entity.Comp.MinSpeakInterval, entity.Comp.MaxSpeakInterval);
 
         entity.Comp.NextSpeakInterval = _gameTiming.CurTime + randomSpeakInterval;
 
@@ -265,8 +254,7 @@ public sealed partial class ParrotSystem : EntitySystem
             if (currentGameTime < parrot.NextSpeakInterval)
                 continue;
 
-            var speakEvent = new ParrotSpeakEvent();
-            RaiseLocalEvent<ParrotSpeakEvent>(uid, ref speakEvent);
+            Speak(new Entity<ParrotComponent>(uid, parrot));
         }
     }
 }
@@ -275,19 +263,10 @@ public sealed partial class ParrotSystem : EntitySystem
 /// Event that is fired when a parrot tries to learn, after a successful learn roll but before anything is added to memory
 /// </summary>
 [ByRefEvent]
-public record struct ParrotTryLearnEvent(string Message, EntityUid Teacher)
-{
-    public bool Cancelled = false;
-};
+public record struct ParrotTryLearnEvent(string Message, EntityUid Teacher);
 
 /// <summary>
 /// Event that is fired when a parrot has learned a new message
 /// </summary>
 [ByRefEvent]
 public readonly record struct ParrotLearnEvent(string Message, EntityUid Teacher);
-
-/// <summary>
-/// Event that is fired when a parrot tries to speak
-/// </summary>
-[ByRefEvent]
-public readonly record struct ParrotSpeakEvent();

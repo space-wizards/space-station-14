@@ -22,13 +22,16 @@ public sealed partial class ParrotComponent : Component
     /// Range of hearing for the entity
     /// </summary>
     [DataField]
-    public int ListenRange = 10;
+    public float ListenRange = 10f;
+
+    [DataField]
+    public bool IgnoreOtherParrots;
 
     /// <summary>
     /// The % chance an entity with this component learns a phrase when learning is off cooldown
     /// </summary>
     [DataField]
-    public float LearnChance = 0.5f;
+    public float LearnChance = 0.4f;
 
     /// <summary>
     /// Time in seconds before another attempt can be made at learning a phrase
@@ -64,13 +67,13 @@ public sealed partial class ParrotComponent : Component
     /// Minimum time to wait after speaking to speak again
     /// </summary>
     [DataField]
-    public float MinSpeakInterval = 4.0f * 60f;
+    public TimeSpan MinSpeakInterval = TimeSpan.FromSeconds(4.0f * 60f);
 
     /// <summary>
     /// Maximum time to wait after speaking to speak again
     /// </summary>
     [DataField]
-    public float MaxSpeakInterval = 8.0f * 60f;
+    public TimeSpan MaxSpeakInterval = TimeSpan.FromSeconds(8.0f * 60f);
 
     /// <summary>
     /// Next time at which the parrot speaks

@@ -2216,10 +2216,6 @@
   - type: ActiveRadio
   - type: ParrotAccent
   - type: Parrot
-    learnChance: 1
-    learnCooldown: 1
-    minSpeakInterval: 5
-    maxSpeakInterval: 5
   - type: Inventory
     templateId: parrot
     speciesId: parrot
