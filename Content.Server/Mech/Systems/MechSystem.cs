@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Body.Systems;
 using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -13,18 +14,17 @@ using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
+using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
-using Content.Shared.Verbs;
-using Content.Shared.Wires;
-using Content.Server.Body.Systems;
 using Content.Shared.Tools.Systems;
+using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
+using Content.Shared.Wires;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
-using Content.Shared.Tools;
 
 namespace Content.Server.Mech.Systems;
 
