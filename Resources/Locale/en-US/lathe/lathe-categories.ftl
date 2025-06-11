@@ -35,6 +35,8 @@ lathe-category-wood = Wood
 
 # Science
 lathe-category-mechs = Mechs
+lathe-category-modules = Modules
+lathe-category-robotics = Robotics
 
 # Security TechFab
 lathe-category-ammo = Ammo
