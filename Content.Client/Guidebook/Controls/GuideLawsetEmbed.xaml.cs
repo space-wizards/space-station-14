@@ -52,11 +52,11 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
             BackgroundColor = Color.DarkBlue
         };
         LawsetName.SetMarkup($"[bold]{Loc.GetString(lawset.Name ?? lawset.ID)}[/bold]");
-        int i = 1;
-        foreach (string lawID in lawset.Laws)
+        var i = 1;
+        foreach (var lawID in lawset.Laws)
         {
-            SiliconLawPrototype lawPrototype = _prototype.Index<SiliconLawPrototype>(lawID);
-            string locLawString = string.Empty;
+            var lawPrototype = _prototype.Index<SiliconLawPrototype>(lawID);
+            var locLawString = string.Empty;
 
             locLawString = Loc.GetString(lawPrototype.LawString);
 
@@ -65,7 +65,7 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
                 HorizontalExpand = true,
                 Margin = new(0, 5, 0, 1)
             };
-            string locLawStatement = Loc.GetString("laws-number-wrapper", ("lawnumber", i), ("lawstring", locLawString));
+            var locLawStatement = Loc.GetString("laws-number-wrapper", ("lawnumber", i), ("lawstring", locLawString));
             lawN.SetMarkup(locLawStatement);
             LawsetContainer.AddChild(lawN);
 
@@ -82,7 +82,7 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
             return false;
         }
 
-        if (!_prototype.TryIndex(id, out SiliconLawsetPrototype? lawset))
+        if (!_prototype.TryIndex<SiliconLawsetPrototype>(id, out var lawset))
         {
             _logging.Error($"Specified SiliconLawsetPrototype \"{id}\" is not a valid Lawset prototype");
             return false;

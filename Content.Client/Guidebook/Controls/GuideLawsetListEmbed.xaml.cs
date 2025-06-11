@@ -33,9 +33,9 @@ public sealed partial class GuideLawsetListEmbed : BoxContainer, IDocumentTag
     {
         control = null;
 
-        foreach (SiliconLawsetPrototype p in _prototype.EnumeratePrototypes<SiliconLawsetPrototype>().OrderBy(x => x.ID))
+        foreach (var lawset in _prototype.EnumeratePrototypes<SiliconLawsetPrototype>().OrderBy(x => x.ID))
         {
-            GuideLawsetEmbed embed = new(p);
+            GuideLawsetEmbed embed = new(lawset);
             GroupContainer.AddChild(embed);
         }
 
