@@ -331,7 +331,6 @@
           Quantity: 100
   - type: Label
     currentLabel: reagent-name-grenadine
-  - type: Openable
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
   - type: SolutionContainerVisuals
