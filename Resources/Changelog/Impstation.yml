@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Courier slots on all maps has been reduced to one
-    type: Tweak
-  - message: Mail Teleporter now starts off, and produces less mail
-    type: Tweak
-  - message: Mail Teleporter can now be powered off
-    type: Fix
-  id: 1305
-  time: '2025-03-14T04:37:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1934
-- author: DinnerCalzone
-  changes:
-  - message: Suppy may now be targeted by the random sentience event.
-    type: Add
-  id: 1306
-  time: '2025-03-14T04:39:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1925
 - author: hivehum
   changes:
   - message: The courier hardsuit is now only available through the cargo request
@@ -4205,3 +4187,18 @@
   id: 1804
   time: '2025-06-10T23:43:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2513
+- author: DinnerCalzone
+  changes:
+  - message: Lock boxes and water tank cargo orders now use our sprites in the request
+      computer.
+    type: Fix
+  id: 1805
+  time: '2025-06-11T02:57:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2721
+- author: astral_amy
+  changes:
+  - message: Another batch of Bedlam tweaks
+    type: Tweak
+  id: 1806
+  time: '2025-06-11T02:56:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2722
