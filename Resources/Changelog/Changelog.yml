@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TiniestShark
-  changes:
-  - message: BRB sign can now be worn in the Neck slot.
-    type: Add
-  id: 8141
-  time: '2025-04-08T21:27:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36036
 - author: TheBlueYowie
   changes:
   - message: NutriMax now contains a sterile swab dispenser instead of individual
@@ -3908,3 +3901,10 @@
   id: 8653
   time: '2025-06-11T04:54:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38252
+- author: Boaz1111
+  changes:
+  - message: Grenadine bottles now start closed, instead of opened.
+    type: Tweak
+  id: 8654
+  time: '2025-06-11T14:01:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38219
