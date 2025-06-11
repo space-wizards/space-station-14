@@ -25,13 +25,13 @@ public sealed partial class ChannelsMenu : DefaultWindow
         ChannelList.OnItemDeselected += OnItemDeselected;
         AllButton.OnPressed += OnAllPressed;
         ClearButton.OnPressed += OnClearPressed;
+        DisplayTrackNames.OnPressed += OnDisplayTrackNamesPressed;
     }
 
     protected override void EnteredTree()
     {
         base.EnteredTree();
 
-        DisplayTrackNames.OnPressed += OnDisplayTrackNamesPressed;
         _owner.Instruments.OnChannelsUpdated += UpdateChannelList;
     }
 
