@@ -1,10 +1,9 @@
-namespace Content.Shared.Telemetry;
+namespace Content.Shared.GameplayMetrics;
 
-public abstract class SharedBasicTelemetrySystem : EntitySystem
+public abstract class SharedBasicGameplayMetricsSystem : EntitySystem
 {
-    public abstract void AddTelemetryData(string campaign, string metadata);
+    public abstract void RecordMetric(string campaign, string metadata);
 }
-
 
 public static class Campaigns
 {

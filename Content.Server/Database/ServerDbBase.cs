@@ -1822,20 +1822,20 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
-        #region Basic Telemetry
+        #region Basic Gameplay Metrics
 
-        public async Task<int> AddTelemetryData(int round, string campaign, string metadata)
+        public async Task<int> RecordGameplayMetric(int round, string campaign, string metadata)
         {
             await using var db = await GetDb();
 
-            var entry = new BasicTelemetry
+            var entry = new BasicGameplayMetrics
             {
                 CreatedAt = DateTime.UtcNow,
                 RoundNumber = round,
                 Campaign = campaign,
                 Metadata = metadata,
             };
-            db.DbContext.BasicTelemetry.Add(entry);
+            db.DbContext.BasicGameplayMetrics.Add(entry);
             await db.DbContext.SaveChangesAsync();
 
             return entry.Id;

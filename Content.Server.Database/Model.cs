@@ -46,7 +46,7 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
-        public DbSet<BasicTelemetry> BasicTelemetry { get; set; } = null!;
+        public DbSet<BasicGameplayMetrics> BasicGameplayMetrics { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1077,8 +1077,8 @@ namespace Content.Server.Database
         public byte[] Data { get; set; } = default!;
     }
 
-    [Table("basic_telemetry")]
-    public class BasicTelemetry
+    [Table("gameplay_metrics")]
+    public class BasicGameplayMetrics
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
+using Content.Server.GameplayMetrics;
 using Content.Server.Station.Components;
-using Content.Server.Telemetry;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -10,11 +10,11 @@ using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
+using Content.Shared.GameplayMetrics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
 using Content.Shared.Paper;
-using Content.Shared.Telemetry;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -29,7 +29,7 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly EmagSystem _emag = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly BasicTelemetrySystem _telemetry = default!;
+        [Dependency] private readonly BasicGameplayMetricsSystem _gameplayMetrics = default!;
 
         private void InitializeConsole()
         {
@@ -258,7 +258,7 @@ namespace Content.Server.Cargo.Systems
                 LogImpact.Low,
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] on account {order.Account} with balance at {accountBalance}");
 
-            _telemetry.AddTelemetryData(Campaigns.CargoOrders, $"{order.ProductId},{order.OrderQuantity},{cost}");
+            _gameplayMetrics.RecordMetric(Campaigns.CargoOrders, $"{order.ProductId},{order.OrderQuantity},{cost}");
 
             orderDatabase.Orders[component.Account].Remove(order);
             UpdateBankAccount((station.Value, bank), -cost, order.Account);

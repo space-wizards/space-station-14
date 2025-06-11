@@ -20,14 +20,14 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using System.Numerics;
+using Content.Server.GameplayMetrics;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Server.IdentityManagement;
-using Content.Server.Telemetry;
 using Content.Shared.DetailExaminable;
+using Content.Shared.GameplayMetrics;
 using Content.Shared.Item;
 using Content.Shared.Store.Components;
-using Content.Shared.Telemetry;
 using Robust.Shared.Collections;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
@@ -49,7 +49,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
-    [Dependency] private readonly BasicTelemetrySystem _telemetry = default!;
+    [Dependency] private readonly BasicGameplayMetricsSystem _gameplayMetrics = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private HashSet<Entity<MapGridComponent>> _targetGrids = [];
@@ -85,7 +85,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         if (metaData.EntityPrototype == null || !HasComp<ItemComponent>(item))
             return;
 
-        _telemetry.AddTelemetryData(Campaigns.StorageImplant, $"{status},{metaData.EntityPrototype.ID},{owner}");
+        _gameplayMetrics.RecordMetric(Campaigns.StorageImplant, $"{status},{metaData.EntityPrototype.ID},{owner}");
     }
 
     private void OnStoreRelay(EntityUid uid, StoreComponent store, ImplantRelayEvent<AfterInteractUsingEvent> implantRelay)
