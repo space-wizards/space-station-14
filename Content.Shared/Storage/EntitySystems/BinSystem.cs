@@ -140,7 +140,6 @@ public sealed class BinSystem : EntitySystem
             return false;
 
         _container.Insert(toInsert, component.ItemContainer);
-        component.Items.Add(toInsert);
         Dirty(uid, component);
         return true;
     }
