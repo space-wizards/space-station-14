@@ -1,7 +1,9 @@
 using Content.Client.Construction;
 using Content.Client.UserInterface.Controls;
 using Content.Shared._EE.ShortConstruction;
+using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.NodeContainer;
 using Content.Shared.Popups;
 using Robust.Client.GameObjects;
 using Robust.Client.Placement;
@@ -52,22 +54,25 @@ public sealed class ShortConstructionMenu : RadialMenu
         {
             if (_playerManager.LocalSession == null)
                 return;
+
+            // imp: basically just checking that the target proto Exists as a valid entity
+            // do not add button if it isnt real
             if (!_protoManager.TryIndex(protoId, out var proto) ||
-                proto.Name == null ||
-                !_protoManager.TryIndex(proto.ID, out var entProto))
+                !_construction.TryGetRecipePrototype(proto.ID, out var targetProtoId) ||
+                !_protoManager.TryIndex(targetProtoId, out var targetProto))
                 continue;
 
             var button = new RadialMenuTextureButtonWithSector
             {
-                ToolTip = Loc.GetString(proto.Name),
+                ToolTip = Loc.GetString(targetProto.Name), // imp
                 SetSize = new Vector2(48f, 48f)
             };
 
             var texture = new TextureRect
             {
-                VerticalAlignment = Control.VAlignment.Center,
-                HorizontalAlignment = Control.HAlignment.Center,
-                Texture = _spriteSystem.Frame0(entProto),
+                VerticalAlignment = VAlignment.Center,
+                HorizontalAlignment = HAlignment.Center,
+                Texture = _spriteSystem.Frame0(targetProto), // imp
                 TextureScale = new Vector2(1.5f, 1.5f)
             };
 
