@@ -148,7 +148,8 @@
 # intentionally excluded from IonStormLawsets
 - type: siliconLawset
   id: SyndicateStatic
-  laws: #region starlight
+  #region starlight
+  laws:
   - Syndicate0
   - Crewsimov1
   - Crewsimov2
