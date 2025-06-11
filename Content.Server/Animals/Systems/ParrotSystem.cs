@@ -34,6 +34,8 @@ public sealed partial class ParrotSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<ParrotComponent, ComponentInit>(OnParrotInit, after: [typeof(LoadoutSystem)]);
 
         SubscribeLocalEvent<ParrotComponent, ListenEvent>(OnListen);
