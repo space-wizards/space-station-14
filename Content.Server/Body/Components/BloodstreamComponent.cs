@@ -184,3 +184,6 @@ namespace Content.Server.Body.Components
         public ProtoId<AlertPrototype> BleedingAlert = "Bleed";
     }
 }
+
+[ByRefEvent]
+public record struct BleedStackReduceEvent(float BleedStackReductionAmount);

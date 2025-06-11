@@ -1,6 +1,7 @@
 using Content.Server.Body.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Popups;
+using Content.Server.Traits.Assorted;
 using Content.Shared.Alert;
 using Content.Shared.Body.Events;
 using Content.Shared.Chemistry.Components;
@@ -16,10 +17,10 @@ using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.HealthExaminable;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Ninja.Components;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Speech.EntitySystems;
-using Content.Shared.Traits.Assorted;
 using Robust.Server.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -41,6 +42,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+    [Dependency] private readonly HemophiliaSystem _hemophiliaSystem = default!;
 
     public override void Initialize()
     {
@@ -129,13 +131,16 @@ public sealed class BloodstreamSystem : EntitySystem
 
             // Removes blood from the bloodstream based on bleed amount (bleed rate)
             // as well as stop their bleeding to a certain extent.
-            if (bloodstream.BleedAmount > 0)
-            {
-                // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
-                TryModifyBloodLevel(uid, (-bloodstream.BleedAmount), bloodstream);
+            if (bloodstream.BleedAmount <= 0)
+                continue;
+            // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
+            TryModifyBloodLevel(uid, (-bloodstream.BleedAmount), bloodstream);
 
-                // The rate in which stacks are reduced. Think of it like the rate at which your blood clots
-                TryModifyBleedAmount(uid, -bloodstream.BleedReductionAmount, bloodstream);
+            var modifyBleedLevel = new BleedStackReduceEvent(bloodstream.BleedReductionAmount);
+            RaiseLocalEvent(uid, ref modifyBleedLevel);
+
+            // The rate in which stacks are reduced. Think of it like the rate at which your blood clots
+            TryModifyBleedAmount(uid, -modifyBleedLevel.BleedStackReductionAmount, bloodstream);
 
             // deal bloodloss damage if their blood level is below a threshold.
             var bloodPercentage = GetBloodLevelPercentage(uid, bloodstream);
@@ -144,15 +149,17 @@ public sealed class BloodstreamSystem : EntitySystem
                 // bloodloss damage is based on the base value, and modified by how low your blood level is.
                 var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
 
-                _damageableSystem.TryChangeDamage(uid, amt,
-                    ignoreResistances: false, interruptsDoAfters: false);
+                _damageableSystem.TryChangeDamage(uid,
+                    amt,
+                    ignoreResistances: false,
+                    interruptsDoAfters: false);
 
                 // Apply dizziness as a symptom of bloodloss.
                 // The effect is applied in a way that it will never be cleared without being healthy.
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
                 _drunkSystem.TryApplyDrunkenness(
                     uid,
-                    (float) bloodstream.UpdateInterval.TotalSeconds * 2,
+                    (float)bloodstream.UpdateInterval.TotalSeconds * 2,
                     applySlur: false);
                 _stutteringSystem.DoStutter(uid, bloodstream.UpdateInterval * 2, refresh: false);
 
@@ -165,7 +172,8 @@ public sealed class BloodstreamSystem : EntitySystem
                 _damageableSystem.TryChangeDamage(
                     uid,
                     bloodstream.BloodlossHealDamage * bloodPercentage,
-                    ignoreResistances: true, interruptsDoAfters: false);
+                    ignoreResistances: true,
+                    interruptsDoAfters: false);
 
                 // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level
                 _drunkSystem.TryRemoveDrunkenessTime(uid, bloodstream.StatusTime.TotalSeconds);
@@ -244,6 +252,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 ent, PopupType.Medium);
         }
     }
+
     /// <summary>
     ///     Shows text on health examine, based on bleed rate and blood level.
     /// </summary>
