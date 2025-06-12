@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: JuneSzalkowska
-  changes:
-  - message: Added cooked dragon steak and dragon cutlets.
-    type: Add
-  id: 8148
-  time: '2025-04-10T15:59:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36273
 - author: SlamBamActionman
   changes:
   - message: The Syndicate Raid Bundle now comes in a Syndicate backpack instead of
@@ -3910,3 +3903,13 @@
   id: 8660
   time: '2025-06-11T21:56:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35645
+- author: SlamBamActionman
+  changes:
+  - message: Propeller hats can now be found in the Clothesmate.
+    type: Add
+  - message: Swirl lollipops can now be found in the manager inventory of GetMore
+      Chocolate Corp. vending machines.
+    type: Add
+  id: 8661
+  time: '2025-06-12T01:22:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38260
