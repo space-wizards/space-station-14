@@ -71,7 +71,6 @@
   name: fuel dispenser
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/walldispenser.rsi
     state: fuel
   - type: SolutionContainerManager
     solutions:
@@ -93,7 +92,6 @@
   name: pepper dispenser
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/walldispenser.rsi
     state: pepper
   - type: SolutionContainerManager
     solutions:
@@ -101,8 +99,3 @@
         reagents:
         - ReagentId: Blackpepper
           Quantity: 500
-  - type: DrainableSolution
-    solution: tank
-  - type: ReagentTank
-  - type: ExaminableSolution
-    solution: tank
