@@ -30,7 +30,7 @@
         visible: false
 
 - type: entity
-  parent: BaseStarlightAdmemePaper
+  parent: Paper
   id: BasePaperQuietChaos
   name: end of Q # no longer "the" since when you emote it would come out to "the the end of Q x"
   description: dreadful paper that cant be faxed. but has it's own ways of getting around.
@@ -63,7 +63,6 @@
     - type: TextToSpeech
     - type: GhostTakeoverAvailable
     - type: MobState
-
     - type: Examiner # allow inspecting stuff and using verbs (you still dont have hands though)
       skipChecks: true #anything on screen is fair game to be observed.
     - type: Polymorphable # so the paper CAN jaunt.
