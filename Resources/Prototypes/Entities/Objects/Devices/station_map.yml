@@ -37,9 +37,6 @@
   - BaseHandheldStationMap
   - BaseHandheldComputer
   suffix: Handheld
-  components:
-  - type: ItemToggle
-    onActivate: false
 
 - type: entity
   id: HandheldStationMapEmpty
