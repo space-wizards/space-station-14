@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Kandiyaki, Axionyx
-  changes:
-  - message: heretics should be able to buy knowledge again.
-    type: Fix
-  id: 1313
-  time: '2025-03-15T05:07:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1960
 - author: Ecramox
   changes:
   - message: Fixed Lone Ops not spawning with all their gear.
@@ -4199,3 +4192,13 @@
   id: 1812
   time: '2025-06-11T21:16:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2731
+- author: DinnerCalzone
+  changes:
+  - message: Cargo Technician no longer has a playtime requirement (again).
+    type: Tweak
+  - message: Supply Assistant has been limited to 1 per map and locks out after 4
+      hours of Cargo playtime.
+    type: Tweak
+  id: 1813
+  time: '2025-06-12T02:59:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2733
