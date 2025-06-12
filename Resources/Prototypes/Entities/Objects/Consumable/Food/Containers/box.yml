@@ -689,13 +689,13 @@
       storagebase: !type:AllSelector
         children:
         - !type:GroupSelector
+          rolls: !type:ConstantNumberSelector
+            value: 4
           children:
-          - !type:NestedSelector
-            tableId: ListToySmallSyndie
-            weight: 0.95
-          - !type:NestedSelector
-            tableId: ListToySmallSyndieUnsafe
-            weight: 0.05 # nukies have lots of TC
+          - id: FoodSaladValid
+            weight: 0.2
+          - id: FoodSnackSyndi
+            weight: 0.8
         - !type:GroupSelector
           rolls: !type:ConstantNumberSelector
             value: 4
@@ -705,13 +705,13 @@
           - id: DrinkNukieCan
             weight: 0.2
         - !type:GroupSelector
-          rolls: !type:ConstantNumberSelector
-            value: 4
           children:
-          - id: FoodSaladValid
-            weight: 0.2
-          - id: FoodSnackSyndi
-            weight: 0.8
+          - !type:NestedSelector
+            tableId: ListToySmallSyndie
+            weight: 0.95
+          - !type:NestedSelector
+            tableId: ListToySmallSyndieUnsafe
+            weight: 0.05 # nukies have lots of TC
 
 - type: entity
   parent: FoodBoxHappyHonk
@@ -884,9 +884,9 @@
   table: !type:GroupSelector
     children:
     - id: BikeHorn
-      weight: 0.9
+      weight: 0.99
     - id: GoldenBikeHorn
-      weight: 0.1
+      weight: 0.01
 
 - type: entityTable
   id: ListToySmallSyndie
