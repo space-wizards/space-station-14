@@ -10,6 +10,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Net.Http.Headers;
 
 namespace Content.Shared.CPR;
 /// <summary>
@@ -34,13 +35,58 @@ public abstract partial class SharedCPRSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CPRComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
+        SubscribeLocalEvent<CPRComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
         SubscribeLocalEvent<CPRComponent, CPRDoAfterEvent>(OnCPRDoAfter);
     }
+    /// <summary>
+    /// Returns true if the CPRComponent has not been given care long enough to allow a new caretaker
+    /// </summary>
+    /// <param name="cpr">The CPRComponent</param>
+    public bool CPRCaretakerOutdated(CPRComponent cpr)
+    {
+        return Timing.CurTime.Seconds - cpr.LastTimeGivenCare.Seconds > CPRDoAfterDelay;
+    }
 
+    /// <summary>
+    /// Returns whether or not the giver can give CPR to the recipient, ignoring the range requirement
+    /// </summary>
+    /// <param name="recipient">The one receiving CPR</param>
+    /// <param name="giver">The one giving CPR</param>
+    public bool CanDoCPR(EntityUid recipient, EntityUid giver)
+    {
+        if (!TryComp<CPRComponent>(recipient, out var cpr) || !TryComp<MobThresholdsComponent>(recipient, out var thresholds) || !TryComp<MobThresholdsComponent>(giver, out var myThresholds))
+            return false;
+
+        if (thresholds.CurrentThresholdState != MobState.Critical || myThresholds.CurrentThresholdState == MobState.Critical || myThresholds.CurrentThresholdState == MobState.Dead)
+            return false;
+
+        // return false if someone else has very recently given care already
+        if (cpr.LastCaretaker.HasValue && !CPRCaretakerOutdated(cpr) && cpr.LastCaretaker.Value != giver)
+            return false;
+
+        return true;
+    }
+    /// <summary>
+    /// Returns whether or not the giver is in range to do CPR on the recipient
+    /// </summary>
+    /// <param name="recipient">The one receiving CPR</param>
+    /// <param name="giver">The one giving CPR</param>
+    public bool InRangeForCPR(EntityUid recipient, EntityUid giver)
+    {
+        return _interactionSystem.InRangeUnobstructed(giver, recipient, SharedInteractionSystem.InteractionRange * CPRInteractionRangeMultiplier);
+    }
+
+    /// <summary>
+    /// Function calld when a CPR Do-after finishes; does the pumping things
+    /// </summary>
+    /// <param name="ent">The recipient</param>
+    /// <param name="args">DoAfter arguments</param>
     public void OnCPRDoAfter(Entity<CPRComponent> ent, ref CPRDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
+            return;
+
+        if (!CanDoCPR(ent, args.User))
             return;
 
         if (!TryComp<DamageableComponent>(ent, out var damage) || !TryComp<CPRComponent>(ent, out var cpr) || !TryComp<MobThresholdsComponent>(ent, out var thresholds))
@@ -57,6 +103,10 @@ public abstract partial class SharedCPRSystem : EntitySystem
             _damage.TryChangeDamage(ent, cpr.BonusHeal, interruptsDoAfters: false, damageable: damage, ignoreResistances: true);
         }
 
+        // set the cpr's latest caretaker and time
+        cpr.LastCaretaker = args.User;
+        cpr.LastTimeGivenCare = Timing.CurTime;
+
         args.Repeat = thresholds.CurrentThresholdState == MobState.Critical;
         args.Handled = true;
     }
@@ -66,43 +116,50 @@ public abstract partial class SharedCPRSystem : EntitySystem
     /// <param name="user">The entity to animate</param>
     public abstract void DoLunge(EntityUid user);
 
-    private void OnGetVerbs(EntityUid uid, CPRComponent component, GetVerbsEvent<Verb> args)
+    /// <summary>
+    /// Tries to start CPR between the giver and recipient, if possible
+    /// </summary>
+    /// <param name="recipient">The one receiving CPR</param>
+    /// <param name="giver">The one giving CPR</param>
+    public void TryStartCPR(EntityUid recipient, EntityUid giver)
     {
-        if (!TryComp<DamageableComponent>(uid, out var damage) || !TryComp<CPRComponent>(uid, out var cpr) || !TryComp<MobThresholdsComponent>(uid, out var thresholds) || !TryComp<MobThresholdsComponent>(args.User, out var myThresholds))
-            return;
-
-        if (thresholds.CurrentThresholdState != MobState.Critical)
-            return;
-
-
-        // low interaction range
-        var inRange = _interactionSystem.InRangeUnobstructed(args.User, args.Target, SharedInteractionSystem.InteractionRange * CPRInteractionRangeMultiplier);
-
         var doAfterEventArgs = new DoAfterArgs(
             EntityManager,
-            args.User,
+            giver,
             TimeSpan.FromSeconds(CPRDoAfterDelay),
             new CPRDoAfterEvent(),
-            args.Target,
-            args.User
+            recipient,
+            giver
             )
         {
             BreakOnMove = true,
-            BreakOnDamage = true,
-            DamageThreshold = 5,
             BlockDuplicate = true,
-            RequireCanInteract = true
+            RequireCanInteract = true,
+            NeedHand = true
         };
 
-        var verb = new Verb()
+        // try starting CPR
+        if (CanDoCPR(recipient, giver) && InRangeForCPR(recipient, giver) && _doAfter.TryStartDoAfter(doAfterEventArgs))
+        {
+            _popup.PopupPredicted(Loc.GetString("cpr-start-you", ("target", Identity.Entity(recipient, EntityManager))), Loc.GetString("cpr-start", ("person", Identity.Entity(giver, EntityManager)), ("target", Identity.Entity(recipient, EntityManager))), giver, giver, PopupType.Medium);
+        }
+    }
+
+    private void OnGetAlternativeVerbs(EntityUid uid, CPRComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!CanDoCPR(uid, args.User))
+            return;
+
+        var inRange = InRangeForCPR(uid, args.User);
+
+        var verb = new AlternativeVerb()
         {
             Act = () =>
             {
-                _doAfter.TryStartDoAfter(doAfterEventArgs);
-                _popup.PopupPredicted(Loc.GetString("cpr-start-you", ("target", Identity.Entity(uid, EntityManager))), Loc.GetString("cpr-start", ("person", Identity.Entity(args.User, EntityManager)), ("target", Identity.Entity(uid, EntityManager))), args.User, args.User, PopupType.Medium);
+                TryStartCPR(uid, args.User);
             },
             Text = Loc.GetString("cpr-verb-text"),
-            Disabled = !inRange || myThresholds.CurrentThresholdState == MobState.Alive,
+            Disabled = !inRange,
             Message = inRange ? null : Loc.GetString("cpr-verb-text-disabled"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cpr.svg.192dpi.png"))
         };

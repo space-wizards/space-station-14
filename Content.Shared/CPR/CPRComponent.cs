@@ -17,6 +17,7 @@ public sealed partial class CPRComponent : Component
     /// </summary>
     [DataField]
     public DamageSpecifier Change = default!;
+
     /// <summary>
     /// Healing is applied when the CPR finishes with the mob returning from a critical state - these values should be negative
     /// </summary>
@@ -25,4 +26,7 @@ public sealed partial class CPRComponent : Component
 
     [DataField]
     public SoundSpecifier? Sound = null;
+
+    public EntityUid? LastCaretaker = null;
+    public TimeSpan LastTimeGivenCare = TimeSpan.Zero;
 }
