@@ -1,94 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Fixed players being unable to interact with or open any machine UI if
-      the machine is unpowered (ex. wirepanels).
-    type: Fix
-  id: 8137
-  time: '2025-04-05T21:05:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36319
-- author: RedBookcase
-  changes:
-  - message: The Crusher Dagger has had it's damage reduced from 15 to 12 Slashing.
-    type: Tweak
-  - message: The Crusher and Crusher Glaive can now be worn on the back and suit storage
-      slots.
-    type: Add
-  id: 8138
-  time: '2025-04-06T06:48:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35914
-- author: K-Dynamic
-  changes:
-  - message: Normalised ziptie box; reduced ziptie box storage from 4x5 to 3x3 (item
-      shape unchanged), reduced zipties from 10 to 9, removed handcuff whitelist
-    type: Tweak
-  id: 8139
-  time: '2025-04-08T08:23:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35057
-- author: Nyxilath
-  changes:
-  - message: Vial Recipe to lathes
-    type: Add
-  id: 8140
-  time: '2025-04-08T09:37:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36380
-- author: TiniestShark
-  changes:
-  - message: BRB sign can now be worn in the Neck slot.
-    type: Add
-  id: 8141
-  time: '2025-04-08T21:27:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36036
-- author: TheBlueYowie
-  changes:
-  - message: NutriMax now contains a sterile swab dispenser instead of individual
-      swabs
-    type: Tweak
-  id: 8142
-  time: '2025-04-08T21:54:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36399
-- author: ColonelThirtyTwo
-  changes:
-  - message: Spider clan charges are now marked as contraband
-    type: Fix
-  id: 8143
-  time: '2025-04-09T22:32:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36421
-- author: Beck Thompson
-  changes:
-  - message: Inflatable barrier disassembly is not not laggy anymore.
-    type: Fix
-  id: 8144
-  time: '2025-04-10T10:39:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32420
-- author: RedBookcase
-  changes:
-  - message: Fixed empty handheld mass scanners being 2x2.
-    type: Fix
-  id: 8145
-  time: '2025-04-10T10:44:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36340
-- author: ArtisticRoomba
-  changes:
-  - message: Fixed power cells and power cages counting for laser gun cargo bounties.
-    type: Fix
-  id: 8146
-  time: '2025-04-10T13:55:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36431
-- author: chromiumboy
-  changes:
-  - message: Large objects, such as crates, can once again be dragged over holopads
-    type: Fix
-  id: 8147
-  time: '2025-04-10T14:18:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36341
-- author: JuneSzalkowska
-  changes:
-  - message: Added cooked dragon steak and dragon cutlets.
-    type: Add
-  id: 8148
-  time: '2025-04-10T15:59:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36273
 - author: SlamBamActionman
   changes:
   - message: The Syndicate Raid Bundle now comes in a Syndicate backpack instead of
@@ -3911,3 +3821,95 @@
   id: 8649
   time: '2025-06-10T04:47:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38093
+- author: BramvanZijp
+  changes:
+  - message: Added Stamina Damage resistance to the raid/hard-suits used by Nuclear
+      Operatives and Emergency Response Teams. [TEST MERGE]
+    type: Tweak
+  id: 8650
+  time: '2025-06-10T19:31:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37040
+- author: themias
+  changes:
+  - message: Returned the cooldown for bike horn implants
+    type: Fix
+  id: 8651
+  time: '2025-06-10T21:40:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38237
+- author: eoineoineoin
+  changes:
+  - message: Technology disks will now show the tech they contain in their name.
+    type: Add
+  id: 8652
+  time: '2025-06-11T01:15:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38157
+- author: hoshizora-sayo
+  changes:
+  - message: Fixed mops, rags, and towels being unable to be properly emptied into
+      drains
+    type: Fix
+  id: 8653
+  time: '2025-06-11T04:54:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38252
+- author: Boaz1111
+  changes:
+  - message: Grenadine bottles now start closed, instead of opened.
+    type: Tweak
+  id: 8654
+  time: '2025-06-11T14:01:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38219
+- author: ScarKy0
+  changes:
+  - message: Reinforced plasma windows no longer block laser shots.
+    type: Fix
+  id: 8655
+  time: '2025-06-11T15:36:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38041
+- author: Simyon264
+  changes:
+  - message: The MIDI Channel Selector now shows the instrument name of the track!
+    type: Tweak
+  id: 8656
+  time: '2025-06-11T18:32:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38083
+- author: Seam_Less
+  changes:
+  - message: Practice Magazines are now white, Incendiary Magazines are now orange.
+    type: Tweak
+  id: 8657
+  time: '2025-06-11T20:03:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37709
+- author: Princess-Cheeseballs
+  changes:
+  - message: Basilisk projectile speed and movement speed has been reduced and is
+      slightly weaker
+    type: Tweak
+  id: 8658
+  time: '2025-06-11T20:20:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38089
+- author: Nox38
+  changes:
+  - message: launchers must now be wielded before firing.
+    type: Tweak
+  id: 8659
+  time: '2025-06-11T20:28:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38110
+- author: Boaz1111
+  changes:
+  - message: Various species can now have the same scars as humans do, with exceptions.
+    type: Add
+  - message: A smaller variant of the eye scars has been added.
+    type: Add
+  id: 8660
+  time: '2025-06-11T21:56:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35645
+- author: SlamBamActionman
+  changes:
+  - message: Propeller hats can now be found in the Clothesmate.
+    type: Add
+  - message: Swirl lollipops can now be found in the manager inventory of GetMore
+      Chocolate Corp. vending machines.
+    type: Add
+  id: 8661
+  time: '2025-06-12T01:22:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38260
