@@ -105,9 +105,10 @@ namespace Content.Server.Database.Migrations.Postgres
                 """
                 UPDATE preference
                 SET selected_character_slot =
-                    (SELECT slot
+                    (SELECT min(slot)
                      FROM profile
-                     WHERE profile.preference_id = preference.preference_id)
+                     WHERE profile.preference_id = preference.preference_id
+                     GROUP BY profile.preference_id)
                 WHERE TRUE
                 """
             );
