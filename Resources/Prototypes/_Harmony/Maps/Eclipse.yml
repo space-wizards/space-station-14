@@ -63,7 +63,7 @@
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 5, 5 ]
             Courier: [ 2, 2 ]
-            SupplyAssistant: [ 3, 3 ]
+            SupplyAssistant: [ 1, 1 ]
             #civilian
             Passenger: [ -1, -1 ]
             #silicon

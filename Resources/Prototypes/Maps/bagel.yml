@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_lox.yml
         - type: StationJobs
-          availableJobs: # Total of 63 jobs roundstart, max of 80 inc. latejoins and trainees.
+          availableJobs: # Total of 63 jobs roundstart, max of 79 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -60,10 +60,10 @@
             SecurityCadet: [ 4, 4 ]
             SecurityOfficer: [ 4, 4 ]
             Warden: [ 1, 1 ]
-            # supply - 7-9
+            # supply - 7-8
             CargoTechnician: [ 3, 3 ]
             Courier: [ 1, 1 ] # imp
             SalvageSpecialist: [ 3, 3 ]
-            SupplyAssistant: [ 2, 2 ] # imp
+            SupplyAssistant: [ 1, 1 ] # imp
             # civilian
             Passenger: [ -1, -1 ]

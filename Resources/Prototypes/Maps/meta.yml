@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_meta.yml
         - type: StationJobs
-          availableJobs: # Total of 71 jobs roundstart, max of 91 inc. latejoins and trainees. she's normal now.
+          availableJobs: # Total of 71 jobs roundstart, max of 89 inc. latejoins and trainees. she's normal now.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -59,10 +59,10 @@
             SecurityCadet: [ 4, 4 ]
             SecurityOfficer: [ 6, 6 ]
             Warden: [ 1, 1 ]
-            # supply - 8-11
+            # supply - 8-9
             CargoTechnician: [ 4, 4 ]
             Courier: [ 1, 1 ] # imp
             SalvageSpecialist: [ 3, 3 ]
-            SupplyAssistant: [ 3, 3 ] # imp
+            SupplyAssistant: [ 1, 1 ] # imp
             # civilian
             Passenger: [ -1, -1 ]

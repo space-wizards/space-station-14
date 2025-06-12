@@ -64,6 +64,6 @@
             CargoTechnician: [ 3, 3 ]
             Courier: [ 1, 1 ] # imp
             SalvageSpecialist: [ 2, 2 ]
-            SupplyAssistant: [ 2, 2 ] # imp
+            SupplyAssistant: [ 1, 1 ] # imp
             # civilian
             Passenger: [ -1, -1 ]

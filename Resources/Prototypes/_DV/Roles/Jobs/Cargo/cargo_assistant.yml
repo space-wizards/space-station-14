@@ -7,7 +7,7 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: Cargo
-    time: 18000 #IMP 5 hrs, down from 15h
+    time: 14400 #IMP 4 hrs, ~3 shifts, down from 15h
     inverted: true # stop playing intern if you're good at cargo!
   icon: "JobIconSupplyAssistant"
   supervisors: job-supervisors-qm

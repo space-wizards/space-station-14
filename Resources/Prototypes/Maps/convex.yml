@@ -55,7 +55,7 @@
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 4, 4 ]
             Courier: [ 1, 1 ] #imp
-            SupplyAssistant: [ 3, 3 ] #imp
+            SupplyAssistant: [ 1, 1 ] #imp
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
