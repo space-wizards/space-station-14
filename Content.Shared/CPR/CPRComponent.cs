@@ -22,6 +22,17 @@ public sealed partial class CPRComponent : Component
         }
     };
 
+    [DataField("bonusHeal")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public DamageSpecifier BonusHeal = new()
+    {
+        DamageDict =
+        {
+            ["Asphyxiation"] = -5,
+            ["Bloodloss"] = -1.5,
+        }
+    };
+
     [DataField("damage")]
     [ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = new()

@@ -48,6 +48,12 @@ public abstract partial class SharedCPRSystem : EntitySystem
         _damage.TryChangeDamage(ent, cpr.Heal, interruptsDoAfters: false, damageable: damage, ignoreResistances: true);
         _damage.TryChangeDamage(ent, cpr.Damage, interruptsDoAfters: false, damageable: damage, ignoreResistances: true);
 
+        // burst of oxygen when not critical anymore
+        if (thresholds.CurrentThresholdState != MobState.Critical)
+        {
+            _damage.TryChangeDamage(ent, cpr.BonusHeal, interruptsDoAfters: false, damageable: damage, ignoreResistances: true);
+        }
+
         args.Repeat = thresholds.CurrentThresholdState == MobState.Critical;
         args.Handled = true;
     }
