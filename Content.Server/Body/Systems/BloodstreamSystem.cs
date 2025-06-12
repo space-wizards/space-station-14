@@ -130,6 +130,7 @@ public sealed class BloodstreamSystem : EntitySystem
             // as well as stop their bleeding to a certain extent.
             if (bloodstream.BleedAmount <= 0)
                 continue;
+
             // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
             TryModifyBloodLevel(uid, (-bloodstream.BleedAmount), bloodstream);
 
@@ -142,7 +143,6 @@ public sealed class BloodstreamSystem : EntitySystem
             // deal bloodloss damage if their blood level is below a threshold.
             var bloodPercentage = GetBloodLevelPercentage(uid, bloodstream);
             if (bloodPercentage < bloodstream.BloodlossThreshold && !_mobStateSystem.IsDead(uid))
-
             {
                 // bloodloss damage is based on the base value, and modified by how low your blood level is.
                 var amt = bloodstream.BloodlossDamage / (0.1f + bloodPercentage);
