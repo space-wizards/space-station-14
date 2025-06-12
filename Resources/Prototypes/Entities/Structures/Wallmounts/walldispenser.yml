@@ -1,7 +1,7 @@
 - type: entity
-  id: CleanerDispenser
-  name: space cleaner dispenser
-  description: Wallmount reagent dispenser.
+  id: BaseDispenser
+  name: wallmount dispenser
+  description: Wallmount dispenser without contents.
   placement:
     mode: SnapgridCenter
     snap:
@@ -12,14 +12,8 @@
   - type: Sprite
     sprite: Structures/Wallmounts/walldispenser.rsi
     layers:
-      - state: cleanerdispenser-2
-      - state: cleanerdispenser-2-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+      - state: basedispenser
   - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: cleanerdispenser-2-
   - type: InteractionOutline
   - type: Clickable
   - type: Transform
@@ -60,12 +54,6 @@
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: SolutionContainerManager
-    solutions:
-      tank:
-        reagents:
-        - ReagentId: SpaceCleaner
-          Quantity: 5000
   - type: DrainableSolution
     solution: tank
   - type: ReagentTank
@@ -73,9 +61,32 @@
     solution: tank
 
 - type: entity
-  parent: CleanerDispenser
+  parent: BaseDispenser
+  id: CleanerDispenser
+  name: space cleaner dispenser
+  description: Wallmount Space Cleaner dispenser.
+  components:
+  - type: Sprite
+    layers:
+      - state: cleanerdispenser-2
+      - state: cleanerdispenser-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: cleanerdispenser-2-
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 5000
+
+- type: entity
+  parent: BaseDispenser
   id: FuelDispenser
   name: fuel dispenser
+  description: Wallmount Fuel dispenser.
   components:
   - type: Sprite
     layers:
@@ -101,9 +112,10 @@
         Heat: 20
 
 - type: entity
-  parent: CleanerDispenser
+  parent: BaseDispenser
   id: PepperDispenser
   name: pepper dispenser
+  description: Wallmount Pepper dispenser.
   components:
   - type: Sprite
     layers: # No fill layer for pepper dispenser, because pepper is black and that doesn't look good on the dispenser
