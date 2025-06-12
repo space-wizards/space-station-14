@@ -4,7 +4,7 @@
   mapPath: /Maps/tram2.yml
   maxRandomOffset: 0
   minPlayers: 0
-  maxPlayers: 99
+  maxPlayers: 80
   stations:
     Tram2:
       stationProto: StandardNanotrasenStation
@@ -15,10 +15,10 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_accordia.yml
         - type: StationJobs
           availableJobs:
-            #service
+            #service 14-16
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 2, 2 ]
@@ -29,33 +29,33 @@
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 1, 2 ]
             Detective: [ 1, 2 ]
-            #engineering
+            #engineering 11
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 3, 3 ]
-            #medical
+            #medical 11-14
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 4, 5 ]
             MedicalIntern: [ 2, 3 ]
             Paramedic: [ 1, 2 ]
             Psychologist: [1, 1]
-            #science
+            #science 7
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 3, 3 ]
             ResearchAssistant: [ 3, 3 ]
-            #security
+            #security 11-13
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 5, 6 ]
             SecurityCadet: [ 3, 3 ]
             Lawyer: [ 1, 2 ]
-            #supply
+            #supply 7
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
-            #civilian
+            #civilian 4+
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
