@@ -56,7 +56,7 @@ public sealed partial class ClothingComponent : Component
     [DataField, AutoNetworkedField]
     public string? EquippedState;
 
-    [DataField]
+    [DataField("sprite")]
     public string? RsiPath;
 
     /// <summary>
