@@ -37,6 +37,7 @@
           False: { state: icon }
   - type: Appearance
   - type: Dumpable
+    dumpsTables: false
 
 - type: entity
   name: emergency toolbox

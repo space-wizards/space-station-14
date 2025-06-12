@@ -31,6 +31,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: Dumpable
+    dumpsTables: false
 
 - type: entity
   parent: ClothingBackpack
