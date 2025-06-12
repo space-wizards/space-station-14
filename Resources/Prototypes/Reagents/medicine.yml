@@ -1229,12 +1229,11 @@
         - !type:EvenHealthChange
           conditions:
           - !type:Temperature
-            max: 213.0
+            max: 150.0
           damage:
-            groups:
-              Brute: -6
-              Burn: -4
-              Toxin: -6
+            Brute: -4.0
+            Burn: -4.0
+            Toxin: -4.0
 
 - type: reagent
   id : Aloxadone
