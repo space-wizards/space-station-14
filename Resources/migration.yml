@@ -653,3 +653,10 @@ SpawnHonkBot: SpawnMobHonkBot
 # 2025-06-01
 CrateFoodPizzaLarge: CrateFoodPizza
 CrateFoodSoftdrinksLarge: CrateFoodSoftdrinks
+
+# 2025-06-12
+HappyHonk: FoodBoxHappyHonkFill
+HappyHonkMime: FoodBoxHappyHonkMimeFill
+HappyHonkCluwne: FoodBoxHappyHonkCluwneFill
+HappyHonkNukie: FoodBoxHappyHonkNukieFill # powergamers better remember where these are mapped
+HappyHonkNukieSnacks: FoodBoxHappyHonkNukieFillLunch

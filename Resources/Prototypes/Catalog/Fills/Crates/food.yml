@@ -201,10 +201,10 @@
 - type: entity
   id: CrateFoodHappyHonkBigBite
   parent: CratePlastic
-  name: Happy Honk meal delivery
-  description: Two fully loaded Happy Honk Big Bite burger meals, complete with cheesy fries, a bottle of Space Cola, a slice of apple pie and a toy!
+  name: happy honk big circus meal delivery
+  description: Two fully loaded happy honk big circus meals, complete with a big burger, fries, canned soft drink, a slice of sweet pie, and a toy!
   components:
   - type: StorageFill
     contents:
-    - id: FoodMealHappyHonkBigBite
+    - id: FoodBoxHappyHonkFillMealBig
       amount: 2

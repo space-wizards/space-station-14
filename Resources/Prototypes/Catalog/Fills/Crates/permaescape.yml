@@ -82,7 +82,7 @@
         prob: 0.25
       - id: OxygenTankFilled
         prob: 0.05
-        
+
 - type: entity
   id: CratePermaEscapeGun
   parent: CrateGenericSteel
@@ -230,7 +230,7 @@
     contents:
       - id: ClothingEyesGlassesOutlawGlasses
       - id: ClothingHeadHatOutlawHat
-      - id: HappyHonkNukieSnacks
+      - id: FoodBoxHappyHonkNukieFillLunch
       # - id: BaseUplinkRadio # too spicy I think.
         # prob: 0.50
       # - id: Telecrystal

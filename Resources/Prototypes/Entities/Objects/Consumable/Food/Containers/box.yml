@@ -499,10 +499,10 @@
       amount: 6
 
 - type: entity
-  id: HappyHonk
   parent: [ BoxCardboard, BaseBagOpenClose ]
+  id: FoodBoxHappyHonk
   name: happy honk meal
-  suffix: Toy Safe
+  suffix: empty
   description: The toy is more edible than the food.
   components:
   - type: Sprite
@@ -517,92 +517,127 @@
     tags:
     - Trash
     - HappyHonk
-  - type: StorageFill
-    contents:
-      - id: ToyMouse
-        orGroup: GiftPool
-      - id: ToyAi
-        orGroup: GiftPool
-      - id: ToyNuke
-        orGroup: GiftPool
-      - id: ToyFigurinePassenger
-        orGroup: GiftPool
-      - id: ToyGriffin
-        orGroup: GiftPool
-      - id: ToyHonk
-        orGroup: GiftPool
-      - id: ToyIan
-        orGroup: GiftPool
-      - id: ToyMarauder
-        orGroup: GiftPool
-      - id: ToyMauler
-        orGroup: GiftPool
-      - id: ToyGygax
-        orGroup: GiftPool
-      - id: ToyOdysseus
-        orGroup: GiftPool
-      - id: ToyOwlman
-        orGroup: GiftPool
-      - id: ToyDeathRipley
-        orGroup: GiftPool
-      - id: ToyPhazon
-        orGroup: GiftPool
-      - id: ToyFireRipley
-        orGroup: GiftPool
-      - id: ToyReticence
-        orGroup: GiftPool
-      - id: ToyRipley
-        orGroup: GiftPool
-      - id: ToySeraph
-        orGroup: GiftPool
-      - id: ToyDurand
-        orGroup: GiftPool
-      - id: ToySkeleton
-        orGroup: GiftPool
-      - id: FoamBlade
-        orGroup: GiftPool
-      - id: ClothingHeadHatBunny
-        orGroup: GiftPool
-      - id: PersonalAI
-        orGroup: GiftPool
-      - id: CrayonBox
-        orGroup: GiftPool
-      - id: ToySword
-        orGroup: GiftPool
-      - id: RevolverCapGun
-        orGroup: GiftPool
-      - id: ToyRubberDuck
-        orGroup: GiftPool
-      - id: BikeHorn
-        prob: 0.5
-        orGroup: GiftPool
-      - id: GoldenBikeHorn
-        prob: 0.1
-        orGroup: GiftPool
 
 - type: entity
-  id: HappyHonkMime
-  parent: HappyHonk
-  description: A limited mime edition of the happy honk meal.
-  suffix: Toy Safe
+  parent: FoodBoxHappyHonk
+  id: FoodBoxHappyHonkFill
+  name: happy honk meal
+  suffix: fill; drink, toy
   components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: ListDrinkCanSoda
+        - !type:GroupSelector
+          children:
+          - !type:NestedSelector
+            tableId: ListBikeHorn
+            weight: 0.1
+          - !type:NestedSelector
+            tableId: ListToySmall
+            weight: 0.9
+
+- type: entity
+  parent: FoodBoxHappyHonk
+  id: FoodBoxHappyHonkFillMeal
+  suffix: fill; drink, meal, toy
+  description: Someone paid good money to get this fast food meal shipped out this way. It smells fresh, somehow.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - !type:GroupSelector
+          children:
+          - !type:NestedSelector
+            tableId: ListFoodBurger
+            weight: 0.8
+          - !type:NestedSelector
+            tableId: ListFoodBurgerExotic
+            weight: 0.2
+        - !type:NestedSelector
+          tableId: ListDrinkCanSoda
+        - !type:GroupSelector
+          children:
+          - !type:NestedSelector
+            tableId: ListBikeHorn
+            weight: 0.2
+          - !type:NestedSelector
+            tableId: ListToySmall
+            weight: 0.8
+
+- type: entity
+  parent: FoodBoxHappyHonk
+  id: FoodBoxHappyHonkFillMealBig
+  name: happy honk big circus meal
+  suffix: fill; drink, large meal, toy
+  description: Someone paid good money to get this fast food meal shipped out this way. It smells fresh, somehow.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - !type:GroupSelector
+          children:
+          - id: FoodBurgerBig
+            weight: 0.8
+          - id: FoodBurgerSuper
+            weight: 0.2
+        - !type:NestedSelector
+          tableId: ListFoodFries
+        - !type:NestedSelector
+          tableId: ListFoodPieSlice
+        - !type:NestedSelector
+          tableId: ListDrinkCanSoda
+        - !type:GroupSelector
+          children:
+          - !type:NestedSelector
+            tableId: ListBikeHorn
+            weight: 0.2
+          - !type:NestedSelector
+            tableId: ListToySmall
+            weight: 0.8
+
+- type: entity
+  parent: FoodBoxHappyHonk
+  id: FoodBoxHappyHonkMime
+  name: happy mime meal
+  suffix: empty
+  description: A limited mime edition of the happy honk meal.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/Happyhonk/mime.rsi
+    state: box
+  - type: Item
+    sprite: Objects/Storage/Happyhonk/mime.rsi
+    heldPrefix: box
   - type: Tag
     tags:
     - Trash
     - MimeHappyHonk
-  - type: Sprite
-    sprite: Objects/Storage/Happyhonk/mime.rsi
-    state: box
-  - type: Item
-    sprite: Objects/Storage/Happyhonk/mime.rsi
-    heldPrefix: box
 
 - type: entity
-  id: HappyHonkNukie
-  parent: [HappyHonk, BaseSyndicateContraband]
+  parent: FoodBoxHappyHonkMime
+  id: FoodBoxHappyHonkMimeFill
+  suffix: fill; toy
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: ListDrinkCanSoda
+        - !type:NestedSelector
+          tableId: ListToySmall
+
+- type: entity
+  parent: [FoodBoxHappyHonk, BaseSyndicateContraband]
+  id: FoodBoxHappyHonkNukie
   name: robust nukie meal
+  suffix: empty
   description: A sus meal with a potentially explosive surprise.
-  suffix: Toy Unsafe
   components:
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/nukie.rsi
@@ -610,256 +645,102 @@
   - type: Item
     sprite: Objects/Storage/Happyhonk/nukie.rsi
     heldPrefix: box
-  - type: StorageFill
-    contents:
-      - id: C4
-        prob: 0.02
-        orGroup: GiftPool
-      - id: ToyMarauder
-        orGroup: GiftPool
-      - id: ToyMauler
-        orGroup: GiftPool
-      - id: ToyNuke
-        orGroup: GiftPool
-      - id: ToySword
-        orGroup: GiftPool
-      - id: BalloonSyn
-        prob: 0.6
-        orGroup: GiftPool
-      - id: PlushieNuke
-        orGroup: GiftPool
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
-  parent: HappyHonkNukie
-  id: HappyHonkNukieSnacks
-  suffix: Toy Unsafe, Snacks
-  name: syndicate snack box
+  parent: FoodBoxHappyHonkNukie
+  id: FoodBoxHappyHonkNukieFill
+  suffix: fill; unsafe toy, drink, meal
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - !type:GroupSelector
+          children:
+          - id: FoodSaladValid
+            weight: 0.1
+          - id: FoodSnackSyndi
+            weight: 0.9
+        - id: DrinkNukieCan
+        - !type:GroupSelector
+          children:
+          - !type:NestedSelector
+            tableId: ListToySmallSyndie
+            weight: 0.9
+          - !type:NestedSelector
+            tableId: ListToySmallSyndieUnsafe
+            weight: 0.1
+
+- type: entity
+  parent: FoodBoxHappyHonkNukie
+  id: FoodBoxHappyHonkNukieFillLunch
+  name: robust nukie family meal
+  description: Get a nukie family meal deal for only 1 telecrystal!
+  suffix: fill; unsafe toy, family drink, meal
   components:
   - type: Storage
     grid:
     - 0,0,5,2
-  - type: StorageFill
-    contents:
-    # toy
-    - id: C4
-      prob: 0.02
-      orGroup: GiftPool
-    - id: ToyMarauder
-      orGroup: GiftPool
-    - id: ToyMauler
-      orGroup: GiftPool
-    - id: ToyNuke
-      orGroup: GiftPool
-    - id: ToySword
-      orGroup: GiftPool
-    - id: BalloonSyn
-      prob: 0.6
-      orGroup: GiftPool
-    - id: PlushieNuke
-      orGroup: GiftPool
-    # drinks - 4 cans, up to 2 blood-red brews
-    - id: DrinkNukieCan
-      prob: 0.2
-      orGroup: Drink1Pool
-    - id: DrinkColaCan
-      orGroup: Drink1Pool
-    - id: DrinkNukieCan
-      prob: 0.2
-      orGroup: Drink2Pool
-    - id: DrinkColaCan
-      orGroup: Drink2Pool
-    - id: DrinkColaCan
-      amount: 2
-    # food
-    - id: FoodSaladValid
-      prob: 0.05
-      amount: 4
-      orGroup: FoodPool
-    - id: FoodSnackSyndi
-      amount: 4
-      orGroup: FoodPool
+  - type: EntityTableContainerFill # Would be overkill to make nested tables unless nukie meals are expanded
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - !type:GroupSelector
+          children:
+          - !type:NestedSelector
+            tableId: ListToySmallSyndie
+            weight: 0.95
+          - !type:NestedSelector
+            tableId: ListToySmallSyndieUnsafe
+            weight: 0.05 # nukies have lots of TC
+        - !type:GroupSelector
+          rolls: !type:ConstantNumberSelector
+            value: 4
+          children:
+          - id: DrinkColaCan
+            weight: 0.8
+          - id: DrinkNukieCan
+            weight: 0.2
+        - !type:GroupSelector
+          rolls: !type:ConstantNumberSelector
+            value: 4
+          children:
+          - id: FoodSaladValid
+            weight: 0.2
+          - id: FoodSnackSyndi
+            weight: 0.8
 
 - type: entity
-  id: HappyHonkCluwne
-  parent: HappyHonk
-  name: woeful cluwne meal
-  description: Nothing good can come of this.
+  parent: FoodBoxHappyHonk
+  id: FoodBoxHappyHonkCluwne
+  name: woeful jonk meal
+  suffix: empty
+  description: Nothing good will come of this.
   components:
-  - type: Tag
-    tags:
-    - Trash
-    - CluwneHappyHonk
   - type: Sprite
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
     state: box
   - type: Item
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
     heldPrefix: box
-  - type: StorageFill
-    contents:
-      - id: CluwneHorn
+  - type: Tag
+    tags:
+    - Trash
+    - CluwneHappyHonk
 
 - type: entity
-  id: FoodMealHappyHonkClown
-  parent: HappyHonk
-  suffix: random food spawner meal
-  categories: [ HideSpawnMenu ]
+  parent: FoodBoxHappyHonkCluwne
+  id: FoodBoxHappyHonkCluwneFill
+  suffix: fill; horn
   components:
-  - type: StorageFill
-    contents:
-      - id: FoodBurgerCrazy
-        orGroup: Burgers
-      - id: FoodBurgerCheese
-        orGroup: Burgers
-      - id: DrinkColaCan
-        orGroup: DrinkPool
-      - id: DrinkLemonLimeCan
-        orGroup: DrinkPool
-      - id: DrinkLemonLimeCranberryCan
-        orGroup: DrinkPool
-      - id: DrinkIcedTeaCan
-        orGroup: DrinkPool
-      - id: ToyMouse
-        orGroup: GiftPool
-      - id: ToyAi
-        orGroup: GiftPool
-      - id: ToyNuke
-        orGroup: GiftPool
-      - id: ToyFigurinePassenger
-        orGroup: GiftPool
-      - id: ToyGriffin
-        orGroup: GiftPool
-      - id: ToyHonk
-        orGroup: GiftPool
-      - id: ToyIan
-        orGroup: GiftPool
-      - id: ToyMarauder
-        orGroup: GiftPool
-      - id: ToyMauler
-        orGroup: GiftPool
-      - id: ToyGygax
-        orGroup: GiftPool
-      - id: ToyOdysseus
-        orGroup: GiftPool
-      - id: ToyOwlman
-        orGroup: GiftPool
-      - id: ToyDeathRipley
-        orGroup: GiftPool
-      - id: ToyPhazon
-        orGroup: GiftPool
-      - id: ToyFireRipley
-        orGroup: GiftPool
-      - id: ToyReticence
-        orGroup: GiftPool
-      - id: ToyRipley
-        orGroup: GiftPool
-      - id: ToySeraph
-        orGroup: GiftPool
-      - id: ToyDurand
-        orGroup: GiftPool
-      - id: ToySkeleton
-        orGroup: GiftPool
-      - id: FoamBlade
-        orGroup: GiftPool
-      - id: ClothingHeadHatBunny
-        orGroup: GiftPool
-      - id: PersonalAI
-        orGroup: GiftPool
-      - id: CrayonBox
-        orGroup: GiftPool
-      - id: ToySword
-        orGroup: GiftPool
-      - id: RevolverCapGun
-        orGroup: GiftPool
-      - id: ToyRubberDuck
-        orGroup: GiftPool
-      - id: BikeHorn
-        prob: 0.5
-        orGroup: GiftPool
-      - id: GoldenBikeHorn
-        prob: 0.1
-        orGroup: GiftPool
-
-- type: entity
-  id: FoodMealHappyHonkBigBite
-  parent: HappyHonk
-  name: Happy Honk Big Bite Meal
-  description: Someone paid good money to get this fast food meal shipped out this way. It smells fresh, somehow.
-  components:
-  - type: StorageFill
-    contents:
-      - id: FoodBurgerBig
-        amount: 1
-      - id: FoodMealFriesCheesy
-        amount: 1
-      - id: DrinkColaCan
-        orGroup: DrinkPool
-      - id: DrinkLemonLimeCan
-        orGroup: DrinkPool
-      - id: DrinkLemonLimeCranberryCan
-        orGroup: DrinkPool
-      - id: DrinkIcedTeaCan
-        orGroup: DrinkPool
-      - id: FoodPieAppleSlice
-        amount: 1
-      - id: ToyMouse
-        orGroup: GiftPool
-      - id: ToyAi
-        orGroup: GiftPool
-      - id: ToyNuke
-        orGroup: GiftPool
-      - id: ToyFigurinePassenger
-        orGroup: GiftPool
-      - id: ToyGriffin
-        orGroup: GiftPool
-      - id: ToyHonk
-        orGroup: GiftPool
-      - id: ToyIan
-        orGroup: GiftPool
-      - id: ToyMarauder
-        orGroup: GiftPool
-      - id: ToyMauler
-        orGroup: GiftPool
-      - id: ToyGygax
-        orGroup: GiftPool
-      - id: ToyOdysseus
-        orGroup: GiftPool
-      - id: ToyOwlman
-        orGroup: GiftPool
-      - id: ToyDeathRipley
-        orGroup: GiftPool
-      - id: ToyPhazon
-        orGroup: GiftPool
-      - id: ToyFireRipley
-        orGroup: GiftPool
-      - id: ToyReticence
-        orGroup: GiftPool
-      - id: ToyRipley
-        orGroup: GiftPool
-      - id: ToySeraph
-        orGroup: GiftPool
-      - id: ToyDurand
-        orGroup: GiftPool
-      - id: ToySkeleton
-        orGroup: GiftPool
-      - id: FoamBlade
-        orGroup: GiftPool
-      - id: ClothingHeadHatBunny
-        orGroup: GiftPool
-      - id: PersonalAI
-        orGroup: GiftPool
-      - id: ToySword
-        orGroup: GiftPool
-      - id: RevolverCapGun
-        orGroup: GiftPool
-      - id: ToyRubberDuck
-        orGroup: GiftPool
-      - id: BikeHorn
-        prob: 0.5
-        orGroup: GiftPool
-      - id: GoldenBikeHorn
-        prob: 0.1
-        orGroup: GiftPool
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: CluwneHorn
 
 - type: entity
   parent: BoxCardboard
@@ -882,3 +763,161 @@
   - type: StorageFill
     contents:
     - id: MaterialCloth10
+
+- type: entityTable
+  id: ListFoodBurger
+  table: !type:GroupSelector
+    children:
+    - id: FoodBurgerBacon
+    - id: FoodBurgerCarp
+    - id: FoodBurgerCheese
+    - id: FoodBurgerChicken
+    - id: FoodBurgerMcguffin
+    - id: FoodBurgerMcrib
+    - id: FoodBurgerPlain
+
+- type: entityTable
+  id: ListFoodBurgerExotic
+  table: !type:GroupSelector
+    children:
+    - id: FoodBurgerAppendix
+    - id: FoodBurgerBaseball
+    - id: FoodBurgerBear
+    - id: FoodBurgerBig
+    - id: FoodBurgerBrain
+    - id: FoodBurgerCat
+    - id: FoodBurgerClown
+    - id: FoodBurgerCrab
+    - id: FoodBurgerCrazy
+    - id: FoodBurgerDuck
+    - id: FoodBurgerEmpowered
+    - id: FoodBurgerFive
+    - id: FoodBurgerGhost
+    - id: FoodBurgerHuman
+    - id: FoodBurgerJelly
+    - id: FoodBurgerMime
+    - id: FoodBurgerMothRoach
+    - id: FoodBurgerRat
+    - id: FoodBurgerRobot
+    - id: FoodBurgerSoy
+    - id: FoodBurgerSpell
+    - id: FoodBurgerSuper
+    - id: FoodBurgerTofu
+    - id: FoodBurgerXeno
+
+- type: entityTable
+  id: ListFoodFries
+  table: !type:GroupSelector
+    children:
+    - id: FoodMealPotatoLoaded
+    - id: FoodMealFries
+    - id: FoodMealFriesCheesy
+    - id: FoodMealFriesCarrot
+    - id: FoodMealNachos
+    - id: FoodMealNachosCheesy
+    - id: FoodMealNachosCuban
+
+- type: entityTable
+  id: ListDrinkCanSoda
+  table: !type:GroupSelector
+    children:
+    - id: DrinkChangelingStingCan
+    - id: DrinkColaCan
+    - id: DrinkDrGibbCan
+    - id: DrinkEnergyDrinkCan
+    - id: DrinkFourteenLokoCan
+    - id: DrinkGrapeCan
+    - id: DrinkIcedTeaCan
+    - id: DrinkLemonLimeCan
+    - id: DrinkLemonLimeCranberryCan
+    - id: DrinkPwrGameCan
+    - id: DrinkRootBeerCan
+    - id: DrinkShamblersJuiceCan
+    - id: DrinkSodaWaterCan
+    - id: DrinkSolDryCan
+    - id: DrinkSpaceMountainWindCan
+    - id: DrinkSpaceUpCan
+    - id: DrinkStarkistCan
+    - id: DrinkTonicWaterCan
+
+- type: entityTable
+  id: ListFoodPieSlice
+  table: !type:GroupSelector
+    children:
+    - id: FoodPieAppleSlice
+    - id: FoodPieBananaCreamSlice
+    - id: FoodPieCherrySlice
+
+- type: entityTable
+  id: ListToySmall
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHeadHatBunny
+    - id: FoamBlade
+    - id: PersonalAI
+    - id: RevolverCapGun
+    - id: ToyAi
+    - id: ToyDeathRipley
+    - id: ToyDurand
+    - id: ToyFigurinePassenger
+    - id: ToyFireRipley
+    - id: ToyGriffin
+    - id: ToyGygax
+    - id: ToyHonk
+    - id: ToyIan
+    - id: ToyMarauder
+    - id: ToyMauler
+    - id: ToyMouse
+    - id: ToyNuke
+    - id: ToyOdysseus
+    - id: ToyOwlman
+    - id: ToyPhazon
+    - id: ToyReticence
+    - id: ToyRipley
+    - id: ToyRubberDuck
+    - id: ToySeraph
+    - id: ToySkeleton
+    - id: ToySword
+
+- type: entityTable
+  id: ListBikeHorn
+  table: !type:GroupSelector
+    children:
+    - id: BikeHorn
+      weight: 0.9
+    - id: GoldenBikeHorn
+      weight: 0.1
+
+- type: entityTable
+  id: ListToySmallSyndie
+  table: !type:GroupSelector
+    children:
+    - id: BalloonSyn
+    - id: ClothingHeadHatCatEars
+    - id: PlushieNuke
+    - id: RevolverCapGun
+    - id: ToyDeathRipley
+    - id: ToyFigurineCaptain
+    - id: ToyFigurineFootsoldier
+    - id: ToyFigurineNukie
+    - id: ToyFigurineNukieCommander
+    - id: ToyFigurineNukieElite
+    - id: ToyGygax
+    - id: ToyMauler
+    - id: ToyNuke
+    - id: ToySword
+
+- type: entityTable
+  id: ListToySmallSyndieUnsafe
+  table: !type:GroupSelector
+    children:
+    - id: C4
+      weight: 0.225
+    - id: EnergySword
+      weight: 0.10
+    - id: RevolverCapGunFake
+      weight: 0.225
+    - id: SyndicatePersonalAI
+      weight: 0.225
+    - id: ThrowingKnife
+      weight: 0.225
