@@ -84,7 +84,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      75: Dead
+      100: Dead
   - type: Destructible
     thresholds:
     - trigger:
@@ -135,6 +135,9 @@
       groups:
         Brute: -0.5
         Burn: -0.5
+      types:
+        Shock: -0.5
+        Structural: -0.5
   - type: ThermalVision
     lightRadius: 7
     color: "#d70aa0"
@@ -194,7 +197,7 @@
   - type: SyncSprite
   - type: MovementSpeedModifier
     baseWalkSpeed: 2 # same as slime
-    baseSprintSpeed: 4
+    baseSprintSpeed: 4.2
     weightlessFriction: 1
     weightlessFrictionNoInput: 2
     weightlessAcceleration: 1.8
@@ -250,7 +253,7 @@
     needsHands: false
   - type: MovementSpeedModifier
     baseWalkSpeed: 2 # same as slime
-    baseSprintSpeed: 4
+    baseSprintSpeed: 4.2
     weightlessFriction: 1
     weightlessFrictionNoInput: 2
     weightlessAcceleration: 1.2
@@ -307,7 +310,7 @@
     needsHands: false
   - type: MovementSpeedModifier
     baseWalkSpeed: 2 # same as slime
-    baseSprintSpeed: 4
+    baseSprintSpeed: 4.2
     weightlessFriction: 1
     weightlessFrictionNoInput: 2
     weightlessAcceleration: 1.2
@@ -363,6 +366,8 @@
     applySpeedModifier: false
   - type: MovementAlwaysTouching
   - type: MovementSpeedModifier
+    baseWalkSpeed: 2 # same as slime
+    baseSprintSpeed: 2.835 # this is the same speed as an engineering hardsuit + duffel
     friction: 30 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
   - type: Sprite
     granularLayersRendering: true
@@ -392,6 +397,16 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Replicator3
+  - type: PassiveDamage # passive healing
+    allowedStates:
+    - Alive
+    damage:
+      groups:
+        Brute: -0.75
+        Burn: -0.75
+      types:
+        Shock: -0.5
+        Structural: -0.5
   - type: Speech
     speechVerb: Robotic
     speechSounds: Replicator
