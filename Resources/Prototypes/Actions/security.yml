@@ -13,10 +13,11 @@
   name: Shout for compliance
   description: Verbally order the criminal to stop.
   components:
-  - type: InstantAction
+  - type: Action
     icon:
       sprite: Clothing/Mask/gassecurity.rsi
       state: sec-hail
     useDelay: 10 # Just like screaming
     itemIconStyle: BigAction
+  - type: InstantAction
     event: !type:HailerActionEvent
