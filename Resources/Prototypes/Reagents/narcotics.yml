@@ -219,7 +219,7 @@
       - !type:Emote
         emote: Cough
         showInChat: true
-        probability: 0.08
+        probability: 0.03
 # feel free to add this line below if you want a min before coughing starts -Mystic
 #        conditions:
 #        - !type:ReagentThreshold
