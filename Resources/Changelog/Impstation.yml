@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ecramox
-  changes:
-  - message: Fixed Lone Ops not spawning with all their gear.
-    type: Fix
-  id: 1314
-  time: '2025-03-15T05:07:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1964
 - author: mqole
   changes:
   - message: Spare pixels sent to the graveyard.
@@ -4202,3 +4195,20 @@
   id: 1813
   time: '2025-06-12T02:59:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2733
+- author: BubbaBean
+  changes:
+  - message: rebalanced replicators to greatly favor a more defensive team orientated
+      play style, check out the pr for a full changelog
+    type: Tweak
+  - message: structural damage no longer two shots replicators, however it remains
+      a great option against them so grab your PKAs and crushers!
+    type: Tweak
+  - message: tier 3 protector is now extremely tanky at the cost of being significantly
+      slower, don't underestimate them or you might get cornered!
+    type: Tweak
+  - message: replicator lasers now fire a lot faster but deal less stun, they don't
+      do that much damage but if they work together it can really add up!
+    type: Tweak
+  id: 1814
+  time: '2025-06-12T07:34:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2708
