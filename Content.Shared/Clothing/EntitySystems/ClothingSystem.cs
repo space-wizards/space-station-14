@@ -21,8 +21,7 @@ public abstract class ClothingSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<ClothingComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<ClothingComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<ClothingComponent, AfterAutoHandleStateEvent>(AfterAutoHandleState);
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
 
@@ -84,6 +83,7 @@ public abstract class ClothingSystem : EntitySystem
     {
         component.InSlot = args.Slot;
         component.InSlotFlag = args.SlotFlags;
+        Dirty(uid, component);
 
         if ((component.Slots & args.SlotFlags) == SlotFlags.NONE)
             return;
@@ -110,17 +110,9 @@ public abstract class ClothingSystem : EntitySystem
         component.InSlotFlag = null;
     }
 
-    private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)
+    private void AfterAutoHandleState(Entity<ClothingComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        args.State = new ClothingComponentState(component.EquippedPrefix);
-    }
-
-    private void OnHandleState(EntityUid uid, ClothingComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not ClothingComponentState state)
-            return;
-
-        SetEquippedPrefix(uid, state.EquippedPrefix, component);
+        _itemSys.VisualsChanged(ent.Owner);
     }
 
     private void OnEquipDoAfter(Entity<ClothingComponent> ent, ref ClothingEquipDoAfterEvent args)
