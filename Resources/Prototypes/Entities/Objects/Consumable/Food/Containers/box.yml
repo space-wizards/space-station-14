@@ -678,7 +678,7 @@
   parent: FoodBoxHappyHonkNukie
   id: FoodBoxHappyHonkNukieFillLunch
   name: robust nukie family meal
-  description: Get a nukie family meal deal for only 1 telecrystal!
+  description: Get a nukie family meal deal for only one telecrystal!
   suffix: fill; unsafe toy, family drink, meal
   components:
   - type: Storage

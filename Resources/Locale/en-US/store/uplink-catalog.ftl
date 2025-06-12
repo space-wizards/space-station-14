@@ -372,8 +372,8 @@ uplink-cigarettes-desc = Elite cigarettes for elite agents. Infused with medicin
 uplink-clothing-conducting-gloves-name = Conducting Gloves
 uplink-clothing-conducting-gloves-desc = Looks exactly like insulated gloves, but shocks you far worse than if you had nothing at all! Best given as a gift to passengers you really don't like.
 
-uplink-snack-box-name = Syndicate Snack Box
-uplink-snack-box-desc = A box of delicious snacks and drinks to eat alone or with your team. Includes 1 toy you didn't want.
+uplink-snack-box-name = Robust Nukie Family Meal
+uplink-snack-box-desc = A box of delicious snacks and drinks to eat alone or with your team. Includes one possibly dangerous toy.
 
 uplink-eshield-name = Energy Shield
 uplink-eshield-desc = Exotic energy shield that reflects almost all laser beams, as well as a little protection from bullets and other physical attacks.
