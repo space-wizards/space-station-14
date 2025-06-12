@@ -70,7 +70,7 @@ namespace Content.Server.GameTicking
             bool force)
         {
             // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
-            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, netUserIds, force));
+            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, force));
 
             var playerNetIds = readyPlayers.Select(o => o.UserId).ToHashSet();
 

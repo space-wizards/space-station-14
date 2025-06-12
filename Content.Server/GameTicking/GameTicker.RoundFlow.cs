@@ -932,13 +932,11 @@ namespace Content.Server.GameTicking
         /// </summary>
         /// <remarks>If you spawn a player by yourself from this event, don't forget to call <see cref="GameTicker.PlayerJoinGame"/> on them.</remarks>
         public List<ICommonSession> PlayerPool { get; }
-        public IReadOnlySet<NetUserId> Profiles { get; }
         public bool Forced { get; }
 
-        public RulePlayerSpawningEvent(List<ICommonSession> playerPool, IReadOnlySet<NetUserId> profiles, bool forced)
+        public RulePlayerSpawningEvent(List<ICommonSession> playerPool, bool forced)
         {
             PlayerPool = playerPool;
-            Profiles = profiles;
             Forced = forced;
         }
     }
