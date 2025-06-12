@@ -1226,16 +1226,15 @@
   metabolisms:
     Medicine:
       effects:
-        - !type:HealthChange
+        - !type:EvenHealthChange
           conditions:
           - !type:Temperature
             max: 213.0
           damage:
             groups:
-              Brute: -4
-              Burn: -5
-            types:
-              Poison: -2
+              Brute: -6
+              Burn: -4
+              Toxin: -6
 
 - type: reagent
   id : Aloxadone
