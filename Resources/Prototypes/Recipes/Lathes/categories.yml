@@ -106,11 +106,6 @@
   id: Wood
   name: lathe-category-wood
 
-# Science
-- type: latheCategory
-  id: Mech
-  name: lathe-category-mechs
-
 # Security TechFab
 - type: latheCategory
   id: Ammo

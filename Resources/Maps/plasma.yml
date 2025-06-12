@@ -137945,21 +137945,11 @@ entities:
     - type: Transform
       pos: -82.10486,-20.286572
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 6684
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6684
   - uid: 13803
     components:
     - type: Transform
       pos: -82.19861,-20.661572
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 6685
     - type: ActionsContainer
     - type: ContainerContainer
       containers:
@@ -137973,8 +137963,6 @@ entities:
     - type: Transform
       pos: -82.46423,-20.286572
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 6753
     - type: ActionsContainer
     - type: ContainerContainer
       containers:
@@ -137986,8 +137974,6 @@ entities:
     - type: Transform
       pos: -82.46423,-20.661572
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 6768
     - type: ActionsContainer
     - type: ContainerContainer
       containers:

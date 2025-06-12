@@ -3,17 +3,17 @@
   name: Webball
   description: Fires a webball towards the clicked location.
   components:
-  - type: WorldTargetAction
+  - type: Action
     useDelay: 30
     itemIconStyle: BigAction
-    checkCanAccess: false
-    raiseOnUser: true
     range: 60
-    sound: !type:SoundPathSpecifier
+    raiseOnUser: true
+    sound:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
     icon:
       sprite: _Starlight/Interface/Actions/actions_spider.rsi
       state: web
+  - type: WorldTargetAction
     event: !type:ProjectileSpellEvent
       prototype: ProjectileWebball
 
@@ -40,7 +40,7 @@
   name: Egg injection
   description: Injection of eggs into the body.
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 3
     itemIconStyle: BigAction
     whitelist:
@@ -52,6 +52,7 @@
     icon:
       sprite:  _Starlight/Interface/Actions/actions_spider.rsi
       state: egg
+  - type: EntityTargetAction
     event: !type:EggInjectionEvent
 
 - type: entity
@@ -59,14 +60,15 @@
   name: Lay the egg.
   description: Lay the egg.
   components:
-  - type: LimitedCharges
-    maxCharges: 3
-  - type: AutoRecharge
-    rechargeDuration: 90
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigAction
     useDelay: 5
     icon:
       sprite: _Starlight/Interface/Actions/actions_spider.rsi
       state: egg
+  - type: LimitedCharges
+    maxCharges: 3
+  - type: AutoRecharge
+    rechargeDuration: 90
+  - type: InstantAction
     event: !type:EggsLayingEvent

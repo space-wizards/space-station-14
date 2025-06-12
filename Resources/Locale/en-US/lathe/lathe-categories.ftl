@@ -32,9 +32,6 @@ lathe-category-steel = Steel
 lathe-category-white = White
 lathe-category-wood = Wood
 
-# Science
-lathe-category-mechs = Mechs
-
 # Security TechFab
 lathe-category-ammo = Ammo
 lathe-category-boxes = Boxes
