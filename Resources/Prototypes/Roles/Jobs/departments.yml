@@ -5,9 +5,9 @@
   color: "#A46106"
   roles:
   - CargoTechnician
-  - CargoTrainee
   - Quartermaster
   - SalvageSpecialist
+  - SupplyAssistant
 
 - type: department
   id: Civilian

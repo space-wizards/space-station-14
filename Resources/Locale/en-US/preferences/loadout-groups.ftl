@@ -100,7 +100,7 @@ loadout-group-cargo-technician-backpack = Cargo Technician backpack
 loadout-group-cargo-technician-outerclothing = Cargo Technician outer clothing
 loadout-group-cargo-technician-shoes = Cargo Technician shoes
 
-loadout-group-cargo-trainee-jumpsuit = Cargo Trainee jumpsuit
+loadout-group-supply-assistant-jumpsuit = Supply Assistant jumpsuit
 
 loadout-group-salvage-specialist-backpack = Salvage Specialist backpack
 loadout-group-salvage-specialist-outerclothing = Salvage Specialist outer clothing

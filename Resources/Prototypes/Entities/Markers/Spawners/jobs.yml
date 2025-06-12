@@ -89,16 +89,16 @@
       - state: passenger
 
 - type: entity
-  id: SpawnPointCargoTrainee
+  id: SpawnPointSupplyAssistant
   parent: SpawnPointJobBase
-  name: cargotrainee
+  name: supply assistant
   components:
   - type: SpawnPoint
-    job_id: CargoTrainee
+    job_id: SupplyAssistant
   - type: Sprite
     layers:
       - state: green
-      - state: cargo_trainee
+      - state: supplyassistant
 
 - type: entity
   id: SpawnPointTechnicalAssistant

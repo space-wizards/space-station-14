@@ -68,9 +68,6 @@
             "name": "CargoTechnician"
         },
         {
-            "name": "CargoTrainee"
-        },
-        {
             "name": "Scientist"
         },
         {
@@ -150,6 +147,9 @@
         },
         {
             "name": "SecurityCadet"
+        },
+        {
+            "name": "SupplyAssistant"
         },
         {
             "name": "Zombie"

@@ -182,12 +182,12 @@
 
 - type: entity
   parent: BasePDA
-  id: CargoTraineePDA
-  name: cargo trainee PDA
+  id: SupplyAssistantPDA
+  name: supply assistant PDA
   description: Why isn't it orange?
   components:
   - type: Pda
-    id: CargoTraineeIDCard
+    id: SupplyAssistantIDCard
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:

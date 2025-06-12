@@ -636,8 +636,8 @@
   - CargoWinterBoots
 
 - type: loadoutGroup
-  id: CargoTraineeJumpsuit
-  name: loadout-group-cargo-trainee-jumpsuit
+  id: SupplyAssistantJumpsuit
+  name: loadout-group-supply-assistant-jumpsuit
   loadouts:
   - YellowJumpsuit
   - YellowJumpskirt

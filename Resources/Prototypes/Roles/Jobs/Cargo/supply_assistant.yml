@@ -1,15 +1,15 @@
 - type: job
-  id: CargoTrainee
-  name: job-name-cargotrainee
-  description: job-description-cargotrainee
-  playTimeTracker: JobCargoTrainee
+  id: SupplyAssistant
+  name: job-name-supply-assistant
+  description: job-description-supply-assistant
+  playTimeTracker: JobSupplyAssistant
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 18000 #5 hrs
       inverted: true # stop playing trainee if you're good at cargo!
-  startingGear: CargoTraineeGear
-  icon: "JobIconCargoTrainee"
+  startingGear: SupplyAssistantGear
+  icon: "JobIconSupplyAssistant"
   supervisors: job-supervisors-cargo
   canBeAntag: false
   access:
@@ -21,21 +21,21 @@
     prototype: BoxCardboard
 
 - type: startingGear
-  id: CargoTraineeGear
+  id: SupplyAssistantGear
   equipment:
     shoes: ClothingShoesColorBlack
-    id: CargoTraineePDA
+    id: SupplyAssistantPDA
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
-    # we don't have an ingame cargo guidebook yet...
-    # pocket2: (whatever a potential future cargo guidebook is called)
+    # we don't have a cargo guidebook item yet...
+    # pocket2: (whatever a potential future cargo guidebook item is called)
   #storage:
     #back:
     #- Stuff
 
 - type: chameleonOutfit
-  id: CargoTraineeChameleonOutfit
-  job: CargoTrainee
+  id: SupplyAssistantChameleonOutfit
+  job: SupplyAssistant
   equipment:
     head: ClothingHeadHatCargosoft
     eyes: ClothingEyesGlassesCheapSunglasses

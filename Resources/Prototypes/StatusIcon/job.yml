@@ -167,14 +167,6 @@
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconCargoTrainee
-  icon:
-    sprite: /Textures/Interface/Misc/job_icons.rsi
-    state: CargoTrainee
-  jobName: job-name-cargotrainee
-
-- type: jobIcon
-  parent: JobIcon
   id: JobIconCargoTechnician
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
@@ -396,6 +388,14 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: SecurityCadet
   jobName: job-name-cadet
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSupplyAssistant
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SupplyAssistant
+  jobName: job-name-supply-assistant
 
 - type: jobIcon
   parent: JobIcon
