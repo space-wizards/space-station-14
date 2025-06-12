@@ -22,13 +22,13 @@ public sealed partial class DumpableComponent : Component
     public SoundSpecifier? DumpSound = new SoundCollectionSpecifier("storageRustle");
 
     /// <summary>
-    /// Does this default to being dumped out onto a table or other placeable surface (default true - set it to false if it's for something like a backpack/toolbox)?
+    /// Does this default to being dumped out onto a table or other placeable surface? (default true - set it to false for something like a backpack/toolbox)
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool DumpsTables = true;
 
     /// <summary>
-    /// Does this default to being dumped out into a trash bin (default true - set it to false if it's for something like a backpack/toolbox)?
+    /// Does this default to being dumped out into a trash bin? (default false - set it to true for something like a trash bag)
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool DumpsBins = false;
