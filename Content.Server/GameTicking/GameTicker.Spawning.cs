@@ -166,7 +166,6 @@ namespace Content.Server.GameTicking
             // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
             RaiseLocalEvent(new RulePlayerJobsAssignedEvent(
                 assignedJobs.Keys.Select(x => _playerManager.GetSessionById(x)).ToArray(),
-                netUserIds,
                 force));
         }
 
