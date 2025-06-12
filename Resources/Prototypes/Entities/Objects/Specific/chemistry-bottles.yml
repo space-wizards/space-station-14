@@ -73,6 +73,7 @@
         Blunt: 4
   - type: Damageable
     damageContainer: Inorganic
+    damageModifierSet: FlimsyGlass
   - type: Destructible
     thresholds:
     - trigger:
