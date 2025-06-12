@@ -11,8 +11,15 @@
     arc: 175
   - type: Sprite
     sprite: Structures/Wallmounts/walldispenser.rsi
-    state: cleaner
+    layers:
+      - state: cleanerdispenser-2
+      - state: cleanerdispenser-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
   - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: cleanerdispenser-2-
   - type: InteractionOutline
   - type: Clickable
   - type: Transform
@@ -71,7 +78,14 @@
   name: fuel dispenser
   components:
   - type: Sprite
-    state: fuel
+    layers:
+      - state: fueldispenser-2
+      - state: fueldispenser-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fueldispenser-2-
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -92,7 +106,15 @@
   name: pepper dispenser
   components:
   - type: Sprite
-    state: pepper
+    layers: # No fill layer for pepper dispenser, because pepper is black and that doesn't look good on the dispenser
+      - state: pepperdispenser # To enable fill layer change to: pepperdispenser-2
+# To enable fill layer, uncomment the following lines and adjust the indentation:
+#     - state: pepperdispenser-2-1
+#       map: ["enum.SolutionContainerLayers.Fill"]
+#       visible: false
+# - type: SolutionContainerVisuals
+#   maxFillLevels: 5
+#   fillBaseName: pepperdispenser-2-
   - type: SolutionContainerManager
     solutions:
       tank:

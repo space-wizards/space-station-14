@@ -8,13 +8,67 @@
     },
     "states": [
       {
-        "name": "cleaner"
+        "name": "cleanerdispenser"
       },
       {
-        "name": "fuel"
+        "name": "cleanerdispenser-2"
       },
       {
-        "name": "pepper"
+        "name": "cleanerdispenser-2-1"
+      },
+      {
+        "name": "cleanerdispenser-2-2"
+      },
+      {
+        "name": "cleanerdispenser-2-3"
+      },
+      {
+        "name": "cleanerdispenser-2-4"
+      },
+      {
+        "name": "cleanerdispenser-2-5"
+      },
+      {
+        "name": "fueldispenser"
+      },
+      {
+        "name": "fueldispenser-2"
+      },
+      {
+        "name": "fueldispenser-2-1"
+      },
+      {
+        "name": "fueldispenser-2-2"
+      },
+      {
+        "name": "fueldispenser-2-3"
+      },
+      {
+        "name": "fueldispenser-2-4"
+      },
+      {
+        "name": "fueldispenser-2-5"
+      },
+      {
+        "name": "pepperdispenser"
+      },
+      {
+        "name": "pepperdispenser-2"
+      },
+      {
+        "name": "pepperdispenser-2-1"
+      },
+      {
+        "name": "pepperdispenser-2-2"
+      },
+      {
+        "name": "pepperdispenser-2-3"
+      },
+      {
+        "name": "pepperdispenser-2-4"
+      },
+      {
+        "name": "pepperdispenser-2-5"
       }
     ]
 }
