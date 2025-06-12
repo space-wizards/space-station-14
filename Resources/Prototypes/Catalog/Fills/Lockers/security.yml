@@ -474,7 +474,7 @@
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
-  id: GunSafeWeaponLaserCarbine
+  id: GunSafeLaserCarbine
   name: laser safe
   components:
   - type: EntityTableContainerFill
