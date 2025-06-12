@@ -216,6 +216,12 @@
   abstract: true
   components:
   - type: Internals
+  - type: CPR
+    sound:
+      path: "/Audio/Effects/cprpulse.ogg"
+      params:
+        volume: 0.5
+        variation: 0.125
   - type: Respirator
     damage:
       types:
