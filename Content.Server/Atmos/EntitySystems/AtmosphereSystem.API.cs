@@ -311,6 +311,23 @@ public partial class AtmosphereSystem
         return true;
     }
 
+    public void SetFlammableAtTile(Entity<TransformComponent?> ent, int flammability = 0)
+    {
+        if(!Resolve(ent, ref ent.Comp)) return;
+        var grid = ent.Comp.GridUid;
+        var position = _transformSystem.GetGridTilePositionOrDefault((ent, ent.Comp));
+        SetFlammableAtTile(position, grid, flammability);
+    }
+
+    public void SetFlammableAtTile(Vector2i position, Entity<GridAtmosphereComponent?>? grid, int flammability = 0)
+    {
+        if (grid is { } gridEnt && Resolve(gridEnt, ref gridEnt.Comp, false) && gridEnt.Comp.Tiles.TryGetValue(position, out var atmosTile))
+        {
+            atmosTile.SolutionFlammability = flammability;
+        }
+
+    }
+
     [ByRefEvent] private record struct SetSimulatedGridMethodEvent
         (EntityUid Grid, bool Simulated, bool Handled = false);
 

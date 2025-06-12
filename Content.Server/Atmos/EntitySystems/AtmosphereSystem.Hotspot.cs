@@ -46,7 +46,7 @@ namespace Content.Server.Atmos.EntitySystems
                 ExcitedGroupResetCooldowns(tile.ExcitedGroup);
 
             if ((tile.Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (tile.Hotspot.Volume <= 1f)
-                || tile.Air == null || tile.Air.GetMoles(Gas.Oxygen) < 0.5f || (tile.Air.GetMoles(Gas.Plasma) < 0.5f && tile.Air.GetMoles(Gas.Tritium) < 0.5f))
+                || tile.Air == null || tile.Air.GetMoles(Gas.Oxygen) < 0.5f || (tile.Air.GetMoles(Gas.Plasma) < 0.5f && tile.Air.GetMoles(Gas.Tritium) < 0.5f && tile.SolutionFlammability == 0))
             {
                 tile.Hotspot = new Hotspot();
                 InvalidateVisuals(ent, tile);
@@ -55,7 +55,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             PerformHotspotExposure(tile);
 
-            if (tile.Hotspot.Bypassing)
+            if (tile.Hotspot.Bypassing || tile.SolutionFlammability > 0)
             {
                 tile.Hotspot.State = 3;
 
@@ -134,12 +134,13 @@ namespace Content.Server.Atmos.EntitySystems
 
             var plasma = tile.Air.GetMoles(Gas.Plasma);
             var tritium = tile.Air.GetMoles(Gas.Tritium);
+            var reagentFlammability = tile.SolutionFlammability;
 
             if (tile.Hotspot.Valid)
             {
                 if (soh)
                 {
-                    if (plasma > 0.5f || tritium > 0.5f)
+                    if (plasma > 0.5f || tritium > 0.5f || reagentFlammability > 0)
                     {
                         if (tile.Hotspot.Temperature < exposedTemperature)
                             tile.Hotspot.Temperature = exposedTemperature;
@@ -148,10 +149,12 @@ namespace Content.Server.Atmos.EntitySystems
                     }
                 }
 
+                tile.Hotspot.Temperature += 12 * reagentFlammability;
+
                 return;
             }
 
-            if ((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature) && (plasma > 0.5f || tritium > 0.5f))
+            if (((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature) && (plasma > 0.5f || tritium > 0.5f)) || (reagentFlammability > 0 && exposedTemperature > 573.15 - 50 * reagentFlammability))
             {
                 if (sparkSourceUid.HasValue)
                     _adminLog.Add(LogType.Flammable, LogImpact.High, $"Heat/spark of {ToPrettyString(sparkSourceUid.Value)} caused atmos ignition of gas: {tile.Air.Temperature.ToString():temperature}K - {oxygen}mol Oxygen, {plasma}mol Plasma, {tritium}mol Tritium");
@@ -159,11 +162,12 @@ namespace Content.Server.Atmos.EntitySystems
                 tile.Hotspot = new Hotspot
                 {
                     Volume = exposedVolume * 25f,
-                    Temperature = exposedTemperature,
+                    Temperature = exposedTemperature + 50 * reagentFlammability,
                     SkippedFirstProcess = tile.CurrentCycle > gridAtmosphere.UpdateCounter,
                     Valid = true,
                     State = 1
                 };
+
 
                 AddActiveTile(gridAtmosphere, tile);
                 gridAtmosphere.HotspotTiles.Add(tile);
@@ -174,7 +178,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (tile.Air == null || !tile.Hotspot.Valid) return;
 
-            tile.Hotspot.Bypassing = tile.Hotspot.SkippedFirstProcess && tile.Hotspot.Volume > tile.Air.Volume*0.95f;
+            tile.Hotspot.Bypassing = tile.Hotspot.SkippedFirstProcess && tile.Hotspot.Volume > tile.Air.Volume*0.95f && tile.SolutionFlammability == 0;
 
             if (tile.Hotspot.Bypassing)
             {
@@ -184,7 +188,7 @@ namespace Content.Server.Atmos.EntitySystems
             else
             {
                 var affected = tile.Air.RemoveVolume(tile.Hotspot.Volume);
-                affected.Temperature = tile.Hotspot.Temperature;
+                affected.Temperature = MathF.Max(tile.Hotspot.Temperature, 273.15f + 50 * tile.SolutionFlammability);
                 React(affected, tile);
                 tile.Hotspot.Temperature = affected.Temperature;
                 tile.Hotspot.Volume = affected.ReactionResults[(byte)GasReaction.Fire] * Atmospherics.FireGrowthRate;

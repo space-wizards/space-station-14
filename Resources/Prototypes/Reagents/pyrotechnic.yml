@@ -43,6 +43,7 @@
   physicalDesc: reagent-physical-desc-soapy
   flavor: bitter
   color: "#FA00AF"
+  flammability: 5
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 5
@@ -157,6 +158,7 @@
   recognizable: true
   boilingPoint: -84.7 # Acetylene. Close enough.
   meltingPoint: -80.7
+  flammability: 2
   friction: 0.4
   tileReactions:
   - !type:FlammableTileReaction {}

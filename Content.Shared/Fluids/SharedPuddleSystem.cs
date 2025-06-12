@@ -8,6 +8,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Components;
+using Content.Shared.Atmos;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -35,6 +36,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         SubscribeLocalEvent<RefillableSolutionComponent, CanDropDraggedEvent>(OnRefillableCanDropDragged);
         SubscribeLocalEvent<PuddleComponent, GetFootstepSoundEvent>(OnGetFootstepSound);
         SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
+        SubscribeLocalEvent<PuddleComponent, TileFireEvent>(OnPuddleBurn);
 
         InitializeSpillable();
     }
@@ -110,6 +112,14 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         }
     }
 
+    private void OnPuddleBurn(Entity<PuddleComponent> entity, ref TileFireEvent args)
+    {
+        // TODO how the FUCK do we do this
+        if (!_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution,
+                out var solution))
+            return;
+        _solutionContainerSystem.BurnFlammableReagents(entity.Comp.Solution.Value, 0.05f);
+    }
     #region Spill
     // These methods are in Shared to make it easier to interact with PuddleSystem in Shared code.
     // Note that they always fail when run on the client, not creating a puddle and returning false.

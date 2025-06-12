@@ -88,6 +88,13 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public float? MeltingPoint { get; private set; }
 
+        /// <summary>
+        /// How likely this reagent is to burst into flames.
+        /// Modeled loosely off NFPA 704.
+        /// </summary>
+        [DataField]
+        public int Flammability { get; private set; } = 0;
+
         [DataField]
         public SpriteSpecifier? MetamorphicSprite { get; private set; } = null;
 
