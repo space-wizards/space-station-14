@@ -99,8 +99,8 @@
     Wood: 20
 
 - type: latheRecipe
-  id: BaseChemistryEmptyVialSmall
-  result: BaseChemistryEmptyVialSmall
+  id: ChemistryEmptyVialSmall
+  result: ChemistryEmptyVialSmall
   completetime: 2
   materials:
     Glass: 25

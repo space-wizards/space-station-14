@@ -16,7 +16,7 @@
   - PillCanister
   - HandLabeler
   - BaseChemistryEmptyVial
-  - BaseChemistryEmptyVialSmall
+  - ChemistryEmptyVialSmall
 
 - type: latheRecipePack
   parent: BasicChemistryStatic

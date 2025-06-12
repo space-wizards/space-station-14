@@ -63,7 +63,7 @@
     - id: BaseChemistryEmptyVial
       amount: !type:RangeNumberSelector
         range: 0, 2
-    - id: BaseChemistryEmptyVialSmall
+    - id: ChemistryEmptyVialSmall
       amount: !type:RangeNumberSelector
         range: 0, 1
 
