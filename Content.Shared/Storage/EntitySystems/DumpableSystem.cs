@@ -51,7 +51,6 @@ public sealed class DumpableSystem : EntitySystem
         if (!(component.DumpsBins && HasComp<DisposalUnitComponent>(args.Target) || component.DumpsTables  && HasComp<PlaceableSurfaceComponent>(args.Target)))
             return;
 
-        if (component.DumpsBins && HasComp<DisposalUnitComponent>(args.Target) || component.DumpsTables && HasComp<PlaceableSurfaceComponent>(args.Target))
         StartDoAfter(uid, args.Target.Value, args.User, component);
         args.Handled = true;
     }
