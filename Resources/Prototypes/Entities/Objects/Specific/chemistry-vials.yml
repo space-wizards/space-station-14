@@ -90,7 +90,7 @@
 - type: entity
   parent: BaseChemistryVial
   abstract: true
-  id: BaseBreakableVial
+  id: BaseBreakableChemistryVial
   components:
   - type: DamageOnLand
     damage:
@@ -124,12 +124,12 @@
 
 - type: entity
   name: vial
-  parent: BaseBreakableVial
+  parent: BaseBreakableChemistryVial
   id: BaseChemistryEmptyVial # TODO remove base from the id
   description: A small vial.
 
 - type: entity
-  parent: BaseBreakableVial
+  parent: BaseBreakableChemistryVial
   id: ChemistryEmptyVialSmall
   name: mini vial
   description: A smaller vial.
