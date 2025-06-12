@@ -152,7 +152,18 @@
     energy: 4
     color: "#84BEF4"
   - type: StaticPrice
-    price: 2000    
+    price: 2000
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckOldMantle
+  name: old wrap
+  description: A tattered fabric wrap, faded over the years. Smells faintly of cigars.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Mantles/oldmantle.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Mantles/oldmantle.rsi
 
 # Fashion-O-Mat, not obtainable any other way, unless mapped
 

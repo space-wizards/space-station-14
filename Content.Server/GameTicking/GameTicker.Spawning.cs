@@ -9,6 +9,7 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Shuttles.Components;
 using Content.Server.Polymorph.Components;
 using Content.Server.Polymorph.Systems;
+using Content.Server.Preferences.Managers;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -43,6 +44,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly NewLifeSystem _newLifeSystem = default!; //🌟Starlight🌟
         [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!; //🌟Starlight🌟
         [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
+        [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         public const string ObserverPrototypeName = "MobObserver";
@@ -72,21 +74,21 @@ namespace Content.Server.GameTicking
         }
 
         private void SpawnPlayers(List<ICommonSession> readyPlayers,
-            Dictionary<NetUserId, HumanoidCharacterProfile> profiles,
+            HashSet<NetUserId> netUserIds,
             bool force)
         {
             // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
-            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, profiles, force));
+            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, force));
 
             var playerNetIds = readyPlayers.Select(o => o.UserId).ToHashSet();
 
             // RulePlayerSpawning feeds a readonlydictionary of profiles.
             // We need to take these players out of the pool of players available as they've been used.
-            if (readyPlayers.Count != profiles.Count)
+            if (readyPlayers.Count != netUserIds.Count)
             {
                 var toRemove = new RemQueue<NetUserId>();
 
-                foreach (var (player, _) in profiles)
+                foreach (var player in netUserIds)
                 {
                     if (playerNetIds.Contains(player))
                         continue;
@@ -96,20 +98,18 @@ namespace Content.Server.GameTicking
 
                 foreach (var player in toRemove)
                 {
-                    profiles.Remove(player);
+                    netUserIds.Remove(player);
                 }
             }
 
             var spawnableStations = GetSpawnableStations();
-            var assignedJobs = _stationJobs.AssignJobs(profiles, spawnableStations);
-
-            _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, spawnableStations);
+            var assignedJobs = _stationJobs.AssignJobs(netUserIds, spawnableStations);
 
             // Calculate extended access for stations.
             var stationJobCounts = spawnableStations.ToDictionary(e => e, _ => 0);
-            foreach (var (netUser, (job, station)) in assignedJobs)
+            foreach (var netUser in netUserIds)
             {
-                if (job == null)
+                if(!assignedJobs.TryGetValue(netUser, out var assignedJobAndStation) || assignedJobAndStation.Item1 is null)
                 {
                     var playerSession = _playerManager.GetSessionById(netUser);
                     var evNoJobs = new NoJobsAvailableSpawningEvent(playerSession); // Used by gamerules to wipe their antag slot, if they got one
@@ -119,7 +119,7 @@ namespace Content.Server.GameTicking
                 }
                 else
                 {
-                    stationJobCounts[station] += 1;
+                    stationJobCounts[assignedJobAndStation.Item2] += 1;
                 }
             }
 
@@ -131,7 +131,43 @@ namespace Content.Server.GameTicking
                 if (job == null)
                     continue;
 
-                SpawnPlayer(_playerManager.GetSessionById(player), profiles[player], station, job, false);
+                var playerSession = _playerManager.GetSessionById(player);
+
+                // Select a profile for the player
+                var playerPrefs = _preferencesManager.GetPreferences(player);
+                var playerProfiles = playerPrefs.GetAllEnabledProfilesForJob(job.Value);
+
+                // Filter out job requirements
+                var filteredPlayerProfiles = playerProfiles.Values.Where(profile =>
+                    JobRequirements.TryRequirementsMet(job.Value,
+                        _playerManager.GetSessionById(player),
+                        null,
+                        out _,
+                        EntityManager,
+                        _prototypeManager,
+                        profile)
+                );
+
+                // If the player is preselected for antags, filter out profiles that aren't requesting these antags.
+                var antags = _antagSelection.GetPreSelectedAntags(playerSession);
+                if (antags.Count > 0)
+                {
+                    // For each antag definition, make sure that at least one of the AntagPrototypes is in
+                    // the character's preferences.
+                    foreach (var antagSet in antags)
+                    {
+                        filteredPlayerProfiles =
+                            filteredPlayerProfiles.Where(profile => antagSet.Overlaps(profile.AntagPreferences));
+                    }
+                }
+
+                var finalPlayerProfiles = filteredPlayerProfiles.ToList();
+                if (finalPlayerProfiles.Count == 0)
+                    continue;
+
+                var profile = _robustRandom.Pick(finalPlayerProfiles.ToList());
+
+                SpawnPlayer(playerSession, profile, station, job, false);
             }
 
             RefreshLateJoinAllowed();
@@ -139,7 +175,6 @@ namespace Content.Server.GameTicking
             // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
             RaiseLocalEvent(new RulePlayerJobsAssignedEvent(
                 assignedJobs.Keys.Select(x => _playerManager.GetSessionById(x)).ToArray(),
-                profiles,
                 force));
         }
 
@@ -149,8 +184,6 @@ namespace Content.Server.GameTicking
             bool lateJoin = true,
             bool silent = false)
         {
-            var character = GetPlayerProfile(player);
-
             var jobBans = _banManager.GetJobBans(player.UserId);
             if (jobBans == null || jobId != null && jobBans.Contains(jobId))
                 return;
@@ -163,11 +196,11 @@ namespace Content.Server.GameTicking
                     return;
             }
 
-            SpawnPlayer(player, character, station, jobId, lateJoin, silent);
+            SpawnPlayer(player, null, station, jobId, lateJoin, silent);
         }
 
         private void SpawnPlayer(ICommonSession player,
-            HumanoidCharacterProfile character,
+            HumanoidCharacterProfile? character,
             EntityUid station,
             string? jobId = null,
             bool lateJoin = true,
@@ -244,8 +277,10 @@ namespace Content.Server.GameTicking
                 restrictedRoles.UnionWith(jobBans);
 
             // Pick best job best on prefs.
+            var playerPreferences = _preferencesManager.GetPreferences(player.UserId);
+            var jobPrioritiesFiltered = playerPreferences.JobPrioritiesFiltered();
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station,
-                character.JobPriorities,
+                jobPrioritiesFiltered,
                 true,
                 restrictedRoles);
             // If no job available, stay in lobby, or if no lobby spawn as observer
@@ -263,8 +298,22 @@ namespace Content.Server.GameTicking
                     Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
             }
-            var slot = _prefsManager.GetPreferences(player.UserId).SelectedCharacterIndex; //🌟Starlight🌟
-            _newLifeSystem.SaveCharacterToUsed(player.UserId, slot);     //🌟Starlight🌟
+
+            // Job has been selected concretely, let's make sure the character profile is concrete
+            character ??= playerPreferences.SelectProfileForJob(jobId);
+            if (character == null)
+            {
+                if (!LobbyEnabled)
+                {
+                    JoinAsObserver(player);
+                }
+                _chatManager.DispatchServerMessage(player,
+                    Loc.GetString("game-ticker-player-no-character-for-job-available-when-joining", ("job", jobId)));
+                return;
+            }
+
+            
+            _newLifeSystem.SaveCharacterToUsed(player.UserId, playerPreferences.IndexOfCharacter(character));     //🌟Starlight🌟
             PlayerJoinGame(player, silent);
 
             var data = player.ContentData();
@@ -398,6 +447,30 @@ namespace Content.Server.GameTicking
         }
 
         /// <summary>
+        /// Makes a player join into the game and spawn on a station
+        /// </summary>
+        /// <remarks>
+        /// This is currently used by:
+        /// RespawnRuleSystem (for like deathmatch I think?)
+        /// Join Game command (late join)
+        /// </remarks>
+        /// <param name="player">The player joining</param>
+        /// <param name="profile">The humanoid profile they're spawning with</param>
+        /// <param name="station">The station they're spawning on</param>
+        /// <param name="jobId">An optional job for them to spawn as</param>
+        /// <param name="silent">Whether or not the player should be greeted upon joining</param>
+        public void MakeJoinGame(ICommonSession player, HumanoidCharacterProfile profile, EntityUid station, string? jobId = null, bool silent = false)
+        {
+            if (!_playerGameStatuses.ContainsKey(player.UserId))
+                return;
+
+            if (!_userDb.IsLoadComplete(player))
+                return;
+
+            SpawnPlayer(player, profile, station, jobId, silent: silent);
+        }
+
+        /// <summary>
         /// Causes the given player to join the current game as observer ghost. See also <see cref="SpawnObserver"/>
         /// </summary>
         public void JoinAsObserver(ICommonSession player)
@@ -423,7 +496,8 @@ namespace Content.Server.GameTicking
             Entity<MindComponent?>? mind = player.GetMind();
             if (mind == null)
             {
-                var name = GetPlayerProfile(player).Name;
+                // There is no selected character anymore, just use the player's name directly
+                var name = player.Name;
                 var (mindId, mindComp) = _mind.CreateMind(player.UserId, name);
                 mind = (mindId, mindComp);
                 _mind.SetUserId(mind.Value, player.UserId);

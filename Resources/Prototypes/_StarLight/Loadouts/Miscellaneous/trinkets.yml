@@ -23,3 +23,9 @@
   storage:
     back:
     - ClothingUnderSocksCoder
+
+- type: loadout
+  id: ClothWrap
+  storage:
+    back:
+    - ClothingClothWrap
