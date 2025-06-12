@@ -449,7 +449,7 @@
   - type: Clothing
     clothingVisuals:
       head:
-      - state: lizard-equipped-HELMET
+      - state: rainbowlizardplush-equipped-HELMET
         shader: unshaded
   - type: Item
     inhandVisuals:
@@ -564,7 +564,7 @@
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/lizard.rsi
-    equippedPrefix: lizard-inversed
+    equippedPrefix: plushielizardinversed
     slots:
     - HEAD
   - type: FoodSequenceElement
