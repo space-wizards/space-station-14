@@ -63,6 +63,11 @@ public abstract class SharedPortalSystem : EntitySystem
                     return;
 
                 var ent = link.LinkedEntities.First();
+
+                // Possible for the client to not know about the other portal; see also OnCollide
+                if (_netMan.IsClient && !Exists(ent))
+                    return;
+
                 TeleportEntity(uid, args.User, Transform(ent).Coordinates, ent, false);
             },
             Disabled = disabled,
