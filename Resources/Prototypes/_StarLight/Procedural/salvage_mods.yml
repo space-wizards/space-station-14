@@ -41,7 +41,19 @@
     - Snow
   difficulties: 
     - Difficult
-    
+
+- type: salvageDungeonMod
+  id: SovietStrategicResourcesWarehouse
+  desc: salvage-dungeon-mod-soviet-warehouse
+  proto: SovietStrategicResourcesWarehouseDungeon
+  biomes:
+    - Lava
+    - Grasslands
+    - Caves
+    - Snow
+  difficulties: 
+    - Impossible
+
 #- type: salvageDungeonMod
 #  id: ElderArenaMod
 #  desc: salvage-dungeon-mod-soviet-stronghold

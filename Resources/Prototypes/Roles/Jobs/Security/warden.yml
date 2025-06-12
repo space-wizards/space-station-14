@@ -35,7 +35,7 @@
   id: WardenGear
   equipment:
     id: WardenPDA
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetSecurityWarden
     pocket1: WeaponPistolDP
   storage:
     back:

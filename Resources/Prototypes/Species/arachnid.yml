@@ -13,6 +13,7 @@
   lastNames: NamesArachnidLast
   sexes:
   - Unsexed
+  customName: true # Starlight
 
 - type: speciesBaseSprites
   id: MobArachnidSprites

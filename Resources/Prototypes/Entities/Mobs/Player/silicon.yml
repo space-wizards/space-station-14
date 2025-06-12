@@ -72,6 +72,7 @@
   - type: CommunicationsConsole
     canShuttle: false
     title: comms-console-announcement-title-station-ai
+    sound: /Audio/_Starlight/Announcements/announce2.ogg #Starlight
     color: "#00a2ff"
   - type: HolographicAvatar
     layerData:
@@ -300,6 +301,10 @@
       state: ai_female
   - type: NameIdentifier
     group: StationAi
+    #region Starlight
+  - type: IonStormTarget
+    chance: 0.6 # lets just try it at 3/4th the chance of a borg and see how bad it gets
+    #endregion
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
