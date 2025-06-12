@@ -131,9 +131,13 @@ namespace Content.Server.GameTicking
                 if (job == null)
                     continue;
 
+                var playerSession = _playerManager.GetSessionById(player);
+
                 // Select a profile for the player
                 var playerPrefs = _preferencesManager.GetPreferences(player);
                 var playerProfiles = playerPrefs.GetAllEnabledProfilesForJob(job.Value);
+
+                // Filter out job requirements
                 var filteredPlayerProfiles = playerProfiles.Values.Where(profile =>
                     JobRequirements.TryRequirementsMet(job.Value,
                         _playerManager.GetSessionById(player),
@@ -142,7 +146,20 @@ namespace Content.Server.GameTicking
                         EntityManager,
                         _prototypeManager,
                         profile)
-                    );
+                );
+
+                // If the player is preselected for antags, filter out profiles that aren't requesting these antags.
+                var antags = _antagSelection.GetPreSelectedAntags(playerSession);
+                if (antags.Count > 0)
+                {
+                    // For each antag definition, make sure that at least one of the AntagPrototypes is in
+                    // the character's preferences.
+                    foreach (var antagSet in antags)
+                    {
+                        filteredPlayerProfiles =
+                            filteredPlayerProfiles.Where(profile => antagSet.Overlaps(profile.AntagPreferences));
+                    }
+                }
 
                 var finalPlayerProfiles = filteredPlayerProfiles.ToList();
                 if (finalPlayerProfiles.Count == 0)
@@ -150,7 +167,7 @@ namespace Content.Server.GameTicking
 
                 var profile = _robustRandom.Pick(finalPlayerProfiles.ToList());
 
-                SpawnPlayer(_playerManager.GetSessionById(player), profile, station, job, false);
+                SpawnPlayer(playerSession, profile, station, job, false);
             }
 
             RefreshLateJoinAllowed();
@@ -433,6 +450,11 @@ namespace Content.Server.GameTicking
         /// <summary>
         /// Makes a player join into the game and spawn on a station
         /// </summary>
+        /// <remarks>
+        /// This is currently used by:
+        /// RespawnRuleSystem (for like deathmatch I think?)
+        /// Join Game command (late join)
+        /// </remarks>
         /// <param name="player">The player joining</param>
         /// <param name="profile">The humanoid profile they're spawning with</param>
         /// <param name="station">The station they're spawning on</param>
