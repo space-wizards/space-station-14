@@ -173,54 +173,80 @@
     - id: MagazinePistol
       amount: 8
 
-- type: entity
-  parent: [GunSafeBaseSecure, BaseSecurityContraband]
-  id: GunSafeRifleLecter
-  name: lecter safe
-  suffix: LowPop
-  components:
-  - type: StorageFill
-    contents:
+- type: entityTable
+  id: BaseFillRifleLecter
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: FillRifleLecterLowPop
+      conditions:
+      - !type:PlayerCountCondition
+        min: 0
+        max: 29
+    - !type:NestedSelector
+      tableId: FillRifleLecterMidPop
+      conditions:
+      - !type:PlayerCountCondition
+        min: 30
+        max: 49
+    - !type:NestedSelector
+      tableId: FillRifleLecterHighPop
+      conditions:
+      - !type:PlayerCountCondition
+        min: 50
+        max: 69
+    - !type:NestedSelector
+      tableId: FillRifleLecterMaxPop
+      conditions:
+      - !type:PlayerCountCondition
+        min: 70
+        max: 80
+
+- type: entityTable
+  id: FillRifleLecterLowPop
+  table: !type:AllSelector
+    children:
     - id: WeaponRifleLecter
       amount: 2
     - id: MagazineRifle
       amount: 4
 
-- type: entity
-  parent: GunSafeRifleLecter
-  id: GunSafeRifleLecterMidPop
-  suffix: MidPop
-  components:
-  - type: StorageFill
-    contents:
+- type: entityTable
+  id: FillRifleLecterMedPop
+  table: !type:AllSelector
+    children:
     - id: WeaponRifleLecter
       amount: 3
     - id: MagazineRifle
       amount: 6
 
-- type: entity
-  parent: GunSafeRifleLecter
-  id: GunSafeRifleLecterHighPop
-  suffix: HighPop
-  components:
-  - type: StorageFill
-    contents:
+- type: entityTable
+  id: FillRifleLecterHighPop
+  table: !type:AllSelector
+    children:
     - id: WeaponRifleLecter
       amount: 4
     - id: MagazineRifle
       amount: 8
 
-- type: entity
-  parent: GunSafeRifleLecter
-  id: GunSafeRifleLecterMaxPop
-  suffix: MaxPop
-  components:
-  - type: StorageFill
-    contents:
+- type: entityTable
+  id: FillRifleLecterMaxPop
+  table: !type:AllSelector
+    children:
     - id: WeaponRifleLecter
       amount: 5
     - id: MagazineRifle
       amount: 10
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseSecurityContraband]
+  id: GunSafeRifleLecter
+  name: lecter safe
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: BaseFillRifleLecter
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
