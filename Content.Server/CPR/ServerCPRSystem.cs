@@ -1,7 +1,3 @@
-using Robust.Client.GameObjects;
-using Robust.Client.Animations;
-using System.Numerics;
-using Robust.Shared.Animations;
 using Content.Shared.CPR;
 using Robust.Shared.Player;
 

@@ -249,5 +249,5 @@
 
 - files: ["cprpulse.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Created by mixing some Effects sounds together by Orsoniks"
+  copyright: "Created by mixing some Effects sounds together by Orsoniks (uses thudwoosh and weak_hit1)"
   source: "https://github.com/cmss13-devs/cmss13"

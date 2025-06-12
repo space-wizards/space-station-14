@@ -1,44 +1,30 @@
-using Robust.Shared.GameStates;
-using Content.Shared.Damage;
-using Content.Shared.Examine;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Verbs;
-using Robust.Shared.Utility;
-using Content.Shared.DoAfter;
-using Content.Shared.Interaction;
-using Robust.Shared.Serialization;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
+using Content.Shared.CPR;
 using Robust.Client.GameObjects;
 using Robust.Client.Animations;
-using System.Numerics;
 using Robust.Shared.Animations;
-using Content.Client.DoAfter;
-using Content.Shared.CPR;
-using Robust.Shared.Timing;
+using System.Numerics;
 
 namespace Content.Client.CPR;
 
 public sealed partial class ClientCPRSystem : SharedCPRSystem
 {
-    [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+
     private const string LungeKey = "cpr-lunge";
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeNetworkEvent<CPRLungeEvent>(OnLunge);
+
+        SubscribeNetworkEvent<CPRLungeEvent>(OnCPRLunge);
     }
     /// <summary>
     /// Used for playing the animation of other entities doing CPR
     /// </summary>
-    /// <param name="evn">The lunge event</param>
-    public void OnLunge(CPRLungeEvent evn)
+    /// <param name="args">The lunge event</param>
+    public void OnCPRLunge(CPRLungeEvent args)
     {
-        var ent = GetEntity(evn.Ent);
+        var ent = GetEntity(args.Ent);
         if (Exists(ent)) DoLunge(ent);
     }
 
@@ -47,18 +33,18 @@ public sealed partial class ClientCPRSystem : SharedCPRSystem
         if (!Timing.IsFirstTimePredicted)
             return;
         // play the CPR animation
-        var lunge = GetLungeAnimation(new Vector2(0f, -1f));
+        var lunge = GetLungeAnimation(new Vector2(0f, -1f)); // downwards vector, as the animation has to go downwards to mimic the motion of CPR
         _animation.Stop(user, LungeKey);
         _animation.Play(user, lunge, LungeKey);
     }
 
     private Animation GetLungeAnimation(Vector2 direction)
     {
-        const float endLength = 0.2f;
+        const float endLength = CPRAnimationLength;
 
         return new Animation
         {
-            Length = TimeSpan.FromSeconds(endLength * 5f), // has to be long, otherwise cuts off in the middle for some reason
+            Length = TimeSpan.FromSeconds(CPRAnimationEndTime),
             AnimationTracks =
             {
                 new AnimationTrackComponentProperty()
