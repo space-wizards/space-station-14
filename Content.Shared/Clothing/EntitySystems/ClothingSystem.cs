@@ -108,6 +108,7 @@ public abstract class ClothingSystem : EntitySystem
 
         component.InSlot = null;
         component.InSlotFlag = null;
+        Dirty(uid, component);
     }
 
     private void AfterAutoHandleState(Entity<ClothingComponent> ent, ref AfterAutoHandleStateEvent args)
