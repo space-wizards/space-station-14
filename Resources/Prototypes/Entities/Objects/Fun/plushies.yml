@@ -564,7 +564,7 @@
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/lizard.rsi
-    equippedPrefix: lizard-inversed
+    equippedPrefix: plushielizardinversed
     slots:
     - HEAD
   - type: FoodSequenceElement
