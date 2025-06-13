@@ -43,6 +43,7 @@
     - MobCatKitten
     rarePrototypes:
     - MobCatSpace
+    - MobFinfin #imp edit
     rareChance: 0.05
 
 - type: entity

@@ -62,3 +62,14 @@
       amount: 1
   products:
     ClarifiedPhalanximine: 1
+
+- type: reaction
+  id: Caramexinin
+  minTemp: 370
+  reactants:
+    Stellibinin:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Caramexinin: 2
