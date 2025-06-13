@@ -194,15 +194,9 @@ public sealed partial class BorgSystem
         if (brainEntity == null)
             return false;
 
-        EntityUid realBrainEntity = brainEntity.Value;
-        if (_entityManager.HasComponent<ItemSlotsComponent>(realBrainEntity) && _itemSlotsSystem.TryGetSlot(realBrainEntity, "brain_slot", out var slot) && slot != null)
-        {
-            if (slot.ContainerSlot != null)
-                return slot.ContainerSlot.ContainedEntity != null;
-            else
-                return false;
-        }
-        else
-            return true;
+        if (TryComp<ItemSlotsComponent>(brainEntity.Value) && _itemSlotsSystem.GetItemOrNull(brainEntity.Value, "brain_slot") == null)
+            return false;
+
+        return true;
     }
 }
