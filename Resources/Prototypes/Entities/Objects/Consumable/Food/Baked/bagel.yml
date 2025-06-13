@@ -47,3 +47,31 @@
           Quantity: 5
         - ReagentId: Nutriment
           Quantity: 5
+
+- type: entity
+  id: FoodBagelCotton
+  parent: FoodBagelBase
+  name: cotton bagel
+  description: A delicious bagel made with cotton dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bread
+    - cotton
+  - type: Sprite
+    state: bagel-cottondough
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2.5
+        - ReagentId: Fiber
+          Quantity: 2.5
+

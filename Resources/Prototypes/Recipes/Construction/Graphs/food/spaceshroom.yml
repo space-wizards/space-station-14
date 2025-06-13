@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: CookedSpaceshroom
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: cooked spaceshroom
+      completed:
+      - !type:PlaySound
+        sound: /Audio/Effects/sizzle.ogg
+      steps:
+      - minTemperature: 375 # little bit above boiling, shrooms need to lose all moisture to be good
+
+  - node: cooked spaceshroom
+    entity: FoodSpaceshroomCooked

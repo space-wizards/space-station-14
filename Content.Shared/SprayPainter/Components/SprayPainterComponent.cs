@@ -17,13 +17,6 @@ public sealed partial class SprayPainterComponent : Component
     public TimeSpan PipeSprayTime = TimeSpan.FromSeconds(1);
 
     /// <summary>
-    /// DoAfterId for airlock spraying.
-    /// Pipes do not track doafters so you can spray multiple at once.
-    /// </summary>
-    [DataField]
-    public DoAfterId? AirlockDoAfter;
-
-    /// <summary>
     /// Pipe color chosen to spray with.
     /// </summary>
     [DataField, AutoNetworkedField]

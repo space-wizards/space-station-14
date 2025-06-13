@@ -62,14 +62,12 @@
                 <Control Access="Public" Visible="False" Name="CharacterSetupState" VerticalExpand="True" />
             </BoxContainer>
             <!-- Right Panel -->
-            <PanelContainer Name="RightSide" StyleClasses="AngleRect" HorizontalAlignment="Right" VerticalExpand="True"
+            <PanelContainer Name="RightSide" Access="Public" StyleClasses="AngleRect" HorizontalAlignment="Right" VerticalExpand="True"
                             VerticalAlignment="Stretch">
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <!-- Top row -->
                     <BoxContainer Orientation="Horizontal" MinSize="0 40" Name="HeaderContainer" Access="Public"
                                   SeparationOverride="4">
-                        <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center"
-                               Text="{Loc 'ui-lobby-title'}" />
                         <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center"
                                HorizontalExpand="True" HorizontalAlignment="Center" />
                     </BoxContainer>
@@ -102,7 +100,27 @@
                     <controls:HSpacer Spacing="10" />
                     <widgets:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3" MinHeight="50" />
                 </BoxContainer>
+                <TextureButton Name="CollapseButton"
+                                TexturePath="filled_right_arrow.svg.192dpi"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Margin="0 2 2 0"
+                                ModulateSelfOverride="#DEDEDE"
+                                Scale="0.5 0.5"/>
             </PanelContainer>
         </SplitContainer>
+        <PanelContainer Name="ExpandPanel"
+                        StyleClasses="AngleRect" 
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0 2 2 0"
+                        Visible="False">
+            <TextureButton Name="ExpandButton"
+                        TexturePath="filled_left_arrow.svg.192dpi"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        ModulateSelfOverride="#DEDEDE"
+                        Scale="0.5 0.5"/>
+        </PanelContainer>
     </BoxContainer>
 </lobbyUi:LobbyGui>

@@ -1,6 +1,8 @@
+using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Bed.Sleep;
 
@@ -39,4 +41,11 @@ public sealed partial class SleepingComponent : Component
     {
         Params = AudioParams.Default.WithVariation(0.05f)
     };
+
+    /// <summary>
+    ///     The fluent string prefix to use when picking a random suffix
+    ///     This is only active for those who have the sleeping component
+    /// </summary>
+    [DataField]
+    public ProtoId<LocalizedDatasetPrototype> ForceSaySleepDataset = "ForceSaySleepDataset";
 }

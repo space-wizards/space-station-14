@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Medical.Components;
+﻿namespace Content.Shared.Medical.Cryogenics;
 
 /// <summary>
 /// Tracking component for an enabled cryo pod (which periodically tries to inject chemicals in the occupant, if one exists)

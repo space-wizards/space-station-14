@@ -16,7 +16,7 @@ revenant-soul-yield-low = {CAPITALIZE(THE($target))} has a below average soul.
 revenant-soul-begin-harvest = {CAPITALIZE(THE($target))} suddenly rises slightly into the air, {POSS-ADJ($target)} skin turning an ashy gray.
 revenant-soul-finish-harvest = {CAPITALIZE(THE($target))} slumps onto the ground!
 
-#UI
+# UI
 revenant-user-interface-title = Ability Shop
 revenant-user-interface-essence-amount = [color=plum]{$amount}[/color] Stolen Essence
 

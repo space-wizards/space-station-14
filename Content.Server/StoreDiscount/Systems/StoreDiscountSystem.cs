@@ -71,7 +71,7 @@ public sealed class StoreDiscountSystem : EntitySystem
 
     private IReadOnlyList<StoreDiscountData> InitializeDiscounts(
         IReadOnlyCollection<ListingDataWithCostModifiers> listings,
-        int totalAvailableDiscounts = 3
+        int totalAvailableDiscounts = 6
     )
     {
         // Get list of categories with cumulative weights.

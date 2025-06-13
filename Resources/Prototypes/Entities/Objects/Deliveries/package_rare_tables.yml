@@ -1,0 +1,182 @@
+# Basically all different loot tables that the mail can choose from
+
+# Loot tables
+- type: entityTable
+  id: PackageRareDepartmentBundlesTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: PackageRareMedicalBundlesTable
+    - !type:NestedSelector
+      tableId: PackageRareEngineeringBundlesTable
+
+# Package Bundles
+## Basically items that should always spawn together, specific to packages
+
+### Medical
+# General table that contains all medical packages
+- type: entityTable
+  id: PackageRareMedicalBundlesTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: PackageMedicalTopicalBundle
+    - !type:NestedSelector
+      tableId: PackageMedicalChemicalBundle
+    - !type:NestedSelector
+      tableId: PackageMedicalClothingBundle
+    - !type:NestedSelector
+      tableId: PackageMedicalReagentBottleBundle
+
+# Topicals
+- type: entityTable
+  id: PackageMedicalTopicalBundle
+  table: !type:AllSelector
+    children:
+    - id: Gauze1
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: Brutepack1
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: Bloodpack1
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: Ointment1
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+
+# Beakers, vials, etc
+- type: entityTable
+  id: PackageMedicalChemicalBundle
+  table: !type:AllSelector
+    children:
+    - id: Beaker
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: LargeBeaker
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: Syringe
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: BaseChemistryEmptyVial
+      amount: !type:RangeNumberSelector
+        range: 0, 2
+
+# Medical clothing
+- type: entityTable
+  id: PackageMedicalClothingBundle
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector
+      children:
+      - id: ClothingUniformJumpskirtMedicalDoctor
+      - id: ClothingUniformJumpsuitMedicalDoctor
+    - !type:GroupSelector
+      children:
+      - id: ClothingBackpackMedical
+      - id: ClothingBackpackDuffelMedical
+      - id: ClothingBackpackSatchelMedical
+    - !type:GroupSelector
+      children:
+      - id: ClothingHandsGlovesNitrile
+      - id: ClothingHandsGlovesLatex
+    - !type:AllSelector
+      prob: 0.5
+      children:
+      - id: ClothingShoesBootsWinterMed
+      - id: ClothingOuterWinterMed
+    - !type:GroupSelector
+      children:
+      - id: ClothingEyesHudMedical
+      - id: ClothingEyesEyepatchHudMedical
+    - id: ClothingBeltMedical
+    - id: ClothingShoesColorWhite
+
+# Random reagents
+- type: entityTable
+  id: PackageMedicalReagentBottleBundle
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: BasicReagentBottlesTable
+      rolls: !type:RangeNumberSelector
+        range: 3, 4
+
+### Engineering
+
+# General table that contains all engineering packages
+- type: entityTable
+  id: PackageRareEngineeringBundlesTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: PackageEngineeringMaterialBundle
+    - !type:NestedSelector
+      tableId: PackageEngineeringRCDBundle
+    - !type:NestedSelector
+      tableId: PackageEngineeringClothingBundle
+
+# Random building materials
+- type: entityTable
+  id: PackageEngineeringMaterialBundle
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomAllConstructionMaterialsTable
+      rolls: !type:RangeNumberSelector
+        range: 2, 3
+    - !type:NestedSelector
+      tableId: RandomAllSupplementaryMaterialsTable
+      rolls: !type:RangeNumberSelector
+        range: 2, 3
+
+# RCD, very high value but I feel like the rarity justifies it
+- type: entityTable
+  id: PackageEngineeringRCDBundle
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector
+      children:
+      - id: RCD
+      - id: RCDEmpty
+    - id: RCDAmmo
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+
+# Engineer clothing
+- type: entityTable
+  id: PackageEngineeringClothingBundle
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector
+      children:
+      - id: ClothingUniformJumpskirtEngineering
+      - id: ClothingUniformJumpsuitEngineering
+      - id: ClothingUniformJumpsuitAtmos
+      - id: ClothingUniformJumpskirtAtmos
+    - !type:GroupSelector
+      children:
+      - id: ClothingBackpackAtmospherics
+      - id: ClothingBackpackEngineering
+      - id: ClothingBackpackDuffelAtmospherics
+      - id: ClothingBackpackDuffelEngineering
+      - id: ClothingBackpackSatchelAtmospherics
+      - id: ClothingBackpackSatchelEngineering
+    - !type:AllSelector
+      prob: 0.5
+      children:
+      - id: ClothingShoesBootsWinterEngi
+      - !type:GroupSelector
+        children:
+        - id: ClothingOuterWinterEngi
+        - id: ClothingOuterWinterAtmos
+    - !type:GroupSelector
+      children:
+      - id: ClothingBeltUtility
+      - id: ClothingBeltUtilityEngineering
+    - id: ClothingShoesBootsMag
+      prob: 0.5
+    - id: ClothingHandsGlovesColorYellow
+    - id: ClothingShoesColorYellow

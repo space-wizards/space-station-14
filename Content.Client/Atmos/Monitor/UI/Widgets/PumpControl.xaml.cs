@@ -83,10 +83,10 @@ public sealed partial class PumpControl : BoxContainer
             PumpDataChanged?.Invoke(_address, _data);
         };
 
-		_copySettings.OnPressed += _ =>
-		{
-			PumpDataCopied?.Invoke(_data);
-		};
+        _copySettings.OnPressed += _ =>
+        {
+            PumpDataCopied?.Invoke(_data);
+        };
     }
 
     public void ChangeData(GasVentPumpData data)

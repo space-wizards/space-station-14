@@ -17,7 +17,7 @@ public enum AntagAcceptability
     /// <summary>
     /// Choose anyone
     /// </summary>
-    All
+    All,
 }
 
 public enum AntagSelectionTime : byte
@@ -29,7 +29,13 @@ public enum AntagSelectionTime : byte
     PrePlayerSpawn,
 
     /// <summary>
+    /// Antag roles are selected to the player session before job assignment and spawning.
+    /// Unlike PrePlayerSpawn, this does not remove you from the job spawn pool.
+    /// </summary>
+    IntraPlayerSpawn,
+
+    /// <summary>
     /// Antag roles get assigned after players have been assigned jobs and have spawned in.
     /// </summary>
-    PostPlayerSpawn
+    PostPlayerSpawn,
 }

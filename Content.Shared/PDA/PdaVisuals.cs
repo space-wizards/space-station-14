@@ -5,7 +5,8 @@ namespace Content.Shared.PDA
     [Serializable, NetSerializable]
     public enum PdaVisuals
     {
-        IdCardInserted
+        IdCardInserted,
+        PdaType
     }
 
     [Serializable, NetSerializable]

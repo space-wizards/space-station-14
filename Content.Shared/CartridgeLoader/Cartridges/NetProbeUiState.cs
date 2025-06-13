@@ -17,7 +17,7 @@ public sealed class NetProbeUiState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable, DataRecord]
-public sealed class ProbedNetworkDevice
+public sealed partial class ProbedNetworkDevice
 {
     public readonly string Name;
     public readonly string Address;
