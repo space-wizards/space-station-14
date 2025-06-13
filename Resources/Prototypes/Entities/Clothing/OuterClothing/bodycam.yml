@@ -1,5 +1,5 @@
 - type: entity
-  id: BaseClothingWithBodycam
+  id: BaseBodycam
   abstract: true
   components:
   - type: Eye
@@ -14,15 +14,28 @@
     nameSet: true
   - type: Bodycam
 
-# basic sec armour
-# most sec armours and outerwear will have the prototype modified to add a bodycam
-# but these two vests are absolutely everywhere so i'll make two bodycam versions and give them to sec
 - type: entity
-  id: ClothingOuterArmorBasicWithBodycam
-  parent: [ ClothingOuterArmorBasic, BaseClothingWithBodycam ]
+  id: ClothingNeckBodycam
+  parent: [ClothingNeckBase, BaseBodycam]
+  name: bodycam
   suffix: bodycam
-
-- type: entity
-  id: ClothingOuterArmorBasicSlimWithBodycam
-  parent: [ ClothingOuterArmorBasicSlim, BaseClothingWithBodycam ]
-  suffix: bodycam
+  description: A man-portable camera worn by security forces. Be wary of its short battery life.
+  components:
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: PowerCellDraw
+    drawRate: 10 # about a minute
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/bling.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/bling.rsi
+  - type: Item
+    sprite: Clothing/Neck/Misc/bling.rsi
