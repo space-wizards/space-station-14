@@ -390,7 +390,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/commandgeneric.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase] #imp
   id: ClothingUniformJumpsuitHydroponics
   name: hydroponics jumpsuit
   description: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
