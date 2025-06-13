@@ -173,69 +173,6 @@
     - id: MagazinePistol
       amount: 8
 
-- type: entityTable
-  id: BaseFillRifleLecter
-  table: !type:AllSelector
-    children:
-    - !type:NestedSelector
-      tableId: FillRifleLecterLowPop
-      conditions:
-      - !type:PlayerCountCondition
-        max: 30
-    - !type:NestedSelector
-      tableId: FillRifleLecterMidPop
-      conditions:
-      - !type:PlayerCountCondition
-        min: 31
-        max: 50
-    - !type:NestedSelector
-      tableId: FillRifleLecterHighPop
-      conditions:
-      - !type:PlayerCountCondition
-        min: 51
-        max: 75
-    - !type:NestedSelector
-      tableId: FillRifleLecterMaxPop
-      conditions:
-      - !type:PlayerCountCondition
-        min: 76
-
-- type: entityTable
-  id: FillRifleLecterLowPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponRifleLecter
-      amount: 2
-    - id: MagazineRifle
-      amount: 4
-
-- type: entityTable
-  id: FillRifleLecterMidPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponRifleLecter
-      amount: 3
-    - id: MagazineRifle
-      amount: 6
-
-- type: entityTable
-  id: FillRifleLecterHighPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponRifleLecter
-      amount: 4
-    - id: MagazineRifle
-      amount: 8
-
-- type: entityTable
-  id: FillRifleLecterMaxPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponRifleLecter
-      amount: 5
-    - id: MagazineRifle
-      amount: 10
-
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafeRifleLecter
@@ -244,70 +181,89 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
-        tableId: BaseFillRifleLecter
+        tableId: GunSafeRifleLecterFill
+
+- type: entityTable
+  id: GunSafeRifleLecterFill
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: BaseFillRifleLecter
+      rolls: 2
+      conditions:
+      - !type:PlayerCountCondition
+        min: 0
+        max: 2
+    - !type:NestedSelector
+      tableId: BaseFillRifleLecter
+      rolls: 3
+      conditions:
+      - !type:PlayerCountCondition
+        min: 3
+        max: 4
+    - !type:NestedSelector
+      tableId: BaseFillRifleLecter
+      rolls: 4
+      conditions:
+      - !type:PlayerCountCondition
+        min: 5
+        max: 6
+    - !type:NestedSelector
+      tableId: BaseFillRifleLecter
+      rolls: 5
+      conditions:
+      - !type:PlayerCountCondition
+        min: 7
+        max: 8
+
+- type: entityTable
+  id: BaseFillRifleLecter
+  table: !type:AllSelector
+    children:
+    - id: WeaponRifleLecter
+    - id: MagazineRifle
+      amount: 2
+
+- type: entityTable
+  id: GunSafeSubMachineGunDrozdFill
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: BaseFillSubMachineGunDrozd
+      rolls: 2
+      conditions:
+      - !type:PlayerCountCondition
+        min: 0
+        max: 2
+    - !type:NestedSelector
+      tableId: BaseFillSubMachineGunDrozd
+      rolls: 3
+      conditions:
+      - !type:PlayerCountCondition
+        min: 3
+        max: 4
+    - !type:NestedSelector
+      tableId: BaseFillSubMachineGunDrozd
+      rolls: 3
+      conditions:
+      - !type:PlayerCountCondition
+        min: 5
+        max: 6
+    - !type:NestedSelector
+      tableId: BaseFillSubMachineGunDrozd
+      rolls: 4
+      conditions:
+      - !type:PlayerCountCondition
+        min: 7
+        max: 8
 
 - type: entityTable
   id: BaseFillSubMachineGunDrozd
   table: !type:AllSelector
     children:
-    - !type:NestedSelector
-      tableId: FillSubMachineGunDrozdLowPop
-      conditions:
-      - !type:PlayerCountCondition
-        max: 30
-    - !type:NestedSelector
-      tableId: FillSubMachineGunDrozdMidPop
-      conditions:
-      - !type:PlayerCountCondition
-        min: 31
-        max: 50
-    - !type:NestedSelector
-      tableId: FillSubMachineGunDrozdHighPop
-      conditions:
-      - !type:PlayerCountCondition
-        min: 51
-        max: 75
-    - !type:NestedSelector
-      tableId: FillSubMachineGunDrozdMaxPop
-      conditions:
-      - !type:PlayerCountCondition
-        min: 76
-
-- type: entityTable
-  id: FillSubMachineGunDrozdLowPop
-  table: !type:AllSelector
-    children:
     - id: WeaponSubMachineGunDrozd
+    - id: MagazinePistolSubMachineGun
       amount: 2
-    - id: MagazinePistolSubMachineGun
-      amount: 4
-
-- type: entityTable
-  id: FillSubMachineGunDrozdMidPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponSubMachineGunDrozd
-      amount: 3
-    - id: MagazinePistolSubMachineGun
-      amount: 6
-
-- type: entityTable
-  id: FillSubMachineGunDrozdHighPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponSubMachineGunDrozd
-      amount: 4
-    - id: MagazinePistolSubMachineGun
-      amount: 8
-
-- type: entityTable
-  id: FillSubMachineGunDrozdMaxPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponSubMachineGunDrozd
-      amount: 5
-    - id: MagazinePistolSubMachineGun
-      amount: 10
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
@@ -317,7 +273,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
-        tableId: BaseFillSubMachineGunDrozd
+        tableId: GunSafeSubMachineGunDrozdFill
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
@@ -332,67 +288,45 @@
       amount: 4
 
 - type: entityTable
+  id: GunSafeShotgunKammererFill
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: BaseFillShotgunKammerer
+      rolls: 2
+      conditions:
+      - !type:PlayerCountCondition
+        min: 0
+        max: 2
+    - !type:NestedSelector
+      tableId: BaseFillShotgunKammerer
+      rolls: 3
+      conditions:
+      - !type:PlayerCountCondition
+        min: 3
+        max: 4
+    - !type:NestedSelector
+      tableId: BaseFillShotgunKammerer
+      rolls: 3
+      conditions:
+      - !type:PlayerCountCondition
+        min: 5
+        max: 6
+    - !type:NestedSelector
+      tableId: BaseFillShotgunKammerer
+      rolls: 4
+      conditions:
+      - !type:PlayerCountCondition
+        min: 7
+        max: 8
+
+- type: entityTable
   id: BaseFillShotgunKammerer
   table: !type:AllSelector
     children:
-    - !type:NestedSelector
-      tableId: FillShotgunKammererLowPop
-      conditions:
-      - !type:PlayerCountCondition
-        max: 30
-    - !type:NestedSelector
-      tableId: FillShotgunKammererMidPop
-      conditions:
-      - !type:PlayerCountCondition
-        min: 31
-        max: 50
-    - !type:NestedSelector
-      tableId: FillShotgunKammererHighPop
-      conditions:
-      - !type:PlayerCountCondition
-        min: 51
-        max: 75
-    - !type:NestedSelector
-      tableId: FillShotgunKammererMaxPop
-      conditions:
-      - !type:PlayerCountCondition
-        min: 76
-
-- type: entityTable
-  id: FillShotgunKammererLowPop
-  table: !type:AllSelector
-    children:
     - id: WeaponShotgunKammerer
+    - id: BoxLethalshot
       amount: 2
-    - id: BoxLethalshot
-      amount: 4
-
-- type: entityTable
-  id: FillShotgunKammererMidPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponShotgunKammerer
-      amount: 3
-    - id: BoxLethalshot
-      amount: 6
-
-- type: entityTable
-  id: FillShotgunKammererHighPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponShotgunKammerer
-      amount: 4
-    - id: BoxLethalshot
-      amount: 8
-
-- type: entityTable
-  id: FillShotgunKammererMaxPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponShotgunKammerer
-      amount: 5
-    - id: BoxLethalshot
-      amount: 10
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
@@ -402,7 +336,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
-        tableId: BaseFillShotgunKammerer
+        tableId: GunSafeShotgunKammererFill
 
 - type: entity
   id: GunSafeSubMachineGunWt550
@@ -418,59 +352,43 @@
       amount: 4
 
 - type: entityTable
-  id: BaseFillWeaponLaserCarbine
+  id: GunSafeLaserCarbineFill
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: FillWeaponLaserCarbineLowPop
+      tableId: BaseFillLaserCarbine
+      rolls: 3
       conditions:
       - !type:PlayerCountCondition
-        max: 30
+        min: 0
+        max: 2
     - !type:NestedSelector
-      tableId: FillWeaponLaserCarbineMidPop
+      tableId: BaseFillLaserCarbine
+      rolls: 4
       conditions:
       - !type:PlayerCountCondition
-        min: 31
-        max: 50
+        min: 3
+        max: 4
     - !type:NestedSelector
-      tableId: FillWeaponLaserCarbineHighPop
+      tableId: BaseFillLaserCarbine
+      rolls: 5
       conditions:
       - !type:PlayerCountCondition
-        min: 51
-        max: 75
+        min: 5
+        max: 6
     - !type:NestedSelector
-      tableId: FillWeaponLaserCarbineMaxPop
+      tableId: BaseFillLaserCarbine
+      rolls: 6
       conditions:
       - !type:PlayerCountCondition
-        min: 76
+        min: 7
+        max: 8
 
 - type: entityTable
-  id: FillWeaponLaserCarbineLowPop
+  id: BaseFillLaserCarbine
   table: !type:AllSelector
     children:
     - id: WeaponLaserCarbine
-      amount: 3
-
-- type: entityTable
-  id: FillWeaponLaserCarbineMidPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponLaserCarbine
-      amount: 4
-
-- type: entityTable
-  id: FillWeaponLaserCarbineHighPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponLaserCarbine
-      amount: 5
-
-- type: entityTable
-  id: FillWeaponLaserCarbineMaxPop
-  table: !type:AllSelector
-    children:
-    - id: WeaponLaserCarbine
-      amount: 6
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
@@ -480,4 +398,4 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
-        tableId: BaseFillWeaponLaserCarbine
+        tableId: GunSafeLaserCarbineFill
