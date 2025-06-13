@@ -45,3 +45,9 @@
         startingItem: PowerCellMedium
   - type: PowerCellDraw
     drawRate: 10 # about a minute
+    # turning off emp vulnerability because it is redundant
+    # the bodycam's cell will be drained when hit by an emp
+  - type: Bodycam
+    empVulnerable: false
+  - type: SurveillanceCamera
+    empVulnerable: false

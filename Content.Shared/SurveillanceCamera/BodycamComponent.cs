@@ -22,6 +22,13 @@ public sealed partial class BodycamComponent: Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Wearer = null;
+
+    /// <summary>
+    /// If the bodycam will glitch out when hit by an emp pulse.
+    /// Keep in mind that this is redundant if the bodycam is powered by a cell as the cell will be drained.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool EmpVulnerable = true;
 }
 
 public enum BodycamState

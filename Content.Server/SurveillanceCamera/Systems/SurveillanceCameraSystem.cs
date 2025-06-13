@@ -430,7 +430,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
     private void OnEmpPulse(EntityUid uid, SurveillanceCameraComponent component, ref EmpPulseEvent args)
     {
-        if (component.Active)
+        if (component.Active && component.EmpVulnerable)
         {
             args.Affected = true;
             args.Disabled = true;

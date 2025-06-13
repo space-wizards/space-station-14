@@ -28,6 +28,9 @@ public sealed class BodycamSystem: SharedBodycamSystem
 
     private void OnEmp(EntityUid uid, BodycamComponent comp, ref EmpPulseEvent args)
     {
+        if (!comp.EmpVulnerable)
+            return;
+
         args.Affected = true;
         args.Disabled = true;
         comp.State = BodycamState.Disabled;
