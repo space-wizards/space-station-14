@@ -69,7 +69,7 @@
     layers:
       Hair: HEAD
       HeadTop : HEAD
-      HeadSide : HEAD 
+      HeadSide : HEAD
 
 - type: entity
   parent: ClothingHeadHatHardhatBase

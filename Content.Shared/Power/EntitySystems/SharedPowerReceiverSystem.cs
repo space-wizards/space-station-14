@@ -23,7 +23,7 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
     public virtual void SetLoad(SharedApcPowerReceiverComponent comp, float load)
     {
     }
-	
+
 	public void SetNeedsPower(EntityUid uid, bool value, SharedApcPowerReceiverComponent? receiver = null)
     {
         if (!ResolveApc(uid, ref receiver) || receiver.NeedsPower == value)

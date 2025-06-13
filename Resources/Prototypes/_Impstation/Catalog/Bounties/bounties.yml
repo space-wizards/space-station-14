@@ -20,16 +20,17 @@
       tags:
       - RegenerativeMesh
 
-- type: cargoBounty
-  id: BountyCrushers
-  reward: 10000
-  description: bounty-description-crushers
-  entries:
-  - name: bounty-item-crushers
-    amount: 1
-    whitelist:
-      tags:
-      - Crusher
+# commented out for arbitrage :(
+# - type: cargoBounty
+#   id: BountyCrushers
+#   reward: 10000
+#   description: bounty-description-crushers
+#   entries:
+#   - name: bounty-item-crushers
+#     amount: 1
+#     whitelist:
+#       tags:
+#       - Crusher
 
 - type: cargoBounty
   id: BountyAloeCream

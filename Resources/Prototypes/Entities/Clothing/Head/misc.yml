@@ -266,7 +266,7 @@
     accent: BarkAccent
   - type: Tag
     tags:
-      - DroneUsable    
+      - DroneUsable
 
 - type: entity
   parent: ClothingHeadBase

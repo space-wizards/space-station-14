@@ -273,7 +273,7 @@ public sealed class PullingSystem : EntitySystem
 		// skip this if ApplySpeedModifier is false
 		if (!component.ApplySpeedModifier)
 			return;
-		
+
         if (TryComp<HeldSpeedModifierComponent>(component.Pulling, out var heldMoveSpeed) && component.Pulling.HasValue)
         {
             var (walkMod, sprintMod) =

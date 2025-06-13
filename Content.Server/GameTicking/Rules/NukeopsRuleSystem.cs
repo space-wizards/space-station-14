@@ -597,7 +597,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         SetWinType(ent, WinType.CrewMajor, false);
 
-        if (nukeops.RoundEndBehavior == RoundEndBehavior.Nothing) // It's still worth checking if operatives have all died, even if the round-end behaviour is nothing. 
+        if (nukeops.RoundEndBehavior == RoundEndBehavior.Nothing) // It's still worth checking if operatives have all died, even if the round-end behaviour is nothing.
             return; // Shouldn't actually try to end the round in the case of nothing though.
 
         _roundEndSystem.DoRoundEndBehavior(nukeops.RoundEndBehavior,
