@@ -5,6 +5,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.GameObjects;
 
 namespace Content.Shared.StatusEffect
 {
@@ -144,6 +145,7 @@ namespace Content.Shared.StatusEffect
             return false;
         }
 
+        // imp add: revenant haunting shit
         public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time, bool refresh, Component component,
             StatusEffectsComponent? status = null)
         {
@@ -153,7 +155,7 @@ namespace Content.Shared.StatusEffect
             if (TryAddStatusEffect(uid, key, time, refresh, status))
             {
                 EntityManager.AddComponent(uid, component, true);
-                status.ActiveEffects[key].RelevantComponent = _componentFactory.GetComponentName(component.GetType());
+                status.ActiveEffects[key].RelevantComponent = Factory.GetComponentName(component.GetType());
                 return true;
             }
 
