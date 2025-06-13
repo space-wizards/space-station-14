@@ -1,0 +1,102 @@
+- type: entity
+  parent: DecalSpawnerBase
+  id: DecalSpawnerBloodSplatters
+  suffix: Blood Splatters, Footprints
+  components:
+  - type: RandomDecalSpawner
+    decals:
+    - footprint
+    - splatter
+    radius: 1
+    randomRotation: true
+    maxDecals: 3
+    prob: 0.5
+    zIndex: 1
+    color: '#9900007F'
+    cleanable: true
+    deleteSpawnerAfterSpawn: true
+
+- type: entity
+  parent: DecalSpawnerBase
+  id: DecalSpawnerGraffiti
+  suffix: Graffiti
+  components:
+  - type: RandomDecalSpawner
+    decals:
+    - Blasto
+    - Clandestine
+    - Cyber
+    - Diablo
+    - Donk
+    - Gene
+    - Gib
+    - Max
+    - Newton
+    - North
+    - Omni
+    - Osiron
+    - Prima
+    - Psyke
+    - Sirius
+    - Tunnel
+    - Waffle
+    - amyjon
+    - beepsky
+    - biohazard
+    - blueprint
+    - bottle
+    - carp
+    - cat
+    - clown
+    - corgi
+    - credit
+    - cyka
+    - danger
+    - disk
+    - dwarf
+    - end
+    - engie
+    - face
+    - fireaxe
+    - firedanger
+    - ghost
+    - guy
+    - heart
+    - like
+    - matt
+    - peace
+    - prolizard
+    - radiation
+    - revolution
+    - safe
+    - scroll
+    - shotgun
+    - skull
+    - snake
+    - star
+    - stickman
+    - taser
+    - toilet
+    - toolbox
+    - uboa
+    radius: 0.5
+    randomRotation: true
+    maxDecals: 1
+    zIndex: 2
+    randomColorList:
+    - aqua
+    - betterviolet
+    - blue
+    - chartreuse
+    - cyan
+    - deeppink
+    - fuchsia
+    - green
+    - indigo
+    - lime
+    - pink
+    - red
+    - silver
+    - yellow
+    cleanable: true
+    deleteSpawnerAfterSpawn: true
