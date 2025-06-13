@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Nox38, BurgerMoth, ArtisticRoomba
-  changes:
-  - message: Added descriptions to all .45 magnum cartridges, magazines, speed loaders,
-      and ammo boxes.
-    type: Add
-  id: 8156
-  time: '2025-04-11T04:58:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36383
 - author: PJB3005
   changes:
   - message: Lobby time on Wizard's Den has been increased from 2 minute 30 seconds
@@ -3914,3 +3906,10 @@
   id: 8668
   time: '2025-06-13T16:09:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38304
+- author: slarticodefast
+  changes:
+  - message: Fixed some reagents like puncturase healing bleeding when they shouldn't.
+    type: Fix
+  id: 8669
+  time: '2025-06-13T16:11:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38289
