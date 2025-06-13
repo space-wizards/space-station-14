@@ -100,6 +100,9 @@
     - neck
   - type: ActivatableUI #imp
     inHandsOnly: false
+  - type: Item #imp
+    size: Small
+    storedRotation: -90
 
 #if you change this to some cringe-ass zelda reference so help me god i will shoot you dead.
 - type: entity
