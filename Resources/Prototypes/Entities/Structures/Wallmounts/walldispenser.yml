@@ -1,5 +1,6 @@
 - type: entity
   id: BaseDispenser
+  abstract: true
   name: wallmount dispenser
   description: Wallmount dispenser without contents.
   placement:
