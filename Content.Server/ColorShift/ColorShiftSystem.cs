@@ -15,7 +15,6 @@ namespace Content.Server.ColorShift;
 public sealed class ColorShiftSystem : SharedColorShiftSystem
 {
     [Dependency] private readonly HumanoidAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
 
     /// <inheritdoc/>
@@ -33,20 +32,32 @@ public sealed class ColorShiftSystem : SharedColorShiftSystem
             return;
 
         var color = args.NewColor;
+        color.A = ent.Comp.SkinColor.A;
+
         var colorList = new List<Color> { color }; // needed for markings
         _appearanceSystem.SetSkinColor(ent.Owner, color);
-        // Hardcoding it to zero is a bandaid until someone can figure out how to loop through all possible hair marking slots and set the color there
-        // Leaving that as an exercise for the reader :P
-        _appearanceSystem.SetMarkingColor(ent.Owner, MarkingCategories.Hair, 0, colorList);
-        _appearanceSystem.SetMarkingColor(ent.Owner, MarkingCategories.FacialHair, 0, colorList);
+
+        if (ent.Comp.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var hairMarking))
+        {
+            for (var i = 0; i < hairMarking.Count; i++)
+            {
+                _appearanceSystem.SetMarkingColor(ent.Owner, MarkingCategories.Hair, i, colorList);
+            }
+        }
+
+        if (ent.Comp.MarkingSet.TryGetCategory(MarkingCategories.FacialHair, out var fHairMarking))
+        {
+            for (var i = 0; i < fHairMarking.Count; i++)
+            {
+                _appearanceSystem.SetMarkingColor(ent.Owner, MarkingCategories.Hair, i, colorList);
+            }
+        }
     }
 
     private void OnMessageReceive(Entity<ColorShifterComponent> ent, ref PleaseHueShiftNetworkMessage args)
     {
-        Log.Debug(args.Actor.Id.ToString());
-
         // Validate client input
-        if (ent.Owner != _entityManager.GetEntity(args.Entity))
+        if (ent.Owner != EntityManager.GetEntity(args.Entity))
             return;
 
         // Perform doafter

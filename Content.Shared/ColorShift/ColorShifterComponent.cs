@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.ColorShift;
 
 /// <summary>
-/// This is used for...
+/// This is used for tracking entities with the hueshifting ability
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ColorShifterComponent : Component

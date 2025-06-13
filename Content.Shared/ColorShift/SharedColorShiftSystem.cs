@@ -11,13 +11,14 @@ public abstract class SharedColorShiftSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+
     public override void Initialize()
     {
-        SubscribeLocalEvent<ColorShifterComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<ColorShifterComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<ColorShifterComponent, OpenColorShiftEvent>(OpenHueShift);
     }
 
-    private void OnComponentInit(Entity<ColorShifterComponent> ent, ref ComponentInit args)
+    private void OnComponentStartup(Entity<ColorShifterComponent> ent, ref ComponentStartup args)
     {
         // try to add hueshift action
         _actionsSystem.AddAction(ent.Owner, ref ent.Comp.ActionEntity, ent.Comp.Action);
@@ -29,6 +30,9 @@ public abstract class SharedColorShiftSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Network message to request colorshift.
+/// </summary>
 [NetSerializable, Serializable]
 public sealed class PleaseHueShiftNetworkMessage : BoundUserInterfaceMessage
 {
@@ -44,6 +48,9 @@ public sealed class PleaseHueShiftNetworkMessage : BoundUserInterfaceMessage
     }
 }
 
+/// <summary>
+/// Do after event for color shifting.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class HueShiftDoAfterEvent : DoAfterEvent
 {
