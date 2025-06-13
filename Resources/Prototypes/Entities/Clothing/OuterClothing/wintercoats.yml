@@ -737,10 +737,9 @@
 ################################################################
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband, BaseClothingWithBodycam]
+  parent: [ClothingOuterWinterCoatToggleable, BaseSecurityContraband]
   id: ClothingOuterWinterWardenUnarmored
   name: warden's winter coat
-  suffix: bodycam
   description: A sturdy coat, a warm coat, but not an armored coat.
   components:
   - type: Sprite
