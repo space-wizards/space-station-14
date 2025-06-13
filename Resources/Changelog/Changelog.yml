@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nukesthestation
-  changes:
-  - message: Zombies /suicideing return to an ai state
-    type: Tweak
-  id: 8152
-  time: '2025-04-11T01:12:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36453
 - author: YoungThugSS14
   changes:
   - message: Wizards now appear roundstart in the "all at once" gamemode.
@@ -3910,3 +3903,13 @@
   id: 8664
   time: '2025-06-13T05:21:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38299
+- author: nkokic
+  changes:
+  - message: Tear gas smoke is now white and semi-transparent.
+    type: Tweak
+  - message: Tear gas now causes coughing, slows you down and hits a bit faster than
+      before.
+    type: Add
+  id: 8665
+  time: '2025-06-13T13:53:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36440
