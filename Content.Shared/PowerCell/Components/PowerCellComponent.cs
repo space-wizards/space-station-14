@@ -9,9 +9,16 @@ namespace Content.Shared.PowerCell;
 /// </summary>
 [NetworkedComponent]
 [RegisterComponent]
+[AutoGenerateComponentState]
 public sealed partial class PowerCellComponent : Component
 {
     public const int PowerCellVisualsLevels = 2;
+
+    /// <summary>
+    /// The percentage charge of this power cell.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float PercentCharge;
 }
 
 [Serializable, NetSerializable]

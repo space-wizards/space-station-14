@@ -1,4 +1,5 @@
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Examine;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
@@ -18,6 +19,9 @@ public abstract class SharedPowerCellSystem : EntitySystem
 
         SubscribeLocalEvent<PowerCellDrawComponent, MapInitEvent>(OnMapInit);
 
+        SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamine);
+
+        SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnCellSlotExamine);
         SubscribeLocalEvent<PowerCellSlotComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
@@ -50,6 +54,22 @@ public abstract class SharedPowerCellSystem : EntitySystem
         {
             args.Cancel();
         }
+    }
+
+    private void OnCellExamine(EntityUid uid, PowerCellComponent comp, ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{comp.PercentCharge:F0}")));
+    }
+
+    private void OnCellSlotExamine(EntityUid uid, PowerCellSlotComponent comp, ExaminedEvent args)
+    {
+        if (!_itemSlots.TryGetSlot(uid, comp.CellSlotId, out var cellSlot) || cellSlot.Item is null)
+        {
+            args.PushMarkup(Loc.GetString("power-cell-component-examine-details-no-battery"));
+            return;
+        }
+
+        RaiseLocalEvent(cellSlot.Item.Value, args);
     }
 
     private void OnCellInserted(EntityUid uid, PowerCellSlotComponent component, EntInsertedIntoContainerMessage args)

@@ -33,13 +33,11 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         base.Initialize();
 
         SubscribeLocalEvent<PowerCellComponent, ChargeChangedEvent>(OnChargeChanged);
-        SubscribeLocalEvent<PowerCellComponent, ExaminedEvent>(OnCellExamined);
         SubscribeLocalEvent<PowerCellComponent, EmpAttemptEvent>(OnCellEmpAttempt);
 
         SubscribeLocalEvent<PowerCellDrawComponent, ChargeChangedEvent>(OnDrawChargeChanged);
         SubscribeLocalEvent<PowerCellDrawComponent, PowerCellChangedEvent>(OnDrawCellChanged);
 
-        SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnCellSlotExamined);
         // funny
         SubscribeLocalEvent<PowerCellSlotComponent, BeingMicrowavedEvent>(OnSlotMicrowaved);
 
@@ -67,6 +65,8 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         }
 
         var frac = args.Charge / args.MaxCharge;
+        component.PercentCharge = frac * 100;
+        Dirty(uid, component);
         var level = (byte)ContentHelpers.RoundToNearestLevels(frac, 1, PowerCellComponent.PowerCellVisualsLevels);
         _sharedAppearanceSystem.SetData(uid, PowerCellVisuals.ChargeLevel, level);
 
@@ -215,37 +215,12 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         return false;
     }
 
-    private void OnCellExamined(EntityUid uid, PowerCellComponent component, ExaminedEvent args)
-    {
-        TryComp<BatteryComponent>(uid, out var battery);
-        OnBatteryExamined(uid, battery, args);
-    }
-
     private void OnCellEmpAttempt(EntityUid uid, PowerCellComponent component, EmpAttemptEvent args)
     {
         var parent = Transform(uid).ParentUid;
         // relay the attempt event to the slot so it can cancel it
         if (HasComp<PowerCellSlotComponent>(parent))
             RaiseLocalEvent(parent, args);
-    }
-
-    private void OnCellSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)
-    {
-        TryGetBatteryFromSlot(uid, out var battery);
-        OnBatteryExamined(uid, battery, args);
-    }
-
-    private void OnBatteryExamined(EntityUid uid, BatteryComponent? component, ExaminedEvent args)
-    {
-        if (component != null)
-        {
-            var charge = component.CurrentCharge / component.MaxCharge * 100;
-            args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}")));
-        }
-        else
-        {
-            args.PushMarkup(Loc.GetString("power-cell-component-examine-details-no-battery"));
-        }
     }
 
     private void OnGetCharge(Entity<PowerCellSlotComponent> entity, ref GetChargeEvent args)
