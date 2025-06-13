@@ -110,7 +110,11 @@
     tools: Welding
     weldingDamage:
       types:
-        Heat: 20
+        Heat: 10
+  - type: PacifismDangerousAttack
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 50 # Smaller explosion due to lower fuel amount than a fuel tank
 
 - type: entity
   parent: BaseDispenser
