@@ -65,4 +65,3 @@ if not re.search(r'^[ \t]*[^a-zA-Z0-9]?[ \t]*(add|remove|tweak|fix): .+', change
     print("::error::Changelog entries must follow the format: 'tag: description'")
     sys.exit(1)
 
-print("Changelog validation passed!")
