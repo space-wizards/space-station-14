@@ -22,7 +22,8 @@ public sealed class BodycamSystem: SharedBodycamSystem
     {
         // disable the body cam on map init
         // otherwise you would be able to connect to them before they are worn
-        _camera.SetActive(uid, false);
+        if (HasComp<SurveillanceCameraComponent>(uid))
+            _camera.SetActive(uid, false);
     }
 
     private void OnEmp(EntityUid uid, BodycamComponent comp, ref EmpPulseEvent args)
