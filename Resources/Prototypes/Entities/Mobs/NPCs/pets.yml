@@ -868,8 +868,7 @@
   - type: ParrotMemory
     learnChance: 0.5 # polly is smarter
   - type: ParrotSpeaker
-    minSpeakInterval: 120 # polly is chattier
-    maxSpeakInterval: 240
+    maxSpeakInterval: 240 # polly is chattier
   - type: Grammar
     attributes:
       proper: true
