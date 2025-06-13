@@ -188,20 +188,20 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/snub.rsi
+  - type: Item
+    size: Small
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/snub.rsi
   - type: RevolverAmmoProvider
   - type: Gun
-    minAngle: 20
-    maxAngle: 35
-    angleIncrease: 8
-    angleDecay: 10
-    selectedMode: SemiAuto
-    fireRate: 0.75
-  - type: UseDelay
-    delay: 0.3
+    fireRate: 2.5
     availableModes:
     - SemiAuto
+    minAngle: 5
+    maxAngle: 30
+    angleIncrease: 10
+    angleDecay: 6
+    selectedMode: SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
     capacity: 6
