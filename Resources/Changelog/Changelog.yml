@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: The Kardashev-Mosin is now considered Major Contraband.
-    type: Tweak
-  id: 8151
-  time: '2025-04-11T00:57:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36446
 - author: Nukesthestation
   changes:
   - message: Zombies /suicideing return to an ai state
@@ -3910,3 +3903,10 @@
   id: 8663
   time: '2025-06-13T01:48:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38297
+- author: hoshizora-sayo
+  changes:
+  - message: Fixed crafting menu entries that included modular machine parts
+    type: Fix
+  id: 8664
+  time: '2025-06-13T05:21:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38299
