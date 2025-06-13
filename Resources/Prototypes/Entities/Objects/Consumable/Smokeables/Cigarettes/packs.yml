@@ -40,9 +40,9 @@
     - CigPack
     - Trash
   - type: PhysicalComposition
-    materialComposition:
-      Steel: 50
-      Plastic: 50
+    materialComposition: #imp edit
+      Steel: 25
+      Plastic: 25
   - type: SpaceGarbage
   - type: Item
     size: Tiny
@@ -112,9 +112,9 @@
     - CigPack
     - Trash
   - type: PhysicalComposition
-    materialComposition:
-      Steel: 50
-      Plastic: 50
+    materialComposition: #imp edit
+      Steel: 25
+      Plastic: 25
   - type: SpaceGarbage
   - type: Item
     size: Tiny

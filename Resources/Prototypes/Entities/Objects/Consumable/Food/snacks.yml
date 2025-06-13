@@ -617,9 +617,9 @@
     tags:
     - Trash
   - type: PhysicalComposition
-    materialComposition:
-      Steel: 50
-      Plastic: 50
+    materialComposition: #imp edit
+      Steel: 75
+      Plastic: 25
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0
