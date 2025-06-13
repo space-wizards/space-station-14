@@ -302,3 +302,5 @@
     sprite: Objects/Weapons/Melee/throwing_knife.rsi
   - type: ThrowingAngle
     angle: 225
+  - type: StaticPrice
+    price: 500 # 2000 for a set of 4
