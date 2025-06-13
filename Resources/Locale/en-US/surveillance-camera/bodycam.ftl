@@ -17,5 +17,5 @@ bodycam-name = {$wearer}'s Bodycam
 bodycam-examine-enabled = The bodycam is [color=green]active[/color].
 bodycam-examine-disabled = The bodycam is [color=darkred]inactive[/color].
 
-bodycam-wearer-examine-enabled = {CAPITALIZE(SUBJECT($identity))} is wearing an [color=green]active[/color] bodycam.
-bodycam-wearer-examine-disabled = {CAPITALIZE(SUBJECT($identity))} is wearing an [color=darkred]inactive[/color] bodycam.
+bodycam-wearer-examine-enabled = {CAPITALIZE(SUBJECT($identity))} {CONJUGATE-BE(identity)} wearing an [color=green]active[/color] bodycam.
+bodycam-wearer-examine-disabled = {CAPITALIZE(SUBJECT($identity))} {CONJUGATE-BE(identity)} wearing an [color=darkred]inactive[/color] bodycam.
