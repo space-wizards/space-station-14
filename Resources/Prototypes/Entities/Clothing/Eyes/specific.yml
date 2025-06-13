@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: ClothingEyesBase
   id: ClothingEyesChameleon # no flash immunity, sorry
   name: sun glasses
@@ -6,9 +6,8 @@
   suffix: Chameleon
   components:
     - type: Tag
-      tags:
-      - CorgiWearable
-      - WhitelistChameleon
+      tags: # intentionally no WhitelistChameleon tag
+      - CorgiWearable 
     - type: Sprite
       sprite: Clothing/Eyes/Glasses/sunglasses.rsi
     - type: Clothing
