@@ -57,15 +57,7 @@ public sealed partial class BorgSystem
                 {
                     if (_entityManager.TryGetComponent<MobThresholdsComponent>(uid, out var mobThresholds))
                     {
-                        if (CalcProgress(uid, mobState, damageable, mobThresholds) is not { } deathProgress)
-                            hpPercent = 0f;
-                        else
-                        {
-                            if (deathProgress.inCrit)
-                                hpPercent = 0f;
-                            else
-                                hpPercent = deathProgress.ratio;
-                        }
+                        hpPercent = CalcHP(uid, mobState, damageable, mobThresholds);
                     }
                 }
             }
@@ -187,37 +179,19 @@ public sealed partial class BorgSystem
     }
 
     /// <summary>
-    /// Returns a ratio between 0 and 1, and whether the entity is in crit.
+    /// Returns a ratio between 0 and 1, 1 when they have no damage and 0 whenever they are crit (or more damaged)
     /// </summary>
-    private (float ratio, bool inCrit)? CalcProgress(EntityUid uid, MobStateComponent component, DamageableComponent dmg, MobThresholdsComponent thresholds)
+    private float CalcHP(EntityUid uid, MobStateComponent component, DamageableComponent dmg, MobThresholdsComponent thresholds)
     {
         if (_mobStateSystem.IsAlive(uid, component))
         {
-            if (dmg.HealthBarThreshold != null && dmg.TotalDamage < dmg.HealthBarThreshold)
-                return null;
+            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold, thresholds))
+                return 1;
 
-            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold, thresholds) &&
-                !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholds))
-                return (1, false);
-
-            var ratio = 1 - ((FixedPoint2)(dmg.TotalDamage / threshold)).Float();
-            return (ratio, false);
+            return 1 - ((FixedPoint2)(dmg.TotalDamage / threshold)).Float();
         }
 
-        if (_mobStateSystem.IsCritical(uid, component))
-        {
-            if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var critThreshold, thresholds) ||
-                !_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Dead, out var deadThreshold, thresholds))
-            {
-                return (1, true);
-            }
-
-            var ratio = 1 - ((dmg.TotalDamage - critThreshold) / (deadThreshold - critThreshold)).Value.Float();
-
-            return (ratio, true);
-        }
-
-        return (0, true);
+        return 0;
     }
 
     /// <summary>
