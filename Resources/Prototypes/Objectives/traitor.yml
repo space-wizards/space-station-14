@@ -17,7 +17,9 @@
   - type: Objective
     icon:
       sprite: Objects/Misc/folders.rsi
-      state: folder-white
+      layers:
+      - state: folder-colormap
+      - state: folder-base
   - type: MultipleTraitorsRequirement
 
 - type: entity
