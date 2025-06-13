@@ -5,7 +5,7 @@
   suffix: Interior
   components:
   - type: StaticPrice
-    price: 400
+    price: 300
   - type: Tag
     tags:
       - Wall
@@ -53,7 +53,7 @@
   name: tech wall
   components:
   - type: StaticPrice
-    price: 400
+    price: 300
   - type: Tag
     tags:
       - Wall

@@ -31,7 +31,7 @@
   - type: Transform
     noRot: false
   - type: Machine
-    board: BoozeDispenserMachineCircuitboard
+    board: ImpCoffeeMachineCircuitboard
   - type: GuideHelp
     guides:
     - Bartender

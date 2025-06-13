@@ -150189,6 +150189,7 @@ entities:
     - EncryptionKeyHolder
     - TelecomServer
     - ContainerContainer
+    - ContainerManager
     - Construction
 - proto: TelecomServerCircuitboard
   entities:
