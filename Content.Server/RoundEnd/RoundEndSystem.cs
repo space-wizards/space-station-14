@@ -239,7 +239,7 @@ namespace Content.Server.RoundEnd
                 _announcer.GetAnnouncementId("ShuttleRecalled"),
                 Filter.Broadcast(),
                 "round-end-system-shuttle-recalled-announcement",
-                Loc.GetString("Station"),
+                Loc.GetString("round-end-system-shuttle-sender-announcement"),
                 Color.Gold
             );
 

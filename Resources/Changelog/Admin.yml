@@ -1139,5 +1139,13 @@ Entries:
   id: 137
   time: '2025-05-02T01:07:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37102
+- author: ScarKy0
+  changes:
+  - message: Added a new "Strip All" debug verb. Used for stripping all inventory
+      items and dropping hand items.
+    type: Add
+  id: 138
+  time: '2025-05-15T20:56:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37426
 Name: Admin
 Order: 2

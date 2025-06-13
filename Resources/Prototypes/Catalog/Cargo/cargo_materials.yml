@@ -49,6 +49,26 @@
   group: market
 
 - type: cargoProduct
+  id: MaterialGold
+  icon:
+    sprite: Objects/Materials/ingots.rsi
+    state: gold_3
+  product: CrateMaterialGold
+  cost: 3225
+  category: cargoproduct-category-name-materials
+  group: market
+
+- type: cargoProduct
+  id: MaterialSilver
+  icon:
+    sprite: Objects/Materials/ingots.rsi
+    state: silver_3
+  product: CrateMaterialSilver
+  cost: 2580
+  category: cargoproduct-category-name-materials
+  group: market
+
+- type: cargoProduct
   id: MaterialTextiles
   icon:
     sprite: Objects/Materials/materials.rsi
@@ -74,7 +94,7 @@
     sprite: Objects/Materials/materials.rsi
     state: cardboard_3
   product: CrateMaterialCardboard
-  cost: 750
+  cost: 330
   category: cargoproduct-category-name-materials
   group: market
 
@@ -84,7 +104,7 @@
     sprite: Objects/Materials/Sheets/other.rsi
     state: paper_3
   product: CrateMaterialPaper
-  cost: 1000
+  cost: 185
   category: cargoproduct-category-name-materials
   group: market
 

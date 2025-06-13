@@ -32,7 +32,7 @@
   parent: ClothingOuterSuitBomb
   id: ClothingOuterSuitJanitorBomb
   name: janitorial bomb suit
-  description: A heavy helmet designed to withstand explosions formed from reactions between chemicals.
+  description: Heavy body armor designed to withstand explosions formed from reactions between chemicals.
   categories: [ DoNotMap ]
   components:
   - type: Sprite

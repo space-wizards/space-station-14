@@ -14,9 +14,10 @@ public sealed class StealthSystem : SharedStealthSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IClientAdminManager _adminManager = default!;
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!; // imp
+    [Dependency] private readonly IClientAdminManager _adminManager = default!; // imp
+    [Dependency] private readonly ContainerSystem _containerSystem = default!; // imp
 
     private ShaderInstance _shader = default!;
     private ShaderInstance _altShader = default!;
@@ -51,7 +52,7 @@ public sealed class StealthSystem : SharedStealthSystem
         if (!Resolve(uid, ref component, ref sprite, false))
             return;
 
-        sprite.Color = Color.White;
+        _sprite.SetColor((uid, sprite), Color.White);
         //imp special - use the alternative full-invis shader if we're set to
         var shaderToUse = component.UseAltShader ? _altShader : _shader;
         sprite.PostShader = enabled ? shaderToUse : null;
@@ -137,6 +138,6 @@ public sealed class StealthSystem : SharedStealthSystem
         shaderToUse.SetParameter("visibility", visibility);
 
         visibility = MathF.Max(0, visibility);
-        args.Sprite.Color = new Color(visibility, visibility, 1, 1);
+        _sprite.SetColor((uid, args.Sprite), new Color(visibility, visibility, 1, 1));
     }
 }

@@ -21,10 +21,9 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IComponentFactory _compFact = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly GameTicker _ticker = default!; // imp
 
-    // Dictionary that contains the minimum round number for certain preset
+    // IMP - Dictionary that contains the minimum round number for certain preset
     // prototypes to be allowed to roll again
     private static Dictionary<ProtoId<GamePresetPrototype>, int> _nextRoundAllowed = new();
 
@@ -33,7 +32,7 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
     public override void Initialize()
     {
         base.Initialize();
-        _ruleCompName = _compFact.GetComponentName(typeof(GameRuleComponent));
+        _ruleCompName = Factory.GetComponentName<GameRuleComponent>();
     }
 
     protected override void Added(EntityUid uid, SecretRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)

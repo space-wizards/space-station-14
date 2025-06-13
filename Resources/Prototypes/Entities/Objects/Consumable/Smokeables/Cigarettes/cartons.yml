@@ -94,22 +94,5 @@
     sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Cartons/mixed.rsi # imp
   - type: StorageFill
     contents:
-      - id: CigPackMixedMedical
-      - id: CigPackMixed
-      - id: CigPackMixedNasty
-
-- type: entity
-  parent: BaseAmmoProvider
-  id: StackOfCigs
-  name: 500 cigarettes
-  description: The aroma is most pleasing.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/500cigarettes.rsi
-    state: 500-cigarettes
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-      - Cigarette
-    proto: Cigarette
-    capacity: 500
+    - id: CigPackMixed
+      amount: 3

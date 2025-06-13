@@ -207,6 +207,6 @@
           type: Kodepiia
           shouldHave: false
   footstepSound:
-    collection: FootstepBlood
+    collection: FootstepSlime
     params:
       volume: 6

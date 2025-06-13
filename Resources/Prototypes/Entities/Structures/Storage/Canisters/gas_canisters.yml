@@ -99,6 +99,7 @@
     - type: GasCanister
       gasTankSlot:
         name: comp-gas-canister-slot-name-gas-tank
+        ejectOnBreak: true
         whitelist:
           components:
             - GasTank

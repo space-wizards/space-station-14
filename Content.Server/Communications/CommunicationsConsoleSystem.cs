@@ -263,7 +263,9 @@ namespace Content.Server.Communications
             Loc.TryGetString(comp.Title, out var title);
             title ??= comp.Title;
 
-            msg += $"\n{Loc.GetString("comms-console-announcement-sent-by")} {author}";
+            if (comp.AnnounceSentBy)
+                msg += $"\n{Loc.GetString("comms-console-announcement-sent-by")} {author}"; // imp regex
+
             if (comp.Global)
             {
                 _announcer.SendAnnouncement("announce", Filter.Broadcast(), msg, title, comp.Color);

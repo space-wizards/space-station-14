@@ -166,6 +166,10 @@ binds:
 - function: SwapHands
   type: State
   key: X
+- function: SwapHandsReverse
+  type: State
+  key: X
+  mod1: Shift
   # DeltaV - NanoChat keybinds Start
 - function: NanoChatNavigateUp
   type: State

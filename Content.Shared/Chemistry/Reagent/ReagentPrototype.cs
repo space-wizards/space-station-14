@@ -162,7 +162,7 @@ namespace Content.Shared.Chemistry.Reagent
         public float PricePerUnit;
 
         [DataField]
-        public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
+        public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepPuddle");
 
         [DataField]
         public bool ImpEvaporates = false;
