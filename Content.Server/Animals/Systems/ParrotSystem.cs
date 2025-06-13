@@ -33,7 +33,6 @@ public sealed partial class ParrotSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = null!;
     [Dependency] private readonly IAdminLogManager _adminLogger = null!;
     [Dependency] private readonly IGameTiming _gameTiming = null!;
-    [Dependency] private readonly InventorySystem _inventory = null!;
     [Dependency] private readonly IPrototypeManager _proto = null!;
     [Dependency] private readonly IRobustRandom _random = null!;
     [Dependency] private readonly MobStateSystem _mobState = null!;
@@ -100,6 +99,8 @@ public sealed partial class ParrotSystem : EntitySystem
         if (!HasComp<ActiveRadioComponent>(args.Clothing))
             return;
 
+        entity.Comp.ActiveRadioEntities.Add(args.Clothing.Owner);
+
         // update active radio channels
         UpdateParrotRadioChannels(entity.Owner);
     }
@@ -110,8 +111,9 @@ public sealed partial class ParrotSystem : EntitySystem
     /// </summary>
     private void OnClothingUnequipped(Entity<ParrotRadioComponent> entity, ref ClothingDidUnequippedEvent args)
     {
-        // only care if the unequipped clothing item has an ActiveRadioComponent
-        if (!HasComp<ActiveRadioComponent>(args.Clothing))
+        // try to remove this item from the active radio entities list
+        // if this returns false, the item wasn't found so it was never a radio we cared about, quit early
+        if (!entity.Comp.ActiveRadioEntities.Remove(args.Clothing.Owner))
             return;
 
         // update active radio channels
@@ -121,32 +123,28 @@ public sealed partial class ParrotSystem : EntitySystem
     /// <summary>
     /// Copies all radio channels from equipped radios to the ActiveRadioComponent of an entity
     /// </summary>
-    public void UpdateParrotRadioChannels(Entity<ActiveRadioComponent?, InventoryComponent?> entity)
+    public void UpdateParrotRadioChannels(Entity<ActiveRadioComponent?, ParrotRadioComponent?> entity)
     {
         if (!Resolve<ActiveRadioComponent>(entity, ref entity.Comp1))
             return;
 
-        if (!Resolve<InventoryComponent>(entity, ref entity.Comp2))
+        if (!Resolve<ParrotRadioComponent>(entity, ref entity.Comp2))
             return;
 
         entity.Comp1.Channels.Clear();
 
-        // quit early if this entity has an inventory component but no slots
-        if (entity.Comp2.Slots.Length == 0)
+        // quit early if there are no ActiveRadios on the ParrotRadioComponent
+        if (entity.Comp2.ActiveRadioEntities.Count == 0)
             return;
 
-        // loop through slots in inventory
-        foreach (var slot in entity.Comp2.Slots)
+        // loop through ActiveRadios in inventory
+        foreach (var radio in entity.Comp2.ActiveRadioEntities)
         {
-            // try to get the entity in this slot
-            if (!_inventory.TryGetSlotEntity(entity, slot.Name, out var slotEntity))
-                continue;
+            if (!TryComp<ActiveRadioComponent>(radio, out var activeRadioComponent))
+                return;
 
-            // skip if the entity does not possess a radio component
-            if (!TryComp<ActiveRadioComponent>(slotEntity, out var inventoryActiveRadioComponent))
-                continue;
-
-            entity.Comp1.Channels.UnionWith(inventoryActiveRadioComponent.Channels);
+            // add them to the channels on the ActiveRadioComponent on the entity
+            entity.Comp1.Channels.UnionWith(activeRadioComponent.Channels);
         }
     }
 
