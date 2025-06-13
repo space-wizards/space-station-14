@@ -65,6 +65,7 @@
 - type: entity
   parent: TearGasSmoke
   id: TearGasSmokeWhite
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: chemsmoke_white
