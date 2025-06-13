@@ -187,7 +187,7 @@ public sealed partial class BorgSystem
     }
 
     /// <summary>
-    /// Returns true if the borg has a brain and fakeDisabled is false
+    /// Returns true if the borg has a brain
     /// </summary>
     private bool CheckBrain(EntityUid? brainEntity)
     {
