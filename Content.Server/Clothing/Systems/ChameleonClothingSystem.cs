@@ -96,7 +96,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (!IsValidTarget(proto, component.Slot, component.RequireTag))
             return;
         component.Default = protoId;
-         
+
         UpdateIdentityBlocker(uid, component, proto);
         UpdateVisuals(uid, component);
         UpdateUi(uid, component);
