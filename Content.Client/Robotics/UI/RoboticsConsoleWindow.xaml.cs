@@ -151,7 +151,6 @@ public sealed partial class RoboticsConsoleWindow : FancyWindow
         // how the turntables
         DisableButton.Disabled = !_allowBorgControl || !(data.HasBrain && data.CanDisable);
         DestroyButton.Disabled = !_allowBorgControl;
-        DangerZone.Visible = _allowBorgControl; // <-- Hide the whole button area if not allowed
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
