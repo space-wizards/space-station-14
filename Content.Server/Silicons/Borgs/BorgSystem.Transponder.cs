@@ -49,18 +49,10 @@ public sealed partial class BorgSystem
                 charge = battery.CurrentCharge / battery.MaxCharge;
 
             var hpPercent = 1f;
-
-            // gaze upon the horrible if ladder
-            if (_entityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
-            {
-                if (_entityManager.TryGetComponent<MobStateComponent>(uid, out var mobState))
-                {
-                    if (_entityManager.TryGetComponent<MobThresholdsComponent>(uid, out var mobThresholds))
-                    {
-                        hpPercent = CalcHP(uid, mobState, damageable, mobThresholds);
-                    }
-                }
-            }
+            if (TryComp<DamageableComponent>(uid, out var damageable) &&
+                TryComp<MobStateComponent>(uid, out var mobState) &&
+                TryComp<MobThresholdsComponent>(uid, out var mobThresholds))
+                hpPercent = CalcHP(uid, mobState, damageable, mobThresholds);
 
             // checks if it has a brain and if the brain is not a empty MMI (gives false anyway if the fake disable is true)
             var hasBrain = CheckBrain(chassis.BrainEntity) && !comp.FakeDisabled;
