@@ -81,12 +81,12 @@ public abstract partial class SharedXenoArtifactSystem
             // as an experiment - unlocking node doesn't activate it, activation is left for player to decide.
             // var activated = ActivateNode((ent, artifactComponent), node.Value, null, null, Transform(ent).Coordinates, false);
             // if (activated)
-            soundEffect = unlockingComponent.UnlockActivationSuccessfulSound;
+            soundEffect = artifactComponent.UnlockActivationSuccessfulSound; //imp edit, move activation sounds, allow artifacts to customize sounds
         }
         else
         {
             unlockAttemptResultMsg = "artifact-unlock-state-end-failure";
-            soundEffect = unlockingComponent.UnlockActivationFailedSound;
+            soundEffect = artifactComponent.UnlockActivationFailedSound; //imp edit, move activation sounds, allow artifacts to customize sounds
         }
 
         if (_net.IsServer)

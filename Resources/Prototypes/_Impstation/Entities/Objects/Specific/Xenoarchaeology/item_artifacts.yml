@@ -7,7 +7,15 @@
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Specific/Xenoarchaeology/skull_artifact.rsi
-    state: ano01
+    layers:
+    - state: ano01
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+    - state: ano01_on
+      map: [ "enum.ArtifactsVisualLayers.UnlockingEffect" ]
+      visible: false
+    - state: artifact-activation
+      map: [ "enum.ArtifactsVisualLayers.ActivationEffect" ]
+      visible: false
   - type: Item
     size: Normal
     sprite: _Impstation/Objects/Specific/Xenoarchaeology/skull_artifact.rsi
@@ -20,6 +28,17 @@
   - type: XenoArtifact
     forceActivationSoundSpecifier:
       path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+    unlockActivationSuccessfulSound:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+      params:
+        variation: 0.1
+        volume: 3.0
+        pitch: 1.15
+    unlockActivationFailedSound:
+      path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+      params:
+        variation: 0.1
+        pitch: 0.85
   - type: Speech
     speechSounds: Alto
     speechVerb: Skeleton

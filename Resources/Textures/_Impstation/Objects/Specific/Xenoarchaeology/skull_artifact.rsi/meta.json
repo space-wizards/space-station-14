@@ -28,6 +28,17 @@
     {
       "name": "ano01-inhand-right",
 	  "directions": 4
+    },
+    {
+      "name": "artifact-activation",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
     }
   ]
 }
