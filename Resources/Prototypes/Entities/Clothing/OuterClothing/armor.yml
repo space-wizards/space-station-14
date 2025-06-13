@@ -163,6 +163,8 @@
         Heat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
+  - type: StaticPrice
+    price: 1500
 
 #Elite web vest
 - type: entity
@@ -191,6 +193,8 @@
     damageCoefficient: 0.5
   - type: FireProtection
     reduction: 0.85
+  - type: StaticPrice
+    price: 2500
 
 #Mercenary web vest
 - type: entity
@@ -240,13 +244,13 @@
         Caustic: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.35
-  #- type: StaminaResistance
-  #  damageCoefficient: 0.45
+  - type: StaminaResistance
+    damageCoefficient: 0.45
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
   #Shoulder mounted flashlight
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: light
     clothingVisuals:
       outerClothing:
@@ -255,6 +259,7 @@
       outerClothing-vox:
       - state: equipped-OUTERCLOTHING-light-vox
         shader: unshaded
+  - type: ItemTogglePointLight
   - type: Appearance
   - type: HandheldLight
     addPrefix: false
@@ -422,7 +427,7 @@
         Heat: 0.9
         Radiation: 0.8
   - type: ClothingSpeedModifier
-    walkModifier: 0.7
+    walkModifier: 0.65
     sprintModifier: 0.65
   - type: HeldSpeedModifier
   - type: ExplosionResistance
@@ -449,6 +454,7 @@
         Piercing: 0.4
   - type: ClothingSpeedModifier
     walkModifier: 0.8
+    sprintModifier: 0.8
   - type: HeldSpeedModifier
   - type: ExplosionResistance
     damageCoefficient: 0.4
