@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: YoungThugSS14
-  changes:
-  - message: Wizards now appear roundstart in the "all at once" gamemode.
-    type: Tweak
-  id: 8153
-  time: '2025-04-11T02:06:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36408
 - author: DinnerCalzone
   changes:
   - message: Fixed gas mixers and pneumatic valves being hidden by floor tiles.
@@ -3913,3 +3906,12 @@
   id: 8665
   time: '2025-06-13T13:53:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36440
+- author: M1tht1c
+  changes:
+  - message: You can now remove visitors mindshields.
+    type: Fix
+  - message: Disaster victims now have mindshields when appropriate.
+    type: Fix
+  id: 8666
+  time: '2025-06-13T14:43:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36537
