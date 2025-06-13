@@ -50,7 +50,7 @@ public sealed partial class BorgSystem
 
             var hpPercent = 1f;
             if (TryComp<DamageableComponent>(uid, out var damageable))
-                hpPercent = CalcHP(uid, mobState, damageable, mobThresholds);
+                hpPercent = CalcHP(uid, damageable);
 
             // checks if it has a brain and if the brain is not a empty MMI (gives false anyway if the fake disable is true)
             var hasBrain = CheckBrain(chassis.BrainEntity) && !comp.FakeDisabled;
