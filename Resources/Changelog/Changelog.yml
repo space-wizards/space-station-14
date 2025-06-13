@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Lobby time on Wizard's Den has been increased from 2 minute 30 seconds
-      to 5 minutes.
-    type: Tweak
-  id: 8157
-  time: '2025-04-12T09:05:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36476
 - author: Quantum-cross
   changes:
   - message: Supercrit anomaly playing explosion sound twice
@@ -3913,3 +3905,11 @@
   id: 8669
   time: '2025-06-13T16:11:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38289
+- author: Kittygyat
+  changes:
+  - message: Monkeys & kobolds can now wear emergency EVA suits, with a fresh new
+      sprite to go along with it! You're welcome, Pun-Pun enthusiasts!
+    type: Tweak
+  id: 8670
+  time: '2025-06-13T18:54:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37660
