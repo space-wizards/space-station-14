@@ -10,13 +10,13 @@ public sealed partial class ParrotSpeakerComponent : Component
     /// Minimum time to wait after speaking to speak again
     /// </summary>
     [DataField]
-    public TimeSpan MinSpeakInterval = TimeSpan.FromSeconds(4.0f * 60f);
+    public TimeSpan MinSpeakInterval = TimeSpan.FromSeconds(2.0f * 60f);
 
     /// <summary>
     /// Maximum time to wait after speaking to speak again
     /// </summary>
     [DataField]
-    public TimeSpan MaxSpeakInterval = TimeSpan.FromSeconds(8.0f * 60f);
+    public TimeSpan MaxSpeakInterval = TimeSpan.FromSeconds(6.0f * 60f);
 
     /// <summary>
     /// Next time at which the parrot speaks

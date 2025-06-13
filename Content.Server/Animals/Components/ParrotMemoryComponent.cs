@@ -19,7 +19,7 @@ public sealed partial class ParrotMemoryComponent : Component
     public float LearnChance = 0.4f;
 
     /// <summary>
-    /// Time in seconds before another attempt can be made at learning a phrase
+    /// Time after which another attempt can be made at learning a phrase
     /// </summary>
     [DataField]
     public TimeSpan LearnCooldown = TimeSpan.FromSeconds(60f);
