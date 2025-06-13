@@ -29,13 +29,13 @@ namespace Content.Server.Animals.Systems;
 /// </summary>
 public sealed partial class ParrotSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = null!;
-    [Dependency] private readonly ChatSystem _chat = null!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = null!;
-    [Dependency] private readonly IGameTiming _gameTiming = null!;
-    [Dependency] private readonly IPrototypeManager _proto = null!;
-    [Dependency] private readonly IRobustRandom _random = null!;
-    [Dependency] private readonly MobStateSystem _mobState = null!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -51,28 +51,17 @@ public sealed partial class ParrotSystem : EntitySystem
         SubscribeLocalEvent<ParrotRadioComponent, ClothingDidUnequippedEvent>(OnClothingUnequipped);
     }
 
-    /// <summary>
-    /// Fired after map initialization. Used to ensure the parrot has an ActiveListenerComponent if it has a
-    /// ParrotListenerComponent
-    /// </summary>
     private void ListenerOnMapInit(Entity<ParrotListenerComponent> entity, ref MapInitEvent args)
     {
         // If an entity has a ParrotListenerComponent it really ought to have an ActiveListenerComponent
         EnsureComp<ActiveListenerComponent>(entity);
     }
 
-    /// <summary>
-    /// Callback for when a nearby chat message is received
-    /// </summary>
     private void OnListen(Entity<ParrotListenerComponent> entity, ref ListenEvent args)
     {
         TryLearn(entity.Owner, args.Message, args.Source);
     }
 
-    /// <summary>
-    /// Fired after map initialization. Used to ensure the parrot has an ActiveRadioComponent if it has a
-    /// ParrotRadioComponent. Updates radio channels
-    /// </summary>
     private void RadioOnMapInit(Entity<ParrotRadioComponent> entity, ref MapInitEvent args)
     {
         // If an entity has a ParrotRadioComponent it really ought to have an ActiveRadioComponent
@@ -81,9 +70,6 @@ public sealed partial class ParrotSystem : EntitySystem
         UpdateParrotRadioChannels((entity, activeRadio));
     }
 
-    /// <summary>
-    /// Callback for when a radio message is received
-    /// </summary>
     private void OnRadioReceive(Entity<ParrotRadioComponent> entity, ref RadioReceiveEvent args)
     {
         TryLearn(entity.Owner, args.Message, args.MessageSource);

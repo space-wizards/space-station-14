@@ -1,9 +1,12 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Server.Animals.Components;
 
 /// <summary>
 /// Makes an entity say things from parrot memory at random intervals
 /// </summary>
 [RegisterComponent]
+[AutoGenerateComponentPause]
 public sealed partial class ParrotSpeakerComponent : Component
 {
     /// <summary>
@@ -21,6 +24,7 @@ public sealed partial class ParrotSpeakerComponent : Component
     /// <summary>
     /// Next time at which the parrot speaks
     /// </summary>
-    [DataField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextSpeakInterval = TimeSpan.FromSeconds(0.0f);
 }

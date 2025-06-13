@@ -1,9 +1,12 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
 namespace Content.Server.Animals.Components;
 
 /// <summary>
 /// Makes an entity able to memorize chat/radio messages
 /// </summary>
 [RegisterComponent]
+[AutoGenerateComponentPause]
 public sealed partial class ParrotMemoryComponent : Component
 {
     /// <summary>
@@ -27,7 +30,8 @@ public sealed partial class ParrotMemoryComponent : Component
     /// <summary>
     /// Next time at which the parrot can attempt to learn something
     /// </summary>
-    [DataField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextLearnInterval = TimeSpan.FromSeconds(0.0f);
 
     /// <summary>
