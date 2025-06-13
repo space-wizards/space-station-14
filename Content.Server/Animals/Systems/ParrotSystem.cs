@@ -57,7 +57,7 @@ public sealed partial class ParrotSystem : EntitySystem
     /// </summary>
     private void ListenerOnMapInit(Entity<ParrotListenerComponent> entity, ref MapInitEvent args)
     {
-        // If an entity has a ParrotRadioComponent it really ought to have an ActiveRadioComponent
+        // If an entity has a ParrotListenerComponent it really ought to have an ActiveListenerComponent
         EnsureComp<ActiveListenerComponent>(entity);
     }
 
@@ -91,7 +91,8 @@ public sealed partial class ParrotSystem : EntitySystem
 
     /// <summary>
     /// Callback for when this entity equips clothing or has clothing equipped by something
-    /// Used to update the radio channels a parrot with a ParrotRadioComponent has
+    /// Used to update the ActiveRadio entities a parrot with a ParrotRadioComponent uses to listen to radios and
+    /// talk on radio channels
     /// </summary>
     private void OnClothingEquipped(Entity<ParrotRadioComponent> entity, ref ClothingDidEquippedEvent args)
     {
@@ -107,7 +108,8 @@ public sealed partial class ParrotSystem : EntitySystem
 
     /// <summary>
     /// Called if this entity unequipped clothing or has clothing unequipped by something
-    /// Used to update the radio channels a parrot with a ParrotRadioComponent has
+    /// Used to update the ActiveRadio entities a parrot with a ParrotRadioComponent uses to listen to radios and
+    /// talk on radio channels
     /// </summary>
     private void OnClothingUnequipped(Entity<ParrotRadioComponent> entity, ref ClothingDidUnequippedEvent args)
     {
@@ -131,17 +133,19 @@ public sealed partial class ParrotSystem : EntitySystem
         if (!Resolve<ParrotRadioComponent>(entity, ref entity.Comp2))
             return;
 
+        // clear all channels first
         entity.Comp1.Channels.Clear();
 
         // quit early if there are no ActiveRadios on the ParrotRadioComponent
         if (entity.Comp2.ActiveRadioEntities.Count == 0)
             return;
 
-        // loop through ActiveRadios in inventory
+        // loop through ActiveRadios in inventory to (re-)add channels
         foreach (var radio in entity.Comp2.ActiveRadioEntities)
         {
+            // if for whatever reason this entity does not have an ActiveRadioComponent, skip it
             if (!TryComp<ActiveRadioComponent>(radio, out var activeRadioComponent))
-                return;
+                continue;
 
             // add them to the channels on the ActiveRadioComponent on the entity
             entity.Comp1.Channels.UnionWith(activeRadioComponent.Channels);
@@ -261,7 +265,6 @@ public sealed partial class ParrotSystem : EntitySystem
     /// Expects an entity to have a ParrotSpeakerComponent and a ParrotMemoryComponent at minimum
     /// If an entity also has a ParrotRadioComponent, it will have a chance to speak on the radio
     /// </summary>
-    /// <param name="entity">The entity to make speak</param>
     private void Speak(Entity<ParrotSpeakerComponent, ParrotMemoryComponent> entity)
     {
 
