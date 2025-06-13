@@ -79,7 +79,7 @@ public abstract class SharedBodycamSystem: EntitySystem
                 Text = Loc.GetString("bodycam-switch-on-verb"),
                 Disabled = disabled,
                 Message = message,
-                Priority = -1
+                Priority = disabled ? -1 : 1
             });
         }
 
@@ -90,7 +90,7 @@ public abstract class SharedBodycamSystem: EntitySystem
                 Act = () => SwitchOff(uid, comp, args.User),
                 Text = Loc.GetString("bodycam-switch-off-verb"),
                 Message = Loc.GetString("bodycam-switch-off-verb-tooltip"),
-                Priority = -1
+                Priority = 1
             });
         }
     }
