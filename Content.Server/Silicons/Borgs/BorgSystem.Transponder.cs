@@ -173,12 +173,12 @@ public sealed partial class BorgSystem
     /// </summary>
     private float CalcHP(EntityUid uid, DamageableComponent dmg)
     {
-        if (!_mobStateSystem.IsAlive(uid, component))
+        if (!_mobStateSystem.IsAlive(uid))
             return 0;
 
         if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold))
         {
-            Log.Error($"Borg with uid: {ToPrettyString(uid)}, doesn't have critical threshold. Trace: {Environment.StackTrace}");
+            Log.Error($"Borg({ToPrettyString(uid)}), doesn't have critical threshold. Trace: {Environment.StackTrace}");
             return 1;
         }
 
