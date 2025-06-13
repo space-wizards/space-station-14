@@ -34,6 +34,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.EUI;
 
 namespace Content.Server.Silicons.Borgs;
 
@@ -43,11 +44,13 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly IBanManager _banManager = default!;
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
+    [Dependency] private readonly IDependencyCollection _dependencies = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly TriggerSystem _trigger = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
