@@ -192,7 +192,6 @@
     size: Small
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/snub.rsi
-  - type: RevolverAmmoProvider
   - type: Gun
     fireRate: 2.5
     availableModes:
