@@ -19,9 +19,17 @@
   protoIds:
   - StationAiHologramFemale
   - StationAiHologramMale
+  - StationAiHologramMoth
+  - StationAiHologramLizard
+  - StationAiHologramArachnid
+  - StationAiHologramVox
+  - StationAiHologramNymph
   - StationAiHologramFace
   - StationAiHologramCat
   - StationAiHologramDog
+  - StationAiHologramClown
+  - StationAiHologramMothroach
+  - StationAiHologramWeh
 
 # Iconography
 - type: stationAiCustomization
@@ -161,3 +169,75 @@
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi
       state: ai_dog
+
+- type: stationAiCustomization
+  id: StationAiHologramClown
+  name: station-ai-hologram-clown
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_clown
+
+- type: stationAiCustomization
+  id: StationAiHologramWeh
+  name: station-ai-hologram-weh
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_weh
+
+- type: stationAiCustomization
+  id: StationAiHologramMothroach
+  name: station-ai-hologram-mothroach
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_mothroach
+
+- type: stationAiCustomization
+  id: StationAiHologramMoth
+  name: station-ai-hologram-moth
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_moth
+
+- type: stationAiCustomization
+  id: StationAiHologramLizard
+  name: station-ai-hologram-lizard
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_lizard
+
+- type: stationAiCustomization
+  id: StationAiHologramArachnid
+  name: station-ai-hologram-arachnid
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_arach
+
+- type: stationAiCustomization
+  id: StationAiHologramVox
+  name: station-ai-hologram-vox
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_vox
+
+- type: stationAiCustomization
+  id: StationAiHologramNymph
+  name: station-ai-hologram-nymph
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_dionanymph
