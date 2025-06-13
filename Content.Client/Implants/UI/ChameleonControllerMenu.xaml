@@ -1,0 +1,12 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+             Title="{Loc 'chameleon-controller-ui-window-name'}"
+             MinSize="250 300"
+             SetSize="850 700">
+    <BoxContainer Orientation="Vertical" Margin="7 0 0 0">
+        <ScrollContainer VerticalExpand="True">
+            <GridContainer Name="Grid" Columns="3" Margin="0 5" >
+            </GridContainer>
+        </ScrollContainer>
+    </BoxContainer>
+</controls:FancyWindow>

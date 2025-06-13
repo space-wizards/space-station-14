@@ -10,6 +10,7 @@ using Content.Shared.Ame.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Mind.Components;
+using Content.Shared.NodeContainer;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -106,7 +107,12 @@ public sealed class AmeControllerSystem : EntitySystem
                 var powerOutput = group.InjectFuel(availableInject, out var overloading);
                 if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                     powerOutlet.MaxSupply = powerOutput;
+
                 fuelContainer.FuelAmount -= availableInject;
+
+                // Dirty for the sake of the AME fuel examine not mispredicting
+                Dirty(controller.FuelSlot.Item.Value, fuelContainer);
+
                 // only play audio if we actually had an injection
                 if (availableInject > 0)
                     _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));

@@ -34,7 +34,7 @@
   components:
   - type: PickSpecificPerson
   - type: KillPersonCondition
-    requireDead: true # don't count missing evac as killing
+    requireDead: true
   - type: TargetObjective
     title: objective-condition-kill-head-title # kill <name>, <job>
 

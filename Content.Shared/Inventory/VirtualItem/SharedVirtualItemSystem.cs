@@ -26,8 +26,6 @@ namespace Content.Shared.Inventory.VirtualItem;
 /// </remarks>
 public abstract class SharedVirtualItemSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
