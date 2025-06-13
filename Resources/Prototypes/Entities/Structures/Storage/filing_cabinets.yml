@@ -6,7 +6,7 @@
       rolls: !type:RangeNumberSelector
         range: 2, 4
       children:
-      - id: BoxFolderFilled
+      - id: BoxFolderBaseFilled
       - id: BoxFolderRedFilled
       - id: BoxFolderBlueFilled
       - id: BoxFolderYellowFilled
