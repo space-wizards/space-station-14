@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Luna in rotation!
-    type: Add
-  - message: Luna changes (check PR for details)
-    type: Tweak
-  id: 1320
-  time: '2025-03-16T00:02:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1887
 - author: honeyed-lemons
   changes:
   - message: Fixed your masculine body urists getting decapitated.. sorry...
@@ -4202,3 +4193,10 @@
   id: 1819
   time: '2025-06-13T00:21:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2730
+- author: ruddygreat
+  changes:
+  - message: Added basic orgnaisational capabilities to the cargo bounty conputer
+    type: Add
+  id: 1820
+  time: '2025-06-13T00:24:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2727
