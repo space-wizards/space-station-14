@@ -18,8 +18,20 @@
   id: ClothingNeckBodycam
   parent: [ClothingNeckBase, BaseBodycam]
   name: bodycam
-  suffix: bodycam
+  suffix: DO NOT MAP
   description: A man-portable camera worn by security forces. Be wary of its short battery life.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/bling.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/bling.rsi
+  - type: Item
+    sprite: Clothing/Neck/Misc/bling.rsi
+
+- type: entity
+  id: ClothingNeckBodycamWithBattery
+  parent: ClothingNeckBodycam
+  suffix: battery
   components:
   - type: PowerCellSlot
     cellSlotId: cell_slot
@@ -33,9 +45,3 @@
         startingItem: PowerCellMedium
   - type: PowerCellDraw
     drawRate: 10 # about a minute
-  - type: Sprite
-    sprite: Clothing/Neck/Misc/bling.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Misc/bling.rsi
-  - type: Item
-    sprite: Clothing/Neck/Misc/bling.rsi
