@@ -1,22 +1,16 @@
-using System.Linq;
 using Content.Server.Emp;
 using Content.Server.IdentityManagement;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
-using Content.Shared.Emp;
 using Content.Shared.IdentityManagement.Components;
-using Content.Shared.Inventory;
 using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 
 namespace Content.Server.Clothing.Systems;
 
 public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -25,6 +19,17 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         SubscribeLocalEvent<ChameleonClothingComponent, ChameleonPrototypeSelectedMessage>(OnSelected);
 
         SubscribeLocalEvent<ChameleonClothingComponent, EmpPulseEvent>(OnEmpPulse);
+        SubscribeLocalEvent<ChameleonClothingComponent, EmpDisabledRemoved>(OnEmpRemoved);
+    }
+
+    private void OnEmpRemoved(Entity<ChameleonClothingComponent> ent, ref EmpDisabledRemoved args)
+    {
+        var beforeEmp = ent.Comp.BeforeEmpPrototype;
+        if(beforeEmp == null)
+            return;
+
+        ent.Comp.BeforeEmpPrototype = null;
+        SetSelectedPrototype(ent, beforeEmp, forceUpdate: true, component: ent);
     }
 
     private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
@@ -37,16 +42,26 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         SetSelectedPrototype(uid, args.SelectedId, component: component);
     }
 
-    private void OnEmpPulse(EntityUid uid, ChameleonClothingComponent component, ref EmpPulseEvent args)
+    private void OnEmpPulse(Entity<ChameleonClothingComponent> ent, ref EmpPulseEvent args)
     {
+        ChameleonClothingComponent component = ent;
         if (!component.AffectedByEmp)
             return;
 
         if (component.EmpContinuous)
-            component.NextEmpChange = _timing.CurTime + TimeSpan.FromSeconds(1f / component.EmpChangeIntensity);
+        {
+            component.NextEmpChange = Timing.CurTime;
+            component.BeforeEmpPrototype = component.Default;
 
-        var pick = GetRandomValidPrototype(component.Slot, component.RequireTag);
-        SetSelectedPrototype(uid, pick, component: component);
+            UI.CloseUi(ent.Owner, ChameleonUiKey.Key);
+
+            DirtyFields(
+                ent.Owner,
+                ent.Comp,
+                null,
+                fields: [ nameof(ChameleonClothingComponent.NextEmpChange), nameof(ChameleonClothingComponent.BeforeEmpPrototype)]
+            );
+        }
 
         args.Affected = true;
         args.Disabled = true;
@@ -76,48 +91,19 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             return;
 
         // make sure that it is valid change
-        if (string.IsNullOrEmpty(protoId) || !_proto.TryIndex(protoId, out EntityPrototype? proto))
+        if (string.IsNullOrEmpty(protoId) || !Proto.TryIndex(protoId, out EntityPrototype? proto))
             return;
         if (!IsValidTarget(proto, component.Slot, component.RequireTag))
             return;
         component.Default = protoId;
-
+         
         UpdateIdentityBlocker(uid, component, proto);
         UpdateVisuals(uid, component);
         UpdateUi(uid, component);
         Dirty(uid, component);
     }
 
-    /// <summary>
-    ///     Get a random prototype for a given slot.
-    /// </summary>
-    public string GetRandomValidPrototype(SlotFlags slot, string? tag = null)
-    {
-        return _random.Pick(GetValidTargets(slot, tag).ToList());
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-        // Randomize EMP-affected clothing
-        var query = EntityQueryEnumerator<EmpDisabledComponent, ChameleonClothingComponent>();
-        while (query.MoveNext(out var uid, out _, out var chameleon))
-        {
-            if (!chameleon.EmpContinuous)
-                continue;
-
-            if (_timing.CurTime < chameleon.NextEmpChange)
-                continue;
-
-            // randomly pick cloth element from available and apply it
-            var pick = GetRandomValidPrototype(chameleon.Slot, chameleon.RequireTag);
-            SetSelectedPrototype(uid, pick, component: chameleon);
-
-            chameleon.NextEmpChange += TimeSpan.FromSeconds(1f / chameleon.EmpChangeIntensity);
-        }
-    }
-
-    private void UpdateIdentityBlocker(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)
+    protected void UpdateIdentityBlocker(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)
     {
         if (proto.HasComponent<IdentityBlockerComponent>(Factory))
             EnsureComp<IdentityBlockerComponent>(uid);

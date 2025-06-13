@@ -10,7 +10,7 @@ namespace Content.Shared.Clothing.Components;
 /// <summary>
 ///     Allow players to change clothing sprite to any other clothing prototype.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, fieldDeltas: true), AutoGenerateComponentPause]
 [Access(typeof(SharedChameleonClothingSystem))]
 public sealed partial class ChameleonClothingComponent : Component
 {
@@ -61,9 +61,15 @@ public sealed partial class ChameleonClothingComponent : Component
     public bool EmpContinuous = true;
 
     /// <summary>
+    /// Prototype that was used before EMP affected entity and it started switching
+    /// prototype sporadically.
+    /// </summary>
+    public EntProtoId? BeforeEmpPrototype = null;
+
+    /// <summary>
     ///     When should next EMP-caused appearance change happen?
     /// </summary>
-    [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField, DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan NextEmpChange = TimeSpan.Zero;
 }
 
