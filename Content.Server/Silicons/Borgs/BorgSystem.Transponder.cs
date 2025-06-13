@@ -196,7 +196,7 @@ public sealed partial class BorgSystem
 
         // if the brainEntity.Value has the component ItemSlotsComponent then it is a MMI,
         // in that case it trys to get the "brain" of the MMI, if it is null the MMI is empty and so it returns false
-        if (TryComp<ItemSlotsComponent>(brainEntity.Value) && _itemSlotsSystem.GetItemOrNull(brainEntity.Value, "brain_slot") == null)
+        if (TryComp<ItemSlotsComponent>(brainEntity.Value, out var slot) && _itemSlotsSystem.GetItemOrNull(brainEntity.Value, "brain_slot") == null)
             return false;
 
         return true;
