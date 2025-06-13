@@ -29,7 +29,6 @@ public abstract class SharedBodycamSystem: EntitySystem
         SubscribeLocalEvent<BodycamComponent, GotUnequippedEvent>(OnUnequip);
         SubscribeLocalEvent<BodycamComponent, ExaminedEvent>(OnBodycamExamine);
         SubscribeLocalEvent<BodycamComponent, InventoryRelayedEvent<ExaminedEvent>>(OnBodycamWearerExamine);
-        SubscribeLocalEvent<BodycamComponent, PowerCellChangedEvent>(OnCellChange);
         SubscribeLocalEvent<BodycamComponent, PowerCellSlotEmptyEvent>(OnCellEmpty);
     }
 
@@ -68,7 +67,7 @@ public abstract class SharedBodycamSystem: EntitySystem
                 disabled = true;
                 message = Loc.GetString("bodycam-switch-on-verb-disabled-emp");
             }
-            else if (HasComp<PowerCellDrawComponent>(uid) && !_cell.HasActivatableCharge(uid) && !_cell.HasDrawCharge(uid))
+            else if (HasComp<PowerCellDrawComponent>(uid) && !_cell.HasDrawCharge(uid))
             {
                 disabled = true;
                 message = Loc.GetString("bodycam-switch-on-verb-disabled-no-power");
@@ -79,7 +78,8 @@ public abstract class SharedBodycamSystem: EntitySystem
                 Act = () => SwitchOn(uid, comp, args.User),
                 Text = Loc.GetString("bodycam-switch-on-verb"),
                 Disabled = disabled,
-                Message = message
+                Message = message,
+                Priority = -1
             });
         }
 
@@ -89,7 +89,8 @@ public abstract class SharedBodycamSystem: EntitySystem
             {
                 Act = () => SwitchOff(uid, comp, args.User),
                 Text = Loc.GetString("bodycam-switch-off-verb"),
-                Message = Loc.GetString("bodycam-switch-off-verb-tooltip")
+                Message = Loc.GetString("bodycam-switch-off-verb-tooltip"),
+                Priority = -1
             });
         }
     }
@@ -109,12 +110,6 @@ public abstract class SharedBodycamSystem: EntitySystem
             args.Args.PushMarkup(Loc.GetString("bodycam-wearer-examine-enabled", ("identity", identity)));
         else if (comp.State == BodycamState.Disabled)
             args.Args.PushMarkup(Loc.GetString("bodycam-wearer-examine-disabled", ("identity", identity)));
-    }
-
-    private void OnCellChange(EntityUid uid, BodycamComponent comp, PowerCellChangedEvent args)
-    {
-        if (args.Ejected && comp.State == BodycamState.Active)
-            SwitchOff(uid, comp);
     }
 
     private void OnCellEmpty(EntityUid uid, BodycamComponent comp, ref PowerCellSlotEmptyEvent args)
@@ -194,9 +189,9 @@ public abstract class SharedBodycamSystem: EntitySystem
         {
             _popup.PopupPredicted(Loc.GetString("bodycam-switch-off-message-unequipped"), uid, unequipper);
         }
-        else if (comp.Wearer is not null)
+        else
         {
-            _popup.PopupPredicted(Loc.GetString("bodycam-switch-off-message-unequipped"), uid, comp.Wearer);
+            _popup.PopupEntity(Loc.GetString("bodycam-switch-off-message-unequipped"), uid);
         }
 
         return true;
