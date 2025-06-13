@@ -131,7 +131,7 @@
     weight: 22
     minimumPlayers: 0
   - type: MeteorSwarm
-    startAnnouncement: true
+    startAnnouncement: true # imp
     nonDirectional: true
     meteors:
       MeteorSpaceDust: 1
@@ -150,7 +150,7 @@
     weight: 18
     minimumPlayers: 15
   - type: MeteorSwarm
-    startAnnouncement: true
+    startAnnouncement: true # imp
     meteors:
       MeteorSmall: 7
       MeteorMedium: 3
@@ -162,7 +162,7 @@
   - type: StationEvent
     weight: 10
   - type: MeteorSwarm
-    startAnnouncement: true
+    startAnnouncement: true # imp
     meteors:
       MeteorSmall: 3
       MeteorMedium: 6
@@ -175,7 +175,7 @@
   - type: StationEvent
     weight: 5
   - type: MeteorSwarm
-    startAnnouncement: true
+    startAnnouncement: true # imp
     meteors:
       MeteorSmall: 2
       MeteorMedium: 4
@@ -188,7 +188,7 @@
   - type: StationEvent
     weight: 0.05
   - type: MeteorSwarm
-    startAnnouncement: true
+    startAnnouncement: true # imp
     meteors:
       MeteorUrist: 1
     waves:
@@ -203,7 +203,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    startAnnouncement: true
+    startAnnouncement: true # imp
     weight: 3.5
     reoccurrenceDelay: 1
     duration: 1
@@ -255,8 +255,7 @@
   - type: StationEvent
     weight: 0.05
   - type: MeteorSwarm
-    announcement: station-event-meteor-cow-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    startAnnouncement: true # imp
     meteors:
       MeteorCow: 1
     waves:
@@ -273,8 +272,7 @@
   - type: StationEvent
     weight: 0.05
   - type: MeteorSwarm
-    announcement: station-event-meteor-clown-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    startAnnouncement: true # imp
     meteors:
       MeteorClown: 1
     waves:
@@ -291,8 +289,7 @@
   - type: StationEvent
     weight: 0.05
   - type: MeteorSwarm
-    announcement: station-event-meteor-potato-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    startAnnouncement: true # imp
     meteors:
       MeteorPotato: 1
     waves:
@@ -309,8 +306,7 @@
   - type: StationEvent
     weight: 0.03
   - type: MeteorSwarm
-    announcement: station-event-fun-swarm-start-announcement
-    announcementSound: /Audio/Announcements/attention.ogg
+    startAnnouncement: true # imp
     meteors:
       MeteorClown: 1
       MeteorCow: 1

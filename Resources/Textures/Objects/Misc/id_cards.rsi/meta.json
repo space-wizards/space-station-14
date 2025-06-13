@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e idcluwne made by brainfood1183 (github) for ss14, idbrigmedic made by PuroSlavKing (Github), pirate made by brainfood1183 (github), idadmin made by Arimah (github), idvisitor by IProduceWidgets (Github), idintern-service by spanky-spanky (Github) | service icons darkened by frobnic8 (Discord and Github), wizard and idwizard by ScarKy0 | idboxer and idlawyer recoloured by K-Dynamic (github). | Deathsquad, CBURN, ERT ids made/updated by RosySaturniidae (git) | headofpersonnel modified by DinnerCalzone(github) | idmime, id musician, idheadofpersonnelm modified by DinnerCalzone(github)",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e idcluwne made by brainfood1183 (github) for ss14, idbrigmedic made by PuroSlavKing (Github), pirate made by brainfood1183 (github), idadmin made by Arimah (github), idvisitor by IProduceWidgets (Github), idintern-service by spanky-spanky (Github) | service icons darkened by frobnic8 (Discord and Github), wizard and idwizard by ScarKy0 | idboxer and idlawyer recoloured by K-Dynamic (github). | Deathsquad, CBURN, ERT ids made/updated by RosySaturniidae (git) | idmime, id musician, idheadofpersonnel modified by DinnerCalzone(github)",
     "size": {
         "x": 32,
         "y": 32
@@ -35,6 +35,12 @@
             "name": "ert_security"
         },
         {
+        "name": "deathsquad"
+        },
+        {
+        "name": "cburn"
+        },
+        {
             "name": "gold"
         },
         {
@@ -57,6 +63,9 @@
         },
         {
             "name": "idcargotechnician"
+        },
+        {
+            "name": "idseniorcargo"
         },
         {
             "name": "idcentcom"

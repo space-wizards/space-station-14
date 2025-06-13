@@ -39,14 +39,6 @@
 
 # Mantle
 - type: loadout
-  id: MinerCloak
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorSalvager
-  equipment:
-    neck: ClothingNeckCloakMiner
-
-- type: loadout
   id: SaMantle
   equipment:
     neck: ClothingNeckMantle

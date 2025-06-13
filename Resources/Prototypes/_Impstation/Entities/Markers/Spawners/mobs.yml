@@ -72,20 +72,6 @@
       - id: MobGoose
 
 - type: entity
-  name: xeno lone praetorian spawner
-  id: SpawnMobXenoPraetorian
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: running
-      sprite: Mobs/Aliens/Xenos/praetorian.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobXenoLonePraetorianNoGhost
-
-- type: entity
   name: Space Bear Major Spawner
   id: SpawnMobBearMajor
   parent: MarkerBase

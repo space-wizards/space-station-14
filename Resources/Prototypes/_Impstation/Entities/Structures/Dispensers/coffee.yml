@@ -13,11 +13,21 @@
       - state: coffeemachine
       - state: unshaded
         shader: unshaded
-  - type: ReagentDispenser
-    storageWhitelist:
+  - type: Storage
+    openOnActivate: false
+    whitelist:
       tags:
       - DrinkBottle
-    pack: ImpCoffeeDispenserInventory
+  - type: StorageFill
+    contents:
+    - id: DrinkCoffeeJug
+    - id: DrinkCreamCartonXL
+    - id: DrinkSugarJug
+    - id: DrinkIceJug
+    - id: DrinkMilkCarton
+    - id: DrinkSoyMilkCarton
+    - id: JugCaramexinin
+    - id: JugCocoa
   - type: Transform
     noRot: false
   - type: Machine
@@ -33,11 +43,3 @@
   id: ImpCoffeeMachineEmpty
   suffix: Empty
   parent: ImpCoffeeMachine
-  components:
-  - type: ReagentDispenser
-    storageWhitelist:
-      tags:
-      - DrinkBottle
-    pack: EmptyInventory
-  - type: Machine
-    board: ImpCoffeeMachineCircuitboard

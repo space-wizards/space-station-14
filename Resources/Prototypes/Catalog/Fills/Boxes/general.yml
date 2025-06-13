@@ -499,6 +499,7 @@
   description: A box filled with forks and spoons.
   components:
   - type: Sprite
+    sprite: Objects/Storage/boxes.rsi # imp
     layers:
       - state: box
       - state: utensils

@@ -254,10 +254,10 @@
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 1
-  - type: GunSpreadModifier
-    spread: 0.6
     soundGunshot:
       path: /Audio/_Impstation/Weapons/Guns/Gunshots/kammerer.ogg #imp
+  - type: GunSpreadModifier
+    spread: 0.6
   - type: Tag
     tags:
     - WeaponShotgunKammerer

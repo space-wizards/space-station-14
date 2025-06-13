@@ -208,8 +208,8 @@
     - DroneUsable
 
 - type: entity
-  parent: BaseComputerCircuitboard
-  id: [ SalvageJobBoardComputerCircuitboard, BaseCargoContraband ] # imp contraband
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ] # imp contraband
+  id: SalvageJobBoardComputerCircuitboard
   name: salvage job board computer board
   description: A computer printed circuit board for a salvage job board computer.
   components:

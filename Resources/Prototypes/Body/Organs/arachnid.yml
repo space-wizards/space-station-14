@@ -43,7 +43,7 @@
     specialDigestible:  #imp edit
       tags:
       - SpiderFood
-    additiveDiet: true  #imp edit (should keep specialdigestible from making that the ONLY thing spiders can eat)
+    isSpecialDigestibleExclusive: false # also imp
   - type: SolutionContainerManager
     solutions:
       stomach:

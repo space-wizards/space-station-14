@@ -24,9 +24,8 @@
   - type: ProximityBeeper
   - type: ProximityDetector
     range: 8
-    criteria:
-      components:
-      - Stealth
+    components:
+    - type: Stealth
   - type: Beeper
     isMuted: true
     minBeepInterval: 1.00

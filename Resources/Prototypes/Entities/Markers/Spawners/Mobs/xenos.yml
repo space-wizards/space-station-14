@@ -44,7 +44,7 @@
     - state: ai
   - type: ConditionalSpawner
     prototypes:
-    - MobXenoPraetorian
+    - MobXenoLonePraetorianNoGhost # imp no ghost
 
 - type: entity
   parent: MarkerBase
