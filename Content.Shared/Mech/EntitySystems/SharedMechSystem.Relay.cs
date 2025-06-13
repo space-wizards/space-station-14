@@ -23,7 +23,7 @@ public abstract partial class SharedMechSystem
 
     public void RelayRefToPilot<T>(Entity<MechComponent> uid, ref T args)
     {
-        if(uid.Comp.PilotSlot.ContainedEntity is not { } pilot)
+        if (uid.Comp.PilotSlot.ContainedEntity is not { } pilot)
             return;
 
         var ev = new MechPilotRelayedEvent<T>(args);
