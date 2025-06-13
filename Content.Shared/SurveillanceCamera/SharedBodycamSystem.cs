@@ -6,6 +6,8 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
+using Content.Shared.PowerCell;
+using Content.Shared.PowerCell.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 
@@ -17,6 +19,7 @@ namespace Content.Shared.SurveillanceCamera;
 public abstract class SharedBodycamSystem: EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPowerCellSystem _cell = default!;
 
     public override void Initialize()
     {
@@ -26,6 +29,8 @@ public abstract class SharedBodycamSystem: EntitySystem
         SubscribeLocalEvent<BodycamComponent, GotUnequippedEvent>(OnUnequip);
         SubscribeLocalEvent<BodycamComponent, ExaminedEvent>(OnBodycamExamine);
         SubscribeLocalEvent<BodycamComponent, InventoryRelayedEvent<ExaminedEvent>>(OnBodycamWearerExamine);
+        SubscribeLocalEvent<BodycamComponent, PowerCellChangedEvent>(OnCellChange);
+        SubscribeLocalEvent<BodycamComponent, PowerCellSlotEmptyEvent>(OnCellEmpty);
     }
 
     private void OnEquip(EntityUid uid, BodycamComponent comp, GotEquippedEvent args)
@@ -62,6 +67,11 @@ public abstract class SharedBodycamSystem: EntitySystem
             {
                 disabled = true;
                 message = Loc.GetString("bodycam-switch-on-verb-disabled-emp");
+            }
+            else if (HasComp<PowerCellDrawComponent>(uid) && !_cell.HasActivatableCharge(uid))
+            {
+                disabled = true;
+                message = Loc.GetString("bodycam-switch-on-verb-disabled-no-power");
             }
 
             args.Verbs.Add(new AlternativeVerb()
@@ -101,6 +111,18 @@ public abstract class SharedBodycamSystem: EntitySystem
             args.Args.PushMarkup(Loc.GetString("bodycam-wearer-examine-disabled", ("identity", identity)));
     }
 
+    private void OnCellChange(EntityUid uid, BodycamComponent comp, PowerCellChangedEvent args)
+    {
+        if (args.Ejected && comp.State == BodycamState.Active)
+            SwitchOff(uid, comp);
+    }
+
+    private void OnCellEmpty(EntityUid uid, BodycamComponent comp, ref PowerCellSlotEmptyEvent args)
+    {
+        if (comp.State == BodycamState.Active)
+            SwitchOff(uid, comp);
+    }
+
     /// <summary>
     /// Called on a bodycam when someone alt-clicks it to turn it on.
     /// Turns the bodycam on and enables the camera (which happens on the server version of this system).
@@ -111,7 +133,8 @@ public abstract class SharedBodycamSystem: EntitySystem
         // if no one is wearing it you can't switch it on
         // if someone is wearing it but it isn't you, you don't get to switch it on
         // if it is disabled by an emp you don't get to switch it on
-        if (comp.Wearer is null || comp.Wearer != user || HasComp<EmpDisabledComponent>(uid))
+        // if it needs power but is out of power you don't get to switch it on
+        if (comp.Wearer is null || comp.Wearer != user || HasComp<EmpDisabledComponent>(uid) || HasComp<PowerCellDrawComponent>(uid) && !_cell.HasActivatableCharge(uid))
             return false;
 
         comp.State = BodycamState.Active;
