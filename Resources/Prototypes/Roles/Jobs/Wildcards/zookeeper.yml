@@ -7,7 +7,7 @@
   icon: "JobIconZookeeper"
   supervisors: job-supervisors-hop
   access:
-  - Service
+  #- Service imp edit
   - Maintenance
   special:
   - !type:GiveItemOnHolidaySpecial
@@ -25,7 +25,7 @@
   inhand:
     - WeaponRifleTranq
   storage:
-    back: 
+    back:
     - TranqDart
     - TranqDart
     - TranqDart

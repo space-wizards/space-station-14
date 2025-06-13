@@ -5,9 +5,8 @@
   playTimeTracker: JobChaplain
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
-  supervisors: job-supervisors-hd # imp
+  supervisors: job-supervisors-hop
   access:
-  - Service #imp edit
   - Chapel
   - Maintenance
   special:

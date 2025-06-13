@@ -7,7 +7,7 @@
   icon: "JobIconReporter"
   supervisors: job-supervisors-hop
   access:
-  - Service
+  #- Service imp edit
   - Maintenance
   - Reporter #Imp
 
