@@ -68,7 +68,7 @@ public abstract class SharedBodycamSystem: EntitySystem
                 disabled = true;
                 message = Loc.GetString("bodycam-switch-on-verb-disabled-emp");
             }
-            else if (HasComp<PowerCellDrawComponent>(uid) && !_cell.HasActivatableCharge(uid))
+            else if (HasComp<PowerCellDrawComponent>(uid) && !_cell.HasActivatableCharge(uid) && !_cell.HasDrawCharge(uid))
             {
                 disabled = true;
                 message = Loc.GetString("bodycam-switch-on-verb-disabled-no-power");
@@ -140,6 +140,13 @@ public abstract class SharedBodycamSystem: EntitySystem
         comp.State = BodycamState.Active;
         Dirty(uid, comp);
 
+        // shame there isnt method which handles turning on a powercell :(
+        if (TryComp<PowerCellDrawComponent>(uid, out var powerCell))
+        {
+            powerCell.Enabled = true;
+            Dirty(uid, powerCell);
+        }
+
         // we assume the person wearing the bodycam is the one turning it on
         var identity = Identity.Entity(user, EntityManager);
         var name = Identity.Name(user, EntityManager);
@@ -167,6 +174,12 @@ public abstract class SharedBodycamSystem: EntitySystem
         comp.State = BodycamState.Disabled;
         Dirty(uid, comp);
 
+        if (TryComp<PowerCellDrawComponent>(uid, out var powerCell))
+        {
+            powerCell.Enabled = false;
+            Dirty(uid, powerCell);
+        }
+
         if (user is not null)
         {
             // we assume the person wearing the bodycam is the one turning it off
@@ -181,9 +194,9 @@ public abstract class SharedBodycamSystem: EntitySystem
         {
             _popup.PopupPredicted(Loc.GetString("bodycam-switch-off-message-unequipped"), uid, unequipper);
         }
-        else
+        else if (comp.Wearer is not null)
         {
-            _popup.PopupEntity(Loc.GetString("bodycam-switch-off-message-unequipped"), uid);
+            _popup.PopupPredicted(Loc.GetString("bodycam-switch-off-message-unequipped"), uid, comp.Wearer);
         }
 
         return true;
