@@ -293,8 +293,12 @@ public sealed partial class ParrotSystem : EntitySystem
     /// <returns></returns>
     private bool TrySpeakRadio(Entity<ParrotRadioComponent> entity, string message)
     {
-        // return if this entity is not an activeradio for some reason
+        // return if this entity does not have an ActiveRadioComponent. Should never happen
         if (!TryComp<ActiveRadioComponent>(entity, out var radio))
+            return false;
+
+        // return if this entity's ActiveRadioComponent contains no channels
+        if (radio.Channels.Count == 0)
             return false;
 
         // choose random channel
