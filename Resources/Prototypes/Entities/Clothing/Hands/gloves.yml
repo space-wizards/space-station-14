@@ -156,7 +156,7 @@
   - type: Fiber
     fiberMaterial: fibers-nitrile
   - type: FingerprintMask
-####
+
 - type: entity
   parent: ClothingHandsButcherable
   id: ClothingHandsGlovesLeather
@@ -216,14 +216,14 @@
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: icon-green}
           False: {state: icon}
   - type: Insulated
@@ -417,7 +417,11 @@
       enum.MeleeSpeechUiKey.Key:
         type: MeleeSpeechBoundUserInterface
   - type: StaticPrice
-    price: 0
+    price: 2500
+  - type: Tag
+    tags:
+    - Kangaroo
+    - WhitelistChameleon
 
 - type: entity
   parent: [ClothingHandsBase, BaseSecurityContraband]
@@ -476,6 +480,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - Kangaroo
 
 - type: entity
   parent: [ClothingHandsKnuckleDusters, BaseMinorContraband] #Craftable version of base knuckledusters
@@ -494,6 +499,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - Kangaroo
 
 - type: entity
   parent: [ClothingHandsBase, BaseGrandTheftContraband]
@@ -520,6 +526,7 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - Kangaroo
   - type: StealTarget
     stealGroup: ClothingHandsKnuckleDustersQM
 
@@ -547,6 +554,9 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - Kangaroo
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   name: stun knuckle dusters
@@ -558,15 +568,15 @@
     sprite: Clothing/Hands/Gloves/KnuckleDusters/electricknuckleduster.rsi
     layers:
     - state: knuckleduster_off
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Hands/Gloves/KnuckleDusters/electricknuckleduster.rsi
     equippedPrefix: on
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: knuckleduster_on}
           False: {state: knuckleduster_off}
   - type: ToggleClothing
@@ -638,5 +648,5 @@
       collection: Punch
     animation: WeaponArcFist
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
-
+    tags:
+    - Kangaroo
