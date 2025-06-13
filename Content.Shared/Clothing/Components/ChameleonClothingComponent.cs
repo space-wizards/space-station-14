@@ -62,7 +62,7 @@ public sealed partial class ChameleonClothingComponent : Component
 
     /// <summary>
     /// Prototype that was used before EMP affected entity and it started switching
-    /// prototype sporadically.
+    /// prototype sporadically. Is server-only.
     /// </summary>
     public EntProtoId? BeforeEmpPrototype = null;
 

@@ -59,7 +59,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
                 ent.Owner,
                 ent.Comp,
                 null,
-                fields: [ nameof(ChameleonClothingComponent.NextEmpChange), nameof(ChameleonClothingComponent.BeforeEmpPrototype)]
+                fields: [ nameof(ChameleonClothingComponent.NextEmpChange)]
             );
         }
 
