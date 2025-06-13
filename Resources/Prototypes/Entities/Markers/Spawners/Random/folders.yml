@@ -15,10 +15,10 @@
   - type: RandomSpawner
     offset: 0
     prototypes:
-      - BoxFolderRed
-      - BoxFolderBlue
-      - BoxFolderYellow
-      - BoxFolderWhite
-      - BoxFolderGrey
-      - BoxFolderBlack
-      - BoxFolderGreen
+      - BoxFolderFilled
+      - BoxFolderRedFilled
+      - BoxFolderBlueFilled
+      - BoxFolderYellowFilled
+      - BoxFolderGreyFilled
+      - BoxFolderBlackFilled
+      - BoxFolderGreenFilled

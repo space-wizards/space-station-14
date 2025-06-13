@@ -142,7 +142,7 @@
   - type: StorageFill
     contents:
     - id: Paper
-      amount: 15
+      amount: 20
     - id: Pen
       amount: 2
     - id: BoxFolderClipboard
