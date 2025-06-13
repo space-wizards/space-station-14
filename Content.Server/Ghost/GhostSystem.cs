@@ -330,8 +330,11 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (_followerSystem.GetMostGhostFollowed() is not {} target)
+            if (_followerSystem.GetMostGhostFollowed() is not { } target)
+            {
+                _popup.PopupCursor(Loc.GetString("ghost-target-window-nobody-being-followed"), uid, PopupType.Medium);
                 return;
+            }
 
             WarpTo(uid, target);
         }
