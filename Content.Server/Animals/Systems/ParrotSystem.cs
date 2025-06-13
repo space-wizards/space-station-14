@@ -3,117 +3,166 @@ using Content.Server.Animals.Components;
 using Content.Server.Chat.Systems;
 using Content.Server.Radio;
 using Content.Server.Radio.Components;
-using Content.Server.Radio.EntitySystems;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
-using Content.Server.Speech.EntitySystems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Chat;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Radio;
-using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Animals.Systems;
 
+/// <summary>
+/// ParrotSystem handles parroting. That is, speaking random learnt messages from memory.
+/// At minimum, an entity requires a ParrotSpeakerComponent and a ParrotMemoryComponent for this system to be active.
+/// Without a ParrotMemoryComponent, nothing will ever be said by an entity.
+/// ParrotMemoryComponent gets filled when ParrotListenerComponent is present on the entity.
+/// With a ParrotListenerComponent, entities listen to nearby local IC chat to fill memory.
+/// If an entity also has a ParrotRadioComponent, it will also listen for messages on radio channels of radios it has
+/// equipped. It will also have a chance to say things on radio channels of radios it has equipped.
+/// </summary>
 public sealed partial class ParrotSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = null!;
     [Dependency] private readonly ChatSystem _chat = null!;
     [Dependency] private readonly IAdminLogManager _adminLogger = null!;
     [Dependency] private readonly IGameTiming _gameTiming = null!;
-    [Dependency] private readonly IPrototypeManager _proto = null!;
     [Dependency] private readonly InventorySystem _inventory = null!;
+    [Dependency] private readonly IPrototypeManager _proto = null!;
     [Dependency] private readonly IRobustRandom _random = null!;
     [Dependency] private readonly MobStateSystem _mobState = null!;
-    [Dependency] private readonly ParrotAccentSystem _parrotAccent = null!;
-    [Dependency] private readonly RadioSystem _radio = null!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ParrotComponent, ComponentInit>(OnParrotInit, after: [typeof(LoadoutSystem)]);
+        SubscribeLocalEvent<ParrotListenerComponent, MapInitEvent>(ListenerOnMapInit);
+        SubscribeLocalEvent<ParrotListenerComponent, ListenEvent>(OnListen);
 
-        SubscribeLocalEvent<ParrotComponent, ListenEvent>(OnListen);
-        SubscribeLocalEvent<ParrotComponent, RadioReceiveEvent>(OnRadioReceive);
+        SubscribeLocalEvent<ParrotRadioComponent, MapInitEvent>(RadioOnMapInit);
+        SubscribeLocalEvent<ParrotRadioComponent, RadioReceiveEvent>(OnRadioReceive);
 
-        SubscribeLocalEvent<ParrotComponent, ClothingDidEquippedEvent>(OnClothingEquipped);
-        SubscribeLocalEvent<ParrotComponent, ClothingDidUnequippedEvent>(OnClothingUnequipped);
-    }
-
-    private void OnParrotInit(Entity<ParrotComponent> entity, ref ComponentInit args)
-    {
-        EnsureComp<ActiveListenerComponent>(entity).Range = entity.Comp.ListenRange;
-
-        // get starting radio on entity
-        if (!_inventory.TryGetSlotEntity(entity, "ears", out var item))
-            return;
-
-        if (!TryComp<ActiveRadioComponent>(item.Value, out var radio))
-            return;
-
-        var radioEntity = new Entity<ActiveRadioComponent>(item.Value, radio);
-
-        entity.Comp.ActiveRadio = radioEntity;
-
-        CopyParrotRadioChannels(entity, radioEntity);
+        SubscribeLocalEvent<ParrotRadioComponent, ClothingDidEquippedEvent>(OnClothingEquipped);
+        SubscribeLocalEvent<ParrotRadioComponent, ClothingDidUnequippedEvent>(OnClothingUnequipped);
     }
 
     /// <summary>
-    /// Listen callback for when a nearby chat message is received
+    /// Fired after map initialization. Used to ensure the parrot has an ActiveListenerComponent if it has a
+    /// ParrotListenerComponent
     /// </summary>
-    private void OnListen(Entity<ParrotComponent> entity, ref ListenEvent args)
+    private void ListenerOnMapInit(Entity<ParrotListenerComponent> entity, ref MapInitEvent args)
     {
-        TryLearn(entity, args.Message, args.Source);
+        // If an entity has a ParrotRadioComponent it really ought to have an ActiveRadioComponent
+        EnsureComp<ActiveListenerComponent>(entity);
+    }
+
+    /// <summary>
+    /// Callback for when a nearby chat message is received
+    /// </summary>
+    private void OnListen(Entity<ParrotListenerComponent> entity, ref ListenEvent args)
+    {
+        TryLearn(entity.Owner, args.Message, args.Source);
+    }
+
+    /// <summary>
+    /// Fired after map initialization. Used to ensure the parrot has an ActiveRadioComponent if it has a
+    /// ParrotRadioComponent. Updates radio channels
+    /// </summary>
+    private void RadioOnMapInit(Entity<ParrotRadioComponent> entity, ref MapInitEvent args)
+    {
+        // If an entity has a ParrotRadioComponent it really ought to have an ActiveRadioComponent
+        var activeRadio = EnsureComp<ActiveRadioComponent>(entity);
+
+        UpdateParrotRadioChannels((entity, activeRadio));
     }
 
     /// <summary>
     /// Callback for when a radio message is received
     /// </summary>
-    private void OnRadioReceive(Entity<ParrotComponent> entity, ref RadioReceiveEvent args)
+    private void OnRadioReceive(Entity<ParrotRadioComponent> entity, ref RadioReceiveEvent args)
     {
-        TryLearn(entity, args.Message, args.MessageSource);
-    }
-
-    private void OnClothingEquipped(Entity<ParrotComponent> entity, ref ClothingDidEquippedEvent args)
-    {
-        if (!TryComp<ActiveRadioComponent>(args.Clothing, out var radio))
-            return;
-
-        var newActiveRadio = new Entity<ActiveRadioComponent>(args.Clothing.Owner, radio);
-
-        entity.Comp.ActiveRadio = newActiveRadio;
-
-        CopyParrotRadioChannels(entity, newActiveRadio);
-    }
-
-    private void OnClothingUnequipped(Entity<ParrotComponent> entity, ref ClothingDidUnequippedEvent args)
-    {
-        if (args.Clothing != entity.Comp.ActiveRadio)
-            return;
-
-        EnsureComp<ActiveRadioComponent>(entity, out var parrotRadio);
-
-        parrotRadio.Channels = [];
-    }
-
-    private void CopyParrotRadioChannels(Entity<ParrotComponent> entity, Entity<ActiveRadioComponent> copyFrom)
-    {
-        EnsureComp<ActiveRadioComponent>(entity, out var parrotRadio);
-
-        parrotRadio.Channels = copyFrom.Comp.Channels;
+        TryLearn(entity.Owner, args.Message, args.MessageSource);
     }
 
     /// <summary>
-    /// Try to learn a new message
+    /// Callback for when this entity equips clothing or has clothing equipped by something
+    /// Used to update the radio channels a parrot with a ParrotRadioComponent has
     /// </summary>
-    private void TryLearn(Entity<ParrotComponent> entity, string incomingMessage, EntityUid source)
+    private void OnClothingEquipped(Entity<ParrotRadioComponent> entity, ref ClothingDidEquippedEvent args)
     {
+        // only care if the equipped clothing item has an ActiveRadioComponent
+        if (!HasComp<ActiveRadioComponent>(args.Clothing))
+            return;
+
+        // update active radio channels
+        UpdateParrotRadioChannels(entity.Owner);
+    }
+
+    /// <summary>
+    /// Called if this entity unequipped clothing or has clothing unequipped by something
+    /// Used to update the radio channels a parrot with a ParrotRadioComponent has
+    /// </summary>
+    private void OnClothingUnequipped(Entity<ParrotRadioComponent> entity, ref ClothingDidUnequippedEvent args)
+    {
+        // only care if the unequipped clothing item has an ActiveRadioComponent
+        if (!HasComp<ActiveRadioComponent>(args.Clothing))
+            return;
+
+        // update active radio channels
+        UpdateParrotRadioChannels(entity.Owner);
+    }
+
+    /// <summary>
+    /// Copies all radio channels from equipped radios to the ActiveRadioComponent of an entity
+    /// </summary>
+    public void UpdateParrotRadioChannels(Entity<ActiveRadioComponent?, InventoryComponent?> entity)
+    {
+        if (!Resolve<ActiveRadioComponent>(entity, ref entity.Comp1))
+            return;
+
+        if (!Resolve<InventoryComponent>(entity, ref entity.Comp2))
+            return;
+
+        entity.Comp1.Channels.Clear();
+
+        // quit early if this entity has an inventory component but no slots
+        if (entity.Comp2.Slots.Length == 0)
+            return;
+
+        // loop through slots in inventory
+        foreach (var slot in entity.Comp2.Slots)
+        {
+            // try to get the entity in this slot
+            if (!_inventory.TryGetSlotEntity(entity, slot.Name, out var slotEntity))
+                continue;
+
+            // skip if the entity does not possess a radio component
+            if (!TryComp<ActiveRadioComponent>(slotEntity, out var inventoryActiveRadioComponent))
+                continue;
+
+            entity.Comp1.Channels.UnionWith(inventoryActiveRadioComponent.Channels);
+        }
+    }
+
+    /// <summary>
+    /// Try to learn a new chat or radio message, returning early if this entity cannot learn a new message,
+    /// the message doesn't pass certain checks, or the chance for learning a new message fails
+    /// </summary>
+    /// <param name="entity">Entity learning a new word</param>
+    /// <param name="incomingMessage">Message to learn</param>
+    /// <param name="source">Source EntityUid of the message</param>
+    private void TryLearn(Entity<ParrotMemoryComponent?> entity, string incomingMessage, EntityUid source)
+    {
+        // learning requires a memory
+        if (!Resolve<ParrotMemoryComponent>(entity, ref entity.Comp))
+            return;
+
         // can't learn when unconscious
         if (_mobState.IsIncapacitated(entity))
             return;
@@ -126,137 +175,167 @@ public sealed partial class ParrotSystem : EntitySystem
         if (source.Equals(entity))
             return;
 
-        // ignore speakers with ParrotComponent or things get silly
-        if (entity.Comp.IgnoreOtherParrots && HasComp<ParrotComponent>(source))
+        // Return if a source has a ParrotSpeakerComponent, this entity has a ParrotListenerComponent, and that
+        // component is set to ignore ParrotSpeakers.
+        // used to prevent accent parroting from getting out of hand
+        if (
+            HasComp<ParrotSpeakerComponent>(source)
+            && TryComp<ParrotListenerComponent>(entity, out var parrotListener)
+            && parrotListener.IgnoreParrotSpeakers)
             return;
 
-        // decide if this message passes a learn chance
-        if (!_random.Prob(entity.Comp.LearnChance))
-            return;
-
+        // remove whitespace around message, if any
         var message = incomingMessage.Trim();
 
-        // ignore messages containing tildes. This is a crude way to ignore whispers or people talking on radio
-        // near a parrot
+        // ignore messages containing tildes. This is a crude way to ignore whispers that are too far away
         if (message.Contains('~'))
             return;
 
+        // ignore empty messages. These probably aren't sent anyway but just in case
         if (string.IsNullOrWhiteSpace(message))
             return;
 
-        // message length out of bounds
+        // ignore messages that are too short or too long
         if (message.Length < entity.Comp.MinEntryLength || message.Length > entity.Comp.MaxEntryLength)
             return;
 
-        Learn(entity, message, source);
+        // only from this point this message has a chance of being learned
+        // set new time for learn interval, regardless of whether the learning succeeds
+        entity.Comp.NextLearnInterval += _gameTiming.CurTime + entity.Comp.LearnCooldown;
+
+        // decide if this message passes the learning chance
+        if (!_random.Prob(entity.Comp.LearnChance))
+            return;
+
+        // actually commit this message to memory
+        Learn((entity, entity.Comp), message, source);
     }
 
     /// <summary>
-    /// Callback for when a parrot succeeds in learning a new message
+    /// Actually learn a message and commit it to memory
     /// </summary>
-    private void Learn(Entity<ParrotComponent> entity, string message, EntityUid teacher)
+    /// <param name="entity">Entity learning a new word</param>
+    /// <param name="message">Message to learn</param>
+    /// <param name="source">Source EntityUid of the message</param>
+    private void Learn(Entity<ParrotMemoryComponent> entity, string message, EntityUid source)
     {
-        // set new time for learn interval
-        entity.Comp.NextLearnInterval = _gameTiming.CurTime + entity.Comp.LearnCooldown;
-
-        // reset next speak interval if this is the first thing the parrot learnt
-        if (entity.Comp.SpeechMemory.Count == 0)
+        // reset next speak interval if the entity has a ParrotSpeakComponent and this is the first thing it learns
+        // this is done so that a parrot doesn't speak the moment it learns something
+        if (TryComp<ParrotSpeakerComponent>(entity, out var speakerComponent) && entity.Comp.SpeechMemory.Count == 0)
         {
-            var randomSpeakInterval = _random.Next(entity.Comp.MinSpeakInterval, entity.Comp.MaxSpeakInterval);
-
-            entity.Comp.NextSpeakInterval = _gameTiming.CurTime + randomSpeakInterval;
+            var randomSpeakInterval = _random.Next(speakerComponent.MinSpeakInterval, speakerComponent.MaxSpeakInterval);
+            speakerComponent.NextSpeakInterval = _gameTiming.CurTime + randomSpeakInterval;
         }
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Parroting entity {ToPrettyString(entity):entity} learned the phrase \"{message}\" from {ToPrettyString(teacher):speaker}");
+        // log a low-priority chat type log to the admin logger
+        // specifies what message was learnt by what entity, and who taught the message to that entity
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Parroting entity {ToPrettyString(entity):entity} learned the phrase \"{message}\" from {ToPrettyString(source):speaker}");
 
-        // can fit more in peanut brain :)
+        // add a new message if there is space in the memory
         if (entity.Comp.SpeechMemory.Count < entity.Comp.MaxSpeechMemory)
         {
             entity.Comp.SpeechMemory.Add(message);
             return;
         }
 
-        // too much in brain. remove something :(
+        // if there's no space in memory, replace something at random
         var replaceIdx = _random.Next(entity.Comp.SpeechMemory.Count);
         entity.Comp.SpeechMemory[replaceIdx] = message;
     }
 
-    /// <summary>
-    /// Callback for when a parrot wants to say something
-    /// </summary>
-    private void Speak(Entity<ParrotComponent> entity)
+    private void TrySpeak(Entity<ParrotSpeakerComponent, ParrotMemoryComponent> entity)
     {
-        // can't talk if you don't have a speech component
-        if (!TryComp<SpeechComponent>(entity, out var speech))
+        var memory = entity.Comp2;
+
+        // return if the entity can't speak at all
+        if (!_actionBlocker.CanSpeak(entity))
             return;
 
-        // or if the speech component is disabled
-        if (!speech.Enabled)
+        // no need to continue to speak if there is nothing to say
+        if (memory.SpeechMemory.Count == 0)
             return;
 
-        // set a new time for the speak interval
-        var randomSpeakInterval = _random.Next(entity.Comp.MinSpeakInterval, entity.Comp.MaxSpeakInterval);
+        Speak(entity);
+    }
 
-        entity.Comp.NextSpeakInterval = _gameTiming.CurTime + randomSpeakInterval;
+    /// <summary>
+    /// Actually say something.
+    /// Expects an entity to have a ParrotSpeakerComponent and a ParrotMemoryComponent at minimum
+    /// If an entity also has a ParrotRadioComponent, it will have a chance to speak on the radio
+    /// </summary>
+    /// <param name="entity">The entity to make speak</param>
+    private void Speak(Entity<ParrotSpeakerComponent, ParrotMemoryComponent> entity)
+    {
+
+        var memory = entity.Comp2;
 
         // get a random message from the memory
-        var message = _random.Pick(entity.Comp.SpeechMemory);
+        var message = _random.Pick(memory.SpeechMemory);
 
         // choice between radio and chat
-        // if talking on the radio doesn't work, will fall back to regular chat
-        if (_random.Prob(entity.Comp.RadioAttemptChance) && TrySpeakRadio(entity, message))
-            return;
+        // see if the entity has a ParrotRadioComponent and whether it passes the radio attempt chance
+        if (TryComp<ParrotRadioComponent>(entity, out var radio) && _random.Prob(radio.RadioAttemptChance))
+        {
+            // try speaking on the radio. If this succeeds, return early
+            if (TrySpeakRadio(new Entity<ParrotRadioComponent>(entity, radio), message))
+                return;
+        }
 
+        // if chance to speak on radio does not pass or speaking on the radio fails for whatever reason, use chat
         _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, ChatTransmitRange.Normal);
     }
 
     /// <summary>
-    /// Attempts to speak on the radio. Returns false if there is no radio
+    /// Attempts to speak on the radio. Returns false if there is no radio or talking on radio fails somehow
     /// </summary>
-    private bool TrySpeakRadio(Entity<ParrotComponent> entity, string message)
+    /// <param name="entity">Entity to try and make speak on the radio</param>
+    /// <param name="message">Message to speak </param>
+    /// <returns></returns>
+    private bool TrySpeakRadio(Entity<ParrotRadioComponent> entity, string message)
     {
-        if (entity.Comp.ActiveRadio is null)
+        // return if this entity is not an activeradio for some reason
+        if (!TryComp<ActiveRadioComponent>(entity, out var radio))
             return false;
-
-        if (!TryComp<ActiveRadioComponent>(entity.Comp.ActiveRadio, out var radio))
-            return false;
-
-        // accentuate for radio. squawk. this isn't great, obviously
-        // also results in a different accent result between chat parrot and radio parrot
-        // if this ends up being such that the radio is chosen alongside chat
-        if (TryComp<ParrotAccentComponent>(entity, out var accentComponent))
-        {
-            var accentedEntity = new Entity<ParrotAccentComponent>(entity, accentComponent);
-            message = _parrotAccent.Accentuate(accentedEntity, message);
-        }
 
         // choose random channel
         var channel = _random.Pick(radio.Channels);
-        _radio.SendRadioMessage(entity, message, _proto.Index<RadioChannelPrototype>(channel), entity);
+        var channelPrefix = _proto.Index<RadioChannelPrototype>(channel).KeyCode;
+
+        _chat.TrySendInGameICMessage(
+            entity,
+            $"{SharedChatSystem.RadioChannelPrefix}{channelPrefix} {message}",
+            InGameICChatType.Whisper,
+            ChatTransmitRange.Normal);
 
         return true;
     }
 
     public override void Update(float frameTime)
     {
+        base.Update(frameTime);
+
+        // get current game time for delay
         var currentGameTime = _gameTiming.CurTime;
 
-        var query = EntityQueryEnumerator<ParrotComponent>();
-        while (query.MoveNext(out var uid, out var parrot))
+        // query to get all components with parrot memory and speaker
+        var query = EntityQueryEnumerator<ParrotMemoryComponent, ParrotSpeakerComponent>();
+        while (query.MoveNext(out var uid, out var parrotMemory, out var parrotSpeaker))
         {
-            // don't talk if unable to speak
-            if (!_actionBlocker.CanSpeak(uid))
+            // go to next entity if it is too early for this one to speak
+            if (currentGameTime < parrotSpeaker.NextSpeakInterval)
                 continue;
 
-            // no need to continue to speak if there is nothing to say
-            if (parrot.SpeechMemory.Count == 0)
-                continue;
+            // set a new time for the speak interval, regardless of whether speaking works
+            var randomSpeakInterval = _random.Next(parrotSpeaker.MinSpeakInterval, parrotSpeaker.MaxSpeakInterval);
+            parrotSpeaker.NextSpeakInterval += randomSpeakInterval;
 
-            // return if too early to speak
-            if (currentGameTime < parrot.NextSpeakInterval)
-                continue;
+            // if an admin updates the speak interval to be immediate, this loop will spam messages until the
+            // nextspeakinterval catches up with the current game time. Prevent this from happening
+            if (parrotSpeaker.NextSpeakInterval < _gameTiming.CurTime)
+                parrotSpeaker.NextSpeakInterval = _gameTiming.CurTime + randomSpeakInterval;
 
-            Speak(new Entity<ParrotComponent>(uid, parrot));
+            // try to speak
+            TrySpeak((uid, parrotSpeaker, parrotMemory));
         }
     }
 }

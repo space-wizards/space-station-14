@@ -2215,7 +2215,10 @@
   - type: ActiveListener
   - type: ActiveRadio
   - type: ParrotAccent
-  - type: Parrot
+  - type: ParrotListener
+  - type: ParrotSpeaker
+  - type: ParrotMemory
+  - type: ParrotRadio
   - type: Inventory
     templateId: parrot
     speciesId: parrot

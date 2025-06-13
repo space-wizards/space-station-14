@@ -865,8 +865,9 @@
   id: MobPollyParrot
   description: An expert in quantum cracker theory
   components:
-  - type: Parrot
+  - type: ParrotMemory
     learnChance: 0.5 # polly is smarter
+  - type: ParrotSpeaker
     minSpeakInterval: 120 # polly is chattier
     maxSpeakInterval: 240
   - type: Grammar
