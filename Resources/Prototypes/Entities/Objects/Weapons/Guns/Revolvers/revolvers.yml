@@ -179,4 +179,32 @@
     capacity: 5
     chambers: [ null, null, null, null, null ]
     ammoSlots: [ null, null, null, null, null ]
+
+- type: entity
+  name: snub-nose revolver
+  parent: [BaseWeaponRevolver, BaseSecurityContraband]
+  id: WeaponRevolverSnubRevolver
+  description: A single-action revolver manufactured by various companies. It is readily available on the civilian market, making it a popular choice among private investigators. You feel lucky just holding it. Loads 6 rounds of .45 magnum.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/snub.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Revolvers/snub.rsi
+  - type: RevolverAmmoProvider
+  - type: Gun
+    minAngle: 20
+    maxAngle: 35
+    angleIncrease: 8
+    angleDecay: 10
+    selectedMode: SemiAuto
+    fireRate: 0.75
+  - type: UseDelay
+    delay: 0.3
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    capacity: 6
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
     
