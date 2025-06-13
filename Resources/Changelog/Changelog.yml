@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Grinding soda cans now gives a small amount of Aluminum.
-    type: Add
-  id: 8150
-  time: '2025-04-11T00:54:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36449
 - author: RedBookcase
   changes:
   - message: The Kardashev-Mosin is now considered Major Contraband.
@@ -3910,3 +3903,10 @@
   id: 8662
   time: '2025-06-12T21:16:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38285
+- author: BigfootBravo
+  changes:
+  - message: Utensils don't spam a warning for incompatible foods.
+    type: Fix
+  id: 8663
+  time: '2025-06-13T01:48:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38297
