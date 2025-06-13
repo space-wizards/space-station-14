@@ -33,9 +33,12 @@ public sealed class GasAnalyzerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GasAnalyzerComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<GasAnalyzerComponent, GasAnalyzerDisableMessage>(OnDisabledMessage);
-        SubscribeLocalEvent<GasAnalyzerComponent, DroppedEvent>(OnDropped);
-        SubscribeLocalEvent<GasAnalyzerComponent, UseInHandEvent>(OnUseInHand);
+
+        Subs.BuiEvents<GasAnalyzerComponent>(GasAnalyzerUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIOpenedEvent>(OnBoundUIOpened);
+            subs.Event<BoundUIClosedEvent>(OnBoundUIClosed);
+        });
     }
 
     public override void Update(float frameTime)
@@ -73,21 +76,6 @@ public sealed class GasAnalyzerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Activates the analyzer with no target, so it only scans the tile the user was on when activated
-    /// </summary>
-    private void OnUseInHand(Entity<GasAnalyzerComponent> entity, ref UseInHandEvent args)
-    {
-        // Not checking for Handled because ActivatableUISystem already marks it as such.
-
-        if (!entity.Comp.Enabled)
-            ActivateAnalyzer(entity, args.User);
-        else
-            DisableAnalyzer(entity, args.User);
-
-        args.Handled = true;
-    }
-
-    /// <summary>
     /// Handles analyzer activation logic
     /// </summary>
     private void ActivateAnalyzer(Entity<GasAnalyzerComponent> entity, EntityUid user, EntityUid? target = null)
@@ -105,21 +93,14 @@ public sealed class GasAnalyzerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Close the UI, turn the analyzer off, and don't update when it's dropped
-    /// </summary>
-    private void OnDropped(Entity<GasAnalyzerComponent> entity, ref DroppedEvent args)
-    {
-        if (args.User is var userId && entity.Comp.Enabled)
-            _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
-        DisableAnalyzer(entity, args.User);
-    }
-
-    /// <summary>
     /// Closes the UI, sets the icon to off, and removes it from the update list
     /// </summary>
     private void DisableAnalyzer(Entity<GasAnalyzerComponent> entity, EntityUid? user = null)
     {
         _userInterface.CloseUi(entity.Owner, GasAnalyzerUiKey.Key, user);
+
+        if (user.HasValue && entity.Comp.Enabled)
+            _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), user.Value, user.Value);
 
         entity.Comp.Enabled = false;
         Dirty(entity);
@@ -130,9 +111,25 @@ public sealed class GasAnalyzerSystem : EntitySystem
     /// <summary>
     /// Disables the analyzer when the user closes the UI
     /// </summary>
-    private void OnDisabledMessage(Entity<GasAnalyzerComponent> entity, ref GasAnalyzerDisableMessage message)
+    private void OnBoundUIClosed(Entity<GasAnalyzerComponent> entity, ref BoundUIClosedEvent args)
     {
-        DisableAnalyzer(entity);
+        if (HasComp<ActiveGasAnalyzerComponent>(entity.Owner)
+            && !_userInterface.IsUiOpen(entity.Owner, args.UiKey))
+        {
+            DisableAnalyzer(entity, args.Actor);
+        }
+    }
+
+    /// <summary>
+    /// Enables the analyzer when the user opens the UI
+    /// </summary>
+    private void OnBoundUIOpened(Entity<GasAnalyzerComponent> entity, ref BoundUIOpenedEvent args)
+    {
+        if (!HasComp<ActiveGasAnalyzerComponent>(entity.Owner)
+            && _userInterface.IsUiOpen(entity.Owner, args.UiKey))
+        {
+            ActivateAnalyzer(entity, args.Actor);
+        }
     }
 
     /// <summary>
