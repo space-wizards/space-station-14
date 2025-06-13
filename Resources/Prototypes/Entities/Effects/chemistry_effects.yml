@@ -63,6 +63,13 @@
     - HideContextMenu
 
 - type: entity
+  parent: TearGasSmoke
+  id: TearGasSmokeWhite
+  components:
+  - type: Sprite
+    state: chemsmoke_white
+
+- type: entity
   parent: Smoke
   id: WizardSmoke
   name: smoke

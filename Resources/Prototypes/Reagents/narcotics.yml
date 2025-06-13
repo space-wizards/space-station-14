@@ -404,23 +404,26 @@
         - norepinephricacid-effect-blindness
       - !type:Emote
         emote: Scream
-        probability: 0.02
+        probability: 0.08
+        conditions:
+        - !type:ReagentThreshold
+          min: 4
       - !type:Emote
         emote: Cough
-        probability: 0.2
+        probability: 0.08
       - !type:GenericStatusEffect
         key: TemporaryBlindness
         component: TemporaryBlindness
         conditions:
         - !type:ReagentThreshold
-          min: 5
+          min: 4
       - !type:MovespeedModifier
-        walkSpeedModifier: 0.5
-        sprintSpeedModifier: 0.5
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
         statusLifetime: 1.5
         conditions: # because of the remainding after effect, threshold is given so the effects ends simultaniously
         - !type:ReagentThreshold
-          min: 5
+          min: 4
 
 - type: reagent
   id: Happiness
