@@ -59,6 +59,7 @@
   - type: Tag
     tags:
     - MonkeyWearable
+    - WhitelistChameleon
 
 #Prisoner EVA
 - type: entity
