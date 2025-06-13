@@ -34,6 +34,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
 
         SubscribeLocalEvent<PowerCellComponent, ChargeChangedEvent>(OnChargeChanged);
         SubscribeLocalEvent<PowerCellComponent, EmpAttemptEvent>(OnCellEmpAttempt);
+        SubscribeLocalEvent<PowerCellComponent, MapInitEvent>(OnCellMapInit);
 
         SubscribeLocalEvent<PowerCellDrawComponent, ChargeChangedEvent>(OnDrawChargeChanged);
         SubscribeLocalEvent<PowerCellDrawComponent, PowerCellChangedEvent>(OnDrawCellChanged);
@@ -43,6 +44,16 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
 
         SubscribeLocalEvent<PowerCellSlotComponent, GetChargeEvent>(OnGetCharge);
         SubscribeLocalEvent<PowerCellSlotComponent, ChangeChargeEvent>(OnChangeCharge);
+    }
+
+    private void OnCellMapInit(EntityUid uid, PowerCellComponent comp, MapInitEvent args)
+    {
+        if (!TryComp<BatteryComponent>(uid, out var battery))
+            return;
+
+        var percentage = battery.CurrentCharge / battery.MaxCharge * 100;
+        comp.PercentCharge = percentage;
+        Dirty(uid, comp);
     }
 
     private void OnSlotMicrowaved(EntityUid uid, PowerCellSlotComponent component, BeingMicrowavedEvent args)
