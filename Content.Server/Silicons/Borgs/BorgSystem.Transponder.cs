@@ -48,9 +48,7 @@ public sealed partial class BorgSystem
             if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
                 charge = battery.CurrentCharge / battery.MaxCharge;
 
-            var hpPercent = 1f;
-            if (TryComp<DamageableComponent>(uid, out var damageable))
-                hpPercent = CalcHP(uid, damageable);
+            var hpPercent = CalcHP(uid);
 
             // checks if it has a brain and if the brain is not a empty MMI (gives false anyway if the fake disable is true)
             var hasBrain = CheckBrain(chassis.BrainEntity) && !comp.FakeDisabled;
@@ -171,18 +169,21 @@ public sealed partial class BorgSystem
     /// <summary>
     /// Returns a ratio between 0 and 1, 1 when they have no damage and 0 whenever they are crit (or more damaged)
     /// </summary>
-    private float CalcHP(EntityUid uid, DamageableComponent dmg)
+    private float CalcHP(EntityUid uid)
     {
+        if (!TryComp<DamageableComponent>(uid, out var damageable))
+            return 1;
+
         if (!_mobStateSystem.IsAlive(uid))
             return 0;
 
         if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold))
         {
-            Log.Error($"Borg({ToPrettyString(uid)}), doesn't have critical threshold. Trace: {Environment.StackTrace}");
+            Log.Error($"Borg({ToPrettyString(uid)}), doesn't have critical threshold.");
             return 1;
         }
 
-        return 1 - ((FixedPoint2)(dmg.TotalDamage / threshold)).Float();
+        return 1 - ((FixedPoint2)(damageable.TotalDamage / threshold)).Float();
     }
 
     /// <summary>
