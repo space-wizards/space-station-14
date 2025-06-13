@@ -203,7 +203,7 @@ public sealed partial class ParrotSystem : EntitySystem
 
         // only from this point this message has a chance of being learned
         // set new time for learn interval, regardless of whether the learning succeeds
-        entity.Comp.NextLearnInterval += _gameTiming.CurTime + entity.Comp.LearnCooldown;
+        entity.Comp.NextLearnInterval = _gameTiming.CurTime + entity.Comp.LearnCooldown;
 
         // decide if this message passes the learning chance
         if (!_random.Prob(entity.Comp.LearnChance))
