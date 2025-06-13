@@ -33,41 +33,12 @@ public sealed class HealthExaminableSystem : EntitySystem
 
         // get correct icon
         string icon = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png"; // default
-        if(detailsRange) // only show specifics when in detail range, otherwise show generic icon
+        if (detailsRange) // only show specifics when in detail range, otherwise show generic icon
         {
             if (thresholds.CurrentThresholdState == MobState.Dead) icon = "/Textures/Interface/VerbIcons/rejuvenate-dead.svg.192dpi.png"; // dead
             else if (thresholds.CurrentThresholdState == MobState.Critical) icon = "/Textures/Interface/VerbIcons/rejuvenate-crit.svg.192dpi.png"; // crit
-            else // health icons
-            {
-                // change icon depending on normalized damage
-                // get normalized damage
-                if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var threshold, thresholds))
-                    return;
-                var value = (damage.TotalDamage / threshold).Value.Float();
-
-                if (value > 0.8f)
-                {
-                    icon = "/Textures/Interface/VerbIcons/rejuvenate-verybad.svg.192dpi.png";
-                }
-                else if (value > 0.6f)
-                {
-                    icon = "/Textures/Interface/VerbIcons/rejuvenate-bad.svg.192dpi.png";
-                }
-                else if (value > 0.4f)
-                {
-                    icon = "/Textures/Interface/VerbIcons/rejuvenate-poor.svg.192dpi.png";
-                }
-                else if (value > 0.2f)
-                {
-                    icon = "/Textures/Interface/VerbIcons/rejuvenate-okay.svg.192dpi.png";
-                }
-                else
-                {
-                    icon = "/Textures/Interface/VerbIcons/rejuvenate-good.svg.192dpi.png";
-                }
-            }
         }
-        
+
 
         var verb = new ExamineVerb()
         {
