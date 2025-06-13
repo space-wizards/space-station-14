@@ -1,63 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Grinding soda cans now gives a small amount of Aluminum.
-    type: Add
-  id: 8150
-  time: '2025-04-11T00:54:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36449
-- author: RedBookcase
-  changes:
-  - message: The Kardashev-Mosin is now considered Major Contraband.
-    type: Tweak
-  id: 8151
-  time: '2025-04-11T00:57:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36446
-- author: Nukesthestation
-  changes:
-  - message: Zombies /suicideing return to an ai state
-    type: Tweak
-  id: 8152
-  time: '2025-04-11T01:12:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36453
-- author: YoungThugSS14
-  changes:
-  - message: Wizards now appear roundstart in the "all at once" gamemode.
-    type: Tweak
-  id: 8153
-  time: '2025-04-11T02:06:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36408
-- author: DinnerCalzone
-  changes:
-  - message: Fixed gas mixers and pneumatic valves being hidden by floor tiles.
-    type: Fix
-  id: 8154
-  time: '2025-04-11T02:10:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36428
-- author: Nox38, BurgerMoth, ArtisticRoomba
-  changes:
-  - message: Added descriptions for all .25 caseless cartridges, magazines, and ammo
-      boxes.
-    type: Add
-  id: 8155
-  time: '2025-04-11T02:15:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36385
-- author: Nox38, BurgerMoth, ArtisticRoomba
-  changes:
-  - message: Added descriptions to all .45 magnum cartridges, magazines, speed loaders,
-      and ammo boxes.
-    type: Add
-  id: 8156
-  time: '2025-04-11T04:58:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36383
-- author: PJB3005
-  changes:
-  - message: Lobby time on Wizard's Den has been increased from 2 minute 30 seconds
-      to 5 minutes.
-    type: Tweak
-  id: 8157
-  time: '2025-04-12T09:05:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36476
 - author: Quantum-cross
   changes:
   - message: Supercrit anomaly playing explosion sound twice
@@ -3910,3 +3851,65 @@
   id: 8662
   time: '2025-06-12T21:16:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38285
+- author: BigfootBravo
+  changes:
+  - message: Utensils don't spam a warning for incompatible foods.
+    type: Fix
+  id: 8663
+  time: '2025-06-13T01:48:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38297
+- author: hoshizora-sayo
+  changes:
+  - message: Fixed crafting menu entries that included modular machine parts
+    type: Fix
+  id: 8664
+  time: '2025-06-13T05:21:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38299
+- author: nkokic
+  changes:
+  - message: Tear gas smoke is now white and semi-transparent.
+    type: Tweak
+  - message: Tear gas now causes coughing, slows you down and hits a bit faster than
+      before.
+    type: Add
+  id: 8665
+  time: '2025-06-13T13:53:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36440
+- author: M1tht1c
+  changes:
+  - message: You can now remove visitors mindshields.
+    type: Fix
+  - message: Disaster victims now have mindshields when appropriate.
+    type: Fix
+  id: 8666
+  time: '2025-06-13T14:43:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36537
+- author: SyaoranFox
+  changes:
+  - message: Rat King is now a full antag.
+    type: Tweak
+  id: 8667
+  time: '2025-06-13T15:52:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38124
+- author: qrwas
+  changes:
+  - message: add missing locale for Undergarment
+    type: Fix
+  id: 8668
+  time: '2025-06-13T16:09:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38304
+- author: slarticodefast
+  changes:
+  - message: Fixed some reagents like puncturase healing bleeding when they shouldn't.
+    type: Fix
+  id: 8669
+  time: '2025-06-13T16:11:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38289
+- author: Kittygyat
+  changes:
+  - message: Monkeys & kobolds can now wear emergency EVA suits, with a fresh new
+      sprite to go along with it! You're welcome, Pun-Pun enthusiasts!
+    type: Tweak
+  id: 8670
+  time: '2025-06-13T18:54:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37660
