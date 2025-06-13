@@ -1,7 +1,7 @@
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 
-namespace Content.IntegrationTests.Tests
+namespace Content.IntegrationTests.Tests.Inventory
 {
     // Tests the behavior of InventoryComponent.
     // i.e. the interaction between uniforms and the pocket/ID slots.
