@@ -59,8 +59,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         }
     }
 
-
-
     public void SetLoaded(bool value)
     {
         Loaded.Visible = value;
@@ -116,30 +114,34 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
                 targetControl.RegisterJobIcon(icon);
             }
 
+            icon.OnPriorityChanged += SendUpdatedPriorities;
+
             GetTargetControl(prio).AddJobIcon(icon, preOrdered: true);
         }
     }
 
-    // private void ContainerMouseUp(Container gridContainer, DraggableJobIcon icon, GUIBoundKeyEventArgs args)
-    // {
-    //     if (!icon.Dragging
-    //         || gridContainer.Parent is not BoxContainer prioContainer
-    //         || !prioContainer.GlobalRect.Contains(_uiManager.MousePositionScaled.Position))
-    //         return;
-    //
-    //
-    //
-    //     icon.StopDragging(gridContainer);
-    //     prioContainer.Modulate = Color.White;
-    //
-    //     if(insertAt >= 0)
-    //         icon.SetPositionInParent(insertAt);
-    // }
-    //
-    // private void CheckInContainer(Container container, Vector2 pos, DraggableJobIcon icon, float size)
-    // {
-    //
-    // }
+    private void SendUpdatedPriorities()
+    {
+        _preferences.UpdateJobPriorities(GetJobPriorities());
+    }
+
+    public Dictionary<ProtoId<JobPrototype>, JobPriority> GetJobPriorities()
+    {
+        var result = new Dictionary<ProtoId<JobPrototype>, JobPriority>();
+
+        foreach (var prio in Enum.GetValues<JobPriority>())
+        {
+            if (prio == JobPriority.Never)
+                continue;
+
+            foreach (var job in GetTargetControl(prio).GetContainedJobs())
+            {
+                result.Add(job, prio);
+            }
+        }
+
+        return result;
+    }
 
     private Tooltip? CreateJobTooltip(JobPrototype job)
     {
