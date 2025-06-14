@@ -175,11 +175,13 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
                 WriteSample(component, sensorData, "teg_circ_a_in_temperature",  SensorUnit.TemperatureK, tegData.CirculatorA.InletTemperature);
                 WriteSample(component, sensorData, "teg_circ_a_out_pressure",    SensorUnit.PressureKpa,  tegData.CirculatorA.OutletPressure);
                 WriteSample(component, sensorData, "teg_circ_a_out_temperature", SensorUnit.TemperatureK, tegData.CirculatorA.OutletTemperature);
+                WriteSample(component, sensorData, "teg_circ_a_temp",            SensorUnit.TemperatureK, tegData.CirculatorA.Temperature);
 
                 WriteSample(component, sensorData, "teg_circ_b_in_pressure",     SensorUnit.PressureKpa,  tegData.CirculatorB.InletPressure);
                 WriteSample(component, sensorData, "teg_circ_b_in_temperature",  SensorUnit.TemperatureK, tegData.CirculatorB.InletTemperature);
                 WriteSample(component, sensorData, "teg_circ_b_out_pressure",    SensorUnit.PressureKpa,  tegData.CirculatorB.OutletPressure);
                 WriteSample(component, sensorData, "teg_circ_b_out_temperature", SensorUnit.TemperatureK, tegData.CirculatorB.OutletTemperature);
+                WriteSample(component, sensorData, "teg_circ_b_temp",            SensorUnit.TemperatureK, tegData.CirculatorB.Temperature);
                 // @formatter:on
                 break;
 
