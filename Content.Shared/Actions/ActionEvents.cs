@@ -180,3 +180,22 @@ public abstract partial class BaseActionEvent : HandledEntityEventArgs
     /// </summary>
     public bool Toggle;
 }
+
+
+/// <summary>
+/// Raised directly on an entity when they have an action added to them.
+/// </summary>
+[ByRefEvent]
+public readonly struct AddedActionEvent(Entity<ActionComponent> action)
+{
+    public readonly Entity<ActionComponent> Action = action;
+}
+
+/// <summary>
+/// Raised directly on an entity when they have an action removed from them
+/// </summary>
+[ByRefEvent]
+public readonly struct RemovedActionEvent(Entity<ActionComponent> action)
+{
+    public readonly Entity<ActionComponent> Action = action;
+}
