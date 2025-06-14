@@ -28,7 +28,7 @@ public sealed class ExitContainerOnMoveSystem : EntitySystem
             return;
 
         //🌟Starlight🌟 Prevent sleeping or stunned entities from exiting containers
-        if (TryComp<SleepingComponent>(args.Entity, out _) || TryComp<StunnedComponent>(args.Entity, out _))
+        if (HasComp<SleepingComponent>(args.Entity) || HasComp<StunnedComponent>(args.Entity))
             return;
 
         _climb.ForciblySetClimbing(args.Entity, ent);
