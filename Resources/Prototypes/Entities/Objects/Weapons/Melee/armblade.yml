@@ -12,12 +12,13 @@
     state: icon
   - type: MeleeWeapon
     wideAnimationRotation: 90
-    attackRate: 0.75
+    attackRate: 1
     damage:
       types:
-        Slash: 25
-        Piercing: 15
+        Slash: 10
+        Piercing: 10
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/armblade.rsi
   - type: Prying
+    pryPowered: true
