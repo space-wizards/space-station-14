@@ -42,7 +42,7 @@ def process_path(path):
 if __name__ == "__main__":
     #check for necessary filepath
     if len(sys.argv) < 2:
-        print("Usage: script.py <path-to-.yml-file-or-directory>")
+        print("Usage: MAP_FIX.py <path-to-.yml-file-or-directory>")
         sys.exit(1)
     
     input_path = sys.argv[1]
