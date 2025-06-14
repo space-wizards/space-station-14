@@ -300,7 +300,7 @@
     color: green
 
 - type: entity
-  parent: FlippoLighter
+  parent: Lighter
   id: DiscountDanLighter
   name: Discount Dan's lighter
   description: "The worst lighter ever produced, lighterburn is inevitable, do not refuel while lit."
@@ -331,6 +331,10 @@
       right:
       - state: inhand-right-flame
         shader: unshaded
+  - type: RandomSprite
+    available:
+      - skin:
+          discount_icon_base: ""
   - type: PointLight
     enabled: false
     netsync: false
