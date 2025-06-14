@@ -3,7 +3,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.CPR;
 
-public sealed partial class ServerCPRSystem : SharedCPRSystem
+public sealed partial class CPRSystem : SharedCPRSystem
 {
     public override void DoLunge(EntityUid user)
     {

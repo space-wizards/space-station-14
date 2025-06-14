@@ -54,14 +54,20 @@ public abstract partial class SharedCPRSystem : EntitySystem
     /// <param name="giver">The one giving CPR</param>
     public bool CanDoCPR(EntityUid recipient, EntityUid giver)
     {
-        if (!TryComp<CPRComponent>(recipient, out var cpr) || !TryComp<MobThresholdsComponent>(recipient, out var thresholds) || !TryComp<MobThresholdsComponent>(giver, out var myThresholds))
+        if (!TryComp<CPRComponent>(recipient, out var cpr) ||
+            !TryComp<MobThresholdsComponent>(recipient, out var thresholds) ||
+            !TryComp<MobThresholdsComponent>(giver, out var myThresholds))
             return false;
 
-        if (thresholds.CurrentThresholdState != MobState.Critical || myThresholds.CurrentThresholdState == MobState.Critical || myThresholds.CurrentThresholdState == MobState.Dead)
+        if (thresholds.CurrentThresholdState != MobState.Critical ||
+            myThresholds.CurrentThresholdState == MobState.Critical ||
+            myThresholds.CurrentThresholdState == MobState.Dead)
             return false;
 
         // return false if someone else has very recently given care already
-        if (cpr.LastCaretaker.HasValue && !CPRCaretakerOutdated(cpr) && cpr.LastCaretaker.Value != giver)
+        if (cpr.LastCaretaker.HasValue &&
+            !CPRCaretakerOutdated(cpr) &&
+            cpr.LastCaretaker.Value != giver)
             return false;
 
         return true;
@@ -89,7 +95,9 @@ public abstract partial class SharedCPRSystem : EntitySystem
         if (!CanDoCPR(ent, args.User))
             return;
 
-        if (!TryComp<DamageableComponent>(ent, out var damage) || !TryComp<CPRComponent>(ent, out var cpr) || !TryComp<MobThresholdsComponent>(ent, out var thresholds))
+        if (!TryComp<DamageableComponent>(ent, out var damage) ||
+            !TryComp<CPRComponent>(ent, out var cpr) ||
+            !TryComp<MobThresholdsComponent>(ent, out var thresholds))
             return;
 
         DoLunge(args.User);
@@ -141,7 +149,9 @@ public abstract partial class SharedCPRSystem : EntitySystem
         // try starting CPR
         if (CanDoCPR(recipient, giver) && InRangeForCPR(recipient, giver) && _doAfter.TryStartDoAfter(doAfterEventArgs))
         {
-            _popup.PopupPredicted(Loc.GetString("cpr-start-you", ("target", Identity.Entity(recipient, EntityManager))), Loc.GetString("cpr-start", ("person", Identity.Entity(giver, EntityManager)), ("target", Identity.Entity(recipient, EntityManager))), giver, giver, PopupType.Medium);
+            var localString = Loc.GetString("cpr-start-you", ("target", Identity.Entity(recipient, EntityManager)));
+            var othersString = Loc.GetString("cpr-start", ("person", Identity.Entity(giver, EntityManager)), ("target", Identity.Entity(recipient, EntityManager)));
+            _popup.PopupPredicted(localString, othersString, giver, giver, PopupType.Medium);
         }
     }
 

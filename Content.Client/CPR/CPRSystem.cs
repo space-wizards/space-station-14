@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace Content.Client.CPR;
 
-public sealed partial class ClientCPRSystem : SharedCPRSystem
+public sealed partial class CPRSystem : SharedCPRSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
 
@@ -42,24 +42,26 @@ public sealed partial class ClientCPRSystem : SharedCPRSystem
     {
         const float endLength = CPRAnimationLength;
 
+        var animationTrack = new AnimationTrackComponentProperty()
+        {
+            ComponentType = typeof(SpriteComponent),
+            Property = nameof(SpriteComponent.Offset),
+            InterpolationMode = AnimationInterpolationMode.Cubic,
+            KeyFrames =
+            {
+                new AnimationTrackProperty.KeyFrame(new Vector2(0f,0f), 0f),
+                new AnimationTrackProperty.KeyFrame(direction.Normalized() * 0.12f, endLength * 0.2f),
+                new AnimationTrackProperty.KeyFrame(direction.Normalized() * 0.16f, endLength * 0.4f),
+                new AnimationTrackProperty.KeyFrame(new Vector2(0f,0f), endLength)
+            }
+        };
+
         return new Animation
         {
             Length = TimeSpan.FromSeconds(CPRAnimationEndTime),
             AnimationTracks =
             {
-                new AnimationTrackComponentProperty()
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Offset),
-                    InterpolationMode = AnimationInterpolationMode.Cubic,
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(new Vector2(0f,0f), 0f),
-                        new AnimationTrackProperty.KeyFrame(direction.Normalized() * 0.12f, endLength * 0.2f),
-                        new AnimationTrackProperty.KeyFrame(direction.Normalized() * 0.16f, endLength * 0.4f),
-                        new AnimationTrackProperty.KeyFrame(new Vector2(0f,0f), endLength)
-                    }
-                }
+                animationTrack
             }
         };
     }
