@@ -7,7 +7,6 @@ using Content.Client.Gameplay;
 using Content.IntegrationTests.Pair;
 using Content.Server.Body.Systems;
 using Content.Server.Hands.Systems;
-using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Shared.Body.Part;
 using Content.Shared.DoAfter;
@@ -22,6 +21,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.Stacks;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
 using Content.Shared.Item.ItemToggle;
@@ -99,7 +99,7 @@ public abstract partial class InteractionTest
     protected IGameTiming STiming = default!;
     protected IComponentFactory Factory = default!;
     protected HandsSystem HandSys = default!;
-    protected StackSystem Stack = default!;
+    protected SharedStackSystem Stack = default!;
     protected SharedInteractionSystem InteractSys = default!;
     protected Content.Server.Construction.ConstructionSystem SConstruction = default!;
     protected SharedDoAfterSystem DoAfterSys = default!;
@@ -171,7 +171,7 @@ public abstract partial class InteractionTest
         MapSystem = SEntMan.System<SharedMapSystem>();
         SConstruction = SEntMan.System<Server.Construction.ConstructionSystem>();
         STestSystem = SEntMan.System<InteractionTestSystem>();
-        Stack = SEntMan.System<StackSystem>();
+        Stack = SEntMan.System<SharedStackSystem>();
         SLogger = Server.ResolveDependency<ILogManager>().RootSawmill;
         SUiSys = Client.System<SharedUserInterfaceSystem>();
 
