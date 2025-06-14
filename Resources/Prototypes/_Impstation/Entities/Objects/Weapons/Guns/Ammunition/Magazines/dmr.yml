@@ -17,6 +17,16 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#820a16" #imp
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#820a16" #imp
 
 - type: entity
   id: MagazineDMREmpty
@@ -33,6 +43,12 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: [ "enum.GunVisualLayers.Mag" ]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag
 
 - type: entity
   id: MagazineDMRPractice
@@ -48,6 +64,16 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#d63b28" #imp
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#d63b28" #imp
 
 - type: entity
   id: MagazineDMRUranium
@@ -63,6 +89,16 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#6b805e" #imp
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#6b805e" #imp
 
 - type: entity
   id: MagazineDMRIncendiary

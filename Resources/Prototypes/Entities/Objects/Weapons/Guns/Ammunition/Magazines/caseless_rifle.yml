@@ -153,11 +153,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
 
 - type: entity
   id: MagazineCaselessRifle
@@ -178,11 +178,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
 
 - type: entity
   id: MagazineCaselessRiflePractice
@@ -203,11 +203,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
 
 - type: entity
   id: MagazineCaselessRifleShort
@@ -229,11 +229,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
 
 - type: entity
   id: MagazineCaselessRifleShortPractice
@@ -255,8 +255,8 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp

@@ -161,11 +161,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
 
 - type: entity
   id: MagazinePistolEmpty
@@ -217,11 +217,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
 
 - type: entity
   id: MagazinePistolUranium
@@ -242,11 +242,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#00cd42"
+        color: "#6b805e" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#00cd42"
+        color: "#6b805e" #imp
 
 - type: entity
   id: MagazinePistolHighCapacityEmpty
@@ -289,11 +289,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
 
 - type: entity
   id: MagazinePistolHighCapacityPractice
@@ -314,11 +314,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
 
 - type: entity
   id: MagazinePistolHighCapacityRubber
@@ -359,11 +359,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
 
 - type: entity
   id: MagazinePistolSubMachineGunEmpty
@@ -406,11 +406,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
 
 - type: entity
   id: MagazinePistolSubMachineGunUranium
@@ -431,11 +431,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#00cd42"
+        color: "#6b805e" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#00cd42"
+        color: "#6b805e" #imp
 
 - type: entity
   parent: BaseMagazinePistolSubMachineGun

@@ -372,9 +372,9 @@
       params:
         volume: 5
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/energybolts.rsi #imp
     layers:
-    - state: omnilaser
+    - state: mediumtemp2
       shader: unshaded
   - type: Ammo
     muzzleFlash: null
@@ -406,9 +406,11 @@
   parent: WatcherBolt
   categories: [ HideSpawnMenu ]
   components:
+  - type: Ammo #imp
+    muzzleFlash: MuzzleFlashEffectTempCold
   - type: Projectile
     #   soundHit:  Waiting on serv3
-    impactEffect: BulletImpactEffectDisabler
+    impactEffect: BulletImpactEffectCold #imp
     damage:
       types:
         Cold: 10
@@ -424,14 +426,15 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/energybolts.rsi #imp
     layers:
-    - state: omnilaser_greyscale
+    - state: mediumtemp #imp
       shader: unshaded
-      color: orangered
+  - type: Ammo
+    muzzleFlash: MuzzleFlashEffectTempHot #imp
   - type: Projectile
     #   soundHit:  Waiting on serv3
-    impactEffect: BulletImpactEffectOrangeDisabler
+    impactEffect: BulletImpactEffectHot #imp
     damage:
       types:
         Heat: 0
@@ -1140,6 +1143,8 @@
   parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
+  - type: Ammo #imp
+    muzzleFlash: null
   - type: TimedDespawn
     lifetime: 5
   - type: Sprite

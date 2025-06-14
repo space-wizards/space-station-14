@@ -18,7 +18,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    sprite: _Wizden/Objects/Weapons/Guns/Ammunition/Boxes/rifle.rsi # imp
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/rifle.rsi # imp
   - type: MagazineVisuals
     magState: mag
     steps: 4

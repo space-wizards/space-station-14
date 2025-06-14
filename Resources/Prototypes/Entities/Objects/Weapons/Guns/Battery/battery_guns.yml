@@ -222,7 +222,7 @@
   description: The power of the primordial element of lightning in your hands.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/tesla_gun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/tesla_gun.rsi #imp
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
@@ -1004,13 +1004,13 @@
 #imp edit end
 
 - type: entity
-  name: temperature gun
+  name: RA-96 temperature gun #imp
   parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponTemperatureGun
   description: An advanced gun that shoots body-temperature-changing beams. This probably constitutes as some kind of war crime.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/temp_gun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/temp_gun.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -1027,7 +1027,7 @@
     steps: 5
     zeroVisible: false
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Battery/temp_gun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/temp_gun.rsi #imp
   - type: Gun
     fireRate: 1
     soundGunshot:

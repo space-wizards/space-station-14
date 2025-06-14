@@ -131,20 +131,20 @@
   - type: Appearance
 
 - type: entity
-  name: M-90gl
+  name: Valkyrie #imp
   parent: [BaseWeaponRifle, Tier3Contraband]
   id: WeaponRifleM90GrenadeLauncher
-  description: An older bullpup-carbine model with an attached underbarrel grenade launcher. Uses .20 rifle ammo.
+  description: A top-of-the-line assault rifle reserved for Nanotrasen's most elite mercenaries. Uses .20 rifle ammo. #imp
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Rifles/carbine.rsi #imp
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Rifles/carbine.rsi #imp
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -164,6 +164,16 @@
         whitelist:
           tags:
             - CartridgeRifle
+  - type: Gun #imp - everything listed in this component
+    minAngle: 21
+    maxAngle: 40
+    angleIncrease: 2
+    angleDecay: 15
+    fireRate: 6
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+      - SemiAuto
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot

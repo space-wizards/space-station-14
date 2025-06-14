@@ -22,11 +22,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#d73307"
+        color: "#820a16" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#d73307"
+        color: "#820a16" #imp
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -72,11 +72,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#ba7710"
+        color: "#820a16" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#ba7710"
+        color: "#820a16" #imp
 
 - type: entity
   id: MagazineShotgunBeanbag
@@ -97,11 +97,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#30722d"
+        color: "#4477bc" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#30722d"
+        color: "#4477bc" #imp
 
 - type: entity
   id: MagazineShotgunSlug
@@ -122,11 +122,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#72382d"
+        color: "#dcb54c" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#72382d"
+        color: "#dcb54c" #imp
 
 - type: entity
   id: MagazineShotgunIncendiary
@@ -147,8 +147,8 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#72382d"
+        color: "#d63b28" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#72382d"
+        color: "#d63b28" #imp

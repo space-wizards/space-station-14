@@ -222,9 +222,9 @@
     - 0,1,0,1
     storedRotation: 0
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Snipers/flintlock.rsi #imp
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Snipers/flintlock.rsi #imp
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 8 #it's a flintlock

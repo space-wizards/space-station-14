@@ -2,6 +2,7 @@
     "version": 1,
     "license": "CC-BY-SA-3.0",
     "copyright": "taken from TGStation on commit https://github.com/tgstation/tgstation/commit/26818af618762ff52319b3417be8cdc1279e99b7",
+    "MetaAtlas": false,
     "size": {
         "x": 32,
         "y": 32

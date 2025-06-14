@@ -46,7 +46,7 @@
   #  steps: 4
   #  zeroVisible: false
   - type: Sprite
-    sprite: _Wizden/Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi # imp
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi # imp
     layers:
       - state: capbase # imp
         map: ["enum.GunVisualLayers.Base"]
