@@ -29,6 +29,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
+using Content.Shared.Friction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
@@ -74,6 +75,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
+    [Dependency] private readonly TileFrictionController _tileFrictionController = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
@@ -438,8 +440,18 @@ public sealed partial class AdminVerbSystem
 
                     _physics.SetLinearVelocity(args.Target, _random.NextVector2(1.5f, 1.5f), manager: fixtures, body: physics);
                     _physics.SetAngularVelocity(args.Target, MathF.PI * 12, manager: fixtures, body: physics);
-                    _physics.SetLinearDamping(args.Target, physics, 0f);
-                    _physics.SetAngularDamping(args.Target, physics, 0f);
+                    Dirty(args.Target, physics);
+
+                    EnsureComp<TileFrictionModifierComponent>(args.Target, out var tile);
+                    _tileFrictionController.SetModifier(args.Target, 0);
+                    Dirty(args.Target, tile);
+
+                    if (TryComp<MovementSpeedModifierComponent>(args.Target, out var move))
+                    {
+                        _movementSpeedModifierSystem.ChangeAllFriction((args.Target, move), 0);
+                        _movementSpeedModifierSystem.RefreshFrictionModifiers((args.Target, move));
+                        Dirty(args.Target, move);
+                    }
                 },
                 Impact = LogImpact.Extreme,
                 Message = string.Join(": ", pinballName, Loc.GetString("admin-smite-pinball-description"))
@@ -469,8 +481,17 @@ public sealed partial class AdminVerbSystem
 
                     _physics.SetLinearVelocity(args.Target, _random.NextVector2(8.0f, 8.0f), manager: fixtures, body: physics);
                     _physics.SetAngularVelocity(args.Target, MathF.PI * 12, manager: fixtures, body: physics);
-                    _physics.SetLinearDamping(args.Target, physics, 0f);
-                    _physics.SetAngularDamping(args.Target, physics, 0f);
+
+                    EnsureComp<TileFrictionModifierComponent>(args.Target, out var tile);
+                    _tileFrictionController.SetModifier(args.Target, 0);
+                    Dirty(args.Target, tile);
+
+                    if (TryComp<MovementSpeedModifierComponent>(args.Target, out var move))
+                    {
+                        _movementSpeedModifierSystem.ChangeAllFriction((args.Target, move), 0);
+                        _movementSpeedModifierSystem.RefreshFrictionModifiers((args.Target, move));
+                        Dirty(args.Target, move);
+                    }
                 },
                 Impact = LogImpact.Extreme,
                 Message = string.Join(": ", yeetName, Loc.GetString("admin-smite-yeet-description"))
@@ -670,7 +691,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Machines/gravity_generator.rsi"), "off"),
             Act = () =>
             {
-                var grav = EnsureComp<MovementIgnoreGravityComponent>(args.Target);
+                EnsureComp<MovementIgnoreGravityComponent>(args.Target, out var grav);
                 grav.Weightless = true;
 
                 Dirty(args.Target, grav);
