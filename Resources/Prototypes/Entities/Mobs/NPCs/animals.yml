@@ -3107,9 +3107,6 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
-  - type: Tag
-    tags:
-      - DoorBumpOpener
   - type: Access
     tags: 
     - NuclearOperative
