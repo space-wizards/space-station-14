@@ -1,17 +1,13 @@
 using Content.Server.Nutrition.Components;
-
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Sliceable;
 using Content.Shared.Storage;
-
 using Robust.Server.GameObjects;
-
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
@@ -58,8 +54,7 @@ public sealed class SliceableSystem : SharedSliceableSystem
             if (!_container.IsEntityOrParentInContainer(sliceUid))
             {
                 var randVect = _random.NextVector2(2.0f, 2.5f);
-                if (TryComp<PhysicsComponent>(sliceUid, out var physics))
-                    _physics.SetLinearVelocity(sliceUid, randVect, body: physics);
+                _physics.SetLinearVelocity(sliceUid, randVect);
             }
 
             // Fills new slice if comp allows.

@@ -8,9 +8,7 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Content.Shared.Interaction;
-
 using Robust.Shared.Utility;
-
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Sliceable;
@@ -36,29 +34,24 @@ public abstract class SharedSliceableSystem : EntitySystem
         if (args.Handled)
             return;
 
-        ToolComponent? toolComp = null;
-        EntityUid? tool = null;
-
         // Tryes to get tool component in held entity, after it on entity itself.
-        if (Resolve(args.Used, ref toolComp))
-            tool = args.Used;
-
-        else if (Resolve(args.User, ref toolComp))
-            tool = args.User;
-
-        else
-            return;
-
-        if (_tools.HasQuality(tool.Value, sliceComp.ToolQuality))
+        if (_tools.HasQuality(args.Used, sliceComp.ToolQuality))
         {
             args.Handled = true;
-            OnVerbUsing(target, args.User, tool.Value, sliceComp.SliceTime, toolComp);
+            OnVerbUsing(target, args.Used, args.User, sliceComp.SliceTime.Seconds, sliceComp.ToolQuality);
+            return;
+        }
+        else if (_tools.HasQuality(args.User, sliceComp.ToolQuality))
+        {
+            args.Handled = true;
+            OnVerbUsing(target, args.User, args.User, sliceComp.SliceTime.Seconds, sliceComp.ToolQuality);
+            return;
         }
     }
 
     private void AddSliceVerb(EntityUid target, SliceableComponent sliceComp, GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanInteract)
             return;
 
         var used = args.Using;
@@ -89,29 +82,25 @@ public abstract class SharedSliceableSystem : EntitySystem
             Message = verbMessage,
             Act = () =>
             {
-                OnVerbUsing(target, args.User, used.Value, sliceComp.SliceTime, toolComp);
+                OnVerbUsing(target, args.User, used.Value, sliceComp.SliceTime.Seconds, sliceComp.ToolQuality);
             },
         };
         args.Verbs.Add(verb);
     }
 
-    private void OnVerbUsing(EntityUid target, EntityUid user, EntityUid used, float time, ToolComponent toolComp)
+    private void OnVerbUsing(EntityUid target, EntityUid user, EntityUid used, float time, string qualities)
     {
         _tools.UseTool(
             used,
             user,
             target,
             time,
-            toolComp.Qualities,
+            qualities,
             new TrySliceEvent());
     }
 
     private void AfterSlicing(EntityUid uid, SliceableComponent comp, TrySliceEvent args)
     {
-        if (args.Used == null)
-            return;
-
-        var used = args.Used.Value;
         var hasBody = TryComp<BodyComponent>(uid, out var body);
 
         // only show a big popup when butchering living things.
@@ -119,7 +108,7 @@ public abstract class SharedSliceableSystem : EntitySystem
         if (hasBody)
             popupType = PopupType.LargeCaution;
 
-        _popupSystem.PopupEntity(Loc.GetString("slice-butchered-success", ("target", uid), ("knife", used)),
+        _popupSystem.PopupEntity(Loc.GetString("slice-butchered-success", ("target", uid), ("knife", args.Used!)),
             args.User, popupType);
 
         if (hasBody)
