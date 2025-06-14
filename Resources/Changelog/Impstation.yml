@@ -1,21 +1,6 @@
 ﻿Entries:
 - author: mqole
   changes:
-  - message: You can now tell whether a manual valve is on or off without prying up
-      the floorboards.
-    type: Tweak
-  id: 1327
-  time: '2025-03-16T03:32:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1978
-- author: mqole
-  changes:
-  - message: Revolutionaries will no longer see red (in chat, that is).
-    type: Fix
-  id: 1328
-  time: '2025-03-16T03:31:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1975
-- author: mqole
-  changes:
   - message: Your guidebook's description for holy water has been updated to be non-denominational
       and anti-entropic.
     type: Tweak
@@ -4195,3 +4180,17 @@
   id: 1826
   time: '2025-06-14T04:36:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2732
+- author: mqole
+  changes:
+  - message: FIXED WHITE
+    type: Fix
+  id: 1827
+  time: '2025-06-14T07:11:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2756
+- author: msTheowo
+  changes:
+  - message: Unadapted to space disability
+    type: Add
+  id: 1828
+  time: '2025-06-14T17:34:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2676
