@@ -1,22 +1,22 @@
 ## supertables
 # letters
-- type: entityTable 
+- type: entityTable
   id: LetterImpCommonEntityTable # TODO: populating the spam letter list with a lot of imp letters
   table: !type:GroupSelector
     children:
     - !type:NestedSelector
-      weight: 2 
+      weight: 2
       tableId: LetterImpBookEntityTable
     - !type:NestedSelector
       weight: 4
       tableId: LetterImpSnacksEntityTable
     - !type:NestedSelector
-      weight: 2 
+      weight: 2
       tableId: LetterImpToysEntityTable
     - !type:NestedSelector
       tableId: LetterImpCreaturesEntityTable
 
-- type: entityTable 
+- type: entityTable
   id: LetterImpUncommonEntityTable
   table: !type:GroupSelector
     children:
@@ -34,7 +34,7 @@
     - !type:NestedSelector
       tableId: LetterImpSmokesEntityTable
 
-- type: entityTable 
+- type: entityTable
   id: LetterImpRareEntityTable
   table: !type:GroupSelector
     children:
@@ -43,7 +43,7 @@
     - !type:NestedSelector
       tableId: LetterImpKnifeEntityTable
 # packages
-- type: entityTable 
+- type: entityTable
   id: PackageImpCommonEntityTable
   table: !type:GroupSelector
     children:
@@ -56,7 +56,7 @@
     - !type:NestedSelector
       tableId: PackageImpBongEntityTable
 
-- type: entityTable 
+- type: entityTable
   id: PackageImpUncommonEntityTable
   table: !type:GroupSelector
     children:
@@ -169,9 +169,7 @@
         - id: CigPackNewport
         - id: CigPackSpirits
         - id: CigarCase
-        - id: CigPackMixedRejects
-        - id: CigPackMixedNasty
-        - id: CigPackMixedMedical
+        - id: CigPackMixed
     - !type:AllSelector
       weight: 0.3
       children:
@@ -243,7 +241,7 @@
     - id: MobAngryBee
       weight: 0.1
 # toys
-- type: entityTable 
+- type: entityTable
   id: LetterImpToysEntityTable
   table: !type:GroupSelector
     children:
@@ -470,7 +468,7 @@
       tableId: PackageFuckingGunTable
       weight: 0.01
 
-- type: entityTable 
+- type: entityTable
   id: PackageToyWeaponEntityTable
   table: !type:GroupSelector
     weight: 0.8
@@ -493,7 +491,7 @@
       - id: SlightlySmallerRock
       - id: PlushieThrongler
 
-- type: entityTable 
+- type: entityTable
   id: PackageRealWeaponEntityTable
   table: !type:GroupSelector
     children:
@@ -523,7 +521,7 @@
     - id: WeaponLauncherChinaLake
       weight: 0.01
 # assorted items
-- type: entityTable 
+- type: entityTable
   id: PackageImpMiscEntityTable
   table: !type:GroupSelector
     children:
@@ -547,7 +545,7 @@
       - id: ClothingMaskMuzzle
       - id: ClothingEyesBlindfold
 # friends! i'm impatient for tcktck to come back and i dont wanna wait for departmental mail
-- type: entityTable 
+- type: entityTable
   id: PackageImpFriendsEntityTable
   table: !type:GroupSelector
     children:
