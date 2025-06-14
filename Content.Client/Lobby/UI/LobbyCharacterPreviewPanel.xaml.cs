@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+using System.Linq;
 using System.Numerics;
 using Content.Client.Lobby.UI.ProfileEditorControls;
 using Content.Client.Players.PlayTimeTracking;
@@ -30,11 +32,34 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
 
     private EntityUid? _previewDummy;
 
+    public DraggableJobTarget GetTargetControl(JobPriority prio)
+    {
+        return FindControl<DraggableJobTarget>($"{prio.ToString()}Box");
+    }
+
+
     public LobbyCharacterPreviewPanel()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
+
+        DraggableJobTarget.UpdatedOrderedJobs(_prototypeManager);
+
+        GetTargetControl(JobPriority.High).SetFallbackTarget(GetTargetControl(JobPriority.Medium));
     }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (args.WasModified<JobPrototype>() || args.WasModified<DepartmentPrototype>())
+        {
+            DraggableJobTarget.UpdatedOrderedJobs(_prototypeManager);
+            Refresh();
+        }
+    }
+
+
 
     public void SetLoaded(bool value)
     {
@@ -54,17 +79,9 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     /// </summary>
     public void Refresh()
     {
-        var iconContainers = new List<Container>()
+        foreach (var prio in Enum.GetValues<JobPriority>())
         {
-            NeverBox,
-            LowBox,
-            MediumBox,
-            HighBox,
-        };
-
-        foreach(var iconContainer in iconContainers)
-        {
-            iconContainer.DisposeAllChildren();
+            GetTargetControl(prio).ClearIcons();
         }
 
         if(_preferences.Preferences is not {} prefs)
@@ -74,7 +91,8 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
 
         var priorities = prefs.JobPriorities;
 
-        foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+        // Create the job icons in order
+        foreach (var job in DraggableJobTarget.OrderedJobs)
         {
             if (!job.SetPreference)
                 continue;
@@ -84,23 +102,44 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
             var prio = priorities.GetValueOrDefault(job, JobPriority.Never);
 
             var atLeastOneEnabled = prefs.GetAllEnabledProfilesForJob(job).Count != 0;
-            var icon = new TextureRect
-            {
-                TextureScale = new Vector2(prio == JobPriority.High ? 8 : 3),
-                VerticalAlignment = VAlignment.Center,
-                HorizontalAlignment = HAlignment.Center,
-                TooltipSupplier = _ => CreateJobTooltip(job),
-                MouseFilter = MouseFilterMode.Pass,
-            };
+            var icon = new DraggableJobIcon(job,
+                _ => CreateJobTooltip(job));
+
             if(!atLeastOneEnabled)
                 icon.Modulate = Color.Salmon;
 
             var jobIcon = _prototypeManager.Index(job.Icon);
             icon.Texture = _sprite.Frame0(jobIcon.Icon);
 
-            iconContainers[(int)prio].AddChild(icon);
+            foreach (var targetControl in Enum.GetValues<JobPriority>().Select(GetTargetControl))
+            {
+                targetControl.RegisterJobIcon(icon);
+            }
+
+            GetTargetControl(prio).AddJobIcon(icon, preOrdered: true);
         }
     }
+
+    // private void ContainerMouseUp(Container gridContainer, DraggableJobIcon icon, GUIBoundKeyEventArgs args)
+    // {
+    //     if (!icon.Dragging
+    //         || gridContainer.Parent is not BoxContainer prioContainer
+    //         || !prioContainer.GlobalRect.Contains(_uiManager.MousePositionScaled.Position))
+    //         return;
+    //
+    //
+    //
+    //     icon.StopDragging(gridContainer);
+    //     prioContainer.Modulate = Color.White;
+    //
+    //     if(insertAt >= 0)
+    //         icon.SetPositionInParent(insertAt);
+    // }
+    //
+    // private void CheckInContainer(Container container, Vector2 pos, DraggableJobIcon icon, float size)
+    // {
+    //
+    // }
 
     private Tooltip? CreateJobTooltip(JobPrototype job)
     {
