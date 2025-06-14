@@ -60,6 +60,7 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
+  - UnadaptedToSpace # imp edit
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit

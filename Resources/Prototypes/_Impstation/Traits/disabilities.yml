@@ -116,3 +116,11 @@
     minimumWait: 300
     maximumWait: 600 # triggers once every 5-10 minutes
     learnChance: 0.1
+
+- type: trait
+  id: UnadaptedToSpace
+  name: trait-unadapted-to-space-name
+  description: trait-unadapted-to-space-desc
+  category: Disabilities
+  components:
+  - type: UnadaptedToSpace
