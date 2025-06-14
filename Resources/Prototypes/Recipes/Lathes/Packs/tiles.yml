@@ -9,6 +9,10 @@
   - FloorTileItemDarkHerringbone
   - FloorTileItemDarkMini
   - FloorTileItemDarkMono
+  - FloorTileItemDarkVerticalSlatsContinuous
+  - FloorTileItemDarkVerticalSlatsBordered
+  - FloorTileItemDarkHorizontalSlatsContinuous
+  - FloorTileItemDarkHorizontalSlatsBordered
   - FloorTileItemDarkPavement
   - FloorTileItemDarkPavementVertical
   - FloorTileItemDarkOffset
@@ -19,6 +23,10 @@
   - FloorTileItemSteelDiagonal
   - FloorTileItemSteelHerringbone
   - FloorTileItemSteelMini
+  - FloorTileItemSteelVerticalSlatsContinuous
+  - FloorTileItemSteelVerticalSlatsBordered
+  - FloorTileItemSteelHorizontalSlatsContinuous
+  - FloorTileItemSteelHorizontalSlatsBordered
   - FloorTileItemSteelMono
   - FloorTileItemSteelPavement
   - FloorTileItemSteelPavementVertical
@@ -29,6 +37,10 @@
   - FloorTileItemWhiteHerringbone
   - FloorTileItemWhiteMini
   - FloorTileItemWhiteMono
+  - FloorTileItemWhiteVerticalSlatsContinuous
+  - FloorTileItemWhiteVerticalSlatsBordered
+  - FloorTileItemWhiteHorizontalSlatsContinuous
+  - FloorTileItemWhiteHorizontalSlatsBordered
   - FloorTileItemWhitePavement
   - FloorTileItemWhitePavementVertical
   - FloorTileItemSteelCheckerLight
