@@ -7361,4 +7361,70 @@ Entries:
   id: 1017
   time: '2025-06-14T02:11:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/758
+- author: CringeCursed
+  changes:
+  - message: Changelog validator for github PRs.
+    type: Add
+  id: 1018
+  time: '2025-06-14T21:09:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/813
+- author: Citrea
+  changes:
+  - message: Handheld artifact containers can actually be used now
+    type: Fix
+  id: 1019
+  time: '2025-06-14T21:23:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/823
+- author: RoadTrain
+  changes:
+  - message: Changed syndicate borg laws to more closely resemble emagged crewsimov.
+    type: Tweak
+  id: 1020
+  time: '2025-06-14T21:39:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/811
+- author: biteless-dot
+  changes:
+  - message: Added new NanoTrasen clipboard for NTR, IAA, and Magistrate jobs (aesthetic
+      only)
+    type: Add
+  id: 1021
+  time: '2025-06-14T21:43:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/784
+- author: biteless-dot
+  changes:
+  - message: Added new NTR Pen in the NTR's PDA.
+    type: Add
+  id: 1022
+  time: '2025-06-14T21:43:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/784
+- author: CringeCursed
+  changes:
+  - message: Now you cant exit abductor return pod when you're asleep or stunned.
+    type: Fix
+  id: 1023
+  time: '2025-06-14T21:45:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/797
+- author: walksanatora
+  changes:
+  - message: hey so I heard you like theiving. so I made a paper that gives you every
+      steal objective in the game. very rarely in mail.
+    type: Add
+  id: 1024
+  time: '2025-06-14T21:49:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/767
+- author: walksanatora
+  changes:
+  - message: made antag mail slightly more common. and the reasons to join the syndicate
+      a bit rarer,
+    type: Tweak
+  id: 1025
+  time: '2025-06-14T21:49:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/767
+- author: walksanatora
+  changes:
+  - message: re-added closet skeletons to the spawning pool.
+    type: Tweak
+  id: 1026
+  time: '2025-06-14T21:56:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/785
 
