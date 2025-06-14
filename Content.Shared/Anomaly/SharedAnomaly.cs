@@ -17,6 +17,14 @@ public enum AnomalyVisualLayers : byte
     Animated
 }
 
+[Serializable, NetSerializable]
+public enum AnomalyStabilityVisuals : byte
+{
+    Stable = 1,
+    Decaying = 2,
+    Growing = 3,
+}
+
 /// <summary>
 /// The types of anomalous particles used
 /// for interfacing with anomalies.
@@ -41,7 +49,7 @@ public enum AnomalousParticleType : byte
 public enum AnomalyVesselVisuals : byte
 {
     HasAnomaly,
-    AnomalyState
+    AnomalySeverity,
 }
 
 [Serializable, NetSerializable]
@@ -66,6 +74,27 @@ public enum AnomalyGeneratorVisualLayers : byte
 public enum AnomalyScannerUiKey : byte
 {
     Key
+}
+
+[Serializable, NetSerializable]
+public enum AnomalyScannerVisuals : byte
+{
+    HasAnomaly,
+    AnomalyStability,
+    AnomalySeverity,
+    AnomalyNextPulse,
+    AnomalyIsSupercritical,
+}
+
+[Serializable, NetSerializable]
+public enum AnomalyScannerVisualLayers : byte
+{
+    Base,
+    Screen,
+    SeverityMask,
+    Stability,
+    Pulse,
+    Supercritical,
 }
 
 [Serializable, NetSerializable]
