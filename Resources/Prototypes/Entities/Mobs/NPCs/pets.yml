@@ -672,7 +672,7 @@
         Piercing: 8
         Poison: 8
   - type: Spider
-    SpawnsWebsAsNonPlayer: false
+    spawnsWebsAsNonPlayer: false
   - type: Grammar
     attributes:
       proper: true
