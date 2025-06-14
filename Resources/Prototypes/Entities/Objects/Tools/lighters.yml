@@ -560,27 +560,6 @@
     color: yellow
 
 - type: entity
-  parent: [BaseItem, BaseSyndicateContraband]
-  id: GorlexMatchbox
-  name: Gorlex match dispenser
-  description: "A pneumatic match box styled after the Gorlex Marauders' equipment. Ejects matches without the need to open it. Contains 20 matches."
-  components:
-  - type: Sprite
-    sprite: Objects/Tools/Lighters/gorlex.rsi
-    layers:
-    - state: icon
-      map: ["base"]
-  - type: Item
-    sprite: Objects/Tools/Lighters/gorlex.rsi
-  - type: SpawnItemsOnUse
-    items:
-      - id: GorlexMatchstick
-    sound:
-      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
-    uses: 20
-  - type: Matchbox
-
-- type: entity
   name: match stick
   parent: [Matchstick, BaseSyndicateContraband]
   id: GorlexMatchstick
