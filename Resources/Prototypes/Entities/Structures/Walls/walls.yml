@@ -1422,6 +1422,9 @@
           collection: MetalSlam
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - type: StaticPrice # imp arbitrage
+        price: 295
+
 
 
 # Vault Walls
