@@ -20,7 +20,7 @@ public sealed partial class RetractableItemActionComponent : Component
     /// Sound collection to play when the item is summoned.
     /// </summary>
     [DataField]
-    public SoundCollectionSpecifier? SpawnSounds;
+    public SoundCollectionSpecifier? SummonSounds;
 
     /// <summary>
     /// Sound collection to play when the summoned item is retracted back into the action.
@@ -34,5 +34,8 @@ public sealed partial class RetractableItemActionComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? ActionItemUid;
 
-    public const string Container = "item-action-item-container";
+    /// <summary>
+    /// The container ID used to store the item.
+    /// </summary>
+    public const string ContainerId = "item-action-item-container";
 }

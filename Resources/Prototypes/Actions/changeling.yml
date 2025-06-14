@@ -15,7 +15,7 @@
     event: !type:OnRetractableItemActionEvent
   - type: RetractableItemAction
     spawnedPrototype: ArmBlade
-    spawnSounds:
+    summonSounds:
       collection: gib # Placeholder
     retractSounds:
       collection: gib # Placeholder

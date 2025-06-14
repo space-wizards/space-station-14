@@ -45,6 +45,11 @@ public sealed class GlueSystem : SharedGlueSystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
+        // If glue is applied to an unremoveable item, the component will disappear after the duration.
+        // This effecitvely means any unremoveable item could be removed with a bottle of glue.
+        if (HasComp<UnremoveableComponent>(args.Target))
+            return;
+
         if (TryGlue(entity, target, args.User))
             args.Handled = true;
     }

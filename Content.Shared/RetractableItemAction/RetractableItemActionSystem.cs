@@ -1,9 +1,9 @@
 using Content.Shared.Actions;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
+using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 
 namespace Content.Shared.RetractableItemAction;
 
@@ -16,7 +16,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
-    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly SharedPopupSystem _popups = default!;
 
     public override void Initialize()
     {
@@ -30,7 +30,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
 
     private void OnActionInit(Entity<RetractableItemActionComponent> ent, ref MapInitEvent args)
     {
-        _containers.EnsureContainer<Container>(ent, RetractableItemActionComponent.Container);
+        _containers.EnsureContainer<Container>(ent, RetractableItemActionComponent.ContainerId);
 
         PopulateActionItem(ent.Owner);
     }
@@ -49,17 +49,24 @@ public sealed class RetractableItemActionSystem : EntitySystem
         if (ent.Comp.ActionItemUid == null)
             return;
 
+        // Don't allow to summon an item if holding an unremoveable item unless that item is summoned by the action.
+        if (userHand.HeldEntity != null && !_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid) && !_hands.CanDropHeld(args.Performer, userHand, false))
+        {
+            _popups.PopupClient(Loc.GetString("retractable-item-hand-cannot-drop"), args.Performer, args.Performer);
+            return;
+        }
+
         if (_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid))
         {
             RemComp<UnremoveableComponent>(ent.Comp.ActionItemUid.Value);
-            var container = _containers.GetContainer(ent, RetractableItemActionComponent.Container);
+            var container = _containers.GetContainer(ent, RetractableItemActionComponent.ContainerId);
             _containers.Insert(ent.Comp.ActionItemUid.Value, container);
             _audio.PlayPredicted(ent.Comp.RetractSounds, action.Comp.AttachedEntity.Value, action.Comp.AttachedEntity.Value);
         }
         else
         {
             _hands.TryForcePickup(args.Performer, ent.Comp.ActionItemUid.Value, userHand, checkActionBlocker: false);
-            _audio.PlayPredicted(ent.Comp.SpawnSounds, action.Comp.AttachedEntity.Value, action.Comp.AttachedEntity.Value);
+            _audio.PlayPredicted(ent.Comp.SummonSounds, action.Comp.AttachedEntity.Value, action.Comp.AttachedEntity.Value);
             EnsureComp<UnremoveableComponent>(ent.Comp.ActionItemUid.Value);
         }
 
@@ -83,7 +90,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false) || TerminatingOrDeleted(ent))
             return;
 
-        if (!PredictedTrySpawnInContainer(ent.Comp.SpawnedPrototype, ent.Owner, RetractableItemActionComponent.Container, out var summoned))
+        if (!PredictedTrySpawnInContainer(ent.Comp.SpawnedPrototype, ent.Owner, RetractableItemActionComponent.ContainerId, out var summoned))
             return;
 
         ent.Comp.ActionItemUid = summoned.Value;

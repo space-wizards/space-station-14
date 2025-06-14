@@ -125,8 +125,8 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Tries to pick up an entity into a hand, forcing to drop an item if its not free
-    /// By default it does check if it's possible to drop items
+    /// Tries to pick up an entity into a hand, forcing to drop an item if its not free.
+    /// By default it does check if it's possible to drop items.
     /// </summary>
     public bool TryForcePickup(
         EntityUid uid,
