@@ -2,26 +2,29 @@
   id: MeatSpike
   start: start
   graph:
-    - node: start
-      actions:
-        - !type:DeleteEntity {}
-      edges:
-        - to: MeatSpike
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-          steps:
-            - material: Steel
-              amount: 15
-              doAfter: 2
-    - node: MeatSpike
-      entity: KitchenSpike
-      edges:
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 15
-          steps:
-            - tool: Screwing
-              doAfter: 1
+  - node: start
+    actions:
+    - !type:DeleteEntity {}
+    edges:
+    - to: MeatSpike
+      completed:
+      - !type:AdminLog # Needs a log for start of attempt in addition to the completion log
+        message: "Construction"
+        impact: High
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: Steel
+        amount: 15
+        doAfter: 2
+  - node: MeatSpike
+    entity: KitchenSpike
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 15
+      steps:
+      - tool: Screwing
+        doAfter: 1

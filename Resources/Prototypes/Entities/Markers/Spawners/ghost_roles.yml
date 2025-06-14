@@ -18,9 +18,9 @@
   - type: GhostRole
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-antagonist-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -190,6 +190,26 @@
     - state: green
     - sprite: Objects/Weapons/Melee/energykatana.rsi
       state: icon
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostParadoxClone
+  components:
+  - type: GhostRole
+    name: ghost-role-information-paradox-clone-name
+    description: ghost-role-information-paradox-clone-description
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: default
+  - type: Sprite
+    layers:
+    - sprite: Markers/jobs.rsi
+      state: green
+    - sprite: Mobs/Aliens/paradox_clone.rsi
+      state: preview
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]

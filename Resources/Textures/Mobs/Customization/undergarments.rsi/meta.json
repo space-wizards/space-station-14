@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "sprites taken from https://github.com/cmss13-devs/cmss13/blob/884ab172389b6fc54ef063f5fbea5e8b0a0a2235/icons/mob/humans/underwear.dmi and https://github.com/cmss13-devs/cmss13/blob/884ab172389b6fc54ef063f5fbea5e8b0a0a2235/icons/mob/humans/undershirt.dmi, edited by SlamBamActionman",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "briefs",
+      "directions": 4
+    },
+    {
+      "name": "satin",
+      "directions": 4
+    },
+    {
+      "name": "boxers",
+      "directions": 4
+    },
+    {
+      "name": "classic",
+      "directions": 4
+    },
+    {
+      "name": "sports",
+      "directions": 4
+    },
+    {
+      "name": "binder",
+      "directions": 4
+    },
+    {
+      "name": "tanktop",
+      "directions": 4
+    },
+    {
+      "name": "briefs_vox",
+      "directions": 4
+    },
+    {
+      "name": "satin_vox",
+      "directions": 4
+    },
+    {
+      "name": "boxers_vox",
+      "directions": 4
+    },
+    {
+      "name": "classic_vox",
+      "directions": 4
+    },
+    {
+      "name": "sports_vox",
+      "directions": 4
+    },
+    {
+      "name": "binder_vox",
+      "directions": 4
+    },
+    {
+      "name": "tanktop_vox",
+      "directions": 4
+    },
+    {
+      "name": "briefs_reptilian",
+      "directions": 4
+    },
+    {
+      "name": "satin_reptilian",
+      "directions": 4
+    },
+    {
+      "name": "boxers_reptilian",
+      "directions": 4
+    }
+  ]
+}

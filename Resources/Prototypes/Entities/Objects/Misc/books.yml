@@ -356,6 +356,7 @@
     nameSegments:
     - BookHintAppearances
     - BookTypes
+    nameFormat: name-format-book
   - type: RandomSprite
     available:
       - cover:

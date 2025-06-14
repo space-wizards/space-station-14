@@ -2,19 +2,22 @@ using Content.Server.EUI;
 using Content.Shared.Eui;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Server.Ghost;
 
 public sealed class ReturnToBodyEui : BaseEui
 {
     private readonly SharedMindSystem _mindSystem;
+    private readonly ISharedPlayerManager _player;
+    private readonly NetUserId? _userId;
 
-    private readonly MindComponent _mind;
-
-    public ReturnToBodyEui(MindComponent mind, SharedMindSystem mindSystem)
+    public ReturnToBodyEui(MindComponent mind, SharedMindSystem mindSystem, ISharedPlayerManager player)
     {
-        _mind = mind;
         _mindSystem = mindSystem;
+        _player = player;
+        _userId = mind.UserId;
     }
 
     public override void HandleMessage(EuiMessageBase msg)
@@ -28,7 +31,8 @@ public sealed class ReturnToBodyEui : BaseEui
             return;
         }
 
-        _mindSystem.UnVisit(_mind.Session);
+        if (_userId is { } userId && _player.TryGetSessionById(userId, out var session))
+            _mindSystem.UnVisit(session);
 
         Close();
     }

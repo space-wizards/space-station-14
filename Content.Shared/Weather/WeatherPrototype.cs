@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weather;
 
-[Prototype("weather")]
+[Prototype]
 public sealed partial class WeatherPrototype : IPrototype
 {
     [IdDataField] public string ID { get; private set; } = default!;
