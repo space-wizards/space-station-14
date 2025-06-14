@@ -316,27 +316,25 @@
       visible: false
       shader: unshaded
       map: [ "flame" ]
-  - type: Item
-    sprite: Objects/Tools/Lighters/discountdan.rsi
   - type: Welder # the single worst lighter invented by mankind
     fuelConsumption: 0.2
     fuelLitCost: 0.1
     tankSafe: false
+  - type: ToggleableLightVisuals
+    spriteLayer: lighter_flame
+    inhandVisuals:
+      left:
+      - state: inhand-left-flame
+        shader: unshaded
+      right:
+      - state: inhand-right-flame
+        shader: unshaded
   - type: GenericVisualizer
     visuals:
       enum.ToggleVisuals.Toggled:
         flame:
           True: { visible: true }
           False: { visible: false }
-  - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-lit
-        shader: unshaded
-      right:
-      - state: inhand-right-lit
-        shader: unshaded
   - type: PointLight
     enabled: false
     netsync: false
