@@ -237,32 +237,23 @@
     stealGroup: FlippoEngravedLighter
 
 - type: entity
-  parent: [FlippoLighter, BaseSyndicateContraband]
-  id: SyndicateFlippo
-  name: Blood-red flippo
-  description: "A 'Valid' choice in lighters. Contains no copper."
+  abstract: true
+  id: BaseBrandedLighter
   components:
   - type: Sprite
-    sprite: Objects/Tools/Lighters/syndielighter.rsi
     layers:
     - state: icon
-      map: ["base"]
+      map: [ "base" ]
     - state: top
-      map: ["top"]
+      map: [ "top" ]
       visible: false
     - state: open
-      map: ["open"]
+      map: [ "open" ]
       visible: false
-    - state: fire
-      map: ["flame"]
+    - state: flame
+      map: [ "flame" ]
       visible: false
       shader: unshaded
-  - type: Item
-    sprite: Objects/Tools/Lighters/syndielighter.rsi
-  - type: Welder
-    fuelConsumption: 0
-    fuelLitCost: 0
-    tankSafe: true
   - type: GenericVisualizer
     visuals:
       enum.ToggleVisuals.Toggled:
@@ -287,17 +278,26 @@
       right:
       - state: inhand-right-lit
         shader: unshaded
+
+- type: entity
+  parent: [BaseBrandedLighter, FlippoLighter, BaseSyndicateContraband]
+  id: SyndicateFlippo
+  name: Blood-red flippo
+  description: "A 'Valid' choice in lighters. Contains no copper."
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Lighters/syndielighter.rsi
+  - type: Item
+    sprite: Objects/Tools/Lighters/syndielighter.rsi
+  - type: Welder
+    fuelConsumption: 0.005
+    fuelLitCost: 0.01
+    tankSafe: true
   - type: PointLight
     enabled: false
     netsync: false
     radius: 2
     color: green
-  - type: SolutionRegeneration
-    solution: Welder
-    generated:
-      reagents:
-      - ReagentId: WeldingFuel
-        Quantity: 0.1
 
 - type: entity
   parent: FlippoLighter
@@ -318,7 +318,7 @@
       map: [ "flame" ]
   - type: Item
     sprite: Objects/Tools/Lighters/discountdan.rsi
-  - type: Welder # the single worst lighter invented by mankind o7
+  - type: Welder # the single worst lighter invented by mankind
     fuelConsumption: 0.2
     fuelLitCost: 0.1
     tankSafe: false
@@ -357,56 +357,19 @@
         maxVol: 3
 
 - type: entity
-  parent: [FlippoLighter, BaseSyndicateContraband]
+  parent: [BaseBrandedLighter,FlippoLighter, BaseSyndicateContraband]
   id: CybersunFlippo
   name: CyberSun Flippo
-  description: "A Sleek black-and-magenta flippo lighter, bearing the logo and iconography of CyberSun Industries."
+  description: "A Sleek black and magenta flippo lighter, bearing the logo and iconography of CyberSun Industries."
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/cybersun.rsi
-    layers:
-    - state: icon
-      map: ["base"]
-    - state: top
-      map: ["top"]
-      visible: false
-    - state: open
-      map: ["open"]
-      visible: false
-    - state: flame
-      map: ["flame"]
-      visible: false
-      shader: unshaded
   - type: Item
     sprite: Objects/Tools/Lighters/cybersun.rsi
   - type: Welder #
-    fuelConsumption: 0
-    fuelLitCost: 0
+    fuelConsumption: 0.005
+    fuelLitCost: 0.01
     tankSafe: true
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        flame:
-          True: { visible: true }
-          False: { visible: false }
-        open:
-          True: { visible: true }
-          False: { visible: false }
-        top:
-          True: { visible: true }
-          False: { visible: false }
-        base:
-          True: { visible: false }
-          False: { visible: true }
-  - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-lit
-        shader: unshaded
-      right:
-      - state: inhand-right-lit
-        shader: unshaded
   - type: PointLight
     enabled: false
     netsync: false
@@ -414,60 +377,23 @@
     color: magenta
 
 - type: entity
-  parent: [FlippoLighter, BaseSyndicateContraband]
+  parent: [BaseBrandedLighter, FlippoLighter, BaseSyndicateContraband]
   id: InterdyneFlippo
   name: Interdyne Flippo
   description: "A deep blue flippo lighter, decorated with the logo of Interdyne Pharmaceuticals' 'Gene Clean' clinics. Become the master of your own cigarette."
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/interdyne.rsi
-    layers:
-    - state: icon
-      map: ["base"]
-    - state: top
-      map: ["top"]
-      visible: false
-    - state: open
-      map: ["open"]
-      visible: false
-    - state: flame
-      map: ["flame"]
-      visible: false
-      shader: unshaded
   - type: Item
     sprite: Objects/Tools/Lighters/interdyne.rsi
   - type: Welder #
-    fuelConsumption: 0
-    fuelLitCost: 0
+    fuelConsumption: 0.005
+    fuelLitCost: 0.01
     tankSafe: true
   - type: ItemToggleMeleeWeapon
     activatedDamage:
         types:
           Radiation: 1
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        flame:
-          True: { visible: true }
-          False: { visible: false }
-        open:
-          True: { visible: true }
-          False: { visible: false }
-        top:
-          True: { visible: true }
-          False: { visible: false }
-        base:
-          True: { visible: false }
-          False: { visible: true }
-  - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-lit
-        shader: unshaded
-      right:
-      - state: inhand-right-lit
-        shader: unshaded
   - type: PointLight
     enabled: false
     netsync: false
@@ -475,57 +401,20 @@
     color: cyan
 
 - type: entity
-  parent: FlippoLighter
+  parent: [BaseBrandedLighter, FlippoLighter]
   id: NanotrasenFlippo
   name: Nanotrasen Flippo
   description: "A navy blue luxury flippo, generally handed out to loyal heads of staff instead of a payraise. Fueled with liquid plasma"
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/nanotrasen.rsi
-    layers:
-    - state: icon
-      map: ["base"]
-    - state: top
-      map: ["top"]
-      visible: false
-    - state: open
-      map: ["open"]
-      visible: false
-    - state: flame
-      map: ["flame"]
-      visible: false
-      shader: unshaded
   - type: Item
     sprite: Objects/Tools/Lighters/nanotrasen.rsi
   - type: Welder #
-    fuelConsumption: 0.01
+    fuelConsumption: 0.005
     fuelLitCost: 1
     fuelReagent: Plasma
     tankSafe: true
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        flame:
-          True: { visible: true }
-          False: { visible: false }
-        open:
-          True: { visible: true }
-          False: { visible: false }
-        top:
-          True: { visible: true }
-          False: { visible: false }
-        base:
-          True: { visible: false }
-          False: { visible: true }
-  - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-lit
-        shader: unshaded
-      right:
-      - state: inhand-right-lit
-        shader: unshaded
   - type: PointLight
     enabled: false
     netsync: false
@@ -542,7 +431,7 @@
         maxVol: 10
 
 - type: entity
-  parent: [FlippoLighter, BaseCentcommContraband]
+  parent: [BaseBrandedLighter, FlippoLighter, BaseCentcommContraband]
   id: CentCommFlippo
   name: Gilded CentComm Flippo
   description: "An Ornate, jade embossed and gilded flippo frame containing a bluespace powered jet. The latch is secured by a miniature access reader that only responds to CentComm officials. The nicest lighter known to man."
@@ -550,19 +439,6 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/centcomm.rsi
-    layers:
-    - state: icon
-      map: ["base"]
-    - state: top
-      map: ["top"]
-      visible: false
-    - state: open
-      map: ["open"]
-      visible: false
-    - state: flame
-      map: ["flame"]
-      visible: false
-      shader: unshaded
   - type: Item
     sprite: Objects/Tools/Lighters/centcomm.rsi
   - type: ItemToggleRequiresLock
@@ -572,30 +448,6 @@
     fuelLitCost: 10
     fuelReagent: Plasma
     tankSafe: true
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        flame:
-          True: { visible: true }
-          False: { visible: false }
-        open:
-          True: { visible: true }
-          False: { visible: false }
-        top:
-          True: { visible: true }
-          False: { visible: false }
-        base:
-          True: { visible: false }
-          False: { visible: true }
-  - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-lit
-        shader: unshaded
-      right:
-      - state: inhand-right-lit
-        shader: unshaded
   - type: PointLight
     enabled: false
     netsync: false
@@ -619,62 +471,25 @@
     generated:
       reagents:
       - ReagentId: Plasma
-        Quantity: 1
+        Quantity: 0.1
   - type: Lock
   - type: AccessReader
     access: [["CentralCommand"]]
 
 - type: entity
-  parent: [FlippoLighter, BaseMajorContraband]
+  parent: [BaseBrandedLighter, FlippoLighter, BaseMajorContraband]
   id: SpiderclanFlippo
   name: Spider-Clan lighter
   description: "A high tech jet lighter, engineered to function even in deep space. Runs on a tiny microfusion cell."
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/spiderclan.rsi
-    layers:
-    - state: icon
-      map: ["base"]
-    - state: top
-      map: ["top"]
-      visible: false
-    - state: open
-      map: ["open"]
-      visible: false
-    - state: flame
-      map: ["flame"]
-      visible: false
-      shader: unshaded
   - type: Item
     sprite: Objects/Tools/Lighters/spiderclan.rsi
   - type: Welder #
     fuelConsumption: 0
     fuelLitCost: 0
     tankSafe: true
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        flame:
-          True: { visible: true }
-          False: { visible: false }
-        open:
-          True: { visible: true }
-          False: { visible: false }
-        top:
-          True: { visible: true }
-          False: { visible: false }
-        base:
-          True: { visible: false }
-          False: { visible: true }
-  - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-lit
-        shader: unshaded
-      right:
-      - state: inhand-right-lit
-        shader: unshaded
   - type: PointLight
     enabled: false
     netsync: false
@@ -682,56 +497,19 @@
     color: green
 
 - type: entity
-  parent: [FlippoLighter, BaseSyndicateContraband]
+  parent: [BaseBrandedLighter, FlippoLighter, BaseSyndicateContraband]
   id: WaffleCoFlippo
   name: Waffle Co. flippo
   description: "A robust mass produced lighter. The Waffle Co. logo turns the spark wheel when pushed up, minimising risk of lighter burns for even the most inept user."
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/waffleco.rsi
-    layers:
-    - state: icon
-      map: ["base"]
-    - state: top
-      map: ["top"]
-      visible: false
-    - state: open
-      map: ["open"]
-      visible: false
-    - state: flame
-      map: ["flame"]
-      visible: false
-      shader: unshaded
   - type: Item
     sprite: Objects/Tools/Lighters/waffleco.rsi
   - type: Welder #
-    fuelConsumption: 0
-    fuelLitCost: 0
+    fuelConsumption: 0.005
+    fuelLitCost: 0.05
     tankSafe: true
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        flame:
-          True: { visible: true }
-          False: { visible: false }
-        open:
-          True: { visible: true }
-          False: { visible: false }
-        top:
-          True: { visible: true }
-          False: { visible: false }
-        base:
-          True: { visible: false }
-          False: { visible: true }
-  - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-lit
-        shader: unshaded
-      right:
-      - state: inhand-right-lit
-        shader: unshaded
   - type: PointLight
     enabled: false
     netsync: false
@@ -739,26 +517,13 @@
     color: brown
 
 - type: entity
-  parent: FlippoLighter
+  parent: [BaseBrandedLighter, FlippoLighter]
   id: HonkCoFlippo
   name: Honk Co. flippo
   description: "A slippery gag lighter produced by Honk Co. hidden inside of a real banana peel."
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/honkco.rsi
-    layers:
-    - state: icon
-      map: ["base"]
-    - state: top
-      map: ["top"]
-      visible: false
-    - state: open
-      map: ["open"]
-      visible: false
-    - state: flame
-      map: ["flame"]
-      visible: false
-      shader: unshaded
   - type: Item
     sprite: Objects/Tools/Lighters/honkco.rsi
   - type: ComponentToggler
@@ -790,30 +555,6 @@
     fuelConsumption: 0.1
     fuelLitCost: 1
     tankSafe: true
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        flame:
-          True: { visible: true }
-          False: { visible: false }
-        open:
-          True: { visible: true }
-          False: { visible: false }
-        top:
-          True: { visible: true }
-          False: { visible: false }
-        base:
-          True: { visible: false }
-          False: { visible: true }
-  - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-lit
-        shader: unshaded
-      right:
-      - state: inhand-right-lit
-        shader: unshaded
   - type: PointLight
     enabled: false
     netsync: false
@@ -863,35 +604,23 @@
     duration: 30
 
 - type: entity
-  parent: FlippoLighter
+  parent: [BaseBrandedLighter, FlippoLighter]
   id: DonkcoLighter
   name: Donk Co. flippo
   description: "The flippo of choice for the seasoned traitor. A Breaded novelty lighter made by Donk Co. Somehow edible while lit."
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/donkco.rsi
-    layers:
-    - state: icon
-      map: ["base"]
-    - state: top
-      map: ["top"]
-      visible: false
-    - state: open
-      map: ["open"]
-      visible: false
-    - state: flame
-      map: ["flame"]
-      visible: false
-      shader: unshaded
   - type: Item
     sprite: Objects/Tools/Lighters/donkco.rsi
   - type: Welder #
-    fuelConsumption: 0
-    fuelLitCost: 0
+    fuelConsumption: 0.02
+    fuelLitCost: 0.1
     tankSafe: true
   - type: Tag
     tags:
     - DonkPocket
+    - Meat
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -914,30 +643,6 @@
   - type: ComponentToggler
     components:
     - type: Food
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        flame:
-          True: { visible: true }
-          False: { visible: false }
-        open:
-          True: { visible: true }
-          False: { visible: false }
-        top:
-          True: { visible: true }
-          False: { visible: false }
-        base:
-          True: { visible: false }
-          False: { visible: true }
-  - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
-    inhandVisuals:
-      left:
-      - state: inhand-left-lit
-        shader: unshaded
-      right:
-      - state: inhand-right-lit
-        shader: unshaded
   - type: PointLight
     enabled: false
     netsync: false

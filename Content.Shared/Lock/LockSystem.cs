@@ -428,7 +428,7 @@ public sealed class LockSystem : EntitySystem
                 _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-generic-fail",
                 ("target", Identity.Entity(uid, EntityManager))),
                 uid,
-                args.User);;
+                args.User);
         }
     }
 }

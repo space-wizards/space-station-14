@@ -150,24 +150,27 @@
       - id: MysteryFigureBoxTrash
       - id: CybersunFlippo
         orGroup: Lighterbox
+        weight: 0.15
       - id: InterdyneFlippo
         orGroup: Lighterbox
+        weight: 0.15
       - id: NanotrasenFlippo
         orGroup: Lighterbox
         weight: 0.25
       - id: WaffleCoFlippo
         orGroup: Lighterbox
+        weight: 0.35
       - id: HonkCoFlippo
         orGroup: Lighterbox
       - id: GorlexMatchbox
         orGroup: Lighterbox
-        weight: 0.5
+        weight: 0.15
       - id: DonkcoLighter
         orGroup: Lighterbox
-        weight: 0.5
+        weight: 0.25
       - id: SyndicateFlippo
         orGroup: Lighterbox
-        weight: 0.25
+        weight: 0.15
 
 - type: entity
   parent: MysteryLighterBox
