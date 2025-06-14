@@ -1,0 +1,214 @@
+- type: entity
+  name: oppa pouch
+  id: OppaPouch
+  parent: BaseStorageItem
+  description: The internal pouch of an oppa, used to store inedible seeds temporarily before they regurgitate them. It's... a little gross.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Animals/oppa.rsi
+    state: oppapouch
+  - type: Item
+    storedRotation: -90
+  - type: Storage
+    grid:
+    - 0,0,3,2
+    maxItemSize: Small
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      components:
+        - Seed
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: FillOppaPouch
+
+# this seems convoluted and it is, but it allows for more seed variety without giving someone the chance for 500 seeds
+- type: entityTable
+  id: FillOppaPouch
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomOppaPouchTable1
+#    - !type:NestedSelector
+#      tableId: RandomOppaPouchTable2
+#    - !type:NestedSelector
+#      tableId: RandomOppaPouchTable3
+
+- type: entityTable
+  id: RandomOppaPouchTable1
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomOppaPouchFlowerTable 
+    - !type:NestedSelector
+      tableId: RandomOppaPouchFruitTable 
+    - !type:NestedSelector
+      tableId: RandomOppaPouchMedicinalTable 
+    - !type:NestedSelector
+      tableId: RandomOppaPouchTomatoTable
+    - !type:NestedSelector
+      tableId: RandomOppaPouchStrangeDrinkTable
+    - !type:NestedSelector
+      tableId: RandomOppaPouchMaterialsTable
+    - !type:NestedSelector
+      tableId: RandomOppaPouchPoisonsTable
+    - !type:NestedSelector
+      tableId: RandomOppaPouchILoveGamblingTable
+
+- type: entityTable
+  id: RandomOppaPouchFlowerTable
+  table: !type:GroupSelector
+    children:
+    - id: BlackRoseSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: RoseSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: LilySeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: PoppySeeds #change to butterfly orchids eventually? more teo in this table
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+
+- type: entityTable 
+  id: RandomOppaPouchFruitTable
+  table: !type:GroupSelector
+    children:
+    - id: ExtradimensionalOrangeSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: LemoSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: BungoSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: FakeCapfruitSeeds 
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+
+- type: entityTable 
+  id: RandomOppaPouchMedicinalTable
+  table: !type:GroupSelector
+    children:
+    - id: KoibeanSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: AloeSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: GoldenAppleSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: HolymelonSeeds 
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+
+- type: entityTable 
+  id: RandomOppaPouchTomatoTable
+  table: !type:GroupSelector
+    children:
+    - id: TomatoSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: BlueTomatoSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: BloodTomatoSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: KisserTomatoSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+
+- type: entityTable 
+  id: RandomOppaPouchStrangeDrinkTable
+  table: !type:GroupSelector
+    children:
+    - id: BluePumpkinSeeds #sleepytime junction
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: PumpkinSeeds #pumpkin spice
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: ChiliSeeds #burnchamber
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: MeatwheatSeeds #zombieslush
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+
+- type: entityTable 
+  id: RandomOppaPouchMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - id: SteelcapSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: GlasstleSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: PapercaneSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: TowercapSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+
+- type: entityTable 
+  id: RandomOppaPouchClowneryTable
+  table: !type:GroupSelector
+    children:
+    - id: BananaSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: LaughinPeaSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: MimanaSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: TomatoSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+
+- type: entityTable 
+  id: RandomOppaPouchPoisonsTable
+  table: !type:GroupSelector
+    children:
+    - id: BungoSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: FlyAmanitaSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: PyrottonSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: KoibeanSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+
+- type: entityTable 
+  id: RandomOppaPouchILoveGamblingTable
+  table: !type:GroupSelector
+    children:
+    - id: GatfruitSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+      weight: 0.2
+    - id: AgentGrainSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+      weight: 0.2
+    - id: AnomalyBerrySeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+      weight: 0.2
+    - id: PotatoSeeds
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+      weight: .4

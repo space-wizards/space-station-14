@@ -23,3 +23,15 @@
     - state: green
     - sprite: Clothing/Head/Hats/cowboyhatbountyhunter.rsi
       state: icon
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostOppa
+  components:
+  - type: GhostRole
+    name: ghost-role-information-oppa-name
+    description: ghost-role-information-oppa-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless

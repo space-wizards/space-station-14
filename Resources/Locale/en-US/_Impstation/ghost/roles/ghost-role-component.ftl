@@ -130,3 +130,6 @@ ghost-role-information-replicator-rules = You are a [color=red][bold]Team Antago
                                           You must [bold]work with your team[/bold] or follow reasonable directions from your team leaders.
 
                                           You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+
+ghost-role-information-oppa-name = Oppa
+ghost-role-information-oppa-description = It's the end of hibernation, and you're hungry enough to empty a kitchen! First, though, you need to get on board the station.
