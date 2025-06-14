@@ -1,21 +1,21 @@
-marking-UndergarmentTopTanktop = Tanktop
-marking-UndergarmentTopBinder = Binder
-marking-UndergarmentTopBra = Classic Bra
-marking-UndergarmentTopSportsbra = Sports Bra
+marking-UndergarmentTopTanktop-tanktop = Tanktop
+marking-UndergarmentTopBinder-binder = Binder
+marking-UndergarmentTopBra-classic = Classic Bra
+marking-UndergarmentTopSportsbra-sports = Sports Bra
 
-marking-UndergarmentBottomBoxers = Boxers
-marking-UndergarmentBottomBriefs = Briefs
-marking-UndergarmentBottomSatin = Satin
+marking-UndergarmentBottomBoxers-boxers = Boxers
+marking-UndergarmentBottomBriefs-briefs = Briefs
+marking-UndergarmentBottomSatin-satin = Satin
 
-marking-UndergarmentTopTanktopVox = Tanktop
-marking-UndergarmentTopBinderVox = Binder
-marking-UndergarmentTopBraVox = Classic Bra
-marking-UndergarmentTopSportsbraVox = Sports Bra
+marking-UndergarmentTopTanktopVox-tanktop_vox = Tanktop
+marking-UndergarmentTopBinderVox-binder_vox = Binder
+marking-UndergarmentTopBraVox-classic_vox = Classic Bra
+marking-UndergarmentTopSportsbraVox-sports_vox = Sports Bra
 
-marking-UndergarmentBottomBoxersVox = Boxers
-marking-UndergarmentBottomBriefsVox = Briefs
-marking-UndergarmentBottomSatinVox = Satin
+marking-UndergarmentBottomBoxersVox-boxers_vox = Boxers
+marking-UndergarmentBottomBriefsVox-briefs_vox = Briefs
+marking-UndergarmentBottomSatinVox-satin_vox = Satin
 
-marking-UndergarmentBottomBoxersReptilian = Boxers
-marking-UndergarmentBottomBriefsReptilian = Briefs
-marking-UndergarmentBottomSatinReptilian = Satin
+marking-UndergarmentBottomBoxersReptilian-boxers_reptilian = Boxers
+marking-UndergarmentBottomBriefsReptilian-briefs_reptilian = Briefs
+marking-UndergarmentBottomSatinReptilian-satin_reptilian = Satin

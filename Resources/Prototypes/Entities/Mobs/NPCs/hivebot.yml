@@ -1,0 +1,123 @@
+# Base hivebot
+- type: entity
+  parent: [ BaseSimpleMob, MobCombat, MobRobotic ]
+  id: MobHivebot
+  name: hivebot
+  description: Agitating, mechanized pests.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/hivebot.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: basic_attack
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+    blackboard:
+      NavSmash: !type:Bool
+        true
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.50
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      20: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+      Dead: BorgDead
+    showOverlays: false
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      10: 0.7
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 6 # Pretty whatever on their own, but their strength is in numbers
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+      - Unimplantable
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.5
+    baseSprintSpeed: 2.5
+# Doesn't seem to work for some reason?
+#  - type: PointLight
+#    radius: 1.0
+#    energy: 1
+#    castShadows: false
+#    color: "#bc5858"
+  - type: RotationVisuals
+    horizontalRotation: 90
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+
+- type: entity
+  parent: MobHivebot
+  id: MobHivebotRanged
+  name: hivebot
+  suffix: Ranged
+  description: Agitating, mechanized pests. This one has a gun.
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: ranged_attack
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.50
+  - type: BasicEntityAmmoProvider
+    proto: BulletHivebot
+    capacity: 1
+    count: 1
+  - type: Gun
+    fireRate: 0.50
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/smg.ogg
+  - type: MovementSpeedModifier #Slower then normal to make them easier to hit
+    baseWalkSpeed: 1
+    baseSprintSpeed: 2
+
+- type: entity
+  parent: MobHivebotRanged
+  id: MobHivebotStrong
+  name: strong hivebot
+  description: Agitating, mechanized pests. This one looks much stronger then normal.
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: strong_attack
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Dead
+  - type: MovementSpeedModifier #Even slower then the ranged variant, to make them even easier to hit
+    baseWalkSpeed: 0.75
+    baseSprintSpeed: 1.75
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      25: 0.7
