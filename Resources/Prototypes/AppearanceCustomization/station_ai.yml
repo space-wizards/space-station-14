@@ -11,6 +11,7 @@
   - StationAiIconDorf
   - StationAiIconHeartline
   - StationAiIconSmiley
+  - StationAiIconJohnnyChaos # imp
 
 - type: stationAiCustomizationGroup
   id: StationAiHolograms
