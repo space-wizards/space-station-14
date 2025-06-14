@@ -433,7 +433,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             var layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
             // FLOOF CHANGE END
 
-            if (!_sprite.LayerMapTryGet((entity.Owner, sprite), layerId, out layerIndex, false))
+            if (!_sprite.LayerMapTryGet((entity.Owner, sprite), layerId, out layerIndex, false)) // imp layerindex
             {
                 // for layers that are supposed to be behind everything,
                 // adding 1 to the layer index makes it not be behind
@@ -462,7 +462,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             // and we need to check the index is correct.
             // So if that happens just default to white?
             // FLOOF ADD =3
-            _sprite.LayerSetColor(entity.Owner, layerIndex, colorDict.TryGetValue(rsi.RsiState, out var color) ? color : Color.White);
+            sprite.LayerSetColor(layerId, colorDict.TryGetValue(rsi.RsiState, out var color) ? color : Color.White);
 
             // FLOOF CHANGE
             // if (colors != null && j < colors.Count)
