@@ -26,20 +26,32 @@ public sealed class ClothingEquipTest : InteractionTest
 {
     private const string HardsuitProto = "ClothingOuterHardsuitEVA";
     private const string JumpsuitProto = "ClothingUniformJumpsuitColorGrey";
+
+    private readonly List<Type> _ignoredComponents =
+    [
+        // Mobs are a massive pain in this test
+        // (Admeme mouse eating your cak, cancer mouse killing you... mice just dying...)
+        typeof(MobStateComponent),
+        typeof(RandomSpawnerComponent),
+    ];
+
+    private readonly List<Type> _removedComponents =
+    [
+        // Material bag can pick up other clothing items.
+        typeof(MagnetPickupComponent),
+    ];
+
     protected override string PlayerPrototype => "MobHuman";
 
     [Test]
-    public async Task EquipAllClothingTesting()
+    public async Task EquipAllClothingTest()
     {
         var clothingProtos = ProtoMan.EnumeratePrototypes<EntityPrototype>()
             .Where(x => x.HasComponent<ClothingComponent>()
                         && !x.HideSpawnMenu
                         && !x.Abstract
                         && !Pair.IsTestPrototype(x)
-                        && !x.HasComponent<RandomSpawnerComponent>()
-                        // Mobs are a massive pain in this test
-                        // (Admeme mouse eating your cak, cancer mouse killing you... mice just dying...)
-                        && !x.HasComponent<MobStateComponent>());
+                        && !_ignoredComponents.Any(ignore => x.HasComponent(ignore)));
 
         List<EntityUid> clothings = [];
         EntityUid jumpsuit = default!;
@@ -51,8 +63,7 @@ public sealed class ClothingEquipTest : InteractionTest
                 var ent = SEntMan.SpawnAtPosition(clothing.ID, ToServer(PlayerCoords));
                 clothings.Add(ent);
 
-                // Material bag can pick up other clothing items.
-                SEntMan.RemoveComponent<MagnetPickupComponent>(ent);
+                _removedComponents.ForEach(remove => SEntMan.RemoveComponent(ent, remove));
             }
 
             jumpsuit = SEntMan.SpawnAtPosition(JumpsuitProto, ToServer(PlayerCoords));
