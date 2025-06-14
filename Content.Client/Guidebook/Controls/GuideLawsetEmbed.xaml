@@ -1,0 +1,22 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+              xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+              Orientation="Vertical"
+              Margin="5 5 5 5">
+    <PanelContainer HorizontalExpand="True">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#777777"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
+                <BoxContainer Name="LawsetContainer" Orientation="Vertical" HorizontalExpand="True">
+                    <PanelContainer Name="NameBackground" HorizontalExpand="True" VerticalExpand="False">
+                        <RichTextLabel Name="LawsetName" VerticalAlignment="Top" HorizontalExpand="True" HorizontalAlignment="Center"/>
+                    </PanelContainer>
+                    
+                    <!--RichTextLabels containing the individual laws are inserted here-->
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</BoxContainer>
