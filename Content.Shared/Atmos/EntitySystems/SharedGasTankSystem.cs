@@ -52,6 +52,7 @@ public abstract class SharedGasTankSystem : EntitySystem
 
         ent.Comp.OutputPressure = pressure;
         Dirty(ent);
+        UpdateUserInterface(ent);
     }
 
     public virtual void UpdateUserInterface(Entity<GasTankComponent> ent)
