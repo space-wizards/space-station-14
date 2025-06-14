@@ -198,7 +198,8 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         MapGridComponent grid,
         Vector2i position,
         int seed,
-        EntityCoordinates? coordinates = null)
+        EntityCoordinates? coordinates = null,
+        HashSet<Vector2i>? reservedTiles = null)
     {
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob.DungeonJob(
@@ -219,18 +220,20 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             seed,
             position,
             coordinates,
-            cancelToken.Token);
+            cancelToken.Token,
+            reservedTiles);
 
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
     }
 
-    public async Task<List<Dungeon>> GenerateDungeonAsync(
+    public async Task<(List<Dungeon>, DungeonData)> GenerateDungeonAsync(
         DungeonConfig gen,
         EntityUid gridUid,
         MapGridComponent grid,
         Vector2i position,
-        int seed)
+        int seed,
+        HashSet<Vector2i>? reservedTiles = null)
     {
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob.DungeonJob(
@@ -251,7 +254,8 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             seed,
             position,
             null,
-            cancelToken.Token);
+            cancelToken.Token,
+            reservedTiles);
 
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
@@ -262,7 +266,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             throw job.Exception;
         }
 
-        return job.Result!;
+        return job.Result;
     }
 
     public Angle GetDungeonRotation(int seed)
