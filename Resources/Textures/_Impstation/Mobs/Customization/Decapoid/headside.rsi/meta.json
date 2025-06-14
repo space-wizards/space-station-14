@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprited by landsharkRAWR for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "1",
+            "directions": 4
+        },
+        {
+            "name": "2",
+            "directions": 4
+        },
+        {
+            "name": "3",
+            "directions": 4
+        },
+        {
+            "name": "4",
+            "directions": 4
+        },
+        {
+            "name": "5",
+            "directions": 4
+        },
+        {
+            "name": "6",
+            "directions": 4
+        },
+        {
+            "name": "7",
+            "directions": 4
+        },
+        {
+            "name": "8",
+            "directions": 4
+        },
+        {
+            "name": "9",
+            "directions": 4
+        },
+        {
+            "name": "10",
+            "directions": 4
+        },
+        {
+            "name": "11",
+            "directions": 4
+        }
+    ]
+}

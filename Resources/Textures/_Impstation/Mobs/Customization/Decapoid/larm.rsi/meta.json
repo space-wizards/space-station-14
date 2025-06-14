@@ -4,7 +4,7 @@
         "x": 32,
         "y": 32
     },
-    "copyright": "pauldron and pauldronspike by widgetbeck. flowermoonpauldron, pauldronarmored, pauldroncracked, pauldronencrusted, sheerspine, and warlord by crocodilecarousel (github)",
+    "copyright": "pauldron and pauldronspike by widgetbeck. flowermoonpauldron, pauldronarmored, pauldroncracked, pauldronencrusted, sheerspine, warlord, skull, and crystal by crocodilecarousel (github)",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
@@ -49,6 +49,14 @@
         },
         {
             "name": "warlord",
+            "directions": 4
+        },
+        {
+            "name": "pauldroncrystal",
+            "directions": 4
+        },
+        {
+            "name": "pauldronskull",
             "directions": 4
         }
     ]
