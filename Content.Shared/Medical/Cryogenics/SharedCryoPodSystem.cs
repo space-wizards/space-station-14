@@ -12,6 +12,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
+using Content.Shared.Chemistry.Components;
 
 namespace Content.Shared.Medical.Cryogenics;
 
@@ -38,8 +39,8 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
     {
         if (args.Handled)
             return;
+        args.CanDrop = true ? HasComp<BodyComponent>(args.Dragged) | HasComp<FitsInDispenserComponent>(args.Dragged) : true;
 
-        args.CanDrop = HasComp<BodyComponent>(args.Dragged);
         args.Handled = true;
     }
 
