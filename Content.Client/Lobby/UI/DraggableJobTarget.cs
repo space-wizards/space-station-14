@@ -105,7 +105,7 @@ public sealed class DraggableJobTarget : Control
     {
         base.ExitedTree();
 
-        RemoveAllChildren();
+        _mainBox.RemoveAllChildren();
         _jobIconContainer = null;
     }
 
