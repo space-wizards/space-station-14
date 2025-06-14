@@ -110,22 +110,41 @@
   - type: SpaceGarbage
 
 - type: entity
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [Matchbox, BaseSyndicateContraband]
   id: GorlexMatchbox
-  name: Gorlex match dispenser
-  description: "A pneumatic match box styled after the Gorlex Marauders' equipment. Ejects matches without the need to open it. Contains 20 matches."
+  name: Gorlex match box
+  description: "A pneumatic match box styled after the Gorlex Marauders' equipment. Contains 24 matches."
   components:
   - type: Sprite
     sprite: Objects/Tools/Lighters/gorlex.rsi
-    layers:
-    - state: icon
-      map: ["base"]
   - type: Item
     sprite: Objects/Tools/Lighters/gorlex.rsi
-  - type: SpawnItemsOnUse
-    items:
+  - type: Storage
+    grid:
+    - 0,0,11,1
+  - type: StorageFill
+    contents:
       - id: GorlexMatchstick
-    sound:
-      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
-    uses: 20
+        amount: 24
   - type: Matchbox
+
+- type: entity
+  name: match stick
+  parent: [Matchstick, BaseSyndicateContraband]
+  id: GorlexMatchstick
+  description: A military grade match stick, used for lighting fine smokables and noncombatants alike.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Lighters/gorlexmatch.rsi
+    layers:
+      - state: match_unlit
+  - type: Item
+    sprite: Objects/Tools/Lighters/gorlexmatch.rsi
+    heldPrefix: unlit
+    size: Tiny
+  - type: PointLight
+    enabled: false
+    radius: 3
+    color: green
+  - type: Matchstick
+    duration: 30

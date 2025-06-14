@@ -8,7 +8,19 @@
     },
     "states": [
         {
-            "name": "icon"
+            "name": "matchbox"
+        },
+        {
+            "name": "matchbox-open"
+        },
+        {
+            "name": "matchbox1"
+        },
+        {
+            "name": "matchbox2"
+        },
+        {
+            "name": "matchbox3"
         }
     ]
 }

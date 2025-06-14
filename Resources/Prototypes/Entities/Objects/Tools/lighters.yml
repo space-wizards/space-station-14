@@ -345,7 +345,7 @@
     - type: DamageOnHolding
       damage:
         types:
-          Heat: 1
+          Heat: 2
   - type: SolutionContainerManager
     solutions:
       Welder:
@@ -558,27 +558,6 @@
     netsync: false
     radius: 2
     color: yellow
-
-- type: entity
-  name: match stick
-  parent: [Matchstick, BaseSyndicateContraband]
-  id: GorlexMatchstick
-  description: A military grade match stick, used for lighting fine smokables and noncombatants alike.
-  components:
-  - type: Sprite
-    sprite: Objects/Tools/Lighters/gorlexmatch.rsi
-    layers:
-      - state: match_unlit
-  - type: Item
-    sprite: Objects/Tools/Lighters/gorlexmatch.rsi
-    heldPrefix: unlit
-    size: Tiny
-  - type: PointLight
-    enabled: false
-    radius: 3
-    color: green
-  - type: Matchstick
-    duration: 30
 
 - type: entity
   parent: [BaseBrandedLighter, FlippoLighter]
