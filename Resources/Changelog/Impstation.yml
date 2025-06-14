@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Pride flag cloaks are back in the uniform printer! As are the Hospitality
-      Director's outfits.
-    type: Add
-  - message: All the new wood tiles can be printed from a tile cutter.
-    type: Add
-  id: 1323
-  time: '2025-03-16T01:00:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1976
 - author: AvianMaiden
   changes:
   - message: "Guns are just really big metal things to hit people with if you think\
@@ -4200,3 +4190,10 @@
   id: 1822
   time: '2025-06-14T00:42:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2737
+- author: Mousetrinity
+  changes:
+  - message: watch out, there's an oppa in the pantry! butcher it, and you'll be rewarded.
+    type: Add
+  id: 1823
+  time: '2025-06-14T00:46:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2699
