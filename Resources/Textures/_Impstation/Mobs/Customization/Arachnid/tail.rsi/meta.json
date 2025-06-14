@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "abdomenbasic, creepy, and widow by crocodilecarousel (github) for Impstation. rest made by PixelTheKermit (github) for SS14 and edited by Sha-Seng (github) for Impstation.",
+    "copyright": "abdomenbasic, creepy, and widow by crocodilecarousel (github) for Impstation. scorpion by Entings (github) for Impstation. rest made by PixelTheKermit (github) for SS14 and edited by Sha-Seng (github) for Impstation.",
     "size": {
         "x": 32,
         "y": 32
@@ -57,6 +57,10 @@
         },
         {
             "name": "long2",
+            "directions": 4
+        },
+        {
+            "name": "scorpion",
             "directions": 4
         },
         {

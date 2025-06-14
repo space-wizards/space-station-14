@@ -67,6 +67,33 @@
     graph: WebObjects
     node: widehat
 
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWebBeret
+  name: web beret
+  description: It's light and fashionable, if a bit stringy.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/beret_web.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/beret_web.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 2
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: Construction
+    graph: WebObjects
+    node: webberet
+
 #Paramedic Siren Hat
 - type: entity
   parent: ClothingHeadBase

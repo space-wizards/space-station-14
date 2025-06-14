@@ -131,6 +131,12 @@ marking-SpiderHair3 = Wisps
 
 marking-ArachnidCheliceraeSmall = Chelicerae (Small)
 marking-ArachnidCheliceraeSmall-small = Chelicerae
+marking-ArachnidCheliceraeBig = Chelicerae (Big)
+marking-ArachnidCheliceraeBig-big = Chelicerae
+marking-ArachnidCheliceraeSolifugid = Chelicerae (Solifugid)
+marking-ArachnidCheliceraeSolifugid-solifugid = Chelicerae
+marking-ArachnidCheliceraeLongjaw = Chelicerae (Longjaw)
+marking-ArachnidCheliceraeLongjaw-longjaw = Chelicerae
 
 # HeadTop
 
@@ -146,5 +152,8 @@ marking-AbdomenWidow-widow2 = Marking
 
 marking-CreepyArms = Creepy Arms
 marking-CreepyArms-creepy = Creepy Arms
+
+marking-AppendagesScorpion = Appendages (Scorpion)
+marking-AppendagesScorpion-scorpion = Legs and Pincers
 
 # RArmExtension
