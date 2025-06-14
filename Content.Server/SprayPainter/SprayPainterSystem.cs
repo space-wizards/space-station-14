@@ -51,7 +51,8 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (args.Handled || !args.CanReach || args.Target != null)
             return;
 
-        if (ent.Comp.DecalMode == DecalPaintMode.Off)
+        // Includes both off and all other don't cares
+        if (ent.Comp.DecalMode != DecalPaintMode.Add && ent.Comp.DecalMode != DecalPaintMode.Remove)
             return;
 
         args.Handled = true;

@@ -110,9 +110,9 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
             string modeLocString = _entity.Comp.DecalMode switch
             {
-                DecalPaintMode.Off => "spray-painter-item-status-off",
                 DecalPaintMode.Add => "spray-painter-item-status-add",
-                _ => "spray-painter-item-status-remove"
+                DecalPaintMode.Remove => "spray-painter-item-status-remove",
+                _ => "spray-painter-item-status-off"
             };
 
             _label.SetMarkupPermissive(Robust.Shared.Localization.Loc.GetString("spray-painter-item-status-label",
