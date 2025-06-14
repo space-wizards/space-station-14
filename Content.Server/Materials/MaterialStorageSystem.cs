@@ -183,7 +183,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         if (amountToSpawn == 0)
             return new List<EntityUid>();
 
-        return _stackSystem.SpawnMultiple(materialProto.StackEntity, amountToSpawn, coordinates);
+        return _stackSystem.SpawnMultipleAtPosition(materialProto.StackEntity.Value, amountToSpawn, coordinates);
     }
 
     /// <summary>

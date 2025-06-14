@@ -287,28 +287,6 @@ public abstract class SharedStackSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets the max stack count for a given entity prototype.
-    /// Returns 1 if there's no <see cref="StackComponent"/>.
-    /// </summary>
-    [PublicAPI]
-    public int GetMaxCount(EntProtoId entityId)
-    {
-        var entProto = _prototype.Index<EntityPrototype>(entityId);
-        entProto.TryGetComponent<StackComponent>(out var stackComp, EntityManager.ComponentFactory);
-        return GetMaxCount(stackComp);
-    }
-
-    /// <summary>
-    /// Gets the max stack count for a given entity.
-    /// Returns 1 if there's no <see cref="StackComponent"/>.
-    /// </summary>
-    [PublicAPI]
-    public int GetMaxCount(EntityUid uid)
-    {
-        return GetMaxCount(CompOrNull<StackComponent>(uid));
-    }
-
-    /// <summary>
     /// Gets the maximum amount that can be fit on a stack.
     /// </summary>
     /// <remarks>
@@ -330,6 +308,47 @@ public abstract class SharedStackSystem : EntitySystem
 
         var stackProto = _prototype.Index(component.StackTypeId);
         return stackProto.MaxCount ?? int.MaxValue;
+    }
+
+    /// <inheritdoc cref="GetMaxCount"/>
+    [PublicAPI]
+    public int GetMaxCount(EntProtoId entityId)
+    {
+        var entProto = _prototype.Index<EntityPrototype>(entityId);
+        entProto.TryGetComponent<StackComponent>(out var stackComp, EntityManager.ComponentFactory);
+        return GetMaxCount(stackComp);
+    }
+
+    /// <inheritdoc cref="GetMaxCount"/>
+    [PublicAPI]
+    public int GetMaxCount(EntityPrototype entityId)
+    {
+        entityId.TryGetComponent<StackComponent>(out var stackComp, EntityManager.ComponentFactory);
+        return GetMaxCount(stackComp);
+    }
+
+    /// <inheritdoc cref="GetMaxCount"/>
+    [PublicAPI]
+    public int GetMaxCount(EntityUid uid)
+    {
+        return GetMaxCount(CompOrNull<StackComponent>(uid));
+    }
+
+    /// <summary>
+    /// Gets the maximum amount that can be fit on a stack, or int.MaxValue if no max value exists.
+    /// </summary>
+    [PublicAPI]
+    public int GetMaxCount(StackPrototype stack)
+    {
+        return stack.MaxCount ?? int.MaxValue;
+    }
+
+    /// <inheritdoc cref="GetMaxCount(StackPrototype)"/>
+    [PublicAPI]
+    public int GetMaxCount(ProtoId<StackPrototype> stackID)
+    {
+        var stackProto = _prototype.Index<StackPrototype>(stackID);
+        return GetMaxCount(stackProto);
     }
 
     /// <summary>

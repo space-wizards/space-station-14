@@ -46,9 +46,14 @@ public sealed class StackSystem : SharedStackSystem
         SetCount((uid, component), amount);
     }
 
+    #region Spawning
+
     /// <summary>
-    ///     Try to split this stack into two. Returns a non-null <see cref="Robust.Shared.GameObjects.EntityUid"/> if successful.
+    ///     Spawns a new entity and moves an amount to it from ent.
     /// </summary>
+    /// <param name="amount"> How much to move to the new entity. </param>
+    /// <returns>Null if StackComponent doesn't resolve, or amount is greater than ent.Comp.Count.</returns>
+    [PublicAPI]
     public EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
@@ -64,7 +69,7 @@ public sealed class StackSystem : SharedStackSystem
             : Prototype(ent.Owner)?.ID;
 
         // Set the output parameter in the event instance to the newly split stack.
-        var newEntity = Spawn(prototype, spawnPosition);
+        var newEntity = SpawnAtPosition(prototype, spawnPosition);
 
         // There should always be a StackComponent, but make sure
         var stackComp = EnsureComp<StackComponent>(newEntity);
@@ -84,61 +89,48 @@ public sealed class StackSystem : SharedStackSystem
         return Split((uid, stack), amount, spawnPosition);
     }
 
-    /// <summary>
-    ///     Spawns a stack of a certain stack type. Won't set the stack over its max.
-    /// </summary>
-    public EntityUid Spawn(int amount, ProtoId<StackPrototype> id, EntityCoordinates spawnPosition)
-    {
-        var proto = _prototypeManager.Index(id);
-        return Spawn(amount, proto, spawnPosition);
-    }
+    #region SpawnAtPosition
 
-    /// <inheritdoc cref="Spawn"/>
-    public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
+    /// <summary>
+    ///     Spawns a stack of a certain stack type and sets its count. Won't set the stack over its max.
+    /// </summary>
+    /// <param name="count"> The amount to set the spawned stack to.</param>
+    [PublicAPI]
+    public EntityUid SpawnAtPosition(int count, StackPrototype prototype, EntityCoordinates spawnPosition)
     {
         // Set the output result parameter to the new stack entity...
-        var entity = SpawnAtPosition(prototype.Spawn, spawnPosition);
+        var entity = SpawnAtPosition(prototype.Spawn, spawnPosition);  // The real SpawnAtPosition
         var stack = Comp<StackComponent>(entity);
 
         // And finally, set the correct amount!
-        SetCount((entity, stack), amount);
+        SetCount((entity, stack), count);
         return entity;
     }
 
-    /// <inheritdoc cref="Spawn"/>
-    public EntityUid SpawnNextToOrDrop(int amount, ProtoId<StackPrototype> id, EntityUid source)
+    /// <inheritdoc cref="SpawnAtPosition"/>
+    [PublicAPI]
+    public EntityUid SpawnAtPosition(int count, ProtoId<StackPrototype> id, EntityCoordinates spawnPosition)
     {
         var proto = _prototypeManager.Index(id);
-        return SpawnNextToOrDrop(amount, proto, source);
-    }
-
-    /// <inheritdoc cref="Spawn"/>
-    public EntityUid SpawnNextToOrDrop(int amount, StackPrototype prototype, EntityUid source)
-    {
-        var entity = SpawnNextToOrDrop(prototype.Spawn, source);
-        var stack = Comp<StackComponent>(entity);
-
-        SetCount((entity, stack), amount);
-        return entity;
+        return SpawnAtPosition(count, proto, spawnPosition);
     }
 
     /// <summary>
     ///     Say you want to spawn 97 units of something that has a max stack count of 30.
     ///     This would spawn 3 stacks of 30 and 1 stack of 7.
     /// </summary>
-    public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityCoordinates spawnPosition)
+    /// <returns>The entities spawned.</returns>
+    private List<EntityUid> SpawnMultipleAtPosition(EntProtoId entityPrototype, List<int> amounts, EntityCoordinates spawnPosition)
     {
-        if (amount <= 0)
+        if (amounts.Count <= 0)
         {
             Log.Error(
-                $"Attempted to spawn an invalid stack: {entityPrototype}, {amount}. Trace: {Environment.StackTrace}");
+                $"Attempted to spawn stacks of nothing: {entityPrototype}, {amounts}. Trace: {Environment.StackTrace}");
             return new();
         }
 
-        var spawns = CalculateSpawns(entityPrototype, amount);
-
         var spawnedEnts = new List<EntityUid>();
-        foreach (var count in spawns)
+        foreach (var count in amounts)
         {
             var entity = SpawnAtPosition(entityPrototype, spawnPosition);
             spawnedEnts.Add(entity);
@@ -148,20 +140,69 @@ public sealed class StackSystem : SharedStackSystem
         return spawnedEnts;
     }
 
-    /// <inheritdoc cref="SpawnMultiple(string,int,EntityCoordinates)"/>
-    public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityUid target)
+    /// <inheritdoc cref="SpawnMultipleAtPosition"/>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleAtPosition(EntityPrototype entityProto, int amount, EntityCoordinates spawnPosition)
     {
-        if (amount <= 0)
+        return SpawnMultipleAtPosition(entityProto.ID, CalculateSpawns(entityProto, amount), spawnPosition);
+    }
+
+    /// <inheritdoc cref="SpawnMultipleAtPosition"/>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleAtPosition(EntProtoId entityPrototypeID, int amount, EntityCoordinates spawnPosition)
+    {
+        return SpawnMultipleAtPosition(entityPrototypeID, CalculateSpawns(entityPrototypeID, amount), spawnPosition);
+    }
+
+    /// <inheritdoc cref="SpawnMultipleAtPosition"/>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleAtPosition(StackPrototype stack, int amount, EntityCoordinates spawnPosition)
+    {
+        return SpawnMultipleAtPosition(stack.Spawn, CalculateSpawns(stack, amount), spawnPosition);
+    }
+
+    /// <inheritdoc cref="SpawnMultipleAtPosition"/>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleAtPosition(ProtoId<StackPrototype> stackID, int amount, EntityCoordinates spawnPosition)
+    {
+        var stackProto = _prototypeManager.Index<StackPrototype>(stackID);
+        return SpawnMultipleAtPosition(stackProto.Spawn, CalculateSpawns(stackProto, amount), spawnPosition);
+    }
+
+    #endregion
+    #region SpawnNextToOrDrop
+
+    /// <inheritdoc cref="SpawnAtPosition"/>
+    [PublicAPI]
+    public EntityUid SpawnNextToOrDrop(int amount, ProtoId<StackPrototype> id, EntityUid source)
+    {
+        var proto = _prototypeManager.Index(id);
+        return SpawnNextToOrDrop(amount, proto, source);
+    }
+
+    /// <inheritdoc cref="SpawnAtPosition"/>
+    [PublicAPI]
+    public EntityUid SpawnNextToOrDrop(int amount, StackPrototype prototype, EntityUid source)
+    {
+        var entity = SpawnNextToOrDrop(prototype.Spawn, source); // The real SpawnNextToOrDrop
+        var stack = Comp<StackComponent>(entity);
+
+        SetCount((entity, stack), amount);
+        return entity;
+    }
+
+    /// <inheritdoc cref="SpawnMultipleAtPosition"/>
+    private List<EntityUid> SpawnMultipleNextToOrDrop(EntProtoId entityPrototype, List<int> amounts, EntityUid target)
+    {
+        if (amounts.Count <= 0)
         {
             Log.Error(
-                $"Attempted to spawn an invalid stack: {entityPrototype}, {amount}. Trace: {Environment.StackTrace}");
+                $"Attempted to spawn stacks of nothing: {entityPrototype}, {amounts}. Trace: {Environment.StackTrace}");
             return new();
         }
 
-        var spawns = CalculateSpawns(entityPrototype, amount);
-
         var spawnedEnts = new List<EntityUid>();
-        foreach (var count in spawns)
+        foreach (var count in amounts)
         {
             var entity = SpawnNextToOrDrop(entityPrototype, target);
             spawnedEnts.Add(entity);
@@ -171,17 +212,44 @@ public sealed class StackSystem : SharedStackSystem
         return spawnedEnts;
     }
 
-    /// <summary>
-    /// Calculates how many stacks to spawn that total up to <paramref name="amount"/>.
-    /// </summary>
-    /// <param name="entityPrototype">The stack to spawn.</param>
-    /// <param name="amount">The amount of pieces across all stacks.</param>
-    /// <returns>The list of stack counts per entity.</returns>
-    private List<int> CalculateSpawns(string entityPrototype, int amount)
+    /// <inheritdoc cref="SpawnMultipleNextToOrDrop"/>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleNextToOrDrop(EntityPrototype stack, int amount, EntityUid target)
     {
-        var proto = _prototypeManager.Index<EntityPrototype>(entityPrototype);
-        proto.TryGetComponent<StackComponent>(out var stack, EntityManager.ComponentFactory);
-        var maxCountPerStack = GetMaxCount(stack);
+        return SpawnMultipleNextToOrDrop(stack.ID, CalculateSpawns(stack, amount), target);
+    }
+
+    /// <inheritdoc cref="SpawnMultipleNextToOrDrop"/>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleNextToOrDrop(EntProtoId stack, int amount, EntityUid target)
+    {
+        return SpawnMultipleNextToOrDrop(stack, CalculateSpawns(stack, amount), target);
+    }
+
+    /// <inheritdoc cref="SpawnMultipleNextToOrDrop"/>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleNextToOrDrop(StackPrototype stack, int amount, EntityUid target)
+    {
+        return SpawnMultipleNextToOrDrop(stack.Spawn, CalculateSpawns(stack, amount), target);
+    }
+
+    /// <inheritdoc cref="SpawnMultipleNextToOrDrop"/>
+    [PublicAPI]
+    public List<EntityUid> SpawnMultipleNextToOrDrop(ProtoId<StackPrototype> stackID, int amount, EntityUid target)
+    {
+        var stackProto = _prototypeManager.Index<StackPrototype>(stackID);
+        return SpawnMultipleNextToOrDrop(stackProto.Spawn, CalculateSpawns(stackProto, amount), target);
+    }
+
+    #endregion
+    #region Calculate
+
+    /// <summary>
+    ///     Calculates how many stacks to spawn that total up to <paramref name="amount"/>.
+    /// </summary>
+    /// <returns>The list of stack counts per entity.</returns>
+    private List<int> CalculateSpawns(int maxCountPerStack, int amount)
+    {
         var amounts = new List<int>();
         while (amount > 0)
         {
@@ -192,6 +260,28 @@ public sealed class StackSystem : SharedStackSystem
 
         return amounts;
     }
+
+    /// <inheritdoc cref="CalculateSpawns"/>
+    private List<int> CalculateSpawns(StackPrototype stackProto, int amount)
+    {
+        return CalculateSpawns(GetMaxCount(stackProto), amount);
+    }
+
+    /// <inheritdoc cref="CalculateSpawns"/>
+    private List<int> CalculateSpawns(EntityPrototype entityPrototype, int amount)
+    {
+        return CalculateSpawns(GetMaxCount(entityPrototype), amount);
+    }
+
+    /// <inheritdoc cref="CalculateSpawns"/>
+    private List<int> CalculateSpawns(EntProtoId entityId, int amount)
+    {
+        return CalculateSpawns(GetMaxCount(entityId), amount);
+    }
+
+    #endregion
+    #endregion
+    #region  Event Handlers
 
     private void OnStackAlternativeInteract(Entity<StackComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
@@ -242,11 +332,12 @@ public sealed class StackSystem : SharedStackSystem
             return;
         }
 
-        if (Split(stack.Owner, amount, user.Comp.Coordinates, stack) is not {} split)
+        if (Split(stack.AsNullable(), amount, user.Comp.Coordinates) is not { } split)
             return;
 
         Hands.PickupOrDrop(user.Owner, split);
 
         Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
     }
+    #endregion
 }
