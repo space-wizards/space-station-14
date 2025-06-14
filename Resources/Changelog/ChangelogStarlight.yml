@@ -7220,4 +7220,12 @@ Entries:
   id: 997
   time: '2025-06-14T01:45:10.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/816
+- author: PubliclyExecutedPig
+  changes:
+  - message: Studies show trying to shoot the smart LMG one handed often results in
+      broken bones.
+    type: Tweak
+  id: 998
+  time: '2025-06-14T01:47:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/804
 
