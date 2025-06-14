@@ -50,7 +50,6 @@
       - state: green
       - state: qm
 
-
 - type: entity
   id: SpawnPointCargoTechnician
   parent: SpawnPointJobBase
@@ -88,6 +87,18 @@
     layers:
       - state: green
       - state: passenger
+
+- type: entity
+  id: SpawnPointSupplyAssistant
+  parent: SpawnPointJobBase
+  name: supply assistant
+  components:
+  - type: SpawnPoint
+    job_id: SupplyAssistant
+  - type: Sprite
+    layers:
+      - state: green
+      - state: supplyassistant
 
 - type: entity
   id: SpawnPointTechnicalAssistant

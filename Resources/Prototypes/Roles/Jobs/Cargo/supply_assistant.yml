@@ -1,0 +1,45 @@
+- type: job
+  id: SupplyAssistant
+  name: job-name-supply-assistant
+  description: job-description-supply-assistant
+  playTimeTracker: JobSupplyAssistant
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 18000 #5 hrs
+      inverted: true # stop playing trainee if you're good at cargo!
+  startingGear: SupplyAssistantGear
+  icon: "JobIconSupplyAssistant"
+  supervisors: job-supervisors-cargo
+  canBeAntag: false
+  access:
+  - Cargo
+  - Maintenance
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: BoxingDay
+    prototype: BoxCardboard
+
+- type: startingGear
+  id: SupplyAssistantGear
+  equipment:
+    shoes: ClothingShoesColorBlack
+    id: SupplyAssistantPDA
+    ears: ClothingHeadsetCargo
+    pocket1: AppraisalTool
+    # we don't have a cargo guidebook item yet...
+    # pocket2: (whatever a potential future cargo guidebook item is called)
+  #storage:
+    #back:
+    #- Stuff
+
+- type: chameleonOutfit
+  id: SupplyAssistantChameleonOutfit
+  job: SupplyAssistant
+  equipment:
+    head: ClothingHeadHatCargosoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterWinterCargo
+    neck: ClothingNeckScarfStripedBrown
+    gloves: ClothingHandsGlovesFingerless

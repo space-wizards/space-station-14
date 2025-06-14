@@ -170,7 +170,7 @@
       "name": "scientist"
     },
     {
-      "name": "security_cadet" 
+      "name": "security_cadet"
     },
     {
       "name": "security_officer"
@@ -189,6 +189,9 @@
     },
     {
       "name": "seniorofficer"
+    },
+    {
+      "name": "supplyassistant"
     },
     {
       "name": "technicalassistant"
