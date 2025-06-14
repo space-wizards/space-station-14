@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: banana has a new atmos area!
-    type: Tweak
-  - message: The handheld quantum camera should now have effectively unlimited range.
-    type: Tweak
-  id: 1326
-  time: '2025-03-16T03:29:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1979
 - author: mqole
   changes:
   - message: You can now tell whether a manual valve is on or off without prying up
@@ -4197,3 +4188,10 @@
   id: 1825
   time: '2025-06-14T04:33:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2741
+- author: hivehum
+  changes:
+  - message: A body has been discovered.
+    type: Add
+  id: 1826
+  time: '2025-06-14T04:36:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2732
