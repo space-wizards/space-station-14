@@ -7404,4 +7404,20 @@ Entries:
   id: 1023
   time: '2025-06-14T21:45:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/797
+- author: walksanatora
+  changes:
+  - message: hey so I heard you like theiving. so I made a paper that gives you every
+      steal objective in the game. very rarely in mail.
+    type: Add
+  id: 1024
+  time: '2025-06-14T21:49:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/767
+- author: walksanatora
+  changes:
+  - message: made antag mail slightly more common. and the reasons to join the syndicate
+      a bit rarer,
+    type: Tweak
+  id: 1025
+  time: '2025-06-14T21:49:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/767
 
