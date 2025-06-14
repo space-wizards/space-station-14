@@ -122,7 +122,13 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
     private void OnVerb(Entity<ChameleonClothingComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || ent.Comp.User != args.User)
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        var ev = new CanAccessChameleonClothingEvent();
+        RaiseLocalEvent(args.User, ref ev);
+
+        if (!ev.CanAccess)
             return;
 
         // Can't pass args from a ref event inside of lambdas
@@ -213,4 +219,10 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             }
         }
     }
+}
+
+[ByRefEvent]
+public sealed class CanAccessChameleonClothingEvent : EntityEventArgs
+{
+    public bool CanAccess = false;
 }
