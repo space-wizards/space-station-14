@@ -78,11 +78,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#9b0000"
+        color: "#820a16" #imp
 
 - type: entity
   id: MagazineLightRifleEmpty
@@ -125,11 +125,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#ea5800"
+        color: "#d63b28" #imp
 
 - type: entity
   id: MagazineLightRifleUranium
@@ -150,11 +150,11 @@
       left:
       - state: inhand-left-mag
       - state: inhand-left-stripe
-        color: "#00cd42"
+        color: "#6b805e" #imp
       right:
       - state: inhand-right-mag
       - state: inhand-right-stripe
-        color: "#00cd42"
+        color: "#6b805e" #imp
 
 - type: entity
   id: MagazineLightRifleIncendiary

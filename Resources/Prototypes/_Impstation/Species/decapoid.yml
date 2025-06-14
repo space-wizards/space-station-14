@@ -22,6 +22,7 @@
     Eyes: MobHumanoidAnyMarking
     Head: MobDecapoidHead
     HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
     Hair: MobHumanoidAnyMarking
     Chest: MobDecapoidTorso
     LArm: MobDecapoidLArm
@@ -47,6 +48,9 @@
       points: 6
       required: false
     HeadTop:
+      points: 1
+      required: false
+    HeadSide:
       points: 2
       required: false
     Chest:

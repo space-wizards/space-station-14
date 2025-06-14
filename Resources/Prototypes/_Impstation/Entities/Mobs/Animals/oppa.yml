@@ -1,0 +1,225 @@
+
+- type: entity
+  name: night oppa
+  parent: [ SimpleSpaceMobBase, FlyingMobBase ]
+  id: MobNightOppa
+  description: A rat-like creature that hibernates in space, often woken from its deep slunger by a profound hunger for station crumbs
+  components:
+  - type: VentCrawler # imp edit
+    enterDelay: 1
+  - type: Body
+    prototype: Mouse
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-oppa-name
+    description: ghost-role-information-oppa-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
+  - type: GhostTakeoverAvailable
+  - type: Speech
+    speechSounds: Squeak
+    speechVerb: SmallMob
+    allowedEmotes: ['Squeak']
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: _Impstation/Mobs/Animals/oppa.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive-night
+  - type: Item
+    size: Tiny
+    heldPrefix: 0
+  - type: NpcFactionMember
+    factions:
+      - Mouse
+  - type: HTN
+    constantlyReplan: false
+    rootTask:
+      task: MouseCompound
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MobState
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - ActionCritSuccumb
+      - ActionCritFakeDeath
+      - ActionCritLastWords
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      15: Critical
+      20: Dead
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive-night
+      Critical:
+        Base: dead-night
+      Dead:
+        Base: dead-night
+  - type: Food
+  - type: Absorbable # imp edit
+    biomassRestored: 0.2
+  - type: FlavorProfile
+    flavors:
+    - meaty
+  - type: Thirst
+    startingThirst: 70  
+    thresholds:
+      OverHydrated: 70
+      Okay: 50
+      Thirsty: 30
+      Parched: 15
+      Dead: 0
+    baseDecayRate: 0.04
+  - type: Hunger
+    thresholds:
+      Overfed: 70
+      Okay: 50
+      Peckish: 30
+      Starving: 15
+      Dead: 0
+    baseDecayRate: 0.5 # I'm very hungry! Give me. The cheese.
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 8
+        - ReagentId: MouseBites #imp
+          Quantity: 6
+      mousebites: #look at this.
+        reagents:
+        - ReagentId: MouseBites
+          Quantity: 500 # LOOK AT THIS
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatRat
+      amount: 2
+    - id: OppaPouch
+      amount: 1
+  - type: ReplacementAccent
+    accent: mouse
+  - type: Tag
+    tags:
+    - Trash
+    - VimPilot
+    - ChefPilot
+    - Mouse
+    - Meat
+    - MultitoolDefibrillatorTarget
+  - type: Vocal
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
+    wilhelmProbability: 0.001
+  # TODO: Remove CombatMode when Prototype Composition is added
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 5
+  - type: Bloodstream
+    bloodMaxVolume: 75
+  - type: CanEscapeInventory
+  - type: MobPrice
+    price: 500
+  - type: BadFood
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Mouse_burning
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Mouse
+  - type: MeleeChemicalInjector #imp
+    solution: mousebites
+    transferAmount: 5
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 4
+    weightlessAcceleration: 1.75 # zoom
+    weightlessFriction: 2.5
+    weightlessModifier: 3
+  - type: MovementIgnoreGravity # nyoom
+    gravityState: true
+  - type: PointLight
+    color: Black
+    radius: 1.1
+    energy: 2
+#here comes the scary pinpointer zone, directly copied from dragon for fun?
+  - type: Inventory 
+    templateId: dragon
+  - type: InventorySlots 
+  - type: Loadout 
+    prototypes:
+      - StartingGearDragonPinpointer
+  - type: Strippable 
+  - type: UserInterface 
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: Hands # hopefully doesn't give them hands
+  - type: ComplexInteraction # imp. necessary for them to be able to use the pinpointer. This doesn't do much else for them, except I think they can now open crates.
+
+- type: entity
+  name: light oppa
+  parent: MobNightOppa
+  id: MobLightOppa
+  description: A rat-like creature that hibernates in space, often woken from its deep slunger by a profound hunger for station crumbs.
+  components:
+  - type: PointLight
+    color: White
+    radius: 1.07
+    energy: 1
+    netsync: false
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: _Impstation/Mobs/Animals/oppa.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 1

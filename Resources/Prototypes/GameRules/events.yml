@@ -42,6 +42,8 @@
     - id: GoblinCastawaysEvent # imp
     - id: BountyHunterSpawn # imp
     - id: ReplicatorSpawn # imp
+    - id: OppaSpawnLight #imp
+    - id: OppaSpawnNight #imp
 
 - type: entityTable
   id: SleeperlessAntagEventsTable
@@ -63,6 +65,8 @@
     - id: GoblinCastawaysEvent # imp
     - id: BountyHunterSpawn # imp
     - id: ReplicatorSpawn # imp
+    - id: OppaSpawnLight #imp
+    - id: OppaSpawnLight #imp
 
 - type: entity
   id: BaseStationEvent

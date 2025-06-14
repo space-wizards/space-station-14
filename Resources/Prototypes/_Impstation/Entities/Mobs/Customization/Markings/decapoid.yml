@@ -247,7 +247,7 @@
 
 - type: marking
   id: DecapoidPauldronRight
-  bodyPart: RArm
+  bodyPart: Tail
   markingCategory: Arms
   speciesRestriction: [ Decapoid ]
   sprites:
@@ -256,7 +256,7 @@
 
 - type: marking
   id: RightEncrustedPauldron
-  bodyPart: RArm
+  bodyPart: Tail
   markingCategory: Arms
   speciesRestriction: [ Decapoid ]
   sprites:
@@ -269,7 +269,7 @@
 
 - type: marking
   id: RPauldronArmored
-  bodyPart: RArm
+  bodyPart: Tail
   markingCategory: Arms
   speciesRestriction: [ Decapoid ]
   sprites:
@@ -280,7 +280,7 @@
 
 - type: marking
   id: DecapoidPauldronLeft
-  bodyPart: LArm
+  bodyPart: Tail
   markingCategory: Arms
   speciesRestriction: [ Decapoid ]
   sprites:
@@ -289,7 +289,7 @@
 
 - type: marking
   id: DecapoidPauldronSpike
-  bodyPart: LArm
+  bodyPart: Tail
   markingCategory: Arms
   speciesRestriction: [ Decapoid ]
   sprites:
@@ -298,7 +298,7 @@
 
 - type: marking
   id: FlowerMoonPauldron
-  bodyPart: LArm
+  bodyPart: Tail
   markingCategory: Arms
   speciesRestriction: [ Decapoid ]
   sprites:
@@ -309,7 +309,7 @@
 
 - type: marking
   id: LeftEncrustedPauldron
-  bodyPart: LArm
+  bodyPart: Tail
   markingCategory: Arms
   speciesRestriction: [ Decapoid ]
   sprites:
@@ -322,7 +322,7 @@
 
 - type: marking
   id: LPauldronArmored
-  bodyPart: LArm
+  bodyPart: Tail
   markingCategory: Arms
   speciesRestriction: [ Decapoid ]
   sprites:
@@ -331,7 +331,7 @@
 
 - type: marking
   id: PauldronCracked
-  bodyPart: LArm
+  bodyPart: Tail
   markingCategory: Arms
   speciesRestriction: [ Decapoid ]
   sprites:
@@ -340,7 +340,7 @@
 
 - type: marking
   id: PauldronSheerspine
-  bodyPart: LArm
+  bodyPart: Tail
   markingCategory: Arms
   speciesRestriction: [ Decapoid ]
   sprites:
@@ -349,12 +349,30 @@
 
 - type: marking
   id: PauldronWarlord
-  bodyPart: LArm
+  bodyPart: Tail
   markingCategory: Arms
   speciesRestriction: [ Decapoid ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
     state: warlord
+
+- type: marking
+  id: PauldronCrystal
+  bodyPart: Tail
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: pauldroncrystal
+
+- type: marking
+  id: PauldronSkull
+  bodyPart: Tail
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/larm.rsi
+    state: pauldronskull
 
 # RLeg
 
@@ -426,7 +444,7 @@
 - type: marking
   id: DecapoidFlatHead
   bodyPart: Hair
-  markingCategory: Head
+  markingCategory: HeadTop
   followSkinColor: true
   forcedColoring: true
   speciesRestriction: [ Decapoid ]
@@ -434,7 +452,172 @@
   - sprite: _Impstation/Mobs/Customization/Decapoid/hair.rsi
     state: flathead
 
+- type: marking
+  id: DecapoidCrestFledgeling
+  bodyPart: Hair
+  markingCategory: HeadTop
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/hair.rsi
+    state: crestfledgeling
+
+- type: marking
+  id: DecapoidCrestJester
+  bodyPart: Hair
+  markingCategory: HeadTop
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/hair.rsi
+    state: crestjester
+
+- type: marking
+  id: DecapoidCrestHerald
+  bodyPart: Hair
+  markingCategory: HeadTop
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/hair.rsi
+    state: crestherald
+
+- type: marking
+  id: DecapoidCrestMalign
+  bodyPart: Hair
+  markingCategory: HeadTop
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/hair.rsi
+    state: crestmalign
+
+- type: marking
+  id: DecapoidCrestReclaimer
+  bodyPart: Hair
+  markingCategory: HeadTop
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/hair.rsi
+    state: crestreclaimer
+
+- type: marking
+  id: DecapoidCrestWise
+  bodyPart: Hair
+  markingCategory: HeadTop
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/hair.rsi
+    state: crestwise
+
 # HeadSide
+
+- type: marking
+  id: DecapoidWhiskerMid
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/headside.rsi
+    state: 1
+
+- type: marking
+  id: DecapoidWhiskerMidR
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/headside.rsi
+    state: 2
+
+- type: marking
+  id: DecapoidWhiskerMidL
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/headside.rsi
+    state: 3
+
+- type: marking
+  id: DecapoidWhiskerShort
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/headside.rsi
+    state: 4
+
+- type: marking
+  id: DecapoidWhiskerLong
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/headside.rsi
+    state: 5
+
+- type: marking
+  id: DecapoidWhiskerLongR
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/headside.rsi
+    state: 6
+
+- type: marking
+  id: DecapoidWhiskerLongL
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/headside.rsi
+    state: 7
+
+- type: marking
+  id: DecapoidWhiskerSimple
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/headside.rsi
+    state: 8
+
+- type: marking
+  id: DecapoidWhiskerStraight
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/headside.rsi
+    state: 9
+
+- type: marking
+  id: DecapoidWhiskerHanging
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/headside.rsi
+    state: 10
+
+- type: marking
+  id: DecapoidWhiskerCurled
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Decapoid/headside.rsi
+    state: 11
 
 # HeadTop
 

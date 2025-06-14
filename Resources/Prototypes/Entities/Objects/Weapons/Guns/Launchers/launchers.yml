@@ -126,14 +126,14 @@
   description: An old anti-tank rocket-propelled grenade launcher, remade for the modern age. #imp
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/rocket.rsi #imp
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Launchers/rocket.rsi #imp
   - type: Gun
     fireRate: 0.5
     soundGunshot:
@@ -246,7 +246,7 @@
   description: Kaboom!
   components:
     - type: Sprite
-      sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/pirate_cannon.rsi #imp
       layers:
         - state: icon
           map: ["enum.GunVisualLayers.Base"]
@@ -257,7 +257,7 @@
           ents: []
       type: ContainerContainer
     - type: Clothing
-      sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/pirate_cannon.rsi #imp
     - type: Gun
       fireRate: 1
       soundGunshot:

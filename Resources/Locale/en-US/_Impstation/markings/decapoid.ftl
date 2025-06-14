@@ -119,6 +119,13 @@ marking-PauldronSheerspine-pauldronsheerspine = Pauldron
 
 marking-PauldronWarlord = Warlord Pauldron
 marking-PauldronWarlord-leftpauldronwarlord = Pauldron
+
+marking-PauldronCrystal = Crystal Pauldron
+marking-PaukdronCrystal-pauldroncrystal = Pauldron
+
+marking-PauldronSkull = Skull Pauldron
+marking-PauldronSkull-pauldronskull = Pauldron
+
 # RLeg
 
 # LLeg
@@ -158,7 +165,52 @@ marking-DecapoidRHandPlate-plate = Minor Claw
 marking-DecapoidFlatHead = Flat Head
 marking-DecapoidFlatHead-flathead = Flat Head
 
+marking-DecapoidCrestFledgeling = Crest (Fledgeling)
+
+marking-DecapoidCrestHerald = Crest (Herald)
+
+marking-DecapoidCrestJester = Crest (Jester)
+
+marking-DecapoidCrestMalign = Crest (Malign)
+
+marking-DecapoidCrestReclaimer = Crest (Reclaimer)
+
+marking-DecapoidCrestWise = Crest (Wise)
+
 # HeadSide
+
+marking-DecapoidWhiskerMid = Whiskers (Mid)
+marking-DecapoidWhisker-1 = Whiskers
+
+marking-DecapoidWhiskerMidR = Whiskers (Mid Uneven R)
+marking-DecapoidWhisker-2 = Whiskers
+
+marking-DecapoidWhiskerMidL = Whiskers (Mid Uneven L)
+marking-DecapoidWhisker-3 = Whiskers
+
+marking-DecapoidWhiskerShort = Whiskers (Short)
+marking-DecapoidWhisker-4 = Whiskers
+
+marking-DecapoidWhiskerLong = Whiskers (Long)
+marking-DecapoidWhisker-5 = Whiskers
+
+marking-DecapoidWhiskerLongR = Whiskers (Long Uneven R)
+marking-DecapoidWhisker-6 = Whiskers
+
+marking-DecapoidWhiskerLongL = Whiskers (Long Uneven L)
+marking-DecapoidWhisker-7 = Whiskers
+
+marking-DecapoidWhiskerSimple = Whiskers (Simple)
+marking-DecapoidWhisker-8 = Whiskers
+
+marking-DecapoidWhiskerStraight = Whiskers (Straight)
+marking-DecapoidWhisker-9 = Whiskers
+
+marking-DecapoidWhiskerHanging = Whiskers (Hanging)
+marking-DecapoidWhisker-10 = Whiskers
+
+marking-DecapoidWhiskerCurled = Whiskers (Curled)
+marking-DecapoidWhisker-11 = Whiskers
 
 # HeadTop
 

@@ -12,6 +12,7 @@
     - id: ParadoxCloneSpawn
     - id: GoblinStowawaysEvent # imp
     - id: ReplicatorSpawn # imp
+    - id: OppaSpawnLight #imp
 
 - type: entity
   id: ChangelingAwakening
@@ -86,3 +87,39 @@
         - NamesBountyHunterTitle
         - NamesBountyHunter
         nameFormat: name-format-bounty-hunter
+
+#my oppa
+
+- type: entity
+  parent: BaseGameRule
+  id: OppaSpawnLight
+  components:
+  - type: StationEvent
+    weight: 4
+    earliestStart: 10
+    reoccurrenceDelay: 10
+    minimumPlayers: 5
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: MobLightOppa
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostOppa
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: OppaSpawnNight
+  components:
+  - type: AntagSpawner
+    prototype: MobNightOppa
+  - type: StationEvent
+    weight: 2
+    earliestStart: 10
+    reoccurrenceDelay: 20
+    minimumPlayers: 10
+    duration: null

@@ -50,15 +50,22 @@
 - type: entity
   name: minigun
   id: WeaponMinigun
-  parent: [ BaseWeaponHeavyMachineGun, BaseMajorContraband ]
+  parent: [ BaseWeaponHeavyMachineGun, BaseGunWieldable, BaseMajorContraband ] #imp
   description: Vzzzzzt! Rahrahrahrah! Vrrrrr! Uses .10 rifle ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/HMGs/minigun.rsi #imp
     layers:
     - state: icon
+  - type: GunRequiresWield #imp
+  - type: Clothing #imp
+    sprite: _Impstation/Objects/Weapons/Guns/HMGs/minigun.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
   - type: Item
-    sprite: Objects/Weapons/Guns/HMGs/minigun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/HMGs/minigun.rsi #imp
   - type: Gun
     fireRate: 15
     soundGunshot:

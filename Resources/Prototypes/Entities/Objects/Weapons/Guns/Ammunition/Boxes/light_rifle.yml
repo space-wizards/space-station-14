@@ -18,7 +18,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    sprite: _Wizden/Objects/Weapons/Guns/Ammunition/Boxes/light_rifle.rsi # imp
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/light_rifle.rsi # imp
   - type: MagazineVisuals
     magState: mag
     steps: 4
@@ -38,15 +38,15 @@
     proto: CartridgeLightRifle
   - type: Sprite
     layers:
-    - state: base-b # imp
+    - state: base-b #imp
       map: ["enum.GunVisualLayers.Base"]
-    - state: magb-1 # imp
+    - state: magb-1 #imp
       map: ["enum.GunVisualLayers.Mag"]
-    - type: MagazineVisuals # imp
-      magState: magb
-      steps: 4
-      zeroVisible: false
-    - type: Appearance # imp
+  - type: MagazineVisuals #imp
+    magState: magb
+    steps: 4
+    zeroVisible: false
+  - type: Appearance # imp
 
 - type: entity
   parent: BaseMagazineBoxLightRifle

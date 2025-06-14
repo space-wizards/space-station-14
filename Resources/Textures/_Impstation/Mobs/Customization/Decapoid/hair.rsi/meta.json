@@ -1,7 +1,7 @@
 ﻿{
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "sprited by widgetbeck (github) for impstation.",
+    "copyright": "flathead by widgetbeck (github), crests by carousel for impstation.",
     "size": {
         "x": 32,
         "y": 32
@@ -9,6 +9,30 @@
     "states": [
         {
             "name": "flathead",
+            "directions": 4
+        },
+        {
+            "name": "crestfledgeling",
+            "directions": 4
+        },
+        {
+            "name": "crestherald",
+            "directions": 4
+        },
+        {
+            "name": "crestjester",
+            "directions": 4
+        },
+        {
+            "name": "crestmalign",
+            "directions": 4
+        },
+        {
+            "name": "crestreclaimer",
+            "directions": 4
+        },
+        {
+            "name": "crestwise",
             "directions": 4
         }
     ]

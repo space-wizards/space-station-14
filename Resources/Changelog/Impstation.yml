@@ -1,41 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Luna in rotation!
-    type: Add
-  - message: Luna changes (check PR for details)
-    type: Tweak
-  id: 1320
-  time: '2025-03-16T00:02:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1887
-- author: honeyed-lemons
-  changes:
-  - message: Fixed your masculine body urists getting decapitated.. sorry...
-    type: Fix
-  id: 1321
-  time: '2025-03-16T00:35:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1970
-- author: honeyed-lemons
-  changes:
-  - message: Revamped Xeno Chapel, and revamped Box's shuttle bay.
-    type: Tweak
-  - message: Xeno atmos -> engi disposal chute should no longer receive trash.
-    type: Fix
-  - message: Xeno Hospitality Director room no longer spaces round start.
-    type: Fix
-  id: 1322
-  time: '2025-03-16T00:54:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1952
-- author: hivehum
-  changes:
-  - message: Pride flag cloaks are back in the uniform printer! As are the Hospitality
-      Director's outfits.
-    type: Add
-  - message: All the new wood tiles can be printed from a tile cutter.
-    type: Add
-  id: 1323
-  time: '2025-03-16T01:00:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1976
 - author: AvianMaiden
   changes:
   - message: "Guns are just really big metal things to hit people with if you think\
@@ -4202,3 +4165,35 @@
   id: 1819
   time: '2025-06-13T00:21:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2730
+- author: ruddygreat
+  changes:
+  - message: Added basic orgnaisational capabilities to the cargo bounty conputer
+    type: Add
+  id: 1820
+  time: '2025-06-13T00:24:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2727
+- author: crocodilecarousel, LandsharkRAWR
+  changes:
+  - message: new crab markings
+    type: Add
+  - message: pauldrons layer better now
+    type: Tweak
+  id: 1821
+  time: '2025-06-14T00:22:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2746
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: New in-hand sprites for our Impstation magazines!
+    type: Add
+  - message: New sprites for several guns and updated colours for ammo boxes.
+    type: Tweak
+  id: 1822
+  time: '2025-06-14T00:42:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2737
+- author: Mousetrinity
+  changes:
+  - message: watch out, there's an oppa in the pantry! butcher it, and you'll be rewarded.
+    type: Add
+  id: 1823
+  time: '2025-06-14T00:46:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2699

@@ -325,9 +325,9 @@
     size: Small
     storedRotation: 90
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/hm_pistol.rsi #imp
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/hm_pistol.rsi #imp
   - type: Gun
     fireRate: 4
   - type: BallisticAmmoProvider
@@ -353,7 +353,7 @@
     shape:
     - 0,0,4,0
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Shotguns/blunderbuss.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/blunderbuss.rsi #imp
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
     fireRate: 2

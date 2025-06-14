@@ -2,6 +2,7 @@
     "version": 1,
     "license": "CC-BY-SA-3.0",
     "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/b98afcd1400b0f398bf1322b2b20de57ccf7bb0c and modified by Flareguy. equipped-BACKPACK, equipped-SUITSTORAGE, inhand-left and inhand-right states modified by Flareguy using ion rifle states",
+	"MetaAtlas": false,
     "size": {
         "x": 32,
         "y": 32
