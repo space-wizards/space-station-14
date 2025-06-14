@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
@@ -29,6 +30,7 @@ using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
+using Robust.Shared.Collections;
 using Robust.Shared.Containers;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -57,13 +59,12 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ISharedChatManager _chat = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedMapSystem _map = default!;
-        [Dependency] private readonly SharedPhysicsSystem _broadphase = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -92,6 +93,8 @@ namespace Content.Shared.Interaction
         public const string RateLimitKey = "Interaction";
 
         private static readonly ProtoId<TagPrototype> BypassInteractionRangeChecksTag = "BypassInteractionRangeChecks";
+
+        private List<EntityUid> _entList = new();
 
         public delegate bool Ignored(EntityUid entity);
 
@@ -605,7 +608,7 @@ namespace Content.Shared.Interaction
 
             predicate ??= _ => false;
             var ray = new CollisionRay(origin.Position, dir.Normalized(), collisionMask);
-            var rayResults = _broadphase.IntersectRayWithPredicate(origin.MapId, ray, dir.Length(), predicate.Invoke, false).ToList();
+            var rayResults = _physics.IntersectRayWithPredicate(origin.MapId, ray, dir.Length(), predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0)
                 return dir.Length();
@@ -668,7 +671,7 @@ namespace Content.Shared.Interaction
             }
 
             var ray = new CollisionRay(origin.Position, dir.Normalized(), (int) collisionMask);
-            var rayResults = _broadphase.IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
+            var rayResults = _physics.IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
 
             return rayResults.Count == 0;
         }
@@ -770,7 +773,7 @@ namespace Content.Shared.Interaction
                 var xfB = new Transform(targetPos.Position, parentRotB + otherAngle);
 
                 // Different map or the likes.
-                if (!_broadphase.TryGetNearest(
+                if (!_physics.TryGetNearest(
                         origin,
                         other,
                         out _,
@@ -862,21 +865,56 @@ namespace Content.Shared.Interaction
 
             if (_itemQuery.HasComp(target) && _physicsQuery.TryComp(target, out var physics) && physics.CanCollide)
             {
-                // If the target is an item, we ignore any colliding entities. Currently done so that if items get stuck
-                // inside of walls, users can still pick them up.
-                // TODO: Bandaid, alloc spam
-                // We use 0.01 range just in case it's perfectly in between 2 walls and 1 gets missed.
-                foreach (var otherEnt in _lookup.GetEntitiesInRange(target, 0.01f, flags: LookupFlags.Static))
+                // If an item is stuck in a wall (or for example, 2 walls), due to any number of reasons (construction, spawning)
+                // we still need to be able to ideally retrieve it.
+                // Previously we checked for intersecting entities but this frequently causes issues
+                // Now we just ignore any entities it's contacting if the contact is perpendicular to us (such as in a seam that's facing us).
+                // Additionally, if there's any contacts pointing away from us then also consider it blocked.
+
+                if (physics.ContactCount > 0)
                 {
-                    if (target == otherEnt ||
-                        !_physicsQuery.TryComp(otherEnt, out var otherBody) ||
-                        !otherBody.CanCollide ||
-                        ((int) collisionMask & otherBody.CollisionLayer) == 0x0)
+                    // TODO: Use physics here when fixtures is kill.
+                    var contacts = _physics.GetContacts(target);
+                    var targetDir = (targetCoords.Position - origin.Position).Normalized();
+                    _entList.Clear();
+
+                    while (contacts.MoveNext(out var contact))
                     {
-                        continue;
+                        var otherBody = contact.OtherBody(target);
+
+                        if (!otherBody.CanCollide ||
+                            ((int)collisionMask & otherBody.CollisionLayer) == 0x0)
+                        {
+                            continue;
+                        }
+
+                        var transformA = _physics.GetPhysicsTransform(contact.EntityA);
+                        var transformB = _physics.GetPhysicsTransform(contact.EntityB);
+
+                        contact.GetWorldManifold(transformA, transformB, out var worldNormal);
+                        var dotProduct = Vector2.Dot(targetDir, worldNormal);
+
+                        // There's at least 1 contact pointing away from us so ignore these checks entirely.
+                        // This is mainly so if it's in a seam but there's something in between that might be blocking us
+                        // we ignore the seam check entirely and pretend it's blocked. Generally this shouldn't be triggered.
+                        if (dotProduct < -0.95f)
+                        {
+                            _entList.Clear();
+                            break;
+                        }
+
+                        // Make sure it's sufficiently perpendicular.
+                        // If you want corners to work you need about abs(0.4) or higher to grab those though that means
+                        // people can more easily grab around corners and may have other interactions I haven't thought of yet.
+                        if (!MathHelper.CloseTo(dotProduct, 0f, 0.1f))
+                        {
+                            continue;
+                        }
+
+                        _entList.Add(contact.OtherEnt(target));
                     }
 
-                    ignored.Add(otherEnt);
+                    ignored.UnionWith(_entList);
                 }
             }
             else if (_wallMountQuery.TryComp(target, out var wallMount))
