@@ -112,8 +112,8 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (!Proto.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
             return false;
 
-        return decalProto.Tags.Contains("station")
-            || decalProto.Tags.Contains("markings")
+        return (decalProto.Tags.Contains("station")
+            || decalProto.Tags.Contains("markings"))
             && !decalProto.Tags.Contains("dirty");
     }
 
