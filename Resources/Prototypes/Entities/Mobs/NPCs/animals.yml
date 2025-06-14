@@ -2550,7 +2550,7 @@
       amount: 2
   - type: CombatMode
   - type: Body
-    prototype: AnimalHemocyanin
+    prototype: AnimalHemocyaninSpider #Imp for edible spider silk
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -2683,8 +2683,6 @@
     damage:
       types:
         Piercing: 6
-  - type: Body    #imp edit
-    prototype: AnimalHemocyaninSpider
 
 - type: entity
   parent:

@@ -437,3 +437,27 @@
     spawned:
     - id: ClothingOuterCoatBomberSecurity
       amount: 1
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatWebSweater
+  name: web sweater
+  description: A soft, comfy sweater made of spider silk. Surprisingly light and breezy. Whoever made this must have put a lot of heart into it.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/websweater.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/websweater.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 10
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: Construction
+    graph: WebObjects
+    node: websweater

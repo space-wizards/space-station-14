@@ -162,3 +162,47 @@
     sprite: _Impstation/Clothing/Neck/Cloaks/capcloakadmiral.rsi
   - type: StealTarget
     stealGroup: HeadCloak
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakWebSimple
+  name: simple web cloak
+  description: This tattered cloak looks a little spooky.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/webcloaksimple.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 10
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: Construction
+    graph: WebObjects
+    node: cloaksimple
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakWebFancy
+  name: fancy web cloak
+  description: This tattered cloak looks really spooky.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/webcloakfancy.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 10
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: Construction
+    graph: WebObjects
+    node: cloakfancy

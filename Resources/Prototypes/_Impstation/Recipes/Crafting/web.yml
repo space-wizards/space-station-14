@@ -32,10 +32,32 @@
   objectType: Item
 
 - type: construction
+  id: ClothingOuterCoatWebSweater
+  graph: WebObjects
+  startNode: start
+  targetNode: websweater
+  category: construction-category-clothing
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  objectType: Item
+
+- type: construction
   id: ClothingUniformJumpsuitLoungewearWeb
   graph: WebObjects
   startNode: start
   targetNode: loungewear
+  category: construction-category-clothing
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  objectType: Item
+
+- type: construction
+  id: ClothingHeadHatWebBeret
+  graph: WebObjects
+  startNode: start
+  targetNode: webberet
   category: construction-category-clothing
   entityWhitelist:
     tags:
@@ -102,6 +124,28 @@
   graph: WebObjects
   startNode: start
   targetNode: mantle
+  category: construction-category-clothing
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  objectType: Item
+
+- type: construction
+  id: ClothingNeckCloakWebSimple
+  graph: WebObjects
+  startNode: start
+  targetNode: cloaksimple
+  category: construction-category-clothing
+  entityWhitelist:
+    tags:
+    - SpiderCraft
+  objectType: Item
+
+- type: construction
+  id: ClothingNeckCloakWebFancy
+  graph: WebObjects
+  startNode: start
+  targetNode: cloakfancy
   category: construction-category-clothing
   entityWhitelist:
     tags:

@@ -1,12 +1,16 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Downwards made by PixelTheKermit (github) for SS14. Inwards made by Nairodian (github) for SS14. Both lightened to match spiders on Impstation by Sha-Seng (github). Small made by Sha-Seng (github)",
+    "copyright": "Downwards made by PixelTheKermit (github) for SS14. Inwards made by Nairodian (github) for SS14. Both lightened to match spiders on Impstation by Sha-Seng (github). Small made by Sha-Seng (github). Big, Solifugid, and Longjaw made by Entings (github) for Impstation.",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
+        {
+            "name": "big",
+            "directions": 4
+        },
         {
             "name": "downwards",
             "directions": 4
@@ -16,7 +20,15 @@
             "directions": 4
         },
         {
+            "name": "longjaw",
+            "directions": 4
+        },
+        {
             "name": "small",
+            "directions": 4
+        },
+        {
+            "name": "solifugid",
             "directions": 4
         }
     ]

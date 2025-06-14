@@ -398,6 +398,33 @@
   - sprite: _Impstation/Mobs/Customization/Arachnid/headside.rsi
     state: small
 
+- type: marking
+  id: ArachnidCheliceraeBig
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/headside.rsi
+    state: big
+
+- type: marking
+  id: ArachnidCheliceraeSolifugid
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/headside.rsi
+    state: solifugid
+
+- type: marking
+  id: ArachnidCheliceraeLongjaw
+  bodyPart: HeadSide
+  markingCategory: HeadSide
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/headside.rsi
+    state: longjaw
+
 # HeadTop
 
 # Tail
@@ -432,5 +459,14 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/Arachnid/tail.rsi
     state: creepy
+
+- type: marking
+  id: AppendagesScorpion
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Arachnid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Arachnid/tail.rsi
+    state: scorpion
 
 # RArmExtension

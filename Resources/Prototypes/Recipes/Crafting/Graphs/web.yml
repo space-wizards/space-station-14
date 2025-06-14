@@ -65,6 +65,12 @@
       - material: WebSilk
         amount: 2
         doAfter: 4
+    
+    - to: webberet
+      steps:
+      - material: WebSilk
+        amount: 2
+        doAfter: 4
 
     - to: gloves
       steps:
@@ -95,11 +101,29 @@
       - material: WebSilk
         amount: 15
         doAfter: 20
+  
+    - to: websweater
+      steps:
+      - material: WebSilk
+        amount: 10
+        doAfter: 20
 
     - to: mantle
       steps:
       - material: WebSilk
         amount: 6
+        doAfter: 20
+
+    - to: cloaksimple
+      steps:
+      - material: WebSilk
+        amount: 10
+        doAfter: 20
+
+    - to: cloakfancy
+      steps:
+      - material: WebSilk
+        amount: 10
         doAfter: 20
 
     - to: scarf
@@ -148,6 +172,9 @@
   - node: elegantdress
     entity: ClothingUniformJumpskirtWebElegantDress
 
+  - node: websweater
+    entity: ClothingOuterCoatWebSweater
+
   - node: loungewear
     entity: ClothingUniformJumpsuitLoungewearWeb
 
@@ -157,6 +184,9 @@
   - node: widehat
     entity: ClothingHeadHatWebHat
 
+  - node: webberet
+    entity: ClothingHeadHatWebBeret
+
   - node: gloves
     entity: ClothingHandsGlovesColorWeb
 
@@ -165,6 +195,12 @@
 
   - node: mantle
     entity: ClothingNeckMantleWeb
+
+  - node: cloaksimple
+    entity: ClothingNeckCloakWebSimple
+  
+  - node: cloakfancy
+    entity: ClothingNeckCloakWebFancy
 
   - node: shortscarf
     entity: ClothingNeckScarfStripedZebraWeb
