@@ -1422,8 +1422,8 @@
           collection: MetalSlam
       - !type:DoActsBehavior
         acts: ["Destruction"]
-      - type: StaticPrice # imp arbitrage
-        price: 295
+  - type: StaticPrice # imp arbitrage
+    price: 295
 
 
 
