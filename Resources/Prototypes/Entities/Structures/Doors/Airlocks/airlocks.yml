@@ -326,3 +326,11 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/centcomm.rsi
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockExternalGlassShuttleEscape
+  suffix: External, Escape 3x4, Glass, Docking
+  components:
+    - type: Sprite
+      sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
