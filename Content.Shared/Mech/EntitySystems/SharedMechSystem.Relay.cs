@@ -1,17 +1,16 @@
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mech.Components;
-using Serilog;
 
 namespace Content.Shared.Mech.EntitySystems;
 
 public abstract partial class SharedMechSystem
 {
-    public void InitializeRelay()
+    private void InitializeRelay()
     {
         SubscribeLocalEvent<MechComponent, GettingAttackedAttemptEvent>(RelayRefToPilot);
     }
 
-    public void RelayToPilot<T>(Entity<MechComponent> uid, T args)
+    private void RelayToPilot<T>(Entity<MechComponent> uid, T args) where T : class
     {
         if (uid.Comp.PilotSlot.ContainedEntity is not { } pilot)
             return;
@@ -21,7 +20,7 @@ public abstract partial class SharedMechSystem
         RaiseLocalEvent(pilot, ref ev);
     }
 
-    public void RelayRefToPilot<T>(Entity<MechComponent> uid, ref T args)
+    private void RelayRefToPilot<T>(Entity<MechComponent> uid, ref T args) where T :struct
     {
         if (uid.Comp.PilotSlot.ContainedEntity is not { } pilot)
             return;
