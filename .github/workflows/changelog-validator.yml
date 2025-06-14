@@ -31,4 +31,9 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           python ./Tools/_Starlight/validate_changelog.py
-          echo "Script exited with code $?"
+          if [ $? -eq 0 ]; then
+            echo "::notice::Changelog validation passed"
+          else
+            echo "::error::Changelog validation failed"
+            exit 1
+          fi
