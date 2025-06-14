@@ -10,7 +10,9 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    size: Huge
+    size: Large
+    shape: # Base rifle size - the same length as a shotgun.
+    - 0,0,4,1
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
     quickEquip: false
@@ -56,6 +58,10 @@
   id: WeaponSniperHristov
   description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.
   components:
+  - type: Item
+    size: Huge
+    shape: # Taller due to its much higher weight. A marvel of Waffle Corp engineering that it even fits in a bag at all.
+    - 0,0,4,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi
   - type: Clothing
@@ -137,7 +143,6 @@
     shape:
     - 0,0,1,0
     - 0,1,0,1
-    storedRotation: 0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: Clothing
