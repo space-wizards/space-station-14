@@ -55,6 +55,13 @@
             - material: Paper
               amount: 20
               doAfter: 15
+        - to: cardDoor
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: Cardboard
+              amount: 5
+              doAfter: 6
     - node: metalDoor
       entity: MetalDoor
       edges:
@@ -121,6 +128,20 @@
           steps:
             - tool: Anchoring
               doAfter: 15
+    - node: cardDoor
+      entity: CardDoor
+      edges:
+        - to: start
+          completed:
+          - !type:PlaySound
+            sound: /Audio/Items/Toys/ToyFall2.ogg
+          - !type:SpawnPrototype
+                prototype: MaterialCardboard1
+                amount: 5
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Slicing
+              doAfter: 2
     - node: bananiumDoor
       entity: BananiumDoor
       edges:
