@@ -32,7 +32,7 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
         if (transform.MapID == MapId.Nullspace)
             return false;
 
-        component.CanFloat = GravitySystem.IsWeightless(uid, xform: transform);
+        component.CanFloat = GravitySystem.IsWeightless(uid);
         Dirty(uid, component);
         return component.CanFloat;
     }
