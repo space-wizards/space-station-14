@@ -45,8 +45,6 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
 
         _lastUpdateTime = _gameTiming.CurTime;
         OnGhostnado(false);
-        _system?.RequestWarps();
-        Gui?.TargetWindow.Populate();
     }
 
     private void OnScreenLoad()
