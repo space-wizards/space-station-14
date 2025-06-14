@@ -246,6 +246,15 @@
     - type: Implanter
       implant: DnaScramblerImplant
 
+- type: entity
+  id: ChameleonControllerImplanter
+  name: chameleon controller implant
+  suffix: chameleon controller
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: ChameleonControllerImplant
+
 #Nuclear Operative/Special implanters
 
 - type: entity
