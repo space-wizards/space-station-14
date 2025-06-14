@@ -17,6 +17,7 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
@@ -67,6 +68,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly AdminFrozenSystem _freeze = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SiliconLawSystem _siliconLawSystem = default!;
+        [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
 
         private readonly Dictionary<ICommonSession, List<EditSolutionsEui>> _openSolutionUis = new();
 
@@ -145,7 +147,7 @@ namespace Content.Server.Administration.Systems
 
                             var stationUid = _stations.GetOwningStation(args.Target);
 
-                            var profile = _gameTicker.GetPlayerProfile(targetActor.PlayerSession);
+                            var profile = _humanoidAppearance.GetBaseProfile(args.Target);
                             var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
 
                             if (_mindSystem.TryGetMind(args.Target, out var mindId, out var mindComp))
@@ -170,8 +172,7 @@ namespace Content.Server.Administration.Systems
                             }
 
                             var stationUid = _stations.GetOwningStation(args.Target);
-
-                            var profile = _gameTicker.GetPlayerProfile(targetActor.PlayerSession);
+                            var profile = _humanoidAppearance.GetBaseProfile(args.Target);
                             _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
                         },
                         ConfirmationPopup = true,
