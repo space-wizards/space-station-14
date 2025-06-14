@@ -681,3 +681,16 @@ BarSignEmprahAlignTile: BarSignEmprah
 BarSignSpacebucksAlignTile: BarSignSpacebucks
 BarSignMaltroachAlignTile: BarSignMaltroach
 BarSignWhiskeyEchoesAlignTile: BarSignWhiskeyEchoes
+
+# 2025-06-13
+BoxFolderBase: BoxFolderBaseFilled
+BoxFolderRed: BoxFolderRedFilled
+BoxFolderBlue: BoxFolderBlueFilled
+BoxFolderYellow: BoxFolderYellowFilled
+BoxFolderGrey: BoxFolderGreyFilled
+BoxFolderBlack: BoxFolderBlackFilled
+BoxFolderGreen: BoxFolderGreenFilled
+BoxFolderWhite: BoxFolderMedicalFilled
+BoxFolderCentCom: BoxFolderCentComFilled
+BoxFolderClipboard: BoxFolderClipboardFilled
+BoxFolderCentComClipboard: BoxFolderCentComClipboardFilled
