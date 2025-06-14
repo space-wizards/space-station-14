@@ -11,6 +11,8 @@
   - type: NpcFactionMember
     factions:
     - NanoTrasen
+  - type: SSDIndicator
+    shouldSleep: false
 
 - type: entity
   name: salvager
@@ -28,6 +30,8 @@
     - type: HTN
       rootTask:
         task: SimpleHumanoidHostileCompound
+    - type: SSDIndicator
+      shouldSleep: false
 
 - type: entity
   name: spirate
@@ -46,6 +50,8 @@
   - type: HTN
     rootTask:
       task: SimpleHumanoidHostileCompound
+  - type: SSDIndicator
+    shouldSleep: false
 
 - type: entity
   name: syndicate footsoldier
@@ -63,6 +69,8 @@
     - type: HTN
       rootTask:
         task: SimpleHumanoidHostileCompound
+    - type: SSDIndicator
+      shouldSleep: false
 
 - type: entity
   name: syndicate shuttle pilot
