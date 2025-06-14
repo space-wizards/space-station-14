@@ -519,6 +519,22 @@
   - type: Stack
     stackType: FloorTileTechmaint
 
+- type: entity
+  parent: FloorTileItemBase
+  id: FloorTileItemTechmaintDark
+  name: dark techmaint floor
+  components:
+  - type: Sprite
+    state: techfloordark
+  - type: Item
+    heldPrefix: dark
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorTechMaintDark
+  - type: Stack
+    stackType: FloorTileTechmaintDark
+
 # TODO add a catwalk tile item once tile smoothing is supported
 
 - type: entity
@@ -1603,3 +1619,81 @@
   - type: Construction
     graph: TileWoodLarge
     node: woodtilelarge
+
+- type: entity
+  id: FloorTileItemXeno
+  parent: FloorTileItemBase
+  name: xeno floor
+  components:
+  - type: Sprite
+    state: xenofloor
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXeno
+  - type: Stack
+    stackType: FloorTileXeno
+
+- type: entity
+  id: FloorTileItemXenoSteel
+  parent: FloorTileItemBase
+  name: xeno steel floor
+  components:
+  - type: Sprite
+    state: xeno-steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXenoSteel
+  - type: Stack
+    stackType: FloorTileXenoSteel
+
+- type: entity
+  id: FloorTileItemXenoSteelCorner
+  parent: FloorTileItemBase
+  name: xeno steel corner floor
+  components:
+  - type: Sprite
+    state: xeno-steel-corner
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXenoSteelCorner
+  - type: Stack
+    stackType: FloorTileXenoSteelCorner
+
+- type: entity
+  name: xeno techmaint
+  parent: FloorTileItemBase
+  id: FloorTileItemXenoMaint
+  components:
+  - type: Sprite
+    state: xeno-techmaint
+  - type: Item
+    heldPrefix: dark
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXenoMaint
+  - type: Stack
+    stackType: FloorTileXenoMaint
+
+- type: entity
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkSquiggly
+  name: dark steel squiggly tile
+  components:
+  - type: Sprite
+    state: dark-squiggly
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkSquiggly
+  - type: Stack
+    stackType: FloorTileDarkSquiggly
