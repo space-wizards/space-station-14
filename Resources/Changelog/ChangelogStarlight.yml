@@ -7375,4 +7375,11 @@ Entries:
   id: 1019
   time: '2025-06-14T21:23:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/823
+- author: RoadTrain
+  changes:
+  - message: Changed syndicate borg laws to more closely resemble emagged crewsimov.
+    type: Tweak
+  id: 1020
+  time: '2025-06-14T21:39:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/811
 
