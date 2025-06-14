@@ -17,7 +17,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
 
     [UISystemDependency] private readonly GhostSystem? _system = default;
 
-    private TimeSpan _lastUpdateTime = TimeSpan.Zero;
+    private TimeSpan _lastUpdateTime;
     private const float UpdateInterval = 5f;
 
     private GhostGui? Gui => UIManager.GetActiveUIWidgetOrNull<GhostGui>();
@@ -35,17 +35,23 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
     {
         base.FrameUpdate(args);
 
-        if (_lastUpdateTime + TimeSpan.FromSeconds(UpdateInterval) < _gameTiming.CurTime
-            || Gui is null)
+        if (Gui is null
+            || Gui?.Visible == false)
+            return;
+
+        if (_lastUpdateTime + TimeSpan.FromSeconds(UpdateInterval) > _gameTiming.CurTime
+            || !Gui!.TargetWindow.IsOpen)
             return;
 
         _lastUpdateTime = _gameTiming.CurTime;
         OnGhostnado(false);
-        RequestWarps();
+        _system?.RequestWarps();
+        Gui?.TargetWindow.Populate();
     }
 
     private void OnScreenLoad()
     {
+        _lastUpdateTime = TimeSpan.Zero;
         LoadGui();
     }
 
@@ -61,6 +67,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         system.PlayerAttached += OnPlayerAttached;
         system.PlayerDetached += OnPlayerDetached;
         system.GhostWarpsResponse += OnWarpsResponse;
+        system.GhostnadoResponse += OnGhostnadoResponse;
         system.GhostRoleCountUpdated += OnRoleCountUpdated;
     }
 
@@ -71,6 +78,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
         system.PlayerAttached -= OnPlayerAttached;
         system.PlayerDetached -= OnPlayerDetached;
         system.GhostWarpsResponse -= OnWarpsResponse;
+        system.GhostnadoResponse -= OnGhostnadoResponse;
         system.GhostRoleCountUpdated -= OnRoleCountUpdated;
     }
 
@@ -116,6 +124,11 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
 
         window.UpdateWarps(msg.Warps);
         window.Populate();
+    }
+
+    private void OnGhostnadoResponse(GhostnadoResponseEvent msg)
+    {
+        Gui?.TargetWindow.UpdateGhostnadoButton(msg.EntityFound);
     }
 
     private void OnRoleCountUpdated(GhostUpdateGhostRoleCountEvent msg)

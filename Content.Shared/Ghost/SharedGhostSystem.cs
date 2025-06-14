@@ -184,6 +184,16 @@ namespace Content.Shared.Ghost
     }
 
     /// <summary>
+    /// A server to client response for <see cref="GhostnadoRequestEvent"/>.
+    /// </summary>
+    /// <param name="entityFound">Whether Any entity to warp to was found.</param>
+    [Serializable, NetSerializable]
+    public sealed class GhostnadoResponseEvent(bool entityFound) : EntityEventArgs
+    {
+        public bool EntityFound { get; } = entityFound;
+    }
+
+    /// <summary>
     /// A client to server request for their ghost to return to body
     /// </summary>
     [Serializable, NetSerializable]

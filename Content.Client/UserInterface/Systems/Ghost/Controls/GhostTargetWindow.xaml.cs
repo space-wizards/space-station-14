@@ -94,5 +94,10 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
             // Reset scroll bar so they can see the relevant results.
             GhostScroll.SetScrollValue(Vector2.Zero);
         }
+
+        public void UpdateGhostnadoButton(bool enabled)
+        {
+            GhostnadoButton.Disabled = !enabled;
+        }
     }
 }
