@@ -34,33 +34,6 @@
   cost: 2
   defaultStyle: basic
   styles:
-    # Lockers (look alright as closets)
-    atmospherics: LockerAtmospherics
-    basic: ClosetSteelBase
-    botanist: LockerBotanist
-    brigmedic: LockerBrigmedic
-    captain: LockerCaptain
-    ce: LockerChiefEngineer
-    chemical: LockerChemistry
-    clown: LockerClown
-    cmo: LockerChiefMedicalOfficer
-    doctor: LockerMedical
-    electrical: LockerElectricalSupplies
-    engineer: LockerEngineer
-    evac: LockerEvacRepair
-    hop: LockerHeadOfPersonnel
-    hos: LockerHeadOfSecurity
-    medicine: LockerMedicine
-    mime: LockerMime
-    paramedic: LockerParamedic
-    quartermaster: LockerQuarterMaster
-    rd: LockerResearchDirector
-    representative: LockerRepresentative
-    salvage: LockerSalvageSpecialist
-    scientist: LockerScientist
-    security: LockerSecurity
-    welding: LockerWeldingSupplies
-    # Closets
     biohazard: ClosetL3
     biohazard-janitor: ClosetL3Janitor
     biohazard-science: ClosetL3Science
@@ -84,11 +57,9 @@
     basic: ClosetWall
     black: ClosetWallBlack
     blue: ClosetWallBlue
-    evac: LockerWallEvacRepair
     fire: ClosetWallFire
     green: ClosetWallGreen
     grey: ClosetWallGrey
-    medical: LockerWallMedical
     mixed: ClosetWallMixed
     nitrogen: ClosetWallEmergencyN2
     orange: ClosetWallOrange
