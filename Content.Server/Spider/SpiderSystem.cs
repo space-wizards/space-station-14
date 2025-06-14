@@ -9,6 +9,7 @@ namespace Content.Server.Spider;
 
 public sealed class SpiderSystem : SharedSpiderSystem
 {
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
@@ -66,7 +67,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
 
     private bool IsTileBlockedByWeb(EntityCoordinates coords)
     {
-        foreach (var entity in coords.GetEntitiesInTile())
+        foreach (var entity in _lookup.GetEntitiesIntersecting(coords))
         {
             if (HasComp<SpiderWebObjectComponent>(entity))
                 return true;
