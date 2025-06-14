@@ -12,10 +12,10 @@
   suffix: "rat"
   components:
   - type: Stomach
-    specialDigestible:
+    specialDigestible: # imp
       tags:
       - Trash
-    additiveDiet: true
+    isSpecialDigestibleExclusive: false # imp
   - type: Metabolizer
     maxReagents: 3
     metabolizerTypes: [ Animal, Rat ]

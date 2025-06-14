@@ -10,6 +10,10 @@
     - state: icon
   - type: Item
     size: Huge
+  - type: MultiHandedItem #huge device
+  - type: HeldSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
   - type: Fixtures
     fixtures:
       fix1:

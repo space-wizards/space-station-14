@@ -186,7 +186,7 @@ namespace Content.Client.Stylesheets
         public static readonly Color ServiceButtonColorDefault = Color.FromHex("#607952");
         public static readonly Color ServiceColorHovered = Color.FromHex("#667A76");
         // End DeltaV
-		
+
 		//Bwoink
         public const string StyleClassPinButtonPinned = "pinButtonPinned";
         public const string StyleClassPinButtonUnpinned = "pinButtonUnpinned";
@@ -1654,6 +1654,10 @@ namespace Content.Client.Stylesheets
 
                 Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
+
+                //
+                Element<TextureButton>().Class("Refresh")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/circular_arrow.svg.96dpi.png")),
                 // ---
 
                 // Profile Editor
@@ -1934,7 +1938,7 @@ namespace Content.Client.Stylesheets
                     .Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, JusticeColorHovered),
                 // End DeltaV
-				
+
 				// Silicon law edit ui
                 Element<Label>().Class(SiliconLawContainer.StyleClassSiliconLawPositionLabel)
                     .Prop(Label.StylePropertyFontColor, NanoGold),

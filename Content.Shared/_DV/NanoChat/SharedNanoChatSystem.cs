@@ -31,6 +31,16 @@ public abstract class SharedNanoChatSystem : EntitySystem
         args.PushMarkup(Loc.GetString("nanochat-card-examine-number", ("number", $"{ent.Comp.Number:D4}")));
     }
 
+    /// <summary>
+    ///     Helper Method for truncating a string to maximum length
+    /// </summary>
+    public static string Truncate(string text, int maxLength, string overflowText = "...")
+    {
+        return text.Length > maxLength
+            ? text[..(maxLength - overflowText.Length)] + overflowText
+            : text;
+    }
+
     #region Public API Methods
 
     /// <summary>

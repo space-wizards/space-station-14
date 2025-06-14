@@ -34,7 +34,6 @@ player-first-join-message = Player {$name} joined for the first time.
 # Displayed in chat to admins when a player leaves
 player-leave-message = Player {$name} left.
 
-# imp edit because CONJUGATE-HAVE($entity) just doesn't really fit here (i.e. "Joan McUrist have arrived at the station!")... not every they-them is plural
 latejoin-arrival-announcement = {$character} ({$job}) has arrived at the station!
 latejoin-arrival-announcement-special = {$job} {$character} on deck!
 latejoin-arrival-sender = Station

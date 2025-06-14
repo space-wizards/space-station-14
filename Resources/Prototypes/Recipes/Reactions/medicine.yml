@@ -666,10 +666,10 @@
   impact: Medium
   reactants:
     Cryoxadone:
-      amount: 1
-    Aloe:
       amount: 2
-    Sigynate:
+    Aloe:
+      amount: 1
+    Leporazine:
       amount: 2
   products:
       Aloxadone: 4
@@ -741,12 +741,31 @@
     Haloperidol: 5
 
 - type: reaction
-  id: Caramexinin
-  minTemp: 370
+  id: Traumoxadone
+  impact: Medium
   reactants:
-    Stellibinin:
+    Cryoxadone:
       amount: 1
-    Sugar:
+    Bicaridine:
+      amount: 1
+    Fersilicite:
+      amount: 1
+    Lipozine:
       amount: 1
   products:
-    Caramexinin: 2
+    Traumoxadone: 3
+
+- type: reaction
+  id: Stelloxadone
+  impact: Medium
+  reactants:
+    Stellibinin:
+      amount: 5
+    Cryoxadone:
+      amount: 3
+    Arithrazine:
+      amount: 2
+  products:
+    Stelloxadone: 5
+    Water: 3
+    Fiber: 2

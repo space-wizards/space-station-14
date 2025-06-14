@@ -67,8 +67,8 @@
     lightningResistance: 10
     lightningExplode: false
   - type: PowerNetworkBattery
-    maxSupply: 3500000
-    supplyRampTolerance: 3500000
+    maxSupply: 350000
+    supplyRampTolerance: 350000
   - type: Anchorable
   - type: Rotatable
   - type: Pullable

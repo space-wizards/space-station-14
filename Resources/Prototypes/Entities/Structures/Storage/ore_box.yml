@@ -61,8 +61,6 @@
       - OreBag # imp
       - ArtifactFragment # imp
   - type: Dumpable # imp
-  - type: MagnetPickup # imp
-    range: 1.5 # more than an ore bag, less than the ore bag of holding
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:

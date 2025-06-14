@@ -64,6 +64,7 @@
     tags:
     - BypassInteractionRangeChecks
   - type: PointLight
+    netsync: false
     radius: 6
     castShadows: false
     enabled: false
@@ -90,7 +91,7 @@
     followEntity: true
   - type: IgnoreUIRange # imp. pretty much all this does is make it so that ghosts can see IDs and health info at any range, since ghosts don't have hands or complexinteract
 
-# imp - ActionAghostShowRadar except with CheckCanInteract set to false, and a UseDelay 
+# imp - ActionAghostShowRadar except with CheckCanInteract set to false, and a UseDelay
 - type: entity
   id: ActionGhostShowRadar
   name: Mass Scanner Interface

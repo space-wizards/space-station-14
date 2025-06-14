@@ -409,7 +409,7 @@
   emagOnly: true
   name: "Blatantly Nuclear // mrjajkes"
   path:
-    path: /Audio/_Impstation/Music/blatantly_nuclear.ogg
+    path: /Audio/StationEvents/blatantly_nuclear.ogg
 
 - type: jukebox
   id: CyberGrind

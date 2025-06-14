@@ -182,7 +182,7 @@
     price: 750
 
 - type: entity
-  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ] # imp contraband
   id: CargoSaleComputerCircuitboard
   name: cargo sale computer board
   description: A computer printed circuit board for a cargo sale computer.
@@ -194,7 +194,7 @@
 
 - type: entity
   id: CargoBountyComputerCircuitboard
-  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ] # imp contraband
   name: cargo bounty computer board
   description: A computer printed circuit board for a cargo bounty computer.
   components:
@@ -208,7 +208,18 @@
     - DroneUsable
 
 - type: entity
-  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ] # imp contraband
+  id: SalvageJobBoardComputerCircuitboard
+  name: salvage job board computer board
+  description: A computer printed circuit board for a salvage job board computer.
+  components:
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: ComputerSalvageJobBoard
+
+- type: entity
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ] # imp contraband
   id: SalvageExpeditionsComputerCircuitboard
   name: salvage expeditions computer board
   description: A computer printed circuit board for a salvage expeditions computer.
@@ -221,7 +232,7 @@
       stealGroup: SalvageExpeditionsComputerCircuitboard
 
 - type: entity
-  parent: [ BaseComputerCircuitboard, BaseCargoContraband ]
+  parent: [ BaseComputerCircuitboard, BaseCargoContraband ] # imp contraband
   id: CargoShuttleConsoleCircuitboard
   name: cargo shuttle console board
   description: A computer printed circuit board for a cargo shuttle console.
@@ -317,7 +328,7 @@
     prototype: ComputerCrewMonitoring
 
 - type: entity
-  parent: [BaseComputerCircuitboard, BaseGrandTheftContraband]
+  parent: [BaseComputerCircuitboard, BaseCommandContraband]
   id: IDComputerCircuitboard
   name: ID card computer board
   description: A computer printed circuit board for an ID card console.
@@ -345,7 +356,7 @@
       prototype: computerBodyScanner
 
 - type: entity
-  parent: [ BaseComputerCircuitboard, BaseGrandTheftContraband ]
+  parent: [ BaseComputerCircuitboard, BaseCommandContraband ]
   id: CommsComputerCircuitboard
   name: communications computer board
   description: A computer printed circuit board for a communications console.

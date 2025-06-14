@@ -1,4 +1,20 @@
 ﻿- type: entity
+  parent: BaseAmmoProvider
+  id: StackOfCigs
+  name: 500 cigarettes
+  description: The aroma is most pleasing.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/500cigarettes.rsi
+    state: 500-cigarettes
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - Cigarette
+    proto: Cigarette
+    capacity: 500
+
+- type: entity
   id: CigCartonMixedRejects
   parent: [CigCartonGreen, Tier2Contraband]
   name: Dan's soaked smokes rejects carton

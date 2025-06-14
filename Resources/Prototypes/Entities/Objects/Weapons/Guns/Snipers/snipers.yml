@@ -52,6 +52,7 @@
     - SemiAuto
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi #imp
+  - type: GunRequiresWield
 #imp edit begin; weapon melee
   - type: MeleeWeapon
     range: 2
@@ -205,6 +206,7 @@
   - type: AltFireMelee
     attackType: Heavy
 #imp edit end
+  - type: GunRequiresWield
 
 - type: entity
   name: flintlock pistol

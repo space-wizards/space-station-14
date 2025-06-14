@@ -33,6 +33,10 @@
     - id: GameRuleMeteorSwarmMedium
     - id: GameRuleMeteorSwarmLarge
     - id: GameRuleUristSwarm
+    - id: GameRuleClownSwarm
+    - id: GameRuleCowSwarm
+    - id: GameRulePotatoSwarm
+    - id: GameRuleFunSwarm
     - id: ImmovableRodSpawn
 
 - type: weightedRandomEntity
@@ -127,7 +131,7 @@
     weight: 22
     minimumPlayers: 0
   - type: MeteorSwarm
-    startAnnouncement: true
+    startAnnouncement: true # imp
     nonDirectional: true
     meteors:
       MeteorSpaceDust: 1
@@ -146,7 +150,7 @@
     weight: 18
     minimumPlayers: 15
   - type: MeteorSwarm
-    startAnnouncement: true
+    startAnnouncement: true # imp
     meteors:
       MeteorSmall: 7
       MeteorMedium: 3
@@ -158,7 +162,7 @@
   - type: StationEvent
     weight: 10
   - type: MeteorSwarm
-    startAnnouncement: true
+    startAnnouncement: true # imp
     meteors:
       MeteorSmall: 3
       MeteorMedium: 6
@@ -171,7 +175,7 @@
   - type: StationEvent
     weight: 5
   - type: MeteorSwarm
-    startAnnouncement: true
+    startAnnouncement: true # imp
     meteors:
       MeteorSmall: 2
       MeteorMedium: 4
@@ -184,7 +188,7 @@
   - type: StationEvent
     weight: 0.05
   - type: MeteorSwarm
-    startAnnouncement: true
+    startAnnouncement: true # imp
     meteors:
       MeteorUrist: 1
     waves:
@@ -199,7 +203,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    startAnnouncement: true
+    startAnnouncement: true # imp
     weight: 3.5
     reoccurrenceDelay: 1
     duration: 1
@@ -234,12 +238,83 @@
     - id: ImmovableRodWeh
       prob: 0.0075
       orGroup: rodProto
-    - id: ImmovableRodFinFin
+    - id: ImmovableRodFinFin # imp
       prob: 0.0075
       orGroup: rodProto
-    - id: ImmovableRodGondal
+    - id: ImmovableRodGondal # imp
       prob: 0.0075
       orGroup: rodProto
-    - id: ImmovableRodHollowPlasticBarrel
+    - id: ImmovableRodHollowPlasticBarrel # imp
       prob: 0.0075
       orGroup: rodProto
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleCowSwarm
+  components:
+  - type: StationEvent
+    weight: 0.05
+  - type: MeteorSwarm
+    startAnnouncement: true # imp
+    meteors:
+      MeteorCow: 1
+    waves:
+      min: 3
+      max: 3
+    meteorsPerWave:
+      min: 10
+      max: 10
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleClownSwarm
+  components:
+  - type: StationEvent
+    weight: 0.05
+  - type: MeteorSwarm
+    startAnnouncement: true # imp
+    meteors:
+      MeteorClown: 1
+    waves:
+      min: 3
+      max: 3
+    meteorsPerWave:
+      min: 10
+      max: 10
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRulePotatoSwarm
+  components:
+  - type: StationEvent
+    weight: 0.05
+  - type: MeteorSwarm
+    startAnnouncement: true # imp
+    meteors:
+      MeteorPotato: 1
+    waves:
+      min: 3
+      max: 3
+    meteorsPerWave:
+      min: 10
+      max: 10
+
+- type: entity
+  parent: GameRuleMeteorSwarm
+  id: GameRuleFunSwarm
+  components:
+  - type: StationEvent
+    weight: 0.03
+  - type: MeteorSwarm
+    startAnnouncement: true # imp
+    meteors:
+      MeteorClown: 1
+      MeteorCow: 1
+      MeteorPotato: 1
+      MeteorUrist: 1
+    waves:
+      min: 3
+      max: 3
+    meteorsPerWave:
+      min: 8
+      max: 12

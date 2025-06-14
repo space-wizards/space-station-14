@@ -80,8 +80,8 @@ public enum CargoTelepadState : byte
     Teleporting,
 };
 
-// [Serializable, NetSerializable] #imp edit to remove default visuals
-// public enum CargoTelepadVisuals : byte
-// {
-//     State,
-// };
+[Serializable, NetSerializable]
+public enum CargoTelepadVisuals : byte
+{
+    State,
+};

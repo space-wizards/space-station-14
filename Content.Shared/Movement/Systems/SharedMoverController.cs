@@ -50,18 +50,19 @@ public abstract partial class SharedMoverController : VirtualController
     [Dependency] private   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly TagSystem _tags = default!;
 
+    protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
+    protected EntityQuery<FootstepModifierComponent> FootstepModifierQuery;
     protected EntityQuery<InputMoverComponent> MoverQuery;
+    protected EntityQuery<MapComponent> MapQuery;
+    protected EntityQuery<MapGridComponent> MapGridQuery;
     protected EntityQuery<MobMoverComponent> MobMoverQuery;
     protected EntityQuery<MovementRelayTargetComponent> RelayTargetQuery;
     protected EntityQuery<MovementSpeedModifierComponent> ModifierQuery;
+    protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
     protected EntityQuery<PhysicsComponent> PhysicsQuery;
     protected EntityQuery<RelayInputMoverComponent> RelayQuery;
     protected EntityQuery<PullableComponent> PullableQuery;
     protected EntityQuery<TransformComponent> XformQuery;
-    protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
-    protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
-    protected EntityQuery<FootstepModifierComponent> FootstepModifierQuery;
-    protected EntityQuery<MapGridComponent> MapGridQuery;
 
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
@@ -91,6 +92,7 @@ public abstract partial class SharedMoverController : VirtualController
         CanMoveInAirQuery = GetEntityQuery<CanMoveInAirComponent>();
         FootstepModifierQuery = GetEntityQuery<FootstepModifierComponent>();
         MapGridQuery = GetEntityQuery<MapGridComponent>();
+        MapQuery = GetEntityQuery<MapComponent>();
 
         SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
 
@@ -404,6 +406,17 @@ public abstract partial class SharedMoverController : VirtualController
         var speed = velocity.Length();
 
         if (speed < minimumFrictionSpeed)
+            return;
+
+        // This equation is lifted from the Physics Island solver.
+        // We re-use it here because Kinematic Controllers can't/shouldn't use the Physics Friction
+        velocity *= Math.Clamp(1.0f - frameTime * friction, 0.0f, 1.0f);
+
+    }
+
+    public void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref float velocity)
+    {
+        if (velocity < minimumFrictionSpeed)
             return;
 
         // This equation is lifted from the Physics Island solver.

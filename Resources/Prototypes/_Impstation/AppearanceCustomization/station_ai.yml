@@ -1,0 +1,11 @@
+- type: stationAiCustomization
+  parent: StationAiIconBase
+  id: StationAiIconJohnnyChaos
+  name: station-ai-icon-johnny-chaos
+  layerData:
+    Occupied:
+      sprite: _Impstation/Mobs/Silicon/station_ai.rsi
+      state: johnny-chaos
+    Dead:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead

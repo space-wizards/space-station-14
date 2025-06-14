@@ -1,4 +1,6 @@
 using Content.Server.Body.Systems;
+using Content.Server.Destructible;
+using Content.Server.Examine;
 using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
@@ -25,6 +27,7 @@ public sealed class ImmovableRodSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -133,7 +136,7 @@ public sealed class ImmovableRodSystem : EntitySystem
             return;
         }
 
-        QueueDel(ent);
+        _destructible.DestroyEntity(ent);
     }
 
     private void OnExamined(EntityUid uid, ImmovableRodComponent component, ExaminedEvent args)

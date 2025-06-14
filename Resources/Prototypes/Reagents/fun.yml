@@ -337,6 +337,7 @@
       effects:
       - !type:Emote
         emote: Laugh
+        showInGuidebook: true
         probability: 0.3
       - !type:PopupMessage
         type: Local
@@ -359,6 +360,7 @@
       - !type:Emote
         emote: Weh
         showInChat: true
+        showInGuidebook: true
         force: true
         probability: 0.5
       - !type:Polymorph
@@ -391,6 +393,7 @@
       - !type:Emote
         emote: Hew
         showInChat: true
+        showInGuidebook: true
         force: true
         probability: 0.5
       - !type:Polymorph

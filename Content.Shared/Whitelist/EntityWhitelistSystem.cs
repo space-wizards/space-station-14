@@ -6,7 +6,6 @@ namespace Content.Shared.Whitelist;
 
 public sealed class EntityWhitelistSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
     private EntityQuery<ItemComponent> _itemQuery;
@@ -178,8 +177,8 @@ public sealed class EntityWhitelistSystem : EntitySystem
 
         foreach (var name in input)
         {
-            var availability = _factory.GetComponentAvailability(name);
-            if (_factory.TryGetRegistration(name, out var registration)
+            var availability = Factory.GetComponentAvailability(name);
+            if (Factory.TryGetRegistration(name, out var registration)
                 && availability == ComponentAvailability.Available)
             {
                 list.Add(registration);

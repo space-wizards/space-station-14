@@ -9,8 +9,9 @@
     - id: CargoSaleComputerCircuitboard
     - id: CargoShuttleConsoleCircuitboard
     - id: SalvageMagnetMachineCircuitboard
-    - id: ShipyardComputerCircuitboard
-    - id: SalvageExpeditionsComputerCircuitboard
+    - id: SalvageJobBoardComputerCircuitboard
+    - id: ShipyardComputerCircuitboard # imp
+    - id: SalvageExpeditionsComputerCircuitboard # imp
     - id: CigPackGreen
       prob: 0.50
     - id: ClothingHeadsetAltCargo
@@ -175,6 +176,7 @@
     - id: RCD
     - id: RCDAmmo
     - id: RubberStampCE
+    - id: MetalFoamGrenade
     - id: PersonalAILearnerEngineering #impspecial
 
 # Hardsuit table, used for suit storage as well
@@ -402,7 +404,6 @@
   - type: StorageFill
     contents:
     - id: WeaponRevolverDeckard
-    - id: ClothingOuterHardsuitBasic
     - id: JetpackBlue
     - id: SpaceCash1000
     - id: BeachBall

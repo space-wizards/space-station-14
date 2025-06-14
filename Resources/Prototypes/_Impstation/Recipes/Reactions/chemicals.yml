@@ -10,7 +10,7 @@
       amount: 2
   products:
     Estradiol: 5
-    
+
 - type: reaction
   id: Testosterone
   impact: Medium
@@ -23,7 +23,7 @@
       amount: 2
   products:
     Testosterone: 5
-    
+
 - type: reaction
   id: PhilosophersJuice
   impact: Medium
@@ -41,7 +41,7 @@
       amount: 100
   products:
     PhilosophersJuice: 1
-    
+
 - type: reaction
   id: Holium
   impact: High
@@ -49,7 +49,7 @@
   reactants:
     Carbon:
       amount: 200
-    UncookedAnimalProteins:
+    Protein:
       amount: 50
     Honk:
       amount: 50
@@ -62,7 +62,7 @@
       catalyst: true
   products:
     Holium: 1
-    
+
 - type: reaction
   id: Medium
   impact: Medium #lol

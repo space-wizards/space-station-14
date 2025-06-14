@@ -40,7 +40,6 @@ namespace Content.Shared.Cuffs
     // TODO remove all the IsServer() checks.
     public abstract partial class SharedCuffableSystem : EntitySystem
     {
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -147,7 +146,7 @@ namespace Content.Shared.Cuffs
 
         private void OnStartup(EntityUid uid, CuffableComponent component, ComponentInit args)
         {
-            component.Container = _container.EnsureContainer<Container>(uid, _componentFactory.GetComponentName(component.GetType()));
+            component.Container = _container.EnsureContainer<Container>(uid, Factory.GetComponentName(component.GetType()));
         }
 
         private void OnRejuvenate(EntityUid uid, CuffableComponent component, RejuvenateEvent args)
@@ -596,7 +595,7 @@ namespace Content.Shared.Cuffs
             if (!Resolve(target, ref cuffable))
                 return;
 
-            // imp. prevent escape attempts if the target is being actively pulled. 
+            // imp. prevent escape attempts if the target is being actively pulled.
             if (TryComp<PullableComponent>(target, out var pullable) && pullable.BeingPulled)
                 return;
 

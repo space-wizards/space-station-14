@@ -8,7 +8,7 @@
   id: FemaleLaugh
   files:
     - /Audio/Voice/Human/womanlaugh.ogg
-    
+
 - type: soundCollection
   id: UnisexLaugh
   files:
@@ -35,7 +35,7 @@
     - /Audio/Voice/Human/male_cough_2.ogg
     - /Audio/Voice/Human/female_cough_1.ogg
     - /Audio/Voice/Human/female_cough_2.ogg
-    
+
 - type: soundCollection
   id: Claps
   files:
@@ -77,7 +77,7 @@
   id: UnisexSigh
   files:
     - /Audio/Voice/Human/male_sigh.ogg
-    - /Audio/Voice/Human/female_sigh.ogg  
+    - /Audio/Voice/Human/female_sigh.ogg
 
 - type: soundCollection
   id: Salutes
@@ -134,3 +134,41 @@
   id: Hew
   files:
   - /Audio/Items/Toys/hew.ogg
+
+- type: soundCollection
+  id: XenoborgLaugh
+  files:
+  - /Audio/Voice/Xenoborg/xenoborg_laugh_1.ogg
+  - /Audio/Voice/Xenoborg/xenoborg_laugh_2.ogg
+  - /Audio/Voice/Xenoborg/xenoborg_laugh_3.ogg
+  - /Audio/Voice/Xenoborg/xenoborg_laugh_4.ogg
+
+- type: soundCollection
+  id: XenoborgBeep
+  files:
+  - /Audio/Voice/Xenoborg/xenoborg_twobeep.ogg
+
+- type: soundCollection
+  id: XenoborgChime
+  files:
+  - /Audio/Voice/Xenoborg/xenoborg_chime.ogg
+
+- type: soundCollection
+  id: XenoborgBuzz
+  files:
+  - /Audio/Voice/Xenoborg/xenoborg_buzz-sigh.ogg
+
+- type: soundCollection
+  id: XenoborgBuzzTwo
+  files:
+  - /Audio/Voice/Xenoborg/xenoborg_buzz-two.ogg
+
+- type: soundCollection
+  id: XenoborgBikeHorn
+  files:
+  - /Audio/Voice/Xenoborg/xenoborg_bikehorn.ogg
+
+- type: soundCollection
+  id: XenoborgPing
+  files:
+  - /Audio/Voice/Xenoborg/xenoborg_ping.ogg

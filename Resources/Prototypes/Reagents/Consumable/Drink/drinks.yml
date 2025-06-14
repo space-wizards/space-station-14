@@ -140,9 +140,7 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   footstepSound:
-    collection: FootstepSticky
-    params:
-      volume: 6
+    collection: FootstepSlime
 
 - type: reagent
   id: IcedCoffee
@@ -449,8 +447,19 @@
       effects:
       - !type:SatiateThirst
         factor: 4
-    Gas: # imp special.
+    Gas:
       effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: true
+        conditions:
+        - !type:OrganType
+          type: Slime
+          shouldHave: true
+        damage:
+          types:
+            Heat: 3
+# imp edits start, vapour breathers
       - !type:Oxygenate
         conditions:
         - !type:OrganType
@@ -471,15 +480,6 @@
         - !type:OrganType
           type: Thaven
         factor: 0.1
-      - !type:HealthChange # for slimes
-        scaleByQuantity: true
-        ignoreResistances: true
-        conditions:
-        - !type:OrganType
-          type: Slime
-        damage:
-          types:
-            Caustic: 8
       - !type:PopupMessage # for apids. they're bees, they get calm if you smoke 'em
         conditions:
         - !type:ReagentThreshold
@@ -511,7 +511,7 @@
         component: ForcedSleeping
         time: 3
         type: Add
-
+# imp edits end
 
 - type: reagent
   id: Ice

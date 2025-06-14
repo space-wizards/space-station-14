@@ -102,6 +102,8 @@
   - SyringeCryostasis
   - BluespaceBeaker
   - SyringeBluespace
+  - LauncherSyringe
+  - MiniSyringe
 
 - type: latheRecipePack
   id: MedicalBoards

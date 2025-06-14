@@ -21,6 +21,7 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Verbs;
+using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -51,6 +52,7 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<MobStateComponent, SleepActionEvent>(OnSleepAction);
 
         SubscribeLocalEvent<SleepingComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<SleepingComponent, EntityZombifiedEvent>(OnZombified);
         SubscribeLocalEvent<SleepingComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<SleepingComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SleepingComponent, SpeakAttemptEvent>(OnSpeakAttempt);
@@ -217,6 +219,16 @@ public sealed partial class SleepingSystem : EntitySystem
 
         if (args.DamageDelta.GetTotal() >= ent.Comp.WakeThreshold)
             TryWaking((ent, ent.Comp));
+    }
+
+    /// <summary>
+    /// Wake up on being zombified.
+    /// In some cases, zombification might theoretically occur without a mob state change or being damaged
+    /// </summary>
+    /// //TODO Perhaps a generic component should be introduced that guarantees that a mob will wake up immediately and can't go to sleep again
+    private void OnZombified(Entity<SleepingComponent> ent, ref EntityZombifiedEvent args)
+    {
+        TryWaking((ent, ent.Comp), true);
     }
 
     /// <summary>

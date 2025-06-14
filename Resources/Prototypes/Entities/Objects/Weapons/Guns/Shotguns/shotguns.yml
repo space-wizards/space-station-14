@@ -256,6 +256,8 @@
     fireRate: 1
     soundGunshot:
       path: /Audio/_Impstation/Weapons/Guns/Gunshots/kammerer.ogg #imp
+  - type: GunSpreadModifier
+    spread: 0.6
   - type: Tag
     tags:
     - WeaponShotgunKammerer

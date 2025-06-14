@@ -43,6 +43,9 @@
   - type: TrashOnSolutionEmpty
     solution: drink
   - type: DnaSubstanceTrace
+  - type: Tag # imp edit, allow cartons in dispenser
+    tags:
+    - DrinkBottle
 
 - type: entity
   parent: DrinkCartonBaseFull
@@ -194,7 +197,7 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/oatmilk.rsi
-    
+
 - type: entity
   parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
   id: DrinkJuiceLemonCarton
@@ -209,7 +212,7 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonjuice.rsi
-    
+
 - type: entity
   parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
   id: DrinkJuicePineappleCarton

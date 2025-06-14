@@ -4,13 +4,16 @@ using Content.Shared.Database;
 using Content.Shared.Power.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Power.EntitySystems;
 
 public abstract class SharedPowerReceiverSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPowerNetSystem _net = default!;
 
     public abstract bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component);
 
@@ -20,7 +23,7 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
     public virtual void SetLoad(SharedApcPowerReceiverComponent comp, float load)
     {
     }
-	
+
 	public void SetNeedsPower(EntityUid uid, bool value, SharedApcPowerReceiverComponent? receiver = null)
     {
         if (!ResolveApc(uid, ref receiver) || receiver.NeedsPower == value)
@@ -51,6 +54,15 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
         // it'll save a lot of confusion if 'always powered' means 'always powered'
         if (!receiver.NeedsPower)
         {
+            var powered = _net.IsPoweredCalculate(receiver);
+
+            // Server won't raise it here as it can raise the load event later with NeedsPower?
+            // This is mostly here for clientside predictions.
+            if (receiver.Powered != powered)
+            {
+                RaisePower((uid, receiver));
+            }
+
             SetPowerDisabled(uid, false, receiver);
             return true;
         }
@@ -64,6 +76,19 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
         {
             _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg"), uid, user: user,
                 AudioParams.Default.WithVolume(-2f));
+        }
+
+        if (_netMan.IsClient && receiver.PowerDisabled)
+        {
+            var powered = _net.IsPoweredCalculate(receiver);
+
+            // Server won't raise it here as it can raise the load event later with NeedsPower?
+            // This is mostly here for clientside predictions.
+            if (receiver.Powered != powered)
+            {
+                receiver.Powered = powered;
+                RaisePower((uid, receiver));
+            }
         }
 
         return !receiver.PowerDisabled; // i.e. PowerEnabled

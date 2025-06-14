@@ -150180,16 +150180,6 @@ entities:
     - type: Transform
       pos: -57.5,-78.5
       parent: 2
-    - type: ApcPowerReceiver
-      powerLoad: 500
-    missingComponents:
-    - Destructible
-    - Machine
-    - WiresPanel
-    - EncryptionKeyHolder
-    - TelecomServer
-    - ContainerContainer
-    - Construction
 - proto: TelecomServerCircuitboard
   entities:
   - uid: 4499
