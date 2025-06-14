@@ -34,6 +34,7 @@
   cost: 2
   defaultStyle: basic
   styles:
+    basic: ClosetSteelBase
     biohazard: ClosetL3
     biohazard-janitor: ClosetL3Janitor
     biohazard-science: ClosetL3Science

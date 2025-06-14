@@ -4,16 +4,17 @@ spray-painter-ammo-after-interact-full = The spray painter is full!
 spray-painter-ammo-after-interact-refilled = You refill the spray painter.
 
 spray-painter-interact-no-charges = Not enough paint left.
+spray-painter-interact-nothing-to-remove = Nothing to remove!
 
 spray-painter-on-examined-painted-message = It seems to have been freshly painted.
 spray-painter-style-not-available = Cannot apply the selected style to this object.
 
-spray-painter-verb-enable-decals = Enable decal painting
-spray-painter-verb-disable-decals = Disable decal painting
+spray-painter-verb-toggle-decals = Toggle decal painting
 
 spray-painter-item-status-label = Decals: {$mode}
-spray-painter-item-status-enabled = [color=green]Enabled[/color]
-spray-painter-item-status-disabled = [color=red]Disabled[/color]
+spray-painter-item-status-add = [color=green]Add[/color]
+spray-painter-item-status-remove = [color=red]Remove[/color]
+spray-painter-item-status-off = [color=gray]Off[/color]
 
 # UI
 spray-painter-window-title = Spray Painter
@@ -23,7 +24,6 @@ spray-painter-selected-style = Selected style:
 spray-painter-selected-decals = Selected decal:
 spray-painter-use-custom-color = Use custom color
 spray-painter-use-snap-to-tile = Snap to tile
-spray-painter-invalid-location = Can't reach there!
 
 spray-painter-angle-rotation = Rotation:
 spray-painter-angle-rotation-90-sub = -90°

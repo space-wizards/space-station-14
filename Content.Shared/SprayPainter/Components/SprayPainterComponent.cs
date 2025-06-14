@@ -58,10 +58,10 @@ public sealed partial class SprayPainterComponent : Component
     public int SelectedTab;
 
     /// <summary>
-    /// Whether or not the painter should be painting decals.
+    /// Whether or not the painter should be painting or removing decals when clicked.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsPaintingDecals = false;
+    public DecalPaintMode DecalMode = DecalPaintMode.Off;
 
     /// <summary>
     /// The currently selected decal prototype.
@@ -104,4 +104,23 @@ public sealed partial class SprayPainterComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier SoundSwitchDecalMode = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg", AudioParams.Default.WithVolume(1.5f));
+}
+
+/// <summary>
+/// A set of operating modes for decal painting.
+/// </summary>
+public enum DecalPaintMode : byte
+{
+    /// <summary>
+    /// Clicking on the floor does nothing.
+    /// </summary>
+    Off = 0,
+    /// <summary>
+    /// Clicking on the floor adds a decal at the requested spot (or snapped to the grid)
+    /// </summary>
+    Add = 1,
+    /// <summary>
+    /// Clicking on the floor removes all decals at the requested spot (or snapped to the grid)
+    /// </summary>
+    Remove = 2,
 }

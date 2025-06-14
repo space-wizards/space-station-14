@@ -90,7 +90,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
     {
         private readonly RichTextLabel _label;
         private readonly Entity<SprayPainterComponent> _entity;
-        private bool? _lastPaintingDecals = null;
+        private DecalPaintMode? _lastPaintingDecals = null;
 
         public StatusControl(Entity<SprayPainterComponent> ent)
         {
@@ -103,14 +103,17 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         {
             base.FrameUpdate(args);
 
-            if (_entity.Comp.IsPaintingDecals == _lastPaintingDecals)
+            if (_entity.Comp.DecalMode == _lastPaintingDecals)
                 return;
 
-            _lastPaintingDecals = _entity.Comp.IsPaintingDecals;
+            _lastPaintingDecals = _entity.Comp.DecalMode;
 
-            var modeLocString = _entity.Comp.IsPaintingDecals
-                ? "spray-painter-item-status-enabled"
-                : "spray-painter-item-status-disabled";
+            string modeLocString = _entity.Comp.DecalMode switch
+            {
+                DecalPaintMode.Off => "spray-painter-item-status-off",
+                DecalPaintMode.Add => "spray-painter-item-status-add",
+                _ => "spray-painter-item-status-remove"
+            };
 
             _label.SetMarkupPermissive(Robust.Shared.Localization.Loc.GetString("spray-painter-item-status-label",
                 ("mode", Robust.Shared.Localization.Loc.GetString(modeLocString))));

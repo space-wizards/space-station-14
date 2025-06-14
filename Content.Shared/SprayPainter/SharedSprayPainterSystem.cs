@@ -124,14 +124,11 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue)
             return;
 
-        var verbLocString = ent.Comp.IsPaintingDecals
-            ? "spray-painter-verb-disable-decals"
-            : "spray-painter-verb-enable-decals";
         var user = args.User;
 
         AlternativeVerb verb = new()
         {
-            Text = Loc.GetString(verbLocString),
+            Text = Loc.GetString("spray-painter-verb-toggle-decals"),
             Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => TogglePaintDecals(ent, user),
             Impact = LogImpact.Low
@@ -147,11 +144,26 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        ent.Comp.IsPaintingDecals = !ent.Comp.IsPaintingDecals;
+        var pitch = 1.0f;
+        switch (ent.Comp.DecalMode)
+        {
+            case DecalPaintMode.Off:
+            default:
+                ent.Comp.DecalMode = DecalPaintMode.Add;
+                pitch = 1.0f;
+                break;
+            case DecalPaintMode.Add:
+                ent.Comp.DecalMode = DecalPaintMode.Remove;
+                pitch = 1.2f;
+                break;
+            case DecalPaintMode.Remove:
+                ent.Comp.DecalMode = DecalPaintMode.Off;
+                pitch = 0.8f;
+                break;
+        }
         Dirty(ent);
 
         // Make the machine beep.
-        var pitch = ent.Comp.IsPaintingDecals ? 1 : 0.8f;
         Audio.PlayPredicted(ent.Comp.SoundSwitchDecalMode, ent, user, ent.Comp.SoundSwitchDecalMode.Params.WithPitchScale(pitch));
     }
 
