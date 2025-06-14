@@ -331,12 +331,6 @@
       right:
       - state: inhand-right-flame
         shader: unshaded
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        flame:
-          True: { visible: true }
-          False: { visible: false }
   - type: PointLight
     enabled: false
     netsync: false
