@@ -17,7 +17,7 @@ public sealed partial class AnalysisConsoleComponent : Component
     /// Can be null if not linked.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public NetEntity? AnalyzerEntity;
+    public EntityUid? AnalyzerEntity;
 
     [DataField]
     public SoundSpecifier? ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");

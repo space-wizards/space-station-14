@@ -36,9 +36,7 @@ public sealed class JointVisualsOverlay : Overlay
             if (xform.MapID != args.MapId)
                 continue;
 
-            var other = _entManager.GetEntity(visuals.Target);
-
-            if (!xformQuery.TryGetComponent(other, out var otherXform))
+            if (!xformQuery.TryGetComponent(visuals.Target, out var otherXform))
                 continue;
 
             if (xform.MapID != otherXform.MapID)
