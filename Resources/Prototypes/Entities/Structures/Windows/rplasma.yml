@@ -55,17 +55,6 @@
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 132
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-        mask:
-        - FullTileMask
-        layer:
-        - WallLayer
-        density: 2000
 
 - type: entity
   id: PlasmaReinforcedWindowDirectional
@@ -93,6 +82,8 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
+  - type: Damageable
+    damageModifierSet: RGlass
   - type: RadiationBlocker
     resistance: 2
   - type: Destructible

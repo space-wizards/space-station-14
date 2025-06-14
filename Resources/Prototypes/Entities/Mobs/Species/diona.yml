@@ -112,6 +112,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: Rootable
 
 - type: entity
   parent: BaseSpeciesDummy

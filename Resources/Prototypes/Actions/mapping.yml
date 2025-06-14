@@ -28,7 +28,7 @@
 - type: entity
   parent: BaseMappingAction
   id: ActionMappingEraser
-  name: action-name-mapping-erase
+  name: Erase Entity
   components:
   - type: Action
     icon: Interface/VerbIcons/delete.svg.192dpi.png

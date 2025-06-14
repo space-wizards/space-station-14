@@ -2,7 +2,7 @@
   id: CrateArmorySMG
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: SMG crate
-  description: Contains two high-powered, semiautomatic rifles with four mags. Requires Armory access to open.
+  description: Contains two SMGs with four mags. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
@@ -88,3 +88,16 @@
       amount: 2
     - id: RiotShield
       amount: 2
+
+- type: entity
+  id: CrateArmoryRifle
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  name: rifle crate
+  description: Contains two high-powered assault rifles with four mags. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRifleLecter
+      amount: 2
+    - id: MagazineRifle
+      amount: 4

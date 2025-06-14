@@ -50,6 +50,8 @@ criminal-records-filter-placeholder = Input text and press "Enter"
 criminal-records-name-filter = Name
 criminal-records-prints-filter = Fingerprints
 criminal-records-dna-filter = DNA
+criminal-records-job-filter = Job
+criminal-records-species-filter = Species
 
 ## Arrest auto history lines
 criminal-records-console-auto-history = ARRESTED: {$reason}

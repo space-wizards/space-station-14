@@ -68,6 +68,9 @@ public sealed class RadiationCollectorSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, RadiationCollectorComponent component, ActivateInWorldEvent args)
     {
+        if (!args.Complex)
+            return;
+
         if (TryComp(uid, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((uid, useDelay), true))
             return;
 

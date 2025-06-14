@@ -136,6 +136,17 @@
     inventory: Drop
     cooldown: 160
 
+- type: polymorph
+  id: SmartCorgiMorph
+  configuration:
+    entity: MobCorgiSmart
+    forced: false
+    inventory: Drop
+    transferName: true
+    revertOnCrit: false
+    revertOnDeath: false
+    allowRepeatedMorphs: false
+
 # this is the monkey polymorph for artifact.
 - type: polymorph
   id: ArtifactMonkey

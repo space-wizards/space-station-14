@@ -417,15 +417,13 @@ public abstract class SharedActionsSystem : EntitySystem
             return comp.CanTargetSelf;
 
         var targetAction = Comp<TargetActionComponent>(uid);
-        var coords = Transform(target).Coordinates;
-        if (!ValidateBaseTarget(user, coords, (uid, targetAction)))
-        {
-            // if not just checking pure range, let stored entities be targeted by actions
-            // if it's out of range it probably isn't stored anyway...
-            return targetAction.CheckCanAccess && _interaction.CanAccessViaStorage(user, target);
-        }
+        // not using the ValidateBaseTarget logic since its raycast fails if the target is e.g. a wall
+        if (targetAction.CheckCanAccess)
+            return _interaction.InRangeAndAccessible(user, target, range: targetAction.Range);
 
-        return _interaction.InRangeAndAccessible(user, target, range: targetAction.Range);
+        // if not just checking pure range, let stored entities be targeted by actions
+        // if it's out of range it probably isn't stored anyway...
+        return _interaction.CanAccessViaStorage(user, target);
     }
 
     public bool ValidateWorldTarget(EntityUid user, EntityCoordinates target, Entity<WorldTargetActionComponent> ent)
@@ -436,7 +434,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private bool ValidateBaseTarget(EntityUid user, EntityCoordinates coords, Entity<TargetActionComponent> ent)
     {
-        var (uid, comp) = ent;
+        var comp = ent.Comp;
         if (comp.CheckCanAccess)
             return _interaction.InRangeUnobstructed(user, coords, range: comp.Range);
 

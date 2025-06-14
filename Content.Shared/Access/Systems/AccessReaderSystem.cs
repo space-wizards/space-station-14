@@ -3,17 +3,17 @@ using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Systems;
+using Content.Shared.GameTicking;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.NameIdentifier;
 using Content.Shared.PDA;
 using Content.Shared.StationRecords;
-using Robust.Shared.Containers;
-using Robust.Shared.GameStates;
-using Content.Shared.GameTicking;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Tag;
+using Robust.Shared.Containers;
 using Robust.Shared.Collections;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -128,6 +128,11 @@ public sealed class AccessReaderSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Searches an entity for an access reader. This is either the entity itself or an entity in its <see cref="AccessReaderComponent.ContainerAccessProvider"/>.
+    /// </summary>
+    /// <param name="uid">The entity being searched for an access reader.</param>
+    /// <param name="ent">The returned access reader entity.</param>
     public bool GetMainAccessReader(EntityUid uid, [NotNullWhen(true)] out Entity<AccessReaderComponent>? ent)
     {
         ent = null;
@@ -157,6 +162,10 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <summary>
     /// Check whether the given access permissions satisfy an access reader's requirements.
     /// </summary>
+    /// <param name="access">A collection of access permissions being used on the access reader.</param>
+    /// <param name="stationKeys">A collection of station record keys being used on the access reader.</param>
+    /// <param name="target">The entity being checked.</param>
+    /// <param name="reader">The access reader being checked.</param>
     public bool IsAllowed(
         ICollection<ProtoId<AccessLevelPrototype>> access,
         ICollection<StationRecordKey> stationKeys,
@@ -199,8 +208,8 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <summary>
     /// Compares the given tags with the readers access list to see if it is allowed.
     /// </summary>
-    /// <param name="accessTags">A list of access tags</param>
-    /// <param name="reader">An access reader to check against</param>
+    /// <param name="accessTags">A list of access tags.</param>
+    /// <param name="reader">The access reader to check against.</param>
     public bool AreAccessTagsAllowed(ICollection<ProtoId<AccessLevelPrototype>> accessTags, AccessReaderComponent reader)
     {
         if (reader.DenyTags.Overlaps(accessTags))
@@ -228,6 +237,8 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <summary>
     /// Compares the given stationrecordkeys with the accessreader to see if it is allowed.
     /// </summary>
+    /// <param name="keys">The collection of station record keys being used against the access reader.</param>
+    /// <param name="reader">The access reader that is being checked.</param>
     public bool AreStationRecordKeysAllowed(ICollection<StationRecordKey> keys, AccessReaderComponent reader)
     {
         foreach (var key in reader.AccessKeys)
@@ -240,8 +251,9 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Finds all the items that could potentially give access to a given entity
+    /// Finds all the items that could potentially give access to an entity.
     /// </summary>
+    /// <param name="uid">The entity that is being searched.</param>
     public HashSet<EntityUid> FindPotentialAccessItems(EntityUid uid)
     {
         FindAccessItemsInventory(uid, out var items);
@@ -261,7 +273,7 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Finds the access tags on the given entity
+    /// Finds the access tags on an entity.
     /// </summary>
     /// <param name="uid">The entity that is being searched.</param>
     /// <param name="items">All of the items to search for access. If none are passed in, <see cref="FindPotentialAccessItems"/> will be used.</param>
@@ -277,14 +289,14 @@ public sealed class AccessReaderSystem : EntitySystem
             FindAccessTagsItem(ent, ref tags, ref owned);
         }
 
-        return (ICollection<ProtoId<AccessLevelPrototype>>?) tags ?? Array.Empty<ProtoId<AccessLevelPrototype>>();
+        return (ICollection<ProtoId<AccessLevelPrototype>>?)tags ?? Array.Empty<ProtoId<AccessLevelPrototype>>();
     }
 
     /// <summary>
-    /// Finds the access tags on the given entity
+    /// Finds any station record keys on an entity.
     /// </summary>
     /// <param name="uid">The entity that is being searched.</param>
-    /// <param name="recordKeys"></param>
+    /// <param name="recordKeys">A collection of the station record keys that were found.</param>
     /// <param name="items">All of the items to search for access. If none are passed in, <see cref="FindPotentialAccessItems"/> will be used.</param>
     public bool FindStationRecordKeys(EntityUid uid, out ICollection<StationRecordKey> recordKeys, HashSet<EntityUid>? items = null)
     {
@@ -302,11 +314,12 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Try to find <see cref="AccessComponent"/> on this item
-    ///     or inside this item (if it's pda)
-    ///     This version merges into a set or replaces the set.
-    ///     If owned is false, the existing tag-set "isn't ours" and can't be merged with (is read-only).
+    /// Try to find <see cref="AccessComponent"/> on this item or inside this item (if it's a PDA).
+    /// This version merges into a set or replaces the set.
     /// </summary>
+    /// <param name="uid">The entity that is being searched.</param>
+    /// <param name="tags">The access tags being merged or replaced.</param>
+    /// <param name="owned">If true, the tags will be merged. Otherwise they are replaced.</param>
     private void FindAccessTagsItem(EntityUid uid, ref HashSet<ProtoId<AccessLevelPrototype>>? tags, ref bool owned)
     {
         if (!FindAccessTagsItem(uid, out var targetTags))
@@ -333,25 +346,287 @@ public sealed class AccessReaderSystem : EntitySystem
         }
     }
 
-    public void SetAccesses(EntityUid uid, AccessReaderComponent component, List<ProtoId<AccessLevelPrototype>> accesses)
+    #region: AccessLists API
+
+    /// <summary>
+    /// Clears the entity's <see cref="AccessReaderComponent.AccessLists"/>.
+    /// </summary>
+    /// <param name="ent">The access reader entity which is having its access permissions cleared.</param>
+    public void ClearAccesses(Entity<AccessReaderComponent> ent)
     {
-        component.AccessLists.Clear();
-        foreach (var access in accesses)
-        {
-            component.AccessLists.Add(new HashSet<ProtoId<AccessLevelPrototype>>(){access});
-        }
-        Dirty(uid, component);
-        RaiseLocalEvent(uid, new AccessReaderConfigurationChangedEvent());
+        ent.Comp.AccessLists.Clear();
+
+        Dirty(ent);
+        RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
     }
 
+    /// <summary>
+    /// Replaces the access permissions in an entity's <see cref="AccessReaderComponent.AccessLists"/> with a supplied list.
+    /// </summary>
+    /// <param name="ent">The access reader entity which is having its list of access permissions replaced.</param>
+    /// <param name="accesses">The list of access permissions replacing the original one.</param>
+    public void SetAccesses(Entity<AccessReaderComponent> ent, List<HashSet<ProtoId<AccessLevelPrototype>>> accesses)
+    {
+        ent.Comp.AccessLists.Clear();
+
+        AddAccesses(ent, accesses);
+    }
+
+    /// <inheritdoc cref = "SetAccesses"/>
+    public void SetAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
+    {
+        ent.Comp.AccessLists.Clear();
+
+        AddAccesses(ent, accesses);
+    }
+
+    /// <summary>
+    /// Adds a collection of access permissions to an access reader entity's <see cref="AccessReaderComponent.AccessLists"/>
+    /// </summary>
+    /// <param name="ent">The access reader entity to which the new access permissions are being added.</param>
+    /// <param name="accesses">The list of access permissions being added.</param>
+    public void AddAccesses(Entity<AccessReaderComponent> ent, List<HashSet<ProtoId<AccessLevelPrototype>>> accesses)
+    {
+        foreach (var access in accesses)
+        {
+            AddAccess(ent, access, false);
+        }
+
+        Dirty(ent);
+        RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
+    }
+
+    /// <inheritdoc cref = "AddAccesses"/>
+    public void AddAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
+    {
+        foreach (var access in accesses)
+        {
+            AddAccess(ent, access, false);
+        }
+
+        Dirty(ent);
+        RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
+    }
+
+    /// <summary>
+    /// Adds an access permission to an access reader entity's <see cref="AccessReaderComponent.AccessLists"/>
+    /// </summary>
+    /// <param name="ent">The access reader entity to which the access permission is being added.</param>
+    /// <param name="access">The access permission being added.</param>
+    /// <param name="dirty">If true, the component will be  marked as changed afterward.</param>
+    public void AddAccess(Entity<AccessReaderComponent> ent, HashSet<ProtoId<AccessLevelPrototype>> access, bool dirty = true)
+    {
+        ent.Comp.AccessLists.Add(access);
+
+        if (!dirty)
+            return;
+
+        Dirty(ent);
+        RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
+    }
+
+    /// <inheritdoc cref = "AddAccess"/>
+    public void AddAccess(Entity<AccessReaderComponent> ent, ProtoId<AccessLevelPrototype> access, bool dirty = true)
+    {
+        AddAccess(ent, new HashSet<ProtoId<AccessLevelPrototype>>() { access }, dirty);
+    }
+
+    /// <summary>
+    /// Removes a collection of access permissions from an access reader entity's <see cref="AccessReaderComponent.AccessLists"/>
+    /// </summary>
+    /// <param name="ent">The access reader entity from which the access permissions are being removed.</param>
+    /// <param name="accesses">The list of access permissions being removed.</param>
+    public void RemoveAccesses(Entity<AccessReaderComponent> ent, List<HashSet<ProtoId<AccessLevelPrototype>>> accesses)
+    {
+        foreach (var access in accesses)
+        {
+            RemoveAccess(ent, access, false);
+        }
+
+        Dirty(ent);
+        RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
+    }
+
+    /// <inheritdoc cref = "RemoveAccesses"/>
+    public void RemoveAccesses(Entity<AccessReaderComponent> ent, List<ProtoId<AccessLevelPrototype>> accesses)
+    {
+        foreach (var access in accesses)
+        {
+            RemoveAccess(ent, access, false);
+        }
+
+        Dirty(ent);
+        RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
+    }
+
+    /// <summary>
+    /// Removes an access permission from an access reader entity's <see cref="AccessReaderComponent.AccessLists"/>
+    /// </summary>
+    /// <param name="ent">The access reader entity from which the access permission is being removed.</param>
+    /// <param name="access">The access permission being removed.</param>
+    /// <param name="dirty">If true, the component will be marked as changed afterward.</param>
+    public void RemoveAccess(Entity<AccessReaderComponent> ent, HashSet<ProtoId<AccessLevelPrototype>> access, bool dirty = true)
+    {
+        for (int i = ent.Comp.AccessLists.Count - 1; i >= 0; i--)
+        {
+            if (ent.Comp.AccessLists[i].SetEquals(access))
+            {
+                ent.Comp.AccessLists.RemoveAt(i);
+            }
+        }
+
+        if (!dirty)
+            return;
+
+        Dirty(ent);
+        RaiseLocalEvent(ent, new AccessReaderConfigurationChangedEvent());
+    }
+
+    /// <inheritdoc cref = "RemoveAccess"/>
+    public void RemoveAccess(Entity<AccessReaderComponent> ent, ProtoId<AccessLevelPrototype> access, bool dirty = true)
+    {
+        RemoveAccess(ent, new HashSet<ProtoId<AccessLevelPrototype>>() { access }, dirty);
+    }
+
+    #endregion
+
+    #region: AccessKeys API
+
+    /// <summary>
+    /// Clears all access keys from an access reader.
+    /// </summary>
+    /// <param name="ent">The access reader entity.</param>
+    public void ClearAccessKeys(Entity<AccessReaderComponent> ent)
+    {
+        ent.Comp.AccessKeys.Clear();
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Replaces all access keys on an access reader with those from a supplied list.
+    /// </summary>
+    /// <param name="ent">The access reader entity.</param>
+    /// <param name="keys">The new access keys that are replacing the old ones.</param>
+    public void SetAccessKeys(Entity<AccessReaderComponent> ent, HashSet<StationRecordKey> keys)
+    {
+        ent.Comp.AccessKeys.Clear();
+
+        foreach (var key in keys)
+        {
+            ent.Comp.AccessKeys.Add(key);
+        }
+
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Adds an access key to an access reader.
+    /// </summary>
+    /// <param name="ent">The access reader entity.</param>
+    /// <param name="key">The access key being added.</param>
+    public void AddAccessKey(Entity<AccessReaderComponent> ent, StationRecordKey key)
+    {
+        ent.Comp.AccessKeys.Add(key);
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Removes an access key from an access reader.
+    /// </summary>
+    /// <param name="ent">The access reader entity.</param>
+    /// <param name="key">The access key being removed.</param>
+    public void RemoveAccessKey(Entity<AccessReaderComponent> ent, StationRecordKey key)
+    {
+        ent.Comp.AccessKeys.Remove(key);
+        Dirty(ent);
+    }
+
+    #endregion
+
+    #region: DenyTags API
+
+    /// <summary>
+    /// Clears all deny tags from an access reader.
+    /// </summary>
+    /// <param name="ent">The access reader entity.</param>
+    public void ClearDenyTags(Entity<AccessReaderComponent> ent)
+    {
+        ent.Comp.DenyTags.Clear();
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Replaces all deny tags on an access reader with those from a supplied list.
+    /// </summary>
+    /// <param name="ent">The access reader entity.</param>
+    /// <param name="tag">The new tags that are replacing the old.</param>
+    public void SetDenyTags(Entity<AccessReaderComponent> ent, HashSet<ProtoId<AccessLevelPrototype>> tags)
+    {
+        ent.Comp.DenyTags.Clear();
+
+        foreach (var tag in tags)
+        {
+            ent.Comp.DenyTags.Add(tag);
+        }
+
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Adds a tag to an access reader that will be used to deny access.
+    /// </summary>
+    /// <param name="ent">The access reader entity.</param>
+    /// <param name="tag">The tag being added.</param>
+    public void AddDenyTag(Entity<AccessReaderComponent> ent, ProtoId<AccessLevelPrototype> tag)
+    {
+        ent.Comp.DenyTags.Add(tag);
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Removes a tag from an access reader that denied a user access.
+    /// </summary>
+    /// <param name="ent">The access reader entity.</param>
+    /// <param name="tag">The tag being removed.</param>
+    public void RemoveDenyTag(Entity<AccessReaderComponent> ent, ProtoId<AccessLevelPrototype> tag)
+    {
+        ent.Comp.DenyTags.Remove(tag);
+        Dirty(ent);
+    }
+
+    #endregion
+
+    /// <summary>
+    /// Enables/disables the access reader on an entity.
+    /// </summary>
+    /// <param name="ent">The access reader entity.</param>
+    /// <param name="enabled">Enable/disable the access reader.</param>
+    public void SetActive(Entity<AccessReaderComponent> ent, bool enabled)
+    {
+        ent.Comp.Enabled = enabled;
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Enables/disables the logging of access attempts on an access reader entity.
+    /// </summary>
+    /// <param name="ent">The access reader entity.</param>
+    /// <param name="enabled">Enable/disable logging.</param>
+    public void SetLoggingActive(Entity<AccessReaderComponent> ent, bool enabled)
+    {
+        ent.Comp.LoggingDisabled = !enabled;
+        Dirty(ent);
+    }
+
+    /// <summary>
+    /// Searches an entity's hand and ID slot for any contained items.
+    /// </summary>
+    /// <param name="uid">The entity being searched.</param>
+    /// <param name="items">The collection of found items.</param>
+    /// <returns>True if one or more items were found.</returns>
     public bool FindAccessItemsInventory(EntityUid uid, out HashSet<EntityUid> items)
     {
-        items = new();
-
-        foreach (var item in _handsSystem.EnumerateHeld(uid))
-        {
-            items.Add(item);
-        }
+        items = new(_handsSystem.EnumerateHeld(uid));
 
         // maybe its inside an inventory slot?
         if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
@@ -363,9 +638,11 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Try to find <see cref="AccessComponent"/> on this item
-    ///     or inside this item (if it's pda)
+    /// Try to find <see cref="AccessComponent"/> on this entity or inside it (if it's a PDA).
     /// </summary>
+    /// <param name="uid">The entity being searched.</param>
+    /// <param name="tags">The access tags that were found.</param>
+    /// <returns>True if one or more access tags were found.</returns>
     private bool FindAccessTagsItem(EntityUid uid, out HashSet<ProtoId<AccessLevelPrototype>> tags)
     {
         tags = new();
@@ -376,9 +653,11 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Try to find <see cref="StationRecordKeyStorageComponent"/> on this item
-    ///     or inside this item (if it's pda)
+    /// Try to find <see cref="StationRecordKeyStorageComponent"/> on this entity or inside it (if it's a PDA).
     /// </summary>
+    /// <param name="uid">The entity being searched.</param>
+    /// <param name="key">The station record key that was found.</param>
+    /// <returns>True if a station record key was found.</returns>
     private bool FindStationRecordKeyItem(EntityUid uid, [NotNullWhen(true)] out StationRecordKey? key)
     {
         if (TryComp(uid, out StationRecordKeyStorageComponent? storage) && storage.Key != null)
@@ -432,15 +711,20 @@ public sealed class AccessReaderSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The reader to log the access on</param>
     /// <param name="name">The name to log as</param>
-    public void LogAccess(Entity<AccessReaderComponent> ent, string name)
+    public void LogAccess(Entity<AccessReaderComponent> ent, string name, TimeSpan? accessTime = null, bool force = false)
     {
-        if (IsPaused(ent) || ent.Comp.LoggingDisabled)
-            return;
+        if (!force)
+        {
+            if (IsPaused(ent) || ent.Comp.LoggingDisabled)
+                return;
 
-        if (ent.Comp.AccessLog.Count >= ent.Comp.AccessLogLimit)
-            ent.Comp.AccessLog.Dequeue();
+            if (ent.Comp.AccessLog.Count >= ent.Comp.AccessLogLimit)
+                ent.Comp.AccessLog.Dequeue();
+        }
 
-        var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+        var stationTime = accessTime ?? _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
         ent.Comp.AccessLog.Enqueue(new AccessRecord(stationTime, name));
+
+        Dirty(ent);
     }
 }

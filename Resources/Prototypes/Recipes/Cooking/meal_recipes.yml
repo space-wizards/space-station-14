@@ -2395,3 +2395,30 @@
     FoodBreadCottonSlice: 2
     FoodCheeseSlice: 1
     FoodButterSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBreakfastAmerican
+  name: full american breakfast recipe
+  result: FoodBreakfastAmerican
+  time: 30
+  group: Savory
+  reagents:
+    Egg: 12
+  solids:
+    FoodMeatBacon: 2
+    FoodPotato: 1
+    FoodBakedPancake: 2
+
+- type: microwaveMealRecipe
+  id: RecipeBreakfastEnglish
+  name: full english breakfast recipe
+  result: FoodBreakfastEnglish
+  time: 30
+  group: Savory
+  reagents:
+    Egg: 12
+  solids:
+    FoodMeatBacon: 1
+    FoodMeat: 1
+    FoodTomato: 1
+    FoodSoybeans: 2 # replace these with green beans once those become a thing

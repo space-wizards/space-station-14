@@ -1345,6 +1345,11 @@
   description: flavor-hew
 
 - type: flavor
+  id: dogfood
+  flavorType: Base
+  description: flavor-complex-dog-food
+
+- type: flavor
   id: fishops
   flavorType: Complex
   description: flavor-complex-fishops

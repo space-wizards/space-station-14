@@ -1,0 +1,85 @@
+# Separate yml file for scrap armor since it has so many construction steps.
+# Listed from first step of crafting to the final armor
+
+- type: entity
+  name: wired apron
+  parent: BaseItem
+  id: WiredApronBase
+  description: An apron threaded with cabling. It looks incomplete.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
+    state: construction-1
+  - type: Item
+    size: Ginormous
+    sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
+  - type: Construction
+    graph: scraparmor
+    node: wiredapron
+
+- type: entity
+  name: steel-covered apron
+  parent: BaseItem
+  id: SteelApronBase
+  description: An apron with steel plating haphazardly affixed by spare cabling. In it's current state, it would fall apart immediately if worn.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
+    state: construction-2
+  - type: Item
+    size: Ginormous
+    sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
+  - type: Construction
+    graph: scraparmor
+    node: steelapron
+
+- type: entity
+  name: welded steel apron
+  parent: BaseItem
+  id: WeldedSteelApronBase
+  description: An apron affixed with welded steel plating attached to spare cabling. The armor is no longer in danger of falling apart, but requires additional work to be worn securely.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
+    state: construction-3
+  - type: Item
+    size: Ginormous
+    sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
+  - type: Construction
+    graph: scraparmor
+    node: weldedsteelapron
+
+# The armor itself
+- type: entity
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseMajorContraband]
+  id: ClothingOuterArmorScrap
+  name: scrap armor
+  description: A tider's gleaming plate mail. Bail up, or you're a dead man.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/scrap_armor.rsi
+    equipSound: /Audio/Effects/metal_scrape2.ogg
+    unequipSound: /Audio/Effects/metal_scrape1.ogg
+    equipDelay: 5
+    unequipDelay: 5 #Its insane more armor/hardsuits don't have equip times tbh?
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5 #Some nukie tier physical protection...
+        Heat: 0.8
+        Radiation: 0.8 #Hey, it's a bunch of solid steel.
+  - type: ExplosionResistance
+    damageCoefficient: 0.80
+  - type: ClothingSpeedModifier #But that protection comes at a price.
+    walkModifier: 0.6
+    sprintModifier: 0.6
+  - type: GroupExamine
+  - type: Construction
+    graph: scraparmor
+    node: scraparmorfinished

@@ -31,6 +31,9 @@
   id: AppraisalTool
 
 - type: Tag
+  id: Apron
+
+- type: Tag
   id: Arrow
 
 - type: Tag
@@ -1403,6 +1406,9 @@
 
 - type: Tag
   id: UraniumGlassShard
+
+- type: Tag
+  id: UtilityBelt
 
 - type: Tag
   id: Vegetable

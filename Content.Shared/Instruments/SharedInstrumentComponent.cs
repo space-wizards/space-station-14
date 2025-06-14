@@ -38,7 +38,13 @@ public abstract partial class SharedInstrumentComponent : Component
 /// Component that indicates that musical instrument was activated (ui opened).
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ActiveInstrumentComponent : Component;
+[AutoGenerateComponentState(true)]
+public sealed partial class ActiveInstrumentComponent : Component
+{
+    [DataField]
+    [AutoNetworkedField]
+    public MidiTrack?[] Tracks = [];
+}
 
 [Serializable, NetSerializable]
 public sealed class InstrumentComponentState : ComponentState
@@ -143,4 +149,73 @@ public sealed class InstrumentMidiEventEvent : EntityEventArgs
 public enum InstrumentUiKey
 {
     Key,
+}
+
+/// <summary>
+/// Sets the MIDI channels on an instrument.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class InstrumentSetChannelsEvent : EntityEventArgs
+{
+    public NetEntity Uid { get; }
+    public MidiTrack?[] Tracks { get; set; }
+
+    public InstrumentSetChannelsEvent(NetEntity uid, MidiTrack?[] tracks)
+    {
+        Uid = uid;
+        Tracks = tracks;
+    }
+}
+
+/// <summary>
+/// Represents a single midi track with the track name, instrument name and bank instrument name extracted.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class MidiTrack
+{
+    /// <summary>
+    /// The first specified Track Name
+    /// </summary>
+    public string? TrackName;
+    /// <summary>
+    /// The first specified instrument name
+    /// </summary>
+    public string? InstrumentName;
+
+    /// <summary>
+    /// The first program change resolved to the name.
+    /// </summary>
+    public string? ProgramName;
+
+    public override string ToString()
+    {
+        return $"Track Name: {TrackName}; Instrument Name: {InstrumentName}; Program Name: {ProgramName}";
+    }
+
+    /// <summary>
+    /// Truncates the fields based on the limit inputted into this method.
+    /// </summary>
+    public void TruncateFields(int limit)
+    {
+        if (InstrumentName != null)
+            InstrumentName = Truncate(InstrumentName, limit);
+
+        if (TrackName != null)
+            TrackName = Truncate(TrackName, limit);
+
+        if (ProgramName != null)
+            ProgramName = Truncate(ProgramName, limit);
+    }
+
+    private const string Postfix = "…";
+    // TODO: Make a general method to use in RT? idk if we have that.
+    private string Truncate(string input, int limit)
+    {
+        if (string.IsNullOrEmpty(input) || limit <= 0 || input.Length <= limit)
+            return input;
+
+        var truncatedLength = limit - Postfix.Length;
+
+        return input.Substring(0, truncatedLength) + Postfix;
+    }
 }

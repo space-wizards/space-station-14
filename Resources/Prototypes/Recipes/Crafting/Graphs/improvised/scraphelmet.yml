@@ -1,0 +1,46 @@
+- type: constructionGraph
+  id: scraphelmet
+  start: start
+  graph:
+    - node: start
+      edges:
+      - to: wiredbucket
+        steps:
+        - tag: Bucket
+          icon:
+            sprite: Objects/Tools/bucket.rsi
+            state: icon
+          name: construction-graph-tag-bucket
+        - material: Cable
+          amount: 15
+          doAfter: 3
+
+    - node: wiredbucket
+      entity: WiredBucketBase
+      edges:
+      - to: slicedbucket
+        steps:
+        - tool: Slicing
+          doAfter: 5
+
+    - node: slicedbucket
+      entity: SlicedBucketBase
+      edges:
+      - to: steelbucket
+        steps:
+        - material: Steel
+          amount: 10
+          doAfter: 3
+        - tool: Welding
+          doAfter: 10
+
+    - node: steelbucket
+      entity: SteelBucketBase
+      edges:
+      - to: scraphelmet
+        steps:
+        - tool: Anchoring
+          doAfter: 5
+
+    - node: scraphelmet
+      entity: ClothingHeadHelmetScrap

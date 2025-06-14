@@ -24,7 +24,7 @@
     prefixOn: on
   - type: Magboots
   - type: ClothingSpeedModifier
-    walkModifier: 0.85
+    walkModifier: 0.8
     sprintModifier: 0.8
   - type: Appearance
   - type: GenericVisualizer
@@ -82,8 +82,8 @@
   description: These would look fetching on a fetcher like you.
   components:
   - type: ClothingSpeedModifier
-    walkModifier: 1.10 #PVS isn't too much of an issue when you are blind...
-    sprintModifier: 1.10
+    walkModifier: 1.1 #PVS isn't too much of an issue when you are blind...
+    sprintModifier: 1.1
   - type: StaticPrice
     price: 3000
 
@@ -99,7 +99,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
   - type: ClothingSpeedModifier
-    walkModifier: 0.95
+    walkModifier: 0.9
     sprintModifier: 0.9
   - type: GasTank
     outputPressure: 42.6
@@ -113,6 +113,8 @@
   - type: Item
     sprite: null
     size: Normal
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   parent: BaseAction

@@ -45,6 +45,14 @@
       cloneable: true
 
 - type: trait
+  id: Monochromancy
+  name: trait-monochromancy-name
+  description: trait-monochromancy-desc
+  category: Disabilities
+  components:
+  - type: BlackAndWhiteOverlay
+
+- type: trait
   id: Muted
   name: trait-muted-name
   description: trait-muted-desc

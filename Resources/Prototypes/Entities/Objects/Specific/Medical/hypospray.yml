@@ -560,7 +560,7 @@
     onlyAffectsMobs: false
     injectOnly: true
   - type: StaticPrice
-    price: 500
+    price: 1500
 
 - type: entity
   name: hyperzine microinjector
@@ -599,7 +599,7 @@
     changeColor: false
     emptySpriteName: microstimpen_empty
   - type: StaticPrice
-    price: 100
+    price: 583 # 3500 for 6 as a freaky fraction
 
 - type: entity
   name: combat medipen
@@ -643,7 +643,7 @@
     onlyAffectsMobs: false
     injectOnly: true
   - type: StaticPrice
-    price: 500
+    price: 1500
 
 - type: entity
   name: pen

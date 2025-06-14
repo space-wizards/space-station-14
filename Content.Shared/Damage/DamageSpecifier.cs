@@ -23,7 +23,7 @@ namespace Content.Shared.Damage
         [JsonPropertyName("types")]
         [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
         [UsedImplicitly]
-        private Dictionary<string,FixedPoint2>? _damageTypeDictionary;
+        private Dictionary<string, FixedPoint2>? _damageTypeDictionary;
 
         [JsonPropertyName("groups")]
         [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
@@ -152,7 +152,7 @@ namespace Content.Shared.Damage
                 if (modifierSet.Coefficients.TryGetValue(key, out var coefficient))
                     newValue *= coefficient; // coefficients can heal you, e.g. cauterizing bleeding
 
-                if(newValue != 0)
+                if (newValue != 0)
                     newDamage.DamageDict[key] = FixedPoint2.New(newValue);
             }
 
@@ -179,6 +179,38 @@ namespace Content.Shared.Damage
 
             if (!any)
                 newDamage = new DamageSpecifier(damageSpec);
+
+            return newDamage;
+        }
+
+        /// <summary>
+        /// Returns a new DamageSpecifier that only contains the entries with positive value.
+        /// </summary>
+        public static DamageSpecifier GetPositive(DamageSpecifier damageSpec)
+        {
+            DamageSpecifier newDamage = new();
+
+            foreach (var (key, value) in damageSpec.DamageDict)
+            {
+                if (value > 0)
+                    newDamage.DamageDict[key] = value;
+            }
+
+            return newDamage;
+        }
+
+        /// <summary>
+        /// Returns a new DamageSpecifier that only contains the entries with negative value.
+        /// </summary>
+        public static DamageSpecifier GetNegative(DamageSpecifier damageSpec)
+        {
+            DamageSpecifier newDamage = new();
+
+            foreach (var (key, value) in damageSpec.DamageDict)
+            {
+                if (value < 0)
+                    newDamage.DamageDict[key] = value;
+            }
 
             return newDamage;
         }
