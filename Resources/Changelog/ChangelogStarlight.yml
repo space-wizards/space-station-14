@@ -7397,4 +7397,11 @@ Entries:
   id: 1022
   time: '2025-06-14T21:43:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/784
+- author: CringeCursed
+  changes:
+  - message: Now you cant exit abductor return pod when you're asleep or stunned.
+    type: Fix
+  id: 1023
+  time: '2025-06-14T21:45:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/797
 
