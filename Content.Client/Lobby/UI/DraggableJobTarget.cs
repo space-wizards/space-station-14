@@ -193,4 +193,12 @@ public sealed class DraggableJobTarget : Control
             }
         }
     }
+
+    public IEnumerable<JobPrototype> GetContainedJobs()
+    {
+        if (_jobIconContainer is null)
+            return [];
+
+        return _jobIconContainer.Children.Cast<DraggableJobIcon>().Select(icon => icon.JobProto);
+    }
 }

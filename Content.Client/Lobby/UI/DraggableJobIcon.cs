@@ -54,6 +54,11 @@ public sealed class DraggableJobIcon : TextureRect
     /// </summary>
     public event Action<Vector2>? OnMouseMove;
 
+    /// <summary>
+    /// Event invoked after the icon stopped dragging and it ended up parented to a different object
+    /// </summary>
+    public event Action? OnPriorityChanged;
+
     public DraggableJobIcon(JobPrototype jobPrototype, TooltipSupplier? tooltipSupplier = null)
     {
         IoCManager.InjectDependencies(this);
@@ -81,6 +86,10 @@ public sealed class DraggableJobIcon : TextureRect
             Orphan();
             _oldParent?.AddChild(this);
         }
+
+        if (Parent != _oldParent)
+            OnPriorityChanged?.Invoke();
+
         _oldParent = null;
     }
 
