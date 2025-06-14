@@ -7202,4 +7202,12 @@ Entries:
   id: 995
   time: '2025-06-12T16:11:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/818
+- author: walksanatora
+  changes:
+  - message: The rare paper in Cap's locker now has some EXTREMELY limited movement
+      options. all magical in nature of course.
+    type: Tweak
+  id: 996
+  time: '2025-06-14T01:39:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/819
 
