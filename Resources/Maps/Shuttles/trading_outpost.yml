@@ -4965,8 +4965,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         290:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 549
     components:
     - type: Transform
@@ -4976,8 +4975,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         288:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 550
     components:
     - type: Transform
@@ -4987,8 +4985,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         279:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 551
     components:
     - type: Transform
@@ -4998,8 +4995,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         289:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignalSwitchDirectional
   entities:
   - uid: 128
@@ -5010,20 +5006,14 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         257:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
         218:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
         215:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
   - uid: 129
     components:
     - type: Transform
@@ -5033,20 +5023,14 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         257:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
         218:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
         215:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
   - uid: 133
     components:
     - type: Transform
@@ -5056,20 +5040,14 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         261:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
         258:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
         212:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
   - uid: 221
     components:
     - type: Transform
@@ -5078,20 +5056,14 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         261:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
         258:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
         212:
-        - - On
-          - Open
-        - - Off
-          - Close
+        - On: Open
+        - Off: Close
 - proto: SignCargoDock
   entities:
   - uid: 271
@@ -5345,33 +5317,21 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         233:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         206:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         202:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         184:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
   - uid: 263
     components:
     - type: Transform
@@ -5380,33 +5340,21 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         143:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         148:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         146:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         140:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
   - uid: 268
     components:
     - type: Transform
@@ -5415,33 +5363,21 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         141:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         147:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         234:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         151:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
   - uid: 269
     components:
     - type: Transform
@@ -5450,33 +5386,21 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         214:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         213:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         264:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         238:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
 - proto: WallPlastitaniumIndestructible
   entities:
   - uid: 219
