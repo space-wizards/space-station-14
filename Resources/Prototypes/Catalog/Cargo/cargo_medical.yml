@@ -32,7 +32,7 @@
   id: EmergencyBurnKit
   icon:
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: burnkit
+    state: burn
   product: CrateEmergencyBurnKit
   cost: 700
   category: cargoproduct-category-name-medical
@@ -42,7 +42,7 @@
   id: EmergencyToxinKit
   icon:
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: toxinkit
+    state: poison
   product: CrateEmergencyToxinKit
   cost: 600
   category: cargoproduct-category-name-medical
@@ -52,7 +52,7 @@
   id: EmergencyO2Kit
   icon:
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: o2kit
+    state: airloss
   product: CrateEmergencyO2Kit
   cost: 600
   category: cargoproduct-category-name-medical
@@ -62,7 +62,7 @@
   id: EmergencyBruteKit
   icon:
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: brutekit
+    state: brute
   product: CrateEmergencyBruteKit
   cost: 600
   category: cargoproduct-category-name-medical
@@ -72,7 +72,7 @@
   id: EmergencyAdvancedKit
   icon:
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: advkit
+    state: advanced
   product: CrateEmergencyAdvancedKit
   cost: 1200
   category: cargoproduct-category-name-medical
@@ -82,7 +82,7 @@
   id: EmergencyRadiationKit
   icon:
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: radkit
+    state: radiation
   product: CrateEmergencyRadiationKit
   cost: 600
   category: cargoproduct-category-name-medical
