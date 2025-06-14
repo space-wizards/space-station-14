@@ -79,7 +79,9 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         Decals.Clear();
         foreach (var decalPrototype in Proto.EnumeratePrototypes<DecalPrototype>().OrderBy(x => x.ID))
         {
-            if (!decalPrototype.Tags.Contains("station") && !decalPrototype.Tags.Contains("markings"))
+            if (!decalPrototype.Tags.Contains("station")
+                && !decalPrototype.Tags.Contains("markings")
+                || decalPrototype.Tags.Contains("dirty"))
                 continue;
 
             Decals.Add(new SprayPainterDecalEntry(decalPrototype.ID, decalPrototype.Sprite));
