@@ -7,6 +7,7 @@ using Robust.Shared.Utility;
 using System.Collections;
 using System.Linq;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Chemistry.Components
 {
@@ -121,6 +122,37 @@ namespace Content.Shared.Chemistry.Components
             // so it will be recalculated.
             if (++_heatCapacityUpdateCounter >= HeatCapacityUpdateInterval)
                 _heatCapacityDirty = true;
+        }
+
+        /// <summary>
+        /// Gives the average "flammability" of a solution, rounded down to discourage random solutions setting on fire.
+        /// This is unscientific, it should be changed if anyone has a better idea.
+        /// </summary>
+        public int GetSolutionFlammability(IPrototypeManager? protoMan)
+        {
+            IoCManager.Resolve(ref protoMan);
+            float solutionFlammability = 0;
+            foreach (var (reagent, quantity) in Contents)
+            {
+                solutionFlammability += protoMan.Index<ReagentPrototype>(reagent.Prototype).Flammability * (float) quantity;
+            }
+            return (int) MathF.Floor(solutionFlammability / (float) Volume);
+        }
+
+        public void BurnFlammableReagents(float fraction, IPrototypeManager? protoMan)
+        {
+            IoCManager.Resolve(ref protoMan);
+            var newSoln = new Solution(this);
+            foreach (var (reagent, quantity) in Contents)
+            {
+                var quantityToBurn = Math.Ceiling(((float)quantity *
+                                                  (fraction * protoMan.Index<ReagentPrototype>(reagent.Prototype)
+                                                      .Flammability)) / 0.5) * 0.5; // Ceiling to nearest 0.5u
+                newSoln.RemoveReagent(reagent, quantityToBurn);
+            }
+            Contents = newSoln.Contents;
+            DebugTools.Assert(Volume >= newSoln.Volume);
+            Volume = newSoln.Volume;
         }
 
         public float GetThermalEnergy(IPrototypeManager? protoMan)

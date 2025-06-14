@@ -45,8 +45,9 @@ namespace Content.Server.Atmos.EntitySystems
             if(tile.ExcitedGroup != null)
                 ExcitedGroupResetCooldowns(tile.ExcitedGroup);
 
+            // A series of rules that will dictate if the hotspot dies. If this evaluates to true, the hotspot will die.
             if ((tile.Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist) || (tile.Hotspot.Volume <= 1f)
-                || tile.Air == null || tile.Air.GetMoles(Gas.Oxygen) < 0.5f || (tile.Air.GetMoles(Gas.Plasma) < 0.5f && tile.Air.GetMoles(Gas.Tritium) < 0.5f))
+                || tile.Air == null || tile.Air.GetMoles(Gas.Oxygen) < 0.5f || (tile.Air.GetMoles(Gas.Plasma) < 0.5f && tile.Air.GetMoles(Gas.Tritium) < 0.5f && tile.SolutionFlammability == 0))
             {
                 tile.Hotspot = new Hotspot();
                 InvalidateVisuals(ent, tile);
@@ -55,7 +56,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             PerformHotspotExposure(tile);
 
-            if (tile.Hotspot.Bypassing)
+            if (tile.Hotspot.Bypassing || tile.SolutionFlammability > 0)
             {
                 tile.Hotspot.State = 3;
 
@@ -134,12 +135,15 @@ namespace Content.Server.Atmos.EntitySystems
 
             var plasma = tile.Air.GetMoles(Gas.Plasma);
             var tritium = tile.Air.GetMoles(Gas.Tritium);
+            var reagentFlammability = tile.SolutionFlammability;
 
             if (tile.Hotspot.Valid)
             {
+                // SOH is asking "was this hotspot caused externally" (i.e. by a welder or cigarette)
+                // if so we'll make sure to at *least* heat the hotspot up to whatever temperature is inputted
                 if (soh)
                 {
-                    if (plasma > 0.5f || tritium > 0.5f)
+                    if (plasma > 0.5f || tritium > 0.5f || reagentFlammability > 0)
                     {
                         if (tile.Hotspot.Temperature < exposedTemperature)
                             tile.Hotspot.Temperature = exposedTemperature;
@@ -148,10 +152,15 @@ namespace Content.Server.Atmos.EntitySystems
                     }
                 }
 
+                tile.Hotspot.Temperature += 12 * reagentFlammability;
+
                 return;
             }
 
-            if ((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature) && (plasma > 0.5f || tritium > 0.5f))
+            // Asks if we are in one of the two possible conditions to start a fire:
+            // a) We are over 100C and there is plasma around.
+            // b) We are over the burn threshold for the puddles on the ground.
+            if (((exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature) && (plasma > 0.5f || tritium > 0.5f)) || (reagentFlammability > 0 && exposedTemperature > 573.15 - 50 * reagentFlammability))
             {
                 if (sparkSourceUid.HasValue)
                     _adminLog.Add(LogType.Flammable, LogImpact.High, $"Heat/spark of {ToPrettyString(sparkSourceUid.Value)} caused atmos ignition of gas: {tile.Air.Temperature.ToString():temperature}K - {oxygen}mol Oxygen, {plasma}mol Plasma, {tritium}mol Tritium");
@@ -159,11 +168,12 @@ namespace Content.Server.Atmos.EntitySystems
                 tile.Hotspot = new Hotspot
                 {
                     Volume = exposedVolume * 25f,
-                    Temperature = exposedTemperature,
+                    Temperature = exposedTemperature + 50 * reagentFlammability,
                     SkippedFirstProcess = tile.CurrentCycle > gridAtmosphere.UpdateCounter,
                     Valid = true,
                     State = 1
                 };
+
 
                 AddActiveTile(gridAtmosphere, tile);
                 gridAtmosphere.HotspotTiles.Add(tile);
@@ -174,23 +184,27 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (tile.Air == null || !tile.Hotspot.Valid) return;
 
-            tile.Hotspot.Bypassing = tile.Hotspot.SkippedFirstProcess && tile.Hotspot.Volume > tile.Air.Volume*0.95f;
+            // A better descriptor for bypassing hotspots is "passive" hotspots. A hotspot should NOT be bypassing if it is actively driving the fire (this is usually the case in reagent fires)
+            tile.Hotspot.Bypassing = tile.Hotspot.SkippedFirstProcess && tile.Hotspot.Volume > tile.Air.Volume*0.95f && tile.SolutionFlammability == 0;
 
             if (tile.Hotspot.Bypassing)
             {
+                // If it's passive, we just steal the hotspot values from any neighbouring trit/plasma reaction
                 tile.Hotspot.Volume = tile.Air.ReactionResults[(byte)GasReaction.Fire] * Atmospherics.FireGrowthRate;
                 tile.Hotspot.Temperature = tile.Air.Temperature;
             }
             else
             {
+                // if it's NOT passive, we'll heat up some air and react it to hopefully start a plasma fire or something.
                 var affected = tile.Air.RemoveVolume(tile.Hotspot.Volume);
-                affected.Temperature = tile.Hotspot.Temperature;
+                affected.Temperature = MathF.Max(tile.Hotspot.Temperature, 273.15f + 50 * tile.SolutionFlammability);
                 React(affected, tile);
                 tile.Hotspot.Temperature = affected.Temperature;
                 tile.Hotspot.Volume = affected.ReactionResults[(byte)GasReaction.Fire] * Atmospherics.FireGrowthRate;
                 Merge(tile.Air, affected);
             }
 
+            // This is also used to "burn" off the reagents in a reagent fire.
             var fireEvent = new TileFireEvent(tile.Hotspot.Temperature, tile.Hotspot.Volume);
             _entSet.Clear();
             _lookup.GetLocalEntitiesIntersecting(tile.GridIndex, tile.GridIndices, _entSet, 0f);
