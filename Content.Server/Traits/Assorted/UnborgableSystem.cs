@@ -2,6 +2,7 @@
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Traits.Assorted;
 
 namespace Content.Server.Traits.Assorted;
 
@@ -11,10 +12,10 @@ public sealed class UnborgableSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<UnborgableComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<UnborgableComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnComponentStartup(Entity<UnborgableComponent> entity, ref ComponentStartup args)
+    private void OnMapInit(Entity<UnborgableComponent> entity, ref MapInitEvent args)
     {
         if (!HasComp<BodyComponent>(entity))
             return;

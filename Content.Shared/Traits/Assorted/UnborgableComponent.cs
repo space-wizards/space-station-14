@@ -1,12 +1,13 @@
 ﻿using Content.Shared.Silicons.Borgs.Components;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Traits.Assorted;
+namespace Content.Shared.Traits.Assorted;
 
 /// <summary>
 /// This trait prevents the owner's brain from being inserted into an MMI.
 /// All this component does is add the <see cref="MMIIncompatibleComponent"/> to the brain.
 /// </summary>
-[RegisterComponent, Access(typeof(UnborgableSystem))]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class UnborgableComponent : Component
 {
     /// <summary>
