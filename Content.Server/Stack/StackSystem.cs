@@ -85,7 +85,7 @@ public sealed class StackSystem : SharedStackSystem
     }
 
     /// <summary>
-    ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
+    ///     Spawns a stack of a certain stack type. Won't set the stack over its max.
     /// </summary>
     public EntityUid Spawn(int amount, ProtoId<StackPrototype> id, EntityCoordinates spawnPosition)
     {
@@ -93,9 +93,7 @@ public sealed class StackSystem : SharedStackSystem
         return Spawn(amount, proto, spawnPosition);
     }
 
-    /// <summary>
-    ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
-    /// </summary>
+    /// <inheritdoc cref="Spawn"/>
     public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
     {
         // Set the output result parameter to the new stack entity...
@@ -107,24 +105,22 @@ public sealed class StackSystem : SharedStackSystem
         return entity;
     }
 
-    // /// <summary>
-    // ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
-    // /// </summary>
-    // public EntityUid SpawnNextToOrDrop(int amount, ProtoId<StackPrototype> id, EntityUid source)
-    // {
-    //     var proto = _prototypeManager.Index(id);
-    //     return SpawnNextToOrDrop(amount, proto, source);
-    // }
+    /// <inheritdoc cref="Spawn"/>
+    public EntityUid SpawnNextToOrDrop(int amount, ProtoId<StackPrototype> id, EntityUid source)
+    {
+        var proto = _prototypeManager.Index(id);
+        return SpawnNextToOrDrop(amount, proto, source);
+    }
 
-    // ///
-    // public EntityUid SpawnNextToOrDrop(int amount, StackPrototype prototype, EntityUid source)
-    // {
-    //     var entity = SpawnNextToOrDrop(prototype.Spawn, source);
-    //     var stack = Comp<StackComponent>(entity);
+    /// <inheritdoc cref="Spawn"/>
+    public EntityUid SpawnNextToOrDrop(int amount, StackPrototype prototype, EntityUid source)
+    {
+        var entity = SpawnNextToOrDrop(prototype.Spawn, source);
+        var stack = Comp<StackComponent>(entity);
 
-    //     SetCount((entity, stack), amount);
-    //     return entity;
-    // }
+        SetCount((entity, stack), amount);
+        return entity;
+    }
 
     /// <summary>
     ///     Say you want to spawn 97 units of something that has a max stack count of 30.
@@ -151,9 +147,6 @@ public sealed class StackSystem : SharedStackSystem
 
         return spawnedEnts;
     }
-
-    // TODO
-    // List<EntityUid> SpawnNexrToOrDropMultiple(string entityPrototype, int amount, EntityUid source)
 
     /// <inheritdoc cref="SpawnMultiple(string,int,EntityCoordinates)"/>
     public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityUid target)
