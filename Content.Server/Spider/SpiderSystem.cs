@@ -2,19 +2,46 @@ using System.Linq;
 using Content.Server.Popups;
 using Content.Shared.Spider;
 using Content.Shared.Maps;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Spider;
 
 public sealed class SpiderSystem : SharedSpiderSystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<SpiderComponent, SpiderWebActionEvent>(OnSpawnNet);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<SpiderComponent>();
+        while (query.MoveNext(out var uid, out var spider))
+        {
+            if (HasComp<ActorComponent>(uid)
+                || !spider.SpawnsWebsAsNonPlayer
+                ||_timing.CurTime < spider.NextWebSpawn)
+                continue;
+
+            spider.NextWebSpawn += TimeSpan.FromSeconds(spider.WebSpawnCooldownSeconds);
+
+            if (_mobState.IsDead(uid))
+                continue;
+
+            OnSpawnNet(uid, spider, new SpiderWebActionEvent());
+        }
     }
 
     private void OnSpawnNet(EntityUid uid, SpiderComponent component, SpiderWebActionEvent args)
