@@ -67,7 +67,6 @@ namespace Content.Shared.Speech
                     if (emote.RequiredMarkings == null ||
                         AttachedIds.IsSupersetOf(emote.RequiredMarkings.Select(i => i.Id)))
                     {
-                        Logger.Info($"Added Emote {emote.EmotePrototype.Id} to {uid}'s SpeechComponent");
                         component.AllowedEmotes.Add(emote.EmotePrototype.Id);
                     }
                 }
