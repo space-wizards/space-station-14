@@ -41,7 +41,7 @@
   - type: Tag
     tags:
     - ClothMade
-    - Recyclable    
+    - Recyclable
     - WhitelistChameleon
 
 - type: entity
@@ -383,6 +383,8 @@
     sprite: Clothing/Head/Hats/outlawhat.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/outlawhat.rsi
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingHeadBase
@@ -477,8 +479,8 @@
     - state: icon-nobeard
       map: [ "foldedLayer" ]
       visible: true
-  
-    
+
+
 
 - type: entity
   parent: ClothingHeadBase
@@ -1314,3 +1316,36 @@
     sprite: Clothing/Head/Hats/solidheadband.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/solidheadband.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPropellerHat
+  name: propeller hat
+  description: You're the bestest boy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/propellerhat.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Clothing
+    equippedPrefix: off
+    sprite: Clothing/Head/Hats/propellerhat.rsi
+  - type: ToggleableVisuals
+    spriteLayer: enum.ToggleableVisuals.Layer
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: {state: icon-on}
+          False: {state: icon}
+  - type: ItemToggle
+    predictable: true
+    soundActivate:
+      path: /Audio/Items/flashlight_on.ogg
+    soundDeactivate:
+      path: /Audio/Items/flashlight_off.ogg

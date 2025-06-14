@@ -61,12 +61,10 @@ public sealed partial class BorgSystem
 
         if (_actions.AddAction(chassis, ref component.ModuleSwapActionEntity, out var action, component.ModuleSwapActionId, uid))
         {
-            if(TryComp<BorgModuleIconComponent>(uid, out var moduleIconComp))
-            {
-                action.Icon = moduleIconComp.Icon;
-            };
-            action.EntityIcon = uid;
-            Dirty(component.ModuleSwapActionEntity.Value, action);
+            var actEnt = (component.ModuleSwapActionEntity.Value, action);
+            _actions.SetEntityIcon(actEnt, uid);
+            if (TryComp<BorgModuleIconComponent>(uid, out var moduleIconComp))
+                _actions.SetIcon(actEnt, moduleIconComp.Icon);
         }
 
         if (!TryComp(chassis, out BorgChassisComponent? chassisComp))
