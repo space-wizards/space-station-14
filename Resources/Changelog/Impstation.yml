@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Luna is now the perfect map, details in PR
-    type: Fix
-  id: 1330
-  time: '2025-03-16T21:45:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1983
 - author: sha-seng, pinkbat5
   changes:
   - message: Three thaven tails (the eel one requires an overlay marking too!)
@@ -4193,3 +4186,12 @@
   id: 1829
   time: '2025-06-14T22:51:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2762
+- author: astral_amy
+  changes:
+  - message: Added Bedlam to map rotation!
+    type: Add
+  - message: One final(?) round of Bedlam tweaks.
+    type: Tweak
+  id: 1830
+  time: '2025-06-14T22:54:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2745
