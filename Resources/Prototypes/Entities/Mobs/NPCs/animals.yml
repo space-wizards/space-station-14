@@ -1416,7 +1416,10 @@
       - Passive
   - type: HTN
     rootTask:
-      task: SimpleHostileCompound
+      task: MonkeyCompound
+    blackboard:
+      NavInteract: !type:Bool
+        true
   - type: IdExaminable
   - type: Tag
     tags:
