@@ -7434,4 +7434,11 @@ Entries:
   id: 1027
   time: '2025-06-14T22:38:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/803
+- author: Conf
+  changes:
+  - message: Added the Emerald Lizitar, a Weh-themed sword.
+    type: Add
+  id: 1028
+  time: '2025-06-14T22:40:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/705
 
