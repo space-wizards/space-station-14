@@ -1701,8 +1701,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         28:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 28
     components:
     - type: Transform
@@ -1711,8 +1710,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         27:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassCargoLocked
   entities:
   - uid: 29
@@ -1736,8 +1734,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         31:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 31
     components:
     - type: Transform
@@ -1746,8 +1743,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         30:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassShuttleArrivals
   entities:
   - uid: 73
@@ -6782,8 +6778,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1070:
-        - - ArtifactAnalyzerSender
-          - ArtifactAnalyzerReceiver
+        - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
 - proto: ComputerAtmosMonitoring
   entities:
   - uid: 1289
@@ -12162,26 +12157,19 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         2596:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2610:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2611:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2612:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2613:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2614:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         2615:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: LockerAtmosphericsFilledHardsuit
   entities:
   - uid: 2499
@@ -14182,14 +14170,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1850:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1857:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1849:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 1947
     components:
     - type: Transform
@@ -14199,8 +14184,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1853:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 1948
     components:
     - type: Transform
@@ -14210,11 +14194,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1851:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         1852:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignalSwitchDirectional
   entities:
   - uid: 1802
@@ -14225,8 +14207,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         910:
-        - - Status
-          - Toggle
+        - Status: Toggle
 - proto: SignAtmos
   entities:
   - uid: 2296
@@ -15346,19 +15327,13 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         956:
-        - - Right
-          - Forward
-        - - Left
-          - Reverse
-        - - Middle
-          - Off
+        - Right: Forward
+        - Left: Reverse
+        - Middle: Off
         957:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
   - uid: 2106
     components:
     - type: Transform
@@ -15367,12 +15342,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1823:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
   - uid: 2107
     components:
     - type: Transform
@@ -15381,40 +15353,25 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         958:
-        - - Middle
-          - Off
-        - - Right
-          - Forward
-        - - Left
-          - Reverse
+        - Middle: Off
+        - Right: Forward
+        - Left: Reverse
         959:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
         960:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
         961:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
         962:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
+        - Left: Reverse
+        - Right: Forward
+        - Middle: Off
 - proto: VendingMachineBooze
   entities:
   - uid: 2108
