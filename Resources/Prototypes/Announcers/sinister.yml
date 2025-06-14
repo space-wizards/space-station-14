@@ -112,6 +112,8 @@
       collection: SinisterVentcloggedAnnouncements
     - id: immovableRodSpawn # The station is moving into an immovable rod, don't die or something, ask Engineering for help repairing it
       collection: SinisterImmovablerodAnnouncements
+    - id: corpseEjectedFromVents # vent clog, kind of
+      collection: SinisterVentcloggedAnnouncements
 
     # - id: ionStorm # AI-controlled equipment are now weird, check their laws
     #  path: events/ion_storm.ogg

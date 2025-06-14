@@ -133,3 +133,17 @@
       prob: 0
     - id: MobButterfly
       prob: 0
+
+- type: entity
+  id: CorpseEjectedFromVents
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: true
+    reoccurrenceDelay: 10
+    weight: 3
+  - type: VentCrittersRule
+    announce: false
+    specialEntries:
+    - id: SalvageHumanCorpse
+      prob: 0

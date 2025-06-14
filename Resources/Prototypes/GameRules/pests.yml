@@ -9,6 +9,7 @@
     - id: MouseMigration
     - id: LuggageMigration # imp special
     - id: SingleCritter # imp special
+    - id: CorpseEjectedFromVents # imp
 
 - type: entityTable
   id: SpicyPestEventsTable

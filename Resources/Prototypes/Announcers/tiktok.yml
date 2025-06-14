@@ -108,6 +108,8 @@
       path: events/solar_flare-complete.ogg
     - id: ventClog # A random reagent is coming out of a scrubber
       path: events/vent_clog.ogg
+    - id: corpseEjectedFromVents # vent clog, kind of
+      path: events/vent_clog.ogg
     - id: slimesSpawn # Some simple slimes are appearing in vents
       path: events/vent_critters.ogg
     - id: spiderSpawn # Some simple spiders are appearing in vents
