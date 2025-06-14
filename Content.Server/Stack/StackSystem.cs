@@ -49,35 +49,39 @@ public sealed class StackSystem : SharedStackSystem
     /// <summary>
     ///     Try to split this stack into two. Returns a non-null <see cref="Robust.Shared.GameObjects.EntityUid"/> if successful.
     /// </summary>
-    public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, StackComponent? stack = null)
+    public EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
     {
-        if (!Resolve(uid, ref stack))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return null;
 
         // Try to remove the amount of things we want to split from the original stack...
-        if (!Use((uid, stack), amount))
+        if (!Use(ent, amount))
             return null;
 
         // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
-        var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
+        var prototype = _prototypeManager.TryIndex<StackPrototype>(ent.Comp.StackTypeId, out var stackType)
             ? stackType.Spawn.ToString()
-            : Prototype(uid)?.ID;
+            : Prototype(ent.Owner)?.ID;
 
         // Set the output parameter in the event instance to the newly split stack.
-        var entity = Spawn(prototype, spawnPosition);
+        var newEntity = Spawn(prototype, spawnPosition);
 
-        if (TryComp(entity, out StackComponent? stackComp))
-        {
-            // Set the split stack's count.
-            SetCount((entity, stackComp), amount);
-            // Don't let people dupe unlimited stacks
-            stackComp.Unlimited = false;
-        }
+        // There should always be a StackComponent, but make sure
+        var stackComp = EnsureComp<StackComponent>(newEntity);
 
-        var ev = new StackSplitEvent(entity);
-        RaiseLocalEvent(uid, ref ev);
+        SetCount((newEntity, stackComp), amount);
+        stackComp.Unlimited = false; // Don't let people dupe unlimited stacks
 
-        return entity;
+        var ev = new StackSplitEvent(newEntity);
+        RaiseLocalEvent(ent, ref ev);
+
+        return newEntity;
+    }
+
+    [Obsolete("Obsolete, Use Entity<T>")]
+    public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, StackComponent? stack = null)
+    {
+        return Split((uid, stack), amount, spawnPosition);
     }
 
     /// <summary>
@@ -103,8 +107,9 @@ public sealed class StackSystem : SharedStackSystem
         return entity;
     }
 
-    // TODO
-    // ///
+    // /// <summary>
+    // ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
+    // /// </summary>
     // public EntityUid SpawnNextToOrDrop(int amount, ProtoId<StackPrototype> id, EntityUid source)
     // {
     //     var proto = _prototypeManager.Index(id);
@@ -112,9 +117,13 @@ public sealed class StackSystem : SharedStackSystem
     // }
 
     // ///
-    // public EntityUid SpawnNextToOrDrop(int amount, StackPrototype id, EntityUid source)
+    // public EntityUid SpawnNextToOrDrop(int amount, StackPrototype prototype, EntityUid source)
     // {
-    //     // TODO
+    //     var entity = SpawnNextToOrDrop(prototype.Spawn, source);
+    //     var stack = Comp<StackComponent>(entity);
+
+    //     SetCount((entity, stack), amount);
+    //     return entity;
     // }
 
     /// <summary>
