@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingFroozy
-  changes:
-  - message: Added white shoes to paramedic's loadout.
-    type: Add
-  id: 8160
-  time: '2025-04-13T10:35:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32227
 - author: EmoGarbage404
   changes:
   - message: Adds departmental economy! All departments now have custom request consoles
@@ -3913,3 +3906,11 @@
   id: 8672
   time: '2025-06-14T09:07:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37951
+- author: Sparlight
+  changes:
+  - message: A pet bag for smart corgis to wear and a construction option for them.  Not
+      actually wearable by normal pets at this time.
+    type: Add
+  id: 8673
+  time: '2025-06-14T16:09:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37440
