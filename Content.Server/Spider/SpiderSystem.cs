@@ -30,14 +30,14 @@ public sealed class SpiderSystem : SharedSpiderSystem
         var query = EntityQueryEnumerator<SpiderComponent>();
         while (query.MoveNext(out var uid, out var spider))
         {
-            if (HasComp<ActorComponent>(uid)
-                || !spider.SpawnsWebsAsNonPlayer
-                ||_timing.CurTime < spider.NextWebSpawn)
+            if (_timing.CurTime < spider.NextWebSpawn)
                 continue;
 
             spider.NextWebSpawn += TimeSpan.FromSeconds(spider.WebSpawnCooldownSeconds);
 
-            if (_mobState.IsDead(uid))
+            if (HasComp<ActorComponent>(uid)
+                || _mobState.IsDead(uid)
+                || !spider.SpawnsWebsAsNonPlayer)
                 continue;
 
             OnSpawnNet(uid, spider, new SpiderWebActionEvent());
