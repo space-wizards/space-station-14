@@ -243,6 +243,9 @@
       - type: ChangelingIdentity
       - type: ChangelingDevour
       - type: ChangelingTransform
+      - type: ActionGrant
+        actions:
+          - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
       mindRoles:
       - MindRoleChangeling
 
