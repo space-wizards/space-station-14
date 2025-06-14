@@ -320,6 +320,8 @@
     fuelConsumption: 0.2
     fuelLitCost: 0.1
     tankSafe: false
+  - type: Item
+    sprite: Objects/Tools/Lighters/lighters.rsi
   - type: ToggleableLightVisuals
     spriteLayer: lighter_flame
     inhandVisuals:
