@@ -7368,4 +7368,11 @@ Entries:
   id: 1018
   time: '2025-06-14T21:09:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/813
+- author: Citrea
+  changes:
+  - message: Handheld artifact containers can actually be used now
+    type: Fix
+  id: 1019
+  time: '2025-06-14T21:23:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/823
 
