@@ -144,7 +144,8 @@ namespace Content.IntegrationTests.Tests
             "Skimmer",
             "Union",
             "Hash",
-            "Refsdal"
+            "Refsdal",
+            "Bedlam"
         };
 
         /// <summary>
