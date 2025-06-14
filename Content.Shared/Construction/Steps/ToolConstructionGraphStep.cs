@@ -15,6 +15,12 @@ namespace Content.Shared.Construction.Steps
 
         [DataField("examine")] public string ExamineOverride { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// If the target is electrified, try to electrocute the user.
+        /// If the user becomes stunned, the construction step will be cancelled.
+        /// </summary>
+        [DataField] public bool TryElectrocute { get; private set; }
+
         public override void DoExamine(ExaminedEvent examinedEvent)
         {
             if (!string.IsNullOrEmpty(ExamineOverride))
