@@ -48,7 +48,7 @@
   - type: GenericVisualizer
     visuals:
       enum.ToggleableVisuals.Enabled:
-        flame:
+        enum.ToggleableVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
   - type: ToggleableVisuals
@@ -165,7 +165,7 @@
   - type: GenericVisualizer
     visuals:
       enum.ToggleableVisuals.Enabled:
-        flame:
+        enum.ToggleableVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
         open:
