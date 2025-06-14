@@ -99,8 +99,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
             var prio = priorities.GetValueOrDefault(job, JobPriority.Never);
 
             var atLeastOneEnabled = prefs.GetAllEnabledProfilesForJob(job).Count != 0;
-            var icon = new DraggableJobIcon(job,
-                _ => CreateJobTooltip(job));
+            var icon = new DraggableJobIcon(job, () => PriorityLock.Pressed, _ => CreateJobTooltip(job));
 
             if(!atLeastOneEnabled)
                 icon.Modulate = Color.Salmon;

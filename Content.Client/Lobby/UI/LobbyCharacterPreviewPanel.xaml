@@ -6,7 +6,11 @@
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
     xmlns:ui="clr-namespace:Content.Client.Lobby.UI">
     <BoxContainer Name="VBox" Orientation="Vertical">
-        <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}" />
+        <BoxContainer>
+            <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}" />
+            <CheckBox Name="PriorityLock" Text="Unlock Priorities" HorizontalExpand="True"
+                      HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        </BoxContainer>
 
         <!-- This is the main bit, only shows once we have preferences from the server -->
         <BoxContainer Name="Loaded" Orientation="Vertical" Visible="False">
