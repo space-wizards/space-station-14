@@ -4,3 +4,4 @@ handheld-radio-component-on-state = on
 handheld-radio-component-off-state = off
 handheld-radio-component-channel-set = Channel set to {$channel}
 handheld-radio-component-chennel-examine = The current channel is {$channel}.
+handheld-radio-verb = Toggle radio
