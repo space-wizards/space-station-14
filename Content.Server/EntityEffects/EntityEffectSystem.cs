@@ -520,6 +520,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
             var spreadAmount = (int) Math.Max(0, Math.Ceiling((reagentArgs.Quantity / args.Effect.OverflowThreshold).Float()));
             var splitSolution = reagentArgs.Source.SplitSolution(reagentArgs.Source.Volume);
+            splitSolution.ScaleSolution(args.Effect.Scale / (spreadAmount + 1)); // Let's control the factor of extra units of the chem made (add 1 to the denominator for the first tile)
             var transform = EntityManager.GetComponent<TransformComponent>(reagentArgs.TargetEntity);
             var mapCoords = _xform.GetMapCoordinates(reagentArgs.TargetEntity, xform: transform);
 
