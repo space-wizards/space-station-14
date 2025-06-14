@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "johnny chaos modified by mqole",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/2a19963297f91efb452dbb5c1d4eb28a14776b0a/icons/mob/silicon/ai.dmi, johnny chaos modified by mqole",
   "size": {
     "x": 32,
     "y": 32
@@ -28,6 +28,37 @@
           0.1
         ]
       ]
-    }
+    },
+    {
+      "name": "ai_camera",
+      "delays": [
+        [
+          1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ai_dead"
+    },
+    {
+      "name": "ai_empty",
+      "delays": [
+        [
+          0.7,
+          0.7
+        ]
+      ]
+    },
+    {
+      "name": "default",
+      "directions": 4
+    },
+    {
+      "name": "base"
+    },
+	{
+	  "name": "icon"
+	}
   ]
 }
