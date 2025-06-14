@@ -9,7 +9,6 @@ public static class SkinColor
     public const float MinTintedHuesLightness = 0.85f;
 
     public const float MinHuesLightness = 0.175f;
-    public const float MinHuesSaturation = 0.1f;
 
     public const float MinFeathersHue = 29f / 360;
     public const float MaxFeathersHue = 174f / 360;
@@ -213,7 +212,6 @@ public static class SkinColor
     public static Color MakeHueValid(Color color)
     {
         var manipulatedColor = Color.ToHsv(color);
-        manipulatedColor.Y = Math.Max(manipulatedColor.Y, MinHuesSaturation);
         manipulatedColor.Z = Math.Max(manipulatedColor.Z, MinHuesLightness);
         return Color.FromHsv(manipulatedColor);
     }
