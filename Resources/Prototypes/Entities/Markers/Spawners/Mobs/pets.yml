@@ -206,7 +206,7 @@
 - type: entity
   parent: MarkerBase
   id: SpawnMobMonkeyPunpun
-  name: Pun Pun Spawner
+  name: Junior Assistant Bartender Spawner
   suffix: Bartender Pet
   components:
   - type: Sprite
@@ -214,9 +214,19 @@
     - state: green
     - state: monkey
       sprite: Mobs/Animals/monkey.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobMonkeyPunpun
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: BartenderAssistantTable
+
+- type: entityTable
+  id: BartenderAssistantTable
+  table: !type:GroupSelector
+    children:
+    - id: MobMonkeyPunpun
+      weight: 7
+    - id: MobKoboldYip
+      weight: 2
+    - id: MobScurretWaWa
 
 - type: entity
   parent: MarkerBase
