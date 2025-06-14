@@ -96,6 +96,10 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: Tag
+    tags:
+    - MonkeyWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: SuitEVAPackage
