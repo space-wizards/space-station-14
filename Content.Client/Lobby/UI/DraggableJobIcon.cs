@@ -59,11 +59,17 @@ public sealed class DraggableJobIcon : TextureRect
     /// </summary>
     public event Action? OnPriorityChanged;
 
-    public DraggableJobIcon(JobPrototype jobPrototype, TooltipSupplier? tooltipSupplier = null)
+    public delegate bool CheckCanDrag();
+
+    private readonly CheckCanDrag? _canDragFunc;
+
+    public DraggableJobIcon(JobPrototype jobPrototype, CheckCanDrag? checkDrag = null, TooltipSupplier? tooltipSupplier = null)
     {
         IoCManager.InjectDependencies(this);
 
         JobProto = jobPrototype;
+
+        _canDragFunc = checkDrag;
 
         var sprite = _entManager.System<SpriteSystem>();
         var iconProto = _prototypeManager.Index(jobPrototype.Icon);
@@ -116,7 +122,7 @@ public sealed class DraggableJobIcon : TextureRect
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
         base.KeyBindDown(args);
-        if (args.Function == EngineKeyFunctions.UIClick)
+        if (args.Function == EngineKeyFunctions.UIClick && _canDragFunc is not null && _canDragFunc())
         {
             StartDragging(args);
             OnMouseDown?.Invoke(args);
