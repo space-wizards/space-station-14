@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Rotation;
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
@@ -5,13 +6,17 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Rotation;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Buckle;
 
 internal sealed class BuckleSystem : SharedBuckleSystem
 {
     [Dependency] private readonly RotationVisualizerSystem _rotationVisualizerSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
@@ -21,6 +26,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
 
         SubscribeLocalEvent<BuckleComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<StrapComponent, MoveEvent>(OnStrapMoveEvent);
+        SubscribeLocalEvent<BuckleComponent, ComponentStartup>(OnBuckleStartup);
         SubscribeLocalEvent<BuckleComponent, BuckledEvent>(OnBuckledEvent);
         SubscribeLocalEvent<BuckleComponent, UnbuckledEvent>(OnUnbuckledEvent);
         SubscribeLocalEvent<BuckleComponent, AttemptMobCollideEvent>(OnMobCollide);
@@ -80,25 +86,61 @@ internal sealed class BuckleSystem : SharedBuckleSystem
         }
     }
 
+    // need to support entities which are "created" buckled
+    private void OnBuckleStartup(Entity<BuckleComponent> ent, ref ComponentStartup args)
+    {
+        if (!ent.Comp.Buckled)
+            return;
+
+        if (!TryComp<SpriteComponent>(ent, out var buckledSprite))
+            return;
+
+        var strap = ent.Comp.BuckledTo!;
+        if (!TryComp<StrapComponent>(strap, out var strapComp))
+            return;
+
+        _sprite.SetOffset((ent.Owner, buckledSprite), buckledSprite.Offset + strapComp.BuckleOffset);
+
+        if (strapComp.Overlay is { } overlay)
+        {
+            var idx = _sprite.LayerMapReserve((ent, buckledSprite), StrapVisualLayers.Overlay);
+            _sprite.LayerSetSprite((ent, buckledSprite), idx, overlay);
+            _sprite.LayerSetScale((ent.Owner, buckledSprite), idx, Vector2.One / buckledSprite.Scale); // reverse scalar values for things like dwarves
+            UpdateBuckleOverlay((ent.Owner, ent, buckledSprite, Transform(ent)));
+        }
+        else
+        {
+            ent.Comp.OriginalDrawDepth ??= buckledSprite.DrawDepth;
+            if (TryComp<SpriteComponent>(strap, out var strapSprite))
+                _sprite.SetDrawDepth((ent.Owner, buckledSprite), strapSprite.DrawDepth + 1);
+        }
+    }
+
     /// <summary>
     /// Lower the draw depth of the buckled entity without needing for the strap entity to rotate/move.
     /// Only do so when the entity is facing screen-local north
     /// </summary>
     private void OnBuckledEvent(Entity<BuckleComponent> ent, ref BuckledEvent args)
     {
-        if (!TryComp<SpriteComponent>(args.Strap, out var strapSprite))
-            return;
-
         if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
             return;
 
-        var angle = _xformSystem.GetWorldRotation(args.Strap) + _eye.CurrentEye.Rotation; // Get true screen position, or close enough
+        if (_timing.IsFirstTimePredicted)
+            _sprite.SetOffset((ent.Owner, buckledSprite), buckledSprite.Offset + args.Strap.Comp.BuckleOffset);
 
-        if (angle.GetCardinalDir() != Direction.North)
-            return;
-
-        ent.Comp.OriginalDrawDepth ??= buckledSprite.DrawDepth;
-        _sprite.SetDrawDepth((ent.Owner, buckledSprite), strapSprite.DrawDepth - 1);
+        if (args.Strap.Comp.Overlay is { } overlay)
+        {
+            var idx = _sprite.LayerMapReserve((ent, buckledSprite), StrapVisualLayers.Overlay);
+            _sprite.LayerSetSprite((ent, buckledSprite), idx, overlay);
+            _sprite.LayerSetScale((ent.Owner, buckledSprite), idx, Vector2.One / buckledSprite.Scale); // reverse scalar values for things like dwarves
+            UpdateBuckleOverlay((ent.Owner, ent, buckledSprite, Transform(ent)));
+        }
+        else
+        {
+            ent.Comp.OriginalDrawDepth ??= buckledSprite.DrawDepth;
+            if (TryComp<SpriteComponent>(args.Strap, out var strapSprite))
+                _sprite.SetDrawDepth((ent.Owner, buckledSprite), strapSprite.DrawDepth + 1);
+        }
     }
 
     /// <summary>
@@ -106,14 +148,68 @@ internal sealed class BuckleSystem : SharedBuckleSystem
     /// </summary>
     private void OnUnbuckledEvent(Entity<BuckleComponent> ent, ref UnbuckledEvent args)
     {
-        if (!TryComp<SpriteComponent>(ent.Owner, out var buckledSprite))
+        if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
             return;
 
-        if (!ent.Comp.OriginalDrawDepth.HasValue)
+        if (_timing.IsFirstTimePredicted)
+            _sprite.SetOffset((ent.Owner, sprite), sprite.Offset - args.Strap.Comp.BuckleOffset);
+
+        if (args.Strap.Comp.Overlay is not null)
+        {
+            _sprite.RemoveLayer(ent.Owner, StrapVisualLayers.Overlay);
+        }
+        else
+        {
+            if (ent.Comp.OriginalDrawDepth != null)
+                _sprite.SetDrawDepth((ent.Owner, sprite), ent.Comp.OriginalDrawDepth.Value);
+            ent.Comp.OriginalDrawDepth = null;
+        }
+    }
+
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+
+        if (!TryComp<EyeComponent>(_playerManager.LocalEntity, out var eye))
             return;
 
-        _sprite.SetDrawDepth((ent.Owner, buckledSprite), ent.Comp.OriginalDrawDepth.Value);
-        ent.Comp.OriginalDrawDepth = null;
+        var query = EntityQueryEnumerator<BuckleComponent, SpriteComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var buckle, out var sprite, out var xform))
+        {
+            if (!_sprite.LayerMapTryGet((uid, sprite), StrapVisualLayers.Overlay, out var spriteLayer, false))
+                continue;
+
+            if (!buckle.Buckled)
+            {
+                _sprite.RemoveLayer((uid, sprite), spriteLayer);
+                continue;
+            }
+
+            UpdateBuckleOverlay((uid, buckle, sprite, xform), eye.Zoom);
+        }
+    }
+
+    private void UpdateBuckleOverlay(Entity<BuckleComponent, SpriteComponent, TransformComponent> ent, Vector2? zoom = null)
+    {
+        var (uid, buckle, sprite, xform) = ent;
+
+        if (zoom == null)
+        {
+            if (!TryComp<EyeComponent>(_playerManager.LocalEntity, out var eye))
+                return;
+            zoom = eye.Zoom;
+        }
+
+        // we best be careful on the scary-ass client code
+        if (!TryComp<TransformComponent>(buckle.BuckledTo, out var strapXform) ||
+            !TryComp<StrapComponent>(buckle.BuckledTo, out var strapComp))
+            return;
+
+        var bucklePos = _eye.MapToScreen(_xformSystem.GetMapCoordinates(xform));
+        var strapPos = _eye.MapToScreen(_xformSystem.GetMapCoordinates(strapXform));
+        var dif = (strapPos.Position - bucklePos.Position) / EyeManager.PixelsPerMeter * zoom.Value - strapComp.BuckleOffset;
+
+        _sprite.LayerSetOffset((uid, sprite), StrapVisualLayers.Overlay, dif);
     }
 
     private void OnAppearanceChange(EntityUid uid, BuckleComponent component, ref AppearanceChangeEvent args)
