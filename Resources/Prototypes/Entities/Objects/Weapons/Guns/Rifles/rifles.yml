@@ -216,7 +216,7 @@
     availableModes:
     - Burst
     - SemiAuto
-    burstFireRate: 16
+    burstFireRate: 14
   - type: GunWieldBonus
     minAngle: -28
     maxAngle: -25
