@@ -2556,6 +2556,8 @@
     color: "#50595C"
     activateSound: null
     deactivateSound: null
+  - type: Tag # imp - remove doorbumpopener
+    tags: []
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
