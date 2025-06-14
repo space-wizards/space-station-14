@@ -30,12 +30,12 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
         SubscribeLocalEvent<ColorFlashEffectComponent, AnimationCompletedEvent>(OnEffectAnimationCompleted);
     }
 
-    public override void RaiseEffect(Color color, List<EntityUid> entities, Filter filter)
+    protected override void RaiseEffect(string source, Color color, List<EntityUid> entities, Filter filter)
     {
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        OnColorFlashEffect(new ColorFlashEffectEvent(color, GetNetEntityList(entities)));
+        OnColorFlashEffect(new ColorFlashEffectEvent(source, color, GetNetEntityList(entities)));
     }
 
     private void OnEffectAnimationCompleted(EntityUid uid, ColorFlashEffectComponent component, AnimationCompletedEvent args)
@@ -99,8 +99,6 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
 
     private void OnColorFlashEffect(ColorFlashEffectEvent ev)
     {
-        var color = ev.Color;
-
         foreach (var nent in ev.Entities)
         {
             var ent = GetEntity(nent);
@@ -118,7 +116,19 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
             }
 
             _animation.Stop(ent, AnimationKey);
-            var animation = GetDamageAnimation(ent, color, sprite);
+
+            // Default, use the color from the event
+            var newColor = ev.Color;
+            // If entity has an override component and a specific override for this effect source, use the override
+            if (TryComp(ent, out ColorFlashEffectOverrideComponent? overrideComp))
+            {
+                if (overrideComp.Values.TryGetValue(ev.EffectSource, out var value))
+                {
+                    newColor = value;
+                }
+            }
+
+            var animation = GetDamageAnimation(ent, newColor, sprite);
 
             if (animation == null)
             {
