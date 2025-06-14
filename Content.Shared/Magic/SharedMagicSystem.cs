@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Hands.Components;
@@ -333,7 +332,7 @@ public abstract class SharedMagicSystem : EntitySystem
         if (!_net.IsServer)
             return;
 
-        var ent = Spawn(proto, position.SnapToGrid(EntityManager, _mapManager));
+        var ent = Spawn(proto, _transform.SnapToGrid(position));
 
         if (lifetime != null)
         {

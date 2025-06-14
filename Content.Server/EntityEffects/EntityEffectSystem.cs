@@ -24,7 +24,6 @@ using Content.Server.Traits.Assorted;
 using Content.Server.Zombies;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.EntityEffects.EffectConditions;
 using Content.Shared.EntityEffects.Effects.PlantMetabolism;
 using Content.Shared.EntityEffects.Effects.StatusEffects;
@@ -533,7 +532,7 @@ public sealed class EntityEffectSystem : EntitySystem
                 return;
 
             var coords = _map.MapToGrid(gridUid, mapCoords);
-            var ent = EntityManager.SpawnEntity(args.Effect.PrototypeId, coords.SnapToGrid());
+            var ent = EntityManager.SpawnEntity(args.Effect.PrototypeId, coords.SnapToGrid(grid));
 
             _smoke.StartSmoke(ent, splitSolution, args.Effect.Duration, spreadAmount);
 
