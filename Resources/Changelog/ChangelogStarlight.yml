@@ -7202,4 +7202,163 @@ Entries:
   id: 995
   time: '2025-06-12T16:11:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/818
+- author: walksanatora
+  changes:
+  - message: The rare paper in Cap's locker now has some EXTREMELY limited movement
+      options. all magical in nature of course.
+    type: Tweak
+  id: 996
+  time: '2025-06-14T01:39:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/819
+- author: Conflee
+  changes:
+  - message: Kiloton - Added Security and Medical Request Consoles. Plasma in Sci.
+      Sink in Chem. Made AI Dock an invalid docking point for Evac. Changed EVAC to
+      use Plasma's EVAC, as part of a trial-and-error process to find an EVAC big
+      enough for the map that will also consistently dock at the correct EVAC.
+    type: Tweak
+  id: 997
+  time: '2025-06-14T01:45:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/816
+- author: PubliclyExecutedPig
+  changes:
+  - message: Studies show trying to shoot the smart LMG one handed often results in
+      broken bones.
+    type: Tweak
+  id: 998
+  time: '2025-06-14T01:47:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/804
+- author: john toe
+  changes:
+  - message: john toe
+    type: Add
+  id: 999
+  time: '2025-06-14T01:51:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/794
+- author: Trep_Maul
+  changes:
+  - message: Upstream Reach.
+    type: Add
+  id: 1000
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: SL credit vends amd ATM.
+    type: Add
+  id: 1001
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: All roles have their lockers.
+    type: Add
+  id: 1002
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: PETS!
+    type: Add
+  id: 1003
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: AI upload!
+    type: Add
+  id: 1004
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: Pun Pun!!
+    type: Add
+  id: 1005
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: more Maint.
+    type: Add
+  id: 1006
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: Outside lights are brighter.
+    type: Tweak
+  id: 1007
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: Adjusted almost every department to be less cluttered.
+    type: Tweak
+  id: 1008
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: Power source now requires engineer interaction.
+    type: Tweak
+  id: 1009
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: Made aesthetics a more consistent.
+    type: Tweak
+  id: 1010
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: A lot of weird pipe and wire issues from upstream.
+    type: Fix
+  id: 1011
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: Clown is now correctly contained.
+    type: Fix
+  id: 1012
+  time: '2025-06-14T01:58:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/772
+- author: Trep_Maul
+  changes:
+  - message: (SC17) tons of little touches
+    type: Add
+  id: 1013
+  time: '2025-06-14T02:11:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/758
+- author: Trep_Maul
+  changes:
+  - message: (SC17) drobes!
+    type: Add
+  id: 1014
+  time: '2025-06-14T02:11:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/758
+- author: Trep_Maul
+  changes:
+  - message: (SC17) Wall under door in cargo bay.
+    type: Remove
+  id: 1015
+  time: '2025-06-14T02:11:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/758
+- author: Trep_Maul
+  changes:
+  - message: (SC17) Placement and layout of several items.
+    type: Tweak
+  id: 1016
+  time: '2025-06-14T02:11:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/758
+- author: Trep_Maul
+  changes:
+  - message: (SC17) Cryosleep and exterior lights now have power!
+    type: Fix
+  id: 1017
+  time: '2025-06-14T02:11:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/758
 
