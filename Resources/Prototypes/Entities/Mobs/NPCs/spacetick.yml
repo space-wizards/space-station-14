@@ -42,6 +42,15 @@
     thresholds:
       0: Alive
       15: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 30
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
   - type: Stamina
     critThreshold: 15
   - type: MovementAlwaysTouching

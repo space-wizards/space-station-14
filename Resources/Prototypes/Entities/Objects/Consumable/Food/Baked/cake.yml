@@ -15,12 +15,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 55 # flavored cakes have less room for spiking
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 40
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 10
   - type: Item
     size: Normal
   - type: Tag
@@ -53,12 +53,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 8
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 2
   - type: Item
     size: Tiny
   - type: Tag
@@ -87,6 +87,16 @@
     tags:
     - Cake
     - Fruit
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      - state: alpha-filling-inhand-left
+        color: blue
+      right:
+      - state: plain-inhand-right
+      - state: alpha-filling-inhand-right
+        color: blue
 
 - type: entity
   name: blueberry slice
@@ -104,6 +114,16 @@
     - Cake
     - Fruit
     - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-slice-inhand-left
+      - state: alpha-slice-filling-inhand-left
+        color: blue
+      right:
+      - state: plain-slice-inhand-right
+      - state: alpha-slice-filling-inhand-right
+        color: blue
 
 # Cake
 
@@ -115,6 +135,17 @@
   components:
   - type: Sprite
     state: plain
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 55
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+        - ReagentId: Vitamin
+          Quantity: 5
+  - type: Item
+    heldPrefix: plain
   - type: Sliceable
     slices:
     - id: FoodCakePlainSlice
@@ -129,6 +160,17 @@
   components:
   - type: Sprite
     state: plain-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1
+  - type: Item
+    heldPrefix: plain-slice
 # Tastes like sweetness, cake.
 
 - type: entity
@@ -158,6 +200,18 @@
     tags:
     - Cake
     - Vegetable
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+        color: "#f8e0af"
+      - state: alpha-filling-inhand-left
+        color: "#ffbd2f"
+      right:
+      - state: plain-inhand-right
+        color: "#f8e0af"
+      - state: alpha-filling-inhand-right
+        color: "#ffbd2f"
 
 - type: entity
   name: slice of carrot cake
@@ -183,6 +237,18 @@
     - Cake
     - Vegetable
     - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-slice-inhand-left
+        color: "#f8e0af"
+      - state: alpha-slice-filling-inhand-left
+        color: "#ffbd2f"
+      right:
+      - state: plain-slice-inhand-right
+        color: "#f8e0af"
+      - state: alpha-slice-filling-inhand-right
+        color: "#ffbd2f"
 
 # Tastes like sweetness, cake, carrot.
 
@@ -202,6 +268,18 @@
     tags:
     - Cake
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-inhand-left
+        color: "#ff5b7a"
+      - state: alpha-filling-inhand-left
+        color: "#ff5b7a"
+      right:
+      - state: alpha-inhand-right
+        color: "#ff5b7a"
+      - state: alpha-filling-inhand-right
+        color: "#ff5b7a"
 
 - type: entity
   name: slice of brain cake
@@ -216,6 +294,18 @@
     - Cake
     - Meat
     - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-slice-inhand-left
+        color: "#ff5b7a"
+      - state: alpha-slice-filling-inhand-left
+        color: "#ff5b7a"
+      right:
+      - state: alpha-slice-inhand-right
+        color: "#ff5b7a"
+      - state: alpha-slice-filling-inhand-right
+        color: "#ff5b7a"
 # Tastes like sweetness, cake, brains.
 
 - type: entity
@@ -226,10 +316,8 @@
   components:
   - type: Sprite
     state: cheese
-  - type: Sliceable
-    slices:
-    - id: FoodCakeCheeseSlice
-      amount: 6
+  - type: SliceableFood
+    slice: FoodCakeCheeseSlice
 
 - type: entity
   name: slice of cheese cake
@@ -239,6 +327,16 @@
   components:
   - type: Sprite
     state: cheese-slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-slice-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#ffffff"
+      right:
+      - state: plain-inhand-right
+      - state: alpha-slice-filling-inhand-right
+        color: "#ffffff"
 # Tastes like sweetness, cream cheese.
 
 - type: entity
@@ -249,14 +347,22 @@
   components:
   - type: Sprite
     state: orange
-  - type: Sliceable
-    slices:
-    - id: FoodCakeOrangeSlice
-      amount: 6
+  - type: SliceableFood
+    slice: FoodCakeOrangeSlice
   - type: Tag
     tags:
     - Cake
     - Fruit
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#ff9900"
+      right:
+      - state: plain-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#ff9900"
 
 - type: entity
   name: slice of orange cake
@@ -264,12 +370,25 @@
   id: FoodCakeOrangeSlice
   components:
   - type: Sprite
-    state: orange-slice
+    layers:
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: "#ff9900"
   - type: Tag
     tags:
     - Cake
     - Fruit
     - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-slice-inhand-left
+      - state: alpha-slice-filling-inhand-left
+        color: "#ff9900"
+      right:
+      - state: plain-slice-inhand-right
+      - state: alpha-slice-filling-inhand-right
+        color: "#ff9900"
 # Tastes like sweetness, cake, oranges.
 
 - type: entity
@@ -280,14 +399,22 @@
   components:
   - type: Sprite
     state: lime
-  - type: Sliceable
-    slices:
-    - id: FoodCakeLimeSlice
-      amount: 6
+  - type: SliceableFood
+    slice: FoodCakeLimeSlice
   - type: Tag
     tags:
     - Cake
     - Fruit
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#00ff00"
+      right:
+      - state: plain-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#00ff00"
 
 - type: entity
   name: slice of lime cake
@@ -295,12 +422,25 @@
   id: FoodCakeLimeSlice
   components:
   - type: Sprite
-    state: lime-slice
+    layers:
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: "#00ff00"
   - type: Tag
     tags:
     - Cake
     - Fruit
     - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-slice-inhand-left
+      - state: alpha-slice-filling-inhand-left
+        color: "#00ff00"
+      right:
+      - state: plain-slice-inhand-right
+      - state: alpha-slice-filling-inhand-right
+        color: "#00ff00"
 # Tastes like sweetness, cake, limes.
 
 - type: entity
@@ -311,14 +451,22 @@
   components:
   - type: Sprite
     state: lemon
-  - type: Sliceable
-    slices:
-    - id: FoodCakeLemonSlice
-      amount: 6
+  - type: SliceableFood
+    slice: FoodCakeLemonSlice
   - type: Tag
     tags:
     - Cake
     - Fruit
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#ffff00"
+      right:
+      - state: plain-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#ffff00"
 
 - type: entity
   name: slice of lemon cake
@@ -326,12 +474,25 @@
   id: FoodCakeLemonSlice
   components:
   - type: Sprite
-    state: lemon-slice
+    layers:
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: "#ffff00"
   - type: Tag
     tags:
     - Cake
     - Fruit
     - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-slice-inhand-left
+      - state: alpha-slice-filling-inhand-left
+        color: "#ffff00"
+      right:
+      - state: plain-slice-inhand-right
+      - state: alpha-slice-filling-inhand-right
+        color: "#ffff00"
 # Tastes like sweetness, cake, lemons.
 
 - type: entity
@@ -353,18 +514,20 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 70
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 40
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 20
         - ReagentId: Milk
-          Quantity: 5
+          Quantity: 10
   - type: Tag
     tags:
     - Cake
     - Fruit
+  - type: Item
+    heldPrefix: lemoon
 
 - type: entity
   name: shard of lemoon cake
@@ -384,16 +547,28 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 8
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 4
         - ReagentId: Milk
-          Quantity: 1
+          Quantity: 2
   - type: Tag
     tags:
     - Cake
     - Fruit
     - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-slice-inhand-left
+        color: "#fffead"
+      - state: alpha-slice-filling-inhand-left
+        color: "#fffead"
+      right:
+      - state: alpha-slice-inhand-right
+        color: "#fffead"
+      - state: alpha-slice-filling-inhand-right
+        color: "#fffead"
 
 - type: entity
   name: chocolate cake
@@ -403,21 +578,27 @@
   components:
   - type: Sprite
     state: chocolate
-  - type: Sliceable
-    slices:
-    - id: FoodCakeChocolateSlice
-      amount: 6
+  - type: SliceableFood
+    slice: FoodCakeChocolateSlice
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 40
         - ReagentId: Theobromine
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 5
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-inhand-left
+        color: "#ba672e"
+      right:
+      - state: alpha-inhand-right
+        color: "#ba672e"
 
 - type: entity
   name: slice of chocolate cake
@@ -425,18 +606,28 @@
   id: FoodCakeChocolateSlice
   components:
   - type: Sprite
-    state: chocolate-slice
+    layers:
+    - state: alpha-slice
+      color: "#ba672e"
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 8
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 8
         - ReagentId: Theobromine
           Quantity: 1
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 2
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-slice-inhand-left
+        color: "#ba672e"
+      right:
+      - state: alpha-slice-inhand-right
+        color: "#ba672e"
 # Tastes like sweetness, cake, chocolate.
 
 - type: entity
@@ -447,14 +638,22 @@
   components:
   - type: Sprite
     state: apple
-  - type: Sliceable
-    slices:
-    - id: FoodCakeAppleSlice
-      amount: 6
+  - type: SliceableFood
+    slice: FoodCakeAppleSlice
   - type: Tag
     tags:
     - Cake
     - Fruit
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#ff4300"
+      right:
+      - state: plain-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#ff4300"
 
 - type: entity
   name: slice of apple cake
@@ -463,12 +662,26 @@
   description: A slice of heavenly cake.
   components:
   - type: Sprite
-    state: apple-slice
+    layers:
+    - state: plain-slice
+    - state: alpha-slice-filling
+      color: "#ff4300"
   - type: Tag
     tags:
     - Cake
     - Fruit
     - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-slice-inhand-left
+      - state: alpha-slice-filling-inhand-left
+        color: "#ff4300"
+      right:
+      - state: plain-slice-inhand-right
+      - state: alpha-slice-filling-inhand-right
+        color: "#ff4300"
+
 # Tastes like sweetness, cake, slime.
 
 - type: entity
@@ -487,6 +700,18 @@
     tags:
     - Cake
     - Meat
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-inhand-left
+        color: "#00ffff"
+      - state: alpha-filling-inhand-left
+        color: "#00ffff"
+      right:
+      - state: alpha-inhand-right
+        color: "#00ffff"
+      - state: alpha-filling-inhand-right
+        color: "#00ffff"
 
 - type: entity
   name: slice of slime cake
@@ -501,6 +726,18 @@
     - Cake
     - Meat
     - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-slice-inhand-left
+        color: "#00ffff"
+      - state: alpha-slice-filling-inhand-left
+        color: "#00ffff"
+      right:
+      - state: alpha-slice-inhand-right
+        color: "#00ffff"
+      - state: alpha-slice-filling-inhand-right
+        color: "#00ffff"
 # Tastes like sweetness, cake, slime.
 
 - type: entity
@@ -518,16 +755,26 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 60
         reagents:
         - ReagentId: Nutriment
-          Quantity: 32
+          Quantity: 35
         - ReagentId: Vitamin
-          Quantity: 11
+          Quantity: 15
   - type: Tag
     tags:
     - Cake
     - Fruit
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-inhand-left
+      - state: alpha-filling-inhand-left
+        color: "#ffffff"
+      right:
+      - state: plain-inhand-right
+      - state: alpha-filling-inhand-right
+        color: "#ffffff"
 
 - type: entity
   name: slice of pumpkin-spice cake
@@ -543,14 +790,24 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6.4
+          Quantity: 7
         - ReagentId: Vitamin
-          Quantity: 2.2
+          Quantity: 3
   - type: Tag
     tags:
     - Cake
     - Fruit
     - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-slice-inhand-left
+      - state: alpha-slice-filling-inhand-left
+        color: "#ffffff"
+      right:
+      - state: plain-slice-inhand-right
+      - state: alpha-slice-filling-inhand-right
+        color: "#ffffff"
 # Tastes like sweetness, cake, pumpkin.
 
 - type: entity
@@ -569,6 +826,14 @@
     tags:
     - Cake
     - Fruit
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-inhand-left
+        color: "#ab5012"
+      right:
+      - state: alpha-inhand-right
+        color: "#ab5012"
 
 - type: entity
   name: slice of christmas cake
@@ -582,6 +847,14 @@
     - Cake
     - Fruit
     - Slice
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: alpha-slice-inhand-left
+        color: "#ab5012"
+      right:
+      - state: alpha-slice-inhand-right
+        color: "#ab5012"
 # Tastes like sweetness, cake, christmas.
 
 - type: entity
@@ -592,10 +865,8 @@
   components:
   - type: Sprite
     state: birthday
-  - type: Sliceable
-    slices:
-    - id: FoodCakeBirthdaySlice
-      amount: 6
+  - type: SliceableFood
+    slice: FoodCakeBirthdaySlice
 
 - type: entity
   name: slice of birthday cake
@@ -605,6 +876,8 @@
   components:
   - type: Sprite
     state: birthday-slice
+  - type: Item
+    heldPrefix: birthday-slice
 # Tastes like sweetness, cake, christmas.
 
 - type: entity
@@ -622,14 +895,16 @@
   - type: SolutionContainerManager #TODO Sprinkles
     solutions:
       food:
-        maxVol: 45
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 25
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Sugar
           Quantity: 15
+  - type: Item
+    heldPrefix: vanilla
 
 - type: entity
   name: slice of vanilla cake
@@ -642,14 +917,22 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 6
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 2
         - ReagentId: Sugar
-          Quantity: 3
+          Quantity: 5
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: plain-slice-inhand-left
+      - state: alpha-slice-filling-inhand-left
+      right:
+      - state: plain-slice-inhand-right
+      - state: alpha-slice-filling-inhand-right
 # Tastes like sweetness, cake, vanilla.
 
 - type: entity
@@ -667,14 +950,16 @@
   - type: SolutionContainerManager #TODO Sprinkles
     solutions:
       food:
-        maxVol: 45
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Sugar
           Quantity: 15
+  - type: Item
+    heldPrefix: clown
 
 - type: entity
   name: slice of clown cake
@@ -687,14 +972,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 8
         - ReagentId: Vitamin
           Quantity: 1
         - ReagentId: Sugar
-          Quantity: 3
+          Quantity: 5
+  - type: Item
+    heldPrefix: clown-slice
 # Tastes like sweetness, cake, clown.
 
 - type: entity
@@ -712,14 +999,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 55
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: PolypyryliumOligomers
           Quantity: 15
+  - type: Item
+    heldPrefix: trumpet
 
 - type: entity
   name: slice of spaceman's cake
@@ -732,14 +1021,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 8
         - ReagentId: Vitamin
           Quantity: 1
         - ReagentId: PolypyryliumOligomers
           Quantity: 3
+  - type: Item
+    heldPrefix: trumpet-slice
 # Tastes like sweetness, cake, jam.
 
 - type: entity
@@ -848,14 +1139,17 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 48
+        maxVol: 125 # SUPER dense cake
         reagents:
         - ReagentId: Nutriment
-          Quantity: 48
+          Quantity: 80
+        - ReagentId: Sugar
+          Quantity: 30
   - type: Food
     transferAmount: 12
   - type: Item
     size: Normal
+    heldPrefix: suppermatter
   - type: PointLight
     color: "#FFFF00"
     radius: 2
@@ -872,10 +1166,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 12
+          Quantity: 10
+        - ReagentId: Sugar
+          Quantity: 5
   - type: Food
     transferAmount: 3
   - type: PointLight
@@ -889,3 +1185,5 @@
     entries:
       Taco: Suppermatter
       Burger: SuppermatterBurger
+  - type: Item
+    heldPrefix: suppermatter-shard
