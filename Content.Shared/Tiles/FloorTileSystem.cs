@@ -37,6 +37,7 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     private static readonly Vector2 CheckRange = new(1f, 1f);
 
@@ -104,14 +105,17 @@ public sealed class FloorTileSystem : EntitySystem
 
         // if user can access tile center then they can place floor
         // otherwise check it isn't blocked by a wall
-        if (!canAccessCenter)
+        if (!canAccessCenter && _turf.TryGetTileRef(location, out var tileRef))
         {
-            foreach (var ent in location.GetEntitiesInTile(lookupSystem: _lookup))
+            var bounds = _lookup.GetWorldBounds(tileRef.Value);
+            bounds.Box.Scale(0.9f);
+
+            foreach (var ent in _lookup.GetEntitiesIntersecting(tileRef.Value.GridUid, bounds, LookupFlags.Static))
             {
                 if (physicQuery.TryGetComponent(ent, out var phys) &&
                     phys.BodyType == BodyType.Static &&
                     phys.Hard &&
-                    (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                    (phys.CollisionLayer & (int)CollisionGroup.Impassable) != 0)
                 {
                     return;
                 }
