@@ -157,3 +157,21 @@
   - type: Sprite
     sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
     state: bibble
+
+- type: entityTable 
+  id: HolyTextEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: Beeble
+    - id: HolyTextQuran
+    - id: HolyTextTanakh
+    - id: HolyTextHolyScroll
+    - id: HolyTextHolyTablet
+    - id: HolyTextGreybible
+    - id: HolyTextKojiki
+    - id: HolyTextTaoTeachings
+    - id: HolyTextPrincipiaDiscordia
+    - id: HolyTextChaplainsGrimoire
+    - id: HolyTextUnitologyTome
+    - id: HolyTextExtremeTeenBible
+    - id: HolyTextBibble

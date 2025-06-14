@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: "Guns are just really big metal things to hit people with if you think\
-      \ about it. They don't hurt much\u2014nothing more than a punch\u2014but you\
-      \ can just hit people for fun and for free!"
-    type: Add
-  - message: Tweaked Mosin things.
-    type: Tweak
-  id: 1324
-  time: '2025-03-16T01:05:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1956
 - author: crocodilecarousel, hivehum
   changes:
   - message: The Hospitality Director has adopted a pet penguin. Say hello to Oswald
@@ -4197,3 +4186,11 @@
   id: 1823
   time: '2025-06-14T00:46:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2699
+- author: yesteryuri
+  changes:
+  - message: Budget cuts at the Mail Inspection Division have led to many more interesting
+      items appearing in letters and packages again.
+    type: Tweak
+  id: 1824
+  time: '2025-06-14T03:54:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2744

@@ -1,0 +1,86 @@
+- type: entityTable #table of this spawner for use in mail
+  id: BakedSingleFoodTable
+  table: !type:GroupSelector
+    children:
+      - !type:GroupSelector
+        weight: 0.8
+        children:
+        - id: FoodBreadPlainSlice
+        - id: FoodBreadMeatSlice
+        - id: FoodBreadBananaSlice
+        - id: FoodBreadCreamcheeseSlice
+        - id: FoodBreadMoldySlice
+        - id: FoodBreadGarlicSlice
+        - id: FoodBreadCornSlice
+        - id: FoodBreadSausageSlice
+        - id: FoodBreadButteredToast
+        - id: FoodBreadJellySlice
+        - id: FoodBreadFrenchToast
+        - id: FoodBreadTwoSlice
+        - id: FoodBreadVolcanicSlice
+        - id: FoodBreadTofuSlice
+        - id: FoodBreadBaguetteSlice
+        - id: FoodCakeBlueberrySlice
+        - id: FoodCakePlainSlice
+        - id: FoodCakeCarrotSlice
+        - id: FoodCakeCheeseSlice
+        - id: FoodCakeOrangeSlice
+        - id: FoodCakeLimeSlice
+        - id: FoodCakeLemonSlice
+        - id: FoodCakeChocolateSlice
+        - id: FoodCakeAppleSlice
+        - id: FoodCakeSlimeSlice
+        - id: FoodCakePumpkinSlice
+        - id: FoodCakeChristmasSlice
+        - id: FoodCakeVanillaSlice
+        - id: FoodCakeBirthdaySlice
+        - id: FoodBakedMuffin
+        - id: FoodBakedMuffinBerry
+        - id: FoodBakedMuffinCherry
+        - id: FoodBakedMuffinBluecherry
+        - id: FoodBakedMuffinChocolate
+        - id: FoodBakedMuffinBanana
+        - id: FoodBakedMuffinLemo
+        - id: FoodBakedBunHoney
+        - id: FoodBakedBunHotX
+        - id: FoodBakedBunMeat
+        - id: FoodBakedCookie
+        - id: FoodBakedCookieOatmeal
+        - id: FoodBakedCookieRaisin
+        - id: FoodBakedCookieSugar
+        - id: FoodBakedGrilledCheeseSandwich
+        - id: FoodBakedGrilledCheeseSandwichCotton
+        - id: FoodBakedNugget
+        - id: FoodBakedPancake
+        - id: FoodBakedPancakeBb
+        - id: FoodBakedPancakeCc
+        - id: FoodBakedWaffle
+        - id: FoodBakedWaffleSoy
+        - id: FoodBakedWaffleSoylent
+        - id: FoodBakedWaffleRoffle
+        - id: FoodBakedPretzel
+        - id: FoodBakedCannoli
+        - id: FoodPieAppleSlice
+        - id: FoodPieLemoSlice
+        - id: FoodPieBaklavaSlice
+        - id: FoodPieClafoutisSlice
+        - id: FoodPieMeatSlice
+        - id: FoodPieCherrySlice
+        - id: FoodPieFrostySlice
+        - id: FoodTartGrape
+        - id: FoodTartCoco
+        - id: FoodBakedBrownie
+        - id: FoodPieBananaCreamSlice
+        - id: FoodTartMimeSlice
+      - !type:GroupSelector
+        weight: 0.2
+        children:
+        - id: FoodBreadMeatSpiderSlice
+        - id: FoodBreadMimanaSlice
+        - id: FoodCakeBrainSlice
+        - id: FoodCakeClownSlice
+        - id: FoodCakeSpacemanSlice
+        - id: FoodTartGapple
+        - id: FoodBreadMeatXenoSlice
+        - id: FoodPieXenoSlice
+        - id: FoodBakedCannabisBrownie
