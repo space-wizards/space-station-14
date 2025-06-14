@@ -37,6 +37,8 @@
     sprite: Clothing/Head/Helmets/eva_syndicate.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/eva_syndicate.rsi
+  - type: StaticPrice
+    price: 500 # Suit is 1000
 
 #Cosmonaut Helmet
 - type: entity
@@ -74,7 +76,7 @@
     sprite: Clothing/Head/Hardsuits/paramedhelm.rsi
   - type: HandheldLight
     addPrefix: false
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: light
     clothingVisuals:
       head:
