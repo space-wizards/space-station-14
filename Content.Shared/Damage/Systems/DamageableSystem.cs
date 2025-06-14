@@ -362,6 +362,40 @@ namespace Content.Shared.Damage
                 DamageChanged(uid, component, delta);
             }
         }
+
+        /// <summary>
+        /// Returns a string list containing the type/s of the highest damage value
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        public List<string> GetHighestDamageTypes(DamageableComponent component)
+        {
+            var highestType = new List<string>();
+            var highestValue = FixedPoint2.Zero;
+
+            foreach (var (damageGroupId, damageAmount) in component.DamagePerGroup)  //go trough each group
+            {
+                var group = _prototypeManager.Index<DamageGroupPrototype>(damageGroupId);  //get group
+                foreach (var type in group.DamageTypes) //go trough each type inside that group
+                {
+                    if (component.Damage.DamageDict.TryGetValue(type, out var damageValue) && damageValue > 0)  //get value and make sure it isnt 0
+                    {
+                        if (damageValue > highestValue)  //if its higher, clear the list and add the value
+                        {
+                            highestType.Clear();
+                            highestType.Add(type);
+
+                            highestValue = damageValue;
+                        }
+                        else if (damageValue == highestValue)  //if its the same, add it to the list
+                        {
+                            highestType.Add(type);
+                        }
+                    }
+                }
+            }
+            return highestType;
+        }
     }
 
     /// <summary>
