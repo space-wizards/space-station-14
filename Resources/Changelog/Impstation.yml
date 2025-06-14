@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Revamped Xeno Chapel, and revamped Box's shuttle bay.
-    type: Tweak
-  - message: Xeno atmos -> engi disposal chute should no longer receive trash.
-    type: Fix
-  - message: Xeno Hospitality Director room no longer spaces round start.
-    type: Fix
-  id: 1322
-  time: '2025-03-16T00:54:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1952
 - author: hivehum
   changes:
   - message: Pride flag cloaks are back in the uniform printer! As are the Hospitality
@@ -4202,3 +4191,12 @@
   id: 1821
   time: '2025-06-14T00:22:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2746
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: New in-hand sprites for our Impstation magazines!
+    type: Add
+  - message: New sprites for several guns and updated colours for ammo boxes.
+    type: Tweak
+  id: 1822
+  time: '2025-06-14T00:42:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2737
