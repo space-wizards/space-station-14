@@ -1027,8 +1027,8 @@
 - type: entity
   parent: BasePlushie
   id: PlushieXeno
-  name: xeno plushie
-  description: An adorable stuffed toy that resembles a scary xenomorf. You're lucky it's just a toy.
+  name: exo plushie
+  description: An adorable stuffed toy that resembles a scary exomorph. You're lucky it's just a toy.
   components:
   - type: Sprite
     sprite: Objects/Fun/Plushies/xeno.rsi
