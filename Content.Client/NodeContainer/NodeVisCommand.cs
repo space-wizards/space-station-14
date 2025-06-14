@@ -1,48 +1,36 @@
 ﻿using Content.Client.Administration.Managers;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.NodeContainer
 {
-    public sealed class NodeVisCommand : IConsoleCommand
+    public sealed class NodeVisCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private readonly IClientAdminManager _admin = default!;
+        [Dependency] private readonly NodeGroupSystem _nodes = default!;
 
-        public string Command => "nodevis";
-        public string Description => "Toggles node group visualization";
-        public string Help => "";
+        public override string Command => "nodevis";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var adminMan = IoCManager.Resolve<IClientAdminManager>();
-            if (!adminMan.HasFlag(AdminFlags.Debug))
-            {
-                shell.WriteError("You need +DEBUG for this command");
-                return;
-            }
-
-            var sys = _e.System<NodeGroupSystem>();
-            sys.SetVisEnabled(!sys.VisEnabled);
+            if (!_admin.HasFlag(AdminFlags.Debug))
+                shell.WriteError(Loc.GetString($"cmd-nodevis-error"));
+            else
+                _nodes.SetVisEnabled(!_nodes.VisEnabled);
         }
     }
 
-    public sealed class NodeVisFilterCommand : IConsoleCommand
+    public sealed class NodeVisFilterCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private readonly NodeGroupSystem _nodes = default!;
 
-        public string Command => "nodevisfilter";
-        public string Description => "Toggles showing a specific group on nodevis";
-        public string Help => "Usage: nodevis [filter]\nOmit filter to list currently masked-off";
+        public override string Command => "nodevisfilter";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var sys = _e.System<NodeGroupSystem>();
-
             if (args.Length == 0)
             {
-                foreach (var filtered in sys.Filtered)
+                foreach (var filtered in _nodes.Filtered)
                 {
                     shell.WriteLine(filtered);
                 }
@@ -50,9 +38,9 @@ namespace Content.Client.NodeContainer
             else
             {
                 var filter = args[0];
-                if (!sys.Filtered.Add(filter))
+                if (!_nodes.Filtered.Add(filter))
                 {
-                    sys.Filtered.Remove(filter);
+                    _nodes.Filtered.Remove(filter);
                 }
             }
         }
