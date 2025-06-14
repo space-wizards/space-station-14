@@ -1,0 +1,62 @@
+- type: dataset
+  id: names_shadekin
+  values:
+
+  # Sad
+  - Fragile
+  - Heartbreak
+  - Inferior
+  - Lone
+  - Lonesome
+  - Loss
+  - Solitary
+  - Solitude
+  - Sorrow
+  - Shade
+
+  # Angry
+  - Fear
+  - Fearful
+  - Fury
+  - Pain
+  - Rage
+  - Rush
+  - Wrath
+
+  # Happy
+  - Calm
+  - Content
+  - Contented
+  - Happy
+  - Hope
+  - Joyous
+  - Lovely
+  - Peace
+  - Peaceful
+  - Quiet
+  - Serene
+  - Serenity
+  - Tranquil
+  - Tranquility
+
+  # Memory
+  - Dillusioned
+  - Forgotten
+  - Focusless
+  - Lost
+  - Memory
+  - Recollection
+  - Remembrance
+  - Reminisce
+  - Reminiscence
+
+  # Other
+  - Apathy
+  - Collected
+  - Curiosity
+  - Free
+  - Interest
+  - Jax
+  - Still
+  - Unbound
+  - Shadows

@@ -1,0 +1,5 @@
+- type: entity
+  save: false
+  name: Urist McShadow
+  parent: [BaseMobShadekin, BaseMob]
+  id: MobShadekin
