@@ -6,7 +6,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Actions.Commands;
 
-[AdminCommand(AdminFlags.Fun)]
+[AdminCommand(AdminFlags.Debug)]
 public sealed class RmActionCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
