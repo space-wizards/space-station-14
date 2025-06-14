@@ -17,6 +17,7 @@
     slots:
     - Back
     - suitStorage
+  - type: GunRequiresWield
   - type: MagazineVisuals
     magState: mag
     steps: 4
