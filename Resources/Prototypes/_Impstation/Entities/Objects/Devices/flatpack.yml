@@ -21,3 +21,12 @@
   components:
   - type: Flatpack
     entity: ChemMaster
+
+- type: entity
+  parent: BaseFlatpack
+  id: JukeboxFlatpack
+  name: Jukebox Flatpack
+  description: A flatpack used for constructing a Jukebox.
+  components:
+  - type: Flatpack
+    entity: Jukebox

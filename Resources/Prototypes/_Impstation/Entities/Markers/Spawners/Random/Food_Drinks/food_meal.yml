@@ -1,0 +1,98 @@
+- type: entityTable #table of this spawner for use in mail
+  id: MealFoodTable
+  table: !type:GroupSelector
+    children:
+      - !type:GroupSelector
+        weight: 0.8
+        children:
+        - id: FoodMealPotatoLoaded
+        - id: FoodMealFries
+        - id: FoodMealFriesCheesy
+        - id: FoodMealFriesCarrot
+        - id: FoodMealNachos
+        - id: FoodMealNachosCheesy
+        - id: FoodMealNachosCuban
+        - id: FoodMealEggplantParm
+        - id: FoodMealPotatoYaki
+        - id: FoodMealCubancarp
+        - id: FoodMealCornedbeef
+        - id: FoodMealPigblanket
+        - id: FoodMealRibs
+        - id: FoodMealEggsbenedict
+        - id: FoodMealOmelette
+        - id: FoodMealFriedegg
+        - id: FoodMealQueso
+        - id: FoodMealSashimi
+        - id: FoodMealEnchiladas
+        - id: FoodNoodlesChowmein
+        - id: FoodNoodlesSpesslaw
+        - id: FoodNoodlesMeatball
+        - id: FoodNoodlesBoiled
+        - id: FoodNoodles
+        - id: FoodNoodlesButter
+        - id: FoodMealHappyHonkClown
+        - id: FoodSoupPea
+        - id: FoodSaladHerb
+        - id: FoodSaladValid
+        - id: FoodSaladFruit
+        - id: FoodSaladJungle
+        - id: FoodSaladCitrus
+        - id: FoodSaladCaesar
+        - id: FoodSaladColeslaw
+        - id: FoodSaladKimchi
+        - id: FoodSaladWatermelonFruitBowl
+        - id: FoodRiceBoiled
+        - id: FoodRiceEgg
+        - id: FoodRicePork
+        - id: FoodRicePudding
+        - id: FoodRiceGumbo
+        - id: FoodOatmeal
+        - id: FoodSoupMeatball
+        - id: FoodSoupVegetable
+        - id: FoodSoupNettle
+        - id: FoodSoupChiliHot
+        - id: FoodSoupChiliCold
+        - id: FoodSoupTomato
+        - id: FoodSoupMiso
+        - id: FoodSoupMushroom
+        - id: FoodSoupBeet
+        - id: FoodSoupBeetRed
+        - id: FoodSoupPotato
+        - id: FoodSoupOnion
+        - id: FoodSoupBisque
+        - id: FoodSoupBungo
+        - id: FoodMealCornInButter
+        - id: FoodSoupStew
+        - id: FoodMealBigLollipop
+        - id: FoodMealBigLollipop
+        - id: FoodMealFruitLollipop
+        - id: FoodMealClothLollipop
+        - id: FoodMealMeatLollipop
+        - id: FoodToddlerRingsStew
+        - id: BoxConversationHeart
+        - id: BoxChocolateHearts
+        - id: BoxMacarons
+      - !type:GroupSelector
+        weight: 0.2
+        children:
+        - id: FoodMealMint
+        - id: FoodMealBearsteak
+        - id: FoodMealMilkape
+        - id: DisgustingSweptSoup
+        - id: FoodMealMemoryleek
+        - id: FoodSaladAesir
+        - id: FoodSaladEden
+        - id: FoodJellyDuff
+        - id: FoodJellyAmanita
+        - id: FoodSoupSlime
+        - id: FoodSoupTomatoBlood
+        - id: FoodSoupWingFangChu
+        - id: FoodSoupClown
+        - id: FoodSoupMystery
+        - id: FoodSoupChiliClown
+        - id: FoodSoupMonkey
+        - id: FoodSoupEyeball
+        - id: FoodSoupElectron
+        - id: FoodNoodlesCopy
+        - id: FoodCamelSoup
+        - id: FoodGummyWorm

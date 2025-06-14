@@ -1,0 +1,15 @@
+- type: entityTable #table of this spawner for use in mail
+  id: DonkpocketSingleTable
+  table: !type:GroupSelector
+    children:
+    - id: FoodDonkpocket
+    - id: FoodDonkpocketDank
+    - id: FoodDonkpocketSpicy
+    - id: FoodDonkpocketTeriyaki
+    - id: FoodDonkpocketPizza
+    - id: FoodDonkpocketHonk
+    - id: FoodDonkpocketBerry
+    - id: FoodDonkpocketStonk
+    - id: FoodDonkpocketCarp
+    - id: FoodDonkpocketDink
+    - id: FoodDonkpocketMoth

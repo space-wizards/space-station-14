@@ -1,0 +1,46 @@
+- type: entity
+  name: backpack
+  parent: ClothingBackpack
+  id: MailImpContractKillerKit
+  description: An unremarkable bag filled with the uniform and tools of a cold-hearted killer.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformHitmanSuit
+        amount: 1
+      - id: RevolverCapGun
+        amount: 1
+      - id: SyringeIpecac
+        amount: 1
+      - id: ClothingShoesBootsLaceup
+        amount: 1
+
+- type: entity
+  suffix: testosterone
+  parent: PrefilledSyringe
+  id: SyringeTestosterone
+  components:
+  - type: Label
+    currentLabel: reagent-name-testosterone
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Testosterone
+          Quantity: 15
+
+- type: entity
+  suffix: estradiol
+  parent: PrefilledSyringe
+  id: SyringeEstradiol
+  components:
+  - type: Label
+    currentLabel: reagent-name-estradiol
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Estradiol
+          Quantity: 15
