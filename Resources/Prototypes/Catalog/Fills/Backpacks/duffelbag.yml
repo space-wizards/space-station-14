@@ -344,3 +344,22 @@
       - id: EmpImplanter
       - id: ClothingShoesBootsMagSyndie
       - id: AgentIDCard
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledStarterKitDiona
+  name: basic operootive bundle
+  description: "Contains a weapon, medical supplies, breaching tools, spare ammo, and some simple utilities."
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponSubMachineGunC20r
+    - id: MagazinePistolSubMachineGun
+      amount: 4
+    - id: MagazinePistol
+    - id: SyndicateJawsOfLife
+    - id: C4
+      amount: 3
+    - id: MedkitCombatFilled
+    - id: EmpImplanter
+    - id: AgentIDCard
