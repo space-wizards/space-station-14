@@ -8,16 +8,16 @@ using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Stacks;
 
+/// <summary>
+/// System for handling entites which represent a stack of identical items, usually materials.
+/// </summary>
 [UsedImplicitly]
 public abstract class SharedStackSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IViewVariablesManager _vvm = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -50,7 +50,8 @@ public abstract class SharedStackSystem : EntitySystem
             .RemovePath(nameof(StackComponent.Count));
     }
 
-    #region Public API
+    #region Public
+    #region Merge Stacks
 
     /// <summary>
     /// Moves as many stacks as we can from the donor to the recipient.
@@ -129,80 +130,8 @@ public abstract class SharedStackSystem : EntitySystem
     {
         TryMergeToHands((item, itemStack), (user, hands));
     }
-
     /// <summary>
-    ///     Sets a stack to an amount. Server will delete ent if stack count is 0.
-    /// </summary>
-    /// <remarks>
-    ///     Will not set the amount higher than the stack's max size.
-    /// </remarks>
-    public virtual void SetCount(Entity<StackComponent?> ent, int amount)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp))
-            return;
-
-        var (stackEnt, stackComp) = (ent.Owner, ent.Comp);
-
-        // Do nothing if amount is already the same.
-        if (amount == stackComp.Count)
-            return;
-
-        // Store old value for event-raising purposes...
-        var old = stackComp.Count;
-
-        // Clamp the value.
-        amount = Math.Min(amount, GetMaxCount(stackComp));
-        amount = Math.Max(amount, 0);
-
-        // Server-side override deletes the entity if count == 0
-        stackComp.Count = amount;
-        Dirty(ent);
-
-        Appearance.SetData(stackEnt, StackVisuals.Actual, stackComp.Count);
-        RaiseLocalEvent(stackEnt, new StackCountChangedEvent(old, stackComp.Count));
-    }
-
-    // TODO
-    [Obsolete("Obsolete, Use Entity<T>")]
-    public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
-    {
-        SetCount((uid, component), amount);
-    }
-
-    /// <summary>
-    ///     Try to use an amount of items on this stack.
-    /// </summary>
-    /// <returns>True if the stacks were used.</returns>
-    [PublicAPI]
-    public bool Use(Entity<StackComponent?> ent, int amount)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp))
-            return false;
-
-        // Check if we have enough things in the stack for this...
-        if (ent.Comp.Count < amount)
-        {
-            // Not enough things in the stack, return false.
-            return false;
-        }
-
-        // We do have enough things in the stack, so remove them and change.
-        if (!ent.Comp.Unlimited)
-        {
-            SetCount(ent, ent.Comp.Count - amount);
-        }
-
-        return true;
-    }
-
-    [Obsolete("Obsolete, Use Entity<T>")]
-    public bool Use(EntityUid uid, int amount, StackComponent? stack = null)
-    {
-        return Use((uid, stack), amount);
-    }
-
-    /// <summary>
-    /// Donor entity merges stacks with contacting entities.
+    /// Donor entity merges stacks into contacting entities.
     /// Deletes donor if all stacks are used.
     /// </summary>
     /// <returns>True if donor moved stacks to contacts.</returns>
@@ -226,7 +155,7 @@ public abstract class SharedStackSystem : EntitySystem
             if (TerminatingOrDeleted(otherEnt) || EntityManager.IsQueuedForDeletion(otherEnt))
                 continue;
 
-            if (!TryMergeStacks((uid, stack), (otherEnt, recipientStack), out _))
+            if (!TryMergeStacks((uid, stack), recipientStack.AsNullable(), out _))
                 continue;
             merged = true;
 
@@ -242,9 +171,109 @@ public abstract class SharedStackSystem : EntitySystem
         return TryMergeToContacts((uid, stack, xform));
     }
 
+    #endregion
+    #region Setters
+
+    // TODO remove nullable and make private
+    /// <summary>
+    ///     Sets a stack to an amount. Server will delete ent if stack count is 0.
+    ///     Clamps between zero and the stack's max size.
+    /// </summary>
+    public virtual void SetCount(Entity<StackComponent?> ent, int amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
+
+        var (stackEnt, stackComp) = (ent.Owner, ent.Comp);
+
+        // Do nothing if amount is already the same.
+        if (amount == stackComp.Count)
+            return;
+
+        // Store old value for event-raising purposes...
+        var old = stackComp.Count;
+
+        // Clamp the value.
+        amount = Math.Min(amount, GetMaxCount(stackComp));
+        amount = Math.Max(amount, 0);
+
+        stackComp.Count = amount;
+        Dirty(ent);
+
+        Appearance.SetData(stackEnt, StackVisuals.Actual, stackComp.Count);
+        RaiseLocalEvent(stackEnt, new StackCountChangedEvent(old, stackComp.Count));
+
+        // Server-side override deletes the entity if count == 0
+    }
+
+    // TODO
+    [Obsolete("Obsolete, Use Entity<T>")]
+    public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
+    {
+        SetCount((uid, component), amount);
+    }
+
+    /// <summary>
+    ///     Reduce a stack by an amount, deleting it if stack count is 0.
+    /// </summary>
+    /// <seealso cref="Use"/>
+    [PublicAPI]
+    public void LowerCount(Entity<StackComponent?> ent, int amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
+
+        SetCount(ent, ent.Comp.Count - amount);
+    }
+
+    // TODO
+    /// <summary>
+    ///     Increase a stack by an amount, and spawn new stacks if above the max.
+    /// </summary>
+    // public List<EntityUid> AddCountAndSpawn(Entity<StackComponent?> ent, int amount);
+
+    /// <summary>
+    ///     Try to use up an amount of this stack.
+    /// </summary>
+    /// <returns>True if the stacks were used.</returns>
+    [PublicAPI]
+    public bool Use(Entity<StackComponent?> ent, int amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        // We're unlimited and always greater than amount
+        if (ent.Comp.Unlimited)
+            return true;
+
+        // Check if we have enough things in the stack for this...
+        if (ent.Comp.Count < amount)
+        {
+            // Not enough things in the stack, return false.
+            return false;
+        }
+
+        // We do have enough things in the stack, so remove them and change.
+        SetCount(ent, ent.Comp.Count - amount);
+        return true;
+    }
+
+    [Obsolete("Obsolete, Use Entity<T>")]
+    public bool Use(EntityUid uid, int amount, StackComponent? stack = null)
+    {
+        return Use((uid, stack), amount);
+    }
+
+    #endregion
+
+    #region Getters
+
     /// <summary>
     /// Gets the amount of items in a stack. If it cannot be stacked, returns 1.
     /// </summary>
+    /// <remarks>
+    /// Use when you don't know if the entity is a stack. Otherwise use Comp.Count
+    /// </remarks>
     [PublicAPI]
     public int GetCount(Entity<StackComponent?> ent)
     {
@@ -312,6 +341,8 @@ public abstract class SharedStackSystem : EntitySystem
         return GetMaxCount(component) - component.Count;
     }
 
+    #endregion
+
     /// <summary>
     /// Tries to add one stack to another. May have some leftover count in the inserted entity.
     /// </summary>
@@ -335,9 +366,7 @@ public abstract class SharedStackSystem : EntitySystem
 
     private void OnStackStarted(Entity<StackComponent> ent, ref ComponentStartup args)
     {
-        // on client, lingering stacks that start at 0 need to be darkened
-        // on server this does nothing
-        SetCount(ent.AsNullable(), ent.Comp.Count);
+        UpdateLingering(ent);
 
         if (!TryComp(ent.Owner, out AppearanceComponent? appearance))
             return;
@@ -345,6 +374,13 @@ public abstract class SharedStackSystem : EntitySystem
         Appearance.SetData(ent.Owner, StackVisuals.Actual, ent.Comp.Count, appearance);
         Appearance.SetData(ent.Owner, StackVisuals.MaxCount, GetMaxCount(ent.Comp), appearance);
         Appearance.SetData(ent.Owner, StackVisuals.Hide, false, appearance);
+    }
+
+    /// <summary>
+    ///     Used on client to set transparency for a lingering stack.
+    /// </summary>
+    protected virtual void UpdateLingering(Entity<StackComponent> ent)
+    {
     }
 
     private void OnStackGetState(Entity<StackComponent> ent, ref ComponentGetState args)
@@ -391,8 +427,6 @@ public abstract class SharedStackSystem : EntitySystem
         args.Handled = true;
 
         // interaction is done, the rest is just generating a pop-up
-        if (!_gameTiming.IsFirstTimePredicted)
-            return;
 
         var popupPos = args.ClickLocation;
         var userCoords = Transform(args.User).Coordinates;
@@ -405,18 +439,18 @@ public abstract class SharedStackSystem : EntitySystem
         switch (transferred)
         {
             case > 0:
-                Popup.PopupCoordinates($"+{transferred}", popupPos, Filter.Local(), false);
+                Popup.PopupClient($"+{transferred}", popupPos, args.User);
 
                 if (GetAvailableSpace(recipientStack) == 0)
                 {
-                    Popup.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
-                        popupPos.Offset(new Vector2(0, -0.5f)), Filter.Local(), false);
+                    Popup.PopupClient(Loc.GetString("comp-stack-becomes-full"),
+                        popupPos.Offset(new Vector2(0, -0.5f)), args.User);
                 }
 
                 break;
 
             case 0 when GetAvailableSpace(recipientStack) == 0:
-                Popup.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local(), false);
+                Popup.PopupClient(Loc.GetString("comp-stack-already-full"), popupPos, args.User);
                 break;
         }
 

@@ -35,6 +35,11 @@ public sealed class StackSystem : SharedStackSystem
 
         base.SetCount(ent, amount);
 
+        UpdateLingering((ent.Owner, ent.Comp));
+    }
+
+    protected override void UpdateLingering(Entity<StackComponent> ent)
+    {
         if (ent.Comp.Lingering &&
             TryComp<SpriteComponent>(ent.Owner, out var sprite))
         {
