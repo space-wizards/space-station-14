@@ -44,6 +44,7 @@ namespace Content.Client.Paper.UI
             typeof(BulletTag),
             typeof(ColorTag),
             typeof(HeadingTag),
+            typeof(SmallTag),
             typeof(ItalicTag),
             typeof(MonoTag)
         };
