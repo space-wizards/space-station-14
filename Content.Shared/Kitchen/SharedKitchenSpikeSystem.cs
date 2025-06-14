@@ -36,3 +36,16 @@ public abstract class SharedKitchenSpikeSystem : EntitySystem
 public sealed partial class SpikeDoAfterEvent : SimpleDoAfterEvent
 {
 }
+
+/// <summary>
+/// Event raised on an entity when it gets spiked.
+/// </summary>
+[ByRefEvent]
+public record struct KitchenSpikedEvent(EntityUid VictimUid, EntityUid SpikeUid, EntityUid SpikerUid);
+
+/// <summary>
+/// Event raised on an entity carving a piece of meat.
+/// </summary>
+[ByRefEvent]
+public record struct KitchenSpikeGetPieceEvent(EntityUid PieceUid);
+
