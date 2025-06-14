@@ -177,3 +177,33 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 75
+
+- type: entity
+  parent: DrinkBase
+  id: Pitcher
+  name: metal pitcher
+  description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 60
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/pitcher.rsi
+    layers:
+    - state: icon
+      map: ["enum.SolutionContainerLayers.Base"]
+    - state: fill-6
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill-
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+  - type: FitsInDispenser
+    solution: drink
