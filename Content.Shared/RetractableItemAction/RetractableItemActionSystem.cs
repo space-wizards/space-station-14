@@ -97,9 +97,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
 
         // Mark the unremovable item so it can be added back into the action.
         var summonedComp = AddComp<ActionRetractableItemComponent>(summoned.Value);
-
         summonedComp.SummoningAction = ent.Owner;
-
         Dirty(summoned.Value, summonedComp);
 
         Dirty(ent);
