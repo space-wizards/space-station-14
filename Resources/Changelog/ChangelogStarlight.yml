@@ -7382,4 +7382,19 @@ Entries:
   id: 1020
   time: '2025-06-14T21:39:04.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/811
+- author: biteless-dot
+  changes:
+  - message: Added new NanoTrasen clipboard for NTR, IAA, and Magistrate jobs (aesthetic
+      only)
+    type: Add
+  id: 1021
+  time: '2025-06-14T21:43:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/784
+- author: biteless-dot
+  changes:
+  - message: Added new NTR Pen in the NTR's PDA.
+    type: Add
+  id: 1022
+  time: '2025-06-14T21:43:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/784
 
