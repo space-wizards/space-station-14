@@ -188,6 +188,12 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
     private void OnDamageChanged(Entity<BloodstreamComponent> ent, ref DamageChangedEvent args)
     {
+        // The incoming state from the server raises a DamageChangedEvent as well.
+        // But the changes to the bloodstream have also been dirtied,
+        // so we prevent applying them twice.
+        if (_timing.ApplyingState)
+            return;
+
         if (args.DamageDelta is null || !args.DamageIncreased)
         {
             return;
