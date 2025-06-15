@@ -101,8 +101,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnExamined(EntityUid uid, EmitterComponent component, ExaminedEvent args)
         {
-            if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Hands == null)
-                ||!_fireMode.TryGetFireMode((uid, null), out var fireMode ))
+            if (!_fireMode.TryGetFireMode((uid, null), out var fireMode ))
                 return;
 
             var proto = _prototype.Index<EntityPrototype>(fireMode.Prototype);
