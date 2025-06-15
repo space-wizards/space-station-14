@@ -25,12 +25,6 @@ public sealed partial class ElectrifiedComponent : Component
     public bool OnAttacked = true;
 
     /// <summary>
-    /// When true - disables power if a window is present in the same tile
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool NoWindowInTile = false;
-
-    /// <summary>
     /// Should player get damage on interact with empty hand
     /// </summary>
     [DataField, AutoNetworkedField]
