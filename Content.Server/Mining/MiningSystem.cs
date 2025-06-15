@@ -1,4 +1,6 @@
+using Content.Server.GameplayMetrics;
 using Content.Shared.Destructible;
+using Content.Shared.GameplayMetrics;
 using Content.Shared.Mining;
 using Content.Shared.Mining.Components;
 using Content.Shared.Random;
@@ -15,6 +17,7 @@ public sealed class MiningSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly BasicGameplayMetricsSystem _gameplayMetrics = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -40,6 +43,8 @@ public sealed class MiningSystem : EntitySystem
         {
             Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.2f)));
         }
+
+        _gameplayMetrics.RecordMetric(Campaigns.MiningOre, $"{proto.ID},{toSpawn}");
     }
 
     private void OnMapInit(EntityUid uid, OreVeinComponent component, MapInitEvent args)
