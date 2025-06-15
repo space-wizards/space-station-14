@@ -414,7 +414,7 @@
       - !type:AllSelector
         weight: 1
         children:
-        - id: LandMineExplosive
+        #- id: LandMineExplosive #imp. die
         - !type:NestedSelector # what's that thing underneath the scrap?
           prob: 0.33
           tableId: SalvageScrapSpawnerCommon
