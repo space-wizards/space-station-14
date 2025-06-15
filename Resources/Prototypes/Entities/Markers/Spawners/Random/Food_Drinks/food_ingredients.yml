@@ -45,6 +45,7 @@
         - id: ReagentContainerCornmeal
         - id: ReagentContainerRice
         - id: ReagentContainerSugar
+        - id: FoodNoodlesRaw
         - !type:GroupSelector
           children:
           - id: ReagentContainerFlourSmall
