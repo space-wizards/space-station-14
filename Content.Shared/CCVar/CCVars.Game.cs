@@ -351,8 +351,8 @@ public sealed partial class CCVars
         CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
 
     /// <summary>
-    ///     The time in seconds that the server should wait before restarting the round.
-    ///     Defaults to 2 minutes.
+    ///     The time in seconds that the server should wait before restarting the round after nuke explosion in nuke gamemode.
+    ///     Defaults to 20 seconds.
     /// </summary>
     public static readonly CVarDef<float> NukeRoundRestartTime =
         CVarDef.Create("game.nuke_round_restart_time", 20f, CVar.SERVERONLY);
