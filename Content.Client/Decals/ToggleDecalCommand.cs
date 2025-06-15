@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Decals;
 

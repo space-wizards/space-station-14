@@ -1,5 +1,4 @@
 using Content.Server.Administration;
-using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
 using Robust.Shared.Console;

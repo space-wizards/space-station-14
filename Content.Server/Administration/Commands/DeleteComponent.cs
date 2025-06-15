@@ -6,6 +6,9 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Spawn)]
     public sealed class DeleteComponent : IConsoleCommand
     {
+        [Dependency] private readonly IComponentFactory _compFactory = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public string Command => "deletecomponent";
         public string Description => "Deletes all instances of the specified component.";
         public string Help => $"Usage: {Command} <name>";
@@ -19,23 +22,21 @@ namespace Content.Server.Administration.Commands
                     break;
                 default:
                     var name = string.Join(" ", args);
-                    var componentFactory = IoCManager.Resolve<IComponentFactory>();
-                    var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                    if (!componentFactory.TryGetRegistration(name, out var registration))
+                    if (!_compFactory.TryGetRegistration(name, out var registration))
                     {
                         shell.WriteLine($"No component exists with name {name}.");
                         break;
                     }
 
                     var componentType = registration.Type;
-                    var components = entityManager.GetAllComponents(componentType, true);
+                    var components = _entityManager.GetAllComponents(componentType, true);
 
                     var i = 0;
 
                     foreach (var (uid, component) in components)
                     {
-                        entityManager.RemoveComponent(uid, component);
+                        _entityManager.RemoveComponent(uid, component);
                         i++;
                     }
 

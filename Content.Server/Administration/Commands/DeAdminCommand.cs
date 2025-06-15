@@ -9,6 +9,7 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.None)]
     public sealed class DeAdminCommand : IConsoleCommand
     {
+        [Dependency] private readonly IAdminManager _admin = default!;
         public string Command => "deadmin";
         public string Description => "Temporarily de-admins you so you can experience the round as a normal player.";
         public string Help => "Usage: deadmin\nUse readmin to re-admin after using this.";
@@ -22,8 +23,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var mgr = IoCManager.Resolve<IAdminManager>();
-            mgr.DeAdmin(player);
+            _admin.DeAdmin(player);
         }
     }
 }
