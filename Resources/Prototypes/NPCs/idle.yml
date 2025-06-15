@@ -24,6 +24,7 @@
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
             pathfindInPlanning: false
+            brakeMaxVelocity: 0.05 # Goobstation
 
         - !type:HTNPrimitiveTask
           operator: !type:RandomOperator

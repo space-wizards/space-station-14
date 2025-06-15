@@ -98,6 +98,12 @@ public sealed partial class NPCSteeringComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public float Range = 0.2f;
 
+    // Goobstation
+    /// <summary>
+    /// Up to how fast can we be going before being considered in range, if not null.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)] public float? InRangeMaxSpeed = null;
+
     /// <summary>
     /// How far does the last node in the path need to be before considering re-pathfinding.
     /// </summary>

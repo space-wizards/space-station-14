@@ -133,7 +133,10 @@ public sealed partial class NPCSteeringSystem
         // We've arrived, nothing else matters.
         if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var targetDistance) &&
             inLos &&
-            targetDistance <= steering.Range)
+            targetDistance <= steering.Range &&
+            // Goobstation
+            (steering.InRangeMaxSpeed == null ||
+                body.LinearVelocity.LengthSquared() < steering.InRangeMaxSpeed.Value * steering.InRangeMaxSpeed.Value))
         {
             steering.Status = SteeringStatus.InRange;
             ResetStuck(steering, ourCoordinates);

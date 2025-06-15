@@ -61,6 +61,14 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
     [DataField("stopOnLineOfSight")]
     public bool StopOnLineOfSight;
 
+    // Goobstation
+    /// <summary>
+    /// Velocity below which we count as successfully braked.
+    /// Don't try to brake if null (upstream behavior).
+    /// </summary>
+    [DataField]
+    public float? BrakeMaxVelocity = null;
+
     private const string MovementCancelToken = "MovementCancelToken";
 
     public override void Initialize(IEntitySystemManager sysManager)
@@ -161,6 +169,7 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
 
             comp.CurrentPath = new Queue<PathPoly>(result.Path);
         }
+        comp.InRangeMaxSpeed = BrakeMaxVelocity; // Goobstation
     }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
@@ -176,9 +185,17 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
             return HTNOperatorStatus.Finished;
         }
 
+        // Goobstation
+        var inRangeStatus = HTNOperatorStatus.Continuing;
+        if (BrakeMaxVelocity == null
+            || !_entManager.TryGetComponent<PhysicsComponent>(owner, out var physics)
+            || physics.LinearVelocity.Length() < BrakeMaxVelocity.Value
+        )
+            inRangeStatus = HTNOperatorStatus.Finished;
+
         return steering.Status switch
         {
-            SteeringStatus.InRange => HTNOperatorStatus.Finished,
+            SteeringStatus.InRange => inRangeStatus, // Goobstation
             SteeringStatus.NoPath => HTNOperatorStatus.Failed,
             SteeringStatus.Moving => HTNOperatorStatus.Continuing,
             _ => throw new ArgumentOutOfRangeException()
