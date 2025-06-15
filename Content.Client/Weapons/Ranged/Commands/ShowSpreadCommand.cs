@@ -3,7 +3,7 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Weapons.Ranged.Commands;
 
-public sealed class ShowSpreadCommand : LocalizedCommands
+public sealed class ShowSpreadCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly GunSystem _gunSystem = default!;
 

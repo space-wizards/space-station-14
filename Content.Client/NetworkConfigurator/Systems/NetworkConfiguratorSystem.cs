@@ -137,7 +137,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     }
 }
 
-public sealed class ClearAllNetworkLinkOverlays : LocalizedCommands
+public sealed class ClearAllNetworkLinkOverlays : LocalizedEntityCommands
 {
     [Dependency] private readonly NetworkConfiguratorSystem _network = default!;
 

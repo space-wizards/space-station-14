@@ -4,7 +4,7 @@ using Robust.Shared.Console;
 
 namespace Content.Client.NodeContainer
 {
-    public sealed class NodeVisCommand : LocalizedCommands
+    public sealed class NodeVisCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly NodeGroupSystem _nodeSystem = default!;
@@ -23,7 +23,7 @@ namespace Content.Client.NodeContainer
         }
     }
 
-    public sealed class NodeVisFilterCommand : LocalizedCommands
+    public sealed class NodeVisFilterCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly NodeGroupSystem _nodeSystem = default!;
 
