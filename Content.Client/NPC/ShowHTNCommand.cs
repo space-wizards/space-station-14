@@ -6,6 +6,7 @@ namespace Content.Client.NPC;
 public sealed class ShowHtnCommand : LocalizedCommands
 {
     [Dependency] private readonly HTNSystem _htnSystem = default!;
+    
     public override string Command => "showhtn";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
