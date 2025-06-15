@@ -13,7 +13,7 @@
     state: icon
   entries:
   - name: bounty-item-tooth-space-carp
-    amount: 10
+    amount: 5 #imp
     whitelist:
       tags:
       - ToothSpaceCarp
@@ -28,7 +28,7 @@
     state: metal-1
   entries:
   - name: bounty-item-scrap
-    amount: 10
+    amount: 5 #imp
     whitelist:
       tags:
       - SalvageScrap
@@ -43,7 +43,7 @@
     state: gold
   entries:
   - name: bounty-item-ore-gold
-    amount: 45
+    amount: 10 #imp
     whitelist:
       tags:
       - OreGold
@@ -58,7 +58,7 @@
     state: silver
   entries:
   - name: bounty-item-ore-silver
-    amount: 45
+    amount: 10 #imp
     whitelist:
       tags:
       - OreSilver
@@ -90,7 +90,7 @@
     state: plasma
   entries:
   - name: bounty-item-ore-plasma
-    amount: 45
+    amount: 30 #imp
     whitelist:
       tags:
       - OrePlasma
@@ -105,7 +105,7 @@
     state: uranium
   entries:
   - name: bounty-item-ore-uranium
-    amount: 30
+    amount: 20 #imp
     whitelist:
       tags:
       - OreUranium
@@ -120,7 +120,7 @@
     state: bananium
   entries:
   - name: bounty-item-ore-bananium
-    amount: 30
+    amount: 15 #imp
     whitelist:
       tags:
       - OreBananium
@@ -152,7 +152,7 @@
     state: hivelord
   entries:
   - name: bounty-item-remains
-    amount: 3
+    amount: 2 #imp
     whitelist:
       tags:
       - HivelordRemains
