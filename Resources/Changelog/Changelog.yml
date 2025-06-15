@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ArchRBX
-  changes:
-  - message: Handheld GPS's can now be examined to read their displays
-    type: Add
-  - message: Handheld GPS's now update their displays much more frequently
-    type: Tweak
-  id: 8164
-  time: '2025-04-13T15:29:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31814
 - author: Beck Thompson, Kaz Wooblie
   changes:
   - message: Computers now wont delete items inside of them when deconstructing.
@@ -3907,3 +3898,10 @@
   id: 8676
   time: '2025-06-15T08:27:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38318
+- author: SlamBamActionman
+  changes:
+  - message: Crates on conveyor belts can now go around tight corners again!
+    type: Fix
+  id: 8677
+  time: '2025-06-15T09:36:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37466
