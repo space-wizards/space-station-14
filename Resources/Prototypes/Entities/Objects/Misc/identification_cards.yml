@@ -307,7 +307,7 @@
 - type: entity
   parent: IDCardStandard
   id: PunPunIDCard
-  name: pun pun ID card
+  name: junior assistant bartender ID card
   components:
     - type: Sprite
       layers:
@@ -315,7 +315,7 @@
         - state: idbartender
     - type: PresetIdCard
       job: Bartender
-      name: Pun Pun
+      name: Junior Assistant Bartender
     - type: Tag #  Ignore Chameleon tags
       tags:
       - DoorBumpOpener

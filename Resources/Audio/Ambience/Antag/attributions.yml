@@ -2,6 +2,10 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station"
   source: "https://github.com/tgstation/tgstation/commit/827967c9650c23af64280ad1491405fed8f644c5#diff-6cc910b7cad9ac4333c8d0885fc844746066120b465d8d4ba8f7019169316574"
+- files: ["traitor_wawa.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station, edited by FairlySadPanda (Github)"
+  source: "https://github.com/tgstation/tgstation/commit/827967c9650c23af64280ad1491405fed8f644c5#diff-6cc910b7cad9ac4333c8d0885fc844746066120b465d8d4ba8f7019169316574"
 - files: ["pirate_start.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Made by @MIXnikita#1474 (Discord) for SS14"
