@@ -13,17 +13,17 @@
 - type: damageModifierSet
   id: StructuralMetallicStrong
   coefficients:
-    Blunt: 0.5
-    Slash: 0.5
-    Piercing: 0.5
+    Blunt: 0.75
+    Slash: 0.75
+    Piercing: 0.75
     Shock: 1.2
-    Structural: 0.25
+    Structural: 0.5
   flatReductions:
-    Blunt: 10
-    Slash: 10
-    Piercing: 10
-    Heat: 10
-    Structural: 10
+    Blunt: 25 # TODO: reduce this once PKA damage is reduced.
+    Slash: 20
+    Piercing: 20
+    Heat: 15
+    Structural: 25
 
 - type: damageModifierSet
   id: StructuralMetallic
@@ -36,7 +36,7 @@
     Slash: 10
     Piercing: 10
     Heat: 10
-    Structural: 10
+    Structural: 15
 
 - type: damageModifierSet
   id: Rock
