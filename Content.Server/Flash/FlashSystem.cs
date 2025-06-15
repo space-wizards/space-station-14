@@ -55,7 +55,8 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<TemporaryBlindnessComponent, FlashAttemptEvent>(OnTemporaryBlindnessFlashAttempt);
         }
         
-        private void OnExamine(Entity ent, ref ExaminedEvent args)
+        private void OnExamine(Entity<FlashImmunityComponent> ent, ref ExaminedEvent args)
+
         {
             args.PushMarkup(Loc.GetString("flash-protection"));
         }
