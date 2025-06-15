@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson, Kaz Wooblie
-  changes:
-  - message: Computers now wont delete items inside of them when deconstructing.
-    type: Fix
-  - message: The ID card computer now throws the IDs out when deconstructed or damaged!
-    type: Add
-  id: 8165
-  time: '2025-04-13T15:51:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32308
 - author: ElectroJr
   changes:
   - message: Fixed a bug that allowed dead or incapacitated people to potentially
@@ -3905,3 +3896,10 @@
   id: 8677
   time: '2025-06-15T09:36:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37466
+- author: SlamBamActionman
+  changes:
+  - message: A new station, Exo, has been added to the map pool.
+    type: Add
+  id: 8678
+  time: '2025-06-15T19:10:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33144
