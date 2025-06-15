@@ -636,6 +636,13 @@
   - CargoWinterBoots
 
 - type: loadoutGroup
+  id: SupplyAssistantJumpsuit
+  name: loadout-group-supply-assistant-jumpsuit
+  loadouts:
+  - YellowJumpsuit
+  - YellowJumpskirt
+
+- type: loadoutGroup
   id: CargoTechnicianHead
   name: loadout-group-cargo-technician-head
   minLimit: 0
@@ -737,8 +744,8 @@
   id: TechnicalAssistantJumpsuit
   name: loadout-group-technical-assistant-jumpsuit
   loadouts:
-  - YellowJumpsuit
-  - YellowJumpskirt
+  - OrangeJumpsuit
+  - OrangeJumpskirt
 
 - type: loadoutGroup
   id: StationEngineerHead

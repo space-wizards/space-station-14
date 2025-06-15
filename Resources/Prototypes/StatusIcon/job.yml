@@ -391,6 +391,14 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconSupplyAssistant
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: SupplyAssistant
+  jobName: job-name-supply-assistant
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconZombie # This is a perfectly legitimate profession to pursue
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi

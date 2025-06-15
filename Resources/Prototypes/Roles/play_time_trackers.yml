@@ -134,6 +134,9 @@
   id: JobServiceWorker
 
 - type: playTimeTracker
+  id: JobSupplyAssistant
+
+- type: playTimeTracker
   id: JobStationAi
 
 - type: playTimeTracker
