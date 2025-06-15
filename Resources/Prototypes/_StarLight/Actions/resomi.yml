@@ -4,12 +4,13 @@
   description: You jumps at the selected direction.
   categories: [ HideSpawnMenu ]
   components:
-  - type: WorldTargetAction
+  - type: Action
     useDelay: 30
+    itemIconStyle: NoItem
     icon:
       sprite: _Starlight/Actions/resomi.rsi
       state: jump
-    itemIconStyle: NoItem
-    checkCanAccess: false
-    range: 200
+  - type: TargetAction
+    range: 20
+  - type: WorldTargetAction
     event: !type:ResomiJumpActionEvent

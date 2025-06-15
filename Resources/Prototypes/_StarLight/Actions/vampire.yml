@@ -1,0 +1,225 @@
+- type: entity
+  id: ActionVampireOpenMutationsMenu
+  name: Mutations menu
+  description: "Opens menu with vampires mutations."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 5
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: summonheirloom
+  - type: InstantAction
+    event:
+      !type:VampireOpenMutationsMenu
+
+- type: entity
+  id: ActionVampireToggleFangs
+  name: Toggle Fangs
+  description: "Extend or retract your fangs. Walking around with your fangs out might reveal your true nature."
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    itemIconStyle: NoItem
+    priority: 1
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: fangs_retracted
+    iconOn:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: fangs_extended
+  - type: InstantAction
+    event: 
+      !type:VampireToggleFangsEvent
+      definitionName: ToggleFangs
+
+- type: entity
+  id: ActionVampireGlare
+  name: Glare
+  description: "Release a blinding flash from your eyes, stunning a unprotected mortal for 10 seconds. Activation Cost: 20 Essence. Cooldown: 60 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 60
+    itemIconStyle: NoItem
+    priority: 2
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: glare
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/Vampire/glare.ogg
+  - type: TargetAction
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    event: 
+      !type:VampireGlareEvent
+      definitionName: Glare
+
+- type: entity
+  id: ActionVampireHypnotise
+  name: Hypnotise
+  description: "Stare deeply into a mortals eyes, forcing them to sleep for 60 seconds. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 300
+    priority: 2
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: hypnotise
+  - type: TargetAction
+    interactOnMiss: false
+  - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - HumanoidAppearance
+    event: 
+      !type:VampireHypnotiseEvent
+      definitionName: Hypnotise
+
+- type: entity
+  id: ActionVampireScreech
+  name: Screech
+  description: "Release a piercing scream, stunning unprotected mortals and shattering fragile objects nearby. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 60
+    priority: 2
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: screech
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/Vampire/screech_tone.ogg
+  - type: InstantAction
+    event: 
+      !type:VampireScreechEvent
+      definitionName: Screech
+
+- type: entity
+  id: ActionVampireBloodSteal
+  name: Blood Steal
+  description: "Wrench the blood from all bodies nearby - living or dead. Activation Cost: 20 Essence. Cooldown: 60 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 60
+    priority: 2
+    itemIconStyle: NoItem
+    checkCanInteract: false
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: bloodsteal
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/demon_consume.ogg
+  - type: InstantAction
+    event: 
+      !type:VampireBloodStealEvent
+      definitionName: BloodSteal
+    
+- type: entity
+  id: ActionVampireUnholyStrength
+  name: Unholy Strength
+  description: "Stare deeply into a mortals eyes, forcing them to sleep for 60 seconds. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 60
+    priority: 2
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: unholystrength
+  - type: InstantAction
+    event: 
+      !type:VampireUnholyStrengthEvent
+      definitionName: UnholyStrength
+    
+- type: entity
+  id: ActionVampireSupernaturalStrength
+  name: SuperNatural Strength
+  description: "Stare deeply into a mortals eyes, forcing them to sleep for 60 seconds. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 60
+    priority: 2
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: supernaturalstrength
+  - type: InstantAction
+    event: 
+      !type:VampireSupernaturalStrengthEvent
+      definitionName: SupernaturalStrength
+
+- type: entity
+  id: ActionVampireBatform
+  name: Bat Form
+  description: "Assume for form of a bat. Fast, Hard to Hit, Likes fruit. Activation Cost: 20 Essence. Cooldown: 30 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 30
+    priority: 2
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: batform
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/teleport_arrival.ogg
+  - type: InstantAction
+    event: 
+      !type:VampirePolymorphEvent
+      definitionName: PolymorphBat
+
+- type: entity
+  id: ActionVampireMouseform
+  name: Mouse Form
+  description: "Assume for form of a mouse. Fast, Small, Immune to doors. Activation Cost: 20 Essence. Cooldown: 30 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 30
+    priority: 2
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: mouseform
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/teleport_arrival.ogg
+  - type: InstantAction
+    event: 
+      !type:VampirePolymorphEvent
+      definitionName: PolymorphMouse
+
+- type: entity
+  id: ActionVampireCloakOfDarkness
+  name: Cloak of Darkness
+  description: "Cloak yourself from mortal eyes, rendering you invisible while stationary. Activation Cost: 30 Essence. Upkeep: 1 Essence/Second Cooldown: 10 Seconds"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 10
+    priority: 2
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: cloakofdarkness
+  - type: InstantAction
+    event: 
+      !type:VampireCloakOfDarknessEvent
+      definitionName: CloakOfDarkness
