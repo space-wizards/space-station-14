@@ -8,36 +8,32 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class FillGas : IConsoleCommand
+    public sealed class FillGas : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
 
-        public string Command => "fillgas";
-        public string Description => "Adds gas to all tiles in a grid.";
-        public string Help => "fillgas <GridEid> <Gas> <moles>";
+        public override string Command => "fillgas";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 3)
                 return;
 
             if (!NetEntity.TryParse(args[0], out var gridIdNet)
-                || !_entManager.TryGetEntity(gridIdNet, out var gridId)
+                || !EntityManager.TryGetEntity(gridIdNet, out var gridId)
                 || !(AtmosCommandUtils.TryParseGasID(args[1], out var gasId))
                 || !float.TryParse(args[2], out var moles))
             {
                 return;
             }
 
-            if (!_entManager.HasComponent<MapGridComponent>(gridId))
+            if (!EntityManager.HasComponent<MapGridComponent>(gridId))
             {
-                shell.WriteLine("Invalid grid ID.");
+                shell.WriteError(Loc.GetString($"shell-invalid-grid-id-specific", ("grid", gridId)));
                 return;
             }
 
-            var atmosphereSystem = _entManager.System<AtmosphereSystem>();
-
-            foreach (var tile in atmosphereSystem.GetAllMixtures(gridId.Value, true))
+            foreach (var tile in _atmosSystem.GetAllMixtures(gridId.Value, true))
             {
                 tile.AdjustMoles(gasId, moles);
             }

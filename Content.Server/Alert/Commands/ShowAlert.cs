@@ -7,20 +7,18 @@ using Robust.Shared.Console;
 namespace Content.Server.Alert.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class ShowAlert : IConsoleCommand
+    public sealed class ShowAlert : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private readonly AlertsSystem _alertSys = default!;
 
-        public string Command => "showalert";
-        public string Description => "Shows an alert for a player, defaulting to current player";
-        public string Help => "showalert <alertType> <severity, -1 if no severity> <name or userID, omit for current player>";
+        public override  string Command => "showalert";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player?.AttachedEntity == null)
             {
-                shell.WriteLine("You cannot run this from the server or without an attached entity.");
+                shell.WriteLine(Loc.GetString($"shell-must-be-attached-to-entity"));
                 return;
             }
 
@@ -32,28 +30,27 @@ namespace Content.Server.Alert.Commands
                 if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
             }
 
-            if (!_e.TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
+            if (!EntityManager.TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
             {
-                shell.WriteLine("user has no alerts component");
+                shell.WriteLine(Loc.GetString($"shell-entity-target-lacks-component", ("componentName", nameof(AlertsComponent))));
                 return;
             }
 
             var alertType = args[0];
             var severity = args[1];
-            var alertsSystem = _e.System<AlertsSystem>();
-            if (!alertsSystem.TryGet(alertType, out var alert))
+            if (!_alertSys.TryGet(alertType, out var alert))
             {
-                shell.WriteLine("unrecognized alertType " + alertType);
+                shell.WriteLine(Loc.GetString($"cmd-clearalert-unrecognized-alert", ("alert", alertType)));
                 return;
             }
             if (!short.TryParse(severity, out var sevint))
             {
-                shell.WriteLine("invalid severity " + sevint);
+                shell.WriteLine(Loc.GetString($"cmd-showalert-invalid-severity", ("severity", sevint)));
                 return;
             }
 
             short? severity1 = sevint == -1 ? null : sevint;
-            alertsSystem.ShowAlert(attachedEntity, alert.ID, severity1, null);
+            _alertSys.ShowAlert(attachedEntity, alert.ID, severity1);
         }
     }
 }
