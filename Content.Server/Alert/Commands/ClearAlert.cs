@@ -7,20 +7,18 @@ using Robust.Shared.Console;
 namespace Content.Server.Alert.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class ClearAlert : IConsoleCommand
+    public sealed class ClearAlert : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private readonly AlertsSystem _alertSys = default!;
 
-        public string Command => "clearalert";
-        public string Description => "Clears an alert for a player, defaulting to current player";
-        public string Help => "clearalert <alertType> <name or userID, omit for current player>";
+        public override string Command => "clearalert";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player?.AttachedEntity == null)
             {
-                shell.WriteLine("You don't have an entity.");
+                shell.WriteLine(Loc.GetString($"shell-must-be-attached-to-entity"));
                 return;
             }
 
@@ -29,24 +27,24 @@ namespace Content.Server.Alert.Commands
             if (args.Length > 1)
             {
                 var target = args[1];
-                if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
+                if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity))
+                    return;
             }
 
-            if (!_e.TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
+            if (!EntityManager.TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
             {
-                shell.WriteLine("user has no alerts component");
+                shell.WriteLine(Loc.GetString($"shell-entity-target-lacks-component", ("componentName", nameof(AlertsComponent))));
                 return;
             }
 
             var alertType = args[0];
-            var alertsSystem = _e.System<AlertsSystem>();
-            if (!alertsSystem.TryGet(alertType, out var alert))
+            if (!_alertSys.TryGet(alertType, out var alert))
             {
-                shell.WriteLine("unrecognized alertType " + alertType);
+                shell.WriteLine(Loc.GetString($"cmd-clearalert-unrecognized-alert", ("alert", alertType)));
                 return;
             }
 
-            alertsSystem.ClearAlert(attachedEntity, alert.ID);
+            _alertSys.ClearAlert(attachedEntity, alert.ID);
         }
     }
 }

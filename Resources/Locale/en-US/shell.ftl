@@ -26,6 +26,7 @@ shell-argument-uid = EntityUid
 
 shell-entity-is-not-mob = Target entity is not a mob!
 shell-invalid-entity-id = Invalid entity ID.
+shell-invalid-grid-id-specific = {$grid} is not a valid grid ID!
 shell-invalid-grid-id = Invalid grid ID.
 shell-invalid-map-id = Invalid map ID.
 shell-invalid-entity-uid = {$uid} is not a valid entity uid
