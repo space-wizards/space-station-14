@@ -7,7 +7,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.SSDIndicator;
 
 /// <summary>
-///     Handle changing player SSD indicator status
+///     Handle changing player SSD indicator status, respecting ShouldSleep flag.
 /// </summary>
 public sealed class SSDIndicatorSystem : EntitySystem
 {
@@ -48,20 +48,24 @@ public sealed class SSDIndicatorSystem : EntitySystem
     {
         component.IsSSD = true;
 
-        // Sets the time when the entity should fall asleep
+        // Sets the time when the entity should fall asleep, only if sleeping is allowed
         if (_icSsdSleep)
         {
-            component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
+            if (component.ShouldSleep)
+                component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
+            else
+                component.FallAsleepTime = TimeSpan.Zero;
         }
         Dirty(uid, component);
     }
 
-    // Prevents mapped mobs to go to sleep immediately
+    // Prevents mapped mobs from going to sleep immediately unless they allow sleeping.
     private void OnMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
     {
         if (_icSsdSleep &&
             component.IsSSD &&
-            component.FallAsleepTime == TimeSpan.Zero)
+            component.FallAsleepTime == TimeSpan.Zero &&
+            component.ShouldSleep)
         {
             component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
         }
@@ -78,11 +82,12 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var ssd))
         {
-            // Forces the entity to sleep when the time has come
-            if(ssd.IsSSD &&
+            // Forces the entity to sleep when the time has come and sleeping is allowed
+            if (ssd.IsSSD &&
+                ssd.ShouldSleep &&
                 ssd.FallAsleepTime <= _timing.CurTime &&
                 !TerminatingOrDeleted(uid) &&
-                !HasComp<ForcedSleepingComponent>(uid)) // Don't add the component if the entity has it from another sources
+                !HasComp<ForcedSleepingComponent>(uid)) // Don't add the component if the entity has it from other sources
             {
                 EnsureComp<ForcedSleepingComponent>(uid);
                 ssd.ForcedSleepAdded = true;
