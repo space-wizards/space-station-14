@@ -71,6 +71,11 @@
 
 # OuterClothing
 - type: loadout
+  id: HeadofSecurityCarapace
+  equipment:
+    outerClothing: ClothingOuterArmorCarapaceHoS
+
+- type: loadout
   id: HeadofSecurityCoat
   equipment:
     outerClothing: ClothingOuterCoatHoSTrench
