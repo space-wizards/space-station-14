@@ -1,18 +1,30 @@
 - type: entity
   name: ore bag
   id: OreBag
-  parent: BaseStorageItem
+  parent: [BaseStorageItem, BaseToggleClothing]
   description: A robust bag for salvage specialists and miners alike to carry large amounts of ore. Magnetises any nearby ores when attached to a belt.
   components:
-  - type: MagnetPickup
   - type: Sprite
     sprite: Objects/Specific/Mining/ore_bag.rsi
-    state: icon
+    layers:
+    - state: icon
+    - state: icon-on
+      shader: unshaded
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
   - type: Clothing
     sprite: Objects/Specific/Mining/ore_bag.rsi
     quickEquip: false
     slots:
     - belt
+  - type: MagnetPickup
+    range: 2
   - type: Item
     size: Ginormous
   - type: Storage
@@ -25,6 +37,14 @@
       tags:
         - ArtifactFragment
         - Ore
+  - type: ItemToggle
+    onActivate: false
+    onUse: false
+  - type: ToggleableVisuals
+    spriteLayer: on
+  - type: ToggleClothing
+    action: ActionToggleOreBag
+    mustEquip: false
   - type: Dumpable
 
 - type: entity
@@ -33,6 +53,23 @@
   name: integrated ore bag
   description: A large ore bag built into the frame of a mining cyborg.
   components:
-    - type: Storage
-      grid:
-      - 0,0,9,5
+  - type: MagnetPickup
+    magnetInHands: true
+  - type: Storage
+    grid:
+    - 0,0,9,5
+  - type: Dumpable
+    delayPerItem: 0
+    multiplier: 0
+
+- type: entity
+  parent: BaseAction
+  id: ActionToggleOreBag
+  name: Toggle Ore Bag
+  description: Toggles the ore bag's magnets on and off.
+  components:
+  - type: Action
+    useDelay: 1
+    itemIconStyle: BigItem
+  - type: InstantAction
+    event: !type:ToggleActionEvent
