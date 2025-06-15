@@ -1,9 +1,8 @@
 using Content.Client.Clothing.Systems;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Emp;
 using Content.Shared.Tag;
-using Content.Shared.Prototypes;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
@@ -27,6 +26,9 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
 
     protected override void Open()
     {
+        if (EntMan.HasComponent<EmpDisabledComponent>(Owner))
+            return;
+
         base.Open();
 
         _menu = this.CreateWindow<ChameleonMenu>();
