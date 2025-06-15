@@ -225,7 +225,7 @@ public sealed class ThrowingSystem : EntitySystem
         if (pushbackRatio != 0.0f &&
             physics.Mass > 0f &&
             TryComp(user.Value, out PhysicsComponent? userPhysics) &&
-            _gravity.IsWeightless(user.Value, userPhysics))
+            _gravity.IsWeightless(user.Value))
         {
             var msg = new ThrowPushbackAttemptEvent();
             RaiseLocalEvent(uid, msg);
