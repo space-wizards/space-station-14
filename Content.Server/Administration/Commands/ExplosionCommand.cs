@@ -44,7 +44,7 @@ public sealed class ExplosionCommand : LocalizedEntityCommands
     {
         if (args.Length == 0 || args.Length == 4 || args.Length > 7)
         {
-            shell.WriteError(Loc.GetString($"shell-wrong-number-of-arguments"));
+            shell.WriteError(Loc.GetString($"shell-wrong-arguments-number"));
             return;
         }
 
