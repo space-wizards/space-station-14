@@ -22,7 +22,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Changeling.Devour;
 
-public sealed class SharedChangelingDevourSystem : EntitySystem
+public sealed class ChangelingDevourSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -34,7 +34,7 @@ public sealed class SharedChangelingDevourSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
-    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
+    [Dependency] private readonly ChangelingIdentitySystem _changelingIdentitySystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;

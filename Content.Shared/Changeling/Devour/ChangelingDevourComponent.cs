@@ -14,7 +14,7 @@ namespace Content.Shared.Changeling.Devour;
 /// and how long it takes to devour someone
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedChangelingDevourSystem))]
+[Access(typeof(ChangelingDevourSystem))]
 public sealed partial class ChangelingDevourComponent : Component
 {
     /// <summary>
