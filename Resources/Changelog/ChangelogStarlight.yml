@@ -7441,4 +7441,11 @@ Entries:
   id: 1028
   time: '2025-06-14T22:40:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/705
+- author: STARLIGHT TEAM
+  changes:
+  - message: Upstream
+    type: Tweak
+  id: 1029
+  time: '2025-06-15T03:18:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/810
 
