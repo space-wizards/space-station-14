@@ -108,8 +108,8 @@
     contents:
       - id: ClothingHeadHatWarden
       - id: ClothingHeadHatBeretWarden
+      - id: ClothingUniformJumpskirtWarden
+      - id: ClothingUniformJumpsuitWarden
       - id: ClothingOuterWinterWarden
       - id: ClothingHandsGlovesColorRed
       - id: ClothingHandsGlovesColorBlack
-      - id: ClothingUniformJumpskirtWarden
-      - id: ClothingUniformJumpsuitWarden

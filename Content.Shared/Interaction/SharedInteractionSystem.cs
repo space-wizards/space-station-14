@@ -215,10 +215,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void OnRemoveAttempt(EntityUid uid, UnremoveableComponent item, ContainerGettingRemovedAttemptEvent args)
         {
-            // don't prevent the server state for the container from being applied to the client correctly
-            // otherwise this will cause an error if the client predicts adding UnremoveableComponent
-            if (!_gameTiming.ApplyingState)
-                args.Cancel();
+            args.Cancel();
         }
 
         /// <summary>

@@ -158,7 +158,6 @@ stack-steel-light-checker-tile = steel light checker tile
 stack-steel-tile = steel tile
 stack-wood-floor = wood floor
 stack-techmaint-floor = techmaint floor
-stack-techmaint-floor-dark = dark techmaint floor
 stack-freezer-tile = freezer tile
 stack-showroom-tile = showroom tile
 stack-green-circuit-floor = green-circuit floor
@@ -234,9 +233,3 @@ stack-red-circuit-floor = red-circuit floor
 stack-asteroid-astro-sand-floor = asteroid astro-sand floor
 
 stack-poker-chips = poker chips
-
-stack-xeno-floor = xeno floor
-stack-xeno-steel = xeno steel tile
-stack-xeno-steel-corner = xeno steel corner tile
-stack-xeno-maint = xeno techmaint
-stack-dark-squiggly = dark steel squiggly tile
