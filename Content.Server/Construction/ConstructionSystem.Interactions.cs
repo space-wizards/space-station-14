@@ -315,7 +315,7 @@ namespace Content.Server.Construction
                     // we split the stack in two and insert the split stack.
                     if (insertStep is MaterialConstructionGraphStep materialInsertStep)
                     {
-                        if (_stackSystem.Split((insert, null), materialInsertStep.Amount, Transform(interactUsing.User).Coordinates) is not {} stack)
+                        if (_stackSystem.Split(insert, materialInsertStep.Amount, Transform(interactUsing.User).Coordinates) is not {} stack)
                             return HandleResult.False;
 
                         insert = stack;

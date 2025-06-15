@@ -123,12 +123,6 @@ public abstract class SharedStackSystem : EntitySystem
         Hands.PickupOrDrop(user.Owner, item.Owner, handsComp: user.Comp);
     }
 
-    [Obsolete("Obsolete, Use Entity<T>")]
-    public void TryMergeToHands(EntityUid item, EntityUid user, StackComponent? itemStack = null, HandsComponent? hands = null)
-    {
-        TryMergeToHands((item, itemStack), (user, hands));
-    }
-
     /// <summary>
     /// Donor entity merges stacks into contacting entities.
     /// Deletes donor if all stacks are used.
@@ -162,12 +156,6 @@ public abstract class SharedStackSystem : EntitySystem
                 break;
         }
         return merged;
-    }
-
-    [Obsolete("Obsolete, Use Entity<T>")]
-    public bool TryMergeToContacts(EntityUid uid, StackComponent? stack = null, TransformComponent? xform = null)
-    {
-        return TryMergeToContacts((uid, stack, xform));
     }
 
     #endregion
@@ -266,12 +254,6 @@ public abstract class SharedStackSystem : EntitySystem
         return true;
     }
 
-    [Obsolete("Obsolete, Use Entity<T>")]
-    public bool Use(EntityUid uid, int amount, StackComponent? stack = null)
-    {
-        return TryUse((uid, stack), amount);
-    }
-
     #endregion
     #region Getters
 
@@ -285,12 +267,6 @@ public abstract class SharedStackSystem : EntitySystem
     public int GetCount(Entity<StackComponent?> ent)
     {
         return Resolve(ent.Owner, ref ent.Comp, false) ? ent.Comp.Count : 1;
-    }
-
-    [Obsolete("Obsolete, Use Entity<T>")]
-    public int GetCount(EntityUid uid, StackComponent? component = null)
-    {
-        return GetCount((uid, component));
     }
 
     /// <summary>
@@ -368,25 +344,6 @@ public abstract class SharedStackSystem : EntitySystem
     }
 
     #endregion
-
-    /// <summary>
-    /// Tries to add one stack to another. May have some leftover count in the inserted entity.
-    /// </summary>
-    [Obsolete("Obsolete, use TryMergeStacks()")]
-    public bool TryAdd(EntityUid insertEnt, EntityUid targetEnt, StackComponent? insertStack = null, StackComponent? targetStack = null)
-    {
-        return TryMergeStacks((insertEnt, insertStack), (targetEnt, targetStack), out var _);
-    }
-
-    /// <summary>
-    /// Tries to add one stack to another. May have some leftover count in the inserted entity.
-    /// </summary>
-    [Obsolete("Obsolete, use TryMergeStacks()")]
-    public bool TryAdd(EntityUid insertEnt, EntityUid targetEnt, int count, StackComponent? insertStack = null, StackComponent? targetStack = null)
-    {
-        return TryMergeStacks((insertEnt, insertStack), (targetEnt, targetStack), out var _, count);
-    }
-
     #endregion
     #region Event Handlers
 

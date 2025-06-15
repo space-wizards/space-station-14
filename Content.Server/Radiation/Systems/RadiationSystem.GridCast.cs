@@ -48,7 +48,7 @@ public partial class RadiationSystem
             var worldPos = _transform.GetWorldPosition(xform);
 
             // Intensity is scaled by stack size.
-            var intensity = source.Intensity * _stack.GetCount((uid, null));
+            var intensity = source.Intensity * _stack.GetCount(uid);
 
             // Apply rad modifier if the source is enclosed within a radiation blocking container
             // Note that this also applies to receivers, and it doesn't bother to check if the container sits between them.

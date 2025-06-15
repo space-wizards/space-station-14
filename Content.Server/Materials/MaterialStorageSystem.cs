@@ -84,7 +84,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         var mats = SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out _);
         foreach (var mat in mats.Where(mat => !TerminatingOrDeleted(mat)))
         {
-            _stackSystem.TryMergeToContacts((mat, null, null));
+            _stackSystem.TryMergeToContacts(mat);
         }
     }
 

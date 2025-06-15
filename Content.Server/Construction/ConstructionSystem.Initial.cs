@@ -396,7 +396,7 @@ namespace Content.Server.Construction
 
             // Just in case this is a stack, attempt to merge it. If it isn't a stack, this will just normally pick up
             // or drop the item as normal.
-            _stackSystem.TryMergeToHands((item, null), (user, null));
+            _stackSystem.TryMergeToHands(item, user);
             return true;
         }
 

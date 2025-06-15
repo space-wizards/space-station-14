@@ -82,12 +82,6 @@ public sealed class StackSystem : SharedStackSystem
         return newEntity;
     }
 
-    [Obsolete("Obsolete, Use Entity<T>")]
-    public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, StackComponent? stack = null)
-    {
-        return Split((uid, stack), amount, spawnPosition);
-    }
-
     #region SpawnAtPosition
 
     /// <summary>

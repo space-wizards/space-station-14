@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Stacks;
 
 /// <summary>
-/// Component on an entity that is a stack of things, usually materials.
+/// Component on an entity that represents a stack of identical things, usually materials.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedStackSystem))]
