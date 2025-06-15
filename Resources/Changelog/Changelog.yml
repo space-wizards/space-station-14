@@ -3870,3 +3870,123 @@
   id: 8663
   time: '2025-06-13T01:48:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38297
+- author: hoshizora-sayo
+  changes:
+  - message: Fixed crafting menu entries that included modular machine parts
+    type: Fix
+  id: 8664
+  time: '2025-06-13T05:21:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38299
+- author: nkokic
+  changes:
+  - message: Tear gas smoke is now white and semi-transparent.
+    type: Tweak
+  - message: Tear gas now causes coughing, slows you down and hits a bit faster than
+      before.
+    type: Add
+  id: 8665
+  time: '2025-06-13T13:53:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36440
+- author: M1tht1c
+  changes:
+  - message: You can now remove visitors mindshields.
+    type: Fix
+  - message: Disaster victims now have mindshields when appropriate.
+    type: Fix
+  id: 8666
+  time: '2025-06-13T14:43:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36537
+- author: SyaoranFox
+  changes:
+  - message: Rat King is now a full antag.
+    type: Tweak
+  id: 8667
+  time: '2025-06-13T15:52:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38124
+- author: qrwas
+  changes:
+  - message: add missing locale for Undergarment
+    type: Fix
+  id: 8668
+  time: '2025-06-13T16:09:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38304
+- author: slarticodefast
+  changes:
+  - message: Fixed some reagents like puncturase healing bleeding when they shouldn't.
+    type: Fix
+  id: 8669
+  time: '2025-06-13T16:11:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38289
+- author: Kittygyat
+  changes:
+  - message: Monkeys & kobolds can now wear emergency EVA suits, with a fresh new
+      sprite to go along with it! You're welcome, Pun-Pun enthusiasts!
+    type: Tweak
+  id: 8670
+  time: '2025-06-13T18:54:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37660
+- author: Nox38
+  changes:
+  - message: The warden's dresser now contains their jumpsuits!
+    type: Add
+  id: 8671
+  time: '2025-06-14T08:59:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38283
+- author: Sparlight
+  changes:
+  - message: Corgium has been added.  Consuming too much polymorphs you into a smart
+      corgi.
+    type: Add
+  id: 8672
+  time: '2025-06-14T09:07:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37951
+- author: Sparlight
+  changes:
+  - message: A pet bag for smart corgis to wear and a construction option for them.  Not
+      actually wearable by normal pets at this time.
+    type: Add
+  id: 8673
+  time: '2025-06-14T16:09:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37440
+- author: Nikitosych
+  changes:
+  - message: Fixed the ability for holoparasite to kill the host through the mech
+    type: Fix
+  id: 8674
+  time: '2025-06-14T17:22:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36659
+- author: ScarKy0
+  changes:
+  - message: Using glue on an unremoveable item will no longer make it removeable.
+    type: Fix
+  id: 8675
+  time: '2025-06-14T18:29:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38150
+- author: FungiFellow
+  changes:
+  - message: Syndie-Cats now have Syndicate ID access.
+    type: Fix
+  id: 8676
+  time: '2025-06-15T08:27:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38318
+- author: SlamBamActionman
+  changes:
+  - message: Crates on conveyor belts can now go around tight corners again!
+    type: Fix
+  id: 8677
+  time: '2025-06-15T09:36:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37466
+- author: SlamBamActionman
+  changes:
+  - message: A new station, Exo, has been added to the map pool.
+    type: Add
+  id: 8678
+  time: '2025-06-15T19:10:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33144
+- author: widgetbeck
+  changes:
+  - message: Randomized characters will now roll markings.
+    type: Add
+  id: 8679
+  time: '2025-06-15T21:11:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34765
