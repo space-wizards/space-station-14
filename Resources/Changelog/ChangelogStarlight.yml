@@ -7448,4 +7448,34 @@ Entries:
   id: 1029
   time: '2025-06-15T03:18:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/810
+- author: STARLIGHT TEAM
+  changes:
+  - message: Jumps are now more responsive and come with sound (placeholder for now,
+      we’ll swap it out later).
+    type: Add
+  id: 1030
+  time: '2025-06-15T04:18:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/709
+- author: STARLIGHT TEAM
+  changes:
+  - message: You can now jump without using the skill button, just press Space (it’s
+      rebindable).
+    type: Add
+  id: 1031
+  time: '2025-06-15T04:18:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/709
+- author: STARLIGHT TEAM
+  changes:
+  - message: Moth can now jump too, but much slower and not as far.
+    type: Add
+  id: 1032
+  time: '2025-06-15T04:18:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/709
+- author: STARLIGHT TEAM
+  changes:
+  - message: All jetpacks now grant the ability to jump as well.
+    type: Add
+  id: 1033
+  time: '2025-06-15T04:18:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/709
 
