@@ -93,9 +93,12 @@ public sealed partial class NPCSteeringSystem
         TransformComponent xform,
         Angle offsetRot,
         float moveSpeed,
+        float acceleration,
+        float friction,
         Span<float> interest,
         float frameTime,
-        ref bool forceSteer)
+        ref bool forceSteer,
+        ref float moveMultiplier) // Goobstation
     {
         var ourCoordinates = xform.Coordinates;
         var destinationCoordinates = steering.Coordinates;
@@ -322,9 +325,13 @@ public sealed partial class NPCSteeringSystem
         // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
         CheckPath(uid, steering, xform, needsPath, targetDistance);
 
+        bool arrivedFinal = arrived && steering.CurrentPath.Count == 0; // Goobstation
+
         // If we don't have a path yet then do nothing; this is to avoid stutter-stepping if it turns out there's no path
         // available but we assume there was.
-        if (steering is { Pathfind: true, CurrentPath.Count: 0 })
+        if (steering is { Pathfind: true, CurrentPath.Count: 0 }
+            && !arrivedFinal // Goobstation
+        )
             return true;
 
         if (moveSpeed == 0f || direction == Vector2.Zero)
@@ -341,13 +348,26 @@ public sealed partial class NPCSteeringSystem
         var norm = input.Normalized();
         var weight = MapValue(direction.Length(), tickMovement * 0.5f, tickMovement * 0.75f);
 
-        ApplySeek(interest, norm, weight);
+        if (!arrivedFinal) // Goobstation
+            ApplySeek(interest, norm, weight);
 
         // Prefer our current direction
         if (weight > 0f && body.LinearVelocity.LengthSquared() > 0f)
         {
-            const float sameDirectionWeight = 0.1f;
-            norm = body.LinearVelocity.Normalized();
+            // <Goobstation modified>
+            var sameDirectionWeight = weight * 0.1f;
+            norm = offsetRot.RotateVec(body.LinearVelocity.Normalized()); // fix TODO: upstream this
+            if (arrivedFinal) {
+                // attempt to prevent jitter on arrival from overbraking in yes-grav
+                const float easeInFactor = 1.5f; // scary magic number
+                var cvel = body.LinearVelocity * 1f;
+                _mover.Friction(0f, frameTime, friction, ref cvel);
+                var postFrictionVel = cvel.Length();
+                var frameAccel = acceleration * frameTime * moveSpeed;
+                moveMultiplier = MapValue(postFrictionVel, 0f, frameAccel * easeInFactor);
+                norm *= -1f;
+            }
+            // </Goobstation modified>
 
             ApplySeek(interest, norm, sameDirectionWeight);
         }

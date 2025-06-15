@@ -67,7 +67,7 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
     /// Don't try to brake if null (upstream behavior).
     /// </summary>
     [DataField]
-    public float? BrakeMaxVelocity = null;
+    public float? BrakeMaxVelocity = 0.1f;
 
     private const string MovementCancelToken = "MovementCancelToken";
 
