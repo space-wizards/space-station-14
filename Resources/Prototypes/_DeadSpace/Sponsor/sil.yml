@@ -160,7 +160,7 @@
   - type: Storage
     maxItemSize: Huge
     grid:
-    - 0,0,11,5
+    - 0,0,12,7
   - type: StorageFill
     contents:
     - id: ClothingBeltDominatorSilFilled
@@ -180,6 +180,18 @@
     - id: PlushieSilKrivazora
     - id: PlushieSilAzrailHardsuit
     - id: PlushieSilSharp
+    - id: PlushieSilRenaTakala
+    - id: PlushieSilEso
+    - id: PlushieSilKel
+    - id: PlushieSilWeaver
+    - id: PlushieSilEyrinLiht
+    - id: PlushieSilKelicKato1
+    - id: PlushieSilKelicKato2
+    - id: PlushieSilYuliWinter
+    - id: PlushieSilEkaterinaAkkerman
+    - id: PlushieSilYohanaWinter
+    - id: PlushieSilGermanKvaSki
+    - id: PlushieSilTimAkkerman
     - id: PaperLawSil
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
@@ -413,3 +425,160 @@
     voice: Flark
   - type: SpeakOnTrigger
     pack: PlushieSharpSpeech
+
+# 2
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilRenaTakala
+  name: плюшевая Рене Такала
+  description: Плющевая игрушка в форме Квартирмейстера, на 65% состоит из чего-то синтетического и на 35% из натурального хлопка. От игрушки пахнет морепродуктами и нотками аммиака.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_rene
+  - type: TTS
+    voice: Tracer
+  - type: SpeakOnTrigger
+    pack: PlushieReneTakalaSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilEso
+  name: плюшевый Эсо
+  description: Плюшевая игрушка вульпканина в форме бригмедика. Пахнет фенолом. Выглядит одиноким и растерянным, словно ему чего-то не хватает…
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_eso
+  - type: TTS
+    voice: Ancano
+  - type: SpeakOnTrigger
+    pack: PlushieEsoSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilKel
+  name: плюшевый Кел
+  description: Плюшевая игрушка улыбающегося коронера, с большими голубыми глазами которые смотрят прямо в душу, от игрушки исходит резкий запах металла и ванили — как намек на то, что за этой милой улыбкой что-то скрывается, последнее что ты услышишь метнув ее в стену - «Коронерское проклятие»
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_kel
+  - type: TTS
+    voice: Aragorn
+  - type: SpeakOnTrigger
+    pack: PlushieKelSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilWeaver
+  name: плюшевый Ткач
+  description: Плюшевая игрушка немного трусливого Парамедика, который возможно спасёт ваш труп. Немного пыльная, исходит лёгкий запах сирени.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_weaver
+  - type: TTS
+    voice: Sova
+  - type: SpeakOnTrigger
+    pack: PlushieWeaverSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilEyrinLiht
+  name: плюшевая Эйрин Като
+  description: Это чёрная плюшевая плафеимка с лиловыми волосами. На этикетке написано "Сварим базу за 15 минут. Или? Без или."
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_eirin
+  - type: TTS
+    voice: Templar
+  - type: SpeakOnTrigger
+    pack: PlushieEyrinLihtSpeech
+  - type: RoarAccent
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilKelicKato1
+  name: плюшевая Келик Като
+  description: Плюшевая игрушка, на бирке написано - рыба, пахнет омега мылом.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_kelic
+  - type: SpeakOnTrigger
+    pack: PlushieKelicKatoSpeech
+  - type: RoarAccent
+  - type: TTS
+    voice: Demoman
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilKelicKato2
+  name: плюшевая Келик Като
+  description: Плюшевая игрушка, на бирке написано - рыба, пахнет омега мылом.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_kelic2
+  - type: SpeakOnTrigger
+    pack: PlushieKelicKatoSpeech
+  - type: RoarAccent
+  - type: TTS
+    voice: Demoman
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilYuliWinter
+  name: плюшевый Юлий Фон Винтер
+  description: От неё чувствуется запах трития и гари. На ощупь шереховато-мягкая.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_yliiy
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilEkaterinaAkkerman
+  name: плюшевый Екатерина Аккерман
+  description: От нее пахнет медикоментами. На ощпуь влажно-мягкая.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_ekaterina
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilYohanaWinter
+  name: плюшевый Йоханна Фон Винтер
+  description: От нее веет бюрократией. На ощупь мягкая.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_yohanna
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilGermanKvaSki
+  name: плюшевый Герман Ква'Ский
+  description: От нее веет медикоментами и пироманией. На ощупь мягкая.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_german
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilTimAkkerman
+  name: плюшевая Тимофей Аккерман
+  description: От неё чувствуется власть и ужас. На ощупь мягкая.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/sil_plushie.rsi
+    state: plushie_timofei
+  - type: SpeakOnTrigger
+    pack: PlushieTimAkkermanSpeech
