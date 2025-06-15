@@ -22,7 +22,7 @@ namespace Content.Client.Changelog
         {
             RobustXamlLoader.Load(this);
             WindowTitle.AddStyleClass(StyleBase.StyleClassLabelHeading);
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
+            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace; // Can I change this to a depen?
         }
 
         protected override void Opened()
@@ -114,13 +114,15 @@ namespace Content.Client.Changelog
     [UsedImplicitly, AnyCommand]
     public sealed class ChangelogCommand : IConsoleCommand
     {
+        [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+
         public string Command => "changelog";
         public string Description => "Opens the changelog";
         public string Help => "Usage: changelog";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<ChangelogUIController>().OpenWindow();
+            _uiManager.GetUIController<ChangelogUIController>().OpenWindow();
         }
     }
 }
