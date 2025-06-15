@@ -82,6 +82,16 @@
     Glass: 100
 
 - type: latheRecipe
+  id: TrashBagHolding
+  result: TrashBagHolding
+  completetime: 5
+  materials:
+    Steel: 1000
+    Silver: 375
+    Plasma: 750
+    Uranium: 750
+
+- type: latheRecipe
   id: Plunger
   result: Plunger
   completetime: 2
