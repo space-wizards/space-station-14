@@ -2,11 +2,11 @@ using JetBrains.Annotations;
 using Content.Shared.EntityEffects;
 using Content.Shared.Database;
 using Robust.Shared.Prototypes;
-using Content.Server.Starlight.EntityEffects.Components;
-using Content.Server.Starlight.EntityEffects.EntitySystems;
+using Content.Shared.Starlight.EntityEffects.Components;
+using Content.Shared.Starlight.EntityEffects.EntitySystems;
 using Content.Shared.Starlight.EntityEffects.Components;
 
-namespace Content.Server.Starlight.EntityEffects.Effects;
+namespace Content.Shared.Starlight.EntityEffects.Effects;
 
 [UsedImplicitly]
 public sealed partial class DissolvableReaction : EntityEffect
@@ -35,7 +35,7 @@ public sealed partial class DissolvableReaction : EntityEffect
         if (args is EntityEffectReagentArgs reagentArgs)
         {
             quantity = reagentArgs.Quantity.Float();
-            reagentArgs.EntityManager.System<DissolvableSystem>().AdjustDissolveStacks(args.TargetEntity, quantity * multiplier, dissolvable);
+            reagentArgs.EntityManager.System<SharedDissolvableSystem>().AdjustDissolveStacks(args.TargetEntity, quantity * multiplier, dissolvable);
             
             var coordinates = reagentArgs.EntityManager.System<SharedTransformSystem>().GetMapCoordinates(args.TargetEntity);
             if (reagentArgs.EntityManager.System<EntityLookupSystem>().GetEntitiesInRange<ThermiteComponent>(coordinates, 1f).Count == 0)
@@ -46,7 +46,7 @@ public sealed partial class DissolvableReaction : EntityEffect
         }
         else
         {
-            args.EntityManager.System<DissolvableSystem>().AdjustDissolveStacks(args.TargetEntity, multiplier, dissolvable);
+            args.EntityManager.System<SharedDissolvableSystem>().AdjustDissolveStacks(args.TargetEntity, multiplier, dissolvable);
             
             var coordinates = args.EntityManager.System<SharedTransformSystem>().GetMapCoordinates(args.TargetEntity);
             if (args.EntityManager.System<EntityLookupSystem>().GetEntitiesInRange<ThermiteComponent>(coordinates, 1f).Count == 0)

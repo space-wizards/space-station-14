@@ -1,35 +1,33 @@
-using Content.Shared.Inventory;
-using Robust.Shared.Physics.Components;
-using Content.Server.Starlight.EntityEffects.Components;
-using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Starlight.EntityEffects;
 using Content.Server.Administration.Logs;
-using Content.Shared.IgnitionSource;
-using Content.Shared.Database;
-using Content.Shared.Atmos;
-using Content.Shared.ActionBlocker;
-using Content.Server.Stunnable;
-using Content.Shared.Popups;
-using Robust.Shared.Timing;
-using Content.Shared.Alert;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
-using Content.Shared.Damage;
 using Content.Server.Temperature.Systems;
-using Content.Shared.Starlight.EntityEffects.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Temperature;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Alert;
+using Content.Shared.Atmos;
+using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Destructible;
+using Content.Shared.IgnitionSource;
+using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.Popups;
+using Content.Shared.Starlight.EntityEffects.Components;
+using Content.Shared.Starlight.EntityEffects.EntitySystems;
+using Content.Shared.Starlight.EntityEffects;
+using Content.Shared.Stunnable;
 using Content.Shared.Tag;
+using Content.Shared.Temperature;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Starlight.EntityEffects.EntitySystems;
 
-public sealed class DissolvableSystem : EntitySystem
+public sealed class DissolvableSystem : SharedDissolvableSystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private readonly StunSystem _stunSystem = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedIgnitionSourceSystem _ignitionSourceSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
@@ -39,17 +37,11 @@ public sealed class DissolvableSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
-    private EntityQuery<InventoryComponent> _inventoryQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-
     private readonly Dictionary<Entity<DissolvableComponent>, float> _dissolveEvets = new();
 
     public override void Initialize()
     {
         UpdatesAfter.Add(typeof(AtmosphereSystem));
-
-        _inventoryQuery = GetEntityQuery<InventoryComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
         
         SubscribeLocalEvent<ThermiteComponent, InteractUsingEvent>(OnInteractUsing);
         
@@ -82,66 +74,6 @@ public sealed class DissolvableSystem : EntitySystem
     private void OnDestruction(EntityUid uid, DissolvableComponent dissolvable, DestructionEventArgs args)
     {
         Extinguish(uid, dissolvable);
-    }
-
-    public void UpdateAppearance(EntityUid uid, DissolvableComponent? dissolvable = null, AppearanceComponent? appearance = null)
-    {
-        if (!Resolve(uid, ref dissolvable, ref appearance))
-            return;
-
-        _appearance.SetData(uid, DissolveVisuals.OnDissolve, dissolvable.OnDissolve, appearance);
-        _appearance.SetData(uid, DissolveVisuals.DissolveStacks, dissolvable.DissolveStacks, appearance);
-    }
-
-    public void AdjustDissolveStacks(EntityUid uid, float relativeFireStacks, DissolvableComponent? dissolvable = null, bool ignite = false)
-    {
-        if (!Resolve(uid, ref dissolvable))
-            return;
-
-        SetDissolveStacks(uid, dissolvable.DissolveStacks + relativeFireStacks, dissolvable, ignite);
-    }
-
-    public void SetDissolveStacks(EntityUid uid, float stacks, DissolvableComponent? dissolvable = null, bool ignite = false)
-    {
-        if (!Resolve(uid, ref dissolvable))
-            return;
-
-        dissolvable.DissolveStacks = MathF.Min(MathF.Max(dissolvable.MinimumDissolveStacks, stacks), dissolvable.MaximumDissolveStacks);
-
-        if (dissolvable.DissolveStacks <= 0)
-            Extinguish(uid, dissolvable);
-        else
-        {
-            dissolvable.OnDissolve |= ignite;
-            UpdateAppearance(uid, dissolvable);
-        }
-    }
-
-
-    public void Extinguish(EntityUid uid, DissolvableComponent? dissolvable = null)
-    {
-        if (!Resolve(uid, ref dissolvable))
-            return;
-
-        if (!dissolvable.OnDissolve || !dissolvable.CanExtinguish)
-            return;
-
-        _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(uid):entity} stopped being on dissolve damage");
-        dissolvable.OnDissolve = false;
-        dissolvable.DissolveStacks = 0;
-        
-        if (dissolvable.Effect != null)
-        {
-            EntityManager.QueueDeleteEntity(dissolvable.Effect);
-            dissolvable.Effect = null;
-        }
-
-        _ignitionSourceSystem.SetIgnited(uid, false);
-
-        var extinguished = new ExtinguishedEvent();
-        RaiseLocalEvent(uid, ref extinguished);
-
-        UpdateAppearance(uid, dissolvable);
     }
 
     public void Dissolve(EntityUid uid, EntityUid dissolveSource, DissolvableComponent? dissolvable = null, EntityUid? dissolveSourceUser = null)
@@ -199,12 +131,22 @@ public sealed class DissolvableSystem : EntitySystem
             Dissolve(dissolveableEntity, dissolveableEntity, dissolvable);
         }
         _dissolveEvets.Clear();
+        
+        var toProcess = new List<EntityUid>();
 
         var query = EntityQueryEnumerator<DissolvableComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var dissolvable, out _))
         {
+            toProcess.Add(uid);
+        }
+
+        foreach (var uid in toProcess)
+        {
+            if (!TryComp(uid, out DissolvableComponent? dissolvable))
+                continue;
+
             if (_timing.CurTime < dissolvable.LastTimeUpdated + dissolvable.UpdateDelay)
-                return;
+                continue;
 
             dissolvable.LastTimeUpdated = _timing.CurTime;
 
@@ -236,7 +178,9 @@ public sealed class DissolvableSystem : EntitySystem
                 AdjustDissolveStacks(uid, dissolvable.DissolveStacksFade * (dissolvable.Resisting ? 10f : 1f), dissolvable, dissolvable.OnDissolve);
             }
             else
+            {
                 Extinguish(uid, dissolvable);
+            }
         }
     }
 }
