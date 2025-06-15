@@ -7478,4 +7478,11 @@ Entries:
   id: 1033
   time: '2025-06-15T04:18:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/709
+- author: AndrewTateOfficialSS14
+  changes:
+  - message: Nitrous Oxide has a longer sleep effect now.
+    type: Tweak
+  id: 1034
+  time: '2025-06-15T04:20:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/782
 
