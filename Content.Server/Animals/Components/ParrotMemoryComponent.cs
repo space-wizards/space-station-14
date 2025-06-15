@@ -25,14 +25,14 @@ public sealed partial class ParrotMemoryComponent : Component
     /// Time after which another attempt can be made at learning a phrase
     /// </summary>
     [DataField]
-    public TimeSpan LearnCooldown = TimeSpan.FromSeconds(60f);
+    public TimeSpan LearnCooldown = TimeSpan.FromMinutes(1);
 
     /// <summary>
     /// Next time at which the parrot can attempt to learn something
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
-    public TimeSpan NextLearnInterval = TimeSpan.FromSeconds(0.0f);
+    public TimeSpan NextLearnInterval = TimeSpan.Zero;
 
     /// <summary>
     /// The number of speech entries that are remembered

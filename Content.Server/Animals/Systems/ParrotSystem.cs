@@ -9,7 +9,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Chat;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
-using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
