@@ -107,10 +107,14 @@ public abstract partial class SharedCPRSystem : EntitySystem
 
         // assist respiration of the target
         var assist = EnsureComp<AssistedRespirationComponent>(ent);
-        assist.AssistedUntil = Timing.CurTime + TimeSpan.FromSeconds(CPRDoAfterDelay * 2);
+
+        var newUntil = Timing.CurTime + TimeSpan.FromSeconds(CPRDoAfterDelay * 2);
+        // comparing just in case other future sources may provide a longer timeframe of assisted respiration
+        if (newUntil > assist.AssistedUntil)
+            assist.AssistedUntil = newUntil;
 
         // burst of oxygen when not critical anymore
-        if (thresholds.CurrentThresholdState != MobState.Critical) //TODO:ERRANT might not be needed anymore?
+        if (thresholds.CurrentThresholdState != MobState.Critical)
         {
             _damage.TryChangeDamage(ent, cpr.BonusHeal, interruptsDoAfters: false, damageable: damage, ignoreResistances: true);
         }
