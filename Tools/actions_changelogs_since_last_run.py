@@ -7,6 +7,7 @@ import requests
 import yaml
 from typing import Any, Iterable
 from datetime import datetime
+import time
 
 # Discord and GitHub settings
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
@@ -67,7 +68,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
     for author, group in itertools.groupby(entries, key=lambda x: x["author"]):
         group = list(group)
         try:
-            time = datetime.strptime(group[0]["time"], "%Y-%m-%dT%H:%M:%S.%f%z")
+            entry_time = datetime.strptime(group[0]["time"], "%Y-%m-%dT%H:%M:%S.%f%z")
         except ValueError:
             print(f"Invalid time format for entry by {author}: {group[0]['time']}")
             continue
@@ -76,7 +77,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
             "title": author,
             "description": "",
             "fields": [],
-            "timestamp": time.isoformat(),
+            "timestamp": entry_time.isoformat(),
             "color": 0x7289DA,
         }
 
