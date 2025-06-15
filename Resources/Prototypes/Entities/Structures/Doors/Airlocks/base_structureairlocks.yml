@@ -159,7 +159,7 @@
   - type: PlacementReplacement
     key: walls
   - type: IconSmooth
-    key: walls
+    key: airlock
     mode: NoSprite
   - type: PaintableAirlock
     group: Standard
