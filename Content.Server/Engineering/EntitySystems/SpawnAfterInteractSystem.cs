@@ -64,7 +64,7 @@ namespace Content.Server.Engineering.EntitySystems
                 return;
 
             if (TryComp<StackComponent>(uid, out var stackComp)
-                && component.RemoveOnInteract && !_stackSystem.Use((uid, stackComp), 1))
+                && component.RemoveOnInteract && !_stackSystem.TryUse((uid, stackComp), 1))
             {
                 return;
             }

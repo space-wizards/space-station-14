@@ -45,7 +45,7 @@ public sealed partial class CableSystem
                 return;
         }
 
-        if (!_stack.Use((placer, null), 1))
+        if (!_stack.TryUse(placer.Owner, 1))
             return;
 
         var newCable = EntityManager.SpawnEntity(component.CablePrototypeId, _map.GridTileToLocal(gridUid, grid, snapPos));

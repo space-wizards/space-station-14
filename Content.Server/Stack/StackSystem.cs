@@ -52,7 +52,7 @@ public sealed class StackSystem : SharedStackSystem
     ///     Spawns a new entity and moves an amount to it from ent.
     /// </summary>
     /// <param name="amount"> How much to move to the new entity. </param>
-    /// <returns>Null if StackComponent doesn't resolve, or amount is greater than ent.Comp.Count.</returns>
+    /// <returns>Null if StackComponent doesn't resolve, or amount to move is greater than ent has.</returns>
     [PublicAPI]
     public EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
     {
@@ -60,7 +60,7 @@ public sealed class StackSystem : SharedStackSystem
             return null;
 
         // Try to remove the amount of things we want to split from the original stack...
-        if (!Use(ent, amount))
+        if (!TryUse(ent, amount))
             return null;
 
         // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
@@ -98,9 +98,9 @@ public sealed class StackSystem : SharedStackSystem
     [PublicAPI]
     public EntityUid SpawnAtPosition(int count, StackPrototype prototype, EntityCoordinates spawnPosition)
     {
-        // Set the output result parameter to the new stack entity...
         var entity = SpawnAtPosition(prototype.Spawn, spawnPosition);  // The real SpawnAtPosition
-        var stack = Comp<StackComponent>(entity);
+        // There should always be a StackComponent, but make sure
+        var stack = EnsureComp<StackComponent>(entity);
 
         // And finally, set the correct amount!
         SetCount((entity, stack), count);
@@ -120,6 +120,9 @@ public sealed class StackSystem : SharedStackSystem
     ///     This would spawn 3 stacks of 30 and 1 stack of 7.
     /// </summary>
     /// <returns>The entities spawned.</returns>
+    /// <remarks>
+    ///     If the entity to spawn doesn't have stack component this will spawn a bunch of single items.
+    /// </remarks>
     private List<EntityUid> SpawnMultipleAtPosition(EntProtoId entityPrototype, List<int> amounts, EntityCoordinates spawnPosition)
     {
         if (amounts.Count <= 0)
@@ -185,7 +188,8 @@ public sealed class StackSystem : SharedStackSystem
     public EntityUid SpawnNextToOrDrop(int amount, StackPrototype prototype, EntityUid source)
     {
         var entity = SpawnNextToOrDrop(prototype.Spawn, source); // The real SpawnNextToOrDrop
-        var stack = Comp<StackComponent>(entity);
+        // There should always be a StackComponent, but make sure
+        var stack = EnsureComp<StackComponent>(entity);
 
         SetCount((entity, stack), amount);
         return entity;

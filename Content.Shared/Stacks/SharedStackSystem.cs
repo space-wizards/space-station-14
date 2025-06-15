@@ -179,6 +179,9 @@ public abstract class SharedStackSystem : EntitySystem
     ///     Sets a stack to an amount. Server will delete ent if stack count is 0.
     ///     Clamps between zero and the stack's max size.
     /// </summary>
+    /// <remarks>
+    ///     All setter functions should end up here.
+    /// </remarks>
     public virtual void SetCount(Entity<StackComponent?> ent, int amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
@@ -213,19 +216,6 @@ public abstract class SharedStackSystem : EntitySystem
         SetCount((uid, component), amount);
     }
 
-    /// <summary>
-    ///     Reduce a stack by an amount, deleting it if stack count is 0.
-    /// </summary>
-    /// <seealso cref="Use"/>
-    [PublicAPI]
-    public void LowerCount(Entity<StackComponent?> ent, int amount)
-    {
-        if (!Resolve(ent.Owner, ref ent.Comp))
-            return;
-
-        SetCount(ent, ent.Comp.Count - amount);
-    }
-
     // TODO
     /// <summary>
     ///     Increase a stack by an amount, and spawn new stacks if above the max.
@@ -233,11 +223,29 @@ public abstract class SharedStackSystem : EntitySystem
     // public List<EntityUid> AddCountAndSpawn(Entity<StackComponent?> ent, int amount);
 
     /// <summary>
+    ///     Reduce a stack by an amount.
+    /// </summary>
+    /// <param name="ignoreUnlimited">If true, reduce this stack even if it's unlimited.</param>
+    /// <seealso cref="TryUse"/>
+    [PublicAPI]
+    public void LowerCount(Entity<StackComponent?> ent, int amount, bool ignoreUnlimited = false)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
+
+        // Don't reduce unlimited stacks unless explicit
+        if (!ignoreUnlimited && ent.Comp.Unlimited)
+            return;
+
+        SetCount(ent, ent.Comp.Count - amount);
+    }
+
+    /// <summary>
     ///     Try to use up an amount of this stack.
     /// </summary>
-    /// <returns>True if the stacks were used.</returns>
+    /// <returns>Always true if the stack is unlimited. Otherwise true if the stacks were removed.</returns>
     [PublicAPI]
-    public bool Use(Entity<StackComponent?> ent, int amount)
+    public bool TryUse(Entity<StackComponent?> ent, int amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
             return false;
@@ -261,7 +269,7 @@ public abstract class SharedStackSystem : EntitySystem
     [Obsolete("Obsolete, Use Entity<T>")]
     public bool Use(EntityUid uid, int amount, StackComponent? stack = null)
     {
-        return Use((uid, stack), amount);
+        return TryUse((uid, stack), amount);
     }
 
     #endregion
@@ -272,7 +280,7 @@ public abstract class SharedStackSystem : EntitySystem
     /// Gets the amount of items in a stack. If it cannot be stacked, returns 1.
     /// </summary>
     /// <remarks>
-    /// Use when you don't know if the entity is a stack. Otherwise use Comp.Count
+    /// Use when you don't know if the entity is a stack. Otherwise use Comp.Count.
     /// </remarks>
     [PublicAPI]
     public int GetCount(Entity<StackComponent?> ent)
