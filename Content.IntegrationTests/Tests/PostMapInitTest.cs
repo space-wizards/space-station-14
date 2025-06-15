@@ -74,7 +74,7 @@ namespace Content.IntegrationTests.Tests
             "Elkridge",
             "Relic",
             "dm01-entryway",
-
+            "Exo",
         };
 
         /// <summary>
