@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Oxygen, Carbon Dioxide, Nitrous Oxide and Frezon can now metabolize when
-      digested/injected.
-    type: Tweak
-  id: 8163
-  time: '2025-04-13T15:21:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31648
 - author: ArchRBX
   changes:
   - message: Handheld GPS's can now be examined to read their displays
@@ -3908,3 +3900,10 @@
   id: 8675
   time: '2025-06-14T18:29:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38150
+- author: FungiFellow
+  changes:
+  - message: Syndie-Cats now have Syndicate ID access.
+    type: Fix
+  id: 8676
+  time: '2025-06-15T08:27:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38318
