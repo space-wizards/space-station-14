@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling;
 
-public abstract partial class SharedChangelingIdentitySystem : EntitySystem
+public sealed class SharedChangelingIdentitySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;

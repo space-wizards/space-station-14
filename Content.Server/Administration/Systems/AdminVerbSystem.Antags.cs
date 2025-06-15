@@ -37,7 +37,6 @@ public sealed partial class AdminVerbSystem
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultThiefRule = "Thief";
 
-
     private EntProtoId<ChangelingRuleComponent> DefaultChangelingRule = "Changeling";
 
     [ValidatePrototypeId<StartingGearPrototype>]

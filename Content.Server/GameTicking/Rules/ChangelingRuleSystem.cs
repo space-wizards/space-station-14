@@ -4,6 +4,9 @@ using Content.Shared.Changeling;
 
 namespace Content.Server.GameTicking.Rules;
 
+/// <summary>
+/// Game rule system for Changelings
+/// </summary>
 public sealed class ChangelingRuleSystem : GameRuleSystem<ChangelingRuleComponent>
 {
     public override void Initialize()

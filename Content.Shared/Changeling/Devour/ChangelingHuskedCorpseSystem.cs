@@ -1,13 +1,10 @@
 ﻿using Content.Shared.Administration.Logs;
-using Content.Shared.Changeling.Transform;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects.Components.Localization;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Changeling.Devour;

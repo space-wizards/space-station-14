@@ -12,18 +12,17 @@ using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Content.Shared.Traits.Assorted;
+using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
-using Robust.Shared.Serialization;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Shared.Changeling.Devour;
 
-public abstract partial class SharedChangelingDevourSystem : EntitySystem
+public sealed class SharedChangelingDevourSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -39,6 +38,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     public override void Initialize()
     {
@@ -236,11 +236,16 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         }
         Dirty(ent);
     }
+    private void RipClothing(EntityUid victim, Entity<ButcherableComponent> item)
+    {
+        var spawnEntities = EntitySpawnCollection.GetSpawns(item.Comp.SpawnedEntities, _robustRandom);
 
-    protected virtual void RipClothing(EntityUid uid, Entity<ButcherableComponent> item) { }
+        foreach (var proto in spawnEntities)
+        {
+            // TODO: once predictedRandom is in, make this a Coordinate offset of 0.25f from the victims position
+            PredictedSpawnNextToOrDrop(proto, victim);
+        }
 
+        QueueDel(item);
+    }
 }
-
-
-
-
