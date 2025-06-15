@@ -20,6 +20,7 @@
     selectedMode: FullAuto
     availableModes:
       - FullAuto
+      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
   - type: ChamberMagazineAmmoProvider
@@ -65,7 +66,6 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
-    fireRate: 5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
   - type: ChamberMagazineAmmoProvider
@@ -187,7 +187,7 @@
       gun_chamber: !type:ContainerSlot
   - type: MagazineVisuals
     magState: mag
-    steps: 1
+    steps: 5
     zeroVisible: true
   - type: Appearance
 
@@ -198,11 +198,11 @@
   description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi
+    sprite: Objects/Fun/Foam/foam_rifle.rsi
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi
+    sprite: Objects/Fun/Foam/foam_rifle.rsi
   - type: Item
-    sprite: Objects/Weapons/Guns/Rifles/foam_rifle_inhand_64x.rsi
+    sprite: Objects/Fun/Foam/foam_rifle_inhand_64x.rsi
   - type: BallisticAmmoProvider
     whitelist:
       tags:
