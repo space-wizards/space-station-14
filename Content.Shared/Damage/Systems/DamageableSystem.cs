@@ -205,7 +205,7 @@ namespace Content.Shared.Damage
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
 
-                Log.Debug("DamageModifyEvent");
+                //Log.Debug("DamageModifyEvent");
                 var ev = new DamageModifyEvent(damage, origin);
                 RaiseLocalEvent(uid.Value, ev);
                 damage = ev.Damage;
@@ -358,8 +358,11 @@ namespace Content.Shared.Damage
 
             // Has the damage actually changed?
             DamageSpecifier newDamage = new() { DamageDict = new(state.DamageDict) };
-            var delta = component.Damage - newDamage;
+            var delta = newDamage - component.Damage;
             delta.TrimZeros();
+            Log.Debug($"newDamage {newDamage}");
+            Log.Debug($"component {component.Damage}");
+            Log.Debug($"delta {delta}");
 
             if (!delta.Empty)
             {
