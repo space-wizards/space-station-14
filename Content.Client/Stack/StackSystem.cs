@@ -28,6 +28,10 @@ namespace Content.Client.Stack
 
             base.SetCount(uid, amount, component);
 
+            // base.SetCount might be deleting this
+            if (EntityManager.IsQueuedForDeletion(uid))
+                return;
+
             if (component.Lingering &&
                 TryComp<SpriteComponent>(uid, out var sprite))
             {
@@ -40,13 +44,6 @@ namespace Content.Client.Stack
                 {
                     _sprite.LayerSetColor((uid, sprite), i, color);
                 }
-            }
-
-            // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
-            if (component.Count <= 0 && !component.Lingering)
-            {
-                Xform.DetachEntity(uid, Transform(uid));
-                return;
             }
 
             component.UiUpdateNeeded = true;

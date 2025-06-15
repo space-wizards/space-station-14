@@ -1,5 +1,4 @@
 using Content.Server.Light.Components;
-using Content.Server.Stack;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IgnitionSource;
@@ -27,7 +26,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly SharedStackSystem _stackSystem = default!;
         [Dependency] private readonly NameModifierSystem _nameModifier = default!;
 
         private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
