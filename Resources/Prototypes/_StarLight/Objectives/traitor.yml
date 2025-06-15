@@ -1,4 +1,4 @@
-﻿# kill
+﻿# Teach a Lesson
 - type: entity
   parent: [BaseTraitorObjective, BaseTeachALessonObjective]
   id: TeachRandomPersonObjective
@@ -14,14 +14,13 @@
 - type: entity
   parent: [BaseTraitorObjective, BaseTeachALessonObjective]
   id: TeachRandomHeadObjective
-  description: We need this head gone and you probably know why. Good luck, agent.
+  description: Ensure this head dies at least once this shift. They know what they did.
   components:
     - type: Objective
-      # technically its still possible for TeachRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
+      # technically it's still possible for TeachRandomPersonObjective to roll a head but this is guaranteed, so higher difficulty
       difficulty: 2.5
       # killing 1 head is enough
       unique: true
     - type: TargetObjective
       title: objective-condition-teach-lesson-title
     - type: PickRandomHead
-    - type: KillPersonCondition
