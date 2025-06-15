@@ -65,7 +65,12 @@ public sealed class WoolySystem : EntitySystem
             if (_mobState.IsDead(uid))
                 continue;
 
-            if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution, out var solution))
+            if (!_solutionContainer.ResolveSolution(
+                uid,
+                wooly.SolutionName,
+                ref wooly.Solution,
+                out var solution)
+                )
                 continue;
 
             if (solution.AvailableVolume == 0)
@@ -111,7 +116,7 @@ public sealed class WoolySystem : EntitySystem
     ///     This function checks the entity's wool solution and either disables or enables the wool layer (if one exists).
     /// </summary>
     /// <param name="ent">the entity containing a wooly component that will be checked.</param>
-    /// <param name="sol">a resolved solution object the prescence of which will be checked.
+    /// <param name="sol">a resolved solution object the presence of which will be checked.
     private void UpdateWoolLayer(Entity<WoolyComponent> ent, Solution? sol = null)
     {
         // If the sol parameter hasn't been provided, we'll try to grab the solution from inside the animal instead.
@@ -149,12 +154,12 @@ public sealed class WoolySystem : EntitySystem
         if (solution.Volume.Value <= 0 || mState.CurrentState == MobState.Dead || mState.CurrentState == MobState.Critical)
         {
             // Remove wool layer
-            _appearance.SetData(ent.Owner, ToggleVisuals.Toggled, false, appearance);
+            _appearance.SetData(ent.Owner, ToggleableVisuals.Enabled, false, appearance);
         }
         else
         {
             // Add wool layer
-            _appearance.SetData(ent.Owner, ToggleVisuals.Toggled, true, appearance);
+            _appearance.SetData(ent.Owner, ToggleableVisuals.Enabled, true, appearance);
         }
     }
 

@@ -1163,6 +1163,9 @@
           Quantity: 30
       wool:
         maxVol: 250
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 25
   - type: Udder
     reagentId: MilkSheep
     quantityPerUpdate: 25
