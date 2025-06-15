@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: jtfg-dev
-  changes:
-  - message: For the whimsical and childish of temperament, and certainly not for
-      anybody seriously working aboard a space station wearing anything but clown
-      shoes, you can now spread Relentless Positivity (in the traits screen!). Please
-      do do that ever again!
-    type: Add
-  id: 1333
-  time: '2025-03-17T03:57:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1992
 - author: Sha-Seng
   changes:
   - message: Thaven blood now works for heretics, artifacts, subjuzine, and centrifuges
@@ -4202,3 +4192,14 @@
   id: 1832
   time: '2025-06-15T02:29:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2754
+- author: DinnerCalzone
+  changes:
+  - message: Lawyer's Security Officer playtime requirement has been modified to be
+      5 hours of departmental Security playtime
+    type: Tweak
+  - message: Security Cadet lockout and Security Officer playtime requirements have
+      been adjusted to be more in-line with other departmental jobs.
+    type: Tweak
+  id: 1833
+  time: '2025-06-15T03:38:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2768
