@@ -12,7 +12,7 @@
       anchored: true
     - type: EmitSoundOnSpawn
       sound:
-        path: /Audio/_Starlight/Effects/Shadowkin/shadeskip.ogg
+        path: /Audio/_Starlight/Effects/Shadekin/shadeskip.ogg
     - type: TimedDespawn
       lifetime: 30
     - type: Physics

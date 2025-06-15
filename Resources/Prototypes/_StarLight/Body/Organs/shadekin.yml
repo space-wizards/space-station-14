@@ -85,6 +85,7 @@
 - type: entity
   id: OrganShadekinCore
   parent: BaseItem
+  name: Shadekin Core
   description: A core of a shadekin, a mysterious and powerful organ that seems to be the source of their energy.
   components:
   - type: Sprite
