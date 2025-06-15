@@ -185,6 +185,9 @@ namespace Content.Shared.Damage
                 return damage;
             }
 
+            Log.Debug($"BeforeDamageChangedEvent {uid} {GetNetEntity(uid)} {Name(uid.Value)} {Prototype(uid.Value)}");
+            Log.Debug($"{damage}");
+
             var before = new BeforeDamageChangedEvent(damage, origin);
             RaiseLocalEvent(uid.Value, ref before);
 
@@ -202,6 +205,7 @@ namespace Content.Shared.Damage
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
 
+                Log.Debug("DamageModifyEvent");
                 var ev = new DamageModifyEvent(damage, origin);
                 RaiseLocalEvent(uid.Value, ev);
                 damage = ev.Damage;
@@ -235,6 +239,7 @@ namespace Content.Shared.Damage
                 delta.DamageDict[type] = newValue - oldValue;
             }
 
+            Log.Debug($"delta {delta}");
             if (delta.DamageDict.Count > 0)
                 DamageChanged(uid.Value, damageable, delta, interruptsDoAfters, origin);
 
