@@ -105,8 +105,12 @@ public abstract partial class SharedCPRSystem : EntitySystem
         _audio.PlayPredicted(cpr.Sound, ent.Owner, args.User);
         _damage.TryChangeDamage(ent, cpr.Change, interruptsDoAfters: false, damageable: damage, ignoreResistances: true);
 
+        // assist respiration of the target
+        var assist = EnsureComp<AssistedRespirationComponent>(ent);
+        assist.AssistedUntil = Timing.CurTime + TimeSpan.FromSeconds(CPRDoAfterDelay * 2);
+
         // burst of oxygen when not critical anymore
-        if (thresholds.CurrentThresholdState != MobState.Critical)
+        if (thresholds.CurrentThresholdState != MobState.Critical) //TODO:ERRANT might not be needed anymore?
         {
             _damage.TryChangeDamage(ent, cpr.BonusHeal, interruptsDoAfters: false, damageable: damage, ignoreResistances: true);
         }

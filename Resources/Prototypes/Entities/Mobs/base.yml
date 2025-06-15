@@ -219,7 +219,6 @@
   - type: CPR
     change:
       types:
-        Asphyxiation: -2
         Bloodloss: -0.5
         Blunt: 0.2
     bonusHeal:
