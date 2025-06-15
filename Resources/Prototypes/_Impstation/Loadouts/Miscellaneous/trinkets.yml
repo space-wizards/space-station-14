@@ -26,6 +26,18 @@
     - CigPackSpirits
 
 - type: loadout
+  id: VapeSwappable
+  storage:
+    back:
+    - VapeSwappable
+
+- type: loadout
+  id: VapeCart
+  storage:
+    back:
+    - WaterVapeCart
+
+- type: loadout
   id: TutorialAI_Newcomer #imp. <15 hours.
   effects:
   - !type:GroupLoadoutEffect
@@ -51,6 +63,12 @@
   storage:
     back:
     - BoxFolderPun
+
+- type: loadout
+  id: Clipboard
+  storage:
+    back:
+    - BoxFolderClipboard
 
 - type: loadout
   id: HarmonicaInstrument
@@ -123,6 +141,12 @@
   storage:
     back:
     - HeartLocketSilver
+
+- type: loadout
+  id: WristwatchTrinket
+  storage:
+    back:
+    - WristwatchTrinket
 
 - type: loadout
   id: GoldRingTrinket

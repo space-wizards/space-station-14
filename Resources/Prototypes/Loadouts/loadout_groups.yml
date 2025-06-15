@@ -18,6 +18,8 @@
   - CigPackNewport #imp
   - CigPackRed
   - CigPackSpirits #imp
+  - VapeSwappable #imp
+  - VapeCart #imp
   - ClothingHeadHatKippahBlueAndGold #imp
   - ClothingHeadHatKippahSimple #imp
   - ClothingHeadHatKippahWhiteAndBlue #imp
@@ -47,6 +49,7 @@
   - FolderHamster #imp
   - FolderMime #imp
   - FolderPun #imp
+  - Clipboard # imp
   - Hairflower
   - PanFluteInstrument #imp
   - Headphones
@@ -58,6 +61,7 @@
   - PlushieDollHair #imp
   - PlushieLizard
   - PlushieSpaceLizard
+  - WristwatchTrinket #imp
   - GoldRingTrinket #imp
   - SilverRingTrinket #imp
   - TowelColorBlack
