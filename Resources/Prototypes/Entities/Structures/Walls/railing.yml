@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseStructureDissolvable ]
   id: BaseRailing
   abstract: true
   name: railing

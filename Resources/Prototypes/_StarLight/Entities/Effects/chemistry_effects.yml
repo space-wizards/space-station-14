@@ -39,3 +39,8 @@
         - ItemMask
         layer:
         - HighImpassable
+  - type: AmbientSound
+    volume: 1
+    range: 7
+    sound:
+      path: /Audio/_Starlight/Effects/thermite_burning.ogg
