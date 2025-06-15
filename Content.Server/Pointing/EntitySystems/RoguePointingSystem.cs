@@ -32,7 +32,7 @@ namespace Content.Server.Pointing.EntitySystems
             var angering = _random.Pick(targets);
             angering.Comp.RemainingAnger -= 1;
             if (angering.Comp.RemainingAnger <= 0)
-                RemComp<PointingArrowAngeringComponent>(angering);
+                RemComp<PointingArrowAngeringComponent>(uid);
 
             return angering.Owner;
         }
