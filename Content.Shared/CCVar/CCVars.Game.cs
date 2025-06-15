@@ -348,14 +348,14 @@ public sealed partial class CCVars
     ///     Defaults to 2 minutes.
     /// </summary>
     public static readonly CVarDef<float> RoundRestartTime =
-    CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
+        CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
 
     /// <summary>
     ///     The time in seconds that the server should wait before restarting the round.
     ///     Defaults to 2 minutes.
     /// </summary>
     public static readonly CVarDef<float> NukeRoundRestartTime =
-    CVarDef.Create("game.nuke_round_restart_time", 20f, CVar.SERVERONLY);
+        CVarDef.Create("game.nuke_round_restart_time", 20f, CVar.SERVERONLY);
 
     /// <summary>
     ///     The prototype to use for secret weights.
