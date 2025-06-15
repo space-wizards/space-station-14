@@ -3107,10 +3107,6 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
-  - type: Access
-    tags: 
-    - NuclearOperative
-    - SyndicateAgent
   - type: MeleeWeapon
     altDisarm: false
     angle: 0

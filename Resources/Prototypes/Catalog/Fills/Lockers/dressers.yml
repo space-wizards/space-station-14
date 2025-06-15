@@ -110,3 +110,6 @@
       - id: ClothingHeadHatBeretWarden
       - id: ClothingUniformJumpskirtWarden
       - id: ClothingUniformJumpsuitWarden
+      - id: ClothingOuterWinterWarden
+      - id: ClothingHandsGlovesColorRed
+      - id: ClothingHandsGlovesColorBlack
