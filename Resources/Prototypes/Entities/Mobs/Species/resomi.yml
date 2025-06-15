@@ -5,7 +5,9 @@
   abstract: true
   components:
   - type: Absorbable
-  - type: ResomiSkill
+  - type: ActionGrant
+    actions:
+    - JumpResomi
   - type: DamageVisuals
     thresholds: [ 10, 30, 50, 70]
     targetLayers:

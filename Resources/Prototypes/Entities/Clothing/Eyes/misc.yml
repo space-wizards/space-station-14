@@ -44,7 +44,7 @@
       sprite: Clothing/Eyes/Glasses/welding.rsi
       layers:
       - state: icon
-        map: [ "enum.ToggleVisuals.Layer" ]
+        map: [ "enum.ToggleableVisuals.Layer" ]
     - type: Clothing
       sprite: Clothing/Eyes/Glasses/welding.rsi
     - type: ItemToggle # Welding mask starts in an activated state
@@ -55,8 +55,8 @@
     - type: WeldingMask
     - type: GenericVisualizer
       visuals:
-        enum.ToggleVisuals.Toggled:
-          enum.ToggleVisuals.Layer:
+        enum.ToggleableVisuals.Enabled:
+          enum.ToggleableVisuals.Layer:
             True: {state: icon}
             False: {state: icon-up}
     - type: ComponentToggler

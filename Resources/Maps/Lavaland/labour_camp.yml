@@ -492,8 +492,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         323:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 323
     components:
     - type: Transform
@@ -504,8 +503,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         321:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassLocked
   entities:
   - uid: 320
@@ -518,8 +516,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         322:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 322
     components:
     - type: Transform
@@ -530,8 +527,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         320:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalLocked
   entities:
   - uid: 324
@@ -544,8 +540,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         325:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 325
     components:
     - type: Transform
@@ -556,8 +551,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         324:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
 - proto: AirlockMaintLocked
   entities:
   - uid: 303
@@ -2042,8 +2036,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         326:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 278
     components:
     - type: Transform
@@ -2052,8 +2045,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         326:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: Sink
   entities:
   - uid: 198

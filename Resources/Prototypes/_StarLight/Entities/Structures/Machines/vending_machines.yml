@@ -213,8 +213,10 @@
     - type: Sprite
       sprite: _Starlight/Structures/abductor_dispencer.rsi
       layers:
-      - state: icon
-        map: ["base"]
+      - state: "icon"
+        map: ["enum.VendingMachineVisualLayers.Base"]
+      - state: "unshaded"
+        map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
     - type: WirelessNetworkConnection
       range: 200
     - type: AbductorDispencer
