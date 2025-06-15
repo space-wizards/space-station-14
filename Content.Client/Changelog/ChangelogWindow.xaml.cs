@@ -16,14 +16,13 @@ namespace Content.Client.Changelog
     public sealed partial class ChangelogWindow : FancyWindow
     {
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
-        [Dependency] private readonly IStylesheetManager _sheetManager = default!;
         [Dependency] private readonly ChangelogManager _changelog = default!;
 
         public ChangelogWindow()
         {
             RobustXamlLoader.Load(this);
             WindowTitle.AddStyleClass(StyleBase.StyleClassLabelHeading);
-            Stylesheet = _sheetManager.SheetSpace;
+            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
         }
 
         protected override void Opened()
