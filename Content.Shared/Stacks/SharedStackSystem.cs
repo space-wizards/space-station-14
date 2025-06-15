@@ -61,26 +61,24 @@ public abstract class SharedStackSystem : EntitySystem
     /// <param name="amount">Number of stacks to move from the donor.</param>
     /// <returns>True if transferred is greater than 0.</returns>
     [PublicAPI]
-    public bool TryMergeStacks(Entity<StackComponent?> donorEnt,
-                                Entity<StackComponent?> recipientEnt,
+    public bool TryMergeStacks(Entity<StackComponent?> donor,
+                                Entity<StackComponent?> recipient,
                                 out int transferred,
                                 int? amount = null)
     {
-        var (donor, donorStack) = donorEnt;
-        var (recipient, recipientStack) = recipientEnt;
         transferred = 0;
 
         if (donor == recipient)
             return false;
 
-        if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
+        if (!Resolve(recipient, ref recipient.Comp, false) || !Resolve(donor, ref donor.Comp, false))
             return false;
 
-        if (recipientStack.StackTypeId != donorStack.StackTypeId)
+        if (recipient.Comp.StackTypeId != donor.Comp.StackTypeId)
             return false;
 
         // The most we can transfer
-        transferred = Math.Min(donorStack.Count, GetAvailableSpace(recipientStack));
+        transferred = Math.Min(donor.Comp.Count, GetAvailableSpace(recipient.Comp));
         if (transferred <= 0)
             return false;
 
@@ -88,8 +86,8 @@ public abstract class SharedStackSystem : EntitySystem
         if (amount != null && amount > 0)
             transferred = Math.Min(transferred, (int)amount);
 
-        SetCount(donorEnt, donorStack.Count - transferred);
-        SetCount(recipientEnt, recipientStack.Count + transferred);
+        SetCount(donor, donor.Comp.Count - transferred);
+        SetCount(recipient, recipient.Comp.Count + transferred);
         return true;
     }
 
@@ -130,6 +128,7 @@ public abstract class SharedStackSystem : EntitySystem
     {
         TryMergeToHands((item, itemStack), (user, hands));
     }
+
     /// <summary>
     /// Donor entity merges stacks into contacting entities.
     /// Deletes donor if all stacks are used.
@@ -138,10 +137,10 @@ public abstract class SharedStackSystem : EntitySystem
     [PublicAPI]
     public bool TryMergeToContacts(Entity<StackComponent?, TransformComponent?> donor)
     {
-        if (!Resolve(donor, ref donor.Comp1, ref donor.Comp2, false))
+        var (uid, stack, xform) = donor; // sue me
+        if (!Resolve(uid, ref stack, ref xform, false))
             return false;
 
-        var (uid, stack, xform) = (donor.Owner, donor.Comp1, donor.Comp2); // sue me
         var map = xform.MapID;
         var bounds = _physics.GetWorldAABB(uid);
         var intersecting = new HashSet<Entity<StackComponent>>();
@@ -209,7 +208,8 @@ public abstract class SharedStackSystem : EntitySystem
         // Server-side override deletes the entity if count == 0
     }
 
-    // TODO
+    // TODO remove
+    /// <inheritdoc cref="SharedStackSystem.SetCount"/>
     [Obsolete("Obsolete, Use Entity<T>")]
     public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
     {
@@ -273,7 +273,6 @@ public abstract class SharedStackSystem : EntitySystem
     }
 
     #endregion
-
     #region Getters
 
     /// <summary>
@@ -404,7 +403,7 @@ public abstract class SharedStackSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Used on client to set transparency for a lingering stack.
+    ///     Used on client to set visuals for a lingering stack.
     /// </summary>
     protected virtual void UpdateLingering(Entity<StackComponent> ent)
     {

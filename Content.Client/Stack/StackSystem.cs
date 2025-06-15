@@ -7,6 +7,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Stack;
 
+/// <summary>
+///     Client system for handling stacks of like entities.
+/// </summary>
 [UsedImplicitly]
 public sealed class StackSystem : SharedStackSystem
 {
@@ -21,13 +24,7 @@ public sealed class StackSystem : SharedStackSystem
         Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent));
     }
 
-    /// <summary>
-    ///     Sets a stack to an amount. Server will delete ent if stack count is 0.
-    ///     Client sets the visuals for a lingering stack.
-    /// </summary>
-    /// <remarks>
-    ///     Will not set the amount higher than the stack's max size.
-    /// </remarks>
+    /// <inheritdoc cref="SharedStackSystem.SetCount"/>
     public override void SetCount(Entity<StackComponent?> ent, int amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
@@ -36,8 +33,20 @@ public sealed class StackSystem : SharedStackSystem
         base.SetCount(ent, amount);
 
         UpdateLingering((ent.Owner, ent.Comp));
+
+        // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
+        if (ent.Comp.Count <= 0 && !ent.Comp.Lingering)
+        {
+            Xform.DetachEntity(ent.Owner, Transform(ent.Owner));
+            return;
+        }
+
+        ent.Comp.UiUpdateNeeded = true;
     }
 
+    /// <summary>
+    ///     Updates the visuals for lingering stacks.
+    /// </summary>
     protected override void UpdateLingering(Entity<StackComponent> ent)
     {
         if (ent.Comp.Lingering &&
@@ -53,15 +62,6 @@ public sealed class StackSystem : SharedStackSystem
                 _sprite.LayerSetColor((ent.Owner, sprite), i, color);
             }
         }
-
-        // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
-        if (ent.Comp.Count <= 0 && !ent.Comp.Lingering)
-        {
-            Xform.DetachEntity(ent.Owner, Transform(ent.Owner));
-            return;
-        }
-
-        ent.Comp.UiUpdateNeeded = true;
     }
 
     [Obsolete("Obsolete, Use Entity<T>")]
@@ -69,6 +69,8 @@ public sealed class StackSystem : SharedStackSystem
     {
         SetCount((uid, component), amount);
     }
+
+    #region Event Handlers
 
     private void OnAppearanceChange(Entity<StackComponent> ent, ref AppearanceChangeEvent args)
     {
@@ -142,4 +144,5 @@ public sealed class StackSystem : SharedStackSystem
         }
         actual = newActual;
     }
+    #endregion
 }

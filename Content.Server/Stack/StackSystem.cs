@@ -25,9 +25,7 @@ public sealed class StackSystem : SharedStackSystem
         SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
     }
 
-    /// <summary>
-    /// Sets the entity's count, and deletes it if it's 0 or less.
-    /// </summary>
+    /// <inheritdoc cref="SharedStackSystem.SetCount"/>
     public override void SetCount(Entity<StackComponent?> ent, int amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
@@ -40,6 +38,7 @@ public sealed class StackSystem : SharedStackSystem
             QueueDel(ent.Owner);
     }
 
+    /// <inheritdoc cref="SharedStackSystem.SetCount"/>
     [Obsolete("Obsolete, Use Entity<T>")]
     public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
     {
