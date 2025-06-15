@@ -18,6 +18,8 @@
   - type: TargetObjective
     title: objective-condition-kill-person-title
   - type: PickRandomAntag
+  - type: KillPersonCondition
+    requireMaroon: true
 
 - type: entity
   parent: [BaseBountyHunterObjective, BaseSurviveObjective]

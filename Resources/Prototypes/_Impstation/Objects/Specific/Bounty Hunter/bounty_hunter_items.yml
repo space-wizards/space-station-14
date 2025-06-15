@@ -57,7 +57,7 @@
       prototype: PlayerBorgBountyHunter
 
 - type: entity
-  name: borgdisabler
+  name: disabler
   parent: [ WeaponDisablerPractice, BaseMajorContraband ]
   id: WeaponBorgDisabler
   description: A disabler modified to slowly recharge off a cyborg's internal battery.
@@ -79,7 +79,7 @@
     autoRechargeRate: 5
 
 - type: entity
-  name: borgstunbaton
+  name: stun baton
   parent: [BaseItem, BaseMajorContraband]
   id: WeaponBorgStunBaton
   description: An internally-stored implement capable of safely incapacitating any criminal, modified to self-charge at the cost of battery life.
