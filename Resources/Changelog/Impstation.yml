@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: AftrLite, ruddygreat, jtfg-dev
-  changes:
-  - message: Cosmic "Cult Lead" deprecated. There is now a cult stewardship vote system
-      instead! Woo, Democracy!
-    type: Add
-  - message: Malign Rifts now display loud accountability text when purged/absorbed.
-    type: Tweak
-  - message: The Monument's beckoning has been tweaked. Read the Monument's guidebook
-      entry!
-    type: Tweak
-  - message: Various changes to Astral Ascended's abilities.
-    type: Tweak
-  - message: Cosmic Cult 1.1.2b (Release Candidate)
-    type: Tweak
-  id: 1339
-  time: '2025-03-17T18:34:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1984
 - author: DinnerCalzone
   changes:
   - message: The Captain, HoP, and other appropriate heads of staff will now be cleared
@@ -4205,3 +4188,11 @@
   id: 1838
   time: '2025-06-15T21:53:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2774
+- author: Cutinup99
+  changes:
+  - message: Metal Foam grenades are now fast acting again! better for smaller breaches
+      rather than a very large area
+    type: Tweak
+  id: 1839
+  time: '2025-06-15T22:02:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2773
