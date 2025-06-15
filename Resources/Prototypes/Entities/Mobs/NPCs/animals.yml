@@ -2181,7 +2181,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: parrot
-      sprite: Mobs/Animals/parrot.rsi
+      sprite: Mobs/Animals/parrot/parrot.rsi
+  - type: SyncSprite
   - type: Fixtures
     fixtures:
       fix1:
@@ -2211,7 +2212,28 @@
   - type: Vocal
     sounds:
       Unsexed: Parrot
+  - type: ActiveListener
+  - type: ActiveRadio
   - type: ParrotAccent
+  - type: ParrotListener
+  - type: ParrotSpeaker
+  - type: ParrotMemory
+  - type: ParrotRadio
+  - type: Inventory
+    templateId: parrot
+    speciesId: parrot
+    displacements:
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/parrot/displacement.rsi
+            state: ears
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-bird
