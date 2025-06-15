@@ -117,6 +117,9 @@
     },
     {
       "name": "scrubber-open"
+    },
+    {
+      "name": "can-rainbow"
     }
   ]
 }
