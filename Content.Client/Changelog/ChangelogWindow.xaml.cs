@@ -15,14 +15,15 @@ namespace Content.Client.Changelog
     [GenerateTypedNameReferences]
     public sealed partial class ChangelogWindow : FancyWindow
     {
-        [Dependency] private readonly ChangelogManager _changelog = default!;
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private readonly IStylesheetManager _sheetManager = default!;
+        [Dependency] private readonly ChangelogManager _changelog = default!;
 
         public ChangelogWindow()
         {
             RobustXamlLoader.Load(this);
             WindowTitle.AddStyleClass(StyleBase.StyleClassLabelHeading);
-            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace; // Can I change this to a depen?
+            Stylesheet = _sheetManager.SheetSpace;
         }
 
         protected override void Opened()
