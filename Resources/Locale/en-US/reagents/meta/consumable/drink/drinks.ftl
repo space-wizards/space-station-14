@@ -93,3 +93,6 @@ reagent-desc-posca = Poor warriors' drink from a forgotten era.
 
 reagent-name-mopwata = mopwata
 reagent-desc-mopwata = Dirty, stagnant mop water.
+
+reagent-name-molten-chocolate = molten chocolate
+reagent-desc-molten-chocolate = A cup of hot chocolate mixed with vestine and plasma, then heated to a very high temperature, would cause serious burns.
