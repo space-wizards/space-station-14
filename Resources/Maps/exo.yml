@@ -4,8 +4,8 @@ meta:
   engineVersion: 262.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/15/2025 12:00:47
-  entityCount: 19420
+  time: 06/15/2025 13:58:26
+  entityCount: 19423
 maps:
 - 1
 grids:
@@ -5165,10 +5165,10 @@ entities:
             0: 55551
           8,-16:
             0: 271
-            4: 17408
+            2: 17408
           8,-15:
             1: 4096
-            4: 4
+            2: 4
           8,-14:
             0: 32752
           8,-13:
@@ -5837,8 +5837,8 @@ entities:
             0: 65535
           9,-16:
             0: 15
-            5: 4352
-            2: 17408
+            3: 4352
+            4: 17408
           10,-20:
             0: 65280
           10,-19:
@@ -5849,8 +5849,8 @@ entities:
             0: 65535
           10,-16:
             0: 15
-            2: 4352
-            6: 17408
+            4: 4352
+            5: 17408
           11,-20:
             0: 65024
           11,-19:
@@ -5862,7 +5862,7 @@ entities:
           11,-16:
             0: 15
             1: 35840
-            2: 4352
+            4: 4352
           12,-20:
             0: 65280
           12,-19:
@@ -5895,7 +5895,7 @@ entities:
             0: 61183
           12,-16:
             0: 3
-            2: 2184
+            4: 2184
             1: 8960
           13,-20:
             0: 65024
@@ -5908,7 +5908,7 @@ entities:
           13,-21:
             1: 16177
           13,-16:
-            2: 819
+            4: 819
             1: 8
           14,-20:
             0: 61704
@@ -6111,7 +6111,7 @@ entities:
             0: 59392
           11,-15:
             1: 32904
-            2: 1
+            4: 1
           12,-14:
             0: 62926
           11,-14:
@@ -6123,7 +6123,7 @@ entities:
             0: 61262
           12,-12:
             0: 43215
-            3: 4352
+            6: 4352
           13,-15:
             0: 65280
             1: 4
@@ -6221,12 +6221,12 @@ entities:
             1: 63624
           11,-12:
             0: 4508
-            3: 52224
+            6: 52224
           12,-11:
-            3: 4369
+            6: 4369
             0: 52424
           11,-11:
-            3: 52428
+            6: 52428
             0: 4371
           12,-10:
             0: 17748
@@ -6445,14 +6445,14 @@ entities:
           11,-3:
             1: 12288
           9,-15:
-            5: 1
-            2: 4
+            3: 1
+            4: 4
             1: 32768
           9,-14:
             0: 36848
           10,-15:
-            2: 1
-            6: 4
+            4: 1
+            5: 4
           10,-14:
             0: 65520
           -8,-24:
@@ -6548,10 +6548,55 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+          - 6666.982
           - 0
           - 0
           - 0
           - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -6567,51 +6612,6 @@ entities:
           - 102.419266
           - 0
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -6682,6 +6682,15 @@ entities:
     components:
     - type: Transform
       parent: 5265
+  - uid: 10251
+    mapInit: true
+    paused: true
+    components:
+    - type: Transform
+      parent: 17933
+    - type: Action
+      originalIconColor: '#FFFFFFFF'
+      container: 17933
   - uid: 17935
     mapInit: true
     paused: true
@@ -6711,6 +6720,15 @@ entities:
       container: 19415
 - proto: ActionToggleJetpack
   entities:
+  - uid: 7161
+    mapInit: true
+    paused: true
+    components:
+    - type: Transform
+      parent: 17933
+    - type: Action
+      originalIconColor: '#FFFFFFFF'
+      container: 17933
   - uid: 7315
     components:
     - type: Transform
@@ -9888,7 +9906,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -95157.94
+      secondsUntilStateChange: -95458.39
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12554,6 +12572,14 @@ entities:
     - type: Transform
       pos: -22.5,-47.5
       parent: 2
+- proto: BedsheetBrigmedic
+  entities:
+  - uid: 19421
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 60.5,-31.5
+      parent: 2
 - proto: BedsheetCaptain
   entities:
   - uid: 5457
@@ -12622,11 +12648,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -37.5,-16.5
-      parent: 2
-  - uid: 7161
-    components:
-    - type: Transform
-      pos: 60.5,-31.5
       parent: 2
   - uid: 14872
     components:
@@ -82329,7 +82350,23 @@ entities:
   - uid: 17933
     components:
     - type: Transform
-      pos: 67.34118,-35.481133
+      pos: 67.341934,-35.365723
+      parent: 2
+    - type: GasTank
+      toggleActionEntity: 10251
+    - type: Jetpack
+      toggleActionEntity: 7161
+    - type: ActionsContainer
+    - type: ContainerContainer
+      containers:
+        actions: !type:Container
+          ents:
+          - 7161
+          - 10251
+  - uid: 19423
+    components:
+    - type: Transform
+      pos: 67.498184,-35.475098
       parent: 2
 - proto: Jug
   entities:
@@ -83904,17 +83941,17 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -19.5,-46.5
       parent: 2
-  - uid: 10251
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 57.5,-31.5
-      parent: 2
   - uid: 17637
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,-28.5
+      parent: 2
+  - uid: 19422
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 57.5,-31.5
       parent: 2
 - proto: MothroachCube
   entities:
