@@ -130,3 +130,8 @@
   license: "CC0-1.0"
   copyright: "Created by ps3moira (github) for space-station-14."
   source: "https://github.com/space-wizards/space-station-14/"
+
+- files: ["dark-marble.png", "marble.png", "plasmarble.png", "uranium-marble.png"]
+  license: "CC0-1.0"
+  copyright: "Created by SeaWyrm"
+  source: "https://github.com/space-wizards/space-station-14/pull/38007"
