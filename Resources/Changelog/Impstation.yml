@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Thaven blood now works for heretics, artifacts, subjuzine, and centrifuges
-    type: Fix
-  id: 1334
-  time: '2025-03-17T05:39:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1994
 - author: hivehum
   changes:
   - message: The guidebook has instructions on how to cook without a microwave.
@@ -4203,3 +4196,11 @@
   id: 1833
   time: '2025-06-15T03:38:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2768
+- author: kipdotnet
+  changes:
+  - message: The Strugglebug now has a docking airlock to stop it from spawning kilometers
+      away from the station.
+    type: Tweak
+  id: 1834
+  time: '2025-06-15T06:29:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2755
