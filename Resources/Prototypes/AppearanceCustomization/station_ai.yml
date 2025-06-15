@@ -10,6 +10,7 @@
   - StationAiIconClown
   - StationAiIconDorf
   - StationAiIconHeartline
+  - StationAiIconObserver
   - StationAiIconSmiley
 
 - type: stationAiCustomizationGroup
@@ -22,6 +23,7 @@
   - StationAiHologramFace
   - StationAiHologramCat
   - StationAiHologramDog
+  - StationAiHologramObserver
 
 # Iconography
 - type: stationAiCustomization
@@ -106,6 +108,18 @@
 
 - type: stationAiCustomization
   parent: StationAiIconBase
+  id: StationAiIconObserver
+  name: station-ai-icon-observer
+  layerData:
+    Occupied:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_observer
+    Dead:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: ai_dead
+
+- type: stationAiCustomization
+  parent: StationAiIconBase
   id: StationAiIconSmiley
   name: station-ai-icon-smiley
   layerData:
@@ -161,3 +175,12 @@
     Hologram:
       sprite: Mobs/Silicon/holograms.rsi
       state: ai_dog
+
+- type: stationAiCustomization
+  id: StationAiHologramObserver
+  name: station-ai-hologram-observer
+  previewKey: Hologram
+  layerData:
+    Hologram:
+      sprite: Mobs/Silicon/holograms.rsi
+      state: ai_observer
