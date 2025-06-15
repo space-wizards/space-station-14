@@ -5,6 +5,7 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
@@ -31,6 +32,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedBoltSystem _boltSystem = default!;
 
         private const string DockingJoint = "docking";
 
@@ -80,7 +82,7 @@ namespace Content.Server.Shuttles.Systems
             foreach (var entity in _dockingBoltSet)
             {
                 _doorSystem.TryClose(entity);
-                _doorSystem.SetBoltsDown((entity.Owner, entity.Comp2), enabled);
+                _boltSystem.TrySetBoltsDown((entity.Owner, entity.Comp2), enabled);
             }
         }
 
@@ -284,7 +286,7 @@ namespace Content.Server.Shuttles.Systems
                 {
                     if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
                     {
-                        _doorSystem.SetBoltsDown((dockAUid, airlockA), true);
+                        _boltSystem.TrySetBoltsDown((dockAUid, airlockA), true);
                     }
                 }
                 doorA.ChangeAirtight = false;
@@ -296,7 +298,7 @@ namespace Content.Server.Shuttles.Systems
                 {
                     if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
                     {
-                        _doorSystem.SetBoltsDown((dockBUid, airlockB), true);
+                        _boltSystem.TrySetBoltsDown((dockBUid, airlockB), true);
                     }
                 }
                 doorB.ChangeAirtight = false;
@@ -350,7 +352,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
 
             if (TryComp<DoorBoltComponent>(dockUid, out var airlock))
-                _doorSystem.SetBoltsDown((dockUid, airlock), false);
+                _boltSystem.TrySetBoltsDown((dockUid, airlock), false);
 
             if (TryComp(dockUid, out DoorComponent? door) && _doorSystem.TryClose(dockUid, door))
                 door.ChangeAirtight = true;
