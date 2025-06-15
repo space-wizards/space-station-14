@@ -6,9 +6,14 @@
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 36000 # 10 hrs, imp
-    - !type:RoleTimeRequirement # imp
-      role: JobSecurityOfficer
-      time: 7200 #2 hrs
+    #imp edit start, substitute secoff playtime with sec playtime, better match upstream intent
+    #- !type:RoleTimeRequirement
+    #  role: JobSecurityOfficer
+    #  time: 7200 #2 hrs
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 18000 #5 hrs
+    #imp edit end,
   startingGear: LawyerGear
   icon: "JobIconLawyer"
   supervisors: job-supervisors-hop
