@@ -5,6 +5,9 @@
   id: BaseMobMoth
   abstract: true
   components:
+  - type: ActionGrant
+    actions:
+    - JumpMoth
   - type: Absorbable
   - type: HumanoidAppearance
     species: Moth

@@ -1,4 +1,6 @@
-using System.Numerics;
+﻿using System.Numerics;
+using System.Security.Cryptography;
+using Content.Shared._Starlight.Actions.Jump;
 using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.Follower.Components;
@@ -40,6 +42,7 @@ namespace Content.Shared.Movement.Systems
                 .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
                 .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
+                .Bind(ContentKeyFunctions.Jump, new JumpInputCmdHandler(_action, _charges, Timing)) // 🌟Starlight🌟
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler(this))
                 .Bind(EngineKeyFunctions.CameraRotateLeft, new CameraRotateInputCmdHandler(this, Direction.East))
                 .Bind(EngineKeyFunctions.CameraRotateRight, new CameraRotateInputCmdHandler(this, Direction.West))

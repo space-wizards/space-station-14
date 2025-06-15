@@ -25,6 +25,8 @@
   name: jetpack
   description: It's a jetpack. It can hold 5 L of gas.
   components:
+  - type: Jump
+    action: JumpJet
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/blue.rsi
     layers:
