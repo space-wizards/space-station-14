@@ -197,7 +197,10 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         if (!_prototypeManager.TryIndex(ent.Comp.DamageBleedModifiers, out var modifiers))
             return;
 
-        var bloodloss = DamageSpecifier.ApplyModifierSet(args.DamageDelta, modifiers);
+        // some reagents may deal and heal different damage types in the same tick, which means DamageIncreased will be true
+        // but we only want to consider the dealt damage when causing bleeding
+        var damage = DamageSpecifier.GetPositive(args.DamageDelta);
+        var bloodloss = DamageSpecifier.ApplyModifierSet(damage, modifiers);
 
         //Log.Debug($"damage {Name(ent.Owner)}");
         //Log.Debug($"{bloodloss} {bloodloss.GetTotal()}");
@@ -239,17 +242,29 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     /// </summary>
     private void OnHealthBeingExamined(Entity<BloodstreamComponent> ent, ref HealthBeingExaminedEvent args)
     {
-        // Shows profusely bleeding at half the max bleed rate.
-        if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount / 2)
+        // Shows massively bleeding at 0.75x the max bleed rate.
+        if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount * 0.75f)
         {
             args.Message.PushNewline();
-            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-profusely-bleeding", ("target", ent.Owner)));
+            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-massive-bleeding", ("target", ent.Owner)));
         }
-        // Shows bleeding message when bleeding, but less than profusely.
-        else if (ent.Comp.BleedAmount > 0)
+        // Shows bleeding message when bleeding above half the max rate, but less than massively.
+        else if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount * 0.5f)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-strong-bleeding", ("target", ent.Owner)));
+        }
+        // Shows bleeding message when bleeding above 0.25x the max rate, but less than half the max.
+        else if (ent.Comp.BleedAmount > ent.Comp.MaxBleedAmount * 0.25f)
         {
             args.Message.PushNewline();
             args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-bleeding", ("target", ent.Owner)));
+        }
+        // Shows bleeding message when bleeding below 0.25x the max cap
+        else if (ent.Comp.BleedAmount > 0)
+        {
+            args.Message.PushNewline();
+            args.Message.AddMarkupOrThrow(Loc.GetString("bloodstream-component-slight-bleeding", ("target", ent.Owner)));
         }
 
         // If the mob's blood level is below the damage threshhold, the pale message is added.
