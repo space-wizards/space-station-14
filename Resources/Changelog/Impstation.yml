@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sha-seng, pinkbat5
-  changes:
-  - message: Three thaven tails (the eel one requires an overlay marking too!)
-    type: Add
-  id: 1331
-  time: '2025-03-16T21:46:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1982
 - author: SivShele
   changes:
   - message: Convex station, now with Imp updates
@@ -4195,3 +4188,13 @@
   id: 1830
   time: '2025-06-14T22:54:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2745
+- author: Mousetrinity
+  changes:
+  - message: oppas are now speedy, and they can emote at you, as is intended!
+    type: Fix
+  - message: butterfly orchid bunches can be worn, and all orchids now have their
+      proper reagents
+    type: Fix
+  id: 1831
+  time: '2025-06-15T01:32:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2765
