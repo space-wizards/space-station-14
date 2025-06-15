@@ -32,7 +32,6 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosions = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly NavMapSystem _navMap = default!;
     [Dependency] private readonly PointLightSystem _pointLight = default!;
@@ -45,6 +44,7 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -210,7 +210,7 @@ public sealed class NukeSystem : EntitySystem
 
             foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(worldPos, component.RequiredFloorRadius), false))
             {
-                if (!tile.IsSpace(_tileDefManager))
+                if (!_turf.IsSpace(tile))
                     continue;
 
                 var msg = Loc.GetString("nuke-component-cant-anchor-floor");

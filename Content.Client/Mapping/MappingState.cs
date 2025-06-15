@@ -793,7 +793,7 @@ public sealed class MappingState : GameplayStateBase
 
             if (_mapMan.TryFindGridAt(mapPos, out var gridUid, out var grid) &&
                 _entityManager.System<SharedMapSystem>().TryGetTileRef(gridUid, grid, coords, out var tileRef) &&
-                _allPrototypesDict.TryGetValue(tileRef.GetContentTileDefinition(), out button))
+                _allPrototypesDict.TryGetValue(_entityManager.System<TurfSystem>().GetContentTileDefinition(tileRef), out button))
             {
                 OnSelected(button);
                 return true;
