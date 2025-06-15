@@ -95,7 +95,4 @@ public sealed partial class DissolvableComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float DissolveStacksFade = -0.1f;
-
-    [DataField]
-    public ProtoId<AlertPrototype> DissolveAlert = "Dissolve";
 }

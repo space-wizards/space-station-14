@@ -30,7 +30,6 @@ public sealed class DissolvableSystem : SharedDissolvableSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -159,14 +158,6 @@ public sealed class DissolvableSystem : SharedDissolvableSystem
 
             if (dissolvable.DissolveStacks < 0)
                 dissolvable.DissolveStacks = MathF.Min(0, dissolvable.DissolveStacks + 1);
-
-            if (!dissolvable.OnDissolve)
-            {
-                _alertsSystem.ClearAlert(uid, dissolvable.DissolveAlert);
-                continue;
-            }
-
-            _alertsSystem.ShowAlert(uid, dissolvable.DissolveAlert);
 
             if (dissolvable.DissolveStacks > 0)
             {
