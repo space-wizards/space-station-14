@@ -479,8 +479,8 @@ namespace Content.Client.Lobby.UI
 
                 TabContainer.RemoveChild(_flavorText);
                 _flavorText.OnFlavorTextChanged -= OnFlavorTextChange;
-                _flavorText.Dispose();
-                _flavorTextEdit?.Dispose();
+                _flavorText.Orphan();
+                _flavorTextEdit?.Orphan();
                 _flavorTextEdit = null;
                 _flavorText = null;
             }
@@ -710,7 +710,7 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public void RefreshLoadouts()
         {
-            _loadoutWindow?.Dispose();
+            _loadoutWindow?.Close();
         }
 
         /// <summary>
@@ -1008,7 +1008,7 @@ namespace Content.Client.Lobby.UI
 
         private void OpenLoadout(JobPrototype? jobProto, RoleLoadout roleLoadout, RoleLoadoutPrototype roleLoadoutProto)
         {
-            _loadoutWindow?.Dispose();
+            _loadoutWindow?.Close();
             _loadoutWindow = null;
             var collection = IoCManager.Instance;
 
@@ -1150,16 +1150,6 @@ namespace Content.Client.Lobby.UI
             ReloadProfilePreview();
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-
-            _loadoutWindow?.Dispose();
-            _loadoutWindow = null;
-        }
-
         protected override void EnteredTree()
         {
             base.EnteredTree();
@@ -1171,6 +1161,9 @@ namespace Content.Client.Lobby.UI
             base.ExitedTree();
             _entManager.DeleteEntity(PreviewDummy);
             PreviewDummy = EntityUid.Invalid;
+
+            _loadoutWindow?.Close();
+            _loadoutWindow = null;
         }
 
         private void SetAge(int newAge)
