@@ -130,6 +130,12 @@ namespace Content.Server.Atmos
         public bool TrimQueued;
 
         /// <summary>
+        /// An integer representing the flammibility of tile based on the solutions within it.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int SolutionFlammability = 0;
+
+        /// <summary>
         /// Cached information about airtight entities on this tile. This gets updated anytime a tile gets invalidated
         /// (i.e., gets added to <see cref="GridAtmosphereComponent.InvalidatedCoords"/>).
         /// </summary>
