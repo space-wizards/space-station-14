@@ -4,6 +4,8 @@
   name: sentient slime core
   description: "The source of incredible, unending gooeyness."
   components:
+    - type: Appearance
+    - type: Organ
     - type: Sprite
       sprite: Mobs/Species/Slime/organs.rsi
       state: brain-slime
@@ -36,8 +38,9 @@
     - type: Item
       size: Small
       heldPrefix: brain
+    - type: SlimeGibSplatter
 
-      
+
 - type: entity
   id: OrganSlimeLungs
   parent: BaseHumanOrgan
@@ -76,3 +79,4 @@
   - type: Item
     size: Small
     heldPrefix: lungs
+  - type: SlimeGibSplatter

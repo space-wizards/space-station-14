@@ -15,14 +15,18 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Forensics;
 using Content.Shared.Forensics.Components;
 using Content.Shared.HealthExaminable;
+using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Speech.EntitySystems;
+using Content.Shared.Sprite;
 using Robust.Server.Audio;
+using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
@@ -40,6 +44,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -55,7 +60,7 @@ public sealed class BloodstreamSystem : EntitySystem
         SubscribeLocalEvent<BloodstreamComponent, ReactionAttemptEvent>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, SolutionRelayEvent<ReactionAttemptEvent>>(OnReactionAttempt);
         SubscribeLocalEvent<BloodstreamComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<BloodstreamComponent, GenerateDnaEvent>(OnDnaGenerated);
+        SubscribeLocalEvent<BloodstreamComponent, RefreshBloodEvent>(OnRefreshBlood);
     }
 
     private void OnMapInit(Entity<BloodstreamComponent> ent, ref MapInitEvent args)
@@ -151,7 +156,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
                 _drunkSystem.TryApplyDrunkenness(
                     uid,
-                    (float) bloodstream.UpdateInterval.TotalSeconds * 2,
+                    (float)bloodstream.UpdateInterval.TotalSeconds * 2,
                     applySlur: false);
                 _stutteringSystem.DoStutter(uid, bloodstream.UpdateInterval * 2, refresh: false);
 
@@ -420,7 +425,7 @@ public sealed class BloodstreamSystem : EntitySystem
             _alertsSystem.ClearAlert(uid, component.BleedingAlert);
         else
         {
-            var severity = (short) Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 10);
+            var severity = (short)Math.Clamp(Math.Round(component.BleedAmount, MidpointRounding.ToZero), 0, 10);
             _alertsSystem.ShowAlert(uid, component.BleedingAlert, severity);
         }
 
@@ -486,19 +491,23 @@ public sealed class BloodstreamSystem : EntitySystem
             _solutionContainerSystem.TryAddReagent(component.BloodSolution.Value, component.BloodReagent, currentVolume, null, GetEntityBloodData(uid));
     }
 
-    private void OnDnaGenerated(Entity<BloodstreamComponent> entity, ref GenerateDnaEvent args)
+    private void OnRefreshBlood(Entity<BloodstreamComponent> entity, ref RefreshBloodEvent args)
     {
+        // TODO: this can fail due to component initialization order.
+        // As an example, the SlimeBloodSystem raises this event
+        // when a slime's appearance gets loaded.
+        // However, appearance could be loaded before a blood solution
+        // exists so this check could fail and not refresh the blood data
+        // even though we want it to.
         if (_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.BloodSolutionName, ref entity.Comp.BloodSolution, out var bloodSolution))
         {
             foreach (var reagent in bloodSolution.Contents)
             {
-                List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
-                reagentData.RemoveAll(x => x is DnaData);
+                var reagentData = reagent.Reagent.EnsureReagentData();
+                reagentData.Clear();
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
             }
         }
-        else
-            Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
     }
 
     /// <summary>
@@ -506,6 +515,8 @@ public sealed class BloodstreamSystem : EntitySystem
     /// </summary>
     public List<ReagentData> GetEntityBloodData(EntityUid uid)
     {
+        // All blood always has DNA data, even if it's invalid, but color data is
+        // only added whatsoever if the color is overridden in the event.
         var bloodData = new List<ReagentData>();
         var dnaData = new DnaData();
 
@@ -513,8 +524,18 @@ public sealed class BloodstreamSystem : EntitySystem
             dnaData.DNA = donorComp.DNA;
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
-
         bloodData.Add(dnaData);
+
+        var ev = new BloodColorOverrideEvent { OverrideColor = null };
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.OverrideColor != null)
+        {
+            var bloodColorData = new ReagentColorData
+            {
+                SubstanceColor = ev.OverrideColor.Value
+            };
+            bloodData.Add(bloodColorData);
+        }
 
         return bloodData;
     }
