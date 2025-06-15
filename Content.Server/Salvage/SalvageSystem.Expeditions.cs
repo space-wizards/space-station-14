@@ -6,6 +6,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage.Expeditions;
+using Content.Shared.Shuttles.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
@@ -75,6 +76,14 @@ public sealed partial class SalvageSystem
     private void OnExpeditionShutdown(EntityUid uid, SalvageExpeditionComponent component, ComponentShutdown args)
     {
         component.Stream = _audio.Stop(component.Stream);
+
+        // First wipe any disks referencing us
+        var disks = EntityQueryEnumerator<ShuttleDestinationCoordinatesComponent>();
+        while (disks.MoveNext(out var disk)
+               && disk.Destination == uid)
+        {
+            disk.Destination = null;
+        }
 
         foreach (var (job, cancelToken) in _salvageJobs.ToArray())
         {
