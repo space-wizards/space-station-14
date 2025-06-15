@@ -61,5 +61,6 @@ salvage-air-mod-volatile-atmosphere = Volatile atmosphere
 salvage-dungeon-mod-lava-brig = Lava Brig
 salvage-dungeon-mod-snowy-labs = Snowy labs
 salvage-dungeon-mod-experiment = Experiment
+salvage-dungeon-mod-syndicate-base = Enemy facility
 salvage-dungeon-mod-haunted = Haunted
 salvage-dungeon-mod-mineshaft = Mineshaft
