@@ -11,17 +11,20 @@
 - type: randomHumanoidSettings
   id: EventHumanoidMindShielded
   parent: EventHumanoid
-  randomizeName: false
   components:
-    - type: MindShield
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
     - type: AntagImmune
 
 - type: randomHumanoidSettings
   id: EventHumanoidCentcomm
   parent: EventHumanoidMindShielded
+  randomizeName: false
   components:
   - type: AutoImplant
     implants:
+    - MindShieldImplant
     - DeathRattleImplantCentcomm
 
 ## Death Squad

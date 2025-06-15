@@ -8,6 +8,7 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Udder;
 using Content.Shared.Verbs;
+using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Animals;
@@ -31,11 +32,22 @@ public sealed class UdderSystem : EntitySystem
         SubscribeLocalEvent<UdderComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
         SubscribeLocalEvent<UdderComponent, MilkingDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<UdderComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
     }
 
     private void OnMapInit(EntityUid uid, UdderComponent component, MapInitEvent args)
     {
         component.NextGrowth = _timing.CurTime + component.GrowthDelay;
+    }
+
+    private void OnEntRemoved(Entity<UdderComponent> entity, ref EntRemovedFromContainerMessage args)
+    {
+        // Make sure the removed entity was our contained solution
+        if (entity.Comp.Solution == null || args.Entity != entity.Comp.Solution.Value.Owner)
+            return;
+
+        // Cleared our cached reference to the solution entity
+        entity.Comp.Solution = null;
     }
 
     public override void Update(float frameTime)

@@ -62,7 +62,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnActivate(EntityUid uid, EmitterComponent component, ActivateInWorldEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.Complex)
                 return;
 
             if (TryComp(uid, out LockComponent? lockComp) && lockComp.Locked)
@@ -101,7 +101,8 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnExamined(EntityUid uid, EmitterComponent component, ExaminedEvent args)
         {
-            if(!_fireMode.TryGetFireMode((uid, null), out var fireMode ))
+            if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Hands == null)
+                ||!_fireMode.TryGetFireMode((uid, null), out var fireMode ))
                 return;
 
             var proto = _prototype.Index<EntityPrototype>(fireMode.Prototype);
