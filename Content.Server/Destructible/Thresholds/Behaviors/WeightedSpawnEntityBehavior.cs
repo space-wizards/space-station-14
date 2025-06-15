@@ -1,9 +1,10 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Server.Spawners.Components;
 using Content.Server.Spawners.EntitySystems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Spawners;
@@ -24,6 +25,12 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
     /// </summary>
     [DataField(required: true)]
     public ProtoId<WeightedRandomEntityPrototype> WeightedEntityTable;
+
+    /// <summary>
+    /// Whether it will only spawn entities on a grid, or also in space.
+    /// </summary>
+    [DataField]
+    public bool EnforceOnGrid = false;
 
     /// <summary>
     /// How far away to spawn the entity from the parent position
@@ -51,6 +58,8 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
 
     public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
     {
+        var mapMan = IoCManager.Resolve<IMapManager>();
+
         // Get the position at which to start initially spawning entities
         var transform = system.EntityManager.System<TransformSystem>();
         var position = transform.GetMapCoordinates(uid);
@@ -70,11 +79,15 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
             // spawn the spawner, assign it a lifetime, and assign the entity that it will spawn when despawned
             for (var i = 0; i < amountToSpawn; i++)
             {
-                var spawner = system.EntityManager.SpawnEntity(tempSpawnerProto.ID, position.Offset(GetRandomVector()));
-                system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
-                timedDespawnComponent.Lifetime = SpawnAfter;
-                system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
-                system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), entity);
+                var positionSpawn = position.Offset(GetRandomVector());
+                if (!EnforceOnGrid || mapMan.TryFindGridAt(positionSpawn, out _, out _))
+                {
+                    var spawner = system.EntityManager.SpawnEntity(tempSpawnerProto.ID, positionSpawn);
+                    system.EntityManager.EnsureComponent<TimedDespawnComponent>(spawner, out var timedDespawnComponent);
+                    timedDespawnComponent.Lifetime = SpawnAfter;
+                    system.EntityManager.EnsureComponent<SpawnOnDespawnComponent>(spawner, out var spawnOnDespawnComponent);
+                    system.EntityManager.System<SpawnOnDespawnSystem>().SetPrototype((spawner, spawnOnDespawnComponent), entity);
+                }
             }
         }
         else
@@ -82,7 +95,11 @@ public sealed partial class WeightedSpawnEntityBehavior : IThresholdBehavior
             // directly spawn the desired entities
             for (var i = 0; i < amountToSpawn; i++)
             {
-                system.EntityManager.SpawnEntity(entity, position.Offset(GetRandomVector()));
+                var positionSpawn = position.Offset(GetRandomVector());
+                if (!EnforceOnGrid || mapMan.TryFindGridAt(positionSpawn, out _, out _))
+                {
+                    system.EntityManager.SpawnEntity(entity, positionSpawn);
+                }
             }
         }
     }
