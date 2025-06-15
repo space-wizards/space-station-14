@@ -12,3 +12,13 @@
     state: icon
   - type: StaticPrice
     price: 80
+
+- type: entity
+  parent: HoloBellProjector
+  id: BorgHoloBellProjector
+  name: borg holobell projector
+  description: Projects a temporary, fully functional hardlight doorbell.
+  components:
+  - type: HolosignProjector
+    signProto: HoloBell
+    chargeUse: 0

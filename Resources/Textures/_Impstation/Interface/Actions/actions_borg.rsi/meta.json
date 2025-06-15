@@ -30,6 +30,9 @@
         },
         {
             "name": "mining-module"
+        },
+        {
+            "name": "courier-module"
         }
     ]
 }

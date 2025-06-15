@@ -12,7 +12,8 @@
     - BorgModuleCargo
 
   defaultModules:
-  - BorgModuleAppraisal # Idk man, I didn't want to let them start with nothing lol
+  - BorgModuleAppraisal
+  - BorgModuleCourier # Imp
 
   radioChannels:
   - Supply
