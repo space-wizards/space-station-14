@@ -12,6 +12,17 @@
     - type: Damageable
       damageContainer: StructuralInorganic
       damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalGlassBreak
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - type: Rotatable
       rotateWhileAnchored: true
     - type: Fixtures
