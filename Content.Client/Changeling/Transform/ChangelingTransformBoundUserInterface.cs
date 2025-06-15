@@ -5,15 +5,14 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Changeling.Transform;
 
 [UsedImplicitly]
-public sealed partial class ChangelingTransformBoundUserInterface : BoundUserInterface
+public sealed partial class ChangelingTransformBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private ChangelingTransformMenu? _window;
-
-    public ChangelingTransformBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
 
     protected override void Open()
     {
         base.Open();
+        
         _window = this.CreateWindow<ChangelingTransformMenu>();
 
         _window.OnIdentitySelect += SendIdentitySelect;
