@@ -41,6 +41,11 @@ public sealed class RespiratorSystem : EntitySystem
 
     private static readonly ProtoId<MetabolismGroupPrototype> GasId = new("Gas");
 
+    // High/Low temp alerts
+    private static readonly ProtoId<AlertPrototype> HighTempAlertId = new("AirHot");
+    private static readonly ProtoId<AlertPrototype> LowTempAlertId = new("AirCold");
+    private static readonly ProtoId<AlertCategoryPrototype> TempAlertCategory = new("AirTemperature");
+
     public override void Initialize()
     {
         base.Initialize();
@@ -84,7 +89,7 @@ public sealed class RespiratorSystem : EntitySystem
                 switch (respirator.Status)
                 {
                     case RespiratorStatus.Inhaling:
-                        Inhale(uid, body);
+                        Inhale((uid, respirator, body));
                         respirator.Status = RespiratorStatus.Exhaling;
                         break;
                     case RespiratorStatus.Exhaling:
@@ -112,25 +117,93 @@ public sealed class RespiratorSystem : EntitySystem
         }
     }
 
-    public void Inhale(EntityUid uid, BodyComponent? body = null)
+    public void Inhale(Entity<RespiratorComponent?, BodyComponent?, ThermalRegulatorComponent?> ent)
     {
-        if (!Resolve(uid, ref body, logMissing: false))
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, logMissing: false))
             return;
 
-        var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((uid, body));
+        var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, ent.Comp2));
 
         // Inhale gas
         var ev = new InhaleLocationEvent();
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(ent, ref ev);
 
-        ev.Gas ??= _atmosSys.GetContainingMixture(uid, excite: true);
+        ev.Gas ??= _atmosSys.GetContainingMixture(ent.Owner, excite: true);
 
         if (ev.Gas is null)
         {
             return;
         }
 
+        // Remove a volume of gas from the environment
         var actualGas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);
+
+        // Only apply temperature damage if there are actually moles to breathe
+        // This prevents damage from vacuum which has temperature but no actual gas
+        if (actualGas.TotalMoles > Atmospherics.GasMinMoles)
+        {
+            var gasTemp = actualGas.Temperature;
+
+            // Take the normal body temperature from the mob's ThermalRegulatorComponent
+            // We don't resolve this component because it shouldn't be required, so we fall back to the atmos consts
+            var normalBodyTempK = ent.Comp3?.NormalBodyTemperature ?? Atmospherics.T0C + Atmospherics.NormalBodyTemperature;
+            var heatCapacity = _atmosSys.GetHeatCapacity(actualGas, false);
+
+            // Calculate thermal energy difference between inhaled gas and normal body temperature
+            // This represents how much thermal energy would be transferred to/from the body
+            var normalThermalEnergy = heatCapacity * normalBodyTempK;
+            var gasThermalEnergy = _atmosSys.GetThermalEnergy(actualGas);
+            var energyDifference = Math.Abs(gasThermalEnergy - normalThermalEnergy);
+
+            // Constants for damage scaling
+            // Oxygen at -200°C (73.15K) with its heat capacity will cause maximum damage (5x multiplier)
+            const float baseDamageEnergyThreshold = 25f;
+
+            // Cap damage multiplier at 5x to prevent extremely hot/cold small amounts of gas from dealing excessive damage
+            const float maxDamageMultiplier = 5.0f;
+
+            // Calculate a damage scale factor based on thermal energy difference
+            // The factor starts at 1.0 at the base threshold and increases linearly with energy
+            var energyScaleFactor = 1.0f + (energyDifference / baseDamageEnergyThreshold);
+            energyScaleFactor = Math.Min(energyScaleFactor, maxDamageMultiplier);
+
+            // Apply high temperature damage
+            if (gasTemp > ent.Comp1.HighTemperatureDamageThreshold)
+            {
+                var scaledDamage = ent.Comp1.HighTemperatureDamage * energyScaleFactor;
+                _damageableSys.TryChangeDamage(ent, scaledDamage, true);
+
+                // Show the alert for the player
+                _alertsSystem.ShowAlert(ent, HighTempAlertId);
+
+                // Log damage for admins with energy information
+                _adminLogger.Add(LogType.Temperature,
+                    $"{ToPrettyString(ent):entity} took {scaledDamage.GetTotal():damage} breathing damage");
+            }
+            // Apply low temperature damage
+            else if (gasTemp < ent.Comp1.LowTemperatureDamageThreshold)
+            {
+                var scaledDamage = ent.Comp1.LowTemperatureDamage * energyScaleFactor;
+                _damageableSys.TryChangeDamage(ent, scaledDamage, true);
+
+                // Show the alert for the player
+                _alertsSystem.ShowAlert(ent, LowTempAlertId);
+
+                // Log damage for admins with energy information
+                _adminLogger.Add(LogType.Temperature,
+                    $"{ToPrettyString(ent):entity} took {scaledDamage.GetTotal():damage} breathing damage ");
+            }
+            else
+            {
+                // Not taking damage, clear the alerts
+                _alertsSystem.ClearAlertCategory(ent, TempAlertCategory);
+            }
+        }
+        else
+        {
+            // Not enough gas to cause temperature damage, clear the alerts
+            _alertsSystem.ClearAlertCategory(ent, TempAlertCategory);
+        }
 
         var lungRatio = 1.0f / organs.Count;
         var gas = organs.Count == 1 ? actualGas : actualGas.RemoveRatio(lungRatio);
