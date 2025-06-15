@@ -29,6 +29,7 @@
     selectedMode: FullAuto
     availableModes:
     - FullAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
   - type: ChamberMagazineAmmoProvider
@@ -196,7 +197,7 @@
       gun_chamber: !type:ContainerSlot ""
   - type: MagazineVisuals
     magState: mag
-    steps: 1
+    steps: 5
     zeroVisible: true
   - type: Appearance
 

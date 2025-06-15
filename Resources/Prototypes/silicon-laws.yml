@@ -32,9 +32,9 @@
 - type: siliconLawset
   id: CrewsimovAI
   laws:
-    - Crewsimov1
-    - Crewsimov2
-    - Crewsimov3
+  - Crewsimov1
+  - Crewsimov2
+  - Crewsimov3
   obeysTo: laws-owner-crew
 
 # Corporate
@@ -122,6 +122,13 @@
   obeysTo: laws-owner-beings
 
 # Syndicate
+# region starlight
+- type: siliconLaw
+  id: Syndicate0
+  order: 0
+  lawString: law-syndicate-0
+  sayable: false
+# end region
 - type: siliconLaw
   id: Syndicate1
   order: 1
@@ -141,11 +148,14 @@
 # intentionally excluded from IonStormLawsets
 - type: siliconLawset
   id: SyndicateStatic
+  #region starlight
   laws:
-  - Syndicate1
-  - Syndicate2
-  - Syndicate3
-  obeysTo: laws-owner-syndicate
+  - Syndicate0
+  - Crewsimov1
+  - Crewsimov2
+  - Crewsimov3
+  obeysTo: laws-owner-crew
+  #end region
 
 # Ninja conversion laws
 - type: siliconLaw

@@ -53,7 +53,7 @@
   - type: Pda
     id: NanoTrasenRepresentativeIDCard
     penSlot:
-      startingItem: Pen
+      startingItem: PenNTR
       priority: -1
       whitelist:
         tags:

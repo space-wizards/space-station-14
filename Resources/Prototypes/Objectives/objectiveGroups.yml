@@ -28,6 +28,8 @@
   weights:
     KillRandomPersonObjective: 1
     KillRandomHeadObjective: 0.25
+    TeachRandomPersonObjective: 1 #Starlight Teach them a lesson
+    TeachRandomHeadObjective: 0.25 # Starlight Teach them a lesson
 
 - type: weightedRandom
   id: TraitorObjectiveGroupState
@@ -39,7 +41,7 @@
 - type: weightedRandom
   id: TraitorObjectiveGroupSocial
   weights:
-    RandomTraitorAliveObjective: 1
+#    RandomTraitorAliveObjective: 1 - Removed because the objective was boring and didn't progress the round.
     RandomTraitorProgressObjective: 1
 
 #Thief groups
