@@ -20,6 +20,7 @@
             <BoxContainer Name="JobGrid"
                           VerticalExpand="True"
                           HorizontalExpand="True"
+                          HorizontalAlignment="Center"
                           SeparationOverride="6">
 
                 <!-- Jobs with "Never" priority -->

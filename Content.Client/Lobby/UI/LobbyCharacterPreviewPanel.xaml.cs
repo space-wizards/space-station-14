@@ -27,25 +27,33 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
 
     private SpriteSystem _sprite = default!;
 
+    /// <summary>
+    /// <see cref="LobbyState"/> needs to register events on this button, so provide a property to access it publicly.
+    /// </summary>
     public Button CharacterSetupButton => CharacterSetup;
 
-    private EntityUid? _previewDummy;
-
-    public DraggableJobTarget GetTargetControl(JobPriority prio)
+    /// <summary>
+    /// Just a helper function to grab the appropriate <see cref="DraggableJobTarget"/> control corresponding to the
+    /// job priority
+    /// </summary>
+    private DraggableJobTarget GetTargetControl(JobPriority prio)
     {
         return FindControl<DraggableJobTarget>($"{prio.ToString()}Box");
     }
-
 
     public LobbyCharacterPreviewPanel()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        // If job or department prototypes get reloaded, we need to respond to that.
         _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
 
+        // Make sure that the cached job ordering is set up and up to date.
         DraggableJobTarget.UpdatedOrderedJobs(_prototypeManager);
 
+        // We need to tell the high priority target control where to bump its current job if someone tries to drag
+        // in another high priority job.
         GetTargetControl(JobPriority.High).SetFallbackTarget(GetTargetControl(JobPriority.Medium));
     }
 
@@ -53,6 +61,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     {
         if (args.WasModified<JobPrototype>() || args.WasModified<DepartmentPrototype>())
         {
+            // Update the job ordering and refresh the job icon layout.
             DraggableJobTarget.UpdatedOrderedJobs(_prototypeManager);
             Refresh();
         }
@@ -62,13 +71,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     {
         Loaded.Visible = value;
         Unloaded.Visible = !value;
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        _entManager.DeleteEntity(_previewDummy);
-        _previewDummy = null;
     }
 
     /// <summary>
@@ -113,22 +115,132 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
             }
 
             icon.OnPriorityChanged += SendUpdatedPriorities;
+            icon.OnPriorityChanged += BalanceColumns;
 
             GetTargetControl(prio).AddJobIcon(icon, preOrdered: true);
         }
+
+        BalanceColumns();
     }
 
+    /// <summary>
+    /// This will take and distribute 15 grid columns between the three variable priority targets.
+    /// </summary>
+    /// <remarks>
+    /// This looks like shit C code, I can make this better later...
+    /// The basic "algorithm" is this.
+    /// Never. Low, and Medium have minimum number of columns of 3, 2, and 3 respectively.
+    /// This is because the size of the label by itself will span that many columns anyway.
+    /// Then for every distribution of columns that add up to 15, calculate how many rows of icons there will be given
+    /// the number of icons in that priority.
+    ///
+    /// Then it will score the solutions based on two criteria.
+    ///
+    /// The first is to minimize the number of rows, so if for one solution: Never, Low, Medium have 6, 2, 3 rows,
+    /// a solution with 4, 4, 4 rows will win because the overall height of the control will be smaller.
+    ///
+    /// The second is to evenly spread the columns between the three targets.
+    /// Example for one solution would be 11, 1, 3 columns vs another solution that has 10, 2, 2 columns.
+    /// It's possible that these two solutions have the same height, but the second solution should win.
+    /// This is done by just minimizing the sum of the squares of the column counts, which will naturally spread out the
+    /// columns as 10^2 to 11^2 is much greater than 1^2 to 3^2.
+    ///
+    /// As for the brute force solution, I'll defend it because
+    /// 1. each calculation is really simple
+    /// 2. it scales with total columns which is fixed to 15, so no need to worry about it running away with role count
+    /// 3. the total for loop iteration count is lower than 100
+    /// 4. this calculation only occurs on first load of summary screen or when an icon is dropped into another column.
+    /// </remarks>
+    private void BalanceColumns()
+    {
+        var targets = new List<DraggableJobTarget>()
+        {
+            GetTargetControl(JobPriority.Never),
+            GetTargetControl(JobPriority.Low),
+            GetTargetControl(JobPriority.Medium)
+        };
+
+        // Get how many jobs in each target
+        var counts = targets.Select(c => c.ContainedJobCount());
+
+        // initialize best value variables
+        var best = 10000;
+        var bestSquare = 10000;
+        var bestColumns = (5, 5, 5);
+
+        // Define the total column count here
+        const int totalColumns = 15;
+
+        // Define the minimum counts for each column, this is because the
+        // size of the label will span this number of columns anyway.
+        const int minColumnNever = 3;
+        const int minColumnLow = 2;
+        const int minColumnMedium = 3;
+
+        // Range of columns to check for Never are the minimum value inclusive to the total column count, but then
+        //   subtract the minimum columns for Low and Medium, they will always at least have the minimum and we need
+        //   to reserve those.
+        for (var a = minColumnNever; a <= totalColumns-minColumnLow-minColumnMedium; a++)
+        {
+            // Similar, the range of columns to check for Low are the minimum number inclusive to the total columns,
+            //   but now we subtract off the defined number of columns for Never (a) and then reserve the minimum number
+            //   of columns for Medium.
+            for (var b = minColumnLow; b <= totalColumns - a - minColumnMedium; b++)
+            {
+                // At the innermost point in the loop, the column count for Never and Low are defined, so the number
+                //   of columns to try for Medium is also easily defined, as they should add up to totalColumns.
+                var c = totalColumns - a - b;
+                var columns = new List<int>() { a, b, c };
+                // Calculate the heights by zipping counts and columns, then dividing counts by columns. We need to
+                //   do some funny business to fix off by one errors.
+                // For example, if there are 5 columns and 3 icons, then 3 / 5 = 0,
+                //   so we want to add one (basically the ceiling of the float division).
+                // Secondly, 5 col 9  icons is ( 9 / 5) + 1 = 2 (correct)
+                //           5 col 10 icons is (10 / 5) + 1 = 3 (incorrect)
+                // In order for the integer to transition at the next number, we need to take the count - 1
+                // Finally, 5 col  9 icons is (( 9-1)/5) + 1 = 2 (correct)
+                //          5 col 10 icons is ((10-1)/5) + 1 = 2 (correct)
+                //          5 col 11 icons is ((11-1)/5) + 1 = 3 (correct)
+                var height = counts.Zip(columns).Select(x => ((x.First - 1) / x.Second) + 1).ToList();
+                // Find the max height as our first criteria
+                var maxHeight = height.Max();
+                // Find the sum of squares of columns as our second criteria
+                var square = a * a + b * b + c * c;
+                // If it's better, save it
+                if (maxHeight < best || maxHeight == best && square < bestSquare)
+                {
+                    best = maxHeight;
+                    bestColumns = (a, b, c);
+                    bestSquare = square;
+                }
+            }
+        }
+
+        // Set the best column counts to the targets
+        GetTargetControl(JobPriority.Never).SetColumns(bestColumns.Item1);
+        GetTargetControl(JobPriority.Low).SetColumns(bestColumns.Item2);
+        GetTargetControl(JobPriority.Medium).SetColumns(bestColumns.Item3);
+    }
+
+    /// <summary>
+    /// Get the job priority set from the target controls and send them to the preferences manager to save them to your
+    /// profile
+    /// </summary>
     private void SendUpdatedPriorities()
     {
         _preferences.UpdateJobPriorities(GetJobPriorities());
     }
 
-    public Dictionary<ProtoId<JobPrototype>, JobPriority> GetJobPriorities()
+    /// <summary>
+    /// Extract the job priority dictionary from the presence of the job icons in the job priority drop targets
+    /// </summary>
+    private Dictionary<ProtoId<JobPrototype>, JobPriority> GetJobPriorities()
     {
         var result = new Dictionary<ProtoId<JobPrototype>, JobPriority>();
 
         foreach (var prio in Enum.GetValues<JobPriority>())
         {
+            // Never priorities shouldn't be represented in the dictionary
             if (prio == JobPriority.Never)
                 continue;
 
@@ -141,6 +253,11 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         return result;
     }
 
+    /// <summary>
+    /// Make the tooltip that shows up when you hover over a job icon. This will show all characters that have the job
+    /// preference enabled
+    /// </summary>
+    /// <param name="job">The job prototype that this tooltip should be represented in this tooltip</param>
     private Tooltip? CreateJobTooltip(JobPrototype job)
     {
         if(_preferences.Preferences is not {} prefs)

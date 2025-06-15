@@ -20,7 +20,14 @@ public sealed class DraggableJobIcon : TextureRect
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
+    /// <summary>
+    /// The TextureScale of a job icon
+    /// </summary>
     private const float DefaultScale = 3;
+
+    /// <summary>
+    /// The TextureScale of a job icon if it's in the high priority bucket
+    /// </summary>
     private const float DefaultHighScale = 8;
 
     /// <summary>
@@ -33,6 +40,13 @@ public sealed class DraggableJobIcon : TextureRect
     /// If the drag has ended and no other elements reparented this icon, it will snap back to _oldParent.
     /// </summary>
     private Control? _oldParent;
+
+    /// <summary>
+    /// If the icon is being dragged, this will hold the <see cref="TextureRect.TextureScale"/> that was set before the
+    /// dragging. If the drag has ended and no other elements reparented this icon, it will reset the
+    /// <see cref="TextureRect.TextureScale"/> back to this value..
+    /// </summary>
+    private Vector2? _oldScale;
 
     /// <summary>
     /// Helper to check if this icon is being dragged. The icon is being dragged if and only if _oldParent isn't null.
@@ -59,8 +73,14 @@ public sealed class DraggableJobIcon : TextureRect
     /// </summary>
     public event Action? OnPriorityChanged;
 
+    /// <summary>
+    /// Invoked when a drag is about to start, will be canceled if this returns false.
+    /// </summary>
     public delegate bool CheckCanDrag();
 
+    /// <summary>
+    /// The delegate instance to call to check if dragging should be allowed
+    /// </summary>
     private readonly CheckCanDrag? _canDragFunc;
 
     public DraggableJobIcon(JobPrototype jobPrototype, CheckCanDrag? checkDrag = null, TooltipSupplier? tooltipSupplier = null)
@@ -85,23 +105,39 @@ public sealed class DraggableJobIcon : TextureRect
             TooltipSupplier = obj => Dragging ? null : tooltipSupplier(obj);
     }
 
-    public void StopDragging()
+    /// <summary>
+    /// Called after all <see cref="OnMouseUp"/> events are called to clean up the drag event
+    /// </summary>
+    private void StopDragging()
     {
+        // If nothing reparented the icon from the OnMouseUp events, then we should snap the icon back to its original
+        // parent
         if (Parent == _uiManager.PopupRoot)
         {
+            // Put it back and make sure the TextureScale is reset
             Orphan();
             _oldParent?.AddChild(this);
+            if (_oldScale is not null)
+                TextureScale = _oldScale.Value;
         }
 
+        // If the parent changed, then invoke the event that priorities changed!
         if (Parent != _oldParent)
             OnPriorityChanged?.Invoke();
 
         _oldParent = null;
+        _oldScale = null;
     }
 
+    /// <summary>
+    /// Start the process of dragging the icon
+    /// </summary>
     private void StartDragging(GUIBoundKeyEventArgs args)
     {
+        // Save the current parent and texture scale
         _oldParent = Parent;
+        _oldScale = TextureScale;
+        // Put it into PopupRoot
         Orphan();
         _uiManager.PopupRoot.AddChild(this);
 
@@ -111,17 +147,21 @@ public sealed class DraggableJobIcon : TextureRect
     {
         base.FrameUpdate(args);
 
+        // We only need to do stuff if we're dragging
         if (!Dragging)
             return;
 
+        // Track the icon to the mouse cursor
         var mousePos = _uiManager.MousePositionScaled.Position;
         LayoutContainer.SetPosition(this, mousePos - Size / 2.0f);
+        // Let the drop targets check if you're dragging over them
         OnMouseMove?.Invoke(mousePos);
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
         base.KeyBindDown(args);
+        // Make sure we're allowed to drag as well
         if (args.Function == EngineKeyFunctions.UIClick && _canDragFunc is not null && _canDragFunc())
         {
             StartDragging(args);
@@ -134,17 +174,25 @@ public sealed class DraggableJobIcon : TextureRect
         base.KeyBindUp(args);
         if (args.Function == EngineKeyFunctions.UIClick)
         {
+            // Invoke this to let drop targets handle the icon
             OnMouseUp?.Invoke(_uiManager.MousePositionScaled.Position);
+            // Clean up
             StopDragging();
         }
     }
 
+    /// <summary>
+    /// Set the TextureScale of the icon according to the job priority using constants
+    /// </summary>
     public void SetScale(JobPriority priority)
     {
         SetScale(priority == JobPriority.High ? DefaultHighScale : DefaultScale);
     }
 
-    public void SetScale(float scale)
+    /// <summary>
+    /// Just a wrapper to set the TextureScale from a single float
+    /// </summary>
+    private void SetScale(float scale)
     {
         TextureScale = new Vector2(scale);
     }
