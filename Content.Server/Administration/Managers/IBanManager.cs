@@ -26,6 +26,22 @@ public interface IBanManager
     /// <param name="reason">Reason for the ban</param>
     public void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, uint? minutes, NoteSeverity severity, string reason);
     public HashSet<string>? GetRoleBans(NetUserId playerUserId);
+
+    /// <summary>
+    /// Check if the player is currently banned from any of the listed roles
+    /// </summary>
+    /// <param name="player">The player</param>
+    /// <param name="prototypes">A list of antagprototype/jobprototype IDs. They must have an "Antag:" or "Job:" prefix</param>
+    /// <returns>Returns True if an active role ban is found for this player for any of the provided roles</returns>
+    public bool IsRoleBanned(ICommonSession player, List<string> prototypes);
+
+    /// <summary>
+    /// Check if the player is currently banned from any of the listed roles
+    /// </summary>
+    /// <param name="player">The player</param>
+    /// <param name="prototypes">A list of valid antagprototype IDs</param>
+    /// <returns>Returns True if an active role ban is found for this player for any of the provided roles</returns>
+    public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes);
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
 
     /// <summary>
