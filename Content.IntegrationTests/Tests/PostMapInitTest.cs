@@ -74,6 +74,7 @@ namespace Content.IntegrationTests.Tests
             "Elkridge",
             "Relic",
             "dm01-entryway",
+            "Exo",
             "Saltern2",
             "Cluster2",
             "Atlas2"

@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "Taken from https://github.com/Baystation12/Baystation12/tree/7274e5654c3cf82d4104dbf818ef00fdc0082aa8, edited by SlamBamActionman at https://github.com/space-wizards/space-station-14/pull/33144",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "base",
+            "directions": 4
+        }
+    ]
+}
