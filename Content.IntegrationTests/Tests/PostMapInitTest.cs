@@ -76,7 +76,8 @@ namespace Content.IntegrationTests.Tests
             "dm01-entryway",
             "Saltern2",
             "Cluster2",
-            "Atlas2"
+            "Atlas2",
+            "Exo",
         };
 
         /// <summary>
