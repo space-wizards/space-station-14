@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SivShele
-  changes:
-  - message: Convex station, now with Imp updates
-    type: Add
-  id: 1332
-  time: '2025-03-17T02:45:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1941
 - author: jtfg-dev
   changes:
   - message: For the whimsical and childish of temperament, and certainly not for
@@ -4198,3 +4191,14 @@
   id: 1831
   time: '2025-06-15T01:32:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2765
+- author: TuttlePants
+  changes:
+  - message: Bounty hunters now spawn with an inspector.
+    type: Tweak
+  - message: The BH shuttle now has a stasis bed and, more importantly, NT block game.
+    type: Tweak
+  - message: Bounty hunter objectives no longer auto-complete.
+    type: Fix
+  id: 1832
+  time: '2025-06-15T02:29:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2754
