@@ -14,3 +14,5 @@ ui-lobby-ready-button-tooltip-is-ready = Your application to participate in the 
 ui-lobby-ready-button-tooltip-is-not-ready = You have not applied to participate in the next crew shift.
 ui-lobby-ready-button-tooltip-not-loaded = Hold on! Your characters have not loaded yet!
 ui-lobby-ready-button-tooltip-join-state = Clock in late to the current crew shift.
+
+ui-lobby-unlock-priorities-checkbox-tooltip = Allow changing job priorities by directly dragging the job icons.
