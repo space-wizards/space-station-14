@@ -31,7 +31,7 @@ public sealed class AlertLevelDisplaySystem : EntitySystem
         if (TryComp(uid, out AppearanceComponent? appearance))
         {
             var stationUid = _stationSystem.GetOwningStation(uid);
-            if (stationUid != null && TryComp(stationUid, out AlertLevelComponent? alert))
+            if (stationUid != null && TryComp(stationUid, out Shared.AlertLevel.AlertLevelComponent? alert))
             {
                 _appearance.SetData(uid, AlertLevelDisplay.CurrentLevel, alert.CurrentLevel, appearance);
             }
