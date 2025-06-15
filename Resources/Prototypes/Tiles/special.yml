@@ -1,0 +1,8 @@
+﻿- type: tile
+  id: Invisible
+  name: tiles-invisible
+  sprite: /Textures/Tiles/empty.png
+  isSubfloor: true
+  invisibleSprite:
+    sprite: /Textures/Tiles/Misc/invisible.rsi
+    state: floor

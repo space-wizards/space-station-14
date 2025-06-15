@@ -25,6 +25,7 @@ internal sealed class MappingClientSideSetupCommand : LocalizedCommands
             _entitySystemManager.GetEntitySystem<MarkerSystem>().MarkersVisible = true;
             _lightManager.Enabled = false;
             shell.ExecuteCommand("showsubfloor");
+            _entitySystemManager.GetEntitySystem<ShowInvisibleEntitySystem>().SetActive(true);
             _entitySystemManager.GetEntitySystem<ActionsSystem>().LoadActionAssignments("/mapping_actions.yml", false);
         }
     }

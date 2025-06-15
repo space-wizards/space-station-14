@@ -123,6 +123,14 @@ namespace Content.Shared.Maps
         /// </summary>
         [DataField("indestructible")] public bool Indestructible = false;
 
+        /// <summary>
+        /// A sprite that will be drawn over this tile when invisible mapping entities are shown.
+        /// </summary>
+        /// <remarks>
+        /// See <c>ShowInvisibleEntitySystem</c> in the client for details.
+        /// </remarks>
+        [DataField] public SpriteSpecifier? InvisibleSprite;
+
         public void AssignTileId(ushort id)
         {
             TileId = id;

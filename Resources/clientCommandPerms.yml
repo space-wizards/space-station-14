@@ -79,6 +79,7 @@
     - mapping
     - toggleautosave
     - toggledecals
+    - show_invisible
 
 - Flags: QUERY
   Commands:
