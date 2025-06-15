@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: The Captain, HoP, and other appropriate heads of staff will now be cleared
-      to use departmental or job restricted contraband in that contraband's examine
-      text.
-    type: Add
-  id: 1340
-  time: '2025-03-17T18:36:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1967
 - author: EpicToast
   changes:
   - message: The cargo shuttle should now spawn on Core, Elkridge and Barratry.
@@ -4196,3 +4187,14 @@
   id: 1839
   time: '2025-06-15T22:02:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2773
+- author: VeeNomine
+  changes:
+  - message: Added a borg courier module to the default cargo chassis. This includes
+      both a mail bag and a holobell projector.
+    type: Add
+  - message: Changed the cargo chassis description that appears on the chassis selection
+      screen.
+    type: Tweak
+  id: 1840
+  time: '2025-06-15T22:10:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2770
