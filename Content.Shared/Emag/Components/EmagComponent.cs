@@ -33,4 +33,13 @@ public sealed partial class EmagComponent : Component
     [DataField]
     [AutoNetworkedField]
     public SoundSpecifier EmagSound = new SoundCollectionSpecifier("sparks");
+
+    //#region Starlight
+    /// <summary>
+    /// should this emag also destroy the transponder
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public bool DestroyTransponder = false;
+    //#endregion Starlight
 }

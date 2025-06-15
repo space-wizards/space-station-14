@@ -6,13 +6,15 @@
   - type: Action
     useDelay: 30
     itemIconStyle: BigAction
-    range: 60
     raiseOnUser: true
     sound:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
     icon:
       sprite: _Starlight/Interface/Actions/actions_spider.rsi
       state: web
+  - type: TargetAction
+    range: 20
+    checkCanAccess: false
   - type: WorldTargetAction
     event: !type:ProjectileSpellEvent
       prototype: ProjectileWebball
@@ -43,16 +45,17 @@
   - type: Action
     useDelay: 3
     itemIconStyle: BigAction
-    whitelist:
-      components:
-      - HumanoidAppearance
-    canTargetSelf: false
-    interactOnMiss: false
     sound: /Audio/Effects/pop.ogg
     icon:
       sprite:  _Starlight/Interface/Actions/actions_spider.rsi
       state: egg
+  - type: TargetAction
+    interactOnMiss: false
   - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - HumanoidAppearance
     event: !type:EggInjectionEvent
 
 - type: entity

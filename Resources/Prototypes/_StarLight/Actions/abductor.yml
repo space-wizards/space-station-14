@@ -23,7 +23,6 @@
   - type: Action
     useDelay: 10
     priority: -19
-    range: -1
     checkConsciousness: false
     checkCanInteract: false
     itemIconStyle: BigAction
@@ -44,11 +43,12 @@
   - type: Action
     useDelay: 10
     priority: -18
-    range: -1
     itemIconStyle: BigAction
     icon:
       sprite: _Starlight/Interface/Actions/actions_abductor.rsi
       state: gizmo
+  - type: TargetAction
+    range: -1
   - type: EntityTargetAction
     event: !type:GizmoMarkEvent
 

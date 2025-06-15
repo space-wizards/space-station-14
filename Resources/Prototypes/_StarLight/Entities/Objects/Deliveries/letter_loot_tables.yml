@@ -5,3 +5,6 @@
   table: !type:GroupSelector
     children:
       - id: MailSyndicateSpamLetter
+      - id: MailSpamDontYouWantMore
+      - id: MailSpamDontYouWantMore
+      - id: MailSpamDontYouWantMore

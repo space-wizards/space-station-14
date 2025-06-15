@@ -43,5 +43,5 @@
   name: roles-antag-space-ninja-name
   startingGear: SpaceNinjaGear
   equipment:
-    id: PassengerPDA
+    id: AssistantPDA
     neck: ClothingNeckGoldmedal

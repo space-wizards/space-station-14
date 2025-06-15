@@ -3,9 +3,13 @@
   name: Toggle Limb
   description: Toggle Limb.
   components:
-  - type: InstantAction
+  - type: Action
+    useDelay: 1
+    icon:
+      sprite: _Starlight/Interface/Actions/actions_cyber.rsi
+      state: cyber-hand-left
     itemIconStyle: BigItem
-    useDelay: 1 
+  - type: InstantAction
     event: !type:ToggleLimbEvent
 
 - type: entity
