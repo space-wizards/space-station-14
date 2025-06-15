@@ -132,8 +132,6 @@
   - type: Objective
     difficulty: 0.7
 
-
-
 - type: entity
   parent: BaseThiefStealCollectionObjective
   id: LAMPStealCollectionObjective
