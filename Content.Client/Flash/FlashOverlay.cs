@@ -1,8 +1,10 @@
+using Content.Shared.CCVar;
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
 using Content.Shared.StatusEffect;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -15,21 +17,37 @@ namespace Content.Client.Flash
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         private readonly SharedFlashSystem _flash;
         private readonly StatusEffectsSystem _statusSys;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
-        private readonly ShaderInstance _shader;
+        private ShaderInstance _shader;
         public float PercentComplete = 0.0f;
         public Texture? ScreenshotTexture;
+
+        private readonly ProtoId<ShaderPrototype> _flashedEffect = "FlashedEffect";
+        private readonly ProtoId<ShaderPrototype> _flashedEffectReducedMotion = "FlashedEffectReducedMotion";
 
         public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").InstanceUnique();
+            // Default to the normal flashed effect so that _shader can be initialized in the constructor
+            // and does not need to be nullable
+            _shader = _prototypeManager.Index(_flashedEffect).InstanceUnique();
+
+            // Set the shader according to the CVar when it is changed and also now.
+            _configManager.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
+
             _flash = _entityManager.System<SharedFlashSystem>();
             _statusSys = _entityManager.System<StatusEffectsSystem>();
+        }
+
+        private void OnReducedMotionChanged(bool reducedMotion)
+        {
+            var effectName = reducedMotion ? _flashedEffectReducedMotion : _flashedEffect;
+            _shader = _prototypeManager.Index<ShaderPrototype>(effectName).InstanceUnique();
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
