@@ -113,15 +113,13 @@ namespace Content.Client.Changelog
     }
 
     [UsedImplicitly, AnyCommand]
-    public sealed class ChangelogCommand : IConsoleCommand
+    public sealed class ChangelogCommand : LocalizedCommands
     {
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
-        public string Command => "changelog";
-        public string Description => "Opens the changelog";
-        public string Help => "Usage: changelog";
+        public override string Command => "changelog";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             _uiManager.GetUIController<ChangelogUIController>().OpenWindow();
         }
