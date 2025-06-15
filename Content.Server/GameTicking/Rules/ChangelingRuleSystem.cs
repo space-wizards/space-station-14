@@ -12,6 +12,7 @@ public sealed class ChangelingRuleSystem : GameRuleSystem<ChangelingRuleComponen
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ChangelingRoleComponent, GetBriefingEvent>(OnGetBriefing);
     }
 
