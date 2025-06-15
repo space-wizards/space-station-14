@@ -321,6 +321,10 @@
   id: FoodButterflyOrchid
   description: It looks as if there are many butterflies flying around it. It gives a touch of spring.
   components:
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
   - type: FlavorProfile
     flavors:
     - honey

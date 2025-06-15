@@ -19,10 +19,6 @@
     mindRoles:
     - MindRoleGhostRoleFreeAgentHarmless
   - type: GhostTakeoverAvailable
-  - type: Speech
-    speechSounds: Squeak
-    speechVerb: SmallMob
-    allowedEmotes: ['Squeak']
   - type: Sprite
     drawdepth: SmallMobs
     sprite: _Impstation/Mobs/Animals/oppa.rsi
@@ -80,7 +76,7 @@
     flavors:
     - meaty
   - type: Thirst
-    startingThirst: 70  
+    startingThirst: 70
     thresholds:
       OverHydrated: 70
       Okay: 50
@@ -116,8 +112,6 @@
       amount: 2
     - id: OppaPouch
       amount: 1
-  - type: ReplacementAccent
-    accent: mouse
   - type: Tag
     tags:
     - Trash
@@ -126,12 +120,6 @@
     - Mouse
     - Meat
     - MultitoolDefibrillatorTarget
-  - type: Vocal
-    sounds:
-      Male: Mouse
-      Female: Mouse
-      Unsexed: Mouse
-    wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
   - type: MeleeWeapon
@@ -164,26 +152,39 @@
     activateSound: null
     deactivateSound: null
   - type: MovementSpeedModifier
-    baseWalkSpeed: 3.5
-    baseSprintSpeed: 4
-    weightlessAcceleration: 1.75 # zoom
-    weightlessFriction: 2.5
-    weightlessModifier: 3
+    baseWalkSpeed: 8
+    baseSprintSpeed: 10
+    weightlessAcceleration: 1.5 # zoom
+    weightlessFriction: 1
+    baseWeightlessModifier: 1
   - type: MovementIgnoreGravity # nyoom
     gravityState: true
   - type: PointLight
     color: Black
     radius: 1.1
     energy: 2
+#fixing vocal
+  - type: Speech
+    speechSounds: Squeak
+    speechVerb: SmallMob
+    allowedEmotes: ['Squeak']
+  - type: Vocal
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
+    wilhelmProbability: 0.001
+  - type: ReplacementAccent
+    accent: mouse
 #here comes the scary pinpointer zone, directly copied from dragon for fun?
-  - type: Inventory 
+  - type: Inventory
     templateId: dragon
-  - type: InventorySlots 
-  - type: Loadout 
+  - type: InventorySlots
+  - type: Loadout
     prototypes:
       - StartingGearDragonPinpointer
-  - type: Strippable 
-  - type: UserInterface 
+  - type: Strippable
+  - type: UserInterface
     interfaces:
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface

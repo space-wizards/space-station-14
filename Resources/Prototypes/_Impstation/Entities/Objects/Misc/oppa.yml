@@ -40,11 +40,11 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomOppaPouchFlowerTable 
+      tableId: RandomOppaPouchFlowerTable
     - !type:NestedSelector
-      tableId: RandomOppaPouchFruitTable 
+      tableId: RandomOppaPouchFruitTable
     - !type:NestedSelector
-      tableId: RandomOppaPouchMedicinalTable 
+      tableId: RandomOppaPouchMedicinalTable
     - !type:NestedSelector
       tableId: RandomOppaPouchTomatoTable
     - !type:NestedSelector
@@ -69,11 +69,11 @@
     - id: LilySeeds
       amount: !type:RangeNumberSelector
         range: 0, 1
-    - id: PoppySeeds #change to butterfly orchids eventually? more teo in this table
+    - id: ButterflyOrchidSeeds
       amount: !type:RangeNumberSelector
         range: 0, 1
 
-- type: entityTable 
+- type: entityTable
   id: RandomOppaPouchFruitTable
   table: !type:GroupSelector
     children:
@@ -86,11 +86,11 @@
     - id: BungoSeeds
       amount: !type:RangeNumberSelector
         range: 0, 1
-    - id: FakeCapfruitSeeds 
+    - id: RealCapfruitSeeds #THESE WEREN'T MEANT TO BE HARMFUL OH MY GOD. WHAT DO YOU MEAN FAKE CAPFRUIT IS THE ONE THAT SHOOTS REAL BULLETS
       amount: !type:RangeNumberSelector
         range: 0, 1
 
-- type: entityTable 
+- type: entityTable
   id: RandomOppaPouchMedicinalTable
   table: !type:GroupSelector
     children:
@@ -103,11 +103,11 @@
     - id: GoldenAppleSeeds
       amount: !type:RangeNumberSelector
         range: 0, 1
-    - id: HolymelonSeeds 
+    - id: HolymelonSeeds
       amount: !type:RangeNumberSelector
         range: 0, 1
 
-- type: entityTable 
+- type: entityTable
   id: RandomOppaPouchTomatoTable
   table: !type:GroupSelector
     children:
@@ -124,7 +124,7 @@
       amount: !type:RangeNumberSelector
         range: 0, 1
 
-- type: entityTable 
+- type: entityTable
   id: RandomOppaPouchStrangeDrinkTable
   table: !type:GroupSelector
     children:
@@ -141,7 +141,7 @@
       amount: !type:RangeNumberSelector
         range: 0, 1
 
-- type: entityTable 
+- type: entityTable
   id: RandomOppaPouchMaterialsTable
   table: !type:GroupSelector
     children:
@@ -158,7 +158,7 @@
       amount: !type:RangeNumberSelector
         range: 0, 1
 
-- type: entityTable 
+- type: entityTable
   id: RandomOppaPouchClowneryTable
   table: !type:GroupSelector
     children:
@@ -175,7 +175,7 @@
       amount: !type:RangeNumberSelector
         range: 0, 1
 
-- type: entityTable 
+- type: entityTable
   id: RandomOppaPouchPoisonsTable
   table: !type:GroupSelector
     children:
@@ -192,7 +192,7 @@
       amount: !type:RangeNumberSelector
         range: 0, 1
 
-- type: entityTable 
+- type: entityTable
   id: RandomOppaPouchILoveGamblingTable
   table: !type:GroupSelector
     children:
