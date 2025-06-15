@@ -131,7 +131,7 @@
   id: Strugglebug
   name: NT-Strugglebug
   description: A small, bare-bones three-seater mining shuttle. EVA required.
-  price: 6500
+  price: 6825
   path:
   - /Maps/_Impstation/Shuttles/Shipyard/strugglebug.yml
   categories:
