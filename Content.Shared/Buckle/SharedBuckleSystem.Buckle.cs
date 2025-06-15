@@ -139,7 +139,7 @@ public abstract partial class SharedBuckleSystem
             return;
         }
 
-        var delta = (xform.LocalPosition - strapComp.BuckleOffset).LengthSquared();
+        var delta = xform.LocalPosition.LengthSquared();
         if (delta > 1e-5)
             Unbuckle(buckle, (strapUid, strapComp), null);
     }
@@ -370,7 +370,7 @@ public abstract partial class SharedBuckleSystem
         _rotationVisuals.SetHorizontalAngle(buckle.Owner, strap.Comp.Rotation);
 
         var xform = Transform(buckle);
-        var coords = new EntityCoordinates(strap, strap.Comp.BuckleOffset);
+        var coords = new EntityCoordinates(strap, Vector2.Zero);
         _transform.SetCoordinates(buckle, xform, coords, rotation: Angle.Zero);
 
         _joints.SetRelay(buckle, strap);
@@ -466,12 +466,6 @@ public abstract partial class SharedBuckleSystem
 
             var oldBuckledToWorldRot = _transform.GetWorldRotation(strap);
             _transform.SetWorldRotationNoLerp((buckle, buckleXform), oldBuckledToWorldRot);
-
-            // TODO: This is doing 4 moveevents this is why I left the warning in, if you're going to remove it make it only do 1 moveevent.
-            if (strap.Comp.BuckleOffset != Vector2.Zero)
-            {
-                buckleXform.Coordinates = oldBuckledXform.Coordinates.Offset(strap.Comp.BuckleOffset);
-            }
         }
 
         _rotationVisuals.ResetHorizontalAngle(buckle.Owner);

@@ -5,6 +5,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Buckle.Components;
 
@@ -80,6 +81,12 @@ public sealed partial class StrapComponent : Component
     public ProtoId<AlertPrototype> BuckledAlertType = "Buckled";
 
     /// <summary>
+    /// Sprite layer applied to the entity that is buckled to this entity.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? Overlay;
+
+    /// <summary>
     /// How long it takes to buckle someone else into a chair
     /// </summary>
     [DataField]
@@ -108,6 +115,11 @@ public enum StrapPosition
     /// Makes the mob lie down
     /// </summary>
     Down
+}
+
+public enum StrapVisualLayers : byte
+{
+    Overlay,
 }
 
 [Serializable, NetSerializable]
