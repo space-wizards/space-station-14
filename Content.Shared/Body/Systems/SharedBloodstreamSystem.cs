@@ -202,8 +202,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         var damage = DamageSpecifier.GetPositive(args.DamageDelta);
         var bloodloss = DamageSpecifier.ApplyModifierSet(damage, modifiers);
 
-        //Log.Debug($"damage {Name(ent.Owner)}");
-        //Log.Debug($"{bloodloss} {bloodloss.GetTotal()}");
+        Log.Debug($"damage {Name(ent.Owner)}");
+        Log.Debug($"{bloodloss} {bloodloss.GetTotal()}");
 
         if (bloodloss.Empty)
             return;
@@ -214,18 +214,21 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         var totalFloat = total.Float();
         TryModifyBleedAmount(ent.AsNullable(), totalFloat);
 
+        // TODO: Move this elsewhere, for example into weapon code
+        // This should not happen for any damage, especially not incoming server states
         /// Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
         /// The crit chance is currently the bleed rate modifier divided by 25.
         /// Higher damage weapons have a higher chance to crit!
-        var prob = Math.Clamp(totalFloat / 25, 0, 1);
-        if (totalFloat > 0 && _random.Prob(prob)) // TODO: random predicted
-        {
-            TryModifyBloodLevel(ent.AsNullable(), -total / 5);
-            _audio.PlayPredicted(ent.Comp.InstantBloodSound, ent, args.Origin);
-        }
+        //var prob = Math.Clamp(totalFloat / 25, 0, 1);
+        //if (totalFloat > 0 && _random.Prob(prob)) // TODO: random predicted
+        //{
+        //    TryModifyBloodLevel(ent.AsNullable(), -total / 5);
+        //    _audio.PlayPredicted(ent.Comp.InstantBloodSound, ent, args.Origin);
+        //}
 
         // Heat damage will cauterize, causing the bleed rate to be reduced.
-        else if (totalFloat <= ent.Comp.BloodHealedSoundThreshold && oldBleedAmount > 0)
+        // else if
+        if (totalFloat <= ent.Comp.BloodHealedSoundThreshold && oldBleedAmount > 0)
         {
             // Magically, this damage has healed some bleeding, likely
             // because it's burn damage that cauterized their wounds.
