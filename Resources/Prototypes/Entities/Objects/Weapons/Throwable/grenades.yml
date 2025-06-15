@@ -462,8 +462,8 @@
   - type: OnUseTimerTrigger
     delay: 5
   - type: SmokeOnTrigger
-    duration: 10
-    spreadAmount: 20
+    duration: 2 # imp 10 -> 2
+    spreadAmount: 5 #imp 20 ->5
     smokePrototype: AluminiumMetalFoam
   - type: StaticPrice
     price: 350
