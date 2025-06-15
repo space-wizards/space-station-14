@@ -109,6 +109,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
             embed["description"] += "\n\nRelated Pull Requests:\n" + "\n".join(f"- [GitHub Pull Request]({url})" for url in urls)
 
         send_discord(embed)
+        time.sleep(0.5)
 
     update_sent_ids(SENT_IDS_FILE, [{"id": eid} for eid in sent_ids])
 
