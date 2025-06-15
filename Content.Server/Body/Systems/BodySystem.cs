@@ -97,6 +97,7 @@ public sealed class BodySystem : SharedBodySystem
     public override HashSet<EntityUid> GibBody(
         EntityUid bodyId,
         bool gibOrgans = false,
+        bool acidify = false,
         BodyComponent? body = null,
         bool launchGibs = true,
         Vector2? splatDirection = null,
@@ -105,6 +106,11 @@ public sealed class BodySystem : SharedBodySystem
         SoundSpecifier? gibSoundOverride = null
     )
     {
+        var beforeGibEv = new BeforeBeingGibbedEvent();
+        RaiseLocalEvent(bodyId, ref beforeGibEv);
+        if (beforeGibEv.Canceled)
+            return new HashSet<EntityUid>();
+
         if (!Resolve(bodyId, ref body, logMissing: false)
             || TerminatingOrDeleted(bodyId)
             || EntityManager.IsQueuedForDeletion(bodyId))
@@ -119,7 +125,7 @@ public sealed class BodySystem : SharedBodySystem
         if (xform.MapUid is null)
             return new HashSet<EntityUid>();
 
-        var gibs = base.GibBody(bodyId, gibOrgans, body, launchGibs: launchGibs,
+        var gibs = base.GibBody(bodyId, gibOrgans, acidify, body, launchGibs: launchGibs,
             splatDirection: splatDirection, splatModifier: splatModifier, splatCone:splatCone);
 
         var ev = new BeingGibbedEvent(gibs);
@@ -129,4 +135,10 @@ public sealed class BodySystem : SharedBodySystem
 
         return gibs;
     }
+}
+
+[ByRefEvent]
+public record struct BeforeBeingGibbedEvent()
+{
+    public bool Canceled;
 }
