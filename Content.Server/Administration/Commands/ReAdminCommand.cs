@@ -7,6 +7,8 @@ namespace Content.Server.Administration.Commands
     [AnyCommand]
     public sealed class ReAdminCommand : IConsoleCommand
     {
+        [Dependency] private readonly IAdminManager _adminMan = default!;
+
         public string Command => "readmin";
         public string Description => "Re-admins you if you previously de-adminned.";
         public string Help => "Usage: readmin";
@@ -20,15 +22,13 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var mgr = IoCManager.Resolve<IAdminManager>();
-
-            if (mgr.GetAdminData(player, includeDeAdmin: true) == null)
+            if (_adminMan.GetAdminData(player, includeDeAdmin: true) == null)
             {
                 shell.WriteLine("You're not an admin.");
                 return;
             }
 
-            mgr.ReAdmin(player);
+            _adminMan.ReAdmin(player);
         }
     }
 }

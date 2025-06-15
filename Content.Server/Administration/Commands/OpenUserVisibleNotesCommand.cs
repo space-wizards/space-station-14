@@ -12,9 +12,7 @@ public sealed class OpenUserVisibleNotesCommand : IConsoleCommand
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IAdminNotesManager _notes = default!;
 
-    public const string CommandName = "adminremarks";
-
-    public string Command => CommandName;
+    public string Command => "adminremarks";
     public string Description => Loc.GetString("admin-remarks-command-description");
     public string Help => $"Usage: {Command}";
 

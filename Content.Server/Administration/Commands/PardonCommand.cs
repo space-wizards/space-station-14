@@ -8,6 +8,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Ban)]
     public sealed class PardonCommand : IConsoleCommand
     {
+        [Dependency] private readonly IServerDbManager _dbManager = default!;
+
         public string Command => "pardon";
         public string Description => "Pardons somebody's ban";
         public string Help => $"Usage: {Command} <ban id>";
@@ -15,7 +17,6 @@ namespace Content.Server.Administration.Commands
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
-            var dbMan = IoCManager.Resolve<IServerDbManager>();
 
             if (args.Length != 1)
             {
@@ -29,7 +30,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var ban = await dbMan.GetServerBanAsync(banId);
+            var ban = await _dbManager.GetServerBanAsync(banId);
 
             if (ban == null)
             {
@@ -52,7 +53,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            await dbMan.AddServerUnbanAsync(new ServerUnbanDef(banId, player?.UserId, DateTimeOffset.Now));
+            await _dbManager.AddServerUnbanAsync(new ServerUnbanDef(banId, player?.UserId, DateTimeOffset.Now));
 
             shell.WriteLine($"Pardoned ban with id {banId}");
         }
