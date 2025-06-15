@@ -7485,4 +7485,11 @@ Entries:
   id: 1034
   time: '2025-06-15T04:20:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/782
+- author: KarmaKitsuna and Quantum
+  changes:
+  - message: Added Teach A Lesson as a traitor objective
+    type: Add
+  id: 1035
+  time: '2025-06-15T04:22:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/701
 
