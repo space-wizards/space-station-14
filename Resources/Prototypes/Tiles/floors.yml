@@ -2073,7 +2073,6 @@
   footstepSounds:
     collection: FootstepBlood
   itemDrop: FloorTileItemXeno
-  friction: 0.25 #slippy
   heatCapacity: 10000
 
 - type: tile
