@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Fallback antagonist rolls should no longer occassionally overwrite preferred
-      antagonist rolls. Hopefully. This primarily affected nuclear operatives.
-    type: Fix
-  id: 1336
-  time: '2025-03-17T18:26:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1998
 - author: widgetbeck
   changes:
   - message: Drones have received a major overhaul. Check the PR on Github for more
@@ -4204,3 +4196,13 @@
   id: 1835
   time: '2025-06-15T07:44:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2757
+- author: DinnerCalzone
+  changes:
+  - message: Amber, Bagel, Cog, Marathon, Oasis, Hummingbird, Plasma, Omega, Saltern,
+      and Train have been updated to have the salvage job board.
+    type: Add
+  - message: Hummingbird's security area has received a rework and now features genpop.
+    type: Add
+  id: 1836
+  time: '2025-06-15T17:07:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2771
