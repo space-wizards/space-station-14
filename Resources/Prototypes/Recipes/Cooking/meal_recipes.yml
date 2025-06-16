@@ -1114,6 +1114,20 @@
     FoodButter: 1
     FoodMeatSnailCooked: 1
 
+- type: microwaveMealRecipe
+  id: RecipeCigaretteButtSoup
+  name: magical cigarette soup recipe
+  result: FoodSoupCigaretteButt
+  time: 20
+  group: Soup
+  reagents:
+    Water: 10
+    Ketchup: 5
+    TableSalt: 5
+  solids:
+    FoodBowlBig: 1
+    CigaretteSpent: 5
+
 #Pies
 
 - type: microwaveMealRecipe
