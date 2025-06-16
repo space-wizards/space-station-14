@@ -1397,6 +1397,20 @@
     - UplinkImplants
 
 - type: listing
+  id: UplinkMantisBladeImplanter
+  name: uplink-MantisBlade-implanter-name
+  description: uplink-MantisBlade-implanter-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/mantis.rsi, state: icon }
+  productEntity: MantisBladeImplanter
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 5
+  cost:
+    Telecrystal: 10
+  categories:
+    - UplinkImplants
+
+- type: listing
   id: UplinkRadioImplanter
   name: uplink-radio-implanter-name
   description: uplink-radio-implanter-desc

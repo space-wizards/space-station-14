@@ -229,6 +229,19 @@
       enum.ChameleonControllerKey.Key:
         type: ChameleonControllerBoundUserInterface
 
+- type: entity
+  parent: [ BaseSubdermalImplant, StorePresetUplink ]
+  id: MantisBladeImplant
+  name: Mantis blade implant
+  description: This implant is needed to transform your hand into a dangerous praying mantis blade.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionRetractableItemMantisBladeImplant
+    whitelist:
+      components:
+      - Hands
+
 #Nuclear Operative/Special Exclusive implants
 
 - type: entity

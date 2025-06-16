@@ -87,3 +87,8 @@
   license: "CC0-1.0"
   copyright: "Taken from 0ne_one111yt on freesound.org"
   source: "https://freesound.org/people/0ne_one111yt/sounds/478213/"
+
+- files: ["wristblades_on.ogg, wristblades_off.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Paradise station SS220"
+  source: "https://github.com/ss220-space/Paradise/pull/2990/commits/5c4a3c7c1480ab3349f423cc7e81976921c8afa3"

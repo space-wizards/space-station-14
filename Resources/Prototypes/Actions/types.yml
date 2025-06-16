@@ -423,3 +423,26 @@
     itemIconStyle: BigAction
   - type: InstantAction
     event: !type:ChameleonControllerOpenMenuEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionRetractableItemMantisBladeImplant
+  name: Mantis blade
+  description: Get out your Mantis Blade.
+  components:
+  - type: Action
+    useDelay: 2
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Weapons/Melee/mantis.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:OnRetractableItemActionEvent
+  - type: RetractableItemAction
+    spawnedPrototype: MantisBlade
+    summonSounds:
+      collection: wristblades_on
+    retractSounds:
+      collection: wristblades_off
+

@@ -46,6 +46,7 @@
       - MindShieldImplant
       - FakeMindShieldImplant
       - RadioImplant
+      - MantisBladeImplant
       deimplantFailureDamage:
         types:
           Cellular: 50
@@ -254,6 +255,14 @@
   components:
   - type: Implanter
     implant: ChameleonControllerImplant
+
+- type: entity
+  id: MantisBladeImplanter
+  name: Mantis blade implant
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: MantisBladeImplant
 
 #Nuclear Operative/Special implanters
 

@@ -26,3 +26,29 @@
   - type: Prying
     speedModifier: 1.5 # Jaws of life speed
     pryPowered: true
+
+- type: entity
+  name: Mantis blade
+  parent: BaseItem
+  id: MantisBlade
+  description: Kill like a mantis, run like a syndicate
+  components:
+  - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/mantis.rsi
+    state: icon
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    wideAnimationRotation: 90
+    attackRate: 1
+    damage:
+      types: # Same as energy sword, but slash/pierce instead of slash/heat
+        Slash: 15
+        Piercing: 15
+        Structural: 20
+  - type: Item
+    size: Normal
+    sprite: Objects/Weapons/Melee/mantis.rsi

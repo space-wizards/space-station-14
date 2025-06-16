@@ -1,0 +1,9 @@
+- type: soundCollection
+  id: wristblades_on
+  files:
+    - /Audio/Weapons/wristblades_on.ogg
+
+- type: soundCollection
+  id: wristblades_off
+  files:
+    - /Audio/Weapons/wristblades_off.ogg
