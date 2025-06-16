@@ -82,6 +82,8 @@ public sealed partial class ProfilePreviewSpriteView
             _prototypeManager.Index(humanoid.Species).DollPrototype,
             MapCoordinates.Nullspace);
 
+        ReloadHumanoidEntity(humanoid);
+
         // Bail now if all we need is the naked doll
         if (!showClothes)
             return;
@@ -100,6 +102,7 @@ public sealed partial class ProfilePreviewSpriteView
                 // We found an antag to dress as! Set it and return.
                 GiveDummyAntagLoadout(antagProto);
                 JobName = Loc.GetString(antagProto.Name);
+
                 return;
             }
         }
@@ -128,8 +131,6 @@ public sealed partial class ProfilePreviewSpriteView
         LoadoutName = GetLoadoutName(loadout);
 
         GiveDummyLoadout(PreviewDummy, loadout);
-
-        ReloadHumanoidEntity(humanoid);
     }
 
     /// <summary>
