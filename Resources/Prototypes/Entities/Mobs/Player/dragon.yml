@@ -141,7 +141,9 @@
     foodPreferenceWhitelist:
       components:
       - HumanoidAppearance
-    shouldStoreDevoured: true
+    stomachStorageWhitelist:
+      components:
+      - MobState
     chemical: Ichor
     healRate: 7.5
     whitelist:

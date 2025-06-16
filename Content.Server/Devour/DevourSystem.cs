@@ -34,12 +34,13 @@ public sealed class DevourSystem : SharedDevourSystem
         }
 
         // If the devoured thing meets the stomach whitelist criteria, add it to the stomach
-        if (component.ShouldStoreDevoured && args.Args.Target != null && _entityWhitelistSystem.IsWhitelistPass(component.StomachStorageWhitelist, (EntityUid)args.Args.Target))
+        if (args.Args.Target != null && _entityWhitelistSystem.IsWhitelistPass(component.StomachStorageWhitelist, (EntityUid)args.Args.Target))
         {
             ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
         }
         //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
-        //If it's not alive, it must be a structure
+        //If it's not alive, it must be a structure.
+        // Delete if the thing isn't in the stomach storage whitelist (or the stomach whitelist is null/empty)
         else if (args.Args.Target != null)
         {
             QueueDel(args.Args.Target.Value);
@@ -50,7 +51,7 @@ public sealed class DevourSystem : SharedDevourSystem
 
     private void OnGibContents(EntityUid uid, DevourerComponent component, ref BeingGibbedEvent args)
     {
-        if (!component.ShouldStoreDevoured)
+        if (component.StomachStorageWhitelist == null)
             return;
 
         // For some reason we have two different systems that should handle gibbing,
