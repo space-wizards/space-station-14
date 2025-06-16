@@ -1,0 +1,9 @@
+# Command
+
+- type: entity
+  id: TurnstileCommand
+  parent: Turnstile
+  suffix: Command
+  components:
+  - type: AccessReader
+    access: [["Command"]]
