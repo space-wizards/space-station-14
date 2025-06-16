@@ -142,6 +142,10 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 50
 
 - type: entity
   parent: ClothingMaskBreathMedical
@@ -381,6 +385,8 @@
     slots:
     - Hair
     - Snout
+    - HeadTop
+    - HeadSide
     hideOnToggle: true
   - type: Pierceable
     level: Metal
@@ -452,6 +458,11 @@
     sprite: Clothing/Mask/squadron.rsi
   - type: Clothing
     sprite: Clothing/Mask/squadron.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
   - type: Pierceable
     level: Rock
   - type: Armor

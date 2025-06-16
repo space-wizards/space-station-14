@@ -41,6 +41,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Linq;
+using Content.Shared.Atmos.Components;
 
 namespace Content.Server.Mech.Systems;
 

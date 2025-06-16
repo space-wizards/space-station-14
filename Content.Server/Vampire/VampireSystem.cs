@@ -41,6 +41,10 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Server.Charges;
+using Content.Shared.Charges.Components;
+using Content.Shared.Actions.Components;
+using Content.Server.Administration.Systems;
 
 namespace Content.Server.Vampire;
 
@@ -78,6 +82,8 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedVampireSystem _vampire = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly ChargesSystem _charges = default!;
+    [Dependency] private readonly StarlightEntitySystem _entities = default!;
 
     public override void Initialize()
     {
@@ -241,7 +247,8 @@ public sealed partial class VampireSystem : EntitySystem
         if (mutationsAction == null)
             return;
 
-        _action.SetCharges(mutationsAction, chargeDisplay);
+        if(TryComp<LimitedChargesComponent>(mutationsAction, out var charges))
+            _charges.SetCharges((mutationsAction.Value, charges), chargeDisplay);
     }
     
     private void OnVampireBloodChangedEvent(EntityUid uid, VampireComponent component, VampireBloodChangedEvent args)
@@ -310,8 +317,9 @@ public sealed partial class VampireSystem : EntitySystem
             {
                 if (TryComp(uid, out ActionsComponent? comp))
                 {
-                    _action.RemoveAction(uid, _entityManager.GetEntity(abilityInfo.Action), comp);
-                    _actionContainer.RemoveAction(_entityManager.GetEntity(abilityInfo.Action));
+                    var action = _entities.Entity<ActionComponent>(_entityManager.GetEntity(abilityInfo.Action));
+                    _action.RemoveAction(action);
+                    _actionContainer.RemoveAction(action.Owner);
                     component.actionEntities.Remove(actionId);
                     if (powerId != null && component.UnlockedPowers.ContainsKey(powerId))
                         component.UnlockedPowers.Remove(powerId);

@@ -21,12 +21,21 @@
     hideLayersOnEquip:
     - Hair
     - Snout
-  - type: MovementSpeedModifier
-    speciesSprintSpeedModifier: 0.85
-    speciesWalkSpeedModifier: 1.00
   - type: Body
     prototype: Cyclorite
     requiredLegs: 2
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 222 # 120%
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MobThresholds
     thresholds:
       0: Alive

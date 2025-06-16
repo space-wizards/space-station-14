@@ -7,6 +7,7 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobHumanDummy
   skinColoration: HumanToned
+  customName: true # Starlight
 
 # The lack of a layer means that
 # this person cannot have round-start anything
@@ -17,6 +18,7 @@
 - type: speciesBaseSprites
   id: MobHumanSprites
   sprites:
+    Tail: MobHumanoidAnyMarking # Starlight
     Special: MobHumanoidAnyMarking
     Head: MobHumanHead
     Hair: MobHumanoidAnyMarking
@@ -64,7 +66,7 @@
       points: 1
       required: false
     Chest:
-      points: 1
+      points: 2
       required: false
     Legs:
       points: 2

@@ -48,3 +48,16 @@
           Low: {state: jammer_low_charge}
           Medium: {state: jammer_medium_charge}
           High: {state: jammer_high_charge}
+
+- type: entity
+  parent: [RadioJammer, BaseXenoborgContraband]
+  id: XenoborgRadioJammer
+  name: xenoborg radio jammer
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+        disableEject: true
+        swap: false

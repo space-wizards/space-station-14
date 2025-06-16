@@ -29,8 +29,10 @@
   - ClothingNeckLesbianPin
   - ClothingNeckNonBinaryPin
   - ClothingNeckPansexualPin
+  - ClothingNeckPluralPin
   - ClothingNeckOmnisexualPin
   - ClothingNeckGenderqueerPin
+  - ClothingNeckGenderfluidPin
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
@@ -51,6 +53,8 @@
   - TowelColorWhite
   - TowelColorYellow
   - SuperSynthesizerInstrument # 🌟Starlight🌟
+  - ClothingUnderSocksCoder # 🌟Starlight🌟
+  - ClothWrap # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: Glasses
@@ -200,6 +204,7 @@
   - BasicJumpskirt
   - AncientJumpsuit
   - RainbowJumpsuit
+  - RainbowJumpskirt
 
 - type: loadoutGroup
   id: AssistantFace
@@ -549,6 +554,7 @@
   loadouts:
   - EmergencyNitrogenMime
   - EmergencyOxygenMime
+  - EmergencySpeciesMothMime
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
@@ -1066,12 +1072,12 @@
   - CorpsmanBelt #Starlight
 
 #Starlight Start
-- type: loadoutGroup 
+- type: loadoutGroup
   id: BrigmedicGloves
   name: loadout-group-brigmedic-gloves
   loadouts:
   - Nitrile
-  - BlackNitrile 
+  - BlackNitrile
 #Starlight End
 
 - type: loadoutGroup
@@ -1365,7 +1371,19 @@
   name: loadout-group-paramedic-shoes
   loadouts:
   - BlueShoes
+  - WhiteShoes
   - MedicalWinterBoots
+
+- type: loadoutGroup
+  id: MedicalEyewear
+  name: loadout-group-medical-glasses
+  minLimit: 0
+  loadouts:
+  - MedicalHud
+  - MedicalEyePatchHud
+  - Glasses
+  - GlassesJamjar
+  - GlassesJensen
 
 - type: loadoutGroup
   id: SurvivalMedical

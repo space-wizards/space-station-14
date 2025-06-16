@@ -66,8 +66,8 @@ public sealed class NukeOpsTest
         await pair.RunTicksSync(5);
 
         // Opt into the nukies role.
-        await pair.SetAntagPreference("NukeopsCommander", true);
-        await pair.SetAntagPreference("NukeopsMedic", true, dummies[1].UserId);
+        await pair.SetAntagPreferences(["NukeopsCommander"]);
+        await pair.SetAntagPreferences(dummies[1], ["NukeopsMedic"]);
 
         // Initially, the players have no attached entities
         Assert.That(pair.Player?.AttachedEntity, Is.Null);
@@ -181,7 +181,7 @@ public sealed class NukeOpsTest
         }
 
         Assert.That(!entMan.EntityExists(nukieStationEnt)); // its not supposed to be a station!
-        Assert.That(server.MapMan.MapExists(gridsRule.Map));
+        Assert.That(mapSys.MapExists(gridsRule.Map));
         var nukieMap = mapSys.GetMap(gridsRule.Map!.Value);
 
         var targetStation = entMan.GetComponent<StationDataComponent>(ruleComp.TargetStation!.Value);

@@ -22,7 +22,6 @@ namespace Content.Shared.VendingMachines;
 public abstract partial class SharedVendingMachineSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private   readonly INetManager _net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] private   readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearanceSystem = default!;
@@ -50,7 +49,40 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             subs.Event<VendingMachineEjectMessage>(OnInventoryEjectMessage);
         });
     }
+    
+    //#region starlight
+    /// <summary>
+    /// Restocks one item from the starting inventory, can also be overriden what is restocked on the VendingMachineComponent
+    /// </summary>
+    /// <param name="uid">the EntityUid of the vending machine</param>
+    /// <param name="component">the Vending Machine component of the vending machine</param>
+    public void RestockRandom(EntityUid uid, VendingMachineComponent component)
+    {
+        string? item = null;
+        if (component.RandomRestockTarget != null)
+        {
+            item = component.RandomRestockTarget.ToString();
+        }
+        else
+        {
+            if (!PrototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
+                return;
+            var startingInventory = packPrototype.StartingInventory;
+            var next = Randomizer.Next(0, startingInventory.Count);
+            var target = packPrototype.StartingInventory.ElementAt(next);
+            item = target.Key;
+        }
 
+        if (item == null)
+            return;
+        var theItem = new Dictionary<string, uint>();
+        theItem.Add(item, 1);
+        
+        AddInventoryFromPrototype(uid, theItem, InventoryType.Regular, component);
+        Dirty(uid, component);
+    }
+    //#endregion starlight
+    
     private void OnVendingGetState(Entity<VendingMachineComponent> entity, ref ComponentGetState args)
     {
         var component = entity.Comp;

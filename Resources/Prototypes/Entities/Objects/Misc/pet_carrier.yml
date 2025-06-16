@@ -1,12 +1,12 @@
 - type: entity
   id: PetCarrier
-  name: big pet carrier
+  name: pet carrier
   description: Allows large animals to be carried comfortably. It smells vaguely of toilet water and explosives.
   parent: BaseStructureDynamic
   components:
   - type: Sprite
     noRot: true
-    drawdepth: Objects
+    drawdepth: Items
     sprite: Objects/Storage/petcarrier.rsi
     layers:
     - state: pet_carrier_base
@@ -31,8 +31,6 @@
         density: 25
         mask:
         - ItemMask
-        layer:
-        - MachineLayer
   - type: EntityStorage
     capacity: 1
     airtight: false

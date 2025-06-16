@@ -1,0 +1,93 @@
+- type: entity
+  id: MailSyndicateSpamLetter
+  name: Reasons to choose The Syndicate!
+  description: An advertisement for the Syndicate. Wont fit in a fax somehow.
+  parent: Paper
+  components:
+    - type: Paper
+      content: delivery-spam-reasons-to-join-syndicate
+    - type: AntagOnSign
+      chance: 0.25
+      antags:
+        - antag: Traitor
+          targetComponent: TraitorRule
+
+- type: entity
+  id: MailSpamDontYouWantMore
+  name: Don't You Want More?
+  description: An inciting paper that smells faintly of welding fuel and desire. Wont fit in a fax somehow.
+  parent: Paper
+  components:
+    - type: Paper
+      content: deliver-spam-dont-you-want-more
+    - type: AntagOnSign
+      chance: 1 # theif is a "low impact" antag... not for much longer :3
+      antags:
+        - antag: Traitor # gotta be a traitor for the traitor objectives
+          targetComponent: TraitorRule
+        - antag: Thief # gotta be a thief for the thief objectives
+          targetComponent: ThiefRule
+    - type: ObjectiveOnSign
+      objectives:
+        # thief collection objectives
+        - HeadCloakStealCollectionObjective
+        - HeadBedsheetStealCollectionObjective
+        - StampStealCollectionObjective
+        - DoorRemoteStealCollectionObjective
+        - TechnologyDiskStealCollectionObjective
+        - MailStealCollectionObjective
+        - FigurineStealCollectionObjective
+        - IDCardsStealCollectionObjective
+        - LAMPStealCollectionObjective
+        # thief item objectives
+        - ForensicScannerStealObjective
+        - FlippoEngravedLighterStealObjective
+        - ClothingHeadHatWardenStealObjective
+        - WantedListCartridgeStealObjective
+        - ClothingOuterHardsuitVoidParamedStealObjective
+        - MedicalTechFabCircuitboardStealObjective
+        - ClothingHeadsetAltMedicalStealObjective
+        - FireAxeStealObjective
+        - AmePartFlatpackStealObjective
+        - ExpeditionsCircuitboardStealObjective
+        - CargoShuttleCircuitboardStealObjective
+        - ClothingEyesHudBeerStealObjective
+        - BibleStealObjective
+        - ClothingNeckGoldmedalStealObjective
+        - ClothingNeckClownmedalStealObjective
+        # thief structure objectives
+        - NuclearBombStealObjective
+        - FaxMachineCaptainStealObjective
+        - ChemDispenserStealObjective
+        - XenoArtifactStealObjective
+        - FreezerHeaterStealObjective
+        - TegStealObjective
+        - BoozeDispenserStealObjective
+        - AltarNanotrasenStealObjective
+        - PlantRDStealObjective
+        - ToiletGoldenStealObjective
+        # thief pet steal objecives
+        - IanStealObjective
+        - BingusStealObjective
+        - McGriffStealObjective
+        - WalterStealObjective
+        - MortyStealObjective
+        - RenaultStealObjective
+        - ShivaStealObjective
+        - TropicoStealObjective
+        # thief escape objective
+        - EscapeThiefShuttleObjective
+        # traitor steal objectives
+        - CaptainIDStealObjective
+        - CMOHyposprayStealObjective
+        - CMOCrewMonitorStealObjective
+        - RDHardsuitStealObjective
+        - NukeDiskStealObjective
+        - MagbootsStealObjective
+        # no ian meat because you are a pacifist and need them alive
+        - ClipboardStealObjective #QM's digiboard
+        - CaptainGunStealObjective
+        - CaptainJetpackStealObjective
+        - HandTeleporterStealObjective
+        - EnergyShotgunStealObjective
+    

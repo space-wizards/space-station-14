@@ -1,19 +1,31 @@
-#The Synth
-# Timers
-- type: loadoutEffectGroup
-  id: SuperSynthTimerAndWhitelist
-  effects:
-    - !type:JobRequirementLoadoutEffect
-      requirement:
-        !type:RoleTimeRequirement
-        role: JobMusician
-        time: 72000 # 20 hours of being the biggest musician on the station
-
+# Super Synth
 - type: loadout
   id: SuperSynthesizerInstrument
   effects:
-    - !type:GroupLoadoutEffect
-      proto: SuperSynthTimerAndWhitelist
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMusician
+      time: 72000 # 20 hours of being the biggest musician on the station
   storage:
     back:
-      - SuperSynthesizerInstrument
+    - SuperSynthesizerInstrument
+
+# Meow mrrp
+- type: loadout
+  id: ClothingUnderSocksCoder
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:AnyFlagsRequirement
+      flags:
+      - Staff
+  storage:
+    back:
+    - ClothingUnderSocksCoder
+
+- type: loadout
+  id: ClothWrap
+  storage:
+    back:
+    - ClothingClothWrap

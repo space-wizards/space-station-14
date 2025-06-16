@@ -1,19 +1,24 @@
-using Content.Shared.Body.Components;
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Foldable;
 
+// TODO: This system could arguably be refactored into a general state system, as it is being utilized for a lot of different objects with various needs.
 public sealed class FoldableSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedBuckleSystem _buckle = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly AnchorableSystem _anchorable = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -24,8 +29,8 @@ public sealed class FoldableSystem : EntitySystem
 
         SubscribeLocalEvent<FoldableComponent, ComponentInit>(OnFoldableInit);
         SubscribeLocalEvent<FoldableComponent, ContainerGettingInsertedAttemptEvent>(OnInsertEvent);
-        SubscribeLocalEvent<FoldableComponent, InsertIntoEntityStorageAttemptEvent>(OnStoreThisAttempt);
         SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
+        SubscribeLocalEvent<FoldableComponent, EntityStorageInsertedIntoAttemptEvent>(OnEntityStorageAttemptInsert);
 
         SubscribeLocalEvent<FoldableComponent, StrapAttemptEvent>(OnStrapAttempt);
     }
@@ -46,15 +51,16 @@ public sealed class FoldableSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
+    public void OnStrapAttempt(EntityUid uid, FoldableComponent comp, ref StrapAttemptEvent args)
     {
         if (comp.IsFolded)
             args.Cancelled = true;
     }
 
-    public void OnStrapAttempt(EntityUid uid, FoldableComponent comp, ref StrapAttemptEvent args)
+    private void OnEntityStorageAttemptInsert(Entity<FoldableComponent> entity,
+        ref EntityStorageInsertedIntoAttemptEvent args)
     {
-        if (comp.IsFolded)
+        if (entity.Comp.IsFolded)
             args.Cancelled = true;
     }
 
@@ -89,9 +95,17 @@ public sealed class FoldableSystem : EntitySystem
             args.Cancel();
     }
 
-    public bool TryToggleFold(EntityUid uid, FoldableComponent comp)
+    public bool TryToggleFold(EntityUid uid, FoldableComponent comp, EntityUid? folder = null)
     {
-        return TrySetFolded(uid, comp, !comp.IsFolded);
+        var result = TrySetFolded(uid, comp, !comp.IsFolded);
+        if (!result && folder != null)
+        {
+            if (comp.IsFolded)
+                _popup.PopupPredicted(Loc.GetString("foldable-unfold-fail", ("object", uid)), uid, folder.Value);
+            else
+                _popup.PopupPredicted(Loc.GetString("foldable-fold-fail", ("object", uid)), uid, folder.Value);
+        }
+        return result;
     }
 
     public bool CanToggleFold(EntityUid uid, FoldableComponent? fold = null)
@@ -101,6 +115,10 @@ public sealed class FoldableSystem : EntitySystem
 
         // Can't un-fold in any container unless enabled (locker, hands, inventory, whatever).
         if (_container.IsEntityInContainer(uid) && !fold.CanFoldInsideContainer)
+            return false;
+
+        if (!TryComp(uid, out PhysicsComponent? body) ||
+            !_anchorable.TileFree(Transform(uid).Coordinates, body))
             return false;
 
         var ev = new FoldAttemptEvent(fold);
@@ -127,12 +145,12 @@ public sealed class FoldableSystem : EntitySystem
 
     private void AddFoldVerb(EntityUid uid, FoldableComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null || !CanToggleFold(uid, component))
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
         AlternativeVerb verb = new()
         {
-            Act = () => TryToggleFold(uid, component),
+            Act = () => TryToggleFold(uid, component, args.User),
             Text = component.IsFolded ? Loc.GetString(component.UnfoldVerbText) : Loc.GetString(component.FoldVerbText),
             Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/fold.svg.192dpi.png")),
 

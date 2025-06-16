@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a. Further modifications and derivate works (inhand-left and inhand-right) under same license, derivative monkey made by brainfood1183 (github) for ss14, reptilian made by kuro(388673708753027083), harpy by VMSolidus, equipped-OUTERCLOTHING-resomi made by svarshiksatanist (Discord), reptilian made by kuro(388673708753027083) (Taken from GoobStation)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-OUTERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-monkey",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-resomi",
+      "directions": 4
+    }
+  ]
+}

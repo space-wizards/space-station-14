@@ -209,10 +209,13 @@
   name: Play Guitar
   description: Open your internal BASS GUITAR MIDI interface to soothe the station.
   components:
-  - type: InstantAction
+  - type: Action
     checkCanInteract: false
     checkConsciousness: false
+    useDelay: 1
+    itemIconStyle: NoItem
     icon: Interface/Actions/pai-midi.png
+  - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.InstrumentUiKey.Key
 
@@ -537,7 +540,7 @@
       - BorgModuleTool
       - BorgModuleAdvancedTool
       - BorgModuleSyndicateWeapon
-      - BorgModuleTreatment
+      - BorgModuleTopicals
       - BorgModuleFireExtinguisher
   - type: NpcFactionMember
     factions:
@@ -628,7 +631,7 @@
       - BorgModuleTool
       - BorgModuleAdvancedTool
       - BorgModuleSyndicateWeapon
-      - BorgModuleTreatment
+      - BorgModuleTopicals
       - BorgModuleFireExtinguisher
   - type: NpcFactionMember
     factions:

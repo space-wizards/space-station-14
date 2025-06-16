@@ -25,6 +25,8 @@
   - Detective
   - Cryogenics
   - Brigmedic
+  - GenpopEnter #starlight
+  - GenpopLeave #starlight
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -33,10 +35,24 @@
   id: WardenGear
   equipment:
     id: WardenPDA
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetSecurityWarden
     pocket1: WeaponPistolDP
   storage:
     back:
     - Flash
     - MagazinePistol40SP
     - MagazinePistol40SP
+
+- type: chameleonOutfit
+  id: WardenChameleonOutfit
+  job: Warden
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatWarden
+    mask: ClothingMaskGasSecurity
+    outerClothing: ClothingOuterCoatWarden
+    jumpsuit: ClothingUniformJumpsuitWarden
+    neck: Dinkystar
+    belt: ClothingBeltSecurity
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsJack

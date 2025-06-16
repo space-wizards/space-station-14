@@ -3,8 +3,11 @@ using Content.Shared.Screen.Components;
 using Content.Server.AlertLevel;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Log;
+using Content.Shared.TextScreen;
 
 
 namespace Content.Server.Screen.Systems;
@@ -79,7 +82,7 @@ public sealed class ScreenSystem : EntitySystem
     /// <summary>
     /// Determines if/how a timer packet affects this screen.
     /// Currently there are 2 broadcast domains: Arrivals, and every other screen.
-    /// Domain is determined by the <see cref="DeviceNetworkComponent.TransmitFrequencyId"/> on each timer.
+    /// Domain is determined by the <see cref="Shared.DeviceNetwork.Components.DeviceNetworkComponent.TransmitFrequencyId"/> on each timer.
     /// Each broadcast domain is divided into subnets. Screen MapUid determines subnet.
     /// Subnets are the shuttle, source, and dest. Source/dest change each jump.
     /// This is required to send different timers to the shuttle/terminal/station.
