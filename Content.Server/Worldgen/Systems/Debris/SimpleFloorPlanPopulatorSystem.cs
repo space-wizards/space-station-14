@@ -29,7 +29,7 @@ public sealed class SimpleFloorPlanPopulatorSystem : BaseWorldSystem
         var enumerator = _map.GetAllTilesEnumerator(uid, grid);
         while (enumerator.MoveNext(out var tile))
         {
-            var coords = grid.GridTileToLocal(tile.Value.GridIndices);
+            var coords = _map.GridTileToLocal(uid, grid, tile.Value.GridIndices);
             var selector = tile.Value.Tile.GetContentTileDefinition(_tileDefinition).ID;
             if (!component.Caches.TryGetValue(selector, out var cache))
                 continue;
