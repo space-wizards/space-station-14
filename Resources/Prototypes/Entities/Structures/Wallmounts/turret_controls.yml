@@ -1,0 +1,225 @@
+- type: entity
+  id: WeaponEnergyTurretControlPanelFrame
+  name: sentry turret control panel assembly
+  description: An incomplete wall-mounted assembly for a sentry turret control panel.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    noRot: false
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/turret_controls.rsi
+    layers:
+    - state: base
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
+      #- !type:ChangeConstructionNodeBehavior - To be added in a later PR
+      #  node: machineFrame
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Transform
+    anchored: true
+  - type: WallMount
+  - type: Clickable
+  - type: InteractionOutline
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+  #- type: Construction - To be added in a later PR
+  #  graph: WeaponEnergyTurretControlPanel
+  #  node: frame
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+
+- type: entity
+  abstract: true
+  parent: WeaponEnergyTurretControlPanelFrame
+  id: WeaponEnergyTurretStationControlPanelBase
+  name: sentry turret control panel
+  description: A wall-mounted interface for remotely configuring the operational parameters of linked sentry turrets.
+  components:
+  - type: Appearance
+  - type: Sprite
+    noRot: false
+    drawdepth: SmallObjects
+    sprite: Structures/Wallmounts/turret_controls.rsi
+    layers:
+    - state: base
+    - state: safe
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+    - state: wires
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
+  - type: GenericVisualizer
+    visuals:
+      enum.WiresVisualLayers.MaintenancePanel:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.TurretControllerVisuals.ControlPanel:
+        enum.PowerDeviceVisualLayers.Powered:
+          -1: { state: safe }
+          0: { state: stun }
+          1: { state: lethal }
+  - type: StationAiWhitelist
+  - type: DeployableTurretController
+    accessGroups:
+    - Cargo
+    - Command
+    - Engineering
+    - General
+    - Medical
+    - Research
+    - Security
+    - Service
+    - Silicon
+    accessLevels:
+    - Armory
+    - Atmospherics
+    - Bar
+    - BasicSilicon
+    - Borg
+    - Brig
+    - Detective
+    - Captain
+    - Cargo
+    - Chapel
+    - Chemistry
+    - ChiefEngineer
+    - ChiefMedicalOfficer
+    - Command
+    - Cryogenics
+    - Engineering
+    - External
+    - HeadOfPersonnel
+    - HeadOfSecurity
+    - Hydroponics
+    - Janitor
+    - Kitchen
+    - Lawyer
+    - Maintenance
+    - Medical
+    - Quartermaster
+    - Research
+    - ResearchDirector
+    - Salvage
+    - Security
+    - Service
+    - Theatre
+  - type: DeviceList
+    isAllowList: true
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: Turret
+    transmitFrequencyId: TurretControl
+    sendBroadcastAttemptEvent: true
+    prefix: device-address-prefix-console
+  - type: DeviceNetworkRequiresPower
+  - type: WiredNetworkConnection
+  - type: ActivatableUI
+    key: enum.DeployableTurretControllerUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.DeployableTurretControllerUiKey.Key:
+        type: TurretControllerWindowBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Wires
+    boardName: wires-board-name-turret-controls
+    layoutId: TurretControls
+  - type: Lock
+    locked: true
+    unlockOnClick: false
+  - type: LockedWiresPanel
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  #- type: ContainerFill - Will be added in a later PR
+  #  containers:
+  #    board:
+  #    - WeaponEnergyTurretStationControlPanelElectronics
+  #- type: Construction - Will be added in a later PR
+  #  graph: WeaponEnergyTurretControlPanel
+  #  node: finish
+
+- type: entity
+  parent: WeaponEnergyTurretStationControlPanelBase
+  id: WeaponEnergyTurretAIControlPanel
+  suffix: AI, Silicon
+  components:
+  - type: AccessReader
+    access: [["StationAi"], ["ResearchDirector"]]
+  #- type: ContainerFill - Will be added in a later PR
+  #  containers:
+  #    board:
+  #    - WeaponEnergyTurretAIControlPanelElectronics
+  - type: DeviceNetwork
+    receiveFrequencyId: TurretAI
+    transmitFrequencyId: TurretControlAI
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - BasicSilicon
+    - Borg
+  - type: DeployableTurretController
+    accessGroups:
+    - Silicon
+    accessLevels:
+    - BasicSilicon
+    - Borg
+
+- type: entity
+  parent: WeaponEnergyTurretStationControlPanelBase
+  id: WeaponEnergyTurretSecurityControlPanel
+  suffix: Security
+  components:
+  - type: AccessReader
+    access: [["StationAi"], ["Security"]]
+  #- type: ContainerFill - Will be added in a later PR
+  #  containers:
+  #    board:
+  #    - WeaponEnergyTurretSecurityControlPanelElectronics
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - Security
+    - BasicSilicon
+    - Borg
+
+- type: entity
+  parent: WeaponEnergyTurretStationControlPanelBase
+  id: WeaponEnergyTurretCommandControlPanel
+  suffix: Command
+  components:
+  - type: AccessReader
+    access: [["StationAi"], ["Command"]]
+  #- type: ContainerFill - Will be added in a later PR
+  #  containers:
+  #    board:
+  #    - WeaponEnergyTurretCommandControlPanelElectronics
+  - type: TurretTargetSettings
+    exemptAccessLevels:
+    - Command
+    - BasicSilicon
+    - Borg
