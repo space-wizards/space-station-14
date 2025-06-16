@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TeenSarlacc
-  changes:
-  - message: You can now purchase shark plushies from Cargo.
-    type: Add
-  id: 8169
-  time: '2025-04-14T01:33:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36338
 - author: K-Dynamic
   changes:
   - message: Syndicate commander hardsuit now slows movement by 10%.
@@ -3907,3 +3900,15 @@
   id: 8681
   time: '2025-06-16T15:39:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38349
+- author: ArtisticRoomba
+  changes:
+  - message: Thieves now have an innate stealth steal ability (thieving gloves) that
+      can be toggled on/off.
+    type: Add
+  - message: The Thief no longer spawns with thieving gloves.
+    type: Remove
+  - message: Thieving gloves have been removed from the Traitor store.
+    type: Remove
+  id: 8682
+  time: '2025-06-16T22:47:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38123
