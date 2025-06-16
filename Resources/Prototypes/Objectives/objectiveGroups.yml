@@ -1,0 +1,126 @@
+# Traitor
+- type: weightedRandom
+  id: TraitorObjectiveGroups
+  weights:
+    TraitorObjectiveGroupSteal: 1
+    TraitorObjectiveGroupKill: 1
+    TraitorObjectiveGroupState: 1 #As in, something about your character. Alive, dead, arrested, gained an ability...
+    TraitorObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff
+
+- type: weightedRandom
+  id: TraitorObjectiveGroupSteal
+  weights:
+    CaptainIDStealObjective: 1
+    CMOHyposprayStealObjective: 1
+    CMOCrewMonitorStealObjective: 1
+    RDHardsuitStealObjective: 1
+    NukeDiskStealObjective: 1
+    MagbootsStealObjective: 1
+    CorgiMeatStealObjective: 1
+    ClipboardStealObjective: 1
+    CaptainGunStealObjective: 0.5
+    CaptainJetpackStealObjective: 0.5
+    HandTeleporterStealObjective: 0.5
+    EnergyShotgunStealObjective: 0.5
+    RDDiplomaStealObjective: 1 #Starlight Unique Targets
+    CMOLicenseStealObjective: 1 #Starlight Unique Targets
+
+- type: weightedRandom
+  id: TraitorObjectiveGroupKill
+  weights:
+    KillRandomPersonObjective: 1
+    KillRandomHeadObjective: 0.25
+    TeachRandomPersonObjective: 1 #Starlight Teach them a lesson
+    TeachRandomHeadObjective: 0.25 # Starlight Teach them a lesson
+
+- type: weightedRandom
+  id: TraitorObjectiveGroupState
+  weights:
+    EscapeShuttleObjective: 1
+    DieObjective: 0.05
+    #HijackShuttleObjective: 0.02
+
+- type: weightedRandom
+  id: TraitorObjectiveGroupSocial
+  weights:
+#    RandomTraitorAliveObjective: 1 - Removed because the objective was boring and didn't progress the round.
+    RandomTraitorProgressObjective: 1
+
+#Thief groups
+- type: weightedRandom
+  id: ThiefObjectiveGroups
+  weights:
+    ThiefObjectiveGroupCollection: 1
+    ThiefObjectiveGroupItem: 1
+
+- type: weightedRandom
+  id: ThiefBigObjectiveGroups
+  weights:
+    ThiefObjectiveGroupStructure: 1
+    ThiefObjectiveGroupAnimal: 1
+
+- type: weightedRandom
+  id: ThiefObjectiveGroupCollection
+  weights:
+    HeadCloakStealCollectionObjective: 1                #command
+    HeadBedsheetStealCollectionObjective: 1
+    StampStealCollectionObjective: 1
+    DoorRemoteStealCollectionObjective: 1
+    TechnologyDiskStealCollectionObjective: 1           #sci
+    MailStealCollectionObjective: 1                     #cargo
+    FigurineStealCollectionObjective: 0.3          #service
+    IDCardsStealCollectionObjective: 1
+    LAMPStealCollectionObjective: 2                     #only for moth
+
+- type: weightedRandom
+  id: ThiefObjectiveGroupItem
+  weights:
+    ForensicScannerStealObjective: 1                    #sec
+    FlippoEngravedLighterStealObjective: 0.5
+    ClothingHeadHatWardenStealObjective: 1
+    WantedListCartridgeStealObjective: 1
+    ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
+    MedicalTechFabCircuitboardStealObjective: 1
+    ClothingHeadsetAltMedicalStealObjective: 1
+    FireAxeStealObjective: 1                            #eng
+    AmePartFlatpackStealObjective: 1
+    ExpeditionsCircuitboardStealObjective: 1            #sup
+    CargoShuttleCircuitboardStealObjective: 1
+    SalvageShuttleCircuitboardStealObjective: 1
+    ClothingEyesHudBeerStealObjective: 1                #srv
+    BibleStealObjective: 1
+    ClothingNeckGoldmedalStealObjective: 1              #other
+    ClothingNeckClownmedalStealObjective: 0.5
+
+- type: weightedRandom
+  id: ThiefObjectiveGroupStructure
+  weights:
+    NuclearBombStealObjective: 0.5
+    FaxMachineCaptainStealObjective: 1
+    ChemDispenserStealObjective: 1
+    XenoArtifactStealObjective: 1
+    FreezerHeaterStealObjective: 1
+    TegStealObjective: 1
+    BoozeDispenserStealObjective: 1
+    AltarNanotrasenStealObjective: 1
+    PlantRDStealObjective: 1
+    ToiletGoldenStealObjective: 1
+
+- type: weightedRandom
+  id: ThiefObjectiveGroupAnimal
+  weights:
+    IanStealObjective: 1
+    BingusStealObjective: 1
+    McGriffStealObjective: 1
+    WalterStealObjective: 1
+    MortyStealObjective: 1
+    RenaultStealObjective: 1
+    ShivaStealObjective: 1
+    TropicoStealObjective: 1
+
+- type: weightedRandom
+  id: ThiefObjectiveGroupEscape
+  weights:
+    EscapeThiefShuttleObjective: 1
+
+#Crew, wizard, when you code it...
