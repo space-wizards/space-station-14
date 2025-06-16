@@ -235,7 +235,7 @@
   cost:
     NTCredit: 16
   categories:
-  - SLPlushies
+  - SLCrew
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -348,7 +348,7 @@
   cost:
     NTCredit: 20
   categories:
-  - SLSpecies
+  - SLCrew
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -359,7 +359,7 @@
   cost:
     NTCredit: 20
   categories:
-  - SLSpecies
+  - SLCrew
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -371,7 +371,7 @@
   cost:
     NTCredit: 20
   categories:
-  - SLSpecies
+  - SLCrew
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -383,7 +383,7 @@
   cost:
     NTCredit: 20
   categories:
-  - SLSpecies
+  - SLCrew
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -394,7 +394,7 @@
   cost:
     NTCredit: 20
   categories:
-  - SLSpecies
+  - SLCrew
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -405,7 +405,7 @@
   cost:
     NTCredit: 20
   categories:
-  - SLSpecies
+  - SLCrew
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -416,7 +416,7 @@
   cost:
     NTCredit: 20
   categories:
-  - SLSpecies
+  - SLCrew
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -427,7 +427,7 @@
   cost:
     NTCredit: 20
   categories:
-  - SLSpecies
+  - SLCrew
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
