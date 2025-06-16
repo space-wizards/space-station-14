@@ -367,7 +367,7 @@
     accent: chicken # this is basically the same thing as a penguin probably
   - type: Speech
     speechVerb: Vox
-    speechSounds: Cluck
+    speechSounds: Penguin
   - type: Inventory
     speciesId: penguin
     templateId: oswald

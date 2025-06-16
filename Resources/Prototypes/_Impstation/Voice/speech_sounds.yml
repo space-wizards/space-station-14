@@ -42,7 +42,7 @@
     path: /Audio/_Impstation/Kodepiia/kodeask.ogg
   exclaimSound:
     path: /Audio/_Impstation/Kodepiia/kodeexclaim.ogg
-    
+
 - type: speechSounds
   id: Suppy
   saySound:
@@ -51,3 +51,12 @@
     collection: SuppyAsk
   exclaimSound:
     collection: SuppyExclaim
+
+- type: speechSounds
+  id: Penguin
+  saySound:
+    path: /Audio/Animals/penguin_squawk.ogg
+  askSound:
+    path: /Audio/Animals/penguin_squawk.ogg
+  exclaimSound:
+    path: /Audio/Animals/penguin_squawk.ogg
