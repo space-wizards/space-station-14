@@ -132,6 +132,7 @@
     - id: HandheldGPSBasic
     - id: MedkitFilled
       prob: 0.3
+    - id: PlushieKiosha #starlight
 
 - type: entity
   parent: LockerParamedic

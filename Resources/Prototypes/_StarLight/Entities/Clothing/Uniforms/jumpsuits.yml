@@ -101,7 +101,18 @@
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi 
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCentcommContraband]
+  id: ClothingUniformNTCCFatigues
+  name: NTCC Fatigues
+  description: NT-CC Consortium Fatigues. Very airy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/ntcc_fatigues.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/ntcc_fatigues.rsi
 
 # Fashion-O-Mat, not obtainable any other way, unless mapped
 

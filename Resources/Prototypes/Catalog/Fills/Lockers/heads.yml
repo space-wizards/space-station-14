@@ -21,6 +21,7 @@
     - id: AstroNavCartridge
     - id: ClothingHandsKnuckleDustersQM
     - id: MailTeleporterMachineCircuitboard
+    - id: PlushieLance #starlight
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -190,6 +191,7 @@
     - id: RCDAmmo
     - id: RubberStampCE
     - id: MetalFoamGrenade
+    - id: PlushieMatthew #starlight
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
