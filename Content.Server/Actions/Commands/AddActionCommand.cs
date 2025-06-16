@@ -60,6 +60,16 @@ public sealed class AddActionCommand : LocalizedEntityCommands
                 Loc.GetString("cmd-addaction-player-completion"));
         }
 
-        return CompletionResult.Empty;
+        if (args.Length != 2)
+            return CompletionResult.Empty;
+
+        var actionPrototypes = _prototypeManager.EnumeratePrototypes<EntityPrototype>()
+            .Where(p => p.HasComponent<ActionComponent>())
+            .Select(p => p.ID)
+            .Order();
+
+        return CompletionResult.FromHintOptions(
+            actionPrototypes,
+            Loc.GetString("cmd-addaction-action-completion"));
     }
 }
