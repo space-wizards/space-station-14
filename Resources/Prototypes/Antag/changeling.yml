@@ -61,9 +61,11 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
+  - Fixtures
   eventComponents:
   - Wagging
   - Vocal
+  - Storage
   copyEquipment: null
   copyInternalStorage: false
   copyImplants: false
