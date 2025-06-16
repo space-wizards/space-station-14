@@ -244,13 +244,11 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             var objectives = group.Weights.ShallowClone();
             while (_random.TryPickAndTake(objectives, out var objectiveProto))
             {
-                if (!TryCreateObjective((mindId, mind), objectiveProto, out var objective))
+                if (!_prototypeManager.Index(objectiveProto).TryGetComponent<ObjectiveComponent>(out var objectiveComp, EntityManager.ComponentFactory))
                     continue;
 
-                if (Comp<ObjectiveComponent>(objective.Value).Difficulty <= maxDifficulty)
+                if (objectiveComp.Difficulty <= maxDifficulty && TryCreateObjective((mindId, mind), objectiveProto, out var objective))
                     return objective;
-
-                Del(objective);
             }
         }
 
