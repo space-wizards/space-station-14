@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Handheld Television!
-    type: Add
-  id: 1343
-  time: '2025-03-17T18:52:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1917
 - author: formlessnameless
   changes:
   - message: Night vision and thermal vision now exist!
@@ -4197,3 +4190,10 @@
   id: 1842
   time: '2025-06-16T09:35:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2781
+- author: EpicToast
+  changes:
+  - message: Elkridge Depot now supports genpop.
+    type: Add
+  id: 1843
+  time: '2025-06-16T09:44:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2783
