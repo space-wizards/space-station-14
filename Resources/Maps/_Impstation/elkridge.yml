@@ -4,7 +4,7 @@ meta:
   engineVersion: 260.2.0
   forkId: ""
   forkVersion: ""
-  time: 06/16/2025 09:25:07
+  time: 06/16/2025 09:56:41
   entityCount: 17590
 maps:
 - 1
@@ -14035,7 +14035,7 @@ entities:
       pos: 9.5,-20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2735.2988
+      secondsUntilStateChange: -2859.342
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14445,7 +14445,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -464739.28
+      secondsUntilStateChange: -464863.3
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -50071,6 +50071,12 @@ entities:
       parent: 2
 - proto: CryogenicSleepUnit
   entities:
+  - uid: 1220
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 11.5,19.5
+      parent: 2
   - uid: 1987
     components:
     - type: Transform
@@ -50081,19 +50087,11 @@ entities:
     - type: Transform
       pos: -11.5,-20.5
       parent: 2
-- proto: CryogenicSleepUnitSpawner
-  entities:
   - uid: 4167
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
+      rot: 3.141592653589793 rad
       pos: 11.5,21.5
-      parent: 2
-  - uid: 4168
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 11.5,19.5
       parent: 2
 - proto: CryogenicSleepUnitSpawnerLateJoin
   entities:
@@ -50688,17 +50686,19 @@ entities:
     - type: Transform
       pos: 41.5,-20.5
       parent: 2
-- proto: DefaultStationBeaconSolars
+- proto: DefaultStationBeaconSolarsNorth
   entities:
-  - uid: 1220
-    components:
-    - type: Transform
-      pos: 13.5,-34.5
-      parent: 2
   - uid: 14608
     components:
     - type: Transform
       pos: 27.5,31.5
+      parent: 2
+- proto: DefaultStationBeaconSolarsSouth
+  entities:
+  - uid: 4168
+    components:
+    - type: Transform
+      pos: 13.5,-34.5
       parent: 2
 - proto: DefaultStationBeaconSupply
   entities:
