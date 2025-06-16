@@ -7743,4 +7743,11 @@ Entries:
   id: 1069
   time: '2025-06-16T22:09:04.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/649
+- author: Aedler
+  changes:
+  - message: Removed skeleton's mob freeagent mindrole
+    type: Fix
+  id: 1070
+  time: '2025-06-16T22:10:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/845
 
