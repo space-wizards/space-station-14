@@ -73,8 +73,18 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
         LoadoutsContainer.DisposeAllChildren();
 
+        // Get all loadout prototypes for this group.
         var validProtos = _groupProto.Loadouts.Select(id => protoMan.Index(id));
 
+        /*
+         * Group the prototypes based on their GroupBy field.
+         * - If GroupBy is null or empty, fallback to grouping by the prototype ID itself.
+         * - The result is a dictionary where:
+         *   - The key is either GroupBy or ID (if GroupBy is not set).
+         *   - The value is the list of prototypes that belong to that group.
+         *
+         * This allows grouping loadouts into sub-categories within the group.
+         */
         var groups = validProtos
         .GroupBy(p => string.IsNullOrEmpty(p.GroupBy)
                          ? p.ID
@@ -87,6 +97,12 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
             if (protos.Count > 1)
             {
+                /*
+                 * Build the list of UI elements for each loadout prototype:
+                 * - For each prototype, create its corresponding LoadoutContainer UI element.
+                 * - Set HorizontalExpand to true so elements properly stretch in layout.
+                 * - Collect all UI elements into a list for further processing.
+                 */
                 var uiElements = protos
                     .Select(proto =>
                     {
@@ -96,8 +112,17 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                     })
                     .ToList();
 
+                /*
+                 * Determine which element should be displayed first:
+                 * - If any element is currently selected (its button is pressed), use it.
+                 * - Otherwise, fallback to the first element in the list.
+                 */
                 var firstElement = uiElements.FirstOrDefault(e => e.Select.Pressed) ?? uiElements[0];
 
+                /*
+                 * Get all remaining elements except the first one:
+                 * - Use ReferenceEquals to ensure we exclude the exact instance used as firstElement.
+                 */
                 var otherElements = uiElements.Where(e => !ReferenceEquals(e, firstElement)).ToList();
 
                 firstElement.HorizontalExpand = true;
@@ -160,6 +185,26 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             : Color.White;
     }
 
+    /// <summary>
+    /// Creates a UI container for a single Loadout item.
+    ///
+    /// This method was extracted from RefreshLoadouts because the logic for creating 
+    /// individual loadout items is used multiple times inside that method, and duplicating 
+    /// the code made it harder to maintain.
+    ///
+    /// Logic:
+    /// - Checks if the item is currently selected in the loadout.
+    /// - Checks if the item is valid for selection (IsValid).
+    /// - Creates a LoadoutContainer with the appropriate status (disabled / active).
+    /// - Subscribes to button press events to handle selection and deselection.
+    /// </summary>
+    /// <param name="proto">The loadout item prototype.</param>
+    /// <param name="profile">The humanoid character profile.</param>
+    /// <param name="loadout">The current role loadout for the user.</param>
+    /// <param name="session">The user's session.</param>
+    /// <param name="collection">The dependency injection container.</param>
+    /// <param name="loadoutSystem">The loadout system instance.</param>
+    /// <returns>A fully initialized LoadoutContainer for UI display.</returns>
     private LoadoutContainer CreateLoadoutUI(LoadoutPrototype proto, HumanoidCharacterProfile profile, RoleLoadout loadout, ICommonSession session, IDependencyCollection collection, LoadoutSystem loadoutSystem)
     {
         var selected = loadout.SelectedLoadouts[_groupProto.ID];
