@@ -69,8 +69,8 @@
             
 - type: entity
   name: N1984
-  parent: WeaponPistolN1984
-  id: [WeaponPistolN1984Nonlethal, BaseSecurityContraband]
+  parent: [ WeaponPistolN1984, BaseSecurityContraband ]
+  id: WeaponPistolN1984Nonlethal
   suffix: Non-lethal
   components:
   - type: ItemSlots
@@ -94,7 +94,7 @@
             
 - type: entity
   name: golden mk 58
-  parent: [WeaponPistolMk58, BaseSecurityContraband]
+  parent: [ WeaponPistolMk58, BaseSecurityContraband ]
   id: WeaponPistolGoldenMk58
   components:
   - type: Sprite
@@ -104,7 +104,7 @@
     
 - type: entity
   name: enforcer
-  parent: [BaseWeaponPistol, BaseSecurityContraband]
+  parent: [ BaseWeaponPistol, BaseSecurityContraband ]
   id: WeaponPistolEnforcer
   description: A pistol of modern design.
   components:
