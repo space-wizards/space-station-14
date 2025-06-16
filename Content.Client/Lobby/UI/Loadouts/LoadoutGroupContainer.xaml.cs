@@ -13,8 +13,8 @@ namespace Content.Client.Lobby.UI.Loadouts;
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutGroupContainer : BoxContainer
 {
-    private const string CLOSED_GROUP_MARK = "▶";
-    private const string OPENED_GROUP_MARK = "▼";
+    private const string ClosedGroupMark = "▶";
+    private const string OpenedGroupMark = "▼";
 
     /// <summary>
     /// A dictionary that stores open groups
@@ -112,7 +112,9 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
                 var subList = subContainer.Grid;
                 foreach (var proto in otherElements)
+                {
                     subList.AddChild(proto);
+                }
 
                 UpdateToggleColor(toggle, subList);
             }
@@ -129,16 +131,16 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     {
         var toggle = new ToggleLoadoutButton
         {
-            Text = CLOSED_GROUP_MARK
+            Text = ClosedGroupMark
         };
 
-        toggle.Text = subContainer.Visible ? OPENED_GROUP_MARK : CLOSED_GROUP_MARK;
+        toggle.Text = subContainer.Visible ? OpenedGroupMark : ClosedGroupMark;
 
         toggle.OnPressed += _ =>
         {
             var willOpen = !subContainer.Visible;
             subContainer.Visible = willOpen;
-            toggle.Text = willOpen ? OPENED_GROUP_MARK : CLOSED_GROUP_MARK;
+            toggle.Text = willOpen ? OpenedGroupMark : ClosedGroupMark;
             _openedGroups[kvp.Key] = willOpen;
         };
 
