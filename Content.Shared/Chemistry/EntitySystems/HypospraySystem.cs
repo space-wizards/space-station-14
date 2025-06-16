@@ -240,7 +240,7 @@ public sealed class HypospraySystem : EntitySystem
     // </summary>
     private void AddToggleModeVerb(Entity<HyposprayComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || entity.Comp.InjectOnly)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || entity.Comp.InjectOnly)
             return;
 
         var user = args.User;
