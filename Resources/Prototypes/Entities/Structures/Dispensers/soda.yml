@@ -11,6 +11,7 @@
     drawdepth: SmallObjects
     state: soda
   - type: Storage
+    openOnActivate: false
     whitelist:
       tags:
       - DrinkBottle

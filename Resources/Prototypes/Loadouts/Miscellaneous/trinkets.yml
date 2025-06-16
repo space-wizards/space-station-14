@@ -122,30 +122,35 @@
   storage:
     back:
     - Lighter
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigPackGreen
   storage:
     back:
     - CigPackGreen
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigPackRed
   storage:
     back:
     - CigPackRed
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigPackBlue
   storage:
     back:
     - CigPackBlue
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigPackBlack
   storage:
     back:
     - CigPackBlack
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigarCase
@@ -155,6 +160,7 @@
   storage:
     back:
     - CigarCase
+  groupBy: "smokeables"
 
 - type: loadout
   id: CigarGold
@@ -164,6 +170,7 @@
   storage:
     back:
     - CigarGold
+  groupBy: "smokeables"
 
 # Pins
 - type: loadout
@@ -171,108 +178,126 @@
   storage:
     back:
     - ClothingNeckLGBTPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckAllyPin
   storage:
     back:
     - ClothingNeckAllyPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckAromanticPin
   storage:
     back:
     - ClothingNeckAromanticPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckAsexualPin
   storage:
     back:
     - ClothingNeckAsexualPin
-
-- type: loadout
-  id: ClothingNeckAroacePin
-  storage:
-    back:
-    - ClothingNeckAroacePin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckBisexualPin
   storage:
     back:
     - ClothingNeckBisexualPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckGayPin
   storage:
     back:
     - ClothingNeckGayPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckIntersexPin
   storage:
     back:
     - ClothingNeckIntersexPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckLesbianPin
   storage:
     back:
     - ClothingNeckLesbianPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckNonBinaryPin
   storage:
     back:
     - ClothingNeckNonBinaryPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckPansexualPin
   storage:
     back:
     - ClothingNeckPansexualPin
-
-- type: loadout
-  id: ClothingNeckPluralPin
-  storage:
-    back:
-    - ClothingNeckPluralPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckOmnisexualPin
   storage:
     back:
     - ClothingNeckOmnisexualPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckGenderqueerPin
   storage:
     back:
     - ClothingNeckGenderqueerPin
-
-- type: loadout
-  id: ClothingNeckGenderfluidPin
-  storage:
-    back:
-    - ClothingNeckGenderfluidPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckTransPin
   storage:
     back:
     - ClothingNeckTransPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckAutismPin
   storage:
     back:
     - ClothingNeckAutismPin
+  groupBy: "pin"
 
 - type: loadout
   id: ClothingNeckGoldAutismPin
   storage:
     back:
     - ClothingNeckGoldAutismPin
+  groupBy: "pin"
+
+- type: loadout
+  id: ClothingNeckAroacePin
+  storage:
+    back:
+    - ClothingNeckAroacePin
+  groupBy: "pin"
+
+- type: loadout
+  id: ClothingNeckPluralPin
+  storage:
+    back:
+    - ClothingNeckPluralPin
+  groupBy: "pin"
+
+- type: loadout
+  id: ClothingNeckGenderfluidPin
+  storage:
+    back:
+    - ClothingNeckGenderfluidPin
+  groupBy: "pin"
 
 # Towels
 - type: loadout
@@ -285,6 +310,7 @@
   storage:
     back:
     - TowelColorWhite
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorSilver
@@ -296,6 +322,7 @@
   storage:
     back:
     - TowelColorSilver
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorGold
@@ -307,6 +334,7 @@
   storage:
     back:
     - TowelColorGold
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorLightBrown
@@ -319,6 +347,7 @@
   storage:
     back:
     - TowelColorLightBrown
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorGreen
@@ -331,6 +360,7 @@
   storage:
     back:
     - TowelColorGreen
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorDarkBlue
@@ -343,6 +373,7 @@
   storage:
     back:
     - TowelColorDarkBlue
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorOrange
@@ -355,6 +386,7 @@
   storage:
     back:
     - TowelColorOrange
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorLightBlue
@@ -367,6 +399,7 @@
   storage:
     back:
     - TowelColorLightBlue
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorPurple
@@ -379,6 +412,7 @@
   storage:
     back:
     - TowelColorPurple
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorRed
@@ -391,6 +425,7 @@
   storage:
     back:
     - TowelColorRed
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorGray
@@ -403,6 +438,7 @@
   storage:
     back:
     - TowelColorGray
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorBlack
@@ -415,6 +451,7 @@
   storage:
     back:
     - TowelColorBlack
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorDarkGreen
@@ -427,6 +464,7 @@
   storage:
     back:
     - TowelColorDarkGreen
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorMaroon
@@ -439,6 +477,7 @@
   storage:
     back:
     - TowelColorMaroon
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorYellow
@@ -451,6 +490,7 @@
   storage:
     back:
     - TowelColorYellow
+  groupBy: "towels"
 
 - type: loadout
   id: TowelColorMime
@@ -463,3 +503,4 @@
   storage:
     back:
     - TowelColorMime
+  groupBy: "towels"

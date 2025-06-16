@@ -70,6 +70,15 @@
       key: enum.StationMapUiKey.Key
     - type: Destructible
       thresholds:
+        - trigger: # Excess damage, don't spawn entities
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
             damage: 100
