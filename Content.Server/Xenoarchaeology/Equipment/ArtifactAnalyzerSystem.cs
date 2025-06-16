@@ -39,7 +39,8 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
             sumResearch += research;
         }
 
-        if (sumResearch == 0)
+        // 4-16-25: It's a sad day when a scientist makes negative 5k research
+        if (sumResearch <= 0)
             return;
 
         _research.ModifyServerPoints(server.Value, sumResearch, serverComponent);

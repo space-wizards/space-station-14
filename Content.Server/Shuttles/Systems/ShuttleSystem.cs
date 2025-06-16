@@ -1,20 +1,22 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
-using Content.Server.Doors.Systems;
+using Content.Server.Buckle.Systems;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
-using Content.Shared.GameTicking;
-using Content.Shared.Mobs.Systems;
+using Content.Shared.Buckle.Components;
+using Content.Shared.Damage;
+using Content.Shared.Light.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.EntitySerialization.Systems;
@@ -33,21 +35,21 @@ namespace Content.Server.Shuttles.Systems;
 public sealed partial class ShuttleSystem : SharedShuttleSystem
 {
     [Dependency] private readonly IAdminLogManager _logger = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly BiomeSystem _biomes = default!;
     [Dependency] private readonly BodySystem _bobby = default!;
+    [Dependency] private readonly BuckleSystem _buckle = default!;
+    [Dependency] private readonly DamageableSystem _damageSys = default!;
     [Dependency] private readonly DockingSystem _dockSystem = default!;
     [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly PvsOverrideSystem _pvs = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -61,15 +63,19 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     [Dependency] private readonly ThrusterSystem _thruster = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
+    private EntityQuery<BuckleComponent> _buckleQuery;
     private EntityQuery<MapGridComponent> _gridQuery;
-
-    public const float TileMassMultiplier = 0.5f;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        _buckleQuery = GetEntityQuery<BuckleComponent>();
         _gridQuery = GetEntityQuery<MapGridComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
 
         InitializeFTL();
         InitializeGridFills();
@@ -78,9 +84,11 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
         SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
         SubscribeLocalEvent<ShuttleComponent, ComponentShutdown>(OnShuttleShutdown);
+        SubscribeLocalEvent<ShuttleComponent, TileFrictionEvent>(OnTileFriction);
+        SubscribeLocalEvent<ShuttleComponent, FTLStartedEvent>(OnFTLStarted);
+        SubscribeLocalEvent<ShuttleComponent, FTLCompletedEvent>(OnFTLCompleted);
 
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
-        SubscribeLocalEvent<FixturesComponent, GridFixtureChangeEvent>(OnGridFixtureChange);
     }
 
     public override void Update(float frameTime)
@@ -89,21 +97,13 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         UpdateHyperspace();
     }
 
-    private void OnGridFixtureChange(EntityUid uid, FixturesComponent manager, GridFixtureChangeEvent args)
-    {
-        foreach (var fixture in args.NewFixtures)
-        {
-            _physics.SetDensity(uid, fixture.Key, fixture.Value, TileMassMultiplier, false, manager);
-            _fixtures.SetRestitution(uid, fixture.Key, fixture.Value, 0.1f, false, manager);
-        }
-    }
-
     private void OnGridInit(GridInitializeEvent ev)
     {
         if (HasComp<MapComponent>(ev.EntityUid))
             return;
 
-        EntityManager.EnsureComponent<ShuttleComponent>(ev.EntityUid);
+        EnsureComp<ShuttleComponent>(ev.EntityUid);
+        EnsureComp<ImplicitRoofComponent>(ev.EntityUid);
     }
 
     private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
@@ -122,6 +122,8 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         {
             Enable(uid, component: physicsComponent, shuttle: component);
         }
+
+        component.DampingModifier = component.BodyModifier;
     }
 
     public void Toggle(EntityUid uid, ShuttleComponent component)
@@ -149,8 +151,6 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         _physics.SetBodyType(uid, BodyType.Dynamic, manager: manager, body: component);
         _physics.SetBodyStatus(uid, component, BodyStatus.InAir);
         _physics.SetFixedRotation(uid, false, manager: manager, body: component);
-        _physics.SetLinearDamping(uid, component, shuttle.LinearDamping);
-        _physics.SetAngularDamping(uid, component, shuttle.AngularDamping);
     }
 
     public void Disable(EntityUid uid, FixturesComponent? manager = null, PhysicsComponent? component = null)
@@ -170,5 +170,20 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
             return;
 
         Disable(uid);
+    }
+
+    private void OnTileFriction(Entity<ShuttleComponent> ent, ref TileFrictionEvent args)
+    {
+        args.Modifier *= ent.Comp.DampingModifier;
+    }
+
+    private void OnFTLStarted(Entity<ShuttleComponent> ent, ref FTLStartedEvent args)
+    {
+        ent.Comp.DampingModifier = 0f;
+    }
+
+    private void OnFTLCompleted(Entity<ShuttleComponent> ent, ref FTLCompletedEvent args)
+    {
+        ent.Comp.DampingModifier = ent.Comp.BodyModifier;
     }
 }
