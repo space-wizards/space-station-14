@@ -1,6 +1,6 @@
 marking-EyesShadekin = Shadekin
 
-marking-TailShadekinn = Shadekin
+marking-TailShadekin = Shadekin
 marking-TailShadekinBig = Shadekin (Big)
 marking-TailShadekinShorter = Shadekin (Short)
 marking-TailShadekinMedium = Shadekin (Medium)
