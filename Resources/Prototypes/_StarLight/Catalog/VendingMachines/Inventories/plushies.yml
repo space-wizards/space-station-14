@@ -420,14 +420,3 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-
-- type: listing
-  id: VendorPlushieMozan
-  productEntity: PlushieMozan
-  cost:
-    NTCredit: 20
-  categories:
-  - SLSpecies
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
