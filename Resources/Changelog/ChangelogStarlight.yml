@@ -7772,4 +7772,11 @@ Entries:
   id: 1073
   time: '2025-06-16T22:59:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/846
+- author: Trep_Maul
+  changes:
+  - message: Nearly 100 contra tags were missing or wrong.
+    type: Fix
+  id: 1074
+  time: '2025-06-16T23:13:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/847
 
