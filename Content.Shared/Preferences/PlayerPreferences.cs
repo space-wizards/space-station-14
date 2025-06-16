@@ -37,8 +37,8 @@ namespace Content.Shared.Preferences
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             return jobPriorities.Where(p =>
-            return jobPriorities.Where(p =>
                     p.Value != JobPriority.Never && prototypeManager.TryIndex(p.Key, out var job) && job.SetPreference)
+                .ToDictionary();
         }
 
         /// <summary>
