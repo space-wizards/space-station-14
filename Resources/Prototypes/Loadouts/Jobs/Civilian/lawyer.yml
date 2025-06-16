@@ -3,51 +3,61 @@
   id: LawyerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitLawyerBlack
+  groupBy: "jumpsuit"
 
 - type: loadout
   id: LawyerJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtLawyerBlack
+  groupBy: "jumpskirt"
 
 - type: loadout
   id: LawyerJumpsuitBlue
   equipment:
     jumpsuit: ClothingUniformJumpsuitLawyerBlue
+  groupBy: "jumpsuit"
 
 - type: loadout
   id: LawyerJumpskirtBlue
   equipment:
     jumpsuit: ClothingUniformJumpskirtLawyerBlue
+  groupBy: "jumpskirt"
 
 - type: loadout
   id: LawyerJumpsuitPurple
   equipment:
     jumpsuit: ClothingUniformJumpsuitLawyerPurple
+  groupBy: "jumpsuit"
 
 - type: loadout
   id: LawyerJumpskirtPurple
   equipment:
     jumpsuit: ClothingUniformJumpskirtLawyerPurple
+  groupBy: "jumpskirt"
 
 - type: loadout
   id: LawyerJumpsuitRed
   equipment:
     jumpsuit: ClothingUniformJumpsuitLawyerRed
+  groupBy: "jumpsuit"
 
 - type: loadout
   id: LawyerJumpskirtRed
   equipment:
     jumpsuit: ClothingUniformJumpskirtLawyerRed
+  groupBy: "jumpskirt"
 
 - type: loadout
   id: LawyerJumpsuitGood
   equipment:
     jumpsuit: ClothingUniformJumpsuitLawyerGood
+  groupBy: "jumpsuit"
 
 - type: loadout
   id: LawyerJumpskirtGood
   equipment:
     jumpsuit: ClothingUniformJumpskirtLawyerGood
+  groupBy: "jumpskirt"
 
 # Neck
 - type: loadout
