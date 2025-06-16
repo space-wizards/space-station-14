@@ -102,6 +102,7 @@
     categories:
     - SLPlushies
     - SLSpecies
+    - SLCrew
 
 - type: entity
   parent: SLVendingMachine
