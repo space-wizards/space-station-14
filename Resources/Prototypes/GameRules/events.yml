@@ -426,15 +426,13 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    duration: 60
+    duration: 30 # DeltaV: was 60, used as a delay now
   - type: VentCrittersRule
-    entries:
-    - id: MobAdultSlimesBlueAngry
-      prob: 0.02
-    - id: MobAdultSlimesGreenAngry
-      prob: 0.02
-    - id: MobAdultSlimesYellowAngry
-      prob: 0.02
+    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
+      children:
+      - id: MobAdultSlimesBlueAngry
+      - id: MobAdultSlimesGreenAngry
+      - id: MobAdultSlimesYellowAngry
 
 - type: entity
   id: SnakeSpawn
@@ -445,17 +443,15 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
-    minimumPlayers: 25 # Ronstation - should get to the point where there's enough sec.
+    minimumPlayers: 15 # Ronstation - should get to the point where there's enough sec.
     weight: 5
     duration: 30 # Ronstation - needs a reduction.
   - type: VentCrittersRule
-    entries:
-    - id: MobPurpleSnake
-      prob: 0.01
-    - id: MobSmallPurpleSnake
-      prob: 0.01
-    - id: MobCobraSpace
-      prob: 0.01
+    table: !type:GroupSelector # DeltaV: EntityTable instead of spawn entries
+      children:
+      - id: MobPurpleSnake
+      - id: MobSmallPurpleSnake
+      - id: MobCobraSpace
 
 - type: entity
   id: SpiderSpawn
@@ -466,13 +462,12 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 20
-    minimumPlayers: 25 # Ronstation - should get to the point where there's enough sec.
+    minimumPlayers: 15 # Ronstation - should get to the point where there's enough sec.
     weight: 5
     duration: 30 # Ronstation - needs a reduction.
   - type: VentCrittersRule
-    entries:
-    - id: MobGiantSpiderAngry
-      prob: 0.03
+    table: # DeltaV: EntityTable instead of spawn entries
+      id: MobGiantSpiderAngry
 
 #- type: entity
 #  id: SpiderClownSpawn
