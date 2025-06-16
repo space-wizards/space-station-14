@@ -137,7 +137,8 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        350: Dead
+        350: Critical
+        400: Dead
     - type: MeleeWeapon
       soundHit:
         collection: Punch
