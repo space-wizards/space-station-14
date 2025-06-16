@@ -30,8 +30,8 @@
       sprite: Clothing/Ears/Headsets/servicesecurity.rsi
 
 - type: entity
-  parent: ClothingHeadset
-  id: [ ClothingHeadsetAssistantNinja, BaseMajorContraband ]
+  parent: [ ClothingHeadset, BaseMajorContraband ]
+  id: ClothingHeadsetAssistantNinja
   name: stolen headset
   components:
   - type: Sprite
