@@ -148,7 +148,11 @@ public sealed class ChangelingDevourSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.None,
         });
 
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-windup"), args.Performer, null, PopupType.MediumCaution);
+        _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-windup"),
+            Loc.GetString("changeling-devour-begin-windup-others", ("user", args.Performer)),
+            args.Performer,
+            args.Performer,
+            PopupType.MediumCaution);
 
     }
 
@@ -163,8 +167,9 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return;
 
         _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-consume"),
+            Loc.GetString("changeling-devour-begin-consume-others", ("user", args.User)),
             args.User,
-            null,
+            args.User,
             PopupType.LargeCaution);
 
         if (_net.IsServer)
@@ -209,7 +214,11 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return;
         }
 
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-consume-complete"), args.User, null, PopupType.LargeCaution);
+        _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-consume-complete"),
+            Loc.GetString("changeling-devour-consume-complete-others", ("user", args.User)),
+            args.User,
+            args.User,
+            PopupType.LargeCaution);
 
         if (_mobState.IsDead(target.Value)
             && TryComp<BodyComponent>(target, out var body)
