@@ -20,6 +20,15 @@
   loadouts:
   - RoboticistCap
   - SkullBandana
+
+- type: loadoutGroup
+  id: RoboticistGloves
+  name: loadout-group-roboticist-gloves
+  minLimit: 0
+  loadouts:
+  - LatexGloves
+  - PurpleGloves
+  - RobohandsGloves Only for roboticist
   
 - type: loadoutGroup
   id: RoboticistBackpack
