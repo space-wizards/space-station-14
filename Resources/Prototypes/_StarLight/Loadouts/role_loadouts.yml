@@ -3,6 +3,7 @@
   groups:
   - RoboticistHead
   - RoboticistJumpsuit
+  - RoboticistGloves
   - RoboticistOuterClothing
   - RoboticistBackpack
   - ScientistShoes
