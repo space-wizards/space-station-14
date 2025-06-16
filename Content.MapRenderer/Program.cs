@@ -29,12 +29,14 @@ namespace Content.MapRenderer
             if (!CommandLineArguments.TryParse(args, out var arguments))
                 return;
 
+            var testContext = new ExternalTestContext("Content.MapRenderer", Console.Out);
+
             PoolManager.Startup();
             if (arguments.Maps.Count == 0)
             {
                 Console.WriteLine("Didn't specify any maps to paint! Loading the map list...");
 
-                await using var pair = await PoolManager.GetServerClient();
+                await using var pair = await PoolManager.GetServerClient(testContext: testContext);
                 var mapIds = pair.Server
                     .ResolveDependency<IPrototypeManager>()
                     .EnumeratePrototypes<GameMapPrototype>()
@@ -109,11 +111,11 @@ namespace Content.MapRenderer
                 Console.WriteLine("Retrieving maps by file names...");
             }
 
-            await Run(arguments);
+            await Run(arguments, testContext);
             PoolManager.Shutdown();
         }
 
-        private static async Task Run(CommandLineArguments arguments)
+        private static async Task Run(CommandLineArguments arguments, ExternalTestContext testContext)
         {
             Console.WriteLine($"Creating images for {arguments.Maps.Count} maps");
 
@@ -134,7 +136,9 @@ namespace Content.MapRenderer
                 var i = 0;
                 try
                 {
-                    await foreach (var renderedGrid in MapPainter.Paint(map,
+                    await foreach (var renderedGrid in MapPainter.Paint(
+                                       map,
+                                       testContext,
                                        arguments.ArgumentsAreFileNames,
                                        arguments.ShowMarkers))
                     {

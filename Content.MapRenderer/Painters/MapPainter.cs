@@ -26,7 +26,9 @@ namespace Content.MapRenderer.Painters
 {
     public sealed class MapPainter
     {
-        public static async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(string map,
+        public static async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint(
+            string map,
+            ITestContextLike testContextLike,
             bool mapIsFilename = false,
             bool showMarkers = false)
         {
@@ -40,7 +42,7 @@ namespace Content.MapRenderer.Painters
                 Fresh = true,
                 // Seriously whoever made MapPainter use GameMapPrototype I wish you step on a lego one time.
                 Map = mapIsFilename ? "Empty" : map,
-            });
+            }, testContextLike);
 
             var server = pair.Server;
             var client = pair.Client;
