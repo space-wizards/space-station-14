@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed a bug that allowed dead or incapacitated people to potentially
-      interact with some UIs.
-    type: Fix
-  id: 8166
-  time: '2025-04-13T16:09:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36480
 - author: K-Dynamic
   changes:
   - message: Stinger grenades no longer flash on detonation.
@@ -3930,3 +3922,10 @@
   id: 8678
   time: '2025-06-15T19:10:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33144
+- author: widgetbeck
+  changes:
+  - message: Randomized characters will now roll markings.
+    type: Add
+  id: 8679
+  time: '2025-06-15T21:11:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34765
