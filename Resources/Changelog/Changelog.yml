@@ -1,38 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Oxygen, Carbon Dioxide, Nitrous Oxide and Frezon can now metabolize when
-      digested/injected.
-    type: Tweak
-  id: 8163
-  time: '2025-04-13T15:21:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31648
-- author: ArchRBX
-  changes:
-  - message: Handheld GPS's can now be examined to read their displays
-    type: Add
-  - message: Handheld GPS's now update their displays much more frequently
-    type: Tweak
-  id: 8164
-  time: '2025-04-13T15:29:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31814
-- author: Beck Thompson, Kaz Wooblie
-  changes:
-  - message: Computers now wont delete items inside of them when deconstructing.
-    type: Fix
-  - message: The ID card computer now throws the IDs out when deconstructed or damaged!
-    type: Add
-  id: 8165
-  time: '2025-04-13T15:51:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32308
-- author: ElectroJr
-  changes:
-  - message: Fixed a bug that allowed dead or incapacitated people to potentially
-      interact with some UIs.
-    type: Fix
-  id: 8166
-  time: '2025-04-13T16:09:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36480
 - author: K-Dynamic
   changes:
   - message: Stinger grenades no longer flash on detonation.
@@ -3908,3 +3874,31 @@
   id: 8675
   time: '2025-06-14T18:29:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38150
+- author: FungiFellow
+  changes:
+  - message: Syndie-Cats now have Syndicate ID access.
+    type: Fix
+  id: 8676
+  time: '2025-06-15T08:27:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38318
+- author: SlamBamActionman
+  changes:
+  - message: Crates on conveyor belts can now go around tight corners again!
+    type: Fix
+  id: 8677
+  time: '2025-06-15T09:36:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37466
+- author: SlamBamActionman
+  changes:
+  - message: A new station, Exo, has been added to the map pool.
+    type: Add
+  id: 8678
+  time: '2025-06-15T19:10:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33144
+- author: widgetbeck
+  changes:
+  - message: Randomized characters will now roll markings.
+    type: Add
+  id: 8679
+  time: '2025-06-15T21:11:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34765
