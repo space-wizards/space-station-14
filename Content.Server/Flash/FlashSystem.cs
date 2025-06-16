@@ -22,6 +22,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Flash
 {
@@ -38,6 +39,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
         private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
@@ -54,13 +56,29 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<PermanentBlindnessComponent, FlashAttemptEvent>(OnPermanentBlindnessFlashAttempt);
             SubscribeLocalEvent<TemporaryBlindnessComponent, FlashAttemptEvent>(OnTemporaryBlindnessFlashAttempt);
         }
-        
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            var query = EntityQueryEnumerator<FlashComponent>();
+            var curTime = _timing.CurTime;
+            while (query.MoveNext(out var uid, out var flash))
+            {
+                if (flash.Flashing && curTime > flash.FlashingEndTime)
+                {
+                    _appearance.SetData(uid, FlashVisuals.Flashing, false);
+                    flash.Flashing = false;
+                }
+            }
+        }
+
         private void OnExamine(Entity<FlashImmunityComponent> ent, ref ExaminedEvent args)
 
         {
             args.PushMarkup(Loc.GetString("flash-protection"));
         }
-        
+
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
         {
             if (!args.IsHit ||
@@ -99,6 +117,7 @@ namespace Content.Server.Flash
             _audio.PlayPvs(comp.Sound, uid);
             comp.Flashing = true;
             _appearance.SetData(uid, FlashVisuals.Flashing, true);
+            comp.FlashingEndTime = _timing.CurTime + comp.FlashingDuration;
 
             if (_sharedCharges.IsEmpty((uid, charges)))
             {
@@ -106,12 +125,6 @@ namespace Content.Server.Flash
                 _tag.AddTag(uid, TrashTag);
                 _popup.PopupEntity(Loc.GetString("flash-component-becomes-empty"), user);
             }
-
-            uid.SpawnTimer(400, () =>
-            {
-                _appearance.SetData(uid, FlashVisuals.Flashing, false);
-                comp.Flashing = false;
-            });
 
             return true;
         }

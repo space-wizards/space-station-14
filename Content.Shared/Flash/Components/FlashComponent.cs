@@ -40,6 +40,18 @@ namespace Content.Shared.Flash.Components
 
         public bool Flashing;
 
+        /// <summary>
+        /// How long the visual of the flashing bulb lasts after activation.
+        /// </summary>
+        [DataField]
+        public TimeSpan FlashingDuration = TimeSpan.FromMilliseconds(400);
+
+        /// <summary>
+        /// The time at which the flashing bulb visual will end.
+        /// </summary>
+        [DataField]
+        public TimeSpan FlashingEndTime;
+
         [DataField]
         public float Probability = 1f;
     }
