@@ -24,20 +24,21 @@ namespace Content.Shared.Preferences
             IEnumerable<KeyValuePair<int, ICharacterProfile>> characters,
             Color adminOOCColor,
             List<ProtoId<ConstructionPrototype>> constructionFavorites,
-            Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
+            Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities,
+            bool sanitizePriorities = true)
         {
             _characters = new Dictionary<int, ICharacterProfile>(characters);
             AdminOOCColor = adminOOCColor;
             ConstructionFavorites = constructionFavorites;
-            JobPriorities = SanitizeJobPriorities(jobPriorities);
+            JobPriorities = sanitizePriorities ? SanitizeJobPriorities(jobPriorities) : jobPriorities;
         }
 
         private static Dictionary<ProtoId<JobPrototype>, JobPriority> SanitizeJobPriorities(Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             return jobPriorities.Where(p =>
+            return jobPriorities.Where(p =>
                     p.Value != JobPriority.Never && prototypeManager.TryIndex(p.Key, out var job) && job.SetPreference)
-                .ToDictionary();
         }
 
         /// <summary>
