@@ -641,6 +641,7 @@
   minLimit: 0
   loadouts:
   - CargoTechnicianHead
+  - SeniorCourierBeret
 
 - type: loadoutGroup
   id: CargoTechnicianJumpsuit
@@ -670,6 +671,13 @@
   loadouts:
   - BlackShoes
   - CargoWinterBoots
+
+- type: loadoutGroup
+  id: CargoTechnicianID
+  name: loadout-group-cargo-technician-id
+  loadouts:
+  - CargoTechnicianPDA
+  - SeniorCourierPDA
 
 - type: loadoutGroup
   id: SalvageSpecialistBackpack
