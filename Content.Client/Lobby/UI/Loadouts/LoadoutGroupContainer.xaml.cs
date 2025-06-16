@@ -112,11 +112,15 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                     })
                     .ToList();
 
-                /*
-                 * Determine which element should be displayed first:
-                 * - If any element is currently selected (its button is pressed), use it.
-                 * - Otherwise, fallback to the first element in the list.
-                 */
+                /* 
+                * Determine which element should be displayed first: 
+                * - If any element is currently selected (its button is pressed), use it. 
+                * - Otherwise, fallback to the first element in the list. 
+                * 
+                * This moves the selected item outside of the sublist for better usability, 
+                * making it easier for players to quickly toggle loadout options (e.g. clothing, accessories) 
+                * without having to search inside expanded subgroups. 
+                */
                 var firstElement = uiElements.FirstOrDefault(e => e.Select.Pressed) ?? uiElements[0];
 
                 /*
