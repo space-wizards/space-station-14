@@ -45,7 +45,7 @@ public sealed partial class ProfilePreviewSpriteView
 
         job ??= GetPreferredJob(humanoid);
 
-        RoleLoadout? loadout;
+        RoleLoadout? loadout = null;
 
         if(job != null)
         {
@@ -60,7 +60,7 @@ public sealed partial class ProfilePreviewSpriteView
             }
             catch (UnknownPrototypeException e)
             {
-                loadout = new RoleLoadout();
+                loadout = null;
             }
 
             // If the job has a preview specific entity or a job specific entity use that
@@ -72,7 +72,7 @@ public sealed partial class ProfilePreviewSpriteView
                 PreviewDummy = EntMan.SpawnEntity(previewEntity, MapCoordinates.Nullspace);
                 JobName = job.LocalizedName;
                 // Grab the loadout specific name too!
-                LoadoutName = GetLoadoutName(loadout);
+                LoadoutName = loadout is null ? null : GetLoadoutName(loadout);
                 return;
             }
         }
@@ -119,6 +119,9 @@ public sealed partial class ProfilePreviewSpriteView
         GiveDummyJobClothes(PreviewDummy, humanoid, job);
 
         if (!_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
+            return;
+
+        if (loadout is null)
             return;
 
         loadout = humanoid.GetLoadoutOrDefault(
