@@ -7552,4 +7552,12 @@ Entries:
   id: 1043
   time: '2025-06-16T14:07:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/830
+- author: Citrea
+  changes:
+  - message: Resomi no longer break their legs when being picked up and are no longer
+      jetpacks.
+    type: Fix
+  id: 1044
+  time: '2025-06-16T15:46:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/841
 
