@@ -21,7 +21,7 @@
     - type: Paper
       content: deliver-spam-dont-you-want-more
     - type: AntagOnSign
-      chance: 1 # theif is a "low impact" antag... not for much longer :3
+      chance: .5
       antags:
         - antag: Traitor # gotta be a traitor for the traitor objectives
           targetComponent: TraitorRule
