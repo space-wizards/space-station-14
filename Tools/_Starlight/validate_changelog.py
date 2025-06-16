@@ -23,7 +23,7 @@ if "**Changelog**" not in pr_body:
     sys.exit(0)
 
 # Extract changelog content
-changelog_match = re.search(r'\*\*Changelog\*\*\s*(.*?)(?:-->|$)', pr_body, re.DOTALL)
+changelog_match = re.search(r'**Changelog**\s(.?)$', pr_body, re.DOTALL)
 if not changelog_match or not changelog_match.group(1).strip():
     print("::error::Changelog section is empty. Please add changelog entries or remove the section.")
     sys.exit(1)
