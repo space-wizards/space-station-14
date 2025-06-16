@@ -47,6 +47,7 @@
   - FloorTileItemGratingMaint
   - FloorTileItemTechmaint
   - FloorTileItemSteelMaint
+  - FloorTileItemTechmaintDark
 
 - type: latheRecipePack
   id: FloorWoodTilesStatic
