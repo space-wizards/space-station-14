@@ -7,7 +7,7 @@
   name: trait-accentless-name
   description: trait-accentless-desc
   category: SpeechTraits
-  cost: 1
+  cost: 0
   components:
   - type: Accentless
     removes:
