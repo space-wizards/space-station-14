@@ -107,7 +107,7 @@
       path: /Audio/_Starlight/Effects/Radio/marauder_agent.ogg
 
 - type: entity
-  parent: ClothingHeadsetAltCentCom
+  parent: [ ClothingHeadsetAltCentCom, BaseCentcommContraband ]
   id: ClothingHeadsetAltCentComDS
   name: CentComm agent over-ear headset
   components:

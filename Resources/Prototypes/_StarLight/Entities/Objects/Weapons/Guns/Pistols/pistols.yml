@@ -47,7 +47,7 @@
     
 - type: entity
   id: WeaponPistolMk58Nonlethal
-  parent: WeaponPistolMk58
+  parent: [WeaponPistolMk58, BaseSecurityContraband]
   suffix: Non-lethal
   components:
   - type: ItemSlots
@@ -71,7 +71,7 @@
             
 - type: entity
   name: N1984
-  parent: WeaponPistolN1984
+  parent: [ WeaponPistolN1984, BaseSecurityContraband ]
   id: WeaponPistolN1984Nonlethal
   suffix: Non-lethal
   components:
@@ -96,7 +96,7 @@
             
 - type: entity
   name: golden mk 58
-  parent: [WeaponPistolMk58, BaseRestrictedContraband]
+  parent: [ WeaponPistolMk58, BaseSecurityContraband ]
   id: WeaponPistolGoldenMk58
   components:
   - type: Sprite
@@ -106,7 +106,7 @@
     
 - type: entity
   name: enforcer
-  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  parent: [ BaseWeaponPistol, BaseSecurityContraband ]
   id: WeaponPistolEnforcer
   description: A pistol of modern design.
   components:
@@ -130,7 +130,7 @@
     
 - type: entity
   name: Due Process
-  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  parent: [BaseWeaponPistol, BaseSecurityContraband]
   id: WeaponPistolDP
   description: A pistol that packs a punch for brig defense, just as NanoTransen intended.
   components:
@@ -166,7 +166,7 @@
             
 - type: entity
   name: sp-8t
-  parent: WeaponPistolDP
+  parent: [WeaponPistolDP, BaseSecurityContraband]
   id: WeaponPistolSP8T
   components:
   - type: Gun
@@ -181,7 +181,7 @@
     
 - type: entity
   name: sp-8ar
-  parent: WeaponPistolDP
+  parent: [WeaponPistolDP, BaseSecurityContraband]
   id: WeaponPistolSP8AR
   components:
   - type: Gun
@@ -195,7 +195,7 @@
     
 - type: entity
   name: stechkin pistol
-  parent: [WeaponPistolMk58, BaseRestrictedContraband]
+  parent: [WeaponPistolMk58, BaseSecurityContraband]
   id: WeaponPistolStechkin
   description: A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors.
   components:
@@ -209,7 +209,7 @@
       
 - type: entity
   name: Stechkin APS
-  parent: [WeaponPistolMk58, BaseRestrictedContraband]
+  parent: [WeaponPistolMk58, BaseSovietContraband]
   id: WeaponPistolAPS
   description: A high quality firearm issued to SNKVD elites and high ranking officials. It's half pistol, half closing argument.
   components:
@@ -228,7 +228,7 @@
       
 - type: entity
   name: desert eagle
-  parent: WeaponPistolN1984
+  parent: [WeaponPistolN1984, BaseSecurityContraband]
   id: WeaponPistolDeagle
   description: A robust magnum handgun.
   components:
@@ -247,7 +247,7 @@
       
 - type: entity
   name: m1911
-  parent: WeaponPistolN1984
+  parent: [WeaponPistolN1984, BaseSecurityContraband]
   id: WeaponPistolM1911
   description: A classic .45 handgun with a small magazine capacity.
   components:

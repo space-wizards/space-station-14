@@ -1,6 +1,6 @@
 - type: entity
   name: hybrid taser
-  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband ]
   id: WeaponAdvancedTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
@@ -51,7 +51,7 @@
 
 - type: entity
   name: energy gun
-  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband ]
   id: WeaponEnergyGun
   description: An energy gun capable of switching between lethal and debilitating lasers.
   components:
@@ -90,7 +90,7 @@
 
 - type: entity
   name: miniature energy gun
-  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband ]
   id: WeaponMiniEnergyGun
   description: An energy gun capable of switching between lethal and debilitating lasers.
   components:
@@ -157,7 +157,7 @@
 
 - type: entity
   name: dominator
-  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband ]
   id: WeaponDominator
   description: A high-tech weapon created by the law enforcement organization Sibyl System, designed specifically to fight crime.
   components:
@@ -209,7 +209,7 @@
 
 - type: entity
   name: X-01 multiphase energy gun
-  parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband ]
+  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband ]
   id: WeaponMultiphaseGun
   description: This is an expensive, modern version of the antique laser pistol, with several unique fire modes.
   components:
@@ -307,7 +307,7 @@
     pvsIncrease: 0.3
 
 - type: entity
-  parent: BaseWeaponBattery
+  parent: [BaseWeaponBattery, BaseSecurityContraband ]
   id: WeaponIonCarbine
   name: ion carbine
   components:
@@ -342,7 +342,7 @@
 
 - type: entity
   name: immolator laser gun
-  parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseSecuritySalvageContraband]
   id: WeaponLaserImmolator
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
@@ -365,7 +365,7 @@
     price: 300
 
 - type: entity
-  parent: BaseWeaponBatterySmall
+  parent: [BaseWeaponBatterySmall, BaseSecurityContraband ]
   id: WeaponDecloner
   name: decloner
   components:
@@ -390,7 +390,7 @@
 
 - type: entity
   name: m1911
-  parent: BaseWeaponBatterySmall
+  parent: [BaseWeaponBatterySmall, BaseSecurityContraband ]
   id: WeaponM1911
   description: A compact pulse core in a classic Nanotrasen officer pistol design. It's not the size of the gun, it's the size of the hole it puts in people.
   components:
@@ -431,7 +431,7 @@
 
 - type: entity
   name: pulse pistol
-  parent: BaseWeaponBatterySmall
+  parent: [BaseWeaponBatterySmall, BaseSecurityContraband ]
   id: WeaponPulsePistol
   description: An extremely compact version of the pulse carabine.
   components:
@@ -477,7 +477,7 @@
 
 - type: entity
   name: PDW-9 taser pistol
-  parent: BaseWeaponBatterySmall
+  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband ]
   id: WeaponPDW9
   description: A compact pulse core in a classic Nanotrasen officer pistol design. It's not the size of the gun, it's the size of the hole it puts in people.
   components:
@@ -518,7 +518,7 @@
     startingCharge: 1500
 
 - type: entity
-  parent: BaseWeaponBatterySmall
+  parent: [ BaseWeaponBatterySmall, BaseMajorContraband ]
   id: WeaponAlien
   name: alien pistol
   components:
@@ -700,7 +700,7 @@
 
 - type: entity
   name: ANNIHILATOR
-  parent: WeaponPulseCarbine
+  parent: [ WeaponPulseCarbine, BaseMajorContraband ]
   id: WeaponANNIHILATOR
   description: A weapon that is almost as infamous as its users.
   components:

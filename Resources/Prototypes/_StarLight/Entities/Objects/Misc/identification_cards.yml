@@ -1,5 +1,5 @@
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseCommandContraband ]
   id: MagistrateIDCard
   name: magistrate ID card
   components:
@@ -12,7 +12,7 @@
       job: Magistrate
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseSecurityContraband ]
   id: BrigmedicIDCard
   name: brigmedic ID card
   components:
@@ -24,7 +24,7 @@
       job: Brigmedic
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseCentcommContraband ]
   id: CentcomIDCardOperator
   name: centcomm operator ID card
   components:
@@ -37,7 +37,7 @@
     job: CentralCommandOperator
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseScienceContraband ]
   id: RoboticistIDCard
   name: roboticist ID card
   components:
@@ -49,7 +49,7 @@
     job: Roboticist
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseCommandContraband ]
   id: NanoTrasenRepresentativeIDCard
   name: NanoTrasen representative ID Card
   components:
@@ -60,7 +60,7 @@
     job: NanoTrasenRepresentative
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseLawContraband ]
   id: IAAIDCard
   name: internal affairs agent ID card
   components:
@@ -73,7 +73,7 @@
     job: IAA
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseCommandContraband ]
   id: BlueShieldIDCard
   name: blueshield officer's ID card
   components:
@@ -86,7 +86,7 @@
     job: BlueShield
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseCommandContraband ]
   id: NTCCBlueShieldIDCard
   name: NT-CC consortium officer's ID card
   components:
@@ -99,7 +99,7 @@
     job: NTCCBlueshield
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseCargoContraband ]
   id: MiningIDCard
   name: mining ID card
   components:
@@ -112,7 +112,7 @@
     job: MiningSpecialist
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseCargoContraband ]
   id: MailTechIDCard
   name: mailtech ID card
   components:
@@ -135,7 +135,7 @@
     - state: sovietid
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseSyndicateContraband ]
   id: CommanderIDCard
   name: Commander ID Card
   components:
@@ -159,7 +159,7 @@
           type: AgentIDCardBoundUserInterface
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseSyndicateContraband ]
   id: SyndicateAgentIDCard
   name: Syndicate Agent ID Card
   components:
@@ -183,7 +183,7 @@
           type: AgentIDCardBoundUserInterface
 
 - type: entity
-  parent: IDCardStandard
+  parent: [ IDCardStandard, BaseSyndicateContraband ]
   id: OperativeIDCard
   name: Operative ID Card
   components:
