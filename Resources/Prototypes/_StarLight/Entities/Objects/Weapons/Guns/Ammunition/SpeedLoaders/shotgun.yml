@@ -38,7 +38,7 @@
 - type: entity
   id: SpeedLoaderShotgunEmpty
   name: "speed loader (.50 any)"
-  parent: BaseSpeedLoaderShotgun
+  parent: [ BaseSpeedLoaderShotgun, BaseSecuritySalvageContraband ]
   components:
   - type: BallisticAmmoProvider
     proto: null
