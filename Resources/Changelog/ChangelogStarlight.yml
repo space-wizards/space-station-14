@@ -7636,4 +7636,11 @@ Entries:
   id: 1054
   time: '2025-06-16T17:06:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/777
+- author: RoadTrain
+  changes:
+  - message: Changed Station AI's default lawset from Crewsimov to NT default
+    type: Tweak
+  id: 1055
+  time: '2025-06-16T17:08:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/734
 
