@@ -80,13 +80,7 @@ public sealed partial class DevourerComponent : Component
     /// it is rewarded with the reward chemical.  If null, all food is fine.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("foodPreferenceWhitelist")]
-    public EntityWhitelist? FoodPreferenceWhitelist = new()
-    {
-        Components = new[]
-        {
-            "HumanoidAppearance",
-        }
-    };
+    public EntityWhitelist? FoodPreferenceWhitelist;
 
     /// <summary>
     /// The chemical ID injected upon devouring
