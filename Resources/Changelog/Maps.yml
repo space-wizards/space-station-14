@@ -371,4 +371,12 @@
   id: 45
   time: '2025-06-13T19:17:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38259
+- author: SlamBamActionman
+  changes:
+  - message: Exo has received a "day 1 patch", fixing various incorrectly mapped features
+      and some smaller balance tweaks.
+    type: Fix
+  id: 46
+  time: '2025-06-16T16:43:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38348
 Order: 1
