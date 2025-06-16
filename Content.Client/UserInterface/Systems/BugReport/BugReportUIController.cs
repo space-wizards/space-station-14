@@ -28,10 +28,10 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
 
         SetupWindow();
 
-        CommandBinds.Builder
-            .Bind(ContentKeyFunctions.BugReportMenu,
-                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
-            .Register<BugReportUIController>();
+        CommandBinds.Builder.Bind(
+            ContentKeyFunctions.BugReportMenu,
+            InputCmdHandler.FromDelegate(_ => ToggleWindow())
+        ).Register<BugReportUIController>();
     }
 
     public void OnStateExited(GameplayState state)
@@ -39,6 +39,22 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
         _bugReportWindow.Close();
 
         CommandBinds.Unregister<BugReportUIController>();
+    }
+
+    public void LoadButton()
+    {
+        if (BugReportButton == null)
+            return;
+
+        BugReportButton.OnPressed += ButtonToggleWindow;
+    }
+
+    public void UnloadButton()
+    {
+        if (BugReportButton == null)
+            return;
+
+        BugReportButton.OnPressed -= ButtonToggleWindow;
     }
 
     private void SetupWindow()
@@ -62,34 +78,16 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
     private void ToggleWindow()
     {
         if (_bugReportWindow.IsOpen)
-        {
             _bugReportWindow.Close();
-
-            return;
-        }
-
-        _bugReportWindow.OpenCentered();
+        else
+            _bugReportWindow.OpenCentered();
     }
 
     private void OnBugReportSubmitted(PlayerBugReportInformation report)
     {
-        _net.ClientSendMessage(new BugReportMessage{ ReportInformation = report });
+        var message = new BugReportMessage { ReportInformation = report };
+        _net.ClientSendMessage(message);
         _bugReportWindow.Close();
-    }
-
-    public void LoadButton()
-    {
-        if (BugReportButton == null)
-            return;
-
-        BugReportButton.OnPressed += ButtonToggleWindow;
-    }
-    public void UnloadButton()
-    {
-        if (BugReportButton == null)
-            return;
-
-        BugReportButton.OnPressed -= ButtonToggleWindow;
     }
 
     private void ButtonToggleWindow(BaseButton.ButtonEventArgs obj)
