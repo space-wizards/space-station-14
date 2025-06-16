@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprites by Flareguy & cboyjet, modified from space suit sprites taken from tgstation at commit https://github.com/tgstation/tgstation/commit/fb2d71495bfe81446159ef528534193d09dd8d34. Vox state based off of biosuit, taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/31d6576ba8102135d058ef49c3cb6ecbe8db8a79",
+  "copyright": "Sprites by Flareguy, cboyjet, & monkey-suit sprite by Kittygyat, modified from space suit sprites taken from tgstation at commit https://github.com/tgstation/tgstation/commit/fb2d71495bfe81446159ef528534193d09dd8d34. Vox state based off of biosuit, taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/31d6576ba8102135d058ef49c3cb6ecbe8db8a79",
   "size": {
     "x": 32,
     "y": 32
@@ -16,6 +16,10 @@
     },
     {
       "name": "equipped-OUTERCLOTHING-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-OUTERCLOTHING-monkey",
       "directions": 4
     },
     {
