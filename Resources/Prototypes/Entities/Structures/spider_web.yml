@@ -43,7 +43,7 @@
     key: web
     additionalKeys:
     - walls
-    base: carpet_
+    base: web_
 
 - type: entity
   id: SpiderWeb
