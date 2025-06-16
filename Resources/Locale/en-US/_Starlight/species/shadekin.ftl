@@ -1,5 +1,5 @@
 alerts-shadekin-name = Light Exposure
-alerts-shadekin-desc = Hhow much light is around you.
+alerts-shadekin-desc = How much light is around you.
 
 shadekin-alert-0 = [color=green]Light Exposure: Darkness...[/color]
                     The darkness is nice... its like home... i feel my wounds healing...
