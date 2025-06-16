@@ -7545,4 +7545,11 @@ Entries:
   id: 1042
   time: '2025-06-16T13:02:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/824
+- author: ScarletLightweaver
+  changes:
+  - message: Added a new syndicate admeme shuttle
+    type: Add
+  id: 1043
+  time: '2025-06-16T14:07:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/830
 
