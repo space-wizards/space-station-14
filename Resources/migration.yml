@@ -645,10 +645,6 @@ CapacitorStockPart: MicroManipulatorStockPart
 # 2025-05-30
 SpawnHonkBot: SpawnMobHonkBot
 
-# 2025-06-01
-CrateFoodPizzaLarge: CrateFoodPizza
-CrateFoodSoftdrinksLarge: CrateFoodSoftdrinks
-
 # 2025-06-09
 BarSignAlignTile: BarSign
 BarSignComboCafeAlignTile: BarSignComboCafe
