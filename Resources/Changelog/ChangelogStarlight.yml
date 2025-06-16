@@ -7560,4 +7560,22 @@ Entries:
   id: 1044
   time: '2025-06-16T15:46:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/841
+- author: Conflee
+  changes:
+  - message: Changed Contra Severity of Syndicate Pajamas, Pajama Hats, and Scarves
+      from Syndicate to Major (pajamas shouldn't be as illegal to own as a china lake,
+      this was stupid as fuck)
+    type: Tweak
+  id: 1045
+  time: '2025-06-16T16:39:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/836
+- author: Conflee
+  changes:
+  - message: Changed Contra Severity of Interdyne Herbal Cigarettes to non-contra.
+      Interdyne isn't publicly known to work with the Syndicate, so them being illegal
+      was illogical. Description changed to be less incriminating also
+    type: Tweak
+  id: 1046
+  time: '2025-06-16T16:39:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/836
 
