@@ -632,7 +632,7 @@
 
 - type: entity
   name: human burger
-  parent: FoodBurgerBase
+  parent: [ FoodBurgerBase, BaseMajorContraband ]
   id: FoodBurgerHuman
   description: You cant tell who this is made of...
   components:

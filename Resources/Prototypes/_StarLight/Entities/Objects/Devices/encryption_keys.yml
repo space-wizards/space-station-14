@@ -1,5 +1,5 @@
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseLawContraband ]
   id: EncryptionKeyLaw
   name: law encryption key
   description: An encryption key used by the most meticulous person.

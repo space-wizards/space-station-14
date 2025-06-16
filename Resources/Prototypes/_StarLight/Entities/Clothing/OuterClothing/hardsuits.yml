@@ -31,6 +31,7 @@
     damageCoefficient: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBlueshield
+
 #NTRep Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
@@ -64,6 +65,7 @@
     damageCoefficient: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitNtrep
+
 #Clown Battlesuit
 - type: entity
   parent: [ClothingOuterHardsuitBase]
@@ -98,6 +100,7 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetBattlesuitClown
+    
 #Mercenary Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseMajorContraband]
