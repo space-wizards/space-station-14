@@ -7629,4 +7629,11 @@ Entries:
   id: 1053
   time: '2025-06-16T17:03:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/834
+- author: Killer Tamashi
+  changes:
+  - message: Changed zombification speed from .4 to .3
+    type: Tweak
+  id: 1054
+  time: '2025-06-16T17:06:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/777
 
