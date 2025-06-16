@@ -7,7 +7,6 @@
   components:
   - type: Jump
     action: JumpMoth
-    isEquipment: false
   - type: Absorbable
   - type: HumanoidAppearance
     species: Moth

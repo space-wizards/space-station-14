@@ -7,7 +7,6 @@
   - type: Absorbable
   - type: Jump
     action: JumpResomi
-    isEquipment: false
   - type: DamageVisuals
     thresholds: [ 10, 30, 50, 70]
     targetLayers:
