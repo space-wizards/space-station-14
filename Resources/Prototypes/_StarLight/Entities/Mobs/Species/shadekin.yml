@@ -5,6 +5,7 @@
   id: BaseMobShadekin
   abstract: true
   components:
+    - type: Shadekin
     - type: Absorbable
     - type: HumanoidAppearance
       species: Shadekin

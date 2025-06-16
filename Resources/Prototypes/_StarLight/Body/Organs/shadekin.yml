@@ -85,12 +85,11 @@
 - type: entity
   id: OrganShadekinCore
   parent: BaseItem
-  name: Shadekin Core
+  name: shadekin core
   description: A core of a shadekin, a mysterious and powerful organ that seems to be the source of their energy.
   components:
+  - type: Organ
   - type: Sprite
     sprite: _Starlight/Mobs/Species/Shadekin/organs.rsi
     layers:
       - state: core
-  - type: Extractable
-    grindableSolutionName: organ

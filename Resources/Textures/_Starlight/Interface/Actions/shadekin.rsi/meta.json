@@ -10,14 +10,6 @@
         {
             "name": "phase",
             "directions": 1
-        },
-        {
-            "name": "rest",
-            "directions": 1
-        },
-        {
-            "name": "darkvision",
-            "directions": 1
         }
     ]
 }
