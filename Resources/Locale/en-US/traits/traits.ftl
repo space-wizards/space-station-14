@@ -30,6 +30,7 @@ trait-unrevivable-desc = You are unable to be revived by defibrillators.
 trait-pirate-accent-name = Pirate accent
 trait-pirate-accent-desc = You can't stop speaking like a pirate!
 
+🌟Starlight🌟
 trait-accentless-name = No native accent
 trait-accentless-desc = You don't have the accent that your species would usually have
 
