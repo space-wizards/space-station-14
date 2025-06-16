@@ -7585,4 +7585,13 @@ Entries:
   id: 1047
   time: '2025-06-16T16:41:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/825
+- author: Conflee
+  changes:
+  - message: Removed annoying ass alarm on Oasis. Supposed to go off when Emitters
+      lose power, but goes off constantly. Removing the batteries from my carbon monoxide
+      detector, its big brain engineering time
+    type: Remove
+  id: 1048
+  time: '2025-06-16T16:59:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/840
 
