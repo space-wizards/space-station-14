@@ -128,7 +128,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var oldPrios = db.DbContext.Preference
+            var playerPreference = db.DbContext.Preference
                 .Include(p => p.JobPriorities)
                 .Single(p => p.UserId == userId.UserId);
 
@@ -142,7 +142,7 @@ namespace Content.Server.Database
                 };
                 newPrios.Add(newPrio);
             }
-            oldPrios.JobPriorities = newPrios;
+            playerPreference.JobPriorities = newPrios;
 
             await db.DbContext.SaveChangesAsync();
         }

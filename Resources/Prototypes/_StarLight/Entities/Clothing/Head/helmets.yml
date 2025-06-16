@@ -52,7 +52,7 @@
     sprite: _Starlight/Clothing/Head/Helmets/bulletproof.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: _Starlight/Clothing/Head/Helmets/bulletproof.rsi
   - type: Item
@@ -77,8 +77,8 @@
     hideOnToggle: true
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: icon}
           False: {state: icon-up}
   - type: ComponentToggler

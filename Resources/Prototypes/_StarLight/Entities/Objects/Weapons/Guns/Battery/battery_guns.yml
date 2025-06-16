@@ -732,3 +732,32 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 500
+
+- type: entity
+  parent: BaseWeaponBatterySmall
+  id: WeaponToecloner
+  name: toecloner
+  suffix: Admeme
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Weapons/Guns/Battery/decloner.rsi
+      layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: normal
+        shader: unshaded
+      - state: mag-unshaded-4
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+    - type: ProjectileBatteryAmmoProvider
+      proto: ProjectilePolyboltJohnToe
+      fireCost: 200
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 40 #every 5 seconds another becomes toe.
+      autoRechargePause: false
+    - type: MagazineVisuals
+      magState: mag
+      steps: 5
+      zeroVisible: true
+    - type: Appearance

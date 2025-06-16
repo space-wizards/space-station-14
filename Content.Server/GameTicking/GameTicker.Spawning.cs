@@ -78,7 +78,7 @@ namespace Content.Server.GameTicking
             bool force)
         {
             // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
-            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, netUserIds, force));
+            RaiseLocalEvent(new RulePlayerSpawningEvent(readyPlayers, force));
 
             var playerNetIds = readyPlayers.Select(o => o.UserId).ToHashSet();
 
@@ -131,9 +131,13 @@ namespace Content.Server.GameTicking
                 if (job == null)
                     continue;
 
+                var playerSession = _playerManager.GetSessionById(player);
+
                 // Select a profile for the player
                 var playerPrefs = _preferencesManager.GetPreferences(player);
                 var playerProfiles = playerPrefs.GetAllEnabledProfilesForJob(job.Value);
+
+                // Filter out job requirements
                 var filteredPlayerProfiles = playerProfiles.Values.Where(profile =>
                     JobRequirements.TryRequirementsMet(job.Value,
                         _playerManager.GetSessionById(player),
@@ -142,7 +146,20 @@ namespace Content.Server.GameTicking
                         EntityManager,
                         _prototypeManager,
                         profile)
-                    );
+                );
+
+                // If the player is preselected for antags, filter out profiles that aren't requesting these antags.
+                var antags = _antagSelection.GetPreSelectedAntags(playerSession);
+                if (antags.Count > 0)
+                {
+                    // For each antag definition, make sure that at least one of the AntagPrototypes is in
+                    // the character's preferences.
+                    foreach (var antagSet in antags)
+                    {
+                        filteredPlayerProfiles =
+                            filteredPlayerProfiles.Where(profile => antagSet.Overlaps(profile.AntagPreferences));
+                    }
+                }
 
                 var finalPlayerProfiles = filteredPlayerProfiles.ToList();
                 if (finalPlayerProfiles.Count == 0)
@@ -150,7 +167,7 @@ namespace Content.Server.GameTicking
 
                 var profile = _robustRandom.Pick(finalPlayerProfiles.ToList());
 
-                SpawnPlayer(_playerManager.GetSessionById(player), profile, station, job, false);
+                SpawnPlayer(playerSession, profile, station, job, false);
             }
 
             RefreshLateJoinAllowed();
@@ -158,7 +175,6 @@ namespace Content.Server.GameTicking
             // Allow rules to add roles to players who have been spawned in. (For example, on-station traitors)
             RaiseLocalEvent(new RulePlayerJobsAssignedEvent(
                 assignedJobs.Keys.Select(x => _playerManager.GetSessionById(x)).ToArray(),
-                netUserIds,
                 force));
         }
 
@@ -317,7 +333,7 @@ namespace Content.Server.GameTicking
 
             _mind.TransferTo(newMind, mob);
 
-            _roles.MindAddJobRole(newMind, silent: silent, jobPrototype:jobId);
+            _roles.MindAddJobRole(newMind, silent: silent, jobPrototype: jobId);
             var jobName = _jobs.MindTryGetJobName(newMind);
             _admin.UpdatePlayerList(player);
 
@@ -433,6 +449,11 @@ namespace Content.Server.GameTicking
         /// <summary>
         /// Makes a player join into the game and spawn on a station
         /// </summary>
+        /// <remarks>
+        /// This is currently used by:
+        /// RespawnRuleSystem (for like deathmatch I think?)
+        /// Join Game command (late join)
+        /// </remarks>
         /// <param name="player">The player joining</param>
         /// <param name="profile">The humanoid profile they're spawning with</param>
         /// <param name="station">The station they're spawning on</param>
@@ -546,17 +567,17 @@ namespace Content.Server.GameTicking
                 return spawn;
             }
 
-            if (_mapManager.MapExists(DefaultMap))
+            if (_map.MapExists(DefaultMap))
             {
-                var mapUid = _mapManager.GetMapEntityId(DefaultMap);
+                var mapUid = _map.GetMapOrInvalid(DefaultMap);
                 if (!TerminatingOrDeleted(mapUid))
                     return new EntityCoordinates(mapUid, Vector2.Zero);
             }
 
             // Just pick a point at this point I guess.
-            foreach (var map in _mapManager.GetAllMapIds())
+            foreach (var map in _map.GetAllMapIds())
             {
-                var mapUid = _mapManager.GetMapEntityId(map);
+                var mapUid = _map.GetMapOrInvalid(map);
 
                 if (!metaQuery.TryGetComponent(mapUid, out var meta)
                     || meta.EntityPaused

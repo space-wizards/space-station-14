@@ -339,8 +339,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         198:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 198
     components:
     - type: Transform
@@ -351,8 +350,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         197:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
 - proto: APCBasic
   entities:
   - uid: 275
