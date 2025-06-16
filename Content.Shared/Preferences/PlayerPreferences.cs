@@ -29,7 +29,10 @@ namespace Content.Shared.Preferences
 
         private static Dictionary<ProtoId<JobPrototype>, JobPriority> SanitizeJobPriorities(Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
         {
-            return jobPriorities.Where(kvp => kvp.Value != JobPriority.Never).ToDictionary();
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            return jobPriorities.Where(p =>
+                    p.Value != JobPriority.Never && prototypeManager.TryIndex(p.Key, out var job) && job.SetPreference)
+                .ToDictionary();
         }
 
         /// <summary>
