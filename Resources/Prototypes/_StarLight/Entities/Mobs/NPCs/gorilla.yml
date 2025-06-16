@@ -57,9 +57,14 @@
       rootTask:
         task: SimpleHostileCompound
       blackboard:
-        NavSmash: !type:Bool true
-        NavClimb: !type:Bool true
-        NavInteract: !type:Bool true
+        NavClimb: !type:Bool
+          true
+        NavInteract: !type:Bool
+          true
+        NavPry: !type:Bool
+          true
+        NavSmash: !type:Bool
+          true
     - type: Hands
     - type: MovementSpeedModifier
       baseWalkSpeed: 2
@@ -81,10 +86,15 @@
         - Adrenaline
     - type: Prying
       pryPowered: true
+      force: true
+      speedModifier: 1.5
+      useSound:
+        path: /Audio/Items/crowbar.ogg
     - type: MobThresholds
       thresholds:
         0: Alive
-        220: Dead
+        200: Critical
+        250: Dead
     - type: MeleeSpeech
       Battlecry: Gorilla punch!
     - type: UserInterface
