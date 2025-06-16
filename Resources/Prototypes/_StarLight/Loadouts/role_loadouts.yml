@@ -2,6 +2,7 @@
   id: JobRoboticist
   groups:
   - RoboticistHead
+  - RoboticistGoggles
   - RoboticistJumpsuit
   - RoboticistGloves
   - RoboticistOuterClothing

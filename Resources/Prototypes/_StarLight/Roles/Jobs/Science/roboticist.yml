@@ -21,7 +21,5 @@
   id: RoboticistGear
   equipment:
     id: RoboticistPDA
-    gloves: ClothingHandsGlovesRobohands
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetRobotics
-    eyes: ClothingEyesWeldingGoggles

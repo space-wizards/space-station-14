@@ -28,7 +28,16 @@
   loadouts:
   - LatexGloves
   - PurpleGloves
-  - RobohandsGloves Only for roboticist
+  - RobohandsGloves
+
+- type: loadoutGroup
+  id: RoboticistGoggles
+  name: loadout-group-roboticist-goggles
+  minLimit: 0
+  loadouts:
+  - RoboticistWeldingGoggles
+  - RoboticistDiagnosticsHud
+  
   
 - type: loadoutGroup
   id: RoboticistBackpack
