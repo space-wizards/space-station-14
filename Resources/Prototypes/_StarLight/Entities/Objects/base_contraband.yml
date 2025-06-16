@@ -30,3 +30,11 @@
   - type: Contraband
     allowedDepartments: [ Engineering ]
     allowedJobs: [ SalvageSpecialist ]
+
+- type: entity
+  id: BaseLawContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Law ]

@@ -23,7 +23,7 @@
     size: Normal
 
 - type: entity
-  parent: ClothingOuterArmorBasic
+  parent: [ ClothingOuterArmorBasic, BaseMajorContraband ]
   id: ClothingOuterArmorAbductor
   name: agent vest
   components:

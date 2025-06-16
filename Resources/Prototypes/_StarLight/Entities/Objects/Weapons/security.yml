@@ -1,6 +1,6 @@
 - type: entity
   name: double stun baton
-  parent: Stunbaton
+  parent: [ Stunbaton, BaseSecurityContraband ]
   id: DoubleStunbaton
   components:
   - type: Sprite
@@ -11,7 +11,7 @@
       
 - type: entity
   name: purple stun baton
-  parent: Stunbaton
+  parent: [ Stunbaton, BaseSecurityContraband ]
   id: PurpleStunbaton
   components:
   - type: Sprite

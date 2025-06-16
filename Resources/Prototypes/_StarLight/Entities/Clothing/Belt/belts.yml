@@ -98,7 +98,7 @@
     price: 1000
     
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ ClothingBeltStorageBase, , BaseMajorContraband ]
   id: ClothingAbductorBelt
   name: abductor belt
   description: Can hold various OUR things.

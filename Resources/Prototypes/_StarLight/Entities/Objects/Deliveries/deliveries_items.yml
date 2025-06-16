@@ -2,7 +2,7 @@
   id: MailSyndicateSpamLetter
   name: Reasons to choose The Syndicate!
   description: An advertisement for the Syndicate. Wont fit in a fax somehow.
-  parent: Paper
+  parent: [ Paper, BaseSyndicateContraband ]
   components:
     - type: Paper
       content: delivery-spam-reasons-to-join-syndicate
@@ -16,7 +16,7 @@
   id: MailSpamDontYouWantMore
   name: Don't You Want More?
   description: An inciting paper that smells faintly of welding fuel and desire. Wont fit in a fax somehow.
-  parent: Paper
+  parent: [ Paper, BaseMajorContraband ]
   components:
     - type: Paper
       content: deliver-spam-dont-you-want-more

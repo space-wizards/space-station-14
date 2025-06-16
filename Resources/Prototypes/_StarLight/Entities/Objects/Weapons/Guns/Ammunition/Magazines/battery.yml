@@ -2,7 +2,7 @@
 - type: entity
   id: BaseMagazineBattery
   name: "magazine (laser)"
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem ]
   abstract: true
   components:
   - type: Tag
@@ -36,7 +36,7 @@
 - type: entity
   id: MagazineBatteryLr30
   name: "magazine (laser)"
-  parent: [ BaseMagazineBattery, BaseSecuritySalvageContraband ]
+  parent: BaseMagazineBattery
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeBattery

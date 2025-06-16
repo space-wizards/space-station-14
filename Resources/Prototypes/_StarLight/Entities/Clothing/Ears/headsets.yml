@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHeadset
+  parent: [ ClothingHeadset, BaseLawContraband ]
   id: ClothingHeadsetIAA
   name: Internal Affairs Agent Headset
   description: A headset for internal affairs agent to hear the captain's last words.
@@ -14,7 +14,7 @@
       sprite: Clothing/Ears/Headsets/servicesecurity.rsi
       
 - type: entity
-  parent: ClothingHeadset
+  parent: [ ClothingHeadset, BaseLawContraband ]
   id: ClothingHeadsetMagistrate
   name: Magistrate headset
   description: A headset for internal affairs agent to hear the captain's last words.
@@ -31,7 +31,7 @@
 
 - type: entity
   parent: ClothingHeadset
-  id: ClothingHeadsetAssistantNinja
+  id: [ ClothingHeadsetAssistantNinja, BaseMajorContraband ]
   name: stolen headset
   components:
   - type: Sprite
@@ -41,7 +41,7 @@
       path: /Audio/_Starlight/Effects/Radio/ninja.ogg
 
 - type: entity
-  parent: [ClothingHeadset, BaseSecurityLawyerContraband]
+  parent: [ ClothingHeadset, BaseSecurityContraband ]
   id: ClothingHeadsetSecurityWarden
   name: warden's headset
   description: This is used by your elite warden.
