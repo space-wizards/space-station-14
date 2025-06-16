@@ -7671,4 +7671,76 @@ Entries:
   id: 1059
   time: '2025-06-16T18:31:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/837
+- author: Happyrobot33
+  changes:
+  - message: Added Various cute marketable crewmember plushes, that come with their
+      own unique voicebox and voicelines!
+    type: Add
+  id: 1060
+  time: '2025-06-16T22:09:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/649
+- author: Happyrobot33
+  changes:
+  - message: Matthew and Emmie plushies
+    type: Add
+  id: 1061
+  time: '2025-06-16T22:09:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/649
+- author: Happyrobot33
+  changes:
+  - message: Morgana and Killer plushies
+    type: Add
+  id: 1062
+  time: '2025-06-16T22:09:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/649
+- author: Happyrobot33
+  changes:
+  - message: IJK OP plushie
+    type: Add
+  id: 1063
+  time: '2025-06-16T22:09:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/649
+- author: Happyrobot33
+  changes:
+  - message: ROUND MORGANA
+    type: Add
+  id: 1064
+  time: '2025-06-16T22:09:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/649
+- author: Happyrobot33
+  changes:
+  - message: Kiosha plushie
+    type: Add
+  id: 1065
+  time: '2025-06-16T22:09:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/649
+- author: Happyrobot33
+  changes:
+  - message: Lance plushie
+    type: Add
+  id: 1066
+  time: '2025-06-16T22:09:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/649
+- author: Happyrobot33
+  changes:
+  - message: Trystan plushie
+    type: Add
+  id: 1067
+  time: '2025-06-16T22:09:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/649
+- author: Happyrobot33
+  changes:
+  - message: Added crewmember plushies to relevant job lockers
+    type: Add
+  id: 1068
+  time: '2025-06-16T22:09:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/649
+- author: Happyrobot33
+  changes:
+  - message: All plushes have internally been moved around. Let me know if ive broken
+      any of them!
+    type: Tweak
+  id: 1069
+  time: '2025-06-16T22:09:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/649
 
