@@ -10,3 +10,5 @@ shadekin-alert-3 = [color=green]Light Exposure: High[/color]
                     too many lights... too many! i feel exausted...
 shadekin-alert-4 = [color=green]Light Exposure:[/color] [color=red]EXTREME[/color]
                     LIGHTS... I NEED DARKNESS! its burns!
+
+phase-fail-generic = I can't phase!

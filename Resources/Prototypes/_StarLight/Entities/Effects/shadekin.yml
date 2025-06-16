@@ -12,7 +12,7 @@
       anchored: true
     - type: EmitSoundOnSpawn
       sound:
-        path: /Audio/_Starlight/Effects/Shadekin/shadeskip.ogg
+        path: /Audio/_Starlight/Effects/Shadekin/nullphase.ogg
     - type: TimedDespawn
       lifetime: 30
     - type: Physics
@@ -36,3 +36,37 @@
             data: { state: spookysmoke }
           - options: ReducedMotion
             data: { state: spookysmoke_static }
+
+- type: entity
+  id: ShadekinPhaseInEffect
+  name: Shadekin Phase in
+  components:
+    - type: EmitSoundOnSpawn
+      sound:
+        path: /Audio/_Starlight/Effects/Shadekin/shadekinphase.ogg
+    - type: TimedDespawn
+      lifetime: 0.5
+    - type: Sprite
+      layers:
+        - sprite: _Starlight/Effects/shadekin.rsi
+          state: tp_in
+          shader: unshaded
+      netsync: false
+      drawdepth: Effects
+
+- type: entity
+  id: ShadekinPhaseOutEffect
+  name: Shadekin Phase out
+  components:
+    - type: EmitSoundOnSpawn
+      sound:
+        path: /Audio/_Starlight/Effects/Shadekin/shadekinphase.ogg
+    - type: TimedDespawn
+      lifetime: 0.5
+    - type: Sprite
+      layers:
+        - sprite: _Starlight/Effects/shadekin.rsi
+          state: tp_out
+          shader: unshaded
+      netsync: false
+      drawdepth: Effects
