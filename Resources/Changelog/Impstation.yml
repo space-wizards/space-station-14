@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: The cargo shuttle should now spawn on Core, Elkridge and Barratry.
-    type: Fix
-  id: 1341
-  time: '2025-03-17T18:41:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1999
-- author: Kandiyaki
-  changes:
-  - message: Being sacrificed by a heretic will now briefly send the victim to hell!
-    type: Add
-  - message: Being sacrificed by a heretic will no longer gib the victim.
-    type: Remove
-  id: 1342
-  time: '2025-03-17T18:48:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1955
 - author: SixValentine
   changes:
   - message: Handheld Television!
@@ -4198,3 +4182,18 @@
   id: 1840
   time: '2025-06-15T22:10:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2770
+- author: Princess-Cheeseballs
+  changes:
+  - message: Salvage bounties should now be counted properly when turning them in
+      alongside other bounties.
+    type: Fix
+  id: 1841
+  time: '2025-06-16T09:35:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2782
+- author: hivehum
+  changes:
+  - message: Oswald no longer sounds like a fucking chicken
+    type: Fix
+  id: 1842
+  time: '2025-06-16T09:35:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2781
