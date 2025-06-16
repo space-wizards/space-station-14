@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Content.MapRenderer.Painters;
 using Content.Server.Maps;
-using Newtonsoft.Json;
 using Robust.Shared.Prototypes;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Webp;
@@ -186,7 +186,7 @@ namespace Content.MapRenderer
 
                 if (arguments.ExportViewerJson)
                 {
-                    var json = JsonConvert.SerializeObject(mapViewerData);
+                    var json = JsonSerializer.Serialize(mapViewerData);
                     await File.WriteAllTextAsync(Path.Combine(arguments.OutputPath, map, "map.json"), json);
                 }
             }

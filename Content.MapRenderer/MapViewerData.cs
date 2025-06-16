@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
+using System.Text.Json.Serialization;
 using Robust.Shared.Maths;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -91,9 +92,13 @@ public sealed class Layer
 
 public readonly struct Extent
 {
+    [JsonInclude]
     public readonly float X1;
+    [JsonInclude]
     public readonly float Y1;
+    [JsonInclude]
     public readonly float X2;
+    [JsonInclude]
     public readonly float Y2;
 
     public Extent()
@@ -123,7 +128,9 @@ public readonly struct Extent
 
 public readonly struct Position
 {
+    [JsonInclude]
     public readonly float X;
+    [JsonInclude]
     public readonly float Y;
 
     public Position(float x, float y)
