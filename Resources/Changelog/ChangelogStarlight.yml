@@ -7594,4 +7594,39 @@ Entries:
   id: 1048
   time: '2025-06-16T16:59:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/840
+- author: Conflee / Abby
+  changes:
+  - message: Added NT CC Fatigue
+    type: Add
+  id: 1049
+  time: '2025-06-16T17:03:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/834
+- author: Conflee / Abby
+  changes:
+  - message: Added NT CC Hardsuit
+    type: Add
+  id: 1050
+  time: '2025-06-16T17:03:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/834
+- author: Conflee / Abby
+  changes:
+  - message: Added NT CC Vest
+    type: Add
+  id: 1051
+  time: '2025-06-16T17:03:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/834
+- author: Conflee / Abby
+  changes:
+  - message: Added NT CC Helmet
+    type: Add
+  id: 1052
+  time: '2025-06-16T17:03:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/834
+- author: Conflee / Abby
+  changes:
+  - message: Added NT CC PDA
+    type: Add
+  id: 1053
+  time: '2025-06-16T17:03:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/834
 
