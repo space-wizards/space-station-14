@@ -156,3 +156,9 @@
   id: PowerDischarging
   name: signal-port-name-power-discharging
   description: signal-port-description-power-discharging
+
+- type: sourcePort
+  id: ItemDetected
+  name: signal-port-name-item-detected
+  description: signal-port-description-item-detected
+  defaultLinks: [ Toggle, Trigger, Timer ]
