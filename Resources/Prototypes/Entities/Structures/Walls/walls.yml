@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseStructure, BaseStructureDissolvable ] # Starlight-edit
+  parent: BaseStructure
   id: BaseStructureWall
   name: basewall
   description: Keeps the air in and the assistants out.
