@@ -49,12 +49,19 @@ public sealed partial class ProfilePreviewSpriteView
 
         if(job != null)
         {
-            loadout = humanoid.GetLoadoutOrDefault(
-                LoadoutSystem.GetJobPrototype(job.ID),
-                _playerManager.LocalSession,
-                humanoid.Species,
-                EntMan,
-                _prototypeManager);
+            try
+            {
+                loadout = humanoid.GetLoadoutOrDefault(
+                    LoadoutSystem.GetJobPrototype(job.ID),
+                    _playerManager.LocalSession,
+                    humanoid.Species,
+                    EntMan,
+                    _prototypeManager);
+            }
+            catch (UnknownPrototypeException e)
+            {
+                loadout = new RoleLoadout();
+            }
 
             // If the job has a preview specific entity or a job specific entity use that
             var previewEntity = job.JobPreviewEntity ?? (EntProtoId?)job.JobEntity;
