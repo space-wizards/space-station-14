@@ -43,9 +43,6 @@
   id: ATVKeys
 
 - type: Tag
-  id: Backpack
-
-- type: Tag
   id: Balloon
 
 - type: Tag
@@ -1039,9 +1036,6 @@
 
 - type: Tag
   id: PercussionInstrument
-
-- type: Tag
-  id: PetOnly
 
 - type: Tag
   id: PetWearable
