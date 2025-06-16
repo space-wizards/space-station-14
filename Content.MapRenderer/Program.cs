@@ -124,14 +124,16 @@ namespace Content.MapRenderer
             {
                 Console.WriteLine($"Painting map {map}");
 
+                var mapShort = Path.GetFileNameWithoutExtension(map);
+
                 var mapViewerData = new MapViewerData
                 {
-                    Id = map,
-                    Name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(map)
+                    Id = mapShort,
+                    Name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(mapShort)
                 };
 
                 mapViewerData.ParallaxLayers.Add(LayerGroup.DefaultParallax());
-                var directory = Path.Combine(arguments.OutputPath, Path.GetFileNameWithoutExtension(map));
+                var directory = Path.Combine(arguments.OutputPath, mapShort);
 
                 var i = 0;
                 try
@@ -145,8 +147,7 @@ namespace Content.MapRenderer
                         var grid = renderedGrid.Image;
                         Directory.CreateDirectory(directory);
 
-                        var fileName = Path.GetFileNameWithoutExtension(map);
-                        var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.{arguments.Format}";
+                        var savePath = $"{directory}{Path.DirectorySeparatorChar}{mapShort}-{i}.{arguments.Format}";
 
                         Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
 
@@ -171,9 +172,9 @@ namespace Content.MapRenderer
 
                         grid.Dispose();
 
-                        mapViewerData.Grids.Add(new GridLayer(renderedGrid, Path.Combine(map, Path.GetFileName(savePath))));
+                        mapViewerData.Grids.Add(new GridLayer(renderedGrid, Path.Combine(mapShort, Path.GetFileName(savePath))));
 
-                        mapNames.Add(fileName);
+                        mapNames.Add(mapShort);
                         i++;
                     }
                 }
@@ -187,7 +188,7 @@ namespace Content.MapRenderer
                 if (arguments.ExportViewerJson)
                 {
                     var json = JsonSerializer.Serialize(mapViewerData);
-                    await File.WriteAllTextAsync(Path.Combine(arguments.OutputPath, map, "map.json"), json);
+                    await File.WriteAllTextAsync(Path.Combine(directory, "map.json"), json);
                 }
             }
 
