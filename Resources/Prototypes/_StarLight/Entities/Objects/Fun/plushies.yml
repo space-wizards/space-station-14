@@ -55,6 +55,32 @@
       voice: ganyu
 
 - type: entity
+  parent: BaseVulpkaninPlushie
+  id: PlushieTrystan
+  name: trystan plushie
+  description: He yeeps...
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/trystan_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/trystan_plushie.rsi
+    layers: 
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components: 
+    - type: Advertise
+      pack: PlushiesTrystan
+      minimumWait: 1
+      maximumWait: 1
+    - type: TextToSpeech
+      voice: barneycalhoun
+
+- type: entity
   parent: BaseResomiPlushie
   id: PlushieMorgana
   name: morgana plushie

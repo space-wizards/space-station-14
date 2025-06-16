@@ -420,3 +420,14 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: VendorPlushieTrystan
+  productEntity: PlushieTrystan
+  cost:
+    NTCredit: 20
+  categories:
+  - SLSpecies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
