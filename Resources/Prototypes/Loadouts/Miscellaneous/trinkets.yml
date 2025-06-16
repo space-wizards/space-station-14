@@ -28,85 +28,99 @@
     back:
     - ClothingNeckHeadphones
 
-# Toys
+# Plushies
 - type: loadout
   id: PlushieBee
   storage:
     back:
     - PlushieBee
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushiePenguin
   storage:
     back:
     - PlushiePenguin
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSharkBlue
   storage:
     back:
     - PlushieSharkBlue
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSharkGrey
   storage:
     back:
     - PlushieSharkGrey
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSharkPink
   storage:
     back:
     - PlushieSharkPink
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSnake
   storage:
     back:
     - PlushieSnake
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieArachind
   storage:
     back:
     - PlushieArachind
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieDiona
   storage:
     back:
     - PlushieDiona
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieLizard
   storage:
     back:
     - PlushieLizard
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSpaceLizard
   storage:
     back:
     - PlushieSpaceLizard
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieMoth
   storage:
     back:
     - PlushieMoth
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieSlime
   storage:
     back:
     - PlushieSlime
+  groupBy: "plushies"
 
 - type: loadout
   id: PlushieVox
   storage:
     back:
     - PlushieVox
+  groupBy: "plushies"
 
+# Candles?
 - type: loadout
   id: ThreeCandles
   dummyEntity: LoadoutDummyCandles
