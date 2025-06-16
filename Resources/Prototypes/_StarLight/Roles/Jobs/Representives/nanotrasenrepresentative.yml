@@ -57,6 +57,7 @@
     id: NanoTrasenRepresentativePDA
     ears: ClothingHeadsetAltCommand
     outerClothing: ClothingOuterCoatNtrep
+    belt: BoxFolderNanoTrasenClipboard
   storage:
     back:
     - RubberStampNtrep

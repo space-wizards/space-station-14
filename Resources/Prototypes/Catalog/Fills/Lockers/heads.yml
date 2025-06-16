@@ -21,6 +21,7 @@
     - id: AstroNavCartridge
     - id: ClothingHandsKnuckleDustersQM
     - id: MailTeleporterMachineCircuitboard
+    - id: PlushieLance #starlight
     - id: RadioHandheldExpedition
 
 - type: entity
@@ -191,6 +192,7 @@
     - id: RCDAmmo
     - id: RubberStampCE
     - id: MetalFoamGrenade
+    - id: PlushieMatthew #starlight
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -251,6 +253,7 @@
     - id: MedkitFilled
     - id: RubberStampCMO
     - id: MedTekCartridge
+    - id: CMOLicense #STARLIGHT
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable
@@ -304,6 +307,7 @@
     - id: ResearchComputerCircuitboard
     - id: CargoRequestScienceComputerCircuitboard
     - id: RubberStampRd
+    - id: RDDiploma #STARLIGHT
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

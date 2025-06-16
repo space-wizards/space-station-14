@@ -1,0 +1,17 @@
+- type: chameleonOutfit
+  id: SusChameleonOutfit
+  loadoutName: chameleon-outfit-sus-name
+  name: job-name-assistant
+  icon: "JobIconAssistant"
+  equipment:
+    head: ClothingHeadHatBeret
+    eyes: ClothingEyesGlassesSunglasses
+    ears: ClothingHeadsetAssistant
+    mask: ClothingMaskGas
+    outerClothing: ClothingOuterVest
+    jumpsuit: ClothingUniformJumpsuitColorBlack
+    neck: ClothingNeckScarfStripedRed
+    back: ClothingBackpack
+    gloves: ClothingHandsGlovesColorBlack
+    shoes: ClothingShoesColorBlack
+    id: AssistantPDA

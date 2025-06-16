@@ -4745,10 +4745,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         178:
-        - - On
-          - On
-        - - Off
-          - Off
+        - On: On
+        - Off: Off
 - proto: SignRadiationMed
   entities:
   - uid: 313
