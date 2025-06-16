@@ -113,6 +113,3 @@ alerts-revenant-essence-desc = The power of souls. It sustains you and is used f
 
 alerts-revenant-corporeal-name = Corporeal
 alerts-revenant-corporeal-desc = You have manifested physically. People around you can see and hurt you.
-
-alerts-blob-resource-name = Resources
-alerts-blob-resource-desc = Used for creating structures and expanding your powerful blobiness.

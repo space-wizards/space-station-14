@@ -16,7 +16,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
-using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
@@ -254,9 +253,6 @@ namespace Content.Shared.Interaction
                 Log.Info($"TryPullObject input validation failed");
                 return true;
             }
-
-            if (!HasComp<PullerComponent>(userEntity))
-                return false;
 
             //is this user trying to pull themself?
             if (userEntity.Value == uid)

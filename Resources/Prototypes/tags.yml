@@ -70,9 +70,6 @@
   id: BikeHorn
 
 - type: Tag
-  id: BlobAllowReplace
-
-- type: Tag
   id: Bloodpack
 
 - type: Tag
