@@ -27,6 +27,7 @@
   components:
   - type: Jump
     action: JumpJet
+    setEntityIcon: true
   - type: Sprite
     sprite: Objects/Tanks/Jetpacks/blue.rsi
     layers:

@@ -39,13 +39,18 @@ public abstract class SharedJumpSystem : EntitySystem
         SubscribeLocalEvent<JumpActionEvent>(OnJump);
     }
 
-    private void OnGetItemActions(Entity<JumpComponent> ent, ref GetItemActionsEvent args) 
+    private void OnGetItemActions(Entity<JumpComponent> ent, ref GetItemActionsEvent args)
         => args.AddAction(ref ent.Comp.ActionEntity, ent.Comp.Action);
 
     private void OnStartup(EntityUid uid, JumpComponent component, MapInitEvent args)
     {
-        if (_actionContainer.EnsureAction(uid, ref component.ActionEntity, out var action, component.Action))
-            _action.SetEntityIcon((component.ActionEntity.Value, action), uid);
+        if (component.SetEntityIcon)
+        {
+            if (_actionContainer.EnsureAction(uid, ref component.ActionEntity, out var action, component.Action))
+                _action.SetEntityIcon((component.ActionEntity.Value, action), uid);
+        }
+        else
+            _action.AddAction(uid, ref component.ActionEntity, component.Action);
 
         Dirty(uid, component);
     }
@@ -59,13 +64,13 @@ public abstract class SharedJumpSystem : EntitySystem
         _action.RemoveAction(component.ActionEntity);
     }
 
-    protected virtual bool TryReleaseGas(Entity<JumpComponent> ent, ref JetJumpActionEvent args) 
+    protected virtual bool TryReleaseGas(Entity<JumpComponent> ent, ref JetJumpActionEvent args)
         => TryComp<GasTankComponent>(ent, out var gasTank) && gasTank.TotalMoles > args.MoleUsage;
 
     private void OnJump(Entity<JumpComponent> ent, ref JetJumpActionEvent args)
     {
         if (args.Handled
-            || !TryReleaseGas(ent, ref args)) 
+            || !TryReleaseGas(ent, ref args))
             return;
 
         OnJump((JumpActionEvent)args);

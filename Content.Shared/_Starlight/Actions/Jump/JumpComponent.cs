@@ -13,4 +13,7 @@ public sealed partial class JumpComponent : Component
 
     [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
+
+    [DataField, AutoNetworkedField]
+    public bool SetEntityIcon;
 }
