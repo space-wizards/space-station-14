@@ -57,7 +57,7 @@ public sealed partial class DevourerComponent : Component
     public EntityWhitelist? Whitelist = new()
     {
         Components = new[]
-    {
+        {
             "MobState",
         }
     };
