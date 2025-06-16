@@ -21,7 +21,7 @@ using Robust.Shared.Player;
 using Content.Shared.Chat;
 
 
-namespace Content.Server._Floof.Shadekin;
+namespace Content.Server._Starlight;
 
 public sealed class ShadekinSystem : EntitySystem
 {
