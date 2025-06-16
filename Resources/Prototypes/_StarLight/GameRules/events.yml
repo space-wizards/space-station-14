@@ -173,3 +173,28 @@
     - type: RuleGrids
     - type: LoadMapRule
       mapPath: /Maps/_Starlight/EventMaps/research_outpost_map.yml
+
+
+
+
+
+
+
+# Roundender-less events table for survival
+- type: entityTable
+  id: BasicAntagEventsTableNoRoundenders
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: ClosetSkeleton
+    - id: DragonSpawn
+    - id: KingRatMigration
+    - id: NinjaSpawn
+    - id: ParadoxCloneSpawn
+    - id: RevenantSpawn
+    - id: SleeperAgents
+#    - id: ZombieOutbreak
+#    - id: LoneOpsSpawn
+    - id: DerelictCyborgSpawn
+    - id: WizardSpawn
+
+    - id: AbductorsSpawn # Starlight
