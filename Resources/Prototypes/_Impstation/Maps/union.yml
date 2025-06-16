@@ -3,7 +3,7 @@
   mapName: 'Union'
   mapPath: /Maps/_Impstation/union.yml
   minPlayers: 35
-  maxPlayers: 80
+  maxPlayers: 70
   stations:
     Union:
       stationProto: StandardNanotrasenStation
