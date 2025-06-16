@@ -34,6 +34,14 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
+            var luminance = (0.2126f * color.Value.R) + (0.7152f * color.Value.G) + (0.0722f * color.Value.B);
+
+            if (luminance is < 0.2f or > 0.8f)
+            {
+                shell.WriteError("The color is too close to black or white — pick a more contrasting shade.");
+                return;
+            }
+
             var userId = shell.Player.UserId;
             // Save the DB
             var dbMan = IoCManager.Resolve<IServerDbManager>();

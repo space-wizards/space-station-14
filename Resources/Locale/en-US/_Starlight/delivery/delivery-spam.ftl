@@ -13,3 +13,27 @@ delivery-spam-reasons-to-join-syndicate = {-delivery-header-syndicate}
 
                     {"[bold]SIGN HERE IF YOU AGREE[/bold]"}
                     glory to the syndicate, death to nanotransen
+
+deliver-spam-dont-you-want-more = {"[color=gold][bold]Don't You Want More?[/bold][/color]"}
+                                  
+                                  Look around.
+                                  Someone's got the insulated gloves.
+                                  Someone's got the captain's spare.
+                                  Someone's got a locker full of contraband and cool toys.
+                                  
+                                  And it's not you.
+                                  
+                                  Why wait?
+                                  {"[color=red][bold]Take what you want.[/bold][/color]"}
+                                  Wrenches. Weapons. IDs. Jetpacks. Don't ask. Don't trade. Just grab it and run.
+                                  Security's lazy. Cargo's careless. Engineering leaves stuff lying around.
+                                  All of it could be yours — if you're fast enough.
+                                  
+                                  You're not doing this to make things better.
+                                  {"You're doing this because [color=red][bold]you deserve more.[/bold][/color]"}
+                                  More gear. More power. More fun.
+                                  
+                                  {"[color=orange][bold]Sign below if you're ready to stop being poor and start taking what’s yours.[/bold][/color]"}
+                                  
+                                  No heroes. Just winners.
+

@@ -245,3 +245,14 @@
         tableId: RandomTechBoardTable
         rolls: !type:RangeNumberSelector
           range: 6, 8
+
+- type: entity
+  id: CrateAirGrenade
+  parent: CrateEngineering
+  name: air grenade crate
+  description: A crate containing 3 air grenades.
+  components:
+  - type: StorageFill
+    contents:
+    - id: AirGrenade
+      amount: 3

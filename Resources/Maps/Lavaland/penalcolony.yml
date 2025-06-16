@@ -4943,8 +4943,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         99:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 327
     components:
     - type: Transform
@@ -4953,32 +4952,23 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         595:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         597:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         596:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         593:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         601:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         600:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         594:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         599:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         598:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignBath
   entities:
   - uid: 35
