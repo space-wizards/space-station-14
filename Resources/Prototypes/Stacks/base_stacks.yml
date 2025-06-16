@@ -1,0 +1,26 @@
+# Base sizes for stacks in one convenient place
+
+# size used by powders and smokeables
+- type: stack
+  abstract: true
+  id: BaseVerySmallStack
+  maxCount: 5
+
+# size used by topicals and machine parts
+- type: stack
+  abstract: true
+  id: BaseSmallStack
+  maxCount: 10
+
+# Default size, used by most materials
+- type: stack
+  abstract: true
+  id: BaseMediumStack
+  maxCount: 30
+
+# Used by tiles
+- type: stack
+  abstract: true
+  icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: steel }
+  id: BaseTileStack
+  maxCount: 30

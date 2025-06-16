@@ -1,0 +1,74 @@
+# Carpets that are tiles
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackCarpetClown
+  name: stack-clown-carpet-tile
+  spawn: FloorTileItemCarpetClown
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackCarpetOffice
+  name: stack-office-carpet-tile
+  spawn: FloorTileItemCarpetOffice
+
+# Carpets that are not actually tiles (yet)
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetRed
+  name: stack-red-carpet-tile
+  spawn: FloorCarpetItemRed
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetBlack
+  name: stack-block-carpet-tile
+  spawn: FloorCarpetItemBlack
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetBlue
+  name: stack-blue-carpet-tile
+  spawn: FloorCarpetItemBlue
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetGreen
+  name: stack-green-carpet-tile
+  spawn: FloorCarpetItemGreen
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetOrange
+  name: stack-orange-carpet-tile
+  spawn: FloorCarpetItemOrange
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetSkyBlue
+  name: stack-skyblue-carpet-tile
+  spawn: FloorCarpetItemSkyBlue
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetPurple
+  name: stack-purple-carpet-tile
+  spawn: FloorCarpetItemPurple
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetPink
+  name: stack-pink-carpet-tile
+  spawn: FloorCarpetItemPink
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetCyan
+  name: stack-cyan-carpet-tile
+  spawn: FloorCarpetItemCyan
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorCarpetWhite
+  name: stack-white-carpet-tile
+  spawn: FloorCarpetItemWhite
