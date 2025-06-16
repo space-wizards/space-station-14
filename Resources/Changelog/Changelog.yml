@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Stinger grenades no longer flash on detonation.
-    type: Tweak
-  id: 8167
-  time: '2025-04-13T17:23:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36394
 - author: Unisol
   changes:
   - message: added deathmatch map DM01 Entryway
@@ -3902,3 +3895,15 @@
   id: 8679
   time: '2025-06-15T21:11:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34765
+- author: qrwas
+  changes:
+  - message: Grouping for Loadouts
+    type: Add
+  - message: '3 new pin to loadout: aroace pin, plural pin and genderfluid pin'
+    type: Add
+  - message: smoking, pins, towels and jumpsuit for HoS are now grouped in loadouts
+      menu
+    type: Tweak
+  id: 8680
+  time: '2025-06-16T09:36:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36951
