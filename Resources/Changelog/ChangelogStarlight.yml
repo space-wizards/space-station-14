@@ -7643,4 +7643,25 @@ Entries:
   id: 1055
   time: '2025-06-16T17:08:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/734
+- author: Cyanogen
+  changes:
+  - message: Reverted Wizden cargo food price changes
+    type: Tweak
+  id: 1056
+  time: '2025-06-16T18:29:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/842
+- author: Cyanogen
+  changes:
+  - message: Disaster pizza deliveries are back on the menu!
+    type: Add
+  id: 1057
+  time: '2025-06-16T18:29:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/842
+- author: Cyanogen
+  changes:
+  - message: Soft drinks bulk crates are back too~
+    type: Add
+  id: 1058
+  time: '2025-06-16T18:29:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/842
 
