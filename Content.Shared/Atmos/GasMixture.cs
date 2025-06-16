@@ -32,7 +32,7 @@ namespace Content.Shared.Atmos
         [DataField("immutable")]
         public bool Immutable { get; private set; }
         [DataField("isInternal")]
-        public bool IsInternal { get; private set; }
+        public bool IsInternal { get; set; }
 
         [ViewVariables]
         public readonly float[] ReactionResults =
@@ -110,13 +110,7 @@ namespace Content.Shared.Atmos
         {
             Immutable = true;
         }
-        // PR reviewer(s): This is definitley not needed right now, but might be required by future uses of IsInternal? Remove it if you don't think so.
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void MarkInternal()
-        {
-            IsInternal = true;
-        }
-
+        
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float GetMoles(int gasId)
         {
