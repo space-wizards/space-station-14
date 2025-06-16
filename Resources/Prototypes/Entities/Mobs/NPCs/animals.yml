@@ -475,8 +475,6 @@
   id: MobMothroach
   description: This is the adorable by-product of multiple attempts at genetically mixing mothpeople with cockroaches.
   components:
-  - type: NPCUseActionOnTarget
-    actionId: JumpMoth
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -3005,8 +3003,6 @@
   id: MobCat
   description: Feline pet, very funny.
   components:
-  - type: NPCUseActionOnTarget
-    actionId: JumpCat
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/cat.rsi

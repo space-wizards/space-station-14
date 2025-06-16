@@ -1,1 +1,0 @@
-dissolvable-component-resist-message = You stop and frantically try to put yourself out, shaking off the thermite

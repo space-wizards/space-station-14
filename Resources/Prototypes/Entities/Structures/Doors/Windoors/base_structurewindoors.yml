@@ -1,7 +1,7 @@
 #Normal windoors
 - type: entity
   id: BaseWindoor
-  parent: [ BaseStructure, BaseStructureDissolvable ]
+  parent: BaseStructure
   abstract: true
   placement:
     mode: SnapgridCenter

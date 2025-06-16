@@ -1,6 +1,8 @@
+using System;
 using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Shuttles.Components;
 using Robust.Shared.Input;
@@ -35,6 +37,17 @@ public sealed class JumpInputCmdHandler(SharedActionsSystem actions, SharedCharg
                 if (!actions.IsCooldownActive(Comp, timing.CurTime)
                  && !charges.IsEmpty((Id, null)))
                 {
+                    var ev = new RequestPerformActionEvent(entManager.GetNetEntity(uid), entManager.GetNetCoordinates(coordinates));
+                    var validateEv = new ActionValidateEvent()
+                    {
+                        Input = ev,
+                        User = uid,
+                        Provider = uid
+                    };
+                    entManager.EventBus.RaiseLocalEvent(Id, ref validateEv);
+                    if (validateEv.Invalid)
+                        return false;
+
                     var @event = worldTarget.Event;
                     @event.Target = coordinates;
                     actions.PerformAction((uid, null), (Id, Comp), @event);
