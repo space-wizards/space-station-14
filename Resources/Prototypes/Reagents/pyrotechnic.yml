@@ -26,6 +26,12 @@
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 2
+  reactiveEffects:
+    Dissolvable:
+      methods: [ Touch ]
+      effects:
+      - !type:DissolvableReaction
+        multiplier: 1
   metabolisms:
     Poison:
       effects:
