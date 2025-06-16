@@ -2,7 +2,7 @@
   parent: BaseResomiPlushie
   id: PlushieMatthew
   name: matthew plushie
-  description: TODO
+  description: Such a cute little thing, dont you just want to protect it? Make sure your doing your job though, or it might bite! Smells oddly like root beer and ice cream.....
   components:
   - type: Item
     size: Small
@@ -24,12 +24,13 @@
       minimumWait: 1
       maximumWait: 1
     - type: TextToSpeech
+      voice: sampo
 
 - type: entity
   parent: BaseResomiPlushie
   id: PlushieEmmie
   name: emmie plushie
-  description: TODO
+  description: Such a cute little thing, dont you just want to protect it? You should, as it controls whether you keep your contract or not.
   components:
   - type: Item
     size: Small
@@ -40,6 +41,18 @@
       - state: icon
       - state: icon-unshaded
         shader: unshaded
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components: 
+    - type: Advertise
+      pack: PlushiesEmmie
+      minimumWait: 1
+      maximumWait: 1
+    - type: TextToSpeech
+      voice: 
 
 - type: entity
   parent: BaseResomiPlushie
@@ -71,7 +84,7 @@
   parent: BaseResomiPlushie
   id: PlushieMorganaRound
   name: round morgana plushie
-  description: TODO
+  description: Soft borb.....
   components:
   - type: Item
     size: Small
@@ -163,7 +176,7 @@
   parent: PlushieHuman
   id: PlushieOp
   name: op plushie
-  description: TODO
+  description: bnuny..... human?
   components:
   - type: Item
     size: Small
