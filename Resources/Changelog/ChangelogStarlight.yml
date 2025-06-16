@@ -7514,4 +7514,11 @@ Entries:
   id: 1038
   time: '2025-06-16T00:07:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/832
+- author: Rinary
+  changes:
+  - message: Termite is now destroying structures.
+    type: Tweak
+  id: 1039
+  time: '2025-06-16T00:07:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/832
 
