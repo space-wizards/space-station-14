@@ -7,7 +7,7 @@
   speciesRestriction: [Shadekin]
   forcedColoring: true
   sprites:
-    - sprite: _Starlight/Mobs/Customization/Shadekin/ears.rsi
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
       state: shadekin
 
 - type: marking
@@ -25,9 +25,9 @@
           !type:SimpleColoring
             color: "#FFFFFF"
   sprites:
-    - sprite: _Starlight/Mobs/Customization/Shadekin/ears.rsi
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
       state: shadekin
-    - sprite: _Starlight/Mobs/Customization/Shadekin/ears.rsi
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
       state: shadekin_stripes
 
 # Tails
@@ -39,7 +39,7 @@
   speciesRestriction: [Shadekin]
   forcedColoring: true
   sprites:
-    - sprite: _Starlight/Mobs/Customization/Shadekin/tails64x32.rsi
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
       state: shadekin
 
 - type: marking
@@ -49,7 +49,7 @@
   speciesRestriction: [Shadekin]
   forcedColoring: true
   sprites:
-    - sprite: _Starlight/Mobs/Customization/Shadekin/tails64x32.rsi
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
       state: shadekin_big
 
 - type: marking
@@ -59,7 +59,7 @@
   speciesRestriction: [Shadekin]
   forcedColoring: true
   sprites:
-    - sprite: _Starlight/Mobs/Customization/Shadekin/tails64x32.rsi
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
       state: shadekin_big_fluff
 
 - type: marking
@@ -69,7 +69,7 @@
   speciesRestriction: [Shadekin]
   forcedColoring: true
   sprites:
-    - sprite: _Starlight/Mobs/Customization/Shadekin/tails32x32.rsi
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails32x32.rsi
       state: shadekin_shorter
 
 - type: marking
@@ -79,5 +79,5 @@
   speciesRestriction: [Shadekin]
   forcedColoring: true
   sprites:
-    - sprite: _Starlight/Mobs/Customization/Shadekin/tails32x32.rsi
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails32x32.rsi
       state: shadekin_medium
