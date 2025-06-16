@@ -7578,4 +7578,11 @@ Entries:
   id: 1046
   time: '2025-06-16T16:39:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/836
+- author: Cyanogen
+  changes:
+  - message: Mrrp mrreow!! (Roundstart femboy staff.)
+    type: Add
+  id: 1047
+  time: '2025-06-16T16:41:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/825
 
