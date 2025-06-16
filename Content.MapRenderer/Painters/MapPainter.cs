@@ -39,6 +39,7 @@ namespace Content.MapRenderer.Painters
             {
                 DummyTicker = false,
                 Connected = true,
+                Destructive = true,
                 Fresh = true,
                 // Seriously whoever made MapPainter use GameMapPrototype I wish you step on a lego one time.
                 Map = mapIsFilename ? "Empty" : map,
