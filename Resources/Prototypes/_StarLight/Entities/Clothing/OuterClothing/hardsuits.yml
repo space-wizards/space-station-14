@@ -167,3 +167,21 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+
+#CCNT Consortium BSOs
+- type: entity
+  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ] #sl Change
+  id: ClothingOuterHardsuitNTCCConsortium
+  name: nt cc consortium hardsuit
+  description: A protective hardsuit worn by NT-CC Consotrium Officers.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_hardsuit.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitNTCCConsortium
+  - type: Tag
+    tags:
+    - Hardsuit
+    - WhitelistChameleon
