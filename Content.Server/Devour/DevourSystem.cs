@@ -3,14 +3,14 @@ using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
-using Content.Shared.Humanoid;
-using Content.Shared.Mobs.Components;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Devour;
 
 public sealed class DevourSystem : SharedDevourSystem
 {
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _entityWhitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -28,14 +28,13 @@ public sealed class DevourSystem : SharedDevourSystem
         var ichorInjection = new Solution(component.Chemical, component.HealRate);
 
         // Grant ichor if the devoured thing meets the dragon's food preference
-        if (component.FoodPreference == FoodPreference.All ||
-            (component.FoodPreference == FoodPreference.Humanoid && HasComp<HumanoidAppearanceComponent>(args.Args.Target)))
+        if (args.Args.Target != null && _entityWhitelistSystem.IsWhitelistPassOrNull(component.FoodPreferenceWhitelist, (EntityUid)args.Args.Target))
         {
             _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);
         }
 
-        // If the devoured thing has the capacity for life, add it to the stomach
-        if (component.ShouldStoreDevoured && args.Args.Target is not null && HasComp<MobStateComponent>(args.Args.Target))
+        // If the devoured thing meets the stomach whitelist criteria, add it to the stomach
+        if (component.ShouldStoreDevoured && args.Args.Target != null && _entityWhitelistSystem.IsWhitelistPass(component.StomachStorageWhitelist, (EntityUid)args.Args.Target))
         {
             ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
         }

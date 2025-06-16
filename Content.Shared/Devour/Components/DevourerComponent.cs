@@ -50,12 +50,41 @@ public sealed partial class DevourerComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("shouldStoreDevoured")]
     public bool ShouldStoreDevoured = true;
 
+    /// <summary>
+    /// Determines what things the devourer can consume.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("whitelist")]
     public EntityWhitelist? Whitelist = new()
     {
         Components = new[]
+    {
+            "MobState",
+        }
+    };
+
+    /// <summary>
+    /// Determines what things end up in the dragon's stomach if they eat it.
+    /// If it isn't in the whitelist, it's deleted.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("stomachStorageWhitelist")]
+    public EntityWhitelist? StomachStorageWhitelist = new()
+    {
+        Components = new[]
         {
             "MobState",
+        }
+    };
+
+    /// <summary>
+    /// Determine's the dragon's food preference.  If the eaten thing matches,
+    /// it is rewarded with the reward chemical.  If null, all food is fine.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("foodPreferenceWhitelist")]
+    public EntityWhitelist? FoodPreferenceWhitelist = new()
+    {
+        Components = new[]
+        {
+            "HumanoidAppearance",
         }
     };
 
@@ -71,10 +100,5 @@ public sealed partial class DevourerComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("healRate")]
     public float HealRate = 15f;
 
-    /// <summary>
-    /// The favorite food not only feeds you, but also heals
-    /// </summary>
-    [DataField("foodPreference")]
-    public FoodPreference FoodPreference = FoodPreference.All;
 }
 
