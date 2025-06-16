@@ -6,11 +6,12 @@
   components:
     - type: LimitedCharges
       maxCharges: 1
-    - type: InstantAction
+    - type: Action
       checkCanInteract: false
       itemIconStyle: BigAction
       priority: -20
       icon:
         sprite: _Starlight/Actions/implants.rsi
         state: gorilla_rampage
+    - type: InstantAction
       event: !type:UseMagillitisSerumImplantEvent
