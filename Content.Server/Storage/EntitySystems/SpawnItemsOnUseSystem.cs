@@ -39,8 +39,7 @@ namespace Content.Server.Storage.EntitySystems
 
                 // Calculate the average price of the possible spawned items
                 args.Price += _pricing.GetPrice(protUid) * entry.SpawnProbability * entry.GetAmount(getAverage: true);
-
-                EntityManager.DeleteEntity(protUid);
+                Del(protUid);
             }
 
             foreach (var group in orGroups)
@@ -53,8 +52,7 @@ namespace Content.Server.Storage.EntitySystems
                     args.Price += _pricing.GetPrice(protUid) *
                                   (entry.SpawnProbability / group.CumulativeProbability) *
                                   entry.GetAmount(getAverage: true);
-
-                    EntityManager.DeleteEntity(protUid);
+                    Del(protUid);
                 }
             }
 

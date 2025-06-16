@@ -29,7 +29,7 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
             .Where(x => !x.Abstract)
             .Select(x => x.ID).ToList();
 
-        foreach (var (_, transform) in EntityManager.EntityQuery<GasVentPumpComponent, TransformComponent>())
+        foreach (var (_, transform) in EntityQuery<GasVentPumpComponent, TransformComponent>())
         {
             if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station != chosenStation)
             {

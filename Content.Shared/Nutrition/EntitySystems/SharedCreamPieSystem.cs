@@ -40,7 +40,7 @@ namespace Content.Shared.Nutrition.EntitySystems
 
             creamPied.CreamPied = value;
 
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (TryComp(uid, out AppearanceComponent? appearance))
             {
                 _appearance.SetData(uid, CreamPiedVisuals.Creamed, value, appearance);
             }
@@ -58,7 +58,7 @@ namespace Content.Shared.Nutrition.EntitySystems
 
         private void OnCreamPiedHitBy(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
         {
-            if (!EntityManager.EntityExists(args.Thrown) || !EntityManager.TryGetComponent(args.Thrown, out CreamPieComponent? creamPie)) return;
+            if (!Exists(args.Thrown) || !TryComp(args.Thrown, out CreamPieComponent? creamPie)) return;
 
             SetCreamPied(uid, creamPied, true);
 
