@@ -5,6 +5,8 @@
   id: BaseMobMoth
   abstract: true
   components:
+  - type: Jump
+    action: JumpMoth
   - type: Absorbable
   - type: HumanoidAppearance
     species: Moth
@@ -100,9 +102,9 @@
       - map: [ "shoes" ]
       - map: [ "ears" ]
       - map: [ "eyes" ]
+      - map: [ "outerClothing" ] # Starlight
       - map: [ "belt" ]
       - map: [ "id" ]
-      - map: [ "outerClothing" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ] #in the utopian future we should probably have a wings enum inserted here so everyhting doesn't break
       - map: [ "back" ]
       - map: [ "neck" ]

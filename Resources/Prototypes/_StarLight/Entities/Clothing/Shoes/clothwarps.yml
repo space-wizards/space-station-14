@@ -1,0 +1,44 @@
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingClothWrap
+  name: cloth wraps
+  description: A roll of treated canvas used for wrapping claws or paws.
+  components:
+  - type: Item
+    size: Small
+    storedRotation: -90
+  - type: Sprite
+    state: icon
+    sprite: _Starlight/Clothing/clothWrap.rsi
+  - type: Clothing
+    slots: [gloves, FEET]
+    sprite: _Starlight/Clothing/clothWrap.rsi
+  - type: Construction
+    graph: ClothingClothWrap
+    node: shoes
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 1
+  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
+    materialComposition:
+      Cloth: 50
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: Fiber
+    fiberMaterial: fibers-cloth
+    fiberColor: fibers-white
+  - type: ProtectedFromStepTriggers
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon

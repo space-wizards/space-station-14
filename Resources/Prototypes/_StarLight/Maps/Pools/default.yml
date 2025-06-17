@@ -1,6 +1,7 @@
 - type: gameMapPool
   id: DefaultStarlightMapPool
   maps:
+  - Barratry
   - StarlightCog
   - StarlightFland
   - Lobster
@@ -9,6 +10,9 @@
   - StarlightOmega
   - Orwell
   - StarlightReach
+  - StarlightSaltern
+  - Starboard
+  - Kiloton
 
 # - StarlightBagel
 # - StarlightBox
@@ -16,6 +20,4 @@
 # - StarlightMarathon
 # - StarlightMeta
 # - StarlightPacked
-# - StarlightSaltern
-# - Starboard
 # - StarlightElkridge

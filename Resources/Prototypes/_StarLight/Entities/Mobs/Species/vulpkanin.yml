@@ -87,13 +87,6 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Vulpkanin
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 2.0
-    damageRecovery:
-      types:
-        Asphyxiation: -2.0
   - type: Wagging
 
 - type: entity

@@ -10,7 +10,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/soviet.rsi
 
 - type: entity
-  parent: UnsensoredClothingUniformBase
+  parent: [ UnsensoredClothingUniformBase, BaseMajorContraband ]
   id: ClothingUniformJumpsuitAbductor
   name: abductor uniform
   components:
@@ -27,7 +27,7 @@
   - type: VentCrawClothing
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: MagistrateUniformSuit
   name: Magistrate's Jumpsuit
   components:
@@ -37,7 +37,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/magistrate.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitNtrep
   name: nt representive suit
   description: That suit that is better not to see.
@@ -48,7 +48,7 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrep.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitNtrepFormal
   name: nt representive formal suit
   description: That suit that is better not to see.
@@ -101,7 +101,18 @@
   - type: Sprite
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi
   - type: Clothing
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi 
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCentcommContraband]
+  id: ClothingUniformNTCCFatigues
+  name: NTCC Fatigues
+  description: NT-CC Consortium Fatigues. Very airy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/ntcc_fatigues.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/ntcc_fatigues.rsi
 
 # Fashion-O-Mat, not obtainable any other way, unless mapped
 

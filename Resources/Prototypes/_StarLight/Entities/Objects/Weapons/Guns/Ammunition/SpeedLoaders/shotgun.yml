@@ -1,7 +1,7 @@
 - type: entity
   id: BaseSpeedLoaderShotgun
   name: "speed loader (.50)"
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem ]
   abstract: true
   components:
   - type: Tag
@@ -38,7 +38,7 @@
 - type: entity
   id: SpeedLoaderShotgunEmpty
   name: "speed loader (.50 any)"
-  parent: BaseSpeedLoaderShotgun
+  parent: [ BaseSpeedLoaderShotgun, BaseSecuritySalvageContraband ]
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -56,7 +56,7 @@
 - type: entity
   id: SpeedLoaderMagnumBasic
   name: "speed loader (.50 pellet)"
-  parent: BaseSpeedLoaderShotgun
+  parent: [ BaseSpeedLoaderShotgun, BaseSecurityContraband ]
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgun
@@ -74,7 +74,7 @@
 - type: entity
   id: SpeedLoaderShotgunBeanbag
   name: "speed loader (.50 beanbag)"
-  parent: BaseSpeedLoaderShotgun
+  parent: [ BaseSpeedLoaderShotgun, BaseSecurityBartenderContraband ]
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
@@ -92,7 +92,7 @@
 - type: entity
   id: SpeedLoaderShotgunSlug
   name: "speed loader (.50 slug)"
-  parent: BaseSpeedLoaderShotgun
+  parent: [ BaseSpeedLoaderShotgun, BaseSecurityContraband ]
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunSlug
@@ -110,7 +110,7 @@
 - type: entity
   id: SpeedLoaderShotgunUranium
   name: "speed loader (.50 uranium)"
-  parent: BaseSpeedLoaderShotgun
+  parent: [ BaseSpeedLoaderShotgun, BaseSecurityContraband ]
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunUranium
@@ -128,7 +128,7 @@
 - type: entity
   id: SpeedLoaderShotgunIncendiary
   name: "speed loader (.50 incendiary)"
-  parent: BaseSpeedLoaderShotgun
+  parent: [ BaseSpeedLoaderShotgun, BaseSecurityContraband ]
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunIncendiary

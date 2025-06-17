@@ -10,7 +10,7 @@ public sealed partial class AntagOnSignComponent : Component
     /// how many people are able to sign this paper in a attempt to roll for antag.
     /// </summary>
     [DataField("charges")]
-    public int ChargesRemaing = 1;
+    public int ChargesRemaining = 1;
 
     /// <summary>
     /// A list of every entity that has signed this paper to prevent spam signing from using all the charges
@@ -35,6 +35,12 @@ public sealed partial class AntagOnSignComponent : Component
     /// </summary>
     [DataField]
     public List<AntagCompPair> Antags = [];
+
+    /// <summary>
+    /// is the faxable component kept? this is for admeme protos
+    /// </summary>
+    [DataField]
+    public bool KeepFaxable = false;
 }
 
 [DataDefinition]

@@ -1,0 +1,120 @@
+- type: entity
+  parent: BaseItem
+  id: BaseStarlightAdmemePaper
+  abstract: true
+  components:
+    - type: Tag
+      tags:
+        - Document
+    - type: Appearance
+    - type: Item
+      size: Tiny
+    - type: PaperVisuals
+    - type: PaperLabelType
+    - type: ActivatableUI
+      key: enum.PaperUiKey.Key
+      requiresComplex: false
+    - type: UserInterface
+      interfaces:
+        enum.PaperUiKey.Key:
+          type: PaperBoundUserInterface
+    - type: Sprite
+      sprite: Objects/Misc/bureaucracy.rsi
+      layers:
+      - state: paper
+      - state: paper_words
+        map: ["enum.PaperVisualLayers.Writing"]
+        visible: false
+      - state: paper_stamp-generic
+        map: ["enum.PaperVisualLayers.Stamp"]
+        visible: false
+
+- type: entity
+  parent: Paper
+  id: BasePaperQuietChaos
+  name: end of Q # no longer "the" since when you emote it would come out to "the the end of Q x"
+  description: dreadful paper that cant be faxed. but has it's own ways of getting around.
+  abstract: true
+  components:
+    - type: Tag
+      tags:
+        - GhostOnlyWarp
+        - Document
+        - Paper
+    - type: WarpPoint # if someone takes the ghost role it appears twice. once as a ghost warp. once as a player but oh well.
+      follow: true
+      location: end of Q
+      blacklist:
+        tags:
+        - GhostOnlyWarp
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-chaospaper-name
+      description: ghost-role-information-chaospaper-description
+      rules: ghost-role-information-freeagent-rules
+      allowSpeech: true
+      reregister: true
+      raffle: 
+        settings: default
+      mindRoles: 
+        - MindRoleGhostRoleFreeAgent
+    - type: ShowMindShieldIcons # gotta know your targets.
+    - type: Speech
+    - type: TextToSpeech
+    - type: GhostTakeoverAvailable
+    - type: MobState
+    - type: Examiner # allow inspecting stuff and using verbs (you still dont have hands though)
+      skipChecks: true #anything on screen is fair game to be observed.
+    - type: Polymorphable # so the paper CAN jaunt.
+    - type: ActionGrant
+      actions:
+        # I would give it ghost Boo! action. but that requires ghost component...
+        - ActionPolymorphJauntIII
+        - ActionVoidApplause
+
+- type: entity
+  parent: BasePaperQuietChaos
+  id: PaperTooQuietNeedChaos
+  name: the end of Q
+  description: dreadful paper that cant fit in a fax machine.
+  components:
+    - type: Paper
+      content: paper-too-quiet-need-chaos
+    - type: GameruleOnSign
+      remaining: 9 # command, security, cargo, science, medical, engineering, service, and 2 members of sec outside of hos (or more sec/salv and less heads... or people who you mindshielded JUST to get this signed)
+      whitelist: 
+        components:
+          - MindShield
+      rules: #this will DEFINETLY end the "quiet" you so hate
+        - AbductorsSpawn
+        - AnomalySpawn
+        - AnomalySpawn
+        - AnomalySpawn
+        - AnomalySpawn
+        - AnomalySpawn # ATTENTION spam warning but there is no silent anom spawn sadly
+        - UnknownShuttleHonki
+        - LoneOpsSpawn
+        - WizardSpawn
+        - DragonSpawn
+        - NinjaSpawn
+        - ParadoxCloneSpawn
+    
+- type: entity
+  parent: BasePaperQuietChaos
+  id: PaperTooQuietNeedChaosFew
+  suffix: Lowpop
+  components:
+    - type: Paper
+      content: paper-too-quiet-need-chaos-few
+    - type: GameruleOnSign
+      remaining: 3 # on 15 pop usually there are only about 3 heads I expect
+      whitelist: 
+        components:
+          - MindShield
+      rules: #this will DEFINETLY end the "quiet" you so hate
+        - AbductorsSpawn
+        - AnomalySpawn # only 2 anoms cause you are probally on reach or omega which are TINY
+        - AnomalySpawn
+        - UnknownShuttleHonki
+        - WizardSpawn
+        - NinjaSpawn #spawns less cause there is also less people to take said roles. and I deem these to be the less "chaotic" ones
