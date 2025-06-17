@@ -1,4 +1,4 @@
-﻿ui-lobby-welcome = Welcome to { $name }
+ui-lobby-welcome = Welcome to { $name }
 ui-lobby-title = Lobby: {$serverName}
 ui-lobby-ahelp-button = AHelp
 ui-lobby-options-button = Options
@@ -16,4 +16,5 @@ ui-lobby-ready-button-tooltip-is-not-ready = You have not applied to participate
 ui-lobby-ready-button-tooltip-not-loaded = Hold on! Your characters have not loaded yet!
 ui-lobby-ready-button-tooltip-join-state = Clock in late to the current crew shift.
 
-ui-lobby-unlock-priorities-checkbox-tooltip = Allow changing job priorities by directly dragging the job icons.
+ui-lobby-lock-priorities-checkbox-tooltip = Lock dragging and dropping of job priorities directly.
+ui-lobby-lock-priorities-checkbox-label = Lock priorities
