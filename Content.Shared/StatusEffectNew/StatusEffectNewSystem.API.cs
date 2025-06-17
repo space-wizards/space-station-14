@@ -53,7 +53,7 @@ public abstract partial class SharedStatusEffectsSystem
         container.ActiveStatusEffects.Add(effect);
         effectComp.AppliedTo = uid;
 
-        var ev = new StatusEffectApplied(uid, (effect, effectComp));
+        var ev = new StatusEffectApplied(uid);
         RaiseLocalEvent(uid, ref ev);
         RaiseLocalEvent(effect, ref ev);
 
@@ -80,7 +80,7 @@ public abstract partial class SharedStatusEffectsSystem
                 if (!_effectQuery.TryComp(effect, out var effectComp))
                     return false;
 
-                var ev = new StatusEffectRemoved(uid, (effect, effectComp));
+                var ev = new StatusEffectRemoved(uid);
                 RaiseLocalEvent(uid, ref ev);
                 RaiseLocalEvent(effect, ref ev);
 
@@ -142,7 +142,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// <param name="container">Optional. The status effect container component of the entity.</param>
     public bool TryGetTime(EntityUid uid,
         EntProtoId effectProto,
-        out (EntityUid EffectEnt, TimeSpan? RemainigTime) time,
+        out (EntityUid EffectEnt, TimeSpan? RemainingTime) time,
         StatusEffectContainerComponent? container = null)
     {
         time = default;
@@ -215,7 +215,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// <summary>
     /// Checks if the specified component is present on any of the entity's status effects.
     /// </summary>
-    public bool HasEffectComp<T>(EntityUid target) where T : IComponent
+    public bool HasEffectComp<T>(EntityUid? target) where T : IComponent
     {
         if (!_containerQuery.TryComp(target, out var container))
             return false;
@@ -232,11 +232,11 @@ public abstract partial class SharedStatusEffectsSystem
     /// <summary>
     /// Returns all status effects that have the specified component
     /// </summary>
-    public HashSet<Entity<T>> TryEffectWithComp<T>(EntityUid target) where T : IComponent
+    public bool TryEffectWithComp<T>(EntityUid? target, out HashSet<Entity<T>> effects) where T : IComponent
     {
-        HashSet<Entity<T>> effects = new();
+        effects = new();
         if (!_containerQuery.TryComp(target, out var container))
-            return effects;
+            return false;
 
         foreach (var effect in container.ActiveStatusEffects)
         {
@@ -244,6 +244,6 @@ public abstract partial class SharedStatusEffectsSystem
                 effects.Add((effect, comp));
         }
 
-        return effects;
+        return true;
     }
 }

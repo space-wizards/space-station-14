@@ -1,7 +1,7 @@
 using Content.Shared.Drowsiness;
+using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Player;
 
 namespace Content.Client.Drowsiness;
 
@@ -9,6 +9,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private readonly SharedStatusEffectsSystem _statusEffects = default!;
 
     private DrowsinessOverlay _overlay = default!;
 
@@ -16,35 +17,47 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, ComponentInit>(OnDrowsinessInit);
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, ComponentShutdown>(OnDrowsinessShutdown);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectApplied>(OnDrowsinessApply);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectRemoved>(OnDrowsinessShutdown);
 
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectPlayerAttachedEvent>(OnStatusEffectPlayerAttached);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectPlayerDetachedEvent>(OnStatusEffectPlayerDetached);
 
         _overlay = new();
     }
 
-    private void OnPlayerAttached(EntityUid uid, DrowsinessStatusEffectComponent component, LocalPlayerAttachedEvent args)
+    private void OnDrowsinessApply(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectApplied args)
     {
-        _overlayMan.AddOverlay(_overlay);
-    }
-
-    private void OnPlayerDetached(EntityUid uid, DrowsinessStatusEffectComponent component, LocalPlayerDetachedEvent args)
-    {
-        _overlay.CurrentPower = 0;
-        _overlayMan.RemoveOverlay(_overlay);
-    }
-
-    private void OnDrowsinessInit(EntityUid uid, DrowsinessStatusEffectComponent component, ComponentInit args)
-    {
-        if (_player.LocalEntity == uid)
+        if (_player.LocalEntity == args.Target)
             _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnDrowsinessShutdown(EntityUid uid, DrowsinessStatusEffectComponent component, ComponentShutdown args)
+    private void OnDrowsinessShutdown(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectRemoved args)
     {
-        if (_player.LocalEntity == uid)
+        if (_player.LocalEntity != args.Target)
+            return;
+
+        if (!_statusEffects.HasEffectComp<DrowsinessStatusEffectComponent>(_player.LocalEntity.Value))
+        {
+            _overlay.CurrentPower = 0;
+            _overlayMan.RemoveOverlay(_overlay);
+        }
+    }
+
+    private void OnStatusEffectPlayerAttached(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectPlayerAttachedEvent args)
+    {
+        if (args.Target != _player.LocalEntity)
+            return;
+
+        _overlayMan.AddOverlay(_overlay);
+    }
+
+    private void OnStatusEffectPlayerDetached(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectPlayerDetachedEvent args)
+    {
+        if (args.Target != _player.LocalEntity)
+            return;
+
+        if (!_statusEffects.HasEffectComp<DrowsinessStatusEffectComponent>(_player.LocalEntity.Value))
         {
             _overlay.CurrentPower = 0;
             _overlayMan.RemoveOverlay(_overlay);

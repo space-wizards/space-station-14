@@ -1,6 +1,7 @@
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
@@ -40,18 +41,26 @@ public sealed class DrowsinessOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_entityManager.HasComponent<DrowsinessStatusEffectComponent>(playerEntity))
-            return;
-
         var statusSys = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
-        if (!statusSys.TryGetTime(playerEntity.Value, SleepingSystem.StatusEffectForcedSleeping, out var effect))
+
+        if (!statusSys.TryEffectWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var drowsinessEffects))
             return;
 
-        if (effect.RemainigTime is null)
+        TimeSpan? remainingTime = TimeSpan.Zero;
+        foreach (var effect in drowsinessEffects)
+        {
+            if (!_entityManager.TryGetComponent<StatusEffectComponent>(effect, out var statusEffect))
+                continue;
+
+            if (statusEffect.EndEffectTime > remainingTime)
+                remainingTime = statusEffect.EndEffectTime;
+        }
+
+        if (remainingTime is null)
             return;
 
         var curTime = _timing.CurTime;
-        var timeLeft = (float)(effect.RemainigTime - curTime).Value.TotalSeconds;
+        var timeLeft = (float)(remainingTime - curTime).Value.TotalSeconds;
 
         CurrentPower += 8f * (0.5f * timeLeft - CurrentPower) * args.DeltaSeconds / (timeLeft + 1);
     }
