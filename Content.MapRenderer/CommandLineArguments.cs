@@ -71,6 +71,12 @@ public sealed class CommandLineArguments
                     return false;
 
                 default:
+                    if (argument.StartsWith('-'))
+                    {
+                        Console.WriteLine($"Unknown argument: {argument}");
+                        return false;
+                    }
+
                     parsed.Maps.Add(argument);
                     break;
             }
