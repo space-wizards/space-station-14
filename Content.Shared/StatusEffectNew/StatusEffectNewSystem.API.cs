@@ -55,7 +55,7 @@ public abstract partial class SharedStatusEffectsSystem
         Dirty(target, container);
         Dirty(effect, effectComp);
 
-        var ev = new StatusEffectApplied(target);
+        var ev = new StatusEffectAppliedEvent(target);
         RaiseLocalEvent(effect, ref ev);
 
         return true;
@@ -81,7 +81,7 @@ public abstract partial class SharedStatusEffectsSystem
                 if (!_effectQuery.TryComp(effect, out var effectComp))
                     return false;
 
-                var ev = new StatusEffectRemoved(target);
+                var ev = new StatusEffectRemovedEvent(target);
                 RaiseLocalEvent(effect, ref ev);
 
                 QueueDel(effect);

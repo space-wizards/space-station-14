@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.StatusEffectNew.Components;
 
@@ -7,10 +8,16 @@ namespace Content.Shared.StatusEffectNew.Components;
 /// Is applied automatically upon adding any status effect.
 /// Can be used for tracking currently applied status effects.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedStatusEffectsSystem))]
 public sealed partial class StatusEffectContainerComponent : Component
 {
-    [DataField, AutoNetworkedField]
+    [DataField]
     public HashSet<EntityUid> ActiveStatusEffects = new();
+}
+
+[Serializable, NetSerializable]
+public sealed class StatusEffectContainerComponentState(HashSet<NetEntity> activeStatusEffects) : ComponentState
+{
+    public readonly HashSet<NetEntity> ActiveStatusEffects = activeStatusEffects;
 }

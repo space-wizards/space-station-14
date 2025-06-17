@@ -17,8 +17,8 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectApplied>(OnDrowsinessApply);
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectRemoved>(OnDrowsinessShutdown);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectAppliedEvent>(OnDrowsinessApply);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectRemovedEvent>(OnDrowsinessShutdown);
 
         SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectPlayerAttachedEvent>(OnStatusEffectPlayerAttached);
         SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectPlayerDetachedEvent>(OnStatusEffectPlayerDetached);
@@ -26,13 +26,13 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
         _overlay = new();
     }
 
-    private void OnDrowsinessApply(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectApplied args)
+    private void OnDrowsinessApply(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         if (_player.LocalEntity == args.Target)
             _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnDrowsinessShutdown(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectRemoved args)
+    private void OnDrowsinessShutdown(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
         if (_player.LocalEntity != args.Target)
             return;

@@ -1,6 +1,8 @@
 using Content.Shared.Alert;
+using Content.Shared.StatusEffect;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -29,14 +31,20 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StatusEffectComponent, StatusEffectApplied>(OnStatusEffectApplied);
-        SubscribeLocalEvent<StatusEffectComponent, StatusEffectRemoved>(OnStatusEffectRemoved);
+        SubscribeLocalEvent<StatusEffectComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);
+        SubscribeLocalEvent<StatusEffectComponent, StatusEffectRemovedEvent>(OnStatusEffectRemoved);
 
         SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerAttachedEvent>(OnStatusEffectContainerAttached);
         SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerDetachedEvent>(OnStatusEffectContainerDetached);
+        SubscribeLocalEvent<StatusEffectContainerComponent, ComponentGetState>(OnGetState);
 
         _containerQuery = GetEntityQuery<StatusEffectContainerComponent>();
         _effectQuery = GetEntityQuery<StatusEffectComponent>();
+    }
+
+    private void OnGetState(Entity<StatusEffectContainerComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new StatusEffectContainerComponentState(GetNetEntitySet(ent.Comp.ActiveStatusEffects));
     }
 
     private void OnStatusEffectContainerAttached(Entity<StatusEffectContainerComponent> ent, ref LocalPlayerAttachedEvent args)
@@ -124,7 +132,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         }
     }
 
-    private void OnStatusEffectApplied(Entity<StatusEffectComponent> ent, ref StatusEffectApplied args)
+    private void OnStatusEffectApplied(Entity<StatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         if (ent.Comp.AppliedTo is null)
             return;
@@ -139,7 +147,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         }
     }
 
-    private void OnStatusEffectRemoved(Entity<StatusEffectComponent> ent, ref StatusEffectRemoved args)
+    private void OnStatusEffectRemoved(Entity<StatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
         if (ent.Comp.AppliedTo is null)
             return;
@@ -173,13 +181,13 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 /// Calls on effect entity, when a status effect is applied.
 /// </summary>
 [ByRefEvent]
-public readonly record struct StatusEffectApplied(EntityUid Target);
+public readonly record struct StatusEffectAppliedEvent(EntityUid Target);
 
 /// <summary>
 /// Calls on effect entity, when a status effect is removed.
 /// </summary>
 [ByRefEvent]
-public readonly record struct StatusEffectRemoved(EntityUid Target);
+public readonly record struct StatusEffectRemovedEvent(EntityUid Target);
 
 /// <summary>
 /// Called on a status effect entity inside <see cref="StatusEffectContainerComponent"/> after a player has been <see cref="LocalPlayerAttachedEvent"/> to this container entity.

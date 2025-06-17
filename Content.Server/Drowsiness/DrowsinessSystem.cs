@@ -17,10 +17,10 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectApplied>(OnEffectApplied);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectAppliedEvent>(OnEffectApplied);
     }
 
-    private void OnEffectApplied(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectApplied args)
+    private void OnEffectApplied(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         ent.Comp.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(ent.Comp.TimeBetweenIncidents.X, ent.Comp.TimeBetweenIncidents.Y));
     }
