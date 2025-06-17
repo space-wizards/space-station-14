@@ -24,11 +24,10 @@ public sealed class JetpackSystem : SharedJetpackSystem
         SubscribeLocalEvent<JetpackComponent, AppearanceChangeEvent>(OnJetpackAppearance);
     }
 
-    protected override bool CanEnable(EntityUid uid, JetpackComponent component)
-    {
-        // No predicted atmos so you'd have to do a lot of funny to get this working.
-        return false;
-    }
+    // No predicted atmos so you'd have to do a lot of funny to get this working.
+    protected override bool CanEnable(Entity<JetpackComponent> jetpack)
+        => false;
+
 
     private void OnJetpackAppearance(EntityUid uid, JetpackComponent component, ref AppearanceChangeEvent args)
     {
@@ -51,18 +50,20 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         // TODO: Please don't copy-paste this I beg
         // make a generic particle emitter system / actual particles instead.
-        var query = EntityQueryEnumerator<ActiveJetpackComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<ActiveJetpackComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var xform))
+        while (query.MoveNext(out var uid, out var comp))
         {
+            var transform = Transform(uid);
+
             // As long as the component is clientside it bulldozes *EVERYTHING*.
-            var currentCoords = _transform.GetMoverCoordinates(xform.Coordinates);
+            var currentCoords = _transform.GetMoverCoordinates(transform.Coordinates);
             if (comp.LastCoordinates is not { } lastCoords)
             {
                 comp.LastCoordinates = currentCoords;
                 continue;
             }
-            else if (_transform.InRange(xform.Coordinates, lastCoords, comp.MaxDistance))
+            else if (_transform.InRange(transform.Coordinates, lastCoords, comp.MaxDistance))
             {
                 if (_timing.CurTime < comp.TargetTime)
                     continue;
@@ -70,7 +71,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
             comp.LastCoordinates = currentCoords;
             comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
-            CreateParticles(uid, xform);
+            CreateParticles(uid, transform);
         }
     }
 
