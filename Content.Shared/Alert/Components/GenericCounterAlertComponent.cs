@@ -28,9 +28,17 @@ public sealed partial class GenericCounterAlertComponent : Component
     [DataField]
     public bool HideLeadingZeroes = true;
 
+    /// <summary>
+    /// The size of the alert sprite.
+    /// Used to calculate offsets.
+    /// </summary>
     [DataField]
     public Vector2i AlertSize = new(32, 32);
 
+    /// <summary>
+    /// Digits that can be displayed by the alert.
+    /// Ones, Tens, Hundreds, etc.
+    /// </summary>
     [DataField]
     public List<string> DigitKeys = new()
     {
