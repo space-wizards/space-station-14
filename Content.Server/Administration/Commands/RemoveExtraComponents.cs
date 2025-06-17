@@ -56,7 +56,7 @@ namespace Content.Server.Administration.Commands
                 shell.WriteLine(Loc.GetString($"cmd-removeextracomponents-success-with-id",
                     ("count", components),
                     ("entities", entities),
-                    ("id", $"{id}")));
+                    ("id", id)));
                 return;
             }
 

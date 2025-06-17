@@ -8,7 +8,6 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Round)]
     public sealed class CallShuttleCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly ILocalizationManager _locManager = default!;
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
 
         public override string Command => "callshuttle";
@@ -16,7 +15,7 @@ namespace Content.Server.Administration.Commands
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             // ReSharper disable once ConvertIfStatementToSwitchStatement
-            if (args.Length == 1 && TimeSpan.TryParseExact(args[0], ContentLocalizationManager.TimeSpanMinutesFormats, _locManager.DefaultCulture, out var timeSpan))
+            if (args.Length == 1 && TimeSpan.TryParseExact(args[0], ContentLocalizationManager.TimeSpanMinutesFormats, LocalizationManager.DefaultCulture, out var timeSpan))
                 _roundEndSystem.RequestRoundEnd(timeSpan, shell.Player?.AttachedEntity, false);
 
             else if (args.Length == 1)
