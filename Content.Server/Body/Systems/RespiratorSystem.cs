@@ -19,7 +19,6 @@ using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Content.Server._Starlight.Body; // Starlight
 
 namespace Content.Server.Body.Systems;
 
