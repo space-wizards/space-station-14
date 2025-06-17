@@ -30,6 +30,8 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
         _lobbyMusicCollection = _prototypeManager.Index<SoundCollectionPrototype>(_cfg.GetCVar(CCVars.LobbyMusicCollection));
         _lobbyPlaylist = ShuffleLobbyPlaylist();
 
+        _cfg.OnValueChanged(CCVars.LobbyMusicCollection, x => _lobbyMusicCollection = _prototypeManager.Index<SoundCollectionPrototype>(x), true);
+
         SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEnd);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundCleanup);
