@@ -83,6 +83,8 @@
     steps: 4
     zeroVisible: true
   - type: Appearance
+  - type: StaticPrice
+    price: 10000
 
 - type: entity
   name: L6C ROW

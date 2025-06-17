@@ -1,0 +1,88 @@
+# Borgi Inventory Template
+- type: inventoryTemplate
+  id: SmartCorgi
+  slots:
+  - name: ears
+    slotTexture: ears
+    slotFlags: EARS
+    stripTime: 3
+    uiWindowPos: 2,2
+    strippingWindowPos: 2,0
+    displayName: Ears
+  - name: mask
+    slotTexture: mask
+    slotFlags: MASK
+    uiWindowPos: 0,2
+    strippingWindowPos: 1,2
+    displayName: Mask
+    whitelist:
+      tags:
+      - PetWearable
+  - name: suitstorage
+    slotTexture: suit_storage
+    slotFlags: SUITSTORAGE
+    stripTime: 3
+    uiWindowPos: 0,1
+    strippingWindowPos: 2,5
+    displayName: Suit Storage
+    whitelist:
+      components:
+      - GasTank
+  - name: id
+    slotTexture: id
+    fullTextureName: template_small
+    slotFlags: IDCARD
+    slotGroup: SecondHotbar
+    stripTime: 2
+    uiWindowPos: 2,1
+    strippingWindowPos: 2,4
+    displayName: ID
+  - name: belt
+    slotTexture: belt
+    fullTextureName: template_small
+    slotFlags: BELT
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 3,1
+    strippingWindowPos: 1,5
+    displayName: Belt
+  - name: outerClothing
+    slotTexture: suit
+    slotFlags: OUTERCLOTHING
+    stripTime: 6
+    uiWindowPos: 1,1
+    strippingWindowPos: 1,3
+    displayName: Suit
+    whitelist:
+      tags:
+      - CorgiWearable
+  - name: eyes
+    slotTexture: glasses
+    slotFlags: EYES
+    uiWindowPos: 1,2
+    strippingWindowPos: 1,1
+    displayName: Eyes
+    whitelist:
+      tags:
+      - CorgiWearable
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    uiWindowPos: 1,3
+    strippingWindowPos: 1,0
+    displayName: Head
+    whitelist:
+      tags:
+      - CorgiWearable
+  - name: back
+    slotTexture: back
+    fullTextureName: template_small
+    slotFlags: BACK
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 3,0
+    strippingWindowPos: 0,5
+    displayName: Back
+    whitelist:
+      tags:
+      - CorgiWearable
