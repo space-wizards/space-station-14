@@ -51,6 +51,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Server.Resist;
 
 namespace Content.Server.Administration.Systems;
 
@@ -143,6 +144,49 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", chessName, Loc.GetString("admin-smite-chess-dimension-description"))
         };
         args.Verbs.Add(chess);
+
+        // imp - moved killsign out of the InventoryComponent check so it can be applied to anything
+        var killSignName = Loc.GetString("admin-smite-kill-sign-name").ToLowerInvariant();
+        Verb killSign = new()
+        {
+            Text = killSignName,
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Misc/killsign.rsi"), "icon"),
+            Act = () =>
+            {
+                EnsureComp<KillSignComponent>(args.Target);
+            },
+            Impact = LogImpact.Extreme,
+            Message = string.Join(": ", killSignName, Loc.GetString("admin-smite-kill-sign-description"))
+        };
+        args.Verbs.Add(killSign);
+
+        // imp - moved Locker Stuff smite into its own check for CanEscapeInventoryComponent, so it can be performed on any entity that can break out
+        if (HasComp<CanEscapeInventoryComponent>(args.Target))
+        {
+            var lockerName = Loc.GetString("admin-smite-locker-stuff-name").ToLowerInvariant();
+            Verb locker = new()
+            {
+                Text = lockerName,
+                Category = VerbCategory.Smite,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/_Impstation/Structures/Storage/closet.rsi"), "generic"), // imp - different sprite
+                Act = () =>
+                {
+                    var xform = Transform(args.Target);
+                    var locker = Spawn("ClosetMaintenance", xform.Coordinates);
+                    if (TryComp<EntityStorageComponent>(locker, out var storage))
+                    {
+                        _entityStorageSystem.ToggleOpen(args.Target, locker, storage);
+                        _entityStorageSystem.Insert(args.Target, locker, storage);
+                        _entityStorageSystem.ToggleOpen(args.Target, locker, storage);
+                    }
+                    _weldableSystem.SetWeldedState(locker, true);
+                },
+                Impact = LogImpact.Extreme,
+                Message = string.Join(": ", lockerName, Loc.GetString("admin-smite-locker-stuff-description"))
+            };
+            args.Verbs.Add(locker);
+        }
 
         if (TryComp<FlammableComponent>(args.Target, out var flammable))
         {
@@ -324,7 +368,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = handsRemovalName,
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/remove-hands.png")),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/remove-hands.png")),
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
@@ -347,7 +391,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = handRemovalName,
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/AdminActions/remove-hand.png")),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/remove-hand.png")),
                 Act = () =>
                 {
                     var baseXform = Transform(args.Target);
@@ -371,7 +415,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = stomachRemovalName,
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Species/Human/organs.rsi"), "stomach"),
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Species/Human/organs.rsi"), "stomach"),
                 Act = () =>
                 {
                     foreach (var entity in _bodySystem.GetBodyOrganEntityComps<StomachComponent>((args.Target, body)))
@@ -392,7 +436,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = lungRemovalName,
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Mobs/Species/Human/organs.rsi"), "lung-r"),
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/_Impstation/Objects/Tanks/oxygen.rsi"), "icon"),
                 Act = () =>
                 {
                     foreach (var entity in _bodySystem.GetBodyOrganEntityComps<LungComponent>((args.Target, body)))
@@ -416,12 +460,12 @@ public sealed partial class AdminVerbSystem
             {
                 Text = pinballName,
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Fun/toys.rsi"), "basketball"),
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Fun/toys.rsi"), "basketball"),
                 Act = () =>
                 {
                     var xform = Transform(args.Target);
                     var fixtures = Comp<FixturesComponent>(args.Target);
-                    _transformSystem.Unanchor(args.Target, xform); // Just in case.
+                    _transformSystem.Unanchor(args.Target); // Just in case.
                     _physics.SetBodyType(args.Target, BodyType.Dynamic, manager: fixtures, body: physics);
                     _physics.SetBodyStatus(args.Target, physics, BodyStatus.InAir);
                     _physics.WakeBody(args.Target, manager: fixtures, body: physics);
@@ -451,7 +495,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = yeetName,
                 Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
                 Act = () =>
                 {
                     var xform = Transform(args.Target);
@@ -476,6 +520,25 @@ public sealed partial class AdminVerbSystem
                 Message = string.Join(": ", yeetName, Loc.GetString("admin-smite-yeet-description"))
             };
             args.Verbs.Add(yeet);
+
+            // imp - moved NoGravity smite out of the InventoryComponent check and into Physics, so it can be applied to anything
+            var noGravityName = Loc.GetString("admin-smite-remove-gravity-name").ToLowerInvariant();
+            Verb noGravity = new()
+            {
+                Text = noGravityName,
+                Category = VerbCategory.Smite,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Machines/gravity_generator.rsi"), "off"),
+                Act = () =>
+                {
+                    var grav = EnsureComp<MovementIgnoreGravityComponent>(args.Target);
+                    grav.Weightless = true;
+
+                    Dirty(args.Target, grav);
+                },
+                Impact = LogImpact.Extreme,
+                Message = string.Join(": ", noGravityName, Loc.GetString("admin-smite-remove-gravity-description"))
+            };
+            args.Verbs.Add(noGravity);
         }
 
         var breadName = Loc.GetString("admin-smite-become-bread-name").ToLowerInvariant(); // Will I get cancelled for breadName-ing you?
@@ -546,21 +609,6 @@ public sealed partial class AdminVerbSystem
                 Message = string.Join(": ", nyanifyName, Loc.GetString("admin-smite-nyanify-description"))
             };
             args.Verbs.Add(nyanify);
-
-            var killSignName = Loc.GetString("admin-smite-kill-sign-name").ToLowerInvariant();
-            Verb killSign = new()
-            {
-                Text = killSignName,
-                Category = VerbCategory.Smite,
-                Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Misc/killsign.rsi"), "icon"),
-                Act = () =>
-                {
-                    EnsureComp<KillSignComponent>(args.Target);
-                },
-                Impact = LogImpact.Extreme,
-                Message = string.Join(": ", killSignName, Loc.GetString("admin-smite-kill-sign-description"))
-            };
-            args.Verbs.Add(killSign);
 
             var cluwneName = Loc.GetString("admin-smite-cluwne-name").ToLowerInvariant();
             Verb cluwne = new()
@@ -662,24 +710,6 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(instrumentation);
 
-        var noGravityName = Loc.GetString("admin-smite-remove-gravity-name").ToLowerInvariant();
-        Verb noGravity = new()
-        {
-            Text = noGravityName,
-            Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Machines/gravity_generator.rsi"), "off"),
-            Act = () =>
-            {
-                var grav = EnsureComp<MovementIgnoreGravityComponent>(args.Target);
-                grav.Weightless = true;
-
-                Dirty(args.Target, grav);
-            },
-            Impact = LogImpact.Extreme,
-            Message = string.Join(": ", noGravityName, Loc.GetString("admin-smite-remove-gravity-description"))
-        };
-        args.Verbs.Add(noGravity);
-
         var reptilianName = Loc.GetString("admin-smite-reptilian-species-swap-name").ToLowerInvariant();
         Verb reptilian = new()
         {
@@ -694,29 +724,6 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", reptilianName, Loc.GetString("admin-smite-reptilian-species-swap-description"))
         };
         args.Verbs.Add(reptilian);
-
-        var lockerName = Loc.GetString("admin-smite-locker-stuff-name").ToLowerInvariant();
-        Verb locker = new()
-        {
-            Text = lockerName,
-            Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ("/Textures/_Impstation/Structures/Storage/closet.rsi"), "generic"), // imp - different sprite
-            Act = () =>
-            {
-                var xform = Transform(args.Target);
-                var locker = Spawn("ClosetMaintenance", xform.Coordinates);
-                if (TryComp<EntityStorageComponent>(locker, out var storage))
-                {
-                    _entityStorageSystem.ToggleOpen(args.Target, locker, storage);
-                    _entityStorageSystem.Insert(args.Target, locker, storage);
-                    _entityStorageSystem.ToggleOpen(args.Target, locker, storage);
-                }
-                _weldableSystem.SetWeldedState(locker, true);
-            },
-            Impact = LogImpact.Extreme,
-            Message = string.Join(": ", lockerName, Loc.GetString("admin-smite-locker-stuff-description"))
-        };
-        args.Verbs.Add(locker);
 
         var headstandName = Loc.GetString("admin-smite-headstand-name").ToLowerInvariant();
         Verb headstand = new()

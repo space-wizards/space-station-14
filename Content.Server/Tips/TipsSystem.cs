@@ -3,6 +3,7 @@ using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Dataset;
+using Content.Shared.Ghost;
 using Content.Shared.Tips;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -34,16 +35,6 @@ public sealed class TipsSystem : EntitySystem
     private float _tipTimeInRound;
     private string _tipsDataset = "";
     private float _tipTippyChance;
-
-    /// <summary>
-    /// Always adds this time to a speech message. This is so really short message stay around for a bit.
-    /// </summary>
-    private const float SpeechBuffer = 3f;
-
-    /// <summary>
-    /// Expected reading speed.
-    /// </summary>
-    private const float Wpm = 180f;
 
     [ViewVariables(VVAccess.ReadWrite)]
     private TimeSpan _nextTipTime = TimeSpan.Zero;
@@ -93,7 +84,16 @@ public sealed class TipsSystem : EntitySystem
         }
 
         ActorComponent? actor = null;
-        if (args[0] != "all")
+        HashSet<ActorComponent> ghostActors = [];
+        if (args[0] == "ghosts")
+        {
+            var query = EntityQueryEnumerator<GhostComponent, ActorComponent>();
+            while (query.MoveNext(out _, out _, out var actorComp))
+            {
+                ghostActors.Add(actorComp);
+            }
+        }
+        else if (args[0] != "all")
         {
             ICommonSession? session;
             if (args.Length > 0)
@@ -109,13 +109,11 @@ public sealed class TipsSystem : EntitySystem
             {
                 session = shell.Player;
             }
-
             if (session?.AttachedEntity is not { } user)
             {
                 shell.WriteLine(Loc.GetString("cmd-tippy-error-no-user"));
                 return;
             }
-
             if (!TryComp(user, out actor))
             {
                 shell.WriteError(Loc.GetString("cmd-tippy-error-no-user"));
@@ -137,8 +135,6 @@ public sealed class TipsSystem : EntitySystem
 
         if (args.Length > 3)
             ev.SpeakTime = float.Parse(args[3]);
-        else
-            ev.SpeakTime = GetSpeechTime(ev.Msg);
 
         if (args.Length > 4)
             ev.SlideTime = float.Parse(args[4]);
@@ -146,7 +142,14 @@ public sealed class TipsSystem : EntitySystem
         if (args.Length > 5)
             ev.WaddleInterval = float.Parse(args[5]);
 
-        if (actor != null)
+        if (ghostActors.Count > 0)
+        {
+            foreach (var ghostActor in ghostActors)
+            {
+                RaiseNetworkEvent(ev, ghostActor.PlayerSession);
+            }
+        }
+        else if (actor != null)
             RaiseNetworkEvent(ev, actor.PlayerSession);
         else
             RaiseNetworkEvent(ev);
@@ -195,12 +198,6 @@ public sealed class TipsSystem : EntitySystem
         _tipTippyChance = value;
     }
 
-    public static float GetSpeechTime(string text)
-    {
-        var wordCount = (float)text.Split().Length;
-        return SpeechBuffer + wordCount * (60f / Wpm);
-    }
-
     private void AnnounceRandomTip()
     {
         if (!_prototype.TryIndex<LocalizedDatasetPrototype>(_tipsDataset, out var tips))
@@ -212,7 +209,7 @@ public sealed class TipsSystem : EntitySystem
         if (_random.Prob(_tipTippyChance))
         {
             var ev = new TippyEvent(msg);
-            ev.SpeakTime = GetSpeechTime(msg);
+            ev.SpeakTime = 1 + tip.Length * 0.05f;
             RaiseNetworkEvent(ev);
         } else
         {
