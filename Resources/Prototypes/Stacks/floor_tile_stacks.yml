@@ -191,6 +191,12 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileTechmaintDark
+  name: stack-techmaint-floor-dark
+  spawn: FloorTileItemTechmaintDark
+  maxCount: 30
+
+- type: stack
   id: FloorTileFreezer
   name: stack-freezer-tile
   spawn: FloorTileItemFreezer
@@ -330,7 +336,7 @@
 
 - type: stack
   id: FloorCarpetBlack
-  name: stack-block-carpet-tile
+  name: stack-black-carpet-tile
   spawn: FloorCarpetItemBlack
   maxCount: 30
 
@@ -633,4 +639,34 @@
   id: FloorTileWoodLarge
   name: stack-large-wood-floor
   spawn: FloorTileItemWoodLarge
+  maxCount: 30
+
+- type: stack
+  id: FloorTileXeno
+  name: stack-xeno-floor
+  spawn: FloorTileItemXeno
+  maxCount: 30
+
+- type: stack
+  id: FloorTileXenoSteel
+  name: stack-xeno-steel
+  spawn: FloorTileItemXenoSteelCorner
+  maxCount: 30
+
+- type: stack
+  id: FloorTileXenoSteelCorner
+  name: stack-xeno-steel-corner
+  spawn: FloorTileItemXenoSteelCorner
+  maxCount: 30
+
+- type: stack
+  id: FloorTileXenoMaint
+  name: stack-xeno-maint
+  spawn: FloorTileItemXenoSteelCorner
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkSquiggly
+  name: stack-dark-squiggly
+  spawn: FloorTileItemDarkSquiggly
   maxCount: 30
