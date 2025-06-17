@@ -2,6 +2,7 @@ using Content.Server.Body.Components;
 using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Popups;
+using Content.Shared._Impstation.Hemorrhage;
 using Content.Shared._Impstation.Traits.Assorted;
 using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
@@ -364,7 +365,9 @@ public sealed class BloodstreamSystem : EntitySystem
         // Removal is more involved,
         // since we also wanna handle moving it to the temporary solution
         // and then spilling it if necessary.
-        var newSol = _solutionContainerSystem.SplitSolution(component.BloodSolution.Value, -amount);
+        var hemorrhageAdjust = TryComp<HemorrhageComponent>(uid, out var trait) ? amount * trait.BleedIncreaseMultiplier : amount; // imp Multiplies the blood lost per stack by the value set
+
+        var newSol = _solutionContainerSystem.SplitSolution(component.BloodSolution.Value, -hemorrhageAdjust);
 
         if (!_solutionContainerSystem.ResolveSolution(uid, component.BloodTemporarySolutionName, ref component.TemporarySolution, out var tempSolution))
             return true;

@@ -125,6 +125,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: Hemorrhage # imp
 
 - type: entity
   parent: MobHumanDummy

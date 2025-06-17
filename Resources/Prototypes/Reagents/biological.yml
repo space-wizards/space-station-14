@@ -79,6 +79,12 @@
       effects:
       - !type:SatiateHunger
         factor: 1
+      - !type:ModifyBloodLevel # imp
+        conditions:
+        - !type:OrganType
+          type: Slime
+          shouldHave: true
+        amount: 0.48 # imp Restores slime at a 24:25 ratio. Just shove that shit back in there.
   footstepSound:
     collection: FootstepSlime # makes sense
     params:
