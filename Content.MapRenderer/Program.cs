@@ -187,6 +187,8 @@ namespace Content.MapRenderer
         {
             Console.WriteLine($"Creating images for {toRender.Count} maps");
 
+            var parallaxOutput = arguments.OutputParallax ? new ParallaxOutput(arguments.OutputPath) : null;
+
             var mapNames = new List<string>();
             foreach (var map in toRender)
             {
@@ -196,7 +198,7 @@ namespace Content.MapRenderer
                 await painter.Initialize();
                 await painter.SetupView(showMarkers: arguments.ShowMarkers);
 
-                var mapViewerData = await painter.GenerateMapViewerData();
+                var mapViewerData = await painter.GenerateMapViewerData(parallaxOutput);
 
                 var mapShort = map.ShortName;
                 var directory = Path.Combine(arguments.OutputPath, mapShort);

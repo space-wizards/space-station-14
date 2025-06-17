@@ -12,6 +12,7 @@ using Content.Server.GameTicking;
 using Robust.Client.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
@@ -102,7 +103,7 @@ namespace Content.MapRenderer.Painters
             }
         }
 
-        public Task<MapViewerData> GenerateMapViewerData()
+        public async Task<MapViewerData> GenerateMapViewerData(ParallaxOutput? parallaxOutput)
         {
             if (_pair == null)
                 throw new InvalidOperationException("Instance not initialized!");
@@ -125,10 +126,16 @@ namespace Content.MapRenderer.Painters
                 Name = fullName,
             };
 
-            // TODO: Proper parallax info.
-            mapViewerData.ParallaxLayers.Add(LayerGroup.DefaultParallax());
+            if (parallaxOutput != null)
+            {
+                await _pair.Client.WaitPost(() =>
+                {
+                    var res = _pair.Client.InstanceDependencyCollection.Resolve<IResourceManager>();
+                    mapViewerData.ParallaxLayers.Add(LayerGroup.DefaultParallax(res, parallaxOutput));
+                });
+            }
 
-            return Task.FromResult(mapViewerData);
+            return mapViewerData;
         }
 
         public async IAsyncEnumerable<RenderedGridImage<Rgba32>> Paint()
