@@ -5,8 +5,10 @@ using Content.Server.Temperature.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Heretic;
+using Content.Shared.Physics;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Audio;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using System.Linq;
 
@@ -34,6 +36,13 @@ public sealed partial class HereticAbilitySystem : EntitySystem
     {
         RemComp<BarotraumaComponent>(ent);
         EnsureComp<AristocratComponent>(ent);
+
+        if(TryComp<FixturesComponent>(ent, out var fixtures) && TryComp<PhysicsComponent>(ent, out var physics))
+        {
+            var fix = fixtures.Fixtures.First();
+            _phys.SetCollisionMask(ent, fix.Key, fix.Value, (int)CollisionGroup.Opaque);
+            _phys.SetCollisionLayer(ent, fix.Key, fix.Value, (int)CollisionGroup.BulletImpassable);
+        }
     }
 
     private void OnVoidBlast(Entity<HereticComponent> ent, ref HereticVoidBlastEvent args)
@@ -50,10 +59,13 @@ public sealed partial class HereticAbilitySystem : EntitySystem
             _phys.SetBodyStatus(rod, phys, BodyStatus.InAir);
 
             var xform = Transform(rod);
-            var vel = _transform.GetWorldRotation(ent).ToWorldVec() * 15f;
+            var direction = _transform.ToMapCoordinates(args.Target).Position - _transform.GetWorldPosition(ent);
+            direction.Normalize();
+
+            var vel = direction * 15f;
 
             _phys.SetLinearVelocity(rod, vel, body: phys);
-            xform.LocalRotation = Transform(ent).LocalRotation;
+            xform.LocalRotation = direction.ToAngle();
         }
 
         args.Handled = true;
