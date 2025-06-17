@@ -3,13 +3,13 @@ using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Shared.Audio;
 using Content.Shared.Audio.Events;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
-using Content.Shared.CCVar;
 
 namespace Content.Server.Audio;
 
@@ -27,10 +27,12 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
     {
         base.Initialize();
 
-        //Onvalue chage changes the music collection and reshuffles the playlist to update the lobby music
-        _cfg.OnValueChanged(
+        //changes the music collection and reshuffles the playlist to update the lobby music
+        Subs.CVar(
+            _cfg,
             CCVars.LobbyMusicCollection,
-            x => {
+            x =>
+            {
                 _lobbyMusicCollection = _prototypeManager.Index<SoundCollectionPrototype>(x);
                 _lobbyPlaylist = ShuffleLobbyPlaylist();
             },
