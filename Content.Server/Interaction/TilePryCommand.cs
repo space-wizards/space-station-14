@@ -15,7 +15,7 @@ public sealed class TilePryCommand : LocalizedEntityCommands
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
-    private readonly ProtoId<ContentTileDefinition> _platingId = "Plating";
+    private readonly string _platingId = "Plating";
 
     public override string Command => "tilepry";
 
