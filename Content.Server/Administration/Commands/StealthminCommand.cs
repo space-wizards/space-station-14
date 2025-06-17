@@ -10,6 +10,8 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Stealth)]
 public sealed class StealthminCommand : LocalizedCommands
 {
+    [Dependency] private readonly IAdminManager _admin = default!;
+
     public override string Command => "stealthmin";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -21,19 +23,13 @@ public sealed class StealthminCommand : LocalizedCommands
                 return;
             }
 
-            var mgr = IoCManager.Resolve<IAdminManager>();
-
-            var adminData = mgr.GetAdminData(player);
+            var adminData = _admin.GetAdminData(player);
 
             DebugTools.AssertNotNull(adminData);
 
             if (!adminData!.Stealth)
-            {
-                mgr.Stealth(player);
-            }
+                _admin.Stealth(player);
             else
-            {
-                mgr.UnStealth(player);
-            }
+                _admin.UnStealth(player);
     }
 }

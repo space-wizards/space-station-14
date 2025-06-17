@@ -9,6 +9,10 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.ViewNotes)]
 public sealed class OpenAdminNotesCommand : LocalizedCommands
 {
+    [Dependency] private readonly IAdminNotesManager _notesManager = default!;
+    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+
     public const string CommandName = "adminnotes";
 
     public override string Command => CommandName;
@@ -28,8 +32,7 @@ public sealed class OpenAdminNotesCommand : LocalizedCommands
             case 1 when Guid.TryParse(args[0], out notedPlayer):
                 break;
             case 1:
-                var locator = IoCManager.Resolve<IPlayerLocator>();
-                var dbGuid = await locator.LookupIdByNameAsync(args[0]);
+                var dbGuid = await _playerLocator.LookupIdByNameAsync(args[0]);
 
                 if (dbGuid == null)
                 {
@@ -44,7 +47,7 @@ public sealed class OpenAdminNotesCommand : LocalizedCommands
                 return;
         }
 
-        await IoCManager.Resolve<IAdminNotesManager>().OpenEui(player, notedPlayer);
+        await _notesManager.OpenEui(player, notedPlayer);
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -52,8 +55,7 @@ public sealed class OpenAdminNotesCommand : LocalizedCommands
         if (args.Length != 1)
             return CompletionResult.Empty;
 
-        var playerMgr = IoCManager.Resolve<IPlayerManager>();
-        var options = playerMgr.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
+        var options = _playerManager.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
         return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-adminnotes-hint"));
     }
 }
