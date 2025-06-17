@@ -112,8 +112,6 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
                 ent.Comp.Alert.Value,
                 cooldown: cooldown);
         }
-
-        EntityManager.AddComponents(args.Target, ent.Comp.Components);
     }
 
     private void OnStatusEffectRemoved(Entity<StatusEffectComponent> ent, ref StatusEffectRemoved args)
@@ -123,8 +121,6 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
         if (ent.Comp.Alert is not null)
             _alerts.ClearAlert(ent.Comp.AppliedTo.Value, ent.Comp.Alert.Value);
-
-        EntityManager.RemoveComponents(args.Target, ent.Comp.Components);
     }
 
     private bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
@@ -149,13 +145,13 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 }
 
 /// <summary>
-/// Calls on both effect entity and target entity, when a status effect is applied.
+/// Calls on effect entity, when a status effect is applied.
 /// </summary>
 [ByRefEvent]
 public readonly record struct StatusEffectApplied(EntityUid Target, Entity<StatusEffectComponent> Effect);
 
 /// <summary>
-/// Calls on both effect entity and target entity, when a status effect is removed.
+/// Calls on effect entity, when a status effect is removed.
 /// </summary>
 [ByRefEvent]
 public readonly record struct StatusEffectRemoved(EntityUid Target, Entity<StatusEffectComponent> Effect);

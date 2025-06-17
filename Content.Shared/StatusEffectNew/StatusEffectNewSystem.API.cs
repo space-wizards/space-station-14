@@ -211,4 +211,39 @@ public abstract partial class SharedStatusEffectsSystem
         }
         return false;
     }
+
+    /// <summary>
+    /// Checks if the specified component is present on any of the entity's status effects.
+    /// </summary>
+    public bool HasEffectComp<T>(EntityUid target) where T : IComponent
+    {
+        if (!_containerQuery.TryComp(target, out var container))
+            return false;
+
+        foreach (var effect in container.ActiveStatusEffects)
+        {
+            if (HasComp<T>(effect))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Returns all status effects that have the specified component
+    /// </summary>
+    public HashSet<Entity<T>> TryEffectWithComp<T>(EntityUid target) where T : IComponent
+    {
+        HashSet<Entity<T>> effects = new();
+        if (!_containerQuery.TryComp(target, out var container))
+            return effects;
+
+        foreach (var effect in container.ActiveStatusEffects)
+        {
+            if (TryComp<T>(effect, out var comp))
+                effects.Add((effect, comp));
+        }
+
+        return effects;
+    }
 }

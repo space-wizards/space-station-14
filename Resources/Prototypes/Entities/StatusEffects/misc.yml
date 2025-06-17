@@ -17,11 +17,10 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StatusEffect
-    components:
-    - type: ForcedSleepingStatusEffect
     whitelist:
       components:
       - MobState
+  - type: ForcedSleepingStatusEffect
 
 # Blurs your vision and makes you randomly fall asleep
 - type: entity
@@ -31,8 +30,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: StatusEffect
-    components:
-    - type: DrowsinessStatusEffect
     whitelist:
       components:
       - MobState
+  - type: DrowsinessStatusEffect
