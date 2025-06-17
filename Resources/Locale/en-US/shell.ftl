@@ -25,6 +25,7 @@ shell-argument-uid = EntityUid
 
 ## Guards
 
+shell-missing-required-permission = You need {$perm} for this command!
 shell-entity-is-not-mob = Target entity is not a mob!
 shell-invalid-entity-id = Invalid entity ID.
 shell-invalid-grid-id = Invalid grid ID.
