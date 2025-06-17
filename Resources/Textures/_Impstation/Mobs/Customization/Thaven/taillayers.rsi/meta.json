@@ -1,0 +1,183 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Tails by carousel. Nurse/stub/eel by Shaseng. Modified by carousel for use with multi-layer markings",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "basic_behind",
+            "directions": 4
+        },
+        {
+            "name": "basic_front",
+            "directions": 4
+        },
+        {
+            "name": "big1_front",
+            "directions": 4
+        },
+        {
+            "name": "big1_behind",
+            "directions": 4
+        },
+        {
+            "name": "big2_front",
+            "directions": 4
+        },
+        {
+            "name": "big2_behind",
+            "directions": 4
+        },
+        {
+            "name": "eel1_front",
+            "directions": 4
+        },
+        {
+            "name": "eel1_behind",
+            "directions": 4
+        },
+        {
+            "name": "eel2_front",
+            "directions": 4
+        },
+        {
+            "name": "eel2_behind",
+            "directions": 4
+        },
+        {
+            "name": "eel3_front",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "eel3_behind",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "eelghost_front",
+            "directions": 4
+        },
+        {
+            "name": "eelghost_behind",
+            "directions": 4
+        },
+        {
+            "name": "nurse1_front",
+            "directions": 4
+        },
+        {
+            "name": "nurse1_behind",
+            "directions": 4
+        },
+        {
+            "name": "nurse2_front",
+            "directions": 4
+        },
+        {
+            "name": "nurse2_behind",
+            "directions": 4
+        },
+        {
+            "name": "stub1_front",
+            "directions": 4
+        },
+        {
+            "name": "stub1_behind",
+            "directions": 4
+        },
+        {
+            "name": "stub2_front",
+            "directions": 4
+        },
+        {
+            "name": "stub2_behind",
+            "directions": 4
+        },
+        {
+            "name": "tadpole1_front",
+            "directions": 4
+        },
+        {
+            "name": "tadpole1_behind",
+            "directions": 4
+        },
+        {
+            "name": "tadpole2_front",
+            "directions": 4
+        },
+        {
+            "name": "tadpole2_behind",
+            "directions": 4
+        }
+    ]
+}

@@ -326,22 +326,47 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Reptilian ]
+  layering:
+    gecko1_front: TailBehindBackpack
+    gecko1_behind: TailBehind
+    gecko2_front: TailBehindBackpack
+    gecko2_behind: TailBehind
+  colorLinks:
+    gecko1_behind: gecko1_front
+    gecko2_behind: gecko2_front
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
-    state: gecko1
-  - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
-    state: gecko2
+  - sprite: _Impstation/Mobs/Customization/Reptilian/taillayers.rsi
+    state: gecko1_behind
+  - sprite: _Impstation/Mobs/Customization/Reptilian/taillayers.rsi
+    state: gecko1_front
+  - sprite: _Impstation/Mobs/Customization/Reptilian/taillayers.rsi
+    state: gecko2_behind
+  - sprite: _Impstation/Mobs/Customization/Reptilian/taillayers.rsi
+    state: gecko2_front
 
 - type: marking
   id: TailSnailLizard
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [ Reptilian ]
+  layering:
+    snizard1_front: TailBehindBackpack
+    snizard1_behind: TailBehind
+    snizard2_front: TailBehindBackpack
+    snizard2_behind: TailBehind
+    snizard3: TailBehindBackpack
+  colorLinks:
+    snizard1_behind: snizard1_front
+    snizard2_behind: snizard2_front
   sprites:
-  - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
-    state: snizard1
-  - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
-    state: snizard2
+  - sprite: _Impstation/Mobs/Customization/Reptilian/taillayers.rsi
+    state: snizard1_behind
+  - sprite: _Impstation/Mobs/Customization/Reptilian/taillayers.rsi
+    state: snizard1_front
+  - sprite: _Impstation/Mobs/Customization/Reptilian/taillayers.rsi
+    state: snizard2_behind
+  - sprite: _Impstation/Mobs/Customization/Reptilian/taillayers.rsi
+    state: snizard2_front
   - sprite: _Impstation/Mobs/Customization/Reptilian/tail.rsi
     state: snizard3
 

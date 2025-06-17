@@ -131,16 +131,7 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Reptilian]
-  # imp edit below
-  layering:
-    tail_smooth_front: TailBehindBackpack
-    tail_smooth_primary: TailBehind
-    tail_smooth_secondary: TailBehind
-  colorLinks:
-    tail_smooth_primary: tail_smooth_front
   sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: tail_smooth_front
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_smooth_primary
   - sprite: Mobs/Customization/reptilian_parts.rsi
@@ -168,51 +159,27 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Reptilian]
-  # imp edit below
-  layering:
-    tail_spikes_front: TailBehindBackpack
-    tail_spikes_behind: TailBehind
-  colorLinks:
-    tail_spikes_behind: tail_spikes_front
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: tail_spikes_behind
-  - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: tail_spikes_front
+    state: tail_spikes
 
 - type: marking
   id: LizardTailLTiger
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Reptilian]
-  # imp edit below
-  layering:
-    tail_ltiger_front: TailBehindBackpack
-    tail_ltiger_behind: TailBehind
-  colorLinks:
-    tail_ltiger_behind: tail_ltiger_front
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: tail_ltiger_front
-  - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: tail_ltiger_behind
+    state: tail_ltiger
 
 - type: marking
   id: LizardTailDTiger
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Reptilian]
-  # imp edit below
-  layering:
-    tail_dtiger_front: TailBehindBackpack
-    tail_dtiger_behind: TailBehind
-  colorLinks:
-    tail_dtiger_behind: tail_dtiger_front
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: tail_dtiger_front
-  - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: tail_dtiger_behind
+    state: tail_dtiger
 
 - type: marking
   id: LizardTailAquatic

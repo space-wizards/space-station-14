@@ -24,6 +24,7 @@ namespace Content.Shared.Humanoid
         TailBehind, // FLOOF - add tails that dont have to go through a brutal cookiecutter to work
         TailBehindBackpack, // imp - to layer behind backpacks, treat this like an oversuit
         TailOversuit, // FLOOF - add tails that dont have to go through a brutal cookiecutter to work
+        TailUnderlay, // imp - temporary until i have a better way to do two part tails
         Eyes,
         RArm,
         LArm,
