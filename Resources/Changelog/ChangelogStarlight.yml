@@ -7818,4 +7818,11 @@ Entries:
   id: 1079
   time: '2025-06-17T11:16:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/848
+- author: Conf / Abby
+  changes:
+  - message: Added Amali plushie
+    type: Add
+  id: 1080
+  time: '2025-06-17T19:00:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/855
 
