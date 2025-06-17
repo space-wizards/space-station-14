@@ -27,7 +27,6 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
     {
         base.Initialize();
 
-        _lobbyMusicCollection = _prototypeManager.Index<SoundCollectionPrototype>(_cfg.GetCVar(CCVars.LobbyMusicCollection));
         _lobbyPlaylist = ShuffleLobbyPlaylist();
 
         //Onvalue chage changes the music collection and reshuffles the playlist to update the lobby music
