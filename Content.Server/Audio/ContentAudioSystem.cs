@@ -27,8 +27,6 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
     {
         base.Initialize();
 
-        _lobbyPlaylist = ShuffleLobbyPlaylist();
-
         //Onvalue chage changes the music collection and reshuffles the playlist to update the lobby music
         _cfg.OnValueChanged(
             CCVars.LobbyMusicCollection,
