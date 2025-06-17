@@ -1,4 +1,4 @@
-# Tiles that don't fit in another category
+# Tiles that don't fit cleanly in another category
 
 - type: stack
   parent: BaseTileStack

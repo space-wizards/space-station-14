@@ -1,59 +1,90 @@
-- type: stack
+- type: material
   id: Biomass
-  name: stack-biomass
+  stackEntity: MaterialBiomass1
+  name: materials-biomass
+  unit: materials-unit-piece
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
-  spawn: MaterialBiomass1
-  maxCount: 100
+  color: "#8A9A5B"
+  price: 0.1
 
-# Stacks which come from plants
+# Cloth
 
-- type: stack
-  parent: BaseMediumStack
-  id: WoodPlank
-  name: stack-wood-plank
-  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: wood }
-  spawn: MaterialWoodPlank1
+- type: material
+  id: Cloth
+  stackEntity: MaterialCloth1
+  name: materials-cloth
+  unit: materials-unit-roll
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cloth }
+  color: "#e7e7de"
+  price: 0.05
 
-- type: stack
-  parent: BaseMediumStack
+- type: material
+  id: Durathread
+  stackEntity: MaterialDurathread1
+  name: materials-durathread
+  # not exactly a sheet but its sprite suggests it cant be rolled like cloth
+  unit: materials-unit-sheet
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: durathread }
+  color: "#8291a1"
+  price: 0.35 # 1-1 mix of plastic and cloth.
+
+- type: material
+  id: Cotton
+  name: materials-cotton
+  unit: materials-unit-boll
+  icon: { sprite: Objects/Materials/materials.rsi, state: cotton }
+  color: "#cccccc"
+  price: 0.01 #Who knew cotton was infinitely more valuable than silk
+
+# Wood
+
+- type: material
+  id: Wood
+  stackEntity: MaterialWoodPlank1
+  name: materials-wood
+  unit: materials-unit-plank
+  icon: { sprite: Objects/Materials/materials.rsi, state: wood }
+  color: "#966F33"
+  price: 0.10 # $10 for 1 unit
+
+- type: material
   id: Cardboard
-  name: stack-cardboard
+  stackEntity: MaterialCardboard1
+  name: materials-cardboard
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cardboard }
-  spawn: MaterialCardboard1
+  color: "#70736c"
+  price: 0.025
 
-# Stacks which come from or might come from a creature
+- type: material
+  id: Paper
+  stackEntity: SheetPaper1
+  name: materials-paper
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: paper }
+  color: "#d9d9d9"
+  price: 0.01 # it's paper bro what do you expect?
 
-- type: stack
-  parent: BaseMediumStack
-  id: Bones
-  name: stack-bones
-  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: bones }
-  spawn: MaterialBones1
+# Body parts and secretions
 
-- type: stack
+- type: material
+  id: Meaterial # you can't take this pun from me
+  name: materials-meat
+  unit: materials-unit-slab
+  icon: { sprite: Objects/Materials/Sheets/meaterial.rsi, state: meat }
+  color: "#c53648"
+  price: 0.05
+
+- type: material
   id: WebSilk
-  name: stack-silk
-  icon: { sprite: /Textures/Objects/Materials/silk.rsi, state: icon }
-  spawn: MaterialWebSilk1
-  maxCount: 50
+  name: materials-web
+  unit: materials-unit-web
+  icon: { sprite: Objects/Materials/silk.rsi, state: icon }
+  color: "#eeeeee" #eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  price: 0 # Maybe better for it to be priceless, knowing how greedy cargo is.
 
-- type: stack
-  parent: BaseMediumStack
-  id: SpaceCarpTooth
-  name: stack-space-carp-tooth
-  icon: { sprite: /Textures/Objects/Materials/Mob/carptooth.rsi, state: tooth }
-  spawn: MaterialToothSpaceCarp1
-
-- type: stack
-  parent: BaseMediumStack
-  id: SharkMinnowTooth
-  name: stack-sharkminnow-tooth
-  icon: { sprite: /Textures/Objects/Materials/Mob/sharktooth.rsi, state: tooth }
-  spawn: MaterialToothSharkminnow1
-
-- type: stack
-  parent: BaseMediumStack
-  id: GoliathHide
-  name: stack-goliath-hide
-  icon: { sprite: /Textures/Objects/Materials/hide.rsi, state: goliath_hide }
-  spawn: MaterialGoliathHide1
+- type: material
+  id: Bones
+  name: materials-bones
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/materials.rsi, state: bones }
+  color: "#896f5e"
+  price: 0

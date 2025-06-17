@@ -1,4 +1,4 @@
-# Materials which come from refining ores
+# Materials which come from refining ores, excluding sheets
 
 - type: stack
   parent: BaseMediumStack

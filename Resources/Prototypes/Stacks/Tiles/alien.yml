@@ -1,5 +1,6 @@
-# Alien tiles, aka exo or xeno
+# Tiles you might find in an alien world
 
+# Exo station
 - type: stack
   parent: BaseTileStack
   id: FloorTileXeno

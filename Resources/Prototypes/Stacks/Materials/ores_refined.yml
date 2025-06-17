@@ -1,0 +1,35 @@
+# Materials produced from ores, excluding metal and glass
+
+- type: material
+  id: Plasma
+  stackEntity: SheetPlasma1
+  name: materials-plasma
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: plasma }
+  color: "#7e009e"
+  price: 0.35 # $35 for 1 unit
+
+- type: material
+  id: Plastic
+  stackEntity: SheetPlastic1
+  name: materials-plastic
+  icon: { sprite: Objects/Materials/Sheets/other.rsi, state: plastic }
+  color: "#d9d9d9"
+  price: 0.20 # $20 for 1 unit
+
+- type: material
+  id: Bananium
+  stackEntity: MaterialBananium1
+  name: materials-bananium
+  unit: materials-unit-bunch
+  icon: { sprite: Objects/Materials/materials.rsi, state: bananium }
+  color: "#32a852"
+  price: 1.0 # $100 for 1 unit
+
+- type: material
+  id: Diamond
+  stackEntity: MaterialDiamond1
+  name: materials-diamond
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/materials.rsi, state: diamond }
+  color: "#80ffff"
+  price: 20 # big diamond gaslit us so hard diamonds actually became extremely rare

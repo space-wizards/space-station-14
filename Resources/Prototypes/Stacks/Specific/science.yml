@@ -2,6 +2,7 @@
   parent: BaseMediumStack
   id: ArtifactFragment
   name: stack-artifact-fragment
+  icon: { sprite: /Textures/Objects/Specific/Xenoarchaeology/artifact_fragments.rsi, state: martianball1 }
   spawn: ArtifactFragment1
 
 - type: stack

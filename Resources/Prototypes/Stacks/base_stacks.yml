@@ -18,6 +18,16 @@
   id: BaseMediumStack
   maxCount: 30
 
+- type: stack
+  abstract: true
+  id: BaseLargeStack
+  maxCount: 50
+
+- type: stack
+  abstract: true
+  id: BaseVeryLargeStack
+  maxCount: 100
+
 # Used by tiles
 - type: stack
   abstract: true
