@@ -1114,6 +1114,183 @@
     FoodButter: 1
     FoodMeatSnailCooked: 1
 
+# Donuts
+# As of 6/17/25, donuts.yml has talk of only directly baking plain donuts and applying glazes with "a brush or something", but I don't see any open PRs for this at the moment so I'm just going to let you make them directly for now by adding sugar and ingredients to the base recipe
+
+- type: microwaveMealRecipe
+  id: RecipeDonutPlain
+  name: plain donut recipe
+  result: FoodDonutPlain
+  time: 10
+  group: Dessert
+  solids:
+    FoodDoughRope: 1
+    FoodButterSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutPink
+  name: pink donut recipe
+  result: FoodDonutPink
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutPlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutApple
+  name: apple donut recipe
+  result: FoodDonutApple
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutPlain: 1
+    FoodApple: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutChocolate
+  name: chocolate donut recipe
+  result: FoodDonutChocolate
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutPlain: 1
+    FoodSnackChocolateBar: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutBluePumpkin
+  name: blue pumpkin donut recipe
+  result: FoodDonutBluePumpkin
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutPlain: 1
+    FoodBluePumpkin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutBungo
+  name: bungo donut recipe
+  result: FoodDonutBungo
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutPlain: 1
+    FoodBungo: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutMatcha
+  name: matcha donut recipe
+  result: FoodDonut
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutPlain: 1
+    LeavesTeaDried: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutJellyPlain
+  name: plain jelly-donut recipe
+  result: FoodDonutJellyPlain
+  time: 10
+  group: Dessert
+  solids:
+    FoodDoughRope: 1
+    FoodButterSlice: 1
+    FoodJellyAmanita: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutJellyPink
+  name: pink jelly-donut recipe
+  result: FoodDonutJellyPink
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutJellyPlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutJellyApple
+  name: apple jelly-donut recipe
+  result: FoodDonutJellyApple
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutJellyPlain: 1
+    FoodApple: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutJellyChocolate
+  name: chocolate jelly-donut recipe
+  result: FoodDonutJellyChocolate
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutJellyPlain: 1
+    FoodSnackChocolateBar: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutJellyBluePumpkin
+  name: blue pumpkin jelly-donut recipe
+  result: FoodDonutJellyBluePumpkin
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutJellyPlain: 1
+    FoodBluePumpkin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutJellyBungo
+  name: bungo jelly-donut recipe
+  result: FoodDonutJellyBungo
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutJellyPlain: 1
+    FoodBungo: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutJellyMatcha
+  name: matcha jelly-donut recipe
+  result: FoodDonutJelly
+  time: 5
+  group: Dessert
+  reagents:
+    Sugar: 5
+  solids:
+    FoodDonutJellyPlain: 1
+    LeavesTeaDried: 1
+
+- type: microwaveMealRecipe
+  id: RecipeDonutMeat
+  name: meat donut recipe
+  result: FoodDonutMeat
+  time: 10
+  group: Dessert
+  solids:
+    FoodDoughRope: 1
+    FoodButterSlice: 1
+    FoodMeat: 1
+
 #Pies
 
 - type: microwaveMealRecipe
