@@ -1,3 +1,3 @@
-reflect-examine = It has a [color=lightblue]{$value}%[/color] to [color=cyan]reflect[/color] {$type}.
-NonEnergy = bullets
-Energy = energy bolts
+reflect-component-examine = It has a [color=lightblue]{$value}%[/color] to [color=cyan]reflect[/color] {$type}.
+reflect-component-nonenergy = bullets
+reflect-component-energy = energy bolts

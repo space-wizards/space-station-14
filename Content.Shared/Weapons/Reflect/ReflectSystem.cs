@@ -220,13 +220,13 @@ public sealed class ReflectSystem : EntitySystem
 
         for (var i = 0; i < compTypes.Length; i++)
         {
-            var type = Loc.GetString(compTypes[i]);
+            var type = ("reflect-component-" + Loc.GetString(compTypes[i])).ToLower();
             typeList.Add(type);
         }
 
         var msg = ContentLocalizationManager.FormatList(typeList);
 
-        args.PushMarkup(Loc.GetString("reflect-examine", ("value", value), ("type", msg)));
+        args.PushMarkup(Loc.GetString("reflect-component-examine", ("value", value), ("type", msg)));
     }
     #endregion
 }
