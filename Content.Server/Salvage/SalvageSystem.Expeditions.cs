@@ -78,11 +78,12 @@ public sealed partial class SalvageSystem
         component.Stream = _audio.Stop(component.Stream);
 
         // First wipe any disks referencing us
-        var disks = EntityQueryEnumerator<ShuttleDestinationCoordinatesComponent>();
-        while (disks.MoveNext(out var disk)
-               && disk.Destination == uid)
+        var disks = AllEntityQuery<ShuttleDestinationCoordinatesComponent>();
+        while (disks.MoveNext(out var disk, out var diskComp)
+               && diskComp.Destination == uid)
         {
-            disk.Destination = null;
+            diskComp.Destination = null;
+            Dirty(disk, diskComp);
         }
 
         foreach (var (job, cancelToken) in _salvageJobs.ToArray())
