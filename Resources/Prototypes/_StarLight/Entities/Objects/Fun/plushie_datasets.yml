@@ -1,0 +1,41 @@
+- type: localizedDataset
+  id: PlushiesMatthew
+  values:
+    prefix: plushie-matthew-
+    count: 8
+
+- type: localizedDataset
+  id: PlushiesEmmie
+  values:
+    prefix: plushie-emmie-
+    count: 8
+
+- type: localizedDataset
+  id: PlushiesMorgana
+  values:
+    prefix: plushie-morgana-
+    count: 8
+
+- type: localizedDataset
+  id: PlushiesKiosha
+  values:
+    prefix: plushie-kiosha-
+    count: 8
+
+- type: localizedDataset
+  id: PlushiesLance
+  values:
+    prefix: plushie-lance-
+    count: 6
+
+- type: localizedDataset
+  id: PlushiesKiller
+  values:
+    prefix: plushie-killer-
+    count: 8
+
+- type: localizedDataset
+  id: PlushiesTrystan
+  values:
+    prefix: plushie-trystan-
+    count: 6

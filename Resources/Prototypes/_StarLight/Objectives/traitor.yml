@@ -24,3 +24,17 @@
     - type: TargetObjective
       title: objective-condition-teach-lesson-title
     - type: PickRandomHead
+
+- type: entity
+  parent: BaseRDStealObjective
+  id: RDDiplomaStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: RDDiplomaSteal
+    
+- type: entity
+  parent: BaseCMOStealObjective
+  id: CMOLicenseStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: CMOLicenseSteal
