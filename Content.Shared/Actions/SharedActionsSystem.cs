@@ -108,7 +108,7 @@ public abstract class SharedActionsSystem : EntitySystem
     /// </summary>
     public Entity<ActionComponent>? GetAction(Entity<ActionComponent?>? action, bool logError = true)
     {
-        if (action is not {} ent || TerminatingOrDeleted(ent))
+        if (action is not {} ent || Deleted(ent))
             return null;
 
         if (!_actionQuery.Resolve(ent, ref ent.Comp, logError))
