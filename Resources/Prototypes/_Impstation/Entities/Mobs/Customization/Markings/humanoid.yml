@@ -1647,6 +1647,230 @@
   - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
     state: susienobangs
 
+- type: marking
+  id: HumanHairEyeBangLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: eyebanglong
+
+- type: marking
+  id: HumanHairEyeBangSideTail
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: eyebangsidetail
+
+- type: marking
+  id: HumanHairOverEyes
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: overeyes
+
+- type: marking
+  id: HumanHairOverEyesTail
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: overeyestail
+
+- type: marking
+  id: HumanHairFringeTail
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: fringetail
+
+- type: marking
+  id: HumanHairFringeRat
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: fringerat
+
+- type: marking
+  id: HumanHairFringeBraid
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: fringebraid
+
+- type: marking
+  id: HumanHairAsymBun
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: asymbun
+
+- type: marking
+  id: HumanHairIntakeShort
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: intakeshort
+
+- type: marking
+  id: HumanHairIntakeLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: intakelong
+
+- type: marking
+  id: HumanHairLiberatorTied
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: liberatortied
+
+- type: marking
+  id: HumanHairLiberatorShort
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: liberatorshort
+
+- type: marking
+  id: HumanHairLiberatorLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: liberatorlong
+
+- type: marking
+  id: HumanHairDrillTail
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: drilltail
+
+- type: marking
+  id: HumanHairBraidMed
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: braidmed
+
+- type: marking
+  id: HumanHairLocsTied
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: locstied
+
+- type: marking
+  id: HumanHairCurlyPerm
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: curlyperm
+
+- type: marking
+  id: HumanHairPosterPerson
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: posterperson
+
+- type: marking
+  id: HumanHairSmiler
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: smiler
+
+- type: marking
+  id: HumanHairWavyLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: wavylong
+
+- type: marking
+  id: HumanHairMiddlePartShort
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: middlepartshort
+
+- type: marking
+  id: HumanHairFadeHighlight
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: fadehighlight
+
+- type: marking
+  id: HumanHairChonmage
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: chonmage
+
+- type: marking
+  id: HumanHairBaldingLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: baldinglong
+
+- type: marking
+  id: HumanHairBaldingCurls
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: baldingcurls
+
+- type: marking
+  id: HumanHairFriar
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: friar
+
+- type: marking
+  id: HumanHairAdoringFan
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: adoringfan
+
+- type: marking
+  id: HumanHairBabyHair
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/hair.rsi
+    state: babyhair
+
 # HeadSide
 
 # HeadTop
