@@ -36,8 +36,7 @@ namespace Content.Server.GameTicking.Commands
             if (preset != null)
                 _gameTicker.SetGamePreset(preset);
 
-            shell.WriteLine(Loc.GetString($"cmd-golobby-success") +
-                            $"{(preset == null ? "" : Loc.GetString($"cmd-forcepreset-success", ("preset", presetName)))}");
+            shell.WriteLine(Loc.GetString(preset == null ? "cmd-golobby-success" : "cmd-golobby-success-with-preset", ("preset", presetName)));
         }
     }
 }

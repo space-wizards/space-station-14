@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    internal sealed class ForcePresetCommand : LocalizedEntityCommands
+    public sealed class ForcePresetCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
@@ -50,7 +50,7 @@ namespace Content.Server.GameTicking.Commands
                     .OrderBy(p => p.ID)
                     .Select(p => p.ID);
 
-                return CompletionResult.FromHintOptions(options, Help);
+                return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-forcepreset-hint"));
             }
 
             return CompletionResult.Empty;

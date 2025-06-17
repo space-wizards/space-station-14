@@ -5,6 +5,7 @@ using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Interaction;
 
@@ -13,6 +14,8 @@ public sealed class TilePryCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+
+    private readonly ProtoId<ContentTileDefinition> _platingId = "Plating";
 
     public override string Command => "tilepry";
 
@@ -62,7 +65,7 @@ public sealed class TilePryCommand : LocalizedEntityCommands
                 if (!tileDef.CanCrowbar)
                     continue;
 
-                var plating = _tileDefinitionManager["Plating"];
+                var plating = _tileDefinitionManager[_platingId];
                 _mapSystem.SetTile(playerGrid.Value, mapGrid, coordinates, new Tile(plating.TileId));
             }
         }

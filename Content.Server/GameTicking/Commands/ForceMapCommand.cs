@@ -10,10 +10,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    internal sealed class ForceMapCommand : LocalizedCommands
+    public sealed class ForceMapCommand : LocalizedCommands
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IGameMapManager _gameMapMaanger = default!;
+        [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Command => "forcemap";
@@ -29,9 +29,9 @@ namespace Content.Server.GameTicking.Commands
             var name = args[0];
 
             // An empty string clears the forced map
-            if (!string.IsNullOrEmpty(name) && !_gameMapMaanger.CheckMapExists(name))
+            if (!string.IsNullOrEmpty(name) && !_gameMapManager.CheckMapExists(name))
             {
-                shell.WriteLine(Loc.GetString("shell-invalid-map-id"));
+                shell.WriteLine(Loc.GetString("cmd-forcemap-map-not-found", ("map", name)));
                 return;
             }
 
@@ -52,7 +52,7 @@ namespace Content.Server.GameTicking.Commands
                     .Select(p => new CompletionOption(p.ID, p.MapName))
                     .OrderBy(p => p.Value);
 
-                return CompletionResult.FromHintOptions(options, Help);
+                return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-forcemap-hint"));
             }
 
             return CompletionResult.Empty;
