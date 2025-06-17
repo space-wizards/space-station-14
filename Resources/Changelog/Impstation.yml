@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Various Luna edits. Check PR.
-    type: Fix
-  id: 1353
-  time: '2025-03-20T05:12:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2022
 - author: AvianMaiden
   changes:
   - message: Hit and stab more things more ways more guns more!!
@@ -4204,3 +4197,11 @@
   id: 1852
   time: '2025-06-17T00:49:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2751
+- author: jtfg-dev
+  changes:
+  - message: The Intergalactic Standards Organization has ordered Nanotrasen's lathe
+      compendium updated. All materials now have unique descriptions.
+    type: Add
+  id: 1853
+  time: '2025-06-17T00:53:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2624
