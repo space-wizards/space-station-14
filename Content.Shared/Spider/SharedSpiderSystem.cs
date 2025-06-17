@@ -18,6 +18,5 @@ public abstract class SharedSpiderSystem : EntitySystem
     private void OnInit(EntityUid uid, SpiderComponent component, MapInitEvent args)
     {
         _action.AddAction(uid, ref component.Action, component.WebAction, uid);
-        component.NextWebSpawn = _timing.CurTime + component.WebSpawnCooldown;
     }
 }

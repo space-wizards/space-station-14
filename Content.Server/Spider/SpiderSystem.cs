@@ -30,6 +30,8 @@ public sealed class SpiderSystem : SharedSpiderSystem
         var query = EntityQueryEnumerator<SpiderComponent>();
         while (query.MoveNext(out var uid, out var spider))
         {
+            spider.NextWebSpawn ??= _timing.CurTime + spider.WebSpawnCooldown;
+
             if (_timing.CurTime < spider.NextWebSpawn)
                 continue;
 
