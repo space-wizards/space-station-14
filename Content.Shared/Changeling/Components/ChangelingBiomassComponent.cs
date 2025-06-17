@@ -66,5 +66,8 @@ public sealed partial class ChangelingBiomassComponent : Component
 
     [DataField]
     public TimeSpan UpdateInterval = TimeSpan.FromSeconds(5);
+
+    // Prevent third party tools from figuring out who a changeling is based on the fact they own this component.
+    public override bool SendOnlyToOwner => true;
 }
 
