@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Ore processors default to producing 10 sheets of materials, as intended.
-    type: Fix
-  id: 1358
-  time: '2025-03-21T02:37:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2037
 - author: TheGrimbeeper
   changes:
   - message: Pain insensitive people will no longer notice painful radioactive effects.
@@ -4200,3 +4193,11 @@
   id: 1857
   time: '2025-06-17T08:23:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2794
+- author: DinnerCalzone
+  changes:
+  - message: The salvage chemical barrels have been given new sprites and their material
+      composition has been changed to plastic to match.
+    type: Add
+  id: 1858
+  time: '2025-06-17T08:24:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2791
