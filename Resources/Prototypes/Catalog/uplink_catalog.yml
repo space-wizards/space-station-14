@@ -187,6 +187,20 @@
   - UplinkWeaponry
 
 - type: listing
+  id: UplinkEstocBundle
+  name: uplink-estoc-bundle-name
+  description: uplink-estoc-bundle-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Rifles/estoc.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledRifle
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 11
+  cost:
+    Telecrystal: 18
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: UplinkBulldogBundle
   name: uplink-buldog-bundle-name
   description: uplink-buldog-bundle-desc
@@ -554,6 +568,17 @@
   productEntity: MagazineBoxLightRifle
   cost:
     Telecrystal: 1
+  categories:
+  - UplinkAmmo
+
+# For the Estoc
+- type: listing
+  id: UplinkEstocAmmo
+  name: uplink-estoc-ammo-name
+  description: uplink-estoc-ammo-desc
+  productEntity: MagazineRifle
+  cost:
+    Telecrystal: 2
   categories:
   - UplinkAmmo
 
@@ -1590,20 +1615,6 @@
     Telecrystal: 1
   cost:
     Telecrystal: 2
-  categories:
-  - UplinkWearables
-
-# TODO: Revert back to normal thieving gloves when clothes dyeing is added
-- type: listing
-  id: UplinkgClothingThievingGloves
-  name: uplink-clothing-chameleon-thieving-gloves-name
-  description: uplink-clothing-chameleon-thieving-gloves-desc
-  productEntity: ClothingHandsChameleonThief
-  discountCategory: veryRareDiscounts
-  discountDownTo:
-    Telecrystal: 3
-  cost:
-    Telecrystal: 5
   categories:
   - UplinkWearables
 
