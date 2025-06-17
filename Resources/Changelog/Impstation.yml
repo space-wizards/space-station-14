@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: Hit and stab more things more ways more guns more!!
-    type: Add
-  id: 1354
-  time: '2025-03-20T12:57:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2020
 - author: kipdotnet, AfterLite
   changes:
   - message: Prize tickets have been added to the service techfab! they come in varying
@@ -4205,3 +4198,14 @@
   id: 1853
   time: '2025-06-17T00:53:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2624
+- author: DinnerCalzone
+  changes:
+  - message: Water tanks, fuel tanks, water coolers, wall dispensers, and the nuke
+      keg can now be refilled by either click and dragging a reagent container on
+      to them or by using a right-click verb.
+    type: Add
+  - message: Reagents can now be added to ChemMasters using a right-click verb.
+    type: Add
+  id: 1854
+  time: '2025-06-17T00:58:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2743
