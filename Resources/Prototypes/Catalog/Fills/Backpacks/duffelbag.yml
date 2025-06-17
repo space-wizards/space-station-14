@@ -370,17 +370,20 @@
 
 - type: entity
   parent: ClothingBackpackDuffelERT
-  id: ClothingBackpackDuffelERTFilledAmmo
-  name: ERT ammo bag
-  description: "Contains spare ammunition for ERT forces. Usually carried by riflemen."
+  id: ClothingBackpackDuffelERTFilledMedical
+  name: ERT medical bag
+  description: "Contains medical supplies. Carried by ERT medics."
   components:
   - type: StorageFill
     contents:
-    - id: Handcuffs
-      amount: 2
-    - id: MagazineBoxPistol
-      amount: 2
-    - id: MagazineBoxRifle
-      amount: 2
-    - id: BoxLethalshot
-      amount: 2
+    - id: JugDexPlusSaline
+    - id: JugPunctTranex
+    - id: JugPyraDerma
+    - id: JugTrico
+    - id: BeakerSmallBruiz
+    - id: BeakerSmallLace
+    - id: PowerCellHigh
+    - id: Cautery
+    - id: BodyBagFolded
+      amount: 6
+

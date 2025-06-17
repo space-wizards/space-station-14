@@ -300,7 +300,6 @@
 - type: entity
   parent: RandomHumanoidSpawnerERTEngineerEVA
   id: RandomHumanoidSpawnerERTEngineerArmed
-  name: ERT combat engineer
   suffix: ERTRole, Armed, EVA
   components:
   - type: Sprite
@@ -506,7 +505,6 @@
 - type: entity
   parent: RandomHumanoidSpawnerERTMedicalEVA
   id: RandomHumanoidSpawnerERTMedicalArmed
-  name: ERT combat medic
   suffix: ERTRole, Armed, EVA
   components:
   #- type: Sprite
