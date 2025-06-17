@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Origin Station has been shot with a gun.
-    type: Remove
-  id: 1345
-  time: '2025-03-18T23:44:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2006
 - author: Sha-Seng
   changes:
   - message: Barbel markings for thaven from Delta-V
@@ -4199,3 +4192,11 @@
   id: 1844
   time: '2025-06-16T10:52:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2784
+- author: VeeNomine
+  changes:
+  - message: Gumballs can now be placed in and removed from the candy bowl just like
+      other pills.
+    type: Tweak
+  id: 1845
+  time: '2025-06-17T00:35:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2790
