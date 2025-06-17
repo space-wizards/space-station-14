@@ -7779,4 +7779,11 @@ Entries:
   id: 1074
   time: '2025-06-16T23:13:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/847
+- author: ScarletLightweaver.
+  changes:
+  - message: Fixed the SHC shuttle
+    type: Fix
+  id: 1075
+  time: '2025-06-17T09:57:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/851
 
