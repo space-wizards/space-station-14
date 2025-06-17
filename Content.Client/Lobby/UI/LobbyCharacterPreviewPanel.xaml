@@ -6,11 +6,13 @@
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
     xmlns:ui="clr-namespace:Content.Client.Lobby.UI">
     <BoxContainer Name="VBox" Orientation="Vertical">
+
+        <!-- Header and the checkbox for locking/unlocking priority icons -->
         <BoxContainer>
             <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}" />
-            <CheckBox Name="PriorityLock" Text="Unlock Priorities" HorizontalExpand="True"
-                      HorizontalAlignment="Right" VerticalAlignment="Center"
-                      ToolTip="{Loc 'ui-lobby-unlock-priorities-checkbox-tooltip'}"/>
+            <CheckBox Name="PriorityLock" Text="{Loc 'ui-lobby-lock-priorities-checkbox-label'}"
+                      HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center"
+                      Pressed="True" ToolTip="{Loc 'ui-lobby-lock-priorities-checkbox-tooltip'}"/>
         </BoxContainer>
 
         <!-- This is the main bit, only shows once we have preferences from the server -->
