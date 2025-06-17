@@ -72,7 +72,7 @@ public sealed class GenericCounterAlertSystem : EntitySystem
     /// <summary>
     /// Gets the number of digits that we can display.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The number of digits.</returns>
     private int GetMaxDigitCount(Entity<GenericCounterAlertComponent, SpriteComponent> ent)
     {
         var comp = ent.Comp1;
