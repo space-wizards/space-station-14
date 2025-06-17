@@ -220,7 +220,7 @@ public sealed class ReflectSystem : EntitySystem
 
         for (var i = 0; i < compTypes.Length; i++)
         {
-            var type = ("reflect-component-" + Loc.GetString(compTypes[i])).ToLower();
+            var type = Loc.GetString(("reflect-component-" + compTypes[i]).ToLower());
             typeList.Add(type);
         }
 
