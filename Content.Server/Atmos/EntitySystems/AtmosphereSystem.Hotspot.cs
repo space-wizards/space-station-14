@@ -7,12 +7,15 @@ using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
+        private static readonly ProtoId<SoundCollectionPrototype> DefaultHotspotSounds = "AtmosHotspot";
+
         [Dependency] private readonly DecalSystem _decalSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -21,7 +24,7 @@ namespace Content.Server.Atmos.EntitySystems
         private int _hotspotSoundCooldown = 0;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public SoundSpecifier? HotspotSound { get; private set; } = new SoundPathSpecifier("/Audio/Effects/fire.ogg");
+        public SoundSpecifier? HotspotSound { get; private set; } = new SoundCollectionSpecifier(DefaultHotspotSounds);
 
         private void ProcessHotspot(
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
