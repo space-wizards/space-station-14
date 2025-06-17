@@ -1163,5 +1163,21 @@ Entries:
   id: 140
   time: '2025-05-27T23:44:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37849
+- author: Samuka
+  changes:
+  - message: the command solution:adjreagent now actually works and no longer needs
+      a "FixedPoint2" for the amount
+    type: Fix
+  id: 141
+  time: '2025-06-08T03:47:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38134
+- author: ScarKy0
+  changes:
+  - message: 'addaction/rmaction commands. NOTE: Addaction will not work correctly
+      if the action requires the entity to have a component (such as Dragon''s Devour).'
+    type: Add
+  id: 142
+  time: '2025-06-16T10:25:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38317
 Name: Admin
 Order: 2
