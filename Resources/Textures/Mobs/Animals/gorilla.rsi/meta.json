@@ -58,6 +58,58 @@
           1
         ]
       ]
+    },
+    {
+      "name": "cargo_icon",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "cargo_dead",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "cargo_crawling",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "cargo_standing",
+      "directions": 4,
+      "delays": [
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ],
+        [
+          1
+        ]
+      ]
     }
   ]
 }
