@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: YoungThugSS14
-  changes:
-  - message: Binoculars can now be worn on the neck.
-    type: Tweak
-  id: 8171
-  time: '2025-04-14T06:34:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35759
 - author: K-Dynamic
   changes:
   - message: Drawings from blue and green crayons now match their colours.
@@ -3912,3 +3905,11 @@
   id: 8683
   time: '2025-06-17T00:08:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38046
+- author: august-sun
+  changes:
+  - message: Added the Estoc DMR, a burst-fire marksman rifle with an optic. Available
+      for syndicate operatives at 18 TC.
+    type: Add
+  id: 8684
+  time: '2025-06-17T00:20:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38122
