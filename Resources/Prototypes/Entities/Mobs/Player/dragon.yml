@@ -205,6 +205,9 @@
         type: StrippableBoundUserInterface
   - type: Hands # imp. don't worry, they don't actually have hands.
   - type: ComplexInteraction # imp. necessary for them to be able to use the pinpointer. This doesn't do much else for them, except I think they can now open crates.
+  - type: Emoting #imp. Let them emote
+  - type: BodyEmotes #imp
+    soundsId: GeneralBodyEmotes #imp
 
 - type: entity
   categories: [ HideSpawnMenu ]
