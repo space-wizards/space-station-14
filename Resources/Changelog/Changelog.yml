@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: Unisol
-  changes:
-  - message: added deathmatch map DM01 Entryway
-    type: Add
-  id: 8168
-  time: '2025-04-14T01:21:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31533
-- author: TeenSarlacc
-  changes:
-  - message: You can now purchase shark plushies from Cargo.
-    type: Add
-  id: 8169
-  time: '2025-04-14T01:33:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36338
-- author: K-Dynamic
-  changes:
-  - message: Syndicate commander hardsuit now slows movement by 10%.
-    type: Tweak
-  id: 8170
-  time: '2025-04-14T05:37:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35805
-- author: YoungThugSS14
-  changes:
-  - message: Binoculars can now be worn on the neck.
-    type: Tweak
-  id: 8171
-  time: '2025-04-14T06:34:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35759
 - author: K-Dynamic
   changes:
   - message: Drawings from blue and green crayons now match their colours.
@@ -3907,3 +3879,37 @@
   id: 8680
   time: '2025-06-16T09:36:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36951
+- author: Sparlight
+  changes:
+  - message: Smart corgis are now targeted by hostile mobs like the rest of the crew.
+    type: Tweak
+  id: 8681
+  time: '2025-06-16T15:39:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38349
+- author: ArtisticRoomba
+  changes:
+  - message: Thieves now have an innate stealth steal ability (thieving gloves) that
+      can be toggled on/off.
+    type: Add
+  - message: The Thief no longer spawns with thieving gloves.
+    type: Remove
+  - message: Thieving gloves have been removed from the Traitor store.
+    type: Remove
+  id: 8682
+  time: '2025-06-16T22:47:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38123
+- author: kosticia
+  changes:
+  - message: Hyposprays are now predicted.
+    type: Tweak
+  id: 8683
+  time: '2025-06-17T00:08:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38046
+- author: august-sun
+  changes:
+  - message: Added the Estoc DMR, a burst-fire marksman rifle with an optic. Available
+      for syndicate operatives at 18 TC.
+    type: Add
+  id: 8684
+  time: '2025-06-17T00:20:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38122

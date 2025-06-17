@@ -4,8 +4,8 @@ meta:
   engineVersion: 262.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/15/2025 12:24:53
-  entityCount: 1013
+  time: 06/16/2025 11:37:57
+  entityCount: 1017
 maps: []
 grids:
 - 2
@@ -5395,6 +5395,28 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,0.5
+      parent: 2
+- proto: Screen
+  entities:
+  - uid: 1014
+    components:
+    - type: Transform
+      pos: 7.5,6.5
+      parent: 2
+  - uid: 1015
+    components:
+    - type: Transform
+      pos: -1.5,7.5
+      parent: 2
+  - uid: 1016
+    components:
+    - type: Transform
+      pos: 11.5,-1.5
+      parent: 2
+  - uid: 1017
+    components:
+    - type: Transform
+      pos: -0.5,-3.5
       parent: 2
 - proto: ShardGlassReinforced
   entities:
