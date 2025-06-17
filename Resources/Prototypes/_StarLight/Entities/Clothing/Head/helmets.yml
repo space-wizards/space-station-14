@@ -1,6 +1,6 @@
 #Basic Helmet (Abductor Helmet)
 - type: entity
-  parent: ClothingHeadHelmetBase
+  parent: [ ClothingHeadHelmetBase, BaseMajorContraband ]
   id: ClothingHeadHelmetAbductor
   name: helmet
   components:
@@ -28,7 +28,7 @@
     
 #Basic Helmet (Security Helmet Reskin)
 - type: entity
-  parent: [ClothingHeadHelmetBase, BaseRestrictedContraband]
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
   id: ClothingHeadHelmetDredd
   name: helmet
   description: I AM THE LAW!
@@ -134,7 +134,7 @@
     - SecurityHelmet
 
 - type: entity
-  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  parent:  [ClothingHeadHelmetBase, BaseSecurityContraband ]
   id: ClothingHeadHelmetStabproof
   name: stabproof helmet
   description: The most "comfortable" security helmet, as rated by officers. Will take a blow to the head nicely, but a bullet'll go right through it.
@@ -155,7 +155,7 @@
     - SecurityHelmet
 
 - type: entity
-  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  parent: [ ClothingHeadHelmetBase, BaseSecurityContraband ]
   id: ClothingHeadHelmetHeatAbsorbent
   name: heat absorbent helmet
   description: Advanced helmet best paired with the vest for pure style, has minor reflective properties and can absorb heat fairly well.
@@ -174,3 +174,17 @@
   - type: Tag
     tags:
     - SecurityHelmet
+    
+- type: entity
+  parent: ClothingHeadHelmetERTLeader
+  id: ClothingHeadHelmetNTCCConsortium
+  name: nt cc consortium helmet
+  description: An in-atmosphere helmet worn by NT-CC Consortium Officers.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/ntcc_helmet.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/ntcc_helmet.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD

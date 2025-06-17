@@ -2,7 +2,7 @@
   id: MailSyndicateSpamLetter
   name: Reasons to choose The Syndicate!
   description: An advertisement for the Syndicate. Wont fit in a fax somehow.
-  parent: Paper
+  parent: [ Paper, BaseSyndicateContraband ]
   components:
     - type: Paper
       content: delivery-spam-reasons-to-join-syndicate
@@ -16,12 +16,12 @@
   id: MailSpamDontYouWantMore
   name: Don't You Want More?
   description: An inciting paper that smells faintly of welding fuel and desire. Wont fit in a fax somehow.
-  parent: Paper
+  parent: [ Paper, BaseMajorContraband ]
   components:
     - type: Paper
       content: deliver-spam-dont-you-want-more
     - type: AntagOnSign
-      chance: 1 # theif is a "low impact" antag... not for much longer :3
+      chance: .5
       antags:
         - antag: Traitor # gotta be a traitor for the traitor objectives
           targetComponent: TraitorRule
@@ -84,6 +84,8 @@
         - RDHardsuitStealObjective
         - NukeDiskStealObjective
         - MagbootsStealObjective
+        - RDDiplomaStealObjective
+        - CMOLicenseStealObjective
         # no ian meat because you are a pacifist and need them alive
         - ClipboardStealObjective #QM's digiboard
         - CaptainGunStealObjective

@@ -19,6 +19,7 @@
       - id: BoxFolderClipboardFilled
       - id: PrinterDocFlatpack
       - id: FaxMachineFlatpack
+      - id: PlushieEmmie
   
 - type: entity
   id: LockerRepresentativeFilledBluespaced

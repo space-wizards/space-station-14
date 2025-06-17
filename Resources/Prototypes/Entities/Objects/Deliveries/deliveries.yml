@@ -163,7 +163,7 @@
     - id: DeliveryModifierFragile
       prob: 0.25
     - id: DeliveryModifierBomb
-      prob: 0.02 # Should happen maybe once or twice per game.
+      prob: 0.01 # Should happen maybe once or twice per game.
 
 - type: entity
   id: DeliveryModifierPriority

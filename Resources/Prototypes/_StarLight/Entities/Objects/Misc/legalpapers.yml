@@ -1,0 +1,43 @@
+- type: entity
+  name: rd's diploma
+  categories: [ DoNotMap ]
+  parent: [ BasePaper, BaseGrandTheftContraband ]
+  id: RDDiploma
+  description: 'The Research Directors Diploma. You cant believe they went to that school!'
+  components:
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+    - HighRiskItem
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/legalpapers/rd-diploma.rsi
+    state: rd-diploma
+  - type: StaticPrice
+    price: 1000
+  - type: StealTarget
+    stealGroup: RDDiplomaSteal
+  - type: Item
+    size: Small
+    
+- type: entity
+  name: cmo's medical license
+  categories: [ DoNotMap ]
+  parent: [ BasePaper, BaseGrandTheftContraband ]
+  id: CMOLicense
+  description: 'The Chief Medical Officers Medical License. You cant believe its not expired.'
+  components:
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+    - HighRiskItem
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/legalpapers/cmo-license.rsi
+    state: cmo-license
+  - type: StaticPrice
+    price: 1000
+  - type: StealTarget
+    stealGroup: CMOLicenseSteal
+  - type: Item
+    size: Small

@@ -22,6 +22,8 @@
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
     EnergyShotgunStealObjective: 0.5
+    RDDiplomaStealObjective: 1 #Starlight Unique Targets
+    CMOLicenseStealObjective: 1 #Starlight Unique Targets
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill

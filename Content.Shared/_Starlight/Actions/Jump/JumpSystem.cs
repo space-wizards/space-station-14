@@ -40,7 +40,10 @@ public abstract class SharedJumpSystem : EntitySystem
     }
 
     private void OnGetItemActions(Entity<JumpComponent> ent, ref GetItemActionsEvent args)
-        => args.AddAction(ref ent.Comp.ActionEntity, ent.Comp.Action);
+    {
+        if(ent.Comp.IsEquipment)
+            args.AddAction(ref ent.Comp.ActionEntity, ent.Comp.Action);
+    }
 
     private void OnStartup(EntityUid uid, JumpComponent component, MapInitEvent args)
     {
