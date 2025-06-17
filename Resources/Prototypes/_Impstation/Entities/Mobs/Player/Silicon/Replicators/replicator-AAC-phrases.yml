@@ -1,30 +1,6 @@
 - type: quickPhraseGroup
   id: ReplicatorPhrases
   prototypes:
-# Safety
-    - SafetyInDangerPhrase
-    - SafetyInjuredPhrase
-    - SafetyEscapePhrase
-    - SafetyHazardousPhrase
-    - SafetyNotPhrase
-    - SafetyYouArePhrase
-    - SafetyIAmPhrase
-# Species
-    - ReplicatorOrganicPhrase
-    - ReplicatorSiliconPhrase
-# Actions
-    - ShowMePhrase
-    - HelpPhrase
-    - AttackPhrase
-    - BreakPhrase
-    - RunPhrase
-# Tools
-    - WrenchPhrase
-    - CrowbarPhrase
-    - ScrewdriverPhrase
-    - WirecutterPhrase
-    - WeldingToolPhrase
-    - MultitoolPhrase
 # Laws
     - ReplicatorLaw1Phrase
     - ReplicatorLaw2Phrase
@@ -32,55 +8,47 @@
 # Directions
     - LocationNearPhrase
     - LocationFarPhrase
-    - LocationInsidePhrase
-    - LocationOutsidePhrase
     - LocationNorthPhrase
     - LocationEastPhrase
     - LocationSouthPhrase
     - LocationWestPhrase
-    - LocationNorthEastPhrase
-    - LocationSouthEastPhrase
-    - LocationSouthWestPhrase
-    - LocationNorthWestPhrase
-# Pronouns
-    - ItPhrase
-    - WePhrase
-    - WeArePhrase
-# Hostiles
-    - HostileLifeformPhrase
-    - HostileEntityPhrase
-    - HostileWeaponPhrase
-# Manners
-    - YesPhrase
-    - NoPhrase
-# Commands
-    - GoAwayPhrase
-    - GoToPhrase
-    - DoNotPhrase
-    - ThisPhrase
-    - TakePhrase
-    - LeavePhrase
-    - StopPhrase
-    - WaitPhrase
+# Nouns
+    - RepYouPhrase
+    - RepWePhrase
+    - RepUnitPhrase
+    - RepUnitsPhrase
+    - RepThisUnitPhrase
+    - RepTheNestPhrase
+    - RepTheHivePhrase
+# Verbs
+    - RepArePhrase
+    - RepIsPhrase
+    - RepWillPhrase
+    - RepNotPhrase
+    - RepLeavePhrase
+    - RepAttackPhrase
+    - RepDismantlePhrase
+    - RepConsumePhrase
+    - RepEndangerPhrase
+    - RepCeasePhrase
+    - RepSuspendPhrase
+# Alignment
+    - RepHostilePhrase
+    - RepCombatantPhrase
+    - RepNoncombatantPhrase
+    - RepAllyPhrase
+    - RepHazardousPhrase
+# Confirmation
+    - RepAffirmativePhrase
+    - RepNegativePhrase
+    - RepQueryPhrase
+    - RepQuestionMarkPhrase
 # Questions
     - WherePhrase
-    - WhoPhrase
     - WhatPhrase
     - WhyPhrase
     - HowPhrase
     - WhenPhrase
-    - WhichPhrase
-
-# Species
-- type: quickPhrase
-  id: ReplicatorOrganicPhrase
-  parent: BaseSpeciesPhrase
-  text: repli-phrase-species-organic
-
-- type: quickPhrase
-  id: ReplicatorSiliconPhrase
-  parent: BaseSpeciesPhrase
-  text: repli-phrase-species-silicon
 
 # Laws
 - type: quickPhrase
@@ -98,13 +66,141 @@
   tab: Laws
   text: law-replicator-3
 
-# Pronouns
+# Nouns
 - type: quickPhrase
-  id: WePhrase
-  parent: BaseNounsPhrase
-  text: phrase-we
+  id: RepYouPhrase
+  tab: Nouns
+  text: rep-phrase-you
 
 - type: quickPhrase
-  id: WeArePhrase
-  parent: BaseNounsPhrase
-  text: phrase-we-are
+  id: RepWePhrase
+  tab: Nouns
+  text: rep-phrase-we
+
+- type: quickPhrase
+  id: RepUnitPhrase
+  tab: Nouns
+  text: rep-phrase-unit
+
+- type: quickPhrase
+  id: RepUnitsPhrase
+  tab: Nouns
+  text: rep-phrase-units
+
+- type: quickPhrase
+  id: RepThisUnitPhrase
+  tab: Nouns
+  text: rep-phrase-i
+
+- type: quickPhrase
+  id: RepTheNestPhrase
+  tab: Nouns
+  text: rep-phrase-the-nest
+
+- type: quickPhrase
+  id: RepTheHivePhrase
+  tab: Nouns
+  text: rep-phrase-the-hive
+
+# Verbs
+- type: quickPhrase
+  id: RepArePhrase
+  tab: Verbs
+  text: rep-phrase-are
+
+- type: quickPhrase
+  id: RepIsPhrase
+  tab: Verbs
+  text: rep-phrase-is
+
+- type: quickPhrase
+  id: RepWillPhrase
+  tab: Verbs
+  text: rep-phrase-will
+
+- type: quickPhrase
+  id: RepNotPhrase
+  tab: Verbs
+  text: rep-phrase-not
+
+- type: quickPhrase
+  id: RepLeavePhrase
+  tab: Verbs
+  text: rep-phrase-leave
+
+- type: quickPhrase
+  id: RepAttackPhrase
+  tab: Verbs
+  text: rep-phrase-attack
+
+- type: quickPhrase
+  id: RepDismantlePhrase
+  tab: Verbs
+  text: rep-phrase-dismantle
+
+- type: quickPhrase
+  id: RepConsumePhrase
+  tab: Verbs
+  text: rep-phrase-consume
+
+- type: quickPhrase
+  id: RepEndangerPhrase
+  tab: Verbs
+  text: rep-phrase-endanger
+
+- type: quickPhrase
+  id: RepCeasePhrase
+  tab: Verbs
+  text: rep-phrase-cease
+
+- type: quickPhrase
+  id: RepSuspendPhrase
+  tab: Verbs
+  text: rep-phrase-suspend
+
+# Confirmation
+- type: quickPhrase
+  id: RepAffirmativePhrase
+  tab: Confirmation
+  text: rep-phrase-affirmative
+
+- type: quickPhrase
+  id: RepNegativePhrase
+  tab: Confirmation
+  text: rep-phrase-negative
+
+- type: quickPhrase
+  id: RepQueryPhrase
+  tab: Confirmation
+  text: rep-phrase-query
+
+- type: quickPhrase
+  id: RepQuestionMarkPhrase
+  tab: Confirmation
+  text: rep-phrase-questionmark
+
+# Alignment
+- type: quickPhrase
+  id: RepHostilePhrase
+  tab: Alignment
+  text: rep-phrase-hostile
+
+- type: quickPhrase
+  id: RepCombatantPhrase
+  tab: Alignment
+  text: rep-phrase-combatant
+
+- type: quickPhrase
+  id: RepNoncombatantPhrase
+  tab: Alignment
+  text: rep-phrase-noncombatant
+
+- type: quickPhrase
+  id: RepAllyPhrase
+  tab: Alignment
+  text: rep-phrase-ally
+
+- type: quickPhrase
+  id: RepHazardousPhrase
+  tab: Alignment
+  text: rep-phrase-hazardous

@@ -47,7 +47,7 @@
     state: t1weapon
   - type: Appearance
   - type: Gun
-    fireRate: 1
+    fireRate: 0.3
     soundGunshot:
       path: /Audio/_Impstation/Weapons/Guns/Gunshots/stunprojector.ogg
   - type: HitscanBatteryAmmoProvider
@@ -100,7 +100,7 @@
   - type: MeleeWeapon
     attackRate: 1.2
     wideAnimationRotation: 180
-    soundHit: 
+    soundHit:
       collection: MetalThud
     animation: WeaponArcSlash
     damage:
@@ -125,7 +125,7 @@
   - type: MeleeWeapon
     attackRate: 0.5
     wideAnimationRotation: 180
-    soundHit: 
+    soundHit:
       path: "/Audio/Effects/metal_slam4.ogg"
     animation: WeaponArcSlash
     damage:
@@ -192,11 +192,7 @@
 
 - type: hitscan
   id: HitscanReplicator
-  staminaDamage: 12.5
-  damage:
-    types:
-      Heat: 4
-      Shock: 3
+  staminaDamage: 25
   muzzleFlash:
     sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
     state: muzzle_repli

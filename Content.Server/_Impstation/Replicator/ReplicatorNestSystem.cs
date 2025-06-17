@@ -15,6 +15,7 @@ using Content.Shared.Destructible;
 using Content.Shared.Explosion.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
+using Content.Shared.Mech.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
@@ -77,6 +78,7 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
                 !HasComp<HumanoidAppearanceComponent>(uid) && // Store people
                 !HasComp<OnUseTimerTriggerComponent>(uid) && // Store grenades
                 !HasComp<StealTargetComponent>(uid) && // Store steal targets
+                !HasComp<MechComponent>(uid) && // Store mechs like Ripley
                 !TryComp<MindContainerComponent>(uid, out var mind) | (mind != null && !mind!.HasMind)) // Store anything else that has a mind
             {
                 toDel.Add(uid);
@@ -251,7 +253,7 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
             else
                 locationsList = string.Concat(locationsList, $"[/color]and [color=#d70aa0]{location}[/color].");
 
-            totalPoints += pointsStorage.TotalPoints;
+            totalPoints += pointsStorage.TotalPoints / 10; // dividing by ten gives us a slightly more manageable number + keeps it consistent with pre-stackcount point calculation.
 
             totalSpawned += pointsStorage.TotalReplicators;
 
