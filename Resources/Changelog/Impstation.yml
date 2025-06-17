@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Nutribricks are far less nutritious...
-    type: Tweak
-  - message: Chefs will notice a subtle but substantial increase in the intensity
-      of their output.
-    type: Tweak
-  - message: Yeah um so it turns out every food from a vending machine had no nutritional
-      value. That's fixed now. Oops.
-    type: Fix
-  id: 1357
-  time: '2025-03-21T01:11:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2021
 - author: Darkmajia
   changes:
   - message: Ore processors default to producing 10 sheets of materials, as intended.
@@ -4206,3 +4193,10 @@
   id: 1856
   time: '2025-06-17T07:33:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2795
+- author: DinnerCalzone
+  changes:
+  - message: Fixed genpop closets using wrong sprites.
+    type: Fix
+  id: 1857
+  time: '2025-06-17T08:23:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2794
