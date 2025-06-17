@@ -31,6 +31,55 @@
       - id: ClothingUniformJumpskirtPrisoner
       - id: ClothingShoesColorBlack
     - id: ClothingMaskMuzzle
+    - !type:GroupSelector
+      prob: 0.15
+      rolls: !type:ConstantNumberSelector
+        value: 2
+      children:
+      - id: FoodSnackBoritos
+      - id: FoodSnackCheesie
+      - id: FoodSnackChips
+      - id: FoodSnackRaisins
+      - id: FoodSnackMREBrownie
+      - id: FoodSnackChocolate
+      - id: FoodSnackChowMein
+    - !type:GroupSelector
+      prob: 0.25
+      children:
+      - id: BookRandomStory
+      - id: BookRandom
+    - !type:GroupSelector
+      prob: 0.15
+      children:
+      - id: Flare
+      - id: BarberScissors
+      - id: FlippoLighter
+      - id: trayScanner
+      - id: Wristwatch
+      - id: ClothingNeckBling
+      - id: ClothingNeckHeadphones
+      - id: DiceBag
+      - id: PersonalAI
+      - id: CrayonBox
+      - id: HarmonicaInstrument
+      - id: ToyAmongPequeno
+      - id: WhoopieCushion
+      - id: Brutepack
+      - id: StrangePill
+      - id: Shiv
+    - !type:GroupSelector
+      prob: 0.1
+      children:
+      - id: CigPackBlack
+      - id: Joint
+      - id: Blunt
+      - id: PackPaperRolling
+      - id: Cigarette
+        amount: !type:RangeNumberSelector
+          range: 1, 4
+      - id: GroundCannabis
+        amount: !type:RangeNumberSelector
+          range: 1, 6
 
 #- type: entity
 #  id: WardrobePajamaFilled
