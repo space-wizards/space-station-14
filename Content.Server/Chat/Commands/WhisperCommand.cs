@@ -6,7 +6,7 @@ using Robust.Shared.Enums;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal sealed class WhisperCommand : LocalizedEntityCommands
+    public sealed class WhisperCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         public override string Command => "whisper";

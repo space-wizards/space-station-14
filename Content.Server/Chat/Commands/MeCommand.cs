@@ -6,7 +6,7 @@ using Robust.Shared.Enums;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal sealed class MeCommand : LocalizedEntityCommands
+    public sealed class MeCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly ChatSystem _chatSystem = default!;
 
