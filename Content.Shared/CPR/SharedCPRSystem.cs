@@ -32,14 +32,15 @@ public abstract partial class SharedCPRSystem : EntitySystem
     public const float CPRDoAfterDelay = 0.7f;
     public const float CPRAnimationLength = 0.2f;
     public const float CPRAnimationEndTime = 1f; // This is set to much higher than the actual animation length to avoid it stopping prematurely, as it did in testing. Shouldnt affect anything
-    public const float AssistedDurationMultiplier = 2f; // This is used as a mulitplier on DoAfterDelay to determine how long the AssistedRespiration will last.
     private bool _cprRepeat;
+    private float _cprEffectDuration;
 
     public override void Initialize()
     {
         base.Initialize();
 
         _config.OnValueChanged(CCVars.CPRRepeat, value => _cprRepeat = value, true);
+        _config.OnValueChanged(CCVars.CPREffectDuration, value => _cprEffectDuration = value, true);
 
         SubscribeLocalEvent<CPRComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
         SubscribeLocalEvent<CPRComponent, CPRDoAfterEvent>(OnCPRDoAfter);
@@ -114,7 +115,7 @@ public abstract partial class SharedCPRSystem : EntitySystem
         // assist respiration of the target
         var assist = EnsureComp<AssistedRespirationComponent>(ent);
 
-        var newUntil = Timing.CurTime + TimeSpan.FromSeconds(CPRDoAfterDelay * AssistedDurationMultiplier);
+        var newUntil = Timing.CurTime + TimeSpan.FromSeconds(CPRDoAfterDelay * _cprEffectDuration);
         // comparing just in case other future sources may provide a longer timeframe of assisted respiration
         if (newUntil > assist.AssistedUntil)
             assist.AssistedUntil = newUntil;

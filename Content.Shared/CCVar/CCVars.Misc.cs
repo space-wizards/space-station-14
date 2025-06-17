@@ -101,4 +101,13 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> CPRRepeat =
         CVarDef.Create("cpr.repeat", true, CVar.SERVER);
+
+    /// <summary>
+    ///     This is used as a mulitplier on the CPR doafter duration, to determine how long the effect of the CPR will last.
+    ///     When set to 1, the effect of a CPR action will last for exactly as long as it takes to perform the next CPR action
+    ///     Players will never be able to do this perfectly in manual mode, due to reflexes and potential lag
+    ///     So an increased multiplier makes it easier not to leave "gaps" in the CPR where the targets's breathing may skip a phase
+    /// </summary>
+    public static readonly CVarDef<float> CPREffectDuration =
+        CVarDef.Create("cpr.effect_duration", 2f, CVar.SERVER);
 }
