@@ -13,13 +13,13 @@
     FoodCondimentBottleVinegar: 4
     ReagentContainerOliveoil: 4
     ReagentContainerMayo: 2
-    VariantCubeBox: 1
+    ChefCubeBox: 1 #imp, previously was VariantCubeBox
     FoodContainerEgg: 2
     DrinkMilkCarton: 4
     DrinkSoyMilkCarton: 2
     FoodButter: 6
     FoodCheese: 2
-    FoodMeat: 12
+    FoodMeat: 16 #imp, original - 12, upped slightly to account for mild monkey repossession
   contrabandInventory:
     EggBoxBroken: 1
     FoodBoxDonkpocket: 1
