@@ -28,6 +28,7 @@
   parent: MaterialBase
   id: MaterialCardboard
   name: cardboard
+  description: A tough corrugated paper that is really neither card nor board. # imp
   suffix: Full
   components:
   - type: Material
@@ -97,6 +98,7 @@
   parent: MaterialBase
   id: MaterialCloth
   name: cloth
+  description: A fibrous textile, ancient in origin. # imp
   suffix: Full
   components:
   - type: Healing
@@ -185,89 +187,9 @@
 
 - type: entity
   parent: MaterialBase
-  id: MaterialHempCloth
-  name: hemp cloth
-  suffix: Full
-  components:
-  - type: Healing
-    damageContainers:
-      - Biological
-    damage:
-      types:
-        Slash: -0.3
-        Piercing: -0.3
-    bloodlossModifier: -2
-    healingBeginSound:
-      path: "/Audio/Items/Medical/brutepack_begin.ogg"
-    healingEndSound:
-      path: "/Audio/Items/Medical/brutepack_end.ogg"
-  - type: Stack
-    stackType: HempCloth
-    baseLayer: base
-    layerStates:
-    - hemp_cloth
-    - hemp_cloth_2
-    - hemp_cloth_3
-  - type: Material
-  - type: PhysicalComposition
-    materialComposition:
-      HempCloth: 100
-  - type: Sprite
-    state: hemp_cloth_3
-    layers:
-    - state: hemp_cloth_3
-      map: ["base"]
-  - type: Appearance
-  - type: Food
-    requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 5
-        - ReagentId: THC
-          Quantity: 5
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 4
-      - ReagentId: THC
-        Quantity: 4
-  - type: Tag
-    tags:
-      - ClothMade
-      - RawMaterial
-  - type: Construction
-    graph: HempObjects
-    node: hempcloth
-
-- type: entity
-  parent: MaterialHempCloth
-  id: MaterialHempCloth10
-  suffix: 10
-  components:
-  - type: Sprite
-    state: hemp_cloth
-  - type: Stack
-    count: 10
-
-- type: entity
-  parent: MaterialHempCloth
-  id: MaterialHempCloth1
-  suffix: Single
-  components:
-  - type: Sprite
-    state: hemp_cloth
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: MaterialBase
   id: MaterialDurathread
   name: durathread
+  description: A tough textile made from cloth and plastic, useful for armor, uniforms, or nice bedsheets. # imp
   suffix: Full
   components:
   - type: Stack
@@ -328,6 +250,7 @@
   parent: MaterialBase
   id: MaterialWoodPlank
   name: wood
+  description: A material made from trees. It's time to carpent. # imp
   suffix: Full
   components:
   - type: Material
@@ -412,6 +335,7 @@
   parent: MaterialBase
   id: MaterialBiomass
   name: biomass
+  description: Pure biological currency. One full cube contains about the same amount of suffering as your entire body. # imp
   suffix: Full
   components:
   - type: Material
@@ -441,6 +365,7 @@
   parent: MaterialBase
   id: MaterialHideBear
   name: bear hide
+  description: AAH! WHERE!!! # imp is this funny i dont know is this funny
   components:
   - type: Sprite
     sprite: Objects/Materials/materials.rsi
@@ -491,6 +416,7 @@
   parent: MaterialBase
   id: MaterialDiamond
   name: refined diamond
+  description: A luxurious pure carbon jewel, used throughout history for jewelry and engineering. # imp
   suffix: Full
   components:
   - type: Stack
@@ -537,6 +463,7 @@
   parent: MaterialBase
   id: MaterialCotton
   name: cotton
+  description: A soft, fibrous material that grows on a plant. The basis of the moth palate. # imp
   suffix: Full
   components:
   - type: Stack
@@ -595,61 +522,9 @@
 
 - type: entity
   parent: MaterialBase
-  id: MaterialHemp
-  name: hemp
-  suffix: Full
-  components:
-  - type: Stack
-    stackType: Hemp
-    baseLayer: base
-    layerStates:
-    - hemp
-    - hemp_2
-    - hemp_3
-  - type: Sprite
-    state: hemp_3
-    layers:
-    - state: hemp_3
-      map: ["base"]
-  - type: Appearance
-  - type: Food
-    requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 5
-        - ReagentId: THC
-          Quantity: 5
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 4
-      - ReagentId: THC
-        Quantity: 4
-  - type: Tag
-    tags:
-      - ClothMade
-      - DroneUsable
-      - RawMaterial
-
-- type: entity
-  parent: MaterialHemp
-  id: MaterialHemp1
-  suffix: Single
-  components:
-  - type: Sprite
-    state: hemp
-  - type: Stack
-    count: 1
-
-- type: entity
-  parent: MaterialBase
   id: MaterialPyrotton
   name: pyrotton
+  description: An ever-burning cotton variant, ironically made by attempts to fireproof cotton. # imp
   suffix: Full
   components:
   - type: Stack
@@ -704,6 +579,7 @@
   parent: MaterialBase
   id: MaterialBananium
   name: bananium
+  description: An anomalous material. Has the exact same spatiotemporal properties as a banana. #imp
   suffix: Full
   components:
   - type: Material
@@ -765,7 +641,7 @@
   parent: MaterialBase
   id: MaterialWebSilk
   name: silk
-  description: A webby material.
+  description: A webby material produced by bugs, once thought quite luxurious. #imp
   suffix: Full
   components:
   - type: PhysicalComposition
@@ -906,6 +782,7 @@
   parent: MaterialBase
   id: MaterialBones
   name: bones
+  description: Most crew members have at least one of these. # imp
   suffix: Full
   components:
   - type: Stack
@@ -950,7 +827,7 @@
   parent: MaterialBase
   id: MaterialGunpowder
   name: gunpowder
-  description: An explosive compound.
+  description: An explosive compound. Outdated, but still bangs. # imp
   components:
   - type: Stack
     stackType: Gunpowder

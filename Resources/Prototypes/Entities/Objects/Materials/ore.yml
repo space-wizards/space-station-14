@@ -2,7 +2,7 @@
   abstract: true
   parent: BaseItem
   id: OreBase
-  description: A piece of unrefined ore.
+  description: A piece of unrefined ore. Where's the furnace when you need it? # imp
   components:
   - type: Sprite
     sprite: Objects/Materials/ore.rsi

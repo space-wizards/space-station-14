@@ -459,7 +459,7 @@
   parent: BaseScrapLarge
   id: ScrapGeneratorPlasmaLeaking
   name: leaking P.A.C.M.A.N. generator
-  description: An old looking P.A.C.M.A.N. generator whos plasma tanks started leaking.
+  description: An old-looking P.A.C.M.A.N. generator. Its plasma tanks have leaked all over the place. # imp edit
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
@@ -477,7 +477,7 @@
   parent: BaseScrapLarge
   id: ScrapGeneratorPlasma
   name: old P.A.C.M.A.N. generator
-  description: An old looking P.A.C.M.A.N. generator. It's in very poor condition and non functional.
+  description: An old-looking P.A.C.M.A.N. generator. There's no way it's getting fixed in this state. # imp rephrase
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi
@@ -493,7 +493,7 @@
   parent: BaseScrapLarge
   id: ScrapGeneratorUraniumLeaking
   name: leaking S.U.P.E.R.P.A.C.M.A.N. generator
-  description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some kind of catastrophic failure. Its leaking uranium.
+  description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some kind of catastrophic failure. It's leaking uranium. # imp rephrase
   components:
   - type: Sprite
     sprite: Objects/Materials/Scrap/generator.rsi

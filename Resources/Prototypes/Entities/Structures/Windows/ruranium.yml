@@ -57,7 +57,7 @@
   id: UraniumReinforcedWindowDirectional
   parent: WindowDirectional
   name: directional reinforced uranium window
-  description: Don't smudge up the glass down there.
+  description:  Zii yaer smudge vru thusd glass keb there. # imp
   placement:
     mode: SnapgridCenter
     snap:

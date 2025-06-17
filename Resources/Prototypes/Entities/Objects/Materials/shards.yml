@@ -89,7 +89,7 @@
   parent: ShardBase
   id: ShardGlass
   name: glass shard
-  description: A small piece of glass.
+  description: The humble glass shard. Sharp. Fragile. Tiny. Inelegant. And very, very accessible. #imp
   components:
   - type: Sprite
     color: "#bbeeff"
@@ -120,7 +120,7 @@
   parent: ShardBase
   id: ShardGlassReinforced
   name: reinforced glass shard
-  description: A small piece of reinforced glass.
+  description: ...'Reinforced', you say? Well, not anymore. At least its temper remains... #imp
   components:
   - type: Sprite
     color: "#96cdef"
@@ -148,6 +148,10 @@
         reagents:
         - ReagentId: Silicon
           Quantity: 5 #I don't care enough to divide all of the reinforced glass materials by 2 because reinforced glass shards are due for removal anyways.
+        - ReagentId: Iron # imp; don't worry 17-months-ago upstream i got you it's really easy (also the other glass shards are out of 10u anyway so who even gives a fuck)
+          Quantity: 4
+        - ReagentId: Carbon # imp ^
+          Quantity: 1
   - type: Construction
     graph: ReinforcedShivConstruct
     node: start
@@ -156,7 +160,7 @@
   parent: ShardBase
   id: ShardGlassPlasma
   name: plasma glass shard
-  description: A small piece of plasma glass.
+  description: If you attack someone with this, they might get really mad at you. #imp
   components:
   - type: Sprite
     color: "#FF72E7"
@@ -194,7 +198,7 @@
   parent: ShardBase
   id: ShardGlassUranium
   name: uranium glass shard
-  description: A small piece of uranium glass.
+  description: A broken, likely-to-shorten-your-lifespan piece of uranium glass. #imp
   components:
   - type: Sprite
     color: "#8eff7a"
@@ -234,7 +238,7 @@
   parent: ShardBase
   id: ShardGlassClockwork
   name: clockwork glass shard
-  description: A small piece of brass-infused glass.
+  description: Gubfr jub yvir va tynff ubhfrf fubhyqa'g guebj fgbarf. # imp; "those who live in glass houses shouldn't throw stones"
   components:
   - type: Sprite
     color: "#e0aa36"

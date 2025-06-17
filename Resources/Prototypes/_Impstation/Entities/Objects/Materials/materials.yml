@@ -1,0 +1,135 @@
+- type: entity
+  parent: MaterialBase
+  id: MaterialHempCloth
+  name: hemp cloth
+  description: Fast-growing cloth made from a cultivar of cannabis. A mothy food with some psychoactive properties.
+  suffix: Full
+  components:
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Slash: -0.3
+        Piercing: -0.3
+    bloodlossModifier: -2
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: HempCloth
+    baseLayer: base
+    layerStates:
+    - hemp_cloth
+    - hemp_cloth_2
+    - hemp_cloth_3
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      HempCloth: 100
+  - type: Sprite
+    state: hemp_cloth_3
+    layers:
+    - state: hemp_cloth_3
+      map: ["base"]
+  - type: Appearance
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: THC
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 4
+      - ReagentId: THC
+        Quantity: 4
+  - type: Tag
+    tags:
+      - ClothMade
+      - RawMaterial
+  - type: Construction
+    graph: HempObjects
+    node: hempcloth
+
+- type: entity
+  parent: MaterialHempCloth
+  id: MaterialHempCloth10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: hemp_cloth
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: MaterialHempCloth
+  id: MaterialHempCloth1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: hemp_cloth
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialHemp
+  name: hemp
+  description: Impressively multipurpose. A mothy snack that has psychoactive properties.
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: Hemp
+    baseLayer: base
+    layerStates:
+    - hemp
+    - hemp_2
+    - hemp_3
+  - type: Sprite
+    state: hemp_3
+    layers:
+    - state: hemp_3
+      map: ["base"]
+  - type: Appearance
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: THC
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 4
+      - ReagentId: THC
+        Quantity: 4
+  - type: Tag
+    tags:
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
+
+- type: entity
+  parent: MaterialHemp
+  id: MaterialHemp1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: hemp
+  - type: Stack
+    count: 1

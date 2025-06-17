@@ -206,7 +206,7 @@
   name: shiv
   parent: [BaseKnife, BaseMinorContraband]
   id: Shiv
-  description: A crude weapon fashioned from a piece of cloth and a glass shard.
+  description: Got me a loicense for stabbin' right 'ere. # imp
   components:
   - type: Tag
     tags:
@@ -235,7 +235,7 @@
   name: reinforced shiv
   parent: Shiv
   id: ReinforcedShiv
-  description: A crude weapon fashioned from a piece of cloth and a reinforced glass shard.
+  # description: A crude weapon fashioned from a piece of cloth and a reinforced glass shard. # imp comment-out
   components:
   - type: Construction
     graph: ReinforcedShiv
@@ -254,7 +254,7 @@
   name: plasma shiv
   parent: Shiv
   id: PlasmaShiv
-  description: A crude weapon fashioned from a piece of cloth and a plasma glass shard.
+  description: A broken piece of plasma glass, wrapped to be brandished as a crude weapon. The pinkness of the glass makes it do extra damage. # imp
   components:
   - type: Construction
     graph: PlasmaShiv
@@ -273,7 +273,7 @@
   name: uranium shiv
   parent: Shiv
   id: UraniumShiv
-  description: A crude weapon fashioned from a piece of cloth and a uranium glass shard. Violates the geneva convention!
+  description: A broken piece of uranium glass, wrapped to be brandished as a crude weapon. Violates the Geneva convention! # imp rephrase
   components:
   - type: Construction
     graph: UraniumShiv

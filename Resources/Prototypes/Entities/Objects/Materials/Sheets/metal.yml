@@ -39,6 +39,7 @@
   parent: SheetMetalBase
   id: SheetSteel
   name: steel
+  description: A sheet of super-tough metal. Can stand the test of time. # imp
   suffix: Full
   components:
   - type: Material
@@ -197,6 +198,7 @@
   parent: SheetMetalBase
   id: SheetPlasteel
   name: plasteel
+  description: A sheet of plasma-hardened steel. Strength, tempered by uncertainty. # imp
   suffix: Full
   components:
   - type: Material

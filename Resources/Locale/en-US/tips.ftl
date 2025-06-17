@@ -14,7 +14,8 @@ tips-dataset-13 = Some reagents, like chlorine trifluoride, have unique effects 
 tips-dataset-14 = Remember to touch grass in between playing Space Station 14 every once in a while.
 tips-dataset-15 = You can use the Activate in World keybind, E by default, to interact with objects while your hands are full, or without picking them up.
 tips-dataset-16 = Common sense goes a long way to avoiding conflict.
-tips-dataset-17 = Every other player in game is a human being as well.
+# imp edit for tip 17 because Therians are Based
+tips-dataset-17 = Every other player in game is a real person, too.
 tips-dataset-18 = When running the Singularity, make sure to check on it periodically. If sabotaged, it could put the entire station at risk.
 tips-dataset-19 = If the Singularity is up, make sure to refuel the radiation collectors once in a while.
 tips-dataset-20 = Chemicals don't react while inside the ChemMaster's buffer.

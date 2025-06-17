@@ -30,6 +30,7 @@
   parent: IngotBase
   id: IngotGold
   name: gold bar
+  description: Invulnerable to the passage of time. All that glitters... # imp
   suffix: Full
   components:
   - type: Material
@@ -75,6 +76,7 @@
   parent: IngotBase
   id: IngotSilver
   name: silver bar
+  description: Apparently useful for killing monsters. # imp
   suffix: Full
   components:
   - type: Material

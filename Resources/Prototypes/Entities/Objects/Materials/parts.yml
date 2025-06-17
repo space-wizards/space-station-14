@@ -27,6 +27,7 @@
   parent: PartBase
   id: PartRodMetal
   name: metal rod
+  description: A long piece of steel. Very movable. # imp
   suffix: Full
   components:
   - type: PhysicalComposition

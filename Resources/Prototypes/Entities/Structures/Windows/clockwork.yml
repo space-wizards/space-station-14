@@ -1,7 +1,7 @@
 - type: entity
   id: ClockworkWindow
   name: clockwork window
-  description: Don't smudge up the brass down there.
+  description: Qba'g fzhqtr hc gur tynff qbja gurer. # imp
   parent: Window
   components:
   - type: Sprite
@@ -57,7 +57,7 @@
   id: WindowClockworkDirectional
   parent: WindowDirectional
   name: directional clockwork window
-  description: Don't smudge up the brass down there.
+  description: Qba'g fzhqtr hc gur tynff qbja gurer. # imp
   placement:
     mode: SnapgridCenter
     snap:
