@@ -14,7 +14,6 @@
   parent: StatusEffectBase
   id: StatusEffectForcedSleeping
   name: forced sleep
-  categories: [ HideSpawnMenu ]
   components:
   - type: StatusEffect
     whitelist:
@@ -27,7 +26,6 @@
   parent: StatusEffectBase
   id: StatusEffectDrowsiness
   name: drowsiness
-  categories: [ HideSpawnMenu ]
   components:
   - type: StatusEffect
     whitelist:

@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.StatusEffect
@@ -6,6 +7,7 @@ namespace Content.Shared.StatusEffect
     [RegisterComponent]
     [NetworkedComponent]
     [Access(typeof(StatusEffectsSystem))]
+    [EntityCategory("HideSpawnMenu")]
     public sealed partial class StatusEffectsComponent : Component
     {
         [ViewVariables]

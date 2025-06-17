@@ -190,13 +190,15 @@ public readonly record struct StatusEffectAppliedEvent(EntityUid Target);
 public readonly record struct StatusEffectRemovedEvent(EntityUid Target);
 
 /// <summary>
-/// Called on a status effect entity inside <see cref="StatusEffectContainerComponent"/> after a player has been <see cref="LocalPlayerAttachedEvent"/> to this container entity.
+/// Called on a status effect entity inside <see cref="StatusEffectContainerComponent"/>
+/// after a player has been <see cref="LocalPlayerAttachedEvent"/> to this container entity.
 /// </summary>
 [ByRefEvent]
 public readonly record struct StatusEffectPlayerAttachedEvent(EntityUid Target);
 
 /// <summary>
-/// Called on a status effect entity inside <see cref="StatusEffectContainerComponent"/> after a player has been <see cref="LocalPlayerDetachedEvent"/> to this container entity.
+/// Called on a status effect entity inside <see cref="StatusEffectContainerComponent"/>
+/// after a player has been <see cref="LocalPlayerDetachedEvent"/> to this container entity.
 /// </summary>
 [ByRefEvent]
 public readonly record struct StatusEffectPlayerDetachedEvent(EntityUid Target);
