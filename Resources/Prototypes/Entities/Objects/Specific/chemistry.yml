@@ -250,36 +250,6 @@
 
 - type: entity
   parent: Beaker
-  id: BeakerSmallSaline
-  suffix: saline
-  components:
-  - type: Label
-    currentLabel: reagent-name-saline
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 50
-        reagents:
-        - ReagentId: Saline
-          Quantity: 50
-
-- type: entity
-  parent: Beaker
-  id: BeakerSmallDexPlus
-  suffix: dexalin plus
-  components:
-  - type: Label
-    currentLabel: reagent-name-dexalin-plus
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 50
-        reagents:
-        - ReagentId: DexalinPlus
-          Quantity: 50
-
-- type: entity
-  parent: Beaker
   id: BeakerSmallArith
   suffix: arithrazine
   components:
@@ -291,6 +261,36 @@
         maxVol: 50
         reagents:
         - ReagentId: Arithrazine
+          Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerSmallSigy
+  suffix: sigynate
+  components:
+  - type: Label
+    currentLabel: reagent-name-sigynate
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Sigynate
+          Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerSmallPhal
+  suffix: phalanximine
+  components:
+  - type: Label
+    currentLabel: reagent-name-phalanximine
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Phalanximine
           Quantity: 50
 
 - type: entity

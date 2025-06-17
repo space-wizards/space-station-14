@@ -91,7 +91,7 @@
   suffix: punct & tranex
   components:
   - type: Label
-    currentLabel: reagent-name-puncturase
+    currentLabel: reagent-name-puncturase-tranexamic
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -107,7 +107,7 @@
   suffix: pyra & derma
   components:
   - type: Label
-    currentLabel: reagent-name-pyrazine
+    currentLabel: reagent-name-pyrazine-dermaline
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -119,11 +119,27 @@
 
 - type: entity
   parent: Jug
-  id: JugTrico
-  suffix: tricordazine
+  id: JugDexPlusSaline
+  suffix: dex+ & saline
   components:
   - type: Label
-    currentLabel: reagent-name-tricordazine
+    currentLabel: reagent-name-dexalin-plus-saline
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        reagents:
+        - ReagentId: DexalinPlus
+          Quantity: 100
+        - ReagentId: Saline
+          Quantity: 100
+
+- type: entity
+  parent: Jug
+  id: JugTrico
+  suffix: tricordrazine
+  components:
+  - type: Label
+    currentLabel: reagent-name-tricordrazine
   - type: SolutionContainerManager
     solutions:
       beaker:
