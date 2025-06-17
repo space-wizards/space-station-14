@@ -7794,4 +7794,28 @@ Entries:
   id: 1076
   time: '2025-06-17T11:15:17.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/853
+- author: Trep_Maul
+  changes:
+  - message: mail bombs half as common
+    type: Tweak
+  id: 1077
+  time: '2025-06-17T11:16:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/848
+- author: Trep_Maul
+  changes:
+  - message: thief letter 50% chance on sign now
+    type: Tweak
+  id: 1078
+  time: '2025-06-17T11:16:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/848
+- author: Trep_Maul
+  changes:
+  - message: antag letters now show up significantly less, although thief is still
+      3 times as often as traitor. Should trigger about 1/10 rounds now instead of
+      almost every round. Multiple triggers should basically never happen in one round
+      anymore.
+    type: Tweak
+  id: 1079
+  time: '2025-06-17T11:16:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/848
 
