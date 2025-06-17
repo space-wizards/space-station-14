@@ -1,21 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Power grid events will no longer trigger announcements twice when they
-      finish.
-    type: Fix
-  id: 1349
-  time: '2025-03-19T22:54:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2013
-- author: Toby222
-  changes:
-  - message: Decapoids now spawn with their tanks equipped instead of in their hand
-    type: Add
-  id: 1350
-  time: '2025-03-19T22:53:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2014
-- author: Darkmajia
-  changes:
   - message: Fixed cyborg and drone batteries rapidly draining under certain conditions.
     type: Fix
   id: 1351
@@ -4195,3 +4180,21 @@
   id: 1848
   time: '2025-06-17T00:42:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2786
+- author: Stonylogray, mousesweater
+  changes:
+  - message: Due to licensing issues, asterade has been pulled from most vending machines.
+      They are now licensed under the brand Artic Seltz. Where health meets profit!
+    type: Tweak
+  id: 1849
+  time: '2025-06-17T00:47:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2623
+- author: crocodilecarousel
+  changes:
+  - message: lizard and thaven tails now layer good with clothes!
+    type: Tweak
+  - message: wagging tails work again, but won't be layered under clothing due to
+      limitations
+    type: Fix
+  id: 1850
+  time: '2025-06-17T00:47:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2613
