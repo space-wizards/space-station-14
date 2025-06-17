@@ -6,20 +6,25 @@
     - type: RandomHumanoidAppearance
       randomizeName: false
     - type: GhostTakeoverAvailable
+    - type: IdBind
 
 - type: randomHumanoidSettings
   id: EventHumanoidMindShielded
   parent: EventHumanoid
   components:
-    - type: MindShield
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
     - type: AntagImmune
 
 - type: randomHumanoidSettings
   id: EventHumanoidCentcomm
   parent: EventHumanoidMindShielded
+  randomizeName: false
   components:
   - type: AutoImplant
     implants:
+    - MindShieldImplant
     - DeathRattleImplantCentcomm
 
 ## Death Squad
@@ -43,7 +48,6 @@
 - type: randomHumanoidSettings
   id: DeathSquad
   parent: EventHumanoidCentcomm
-  randomizeName: false
   components:
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
@@ -84,7 +88,6 @@
 - type: randomHumanoidSettings
   id: ERTLeader
   parent: EventHumanoidCentcomm
-  randomizeName: false
   components:
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
