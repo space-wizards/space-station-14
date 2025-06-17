@@ -22,7 +22,7 @@ public sealed class GenericCounterAlertSystem : EntitySystem
     {
         var sprite = args.SpriteViewEnt.Comp;
 
-        var ev = new GetGenericAlertCounterAmountEvent();
+        var ev = new GetGenericAlertCounterAmountEvent(args.Alert);
         RaiseLocalEvent(args.ViewerEnt, ref ev);
 
         if (!ev.Handled)

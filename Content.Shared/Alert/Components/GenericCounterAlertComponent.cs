@@ -44,11 +44,11 @@ public sealed partial class GenericCounterAlertComponent : Component
 
 /// <summary>
 /// Event raised to gather the amount the alert will display.
-/// Needs to be marked as handled to display.
 /// </summary>
+/// <param name="Alert">The alert which is currently requesting an update.</param>
 /// <param name="Amount">The number to display on the alert.</param>
 [ByRefEvent]
-public record struct GetGenericAlertCounterAmountEvent(int? Amount = null)
+public record struct GetGenericAlertCounterAmountEvent(AlertPrototype Alert, int? Amount = null)
 {
     public bool Handled => Amount != null;
 }

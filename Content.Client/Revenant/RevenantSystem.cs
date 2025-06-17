@@ -47,6 +47,9 @@ public sealed class RevenantSystem : EntitySystem
         if (args.Handled)
             return;
 
+        if (ent.Comp.EssenceAlert != args.Alert)
+            return;
+
         args.Amount = ent.Comp.Essence.Int();
     }
 }
