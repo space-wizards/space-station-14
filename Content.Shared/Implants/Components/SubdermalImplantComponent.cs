@@ -96,9 +96,3 @@ public sealed partial class UseDnaScramblerImplantEvent : InstantActionEvent
 {
 
 }
-
-// Starlight
-public sealed partial class UseMagillitisSerumImplantEvent : InstantActionEvent
-{
-
-}
