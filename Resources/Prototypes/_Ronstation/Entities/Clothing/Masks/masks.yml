@@ -1,0 +1,43 @@
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownDallas
+  name: USA clown mask
+  description: Fun fact, this used to be given to patients in the medbay that haven't recieved treatment yet.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Mask/dallas.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Mask/dallas.rsi
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownChains
+  name: purple clown mask
+  description: Contrary to popular belief, you can't use this in a machine.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Mask/chains.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Mask/chains.rsi
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownHoxton
+  name: pink clown mask
+  description: It smells like a time paradox waiting to happen.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Mask/hoxton.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Mask/hoxton.rsi
+
+- type: entity
+  parent: ClothingMaskClown
+  id: ClothingMaskClownWolf
+  name: bloody clown mask
+  description: There's not actually blood on it. Sure looks like it, though.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Clothing/Mask/wolf.rsi
+  - type: Clothing
+    sprite: _Ronstation/Clothing/Mask/wolf.rsi
