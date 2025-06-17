@@ -16,6 +16,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Content.Shared.Examine;
+using Content.Shared.Localizations;
 
 namespace Content.Shared.Weapons.Reflect;
 
@@ -213,12 +214,19 @@ public sealed class ReflectSystem : EntitySystem
         if (!_toggle.IsActivated(ent.Owner) || value == 0 || ent.Comp.Reflects == ReflectType.None)
             return;
 
-        var type = ent.Comp.Reflects.ToString();
+        var compTypes = ent.Comp.Reflects.ToString().Split(", ");
 
-        // SOOOOOOOOOOO, DEPENDING ON THE HOW FTL SELECTOR WORKS THIS IS ONLY WAY TO DO IT PROPERLY.
-        // YES. THIS SENDS TO THE SELECTOR NON-CAMEL CASE SHIT AND REMOVES ANY ", " SO
-        // "Energy, Nonenergy" turs into "EnergyNonenergy"
-        args.PushMarkup(Loc.GetString("reflect-examine", ("value", value), ("type", type.Replace(", ", null))));
+        List<string> typeList = [];
+
+        for (var i = 0; i < compTypes.Length; i++)
+        {
+            var type = Loc.GetString(compTypes[i]);
+            typeList.Add(type);
+        }
+
+        var msg = ContentLocalizationManager.FormatList(typeList);
+
+        args.PushMarkup(Loc.GetString("reflect-examine", ("value", value), ("type", msg)));
     }
     #endregion
 }
