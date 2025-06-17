@@ -75,12 +75,9 @@ public sealed class GenericCounterAlertSystem : EntitySystem
     /// <returns>The number of digits.</returns>
     private int GetMaxDigitCount(Entity<GenericCounterAlertComponent, SpriteComponent> ent)
     {
-        var comp = ent.Comp1;
-        var sprite = ent.Comp2;
-
-        for (var i = comp.DigitKeys.Count - 1; i >= 0; i--)
+        for (var i = ent.Comp1.DigitKeys.Count - 1; i >= 0; i--)
         {
-            if (_sprite.LayerExists((ent.Owner, sprite), comp.DigitKeys[i]))
+            if (_sprite.LayerExists((ent.Owner, ent.Comp2), ent.Comp1.DigitKeys[i]))
                 return i + 1;
         }
 

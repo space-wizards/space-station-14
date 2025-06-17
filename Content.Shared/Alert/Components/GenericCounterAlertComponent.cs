@@ -36,8 +36,8 @@ public sealed partial class GenericCounterAlertComponent : Component
     public Vector2i AlertSize = new(32, 32);
 
     /// <summary>
-    /// Digits that can be displayed by the alert.
-    /// Ones, Tens, Hundreds, etc.
+    /// Digits that can be displayed by the alert, represented by their sprite layer.
+    /// Ones would be on layer "1", tens on layer "10" etc.
     /// </summary>
     [DataField]
     public List<string> DigitKeys = new()
