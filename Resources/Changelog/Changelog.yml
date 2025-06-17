@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fire extinguishers can now extinguish things like candles and cigarettes.
-    type: Add
-  - message: You can even use them to extinguish items that are held/worn!
-    type: Add
-  id: 8173
-  time: '2025-04-14T09:00:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36267
 - author: metalgearsloth
   changes:
   - message: Fix shuttle arrivals visualizer not updating with the target coordinates
@@ -3913,3 +3904,11 @@
   id: 8685
   time: '2025-06-17T08:53:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38383
+- author: hoshizora-sayo
+  changes:
+  - message: Fixed oddities with the memory cell, APC, and black curtains crafting
+      menu entries.
+    type: Fix
+  id: 8686
+  time: '2025-06-17T09:22:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38372
