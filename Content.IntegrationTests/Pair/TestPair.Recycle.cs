@@ -106,7 +106,7 @@ public sealed partial class TestPair : IAsyncDisposable
         await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Return of pair {Id} started");
         State = PairState.CleanDisposed;
         await OnCleanDispose();
-        DebugTools.Assert(State is PairState.Dead or PairState.CleanDisposed);
+        DebugTools.Assert(State is PairState.Dead or PairState.Ready);
         PoolManager.NoCheckReturn(this);
         ClearContext();
     }
