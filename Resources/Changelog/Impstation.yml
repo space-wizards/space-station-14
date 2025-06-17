@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: kipdotnet, AfterLite
-  changes:
-  - message: Prize tickets have been added to the service techfab! they come in varying
-      values and are great monopoly money for poker night.
-    type: Add
-  id: 1355
-  time: '2025-03-20T13:00:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2024
-- author: Sha-Seng
-  changes:
-  - message: Polish pass for thaven hairstyles
-    type: Tweak
-  - message: Sharkminnow Eyeliner displays under bangs now
-    type: Tweak
-  id: 1356
-  time: '2025-03-20T13:05:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2023
 - author: hivehum
   changes:
   - message: Nutribricks are far less nutritious...
@@ -4209,3 +4192,17 @@
   id: 1854
   time: '2025-06-17T00:58:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2743
+- author: EpicToast
+  changes:
+  - message: Core Station now supports genpop.
+    type: Add
+  id: 1855
+  time: '2025-06-17T07:34:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2792
+- author: ScarKy0
+  changes:
+  - message: Reinforced plasma windows no longer block laser shots.
+    type: Fix
+  id: 1856
+  time: '2025-06-17T07:33:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2795
