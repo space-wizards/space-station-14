@@ -1,0 +1,87 @@
+- type: entity
+  parent: [BaseWizardObjective, BaseFreeObjective]
+  id: WizardRespectObjective
+  name: Demand respect
+  description: You are a representative of the Space Wizards Federation and deserve to be treated as such.
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: jaunt
+
+- type: entity
+  parent: [BaseWizardObjective, BaseFreeObjective]
+  id: WizardChaosObjective
+  name: Agent of Chaos
+  description: A wizard is nothing if not unpredictable. Keep 'em guessing!
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Fun/dice.rsi
+      state: d20_20
+
+- type: entity
+  parent: [BaseWizardObjective, BaseFreeObjective]
+  id: WizardFearObjective
+  name: Inspire Fear
+  description: Force these cowards to quake in fear at the very mention of your name!
+  components:
+  - type: Objective
+    icon:
+      sprite: _Goobstation/Heretic/mad_mask.rsi
+      state: icon
+
+- type: entity
+  parent: [BaseWizardObjective, BaseFreeObjective]
+  id: WizardJusticeObjective
+  name: Force of Justice
+  description: You are the sole arbiter of Right and Wrong. Teach these fools the difference.
+  components:
+  - type: Objective
+    icon:
+      sprite: Structures/Wallmounts/signs.rsi
+      state: law
+
+- type: entity
+  parent: [BaseWizardObjective, BaseFreeObjective]
+  id: WizardBenefactorObjective
+  name: Malevolent Benefactor
+  description: It may be amusing to humor the requests of these whelps... and make them regret asking.
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Misc/arabianlamp.rsi
+      state: lamp
+
+- type: entity
+  parent: [BaseWizardObjective, BaseFreeObjective]
+  id: WizardGetRealObjective
+  name: Get Real!
+  description: Nobody takes life seriously anymore. Give these knaves a cold dose of reality.
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
+      state: lit-icon
+
+- type: entity
+  parent: [BaseWizardObjective, BaseFreeObjective]
+  id: WizardGeasObjective
+  name: Quest Giver
+  description: The worms of this station need your direction. Place your geas upon them. They defy you at their own peril.
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: spell_default
+
+- type: entity
+  parent: [BaseWizardObjective, BaseFreeObjective]
+  id: WizardShameObjective
+  name: Shame Them
+  description: Remind these cretins just how pathetic they are in the face of the Federation!
+  components:
+  - type: Objective
+    icon:
+      sprite: Mobs/Aliens/Argocyte/argocyte_common.rsi
+      state: slurva

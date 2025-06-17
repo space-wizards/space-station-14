@@ -270,6 +270,13 @@
     objectives:
     - WizardSurviveObjective
     - WizardDemonstrateObjective
+  - type: AntagRandomObjectives #imp
+    sets:
+    - groups: WizardPridefulGroups
+      maxPicks: 1
+    - groups: WizardChaosGroups
+      maxPicks: 1
+    maxDifficulty: 2
   - type: LoadMapRule
     gridPath: /Maps/_Impstation/Shuttles/wizard.yml # imp
   - type: RuleGrids
