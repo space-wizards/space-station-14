@@ -139,34 +139,34 @@
   source: "https://github.com/ParadiseSS13/Paradise/commit/a34f1054cef5a44a67fdac3b67b811137c6071dd"
 
 - files:
-    - fox1.ogg
-    - fox2.ogg
-    - fox3.ogg
-    - fox4.ogg
-    - fox5.ogg
-    - fox6.ogg
-    - fox7.ogg
-    - fox8.ogg
-    - fox9.ogg
-    - fox10.ogg
-    - fox11.ogg
-    - fox12.ogg
-    - fox13.ogg
-    - fox14.ogg
+  - fox1.ogg
+  - fox2.ogg
+  - fox3.ogg
+  - fox4.ogg
+  - fox5.ogg
+  - fox6.ogg
+  - fox7.ogg
+  - fox8.ogg
+  - fox9.ogg
+  - fox10.ogg
+  - fox11.ogg
+  - fox12.ogg
+  - fox13.ogg
+  - fox14.ogg
   copyright: "Created by fujiwaranao"
   license: "CC-BY-NC-SA-4.0"
   source: "https://github.com/space-wizards/space-station-14/pull/27578"
 
 - files:
-    - wawa-achoo.ogg
-    - wawa-chatter.ogg
-    - wawa-chillin.ogg
-    - wawa-depression.ogg
-    - wawa-exclaim.ogg
-    - wawa-mock.ogg
-    - wawa-protest.ogg
-    - wawa-question.ogg
-    - wawa-statement.ogg
+  - wawa-achoo.ogg
+  - wawa-chatter.ogg
+  - wawa-chillin.ogg
+  - wawa-depression.ogg
+  - wawa-exclaim.ogg
+  - wawa-mock.ogg
+  - wawa-protest.ogg
+  - wawa-question.ogg
+  - wawa-statement.ogg
   copyright: "created by FairlySadPanda"
   license: "CC-BY-4.0"
   source: "https://github.com/space-wizards/space-station-14/pull/37936"
