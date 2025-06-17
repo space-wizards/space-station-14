@@ -18,6 +18,7 @@ public sealed partial class ActiveJetpackComponent : Component
 
     /// <summary>
     /// The last position at which particles were emitted from this jetpack.
+    /// Defaults to null so that prediction reset doesnt spam particles.
     /// </summary>
     public EntityCoordinates? LastCoordinates = null;
 

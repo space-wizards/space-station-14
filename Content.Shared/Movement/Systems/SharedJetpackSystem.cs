@@ -31,17 +31,21 @@ public abstract class SharedJetpackSystem : EntitySystem
         _jetpackUserQuery = GetEntityQuery<JetpackUserComponent>();
         _activeJetpackQuery = GetEntityQuery<ActiveJetpackComponent>();
 
-        SubscribeLocalEvent<JetpackComponent, GetItemActionsEvent>(OnJetpackGetAction);
-        SubscribeLocalEvent<JetpackComponent, DroppedEvent>(OnJetpackDropped);
-        SubscribeLocalEvent<JetpackComponent, ToggleJetpackEvent>(OnJetpackToggle);
+        SubscribeLocalEvent<JetpackComponent, MapInitEvent>(OnMapInit);
 
+        // Actions
+        SubscribeLocalEvent<JetpackComponent, ToggleJetpackEvent>(OnJetpackToggle);
+        SubscribeLocalEvent<JetpackComponent, GetItemActionsEvent>(OnJetpackGetAction);
+
+        // Grav-related
         SubscribeLocalEvent<JetpackUserComponent, RefreshWeightlessModifiersEvent>(OnJetpackUserWeightlessMovement);
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
+        SubscribeLocalEvent<GravityChangedEvent>(OnJetpackUserGravityChanged);
+
+        // Restrictions for flying on grids
         SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
         SubscribeLocalEvent<JetpackComponent, EntGotInsertedIntoContainerMessage>(OnJetpackMoved);
-
-        SubscribeLocalEvent<GravityChangedEvent>(OnJetpackUserGravityChanged);
-        SubscribeLocalEvent<JetpackComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<JetpackComponent, DroppedEvent>(OnJetpackDropped);
     }
 
     private void OnJetpackUserWeightlessMovement(Entity<JetpackUserComponent> ent, ref RefreshWeightlessModifiersEvent args)
