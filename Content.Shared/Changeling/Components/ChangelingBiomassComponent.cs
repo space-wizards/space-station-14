@@ -61,7 +61,7 @@ public sealed partial class ChangelingBiomassComponent : Component
     public ProtoId<AlertPrototype> BiomassAlert = "ChangelingBiomassAlert";
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextUpdate = TimeSpan.Zero;
 
     [DataField]
