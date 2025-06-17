@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: Deathsquad Hardsuit now provides 85% stamina damage resistance.
-    type: Add
-  id: 8176
-  time: '2025-04-14T15:27:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35580
 - author: benev0
   changes:
   - message: Stopped climbing movent while in containers
@@ -3911,3 +3904,11 @@
   id: 8688
   time: '2025-06-17T10:41:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38232
+- author: TheFlyingSentry
+  changes:
+  - message: Animal stealing thief objectives now actually check for the objective's
+      existence.
+    type: Tweak
+  id: 8689
+  time: '2025-06-17T11:06:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38332
