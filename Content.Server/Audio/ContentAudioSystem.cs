@@ -8,17 +8,17 @@ using Robust.Server.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Configuration;
+using Content.Shared.CCVar;
 
 namespace Content.Server.Audio;
 
 public sealed class ContentAudioSystem : SharedContentAudioSystem
 {
-    [ValidatePrototypeId<SoundCollectionPrototype>]
-    private const string LobbyMusicCollection = "LobbyMusic";
-
     [Dependency] private readonly AudioSystem _serverAudio = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private SoundCollectionPrototype _lobbyMusicCollection = default!;
     private string[]? _lobbyPlaylist;
@@ -27,7 +27,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
     {
         base.Initialize();
 
-        _lobbyMusicCollection = _prototypeManager.Index<SoundCollectionPrototype>(LobbyMusicCollection);
+        _lobbyMusicCollection = _prototypeManager.Index<SoundCollectionPrototype>(_cfg.GetCVar(CCVars.LobbyMusicCollection));
         _lobbyPlaylist = ShuffleLobbyPlaylist();
 
         SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEnd);
