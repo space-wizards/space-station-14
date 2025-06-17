@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Pain insensitive people will no longer notice painful radioactive effects.
-    type: Tweak
-  id: 1359
-  time: '2025-03-22T01:39:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2045
 - author: argentsunshine
   changes:
   - message: Edited the sprites for the cargo request and bounty computers to make
@@ -4201,3 +4194,11 @@
   id: 1858
   time: '2025-06-17T08:24:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2791
+- author: maelines
+  changes:
+  - message: scorned user maenyas added 28 hairstyles for humanoids (thavens eventually
+      when she figures that out)
+    type: Add
+  id: 1859
+  time: '2025-06-17T08:31:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2778
