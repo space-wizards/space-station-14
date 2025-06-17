@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SivShele
-  changes:
-  - message: Convex fixes
-    type: Tweak
-  id: 1362
-  time: '2025-03-22T15:11:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2053
 - author: SixValentine
   changes:
   - message: Train got some new lumps! Check the PR for details
@@ -4211,3 +4204,12 @@
   id: 1861
   time: '2025-06-17T14:21:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2536
+- author: TuttlePants
+  changes:
+  - message: Bounty hunters don't target other bounty hunters
+    type: Tweak
+  - message: Bounty hunter targeting isn't fucked anymore
+    type: Fix
+  id: 1862
+  time: '2025-06-17T14:23:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2750
