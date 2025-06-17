@@ -1,5 +1,4 @@
 using Content.Server.Administration;
-using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
 using Robust.Shared.Console;
@@ -7,23 +6,21 @@ using Robust.Shared.Console;
 namespace Content.Server.Verbs.Commands
 {
     [AdminCommand(AdminFlags.Moderator)]
-    public sealed class ListVerbsCommand : IConsoleCommand
+    public sealed class ListVerbsCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
 
-        public string Command => "listverbs";
-        public string Description => Loc.GetString("list-verbs-command-description");
-        public string Help => Loc.GetString("list-verbs-command-help");
+        public override string Command => "listverbs";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteLine(Loc.GetString("list-verbs-command-invalid-args"));
+                shell.WriteLine(Loc.GetString("shell-wrong-arguments-number-need-specific",
+                    ("$properAmount", 2),
+                    ("currentAmount", args.Length)));
                 return;
             }
-
-            var verbSystem = _entManager.System<SharedVerbSystem>();
 
             // get the 'player' entity (defaulting to command user, otherwise uses a uid)
             EntityUid? playerEntity = null;
@@ -41,9 +38,7 @@ namespace Content.Server.Verbs.Commands
                 }
             }
             else
-            {
-                _entManager.TryGetEntity(new NetEntity(intPlayerUid), out playerEntity);
-            }
+                EntityManager.TryGetEntity(new NetEntity(intPlayerUid), out playerEntity);
 
             // gets the target entity
             if (!int.TryParse(args[1], out var intUid))
@@ -60,13 +55,13 @@ namespace Content.Server.Verbs.Commands
 
             var targetNet = new NetEntity(intUid);
 
-            if (!_entManager.TryGetEntity(targetNet, out var target))
+            if (!EntityManager.TryGetEntity(targetNet, out var target))
             {
                 shell.WriteError(Loc.GetString("list-verbs-command-invalid-target-entity"));
                 return;
             }
 
-            var verbs = verbSystem.GetLocalVerbs(target.Value, playerEntity.Value, Verb.VerbTypes);
+            var verbs = _verbSystem.GetLocalVerbs(target.Value, playerEntity.Value, Verb.VerbTypes);
 
             foreach (var verb in verbs)
             {
