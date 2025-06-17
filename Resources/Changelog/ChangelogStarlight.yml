@@ -7825,4 +7825,25 @@ Entries:
   id: 1080
   time: '2025-06-17T19:00:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/855
+- author: FoxxoTrystan
+  changes:
+  - message: Magillitis serum implanter (New Syndicate Implant)
+    type: Add
+  id: 1081
+  time: '2025-06-17T19:15:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/814
+- author: FoxxoTrystan
+  changes:
+  - message: Cargorilla
+    type: Add
+  id: 1082
+  time: '2025-06-17T19:15:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/814
+- author: FoxxoTrystan
+  changes:
+  - message: Gorilla are now hostile and will punch the shit out of you.
+    type: Tweak
+  id: 1083
+  time: '2025-06-17T19:15:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/814
 
