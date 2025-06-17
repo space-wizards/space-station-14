@@ -1,9 +1,9 @@
-using Content.Server.Administration.Commands;
 using Content.Server.Antag;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
+using Content.Server.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind.Components;
@@ -20,6 +20,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ServerClothingSystem _clothing = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultTraitorRule = "Traitor";
@@ -126,7 +127,7 @@ public sealed partial class AdminVerbSystem
             Act = () =>
             {
                 // pirates just get an outfit because they don't really have logic associated with them
-                SetOutfitCommand.SetOutfit(args.Target, PirateGearId, EntityManager);
+                _clothing.SetOutfit(args.Target, PirateGearId, EntityManager);
             },
             Impact = LogImpact.High,
             Message = string.Join(": ", pirateName, Loc.GetString("admin-verb-make-pirate")),
