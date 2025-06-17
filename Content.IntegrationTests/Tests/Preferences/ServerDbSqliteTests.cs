@@ -1,10 +1,15 @@
-#nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Database;
+using Content.Shared.GameTicking;
+using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
+using Content.Shared.Preferences.Loadouts.Effects;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
+using Robust.Shared.Enums;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
@@ -68,13 +73,7 @@ namespace Content.IntegrationTests.Tests.Preferences
             var pair = await PoolManager.GetServerClient();
             var db = GetDb(pair.Server);
             // Database should be empty so a new GUID should do it.
-
-            PlayerPreferences? prefs = null;
-            await pair.Server.WaitPost(async () =>
-            {
-                prefs = await db.GetPlayerPreferencesAsync(NewUserId());
-            });
-            Assert.That(prefs, Is.Null);
+            Assert.That(await db.GetPlayerPreferencesAsync(NewUserId()), Is.Null);
 
             await pair.CleanReturnAsync();
         }
@@ -87,15 +86,9 @@ namespace Content.IntegrationTests.Tests.Preferences
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
             const int slot = 0;
             var originalProfile = CharlieCharlieson();
-
-            PlayerPreferences? prefs = null;
-            await pair.Server.WaitPost(async void () =>
-            {
-                await db.InitPrefsAsync(username, originalProfile);
-                prefs = await db.GetPlayerPreferencesAsync(username);
-            });
-
-            Assert.That(prefs!.Characters.Single(p => p.Key == slot).Value.MemberwiseEquals(originalProfile));
+            await db.InitPrefsAsync(username, originalProfile);
+            var prefs = await db.GetPlayerPreferencesAsync(username);
+            Assert.That(prefs.Characters.Single(p => p.Key == slot).Value.MemberwiseEquals(originalProfile));
             await pair.CleanReturnAsync();
         }
 
@@ -106,20 +99,11 @@ namespace Content.IntegrationTests.Tests.Preferences
             var server = pair.Server;
             var db = GetDb(server);
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
-            await server.WaitPost(async void () =>
-                {
-                    await db.InitPrefsAsync(username, new HumanoidCharacterProfile());
-                    await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);
-                    await db.SaveCharacterSlotAsync(username, null, 1);
-                }
-            );
-            PlayerPreferences? prefs = null;
-            await server.WaitAssertion(async () =>
-                {
-                    prefs = await db.GetPlayerPreferencesAsync(username);
-                }
-            );
-            Assert.That(!prefs!.Characters.Any(p => p.Key != 0));
+            await db.InitPrefsAsync(username, new HumanoidCharacterProfile());
+            await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);
+            await db.SaveCharacterSlotAsync(username, null, 1);
+            var prefs = await db.GetPlayerPreferencesAsync(username);
+            Assert.That(!prefs.Characters.Any(p => p.Key != 0));
             await pair.CleanReturnAsync();
         }
 
