@@ -32,6 +32,9 @@
             "name": "fire_door"
         },
         {
+            "name": "fire_door_glow"
+        },
+        {
             "name": "fire_open"
         },
         {

@@ -4,11 +4,7 @@
         "x": 32,
         "y": 32
     },
-<<<<<<< fire-lockers-resprite
-    "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2 sprites based on fire and emergency sprites, genpop lockers by EmoGarbage404 (github), sci bio locker is a resprited bio viro locker by Alpha-Two (github), fire_door and emergency_door was modified by moomoobeef (github) and fire_door_glow was made by moomoobeef (github)",
-=======
-    "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2 sprites based on fire and emergency sprites, genpop lockers by EmoGarbage404 (github), sci bio locker is a resprited bio viro locker by Alpha-Two (github), Evac lockers by EmoGarbage404 (GitHub)",
->>>>>>> master
+    "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2 sprites based on fire and emergency sprites, genpop lockers by EmoGarbage404 (github), sci bio locker is a resprited bio viro locker by Alpha-Two (github), Evac lockers by EmoGarbage404 (GitHub), fire_door and emergency_door was modified by moomoobeef (github) and fire_door_glow was made by moomoobeef (github)",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
