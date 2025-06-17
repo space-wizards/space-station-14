@@ -54,3 +54,11 @@
         visible: true
       - state: implanter1
         map: [ "implantOnly" ]
+
+- type: entity
+  id: MagillitisSerumImplanter
+  name: magillitis serum implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: MagillitisSerumImplant

@@ -6,12 +6,10 @@
   table: !type:GroupSelector
     children:
       - id: MailSpamLetter
-      - id: MailSpamLetter # Starlight, go go gadget shitty table RNG manipulation
-      - id: MailSpamLetter
-      - id: MailSpamLetter
-      - id: MailSpamLetter
+        weight: .996
       - !type:NestedSelector
         tableId: MailAntagSpamLetter # Starlight, behold, antag on signing papers.
+        weight: .004
 
 # Letter Bundles
 ## Basically items that should always spawn together, specific to letters
