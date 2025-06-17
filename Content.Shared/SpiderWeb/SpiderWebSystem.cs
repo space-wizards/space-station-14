@@ -12,10 +12,10 @@ public sealed class SpiderWebSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpiderWebObjectComponent, StepTriggerAttemptEvent>(HandleAttemptCollide);
+        SubscribeLocalEvent<SpiderWebObjectComponent, StepTriggerAttemptEvent>(HandleStepTrigger);
     }
 
-    private void HandleAttemptCollide(Entity<SpiderWebObjectComponent> _, ref StepTriggerAttemptEvent args)
+    private void HandleStepTrigger(Entity<SpiderWebObjectComponent> _, ref StepTriggerAttemptEvent args)
     {
         if (HasComp<IgnoreSpiderWebComponent>(args.Tripper))
             args.Cancelled = true;

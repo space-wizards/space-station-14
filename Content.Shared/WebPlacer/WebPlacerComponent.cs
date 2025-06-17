@@ -10,7 +10,7 @@ namespace Content.Shared.WebPlacer;
 ///     Gives the entity (probably a spider) an action to spawn entities (probably webs) around itself.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedWebPlacerSystem))]
+[Access(typeof(WebPlacerSystem))]
 public sealed partial class WebPlacerComponent : Component
 {
     /// <summary>
@@ -66,7 +66,6 @@ public sealed partial class WebPlacerComponent : Component
         Vector2i.Right,
     };
 
-    #region Localization
     /// <summary>
     ///     Webs cannot be placed because the component owner is not on a valid grid (e.g. in space).
     /// </summary>
@@ -84,9 +83,11 @@ public sealed partial class WebPlacerComponent : Component
     /// </summary>
     [DataField]
     public LocId MessageNoSpawn = "spider-web-action-no-spawn";
-    #endregion
 }
 
+/// <summary>
+///     IntstantActionEvent used by <see cref="WebPlacerSystem"/>.
+/// </summary>
 public sealed partial class SpiderWebActionEvent : InstantActionEvent
 {
 }
