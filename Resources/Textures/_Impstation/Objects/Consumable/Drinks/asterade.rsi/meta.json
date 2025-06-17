@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by arch_., colors edited by mouse",
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon_empty"
+    },
+    {
+      "name": "icon_open"
+    },
+    {
+      "name": "fill-1"
+    },
+    {
+      "name": "fill-2"
+    },
+    {
+      "name": "fill-3"
+    },
+    {
+      "name": "fill-4"
+    },
+    {
+      "name": "fill-5"
+    },
+    {
+      "name": "fill-6"
+    }
+
+  ]
+}

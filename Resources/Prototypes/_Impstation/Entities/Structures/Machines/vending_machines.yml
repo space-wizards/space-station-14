@@ -91,3 +91,39 @@
     access: [["Cargo"]]
   - type: StealTarget #imp
     stealGroup: SalvDrobe
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineArticSeltz
+  name: Artic Seltz
+  description: Quench your thirst! All your healthful faves in one convenient vend! Brought to you by BODA and Asterade.
+  components:
+  - type: VendingMachine
+    pack: ArticSeltzInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+    initialStockQuality: 0.33
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
+  - type: Advertise
+    pack: ArticSeltzAds
+  - type: SpeakOnUIClosed
+    pack: ArticSeltzGoodbyes
+  - type: Sprite
+    sprite: _Impstation/Structures/Machines/VendingMachines/articseltz.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#389690"

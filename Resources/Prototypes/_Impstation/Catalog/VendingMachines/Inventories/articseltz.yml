@@ -1,0 +1,15 @@
+- type: vendingMachineInventory
+  id: ArticSeltzInventory
+  startingInventory:
+    DrinkSodaWaterCan: 10 #typically hacked product. Default product is "soda"d
+    DrinkOrangeAsteradeBottleFull: 4
+    DrinkPurpleAsteradeBottleFull: 4
+    DrinkRedAsteradeBottleFull: 4
+    DrinkGreenAsteradeBottleFull: 4
+    DrinkYellowAsteradeBottleFull: 4
+    DrinkLemonAsteradeBottleFull: 4
+  contrabandInventory:
+    DrinkBrownAsteradeBottleFull: 4
+    DrinkSodaWaterBottleFull: 2
+    DrinkColaCan: 10
+    ClothingHeadSipsiHat: 2

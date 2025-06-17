@@ -11,6 +11,7 @@
         state: drink
   - type: RandomSpawner
     prototypes:
+      - VendingMachineArticSeltz # imp
       - VendingMachineCoffee
       - VendingMachineCola #Robust Sofdrinks
       - VendingMachineColaBlack #Robust Sofdrinks [Black]

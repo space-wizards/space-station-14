@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: ArticSeltzAds
+  values:
+    prefix: advertisement-articseltz-
+    count: 6

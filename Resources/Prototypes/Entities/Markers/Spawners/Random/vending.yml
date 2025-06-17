@@ -11,6 +11,7 @@
       state: any
   - type: RandomSpawner
     prototypes:
+    - VendingMachineArticSeltz # imp
     - VendingMachineChang
     - VendingMachineCigs
     - VendingMachineCoffee

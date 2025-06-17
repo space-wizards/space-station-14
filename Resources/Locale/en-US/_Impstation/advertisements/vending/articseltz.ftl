@@ -1,0 +1,9 @@
+advertisement-articseltz-1 = You're more producive when you're healthy!
+advertisement-articseltz-2 = Unlock the better employee inside!
+advertisement-articseltz-3 = Healthy bodies, healthy bottom line!
+advertisement-articseltz-4 = Where health meets profit!
+advertisement-articseltz-5 = A healthy body makes the best asset!
+advertisement-articseltz-6 = Maintain a healthy work/work balance!
+thankyou-articseltz-1 = Go break a sweat!
+thankyou-articseltz-2 = Hustle time!
+thankyou-articseltz-3 = Now get out there and make your bosses some money!
