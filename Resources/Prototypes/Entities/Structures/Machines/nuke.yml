@@ -185,3 +185,7 @@
     transferAmount: 100
   - type: StaticPrice
     price: 5000 # That's a pretty fancy keg you got there.
+  # imp edit start, allows refilling with verb or click-and-dragging
+  - type: DumpableSolution
+    solution: tank
+  # imp edit end

@@ -64,6 +64,10 @@
   - type: ReagentTank
   - type: ExaminableSolution
     solution: tank
+  # imp edit start, allows refilling with verb or click-and-dragging
+  - type: DumpableSolution
+    solution: tank
+  # imp edit end
 
 - type: entity
   parent: CleanerDispenser

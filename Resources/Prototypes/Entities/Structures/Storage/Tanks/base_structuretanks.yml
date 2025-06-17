@@ -67,6 +67,10 @@
   - type: ReagentTank
   - type: Transform
     noRot: true
+  # imp edit start, allows refilling with verb or click-and-dragging
+  - type: DumpableSolution
+    solution: tank
+  # imp edit end
 
 # For highcap tanks
 - type: entity
