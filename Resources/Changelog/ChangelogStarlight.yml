@@ -7786,4 +7786,12 @@ Entries:
   id: 1075
   time: '2025-06-17T09:57:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/851
+- author: RoadTrain
+  changes:
+  - message: Fixed syndicate borgs being unable to listen to binary comms, despite
+      being able to talk on it.
+    type: Fix
+  id: 1076
+  time: '2025-06-17T11:15:17.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/853
 
