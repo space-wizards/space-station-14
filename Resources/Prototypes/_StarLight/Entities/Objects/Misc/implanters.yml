@@ -1,0 +1,7 @@
+- type: entity
+  id: MagillitisSerumImplanter
+  name: magillitis serum implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+    - type: Implanter
+      implant: MagillitisSerumImplant
