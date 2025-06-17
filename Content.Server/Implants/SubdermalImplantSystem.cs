@@ -235,6 +235,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         QueueDel(uid);
     }
 
+    // Starlight
     private void OnMagillitisSerumImplantImplant(EntityUid uid, SubdermalImplantComponent component, UseMagillitisSerumImplantEvent args)
     {
         if (component.ImplantedEntity is not { } ent)
