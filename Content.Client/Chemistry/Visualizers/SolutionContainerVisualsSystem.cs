@@ -50,10 +50,8 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         float fraction = 0;
         SolutionComponent? solutionComponent = null;
         if (component.InsertedItemSlotID != null)
-            GetSolutionFromEntity(uid, component.InsertedItemSlotID, out solutionComponent);
-
-        if (component.InsertedItemSlotID != null)
         {
+            GetSolutionFromEntity(uid, component.InsertedItemSlotID, out solutionComponent);
             if (solutionComponent != null)
                 fraction = solutionComponent.Solution.FillFraction;
         }
@@ -137,9 +135,9 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             SpriteSystem.LayerSetRsiState((uid, args.Sprite), fillLayer, stateName);
 
             if (component.InsertedItemSlotID != null && solutionComponent != null)
-                SpriteSystem.LayerSetColor(fillLayer, solutionComponent.Solution.GetColor(_prototype));
+                SpriteSystem.LayerSetColor((uid, args.Sprite), fillLayer, solutionComponent.Solution.GetColor(_prototype));
             else if (changeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, args.Component))
-                SpriteSystem.LayerSetColor(fillLayer, color);
+                SpriteSystem.LayerSetColor((uid, args.Sprite), fillLayer, color);
             else
                 SpriteSystem.LayerSetColor((uid, args.Sprite), fillLayer, Color.White);
         }
@@ -174,8 +172,8 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         if (itemSlotsComponent == null) return false;
 
         var slot = itemSlotsComponent.Slots[insertedItemSlotID];
-        var insertedUid = slot.Item;
-        if (insertedUid == null) return false; //Uid of item (beaker for example) inserted into machine 
+        var insertedUid = slot.Item;  //Uid of item (beaker for example) inserted into machine 
+        if (insertedUid == null) return false;
 
         var containerManagerComponent = CompOrNull<ContainerManagerComponent>(insertedUid); // now trying to get Solution inside beaker
         if (containerManagerComponent == null) return false;
