@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Decapoids can now be admin and supply assistants without immediately
-      suffocating
-    type: Fix
-  id: 1347
-  time: '2025-03-19T00:58:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2003
-- author: AftrLite
-  changes:
-  - message: Cosmic Cult is now officially in regular gamemode rotation!
-    type: Add
-  - message: Entropy is no longer itemized, and is now a cultist-innate resouruce.
-    type: Tweak
-  - message: Cosmic Cult 1.1.3r
-    type: Tweak
-  id: 1348
-  time: '2025-03-19T22:26:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2004
 - author: Darkmajia
   changes:
   - message: Power grid events will no longer trigger announcements twice when they
@@ -4199,3 +4180,18 @@
   id: 1846
   time: '2025-06-17T00:37:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2736
+- author: Stonylogray
+  changes:
+  - message: Slime people are now more susceptible to bloodloss, but can restore most
+      of their lost slime by slurping it back up.
+    type: Tweak
+  id: 1847
+  time: '2025-06-17T00:42:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2683
+- author: Mousetrinity
+  changes:
+  - message: oppas and dragons can now make hand signals
+    type: Fix
+  id: 1848
+  time: '2025-06-17T00:42:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2786
