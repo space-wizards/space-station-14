@@ -29,7 +29,7 @@ public sealed partial class SpiderComponent : Component
     /// The cooldown in seconds between web spawns when not controlled by a player.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float WebSpawnCooldownSeconds = 120f;
+    public TimeSpan WebSpawnCooldown = TimeSpan.FromSeconds(120f);
 
     /// <summary>
     /// The next time the spider can spawn a web when not controlled by a player.

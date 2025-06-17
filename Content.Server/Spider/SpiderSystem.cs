@@ -33,7 +33,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
             if (_timing.CurTime < spider.NextWebSpawn)
                 continue;
 
-            spider.NextWebSpawn += TimeSpan.FromSeconds(spider.WebSpawnCooldownSeconds);
+            spider.NextWebSpawn += spider.WebSpawnCooldown;
 
             if (HasComp<ActorComponent>(uid)
                 || _mobState.IsDead(uid)
