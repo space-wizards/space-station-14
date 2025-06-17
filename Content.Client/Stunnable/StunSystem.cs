@@ -7,6 +7,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Stunnable
 {
@@ -15,6 +16,7 @@ namespace Content.Client.Stunnable
         [Dependency] private readonly AnimationPlayerSystem _animation = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
         private readonly int[] _sign = [-1, 1];
         public const string StunnedAnimationKeyVector = "stunnedVector";
@@ -23,8 +25,48 @@ namespace Content.Client.Stunnable
         {
             base.Initialize();
 
+            SubscribeLocalEvent<StunnedComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<StunnedComponent, AnimationCompletedEvent>(OnAnimationCompleted);
             SubscribeLocalEvent<StunnedComponent, MobStateChangedEvent>(OnMobStateChanged);
+            SubscribeLocalEvent<StunnedComponent, AppearanceChangeEvent>(OnAppearanceChanged);
+        }
+
+        /// <summary>
+        ///     Add stun visual layers
+        /// </summary>
+        private void OnComponentInit(Entity<StunnedComponent> entity, ref ComponentInit args)
+        {
+            if (_timing.IsFirstTimePredicted)
+                return;
+
+            if (!TryComp<SpriteComponent>(entity, out var sprite))
+                return;
+
+            _spriteSystem.LayerMapReserve((entity, sprite), StunVisualLayers.StamCrit);
+            _spriteSystem.LayerSetVisible((entity, sprite), StunVisualLayers.StamCrit, entity.Comp.Visualized);
+            _spriteSystem.LayerSetOffset((entity, sprite), StunVisualLayers.StamCrit, new Vector2(0, 0.3125f));
+
+            _spriteSystem.LayerSetRsi((entity.Owner, sprite), StunVisualLayers.StamCrit, new ResPath("Mobs/Effects/stunned.rsi"));
+
+            UpdateAppearance((entity, sprite, entity.Comp));
+        }
+
+        private void OnAppearanceChanged(Entity<StunnedComponent> entity, ref AppearanceChangeEvent args)
+        {
+            if (args.Sprite != null)
+                UpdateAppearance((entity, args.Sprite, entity.Comp));
+        }
+
+        private void UpdateAppearance(Entity<SpriteComponent?, StunnedComponent> entity)
+        {
+            if ( !Resolve(entity, ref entity.Comp1))
+                return;
+
+            if (!_spriteSystem.LayerMapTryGet(entity, StunVisualLayers.StamCrit, out var index, false))
+                return;
+
+            _spriteSystem.LayerSetVisible(entity, index, entity.Comp2.Visualized);
+            _spriteSystem.LayerSetRsiState(entity, index, "stunned");
         }
 
         /// <summary>
@@ -36,6 +78,8 @@ namespace Content.Client.Stunnable
 
             if (!TryComp<SpriteComponent>(ent, out var sprite) || !_timing.IsFirstTimePredicted)
                 return;
+
+            UpdateAppearance((ent, sprite, ent.Comp));
 
             if (_animation.HasRunningAnimation(ent, StunnedAnimationKeyVector) || _animation.HasRunningAnimation(ent, StunnedAnimationKeyRotation))
                 return;
@@ -64,12 +108,12 @@ namespace Content.Client.Stunnable
             if (!_timing.IsFirstTimePredicted)
                 return;
 
-            if (!HasComp<AnimationPlayerComponent>(ent))
-                return;
-
             // Standing system should handle the angle offset so we don't need to update that
             if (TryComp(ent, out SpriteComponent? sprite))
-                sprite.Offset = ent.Comp.StartOffset;
+                _spriteSystem.SetOffset((ent, sprite), ent.Comp.StartOffset);
+
+            if (!HasComp<AnimationPlayerComponent>(ent))
+                return;
 
             StopStunnedAnimation(ent);
         }
@@ -271,5 +315,10 @@ namespace Content.Client.Stunnable
         /// </summary>
         [ByRefEvent]
         public record struct StunAnimationEvent(TimeSpan Time);
+    }
+
+    public enum StunVisualLayers : byte
+    {
+        StamCrit
     }
 }

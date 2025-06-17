@@ -7,6 +7,12 @@ namespace Content.Shared.Stunnable;
 public sealed partial class StunnedComponent : Component
 {
     /// <summary>
+    /// Is this stun visualized?
+    /// </summary>
+    [AutoNetworkedField, DataField]
+    public bool Visualized;
+
+    /// <summary>
     /// When should our animation end?
     /// </summary>
     [AutoNetworkedField, DataField]
@@ -15,53 +21,53 @@ public sealed partial class StunnedComponent : Component
     /// <summary>
     /// Max vector displacement for our jittering
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public float Amplitude = 0.05f;
 
     /// <summary>
     /// X vector displacement for our heavy breathing
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public float BreathingAmplitude = 0.05f;
 
     /// <summary>
     /// Max angular displacement for our jittering in radians
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public float Torque = 0.08f;
 
     /// <summary>
     /// Total Animations per second
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public float Frequency = 2f;
 
     /// <summary>
     /// Total Rotation Animations per second
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public float RotationFrequency = 4f;
 
     /// <summary>
     ///     The last offset keyframe this animation had, so we can make sure the jitter direction
     ///     is never truly random
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public Vector2 LastJitter;
 
     /// <summary>
     /// Jitters per Animation
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public int Jitters = 4;
 
     /// <summary>
     ///     The offset that an entity had before animation has started,
     ///     so that we can reset it properly.
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public Vector2 StartOffset = Vector2.Zero;
 
-    [AutoNetworkedField, DataField]
+    [DataField]
     public Angle StartAngle = Angle.FromDegrees(90);
 }

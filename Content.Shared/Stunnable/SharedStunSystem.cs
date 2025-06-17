@@ -20,6 +20,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable;
 
@@ -27,6 +28,7 @@ public abstract class SharedStunSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
@@ -111,6 +113,9 @@ public abstract class SharedStunSystem : EntitySystem
     {
         // This exists so the client can end their funny animation if they're playing one.
         UpdateCanMove(ent, ent.Comp, args);
+
+        if (_timing.IsFirstTimePredicted)
+            ent.Comp.Visualized = false;
     }
 
     private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
@@ -369,6 +374,7 @@ public abstract class SharedStunSystem : EntitySystem
     public virtual void TryStunAnimation(Entity<StunnedComponent> entity, TimeSpan time)
     {
         // Here so server can tell the client to do things
+        entity.Comp.Visualized = true;
     }
 }
 
