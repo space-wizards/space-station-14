@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/2a19963297f91efb452dbb5c1d4eb28a14776b0a/icons/mob/silicon/ai.dmi, johnny chaos modified by mqole",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/2a19963297f91efb452dbb5c1d4eb28a14776b0a/icons/mob/silicon/ai.dmi, bee by starlighthowls johnny chaos modified by mqole",
   "size": {
     "x": 32,
     "y": 32
@@ -52,6 +52,29 @@
       ]
     },
     {
+      "name": "ai_bee",
+      "delays": [
+        [
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7,
+          0.7
+        ]
+      ]
+    },
+    {
+      "name": "ai_dead_bee",
+      "delays": [
+        [
+          0.7,
+          0.7
+        ]
+      ]
+    },
+    {
       "name": "ai_camera",
       "delays": [
         [
@@ -79,8 +102,8 @@
     {
       "name": "base"
     },
-	{
-	  "name": "icon"
-	}
+    {
+      "name": "icon"
+    }
   ]
 }
