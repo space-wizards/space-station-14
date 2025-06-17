@@ -17,7 +17,6 @@
   - type: StealCondition
     descriptionText: objective-condition-thief-description
     checkStealAreas: true
-    verifyMapExistence: true
 
 - type: entity
   abstract: true
@@ -43,7 +42,6 @@
   id: BaseThiefStealAnimalObjective
   components:
   - type: StealCondition
-    verifyMapExistence: true
     checkAlive: true
     objectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
     descriptionText: objective-condition-thief-animal-description
