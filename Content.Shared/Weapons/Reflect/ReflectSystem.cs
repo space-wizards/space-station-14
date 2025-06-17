@@ -216,7 +216,7 @@ public sealed class ReflectSystem : EntitySystem
 
         var compTypes = ent.Comp.Reflects.ToString().Split(", ");
 
-        List<string> typeList = [];
+        List<string> typeList = new(compTypes.Length);
 
         for (var i = 0; i < compTypes.Length; i++)
         {
