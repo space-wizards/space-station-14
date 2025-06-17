@@ -35,7 +35,7 @@ public sealed partial class SpiderComponent : Component
     /// The next time the spider can spawn a web when not controlled by a player.
     /// </summary>
     [DataField]
-    public TimeSpan? NextWebSpawn = null;
+    public TimeSpan? NextWebSpawn;
 }
 
 public sealed partial class SpiderWebActionEvent : InstantActionEvent { }
