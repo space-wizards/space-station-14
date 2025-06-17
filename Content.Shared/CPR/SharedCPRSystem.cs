@@ -10,7 +10,8 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Net.Http.Headers;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CPR;
 /// <summary>
@@ -18,6 +19,7 @@ namespace Content.Shared.CPR;
 /// </summary>
 public abstract partial class SharedCPRSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -31,10 +33,13 @@ public abstract partial class SharedCPRSystem : EntitySystem
     public const float CPRAnimationLength = 0.2f;
     public const float CPRAnimationEndTime = 1f; // This is set to much higher than the actual animation length to avoid it stopping prematurely, as it did in testing. Shouldnt affect anything
     public const float AssistedDurationMultiplier = 2f; // This is used as a mulitplier on DoAfterDelay to determine how long the AssistedRespiration will last.
+    private bool _cprRepeat;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _config.OnValueChanged(CCVars.CPRRepeat, value => _cprRepeat = value, true);
 
         SubscribeLocalEvent<CPRComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
         SubscribeLocalEvent<CPRComponent, CPRDoAfterEvent>(OnCPRDoAfter);
@@ -124,7 +129,7 @@ public abstract partial class SharedCPRSystem : EntitySystem
         cpr.LastCaretaker = args.User;
         cpr.LastTimeGivenCare = Timing.CurTime;
 
-        args.Repeat = thresholds.CurrentThresholdState == MobState.Critical;
+        args.Repeat = thresholds.CurrentThresholdState == MobState.Critical && _cprRepeat;
         args.Handled = true;
     }
     /// <summary>

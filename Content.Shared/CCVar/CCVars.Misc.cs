@@ -94,4 +94,11 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> PointingCooldownSeconds =
         CVarDef.Create("pointing.cooldown_seconds", 0.5f, CVar.SERVERONLY);
+
+    /// <summary>
+    ///     Enabled: CPR action will auto-repeat as long as the target is still crit
+    ///     Disabled: CPR has to be performed by repeated manual interaction
+    /// </summary>
+    public static readonly CVarDef<bool> CPRRepeat =
+        CVarDef.Create("cpr.repeat", true, CVar.SERVER);
 }
