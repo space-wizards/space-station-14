@@ -124,7 +124,7 @@
   - Heels
 
 - type: loadoutGroup
-  id: NTRShoes
+  id: NanotrasenRepresentativeShoes
   name: loadout-group-nanotrasenrepresentative-shoes
   minLimit: 1
   loadouts:
@@ -151,7 +151,7 @@
   loadouts:
   - BlackShoes
   - WhiteShoes
-  - GreyShoes
+  - GreenShoes
   - LeatherShoes
   - Heels
   - LaceupShoes
