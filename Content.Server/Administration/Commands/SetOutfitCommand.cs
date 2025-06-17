@@ -1,5 +1,5 @@
 using Content.Server.Administration.UI;
-using Content.Server.Clothing;
+using Content.Server.Clothing.Systems;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Inventory;
@@ -10,9 +10,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class SetOutfitCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private readonly ServerClothingSystem _clothingSystem = default!;
+        [Dependency] private readonly OutfitSystem _outfitSystem = default!;
 
         public override string Command => "setoutfit";
         public override string Description => Loc.GetString("cmd-setoutfit-desc", ("requiredComponent", nameof(InventoryComponent)));
@@ -33,13 +32,13 @@ namespace Content.Server.Administration.Commands
 
             var nent = new NetEntity(entInt);
 
-            if (!_entities.TryGetEntity(nent, out var target))
+            if (!EntityManager.TryGetEntity(nent, out var target))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
-            if (!_entities.HasComponent<InventoryComponent>(target))
+            if (!EntityManager.HasComponent<InventoryComponent>(target))
             {
                 shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message", ("missing", "inventory")));
                 return;
@@ -58,7 +57,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!_clothingSystem.SetOutfit(target.Value, args[1], _entities))
+            if (!_outfitSystem.SetOutfit(target.Value, args[1], EntityManager))
                 shell.WriteLine(Loc.GetString("cmd-setoutfit-invalid-outfit-id-error"));
         }
     }
