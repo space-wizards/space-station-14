@@ -21,7 +21,7 @@ namespace Content.Server.Atmos.EntitySystems
         private int _hotspotSoundCooldown = 0;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public string? HotspotSound { get; private set; } = "/Audio/Effects/fire.ogg";
+        public SoundSpecifier? HotspotSound { get; private set; } = new SoundPathSpecifier("/Audio/Effects/fire.ogg");
 
         private void ProcessHotspot(
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
@@ -105,14 +105,14 @@ namespace Content.Server.Atmos.EntitySystems
             if (tile.Hotspot.Temperature > tile.MaxFireTemperatureSustained)
                 tile.MaxFireTemperatureSustained = tile.Hotspot.Temperature;
 
-            if (_hotspotSoundCooldown++ == 0 && !string.IsNullOrEmpty(HotspotSound))
+            if (_hotspotSoundCooldown++ == 0 && HotspotSound != null)
             {
                 var coordinates = _mapSystem.ToCenterCoordinates(tile.GridIndex, tile.GridIndices);
 
                 // A few details on the audio parameters for fire.
                 // The greater the fire state, the lesser the pitch variation.
                 // The greater the fire state, the greater the volume.
-                _audio.PlayPvs(HotspotSound, coordinates, AudioParams.Default.WithVariation(0.15f/tile.Hotspot.State).WithVolume(-5f + 5f * tile.Hotspot.State));
+                _audio.PlayPvs(HotspotSound, coordinates, HotspotSound.Params.WithVariation(0.15f / tile.Hotspot.State).WithVolume(-5f + 5f * tile.Hotspot.State));
             }
 
             if (_hotspotSoundCooldown > HotspotSoundCooldownCycles)
