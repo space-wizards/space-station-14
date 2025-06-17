@@ -9,24 +9,27 @@ namespace Content.Shared.CPR;
 /// An entity with this Component can have CPR done on them
 /// Has fields that specify how much this mob should be healed when CPR is done on them and the pump sound
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CPRComponent : Component
 {
     /// <summary>
     /// What damage should be changed when CPR is done - negative for healing
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public DamageSpecifier Change = default!;
 
     /// <summary>
     /// Healing is applied when the CPR finishes with the mob returning from a critical state - these values should be negative
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public DamageSpecifier BonusHeal = default!;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? Sound = null;
 
+    [DataField, AutoNetworkedField]
     public EntityUid? LastCaretaker = null;
+
+    [DataField, AutoNetworkedField]
     public TimeSpan LastTimeGivenCare = TimeSpan.Zero;
 }
