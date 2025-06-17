@@ -107,6 +107,7 @@
     - Shock
     - Cold
     - Caustic
+  - type: MindRememberBody
   - type: DamageOnHighSpeedImpact
     damage:
       types:

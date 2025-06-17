@@ -1,3 +1,5 @@
+using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind.Components;
 using Robust.Shared.GameStates;
@@ -113,4 +115,13 @@ public sealed partial class MindComponent : Component
     /// </summary>
     [DataField]
     public LocId? Subtype;
+
+
+    // sucks to save the information this way, find a better method
+    [DataField]
+    public Dictionary<string, FixedPoint2>? DamagePerGroup;
+
+    [DataField]
+    public DamageSpecifier? Damage;
+
 }

@@ -12,6 +12,7 @@ using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 using System.Numerics;
+using Content.Server.GhostTypes;
 using Content.Shared.Damage.Components;
 
 namespace Content.Server.Body.Systems;
@@ -104,6 +105,9 @@ public sealed class BodySystem : SharedBodySystem
         SoundSpecifier? gibSoundOverride = null
     )
     {
+        var beforeEvent = new BeforeBodyDestructionEvent();
+        RaiseLocalEvent(bodyId, ref beforeEvent);
+
         if (!Resolve(bodyId, ref body, logMissing: false)
             || TerminatingOrDeleted(bodyId)
             || EntityManager.IsQueuedForDeletion(bodyId))

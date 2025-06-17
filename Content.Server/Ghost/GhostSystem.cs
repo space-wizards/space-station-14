@@ -1,9 +1,11 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Logs;
+using Content.Server.Body.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
+using Content.Server.GhostTypes;
 using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
@@ -17,7 +19,6 @@ using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
-using Content.Shared.Ghost.GhostSpriteStateSelection;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
@@ -71,6 +72,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly NameModifierSystem _nameMod = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly GhostSpriteStateSystem _ghostState = default!;
 
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -483,10 +485,9 @@ namespace Content.Server.Ghost
             var ghostComponent = Comp<GhostComponent>(ghost);
 
             // Raise an event to assign a sprite state according to the damage taken
-            if (mind.Comp.CurrentEntity != null)
+            if (TryComp<GhostSpriteStateComponent>(ghost, out var state))
             {
-                var spriteEvent = new GhostSpriteEvent(mind.Comp.CurrentEntity.Value);
-                RaiseLocalEvent(ghost, spriteEvent);
+                _ghostState.SetGhostSprite(ghost, mind.Comp, state);
             }
 
             // Try setting the ghost entity name to either the character name or the player name.

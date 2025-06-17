@@ -21,6 +21,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Server.Body.Components;
+using Content.Server.GhostTypes;
 using Content.Shared.Humanoid;
 using Robust.Shared.Player;
 
@@ -63,6 +65,9 @@ namespace Content.Server.Destructible
                 if (threshold.Reached(args.Damageable, this))
                 {
                     RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold), true);
+
+                    var beforeEvent = new BeforeBodyDestructionEvent();  //prolly not the right place for this
+                    RaiseLocalEvent(uid, ref beforeEvent);
 
                     var logImpact = LogImpact.Low;
                     // Convert behaviors into string for logs
