@@ -69,7 +69,6 @@
     - id: MagazineRifle
       amount: 2
 
-
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledRevolver
