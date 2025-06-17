@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: argentsunshine
-  changes:
-  - message: Edited the sprites for the cargo request and bounty computers to make
-      them easier to distinguish.
-    type: Tweak
-  id: 1360
-  time: '2025-03-22T01:38:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2052
 - author: DinnerCalzone
   changes:
   - message: A number of warp points on maps should no longer be duplicated.
@@ -4202,3 +4194,15 @@
   id: 1859
   time: '2025-06-17T08:31:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2778
+- author: Mousetrinity
+  changes:
+  - message: chefs now have a variety of animals to fight and butcher, check your
+      lockers!
+    type: Add
+  - message: monkeys and kobolds that participated in the Ancestor Immunization Program
+      are now immune to zombie infections! be sure to check if your re-hydratable
+      cubes are sanitized, and look out for an N branding on their hands
+    type: Tweak
+  id: 1860
+  time: '2025-06-17T09:15:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2777
