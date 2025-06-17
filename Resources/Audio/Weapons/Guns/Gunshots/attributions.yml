@@ -36,4 +36,9 @@
 - files: ["flamethrower"]
   license: "CC-BY-SA-3.0"
   copyright: "made by Red Eclipse on opengameart"
-  source: https://opengameart.org/content/red-eclipse-sounds
+  source: "https://opengameart.org/content/red-eclipse-sounds"
+
+- files: ["estocshot.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "machinegun-one-shot.wav by DeltaCode. Converted to .OGG and MONO by august-sun"
+  source: "https://freesound.org/people/DeltaCode/sounds/668347/"
