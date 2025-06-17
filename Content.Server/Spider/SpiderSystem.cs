@@ -40,7 +40,8 @@ public sealed class SpiderSystem : SharedSpiderSystem
                 || !spider.SpawnsWebsAsNonPlayer)
                 continue;
 
-            OnSpawnNet(uid, spider, new SpiderWebActionEvent());
+            var transform = Transform(uid);
+            SpawnWeb((uid, spider), transform.Coordinates);
         }
     }
 
@@ -57,30 +58,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
             return;
         }
 
-        var coords = transform.Coordinates;
-
-        // TODO generic way to get certain coordinates
-
-        var result = false;
-        // Spawn web in center
-        if (!IsTileBlockedByWeb(coords))
-        {
-            Spawn(component.WebPrototype, coords);
-            result = true;
-        }
-
-        // Spawn web in other directions
-        for (var i = 0; i < 4; i++)
-        {
-            var direction = (DirectionFlag) (1 << i);
-            coords = transform.Coordinates.Offset(direction.AsDir().ToVec());
-
-            if (!IsTileBlockedByWeb(coords))
-            {
-                Spawn(component.WebPrototype, coords);
-                result = true;
-            }
-        }
+        var result = SpawnWeb((uid, component), transform.Coordinates);
 
         if (result)
         {
@@ -89,6 +67,33 @@ public sealed class SpiderSystem : SharedSpiderSystem
         }
         else
             _popup.PopupEntity(Loc.GetString("spider-web-action-fail"), args.Performer, args.Performer);
+    }
+
+    private bool SpawnWeb(Entity<SpiderComponent> ent, EntityCoordinates coords)
+    {
+        var result = false;
+
+        // Spawn web in center
+        if (!IsTileBlockedByWeb(coords))
+        {
+            Spawn(ent.Comp.WebPrototype, coords);
+            result = true;
+        }
+
+        // Spawn web in other directions
+        for (var i = 0; i < 4; i++)
+        {
+            var direction = (DirectionFlag)(1 << i);
+            var outerSpawnCoordinates = coords.Offset(direction.AsDir().ToVec());
+
+            if (IsTileBlockedByWeb(outerSpawnCoordinates))
+                continue;
+
+            Spawn(ent.Comp.WebPrototype, outerSpawnCoordinates);
+            result = true;
+        }
+
+        return result;
     }
 
     private bool IsTileBlockedByWeb(EntityCoordinates coords)
@@ -101,4 +106,3 @@ public sealed class SpiderSystem : SharedSpiderSystem
         return false;
     }
 }
-
