@@ -1,0 +1,34 @@
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazineCobraEmpty
+  result: MagazinePistolCaselessRifleEmpty
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineCobra
+  result: MagazinePistolCaselessRifle
+  materials:
+    Steel: 185
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazineBasiliskEmpty
+  result: MagazineBREmpty
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBasilisk
+  result: MagazineBR
+  materials:
+    Steel: 409
+
+- type: latheRecipe
+  parent: BaseAmmoBoxRecipe
+  id: MagazineBoxCaseless
+  result: MagazineBoxCaselessRifle
+  materials:
+    Steel: 800

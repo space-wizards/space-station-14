@@ -58,6 +58,16 @@
   - UplinkAmmo
 
 - type: listing
+  id: UplinkCaselessAmmo
+  name: uplink-caseless-ammo-name
+  description: uplink-caseless-ammo-desc
+  productEntity: MagazineBoxCaselessRifle
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkAmmo
+
+- type: listing
   id: UplinkBulletcatcher
   name: uplink-bulletcatcher-name
   description: uplink-bulletcatcher-desc
