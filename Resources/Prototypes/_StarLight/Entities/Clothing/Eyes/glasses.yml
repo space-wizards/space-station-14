@@ -90,3 +90,15 @@
     - HudMedical
   - type: EyeProtection
     protectionTime: 5
+
+- type: entity
+  parent: [ClothingEyesBase, BaseMajorContraband]
+  id: ClothingEyesGlassesNullSpace
+  name: nullspace goggles
+  description: An unusual pair of goggles developed during a time of inhumane experimentation involving Shadowkin. They are designed to allow the wearer to peer into NullSpace.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Glasses/nullspacegoogles.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Glasses/nullspacegoogles.rsi
+  - type: ShowNullSpace

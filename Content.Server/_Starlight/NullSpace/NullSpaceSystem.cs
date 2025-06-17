@@ -9,9 +9,9 @@ using System.Linq;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Systems;
 using Content.Shared._Starlight.NullSpace;
-using Content.Server._Starlight.Body;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Pulling.Components;
+using Content.Server.Atmos.EntitySystems;
 
 namespace Content.Server._Starlight.NullSpace;
 
@@ -22,6 +22,12 @@ public sealed class EtherealSystem : SharedEtherealSystem
     [Dependency] private readonly EyeSystem _eye = default!;
     [Dependency] private readonly NpcFactionSystem _factions = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<NullSpaceComponent, AtmosExposedGetAirEvent>(OnExpose);
+    }
 
     public override void OnStartup(EntityUid uid, NullSpaceComponent component, MapInitEvent args)
     {
@@ -44,7 +50,6 @@ public sealed class EtherealSystem : SharedEtherealSystem
         SuppressFactions(uid, component, true);
 
         EnsureComp<PressureImmunityComponent>(uid);
-        EnsureComp<RespiratorImmuneComponent>(uid);
         EnsureComp<MovementIgnoreGravityComponent>(uid);
 
         if (TryComp<PullableComponent>(uid, out var pullable) && pullable.BeingPulled)
@@ -80,7 +85,6 @@ public sealed class EtherealSystem : SharedEtherealSystem
 
         RemComp<StealthComponent>(uid);
         RemComp<PressureImmunityComponent>(uid);
-        RemComp<RespiratorImmuneComponent>(uid);
         RemComp<MovementIgnoreGravityComponent>(uid);
 
         if (TryComp<PullableComponent>(uid, out var pullable) && pullable.BeingPulled)
@@ -114,5 +118,14 @@ public sealed class EtherealSystem : SharedEtherealSystem
 
             component.SuppressedFactions.Clear();
         }
+    }
+
+    private void OnExpose(EntityUid uid, NullSpaceComponent component, ref AtmosExposedGetAirEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Gas = null;
+        args.Handled = true;
     }
 }

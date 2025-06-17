@@ -185,7 +185,7 @@
     variation: 0.125
   sounds:
     Scream:
-      collection: MaleScreams
+      collection: FelionoidScreams
     Laugh:
       collection: MaleLaugh
     Sneeze:
@@ -225,7 +225,7 @@
     variation: 0.125
   sounds:
     Scream:
-      collection: FemaleScreams
+      collection: FelionoidScreams
     Laugh:
       collection: FemaleLaugh
     Sneeze:

@@ -61,9 +61,9 @@ public sealed class ShowEtherealSystem : EntitySystem
         _eye.SetVisibilityMask(uid, (int) VisibilityFlags.Normal, eye);
     }
 
-    private void OnInteractionAttempt(EntityUid uid, ShowNullSpaceComponent component, InteractionAttemptEvent args)
+    private void OnInteractionAttempt(EntityUid uid, ShowNullSpaceComponent component, ref InteractionAttemptEvent args)
     {
-        if (HasComp<NullSpaceComponent>(args.Target))
+        if (!HasComp<NullSpaceComponent>(args.Target))
             return;
 
         args.Cancelled = true;
