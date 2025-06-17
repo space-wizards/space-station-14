@@ -215,6 +215,18 @@
     sprite: _Starlight/Objects/Fun/Plushies/op_plushie.rsi
     layers: 
       - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: Advertise
+      pack: PlushiesOp
+      minimumWait: 120
+      maximumWait: 240
+    - type: TextToSpeech
+      voice: duelist
 
 - type: entity
   parent: BaseMothPlushie
