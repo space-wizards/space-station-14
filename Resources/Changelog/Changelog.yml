@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix shuttle arrivals visualizer not updating with the target coordinates
-      updating.
-    type: Fix
-  id: 8174
-  time: '2025-04-14T14:34:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35772
 - author: CheesePlated
   changes:
   - message: The ID card console now works properly when setting job presets for replacement
@@ -3912,3 +3904,11 @@
   id: 8686
   time: '2025-06-17T09:22:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38372
+- author: KamTheSythe
+  changes:
+  - message: Explosive payloads no longer explode. Modular grenades with explosive
+      payloads remain unchanged, and can still be used to stack explosions.
+    type: Tweak
+  id: 8687
+  time: '2025-06-17T09:46:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38049
