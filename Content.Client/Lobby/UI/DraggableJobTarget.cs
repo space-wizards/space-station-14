@@ -260,7 +260,7 @@ public sealed class DraggableJobTarget : Control
         foreach (var department in departments)
         {
             // Get and sort jobs in department
-            var jobs = department.Roles.Select(jobId => protoMan.Index(jobId)).ToList();
+            var jobs = department.Roles.Select(protoMan.Index).Where(r => r.SetPreference).ToList();
             jobs.Sort(JobUIComparer.Instance);
             foreach (var job in jobs)
             {
