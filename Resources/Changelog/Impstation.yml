@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: A number of warp points on maps should no longer be duplicated.
-    type: Fix
-  - message: Whale's RD's office should no longer start vacuumed.
-    type: Fix
-  id: 1361
-  time: '2025-03-22T15:12:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2035
 - author: SivShele
   changes:
   - message: Convex fixes
@@ -4206,3 +4197,17 @@
   id: 1860
   time: '2025-06-17T09:15:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2777
+- author: Kandiyaki
+  changes:
+  - message: Heretics' Void Blast can now be aimed!
+    type: Tweak
+  - message: Heretics' Void Blast now makes ice instead of snow.
+    type: Tweak
+  - message: Ascended Void heretics turn nearby walls to ice instead of snow.
+    type: Tweak
+  - message: Ascended Void heretics can now walk through windows, and are immune to
+      lasers!
+    type: Add
+  id: 1861
+  time: '2025-06-17T14:21:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2536
