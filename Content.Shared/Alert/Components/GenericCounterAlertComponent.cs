@@ -15,9 +15,16 @@ public sealed partial class GenericCounterAlertComponent : Component
     [DataField]
     public int GlyphWidth = 6;
 
+    /// <summary>
+    /// Whether the numbers should be centered on the glyph or just follow a static position.
+    /// </summary>
     [DataField]
     public bool CenterGlyph = true;
 
+    /// <summary>
+    /// Whether leading zeros should be hidden.
+    /// If true, "005" would display as "5".
+    /// </summary>
     [DataField]
     public bool HideLeadingZeroes = true;
 
@@ -35,6 +42,11 @@ public sealed partial class GenericCounterAlertComponent : Component
     };
 }
 
+/// <summary>
+/// Event raised to gather the amount the alert will display.
+/// Needs to be marked as handled to display.
+/// </summary>
+/// <param name="Amount">The number to display on the alert.</param>
 [ByRefEvent]
 public record struct GetGenericAlertCounterAmountEvent(int? Amount = null)
 {

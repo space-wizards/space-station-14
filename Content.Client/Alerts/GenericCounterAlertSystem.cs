@@ -10,6 +10,8 @@ namespace Content.Client.Alerts;
 /// </summary>
 public sealed class GenericCounterAlertSystem : EntitySystem
 {
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -41,9 +43,10 @@ public sealed class GenericCounterAlertSystem : EntitySystem
         {
             for (var i = 0; i < ent.Comp.DigitKeys.Count; i++)
             {
-                if (!sprite.LayerMapTryGet(ent.Comp.DigitKeys[i], out var layer))
+                if (!_sprite.LayerMapTryGet(ent.Owner, ent.Comp.DigitKeys[i], out var layer, false))
                     continue;
-                sprite.LayerSetVisible(layer, i <= digitCount - 1);
+
+                _sprite.LayerSetVisible(ent.Owner, layer, i <= digitCount - 1);
             }
         }
 
@@ -52,16 +55,16 @@ public sealed class GenericCounterAlertSystem : EntitySystem
 
         for (var i = 0; i < ent.Comp.DigitKeys.Count; i++)
         {
-            if (!sprite.LayerMapTryGet(ent.Comp.DigitKeys[i], out var layer))
+            if (!_sprite.LayerMapTryGet(ent.Owner, ent.Comp.DigitKeys[i], out var layer, false))
                 continue;
 
             var result = amount / (int) Math.Pow(10, i) % 10;
-            sprite.LayerSetState(layer, $"{result}");
+            _sprite.LayerSetRsiState(ent.Owner, layer, $"{result}");
 
             if (ent.Comp.CenterGlyph)
             {
                 var offset = baseOffset + (digitCount - 1 - i) * ent.Comp.GlyphWidth * (1f / EyeManager.PixelsPerMeter);
-                sprite.LayerSetOffset(layer, new Vector2(offset, 0));
+                _sprite.LayerSetOffset(ent.Owner, layer, new Vector2(offset, 0));
             }
         }
     }
@@ -77,7 +80,7 @@ public sealed class GenericCounterAlertSystem : EntitySystem
 
         for (var i = comp.DigitKeys.Count - 1; i >= 0; i--)
         {
-            if (sprite.LayerExists(comp.DigitKeys[i]))
+            if (_sprite.LayerExists((ent.Owner, sprite), comp.DigitKeys[i]))
                 return i + 1;
         }
 
