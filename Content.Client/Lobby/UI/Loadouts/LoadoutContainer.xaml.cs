@@ -20,6 +20,12 @@ public sealed partial class LoadoutContainer : BoxContainer
 
     public Button Select => SelectButton;
 
+    public string? Text
+    {
+        get => SelectButton.Text;
+        set => SelectButton.Text = value;
+    }
+
     public LoadoutContainer(ProtoId<LoadoutPrototype> proto, bool disabled, FormattedMessage? reason)
     {
         RobustXamlLoader.Load(this);
@@ -56,17 +62,5 @@ public sealed partial class LoadoutContainer : BoxContainer
         base.ExitedTree();
 
         _entManager.DeleteEntity(_entity);
-    }
-
-    public bool Pressed
-    {
-        get => SelectButton.Pressed;
-        set => SelectButton.Pressed = value;
-    }
-
-    public string? Text
-    {
-        get => SelectButton.Text;
-        set => SelectButton.Text = value;
     }
 }
