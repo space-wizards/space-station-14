@@ -1,5 +1,5 @@
 # Actions for Avali species
-#Tip: 50% opacity light orange was applied after the icons were made, take the colors off the light orange in the base sprite.
+# Tip: 50% opacity light orange was applied after the icons were made, take the colors off the light orange in the base sprite.
 
 - type: entity
   id: ActionAvaliStasisEnter

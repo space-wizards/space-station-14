@@ -99,8 +99,6 @@
     weightlessAcceleration: 1.6 # Avalis are specifically built to fly in low-g environments 
     weightlessFriction: 1
     weightlessModifier: 1
-    sprintSpeedModifier: 1.05 #slightly faster due to smaller size (I refuse to go any higher because of what happened with the run speed of felonids.)
-    walkSpeedModifier: 1.00
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Avali
