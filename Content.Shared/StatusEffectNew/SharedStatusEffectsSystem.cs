@@ -91,6 +91,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             return;
 
         effectComp.EndEffectTime += delta;
+        Dirty(effect, effectComp);
 
         if (effectComp.Alert is not null)
         {
@@ -113,6 +114,8 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         if (effectComp.Alert is not null)
         {
             effectComp.EndEffectTime = _timing.CurTime + duration;
+            Dirty(effect, effectComp);
+
             (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null ? null : (_timing.CurTime, effectComp.EndEffectTime.Value);
             _alerts.ShowAlert(
                 effectComp.AppliedTo.Value,
@@ -179,13 +182,13 @@ public readonly record struct StatusEffectApplied(EntityUid Target);
 public readonly record struct StatusEffectRemoved(EntityUid Target);
 
 /// <summary>
-/// Called on a status effect after a player has been <see cref="LocalPlayerAttachedEvent"/> to an entity with <see cref="StatusEffectContainerComponent"/> .
+/// Called on a status effect entity inside <see cref="StatusEffectContainerComponent"/> after a player has been <see cref="LocalPlayerAttachedEvent"/> to this container entity.
 /// </summary>
 [ByRefEvent]
 public readonly record struct StatusEffectPlayerAttachedEvent(EntityUid Target);
 
 /// <summary>
-/// Called on a status effect after a player has been <see cref="LocalPlayerDetachedEvent"/> to an entity with <see cref="StatusEffectContainerComponent"/> .
+/// Called on a status effect entity inside <see cref="StatusEffectContainerComponent"/> after a player has been <see cref="LocalPlayerDetachedEvent"/> to this container entity.
 /// </summary>
 [ByRefEvent]
 public readonly record struct StatusEffectPlayerDetachedEvent(EntityUid Target);

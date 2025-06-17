@@ -22,6 +22,8 @@ public sealed class DrowsinessOverlay : Overlay
     public override bool RequestScreenTexture => true;
     private readonly ShaderInstance _drowsinessShader;
 
+    private EntityQuery<StatusEffectComponent> _statusQuery;
+
     public float CurrentPower = 0.0f;
 
     private const float PowerDivisor = 250.0f;
@@ -31,6 +33,8 @@ public sealed class DrowsinessOverlay : Overlay
     public DrowsinessOverlay()
     {
         IoCManager.InjectDependencies(this);
+
+        _statusQuery = _entityManager.GetEntityQuery<StatusEffectComponent>();
         _drowsinessShader = _prototypeManager.Index<ShaderPrototype>("Drowsiness").InstanceUnique();
     }
 
@@ -43,13 +47,13 @@ public sealed class DrowsinessOverlay : Overlay
 
         var statusSys = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
 
-        if (!statusSys.TryEffectWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var drowsinessEffects))
+        if (!statusSys.TryEffectsWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var drowsinessEffects))
             return;
 
         TimeSpan? remainingTime = TimeSpan.Zero;
         foreach (var effect in drowsinessEffects)
         {
-            if (!_entityManager.TryGetComponent<StatusEffectComponent>(effect, out var statusEffect))
+            if (!_statusQuery.TryComp(effect, out var statusEffect))
                 continue;
 
             if (statusEffect.EndEffectTime > remainingTime)

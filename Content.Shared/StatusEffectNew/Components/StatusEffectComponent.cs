@@ -23,7 +23,7 @@ public sealed partial class StatusEffectComponent : Component
     /// <summary>
     /// Status effect indication for the player. If Null, no Alert will be displayed.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public ProtoId<AlertPrototype>? Alert;
 
     /// <summary>

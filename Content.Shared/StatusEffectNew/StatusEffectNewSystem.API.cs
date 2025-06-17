@@ -11,19 +11,19 @@ public abstract partial class SharedStatusEffectsSystem
     /// and has been successfully extended in time, returns False if the status effect cannot be applied to this entity,
     /// or for any other reason.
     /// </summary>
-    /// <param name="uid">The target entity to which the effect should be added.</param>
+    /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
     /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
     /// <param name="resetCooldown">
     /// If True, the effect duration time will be reset and reapplied. If False, the effect duration time will be overlaid with the existing one.
     /// In the other case, the effect will either be added for the specified time or its time will be extended for the specified time.
     /// </param>
-    public bool TryAddStatusEffect(EntityUid uid,
+    public bool TryAddStatusEffect(EntityUid target,
         EntProtoId effectProto,
         TimeSpan? duration = null,
         bool resetCooldown = false)
     {
-        if (TryGetStatusEffect(uid, effectProto, out var existedEffect))
+        if (TryGetStatusEffect(target, effectProto, out var existedEffect))
         {
             //We don't need to add the effect if it already exists
             if (duration is null)
@@ -36,14 +36,14 @@ public abstract partial class SharedStatusEffectsSystem
             return true;
         }
 
-        if (!CanAddStatusEffect(uid, effectProto))
+        if (!CanAddStatusEffect(target, effectProto))
             return false;
 
-        EnsureComp<StatusEffectContainerComponent>(uid, out var container);
+        EnsureComp<StatusEffectContainerComponent>(target, out var container);
 
         //And only if all checks passed we spawn the effect
-        var effect = PredictedSpawnAttachedTo(effectProto, Transform(uid).Coordinates);
-        _transform.SetParent(effect, uid);
+        var effect = PredictedSpawnAttachedTo(effectProto, Transform(target).Coordinates);
+        _transform.SetParent(effect, target);
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return false;
 
@@ -51,10 +51,11 @@ public abstract partial class SharedStatusEffectsSystem
             effectComp.EndEffectTime = _timing.CurTime + duration;
 
         container.ActiveStatusEffects.Add(effect);
-        effectComp.AppliedTo = uid;
+        effectComp.AppliedTo = target;
+        Dirty(target, container);
+        Dirty(effect, effectComp);
 
-        var ev = new StatusEffectApplied(uid);
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new StatusEffectApplied(target);
         RaiseLocalEvent(effect, ref ev);
 
         return true;
@@ -64,12 +65,12 @@ public abstract partial class SharedStatusEffectsSystem
     /// Attempting to remove a status effect from an entity.
     /// Returns True if the status effect existed on the entity and was successfully removed, and False in otherwise.
     /// </summary>
-    public bool TryRemoveStatusEffect(EntityUid uid, EntProtoId effectProto)
+    public bool TryRemoveStatusEffect(EntityUid target, EntProtoId effectProto)
     {
         if (_net.IsClient) //We cant remove the effect on the client (we need someone more robust at networking than me)
             return false;
 
-        if (!_containerQuery.TryComp(uid, out var container))
+        if (!_containerQuery.TryComp(target, out var container))
             return false;
 
         foreach (var effect in container.ActiveStatusEffects)
@@ -80,12 +81,12 @@ public abstract partial class SharedStatusEffectsSystem
                 if (!_effectQuery.TryComp(effect, out var effectComp))
                     return false;
 
-                var ev = new StatusEffectRemoved(uid);
-                RaiseLocalEvent(uid, ref ev);
+                var ev = new StatusEffectRemoved(target);
                 RaiseLocalEvent(effect, ref ev);
 
                 QueueDel(effect);
                 container.ActiveStatusEffects.Remove(effect);
+                Dirty(target, container);
                 return true;
             }
         }
@@ -96,9 +97,9 @@ public abstract partial class SharedStatusEffectsSystem
     /// <summary>
     /// Checks whether the specified entity is under a specific status effect.
     /// </summary>
-    public bool HasStatusEffect(EntityUid uid, EntProtoId effectProto)
+    public bool HasStatusEffect(EntityUid target, EntProtoId effectProto)
     {
-        if (!_containerQuery.TryComp(uid, out var container))
+        if (!_containerQuery.TryComp(target, out var container))
             return false;
 
         foreach (var effect in container.ActiveStatusEffects)
@@ -114,10 +115,10 @@ public abstract partial class SharedStatusEffectsSystem
     /// <summary>
     /// Attempting to retrieve the EntityUid of a status effect from an entity.
     /// </summary>
-    public bool TryGetStatusEffect(EntityUid uid, EntProtoId effectProto, [NotNullWhen(true)] out EntityUid? effect)
+    public bool TryGetStatusEffect(EntityUid target, EntProtoId effectProto, [NotNullWhen(true)] out EntityUid? effect)
     {
         effect = null;
-        if (!_containerQuery.TryComp(uid, out var container))
+        if (!_containerQuery.TryComp(target, out var container))
             return false;
 
         foreach (var e in container.ActiveStatusEffects)
@@ -232,7 +233,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// <summary>
     /// Returns all status effects that have the specified component
     /// </summary>
-    public bool TryEffectWithComp<T>(EntityUid? target, out HashSet<Entity<T>> effects) where T : IComponent
+    public bool TryEffectsWithComp<T>(EntityUid? target, out HashSet<Entity<T>> effects) where T : IComponent
     {
         effects = new();
         if (!_containerQuery.TryComp(target, out var container))
