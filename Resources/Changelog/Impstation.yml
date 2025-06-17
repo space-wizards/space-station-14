@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Train got some new lumps! Check the PR for details
-    type: Add
-  id: 1363
-  time: '2025-03-22T15:13:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2049
 - author: DinnerCalzone
   changes:
   - message: Thieves will no longer receive steal objectives for steal targets that
@@ -4213,3 +4206,12 @@
   id: 1862
   time: '2025-06-17T14:23:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2750
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: You can now purchase a box of .25 Caseless bullets for 2 telecrystals.
+    type: Add
+  - message: You can now print .25 Caseless magazines and bullets from emagged autolathes.
+    type: Add
+  id: 1863
+  time: '2025-06-17T21:11:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2801
