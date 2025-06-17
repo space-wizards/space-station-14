@@ -7,7 +7,6 @@ namespace Content.Shared.StatusEffect
     [RegisterComponent]
     [NetworkedComponent]
     [Access(typeof(StatusEffectsSystem))]
-    [EntityCategory("HideSpawnMenu")]
     public sealed partial class StatusEffectsComponent : Component
     {
         [ViewVariables]

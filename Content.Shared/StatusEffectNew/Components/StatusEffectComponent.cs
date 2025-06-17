@@ -12,6 +12,7 @@ namespace Content.Shared.StatusEffectNew.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedStatusEffectsSystem))]
+[EntityCategory("StatusEffects")]
 public sealed partial class StatusEffectComponent : Component
 {
     /// <summary>
