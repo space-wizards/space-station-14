@@ -3,11 +3,11 @@
   id: BaseBarrelChem
   abstract: true
   name: chemical barrel
-  description: A small metal drum. How tropical.
+  description: A plastic chemical barrel. Luckily, it isn't perched up high. #imp edit, funny worf plastic barrel reference
   components:
   - type: Sprite
-    sprite: Structures/Storage/barrels.rsi
-    state: metalbarrel
+    sprite: _Impstation/Structures/Storage/barrels.rsi #imp edit
+    state: gray #imp edit
     noRot: true
   - type: Fixtures
     fixtures:
@@ -36,7 +36,7 @@
         solution: tank
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalBreak
+          collection: HollowPlastic #imp edit, plastic now
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SolutionContainerManager
@@ -45,11 +45,11 @@
         maxVol: 500
   - type: PhysicalComposition
     materialComposition:
-      Steel: 3000 # 30 sheets, 1 stack
+      Plastic: 3000 # 30 sheets, 1 stack, imp edit to make plastic to match sprites
   - type: ExaminableSolution
     solution: tank
   - type: StaticPrice
-    price: 500
+    price: 600 # imp edit, plastic more spensive than steel
 
 - type: entity
   parent: BaseBarrelChem
@@ -59,7 +59,7 @@
   description: It seems to be leaking a bit. I don't think you'd want to be around this for long.
   components:
   - type: Sprite
-    state: radbarrel
+    state: radioactive #imp edit
   - type: RadiationSource
     intensity: 1.0
     slope: 0.25
@@ -176,7 +176,7 @@
   suffix: Silicon
   components:
   - type: Sprite
-    state: silicatebarrel
+    state: blue #imp edit
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -192,7 +192,7 @@
   description: Slippery...
   components:
   - type: Sprite
-    state: silicatebarrel
+    state: blue #imp edit
   - type: SolutionContainerManager
     solutions:
       tank:
