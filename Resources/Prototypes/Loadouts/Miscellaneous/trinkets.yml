@@ -30,13 +30,6 @@
 
 # Plushies
 - type: loadout
-  id: PlushieBee
-  storage:
-    back:
-    - PlushieBee
-  groupBy: "plushies"
-
-- type: loadout
   id: PlushiePenguin
   storage:
     back:
