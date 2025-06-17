@@ -101,7 +101,6 @@ Options:
         Defaults to: png
     --viewer
         Causes the map renderer to create the map.json files required for use with the map viewer.
-        Also puts the maps in the required directory structure.
     -o / --output <output path>
         Changes the path the rendered maps will get saved to.
         Defaults to Resources/MapImages
