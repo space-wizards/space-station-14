@@ -594,9 +594,9 @@
       "directions": 4
     },
     {
-      "name": "asteroid-inhand-left",
-      "directions": 4
-    {,
+          "name": "asteroid-inhand-left",
+          "directions": 4
+    },
     {
       "name": "xenofloor"
     },
