@@ -7,14 +7,19 @@ public partial class SharedBorgSystem
 {
     public virtual void InitializeMMI()
     {
-        SubscribeLocalEvent<MMIComponent, ContainerIsInsertingAttemptEvent>(OnMMIAttemptInsert);
+        SubscribeLocalEvent<MMIIncompatibleComponent, ContainerGettingInsertedAttemptEvent>(OnMMIIncompatibleAttemptInsert);
     }
 
-    private void OnMMIAttemptInsert(Entity<MMIComponent> entity, ref ContainerIsInsertingAttemptEvent args)
+    private void OnMMIIncompatibleAttemptInsert(
+        Entity<MMIIncompatibleComponent> entity,
+        ref ContainerGettingInsertedAttemptEvent args)
     {
-        var ev = new AttemptMakeBrainIntoSiliconEvent(args.EntityUid, entity);
-        RaiseLocalEvent(args.EntityUid, ref ev);
-        if (ev.Cancelled)
-            args.Cancel();
+        if (!HasComp<MMIComponent>(args.Container.Owner))
+            return;
+
+        args.Cancel();
+        Popup.PopupEntity(
+            Loc.GetString(entity.Comp.FailureMessage, ("brain", entity), ("mmi", args.Container.Owner)),
+            args.Container.Owner);
     }
 }
