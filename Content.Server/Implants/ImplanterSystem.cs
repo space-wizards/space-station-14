@@ -63,9 +63,8 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
             {
                 Implant(target, target, uid, component);
                 
-                // STARLIGHT: Check if this is the SKB implanter that should dissolve on use
-                if (TryComp<MetaDataComponent>(uid, out var metadata) && 
-                    metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
+                // STARLIGHT: Check if this implanter should dissolve on use
+                if (component.DissolveOnUse)
                 {
                     // Queue the implanter for deletion (dissolve on use)
                     QueueDel(uid);
@@ -117,9 +116,8 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        // STARLIGHT: If this is self-drawing and it's the SKB implanter, handle it immediately
-        if (user == target && TryComp<MetaDataComponent>(implanter, out var metadata) && 
-            metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
+        // STARLIGHT: If this is self-drawing and the implanter should dissolve on use, handle it immediately
+        if (user == target && component.DissolveOnUse)
         {
             Draw(implanter, user, target, component);
             // Queue the implanter for deletion (dissolve on use)
@@ -145,9 +143,8 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
         Implant(args.User, args.Target.Value, args.Used.Value, component);
 
-        // STARLIGHT: Check if this is the SKB implanter that should dissolve on use
-        if (TryComp<MetaDataComponent>(args.Used.Value, out var metadata) && 
-            metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
+        // STARLIGHT: Check if this implanter should dissolve on use
+        if (component.DissolveOnUse)
         {
             // Queue the implanter for deletion (dissolve on use)
             QueueDel(args.Used.Value);
@@ -163,9 +160,8 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
         Draw(args.Used.Value, args.User, args.Target.Value, component);
 
-        // STARLIGHT: Check if this is the SKB implanter that should dissolve on use
-        if (TryComp<MetaDataComponent>(args.Used.Value, out var metadata) && 
-            metadata.EntityPrototype?.ID == "USSPUplinkImplanter")
+        // STARLIGHT: Check if this implanter should dissolve on use
+        if (component.DissolveOnUse)
         {
             // Queue the implanter for deletion (dissolve on use)
             QueueDel(args.Used.Value);

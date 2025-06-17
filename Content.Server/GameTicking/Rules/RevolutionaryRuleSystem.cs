@@ -72,7 +72,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!; // Starlight
-    [Dependency] private readonly ShuttleBuildingUplinkSystem _shuttleUplink = default!; // Starlight
     [Dependency] private readonly ChatSystem _chatSystem = default!; // Starlight
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!; // Starlight
     [Dependency] private readonly ContentAudioSystem _contentAudioSystem = default!; // Starlight

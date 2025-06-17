@@ -229,7 +229,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         args.Handled = true;
         QueueDel(uid);
     }
-    
+
     /// <summary>
     /// Starlight: Tries to get all implants from an entity
     /// </summary>
@@ -239,16 +239,17 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     public bool TryGetImplants(EntityUid uid, out List<EntityUid> implants)
     {
         implants = new List<EntityUid>();
-        
+
         if (!TryComp<ImplantedComponent>(uid, out var implanted))
             return false;
-            
+
         var implantContainer = implanted.ImplantContainer;
-        
+
         if (implantContainer.ContainedEntities.Count == 0)
             return false;
-            
+
         implants.AddRange(implantContainer.ContainedEntities);
         return true;
     }
+    // Starlight End
 }

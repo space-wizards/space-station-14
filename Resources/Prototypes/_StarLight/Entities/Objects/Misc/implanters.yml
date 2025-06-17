@@ -41,6 +41,7 @@
   components:
   - type: Implanter
     implant: USSPUplinkImplant
+    dissolveOnUse: true
   - type: Item
     sprite: _Starlight/Objects/Specific/USSP/SKB_implanter.rsi
     heldPrefix: implanter
