@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Fixed cyborg and drone batteries rapidly draining under certain conditions.
-    type: Fix
-  id: 1351
-  time: '2025-03-19T22:56:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2009
-- author: Darkmajia
-  changes:
-  - message: Embeddable items properly deal damage when thrown.
-    type: Fix
-  - message: Gibbing no longer deletes embedded items.
-    type: Fix
-  id: 1352
-  time: '2025-03-19T23:12:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2012
 - author: SixValentine
   changes:
   - message: Various Luna edits. Check PR.
@@ -4198,3 +4182,25 @@
   id: 1850
   time: '2025-06-17T00:47:27.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2613
+- author: starlighthowls
+  changes:
+  - message: Added a new ai display and hologram.
+    type: Add
+  id: 1851
+  time: '2025-06-17T00:49:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2787
+- author: widgetbeck
+  changes:
+  - message: Replicator nests now count items in stacks properly. One stack of 30
+      is worth (equivalent to) 3 points.
+    type: Add
+  - message: It is now harder for Replicators to make sexual innuendo. Sorry, folks.
+    type: Tweak
+  - message: Replicator Stun Projectors now do no damage, and are back to their old
+      firing rate.
+    type: Tweak
+  - message: Replicator Nests now preserve mechs.
+    type: Tweak
+  id: 1852
+  time: '2025-06-17T00:49:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2751
