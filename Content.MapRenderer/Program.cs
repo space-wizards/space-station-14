@@ -201,6 +201,8 @@ namespace Content.MapRenderer
                 var mapShort = map.ShortName;
                 var directory = Path.Combine(arguments.OutputPath, mapShort);
 
+                mapNames.Add(mapShort);
+
                 var i = 0;
                 try
                 {
@@ -235,8 +237,6 @@ namespace Content.MapRenderer
                         grid.Dispose();
 
                         mapViewerData.Grids.Add(new GridLayer(renderedGrid, Path.Combine(mapShort, Path.GetFileName(savePath))));
-
-                        mapNames.Add(mapShort);
                         i++;
                     }
                 }
