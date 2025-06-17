@@ -4,6 +4,7 @@ using Content.Server.Cargo.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
+using Content.Shared.Cargo;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
@@ -183,10 +184,7 @@ public sealed class PricingSystem : EntitySystem
     /// </summary>
     public double GetEstimatedPrice(EntityPrototype prototype)
     {
-        var ev = new EstimatedPriceCalculationEvent()
-        {
-            Prototype = prototype,
-        };
+        var ev = new EstimatedPriceCalculationEvent(prototype);
 
         RaiseLocalEvent(ref ev);
 
@@ -398,40 +396,4 @@ public sealed class PricingSystem : EntitySystem
 
         return price;
     }
-}
-
-/// <summary>
-/// A directed by-ref event fired on an entity when something needs to know it's price. This value is not cached.
-/// </summary>
-[ByRefEvent]
-public record struct PriceCalculationEvent()
-{
-    /// <summary>
-    /// The total price of the entity.
-    /// </summary>
-    public double Price = 0;
-
-    /// <summary>
-    /// Whether this event was already handled.
-    /// </summary>
-    public bool Handled = false;
-}
-
-/// <summary>
-/// Raised broadcast for an entity prototype to determine its estimated price.
-/// </summary>
-[ByRefEvent]
-public record struct EstimatedPriceCalculationEvent()
-{
-    public required EntityPrototype Prototype;
-
-    /// <summary>
-    /// The total price of the entity.
-    /// </summary>
-    public double Price = 0;
-
-    /// <summary>
-    /// Whether this event was already handled.
-    /// </summary>
-    public bool Handled = false;
 }

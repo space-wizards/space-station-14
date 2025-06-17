@@ -20,6 +20,24 @@
   loadouts:
   - RoboticistCap
   - SkullBandana
+
+- type: loadoutGroup
+  id: RoboticistGloves
+  name: loadout-group-roboticist-gloves
+  minLimit: 0
+  loadouts:
+  - LatexGloves
+  - PurpleGloves
+  - RobohandsGloves
+
+- type: loadoutGroup
+  id: RoboticistGoggles
+  name: loadout-group-roboticist-goggles
+  minLimit: 0
+  loadouts:
+  - RoboticistWeldingGoggles
+  - RoboticistDiagnosticsHud
+  
   
 - type: loadoutGroup
   id: RoboticistBackpack

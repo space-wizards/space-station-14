@@ -235,7 +235,7 @@
   cost:
     NTCredit: 16
   categories:
-  - SLPlushies
+  - SLCrew
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
@@ -341,4 +341,104 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
-#
+#Marketable crewmember plushies
+- type: listing
+  id: VendorPlushieMatthew
+  productEntity: PlushieMatthew
+  cost:
+    NTCredit: 20
+  categories:
+  - SLCrew
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VendorPlushieEmmie
+  productEntity: PlushieEmmie
+  cost:
+    NTCredit: 20
+  categories:
+  - SLCrew
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+
+- type: listing
+  id: VendorPlushieMorgana
+  productEntity: PlushieMorgana
+  cost:
+    NTCredit: 20
+  categories:
+  - SLCrew
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+
+- type: listing
+  id: VendorPlushieMorganaRound
+  productEntity: PlushieMorganaRound
+  cost:
+    NTCredit: 20
+  categories:
+  - SLCrew
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VendorPlushieKiosha
+  productEntity: PlushieKiosha
+  cost:
+    NTCredit: 20
+  categories:
+  - SLCrew
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VendorPlushieLance
+  productEntity: PlushieLance
+  cost:
+    NTCredit: 20
+  categories:
+  - SLCrew
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VendorPlushieKiller
+  productEntity: PlushieKiller
+  cost:
+    NTCredit: 20
+  categories:
+  - SLCrew
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VendorPlushieTrystan
+  productEntity: PlushieTrystan
+  cost:
+    NTCredit: 20
+  categories:
+  - SLCrew
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VendorPlushieAmali
+  productEntity: PlushieAmali
+  cost:
+    NTCredit: 20
+  categories:
+  - SLCrew
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

@@ -65,16 +65,16 @@
     - !type:NestedSelector # Don't you love getting mailed trash?
       tableId: GenericTrashItems
     - !type:NestedSelector
-      weight: 4
+      weight: .4
       tableId: SpamMailTable
     - !type:NestedSelector
-      weight: 2
+      weight: .2
       tableId: RandomBookTable
     - !type:NestedSelector
-      weight: 2
+      weight: .2
       tableId: RandomSnackTable
     - !type:NestedSelector
-      weight: 2
+      weight: .2
       tableId: RandomAllSodaTable
 
 - type: entityTable # TODO: Add more variety!
@@ -114,12 +114,14 @@
     children:
     - !type:NestedSelector
       tableId: MaintToolsTable
+      weight: .25
       rolls: !type:RangeNumberSelector
         range: 1, 2
     - !type:NestedSelector
       tableId: FoodRandomCakeTable
-      weight: 2
+      weight: .5
     - id: FoodBoxPizzaFilled
+      weight: .25
 
 - type: entityTable
   id: PackageUncommonEntityTable
