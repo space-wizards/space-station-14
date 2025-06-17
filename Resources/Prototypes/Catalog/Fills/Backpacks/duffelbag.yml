@@ -59,6 +59,18 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledRifle
+  name: Estoc DMR bundle
+  description: "For medium-range sharpshooting, the Estoc DMR. Bundled with three magazines."
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRifleEstoc
+    - id: MagazineRifle
+      amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledRevolver
   name: Python bundle
   description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."
@@ -211,7 +223,7 @@
         - id: ClothingEyesChameleon
         - id: ClothingHeadsetChameleon
         - id: ClothingShoesChameleon
-        - id: BarberScissors
+        - id: ChameleonControllerImplanter
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

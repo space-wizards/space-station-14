@@ -20,9 +20,11 @@ namespace Content.Server.Power.Nodes
             var gridIndex = mapSystem.TileIndicesFor(gridEnt, xform.Coordinates);
 
             var nodes = NodeHelpers.GetCardinalNeighborNodes(nodeQuery, gridEnt, gridIndex, mapSystem, includeSameTile: false);
-            foreach (var (_, node) in nodes)
+            foreach (var (dir, node) in nodes)
             {
-                if (node is CableTerminalNode)
+                if (node is CableTerminalNode
+                    && dir != Direction.Invalid
+                    && xformQuery.GetComponent(node.Owner).LocalRotation.GetCardinalDir().GetOpposite() == dir)
                     yield return node;
             }
         }
