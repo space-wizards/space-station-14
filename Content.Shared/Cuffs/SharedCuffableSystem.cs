@@ -500,7 +500,7 @@ namespace Content.Shared.Cuffs
                 return true;
             }
 
-            if (!_hands.CanDrop(user, handcuff))
+            if (_hands.IsHolding(user, handcuff) && !_hands.CanDrop(user, handcuff))
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-cannot-drop-cuffs", ("target", Identity.Name(target, EntityManager, user))), user, user);
                 return false;
