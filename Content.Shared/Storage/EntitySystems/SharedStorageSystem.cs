@@ -55,13 +55,11 @@ public abstract class SharedStorageSystem : EntitySystem
     [Dependency] private   readonly ISharedAdminLogManager _adminLog = default!;
 
     [Dependency] protected readonly ActionBlockerSystem ActionBlocker = default!;
-    [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private   readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private   readonly InventorySystem _inventory = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] protected readonly SharedEntityStorageSystem EntityStorage = default!;
     [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] protected readonly SharedItemSystem ItemSystem = default!;
@@ -100,13 +98,9 @@ public abstract class SharedStorageSystem : EntitySystem
 
     public bool CheckingCanInsert;
 
-    private readonly List<EntityUid> _entList = new();
-    private readonly HashSet<EntityUid> _entSet = new();
-
     private readonly List<ItemSizePrototype> _sortedSizes = new();
     private FrozenDictionary<string, ItemSizePrototype> _nextSmallest = FrozenDictionary<string, ItemSizePrototype>.Empty;
 
-    private const string QuickInsertUseDelayID = "quickInsert";
     private const string OpenUiUseDelayID = "storage";
 
     /// <summary>
@@ -147,7 +141,6 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ItemSlotsSystem) });
         SubscribeLocalEvent<StorageComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<StorageComponent, OpenStorageImplantEvent>(OnImplantActivate);
-        SubscribeLocalEvent<StorageComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<StorageComponent, DestructionEventArgs>(OnDestroy);
         SubscribeLocalEvent<StorageComponent, BoundUserInterfaceMessageAttempt>(OnBoundUIAttempt);
         SubscribeLocalEvent<StorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
@@ -155,7 +148,6 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<StorageComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         SubscribeLocalEvent<StorageComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
-        SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<StorageComponent, GotReclaimedEvent>(OnReclaimed);
 
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
@@ -213,7 +205,6 @@ public abstract class SharedStorageSystem : EntitySystem
 
     private void OnMapInit(Entity<StorageComponent> entity, ref MapInitEvent args)
     {
-        UseDelay.SetLength(entity.Owner, entity.Comp.QuickInsertCooldown, QuickInsertUseDelayID);
         UseDelay.SetLength(entity.Owner, entity.Comp.OpenUiCooldown, OpenUiUseDelayID);
     }
 
@@ -508,159 +499,6 @@ public abstract class SharedStorageSystem : EntitySystem
             UI.CloseUi(uid, StorageComponent.StorageUiKey.Key, args.Performer);
         else
             OpenStorageUI(uid, args.Performer, storageComp, false);
-
-        args.Handled = true;
-    }
-
-    /// <summary>
-    /// Allows a user to pick up entities by clicking them, or pick up all entities in a certain radius
-    /// around a click.
-    /// </summary>
-    /// <returns></returns>
-    private void AfterInteract(EntityUid uid, StorageComponent storageComp, AfterInteractEvent args)
-    {
-        if (args.Handled || !args.CanReach || !UseDelay.TryResetDelay(uid, checkDelayed: true, id: QuickInsertUseDelayID))
-            return;
-
-        // Pick up all entities in a radius around the clicked location.
-        // The last half of the if is because carpets exist and this is terrible
-        if (storageComp.AreaInsert && (args.Target == null || !HasComp<ItemComponent>(args.Target.Value)))
-        {
-            _entList.Clear();
-            _entSet.Clear();
-            _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, _entSet, LookupFlags.Dynamic | LookupFlags.Sundries);
-            var delay = 0f;
-
-            foreach (var entity in _entSet)
-            {
-                if (entity == args.User
-                    || !_itemQuery.TryGetComponent(entity, out var itemComp) // Need comp to get item size to get weight
-                    || !_prototype.TryIndex(itemComp.Size, out var itemSize)
-                    || !CanInsert(uid, entity, out _, storageComp, item: itemComp)
-                    || !_interactionSystem.InRangeUnobstructed(args.User, entity))
-                {
-                    continue;
-                }
-
-                _entList.Add(entity);
-                delay += itemSize.Weight * AreaInsertDelayPerItem;
-
-                if (_entList.Count >= StorageComponent.AreaPickupLimit)
-                    break;
-            }
-
-            //If there's only one then let's be generous
-            if (_entList.Count >= 1)
-            {
-                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, delay, new AreaPickupDoAfterEvent(GetNetEntityList(_entList)), uid, target: uid)
-                {
-                    BreakOnDamage = true,
-                    BreakOnMove = true,
-                    NeedHand = true,
-                };
-
-                _doAfterSystem.TryStartDoAfter(doAfterArgs);
-                args.Handled = true;
-            }
-
-            return;
-        }
-
-        // Pick up the clicked entity
-        if (storageComp.QuickInsert)
-        {
-            if (args.Target is not { Valid: true } target)
-                return;
-
-            if (ContainerSystem.IsEntityInContainer(target)
-                || target == args.User
-                || !_itemQuery.HasComponent(target))
-            {
-                return;
-            }
-
-            if (TryComp(uid, out TransformComponent? transformOwner) && TryComp(target, out TransformComponent? transformEnt))
-            {
-                var parent = transformOwner.ParentUid;
-
-                var position = TransformSystem.ToCoordinates(
-                    parent.IsValid() ? parent : uid,
-                    TransformSystem.GetMapCoordinates(transformEnt)
-                );
-
-                args.Handled = true;
-                if (PlayerInsertEntityInWorld((uid, storageComp), args.User, target))
-                {
-                    EntityManager.RaiseSharedEvent(new AnimateInsertingEntitiesEvent(GetNetEntity(uid),
-                        new List<NetEntity> { GetNetEntity(target) },
-                        new List<NetCoordinates> { GetNetCoordinates(position) },
-                        new List<Angle> { transformOwner.LocalRotation }), args.User);
-                }
-            }
-        }
-    }
-
-    private void OnDoAfter(EntityUid uid, StorageComponent component, AreaPickupDoAfterEvent args)
-    {
-        if (args.Handled || args.Cancelled)
-            return;
-
-        args.Handled = true;
-        var successfullyInserted = new List<EntityUid>();
-        var successfullyInsertedPositions = new List<EntityCoordinates>();
-        var successfullyInsertedAngles = new List<Angle>();
-
-        if (!_xformQuery.TryGetComponent(uid, out var xform))
-        {
-            return;
-        }
-
-        var entCount = Math.Min(StorageComponent.AreaPickupLimit, args.Entities.Count);
-
-        for (var i = 0; i < entCount; i++)
-        {
-            var entity = GetEntity(args.Entities[i]);
-
-            // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
-            if (ContainerSystem.IsEntityInContainer(entity)
-                || entity == args.Args.User
-                || !_itemQuery.HasComponent(entity))
-            {
-                continue;
-            }
-
-            if (!_xformQuery.TryGetComponent(entity, out var targetXform) ||
-                targetXform.MapID != xform.MapID)
-            {
-                continue;
-            }
-
-            var position = TransformSystem.ToCoordinates(
-                xform.ParentUid.IsValid() ? xform.ParentUid : uid,
-                new MapCoordinates(TransformSystem.GetWorldPosition(targetXform), targetXform.MapID)
-            );
-
-            var angle = targetXform.LocalRotation;
-
-            if (PlayerInsertEntityInWorld((uid, component), args.Args.User, entity, playSound: false))
-            {
-                successfullyInserted.Add(entity);
-                successfullyInsertedPositions.Add(position);
-                successfullyInsertedAngles.Add(angle);
-            }
-        }
-
-        // If we picked up at least one thing, play a sound and do a cool animation!
-        if (successfullyInserted.Count > 0)
-        {
-            if (!_tag.HasTag(args.User, component.SilentStorageUserTag))
-                Audio.PlayPredicted(component.StorageInsertSound, uid, args.User, _audioParams);
-            EntityManager.RaiseSharedEvent(new AnimateInsertingEntitiesEvent(
-                GetNetEntity(uid),
-                GetNetEntityList(successfullyInserted),
-                GetNetCoordinatesList(successfullyInsertedPositions),
-                successfullyInsertedAngles), args.User);
-        }
 
         args.Handled = true;
     }

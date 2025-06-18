@@ -46,19 +46,8 @@ public abstract partial class SharedGunSystem
         if (args.Handled)
             return;
 
-        if (_whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, args.Used))
-            return;
-
-        if (GetBallisticShots(component) >= component.Capacity)
-            return;
-
-        component.Entities.Add(args.Used);
-        Containers.Insert(args.Used, component.Container);
-        // Not predicted so
-        Audio.PlayPredicted(component.SoundInsert, uid, args.User);
-        args.Handled = true;
-        UpdateBallisticAppearance(uid, component);
-        DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
+        if (TryBallisticInsert((uid, component), args.Used, args.User))
+            args.Handled = true;
     }
 
     private void OnBallisticAfterInteract(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractEvent args)
@@ -144,8 +133,11 @@ public abstract partial class SharedGunSystem
             }
             else
             {
-                // play sound to be cool
-                Audio.PlayPredicted(component.SoundInsert, uid, args.User);
+                if (!TagSystem.HasTag(args.User, component.SilentInsertUserTag))
+                {
+                    // play sound to be cool
+                    Audio.PlayPredicted(component.SoundInsert, uid, args.User);
+                }
                 SimulateInsertAmmo(ent.Value, args.Target.Value, Transform(args.Target.Value).Coordinates);
             }
 
@@ -268,6 +260,52 @@ public abstract partial class SharedGunSystem
     {
         args.Count = GetBallisticShots(component);
         args.Capacity = component.Capacity;
+    }
+
+    /// <summary>
+    /// Returns true if the given <paramref name="entity"/>'s ballistic ammunition is full, false otherwise.
+    /// </summary>
+    public bool IsFullBallistic(Entity<BallisticAmmoProviderComponent> entity)
+    {
+        return GetBallisticShots(entity.Comp) >= entity.Comp.Capacity;
+    }
+
+    /// <summary>
+    /// Returns whether or not <paramref name="inserted"/> can be inserted into <paramref name="entity"/>, based on
+    /// available space and whitelists.
+    /// </summary>
+    public bool CanInsertBallistic(Entity<BallisticAmmoProviderComponent> entity, EntityUid inserted)
+    {
+        return !_whitelistSystem.IsWhitelistFailOrNull(entity.Comp.Whitelist, inserted) &&
+               !IsFullBallistic(entity);
+    }
+
+    /// <summary>
+    /// Attempts to insert <paramref name="inserted"/> into <paramref name="entity"/> as ammunition. Returns true on
+    /// success, false otherwise.
+    /// </summary>
+    public bool TryBallisticInsert(
+        Entity<BallisticAmmoProviderComponent> entity,
+        EntityUid inserted,
+        EntityUid? user,
+        bool suppressInsertionSound = false
+    )
+    {
+        if (!CanInsertBallistic(entity, inserted))
+            return false;
+
+        entity.Comp.Entities.Add(inserted);
+        Containers.Insert(inserted, entity.Comp.Container);
+        if (!suppressInsertionSound &&
+            !(user is { } u && TagSystem.HasTag(u, entity.Comp.SilentInsertUserTag)))
+        {
+            Audio.PlayPredicted(entity.Comp.SoundInsert, entity, user);
+        }
+
+        UpdateBallisticAppearance(entity, entity.Comp);
+        DirtyField(entity.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
+
+        return true;
     }
 
     public void UpdateBallisticAppearance(EntityUid uid, BallisticAmmoProviderComponent component)
