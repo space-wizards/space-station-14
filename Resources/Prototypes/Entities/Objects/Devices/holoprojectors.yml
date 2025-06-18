@@ -155,3 +155,44 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  parent: BaseItem
+  id: Holocuffprojector
+  name: holographic handcuff projector
+  description: Creates holographic handcuffs, fancy arresting.
+  components:
+  - type: Item
+    storedRotation: -90
+  - type: HolocuffProjector
+    cuffProto: HolocuffSecurity
+    chargeUse: 90
+  - type: UseDelay
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot {}
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: Sprite
+    sprite: Objects/Devices/Holoprojectors/cuffs.rsi
+    state: icon
+  - type: Tag
+    tags:
+      - SecBeltEquip
+  - type: StaticPrice
+    price: 50
+
+- type: entity
+  parent: HoloCuffprojector
+  id: HoloCuffprojectorEmpty
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

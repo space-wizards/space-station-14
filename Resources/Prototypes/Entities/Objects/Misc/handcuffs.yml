@@ -158,3 +158,30 @@
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/straight_jacket.rsi
     state: icon
+
+- type: entity
+  parent: Handcuffs
+  id: HolocuffSecurity
+  name: holographic handcuffs
+  description: handcuffs made from hard light. not so hard as advertised.
+  components:
+  - type: Handcuff
+    breakoutTime: 10 # little easier to break out compared to normal cuffs, still better than cable cuffs and zipties
+    cuffedRSI: Objects/Misc/holocuffs.rsi
+    bodyIconState: body-overlay
+    color: red
+    destroyOnRemove: true
+    startCuffSound:
+      path: /Audio/Items/Handcuffs/rope_start.ogg
+    endCuffSound:
+      path: /Audio/Items/Handcuffs/rope_end.ogg
+    startUncuffSound:
+      path: /Audio/Items/Handcuffs/rope_start.ogg
+    endUncuffSound:
+      path: /Audio/Items/Handcuffs/rope_breakout.ogg
+    startBreakoutSound:
+      path: /Audio/Items/Handcuffs/rope_takeoff.ogg
+  - type: Sprite
+    sprite: Objects/Misc/holocuffs.rsi
+    state: cuff
+    color: red
