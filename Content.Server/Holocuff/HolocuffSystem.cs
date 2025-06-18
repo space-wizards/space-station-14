@@ -8,6 +8,7 @@ using Content.Shared.Storage;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Popups;
 
 namespace Content.Server.Holocuff;
 
