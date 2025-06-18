@@ -34,19 +34,17 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
             CCVars.LobbyMusicCollection,
             x =>
             {
+                //Checks to see if the sound collection exists. If it does change it if not set a empty prototype
+                // as the new _lobbyMusicCollection meaning it wont play anything in the lobby.
+                if(_prototypeManager.TryIndex<SoundCollectionPrototype>(x, out var outputSoundCollection))
+                {
+                    _lobbyMusicCollection = outputSoundCollection;
+                }
+                else
+                {
+                    _lobbyMusicCollection = new SoundCollectionPrototype();
+                }
 
-                try
-                {
-                    _lobbyMusicCollection = _prototypeManager.Index<SoundCollectionPrototype>(x);
-                }
-                catch
-                {
-                    Log.Error("No matching sound collection found. Defaulting to LobbyMusic collection");
-                    //This realy should default to the default set inside of the Cvar to avoid a potential loop
-                    //  if the default is ever changed.
-                    _cfg.SetCVar("ambience.lobby_music_collection", "LobbyMusic", true);
-                }
-                
                 _lobbyPlaylist = ShuffleLobbyPlaylist();
             },
             true);

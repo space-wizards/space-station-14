@@ -63,9 +63,6 @@ public sealed partial class CCVars
     /// <summary>
     ///     Lobby music collection string
     /// </summary>
-    /// <remarks>
-    ///     If you change the default setting you need to change the default in Content.Server/Audio/ContentAudioSystem.cs
-    /// </remarks>
     [CVarControl(AdminFlags.VarEdit)]
     public static readonly CVarDef<string> LobbyMusicCollection =
         CVarDef.Create("ambience.lobby_music_collection", "LobbyMusic", CVar.REPLICATED | CVar.SERVER);
