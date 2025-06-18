@@ -7897,4 +7897,19 @@ Entries:
   id: 1090
   time: '2025-06-18T01:45:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/849
+- author: RoadTrain
+  changes:
+  - message: Morgana's plushie now occasionally asks for uppies. And you will comply.
+      OR ELSE
+    type: Add
+  id: 1091
+  time: '2025-06-18T10:01:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/858
+- author: RoadTrain
+  changes:
+  - message: Typo's
+    type: Fix
+  id: 1092
+  time: '2025-06-18T10:01:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/858
 
