@@ -39,6 +39,12 @@
   values:
     prefix: plushie-trystan-
     count: 6
+
+- type: localizedDataset
+  id: PlushiesOp
+  values:
+    prefix: plushie-op-
+    count: 6
     
 - type: localizedDataset
   id: PlushiesAmali
