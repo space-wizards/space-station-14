@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Added Hash
-    type: Add
-  id: 1370
-  time: '2025-03-24T02:27:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2029
 - author: honeyed-lemons
   changes:
   - message: Completely rebuild xeno's bar and kitchen
@@ -4206,3 +4199,11 @@
   id: 1869
   time: '2025-06-18T09:23:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2812
+- author: DinnerCalzone
+  changes:
+  - message: A large number of new chemical barrels have been added to the salvage
+      loot pool.
+    type: Add
+  id: 1870
+  time: '2025-06-18T09:36:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2811
