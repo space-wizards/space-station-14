@@ -41,13 +41,13 @@ public abstract class SharedJumpSystem : EntitySystem
 
     private void OnGetItemActions(Entity<JumpComponent> ent, ref GetItemActionsEvent args)
     {
-        if(ent.Comp.IsEquipment)
+        if (ent.Comp.IsEquipment)
             args.AddAction(ref ent.Comp.ActionEntity, ent.Comp.Action);
     }
 
     private void OnStartup(EntityUid uid, JumpComponent component, MapInitEvent args)
     {
-        if (component.SetEntityIcon)
+        if (component.IsEquipment)
         {
             if (_actionContainer.EnsureAction(uid, ref component.ActionEntity, out var action, component.Action))
                 _action.SetEntityIcon((component.ActionEntity.Value, action), uid);
@@ -63,8 +63,12 @@ public abstract class SharedJumpSystem : EntitySystem
         if (Deleted(uid) || component.ActionEntity is null)
             return;
 
-        _actionContainer.RemoveAction(component.ActionEntity.Value);
-        _action.RemoveAction(component.ActionEntity);
+        if (component.IsEquipment)
+        {
+            _actionContainer.RemoveAction(component.ActionEntity.Value);
+        }
+        else
+            _action.RemoveAction((uid, null), component.ActionEntity);
     }
 
     protected virtual bool TryReleaseGas(Entity<JumpComponent> ent, ref JetJumpActionEvent args)
