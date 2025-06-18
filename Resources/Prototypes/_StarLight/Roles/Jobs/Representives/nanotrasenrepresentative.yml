@@ -52,7 +52,7 @@
 - type: startingGear
   id: NanoTrasenRepresentativeGear
   equipment:
-    shoes: ClothingShoesBootsLaceup
+    #shoes: ClothingShoesBootsLaceup
     head: ClothingHeadHatCapNtrep
     id: NanoTrasenRepresentativePDA
     ears: ClothingHeadsetAltCommand

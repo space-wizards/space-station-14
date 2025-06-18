@@ -647,6 +647,9 @@
   name: loadout-group-quartermaster-shoes
   loadouts:
   - BrownShoes
+  - LeatherShoes # 🌟Starlight🌟
+  - SalvageBoots # 🌟Starlight🌟
+  - WorkBoots # 🌟Starlight🌟
   - CargoWinterBoots
 
 - type: loadoutGroup
@@ -683,7 +686,10 @@
   name: loadout-group-cargo-technician-shoes
   loadouts:
   - BlackShoes
+  - YellowShoes # 🌟Starlight🌟
   - CargoWinterBoots
+  - LeatherShoes # 🌟Starlight🌟
+  - WorkBoots # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: SalvageSpecialistBackpack
@@ -706,6 +712,7 @@
   loadouts:
   - SalvageBoots
   - CargoWinterBoots
+  - WorkBoots # 🌟Starlight🌟
 
 # Engineering
 - type: loadoutGroup
@@ -745,6 +752,7 @@
   name: loadout-group-chief-engineer-shoes
   loadouts:
   - BrownShoes
+  - WorkBoots # 🌟Starlight🌟
   - EngineeringWinterBoots
 
 - type: loadoutGroup
@@ -832,6 +840,7 @@
   name: loadout-group-atmospheric-technician-shoes
   loadouts:
   - WhiteShoes
+  - WorkBoots # 🌟Starlight🌟
   - EngineeringWinterBoots
 
 - type: loadoutGroup
@@ -880,7 +889,12 @@
   name: loadout-group-research-director-shoes
   loadouts:
   - BrownShoes
+  - WhiteShoes # 🌟Starlight🌟
+  - BlackShoes # 🌟Starlight🌟
   - ScienceWinterBoots
+  - Heels # 🌟Starlight🌟
+  - LaceupShoes # 🌟Starlight🌟
+  - LeatherShoes # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: ScientistHead
@@ -936,6 +950,8 @@
   - WhiteShoes
   - BlackShoes
   - ScienceWinterBoots
+  - Heels # 🌟Starlight🌟
+  - LeatherShoes # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: ScientistGloves
@@ -1242,7 +1258,11 @@
   name: loadout-group-chief-medical-officer-shoes
   loadouts:
   - BrownShoes
+  - WhiteShoes # 🌟Starlight🌟
   - MedicalWinterBoots
+  - Heels # 🌟Starlight🌟
+  - LaceupShoes # 🌟Starlight🌟
+  - LeatherShoes # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: MedicalDoctorHead
