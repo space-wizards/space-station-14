@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Coordinates.Helpers;
 using Content.Server.Power.Components;
@@ -116,7 +117,7 @@ public sealed class HolocuffSystem : EntitySystem
         if (!_powerCell.TryUseCharge(uid, component.ChargeUse, user: args.User)) // if no battery or no charge, doesn't work)
             return;
 
-        var handcuff = Spawn(HolocuffProjectorComponent.CuffProto);
+        var handcuff = Spawn(component.CuffProto);
         if (!TryComp<HandcuffComponent>(handcuff, out var handcuffComp))
             return;
 
