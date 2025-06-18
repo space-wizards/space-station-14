@@ -449,10 +449,11 @@
   - type: SmokeOnTrigger
     duration: 10
     spreadAmount: 30
+    smokePrototype: TearGasSmokeWhite
     solution:
       reagents:
       - ReagentId: TearGas
-        Quantity: 50
+        Quantity: 20
 
 - type: entity
   parent: [ BaseEngineeringContraband, SmokeGrenade ]
