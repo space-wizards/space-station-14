@@ -17,7 +17,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: blue_door
 
 # Pink wardrobe
@@ -30,7 +30,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: pink_door
 
 # Black wardrobe
@@ -43,7 +43,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: black_door
 
 # Green wardrobe
@@ -56,7 +56,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: green_door
 
 # Prison wardrobe
@@ -68,7 +68,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: orange_door
 
 # Yellow wardrobe
@@ -81,7 +81,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: yellow_door
 
 # White wardrobe
@@ -94,7 +94,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: white_door
 
 # Grey wardrobe
@@ -107,7 +107,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: grey_door
 
 # Mixed wardrobe
@@ -120,7 +120,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: mixed_door
 
 # Jobs
@@ -133,7 +133,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: red_door
 
 - type: entity
@@ -144,7 +144,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: atmos_wardrobe_door
 
 - type: entity
@@ -152,30 +152,7 @@
   parent: WardrobeMixed
   name: custodial closet
   description: It's a storage unit for janitorial clothes and gear.
-  components:
-  - type: Appearance
-  #imp edit begin
-  - type: Sprite
-    sprite: _Impstation/Structures/Storage/janitorcloset.rsi
-    noRot: true
-    layers:
-    - state: janitor
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: janitor_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: paper
-      visible: false
-      sprite: Structures/Storage/closet_labels.rsi
-      offset: "-0.065,0"
-      map: ["enum.PaperLabelVisuals.Layer"]
-  - type: EntityStorageVisuals
-    stateBaseClosed: janitor
-    stateDoorOpen: janitor_open
-    stateDoorClosed: janitor_door
-  #imp edit end
+  categories: [ HideSpawnMenu ] #imp edit
 
 - type: entity
   id: WardrobeFormal

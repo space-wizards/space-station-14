@@ -27,7 +27,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: secure
-    stateDoorOpen: secure_open
+    stateDoorOpen: generic_open_2 #imp edit
     stateDoorClosed: secure_door
   - type: DamageOtherOnHit # imp
     damage:
@@ -44,7 +44,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: qm
-    stateDoorOpen: qm_open
+    stateDoorOpen: command_open #imp edit
     stateDoorClosed: qm_door
   - type: AccessReader
     access: [["Quartermaster"]]
@@ -58,7 +58,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: mining
-    stateDoorOpen: mining_open
+    stateDoorOpen: generic_open #imp edit
     stateDoorClosed: mining_door
   - type: AccessReader
     access: [["Salvage"]]
@@ -72,7 +72,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: cap
-    stateDoorOpen: cap_open
+    stateDoorOpen: command_open #imp edit
     stateDoorClosed: cap_door
   - type: AccessReader
     access: [["Captain"]]
@@ -85,7 +85,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: hop
-    stateDoorOpen: hop_open
+    stateDoorOpen: command_open #imp edit
     stateDoorClosed: hop_door
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
@@ -99,7 +99,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: ce
-    stateDoorOpen: ce_open
+    stateDoorOpen: command_open #imp edit
     stateDoorClosed: ce_door
   - type: AccessReader
     access: [ [ "ChiefEngineer" ] ]
@@ -113,7 +113,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: eng
-    stateDoorOpen: eng_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: eng_elec_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
@@ -127,7 +127,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: eng
-    stateDoorOpen: eng_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: eng_weld_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
@@ -141,7 +141,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: atmos
-    stateDoorOpen: atmos_open
+    stateDoorOpen: generic_open_2 #imp
     stateDoorClosed: atmos_door
   - type: AccessReader
     access: [ [ "Atmospherics" ] ]
@@ -155,7 +155,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: eng_secure
-    stateDoorOpen: eng_secure_open
+    stateDoorOpen: generic_open #imp edit
     stateDoorClosed: eng_secure_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
@@ -199,7 +199,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: hydro
-    stateDoorOpen: hydro_open
+    stateDoorOpen: generic_open #imp edit
     stateDoorClosed: hydro_door
   - type: AccessReader
     access: [ [ "Hydroponics" ] ]
@@ -214,7 +214,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: med
-    stateDoorOpen: med_open
+    stateDoorOpen: generic_open_2 #imp edit
     stateDoorClosed: med_door
   - type: AccessReader
     access: [ [ "Medical" ] ]
@@ -228,7 +228,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: med_secure
-    stateDoorOpen: med_secure_open
+    stateDoorOpen: generic_open_4 #imp edit
     stateDoorClosed: med_secure_door
   - type: AccessReader
     access: [ [ "Medical" ] ]
@@ -242,7 +242,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: paramed
-    stateDoorOpen: paramed_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: paramed_door
   - type: AccessReader
     access: [ [ "Medical" ] ]
@@ -257,7 +257,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: med
-    stateDoorOpen: med_open
+    stateDoorOpen: generic_open_4 #imp edit
     stateDoorClosed: chemical_door
   - type: AccessReader
     access: [ [ "Chemistry" ] ]
@@ -271,7 +271,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: cmo
-    stateDoorOpen: cmo_open
+    stateDoorOpen: command_open #imp edit
     stateDoorClosed: cmo_door
   - type: AccessReader
     access: [ [ "ChiefMedicalOfficer" ] ]
@@ -285,7 +285,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: rd
-    stateDoorOpen: rd_open
+    stateDoorOpen: command_open #imp edit
     stateDoorClosed: rd_door
   - type: AccessReader
     access: [ [ "ResearchDirector" ] ]
@@ -298,7 +298,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: science
-    stateDoorOpen: science_open
+    stateDoorOpen: generic_open #imp edit
     stateDoorClosed: science_door
   - type: AccessReader
     access: [ [ "Research" ] ]
@@ -312,7 +312,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: hos
-    stateDoorOpen: hos_open
+    stateDoorOpen: command_open #imp edit
     stateDoorClosed: hos_door
   - type: AccessReader
     access: [["HeadOfSecurity"]]
@@ -326,7 +326,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: warden
-    stateDoorOpen: warden_open
+    stateDoorOpen: command_open #imp edit
     stateDoorClosed: warden_door
   - type: AccessReader
     access: [["Armory"]]
@@ -339,8 +339,8 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBaseClosed: brigmedic
-    stateDoorOpen: armory_open
+    stateBaseClosed: fire #imp edit
+    stateDoorOpen: generic_open_4 #imp edit
     stateDoorClosed: brigmedic_door
   - type: AccessReader
     access: [["Medical"], ["Armory"]]
@@ -354,7 +354,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: sec
-    stateDoorOpen: sec_open
+    stateDoorOpen: generic_open_2 #imp edit
     stateDoorClosed: sec_door
   - type: AccessReader
     access: [["Security"]]
@@ -509,7 +509,7 @@
   components:
   - type: EntityStorageVisuals #imp
     stateBaseClosed: evidence
-    stateDoorOpen: sec_open
+    stateDoorOpen: generic_open_2 #imp edit
     stateDoorClosed: evidence_door
   - type: AccessReader
     access: [["Security"]]
@@ -565,7 +565,7 @@
     access: [["Clown"]] #imp edit
   - type: EntityStorageVisuals
     stateBaseClosed: clown
-    stateDoorOpen: clown_open
+    stateDoorOpen: generic_open #imp edit
     stateDoorClosed: clown_door
 
 # Mime
@@ -579,7 +579,7 @@
     access: [["Mime"]] #imp edit
   - type: EntityStorageVisuals
     stateBaseClosed: mime
-    stateDoorOpen: mime_open
+    stateDoorOpen: generic_open_5 #imp edit
     stateDoorClosed: mime_door
 
 # Representative
@@ -593,5 +593,5 @@
     access: [["Command"]]
   - type: EntityStorageVisuals
     stateBaseClosed: hop
-    stateDoorOpen: hop_open
+    stateDoorOpen: command_open #imp edit
     stateDoorClosed: representative_door

@@ -5,19 +5,7 @@
   name: business casual wardrobe
   description: "A wardrobe packed with business casual attire."
   components:
-  - type: Appearance
-  - type: Sprite
-    noRot: true
-    sprite: _Impstation/Structures/Storage/closet.rsi
-    layers:
-    - state: generic
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: generic_open
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
   - type: EntityStorageVisuals
     stateBaseClosed: generic
-    stateDoorOpen: generic_open
+    stateDoorOpen: generic_open_3
     stateDoorClosed: business_door
