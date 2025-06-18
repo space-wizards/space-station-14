@@ -7,9 +7,10 @@ using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Configuration;
+
 
 namespace Content.Server.Audio;
 
@@ -33,7 +34,19 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
             CCVars.LobbyMusicCollection,
             x =>
             {
-                _lobbyMusicCollection = _prototypeManager.Index<SoundCollectionPrototype>(x);
+
+                try
+                {
+                    _lobbyMusicCollection = _prototypeManager.Index<SoundCollectionPrototype>(x);
+                }
+                catch
+                {
+                    Log.Error("No matching sound collection found. Defaulting to LobbyMusic collection");
+                    //This realy should default to the default set inside of the Cvar to avoid a potential loop
+                    //  if the default is ever changed.
+                    _cfg.SetCVar("ambience.lobby_music_collection", "LobbyMusic", true);
+                }
+                
                 _lobbyPlaylist = ShuffleLobbyPlaylist();
             },
             true);

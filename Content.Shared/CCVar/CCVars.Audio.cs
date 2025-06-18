@@ -64,7 +64,7 @@ public sealed partial class CCVars
     ///     Lobby music collection string
     /// </summary>
     /// <remarks>
-    ///     This is only updatable when not in the lobby
+    ///     If you change the default setting you need to change the default in Content.Server/Audio/ContentAudioSystem.cs
     /// </remarks>
     [CVarControl(AdminFlags.VarEdit)]
     public static readonly CVarDef<string> LobbyMusicCollection =
