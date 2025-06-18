@@ -19,13 +19,13 @@ using Content.Shared.Materials;
 using Content.Shared.Mind;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Power;
+using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Humanoid;
-using Content.Shared.Stacks;
 
 namespace Content.Server.Materials;
 
@@ -184,11 +184,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         var xform = Transform(uid);
 
-        var modifer = 1.0f;
-        if (TryComp<StackComponent>(item, out var stack))
-            modifer = stack.Count;
-
-        SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, modifer, xform: xform);
+        SpawnMaterialsFromComposition(uid, item, completion * component.Efficiency, xform: xform);
 
         if (CanGib(uid, item, component))
         {
@@ -209,7 +205,6 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     private void SpawnMaterialsFromComposition(EntityUid reclaimer,
         EntityUid item,
         float efficiency,
-        float modifer,
         MaterialStorageComponent? storage = null,
         TransformComponent? xform = null,
         PhysicalCompositionComponent? composition = null)
@@ -220,9 +215,12 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         if (!Resolve(item, ref composition, false))
             return;
 
+        // If more of these checks are needed, use an event instead
+        var modifier = CompOrNull<StackComponent>(item)?.Count ?? 1.0f;
+
         foreach (var (material, amount) in composition.MaterialComposition)
         {
-            var outputAmount = (int) (amount * efficiency * modifer);
+            var outputAmount = (int) (amount * efficiency * modifier);
             _materialStorage.TryChangeMaterialAmount(reclaimer, material, outputAmount, storage);
         }
 
