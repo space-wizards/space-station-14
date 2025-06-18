@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseGameRule
-  id: SHCDefender
+  id: ScarletNukieWarShip
   components:
     - type: StationEvent
       startAnnouncement: null # It should be silent.
     - type: LoadMapRule
-      gridPath: /Maps/_Starlight/Shuttles/scarletSHCdefenderFinal.yml # no preload cause that leads to a warp point in shuttle space
+      gridPath: /Maps/_Starlight/Shuttles/scarletNUKIEWARSHIP.yml # no preload cause that leads to a warp point in shuttle space
