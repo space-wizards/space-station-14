@@ -15,7 +15,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
-          availableJobs: # Total of 52 jobs roundstart, max of 66 inc. latejoins and trainees.
+          availableJobs: # Total of 54 jobs roundstart, max of 68 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -25,7 +25,7 @@
             HeadOfSecurity: [ 1, 1 ]
             HospitalityDirector: [ 1, 1 ] # imp
             Quartermaster: [ 1, 1 ]
-            # service - 12
+            # service - 13
             Bartender: [ 2, 2 ] #imp 1 > 2
             Botanist: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
@@ -35,16 +35,18 @@
             Librarian: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            Reporter: [ 1, 1 ] #imp
             #ServiceWorker: [ 2, 2 ] #imp
             # engineering - 6-10
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 4, 4 ]
-            # medical - 7-10
+            # medical - 8-11
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 4, 4 ] #intern, not counted
             Paramedic: [ 1, 1 ]
+            Psychologist: [ 1, 1 ] #imp
             # science - 7-9
             Borg: [ 2, 2 ]
             ResearchAssistant: [ 2, 2 ]
