@@ -16,11 +16,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.UserInterface;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class StatValuesCommand : LocalizedCommands
+public sealed class StatValuesCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly EuiManager _eui = default!;
+    [Dependency] private readonly IComponentFactory _compFactory = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private readonly ItemSystem _itemSystem = default!;
+    [Dependency] private readonly PricingSystem _pricingSystem = default!;
 
     public override string Command => "showvalues";
 
@@ -63,7 +65,7 @@ public sealed class StatValuesCommand : LocalizedCommands
         }
 
         var eui = new StatValuesEui();
-        _eui.OpenEui(eui, pSession);
+        _euiManager.OpenEui(eui, pSession);
         eui.SendMessage(message);
     }
 
@@ -81,10 +83,9 @@ public sealed class StatValuesCommand : LocalizedCommands
         // So we'll just get the first value for each prototype ID which is probably good enough for the majority.
 
         var values = new List<string[]>();
-        var priceSystem = _entManager.System<PricingSystem>();
-        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
+        var metaQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
         var prices = new HashSet<string>(256);
-        var ents = _entManager.GetEntities().ToArray();
+        var ents = EntityManager.GetEntities().ToArray();
 
         foreach (var entity in ents)
         {
@@ -97,7 +98,7 @@ public sealed class StatValuesCommand : LocalizedCommands
             if (id == null || !prices.Add(id))
                 continue;
 
-            var price = priceSystem.GetPrice(entity);
+            var price = _pricingSystem.GetPrice(entity);
 
             if (price == 0)
                 continue;
@@ -126,11 +127,10 @@ public sealed class StatValuesCommand : LocalizedCommands
     private StatValuesEuiMessage GetItem()
     {
         var values = new List<string[]>();
-        var itemSystem = _entManager.System<ItemSystem>();
-        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
-        var itemQuery = _entManager.GetEntityQuery<ItemComponent>();
+        var metaQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
+        var itemQuery = EntityManager.GetEntityQuery<ItemComponent>();
         var items = new HashSet<string>(1024);
-        var ents = _entManager.GetEntities().ToArray();
+        var ents = EntityManager.GetEntities().ToArray();
 
         foreach (var entity in ents)
         {
@@ -149,7 +149,7 @@ public sealed class StatValuesCommand : LocalizedCommands
             values.Add(new[]
             {
                 id,
-                $"{itemSystem.GetItemSizeLocale(itemComp.Size)}",
+                $"{_itemSystem.GetItemSizeLocale(itemComp.Size)}",
             });
         }
 
@@ -170,9 +170,9 @@ public sealed class StatValuesCommand : LocalizedCommands
     private StatValuesEuiMessage GetMelee()
     {
         var values = new List<string[]>();
-        var meleeName = _entManager.ComponentFactory.GetComponentName<MeleeWeaponComponent>();
+        var meleeName = _compFactory.GetComponentName<MeleeWeaponComponent>();
 
-        foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
         {
             if (proto.Abstract ||
                 !proto.Components.TryGetValue(meleeName,
@@ -213,19 +213,18 @@ public sealed class StatValuesCommand : LocalizedCommands
     private StatValuesEuiMessage GetLatheMessage()
     {
         var values = new List<string[]>();
-        var priceSystem = _entManager.System<PricingSystem>();
 
-        foreach (var proto in _proto.EnumeratePrototypes<LatheRecipePrototype>())
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<LatheRecipePrototype>())
         {
             var cost = 0.0;
 
             foreach (var (material, count) in proto.Materials)
             {
-                var materialPrice = _proto.Index(material).Price;
+                var materialPrice = _prototypeManager.Index(material).Price;
                 cost += materialPrice * count;
             }
 
-            var sell = priceSystem.GetLatheRecipePrice(proto);
+            var sell = _pricingSystem.GetLatheRecipePrice(proto);
 
             values.Add(new[]
             {
@@ -253,9 +252,9 @@ public sealed class StatValuesCommand : LocalizedCommands
     private StatValuesEuiMessage GetDrawRateMessage()
     {
         var values = new List<string[]>();
-        var powerName = _entManager.ComponentFactory.GetComponentName<ApcPowerReceiverComponent>();
+        var powerName = _compFactory.GetComponentName<ApcPowerReceiverComponent>();
 
-        foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
         {
             if (proto.Abstract ||
                 !proto.Components.TryGetValue(powerName,

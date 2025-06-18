@@ -9,8 +9,8 @@ namespace Content.Server.Traitor.Uplink.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class AddUplinkCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
 
         public override string Command => "adduplink";
 
@@ -66,7 +66,7 @@ namespace Content.Server.Traitor.Uplink.Commands
 
                 var eNet = new NetEntity(itemId);
 
-                if (!_entManager.TryGetEntity(eNet, out var eUid))
+                if (!EntityManager.TryGetEntity(eNet, out var eUid))
                 {
                     shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                     return;
@@ -75,7 +75,7 @@ namespace Content.Server.Traitor.Uplink.Commands
                 uplinkEntity = eUid;
             }
 
-            bool isDiscounted = false;
+            var isDiscounted = false;
             if (args.Length >= 3)
             {
                 if (!bool.TryParse(args[2], out isDiscounted))
@@ -86,8 +86,7 @@ namespace Content.Server.Traitor.Uplink.Commands
             }
 
             // Finally add uplink
-            var uplinkSys = _entManager.System<UplinkSystem>();
-            if (!uplinkSys.AddUplink(user, 20, uplinkEntity: uplinkEntity, giveDiscounts: isDiscounted))
+            if (!_uplinkSystem.AddUplink(user, 20, uplinkEntity: uplinkEntity, giveDiscounts: isDiscounted))
                 shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
         }
     }
