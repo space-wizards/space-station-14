@@ -33,3 +33,6 @@ ent-RubberStampSeniorPhysician = печать ведущего врача
 ent-RubberStampSeniorSalvage = печать ведущего утилизатора
     .desc = { ent-RubberStampBase.desc }
     .suffix = НЕ МАППИТЬ
+ent-RubberStampCentcomSpecialOperationOfficer = печать офицера специальных операций
+    .desc = { ent-RubberStampBase.desc }
+    .suffix = НЕ МАППИТЬ

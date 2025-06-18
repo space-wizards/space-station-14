@@ -46,6 +46,7 @@
     - type: StorageFill
       contents:
         - id: RubberStampCentcom
+        - id: RubberStampCentcomSpecialOperationOfficer
         - id: BoxFolderBlueFilled
 
 - type: entity
