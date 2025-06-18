@@ -63,10 +63,10 @@ namespace Content.Server.Speech.EntitySystems
                 // this is kind of slow but its not that bad
                 // essentially: go over all matches, try to match capitalization where possible, then replace
                 // rather than using regex.replace
-                for (int i = Regex.Count(maskMessage, $@"(?<!\w){f}(?!\w)", RegexOptions.IgnoreCase); i > 0; i--)
+                for (int i = Regex.Count(maskMessage, $@"(?<![\w-]){f}(?![\w-])", RegexOptions.IgnoreCase); i > 0; i--) // DS14-replace-fix
                 {
                     // fetch the match again as the character indices may have changed
-                    Match match = Regex.Match(maskMessage, $@"(?<!\w){f}(?!\w)", RegexOptions.IgnoreCase);
+                    Match match = Regex.Match(maskMessage, $@"(?<![\w-]){f}(?![\w-])", RegexOptions.IgnoreCase); // DS14-replace-fix
                     var replacement = r;
 
                     // Intelligently replace capitalization
