@@ -12,7 +12,7 @@
             <controls:NanoHeading Name="Header" Text="{Loc 'lobby-character-preview-panel-header'}" />
             <CheckBox Name="PriorityLock" Text="{Loc 'ui-lobby-lock-priorities-checkbox-label'}"
                       HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center"
-                      Pressed="True" ToolTip="{Loc 'ui-lobby-lock-priorities-checkbox-tooltip'}"/>
+                      ToolTip="{Loc 'ui-lobby-lock-priorities-checkbox-tooltip'}"/>
         </BoxContainer>
 
         <!-- This is the main bit, only shows once we have preferences from the server -->
