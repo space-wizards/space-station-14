@@ -2,6 +2,8 @@ using Content.Server.Administration.Commands;
 using Content.Server.Antag;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Mind;
+using Content.Server.Roles;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -20,6 +22,8 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly RoleSystem _role = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultTraitorRule = "Traitor";
@@ -162,6 +166,44 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", thiefName, Loc.GetString("admin-verb-make-thief")),
         };
         args.Verbs.Add(thief);
+
+        var freeAgentName = Loc.GetString("admin-verb-text-make-free-agent");
+        Verb freeAgent = new()
+        {
+            Text = freeAgentName,
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Specific/Hydroponics/apple.rsi"), "produce"),
+            Act = () =>
+            {
+                _mind.TryGetMind(targetPlayer.UserId, out var playerMind, out _);
+                if (playerMind != null)
+                {
+                    _role.MindAddRole((EntityUid)playerMind, "MindRoleGhostRoleFreeAgent");
+                }
+            },
+            Impact = LogImpact.High,
+            Message = string.Join(": ", freeAgentName, Loc.GetString("admin-verb-make-free-agent")),
+        };
+        args.Verbs.Add(freeAgent);
+
+        var genericAntagName = Loc.GetString("admin-verb-text-make-generic-antag");
+        Verb genericAntag = new()
+        {
+            Text = genericAntagName,
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/kitchen_knife.rsi"), "icon"),
+            Act = () =>
+            {
+                _mind.TryGetMind(targetPlayer.UserId, out var playerMind, out _);
+                if (playerMind != null)
+                {
+                    _role.MindAddRole((EntityUid)playerMind, "MindRoleGhostRoleSoloAntagonist");
+                }
+            },
+            Impact = LogImpact.High,
+            Message = string.Join(": ", genericAntagName, Loc.GetString("admin-verb-make-generic-antag")),
+        };
+        args.Verbs.Add(genericAntag);
 
         var paradoxCloneName = Loc.GetString("admin-verb-text-make-paradox-clone");
         Verb paradox = new()
