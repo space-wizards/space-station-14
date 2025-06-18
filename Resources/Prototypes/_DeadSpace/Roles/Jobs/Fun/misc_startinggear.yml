@@ -1,0 +1,4 @@
+- type: startingGear
+  id: MobLargoGear
+  equipment:
+    id: LargoIDCard

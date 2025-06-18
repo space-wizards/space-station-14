@@ -1,3 +1,31 @@
+# Pets
+- type: entity
+  parent: IDCardStandard
+  id: MukhtarIDCard
+  name: mukhtar ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idsecurityofficer
+  - type: PresetIdCard
+    job: SecurityOfficer
+    name: Мухтар
+
+- type: entity
+  parent: IDCardStandard
+  id: LargoIDCard
+  name: largo ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idcargotechnician
+  - type: PresetIdCard
+    job: CargoTechnician
+    name: Ларго
+
+# Typan
 - type: entity
   parent: IDCardStandard
   id: TypanIDCardCargo
