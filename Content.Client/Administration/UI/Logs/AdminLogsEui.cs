@@ -120,7 +120,7 @@ public sealed class AdminLogsEui : BaseEui
                 entry.Append(',');
                 // Message
                 entry.Append('"');
-                entry.Append(log.Log.Message.Replace("\"", "\\\""));
+                entry.Append(log.Log.Message.Replace("\"", "\"\""));
                 entry.Append('"');
                 // End of message
                 entry.Append(',');
