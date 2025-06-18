@@ -8,7 +8,8 @@ emergency-shuttle-command-round-no = Unable to delay round end.
 emergency-shuttle-command-dock-desc = Calls the emergency shuttle and docks it to the station... if it can.
 
 ## Launch emergency shuttle
-emergency-shuttle-command-launch-desc = Early launches the emergency shuttle if possible.
+cmd-launchemergencyshuttle-desc = Early launches the emergency shuttle if possible.
+cmd-launchemergencyshuttle-help = Usage: launchemergencyshuttle
 
 # Emergency shuttle
 emergency-shuttle-left = The Emergency Shuttle has left the station. Estimate {$transitTime} seconds until the shuttle arrives at CentComm.
