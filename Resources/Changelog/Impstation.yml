@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Thieves will no longer receive steal objectives for steal targets that
-      they may have easy access to through their departments.
-    type: Tweak
-  id: 1364
-  time: '2025-03-22T15:14:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2054
-- author: widgetbeck
-  changes:
-  - message: Drone update.
-    type: Tweak
-  id: 1365
-  time: '2025-03-22T15:22:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2025
 - author: Tyranex
   changes:
   - message: Lathes now have an option to return 30 of a material.
@@ -4215,3 +4200,18 @@
   id: 1863
   time: '2025-06-17T21:11:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2801
+- author: DinnerCalzone
+  changes:
+  - message: Saltern now supports Pyschologist and Reporter.
+    type: Add
+  id: 1864
+  time: '2025-06-18T07:35:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2810
+- author: DinnerCalzone
+  changes:
+  - message: Boxer, Chaplain, Librarian, Reporter, and Zookeeper are once again part
+      of the Service department.
+    type: Tweak
+  id: 1865
+  time: '2025-06-18T07:35:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2805
