@@ -183,5 +183,5 @@
       path: /Audio/Items/Handcuffs/rope_takeoff.ogg
   - type: Sprite
     sprite: Objects/Misc/holocuffs.rsi
-    state: cuff
+    state: handcuff
     color: red
