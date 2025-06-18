@@ -16,6 +16,7 @@
     - Vulpkanin
     - Resomi
     - Avali
+    - Shadekin
 
 - type: guideEntry
   id: Arachnid
@@ -81,3 +82,9 @@
   id: Avali
   name: species-name-avali
   text: "/ServerInfo/Guidebook/Mobs/Avali.xml"
+
+- type: guideEntry
+  id: Shadekin
+  name: species-name-shadekin
+  text: "/ServerInfo/Guidebook/Mobs/Shadekin.xml"
+

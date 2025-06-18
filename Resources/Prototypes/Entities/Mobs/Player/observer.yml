@@ -58,6 +58,7 @@
   - type: GhostHearing
   - type: ShowElectrocutionHUD
   - type: IntrinsicRadioReceiver
+  - type: ShowNullSpace # Starlight
   - type: ActiveRadio
     receiveAllChannels: true
     globalReceive: true

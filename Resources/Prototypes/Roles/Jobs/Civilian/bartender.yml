@@ -21,7 +21,7 @@
 - type: startingGear
   id: BartenderGear
   equipment:
-    shoes: ClothingShoesColorBlack
+    #shoes: ClothingShoesColorBlack # 🌟Starlight🌟
     id: BartenderPDA
     ears: ClothingHeadsetService
   #storage:

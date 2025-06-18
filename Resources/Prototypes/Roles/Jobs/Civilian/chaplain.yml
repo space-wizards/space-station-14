@@ -17,7 +17,7 @@
 - type: startingGear
   id: ChaplainGear
   equipment:
-    shoes: ClothingShoesColorBlack
+    #shoes: ClothingShoesColorBlack # 🌟Starlight🌟
     id: ChaplainPDA
     ears: ClothingHeadsetService
   storage:

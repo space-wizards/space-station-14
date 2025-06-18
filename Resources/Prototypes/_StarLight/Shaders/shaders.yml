@@ -28,3 +28,8 @@
   path: "/Textures/_Starlight/Shaders/brightness.swsl"
   params:
     brightness: 1.5
+
+- type: shader
+  id: NullSpaceShader
+  kind: source
+  path: "/Textures/_Starlight/Shaders/nullspace.swsl"
