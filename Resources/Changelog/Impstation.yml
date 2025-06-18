@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: mqole, crocodilecarousel
-  changes:
-  - message: Head Revolutionaries now start with 4 revolutionary radio keys to give
-      to their comrades. Viva!
-    type: Add
-  id: 1367
-  time: '2025-03-22T15:32:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2047
 - author: DVDPlayerOfDiscordFame
   changes:
   - message: Adjustments to the Arsenal Tech Tree for some small simplification
@@ -4213,3 +4205,11 @@
   id: 1866
   time: '2025-06-18T07:45:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2807
+- author: DinnerCalzone
+  changes:
+  - message: The janitor's closet is now secured by janitor access and the Shining
+      Spring has been moved back into from the HD's locker.
+    type: Tweak
+  id: 1867
+  time: '2025-06-18T09:04:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2797
