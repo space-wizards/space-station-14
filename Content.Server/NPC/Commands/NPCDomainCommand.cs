@@ -27,7 +27,7 @@ public sealed class NpcDomainCommand : LocalizedEntityCommands
 
         if (!_protoManager.HasIndex<HTNCompoundPrototype>(args[0]))
         {
-            shell.WriteError($"Unable to find HTN compound task for '{args[0]}'");
+            shell.WriteError(Loc.GetString($"cmd-npcdomain-fail", ("value", args[0])));
             return;
         }
 

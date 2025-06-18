@@ -11,3 +11,4 @@ cmd-addnpc-entity-has-component = Entity already has an NPC component.
 cmd-npcdomain-desc = Lists the domain of a particular HTN compound task.
 cmd-npcdomain-help = Usage: npcdomain <htncompoundtask>
 cmd-npcdomain-hint = <htncompundtask>
+cmd-npcdomain-fail = Unable to find HTN compound task for {$value}.
