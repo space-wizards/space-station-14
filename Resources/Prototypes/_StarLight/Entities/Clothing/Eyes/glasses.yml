@@ -110,3 +110,17 @@
   - type: IdentityBlocker
     coverage: EYES
   - type: ShowMindShieldIcons
+
+# Shadekin
+
+- type: entity
+  parent: [ClothingEyesBase, BaseMajorContraband]
+  id: ClothingEyesGlassesNullSpace
+  name: nullspace goggles
+  description: An unusual pair of goggles developed during a time of inhumane experimentation involving Shadekin. They are designed to allow the wearer to peer into NullSpace.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Glasses/nullspacegoogles.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Glasses/nullspacegoogles.rsi
+  - type: ShowNullSpace

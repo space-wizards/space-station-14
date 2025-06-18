@@ -8005,4 +8005,25 @@ Entries:
   id: 1105
   time: '2025-06-18T19:10:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/863
+- author: Trep_Maul
+  changes:
+  - message: (Omega) Honk and Fashion credit vends
+    type: Add
+  id: 1106
+  time: '2025-06-18T21:19:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/864
+- author: Trep_Maul
+  changes:
+  - message: (Omega) Brigmedic locker is now filled.
+    type: Fix
+  id: 1107
+  time: '2025-06-18T21:19:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/864
+- author: FoxxoTrystan
+  changes:
+  - message: Shadekins
+    type: Add
+  id: 1108
+  time: '2025-06-18T22:29:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/838
 
