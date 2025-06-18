@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: CheesePlated
-  changes:
-  - message: The ID card console now works properly when setting job presets for replacement
-      IDs
-    type: Fix
-  id: 8175
-  time: '2025-04-14T15:02:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34921
-- author: BramvanZijp
-  changes:
-  - message: Deathsquad Hardsuit now provides 85% stamina damage resistance.
-    type: Add
-  id: 8176
-  time: '2025-04-14T15:27:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35580
-- author: benev0
-  changes:
-  - message: Stopped climbing movent while in containers
-    type: Fix
-  id: 8177
-  time: '2025-04-14T15:56:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32033
 - author: SlamBamActionman
   changes:
   - message: Hyposprays now shows contained chemicals in the sprite.
@@ -3912,3 +3890,25 @@
   id: 8687
   time: '2025-06-17T09:46:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38049
+- author: Kittygyat
+  changes:
+  - message: Increased borg drag speed, equivalent to Diona speeds.
+    type: Tweak
+  id: 8688
+  time: '2025-06-17T10:41:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38232
+- author: TheFlyingSentry
+  changes:
+  - message: Animal stealing thief objectives now actually check for the objective's
+      existence.
+    type: Tweak
+  id: 8689
+  time: '2025-06-17T11:06:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38332
+- author: kosticia
+  changes:
+  - message: Reflection chances are examinable now.
+    type: Add
+  id: 8690
+  time: '2025-06-18T00:50:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38199
