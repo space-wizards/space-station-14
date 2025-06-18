@@ -49,7 +49,7 @@
   parent: JobIcon
   id: JobIconBoxer
   icon:
-    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi # imp
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Boxer
   jobName: job-name-boxer
 
@@ -137,7 +137,7 @@
   parent: JobIcon
   id: JobIconChaplain
   icon:
-    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi # imp
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Chaplain
   jobName: job-name-chaplain
 
@@ -161,7 +161,7 @@
   parent: JobIcon
   id: JobIconLibrarian
   icon:
-    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi # imp
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Librarian
   jobName: job-name-librarian
 
@@ -337,7 +337,7 @@
   parent: JobIcon
   id: JobIconReporter
   icon:
-    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi # imp
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Reporter
   jobName: job-name-reporter
 
@@ -401,7 +401,7 @@
   parent: JobIcon
   id: JobIconZookeeper
   icon:
-    sprite: /Textures/_Impstation/Interface/Misc/job_icons.rsi # imp
+    sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Zookeeper
   jobName: job-name-zookeeper
 

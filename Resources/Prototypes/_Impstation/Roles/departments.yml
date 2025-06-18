@@ -8,18 +8,17 @@
   - HospitalityDirector
   - Bartender
   - Botanist
-  #- Boxer
-  #- Chaplain
+  - Boxer
+  - Chaplain
   - Chef
   - Clown
   - Janitor
- # - Lawyer hop goon now
-  #- Librarian
+  - Librarian
   - Mime
   - Musician
-  #- Reporter
-  #- Visitor
-  #- Zookeeper
+  - Reporter
+  - Visitor
+  - Zookeeper
   #- ServiceWorker
 
 #Used for HD playtime requirments

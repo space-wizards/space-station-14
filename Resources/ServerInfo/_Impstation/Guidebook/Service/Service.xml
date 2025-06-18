@@ -3,9 +3,10 @@
 [color=#9fed58]Service[/color] keeps the station clean, efficient and sane so that all other departments can do their jobs better and keep their staff happy. They also end up doing most of the paperwork on the station.
 
 ## Personnel
-[color=#9fed58]Service[/color]'s staff is made up of Service Workers, Chefs, Botanists, Bartenders, Janitors, Clowns, Mimes, and Musicians. Service is run by the Hospitality Director.
+  [color=#9fed58]Service[/color]'s staff is made up of Chefs, Botanists, Bartenders, Janitors, Chaplains, Clowns, Mimes, Musicians, Boxers, Librarians, Reporters, and Zookeepers. Service is run by the Hospitality Director.
 
   <Box>
+    <GuideEntityEmbed Entity="ToyFigurineChaplain" Caption="Chaplain"/>
     <GuideEntityEmbed Entity="ToyFigurineChef" Caption="Chef"/>
     <GuideEntityEmbed Entity="ToyFigurineBotanist" Caption="Botanist"/>
     <GuideEntityEmbed Entity="ToyFigurineBartender" Caption="Bartender"/>
@@ -15,13 +16,15 @@
     <GuideEntityEmbed Entity="ToyFigurineClown" Caption="Clown"/>
     <GuideEntityEmbed Entity="ToyFigurineMime" Caption="Mime"/>
     <GuideEntityEmbed Entity="ToyFigurineMusician" Caption="Musician"/>
+    <GuideEntityEmbed Entity="ToyFigurineBoxer" Caption="Boxer"/>
+    <GuideEntityEmbed Entity="ToyFigurineLibrarian" Caption="Librarian"/>
   </Box>
 
 ## Working Together
 [color=#9fed58]Service[/color], despite being the most diverse, tends to be the most [color=#a4885c]interlinked[/color] department by far.
 Most [color=#9fed58]Service[/color] jobs require [color=#a4885c]cooperation[/color] between workers.
 Chefs often need ingredients that only botanists can grow efficiently. The bartender may request bananas that only clowns carry in abundance.
-The musician may invite the mime to dance to their music.
+The chaplain may invite the mime to perform at a funeral.
 
 A lot of [color=#a4885c]collaboration[/color] is necessary within and without [color=#9fed58]Service[/color]. Often times, [color=#9fed58]Service[/color] is required by other departments, so be on your toes.
 </Document>
