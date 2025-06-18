@@ -568,7 +568,8 @@ namespace Content.Shared.Preferences
             };
 
             var jobs = new HashSet<ProtoId<JobPrototype>>(JobPreferences
-                .Where(p => prototypeManager.TryIndex(p, out var job) && job.SetPreference));
+                .Where(p => prototypeManager.TryIndex(p, out var job)
+                            && job is { SetPreference: true, Hidden: false }));
 
             var antags = AntagPreferences
                 .Where(id => prototypeManager.TryIndex(id, out var antag) && antag.SetPreference)
