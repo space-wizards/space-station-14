@@ -1,7 +1,7 @@
-using Content.Shared.Starlight.Antags.Abductor;
-using Content.Shared.Silicons.StationAi;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Xml.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Events;
@@ -12,6 +12,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Silicons.StationAi;
+using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
@@ -36,6 +38,8 @@ public abstract class SharedActionsSystem : EntitySystem
     private EntityQuery<ActionComponent> _actionQuery;
     private EntityQuery<ActionsComponent> _actionsQuery;
     private EntityQuery<MindComponent> _mindQuery;
+
+    private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {
@@ -77,6 +81,8 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<WorldTargetActionComponent, ActionSetTargetEvent>(OnWorldSetTarget);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
+
+        _sawmill = Logger.GetSawmill(nameof(SharedActionsSystem)); // starlight
     }
 
     private void OnActionMapInit(Entity<ActionComponent> ent, ref MapInitEvent args)
@@ -102,6 +108,26 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnGetState(Entity<ActionsComponent> ent, ref ComponentGetState args)
     {
+        // starlight start
+        // In that spot, there’s an insane number of errors happening because of actions that have already been deleted.
+        List<EntityUid>? deletedActions = null;
+        foreach (var action in ent.Comp.Actions)
+        {
+            if (Deleted(action))
+            {
+                deletedActions ??= [];
+                deletedActions.Add(action);
+            }
+        }
+
+        if(deletedActions is not null)
+        {
+            _sawmill.Log(LogLevel.Error, $"Action is deleted but still in ActionsComponent {ToPrettyString(ent)}.");
+            foreach (var action in deletedActions)
+                ent.Comp.Actions.Remove(action);
+        }
+
+        // starlight end
         args.State = new ActionsComponentState(GetNetEntitySet(ent.Comp.Actions));
     }
 

@@ -7846,4 +7846,163 @@ Entries:
   id: 1083
   time: '2025-06-17T19:15:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/814
+- author: Killer Tamashi
+  changes:
+  - message: Removed Body Deletion of Rod (it now does 350 blunt + 50 pierce, gib
+      threshold is 400 blunt)
+    type: Tweak
+  id: 1084
+  time: '2025-06-18T01:12:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/857
+- author: Killer Tamashi
+  changes:
+  - message: Undid Rod Speed Nerf (5 -> 35)
+    type: Tweak
+  id: 1085
+  time: '2025-06-18T01:12:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/857
+- author: InanimateIJK
+  changes:
+  - message: Op Plush now has their lines, cute.
+    type: Tweak
+  id: 1086
+  time: '2025-06-18T01:45:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/849
+- author: InanimateIJK
+  changes:
+  - message: Gorlex Marauders nuclear operatives now are requesting proper resumes
+      of experience before enlistment.
+    type: Tweak
+  id: 1087
+  time: '2025-06-18T01:45:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/849
+- author: InanimateIJK
+  changes:
+  - message: Nuclear operative requires 6h Security, 12h total playtime
+    type: Tweak
+  id: 1088
+  time: '2025-06-18T01:45:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/849
+- author: InanimateIJK
+  changes:
+  - message: Agent requires 12h total, 6h chemist, 8h medical, 6h security
+    type: Tweak
+  id: 1089
+  time: '2025-06-18T01:45:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/849
+- author: InanimateIJK
+  changes:
+  - message: Commander requires 24h total, 12h Security, 4h Command
+    type: Tweak
+  id: 1090
+  time: '2025-06-18T01:45:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/849
+- author: RoadTrain
+  changes:
+  - message: Morgana's plushie now occasionally asks for uppies. And you will comply.
+      OR ELSE
+    type: Add
+  id: 1091
+  time: '2025-06-18T10:01:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/858
+- author: RoadTrain
+  changes:
+  - message: Typo's
+    type: Fix
+  id: 1092
+  time: '2025-06-18T10:01:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/858
+- author: Trep_Maul
+  changes:
+  - message: (Reach) kitchen has knives
+    type: Add
+  id: 1093
+  time: '2025-06-18T13:11:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/856
+- author: Trep_Maul
+  changes:
+  - message: (Reach) Holopads
+    type: Add
+  id: 1094
+  time: '2025-06-18T13:11:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/856
+- author: Trep_Maul
+  changes:
+  - message: (Reach) air sensors
+    type: Add
+  id: 1095
+  time: '2025-06-18T13:11:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/856
+- author: Trep_Maul
+  changes:
+  - message: (Reach) ERT Jani dear
+    type: Remove
+  id: 1096
+  time: '2025-06-18T13:11:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/856
+- author: Trep_Maul
+  changes:
+  - message: (Reach) Docks
+    type: Tweak
+  id: 1097
+  time: '2025-06-18T13:11:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/856
+- author: Trep_Maul
+  changes:
+  - message: (Reach) Lights
+    type: Tweak
+  id: 1098
+  time: '2025-06-18T13:11:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/856
+- author: Trep_Maul
+  changes:
+  - message: (Reach) wires
+    type: Fix
+  id: 1099
+  time: '2025-06-18T13:11:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/856
+- author: Trep_Maul
+  changes:
+  - message: (Reach) floors
+    type: Fix
+  id: 1100
+  time: '2025-06-18T13:11:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/856
+- author: Citrea
+  changes:
+  - message: There is now more shoes and many roles get a wider selection in their
+      loadout.
+    type: Add
+  id: 1101
+  time: '2025-06-18T13:14:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/852
+- author: princess_gurchi
+  changes:
+  - message: You can now shut up medibots by snipping their wires
+    type: Add
+  id: 1102
+  time: '2025-06-18T18:43:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/862
+- author: Conflee
+  changes:
+  - message: CentComm G24 - Added Cameras everywhere
+    type: Add
+  id: 1103
+  time: '2025-06-18T19:10:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/863
+- author: Conflee
+  changes:
+  - message: CentComm G24 - Added Sec turnstiles to the sec entry into Debrief
+    type: Add
+  id: 1104
+  time: '2025-06-18T19:10:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/863
+- author: Conflee
+  changes:
+  - message: CentComm G24 - Expanded ERT room with lockers for each ERT type, plus
+      Clown, Chaplain, and Mime
+    type: Add
+  id: 1105
+  time: '2025-06-18T19:10:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/863
 

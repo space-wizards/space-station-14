@@ -11,6 +11,14 @@
     state: icon
     noRot: false
   - type: ImmovableRod
+    minSpeed: 35
+    maxSpeed: 35
+    randomizeVelocity: false
+    shouldGib: false
+    damage:
+      types:
+        Blunt: 175 # Damage is applied twice
+        Piercing: 25
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
@@ -52,8 +60,14 @@
   suffix: Slow
   components:
   - type: ImmovableRod
-    minSpeed: 1
-    maxSpeed: 5
+    minSpeed: 35
+    maxSpeed: 35
+    randomizeVelocity: false
+    shouldGib: false
+    damage:
+      types:
+        Blunt: 175
+        Piercing: 25
 
 - type: entity
   parent: ImmovableRodDespawn
@@ -63,6 +77,14 @@
   - type: ImmovableRod
     destroyTiles: false
     hitSoundProbability: 1.0
+    minSpeed: 35
+    maxSpeed: 35
+    randomizeVelocity: false
+    shouldGib: false
+    damage:
+      types:
+        Blunt: 175
+        Piercing: 25
 
 # For Wizard Polymorph
 - type: entity
@@ -93,12 +115,13 @@
 
 - type: entity
   parent: ImmovableRodKeepTiles
-  id: ImmovableRodKeepTilesStill
+  id: ImmovableRodKeepTilesStill #for some GOD FORSAKEN REASON, the event draws from THIS one.
   suffix: Keep Tiles, Still
   components:
   - type: ImmovableRod
     randomizeVelocity: false
-    maxSpeed: 0
+    minSpeed: 35
+    maxSpeed: 35 
 
 - type: entity
   parent: ImmovableRodKeepTilesStill
