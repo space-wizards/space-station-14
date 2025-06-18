@@ -90,6 +90,76 @@
   id: HotDrinksMachineInventoryEmag
   name: store-category-emag
 
+  # Clothing
+
+- type: storeCategory
+  id: ClothingBackpackMachineInventory
+  name: store-category-backpacks
+
+- type: storeCategory
+  id: ClothingHeadMachineInventory
+  name: store-category-headwear
+
+- type: storeCategory
+  id: ClothingOuterMachineInventory
+  name: store-category-outerwear
+
+- type: storeCategory
+  id: ClothingJumpsuitMachineInventory
+  name: store-category-jumpsuit
+
+- type: storeCategory
+  id: ClothingJumpskirtMachineInventory
+  name: store-category-jumpskirt
+
+- type: storeCategory
+  id: ClothingShoesMachineInventory
+  name: store-category-shoes
+
+- type: storeCategory
+  id: ClothingNeckMachineInventory
+  name: store-category-neck
+
+- type: storeCategory
+  id: ClothingEyesMachineInventory
+  name: store-category-eyes
+
+- type: storeCategory
+  id: ClothingHandsMachineInventory
+  name: store-category-hands
+
+- type: storeCategory
+  id: ClothingEmagMachineInventory
+  name: store-category-emag
+
+# Capes
+
+- type: storeCategory
+  id: ClothesMateCapeInventory
+  name: store-category-neck
+
+- type: storeCategory
+  id: ClothesMateCapeInventoryEmag
+  name: store-category-emag
+
+# Winterdrobe
+
+- type: storeCategory
+  id: WinterDrobeOuterInventory
+  name: store-category-outerwear
+
+- type: storeCategory
+  id: WinterDrobeScarfsInventory
+  name: store-category-scarf
+
+- type: storeCategory
+  id: WinterDrobeOtherInventory
+  name: store-category-other
+
+- type: storeCategory
+  id: WinterDrobeInventoryEmag
+  name: store-category-emag
+
    #withard
 
 - type: storeCategory
