@@ -57,7 +57,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!_outfitSystem.SetOutfit(target.Value, args[1], EntityManager))
+            if (!_outfitSystem.SetOutfit(target.Value, args[1]))
                 shell.WriteLine(Loc.GetString("cmd-setoutfit-invalid-outfit-id-error"));
         }
     }
