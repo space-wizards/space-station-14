@@ -15,6 +15,9 @@
       "name": "hide",
 	  "directions": 4
     },
+	{
+      "name": "shadow"
+    },
     {
       "name": "astral",
 	  "directions": 4,

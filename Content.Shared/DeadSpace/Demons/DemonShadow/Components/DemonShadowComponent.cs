@@ -93,5 +93,8 @@ public sealed partial class DemonShadowComponent : Component
 
     [DataField("astralState")]
     public string AstralState = "astral";
+
+    [DataField("shadowState")]
+    public string ShadowState = "shadow";
     #endregion
 }

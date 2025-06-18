@@ -40,6 +40,8 @@
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
     - id: WizardSpawn
+    - id: ShadowDemonInvasion
+    - id: DemonsInvasion
 
 - type: entity
   id: BaseStationEvent

@@ -25,11 +25,19 @@ public sealed class DemonShadowSystem : SharedDemonShadowSystem
         if (_appearance.TryGetData<bool>(uid, DemonShadowVisuals.Astral, out var astral, args.Component) && astral)
         {
             args.Sprite.LayerSetState(0, component.AstralState);
+            return;
         }
-        else if (_appearance.TryGetData<bool>(uid, DemonShadowVisuals.Hide, out var hide, args.Component))
+
+        if (_appearance.TryGetData<bool>(uid, DemonShadowVisuals.Hide, out var hide, args.Component) && hide)
         {
-            if (hide)
-                args.Sprite.LayerSetState(0, component.HideState);
+            args.Sprite.LayerSetState(0, component.HideState);
+            return;
+        }
+
+        if (_appearance.TryGetData<bool>(uid, DemonShadowVisuals.Shadow, out var shadow, args.Component))
+        {
+            if (shadow)
+                args.Sprite.LayerSetState(0, component.ShadowState);
             else
                 args.Sprite.LayerSetState(0, component.State);
         }

@@ -19,5 +19,6 @@ public enum DemonShadowVisuals : byte
 {
     Astral,
     Hide,
+    Shadow,
     DemonShadow
 }
