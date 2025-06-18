@@ -5,20 +5,12 @@
   setPreference: true
   objective: roles-antag-thief-objective
   requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 144000 # 40 hours
-    - !type:DepartmentTimeRequirement
-      department: Engineering
-      time: 36000 # 10 hours
     - !type:DepartmentTimeRequirement
       department: Medical
       time: 36000 # 10 hours
     - !type:DepartmentTimeRequirement
-      department: Science
-      time: 18000 # 5 hours
-    - !type:DepartmentTimeRequirement
       department: Security
-      time: 54000 # 15 hrs
+      time: 36000 # 10 hours
   # guides: [ Thieves ] # DS14: disabled due to lack of localization
 
 - type: startingGear

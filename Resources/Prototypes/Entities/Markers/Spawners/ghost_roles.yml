@@ -245,6 +245,10 @@
     rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 36000 # 10 hours
     raffle:
       settings: default
   - type: Sprite
@@ -284,6 +288,9 @@
     description: ghost-role-information-wizard-desc
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 216000 # 60h overall
     raffle:
       settings: default
   - type: Sprite
