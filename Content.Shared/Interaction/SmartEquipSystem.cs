@@ -80,7 +80,7 @@ public sealed class SmartEquipSystem : EntitySystem
         }
 
         // early out if we have an item and cant drop it at all
-        if (handItem != null && !_hands.CanDropHeld(uid, hands.ActiveHand))
+        if (hands.ActiveHandId != null && !_hands.CanDropHeld(uid, hands.ActiveHandId))
         {
             _popup.PopupClient(Loc.GetString("smart-equip-cant-drop"), uid, uid);
             return;
@@ -121,7 +121,7 @@ public sealed class SmartEquipSystem : EntitySystem
                 return;
             }
 
-            _hands.TryDrop(uid, hands.ActiveHand, handsComp: hands);
+            _hands.TryDrop(uid, hands.ActiveHandId!, handsComp: hands);
             _inventory.TryEquip(uid, handItem.Value, equipmentSlot, predicted: true, checkDoafter:true);
             return;
         }
@@ -149,7 +149,7 @@ public sealed class SmartEquipSystem : EntitySystem
                 return;
             }
 
-            _hands.TryDrop(uid, hands.ActiveHand, handsComp: hands);
+            _hands.TryDrop(uid, hands.ActiveHandId!, handsComp: hands);
             _storage.Insert(slotItem, handItem.Value, out var stacked, out _);
 
             // if the hand item stacked with the things in inventory, but there's no more space left for the rest

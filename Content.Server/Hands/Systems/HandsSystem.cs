@@ -127,7 +127,7 @@ namespace Content.Server.Hands.Systems
                 _ => throw new ArgumentOutOfRangeException(nameof(args.Part.Comp.Symmetry))
             };
 
-            AddHand(uid, args.Slot, location);
+            AddHand(uid, args.Slot, location, component);
         }
 
         private void HandleBodyPartRemoved(EntityUid uid, HandsComponent component, ref BodyPartRemovedEvent args)
@@ -209,18 +209,18 @@ namespace Content.Server.Hands.Systems
             var fellEvent = new FellDownEvent(entity);
             RaiseLocalEvent(entity, fellEvent, false);
 
-            foreach (var hand in entity.Comp.Hands.Values)
+            foreach (var hand in entity.Comp.Hands.Keys)
             {
-                if (hand.HeldEntity is not EntityUid held)
+                if (!TryGetHeldEntity(entity.AsNullable(), hand, out var heldEntity))
                     continue;
 
                 var throwAttempt = new FellDownThrowAttemptEvent(entity);
-                RaiseLocalEvent(hand.HeldEntity.Value, ref throwAttempt);
+                RaiseLocalEvent(heldEntity.Value, ref throwAttempt);
 
                 if (throwAttempt.Cancelled)
                     continue;
 
-                if (!TryDrop(entity, hand, null, checkActionBlocker: false, handsComp: entity.Comp))
+                if (!TryDrop(entity, hand, checkActionBlocker: false, handsComp: entity.Comp))
                     continue;
 
                 // Rotate the item's throw vector a bit for each item
@@ -231,12 +231,12 @@ namespace Content.Server.Hands.Systems
                 itemVelocity *= _random.NextFloat(1f);
                 // Heavier objects don't get thrown as far
                 // If the item doesn't have a physics component, it isn't going to get thrown anyway, but we'll assume infinite mass
-                itemVelocity *= _physicsQuery.TryComp(held, out var heldPhysics) ? heldPhysics.InvMass : 0;
+                itemVelocity *= _physicsQuery.TryComp(heldEntity, out var heldPhysics) ? heldPhysics.InvMass : 0;
                 // Throw at half the holder's intentional throw speed and
                 // vary the speed a little to make it look more interesting
                 var throwSpeed = entity.Comp.BaseThrowspeed * _random.NextFloat(0.45f, 0.55f);
 
-                _throwingSystem.TryThrow(held,
+                _throwingSystem.TryThrow(heldEntity.Value,
                     itemVelocity,
                     throwSpeed,
                     entity,

@@ -110,7 +110,7 @@ public abstract class SharedItemSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
+        args.Handled = _handsSystem.TryPickup(args.User, uid, null, animateUser: false);
     }
 
     private void AddPickupVerb(EntityUid uid, ItemComponent component, GetVerbsEvent<InteractionVerb> args)

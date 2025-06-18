@@ -233,7 +233,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                     return true;
 
             // If the user changes which hand is active at all, interrupt the do-after
-            if (args.BreakOnHandChange && hands.ActiveHand?.Name != doAfter.InitialHand)
+            if (args.BreakOnHandChange && hands.ActiveHandId != doAfter.InitialHand)
                 return true;
         }
 

@@ -75,14 +75,12 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
     private void HandPressed(GUIBoundKeyEventArgs args, SlotControl hand)
     {
-        if (_playerHandsComponent == null)
-        {
+        if (!_handsSystem.TryGetPlayerHands(out var hands))
             return;
-        }
 
         if (args.Function == EngineKeyFunctions.UIClick)
         {
-            _handsSystem.UIHandClick(_playerHandsComponent, hand.SlotName);
+            _handsSystem.UIHandClick(hands.Value, hand.SlotName);
             args.Handle();
         }
         else if (args.Function == EngineKeyFunctions.UseSecondary)
@@ -145,10 +143,9 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             }
         }
 
-        var activeHand = handsComp.ActiveHand;
-        if (activeHand == null)
+        if (handsComp.ActiveHandId == null)
             return;
-        SetActiveHand(activeHand.Name);
+        SetActiveHand(handsComp.ActiveHandId);
     }
 
     private void HandBlocked(string handName)

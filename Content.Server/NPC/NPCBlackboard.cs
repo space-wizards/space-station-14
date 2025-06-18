@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Interaction;
+using Content.Server.Hands.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Inventory;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
@@ -151,6 +150,9 @@ public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, obj
     {
         value = default;
         EntityUid owner;
+
+        // TODO: big scary. this is probably gonna fuck up a lot of npc code
+        var handSys = entManager.System<HandsSystem>();
 
         switch (key)
         {

@@ -16,7 +16,6 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Hands.Systems
@@ -63,62 +62,24 @@ namespace Content.Client.Hands.Systems
             if (args.Current is not HandsComponentState state)
                 return;
 
-            var handsModified = component.Hands.Count != state.Hands.Count;
-            // we need to check that, even if we have the same amount, that the individual hands didn't change.
-            if (!handsModified)
+            var newHands = state.Hands.Keys.Except(component.Hands.Keys).ToList(); // hands that were added between states
+            var oldHands = component.Hands.Keys.Except(state.Hands.Keys).ToList(); // hands that were removed between states
+
+            foreach (var handId in state.SortedHands.Intersect(newHands))
             {
-                foreach (var hand in component.Hands.Values)
-                {
-                    if (state.Hands.Contains(hand))
-                        continue;
-                    handsModified = true;
-                    break;
-                }
+                AddHand(uid, handId, state.Hands[handId], component);
             }
 
-            var manager = EnsureComp<ContainerManagerComponent>(uid);
+            SetActiveHand((uid, component), state.ActiveHandId);
 
-            if (handsModified)
+            foreach (var handId in oldHands)
             {
-                List<Hand> addedHands = new();
-                foreach (var hand in state.Hands)
-                {
-                    if (component.Hands.ContainsKey(hand.Name))
-                        continue;
-
-                    var container = _containerSystem.EnsureContainer<ContainerSlot>(uid, hand.Name, manager);
-                    var newHand = new Hand(hand.Name, hand.Location, container);
-                    component.Hands.Add(hand.Name, newHand);
-                    addedHands.Add(newHand);
-                }
-
-                foreach (var name in component.Hands.Keys)
-                {
-                    if (!state.HandNames.Contains(name))
-                    {
-                        RemoveHand(uid, name, component);
-                    }
-                }
-
-                component.SortedHands.Clear();
-                component.SortedHands.AddRange(state.HandNames);
-                var sorted = addedHands.OrderBy(hand => component.SortedHands.IndexOf(hand.Name));
-
-                foreach (var hand in sorted)
-                {
-                    AddHand(uid, hand, component);
-                }
+                RemoveHand(uid, handId, component);
             }
+
+            component.SortedHands = state.SortedHands;
 
             _stripSys.UpdateUi(uid);
-
-            if (component.ActiveHand == null && state.ActiveHand == null)
-                return; //edge case
-
-            if (component.ActiveHand != null && state.ActiveHand != component.ActiveHand.Name)
-            {
-                SetActiveHand(uid, component.Hands[state.ActiveHand!], component);
-            }
         }
         #endregion
 
@@ -132,44 +93,46 @@ namespace Content.Client.Hands.Systems
             OnPlayerHandsAdded?.Invoke(hands);
         }
 
-        public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, HandsComponent? hands = null, bool log = true)
+        public override void DoDrop(EntityUid uid, string handId, bool doDropInteraction = true, HandsComponent? hands = null, bool log = true)
         {
-            base.DoDrop(uid, hand, doDropInteraction, hands, log);
+            base.DoDrop(uid, handId, doDropInteraction, hands, log);
 
-            if (TryComp(hand.HeldEntity, out SpriteComponent? sprite))
+            if (TryGetHeldEntity(uid, handId, out var held) && TryComp(held, out SpriteComponent? sprite))
                 sprite.RenderOrder = EntityManager.CurrentTick.Value;
         }
 
         public EntityUid? GetActiveHandEntity()
         {
-            return TryGetPlayerHands(out var hands) ? hands.ActiveHandEntity : null;
+            return TryGetPlayerHands(out var hands) ? GetActiveItem(hands.Value.AsNullable()) : null;
         }
 
         /// <summary>
         ///     Get the hands component of the local player
         /// </summary>
-        public bool TryGetPlayerHands([NotNullWhen(true)] out HandsComponent? hands)
+        public bool TryGetPlayerHands([NotNullWhen(true)] out Entity<HandsComponent>? hands)
         {
             var player = _playerManager.LocalEntity;
             hands = null;
-            return player != null && TryComp(player.Value, out hands);
+            if (player == null || !TryComp<HandsComponent>(player.Value, out var handsComp))
+                return false;
+
+            hands = (player.Value, handsComp);
+            return true;
         }
 
         /// <summary>
         ///     Called when a user clicked on their hands GUI
         /// </summary>
-        public void UIHandClick(HandsComponent hands, string handName)
+        public void UIHandClick(Entity<HandsComponent> ent, string handName)
         {
-            if (!hands.Hands.TryGetValue(handName, out var pressedHand))
+            var hands = ent.Comp;
+            if (hands.ActiveHandId == null)
                 return;
 
-            if (hands.ActiveHand == null)
-                return;
+            var pressedEntity = GetHeldEntityOrNull(ent.AsNullable(), handName);
+            var activeEntity = GetActiveItem(ent.AsNullable());
 
-            var pressedEntity = pressedHand.HeldEntity;
-            var activeEntity = hands.ActiveHand.HeldEntity;
-
-            if (pressedHand == hands.ActiveHand && activeEntity != null)
+            if (handName == hands.ActiveHandId && activeEntity != null)
             {
                 // use item in hand
                 // it will always be attack_self() in my heart.
@@ -177,24 +140,24 @@ namespace Content.Client.Hands.Systems
                 return;
             }
 
-            if (pressedHand != hands.ActiveHand && pressedEntity == null)
+            if (handName != hands.ActiveHandId && pressedEntity == null)
             {
                 // change active hand
                 EntityManager.RaisePredictiveEvent(new RequestSetHandEvent(handName));
                 return;
             }
 
-            if (pressedHand != hands.ActiveHand && pressedEntity != null && activeEntity != null)
+            if (handName != hands.ActiveHandId && pressedEntity != null && activeEntity != null)
             {
                 // use active item on held item
-                EntityManager.RaisePredictiveEvent(new RequestHandInteractUsingEvent(pressedHand.Name));
+                EntityManager.RaisePredictiveEvent(new RequestHandInteractUsingEvent(handName));
                 return;
             }
 
-            if (pressedHand != hands.ActiveHand && pressedEntity != null && activeEntity == null)
+            if (handName != hands.ActiveHandId && pressedEntity != null && activeEntity == null)
             {
                 // move the item to the active hand
-                EntityManager.RaisePredictiveEvent(new RequestMoveHandItemEvent(pressedHand.Name));
+                EntityManager.RaisePredictiveEvent(new RequestMoveHandItemEvent(handName));
             }
         }
 
@@ -210,13 +173,12 @@ namespace Content.Client.Hands.Systems
         public void UIInventoryExamine(string handName)
         {
             if (!TryGetPlayerHands(out var hands) ||
-                !hands.Hands.TryGetValue(handName, out var hand) ||
-                hand.HeldEntity is not { Valid: true } entity)
+                !TryGetHeldEntity(hands.Value.AsNullable(), handName, out var heldEntity))
             {
                 return;
             }
 
-            _examine.DoExamine(entity);
+            _examine.DoExamine(heldEntity.Value);
         }
 
         /// <summary>
@@ -226,13 +188,12 @@ namespace Content.Client.Hands.Systems
         public void UIHandOpenContextMenu(string handName)
         {
             if (!TryGetPlayerHands(out var hands) ||
-                !hands.Hands.TryGetValue(handName, out var hand) ||
-                hand.HeldEntity is not { Valid: true } entity)
+                !TryGetHeldEntity(hands.Value.AsNullable(), handName, out var heldEntity))
             {
                 return;
             }
 
-            _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(entity);
+            _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(heldEntity.Value);
         }
 
         public void UIHandAltActivateItem(string handName)
@@ -246,49 +207,48 @@ namespace Content.Client.Hands.Systems
         {
             base.HandleEntityInserted(uid, hands, args);
 
-            if (!hands.Hands.TryGetValue(args.Container.ID, out var hand))
-                return;
-            UpdateHandVisuals(uid, args.Entity, hand);
+            UpdateHandVisuals(uid, args.Entity, args.Container.ID);
             _stripSys.UpdateUi(uid);
 
             if (uid != _playerManager.LocalEntity)
                 return;
 
-            OnPlayerItemAdded?.Invoke(hand.Name, args.Entity);
+            OnPlayerItemAdded?.Invoke(args.Container.ID, args.Entity);
 
             if (HasComp<VirtualItemComponent>(args.Entity))
-                OnPlayerHandBlocked?.Invoke(hand.Name);
+                OnPlayerHandBlocked?.Invoke(args.Container.ID);
         }
 
         protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)
         {
             base.HandleEntityRemoved(uid, hands, args);
 
-            if (!hands.Hands.TryGetValue(args.Container.ID, out var hand))
-                return;
-            UpdateHandVisuals(uid, args.Entity, hand);
+            UpdateHandVisuals(uid, args.Entity, args.Container.ID);
             _stripSys.UpdateUi(uid);
 
             if (uid != _playerManager.LocalEntity)
                 return;
 
-            OnPlayerItemRemoved?.Invoke(hand.Name, args.Entity);
+            OnPlayerItemRemoved?.Invoke(args.Container.ID, args.Entity);
 
             if (HasComp<VirtualItemComponent>(args.Entity))
-                OnPlayerHandUnblocked?.Invoke(hand.Name);
+                OnPlayerHandUnblocked?.Invoke(args.Container.ID);
         }
 
         /// <summary>
         ///     Update the players sprite with new in-hand visuals.
         /// </summary>
-        private void UpdateHandVisuals(EntityUid uid, EntityUid held, Hand hand, HandsComponent? handComp = null, SpriteComponent? sprite = null)
+        private void UpdateHandVisuals(EntityUid uid, EntityUid held, string handId, HandsComponent? handComp = null, SpriteComponent? sprite = null)
         {
             if (!Resolve(uid, ref handComp, ref sprite, false))
                 return;
 
+            if (!TryGetHand(uid, handId, out var hand, handComp))
+                return;
+
             // visual update might involve changes to the entity's effective sprite -> need to update hands GUI.
             if (uid == _playerManager.LocalEntity)
-                OnPlayerItemAdded?.Invoke(hand.Name, held);
+                OnPlayerItemAdded?.Invoke(handId, held);
 
             if (!handComp.ShowInHands)
                 return;
@@ -310,7 +270,7 @@ namespace Content.Client.Hands.Systems
                 handComp.RevealedLayers[hand.Location] = revealedLayers;
             }
 
-            if (hand.HeldEntity == null)
+            if (HandIsEmpty((uid, handComp), handId))
             {
                 // the held item was removed.
                 RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers), true);
@@ -368,10 +328,7 @@ namespace Content.Client.Hands.Systems
         private void OnVisualsChanged(EntityUid uid, HandsComponent component, VisualsChangedEvent args)
         {
             // update hands visuals if this item is in a hand (rather then inventory or other container).
-            if (component.Hands.TryGetValue(args.ContainerId, out var hand))
-            {
-                UpdateHandVisuals(uid, GetEntity(args.Item), hand, component);
-            }
+            UpdateHandVisuals(uid, GetEntity(args.Item), args.ContainerId, component);
         }
         #endregion
 
@@ -400,24 +357,20 @@ namespace Content.Client.Hands.Systems
         }
         #endregion
 
-        private void AddHand(EntityUid uid, Hand newHand, HandsComponent? handsComp = null)
+        public override void AddHand(EntityUid uid, string handName, Hand hand, HandsComponent? handsComp = null)
         {
-            AddHand(uid, newHand.Name, newHand.Location, handsComp);
-        }
-
-        public override void AddHand(EntityUid uid, string handName, HandLocation handLocation, HandsComponent? handsComp = null)
-        {
-            base.AddHand(uid, handName, handLocation, handsComp);
+            base.AddHand(uid, handName, hand, handsComp);
 
             if (uid == _playerManager.LocalEntity)
-                OnPlayerAddHand?.Invoke(handName, handLocation);
+                OnPlayerAddHand?.Invoke(handName, hand.Location);
 
             if (handsComp == null)
                 return;
 
-            if (handsComp.ActiveHand == null)
-                SetActiveHand(uid, handsComp.Hands[handName], handsComp);
+            if (handsComp.ActiveHandId == null)
+                SetActiveHand((uid, handsComp), handName);
         }
+
         public override void RemoveHand(EntityUid uid, string handName, HandsComponent? handsComp = null)
         {
             if (uid == _playerManager.LocalEntity && handsComp != null &&
@@ -438,13 +391,13 @@ namespace Content.Client.Hands.Systems
             if (_playerManager.LocalEntity != hand.Owner)
                 return;
 
-            if (hand.Comp.ActiveHand == null)
+            if (hand.Comp.ActiveHandId == null)
             {
                 OnPlayerSetActiveHand?.Invoke(null);
                 return;
             }
 
-            OnPlayerSetActiveHand?.Invoke(hand.Comp.ActiveHand.Name);
+            OnPlayerSetActiveHand?.Invoke(hand.Comp.ActiveHandId);
         }
     }
 }

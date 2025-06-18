@@ -433,7 +433,7 @@ public sealed class AdminSystem : EntitySystem
 
             if (TryComp(entity, out HandsComponent? hands))
             {
-                foreach (var hand in _hands.EnumerateHands(entity, hands))
+                foreach (var hand in _hands.EnumerateHands((entity, hands)))
                 {
                     _hands.TryDrop(entity, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
                 }

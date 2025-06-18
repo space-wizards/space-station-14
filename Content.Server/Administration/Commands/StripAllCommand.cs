@@ -42,7 +42,7 @@ public sealed class StripAllCommand : LocalizedEntityCommands
 
         if (EntityManager.TryGetComponent<HandsComponent>(targetEntity, out var hands))
         {
-            foreach (var hand in _handsSystem.EnumerateHands(targetEntity.Value, hands))
+            foreach (var hand in _handsSystem.EnumerateHands((targetEntity.Value, hands)))
             {
                 _handsSystem.TryDrop(targetEntity.Value,
                     hand,

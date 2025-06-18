@@ -37,7 +37,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
 
     private void OnRetractableItemAction(Entity<RetractableItemActionComponent> ent, ref OnRetractableItemActionEvent args)
     {
-        if (_hands.GetActiveHand(args.Performer) is not { } userHand)
+        if (_hands.GetActiveHand(ent.Owner) is not { } activeHand)
             return;
 
         if (_actions.GetAction(ent.Owner) is not { } action)
@@ -50,7 +50,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
             return;
 
         // Don't allow to summon an item if holding an unremoveable item unless that item is summoned by the action.
-        if (userHand.HeldEntity != null && !_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid) && !_hands.CanDropHeld(args.Performer, userHand, false))
+        if (!_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid) && !_hands.CanDropHeld(args.Performer, activeHand, false))
         {
             _popups.PopupClient(Loc.GetString("retractable-item-hand-cannot-drop"), args.Performer, args.Performer);
             return;
@@ -65,7 +65,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
         }
         else
         {
-            _hands.TryForcePickup(args.Performer, ent.Comp.ActionItemUid.Value, userHand, checkActionBlocker: false);
+            _hands.TryForcePickup(args.Performer, ent.Comp.ActionItemUid.Value, activeHand, checkActionBlocker: false);
             _audio.PlayPredicted(ent.Comp.SummonSounds, action.Comp.AttachedEntity.Value, action.Comp.AttachedEntity.Value);
             EnsureComp<UnremoveableComponent>(ent.Comp.ActionItemUid.Value);
         }
