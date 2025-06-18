@@ -19,6 +19,9 @@
         reagents:
         - ReagentId: FluorosulfuricAcid
           Quantity: 5
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
   id: BaseXenoOrgan

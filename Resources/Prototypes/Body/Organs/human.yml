@@ -26,6 +26,7 @@
   - type: Tag
     tags:
       - Meat
+      - Trash # DS14
 
 - type: entity
   id: BaseHumanOrgan
@@ -74,7 +75,7 @@
   - type: Item
     size: Small
     heldPrefix: brain
-  
+
 - type: entity
   id: OrganHumanEyes
   parent: BaseHumanOrgan
