@@ -61,6 +61,7 @@ public sealed class AmbientOcclusionOverlay : Overlay
         args.WorldHandle.RenderInRenderTarget(_aoTarget,
             () =>
             {
+                worldHandle.UseShader(_proto.Index<ShaderPrototype>("unshaded").Instance());
                 var invMatrix = _aoTarget.GetWorldToLocalMatrix(viewport.Eye!, scale);
 
                 var query = _entManager.System<OccluderSystem>();
@@ -100,18 +101,18 @@ public sealed class AmbientOcclusionOverlay : Overlay
                             continue;
 
                         var bounds = lookups.GetLocalBounds(tileRef, grid.TileSize);
-                        worldHandle.DrawRect(bounds, Color.Transparent);
+                        worldHandle.DrawRect(bounds, Color.White);
                     }
                 }
 
-            }, Color.White);
+            }, Color.Transparent);
 
         // Draw the stencil texture to depth buffer.
         worldHandle.UseShader(_proto.Index<ShaderPrototype>("StencilMask").Instance());
         worldHandle.DrawTextureRect(_aoStencilTarget!.Texture, worldBounds);
 
         // Draw the Blurred AO texture finally.
-        worldHandle.UseShader(_proto.Index<ShaderPrototype>("StencilDraw").Instance());
+        worldHandle.UseShader(_proto.Index<ShaderPrototype>("StencilEqualDraw").Instance());
         worldHandle.DrawTextureRect(_aoTarget!.Texture, worldBounds, color);
 
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
