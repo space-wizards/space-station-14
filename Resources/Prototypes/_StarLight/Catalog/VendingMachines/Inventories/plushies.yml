@@ -341,6 +341,17 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: VendorShadekinPlush
+  productEntity: ShadekinPlush
+  cost:
+    NTCredit: 10
+  categories:
+  - SLSpecies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 #Marketable crewmember plushies
 - type: listing
   id: VendorPlushieMatthew
