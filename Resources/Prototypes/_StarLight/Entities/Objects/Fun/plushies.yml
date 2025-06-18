@@ -201,6 +201,32 @@
       maximumWait: 240
     - type: TextToSpeech
       voice: heavy
+      
+- type: entity
+  parent: BaseResomiPlushie
+  id: PlushieAmali
+  name: amali plushie
+  description: Flying high, shooting corporate enemies out of the sky. Glory to NanoTrasen!
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/Plushies/amali_plushie.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Plushies/amali_plushie.rsi
+    layers: 
+      - state: icon
+  - type: ItemToggle
+    onUse: false
+    verbToggleOn: plushie-voicebox-activate
+    verbToggleOff: plushie-voicebox-deactivate
+  - type: ComponentToggler
+    components:
+    - type: Advertise
+      pack: PlushiesAmali
+      minimumWait: 120
+      maximumWait: 240
+    - type: TextToSpeech
+      voice: ganyu
 
 - type: entity
   parent: PlushieHuman
