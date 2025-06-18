@@ -1,13 +1,9 @@
 ﻿using System.Linq;
-using System.Numerics;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Projectiles;
-using Content.Shared.Tag;
 using Content.Shared.Timing;
-using Content.Shared.Weapons.Ranged.Components;
-using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -27,11 +23,8 @@ public sealed partial class AreaPickupSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedProjectileSystem _projectile = default!;
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
@@ -52,8 +45,6 @@ public sealed partial class AreaPickupSystem : EntitySystem
 
         SubscribeLocalEvent<AreaPickupComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AreaPickupComponent, AfterInteractEvent>(AfterInteract);
-        SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfterStorage);
-        SubscribeLocalEvent<BallisticAmmoProviderComponent, AreaPickupDoAfterEvent>(OnDoAfterBallistic);
     }
 
     private void OnMapInit(Entity<AreaPickupComponent> entity, ref MapInitEvent args)
@@ -71,29 +62,7 @@ public sealed partial class AreaPickupSystem : EntitySystem
             !_useDelay.TryResetDelay(entity, checkDelayed: true, id: DelayId))
             return;
 
-        Predicate<Entity<ItemComponent>> canInsert;
-        if (TryComp<StorageComponent>(entity, out var storage))
-        {
-            canInsert = insertedEntity => _storage.CanInsert(
-                entity,
-                insertedEntity,
-                out _,
-                storage,
-                insertedEntity.Comp
-            );
-        }
-        else if (TryComp<BallisticAmmoProviderComponent>(entity, out var ammo))
-        {
-            canInsert = insertedEntity => _gun.CanInsertBallistic((entity, ammo), insertedEntity);
-        }
-        else
-        {
-            DebugTools.Assert(
-                $"Entity {entity} has {nameof(AreaPickupComponent)}, but neither {nameof(StorageComponent)} nor {nameof(BallisticAmmoProviderComponent)} to pickup into"
-            );
-            return;
-        }
-
+        // Find entities near where the interaction click was.
         _entitiesToPickUp.Clear();
         _entitiesInRange.Clear();
         _entityLookup.GetEntitiesInRange(
@@ -102,87 +71,118 @@ public sealed partial class AreaPickupSystem : EntitySystem
             _entitiesInRange,
             LookupFlags.Dynamic | LookupFlags.Sundries
         );
-        var delay = TimeSpan.Zero;
 
+        // Filter out anything that definitely can't be picked up.
+        var pickupCandidates = new List<Entity<ItemComponent>>();
         foreach (var entityInRange in _entitiesInRange)
         {
             if (entityInRange == args.User ||
-                // Need comp to get item size to get weight
                 !_itemQuery.TryGetComponent(entityInRange, out var itemComp) ||
                 !_prototype.TryIndex(itemComp.Size, out var itemSize) ||
-                !canInsert((entityInRange, itemComp)) ||
                 !_interaction.InRangeUnobstructed(args.User, entityInRange))
                 continue;
+            pickupCandidates.Add((entityInRange, itemComp));
+        }
 
-            _entitiesToPickUp.Add(entityInRange);
-            delay += itemSize.Weight * AreaPickupComponent.DelayPerItemWeight;
+        // No candidates to pick up.
+        if (pickupCandidates.Count == 0)
+            return;
 
-            if (_entitiesToPickUp.Count >= AreaPickupComponent.MaximumPickupLimit)
+        // Ask other systems to tell us what to pick up.
+        var ev = new BeforeAreaPickupEvent(pickupCandidates, AreaPickupComponent.MaximumPickupLimit);
+        RaiseLocalEvent(entity, ev);
+        if (ev.EntitiesToPickUp.Count == 0)
+        {
+            // No systems told us to pick anything up.
+            DebugTools.Assert(!ev.Handled, "Zero entities to pickup means this event should not be handled.");
+            return;
+        }
+
+        DebugTools.Assert(ev.Handled, "Non-zero entities to pickup means this event should be handled.");
+
+        // Calculate do after delay based on combined weight of all items to pick up.
+        var delay = TimeSpan.Zero;
+        foreach (var entityToPickUp in ev.EntitiesToPickUp)
+        {
+            _entitiesToPickUp.Add(entityToPickUp);
+            var weight = _prototype.TryIndex(entityToPickUp.Comp.Size, out var itemSize) ? itemSize.Weight : 1;
+            delay += weight * AreaPickupComponent.DelayPerItemWeight;
+        }
+
+        var doAfterArgs = new DoAfterArgs(EntityManager,
+            args.User,
+            delay,
+            new AreaPickupDoAfterEvent(GetNetEntityList(_entitiesInRange)),
+            entity,
+            target: entity)
+        {
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            NeedHand = true,
+        };
+        _doAfter.TryStartDoAfter(doAfterArgs);
+
+        args.Handled = true;
+    }
+
+    /// <summary>
+    /// This function helps with handling <see cref="BeforeAreaPickupEvent"/> by enforcing
+    /// <see cref="AreaPickupComponent.MaximumPickupLimit"/>. Callers need only pass in the event and
+    /// <paramref name="canPickup">a predicate indicating whether a given candidate can be picked up</paramref>. Returns
+    /// true if any items should be picked up and the event should be considered handled, false otherwise.
+    /// </summary>
+    public bool DoBeforeAreaPickup(ref BeforeAreaPickupEvent ev, Predicate<Entity<ItemComponent>> canPickup)
+    {
+        DebugTools.Assert(
+            ev.EntitiesToPickUp.Count == 0,
+            $"{nameof(BeforeAreaPickupEvent)} should not be raised with an empty {nameof(BeforeAreaPickupEvent.EntitiesToPickUp)}."
+        );
+
+        // Collect candidates which can be picked up, up to the maximum.
+        foreach (var entityInRange in ev.PickupCandidates)
+        {
+            if (!canPickup(entityInRange))
+                continue;
+
+            ev.EntitiesToPickUp.Add(entityInRange);
+
+            if (ev.EntitiesToPickUp.Count >= ev.MaxPickups)
                 break;
         }
 
-        if (_entitiesToPickUp.Count >= 1)
-        {
-            var doAfterArgs = new DoAfterArgs(EntityManager,
-                args.User,
-                delay,
-                new AreaPickupDoAfterEvent(GetNetEntityList(_entitiesToPickUp)),
-                entity,
-                target: entity)
-            {
-                BreakOnDamage = true,
-                BreakOnMove = true,
-                NeedHand = true,
-            };
-
-            _doAfter.TryStartDoAfter(doAfterArgs);
-            args.Handled = true;
-        }
+        return ev.EntitiesToPickUp.Count > 0;
     }
 
-    private void OnDoAfterStorage(Entity<StorageComponent> entity, ref AreaPickupDoAfterEvent args)
-    {
-        var user = args.User;
-        OnDoAfterGeneric(
-            entity,
-            ref args,
-            entity.Comp.StorageInsertSound,
-            entity.Comp.SilentStorageUserTag,
-            entityToInsert =>
-                _storage.PlayerInsertEntityInWorld(entity.AsNullable(), user, entityToInsert, playSound: false)
-        );
-    }
+    private readonly List<EntityUid> _pickedUp = [];
+    private readonly List<EntityCoordinates> _positions = [];
+    private readonly List<Angle> _angles = [];
 
-    private void OnDoAfterBallistic(Entity<BallisticAmmoProviderComponent> entity, ref AreaPickupDoAfterEvent args)
-    {
-        var user = args.User;
-        OnDoAfterGeneric(
-            entity,
-            ref args,
-            entity.Comp.SoundInsert,
-            entity.Comp.SilentInsertUserTag,
-            entityToInsert => _gun.TryBallisticInsert(entity, entityToInsert, user, suppressInsertionSound: true)
-        );
-    }
-
-    private void OnDoAfterGeneric(
-        EntityUid pickupEntity,
+    /// <summary>
+    /// This function helps with handling <see cref="AreaPickupDoAfterEvent"/> by handling
+    /// <see cref="AnimateInsertingEntitiesEvent">animating picked up entities</see> and rechecking validity of picked
+    /// up entities while also invoking <paramref name="tryPickup"/>. Returns true if either <paramref name="args"/>
+    /// specifies to entities to pickup or if at least one entity was picked up and therefor the doafter should be
+    /// considered handled; returns false otherwise.
+    /// </summary>
+    public bool TryDoAreaPickup(
         ref AreaPickupDoAfterEvent args,
-        SoundSpecifier? sound,
-        ProtoId<TagPrototype>? silentStorageUserTag,
-        Func<EntityUid, bool> tryInsert
+        Entity<AreaPickupComponent?> entity,
+        SoundSpecifier? pickupSound,
+        Func<EntityUid, bool> tryPickup
     )
     {
-        if (args.Handled ||
-            args.Cancelled ||
-            !HasComp<AreaPickupComponent>(pickupEntity) ||
-            !_xformQuery.TryGetComponent(pickupEntity, out var pickupEntityXform))
-            return;
+        // Nothing to try to pick up, early return as handled.
+        if (args.Entities.Count == 0)
+            return true;
 
-        var successfullyInserted = new List<EntityUid>();
-        var successfullyInsertedPositions = new List<EntityCoordinates>();
-        var successfullyInsertedAngles = new List<Angle>();
+        if (!_xformQuery.TryGetComponent(entity, out var pickupEntityXform))
+            return false;
 
+        _pickedUp.Clear();
+        _positions.Clear();
+        _angles.Clear();
+
+        // Collect position info for the items to pick up and try to actually pick them up.
         var entCount = Math.Min(AreaPickupComponent.MaximumPickupLimit, args.Entities.Count);
         foreach (var entityToPickUp in GetEntityList(args.Entities.ToList().GetRange(0, entCount)))
         {
@@ -201,39 +201,34 @@ public sealed partial class AreaPickupSystem : EntitySystem
 
             // Get the picked up entity's position _before_ inserting it, because that changes its position.
             var position = _transform.ToCoordinates(
-                pickupEntityXform.ParentUid.IsValid() ? pickupEntityXform.ParentUid : pickupEntity,
+                pickupEntityXform.ParentUid.IsValid() ? pickupEntityXform.ParentUid : entity.Owner,
                 _transform.GetMapCoordinates(targetXform)
             );
 
             // Actually insert the item.
-            if (!tryInsert(entityToPickUp))
+            if (!tryPickup(entityToPickUp))
                 continue;
 
-            successfullyInserted.Add(entityToPickUp);
-            successfullyInsertedPositions.Add(position);
-            successfullyInsertedAngles.Add(targetXform.LocalRotation);
+            _pickedUp.Add(entityToPickUp);
+            _positions.Add(position);
+            _angles.Add(targetXform.LocalRotation);
         }
 
-        // If we picked up at least one thing, play a sound and do a cool animation!
-        if (successfullyInserted.Count > 0)
-        {
-            if (silentStorageUserTag is not { } tag ||
-                !_tag.HasTag(args.User, tag))
-            {
-                _audio.PlayPredicted(sound, pickupEntity, args.User, AudioParams);
-            }
+        // Nothing actually got picked up.
+        if (_pickedUp.Count == 0)
+            return false;
 
-            EntityManager.RaiseSharedEvent(
-                new AnimateInsertingEntitiesEvent(
-                    GetNetEntity(pickupEntity),
-                    GetNetEntityList(successfullyInserted),
-                    GetNetCoordinatesList(successfullyInsertedPositions),
-                    successfullyInsertedAngles
-                ),
-                args.User
-            );
-        }
-
-        args.Handled = true;
+        // Play a sound and animate the items being picked up.
+        _audio.PlayPredicted(pickupSound, entity, args.User, AudioParams);
+        EntityManager.RaiseSharedEvent(
+            new AnimateInsertingEntitiesEvent(
+                GetNetEntity(entity),
+                GetNetEntityList(_pickedUp),
+                GetNetCoordinatesList(_positions),
+                _angles
+            ),
+            args.User
+        );
+        return true;
     }
 }
