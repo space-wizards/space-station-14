@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: crocodilecarousel
-  changes:
-  - message: 'Huge buff to janitors and Reinem: headphones can show music notes again!'
-    type: Fix
-  id: 1369
-  time: '2025-03-23T23:26:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2026
 - author: SixValentine
   changes:
   - message: Added Hash
@@ -4205,3 +4198,11 @@
   id: 1868
   time: '2025-06-18T09:15:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2809
+- author: DinnerCalzone
+  changes:
+  - message: Fixed reinforced secret doors not appearing in the construction menu
+      properly.
+    type: Fix
+  id: 1869
+  time: '2025-06-18T09:23:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2812
