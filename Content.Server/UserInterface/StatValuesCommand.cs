@@ -16,26 +16,25 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.UserInterface;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class StatValuesCommand : IConsoleCommand
+public sealed class StatValuesCommand : LocalizedCommands
 {
-    [Dependency] private readonly EuiManager _eui = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly EuiManager _eui = default!;
 
-    public string Command => "showvalues";
-    public string Description => Loc.GetString("stat-values-desc");
-    public string Help => $"{Command} <cargosell / lathesell / melee / itemsize>";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "showvalues";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } pSession)
         {
-            shell.WriteError(Loc.GetString("stat-values-server"));
+            shell.WriteError(Loc.GetString("shell-cannot-run-command-on-server"));
             return;
         }
 
         if (args.Length != 1)
         {
-            shell.WriteError(Loc.GetString("stat-values-args"));
+            shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
             return;
         }
 
@@ -68,12 +67,10 @@ public sealed class StatValuesCommand : IConsoleCommand
         eui.SendMessage(message);
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-        {
             return CompletionResult.FromOptions(new[] { "cargosell", "lathesell", "melee", "itemsize", "drawrate" });
-        }
 
         return CompletionResult.Empty;
     }
