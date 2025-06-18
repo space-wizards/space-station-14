@@ -7983,4 +7983,26 @@ Entries:
   id: 1102
   time: '2025-06-18T18:43:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/862
+- author: Conflee
+  changes:
+  - message: CentComm G24 - Added Cameras everywhere
+    type: Add
+  id: 1103
+  time: '2025-06-18T19:10:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/863
+- author: Conflee
+  changes:
+  - message: CentComm G24 - Added Sec turnstiles to the sec entry into Debrief
+    type: Add
+  id: 1104
+  time: '2025-06-18T19:10:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/863
+- author: Conflee
+  changes:
+  - message: CentComm G24 - Expanded ERT room with lockers for each ERT type, plus
+      Clown, Chaplain, and Mime
+    type: Add
+  id: 1105
+  time: '2025-06-18T19:10:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/863
 
