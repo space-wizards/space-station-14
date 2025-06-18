@@ -13,7 +13,6 @@
       state: heal
   - type: InstantAction
     event: !type:AvaliPrepareStasisActionEvent
-    useDelay: 1
 
 - type: entity
   id: ActionAvaliStasisExit
@@ -27,5 +26,4 @@
       state: healoff
   - type: InstantAction
     event: !type:AvaliExitStasisActionEvent
-    useDelay: 1
 
