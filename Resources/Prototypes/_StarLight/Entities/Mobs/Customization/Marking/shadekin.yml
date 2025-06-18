@@ -52,15 +52,15 @@
     - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
       state: shadekin_big
 
-- type: marking
-  id: TailShadekinBigFluff
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Shadekin]
-  forcedColoring: true
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
-      state: shadekin_big_fluff
+# - type: marking
+#   id: TailShadekinBigFluff
+#   bodyPart: Tail
+#   markingCategory: Tail
+#   speciesRestriction: [Shadekin]
+#   forcedColoring: true
+#   sprites:
+#     - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
+#       state: shadekin_big_fluff
 
 - type: marking
   id: TailShadekinShorter
