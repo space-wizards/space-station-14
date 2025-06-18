@@ -7968,4 +7968,12 @@ Entries:
   id: 1100
   time: '2025-06-18T13:11:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/856
+- author: Citrea
+  changes:
+  - message: There is now more shoes and many roles get a wider selection in their
+      loadout.
+    type: Add
+  id: 1101
+  time: '2025-06-18T13:14:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/852
 
