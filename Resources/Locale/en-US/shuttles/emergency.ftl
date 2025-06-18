@@ -1,6 +1,7 @@
 # Commands
 ## Delay shuttle round end
-emergency-shuttle-command-round-desc = Stops the timer that ends the round when the emergency shuttle exits hyperspace.
+cmd-delayroundend-desc = Stops the timer that ends the round when the emergency shuttle exits hyperspace.
+cmd-delayroundend-help = Usage: delayroundend
 emergency-shuttle-command-round-yes = Round delayed.
 emergency-shuttle-command-round-no = Unable to delay round end.
 
