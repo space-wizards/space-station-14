@@ -1123,9 +1123,11 @@
   result: FoodDonutPlain
   time: 10
   group: Dessert
+  reagents:
+    Milk: 5
+    Sugar: 5
   solids:
     FoodDoughRope: 1
-    FoodButterSlice: 1
 
 - type: microwaveMealRecipe
   id: RecipeDonutPink
@@ -1204,9 +1206,11 @@
   result: FoodDonutJellyPlain
   time: 10
   group: Dessert
+  reagents:
+    Milk: 5
+    Sugar: 5
   solids:
     FoodDoughRope: 1
-    FoodButterSlice: 1
     FoodJellyAmanita: 1
 
 - type: microwaveMealRecipe
@@ -1286,9 +1290,11 @@
   result: FoodDonutMeat
   time: 10
   group: Dessert
+  reagents:
+    Milk: 5
+    Sugar: 5
   solids:
     FoodDoughRope: 1
-    FoodButterSlice: 1
     FoodMeat: 1
 
 #Pies
