@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: Adjustments to the Arsenal Tech Tree for some small simplification
-    type: Tweak
-  - message: New firing sounds for the Laser Cannon and Energy Shotgun; new names
-      for laser weapons (except the Captain's)
-    type: Tweak
-  - message: Laser Cannon's stats have been dramatically changed.
-    type: Tweak
-  - message: 3 new blaster energy weapons can be researched and built
-    type: Add
-  - message: uplink and research icons for several weapons/ammo now use the new art
-      rather than the old art.
-    type: Fix
-  id: 1368
-  time: '2025-03-22T15:42:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2030
 - author: crocodilecarousel
   changes:
   - message: 'Huge buff to janitors and Reinem: headphones can show music notes again!'
@@ -4213,3 +4196,12 @@
   id: 1867
   time: '2025-06-18T09:04:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2797
+- author: TheLuggage05
+  changes:
+  - message: Added a cargo order for the Mail RPDS. Up your courier game today!
+    type: Add
+  - message: The RPDS mail capsules Work Now.
+    type: Fix
+  id: 1868
+  time: '2025-06-18T09:15:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2809
