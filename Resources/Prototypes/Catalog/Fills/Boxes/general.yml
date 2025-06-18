@@ -184,6 +184,7 @@
     contents:
       - id: DrinkMREFlask
       - id: FoodSnackNutribrick
+      - id: FoodSnackFabricbrick
       - id: FoodSnackMREBrownie
       - id: FoodCondimentPacketKetchup
   - type: Sprite

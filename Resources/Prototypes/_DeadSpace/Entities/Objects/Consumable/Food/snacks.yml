@@ -1,0 +1,71 @@
+- type: entity
+  id: FoodSnackFabricbrick
+  parent: BaseItem
+  name: волокнистый батончик
+  description: Высококалорийный батончик, сотканный из волокон хлопка. На вид лучше, чем на вкус.
+  components:
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+    - FoodSnack
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/snacks.rsi
+    state: fabricbrick
+  - type: SpawnItemsOnUse
+    items:
+    - id: FoodPacketFRETrash
+    - id: FoodSnackFabricbrickOpen
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  id: FoodSnackFabricbrickOpen
+  parent: FoodSnackBase
+  name: волокнистый батончик
+  description: Высококалорийный батончик, сотканный из волокон хлопка. На вид лучше, чем на вкус.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cotton
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/snacks.rsi
+    state: fabricbrick-open
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 20
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
+  id: FoodPacketFRETrash
+  name: обёртка от ВРП
+  description: Обёртка широкого назначения для различных военных продуктов питания.
+  components:
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: Tag
+    tags:
+    - ClothMade
+    - Trash
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/snacks.rsi
+    state: fre-wrapper

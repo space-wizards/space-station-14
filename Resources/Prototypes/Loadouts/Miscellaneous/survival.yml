@@ -51,13 +51,20 @@
   - !type:SpeciesLoadoutEffect
     species:
     - Vox
-    
+
 - type: loadoutEffectGroup
   id: EffectSpeciesDwarf
   effects:
   - !type:SpeciesLoadoutEffect
     species:
     - Dwarf
+
+- type: loadoutEffectGroup
+  id: EffectSpeciesMoth
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Moth
 
 # Basic
 - type: loadout
@@ -95,7 +102,7 @@
   storage:
     back:
     - BoxSurvivalRobotNonBreather
-    
+
 - type: loadout
   id: EmergencyBeer
   effects:
@@ -104,6 +111,15 @@
   storage:
     back:
     - BoxSurvivalBeer
+
+- type: loadout
+  id: EmergencyMoth
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesMoth
+  storage:
+    back:
+    - BoxSurvivalMoth
 
 # Clown
 - type: loadout
@@ -133,6 +149,15 @@
     back:
     - BoxHugBeer
 
+- type: loadout
+  id: EmergencyMothClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesMoth
+  storage:
+    back:
+    - BoxHugMoth
+
 # Mime
 - type: loadout
   id: EmergencyOxygenMime
@@ -160,6 +185,15 @@
   storage:
     back:
     - BoxMimeBeer
+
+- type: loadout
+  id: EmergencyMothMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesMoth
+  storage:
+    back:
+    - BoxMimeMoth
 
 # Engineering / Extended
 - type: loadout
@@ -189,6 +223,15 @@
     back:
     - BoxSurvivalEngineeringBeer
 
+- type: loadout
+  id: EmergencyMothExtended
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesMoth
+  storage:
+    back:
+    - BoxSurvivalEngineeringMoth
+
 # Medical
 - type: loadout
   id: EmergencyOxygenMedical
@@ -216,6 +259,15 @@
   storage:
     back:
     - BoxSurvivalMedicalBeer
+
+- type: loadout
+  id: EmergencyMothMedical
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesMoth
+  storage:
+    back:
+    - BoxSurvivalMedicalMoth
 
 # Security
 - type: loadout
@@ -272,6 +324,24 @@
     back:
     - BoxSurvivalBrigmedicBeer
 
+- type: loadout
+  id: EmergencyMothSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesMoth
+  storage:
+    back:
+    - BoxSurvivalSecurityMoth
+
+- type: loadout
+  id: EmergencyMothBrigmedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesMoth
+  storage:
+    back:
+    - BoxSurvivalBrigmedicMoth
+
 # Syndicate
 - type: loadout
   id: EmergencyOxygenSyndicate
@@ -290,6 +360,15 @@
   storage:
     back:
     - BoxSurvivalSyndicateNitrogen
+
+- type: loadout
+  id: EmergencyMothSyndicate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesMoth
+  storage:
+    back:
+    - BoxSurvivalSyndicateMoth
 
 # Pre-equipped species gear
 

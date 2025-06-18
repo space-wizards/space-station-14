@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Made by bahamutichka (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "fre-wrapper"
+    },
+    {
+      "name": "fabricbrick"
+    },
+    {
+      "name": "fabricbrick-in-world"
+    },
+    {
+      "name": "fabricbrick-open-in-world"
+    },
+    {
+      "name": "fabricbrick-open"
+    }
+  ]
+}
