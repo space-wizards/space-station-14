@@ -40,6 +40,11 @@ public sealed partial class HandcuffComponent : Component
     public bool BreakOnRemove;
 
     /// <summary>
+    ///     Will the cuffs vanish when removed?
+    /// </summary>
+    public bool DestroyOnRemove;
+
+    /// <summary>
     ///     Will the cuffs break when removed?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

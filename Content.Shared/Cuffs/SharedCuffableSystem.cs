@@ -707,7 +707,11 @@ namespace Content.Shared.Cuffs
             if (_net.IsServer)
             {
                 // Handles spawning broken cuffs on server to avoid client misprediction
-                if (cuff.BreakOnRemove)
+                if (cuff.DestroyOnRemove)
+                {
+                    QueueDel(cuffsToRemove);
+                }
+                else if (cuff.BreakOnRemove)
                 {
                     QueueDel(cuffsToRemove);
                     var trash = Spawn(cuff.BrokenPrototype, Transform(cuffsToRemove).Coordinates);
