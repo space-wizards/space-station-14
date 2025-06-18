@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: SlamBamActionman
   changes:
-  - message: Hyposprays now shows contained chemicals in the sprite.
-    type: Tweak
-  id: 8178
-  time: '2025-04-14T15:58:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30703
-- author: SlamBamActionman
-  changes:
   - message: Implanters are now named after the implant they contained, even after
       the implanter has been used.
     type: Tweak
@@ -3912,3 +3905,10 @@
   id: 8690
   time: '2025-06-18T00:50:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38199
+- author: Kittygyat
+  changes:
+  - message: Fixed vapes dealing unintended damage types to you when used.
+    type: Fix
+  id: 8691
+  time: '2025-06-18T12:06:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38423
