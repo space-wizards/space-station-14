@@ -20,7 +20,6 @@
     - id: UnknownShuttleMeatZone
     - id: UnknownShuttleMicroshuttle
     - id: UnknownShuttleSpacebus
-    - id: UnknownShuttlePirate # DS14
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable
@@ -35,6 +34,7 @@
     - id: LoneOpsSpawn
     - id: UnknownShuttleManOWar
     - id: UnknownShuttleInstigator
+    - id: UnknownShuttlePirate # DS14
 
 # Shuttle Game Rules
 
@@ -212,8 +212,8 @@
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #Leaving this one because theyre like primitives and its funnier
     weight: 1 # lower because antags
-    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
-    minimumPlayers: 35 # DS14
+    earliestStart: 30 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
+    minimumPlayers: 25 # DS14
   - type: LoadMapRule
     preloadedGrid: ManOWar
 
@@ -254,5 +254,8 @@
   components:
   - type: StationEvent
     startAnnouncement: null
+    weight: 1 # lower because antags
+    earliestStart: 40 # late to hopefully have enough ghosts to fill all roles quickly
+    minimumPlayers: 35 # DS14
   - type: LoadMapRule
     preloadedGrid: Pirate

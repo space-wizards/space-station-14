@@ -288,7 +288,7 @@
   id: Wizard
   components:
   - type: GameRule
-    minPlayers: 10
+    minPlayers: 30 # DS14
   - type: AntagSelection
     agentName: wizard-round-end-name
     selectionTime: PrePlayerSpawn
