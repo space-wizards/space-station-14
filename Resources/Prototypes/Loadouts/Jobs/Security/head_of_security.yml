@@ -118,3 +118,19 @@
     proto: FemaleUnderwear
   equipment:
     underweart: ClothingUnderwearTopBraHeadofSecurity
+
+# Медаль
+- type: loadoutEffectGroup
+  id: HeadofSecurityMedal
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfSecurity
+      time: 270000 # 75 hours
+
+- type: loadout
+  id: HeadOfSecurityMedal
+  storage:
+    back:
+    - ClothingNeckSecurityHeadOfSecurityMedal

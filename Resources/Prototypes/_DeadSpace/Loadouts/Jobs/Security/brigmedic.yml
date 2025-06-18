@@ -60,3 +60,19 @@
     proto: FemaleUnderwear
   equipment:
     underweart: ClothingUnderwearTopBraBrigmedic
+
+# Медаль
+- type: loadoutEffectGroup
+  id: BrigMedicMedal
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobBrigmedic
+      time: 270000 # 75 hours
+
+- type: loadout
+  id: BrigMedicMedal
+  storage:
+    back:
+    - ClothingNeckSecurityBrigMedicMedal

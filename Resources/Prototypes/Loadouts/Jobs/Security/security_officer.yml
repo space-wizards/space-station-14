@@ -210,3 +210,19 @@
   storage:
     back:
     - Dinkystar
+
+# Медаль
+- type: loadoutEffectGroup
+  id: SecurityOfficerMedal
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 270000 # 75 hours
+
+- type: loadout
+  id: SecurityOfficerMedal
+  storage:
+    back:
+    - ClothingNeckSecurityOfficerMedal

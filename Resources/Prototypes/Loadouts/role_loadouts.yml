@@ -383,6 +383,7 @@
   - GroupSpeciesBreathToolSecurity
   - HeadofSecuritySocks # DS14-Underwear
   - HeadofSecurityUnderwear # DS14-Underwear
+  - HeadOfSecurityMedal # DS14-Medal
 
 - type: roleLoadout
   id: JobWarden
@@ -400,6 +401,7 @@
   - GroupSpeciesBreathToolSecurity
   - WardenSocks # DS14-Underwear
   - WardenUnderwear # DS14-Underwear
+  - WardenMedal # DS14-Medal
 
 - type: roleLoadout
   id: JobSecurityOfficer
@@ -419,6 +421,7 @@
   - GroupSpeciesBreathToolSecurity
   - SecuritySocks # DS14-Underwear
   - SecurityUnderwear # DS14-Underwear
+  - SecurityOfficerMedal # DS14-Medal
 
 - type: roleLoadout
   id: JobDetective
@@ -436,6 +439,7 @@
   - GroupSpeciesBreathToolSecurity
   - DetectiveSocks # DS14-Underwear
   - DetectiveUnderwear # DS14-Underwear
+  - DetectiveMedal # DS14-Medal
 
 - type: roleLoadout
   id: JobSecurityCadet
