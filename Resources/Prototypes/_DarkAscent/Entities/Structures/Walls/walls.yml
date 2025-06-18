@@ -1,0 +1,24 @@
+﻿- type: entity
+  parent: BaseWall
+  id: WallCraftstone
+  name: craftstone wall
+
+  components:
+  - type: Sprite
+    sprite: _DarkAscent/Structures/Walls/craftstone.rsi
+
+  - type: Icon
+    sprite: _DarkAscent/Structures/Walls/craftstone.rsi
+
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+  - type: IconSmooth
+    key: walls
+    base: craftstone
