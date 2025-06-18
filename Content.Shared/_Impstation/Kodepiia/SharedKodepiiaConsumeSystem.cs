@@ -23,7 +23,7 @@ public abstract partial class SharedKodepiiaConsumeSystem : EntitySystem
 
     public void OnShutdown(Entity<KodepiiaConsumeActionComponent> ent, ref ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(ent, ent.Comp.ConsumeAction);
+        _actionsSystem.RemoveAction(ent.Owner, ent.Comp.ConsumeAction);
     }
 
     public void OnStartup(Entity<KodepiiaConsumeActionComponent> ent, ref ComponentStartup args)

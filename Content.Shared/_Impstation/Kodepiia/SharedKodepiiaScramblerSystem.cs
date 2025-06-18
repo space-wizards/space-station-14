@@ -31,7 +31,7 @@ public abstract partial class SharedKodepiiaScramblerSystem : EntitySystem
 
     public void OnShutdown(Entity<KodepiiaScramblerComponent> ent, ref ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(ent, ent.Comp.ScramblerAction);
+        _actionsSystem.RemoveAction(ent.Owner, ent.Comp.ScramblerAction);
     }
 
     public void PlaySound(EntityUid uid,KodepiiaScramblerComponent comp)
