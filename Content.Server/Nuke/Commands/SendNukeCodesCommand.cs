@@ -8,15 +8,12 @@ namespace Content.Server.Nuke.Commands
 {
     [UsedImplicitly]
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class SendNukeCodesCommand : IConsoleCommand
+    public sealed class SendNukeCodesCommand : LocalizedEntityCommands
     {
-        public string Command => "nukecodes";
-        public string Description => "Send nuke codes to a station's communication consoles";
-        public string Help => "nukecodes [station EntityUid]";
+        [Dependency] private readonly NukeCodePaperSystem _nukeCodeSystem = default!;
 
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
@@ -24,27 +21,25 @@ namespace Content.Server.Nuke.Commands
                 return;
             }
 
-            if (!NetEntity.TryParse(args[0], out var uidNet) || !_entityManager.TryGetEntity(uidNet, out var uid))
+            if (!NetEntity.TryParse(args[0], out var uidNet) || !EntityManager.TryGetEntity(uidNet, out var uid))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            _entityManager.System<NukeCodePaperSystem>().SendNukeCodes(uid.Value);
+            _nukeCodeSystem.SendNukeCodes(uid.Value);
         }
 
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length != 1)
-            {
                 return CompletionResult.Empty;
-            }
 
             var stations = new List<CompletionOption>();
-            var query = _entityManager.EntityQueryEnumerator<StationDataComponent>();
+            var query = EntityManager.EntityQueryEnumerator<StationDataComponent>();
             while (query.MoveNext(out var uid, out var stationData))
             {
-                var meta = _entityManager.GetComponent<MetaDataComponent>(uid);
+                var meta = EntityManager.GetComponent<MetaDataComponent>(uid);
 
                 stations.Add(new CompletionOption(uid.ToString(), meta.EntityName));
             }
