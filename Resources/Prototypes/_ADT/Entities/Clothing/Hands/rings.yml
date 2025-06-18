@@ -12,6 +12,9 @@
     size: Tiny
   - type: StaticPrice
     price: 1000
+  - type: Tag
+    tags:
+    - Ring
 
 - type: entity
   parent: ClothingHandsBase
@@ -27,6 +30,9 @@
     size: Tiny
   - type: StaticPrice
     price: 1000
+  - type: Tag # DS14
+    tags:
+    - Ring
 
 - type: entity
   parent: ClothingHandsBase
@@ -42,6 +48,9 @@
     size: Tiny
   - type: StaticPrice
     price: 1000
+  - type: Tag # DS14
+    tags:
+    - Ring
 
 - type: entity
   parent: ClothingHandsBase
@@ -57,3 +66,6 @@
     size: Tiny
   - type: StaticPrice
     price: 1000
+  - type: Tag # DS14
+    tags:
+    - Ring

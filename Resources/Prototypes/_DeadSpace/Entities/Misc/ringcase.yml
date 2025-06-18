@@ -1,0 +1,33 @@
+- type: entity
+  id: RingCase
+  name: футляр для колец
+  description: Деревянный кейс для хранения ювелирных украшений.
+  parent: [ BaseStorageItem, BaseBagOpenClose ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Storage/ringcase.rsi
+    layers:
+    - state: closed
+      map: ["closeLayer"]
+    - state: open
+      map: ["openLayer"]
+  - type: Appearance
+  - type: Item
+    sprite: _DeadSpace/Objects/Storage/ringcase.rsi
+    size: Normal
+  - type: Storage
+    grid:
+    - 0,0,3,1
+    whitelist:
+      tags:
+      - Ring
+  - type: StorageFill
+    contents:
+    - id: ClothingHandsRingBlood
+    - id: ClothingHandsRingBlood
+    - id: ClothingHandsRingEmerald
+    - id: ClothingHandsRingEmerald
+    - id: ClothingHandsRingPlazma
+    - id: ClothingHandsRingPlazma
+    - id: ClothingHandsRingTurk
+    - id: ClothingHandsRingTurk
