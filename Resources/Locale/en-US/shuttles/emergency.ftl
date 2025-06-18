@@ -5,7 +5,8 @@ emergency-shuttle-command-round-yes = Round delayed.
 emergency-shuttle-command-round-no = Unable to delay round end.
 
 ## Dock emergency shuttle
-emergency-shuttle-command-dock-desc = Calls the emergency shuttle and docks it to the station... if it can.
+cmd-dockemergencyshuttle-desc = Calls the emergency shuttle and docks it to the station... if it can.
+cmd-dockemergencyshuttle-help = Usage: dockemergencyshuttle
 
 ## Launch emergency shuttle
 cmd-launchemergencyshuttle-desc = Early launches the emergency shuttle if possible.
