@@ -1,0 +1,46 @@
+﻿{
+    "version": 1,
+    "license": "TBD",
+    "copyright": "Taken from Ratwood at https://github.com/Rotwood-Vale/Ratwood-Keep/blob/99ddef40badd69370c85c417357ae360a88b8040/icons/turf/walls/craftstone.dmi",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "craftstone0",
+            "directions": 4
+        },
+        {
+            "name": "craftstone1",
+            "directions": 4
+        },
+        {
+            "name": "craftstone2",
+            "directions": 4
+        },
+        {
+            "name": "craftstone3",
+            "directions": 4
+        },
+        {
+            "name": "craftstone4",
+            "directions": 4
+        },
+        {
+            "name": "craftstone5",
+            "directions": 4
+        },
+        {
+            "name": "craftstone6",
+            "directions": 4
+        },
+        {
+            "name": "craftstone7",
+            "directions": 4
+        },
+        {
+            "name": "full"
+        }
+    ]
+}
