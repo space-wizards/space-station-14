@@ -158,7 +158,7 @@
 
 - type: entity
   parent: BaseItem
-  id: Holocuffprojector
+  id: HolocuffProjector
   name: holographic handcuff projector
   description: Creates holographic handcuffs, fancy arresting.
   components:
@@ -188,8 +188,8 @@
     price: 50
 
 - type: entity
-  parent: HoloCuffprojector
-  id: HoloCuffprojectorEmpty
+  parent: HolocuffProjector
+  id: HolocuffProjectorEmpty
   suffix: Empty
   components:
   - type: ItemSlots
