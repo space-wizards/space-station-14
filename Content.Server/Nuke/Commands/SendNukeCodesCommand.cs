@@ -12,6 +12,7 @@ namespace Content.Server.Nuke.Commands
     {
         [Dependency] private readonly NukeCodePaperSystem _nukeCodeSystem = default!;
 
+        public override string Command => "nukecodes";
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
