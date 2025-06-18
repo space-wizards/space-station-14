@@ -1,0 +1,34 @@
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledSMGTommyGun
+  name: вещмешок
+  description: Большой вещмешок для хранения дополнительных предметов.
+  components: 
+  - type: StorageFill
+    contents:
+      - id: WeaponSMGTommyGun
+      - id: MagazineTommyGun
+        amount: 3
+
+- type: entity 
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledSMGTommyGunAgent
+  name: вещмешок
+  description: Большой вещмешок для хранения дополнительных предметов.
+  components: 
+  - type: StorageFill
+    contents:
+      - id: WeaponSMGTommyGun
+      - id: MagazineTommyGun
+        amount: 1
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledSMGTommyGunAmmoXL
+  name: вещмешок
+  description: Большой вещмешок для хранения дополнительных предметов.
+  components: 
+  - type: StorageFill
+    contents:
+      - id: MagazineDrumTommyGun
+        amount: 3

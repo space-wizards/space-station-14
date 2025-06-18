@@ -38,7 +38,7 @@
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCap
-    capacity: 20
+    capacity: 50
   - type: MagazineVisuals
     magState: mag-cap
     steps: 4

@@ -56,7 +56,10 @@
   id: Necro
 
 - type: Tag
-  id: MagazineTommyCapGun
+  id: MagazineTommyGun
+
+- type: Tag
+  id: MagazineTommyGunCap
 
 - type: Tag
   id: ToySword
