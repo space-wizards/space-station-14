@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Tyranex
-  changes:
-  - message: Lathes now have an option to return 30 of a material.
-    type: Tweak
-  - message: The ore processor now defaults to 30, instead of 10.
-    type: Tweak
-  id: 1366
-  time: '2025-03-22T15:30:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2040
 - author: mqole, crocodilecarousel
   changes:
   - message: Head Revolutionaries now start with 4 revolutionary radio keys to give
@@ -4215,3 +4206,10 @@
   id: 1865
   time: '2025-06-18T07:35:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2805
+- author: meridiadottxt
+  changes:
+  - message: Submarine now in rotation!
+    type: Add
+  id: 1866
+  time: '2025-06-18T07:45:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2807
