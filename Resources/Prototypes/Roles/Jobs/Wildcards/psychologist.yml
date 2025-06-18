@@ -15,7 +15,7 @@
 - type: startingGear
   id: PsychologistGear
   equipment:
-    shoes: ClothingShoesLeather
+    #shoes: ClothingShoesLeather # 🌟Starlight🌟
     id: PsychologistPDA
     ears: ClothingHeadsetMedical
   storage:

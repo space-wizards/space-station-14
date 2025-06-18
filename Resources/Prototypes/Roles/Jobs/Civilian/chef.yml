@@ -21,7 +21,7 @@
 - type: startingGear
   id: ChefGear
   equipment:
-    shoes: ClothingShoesColorBlack
+    #shoes: ClothingShoesColorBlack # 🌟Starlight🌟
     id: ChefPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltChefFilled

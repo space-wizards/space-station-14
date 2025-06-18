@@ -7,7 +7,7 @@
   - RoboticistGloves
   - RoboticistOuterClothing
   - RoboticistBackpack
-  - ScientistShoes
+  - RoboticistShoes
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -16,6 +16,7 @@
   id: JobMagistrate
   groups:
   - CommonBackpack
+  - MagistrateShoes
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -33,6 +34,7 @@
   - NanoTrasenRepresentativeJumpsuit
   - NanoTrasenRepresentativeEyewear
   - CommonBackpack
+  - NanotrasenRepresentativeShoes
   - Trinkets
   - Survival
   - GroupSpeciesBreathTool
@@ -43,6 +45,7 @@
   - LawyerNeck
   - LawyerJumpsuit
   - CommonBackpack
+  - LawyerShoes
   - Trinkets
   - Survival
   - GroupSpeciesBreathTool

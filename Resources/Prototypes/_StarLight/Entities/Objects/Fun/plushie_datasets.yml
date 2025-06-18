@@ -14,7 +14,7 @@
   id: PlushiesMorgana
   values:
     prefix: plushie-morgana-
-    count: 8
+    count: 9
 
 - type: localizedDataset
   id: PlushiesKiosha
@@ -38,6 +38,12 @@
   id: PlushiesTrystan
   values:
     prefix: plushie-trystan-
+    count: 6
+
+- type: localizedDataset
+  id: PlushiesOp
+  values:
+    prefix: plushie-op-
     count: 6
     
 - type: localizedDataset
