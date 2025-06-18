@@ -7,14 +7,15 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Storage;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Cuffs;
+using Content.Shared.Cuffs.Components;
 
 namespace Content.Server.Holocuff;
 
 public sealed class HolocuffSystem : EntitySystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedCuffableSystem _cuff = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
 
     public override void Initialize()
@@ -98,7 +99,7 @@ public sealed class HolocuffSystem : EntitySystem
         if (!_powerCell.TryUseCharge(uid, component.ChargeUse, user: args.User)) // if no battery or no charge, doesn't work)
             return;
 
-        var handcuff = Spawn(HolocuffProjectorComponent.CuffProto);
+        var handcuff = Spawn(component.CuffProto);
         if (!TryComp<HandcuffComponent>(handcuff, out var handcuffComp))
             return;
 
