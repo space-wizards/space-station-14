@@ -50,7 +50,7 @@
   id: PlushieAinnetelSpeech
   values:
     prefix: plushies-ainnetel-
-    count: 4
+    count: 5
 
 - type: localizedDataset
   id: PlushieAlexSpeech
