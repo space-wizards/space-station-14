@@ -1,28 +1,20 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.CCVar;
-using Content.Shared.FixedPoint;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Player;
 
 namespace Content.Server.Traitor.Uplink.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class AddUplinkCommand : IConsoleCommand
+    public sealed class AddUplinkCommand : LocalizedEntityCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        public string Command => "adduplink";
+        public override string Command => "adduplink";
 
-        public string Description => Loc.GetString("add-uplink-command-description");
-
-        public string Help => Loc.GetString("add-uplink-command-help");
-
-
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             return args.Length switch
             {
@@ -33,7 +25,7 @@ namespace Content.Server.Traitor.Uplink.Commands
             };
         }
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length > 3)
             {
@@ -66,13 +58,13 @@ namespace Content.Server.Traitor.Uplink.Commands
             EntityUid? uplinkEntity = null;
             if (args.Length >= 2)
             {
-                if (!int.TryParse(args[1], out var itemID))
+                if (!int.TryParse(args[1], out var itemId))
                 {
                     shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
                     return;
                 }
 
-                var eNet = new NetEntity(itemID);
+                var eNet = new NetEntity(itemId);
 
                 if (!_entManager.TryGetEntity(eNet, out var eUid))
                 {
@@ -96,9 +88,7 @@ namespace Content.Server.Traitor.Uplink.Commands
             // Finally add uplink
             var uplinkSys = _entManager.System<UplinkSystem>();
             if (!uplinkSys.AddUplink(user, 20, uplinkEntity: uplinkEntity, giveDiscounts: isDiscounted))
-            {
                 shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
-            }
         }
     }
 }
