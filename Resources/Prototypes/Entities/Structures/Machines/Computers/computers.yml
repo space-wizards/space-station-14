@@ -109,7 +109,7 @@
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#43ccb5"
 
@@ -964,6 +964,8 @@
   - type: Computer
     board: CargoRequestEngineeringComputerCircuitboard
   - type: PointLight
+    radius: 2.4 #imp
+    energy: 1.6 #imp
     color: "#c9c042"
   - type: AccessReader
     access: [["Engineering"]]
@@ -997,6 +999,8 @@
   - type: Computer
     board: CargoRequestMedicalComputerCircuitboard
   - type: PointLight
+    radius: 2.4 #imp
+    energy: 1.6 #imp
     color: "#41e0fc"
   - type: AccessReader
     access: [["Medical"]]
@@ -1030,6 +1034,8 @@
   - type: Computer
     board: CargoRequestScienceComputerCircuitboard
   - type: PointLight
+    radius: 2.4 #imp
+    energy: 1.6 #imp
     color: "#b53ca1"
   - type: AccessReader
     access: [["Research"]]
@@ -1063,6 +1069,8 @@
   - type: Computer
     board: CargoRequestSecurityComputerCircuitboard
   - type: PointLight
+    radius: 2.4 #imp
+    energy: 1.6 #imp
     color: "#d11d00"
   - type: AccessReader
     access: [["Security"]]
@@ -1096,6 +1104,8 @@
   - type: Computer
     board: CargoRequestServiceComputerCircuitboard
   - type: PointLight
+    radius: 2.4 #imp
+    energy: 1.6 #imp
     color: "#afe837"
   - type: AccessReader
     access: [["Service"], ["Theatre"]]
@@ -1174,7 +1184,7 @@
   - type: Computer
     board: FundingAllocationComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#3c5eb5"
 
@@ -1263,7 +1273,7 @@
   - type: Computer
     board: SalvageJobBoardComputerCircuitboard
   - type: PointLight
-    radius: 1.5
+    radius: 2.4 #imp
     energy: 1.6
     color: "#b89f25"
 
