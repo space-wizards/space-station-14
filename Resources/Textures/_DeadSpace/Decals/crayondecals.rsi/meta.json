@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Made by inspector_jeleshka (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "body_diona"
+    },
+    {
+      "name": "body_lizard"
+    },
+    {
+      "name": "body_moth"
+    },
+    {
+      "name": "body_spider"
+    },
+    {
+      "name": "body_vox"
+    },
+    {
+      "name": "body_vulp"
+    },
+    {
+      "name": "body_demon"
+    },
+    {
+      "name": "body_shark"
+    }
+  ]
+}

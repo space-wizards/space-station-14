@@ -1,0 +1,137 @@
+- type: entity
+  parent: [ BaseThruster, ConstructibleMachine ]
+  id: ThrusterMedium
+  name: большой ракетный двигатель
+  description: Ну и ну, мне определенно не стоит совать туда свою голову. Тем не менее...
+  components:
+  - type: Machine
+    board: ThrusterMachineCircuitboard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 750
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Shuttles/Thrusters/medium.rsi
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      visible: false
+      offset: 0, 1.87
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.85,-0.85,0.85,0.85"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 75
+  - type: TileFrictionModifier
+    modifier: 0.7
+    
+- type: entity
+  id: DebugThrusterMedium
+  parent: ThrusterMedium
+  suffix: DEBUG
+  components:
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+  - type: Thruster
+    requireSpace: false
+
+- type: entity
+  id: ThrusterMediumUnanchored
+  parent: ThrusterMedium
+  suffix: Незакреплённый
+  components:
+    - type: Transform
+      anchored: false
+    - type: Physics
+      bodyType: Dynamic
+
+- type: entity
+  parent: [ BaseThruster, ConstructibleMachine ]
+  id: ThrusterLarge
+  name: огромный ракетный двигатель
+  description: Ну и ну, мне определенно не стоит совать туда свою голову. Тем не менее...
+  components:
+  - type: Machine
+    board: ThrusterMachineCircuitboard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1500
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Shuttles/Thrusters/large.rsi
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+      visible: false
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      visible: false
+      offset: 0,2.66
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.25,-1.45,1.25,1.25"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 90
+
+- type: entity
+  id: DebugThrusterLarge
+  parent: ThrusterLarge
+  suffix: DEBUG
+  components:
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+  - type: Thruster
+    requireSpace: false
+
+- type: entity
+  id: ThrusterLargeUnanchored
+  parent: ThrusterLarge
+  suffix: Незакреплённый
+  components:
+    - type: Transform
+      anchored: false
+    - type: Physics
+      bodyType: Dynamic

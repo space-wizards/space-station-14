@@ -1,0 +1,80 @@
+- type: decal
+  id: bodydiona
+  tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _DeadSpace/Decals/crayondecals.rsi
+    state: body_diona
+
+- type: decal
+  id: bodylizard
+  tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _DeadSpace/Decals/crayondecals.rsi
+    state: body_lizard
+
+- type: decal
+  id: bodymoth
+  tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _DeadSpace/Decals/crayondecals.rsi
+    state: body_moth
+
+- type: decal
+  id: bodyspider
+  tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _DeadSpace/Decals/crayondecals.rsi
+    state: body_spider
+
+- type: decal
+  id: bodyvox
+  tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _DeadSpace/Decals/crayondecals.rsi
+    state: body_vox
+
+- type: decal
+  id: bodyvulp
+  tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _DeadSpace/Decals/crayondecals.rsi
+    state: body_vulp
+
+- type: decal
+  id: bodyshark
+  tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _DeadSpace/Decals/crayondecals.rsi
+    state: body_shark
+
+- type: decal
+  id: bodydemon
+  tags: ["crayon"]
+  defaultCleanable: true
+  defaultCustomColor: true
+  defaultSnap: false
+  sprite:
+    sprite: _DeadSpace/Decals/crayondecals.rsi
+    state: body_demon
+  
