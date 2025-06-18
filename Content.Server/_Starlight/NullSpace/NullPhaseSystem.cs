@@ -11,6 +11,7 @@ using System.Linq;
 using Content.Server.Light.Components;
 using Content.Server.Ghost;
 using Robust.Server.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server._Starlight.NullSpace;
 
@@ -21,7 +22,11 @@ public sealed class EtherealPhaseSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
-    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
+
+    private EntProtoId ShadekinShadow = "ShadekinShadow";
+    private EntProtoId ShadekinPhaseInEffect = "ShadekinPhaseInEffect";
+    private EntProtoId ShadekinPhaseOutEffect = "ShadekinPhaseOutEffect";
 
     public override void Initialize()
     {
@@ -90,11 +95,11 @@ public sealed class EtherealPhaseSystem : EntitySystem
                 foreach (var light in lightQuery)
                     _ghost.DoGhostBooEvent(light);
 
-                var effect = SpawnAtPosition("ShadekinPhaseInEffect", Transform(uid).Coordinates);
+                var effect = SpawnAtPosition(ShadekinPhaseInEffect, Transform(uid).Coordinates);
                 Transform(effect).LocalRotation = Transform(uid).LocalRotation;
             }
             else
-                SpawnAtPosition("ShadekinShadow", Transform(uid).Coordinates);
+                SpawnAtPosition(ShadekinShadow, Transform(uid).Coordinates);
 
             RemComp(uid, ethereal);
         }
@@ -115,11 +120,11 @@ public sealed class EtherealPhaseSystem : EntitySystem
                 foreach (var light in lightQuery)
                     _ghost.DoGhostBooEvent(light);
 
-                var effect = SpawnAtPosition("ShadekinPhaseOutEffect", Transform(uid).Coordinates);
+                var effect = SpawnAtPosition(ShadekinPhaseOutEffect, Transform(uid).Coordinates);
                 Transform(effect).LocalRotation = Transform(uid).LocalRotation;
             }
             else
-                SpawnAtPosition("ShadekinShadow", Transform(uid).Coordinates);
+                SpawnAtPosition(ShadekinShadow, Transform(uid).Coordinates);
         }
         return true;
     }

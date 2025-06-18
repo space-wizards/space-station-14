@@ -20,7 +20,7 @@ public sealed partial class EtherealSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<NullSpaceComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<NullSpaceComponent, ComponentShutdown>(Onhutdown);
+        SubscribeLocalEvent<NullSpaceComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<NullSpaceComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<NullSpaceComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<NullSpaceComponent, PreventCollideEvent>(PreventCollision);
@@ -36,7 +36,7 @@ public sealed partial class EtherealSystem : EntitySystem
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void Onhutdown(EntityUid uid, NullSpaceComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, NullSpaceComponent component, ComponentShutdown args)
     {
         if (uid != _playerMan.LocalEntity)
             return;

@@ -5,6 +5,7 @@ using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Mobs;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 
 namespace Content.Shared._Starlight.NullSpace;
@@ -12,6 +13,8 @@ namespace Content.Shared._Starlight.NullSpace;
 public abstract class SharedEtherealSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
+
+    private EntProtoId ShadekinShadow = "ShadekinShadow";
 
     public override void Initialize()
     {
@@ -40,7 +43,7 @@ public abstract class SharedEtherealSystem : EntitySystem
         if (args.NewMobState == MobState.Critical
             || args.NewMobState == MobState.Dead)
         {
-            SpawnAtPosition("ShadekinShadow", Transform(uid).Coordinates);
+            SpawnAtPosition(ShadekinShadow, Transform(uid).Coordinates);
             RemComp(uid, component);
         }
     }
