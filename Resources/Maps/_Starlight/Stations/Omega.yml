@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 261.2.0
+  forkId: Starlight
+  forkVersion: 1732131340
+  time: 06/18/2025 20:26:54
+  entityCount: 14325
+maps:
+- 14320
+grids:
+- 4812
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   7: FloorAsteroidSand
@@ -4963,9 +4974,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
 - proto: AcousticGuitarInstrument
@@ -4983,72 +4992,41 @@ entities:
 - proto: ActionStethoscope
   entities:
   - uid: 917
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 7580
-    - type: EntityTargetAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7580
 - proto: ActionToggleInternals
   entities:
   - uid: 11171
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 13154
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 13154
   - uid: 11172
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 13153
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 13153
 - proto: ActionToggleLight
   entities:
   - uid: 6594
     components:
     - type: Transform
       parent: 12120
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 12120
   - uid: 7927
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 7926
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 7926
   - uid: 8328
     components:
     - type: Transform
       parent: 6409
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 6409
   - uid: 8638
     components:
     - type: Transform
       parent: 1481
-    - type: InstantAction
-      container: 1481
   - uid: 9825
     components:
     - type: Transform
       parent: 10704
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 10704
 - proto: AirAlarm
   entities:
   - uid: 729
@@ -28851,23 +28829,6 @@ entities:
     - type: Transform
       pos: -31.5,33.5
       parent: 4812
-- proto: CapacitorStockPart
-  entities:
-  - uid: 6210
-    components:
-    - type: Transform
-      pos: 7.701914,-18.299206
-      parent: 4812
-  - uid: 6211
-    components:
-    - type: Transform
-      pos: 7.451914,-18.299206
-      parent: 4812
-  - uid: 6212
-    components:
-    - type: Transform
-      pos: 7.5679626,-16.149172
-      parent: 4812
 - proto: CaptainIDCard
   entities:
   - uid: 2588
@@ -39708,11 +39669,6 @@ entities:
     - type: Transform
       pos: -17.5,5.5
       parent: 4812
-  - uid: 1693
-    components:
-    - type: Transform
-      pos: -7.5,0.5
-      parent: 4812
   - uid: 5359
     components:
     - type: Transform
@@ -40499,11 +40455,6 @@ entities:
     components:
     - type: Transform
       pos: -16.5,14.5
-      parent: 4812
-  - uid: 11840
-    components:
-    - type: Transform
-      pos: -7.5,14.5
       parent: 4812
 - proto: filingCabinetDrawer
   entities:
@@ -68745,9 +68696,9 @@ entities:
         - 0
         - 0
         - 0
-- proto: LockerBrigmedic
+- proto: LockerBrigmedicFilled
   entities:
-  - uid: 8308
+  - uid: 11840
     components:
     - type: Transform
       pos: -32.5,8.5
@@ -69635,18 +69586,6 @@ entities:
     - type: Transform
       pos: -37.5,-28.5
       parent: 4812
-- proto: MatterBinStockPart
-  entities:
-  - uid: 6200
-    components:
-    - type: Transform
-      pos: 7.405039,-15.314831
-      parent: 4812
-  - uid: 6201
-    components:
-    - type: Transform
-      pos: 7.701914,-15.330456
-      parent: 4812
 - proto: MechEquipmentGrabberSmall
   entities:
   - uid: 3442
@@ -69737,6 +69676,16 @@ entities:
       parent: 4812
 - proto: MicroManipulatorStockPart
   entities:
+  - uid: 6200
+    components:
+    - type: Transform
+      pos: 7.405039,-15.314831
+      parent: 4812
+  - uid: 6201
+    components:
+    - type: Transform
+      pos: 7.701914,-15.330456
+      parent: 4812
   - uid: 6202
     components:
     - type: Transform
@@ -69751,6 +69700,21 @@ entities:
     components:
     - type: Transform
       pos: 7.811289,-15.783581
+      parent: 4812
+  - uid: 6210
+    components:
+    - type: Transform
+      pos: 7.701914,-18.299206
+      parent: 4812
+  - uid: 6211
+    components:
+    - type: Transform
+      pos: 7.451914,-18.299206
+      parent: 4812
+  - uid: 6212
+    components:
+    - type: Transform
+      pos: 7.5679626,-16.149172
       parent: 4812
 - proto: MinimoogInstrument
   entities:
@@ -69872,15 +69836,9 @@ entities:
       pos: -32.481808,-7.2820773
       parent: 4812
   - uid: 14306
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 14305
-    - type: NetworkConfigurator
-      lastUseAttempt: -182.000334
-    - type: EmitSoundOnCollide
-      nextSound: -2966.2304482
     - type: Physics
       canCollide: False
 - proto: NitrogenCanister
@@ -79519,6 +79477,13 @@ entities:
     - type: Transform
       pos: -45.5,-5.5
       parent: 4812
+- proto: SLVendingMachineFashion
+  entities:
+  - uid: 8308
+    components:
+    - type: Transform
+      pos: -7.5,14.5
+      parent: 4812
 - proto: SLVendingMachineHugDispenser
   entities:
   - uid: 11224
@@ -84980,6 +84945,13 @@ entities:
     components:
     - type: Transform
       pos: -23.5,-1.5
+      parent: 4812
+- proto: VendingMachineClown
+  entities:
+  - uid: 1693
+    components:
+    - type: Transform
+      pos: -7.5,0.5
       parent: 4812
 - proto: VendingMachineCoffee
   entities:
