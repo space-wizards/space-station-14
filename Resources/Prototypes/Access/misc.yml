@@ -44,3 +44,8 @@
   - Musician
   - Reporter
   #imp edit end
+
+- type: accessGroup
+  id: General
+  tags:
+  - Maintenance

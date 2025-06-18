@@ -326,7 +326,7 @@
   group: Savory
   solids:
     FoodBreadBun: 1
-    CapacitorStockPart: 2
+    MicroManipulatorStockPart: 2
     # i would add steel to this recipe but the microwave explodes
 
 - type: microwaveMealRecipe

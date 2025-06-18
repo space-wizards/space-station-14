@@ -105,8 +105,9 @@
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:
-  - type: SlotBlock
-    slots: [innerclothing, feet]
+# SlotBlocker blocked until UI change
+#  - type: SlotBlock
+#    slots: [innerclothing, feet]
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
@@ -159,8 +160,9 @@
   id: ClothingOuterEVASuitBase
   name: base EVA Suit
   components:
-  - type: SlotBlock
-    slots: [innerclothing, feet]
+# SlotBlocker blocked until UI change
+#  - type: SlotBlock
+#    slots: [innerclothing, feet]
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000

@@ -8,7 +8,7 @@
     CrateMaterialSteel: 1.0
     # things the station might want
     CrateEngineeringAMEJar: 0.25
-    CrateFoodPizzaLarge: 0.25
+    CrateFoodPizza: 0.25
     CrateFoodSoftdrinks: 0.25
     CrateFunInstrumentsVariety: 0.25
     CrateSalvageEquipment: 0.25

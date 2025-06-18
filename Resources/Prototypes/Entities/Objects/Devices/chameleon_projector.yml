@@ -12,7 +12,7 @@
       components:
       - Anchorable
       - Item
-      tags: 
+      tags:
       - Bot # for funny bot moments
     blacklist:
       components:
@@ -39,23 +39,27 @@
 
 # actions
 - type: entity
+  parent: BaseAction
   id: ActionDisguiseNoRot
   name: Toggle Rotation
   description: Use this to prevent your disguise from rotating, making it easier to hide in some scenarios.
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/VerbIcons/refresh.svg.192dpi.png
     itemIconStyle: BigAction
+  - type: InstantAction
     event: !type:DisguiseToggleNoRotEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionDisguiseAnchor
   name: Toggle Anchored
   description: For many objects you will want to be anchored to not be completely obvious.
   components:
-  - type: InstantAction
+  - type: Action
     icon:
       sprite: Objects/Tools/wrench.rsi
       state: icon
     itemIconStyle: BigAction
+  - type: InstantAction
     event: !type:DisguiseToggleAnchoredEvent

@@ -208,7 +208,6 @@
 
 - type: reaction
   id: Ambuzol
-  preserveDNA: true
   reactants:
     Dylovene:
       amount: 1

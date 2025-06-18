@@ -7,11 +7,12 @@
             <BoxContainer Name="FilterVBox" MinWidth="105" Margin="0 10" Orientation="Vertical" SeparationOverride="4"/>
             <BoxContainer Name="HighlightsVBox" MinWidth="120" Margin="0 10" Orientation="Vertical" SeparationOverride="4">
                 <Label Text="{Loc 'hud-chatbox-highlights'}"/>
-                <!-- Custom background for the TextEdit -->
                 <PanelContainer>
+                    <!-- Begin custom background for TextEdit -->
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="#323446"/>
                     </PanelContainer.PanelOverride>
+                    <!-- End custom background -->
                     <TextEdit Name="HighlightEdit" MinHeight="150" Margin="5 5"/>
                 </PanelContainer>
                 <Button Name="HighlightButton" Text="{Loc 'hud-chatbox-highlights-button'}" ToolTip="{Loc 'hud-chatbox-highlights-tooltip'}"/>

@@ -13,20 +13,6 @@
       prob: 0.01
 
 - type: entity
-  id: CrateFoodPizzaLarge
-  parent: CratePlastic
-  name: disaster pizza delivery
-  description: In the ultimate event that all else has failed, Find comfort in that more pizza solves everything. Includes 16 pizzas.
-  components:
-  - type: StorageFill
-    contents:
-    - id: FoodBoxPizzaFilled
-      amount: 15
-    - id: FoodBoxPizzaCotton
-    - id: LidSalami
-      prob: 0.04
-
-- type: entity
   id: CrateFoodMRE
   parent: CratePlastic
   name: MRE crate
