@@ -874,15 +874,15 @@
 
 # FAN
 - type: construction
-  name: Little fan
-  id: LitleFan
+  name: little directional fan
+  id: littleDirectionalFan
   description: Fan to hold the air in and space outside.
-  graph: Fan
+  graph: DirFan
   startNode: start
-  targetNode: litleFan
+  targetNode: littleDirectionalFan
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/Atmospherics/tinyfan.rsi
+    sprite: Structures/Piping/Atmospherics/directionalfan.rsi
     state: icon

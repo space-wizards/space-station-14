@@ -22,12 +22,14 @@
   - type: Airtight
     noAirWhenFullyAirBlocked: false
   - type: Clickable
-  - type: Construction
-    graph: Fan
-    node: litleFan
   - type: Tag
     tags:
       - SpreaderIgnore
+  # DS14-start
+  - type: Construction
+    graph: LittleFan
+    node: tinyFan
+  # DS14-end
 
 - type: entity
   id: AtmosDeviceFanDirectional
@@ -57,3 +59,8 @@
   - type: Tag
     tags:
       - SpreaderIgnore
+  # DS14-start
+  - type: Construction
+    graph: DirFan
+    node: littleDirectionalFan
+  # DS14-end
