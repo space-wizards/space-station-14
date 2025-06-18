@@ -139,3 +139,6 @@ tiles-xeno-steel = xeno steel tile
 tiles-xeno-steel-corner = xeno steel corner tile
 tiles-xeno-maint = xeno techmaint
 tiles-dark-squiggly = dark steel squiggly tile
+
+#### Dark Ascent #####
+tiles-floor-cobble = cobble floor
