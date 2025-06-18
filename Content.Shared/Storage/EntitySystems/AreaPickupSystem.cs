@@ -194,7 +194,10 @@ public sealed partial class AreaPickupSystem : EntitySystem
                 targetXform.MapID != pickupEntityXform.MapID)
                 continue;
 
-            _projectile.EmbedDetach(entityToPickUp, null, args.User);
+            if (TryComp<EmbeddableProjectileComponent>(entityToPickUp, out var embeddable))
+            {
+                _projectile.EmbedDetach(entityToPickUp, embeddable, args.User);
+            }
 
             // Get the picked up entity's position _before_ inserting it, because that changes its position.
             var position = _transform.ToCoordinates(

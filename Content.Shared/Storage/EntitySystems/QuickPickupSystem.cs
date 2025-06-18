@@ -76,7 +76,10 @@ public sealed partial class QuickPickupSystem : EntitySystem
         if (TryComp(pickupEntity, out TransformComponent? pickupEntityXform) &&
             TryComp(target, out TransformComponent? targetXform))
         {
-            _projectile.EmbedDetach(target, null, user);
+            if (TryComp<EmbeddableProjectileComponent>(target, out var embeddable))
+            {
+                _projectile.EmbedDetach(target, embeddable, user);
+            }
 
             // Get the picked up entity's position _before_ inserting it, because that changes its position.
             var position = _transform.ToCoordinates(
