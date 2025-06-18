@@ -1,0 +1,42 @@
+#Empty improvised
+- type: entity
+  id: JetpackImprovised
+  parent: BaseJetpack
+  name: импровизированный джетпак
+  description: Кое как скрепленные вместе баллоны кислорода и огнетушитель в качестве сопла. Выглядит ненадёжно.
+  suffix: Пустой
+  components:
+  - type: Item
+    sprite: _DeadSpace/Objects/Tanks/Jetpacks/improvised.rsi
+    size: Ginormous
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Tanks/Jetpacks/improvised.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Tanks/Jetpacks/improvised.rsi
+    slots:
+    - Back
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      volume: 4
+  - type: Jetpack
+    moleUsage: 0.00850
+  - type: Construction
+    graph: JetpackImprovised
+    node: jetpack
+
+# Filled improvised
+- type: entity
+  id: JetpackImprovisedFilled
+  parent: JetpackImprovised
+  suffix: Полный
+  components:
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 100 seconds of thrust
+      volume: 4
+      temperature: 293.15
+      moles:
+      - 0.373 # oxygen
+      - 0.373 # nitrogen
