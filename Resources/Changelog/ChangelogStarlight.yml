@@ -7976,4 +7976,11 @@ Entries:
   id: 1101
   time: '2025-06-18T13:14:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/852
+- author: princess_gurchi
+  changes:
+  - message: You can now shut up medibots by snipping their wires
+    type: Add
+  id: 1102
+  time: '2025-06-18T18:43:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/862
 
