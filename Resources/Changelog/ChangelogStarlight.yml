@@ -8019,4 +8019,11 @@ Entries:
   id: 1107
   time: '2025-06-18T21:19:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/864
+- author: FoxxoTrystan
+  changes:
+  - message: Shadekins
+    type: Add
+  id: 1108
+  time: '2025-06-18T22:29:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/838
 
