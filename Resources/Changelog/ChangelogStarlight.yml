@@ -7861,4 +7861,40 @@ Entries:
   id: 1085
   time: '2025-06-18T01:12:22.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/857
+- author: InanimateIJK
+  changes:
+  - message: Op Plush now has their lines, cute.
+    type: Tweak
+  id: 1086
+  time: '2025-06-18T01:45:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/849
+- author: InanimateIJK
+  changes:
+  - message: Gorlex Marauders nuclear operatives now are requesting proper resumes
+      of experience before enlistment.
+    type: Tweak
+  id: 1087
+  time: '2025-06-18T01:45:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/849
+- author: InanimateIJK
+  changes:
+  - message: Nuclear operative requires 6h Security, 12h total playtime
+    type: Tweak
+  id: 1088
+  time: '2025-06-18T01:45:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/849
+- author: InanimateIJK
+  changes:
+  - message: Agent requires 12h total, 6h chemist, 8h medical, 6h security
+    type: Tweak
+  id: 1089
+  time: '2025-06-18T01:45:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/849
+- author: InanimateIJK
+  changes:
+  - message: Commander requires 24h total, 12h Security, 4h Command
+    type: Tweak
+  id: 1090
+  time: '2025-06-18T01:45:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/849
 
