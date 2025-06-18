@@ -6,22 +6,21 @@ using Robust.Shared.Console;
 namespace Content.Server.Power.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class PowerStatCommand : IConsoleCommand
+    public sealed class PowerStatCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private readonly PowerNetSystem _powerNet = default!;
 
-        public string Command => "powerstat";
-        public string Description => "Shows statistics for pow3r";
-        public string Help => "Usage: powerstat";
+        public override string Command => "powerstat";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var stats = _e.System<PowerNetSystem>().GetStatistics();
+            var stats = _powerNet.GetStatistics();
 
-            shell.WriteLine($"networks: {stats.CountNetworks}");
-            shell.WriteLine($"loads: {stats.CountLoads}");
-            shell.WriteLine($"supplies: {stats.CountSupplies}");
-            shell.WriteLine($"batteries: {stats.CountBatteries}");
+            shell.WriteLine(Loc.GetString($"cmd-powerstat-output",
+                ("networks", stats.CountNetworks),
+                ("loads", stats.CountLoads),
+                ("supplies", stats.CountSupplies),
+                ("batteries", stats.CountBatteries)));
         }
     }
 }
