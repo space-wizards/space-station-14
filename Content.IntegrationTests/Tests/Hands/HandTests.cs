@@ -41,7 +41,7 @@ public sealed class HandTests
         var mapSystem = server.System<SharedMapSystem>();
         var sys = entMan.System<SharedHandsSystem>();
         var tSys = entMan.System<TransformSystem>();
-        var handsSys = server.System<HandsSystem>();
+        var handsSys = entMan.System<HandsSystem>();
 
         var data = await pair.CreateTestMap();
         await pair.RunTicksSync(5);
@@ -92,7 +92,7 @@ public sealed class HandTests
         var sys = entMan.System<SharedHandsSystem>();
         var tSys = entMan.System<TransformSystem>();
         var containerSystem = server.System<SharedContainerSystem>();
-        var handsSys = server.System<HandsSystem>();
+        var handsSys = entMan.System<HandsSystem>();
 
         EntityUid item = default;
         EntityUid box = default;

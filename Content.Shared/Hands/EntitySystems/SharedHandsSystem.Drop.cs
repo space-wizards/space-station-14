@@ -118,16 +118,17 @@ public abstract partial class SharedHandsSystem
         if (!CanDropHeld(uid, handId, checkActionBlocker))
             return false;
 
-        var entity = GetHeldEntityOrNull((uid, handsComp), handId)!.Value;
+        if (!TryGetHeldEntity((uid, handsComp), handId, out var entity))
+            return false;
 
         // if item is a fake item (like with pulling), just delete it rather than bothering with trying to drop it into the world
         if (TryComp(entity, out VirtualItemComponent? @virtual))
-            _virtualSystem.DeleteVirtualItem((entity, @virtual), uid);
+            _virtualSystem.DeleteVirtualItem((entity.Value, @virtual), uid);
 
         if (TerminatingOrDeleted(entity))
             return true;
 
-        var itemXform = Transform(entity);
+        var itemXform = Transform(entity.Value);
         if (itemXform.MapUid == null)
             return true;
 
@@ -137,7 +138,7 @@ public abstract partial class SharedHandsSystem
         // if the user is in a container, drop the item inside the container
         if (isInContainer)
         {
-            TransformSystem.DropNextTo((entity, itemXform), (uid, userXform));
+            TransformSystem.DropNextTo((entity.Value, itemXform), (uid, userXform));
             return true;
         }
 
@@ -150,10 +151,10 @@ public abstract partial class SharedHandsSystem
             return true;
 
         // otherwise, also move dropped item and rotate it properly according to grid/map
-        var (itemPos, itemRot) = TransformSystem.GetWorldPositionRotation(entity);
+        var (itemPos, itemRot) = TransformSystem.GetWorldPositionRotation(entity.Value);
         var origin = new MapCoordinates(itemPos, itemXform.MapID);
         var target = TransformSystem.ToMapCoordinates(targetDropLocation.Value);
-        TransformSystem.SetWorldPositionRotation(entity, GetFinalDropCoordinates(uid, origin, target, entity), itemRot);
+        TransformSystem.SetWorldPositionRotation(entity.Value, GetFinalDropCoordinates(uid, origin, target, entity.Value), itemRot);
         return true;
     }
 
