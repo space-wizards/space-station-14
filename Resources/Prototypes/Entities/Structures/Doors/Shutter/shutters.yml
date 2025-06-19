@@ -79,7 +79,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: IconSmooth
-    key: wall
+    key: walls
     mode: NoSprite
   - type: DoorSignalControl
   - type: DeviceNetwork
