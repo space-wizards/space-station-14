@@ -31,6 +31,7 @@
     damageCoefficient: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBlueshield
+
 #NTRep Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
@@ -64,6 +65,7 @@
     damageCoefficient: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitNtrep
+
 #Clown Battlesuit
 - type: entity
   parent: [ClothingOuterHardsuitBase]
@@ -98,6 +100,7 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetBattlesuitClown
+    
 #Mercenary Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseMajorContraband]
@@ -163,6 +166,24 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpaceHazard
+  - type: Tag
+    tags:
+    - Hardsuit
+    - WhitelistChameleon
+
+#CCNT Consortium BSOs
+- type: entity
+  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ] #sl Change
+  id: ClothingOuterHardsuitNTCCConsortium
+  name: nt cc consortium hardsuit
+  description: A protective hardsuit worn by NT-CC Consotrium Officers.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_hardsuit.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitNTCCConsortium
   - type: Tag
     tags:
     - Hardsuit

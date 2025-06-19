@@ -3067,14 +3067,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         32:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         33:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         34:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: MachineMaterialSilo
   entities:
   - uid: 670
@@ -3484,20 +3481,14 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         672:
-        - - On
-          - Forward
-        - - Off
-          - Reverse
+        - On: Forward
+        - Off: Reverse
         673:
-        - - On
-          - Forward
-        - - Off
-          - Reverse
+        - On: Forward
+        - Off: Reverse
         674:
-        - - On
-          - Forward
-        - - Off
-          - Reverse
+        - On: Forward
+        - Off: Reverse
 - proto: SignHydro1
   entities:
   - uid: 499

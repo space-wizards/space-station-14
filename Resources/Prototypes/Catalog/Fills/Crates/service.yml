@@ -22,6 +22,17 @@
       - id: BoxCleanerGrenades
 
 - type: entity
+  id: CrateServiceCleanerGrenades
+  parent: CratePlastic
+  name: bulk cleanades crate
+  description: Contains two boxes of cleaner grenades, for those deeply-entrenched stains.
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxCleanerGrenades
+        amount: 2
+
+- type: entity
   id: CrateServiceReplacementLights
   parent: CrateGenericSteel
   name: replacement lights crate

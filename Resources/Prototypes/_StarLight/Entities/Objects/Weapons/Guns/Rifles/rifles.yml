@@ -1,6 +1,6 @@
 - type: entity
   name: Lecter
-  parent: WeaponRifleLecter
+  parent: [WeaponRifleLecter, BaseSecurityContraband]
   id: WeaponRifleLecterRubber
   suffix: Non-lethal
   components:
@@ -25,7 +25,7 @@
             
 - type: entity
   name: lr-30
-  parent: [BaseItem, BaseGunWieldable]
+  parent: [BaseItem, BaseGunWieldable, BaseSecuritySalvageContraband]
   id: WeaponLr30
   description: Energy carbine with lethal mode.
   components:
@@ -71,7 +71,7 @@
   
 - type: entity
   name: IK-60 laser carbine
-  parent: [BaseItem, BaseGunWieldable]
+  parent: [BaseItem, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponIK60
   description: A short, compact rifle-like carbine that relies more on battery-powered ammunition rather than a built-in battery. Used by the Nanotrasen Space Force in combat operations.
   components:
@@ -119,7 +119,7 @@
   
 - type: entity
   name: ARG
-  parent: WeaponRifleLecter
+  parent: [ WeaponRifleLecter, BaseCentcommContraband ]
   id: WeaponRifleARG
   description: A robust assault rile used by Nanotrasen fighting forces.
   components:
@@ -134,7 +134,7 @@
       
 - type: entity
   name: Aussec Armory M-52
-  parent: WeaponRifleLecter
+  parent: [WeaponRifleLecter, BaseSecurityContraband]
   id: WeaponRifleM52
   description: One of the least popular examples of heavy assault rifles. It has impressive firepower.
   components:

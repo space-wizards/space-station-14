@@ -1,0 +1,75 @@
+light_mode unshaded;
+
+uniform sampler2D SCREEN_TEXTURE;
+
+// Function to convert RGB to HSV.
+highp vec3 rgb2hsv(highp vec3 c)
+{
+    highp vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+    highp vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));
+    highp vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));
+
+    highp float d = q.x - min(q.w, q.y);
+    /* float e = 1.0e-10; */
+    highp float e = 0.0000000001;
+    return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+}
+
+// Function to convert HSV to RGB.
+highp vec3 hsv2rgb(highp vec3 c)
+{
+    highp vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    highp vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+
+// Random number function with potential negative values.
+highp float rand(highp vec2 n) {
+    highp float r = 2.0 * (0.5 + 0.5 * fract (sin (dot (n.xy, vec2(12.9898, 78.233)))* 43758.5453)) - 1.0;
+    return r * (r < 0.0 ? 0.8 : 1.3);
+}
+
+void fragment() {
+    highp vec4 color = zTextureSpec(SCREEN_TEXTURE, FRAGCOORD.xy * SCREEN_PIXEL_SIZE);
+
+    // Increase the contrast of the image if the luminance is low enough.
+    highp float luminance = dot(color.rgb, vec3(0.2126, 0.7152, 0.0722));
+    if (luminance < 0.06) {
+        color.rgb *= 0.5;
+    }
+
+    // Convert to HSV.
+    highp vec3 hsvColor = rgb2hsv(color.rgb);
+
+    // Apply a breathing effect to the value of the image.
+    hsvColor.z *= mix(0.35, 0.7, (sin(TIME) * 0.65));
+
+    // Increase the saturation of the color, incorperating a random value, as long as the value is above 0.1.
+    if (hsvColor.z > 0.065) {
+        hsvColor.y *= (rand(FRAGCOORD.xy * (TIME * 0.15)) * 1.5) + 1.0;
+    }
+
+    // Convert back to RGB.
+    color.rgb = hsv2rgb(hsvColor);
+
+
+
+    // get distortion magnitude. hand crafted from a random jumble of trig functions
+    highp float w = sin(TIME + (FRAGCOORD.x + FRAGCOORD.y + 2.0*sin(TIME*0.3) * sin(TIME*0.3 + FRAGCOORD.x - FRAGCOORD.y)) );
+
+    // visualize distortion via:
+    // COLOR = vec4(w,w,w,1.0);
+
+    w *= 5.0;
+
+    highp vec4 background = zTextureSpec(SCREEN_TEXTURE, ( FRAGCOORD.xy + vec2(w) ) * SCREEN_PIXEL_SIZE );
+    highp vec3 hsvBg = rgb2hsv(background.rgb);
+    hsvBg.x *= -1.0;
+    background.rgb = hsv2rgb(hsvBg);
+
+    color.xyz = mix(background.xyz, color.xyz, 0.75);
+
+
+
+    COLOR = color;
+}

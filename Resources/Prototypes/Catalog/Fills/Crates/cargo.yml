@@ -414,6 +414,10 @@
     - id: GrenadeFoamDart
       prob: 0.001
       orGroup: NotUseful
+    #Starlight
     - id: BottleShip
       prob: 0.01
       orGroup: NotUseful
+    - id: EmeraldLizitar
+      prob: 0.01
+      orGroup: Weapons

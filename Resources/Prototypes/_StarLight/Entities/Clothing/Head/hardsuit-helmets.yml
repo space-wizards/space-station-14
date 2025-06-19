@@ -22,6 +22,7 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
+
 #NTREP Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
@@ -38,6 +39,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 10000
+
 #Clown Battlesuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
@@ -61,6 +63,7 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+
 #Mercenary Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitBase
@@ -81,6 +84,7 @@
           Slash: 0.9
           Piercing: 0.9
           Heat: 0.9
+
 #Space Hazard Suit
 - type: entity
   parent: ClothingHeadHardsuitBase
@@ -102,3 +106,25 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.6
+
+- type: entity
+  parent: [ BaseCentcommContraband, ClothingHeadHelmetHardsuitSyndie ]
+  id: ClothingHeadHelmetHardsuitNTCCConsortium
+  name: nt cc consortium hardsuit helmet
+  description: A protective hardsuit helmet worn by NT-CC Consotrium Officers.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntcc_hardsuit_helmet.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntcc_hardsuit_helmet.rsi
+  - type: PointLight
+    color: "#addbff"
+  - type: Pierceable
+    level: HardenedMetal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9

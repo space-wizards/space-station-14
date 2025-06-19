@@ -18698,14 +18698,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         80:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         81:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         82:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignArcade
   entities:
   - uid: 1911
@@ -19576,12 +19573,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         1905:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
 - proto: VendingMachineBoozeSyndicate
   entities:
   - uid: 2020
