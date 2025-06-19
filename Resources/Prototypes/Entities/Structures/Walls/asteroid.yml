@@ -488,6 +488,44 @@
     oreChance: 0.33
     oreRarityPrototypeId: RandomOreDistributionStandard
 
+- type: entity
+  id: IronSandstone
+  parent: AsteroidRock
+  name: ironsandstone
+  suffix: Low Ore Yield
+  description: A rocky asteroid.
+  components:
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: Icon
+    sprite: Structures/Walls/rock.rsi
+    state: ironsandstone
+  - type: SmoothEdge
+  - type: Sprite
+    sprite: Structures/Walls/rock.rsi
+    layers:
+    - state: ironsandstone
+    - map: [ "enum.EdgeLayer.South" ]
+      state: ironsandstone_south
+    - map: [ "enum.EdgeLayer.East" ]
+      state: ironsandstone_east
+    - map: [ "enum.EdgeLayer.North" ]
+      state: ironsandstone_north
+    - map: [ "enum.EdgeLayer.West" ]
+      state: ironsandstone_west
+
+- type: entity
+  id: IronSandstoneMining
+  parent: IronSandstone
+  name: ironsandstone
+  suffix: higher ore yield
+  description: An asteroid.
+  components:
+  - type: OreVein
+    oreChance: 0.33
+    oreRarityPrototypeId: RandomOreDistributionStandard
+
 # Ore veins
 - type: entity
   id: IronRockCoal
