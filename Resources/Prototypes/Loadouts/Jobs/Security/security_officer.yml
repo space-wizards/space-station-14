@@ -44,6 +44,12 @@
   equipment:
     head: ClothingHeadHatSecurityTrooper
 
+# Neck
+- type: loadout
+  id: RedScarf
+  equipment:
+    neck: ClothingNeckScarfStripedRed
+
 # Jumpsuit
 - type: loadout
   id: SecurityJumpsuit

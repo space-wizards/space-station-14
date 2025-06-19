@@ -1014,6 +1014,13 @@
   - TrooperHat
 
 - type: loadoutGroup
+  id: SecurityNeck
+  name: loadout-group-security-neck
+  minLimit: 0
+  loadouts:
+  - RedScarf
+
+- type: loadoutGroup
   id: SecurityJumpsuit
   name: loadout-group-security-jumpsuit
   loadouts:
@@ -1076,6 +1083,8 @@
   minLimit: 0
   loadouts:
   - DetectiveTie
+  - RedTie
+  - RedScarf
 
 - type: loadoutGroup
   id: DetectiveJumpsuit
