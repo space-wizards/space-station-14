@@ -11,7 +11,7 @@ using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Popups;
 
-namespace Content.Server.Holocuff;
+namespace Content.Shared.Holocuff;
 
 public sealed class HolocuffSystem : EntitySystem
 {
@@ -98,8 +98,10 @@ public sealed class HolocuffSystem : EntitySystem
             return;
         }
 
+        /*
         if (!_powerCell.TryUseCharge(uid, component.ChargeUse, user: args.User)) // if no battery or no charge, doesn't work)
             return;
+        */
 
         var handcuff = Spawn(component.CuffProto);
         if (!TryComp<HandcuffComponent>(handcuff, out var handcuffComp))
@@ -116,8 +118,10 @@ public sealed class HolocuffSystem : EntitySystem
         if (!args.HitEntities.Any())
             return;
 
+        /*
         if (!_powerCell.TryUseCharge(uid, component.ChargeUse, user: args.User)) // if no battery or no charge, doesn't work)
             return;
+        */
 
         var handcuff = Spawn(component.CuffProto);
         if (!TryComp<HandcuffComponent>(handcuff, out var handcuffComp))

@@ -1,7 +1,7 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Holocuff
+namespace Content.Shared.Holocuff
 {
     [RegisterComponent]
     public sealed partial class HolocuffProjectorComponent : Component
