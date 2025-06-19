@@ -66517,7 +66517,7 @@ entities:
       pos: 1.5,-10.5
       parent: 2
     - type: NavMapBeacon
-      text: Tesla
+      defaultText: Tesla
     - type: WarpPoint
       location: Tesla
 - proto: DefaultStationBeaconEscapePod
@@ -66734,7 +66734,7 @@ entities:
       pos: -50.5,23.5
       parent: 2
     - type: NavMapBeacon
-      text: Port Bow Solars
+      defaultText: Port Bow Solars
     - type: WarpPoint
       location: Port Bow Solars
   - uid: 15769
@@ -66743,7 +66743,7 @@ entities:
       pos: -69.5,-54.5
       parent: 2
     - type: NavMapBeacon
-      text: Port Quarter Solars
+      defaultText: Port Quarter Solars
     - type: WarpPoint
       location: Port Quarter Solars
   - uid: 21605
@@ -66752,7 +66752,7 @@ entities:
       pos: 64.5,2.5
       parent: 2
     - type: NavMapBeacon
-      text: Starboard Solars
+      defaultText: Starboard Solars
     - type: WarpPoint
       location: Starboard Solars
 - proto: DefaultStationBeaconSurgery

@@ -42600,7 +42600,7 @@ entities:
       pos: -4.5,-152.5
       parent: 2
     - type: NavMapBeacon
-      text: Restroom
+      defaultText: Restroom
     - type: WarpPoint
       location: Restroom
 - proto: DefaultStationBeaconAISatellite
@@ -42646,7 +42646,7 @@ entities:
       pos: -19.5,-308.5
       parent: 2
     - type: NavMapBeacon
-      text: Xenoarchaeology
+      defaultText: Xenoarchaeology
     - type: WarpPoint
       location: Xenoarchaeology
 - proto: DefaultStationBeaconAtmospherics
@@ -42774,7 +42774,7 @@ entities:
       pos: -3.5,-314.5
       parent: 2
     - type: NavMapBeacon
-      text: Laundromat
+      defaultText: Laundromat
     - type: WarpPoint
       location: Laundromat
 - proto: DefaultStationBeaconEngineering
@@ -43000,7 +43000,7 @@ entities:
       pos: 0.5,-95.5
       parent: 2
     - type: NavMapBeacon
-      text: Nitrogen Box
+      defaultText: Nitrogen Box
     - type: WarpPoint
       location: Nitrogen Box
 - proto: DefaultStationBeaconWardensOffice

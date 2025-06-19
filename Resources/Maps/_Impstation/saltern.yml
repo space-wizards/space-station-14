@@ -32600,7 +32600,9 @@ entities:
       pos: 44.5,-24.5
       parent: 31
     - type: NavMapBeacon
-      text: observatory
+      defaultText: Observatory
+    - type: WarpPoint
+      location: Obervatory
 - proto: DefaultStationBeaconAME
   entities:
   - uid: 7280
@@ -32761,7 +32763,9 @@ entities:
       pos: 57.5,10.5
       parent: 31
     - type: NavMapBeacon
-      text: Tesla Storage
+      defaultText: Tesla Storage
+    - type: WarpPoint
+      location: Tesla Storage
 - proto: DefaultStationBeaconEscapePod
   entities:
   - uid: 11467

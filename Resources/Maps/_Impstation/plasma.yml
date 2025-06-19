@@ -67779,7 +67779,7 @@ entities:
       parent: 2
     - type: NavMapBeacon
       color: '#EFB34193'
-      text: TEG Control Room
+      defaultText: TEG Control Room
     - type: WarpPoint
       location: TEG Control Room
 - proto: DefaultStationBeaconAICore
@@ -67949,7 +67949,7 @@ entities:
       pos: -61.5,-11.5
       parent: 2
     - type: NavMapBeacon
-      text: Museum
+      defaultText: Museum
     - type: WarpPoint
       location: Museum
 - proto: DefaultStationBeaconCryonics
@@ -67988,7 +67988,7 @@ entities:
       pos: -93.5,-5.5
       parent: 2
     - type: NavMapBeacon
-      text: 'Plasma Pit #045'
+      defaultText: 'Plasma Pit #045'
     - type: WarpPoint
       location: 'Plasma Pit #045'
   - uid: 9528
@@ -67997,7 +67997,7 @@ entities:
       pos: -111.5,-31.5
       parent: 2
     - type: NavMapBeacon
-      text: Tech Storage
+      defaultText: Tech Storage
     - type: WarpPoint
       location: Tech Storage
   - uid: 12927
@@ -68011,7 +68011,7 @@ entities:
       pos: -89.5,-65.5
       parent: 2
     - type: NavMapBeacon
-      text: 'Plasma Pit #046'
+      defaultText: 'Plasma Pit #046'
     - type: WarpPoint
       location: 'Plasma Pit #046'
 - proto: DefaultStationBeaconEscapePod
@@ -68114,7 +68114,7 @@ entities:
       pos: -22.5,-51.5
       parent: 2
     - type: NavMapBeacon
-      text: Virology
+      defaultText: Virology
     - type: WarpPoint
       location: Virology
   - uid: 8595
@@ -68123,7 +68123,7 @@ entities:
       pos: -19.5,-19.5
       parent: 2
     - type: NavMapBeacon
-      text: Psychology
+      defaultText: Psychology
     - type: WarpPoint
       location: Psychology
 - proto: DefaultStationBeaconMorgue
