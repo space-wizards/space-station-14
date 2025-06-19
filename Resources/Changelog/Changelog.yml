@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Chest rig explosive resistance is increased from 50% to 90%.
-    type: Tweak
-  id: 8183
-  time: '2025-04-14T20:45:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35889
 - author: ArtisticRoomba
   changes:
   - message: Certain randomly filled bags will now have the correct number of contents
@@ -3910,3 +3903,10 @@
   id: 8695
   time: '2025-06-19T19:49:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36875
+- author: VerinSenpai
+  changes:
+  - message: Handcuffs no longer interfere with your daily tail wagging activities.
+    type: Fix
+  id: 8696
+  time: '2025-06-19T22:42:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38454
