@@ -8061,4 +8061,20 @@ Entries:
   id: 1113
   time: '2025-06-19T14:56:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/866
+- author: biteless-dot
+  changes:
+  - message: Unique handheld radio to seperate comms for salvagers and miners to have
+      uncluttered comms
+    type: Add
+  id: 1114
+  time: '2025-06-19T15:04:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/779
+- author: biteless-dot
+  changes:
+  - message: Places expedition radio in Salvage Locker, Mining Locker, and Quartermaster
+      Locker
+    type: Add
+  id: 1115
+  time: '2025-06-19T15:04:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/779
 
