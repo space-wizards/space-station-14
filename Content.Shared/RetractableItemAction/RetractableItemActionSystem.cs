@@ -30,7 +30,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
         SubscribeLocalEvent<RetractableItemActionComponent, OnRetractableItemActionEvent>(OnRetractableItemAction);
 
         SubscribeLocalEvent<ActionRetractableItemComponent, ComponentShutdown>(OnActionSummonedShutdown);
-        Subs.SubscribeWithRelay<ActionRetractableItemComponent, HeldRelayedEvent<TargetHandcuffedEvent>>(OnItemHandcuffed);
+        Subs.SubscribeWithRelay<ActionRetractableItemComponent, HeldRelayedEvent<TargetHandcuffedEvent>>(OnItemHandcuffed, inventory: false);
     }
 
     private void OnActionInit(Entity<RetractableItemActionComponent> ent, ref MapInitEvent args)
