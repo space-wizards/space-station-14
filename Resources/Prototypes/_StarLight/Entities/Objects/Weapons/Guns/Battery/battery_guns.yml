@@ -790,6 +790,8 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      params:
+         volume: -2
   - type: ProjectileBatteryAmmoProvider
     proto: BulletEnergySMGLaser
     fireCost: 50
