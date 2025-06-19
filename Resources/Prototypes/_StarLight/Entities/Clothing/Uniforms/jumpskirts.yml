@@ -430,3 +430,13 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommspecialopsformalwear.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommspecialopsformalwear.rsi
+
+- type: entity
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
+  id: MagistrateUniformSkirt
+  name: Magistrate's Jumpskirt
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/magistrate.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/magistrate.rsi
