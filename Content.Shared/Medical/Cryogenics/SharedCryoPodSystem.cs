@@ -39,7 +39,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
     {
         if (args.Handled)
             return;
-        args.CanDrop = true ? HasComp<BodyComponent>(args.Dragged) | HasComp<FitsInDispenserComponent>(args.Dragged) : true;
+        args.CanDrop = HasComp<BodyComponent>(args.Dragged) | HasComp<FitsInDispenserComponent>(args.Dragged);
 
         args.Handled = true;
     }
