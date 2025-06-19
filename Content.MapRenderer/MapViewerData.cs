@@ -55,29 +55,25 @@ public sealed class LayerGroup
                 Url = output.ReferenceResourceFile(resourceManager, new ResPath("/Textures/Parallaxes/layer1.png")),
                 Extent = new Extent(6000, 4000),
             },
-            // REMOVED because using Imgur as a CDN is utterly cringe,
-            // and I can't figure out the source files for these.
-            /*
             Layers = new List<Layer>
             {
                 new()
                 {
-                    Url = "https://i.imgur.com/IannmmK.png"
+                    Url = output.ReferenceResourceFile(resourceManager, new ResPath("/Textures/Parallaxes/layer1.png")),
                 },
                 new()
                 {
-                    Url = "https://i.imgur.com/T3W6JsE.png",
+                    Url = output.ReferenceResourceFile(resourceManager, new ResPath("/Textures/Parallaxes/layer2.png")),
                     Composition = "lighter",
                     ParallaxScale = new Position(0.2f, 0.2f)
                 },
                 new()
                 {
-                    Url = "https://i.imgur.com/T3W6JsE.png",
+                    Url = output.ReferenceResourceFile(resourceManager, new ResPath("/Textures/Parallaxes/layer3.png")),
                     Composition = "lighter",
                     ParallaxScale = new Position(0.3f, 0.3f)
                 }
             }
-            */
         };
     }
 }
