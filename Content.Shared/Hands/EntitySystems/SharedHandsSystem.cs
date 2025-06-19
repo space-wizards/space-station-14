@@ -180,7 +180,7 @@ public abstract partial class SharedHandsSystem
 
     public string? GetActiveHand(Entity<HandsComponent?> entity)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, false))
             return null;
 
         return entity.Comp.ActiveHandId;
