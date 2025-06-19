@@ -1,0 +1,16 @@
+﻿- type: gameMap
+  id: Roguetest
+  mapName: Roguetest
+  mapPath: /Maps/_DarkAscent/roguetest.yml
+  minPlayers: 0
+  stations:
+    Roguetest:
+      stationProto: StandardNanotrasenStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Roguetest"
+      - type: BecomesStation
+        id: Roguetest
+      - type: StationJobs
+        availableJobs:
+          Captain: [ -1, -1 ]
