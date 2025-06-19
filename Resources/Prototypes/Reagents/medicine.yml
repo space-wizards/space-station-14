@@ -846,6 +846,7 @@
   color: "#520e30"
   metabolisms:
     Medicine:
+      metabolismRate: 0.5
       effects:
       - !type:HealthChange
         conditions:
@@ -854,15 +855,15 @@
           max: 30
         damage:
           groups:
-            Toxin: -3
-            Brute: 0.5
+            Toxin: -1.5
+            Brute: 0.25
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 30
         damage:
           groups:
-            Toxin: -1
+            Toxin: -0.5
             Brute: 3
       - !type:AdjustReagent
         conditions:
@@ -972,11 +973,12 @@
   color: "#e0a5b9"
   metabolisms:
     Medicine:
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
           types:
-            Caustic: -3
+            Caustic: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -1027,11 +1029,12 @@
   color: "#283332"
   metabolisms:
     Medicine:
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
           types:
-            Slash: -3
+            Slash: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -1049,12 +1052,13 @@
   flavor: fizzy
   color: "#b9bf93"
   metabolisms:
+    metabolismRate: 0.25
     Medicine:
       effects:
       - !type:HealthChange
         damage:
           types:
-            Piercing: -4
+            Piercing: -1
             Blunt: 0.1
       - !type:HealthChange
         conditions:
@@ -1074,11 +1078,12 @@
   color: "#ff3636"
   metabolisms:
     Medicine:
+      metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
           types:
-            Blunt: -3.5
+            Blunt: -1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
@@ -1180,12 +1185,13 @@
   color: "#8147ff"
   metabolisms:
     Medicine:
+      metabolismRate: 0.25
       effects:
       # heals shocks and removes shock chems
       - !type:HealthChange
         damage:
           types:
-            Shock: -4
+            Shock: -1
       - !type:AdjustReagent
         reagent: Licoxide
         amount: -4
