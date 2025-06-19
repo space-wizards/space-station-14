@@ -8054,4 +8054,11 @@ Entries:
   id: 1112
   time: '2025-06-18T23:25:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/835
+- author: General Hexweaver
+  changes:
+  - message: Fixed a bug with the warship
+    type: Fix
+  id: 1113
+  time: '2025-06-19T14:56:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/866
 
