@@ -24,7 +24,7 @@ public sealed class RetractableItemActionTest : InteractionTest
         var playerUid = SEntMan.GetEntity(Player);
 
         // Make sure the player's hand starts empty
-        var heldItem = HandSys.GetActiveItem((ToServer(Player), Hands));
+        var heldItem = Hands.ActiveHandEntity;
         Assert.That(heldItem, Is.Null, $"Player is holding an item ({SEntMan.ToPrettyString(heldItem)}) at start of test.");
 
         // Inspect the action prototype to find the item it spawns
@@ -50,7 +50,7 @@ public sealed class RetractableItemActionTest : InteractionTest
         var actionEnt = actionsSystem.GetAction(actionUid);
 
         // Make sure the player's hand is still empty
-        heldItem = HandSys.GetActiveItem((ToServer(Player), Hands));
+        heldItem = Hands.ActiveHandEntity;
         Assert.That(heldItem, Is.Null, $"Player is holding an item ({SEntMan.ToPrettyString(heldItem)}) after adding action.");
 
         await Server.WaitAssertion(() =>
@@ -59,7 +59,7 @@ public sealed class RetractableItemActionTest : InteractionTest
             actionsSystem.PerformAction(ToServer(Player), actionEnt!.Value);
 
             // Make sure the player is now holding the expected item
-            var heldItem = HandSys.GetActiveItem((ToServer(Player), Hands));
+            var heldItem = Hands.ActiveHandEntity;
             Assert.That(heldItem, Is.Not.Null, $"Expected player to be holding {spawnedProtoId} but was holding nothing.");
             AssertPrototype(spawnedProtoId, SEntMan.GetNetEntity(heldItem));
 
@@ -67,7 +67,7 @@ public sealed class RetractableItemActionTest : InteractionTest
             actionsSystem.PerformAction(ToServer(Player), actionEnt.Value);
 
             // Make sure the player's hand is empty again
-            heldItem = HandSys.GetActiveItem((ToServer(Player), Hands));
+            heldItem = Hands.ActiveHandEntity;
             Assert.That(heldItem, Is.Null, $"Player is still holding an item ({SEntMan.ToPrettyString(heldItem)}) after second use.");
         });
     }
