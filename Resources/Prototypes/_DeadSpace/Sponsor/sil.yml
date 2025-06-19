@@ -1,14 +1,20 @@
 - type: sponsorLoadout
   id: Sil
-  entity: ClothingBackpackDominatorSil
+  entity: ClothingBackpackSil
   sponsorOnly: true
+
+- type: sponsorLoadout
+  id: SilHypospray
+  entity: HypospraySil
+  sponsorOnly: true
+  whitelistJobs: [ChiefMedicalOfficer, MedicalDoctor, Chemist]
 
 # Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitAtmos
-  id: ClothingOuterHardsuitDominatorSil
+  id: ClothingOuterHardsuitSil
   name: скафандр "СЕВА"
-  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Характеристики идентичны скафандру атмос-техника.
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -16,7 +22,7 @@
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Sil/hardsuit.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitDominatorSil
+    clothingPrototype: ClothingHeadHelmetHardsuitSil
   - type: Item
     size: Huge
   - type: PressureProtection
@@ -24,6 +30,26 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
+  - type: HardsuitSpeedBuff
+  - type: PowerCellDraw
+    drawRate: 3.6
+    enabled: false
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    fitsInCharger: false
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+      toggleable-clothing: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        disableEject: true
+        whitelist:
+          tags:
+          - PowerCell
   - type: Armor
     modifiers:
       coefficients:
@@ -41,15 +67,36 @@
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitAtmos
-  id: ClothingHeadHelmetHardsuitDominatorSil
+  id: ClothingHeadHelmetHardsuitSil
   categories: [ HideSpawnMenu ]
   name: шлем скафандра "СЕВА"
   description: Шлем изолирующий владельца от страшного вакуума снаружи.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/Sil/helmet.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Sil/helmet.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      - state: equipped-head-unshaded
+        shader: unshaded
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET-unshaded
+        shader: unshaded
+      - state: equipped-head-light
+        shader: unshaded
   - type: PointLight
     color: "#4eb1ae"
   - type: PressureProtection
@@ -65,12 +112,39 @@
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
+# Uniform
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSil
+  name: комбинезон 'Зона'
+  description: Усиленный комбинезон из композитной ткани. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Sil/jumpsuit.rsi
+
+
+# Neck
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckSil
+  name: плащ 'Ноосфера'
+  description: Экспериментальная накидка с пси-защитным покрытием. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/cloak.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
 # Gloves
 - type: entity
   parent: ClothingHandsGlovesDominator
-  id: ClothingHandsGlovesDominatorSil
+  id: ClothingHandsGlovesSil
   name: белые боевые перчатки
-  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Изолированны.
+  description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Изолированы.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -82,19 +156,19 @@
 
 # Boots
 - type: entity
-  parent: [ClothingShoesBootsMag, ClothingSlotBase]
-  id: ClothingShoesBootsDominatorSil
+  parent: [ClothingShoesBootsMag, ClothingSlotBase, BaseJetpack]
+  id: ClothingShoesBootsSil
   name: белые армейские ботинки
   description: Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации. Могут вместить в себя нож.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/Sil/boots.rsi
+    sprite: _DeadSpace/Sponsor/Sil/magboots.rsi
     layers:
     - state: icon
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Clothing
-    sprite: _DeadSpace/Sponsor/Sil/boots.rsi
+    sprite: _DeadSpace/Sponsor/Sil/magboots.rsi
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
@@ -107,15 +181,24 @@
           tags:
           - Knife
           - Sidearm
+  - type: GasTank
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+      - 0.153853429 # oxygen
+      - 0.153853429 # nitrogen
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
 # Belt
 - type: entity
-  parent: ClothingBeltChiefEngineer
-  id: ClothingBeltDominatorSilFilled
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltSilFilled
   name: белый разгрузочный пояс
-  description: Пояс который принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  description: Пояс, который принадлежит члену экипажа под покровительством спонсорской организации.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -124,17 +207,48 @@
     sprite: _DeadSpace/Sponsor/Sil/belt.rsi
   - type: Item
     size: Huge
+  - type: Storage
+    grid:
+    - 0,0,9,1
   - type: StorageFill
     contents:
-    - id: PowerDrill
-    - id: WelderExperimental
-    - id: Multitool
+    - id: PowerDrillSil
+    - id: WelderExperimentalSil
+    - id: MultitoolSil
     - id: SyndicateJawsOfLifeSil
+    - id: trayScannerSil
+    - id: GasAnalyzerSil
+    - id: HandHeldMassScannerSil
+    - id: HolofanProjectorSil
+  - type: ItemMapper
+    mapLayers:
+      drill:
+        whitelist:
+          tags:
+          - Powerdrill
+      jaws:
+        whitelist:
+          tags:
+          - JawsOfLife
+      multitool:
+        whitelist:
+          tags:
+          - Multitool
+      welder:
+        whitelist:
+          components:
+          - Welder
+      hypo:
+        whitelist:
+          components:
+          - Hypospray
+    sprite: _DeadSpace/Sponsor/Sil/belt_overlay.rsi
+  - type: Appearance
 
 # Mask
 - type: entity
   parent: ClothingMaskGas
-  id: ClothingMaskGasDominatorSil
+  id: ClothingMaskGasSil
   name: противогаз ЗК-2М "Защитная Смерть"
   description: Противогаз который принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
   categories: [ HideSpawnMenu ]
@@ -150,7 +264,7 @@
 # Backpack
 - type: entity
   parent: ClothingBackpack
-  id: ClothingBackpackDominatorSil
+  id: ClothingBackpackSil
   name: белый армейский вещмешок
   description: Вместительный вещмешок с множеством карманов. Имеет окрас городского камуфляжа. Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
   categories: [ HideSpawnMenu ]
@@ -160,17 +274,19 @@
   - type: Storage
     maxItemSize: Huge
     grid:
-    - 0,0,12,7
+    - 0,0,19,9
   - type: StorageFill
     contents:
-    - id: ClothingBeltDominatorSilFilled
-    - id: ClothingHandsGlovesDominatorSil
-    - id: ClothingOuterHardsuitDominatorSil
-    - id: ClothingMaskGasDominatorSil
-    - id: ClothingShoesBootsDominatorSil
-    - id: PDADominatorSil
-    - id: AirTankDominatorSil
-    - id: ClothingEyesHudDominatorSil
+    - id: ClothingBeltSilFilled
+    - id: ClothingMaskGasSil
+    - id: ClothingShoesBootsSil
+    - id: PDASil
+    - id: AirTankSil
+    - id: ClothingUniformJumpsuitSil
+    - id: ClothingNeckSil
+    - id: ClothingHandsGlovesSil
+    - id: ClothingEyesHudSil
+    - id: PaperLawSil
     - id: ViolinInstrument
     - id: PlushieSilAily
     - id: PlushieSilAizek
@@ -193,13 +309,22 @@
     - id: PlushieSilGermanKvaSki
     - id: PlushieSilTimAkkerman
     - id: PaperLawSil
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterHardsuitSil
+    requiredSlot: BACK
+    slot: outerClothing
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+      storagebase: !type:Container
+        ents: []
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
 # PDA
 - type: entity
   parent: BaseMedicalPDA
-  id: PDADominatorSil
+  id: PDASil
   name: КПК "Монолит"
   description: Изготовлено на заказ организацией LaFleur Wear.
   categories: [ HideSpawnMenu ]
@@ -214,7 +339,7 @@
 # EYES
 - type: entity
   parent: ClothingEyesHudMultiversal
-  id: ClothingEyesHudDominatorSil
+  id: ClothingEyesHudSil
   name: очки в золотой оправе
   description: Изготовлено на заказ организацией LaFleur Wear.
   categories: [ HideSpawnMenu ]
@@ -232,7 +357,7 @@
 # AIRTANK
 - type: entity
   parent: AirTank
-  id: AirTankDominatorSil
+  id: AirTankSil
   name: белый баллон воздуха
   description: Баллон с воздухом, раскрашенный в оттенки городского камуфляжа.
   categories: [ HideSpawnMenu ]
@@ -262,12 +387,12 @@
 - type: entity
   parent: SyndicateJawsOfLife
   id: SyndicateJawsOfLifeSil
-  name: белые челюсти жизни
-  description: Изготовлено на заказ организацией LaFleur Wear.
+  name: бирюзовые челюсти жизни
+  description: Корпус похож на сплав тёмного титана и синего кварца, а между массивными губками переливается мягкая бирюзовая плазма-нить, создавая ощущение, будто инструмент «дышит» электрическим светом.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: _DeadSpace/Sponsor/Sil/jawsoflife.rsi
+    sprite: _DeadSpace/Sponsor/Sil/tools_jawsoflife.rsi
     state: syn_jaws_pry
   - type: Item
     inhandVisuals:
@@ -280,13 +405,13 @@
     entries:
     - behavior: Prying
       sprite:
-        sprite: _DeadSpace/Sponsor/Sil/jawsoflife.rsi
+        sprite: _DeadSpace/Sponsor/Sil/tools_jawsoflife.rsi
         state: syn_jaws_pry
       useSound: /Audio/Items/jaws_pry.ogg
       changeSound: /Audio/Items/change_jaws.ogg
     - behavior: Cutting
       sprite:
-        sprite: _DeadSpace/Sponsor/Sil/jawsoflife.rsi
+        sprite: _DeadSpace/Sponsor/Sil/tools_jawsoflife.rsi
         state: syn_jaws_cutter
       useSound: /Audio/Items/jaws_cut.ogg
       changeSound: /Audio/Items/change_jaws.ogg
@@ -294,6 +419,155 @@
     damage:
       types:
         Blunt: 14
+
+# drill
+- type: entity
+  parent: PowerDrill
+  id: PowerDrillSil
+  name: бирюзовая электродрель
+  description: Цилиндрическое тело обтянуто рёбрами из графитового волокна, внутреннее сверло виднеется сквозь прозрачную секцию, где мерцают крошечные арк-искры, будто внутри спрятан крошечный шторм.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/tools_powerdrill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Sil/tools_powerdrill.rsi
+    size: Small
+  - type: Tool
+    qualities:
+    - Screwing
+    speedModifier: 1.5
+    useSound: /Audio/Items/drill_use.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: Screwing
+      sprite:
+        sprite: _DeadSpace/Sponsor/Sil/tools_powerdrill.rsi
+        state: drill_screw
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+    - behavior: Anchoring
+      sprite:
+        sprite: _DeadSpace/Sponsor/Sil/tools_powerdrill.rsi
+        state: drill_bolt
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+
+# welder
+- type: entity
+  parent: WelderExperimental
+  id: WelderExperimentalSil
+  name: бирюзовый экспериментальный сварочный аппарат
+  description: Компактная рукоять плавно переходит в хромированный сопло-клюв, вокруг него клубится тонкое голубо-белое марево, словно пламя пытается выбраться наружу, но держится «в клетке» силового поля.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/tools_welder.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Sil/tools_welder.rsi
+
+# multitool
+- type: entity
+  parent: Multitool
+  id: MultitoolSil
+  name: бирюзовый мультитул
+  description: Гладкий прямоугольник с рассыпанными по граням голографическими метками, при лёгком касании корпуса по его поверхности пробегает переливчатая сетка, напоминающая нервную систему живого организма.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/tools_multitool.rsi
+
+# t-ray scanner
+- type: entity
+  parent: trayScanner
+  id: trayScannerSil
+  name: бирюзовый т-лучевой сканер
+  description: Плоский, почти прозрачный планшет с дымчатыми краями, из глубины стеклопластика медленно всплывают тонкие световые дорожки, будто внутрь залили жидкий неон, который ищет себе путь наружу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/tools_trayscanner.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Sil/tools_trayscanner.rsi
+
+# holofan projector
+- type: entity
+  parent: HolofanProjector
+  id: HolofanProjectorSil
+  name: бирюзовый голопроектор
+  description: Изготовлено на заказ организацией LaFleur Wear.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/tools_holofanprojector.rsi
+    state: icon
+
+# gas analyzer
+- type: entity
+  name: бирюзовый газоанализатор
+  parent: GasAnalyzer
+  id: GasAnalyzerSil
+  description: Изготовлено на заказ организацией LaFleur Wear.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/tools_gasanalyzer.rsi
+    layers:
+    - state: icon
+      map: ["analyzer"]
+
+# mass scanner
+- type: entity
+  name: бирюзовый сканер массы
+  parent: HandHeldMassScanner
+  id: HandHeldMassScannerSil
+  description: Широкий датчик цвета иней с зеркальной линзой.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Sil/tools_massscanner.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/tools_massscanner.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: scanner
+      shader: unshaded
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+
+# Hypospray
+- type: entity
+  id: HypospraySil
+  name: гипоспрей "HEALTH-13"
+  parent: BaseItem
+  description: Стрелка каплевидного резервуара окружена кольцом полупрозрачных мембран, при взмахе через стенки проскакивают мягкие волны перламутрового света.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/hypo.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Sil/hypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 5
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+  - type: UseDelay
+    delay: 0.5
 
 # Law
 - type: entity

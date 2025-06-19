@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, resprite by foxselian (discord) for Space Station 14 server Мёртвый Космос",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, resprite by foxselian and hq._.dishka (discord) for Space Station 14 server Мёртвый Космос",
   "size": {
     "x": 32,
     "y": 32
@@ -12,9 +12,6 @@
     },
     {
       "name": "icon-unshaded"
-    },
-    {
-      "name": "icon-flash"
     },
     {
       "name": "light-overlay"
@@ -30,7 +27,17 @@
     {
       "name": "equipped-head-unshaded",
       "directions": 4
-    }
-    
+    },
+    {
+			"name": "on-equipped-HELMET-unshaded",
+			"directions": 4,
+			"delays":
+			[
+				[ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ],
+				[ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ],
+				[ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ],
+				[ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ]
+			]
+		}
   ]
 }
