@@ -8,15 +8,39 @@
   },
   "states": [
     {
-      "name": "handcuff"
+        "name": "handcuff",
+        "delays": [
+            [
+                0.3,
+                0.3,
+                0.3,
+                0.3
+            ]
+        ]
     },
 	{
-      "name": "body-overlay-2",
-      "directions": 4
+        "name": "body-overlay-2",
+        "delays": [
+            [
+                0.3,
+                0.3,
+                0.3,
+                0.3
+            ]
+        ],
+        "directions": 4
     },
 	{
-      "name": "body-overlay-4",
-      "directions": 4
+        "name": "body-overlay-4",
+        "delays": [
+            [
+                0.3,
+                0.3,
+                0.3,
+                0.3
+            ]
+        ],
+        "directions": 4
     }
   ]
 }
