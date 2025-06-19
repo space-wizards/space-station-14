@@ -824,7 +824,7 @@ namespace Content.Shared.Cuffs
     /// Relayed to their held items.
     /// </summary>
     [Serializable, NetSerializable]
-    public sealed partial class TargetHandcuffedEvent : EntityEventArgs, IInventoryRelayEvent
+    public record struct TargetHandcuffedEvent : IInventoryRelayEvent
     {
         /// <summary>
         /// All slots to relay to
