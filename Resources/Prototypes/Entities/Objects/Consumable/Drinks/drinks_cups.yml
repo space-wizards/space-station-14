@@ -329,7 +329,7 @@
     solutions:
       drink:
         reagents:
-        - ReagentId: Water
+        - ReagentId: JuiceGrape
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lean.rsi
