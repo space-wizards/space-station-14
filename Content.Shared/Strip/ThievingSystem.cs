@@ -1,11 +1,10 @@
 using Content.Shared.Alert;
 using Content.Shared.Inventory;
 using Content.Shared.Strip.Components;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared.Strip;
 
-public sealed partial class ThievingSystem : EntitySystem
+public sealed class ThievingSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
@@ -15,29 +14,29 @@ public sealed partial class ThievingSystem : EntitySystem
 
         SubscribeLocalEvent<ThievingComponent, BeforeStripEvent>(OnBeforeStrip);
         SubscribeLocalEvent<ThievingComponent, InventoryRelayedEvent<BeforeStripEvent>>((e, c, ev) =>
-            OnBeforeStrip(e, c, ev.Args));
+            OnBeforeStrip((e, c), ref ev.Args));
         SubscribeLocalEvent<ThievingComponent, ToggleThievingEvent>(OnToggleStealthy);
         SubscribeLocalEvent<ThievingComponent, ComponentInit>(OnCompInit);
         SubscribeLocalEvent<ThievingComponent, ComponentRemove>(OnCompRemoved);
     }
 
-    private void OnBeforeStrip(EntityUid uid, ThievingComponent component, BeforeStripEvent args)
+    private void OnBeforeStrip(Entity<ThievingComponent> ent, ref BeforeStripEvent args)
     {
-        args.Stealth |= component.Stealthy;
-        if (args.Stealth)
-        {
-            args.Additive -= component.StripTimeReduction;
-        }
+        args.Stealth |= ent.Comp.Stealthiness != Stealthiness.Visible && ent.Comp.Enabled;
+        args.Popup &= ent.Comp is not { Stealthiness: Stealthiness.Stealthy, Enabled: true };
+
+        if (ent.Comp.Enabled)
+            args.Additive -= ent.Comp.StripTimeReduction;
     }
 
-    private void OnCompInit(Entity<ThievingComponent> entity, ref ComponentInit args)
+    private void OnCompInit(Entity<ThievingComponent> ent, ref ComponentInit args)
     {
-        _alertsSystem.ShowAlert(entity, entity.Comp.StealthyAlertProtoId, 1);
+        _alertsSystem.ShowAlert(ent, ent.Comp.StealthyAlertProtoId, (short)(ent.Comp.Enabled ? 1 : 0));
     }
 
-    private void OnCompRemoved(Entity<ThievingComponent> entity, ref ComponentRemove args)
+    private void OnCompRemoved(Entity<ThievingComponent> ent, ref ComponentRemove args)
     {
-        _alertsSystem.ClearAlert(entity, entity.Comp.StealthyAlertProtoId);
+        _alertsSystem.ClearAlert(ent, ent.Comp.StealthyAlertProtoId);
     }
 
     private void OnToggleStealthy(Entity<ThievingComponent> ent, ref ToggleThievingEvent args)
@@ -45,9 +44,10 @@ public sealed partial class ThievingSystem : EntitySystem
         if (args.Handled)
             return;
 
-        ent.Comp.Stealthy = !ent.Comp.Stealthy;
-        _alertsSystem.ShowAlert(ent.Owner, ent.Comp.StealthyAlertProtoId, (short)(ent.Comp.Stealthy ? 1 : 0));
-        DirtyField(ent.AsNullable(), nameof(ent.Comp.Stealthy), null);
+        ent.Comp.Enabled = !ent.Comp.Enabled;
+
+        _alertsSystem.ShowAlert(ent.Owner, ent.Comp.StealthyAlertProtoId, (short)(ent.Comp.Enabled ? 1 : 0));
+        DirtyField(ent.AsNullable(), nameof(ent.Comp.Enabled));
 
         args.Handled = true;
     }

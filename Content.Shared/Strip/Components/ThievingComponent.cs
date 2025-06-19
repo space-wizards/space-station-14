@@ -21,7 +21,13 @@ public sealed partial class ThievingComponent : Component
     /// Should it notify the user if they're stripping a pocket?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool Stealthy;
+    public Stealthiness Stealthiness = Stealthiness.Visible;
+
+    /// <summary>
+    /// Whether the thieving is enabled.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Enabled = true;
 
     /// <summary>
     /// Variable pointing at the Alert modal
@@ -38,7 +44,18 @@ public sealed partial class ThievingComponent : Component
 }
 
 /// <summary>
+/// NotStealthy is regular slealing.
+/// Stealthy is fully slealthy stealing.
+/// Ripping is stealthy, but gives a popup after the stealing.
+/// </summary>
+public enum Stealthiness : byte
+{
+    Visible = 0,
+    Stealthy = 1,
+    Ripping = 2,
+}
+
+/// <summary>
 /// Event raised to toggle the thieving component.
 /// </summary>
 public sealed partial class ToggleThievingEvent : BaseAlertEvent;
-

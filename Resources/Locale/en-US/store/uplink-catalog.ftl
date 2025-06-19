@@ -338,6 +338,9 @@ uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slip
 uplink-clothing-chameleon-thieving-gloves-name = Chameleon Thieving Gloves
 uplink-clothing-chameleon-thieving-gloves-desc = Discreetly steal from pockets and improve your thieving technique with these fancy new gloves. They can change appearance to match any pair of gloves!
 
+uplink-ripping-gloves-name = Chameleon Ripping Gloves
+uplink-ripping-gloves-desc = Boldly rip items out or forcefully put them into people's hands with these brand new gloves. They can change appearance to match any pair of gloves!
+
 uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
 
