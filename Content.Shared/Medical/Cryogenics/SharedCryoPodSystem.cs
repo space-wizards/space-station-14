@@ -1,5 +1,6 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -38,8 +39,8 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
     {
         if (args.Handled)
             return;
+        args.CanDrop = true ? HasComp<BodyComponent>(args.Dragged) | HasComp<FitsInDispenserComponent>(args.Dragged) : true;
 
-        args.CanDrop = HasComp<BodyComponent>(args.Dragged);
         args.Handled = true;
     }
 
