@@ -8026,4 +8026,55 @@ Entries:
   id: 1108
   time: '2025-06-18T22:29:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/838
+- author: Quantumcross
+  changes:
+  - message: Loneops will now use a Nuclear Operative profile
+    type: Fix
+  id: 1109
+  time: '2025-06-18T23:25:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/835
+- author: Quantumcross
+  changes:
+  - message: Job priorities can be dragged and dropped on the lobby screen
+    type: Add
+  id: 1110
+  time: '2025-06-18T23:25:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/835
+- author: Quantumcross
+  changes:
+  - message: Some players having missing characters and no new character button
+    type: Fix
+  id: 1111
+  time: '2025-06-18T23:25:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/835
+- author: Quantumcross
+  changes:
+  - message: Dummy characters not representing profile in certain cases
+    type: Fix
+  id: 1112
+  time: '2025-06-18T23:25:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/835
+- author: General Hexweaver
+  changes:
+  - message: Fixed a bug with the warship
+    type: Fix
+  id: 1113
+  time: '2025-06-19T14:56:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/866
+- author: biteless-dot
+  changes:
+  - message: Unique handheld radio to seperate comms for salvagers and miners to have
+      uncluttered comms
+    type: Add
+  id: 1114
+  time: '2025-06-19T15:04:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/779
+- author: biteless-dot
+  changes:
+  - message: Places expedition radio in Salvage Locker, Mining Locker, and Quartermaster
+      Locker
+    type: Add
+  id: 1115
+  time: '2025-06-19T15:04:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/779
 

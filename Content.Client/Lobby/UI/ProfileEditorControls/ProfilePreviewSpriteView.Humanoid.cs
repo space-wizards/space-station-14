@@ -49,12 +49,19 @@ public sealed partial class ProfilePreviewSpriteView
 
         if(job != null)
         {
-            loadout = humanoid.GetLoadoutOrDefault(
-                LoadoutSystem.GetJobPrototype(job.ID),
-                _playerManager.LocalSession,
-                humanoid.Species,
-                EntMan,
-                _prototypeManager);
+            try
+            {
+                loadout = humanoid.GetLoadoutOrDefault(
+                    LoadoutSystem.GetJobPrototype(job.ID),
+                    _playerManager.LocalSession,
+                    humanoid.Species,
+                    EntMan,
+                    _prototypeManager);
+            }
+            catch (UnknownPrototypeException e)
+            {
+                loadout = new RoleLoadout();
+            }
 
             // If the job has a preview specific entity or a job specific entity use that
             var previewEntity = job.JobPreviewEntity ?? (EntProtoId?)job.JobEntity;
@@ -75,6 +82,8 @@ public sealed partial class ProfilePreviewSpriteView
             _prototypeManager.Index(humanoid.Species).DollPrototype,
             MapCoordinates.Nullspace);
 
+        ReloadHumanoidEntity(humanoid);
+
         // Bail now if all we need is the naked doll
         if (!showClothes)
             return;
@@ -93,6 +102,7 @@ public sealed partial class ProfilePreviewSpriteView
                 // We found an antag to dress as! Set it and return.
                 GiveDummyAntagLoadout(antagProto);
                 JobName = Loc.GetString(antagProto.Name);
+
                 return;
             }
         }
@@ -121,8 +131,6 @@ public sealed partial class ProfilePreviewSpriteView
         LoadoutName = GetLoadoutName(loadout);
 
         GiveDummyLoadout(PreviewDummy, loadout);
-
-        ReloadHumanoidEntity(humanoid);
     }
 
     /// <summary>
