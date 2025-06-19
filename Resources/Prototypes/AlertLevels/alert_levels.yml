@@ -70,3 +70,15 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+    omicron:
+      announcement: alert-level-omicron-announcement
+      selectable: false
+      sound:
+        path: /Audio/Misc/epsilon.ogg
+        params:
+          volume: -2
+      disableSelection: true
+      color: DarkGrey
+      emergencyLightColor: DarkGrey
+      forceEnableEmergencyLights: true
+      shuttleTime: 1200
