@@ -203,23 +203,13 @@ namespace Content.Client.Lobby
 
                 var hoursToday = Math.Round(minutesToday / 60f, 1);
 
-                string chosenString;
-
-                switch (minutesToday)
+                var chosenString = minutesToday switch
                 {
-                    case < 180:
-                        chosenString = "lobby-state-playtime-comment-normal";
-                        break;
-                    case < 360:
-                        chosenString = "lobby-state-playtime-comment-concerning";
-                        break;
-                    case < 720:
-                        chosenString = "lobby-state-playtime-comment-grasstouchless";
-                        break;
-                    default:
-                        chosenString = "lobby-state-playtime-comment-selfdestructive";
-                        break;
-                }
+                    < 180 => "lobby-state-playtime-comment-normal",
+                    < 360 => "lobby-state-playtime-comment-concerning",
+                    < 720 => "lobby-state-playtime-comment-grasstouchless",
+                    _ => "lobby-state-playtime-comment-selfdestructive"
+                };
 
                 Lobby.PlaytimeComment.SetMarkup(Loc.GetString(chosenString, ("hours", hoursToday)));
             }
