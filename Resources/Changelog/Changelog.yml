@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: DamagePopups such as target dummies are now predicted.
-    type: Fix
-  id: 8181
-  time: '2025-04-14T19:10:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36547
 - author: SlamBamActionman
   changes:
   - message: Tracking implants no longer announce on radio when someone goes into
@@ -3910,3 +3903,11 @@
   id: 8693
   time: '2025-06-19T01:06:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36483
+- author: ScarKy0
+  changes:
+  - message: APCs now have a wirepanel. It can be used to disallow the AI from accessing
+      it.
+    type: Add
+  id: 8694
+  time: '2025-06-19T15:06:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38443
