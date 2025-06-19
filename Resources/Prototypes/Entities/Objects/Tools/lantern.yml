@@ -55,8 +55,6 @@
     - type: ContainerContainer
       containers:
         cell_slot: !type:ContainerSlot {}
-    - type: StealTarget
-      stealGroup: LAMP
     - type: Clothing
       sprite: Objects/Tools/lantern.rsi
       equippedPrefix: off
