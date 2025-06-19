@@ -1052,8 +1052,8 @@
   flavor: fizzy
   color: "#b9bf93"
   metabolisms:
-    metabolismRate: 0.25
     Medicine:
+    metabolismRate: 0.25
       effects:
       - !type:HealthChange
         damage:
