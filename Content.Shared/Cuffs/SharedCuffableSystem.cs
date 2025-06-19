@@ -474,7 +474,7 @@ namespace Content.Shared.Cuffs
                 return false;
 
             var ev = new TargetHandcuffedEvent();
-            RaiseLocalEvent(target, ev);
+            RaiseLocalEvent(target, ref ev);
 
             // Success!
             _hands.TryDrop(user, handcuff);
@@ -823,7 +823,7 @@ namespace Content.Shared.Cuffs
     /// Raised on the target when they get handcuffed.
     /// Relayed to their held items.
     /// </summary>
-    [Serializable, NetSerializable]
+    [ByRefEvent]
     public record struct TargetHandcuffedEvent : IInventoryRelayEvent
     {
         /// <summary>
