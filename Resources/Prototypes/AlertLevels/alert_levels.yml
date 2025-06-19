@@ -74,7 +74,7 @@
       announcement: alert-level-omicron-announcement
       selectable: false
       sound:
-        path: /Audio/Misc/epsilon.ogg
+        path: /Audio/Misc/omicron.ogg
         params:
           volume: -2
       disableSelection: true
