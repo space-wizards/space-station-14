@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/e1a3cbe9ba2e6e29b7f1cad1bb456b390aac936d/icons/obj/guns/projectile.dmi, backpack sprite by Peptide (copy of Atreides), and sprite modification by Jaсkal 298, backpack sling sprite edited by Boaz1111",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "base",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "base-unshaded",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "mag-0",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "mag-unshaded-0",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "mag-1",
+      "delays": [
+          [
+            0.1,
+            0.3
+          ]
+      ]
+    },
+    {
+      "name": "mag-unshaded-1",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "mag-2",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "mag-unshaded-2",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "mag-3",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "mag-unshaded-3",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "mag-4",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "mag-unshaded-4",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "mag-5",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "mag-unshaded-5",
+      "delays": [
+        [
+          0.1,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BACKPACK",
+      "directions": 4
+    },
+	{
+      "name": "equipped-SUITSTORAGE",
+      "directions": 4
+    }
+  ]
+}

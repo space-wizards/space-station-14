@@ -761,3 +761,53 @@
       steps: 5
       zeroVisible: true
     - type: Appearance
+
+- type: entity
+  name: energy shotgun
+  parent: [BaseWeaponBattery, BaseGrandTheftContraband]
+  id: WeaponEnergySMG
+  description: A one-of-a-kind prototype energy sub-machine gun. It offers high energy firepower and the ability to reload on the field.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_smg.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
+  - type: Appearance
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_smg.rsi
+  - type: Gun
+    fireRate: 5.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletEnergyTurretLaser
+    fireCost: 150
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletEnergyTurretLaser
+      fireCost: 40
+    proto: BulletEnergyTurretDisabler
+    fireCost: 40
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,3,1
+    sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
+    heldPrefix: energy
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StealTarget
+    stealGroup: WeaponEnergyShotgun
+  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Battery
+    maxCharge: 1200
+    startingCharge: 1200
