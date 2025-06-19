@@ -241,6 +241,13 @@ public sealed partial class SingleMarkingPicker : BoxContainer
             };
 
             ColorSelectorContainer.AddChild(selector);
+            // this is most certainly not the right way to do this but this was the only way I could get it to find the dropbox.
+            if (selector.GetChild(0) is BoxContainer rootBox &&
+                rootBox.GetChild(0) is BoxContainer headerBox &&
+                headerBox.GetChild(0) is OptionButton typeSelector)
+            {
+                typeSelector.Select((int) ColorSelectorSliders.ColorSelectorType.Hsv);
+            }
         }
     }
 

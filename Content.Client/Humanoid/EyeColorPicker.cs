@@ -28,6 +28,13 @@ public sealed class EyeColorPicker : Control
 
         vBox.AddChild(_colorSelectors = new ColorSelectorSliders());
         _colorSelectors.SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv; // defaults color selector to HSV
+        // this is most certainly not the right way to do this but this was the only way I could get it to find the dropbox reliably.
+        if (_colorSelectors.GetChild(0) is BoxContainer rootBox &&
+            rootBox.GetChild(0) is BoxContainer headerBox &&
+            headerBox.GetChild(0) is OptionButton typeSelector)
+        {
+            typeSelector.Select((int) ColorSelectorSliders.ColorSelectorType.Hsv);
+        }
 
         _colorSelectors.OnColorChanged += ColorValueChanged;
     }

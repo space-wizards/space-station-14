@@ -418,6 +418,13 @@ public sealed partial class MarkingPicker : Control
             ColorSelectorSliders colorSelector = new ColorSelectorSliders();
             colorSelector.SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv; // defaults color selector to HSV
             colorSliders.Add(colorSelector);
+            // this is most certainly not the right way to do this but this was the only way I could get it to find the dropbox reliably.
+            if (colorSelector.GetChild(0) is BoxContainer rootBox &&
+                rootBox.GetChild(0) is BoxContainer headerBox &&
+                headerBox.GetChild(0) is OptionButton typeSelector)
+            {
+                typeSelector.Select((int) ColorSelectorSliders.ColorSelectorType.Hsv);
+            }
 
             colorContainer.AddChild(new Label { Text = $"{stateNames[i]} color:" });
             colorContainer.AddChild(colorSelector);
