@@ -87,8 +87,6 @@ public sealed class RetractableItemActionSystem : EntitySystem
 
     private void OnItemHandcuffed(Entity<ActionRetractableItemComponent> ent, ref HeldRelayedEvent<TargetHandcuffedEvent> args)
     {
-        Log.Debug("Event received.");
-
         if (_actions.GetAction(ent.Comp.SummoningAction) is not { } action)
             return;
 
