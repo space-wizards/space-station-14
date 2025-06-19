@@ -551,7 +551,6 @@ namespace Content.Shared.Cuffs
                     ("otherName", Identity.Name(user, EntityManager, target))), target, target);
             }
 
-            // TODO: FIX SOUND FOR THE HOLOCUFF
             _audio.PlayPredicted(handcuffComponent.StartCuffSound, tool, user);
             return true;
         }
