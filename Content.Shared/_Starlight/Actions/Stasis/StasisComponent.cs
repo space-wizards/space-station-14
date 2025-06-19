@@ -1,15 +1,13 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Content.Shared.Starlight.Avali.Systems;
 
-namespace Content.Shared.Starlight.Avali.Components;
+namespace Content.Shared._Starlight.Actions.Stasis;
 
 /// <summary>
+/// Component that allows an entity to enter and exit stasis.
 /// </summary>
-/// <remarks>
-/// </remarks>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedAvaliStasisSystem)), AutoGenerateComponentState]
-public sealed partial class AvaliStasisComponent : Component
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedStasisSystem)), AutoGenerateComponentState]
+public sealed partial class StasisComponent : Component
 {
     /// <summary>
     /// Whether the entity is currently in stasis.
@@ -37,112 +35,112 @@ public sealed partial class AvaliStasisComponent : Component
     /// <summary>
     /// The cooldown time for the stasis ability, in seconds.
     /// </summary>
-    [DataField] public float StasisCooldown;
+    [DataField] public float StasisCooldown = 300f;
 
     /// <summary>
     /// The amount of brute damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisBluntHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisBluntHealPerSecond = 2f;
 
     /// <summary>
     /// The amount of sharp damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisSlashingHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisSlashingHealPerSecond = 2f;
 
     /// <summary>
     /// The amount of piercing damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisPiercingHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisPiercingHealPerSecond = 2f;
 
     /// <summary>
     /// The amount of heat damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisHeatHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisHeatHealPerSecond = 2f;
 
     /// <summary>
     /// The amount of cold damage the stasis ability will heal, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisColdHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisColdHealPerSecond = 2f;
     
     /// <summary>
     /// The amount of bleed the stasis ability will heal, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisBleedHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisBleedHealPerSecond = 1.0f;
 
     /// <summary>
     /// The amount of additional damage resistance while in stasis (0-1, where 1 is 100% resistance), so 0.1 resistance lowers damage by 10%.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisAdditionalDamageResistance;
+    [DataField] [AutoNetworkedField] public float StasisAdditionalDamageResistance = 1.5f;
     
     /// <summary>
     /// The amount of brute damage the stasis ability will heal in critical status, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisInCritBluntHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisInCritBluntHealPerSecond = 1f;
 
     /// <summary>
     /// The amount of sharp damage the stasis ability will heal in critical status, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisInCritSlashingHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisInCritSlashingHealPerSecond = 1f;
 
     /// <summary>
     /// The amount of piercing damage the stasis ability will heal in critical status, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisInCritPiercingHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisInCritPiercingHealPerSecond = 1f;
 
     /// <summary>
     /// The amount of heat damage the stasis ability will heal in critical status, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisInCritHeatHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisInCritHeatHealPerSecond = 1f;
 
     /// <summary>
     /// The amount of cold damage the stasis ability will heal in critical status, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisInCritColdHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisInCritColdHealPerSecond = 1f;
     
     /// <summary>
     /// The amount of bleed the stasis ability will heal in critical status, per second.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisInCritBleedHealPerSecond;
+    [DataField] [AutoNetworkedField] public float StasisInCritBleedHealPerSecond = 0.5f;
 
     /// <summary>
     /// The amount of additional damage resistance while in stasis in critical status (0-1, where 1 is 100% resistance), so 0.1 resistance lowers damage by 10%.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisInCritAdditionalDamageResistance;
+    [DataField] [AutoNetworkedField] public float StasisInCritAdditionalDamageResistance = 1.5f;
 
     /// <summary>
     /// The prototype ID of the stasis effect to spawn when entering stasis.
     /// </summary>
-    [DataField] [AutoNetworkedField] public EntProtoId StasisEnterEffect;
+    [DataField] [AutoNetworkedField] public EntProtoId StasisEnterEffect = "EffectNanitesEnter";
 
     /// <summary>
     /// The lifetime of the entering stasis effect in seconds.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisEnterEffectLifetime;
+    [DataField] [AutoNetworkedField] public float StasisEnterEffectLifetime = 2.7f;
 
     /// <summary>
     /// The sound to play when entering stasis.
     /// </summary>
-    [DataField] [AutoNetworkedField] public string StasisEnterSound;
+    [DataField] [AutoNetworkedField] public string StasisEnterSound = "/Audio/_Starlight/Misc/alien_teleport.ogg";
     
     /// <summary>
     /// The prototype ID of the stasis effect to spawn when exiting stasis.
     /// </summary>
-    [DataField] [AutoNetworkedField] public EntProtoId StasisExitEffect;
+    [DataField] [AutoNetworkedField] public EntProtoId StasisExitEffect = "EffectNanitesExit";
 
     /// <summary>
     /// The lifetime of the exit stasis effect in seconds.
     /// </summary>
-    [DataField] [AutoNetworkedField] public float StasisExitEffectLifetime;
+    [DataField] [AutoNetworkedField] public float StasisExitEffectLifetime = 2.7f;
 
     /// <summary>
     /// The sound to play when exiting stasis.
     /// </summary>
-    [DataField] [AutoNetworkedField] public string StasisExitSound;
+    [DataField] [AutoNetworkedField] public string StasisExitSound = "/Audio/_Starlight/Misc/alien_teleport.ogg";
     
     /// <summary>
     /// The prototype ID of the stasis effect to spawn when stasis is currently in use.
     /// </summary>
-    [DataField] [AutoNetworkedField] public EntProtoId StasisContinuousEffect;
+    [DataField] [AutoNetworkedField] public EntProtoId StasisContinuousEffect = "EffectNanitesCurrent";
 
     /// <summary>
     /// The entity reference for the continuous stasis effect.

@@ -1,19 +1,17 @@
 using Content.Shared.Popups;
-using Content.Shared.Starlight.Avali.Components;
-using Content.Shared.Starlight.Avali.Events;
-using Content.Shared.Starlight.Avali.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Spawners;
 using Robust.Shared.Timing;
 using Robust.Client.GameObjects;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
+using Content.Shared._Starlight.Actions.Stasis;
 
-namespace Content.Client.Starlight.Avali.Systems;
+namespace Content.Client._Starlight.Actions.Stasis;
 
 /// <summary>
-/// Client-side system that handles visual and audio effects for Avali stasis.
+/// Client-side system that handles visual and audio effects for stasis.
 /// </summary>
-public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
+public sealed class StasisSystem : SharedStasisSystem
 {
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -26,35 +24,35 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeNetworkEvent<AvaliStasisAnimationEvent>(OnStasisAnimation);
+        SubscribeNetworkEvent<StasisAnimationEvent>(OnStasisAnimation);
     }
 
-    private void OnStasisAnimation(AvaliStasisAnimationEvent ev)
+    private void OnStasisAnimation(StasisAnimationEvent ev)
     {
         // This is a hack to prevent the animation from playing multiple times.
         if (!_timing.IsFirstTimePredicted)
             return;
 
         var entity = GetEntity(ev.Entity);
-        if (!TryComp<AvaliStasisComponent>(entity, out var comp))
+        if (!TryComp<StasisComponent>(entity, out var comp))
             return;
 
         // We react to a specific animation event, and then play the appropriate animation.
         switch (ev.AnimationType)
         {
-            case AvaliStasisAnimationType.Prepare:
+            case StasisAnimationType.Prepare:
                 // Show a popup to the player.
-                _popupSystem.PopupEntity(Loc.GetString("avali-stasis-entering"), entity, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("stasis-entering"), entity, PopupType.Medium);
                 // Play the prepare animation.
                 StasisPrepareAnimation(entity, comp);
                 break;
-            case AvaliStasisAnimationType.Enter:
+            case StasisAnimationType.Enter:
                 // Play the enter animation.
                 StasisEnterAnimation(entity, comp);
                 break;
-            case AvaliStasisAnimationType.Exit:
+            case StasisAnimationType.Exit:
                 // Show a popup to the player.
-                _popupSystem.PopupEntity(Loc.GetString("avali-stasis-exiting"), entity, PopupType.Medium);
+                _popupSystem.PopupEntity(Loc.GetString("stasis-exiting"), entity, PopupType.Medium);
                 // Play the exit animation.
                 StasisExitAnimation(entity, comp);
                 // End the continuous animation.
@@ -63,7 +61,7 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
         }
     }
 
-    private void StasisPrepareAnimation(EntityUid uid, AvaliStasisComponent comp)
+    private void StasisPrepareAnimation(EntityUid uid, StasisComponent comp)
     {
         EnsureComp<TransformComponent>(uid, out var xform);
         var effectEnt = SpawnAttachedTo(comp.StasisEnterEffect, xform.Coordinates);
@@ -82,7 +80,7 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
         _enterEffect = effectEnt;
     }
     
-    private void StasisEnterAnimation(EntityUid uid, AvaliStasisComponent comp)
+    private void StasisEnterAnimation(EntityUid uid, StasisComponent comp)
     {
         // Start the continuous animation.
         StartStasisContinuousAnimation(uid, comp);
@@ -94,7 +92,7 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
         }
     }
 
-    private void StasisExitAnimation(EntityUid uid, AvaliStasisComponent comp)
+    private void StasisExitAnimation(EntityUid uid, StasisComponent comp)
     {
         EnsureComp<TransformComponent>(uid, out var xform);
         var effectEnt = SpawnAttachedTo(comp.StasisExitEffect, xform.Coordinates);
@@ -119,7 +117,7 @@ public sealed class ClientAvaliStasisSystem : SharedAvaliStasisSystem
         }
     }
 
-    private void StartStasisContinuousAnimation(EntityUid uid, AvaliStasisComponent comp)
+    private void StartStasisContinuousAnimation(EntityUid uid, StasisComponent comp)
     {
         EnsureComp<TransformComponent>(uid, out var xform);
         var effectEnt = SpawnAttachedTo(comp.StasisContinuousEffect, xform.Coordinates);

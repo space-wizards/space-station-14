@@ -7,13 +7,11 @@ using Robust.Shared.Timing;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Starlight.Avali.Components;
-using Content.Shared.Starlight.Avali.Events;
-using Content.Shared.Starlight.Avali.Systems;
+using Content.Shared._Starlight.Actions.Stasis;
 
-namespace Content.Server._Starlight.Avali.Systems;
+namespace Content.Server._Starlight.Actions.Stasis;
 
-public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
+public sealed class StasisSystem : SharedStasisSystem
 {
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
@@ -23,23 +21,23 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AvaliStasisComponent, DamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<StasisComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
     }
 
     private void OnMobStateChanged(MobStateChangedEvent args)
     {
         // If the entity has a stasis component, and the new mob state is dead, exit stasis.
-        if (TryComp<AvaliStasisComponent>(args.Target, out var comp))
+        if (TryComp<StasisComponent>(args.Target, out var comp))
         {
             if (args.NewMobState == MobState.Dead && comp.IsInStasis)
             {
-                RaiseLocalEvent(args.Target, new AvaliExitStasisActionEvent());
+                RaiseLocalEvent(args.Target, new ExitStasisActionEvent());
             }
         }
     }
 
-    protected override void OnMapInit(EntityUid uid, AvaliStasisComponent comp, MapInitEvent args)
+    protected override void OnMapInit(EntityUid uid, StasisComponent comp, MapInitEvent args)
     {
         _actionsSystem.AddAction(uid, ref comp.EnterStasisActionEntity, comp.EnterStasisAction);
     }
@@ -47,41 +45,41 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
     /// <summary>
     /// Takeths away the action to preform stasis from the entity.
     /// </summary>
-    protected override void OnCompRemove(EntityUid uid, AvaliStasisComponent comp, ComponentShutdown args)
+    protected override void OnCompRemove(EntityUid uid, StasisComponent comp, ComponentShutdown args)
     {
         _actionsSystem.RemoveAction(uid, comp.EnterStasisActionEntity);
         _actionsSystem.RemoveAction(uid, comp.ExitStasisActionEntity);
     }
 
-    protected override void OnPrepareStasisStart(EntityUid uid, AvaliStasisComponent comp,
-        AvaliPrepareStasisActionEvent args)
+    protected override void OnPrepareStasisStart(EntityUid uid, StasisComponent comp,
+        PrepareStasisActionEvent args)
     {
         Dirty(uid, comp);
         
-        EnsureComp<AvaliStasisFrozenComponent>(uid);
+        EnsureComp<StasisFrozenComponent>(uid);
         
         _actionsSystem.RemoveAction(uid, comp.EnterStasisActionEntity);
         _actionsSystem.AddAction(uid, ref comp.ExitStasisActionEntity, comp.ExitStasisAction);
         _actionsSystem.SetCooldown(comp.ExitStasisActionEntity, TimeSpan.FromSeconds(comp.StasisEnterEffectLifetime + 1));
 
         // Send animation event to all clients
-        var ev = new AvaliStasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
-            AvaliStasisAnimationType.Prepare);
+        var ev = new StasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
+            StasisAnimationType.Prepare);
         RaiseNetworkEvent(ev);
 
         // Schedule the enter stasis event after delay
         Timer.Spawn(TimeSpan.FromSeconds(comp.StasisEnterEffectLifetime), () =>
         {
-            if (!TryComp<AvaliStasisComponent>(uid, out var stasisComp))
+            if (!TryComp<StasisComponent>(uid, out var stasisComp))
                 return;
 
-            var enterEv = new AvaliEnterStasisActionEvent();
+            var enterEv = new EnterStasisActionEvent();
             RaiseLocalEvent(uid, enterEv);
         });
     }
     
-    protected override void OnEnterStasisStart(EntityUid uid, AvaliStasisComponent comp,
-        AvaliEnterStasisActionEvent args)
+    protected override void OnEnterStasisStart(EntityUid uid, StasisComponent comp,
+        EnterStasisActionEvent args)
     {
         comp.IsInStasis = true;
 
@@ -94,12 +92,12 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         }
 
         // Send animation event to all clients
-        var ev = new AvaliStasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
-            AvaliStasisAnimationType.Enter);
+        var ev = new StasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
+            StasisAnimationType.Enter);
         RaiseNetworkEvent(ev);
     }
 
-    protected override void OnExitStasisStart(EntityUid uid, AvaliStasisComponent comp, AvaliExitStasisActionEvent args)
+    protected override void OnExitStasisStart(EntityUid uid, StasisComponent comp, ExitStasisActionEvent args)
     {
         comp.IsInStasis = false;
         Dirty(uid, comp);
@@ -108,11 +106,11 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         _actionsSystem.AddAction(uid, ref comp.EnterStasisActionEntity, comp.EnterStasisAction);
         _actionsSystem.SetCooldown(comp.EnterStasisActionEntity, TimeSpan.FromSeconds(comp.StasisCooldown));
 
-        RemComp<AvaliStasisFrozenComponent>(uid);
+        RemComp<StasisFrozenComponent>(uid);
 
         // Send animation event to all clients
-        var ev = new AvaliStasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
-            AvaliStasisAnimationType.Exit);
+        var ev = new StasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
+            StasisAnimationType.Exit);
         RaiseNetworkEvent(ev);
     }
 
@@ -120,7 +118,7 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<AvaliStasisComponent>();
+        var query = EntityQueryEnumerator<StasisComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
             if (TryComp<MobStateComponent>(uid, out var mobState))
@@ -132,7 +130,7 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         }
     }
 
-    private void OnDamageChanged(EntityUid uid, AvaliStasisComponent component, DamageChangedEvent args)
+    private void OnDamageChanged(EntityUid uid, StasisComponent component, DamageChangedEvent args)
     {
             // If the entity has a mob state component, and the damage changed event is not healing, apply the resistance.
             if (TryComp<MobStateComponent>(uid, out var mobState))
@@ -143,7 +141,7 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
             }
     }
     
-    private void ApplyResistance(EntityUid uid, DamageChangedEvent args, AvaliStasisComponent comp, AvaliStasisHealingValues healingValues) {
+    private void ApplyResistance(EntityUid uid, DamageChangedEvent args, StasisComponent comp, StasisHealingValues healingValues) {
             // Skip if this is healing or if the damage change is from our own healing
         if (!args.DamageIncreased || args.DamageDelta == null || args.Origin == uid)
             return;
@@ -167,8 +165,8 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
         _damageableSystem.TryChangeDamage(uid, damageToApply, true, origin: uid);
     }
 
-    private void OnStasisUpdate(EntityUid uid, AvaliStasisComponent comp, FrameEventArgs args,
-        AvaliStasisHealingValues healingValues)
+    private void OnStasisUpdate(EntityUid uid, StasisComponent comp, FrameEventArgs args,
+        StasisHealingValues healingValues)
     {
         if (!comp.IsInStasis)
             return;
@@ -198,15 +196,15 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
     /// <summary>
     /// Gets the healing values for the stasis effect based on the mob state.
     /// </summary>
-    private AvaliStasisHealingValues GetHealingValues(MobState state, AvaliStasisComponent comp)
+    private StasisHealingValues GetHealingValues(MobState state, StasisComponent comp)
     {
         return state switch
         {
-            MobState.Alive => new AvaliStasisHealingValues(comp.StasisBluntHealPerSecond, comp.StasisSlashingHealPerSecond, comp.StasisPiercingHealPerSecond, comp.StasisHeatHealPerSecond, comp.StasisColdHealPerSecond, comp.StasisBleedHealPerSecond, comp.StasisAdditionalDamageResistance),
-            MobState.Critical => new AvaliStasisHealingValues(comp.StasisInCritBluntHealPerSecond, comp.StasisInCritSlashingHealPerSecond, comp.StasisInCritPiercingHealPerSecond, comp.StasisInCritHeatHealPerSecond, comp.StasisInCritColdHealPerSecond, comp.StasisInCritBleedHealPerSecond, comp.StasisInCritAdditionalDamageResistance),
-            MobState.Invalid =>  new AvaliStasisHealingValues(0, 0, 0, 0, 0, 0, 0),
-            MobState.Dead => new AvaliStasisHealingValues(0, 0, 0, 0, 0, 0, 0),
-            _ => new AvaliStasisHealingValues(0, 0, 0, 0, 0, 0, 0),
+            MobState.Alive => new StasisHealingValues(comp.StasisBluntHealPerSecond, comp.StasisSlashingHealPerSecond, comp.StasisPiercingHealPerSecond, comp.StasisHeatHealPerSecond, comp.StasisColdHealPerSecond, comp.StasisBleedHealPerSecond, comp.StasisAdditionalDamageResistance),
+            MobState.Critical => new StasisHealingValues(comp.StasisInCritBluntHealPerSecond, comp.StasisInCritSlashingHealPerSecond, comp.StasisInCritPiercingHealPerSecond, comp.StasisInCritHeatHealPerSecond, comp.StasisInCritColdHealPerSecond, comp.StasisInCritBleedHealPerSecond, comp.StasisInCritAdditionalDamageResistance),
+            MobState.Invalid =>  new StasisHealingValues(0, 0, 0, 0, 0, 0, 0),
+            MobState.Dead => new StasisHealingValues(0, 0, 0, 0, 0, 0, 0),
+            _ => new StasisHealingValues(0, 0, 0, 0, 0, 0, 0),
         };
     }
 }
@@ -214,7 +212,7 @@ public sealed class AvaliStasisSystem : SharedAvaliStasisSystem
 /// <summary>
 /// A struct that contains the healing values for the stasis effect.
 /// </summary>
-sealed class AvaliStasisHealingValues(
+sealed class StasisHealingValues(
     float bluntHeal,
     float slashHeal,
     float piercingHeal,

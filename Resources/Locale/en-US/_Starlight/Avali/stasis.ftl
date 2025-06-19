@@ -1,5 +1,5 @@
-avali-stasis-entering = Entering Stasis
-avali-stasis-exiting = Exiting Stasis
+stasis-entering = Entering Stasis
+stasis-exiting = Exiting Stasis
 
 # Action names
 avali-stasis-action-enter-name = Enter Stasis

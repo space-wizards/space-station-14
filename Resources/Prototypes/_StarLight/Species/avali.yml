@@ -160,33 +160,10 @@
     state: r_foot
 
 - type: entity
-  id: AvaliStasis
+  id: Stasis
   name: Avali Stasis
   description: Allows Avali to enter nanite induced stasis.
   components:
-    - type: AvaliStasis
-      enterStasisAction: ActionAvaliStasisEnter
-      exitStasisAction: ActionAvaliStasisExit
-      stasisCooldown: 300
-      stasisBluntHealPerSecond: 2
-      stasisSlashingHealPerSecond: 2
-      stasisPiercingHealPerSecond: 2
-      stasisHeatHealPerSecond: 2
-      stasisColdHealPerSecond: 2
-      stasisBleedHealPerSecond: 1.0
-      stasisAdditionalDamageResistance: 1.5
-      stasisInCritBluntHealPerSecond: 1
-      stasisInCritSlashingHealPerSecond: 1
-      stasisInCritPiercingHealPerSecond: 1
-      stasisInCritHeatHealPerSecond: 1
-      stasisInCritColdHealPerSecond: 1
-      stasisInCritBleedHealPerSecond: 0.5
-      stasisInCritAdditionalDamageResistance: 1.5
-      stasisEnterEffect: EffectNanitesEnter
-      stasisEnterEffectLifetime: 2.7
-      stasisEnterSound: /Audio/_Starlight/Misc/alien_teleport.ogg
-      stasisExitEffect: EffectNanitesExit
-      stasisExitEffectLifetime: 2.7
-      stasisExitSound: /Audio/_Starlight/Misc/alien_teleport.ogg
-      stasisContinuousEffect: EffectNanitesCurrent
-      
+    - type: Stasis
+      enterStasisAction: ActionStasisEnter
+      exitStasisAction: ActionStasisExit

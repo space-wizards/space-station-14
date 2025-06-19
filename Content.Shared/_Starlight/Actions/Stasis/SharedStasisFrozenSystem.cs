@@ -8,51 +8,45 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Speech;
 using Content.Shared.Throwing;
-using Content.Shared.Starlight.Avali.Components;
 
-namespace Content.Shared.Starlight.Avali.Systems;
+namespace Content.Shared._Starlight.Actions.Stasis;
 
 /// <summary>
 /// System that handles the freezing behavior of entities in stasis.
-/// This system prevents entities with AvaliStasisFrozenComponent from performing most actions,
+/// This system prevents entities with StasisFrozenComponent from performing most actions,
 /// while still allowing them to use the exit stasis action.
 /// </summary>
-public abstract class SharedAvaliStasisFrozenSystem : EntitySystem
+public abstract class SharedStasisFrozenSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-
-    private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _sawmill = _logManager.GetSawmill("avali.stasis");
-
         // Block various actions and interactions
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, UseAttemptEvent>(OnUseAttempt);
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, PickupAttemptEvent>(OnCancellableAttempt);
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, ThrowAttemptEvent>(OnCancellableAttempt);
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, InteractionAttemptEvent>(OnInteractAttempt);
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, ComponentShutdown>(UpdateCanMove);
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, PullAttemptEvent>(OnPullAttempt);
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, AttackAttemptEvent>(OnCancellableAttempt);
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, ChangeDirectionAttemptEvent>(OnCancellableAttempt);
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, EmoteAttemptEvent>(OnEmoteAttempt);
-        SubscribeLocalEvent<AvaliStasisFrozenComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+        SubscribeLocalEvent<StasisFrozenComponent, UseAttemptEvent>(OnUseAttempt);
+        SubscribeLocalEvent<StasisFrozenComponent, PickupAttemptEvent>(OnCancellableAttempt);
+        SubscribeLocalEvent<StasisFrozenComponent, ThrowAttemptEvent>(OnCancellableAttempt);
+        SubscribeLocalEvent<StasisFrozenComponent, InteractionAttemptEvent>(OnInteractAttempt);
+        SubscribeLocalEvent<StasisFrozenComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<StasisFrozenComponent, ComponentShutdown>(UpdateCanMove);
+        SubscribeLocalEvent<StasisFrozenComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
+        SubscribeLocalEvent<StasisFrozenComponent, PullAttemptEvent>(OnPullAttempt);
+        SubscribeLocalEvent<StasisFrozenComponent, AttackAttemptEvent>(OnCancellableAttempt);
+        SubscribeLocalEvent<StasisFrozenComponent, ChangeDirectionAttemptEvent>(OnCancellableAttempt);
+        SubscribeLocalEvent<StasisFrozenComponent, EmoteAttemptEvent>(OnEmoteAttempt);
+        SubscribeLocalEvent<StasisFrozenComponent, SpeakAttemptEvent>(OnSpeakAttempt);
     }
 
     /// <summary>
     /// Handles use attempts, allowing only the exit stasis action to proceed.
     /// </summary>
-    private void OnUseAttempt(EntityUid uid, AvaliStasisFrozenComponent component, UseAttemptEvent args)
+    private void OnUseAttempt(EntityUid uid, StasisFrozenComponent component, UseAttemptEvent args)
     {
-        // If we get here, the entity with AvaliStasisFrozenComponent is trying to use an action
-        if (!TryComp<AvaliStasisComponent>(uid, out var stasisComponent))
+        // If we get here, the entity with StasisFrozenComponent is trying to use an action
+        if (!TryComp<StasisComponent>(uid, out var stasisComponent))
         {
             args.Cancel();
             return;
@@ -71,7 +65,7 @@ public abstract class SharedAvaliStasisFrozenSystem : EntitySystem
     /// <summary>
     /// Handles speech attempts, blocking them if the entity is muted.
     /// </summary>
-    private void OnSpeakAttempt(EntityUid uid, AvaliStasisFrozenComponent component, SpeakAttemptEvent args)
+    private void OnSpeakAttempt(EntityUid uid, StasisFrozenComponent component, SpeakAttemptEvent args)
     {
         if (!component.Muted)
         {
@@ -84,7 +78,7 @@ public abstract class SharedAvaliStasisFrozenSystem : EntitySystem
     /// <summary>
     /// Handles various cancellable attempts, blocking them all.
     /// </summary>
-    private void OnCancellableAttempt(EntityUid uid, AvaliStasisFrozenComponent component,
+    private void OnCancellableAttempt(EntityUid uid, StasisFrozenComponent component,
         CancellableEntityEventArgs args)
     {
         args.Cancel();
@@ -93,7 +87,7 @@ public abstract class SharedAvaliStasisFrozenSystem : EntitySystem
     /// <summary>
     /// Handles pull attempts, preventing the entity from being pulled.
     /// </summary>
-    private void OnPullAttempt(EntityUid uid, AvaliStasisFrozenComponent component, PullAttemptEvent args)
+    private void OnPullAttempt(EntityUid uid, StasisFrozenComponent component, PullAttemptEvent args)
     {
         args.Cancelled = true;
     }
@@ -101,7 +95,7 @@ public abstract class SharedAvaliStasisFrozenSystem : EntitySystem
     /// <summary>
     /// Handles component startup, stopping any active pulls and updating movement state.
     /// </summary>
-    private void OnStartup(EntityUid uid, AvaliStasisFrozenComponent component, ComponentStartup args)
+    private void OnStartup(EntityUid uid, StasisFrozenComponent component, ComponentStartup args)
     {
         if (TryComp<PullableComponent>(uid, out var pullable))
         {
@@ -114,7 +108,7 @@ public abstract class SharedAvaliStasisFrozenSystem : EntitySystem
     /// <summary>
     /// Handles movement update events, preventing movement while in stasis.
     /// </summary>
-    private void OnUpdateCanMove(EntityUid uid, AvaliStasisFrozenComponent component, UpdateCanMoveEvent args)
+    private void OnUpdateCanMove(EntityUid uid, StasisFrozenComponent component, UpdateCanMoveEvent args)
     {
         if (component.LifeStage > ComponentLifeStage.Running)
             return;
@@ -125,7 +119,7 @@ public abstract class SharedAvaliStasisFrozenSystem : EntitySystem
     /// <summary>
     /// Updates the entity's movement state.
     /// </summary>
-    private void UpdateCanMove(EntityUid uid, AvaliStasisFrozenComponent component, EntityEventArgs args)
+    private void UpdateCanMove(EntityUid uid, StasisFrozenComponent component, EntityEventArgs args)
     {
         _blocker.UpdateCanMove(uid);
     }
@@ -133,7 +127,7 @@ public abstract class SharedAvaliStasisFrozenSystem : EntitySystem
     /// <summary>
     /// Handles emote attempts, blocking them if the entity is muted.
     /// </summary>
-    private void OnEmoteAttempt(EntityUid uid, AvaliStasisFrozenComponent component, EmoteAttemptEvent args)
+    private void OnEmoteAttempt(EntityUid uid, StasisFrozenComponent component, EmoteAttemptEvent args)
     {
         if (component.Muted)
         {
@@ -144,19 +138,15 @@ public abstract class SharedAvaliStasisFrozenSystem : EntitySystem
     /// <summary>
     /// Handles general interaction attempts, blocking them all except for skills.
     /// </summary>
-    private void OnInteractAttempt(Entity<AvaliStasisFrozenComponent> ent, ref InteractionAttemptEvent args)
+    private void OnInteractAttempt(Entity<StasisFrozenComponent> ent, ref InteractionAttemptEvent args)
     {
-        _sawmill.Info($"Interaction attempt - args.Uid: {args.Uid}, ent.Owner: {ent.Owner}, args.Target: {args.Target}");
-
         // Check if this is a skill interaction
         if (args.Target == null)
         {
-            _sawmill.Info("Allowing interaction - skill (no target)");
             return;
         }
 
         // Block all other interactions
-        _sawmill.Info("Blocking interaction - not a skill");
         args.Cancelled = true;
     }
 }
