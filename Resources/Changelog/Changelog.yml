@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Golub
-  changes:
-  - message: Added the Knock spell to the wizard's grimoire
-    type: Add
-  id: 8180
-  time: '2025-04-14T18:57:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36562
 - author: metalgearsloth
   changes:
   - message: DamagePopups such as target dummies are now predicted.
@@ -3909,3 +3902,11 @@
   id: 8692
   time: '2025-06-18T21:14:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38433
+- author: Bhijn and Myr
+  changes:
+  - message: In interest of raising awareness of addiction to the game, the lobby
+      will now display your current playtime on a given day once it exceeds a threshold.
+    type: Add
+  id: 8693
+  time: '2025-06-19T01:06:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36483
