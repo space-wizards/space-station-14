@@ -137,9 +137,10 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
     private void HandleDragDropOn(Entity<CryoPodComponent> entity, ref DragDropTargetEvent args)
     {
-        if (_itemSlotsSystem.TryInsert(entity, entity.Comp.SolutionContainerName, args.Dragged, args.User) == false)
-            args.Handled = false;
-        else args.Handled = true;
+        if (_itemSlotsSystem.TryInsert(entity, entity.Comp.SolutionContainerName, args.Dragged, args.User) == true) {
+            args.Handled = true;
+            return;
+        }
 
         if (entity.Comp.BodyContainer.ContainedEntity != null || args.Handled == true)
             return;
