@@ -80,7 +80,7 @@ namespace Content.Server.Sandbox.Commands
                 if (!EntityManager.TryGetComponent(x.Owner, out AtmosPipeColorComponent? atmosPipeColorComponent))
                     continue;
 
-                _pipeColorSystem.SetColor(x.Owner, atmosPipeColorComponent, color);
+                _pipeColorSystem.SetColor((x.Owner, atmosPipeColorComponent), color);
             }
         }
     }
