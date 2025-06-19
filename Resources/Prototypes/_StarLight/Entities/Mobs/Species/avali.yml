@@ -96,7 +96,7 @@
         Female: FemaleAvali
         Unsexed: MaleAvali
     - type: MovementSpeedModifier
-      weightlessAcceleration: 1.6 # Avalis are specifically built to fly in low-g environments 
+      weightlessAcceleration: 1.6 # Avalis are specifically built to fly in low-g environments
       weightlessFriction: 1
       weightlessModifier: 1
     - type: Damageable
