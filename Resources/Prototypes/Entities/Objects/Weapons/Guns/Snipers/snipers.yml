@@ -15,6 +15,9 @@
       Resomi:
         knockback: 4
         staminaMultiplier: 15
+      Avali:
+        knockback: 1 # Bigger bird, more sturdy bones.. or something.
+        staminaMultiplier: 15
       Felionoid:
         knockback: 2 #half of what resomi take
         staminaMultiplier: 15
