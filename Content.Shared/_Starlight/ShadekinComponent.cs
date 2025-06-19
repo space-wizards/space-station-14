@@ -9,9 +9,13 @@ public sealed partial class ShadekinComponent : Component
     [DataField]
     public ProtoId<AlertPrototype> ShadekinAlert = "Shadekin";
 
-    public float Accumulator;
+    [ViewVariables(VVAccess.ReadOnly)]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
 
     [DataField]
+    public TimeSpan UpdateCooldown = TimeSpan.FromSeconds(1f);
+
+    [ViewVariables(VVAccess.ReadOnly)]
     public float LightExposure = 0;
 }
 
