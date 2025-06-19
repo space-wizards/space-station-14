@@ -96,9 +96,8 @@
       roleLoadout: [ RoleSurvivalExtended ]
     - type: RandomMetadata
       nameSegments:
-      - NamesMilitaryFirstLeader # Todo: Add 'Sergeant' name
       - NamesMilitaryLast
-      nameFormat: name-format-ert
+      nameFormat: name-format-military-leader
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVA
@@ -167,9 +166,8 @@
       job: ERTChaplain
     - type: RandomMetadata
       nameSegments:
-      - NamesMilitaryFirst # Todo: Add 'chaplain' name
       - NamesMilitaryLast
-      nameFormat: name-format-ert
+      nameFormat: name-format-military-specialist
     - type: Loadout
       prototypes: [ ERTChaplainGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -221,9 +219,8 @@
       job: ERTJanitor
     - type: RandomMetadata
       nameSegments:
-      - NamesMilitaryFirst # Todo: Add 'specialist' name
       - NamesMilitaryLast
-      nameFormat: name-format-ert
+      nameFormat: name-format-military-specialist
     - type: Loadout
       prototypes: [ ERTJanitorGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -274,9 +271,8 @@
       job: ERTEngineer
     - type: RandomMetadata
       nameSegments:
-      - NamesMilitaryFirst # Todo: Add 'specialist' name
       - NamesMilitaryLast
-      nameFormat: name-format-ert
+      nameFormat: name-format-military-specialist
     - type: Loadout
       prototypes: [ ERTEngineerGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -346,9 +342,8 @@
       job: ERTSecurity
     - type: RandomMetadata
       nameSegments:
-      - NamesMilitaryFirst # Todo: Add 'officer' name
       - NamesMilitaryLast
-      nameFormat: name-format-ert
+      nameFormat: name-format-military-officer
     - type: Loadout
       prototypes: [ ERTSecurityGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -381,51 +376,45 @@
       roleLoadout: [ RoleSurvivalEVA ]
 
 - type: entity
-  id: RandomHumanoidSpawnerERTSecurityArmedRifleman
+  id: RandomHumanoidSpawnerERTSecurityArmedRifle
   parent: RandomHumanoidSpawnerERTSecurityEVA
   name: ERT security rifleman
   suffix: ERTRole, Armed, EVA
   components:
-  #- type: Sprite
-  #  sprite: Markers/jobs.rsi
-  #  state: ertsecurityarmedrifleman # Todo: Add job sprites
   - type: RandomHumanoidSpawner
-    settings: ERTSecurityArmedRifleman
+    settings: ERTSecurityArmedRifle
 
 - type: randomHumanoidSettings
-  id: ERTSecurityArmedRifleman
+  id: ERTSecurityArmedRifle
   parent: ERTSecurityEVA
   components:
-  #- type: RandomMetadata
-  #  nameSegments:
-  #  - NamesMilitaryFirst # Todo: Add 'rifleman' name
-  #  - NamesMilitaryLast
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-military-rifle
   - type: Loadout
-    prototypes: [ ERTSecurityGearArmedRifleman ]
+    prototypes: [ ERTSecurityGearArmedRifle ]
     roleLoadout: [ RoleSurvivalEVA ]
 
 - type: entity
   parent: RandomHumanoidSpawnerERTSecurityEVA
-  id: RandomHumanoidSpawnerERTSecurityArmedGrenadier
+  id: RandomHumanoidSpawnerERTSecurityArmedGrenade
   name: ERT security grenadier
   suffix: ERTRole, Armed, EVA
   components:
-  #- type: Sprite
-  #  sprite: Markers/jobs.rsi
-  #  state: ertsecurityarmedgrenadier # Todo: Add job sprites
   - type: RandomHumanoidSpawner
-    settings: ERTSecurityArmedGrenadier
+    settings: ERTSecurityArmedGrenade
 
 - type: randomHumanoidSettings
   parent: ERTSecurityEVA
-  id: ERTSecurityArmedGrenadier
+  id: ERTSecurityArmedGrenade
   components:
-  #- type: RandomMetadata
-  #  nameSegments:
-  #  - NamesMilitaryFirst # Todo: Add 'grenadier' name
-  #  - NamesMilitaryLast
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-military-grenade
   - type: Loadout
-    prototypes: [ ERTSecurityGearArmedGrenadier ]
+    prototypes: [ ERTSecurityGearArmedGrenade ]
     roleLoadout: [ RoleSurvivalEVA ]
 
 - type: entity
@@ -434,9 +423,6 @@
   name: ERT security vanguard
   suffix: ERTRole, Armed, EVA
   components:
-  #- type: Sprite
-  #  sprite: Markers/jobs.rsi
-  #  state: ertsecurityarmedmelee # Todo: Add job sprites
   - type: RandomHumanoidSpawner
     settings: ERTSecurityArmedMelee
 
@@ -444,10 +430,10 @@
   parent: ERTSecurityEVA
   id: ERTSecurityArmedMelee
   components:
-  #- type: RandomMetadata
-  #  nameSegments:
-  #  - NamesMilitaryFirst # Todo: Add 'vanguard' name
-  #  - NamesMilitaryLast
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-military-melee
   - type: Loadout
     prototypes: [ ERTSecurityGearArmedMelee ]
     roleLoadout: [ RoleSurvivalEVA ]
@@ -479,9 +465,8 @@
       job: ERTMedical
     - type: RandomMetadata
       nameSegments:
-      - NamesMilitaryFirst # Todo: Add 'corpsman' name
       - NamesMilitaryLast
-      nameFormat: name-format-ert
+      nameFormat: name-format-military-medic
     - type: Loadout
       prototypes: [ ERTMedicalGear ]
       roleLoadout: [ RoleSurvivalExtended ]

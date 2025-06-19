@@ -350,7 +350,7 @@
 
 - type: startingGear
   parent: ERTSecurityGearEVA
-  id: ERTSecurityGearArmedRifleman
+  id: ERTSecurityGearArmedRifle
   equipment:
     back: PortableRecharger
     suitstorage: WeaponRifleLecter
@@ -369,7 +369,7 @@
 
 - type: startingGear
   parent: ERTSecurityGearEVA
-  id: ERTSecurityGearArmedGrenadier
+  id: ERTSecurityGearArmedGrenade
   equipment:
     pocket2: WeaponPistolMk58
     suitstorage: WeaponLauncherHydraLethal
