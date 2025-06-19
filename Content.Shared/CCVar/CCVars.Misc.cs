@@ -38,7 +38,7 @@ public sealed partial class CCVars
     ///     some food object won't spam a user with flavors.
     /// </summary>
     public static readonly CVarDef<int>
-        FlavorLimit = CVarDef.Create("flavor.limit", 10, CVar.SERVERONLY);
+        FlavorLimit = CVarDef.Create("flavor.limit", 10, CVar.SERVER | CVar.REPLICATED);
 
     public static readonly CVarDef<string> DestinationFile =
         CVarDef.Create("autogen.destination_file", "", CVar.SERVER | CVar.SERVERONLY);

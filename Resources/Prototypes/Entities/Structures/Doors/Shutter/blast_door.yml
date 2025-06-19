@@ -11,6 +11,8 @@
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
+    - state: welded
+      map: ["enum.WeldableLayers.BaseWelded"]
   - type: Door
     closeTimeOne: 0.4
     closeTimeTwo: 0.4
@@ -73,6 +75,91 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Shutters/blastdoor.rsi
+    state: assembly
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask:
+        - Impassable
+        - HighImpassable
+        layer:
+        - HighImpassable
+  - type: Transform
+    noRot: true
+  - type: Construction
+    graph: BlastDoor
+    node: frame1
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  parent: BlastDoor
+  id: BlastDoorXeno
+  name: xeno blast door
+  description: Don't lose an arm!
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Shutters/xeno_blastdoor.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    closeTimeOne: 0.4
+    closeTimeTwo: 0.7
+    openTimeOne: 0.4
+    openTimeTwo: 0.7
+    openingAnimationTime: 1.1
+    closingAnimationTime: 1.0
+    canPry: false
+    crushDamage:
+      types:
+        Blunt: 25 # yowch
+  - type: IconSmooth
+    key: chitin
+    mode: NoSprite
+
+- type: entity
+  parent: BlastDoorXeno
+  id: BlastDoorXenoOpen
+  suffix: Open
+  components:
+  - type: Door
+    state: Open
+  - type: Occluder
+    enabled: false
+  - type: Physics
+    canCollide: false
+  - type: Airtight
+    airBlocked: false
+  - type: RadiationBlocker
+    enabled: false
+
+- type: entity
+  parent: BaseStructureDynamic
+  id: BlastDoorXenoFrame
+  name: xeno blast door frame
+  description: This one says 'BLAST DONGER'.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Shutters/xeno_blastdoor.rsi
     state: assembly
   - type: InteractionOutline
   - type: Damageable
