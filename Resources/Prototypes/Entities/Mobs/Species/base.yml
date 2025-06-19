@@ -47,7 +47,7 @@
     - map: ["enum.HumanoidVisualLayers.Handcuffs"]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
-      state: body-overlay
+      state: body-overlay-2
       visible: false
     - map: [ "clownedon" ] # Dynamically generated
       sprite: "Effects/creampie.rsi"
@@ -149,6 +149,7 @@
   - type: FloatingVisuals
   - type: Climbing
   - type: Cuffable
+    baseCuffableState: body-overlay
   - type: Ensnareable
     sprite: Objects/Misc/ensnare.rsi
     state: icon
@@ -317,7 +318,7 @@
     - map: ["enum.HumanoidVisualLayers.Handcuffs"]
       color: "#ffffff"
       sprite: Objects/Misc/handcuffs.rsi
-      state: body-overlay
+      state: body-overlay-2
       visible: false
     - map: [ "gloves" ]
     - map: [ "shoes" ]

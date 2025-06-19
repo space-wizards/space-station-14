@@ -49,11 +49,7 @@ public sealed class CuffableSystem : SharedCuffableSystem
             return;
         _sprite.LayerSetColor((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffState.Color!.Value);
 
-        // Get the entity's humanoid visual layer so we can pull its cuff visuals
-        if (!_sprite.TryGetLayer((uid, sprite), HumanoidVisualLayers.Handcuffs, out var cuffLayer, false))
-            return;
 
-        component.BaseCuffableState ??= cuffLayer.State.Name;
         var cuffIconState = $"{component.BaseCuffableState}-{cuffState.NumHandsCuffed}";
 
         if (!Equals(component.CurrentRSI, cuffState.RSI) && cuffState.RSI != null) // we don't want to keep loading the same RSI
