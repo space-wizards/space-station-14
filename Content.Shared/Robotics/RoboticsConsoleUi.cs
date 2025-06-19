@@ -18,6 +18,10 @@ public sealed class RoboticsConsoleState : BoundUserInterfaceState
     /// Map of device network addresses to cyborg data.
     /// </summary>
     public Dictionary<string, CyborgControlData> Cyborgs;
+
+    /// <summary>
+    /// If the UI will have the buttons to disable and destroy
+    /// </summary>
     public bool AllowBorgControl;
 
     public RoboticsConsoleState(Dictionary<string, CyborgControlData> cyborgs, bool allowBorgControl)
