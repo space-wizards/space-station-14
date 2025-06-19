@@ -97,15 +97,16 @@ public sealed partial class CCVars
 
     /// <summary>
     ///     The last time the client recorded a valid connection to a game server.
-    ///     Used in conjunction with <see cref="MinutesToday"/> to track how long the player has been playing for the given day.
+    ///     Used in conjunction with <see cref="PlaytimeMinutesToday"/> to track how long the player has been playing for the given day.
     /// </summary>
-    public static readonly CVarDef<string> LastConnectDate =
-        CVarDef.Create("playtime.last_connect_date", "1970-01-01", CVar.CLIENTONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<string> PlaytimeLastConnectDate =
+        CVarDef.Create("playtime.last_connect_date", "", CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     ///     The total minutes that the client has spent since the date of last connection.
     ///     This is reset to 0 when the last connect date is updated.
+    ///     Do not read this value directly, use <code>ClientsidePlaytimeTrackingManager</code> instead.
     /// </summary>
-    public static readonly CVarDef<float> MinutesToday =
+    public static readonly CVarDef<float> PlaytimeMinutesToday =
         CVarDef.Create("playtime.minutes_today", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
 }
