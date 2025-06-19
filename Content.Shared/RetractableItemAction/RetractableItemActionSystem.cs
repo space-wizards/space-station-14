@@ -37,7 +37,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
 
     private void OnRetractableItemAction(Entity<RetractableItemActionComponent> ent, ref OnRetractableItemActionEvent args)
     {
-        if (_hands.GetActiveHand(ent.Owner) is not { } activeHand)
+        if (_hands.GetActiveHand(args.Performer) is not { } activeHand)
             return;
 
         if (_actions.GetAction(ent.Owner) is not { } action)
