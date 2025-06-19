@@ -22,6 +22,12 @@ public sealed partial class TurnstileComponent : Component
     public EntityWhitelist? ProcessWhitelist;
 
     /// <summary>
+    /// If the turnstile is emagged, it will flip directions
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Flipped;
+
+    /// <summary>
     /// The next time at which the resist message can show.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
@@ -31,16 +37,18 @@ public sealed partial class TurnstileComponent : Component
     /// Maintained hashset of entities currently passing through the turnstile.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<EntityUid> CollideExceptions = new();
+    public Dictionary<EntityUid, EntranceMethod> CollideExceptions = new();
 
     /// <summary>
-    /// default state of the turnstile sprite.
+    /// Maintained dictionary of entities that can enter due to a successful prying DoAfter
+    /// The values represent the game time at which the entry will expire.
     /// </summary>
-    [DataField]
-    public string DefaultState = "turnstile";
+    [DataField, AutoNetworkedField]
+    public Dictionary<EntityUid, TimeSpan> PriedExceptions = new();
 
     /// <summary>
     /// animation state of the turnstile spinning.
+    /// Frame 0 will be used for the idle state
     /// </summary>
     [DataField]
     public string SpinState = "operate";
@@ -50,6 +58,12 @@ public sealed partial class TurnstileComponent : Component
     /// </summary>
     [DataField]
     public string DenyState = "deny";
+
+    /// <summary>
+    /// animation state of the turnstile granting entry.
+    /// </summary>
+    [DataField]
+    public string GrantedState = "granted";
 
     /// <summary>
     /// Sound to play when the turnstile admits a mob through.
@@ -68,10 +82,77 @@ public sealed partial class TurnstileComponent : Component
             Volume = -7,
         },
     };
+
+    /// <summary>
+    /// This is similar to the POWER wire on traditional airlocks
+    /// While this is true, the turnstile may be bypassed by prying and the bolts will not actuate.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool SolenoidBypassed;
+
+    /// <summary>
+    /// Pry modifier for a turnstile without bypassing the solenoid.
+    /// Most anything that can pry powered has a pry speed bonus,
+    /// so this default is closer to 6 effectively on e.g. jaws (9 seconds when applied to other default.)
+    /// </summary>
+    [DataField]
+    public float PoweredPryModifier = 9f;
+
+    /// <summary>
+    /// Pry modifier for a prying a turnstile from the wrong direction.
+    /// </summary>
+    [DataField]
+    public float WrongDirectionPryModifier = 2f;
+
+    /// <summary>
+    /// Pry modifier for a bolted turnstile.
+    /// Currently only zombies can pry bolted turnstiles.
+    /// </summary>
+    [DataField]
+    public float BoltedPryModifier = 3f;
+
+    /// <summary>
+    /// The amount of time it takes for a successful pry DoAfter to expire
+    /// You must enter the turnstile within this amount of time after the DoAfter finishes
+    /// </summary>
+    [DataField]
+    public TimeSpan PryExpirationTime = TimeSpan.FromSeconds(3);
+
+    /// <summary>
+    /// Server variable for keeping track of if the turnstile has had access broken since construction
+    /// </summary>
+    [DataField(serverOnly: true, readOnly: true)]
+    public bool AccessBroken;
+
+    /// <summary>
+    /// Client variable for keeping track of if the turnstile "obviously" has broken access for prediction.
+    /// This should match the "constantly spinning" anomation state
+    /// </summary>
+    [DataField(readOnly: true), AutoNetworkedField]
+    public bool ObviouslyAccessBroken;
+}
+
+[Serializable, NetSerializable]
+public enum TurnstileVisuals : byte
+{
+    AccessBrokenSpinning,
 }
 
 [Serializable, NetSerializable]
 public enum TurnstileVisualLayers : byte
 {
-    Base
+    Base,
+    Spinner,
+    Indicators,
+    BoltIndicators,
+}
+
+[Serializable, NetSerializable]
+public enum EntranceMethod : byte
+{
+    Access = 0,
+    Pulled,
+    ChainPulled,
+    Forced,
+    AccessBroken,
 }
