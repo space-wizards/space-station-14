@@ -143,10 +143,10 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:EvenHealthChange
+      - !type:HealthChange
         damage:
           groups:
-            Brute: -1
+            Brute: -2
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
