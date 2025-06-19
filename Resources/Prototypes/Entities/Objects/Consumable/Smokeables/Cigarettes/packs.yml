@@ -177,10 +177,10 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
 
 - type: entity
-  id: CigPackSyndicate
-  parent: [CigPackBase, BaseSyndicateContraband]
+  id: CigPackSyndicate  #SL EDIT, Syndie to non-contra
+  parent: CigPackBase
   name: Interdyne herbals packet
-  description: Elite cigarettes for elite syndicate agents. Infused with medicine for when you need to do more than calm your nerves.
+  description: Medicinal cigarettes infused with medicine for when you need to do more than calm your nerves.  #SL EDIT, desc change for lore
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi

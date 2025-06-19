@@ -1,0 +1,8 @@
+- type: soundCollection
+  id: Knuckles
+  files:
+    - /Audio/_Starlight/Weapons/knuckle1.ogg
+    - /Audio/_Starlight/Weapons/knuckle2.ogg
+    - /Audio/_Starlight/Weapons/knuckle3.ogg
+    - /Audio/_Starlight/Weapons/knuckle4.ogg
+    - /Audio/_Starlight/Weapons/knuckle5.ogg

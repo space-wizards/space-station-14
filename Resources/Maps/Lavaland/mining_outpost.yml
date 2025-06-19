@@ -688,8 +688,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         896:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 896
     components:
     - type: Transform
@@ -700,8 +699,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         895:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassCargoLocked
   entities:
   - uid: 893
@@ -714,8 +712,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         894:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 894
     components:
     - type: Transform
@@ -726,8 +723,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         893:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
 - proto: AirlockGlass
   entities:
   - uid: 851
@@ -4907,8 +4903,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         848:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
   - uid: 843
     components:
     - type: Transform
@@ -4918,8 +4913,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         849:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
   - uid: 844
     components:
     - type: Transform
@@ -4929,8 +4923,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         850:
-        - - Pressed
-          - DoorBolt
+        - Pressed: DoorBolt
 - proto: SignSecurearea
   entities:
   - uid: 869
@@ -5124,61 +5117,37 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         345:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         346:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         347:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         348:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         349:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         350:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         351:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
         352:
-        - - Left
-          - Forward
-        - - Right
-          - Reverse
-        - - Middle
-          - Off
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
 - proto: UnfinishedMachineFrame
   entities:
   - uid: 878

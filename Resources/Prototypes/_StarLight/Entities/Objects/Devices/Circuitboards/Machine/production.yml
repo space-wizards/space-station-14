@@ -7,7 +7,7 @@
     - type: MachineBoard
       prototype: PrinterDoc
       stackRequirements:
-        MatterBin: 3
+        Steel: 3
         Manipulator: 1
         Glass: 1
         
@@ -21,7 +21,7 @@
     - type: MachineBoard
       prototype: KitchenOven
       stackRequirements:
-        Capacitor: 4
+        Steel: 4
         Glass: 2
         Cable: 10
     - type: Tag
@@ -38,7 +38,7 @@
     - type: MachineBoard
       prototype: KitchenStove
       stackRequirements:
-        Capacitor: 1
+        Steel: 1
         Cable: 5
     - type: Tag
       tags:

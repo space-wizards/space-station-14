@@ -2,9 +2,10 @@
   id: SpaceNinja
   name: roles-antag-space-ninja-name
   antagonist: true
-  setPreference: false
+  setPreference: true
   objective: roles-antag-space-ninja-objective
   guides: [ SpaceNinja ]
+  previewStartingGear: SpaceNinjaGear
   requirements:
   - !type:OverallPlaytimeRequirement
     time: 3600 # 5h
@@ -36,3 +37,11 @@
     - Wirecutter
     - Welder
     - Multitool
+
+- type: chameleonOutfit
+  id: NinjaChameleonOutfit
+  name: roles-antag-space-ninja-name
+  startingGear: SpaceNinjaGear
+  equipment:
+    id: AssistantPDA
+    neck: ClothingNeckGoldmedal

@@ -138,16 +138,3 @@
   roles:
   - Borg
   - StationAi
-
-- type: department
-  id: Specific
-  name: department-Specific
-  description: department-Specific-description
-  color: "#539c00"
-  weight: 10
-  roles:
-  - Boxer
-  - Reporter
-  - Zookeeper
-  - Psychologist
-  primary: false

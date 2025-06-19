@@ -1,0 +1,21 @@
+- type: entity
+  name: emerald lizitar
+  parent: [ BaseSword, BaseSecurityCargoContraband ]
+  id: EmeraldLizitar
+  description: Caledscratch && Emerald Contraband. Why is it so expensive? What the hell is 'grist'? This weapon leaves you with so many questions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/emerald_lizitar.rsi
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Slash: 15
+    soundHit:
+        path: /Audio/Items/Toys/weh.ogg
+  - type: Item
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Melee/emerald_lizitar.rsi
+    slots:
+    - back
+  - type: DisarmMalus

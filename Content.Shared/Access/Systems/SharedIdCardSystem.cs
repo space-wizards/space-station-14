@@ -204,6 +204,22 @@ public abstract class SharedIdCardSystem : EntitySystem
         return true;
     }
 
+    public bool TryChangeJobDepartment(EntityUid uid, List<ProtoId<DepartmentPrototype>> departments, IdCardComponent? id = null)
+    {
+        if (!Resolve(uid, ref id))
+            return false;
+
+        id.JobDepartments.Clear();
+        foreach (var department in departments)
+        {
+            id.JobDepartments.Add(department);
+        }
+
+        Dirty(uid, id);
+
+        return true;
+    }
+
     /// <summary>
     /// Attempts to change the full name of a card.
     /// Returns true/false.

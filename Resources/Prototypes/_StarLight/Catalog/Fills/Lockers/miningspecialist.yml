@@ -11,8 +11,9 @@
       - id: SurvivalKnife
       - id: HandheldGPSBasic
       - id: RadioHandheld
+      - id: RadioHandheldExpedition
       - id: AppraisalTool
-      - id: ClothingOuterHardsuitEVA
+      - id: ClothingOuterHardsuitSpaceHazard
       - id: Flare
       - id: JetpackMiniFilled
       - id: Pickaxe

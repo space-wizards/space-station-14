@@ -59,7 +59,7 @@
 - type: startingGear
   id: HoPGear
   equipment:
-    shoes: ClothingShoesColorBrown
+    #shoes: ClothingShoesColorBrown # 🌟Starlight🌟
     id: HoPPDA
     gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetHoP
@@ -67,3 +67,15 @@
   storage:
     back:
     - Flash
+
+- type: chameleonOutfit
+  id: HeadOfPersonnelChameleonOutfit
+  job: HeadOfPersonnel
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatHopcap
+    eyes: ClothingEyesHudCommand
+    mask: ClothingMaskNeckGaiterRed
+    neck: ClothingNeckCloakHop
+    outerClothing: ClothingOuterWinterHoP
+

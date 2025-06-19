@@ -7,6 +7,7 @@ using Content.Shared.Screen;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using Content.Shared.TextScreen;
 
 namespace Content.Server.DeviceLinking.Systems;
 
