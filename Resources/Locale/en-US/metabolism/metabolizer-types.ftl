@@ -11,4 +11,5 @@ metabolizer-type-dwarf = Dwarf
 metabolizer-type-moth = Moth
 metabolizer-type-arachnid = Arachnid
 metabolizer-type-vampire = Vampire
+# Starlight
 metabolizer-type-avali = Avali

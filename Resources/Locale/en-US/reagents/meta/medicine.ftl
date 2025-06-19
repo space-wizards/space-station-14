@@ -22,11 +22,13 @@ reagent-desc-doxarubixadone = A cryogenics chemical. Heals cellular damage cause
 reagent-name-dermaline = dermaline
 reagent-desc-dermaline = An advanced chemical that is more effective at treating burn damage than kelotane.
 
+# Starlight Start
 reagent-name-dexalin = dexalin
 reagent-desc-dexalin = Used for treating minor oxygen deprivation and bloodloss, mildly toxic to Avali. A required reagent for dexalin plus.
 
 reagent-name-dexalin-plus = dexalin plus
 reagent-desc-dexalin-plus = Used in treatment of extreme cases of oxygen deprivation and bloodloss, toxic to Avali. Flushes heartbreaker toxin out of the blood stream.
+# Starlight End
 
 reagent-name-epinephrine = epinephrine
 reagent-desc-epinephrine = An effective stabilizing chemical used to keep a critical person from dying to asphyxiation while patching up minor damage during crit. Flushes heartbreaker toxin out the blood stream at the cost of more epinephrine, but may add histamine. Helps reduce stun time. Commonly found in the form of emergency medipens.
@@ -106,8 +108,10 @@ reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine
 reagent-name-sigynate = sigynate
 reagent-desc-sigynate = A thick pink syrup useful for neutralizing acids and soothing trauma caused by acids. Tastes sweet!
 
+# Starlight Start
 reagent-name-saline = saline
 reagent-desc-saline = A mixture of salt and water, highly toxic to Avali. Commonly used to treat dehydration or low fluid presence in blood.
+#Starlight End
 
 reagent-name-lacerinol = lacerinol
 reagent-desc-lacerinol = A fairly unreactive chemical that boosts collagen sythesis to incredible levels, healing slash trauma.
