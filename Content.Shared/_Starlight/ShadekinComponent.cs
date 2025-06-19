@@ -3,13 +3,13 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared._Starlight;
 
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class ShadekinComponent : Component
 {
     [DataField]
     public ProtoId<AlertPrototype> ShadekinAlert = "Shadekin";
 
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly), AutoPausedField]
     public TimeSpan NextUpdate = TimeSpan.Zero;
 
     [DataField]
