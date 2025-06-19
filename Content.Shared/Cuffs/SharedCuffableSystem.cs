@@ -326,15 +326,10 @@ namespace Content.Shared.Cuffs
 
         private void OnAddCuffDoAfter(EntityUid uid, HandcuffComponent component, AddCuffDoAfterEvent args)
         {
-            Log.Debug("Entered OnAddCuffDoAfter");
-            Log.Debug($"Handcuff: {uid}");
-
             var user = args.Args.User;
 
             if (!TryComp<CuffableComponent>(args.Args.Target, out var cuffable))
                 return;
-
-            Log.Debug("Target has cuffable");
 
             var target = args.Args.Target.Value;
 
@@ -342,12 +337,8 @@ namespace Content.Shared.Cuffs
                 return;
             args.Handled = true;
 
-            Log.Debug("Args were not handled yet");
-
             if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable, component))
             {
-                Log.Debug("Success into Adding new cuffs");
-
                 component.Used = true;
                 _audio.PlayPredicted(component.EndCuffSound, uid, user);
 
