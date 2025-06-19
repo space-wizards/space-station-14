@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Hands.Systems;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -40,6 +41,7 @@ public sealed class HandTests
         var mapSystem = server.System<SharedMapSystem>();
         var sys = entMan.System<SharedHandsSystem>();
         var tSys = entMan.System<TransformSystem>();
+        var handsSys = server.System<HandsSystem>();
 
         var data = await pair.CreateTestMap();
         await pair.RunTicksSync(5);
@@ -53,12 +55,12 @@ public sealed class HandTests
             var xform = entMan.GetComponent<TransformComponent>(player);
             item = entMan.SpawnEntity("Crowbar", tSys.GetMapCoordinates(player, xform: xform));
             hands = entMan.GetComponent<HandsComponent>(player);
-            sys.TryPickup(player, item, hands.ActiveHand!);
+            sys.TryPickup(player, item, hands.ActiveHandId!);
         });
 
         // run ticks here is important, as errors may happen within the container system's frame update methods.
         await pair.RunTicksSync(5);
-        Assert.That(hands.ActiveHandEntity, Is.EqualTo(item));
+        Assert.That(handsSys.GetActiveItem((player, hands)), Is.EqualTo(item));
 
         await server.WaitPost(() =>
         {
@@ -66,7 +68,7 @@ public sealed class HandTests
         });
 
         await pair.RunTicksSync(5);
-        Assert.That(hands.ActiveHandEntity, Is.Null);
+        Assert.That(handsSys.GetActiveItem((player, hands)), Is.Null);
 
         await server.WaitPost(() => mapSystem.DeleteMap(data.MapId));
         await pair.CleanReturnAsync();
@@ -90,6 +92,7 @@ public sealed class HandTests
         var sys = entMan.System<SharedHandsSystem>();
         var tSys = entMan.System<TransformSystem>();
         var containerSystem = server.System<SharedContainerSystem>();
+        var handsSys = server.System<HandsSystem>();
 
         EntityUid item = default;
         EntityUid box = default;
@@ -105,10 +108,10 @@ public sealed class HandTests
             player = playerMan.Sessions.First().AttachedEntity!.Value;
             tSys.PlaceNextTo(player, item);
             hands = entMan.GetComponent<HandsComponent>(player);
-            sys.TryPickup(player, item, hands.ActiveHand!);
+            sys.TryPickup(player, item, hands.ActiveHandId!);
         });
         await pair.RunTicksSync(5);
-        Assert.That(hands.ActiveHandEntity, Is.EqualTo(item));
+        Assert.That(handsSys.GetActiveItem((player, hands)), Is.EqualTo(item));
 
         // Open then close the box to place the player, who is holding the crowbar, inside of it
         var storage = server.System<EntityStorageSystem>();
@@ -130,7 +133,7 @@ public sealed class HandTests
         await pair.RunTicksSync(5);
         var xform = entMan.GetComponent<TransformComponent>(player);
         var itemXform = entMan.GetComponent<TransformComponent>(item);
-        Assert.That(hands.ActiveHandEntity, Is.Not.EqualTo(item));
+        Assert.That(handsSys.GetActiveItem((player, hands)), Is.Not.EqualTo(item));
         Assert.That(containerSystem.IsInSameOrNoContainer((player, xform), (item, itemXform)));
 
         await server.WaitPost(() => mapSystem.DeleteMap(map.MapId));

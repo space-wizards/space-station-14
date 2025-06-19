@@ -2,6 +2,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item.ItemToggle;
@@ -19,6 +20,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -128,8 +130,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         target = args.Target;
         return _timing.IsFirstTimePredicted
             && !_combatMode.IsInCombatMode(uid)
-            && TryComp<HandsComponent>(uid, out var hands)
-            && hands.ActiveHandEntity == null
+            && _hands.GetActiveItem(uid) == null
             && _interaction.InRangeUnobstructed(uid, target);
     }
 }

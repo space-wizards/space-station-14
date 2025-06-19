@@ -1,6 +1,5 @@
 using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -10,22 +9,11 @@ namespace Content.Shared.Hands.Components;
 [Access(typeof(SharedHandsSystem))]
 public sealed partial class HandsComponent : Component
 {
-    [DataField]
-    public string? ActiveHandId;
-
     /// <summary>
     ///     The currently active hand.
     /// </summary>
-    [ViewVariables]
-    [Obsolete("Use ActiveHandId")]
-    public Hand? ActiveHand => ActiveHandId == null ? null : Hands.GetValueOrDefault(ActiveHandId);
-
-    /// <summary>
-    ///     The item currently held in the active hand.
-    /// </summary>
-    [ViewVariables]
-    [Obsolete("Use TryGetActiveItem")]
-    public EntityUid? ActiveHandEntity => ActiveHand?.HeldEntity;
+    [DataField]
+    public string? ActiveHandId;
 
     [DataField]
     public Dictionary<string, Hand> Hands = new();
@@ -108,27 +96,19 @@ public sealed partial class HandsComponent : Component
 
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed partial class Hand //TODO: This should definitely be a struct - Jezi
+public sealed partial class Hand
 {
     [DataField]
-    public HandLocation Location;
+    public HandLocation Location = HandLocation.Right;
 
-    /// <summary>
-    ///     The container used to hold the contents of this hand. Nullable because the client must get the containers via <see cref="ContainerManagerComponent"/>,
-    ///     which may not be synced with the server when the client hands are created.
-    /// </summary>
-    [ViewVariables, NonSerialized]
-    [Obsolete("Use ContainerSystem and the hand ID on HandsComponent")]
-    public ContainerSlot? Container;
+    public Hand()
+    {
 
-    [ViewVariables]
-    [Obsolete("Use SharedHandsSystem.GetHeldEntityOrNull or SharedHandsSystem.GetHeldEntity")]
-    public EntityUid? HeldEntity => Container?.ContainedEntity;
+    }
 
-    public Hand(string name, HandLocation location, ContainerSlot? container = null)
+    public Hand(HandLocation location)
     {
         Location = location;
-        Container = container;
     }
 }
 

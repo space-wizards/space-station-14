@@ -44,7 +44,7 @@ public abstract partial class SharedHandsSystem
 
     public void AddHand(EntityUid uid, string handName, HandLocation handLocation, HandsComponent? handsComp = null)
     {
-        AddHand(uid, handName, new Hand(handName, handLocation), handsComp);
+        AddHand(uid, handName, new Hand(handLocation), handsComp);
     }
 
     public virtual void AddHand(EntityUid uid, string handName, Hand hand, HandsComponent? handsComp = null)
