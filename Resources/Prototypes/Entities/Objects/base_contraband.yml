@@ -181,6 +181,15 @@
     allowedJobs: [ Bartender ]
 
 - type: entity
+  id: BaseSecurityCommandBartenderContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Command ]
+    allowedJobs: [ Bartender ]
+
+- type: entity
   id: BaseSecurityBartenderZookeeperContraband
   parent: BaseRestrictedContraband
   abstract: true
