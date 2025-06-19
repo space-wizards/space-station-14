@@ -326,10 +326,15 @@ namespace Content.Shared.Cuffs
 
         private void OnAddCuffDoAfter(EntityUid uid, HandcuffComponent component, AddCuffDoAfterEvent args)
         {
+            Log.Debug("Entered OnAddCuffDoAfter");
+            Log.Debug($"Handcuff: {uid}");
+
             var user = args.Args.User;
 
             if (!TryComp<CuffableComponent>(args.Args.Target, out var cuffable))
                 return;
+
+            Log.Debug("Target has cuffable");
 
             var target = args.Args.Target.Value;
 
@@ -337,8 +342,12 @@ namespace Content.Shared.Cuffs
                 return;
             args.Handled = true;
 
-            if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable))
+            Log.Debug("Args were not handled yet");
+
+            if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable, component))
             {
+                Log.Debug("Success into Adding new cuffs");
+
                 component.Used = true;
                 _audio.PlayPredicted(component.EndCuffSound, uid, user);
 
@@ -463,7 +472,10 @@ namespace Content.Shared.Cuffs
             if (!Resolve(target, ref component) || !Resolve(handcuff, ref cuff))
                 return false;
 
-            if (!_interaction.InRangeUnobstructed(handcuff, target))
+
+            var tool = cuff?.HandcuffTool ?? handcuff;
+
+            if (!_interaction.InRangeUnobstructed(tool, target))
                 return false;
 
             // if the amount of hands the target has is equal to or less than the amount of hands that are cuffed
@@ -514,7 +526,9 @@ namespace Content.Shared.Cuffs
             if (HasComp<DisarmProneComponent>(target))
                 cuffTime = 0.0f; // cuff them instantly.
 
-            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, cuffTime, new AddCuffDoAfterEvent(), handcuff, target, handcuff)
+            var tool = handcuffComponent.HandcuffTool ?? handcuff;
+
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, cuffTime, new AddCuffDoAfterEvent(), handcuff, target, tool)
             {
                 BreakOnMove = true,
                 BreakOnWeightlessMove = false,
@@ -546,7 +560,8 @@ namespace Content.Shared.Cuffs
                     ("otherName", Identity.Name(user, EntityManager, target))), target, target);
             }
 
-            _audio.PlayPredicted(handcuffComponent.StartCuffSound, handcuff, user);
+            // TODO: FIX SOUND FOR THE HOLOCUFF
+            _audio.PlayPredicted(handcuffComponent.StartCuffSound, tool, user);
             return true;
         }
 
@@ -781,6 +796,11 @@ namespace Content.Shared.Cuffs
                 }
             }
             cuff.Removing = false;
+        }
+
+        public void SetHandcuffTool(HandcuffComponent handcuffComp, EntityUid tool)
+        {
+            handcuffComp.HandcuffTool = tool;
         }
 
         #region ActionBlocker

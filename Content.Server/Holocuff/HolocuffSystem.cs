@@ -105,6 +105,8 @@ public sealed class HolocuffSystem : EntitySystem
         if (!TryComp<HandcuffComponent>(handcuff, out var handcuffComp))
             return;
 
+        _cuff.SetHandcuffTool(handcuffComp, uid);
+
         var result = _cuff.TryCuffing(args.User, target, handcuff, handcuffComp);
         args.Handled = result;
     }
@@ -120,6 +122,8 @@ public sealed class HolocuffSystem : EntitySystem
         var handcuff = Spawn(component.CuffProto);
         if (!TryComp<HandcuffComponent>(handcuff, out var handcuffComp))
             return;
+
+        _cuff.SetHandcuffTool(handcuffComp, uid);
 
         _cuff.TryCuffing(args.User, args.HitEntities.First(), handcuff, handcuffComp);
         args.Handled = true;
