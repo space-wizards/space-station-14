@@ -35,7 +35,7 @@ namespace Content.Client.Hands.Systems
         public event Action<string, HandLocation>? OnPlayerAddHand;
         public event Action<string>? OnPlayerRemoveHand;
         public event Action<string?>? OnPlayerSetActiveHand;
-        public event Action<HandsComponent>? OnPlayerHandsAdded;
+        public event Action<Entity<HandsComponent>>? OnPlayerHandsAdded;
         public event Action? OnPlayerHandsRemoved;
         public event Action<string, EntityUid>? OnPlayerItemAdded;
         public event Action<string, EntityUid>? OnPlayerItemRemoved;
@@ -90,7 +90,7 @@ namespace Content.Client.Hands.Systems
                 return;
             }
 
-            OnPlayerHandsAdded?.Invoke(hands);
+            OnPlayerHandsAdded?.Invoke(hands.Value);
         }
 
         public override void DoDrop(EntityUid uid, string handId, bool doDropInteraction = true, HandsComponent? hands = null, bool log = true)
@@ -336,7 +336,7 @@ namespace Content.Client.Hands.Systems
 
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, LocalPlayerAttachedEvent args)
         {
-            OnPlayerHandsAdded?.Invoke(component);
+            OnPlayerHandsAdded?.Invoke((uid, component));
         }
 
         private void HandlePlayerDetached(EntityUid uid, HandsComponent component, LocalPlayerDetachedEvent args)
@@ -347,7 +347,7 @@ namespace Content.Client.Hands.Systems
         private void OnHandsStartup(EntityUid uid, HandsComponent component, ComponentStartup args)
         {
             if (_playerManager.LocalEntity == uid)
-                OnPlayerHandsAdded?.Invoke(component);
+                OnPlayerHandsAdded?.Invoke((uid, component));
         }
 
         private void OnHandsShutdown(EntityUid uid, HandsComponent component, ComponentShutdown args)

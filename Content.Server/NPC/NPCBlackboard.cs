@@ -151,7 +151,6 @@ public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, obj
         value = default;
         EntityUid owner;
 
-        // TODO: big scary. this is probably gonna fuck up a lot of npc code
         var handSys = entManager.System<HandsSystem>();
 
         switch (key)
@@ -170,25 +169,24 @@ public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, obj
             case ActiveHand:
             {
                 if (!TryGetValue(Owner, out owner, entManager) ||
-                    !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
-                    hands.ActiveHand == null)
+                    handSys.GetActiveHand(owner) is not { } activeHand)
                 {
                     return false;
                 }
 
-                value = hands.ActiveHand;
+                value = activeHand;
                 return true;
             }
             case ActiveHandFree:
             {
                 if (!TryGetValue(Owner, out owner, entManager) ||
                     !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
-                    hands.ActiveHand == null)
+                    handSys.GetActiveHand(owner) is not { } activeHand)
                 {
                     return false;
                 }
 
-                value = hands.ActiveHand.IsEmpty;
+                value = handSys.HandIsEmpty((owner, hands), activeHand);
                 return true;
             }
             case CanMove:
@@ -206,16 +204,16 @@ public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, obj
             {
                 if (!TryGetValue(Owner, out owner, entManager) ||
                     !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
-                    hands.ActiveHand == null)
+                    handSys.GetActiveHand(owner) is null)
                 {
                     return false;
                 }
 
                 var handos = new List<string>();
 
-                foreach (var (id, hand) in hands.Hands)
+                foreach (var id in hands.Hands.Keys)
                 {
-                    if (!hand.IsEmpty)
+                    if (!handSys.HandIsEmpty((owner, hands), id))
                         continue;
 
                     handos.Add(id);
@@ -228,16 +226,16 @@ public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, obj
             {
                 if (!TryGetValue(Owner, out owner, entManager) ||
                     !entManager.TryGetComponent<HandsComponent>(owner, out var hands) ||
-                    hands.ActiveHand == null)
+                    handSys.GetActiveHand(owner) is null)
                 {
                     return false;
                 }
 
                 var handos = new List<string>();
 
-                foreach (var (id, hand) in hands.Hands)
+                foreach (var id in hands.Hands.Keys)
                 {
-                    if (!hand.IsEmpty)
+                    if (!handSys.HandIsEmpty((owner, hands), id))
                         continue;
 
                     handos.Add(id);

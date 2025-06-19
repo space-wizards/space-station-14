@@ -1,7 +1,7 @@
 using System.Numerics;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Events;
 using Content.Shared.Physics;
@@ -25,6 +25,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -80,9 +81,11 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     private void OnGrapplingReel(RequestGrapplingReelMessage msg, EntitySessionEventArgs args)
     {
-        var player = args.SenderSession.AttachedEntity;
-        if (!TryComp<HandsComponent>(player, out var hands) ||
-            !TryComp<GrapplingGunComponent>(hands.ActiveHandEntity, out var grappling))
+        if (args.SenderSession.AttachedEntity is not { } player)
+            return;
+
+        if (!_hands.TryGetActiveItem(player, out var activeItem) ||
+            !TryComp<GrapplingGunComponent>(activeItem, out var grappling))
         {
             return;
         }
@@ -94,7 +97,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             return;
         }
 
-        SetReeling(hands.ActiveHandEntity.Value, grappling, msg.Reeling, player.Value);
+        SetReeling(activeItem.Value, grappling, msg.Reeling, player);
     }
 
     private void OnWeightlessMove(ref CanWeightlessMoveEvent ev)

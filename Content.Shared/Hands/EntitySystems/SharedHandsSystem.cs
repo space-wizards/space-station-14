@@ -270,28 +270,6 @@ public abstract partial class SharedHandsSystem
         return true;
     }
 
-    [Obsolete("Use Entity<T> variant")]
-    public bool IsHolding(EntityUid uid, [NotNullWhen(true)] EntityUid? entity, [NotNullWhen(true)] out Hand? inHand, HandsComponent? handsComp = null)
-    {
-        inHand = null;
-        if (entity == null)
-            return false;
-
-        if (!Resolve(uid, ref handsComp, false))
-            return false;
-
-        foreach (var hand in handsComp.Hands.Keys)
-        {
-            if (GetHeldEntityOrNull((uid, handsComp), hand) == entity)
-            {
-                inHand = handsComp.Hands[hand];
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public bool IsHolding(Entity<HandsComponent?> entity, [NotNullWhen(true)] EntityUid? item)
     {
         return IsHolding(entity, item, out _);

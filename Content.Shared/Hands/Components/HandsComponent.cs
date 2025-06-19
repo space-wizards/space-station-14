@@ -110,10 +110,6 @@ public sealed partial class HandsComponent : Component
 [Serializable, NetSerializable]
 public sealed partial class Hand //TODO: This should definitely be a struct - Jezi
 {
-    [ViewVariables]
-    [Obsolete("Get the container ID from HandsComponent.Hands")]
-    public string Name { get; }
-
     [DataField]
     public HandLocation Location;
 
@@ -129,12 +125,8 @@ public sealed partial class Hand //TODO: This should definitely be a struct - Je
     [Obsolete("Use SharedHandsSystem.GetHeldEntityOrNull or SharedHandsSystem.GetHeldEntity")]
     public EntityUid? HeldEntity => Container?.ContainedEntity;
 
-    [Obsolete("Use SharedHandsSystem.HandIsEmpty")]
-    public bool IsEmpty => HeldEntity == null;
-
     public Hand(string name, HandLocation location, ContainerSlot? container = null)
     {
-        Name = name;
         Location = location;
         Container = container;
     }

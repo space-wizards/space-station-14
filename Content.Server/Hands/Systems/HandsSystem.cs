@@ -87,10 +87,9 @@ namespace Content.Server.Hands.Systems
             if (ent.Comp.DisableExplosionRecursion)
                 return;
 
-            foreach (var hand in ent.Comp.Hands.Values)
+            foreach (var held in EnumerateHeld(ent))
             {
-                if (hand.HeldEntity is { } uid)
-                    args.Contents.Add(uid);
+                args.Contents.Add(held);
             }
         }
 
@@ -155,8 +154,8 @@ namespace Content.Server.Hands.Systems
         {
             if (ContainerSystem.IsEntityInContainer(player) ||
                 !TryComp(player, out HandsComponent? hands) ||
-                hands.ActiveHandEntity is not { } throwEnt ||
-                !_actionBlockerSystem.CanThrow(player, throwEnt))
+                !TryGetActiveItem((player, hands), out var throwEnt) ||
+                !_actionBlockerSystem.CanThrow(player, throwEnt.Value))
                 return false;
 
             if (_timing.CurTime < hands.NextThrowTime)
@@ -165,7 +164,7 @@ namespace Content.Server.Hands.Systems
 
             if (EntityManager.TryGetComponent(throwEnt, out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = _stackSystem.Split(throwEnt, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
+                var splitStack = _stackSystem.Split(throwEnt.Value, 1, EntityManager.GetComponent<TransformComponent>(player).Coordinates, stack);
 
                 if (splitStack is not {Valid: true})
                     return false;
@@ -185,14 +184,14 @@ namespace Content.Server.Hands.Systems
 
             // Let other systems change the thrown entity (useful for virtual items)
             // or the throw strength.
-            var ev = new BeforeThrowEvent(throwEnt, direction, throwSpeed, player);
+            var ev = new BeforeThrowEvent(throwEnt.Value, direction, throwSpeed, player);
             RaiseLocalEvent(player, ref ev);
 
             if (ev.Cancelled)
                 return true;
 
             // This can grief the above event so we raise it afterwards
-            if (IsHolding(player, throwEnt, out _, hands) && !TryDrop(player, throwEnt, handsComp: hands))
+            if (IsHolding((player, hands), throwEnt, out _) && !TryDrop(player, throwEnt.Value, handsComp: hands))
                 return false;
 
             _throwingSystem.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowSpeed, ev.PlayerUid, compensateFriction: !HasComp<LandAtCursorComponent>(ev.ItemUid));

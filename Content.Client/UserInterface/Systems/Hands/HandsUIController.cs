@@ -120,32 +120,33 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         }
     }
 
-    private void LoadPlayerHands(HandsComponent handsComp)
+    private void LoadPlayerHands(Entity<HandsComponent> handsComp)
     {
         DebugTools.Assert(_playerHandsComponent == null);
         if (HandsGui != null)
             HandsGui.Visible = true;
 
         _playerHandsComponent = handsComp;
-        foreach (var (name, hand) in handsComp.Hands)
+        foreach (var (name, hand) in handsComp.Comp.Hands)
         {
             var handButton = AddHand(name, hand.Location);
 
-            if (_entities.TryGetComponent(hand.HeldEntity, out VirtualItemComponent? virt))
+            if (_handsSystem.TryGetHeldEntity(handsComp.AsNullable(), name, out var held) &&
+                _entities.TryGetComponent(held, out VirtualItemComponent? virt))
             {
                 handButton.SetEntity(virt.BlockingEntity);
                 handButton.Blocked = true;
             }
             else
             {
-                handButton.SetEntity(hand.HeldEntity);
+                handButton.SetEntity(held);
                 handButton.Blocked = false;
             }
         }
 
-        if (handsComp.ActiveHandId == null)
+        if (handsComp.Comp.ActiveHandId == null)
             return;
-        SetActiveHand(handsComp.ActiveHandId);
+        SetActiveHand(handsComp.Comp.ActiveHandId);
     }
 
     private void HandBlocked(string handName)
@@ -259,17 +260,19 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             _player.LocalSession?.AttachedEntity is { } playerEntity &&
             _handsSystem.TryGetHand(playerEntity, handName, out var hand, _playerHandsComponent))
         {
+            var heldEnt = _handsSystem.GetHeldEntityOrNull((playerEntity, _playerHandsComponent), handName);
+
             var foldedLocation = hand.Location.GetUILocation();
             if (foldedLocation == HandUILocation.Left)
             {
                 _statusHandLeft = handControl;
-                HandsGui.UpdatePanelEntityLeft(hand.HeldEntity);
+                HandsGui.UpdatePanelEntityLeft(heldEnt);
             }
             else
             {
                 // Middle or right
                 _statusHandRight = handControl;
-                HandsGui.UpdatePanelEntityRight(hand.HeldEntity);
+                HandsGui.UpdatePanelEntityRight(heldEnt);
             }
 
             HandsGui.SetHighlightHand(foldedLocation);
