@@ -381,7 +381,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 
     private void OnThavenMoodShutdown(Entity<ThavenMoodsComponent> ent, ref ComponentShutdown args)
     {
-        _actions.RemoveAction(ent, ent.Comp.Action);
+        _actions.RemoveAction(ent.Owner, ent.Comp.Action);
     }
 
     protected override void OnEmagged(Entity<ThavenMoodsComponent> ent, ref GotEmaggedEvent args)

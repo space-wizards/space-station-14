@@ -50,7 +50,7 @@ using Content.Shared._Impstation.CCVar;
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
-public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterInfoSystem>
+public sealed partial class ChatUIController : UIController, IOnSystemChanged<CharacterInfoSystem>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IChatManager _manager = default!;
@@ -73,7 +73,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     [UISystemDependency] private readonly TransformSystem? _transform = default;
     [UISystemDependency] private readonly MindSystem? _mindSystem = default!;
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
-    [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "ChatNames";
@@ -160,23 +159,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
-    /// <summary>
-    ///     A list of words to be highlighted in the chatbox.
-    /// </summary>
-    private List<string> _highlights = [];
-
-    /// <summary>
-    ///     The color (hex) in witch the words will be highlighted as.
-    /// </summary>
-    private string? _highlightsColor;
-
-    private bool _autoFillHighlightsEnabled;
-
-    /// <summary>
-    ///     A bool to keep track if the 'CharacterUpdated' event is a new player attaching or the opening of the character info panel.
-    /// </summary>
-    private bool _charInfoIsAttach = false;
-
     // TODO add a cap for this for non-replays
     public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
 
@@ -200,7 +182,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     public event Action<ChatSelectChannel>? SelectableChannelsChanged;
     public event Action<ChatChannel, int?>? UnreadMessageCountsUpdated;
     public event Action<ChatMessage>? MessageAdded;
-    public event Action<string>? HighlightsUpdated;
 
     public override void Initialize()
     {
@@ -288,16 +269,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     public void OnScreenUnload()
     {
         SetMainChat(false);
-    }
-
-    public void OnSystemLoaded(CharacterInfoSystem system)
-    {
-        system.OnCharacterUpdate += CharacterUpdated;
-    }
-
-    public void OnSystemUnloaded(CharacterInfoSystem system)
-    {
-        system.OnCharacterUpdate -= CharacterUpdated;
     }
 
     private void OnChatWindowOpacityChanged(float opacity)

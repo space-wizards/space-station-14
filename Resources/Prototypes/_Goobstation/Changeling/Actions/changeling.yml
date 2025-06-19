@@ -140,12 +140,13 @@
   description: We shape one of our arms into a strong blade. We may retract our blade in the same manner as we form it. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 2
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Changeling/changeling_abilities.rsi
       state: armblade
+  - type: InstantAction
     event: !type:ToggleArmbladeEvent {}
   - type: ChangelingAction
     chemicalCost: 15
