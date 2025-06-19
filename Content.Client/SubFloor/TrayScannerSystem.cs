@@ -76,6 +76,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
 
             range = MathF.Max(heldScanner.Range, range);
             canSee = true;
+            break;
         }
 
         inRange = new HashSet<Entity<SubFloorHideComponent>>();
