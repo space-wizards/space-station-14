@@ -8,7 +8,7 @@
   - type: Sprite
   - type: Item
     size: Huge
-    shape: # Carbine size - full length rifles are 5 long.
+    shape:
     - 0,0,3,2
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -205,6 +205,8 @@
     sprite: Objects/Fun/Foam/foam_rifle.rsi
   - type: Item
     sprite: Objects/Fun/Foam/foam_rifle_inhand_64x.rsi
+    shape:
+    - 0,0,3,0
   - type: BallisticAmmoProvider
     whitelist:
       tags:

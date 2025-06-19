@@ -11,7 +11,7 @@
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: Large
-    shape: # Base rifle size - the same length as a shotgun.
+    shape:
     - 0,0,4,1
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
@@ -60,7 +60,7 @@
   components:
   - type: Item
     size: Huge
-    shape: # Taller due to its much higher weight. A marvel of Waffle Corp engineering that it even fits in a bag at all.
+    shape:
     - 0,0,4,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi

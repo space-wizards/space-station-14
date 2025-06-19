@@ -11,7 +11,7 @@
       map: [ "enum.GunVisualLayers.Base" ]
   - type: Item
     size: Large
-    shape: # Light shotgun size - 5 long, 1 tall for lower weight compared to automatic shotguns.
+    shape:
     - 0,0,4,0
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
@@ -143,7 +143,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Item
-    shape: # Automatic shotgun size - Taller due to weight.
+    shape:
     - 0,0,4,1
     sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
   - type: BallisticAmmoProvider
@@ -190,7 +190,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Item
     size: Small
-    shape: # 3 long to fit its sprite and stock.
+    shape:
     - 0,0,2,0
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: Gun
@@ -224,8 +224,9 @@
   components:
   - type: Item
     size: Small
-    shape: # Would be pistol shaped if not for the extremely tiny grip in the sprite - wouldn't look right in the pistol shape.
+    shape:
     - 0,0,1,0
+    - 0,1,0,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Clothing

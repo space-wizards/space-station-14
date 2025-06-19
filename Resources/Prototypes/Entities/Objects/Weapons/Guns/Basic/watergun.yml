@@ -57,7 +57,7 @@
   description: The dinkiest of water-based weaponry. You swear the trigger doesn't do anything.
   components:
   - type: Item
-    shape: # Pistol shaped.
+    shape:
     - 0,0,1,0
     - 0,1,0,1
   - type: Sprite
@@ -100,7 +100,7 @@
   - type: Item
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     size: Large
-    shape: # SMG size.
+    shape:
     - 0,0,2,1
   - type: RandomSprite
     getAllGroups: true

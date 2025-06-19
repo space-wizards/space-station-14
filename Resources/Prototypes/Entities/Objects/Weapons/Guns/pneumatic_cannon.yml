@@ -137,7 +137,7 @@
     container: storagebase
   - type: Item
     size: Large
-    shape: # SMG size.
+    shape:
     - 0,0,2,1
   - type: ContainerContainer
     containers:

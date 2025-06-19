@@ -290,7 +290,7 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
-    shape: # It's a toy revolver, so pistol shaped.
+    shape:
     - 0,0,1,0
     - 0,1,0,1
     sprite: Objects/Fun/capgun.rsi
