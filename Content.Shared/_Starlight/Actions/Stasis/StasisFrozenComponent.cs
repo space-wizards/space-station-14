@@ -15,6 +15,5 @@ public sealed partial class StasisFrozenComponent : Component
     /// Whether the player is also muted while in stasis.
     /// When true, prevents the entity from speaking or emoting.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Muted = false;
-} 
+    [DataField, AutoNetworkedField] public bool Muted = false;
+}

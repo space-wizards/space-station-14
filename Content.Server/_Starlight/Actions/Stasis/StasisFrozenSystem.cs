@@ -13,4 +13,4 @@ public sealed class StasisFrozenSystem : SharedStasisFrozenSystem
         comp.Muted = false;
         Dirty(uid, comp);
     }
-} 
+}

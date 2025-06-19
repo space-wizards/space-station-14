@@ -41,4 +41,4 @@ public sealed class StasisAnimationEvent : EntityEventArgs
         Coordinates = coordinates;
         AnimationType = animationType;
     }
-} 
+}

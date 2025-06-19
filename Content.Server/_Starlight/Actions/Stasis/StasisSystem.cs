@@ -55,12 +55,13 @@ public sealed class StasisSystem : SharedStasisSystem
         PrepareStasisActionEvent args)
     {
         Dirty(uid, comp);
-        
+
         EnsureComp<StasisFrozenComponent>(uid);
-        
+
         _actionsSystem.RemoveAction(uid, comp.EnterStasisActionEntity);
         _actionsSystem.AddAction(uid, ref comp.ExitStasisActionEntity, comp.ExitStasisAction);
-        _actionsSystem.SetCooldown(comp.ExitStasisActionEntity, TimeSpan.FromSeconds(comp.StasisEnterEffectLifetime + 1));
+        _actionsSystem.SetCooldown(comp.ExitStasisActionEntity,
+            TimeSpan.FromSeconds(comp.StasisEnterEffectLifetime + 1));
 
         // Send animation event to all clients
         var ev = new StasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
@@ -77,7 +78,7 @@ public sealed class StasisSystem : SharedStasisSystem
             RaiseLocalEvent(uid, enterEv);
         });
     }
-    
+
     protected override void OnEnterStasisStart(EntityUid uid, StasisComponent comp,
         EnterStasisActionEvent args)
     {
@@ -132,17 +133,19 @@ public sealed class StasisSystem : SharedStasisSystem
 
     private void OnDamageChanged(EntityUid uid, StasisComponent component, DamageChangedEvent args)
     {
-            // If the entity has a mob state component, and the damage changed event is not healing, apply the resistance.
-            if (TryComp<MobStateComponent>(uid, out var mobState))
-            {
-                var currentState = mobState.CurrentState;
-                var healingValues = GetHealingValues(currentState, component);
-                ApplyResistance(uid, args, component, healingValues);
-            }
+        // If the entity has a mob state component, and the damage changed event is not healing, apply the resistance.
+        if (TryComp<MobStateComponent>(uid, out var mobState))
+        {
+            var currentState = mobState.CurrentState;
+            var healingValues = GetHealingValues(currentState, component);
+            ApplyResistance(uid, args, component, healingValues);
+        }
     }
-    
-    private void ApplyResistance(EntityUid uid, DamageChangedEvent args, StasisComponent comp, StasisHealingValues healingValues) {
-            // Skip if this is healing or if the damage change is from our own healing
+
+    private void ApplyResistance(EntityUid uid, DamageChangedEvent args, StasisComponent comp,
+        StasisHealingValues healingValues)
+    {
+        // Skip if this is healing or if the damage change is from our own healing
         if (!args.DamageIncreased || args.DamageDelta == null || args.Origin == uid)
             return;
 
@@ -200,9 +203,14 @@ public sealed class StasisSystem : SharedStasisSystem
     {
         return state switch
         {
-            MobState.Alive => new StasisHealingValues(comp.StasisBluntHealPerSecond, comp.StasisSlashingHealPerSecond, comp.StasisPiercingHealPerSecond, comp.StasisHeatHealPerSecond, comp.StasisColdHealPerSecond, comp.StasisBleedHealPerSecond, comp.StasisAdditionalDamageResistance),
-            MobState.Critical => new StasisHealingValues(comp.StasisInCritBluntHealPerSecond, comp.StasisInCritSlashingHealPerSecond, comp.StasisInCritPiercingHealPerSecond, comp.StasisInCritHeatHealPerSecond, comp.StasisInCritColdHealPerSecond, comp.StasisInCritBleedHealPerSecond, comp.StasisInCritAdditionalDamageResistance),
-            MobState.Invalid =>  new StasisHealingValues(0, 0, 0, 0, 0, 0, 0),
+            MobState.Alive => new StasisHealingValues(comp.StasisBluntHealPerSecond, comp.StasisSlashingHealPerSecond,
+                comp.StasisPiercingHealPerSecond, comp.StasisHeatHealPerSecond, comp.StasisColdHealPerSecond,
+                comp.StasisBleedHealPerSecond, comp.StasisAdditionalDamageResistance),
+            MobState.Critical => new StasisHealingValues(comp.StasisInCritBluntHealPerSecond,
+                comp.StasisInCritSlashingHealPerSecond, comp.StasisInCritPiercingHealPerSecond,
+                comp.StasisInCritHeatHealPerSecond, comp.StasisInCritColdHealPerSecond,
+                comp.StasisInCritBleedHealPerSecond, comp.StasisInCritAdditionalDamageResistance),
+            MobState.Invalid => new StasisHealingValues(0, 0, 0, 0, 0, 0, 0),
             MobState.Dead => new StasisHealingValues(0, 0, 0, 0, 0, 0, 0),
             _ => new StasisHealingValues(0, 0, 0, 0, 0, 0, 0),
         };
