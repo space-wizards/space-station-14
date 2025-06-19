@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Coordinates.Helpers;
-using Content.Server.Power.Components;
-using Content.Server.PowerCell;
+using Content.Shared.Power.Components;
+using Content.Shared.PowerCell;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Storage;
@@ -15,7 +15,7 @@ namespace Content.Shared.Holocuff;
 
 public sealed class HolocuffSystem : EntitySystem
 {
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    // [Dependency] private readonly SharedPowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedCuffableSystem _cuff = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
@@ -24,12 +24,13 @@ public sealed class HolocuffSystem : EntitySystem
     {
         base.Initialize();
         // SubscribeLocalEvent<HolocuffProjectorComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
-        SubscribeLocalEvent<HolocuffProjectorComponent, ExaminedEvent>(OnExamine);
+        // SubscribeLocalEvent<HolocuffProjectorComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<HolocuffProjectorComponent, AfterInteractEvent>(OnCuffAfterInteract);
         SubscribeLocalEvent<HolocuffProjectorComponent, MeleeHitEvent>(OnCuffMeleeHit);
     }
 
+    /*
     private void OnExamine(EntityUid uid, HolocuffProjectorComponent component, ExaminedEvent args)
     {
         // TODO: This should probably be using an itemstatus
@@ -48,6 +49,7 @@ public sealed class HolocuffSystem : EntitySystem
             }
         }
     }
+    */
 
     /*
     private void OnBeforeInteract(EntityUid uid, HolocuffProjectorComponent component, BeforeRangedInteractEvent args)
@@ -71,6 +73,7 @@ public sealed class HolocuffSystem : EntitySystem
     }
     */
 
+    /*
     private int UsesRemaining(HolocuffProjectorComponent component, BatteryComponent? battery = null)
     {
         if (battery == null ||
@@ -86,6 +89,7 @@ public sealed class HolocuffSystem : EntitySystem
 
         return (int)(battery.MaxCharge / component.ChargeUse);
     }
+    */
 
     private void OnCuffAfterInteract(EntityUid uid, HolocuffProjectorComponent component, AfterInteractEvent args)
     {
