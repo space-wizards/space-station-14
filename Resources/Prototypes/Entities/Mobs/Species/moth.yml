@@ -93,7 +93,7 @@
       - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
         color: "#ffffff"
         sprite: Objects/Misc/handcuffs.rsi
-        state: body-overlay-2
+        state: body-overlay
         visible: false
       - map: [ "gloves" ]
       - map: [ "shoes" ]
