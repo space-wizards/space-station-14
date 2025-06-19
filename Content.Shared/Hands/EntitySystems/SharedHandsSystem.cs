@@ -34,12 +34,30 @@ public abstract partial class SharedHandsSystem
         InitializeDrop();
         InitializePickup();
         InitializeRelay();
+
+        SubscribeLocalEvent<HandsComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<HandsComponent, MapInitEvent>(OnMapInit);
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
         CommandBinds.Unregister<SharedHandsSystem>();
+    }
+
+    private void OnInit(Entity<HandsComponent> ent, ref ComponentInit args)
+    {
+        var container = EnsureComp<ContainerManagerComponent>(ent);
+        foreach (var id in ent.Comp.Hands.Keys)
+        {
+            ContainerSystem.EnsureContainer<ContainerSlot>(ent, id, container);
+        }
+    }
+
+    private void OnMapInit(Entity<HandsComponent> ent, ref MapInitEvent args)
+    {
+        if (ent.Comp.ActiveHandId == null)
+            SetActiveHand(ent.AsNullable(), ent.Comp.SortedHands.FirstOrDefault());
     }
 
     public void AddHand(EntityUid uid, string handName, HandLocation handLocation, HandsComponent? handsComp = null)

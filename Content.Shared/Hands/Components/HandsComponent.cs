@@ -15,9 +15,16 @@ public sealed partial class HandsComponent : Component
     [DataField]
     public string? ActiveHandId;
 
+    /// <summary>
+    /// Dictionary relating a unique hand ID corresponding to a container slot on the attached entity to a class containing information about the Hand itself.
+    /// </summary>
     [DataField]
     public Dictionary<string, Hand> Hands = new();
 
+    /// <summary>
+    /// The number of hands
+    /// </summary>
+    [ViewVariables]
     public int Count => Hands.Count;
 
     /// <summary>
