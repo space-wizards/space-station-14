@@ -122,6 +122,8 @@
         knockback: -5
       Felionoid:
         knockback: -2.5 #half of what resomi take
+      Avali:
+        knockback: -1.5
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
     layers:
