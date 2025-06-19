@@ -49,9 +49,7 @@ public sealed class CuffableSystem : SharedCuffableSystem
             return;
         _sprite.LayerSetColor((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffState.Color!.Value);
 
-
         var cuffIconState = $"{component.BaseCuffableState}-{cuffState.NumHandsCuffed}";
-
         if (!Equals(component.CurrentRSI, cuffState.RSI) && cuffState.RSI != null) // we don't want to keep loading the same RSI
         {
             component.CurrentRSI = cuffState.RSI;
