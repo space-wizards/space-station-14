@@ -39,7 +39,6 @@ public sealed partial class HandcuffComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool BreakOnRemove;
 
-
     /// <summary>
     ///     Will the cuffs vanish when removed?
     /// </summary>
