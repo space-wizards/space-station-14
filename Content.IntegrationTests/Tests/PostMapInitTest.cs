@@ -76,7 +76,7 @@ namespace Content.IntegrationTests.Tests
             "/Maps/Shuttles/ERT/janitors.yml", // ERT shuttle
             "/Maps/Shuttles/ERT/red.yml", // ERT shuttle
             "/Maps/Shuttles/ERT/sierra.yml", // ERT shuttle
-            "/Maps/ds_typan.yml",
+            "/Maps/ds_taipan.yml",
         };
 
         private static readonly string[] GameMaps =
@@ -107,7 +107,7 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "Train",
             "Cog",
-            // "DSTypan",
+            // "DSTaipan",
             "Amber",
             "Gate",
             "Amber",
@@ -120,7 +120,7 @@ namespace Content.IntegrationTests.Tests
 
         private static readonly string[] GameMapsExcludedFromTests =
         {
-            "DSTypan", //remap in progress
+            "DSTaipan", //remap in progress
             "Elkridge" //remap in progress
         };
 
@@ -517,7 +517,7 @@ namespace Content.IntegrationTests.Tests
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
             var gameMaps = protoMan.EnumeratePrototypes<GameMapPrototype>()
-                .Where(x => !pair.IsTestPrototype(x) && !GameMapsExcludedFromTests.Contains(x.ID)) // DS14: temp exclude broken Typan map file
+                .Where(x => !pair.IsTestPrototype(x) && !GameMapsExcludedFromTests.Contains(x.ID)) // DS14: temp exclude broken Taipan map file
                 .Select(x => x.ID)
                 .ToHashSet();
 

@@ -1,0 +1,28 @@
+- type: job
+  id: TaipanChef
+  name: job-name-taipan-chef
+  playTimeTracker: TaipanChef
+  description: Повар из далёкого космоса.
+  startingGear: SyndicateChef
+  icon: "JobIconTaipanChef"
+  supervisors: job-supervisors-taipan-telecommunications-officer
+  canBeAntag: false
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 6000
+  access:
+  - SyndicateAgent
+  - NuclearOperative
+  accessGroups:
+  - AllAccess
+
+- type: startingGear
+  id: SyndicateChef
+  equipment:
+    ears: ClothingHeadsetAltTaipan
+    jumpsuit: ClothingUniformJumpsuitTaipanChef
+    back: ClothingBackpackSyndicate
+    outerClothing: ClothingOuterApronTaipanChef
+    shoes: ClothingShoesColorBlack
+    id: SyndiPDAChef

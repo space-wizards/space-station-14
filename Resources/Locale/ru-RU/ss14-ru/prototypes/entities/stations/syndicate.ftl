@@ -2,5 +2,5 @@ ent-BaseStationSyndicate = { "" }
     .desc = { "" }
 ent-StandardNukieOutpost = { ent-BaseStation }
     .desc = { ent-BaseStation.desc }
-ent-BaseStationTypan = { ent-BaseStationSyndicate }
+ent-BaseStationTaipan = { ent-BaseStationSyndicate }
     .desc = { ent-BaseStationSyndicate.desc }

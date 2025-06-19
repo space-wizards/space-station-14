@@ -1,0 +1,16 @@
+ent-SpawnPointLatejoinTaipanAtmos = атмосферный инженер Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTaipanBotanist = ботаник Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTaipanCargotech = грузчик Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTaipanChef = повар Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTaipanMedic = медик Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTaipanRD = директор исследований Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTaipanScience = учёный Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointLatejoinTaipanOfficer = офицер телекоммуникаций Синдиката
+    .desc = { ent-SpawnPointJobBase.desc }

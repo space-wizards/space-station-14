@@ -30,7 +30,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform
-    - type: StationTypanLoader # DS14
+    - type: StationTaipanLoader # DS14
 
 - type: entity
   id: NanotrasenCentralCommand

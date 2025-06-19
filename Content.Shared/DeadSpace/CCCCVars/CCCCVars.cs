@@ -59,14 +59,14 @@ public sealed class CCCCVars
         CVarDef.Create("audio.radio_tts_sounds_enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /*
-    * Typan
+    * Taipan
     */
 
     /// <summary>
-    /// Should Typan spawn or not.
+    /// Should Taipan spawn or not.
     /// </summary>
-    public static readonly CVarDef<bool> TypanEnabled =
-        CVarDef.Create("typan.enabled", false, CVar.SERVERONLY);
+    public static readonly CVarDef<bool> TaipanEnabled =
+        CVarDef.Create("taipan.enabled", false, CVar.SERVERONLY);
 
     /*
     * Lobby ui

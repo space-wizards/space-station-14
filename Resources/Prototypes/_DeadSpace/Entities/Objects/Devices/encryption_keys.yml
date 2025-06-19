@@ -45,15 +45,15 @@
 
 - type: entity
   parent: EncryptionKey
-  id: EncryptionKeyTypan
+  id: EncryptionKeyTaipan
   name: красный ключ шифрования
   description: Ключ шифрования, используемый... хм... кем же?
   suffix: Тайпан
   components:
   - type: EncryptionKey
     channels:
-    - Typan
-    defaultChannel: Typan
+    - Taipan
+    defaultChannel: Taipan
   - type: Sprite
     sprite: _DeadSpace/Objects/Devices/encryption_keys.rsi
     layers:

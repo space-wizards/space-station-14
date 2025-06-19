@@ -92,15 +92,15 @@ job-name-zombie = зомби
 job-title-visitor = Посетитель
 job-title-cluwne = Клувень
 job-title-universal = Администратор
-# Typan
-job-name-typan-atmos-tech = Атмосферный инженер Синдиката
-job-name-typan-botanist = Ботаник Синдиката
-job-name-typan-cargotech = Карготехник Синдиката
-job-name-typan-chef = Повар Синдиката
-job-name-typan-medic = Медик Синдиката
-job-name-typan-rd = Директор исследований Синдиката
-job-name-typan-science = Учёный Синдиката
-job-name-typan-telecommunications-officer = Офицер телекоммуникаций Синдиката
+# Taipan
+job-name-taipan-atmos-tech = Атмосферный инженер Синдиката
+job-name-taipan-botanist = Ботаник Синдиката
+job-name-taipan-cargotech = Карготехник Синдиката
+job-name-taipan-chef = Повар Синдиката
+job-name-taipan-medic = Медик Синдиката
+job-name-taipan-rd = Директор исследований Синдиката
+job-name-taipan-science = Учёный Синдиката
+job-name-taipan-telecommunications-officer = Офицер телекоммуникаций Синдиката
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Атмосферный техник
 JobBartender = Бармен
@@ -179,12 +179,12 @@ JobSeniorSalvageSpecialist = Ведущий утилизатор
 JobSeniorAdministrator = Менеджер
 JobStationAi = Станционный ИИ
 JobVisitor = Посетитель
-# Typan
-JobTypanAtmosTech = Атмосферный инженер Синдиката
-JobTypanBotanist = Ботаник Синдиката
-JobTypanCargotech = Карготехник Синдиката
-JobTypanChef = Повар Синдиката
-JobTypanMedic = Медик Синдиката
-JobTypanRD = Директор исследований Синдиката
-JobTypanScience = Учёный Синдиката
-JobTypanTelecommunicationsOfficer = Офицер телекоммуникаций Синдиката
+# Taipan
+JobTaipanAtmosTech = Атмосферный инженер Синдиката
+JobTaipanBotanist = Ботаник Синдиката
+JobTaipanCargotech = Карготехник Синдиката
+JobTaipanChef = Повар Синдиката
+JobTaipanMedic = Медик Синдиката
+JobTaipanRD = Директор исследований Синдиката
+JobTaipanScience = Учёный Синдиката
+JobTaipanTelecommunicationsOfficer = Офицер телекоммуникаций Синдиката

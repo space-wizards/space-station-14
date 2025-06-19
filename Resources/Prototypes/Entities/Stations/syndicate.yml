@@ -16,9 +16,9 @@
     - type: Transform
 
 - type: entity
-  id: BaseStationTypan
+  id: BaseStationTaipan
   parent:
   - BaseStationSyndicate
   categories: [ HideSpawnMenu ]
   components:
-  - type: StationTypan
+  - type: StationTaipan

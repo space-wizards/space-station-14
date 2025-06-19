@@ -53750,7 +53750,7 @@ entities:
     - type: Transform
       pos: -22.220984,-66.33661
       parent: 1
-- proto: ClothingBeltAssaultTypan
+- proto: ClothingBeltAssaultTaipan
   entities:
   - uid: 23
     components:

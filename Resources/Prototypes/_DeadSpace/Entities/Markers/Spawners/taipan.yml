@@ -1,0 +1,87 @@
+- type: entity
+  name: атмосферный инженер Синдиката
+  id: SpawnPointLatejoinTaipanAtmos
+  parent: SpawnPointJobBase
+  components:
+  - type: Sprite
+    state: green
+  - type: SpawnPoint
+    job_id: TaipanAtmosTech
+    spawn_type: LateJoin
+
+- type: entity
+  name: ботаник Синдиката
+  id: SpawnPointLatejoinTaipanBotanist
+  parent: SpawnPointJobBase
+  components:
+  - type: Sprite
+    state: green
+  - type: SpawnPoint
+    job_id: TaipanBotanist
+    spawn_type: LateJoin
+
+- type: entity
+  name: грузчик Синдиката
+  id: SpawnPointLatejoinTaipanCargotech
+  parent: SpawnPointJobBase
+  components:
+  - type: Sprite
+    state: green
+  - type: SpawnPoint
+    job_id: TaipanCargotech
+    spawn_type: LateJoin
+
+- type: entity
+  name: повар Синдиката
+  id: SpawnPointLatejoinTaipanChef
+  parent: SpawnPointJobBase
+  components:
+  - type: Sprite
+    state: green
+  - type: SpawnPoint
+    job_id: TaipanChef
+    spawn_type: LateJoin
+
+- type: entity
+  name: медик Синдиката
+  id: SpawnPointLatejoinTaipanMedic
+  parent: SpawnPointJobBase
+  components:
+  - type: Sprite
+    state: green
+  - type: SpawnPoint
+    job_id: TaipanMedic
+    spawn_type: LateJoin
+
+- type: entity
+  name: директор исследований Синдиката
+  id: SpawnPointLatejoinTaipanRD
+  parent: SpawnPointJobBase
+  components:
+  - type: Sprite
+    state: green
+  - type: SpawnPoint
+    job_id: TaipanRD
+    spawn_type: LateJoin
+
+- type: entity
+  name: учёный Синдиката
+  id: SpawnPointLatejoinTaipanScience
+  parent: SpawnPointJobBase
+  components:
+  - type: Sprite
+    state: green
+  - type: SpawnPoint
+    job_id: TaipanScience
+    spawn_type: LateJoin
+
+- type: entity
+  name: офицер телекоммуникаций Синдиката
+  id: SpawnPointLatejoinTaipanOfficer
+  parent: SpawnPointJobBase
+  components:
+  - type: Sprite
+    state: green
+  - type: SpawnPoint
+    job_id: TaipanTelecommunicationsOfficer
+    spawn_type: LateJoin

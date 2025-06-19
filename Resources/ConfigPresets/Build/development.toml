@@ -46,5 +46,5 @@ patreon = "https://boosty.to/deadstation14"
 [server]
 rules_file = "DeadSpaceDefaultRuleset"
 
-[typan]
+[taipan]
 enabled = false

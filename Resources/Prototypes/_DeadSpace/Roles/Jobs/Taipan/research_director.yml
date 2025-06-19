@@ -1,0 +1,35 @@
+- type: job
+  id: TaipanRD
+  name: job-name-taipan-rd
+  playTimeTracker: TaipanRD
+  description: Директор исследований из далёкого космоса.
+  startingGear: SyndicateRD
+  icon: "JobIconSyndicateRD"
+  supervisors: job-supervisors-taipan-syndicate
+  canBeAntag: false
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 60000
+    - !type:OverallPlaytimeRequirement
+      time: 150000
+    - !type:AgeRequirement
+      requiredAge: 24
+  access:
+  - SyndicateAgent
+  - NuclearOperative
+  accessGroups:
+  - AllAccess
+
+- type: startingGear
+  id: SyndicateRD
+  equipment:
+    eyes: ClothingEyesGlassesHiddenSecurity
+    ears: ClothingHeadsetAltTaipan
+    shoes: ClothingShoesBootsCombat
+    outerClothing: ClothingOuterCoatRDTaipan
+    gloves: ClothingHandsRDTaipan
+    id: SyndiPDARD
+    back: ClothingBackpackSyndicate
+    jumpsuit: ClothingUniformJumpsuitSyndieFormal
+    belt: ClothingBeltAssaultTaipan

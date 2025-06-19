@@ -1,0 +1,18 @@
+- type: entity
+  id: StandardTaipanStation
+  parent:
+  - BaseStation
+  - BaseStationNews
+  - BaseStationCargo
+  - BaseStationJobsSpawning
+  - BaseStationRecords
+  # - BaseStationShuttles
+  - BaseStationAlertLevels
+  - BaseStationMagnet
+  - BaseStationExpeditions
+  - BaseStationSiliconLawCrewsimov
+  # - BaseStationAllEventsEligible
+  - BaseStationTaipan
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform
