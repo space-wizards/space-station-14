@@ -13,6 +13,8 @@ using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -180,11 +182,15 @@ namespace Content.Server.Kitchen.EntitySystems
                     // This is ugly but we can't use whitelistFailPopup because there are 2 containers with different whitelists.
                     _popupSystem.PopupEntity(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), entity.Owner, args.User);
                 }
+                if (TryInsertFromStorage(entity, args.Used))
+                {
+                    return;
+                }
 
                 // Entity did NOT pass the whitelist for grind/juice.
-                // Wouldn't want the clown grinding up the Captain's ID card now would you?
-                // Why am I asking you? You're biased.
-                return;
+                    // Wouldn't want the clown grinding up the Captain's ID card now would you?
+                    // Why am I asking you? You're biased.
+                    return;
             }
 
             if (args.Handled)
@@ -311,6 +317,19 @@ namespace Content.Server.Kitchen.EntitySystems
                 AudioParams.Default.WithPitchScale(1 / reagentGrinder.WorkTimeMultiplier))?.Entity; //slightly higher pitched
             _userInterfaceSystem.ServerSendUiMessage(uid, ReagentGrinderUiKey.Key,
                 new ReagentGrinderWorkStartedMessage(program));
+        }
+
+        private bool TryInsertFromStorage(Entity<ReagentGrinderComponent> ent, EntityUid used)
+        {
+            if (!TryComp<StorageComponent>(used, out var storage))
+                return false;
+
+            var inputContainer = _containerSystem.EnsureContainer<Container>(ent, SharedReagentGrinder.InputContainerId);
+            foreach (var (item, _location) in storage.StoredItems)
+                if (!_containerSystem.Insert(item, inputContainer))
+                    return false;
+
+            return true;
         }
 
         private void ClickSound(Entity<ReagentGrinderComponent> reagentGrinder)
