@@ -70,16 +70,17 @@ public sealed class StasisSystem : SharedStasisSystem
         if (TryComp<SpriteComponent>(effectEnt, out var sprite))
         {
             // Set it to be over the parent entity.
-            sprite.DrawDepth = (int) DrawDepth.Effects;
+            sprite.DrawDepth = (int)DrawDepth.Effects;
             // Prevent it from rotating.
             sprite.NoRotation = true;
             sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
         }
+
         // Play the sound effect.
         _audioSystem.PlayPvs(comp.StasisEnterSound, effectEnt);
         _enterEffect = effectEnt;
     }
-    
+
     private void StasisEnterAnimation(EntityUid uid, StasisComponent comp)
     {
         // Start the continuous animation.
@@ -102,11 +103,12 @@ public sealed class StasisSystem : SharedStasisSystem
         if (TryComp<SpriteComponent>(effectEnt, out var sprite))
         {
             // Set it to be over the parent entity.
-            sprite.DrawDepth = (int) DrawDepth.Effects;
+            sprite.DrawDepth = (int)DrawDepth.Effects;
             // Prevent it from rotating.
             sprite.NoRotation = true;
             sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
         }
+
         // Play the sound effect.
         _audioSystem.PlayPvs(comp.StasisExitSound, effectEnt);
 
@@ -129,7 +131,7 @@ public sealed class StasisSystem : SharedStasisSystem
         if (TryComp<SpriteComponent>(effectEnt, out var sprite))
         {
             // Set it to be over the parent entity.
-            sprite.DrawDepth = (int) DrawDepth.Effects;
+            sprite.DrawDepth = (int)DrawDepth.Effects;
             // Prevent it from rotating.
             sprite.NoRotation = true;
             // Make it visible if the parent entity is visible.

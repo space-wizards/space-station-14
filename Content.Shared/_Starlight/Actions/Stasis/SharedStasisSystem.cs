@@ -36,7 +36,7 @@ public abstract class SharedStasisSystem : EntitySystem
         PrepareStasisActionEvent args)
     {
     }
-    
+
     protected virtual void OnEnterStasisStart(EntityUid uid, StasisComponent comp,
         EnterStasisActionEvent args)
     {

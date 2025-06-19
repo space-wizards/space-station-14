@@ -13,12 +13,12 @@ public enum StasisAnimationType
     /// Animation played when preparing stasis
     /// </summary>
     Prepare,
-    
+
     /// <summary>
     /// Animation played when entering stasis
     /// </summary>
     Enter,
-    
+
     /// <summary>
     /// Animation played when exiting stasis
     /// </summary>

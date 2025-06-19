@@ -61,7 +61,7 @@ public sealed partial class StasisComponent : Component
     /// The amount of cold damage the stasis ability will heal, per second.
     /// </summary>
     [DataField] [AutoNetworkedField] public float StasisColdHealPerSecond = 2f;
-    
+
     /// <summary>
     /// The amount of bleed the stasis ability will heal, per second.
     /// </summary>
@@ -71,7 +71,7 @@ public sealed partial class StasisComponent : Component
     /// The amount of additional damage resistance while in stasis (0-1, where 1 is 100% resistance), so 0.1 resistance lowers damage by 10%.
     /// </summary>
     [DataField] [AutoNetworkedField] public float StasisAdditionalDamageResistance = 1.5f;
-    
+
     /// <summary>
     /// The amount of brute damage the stasis ability will heal in critical status, per second.
     /// </summary>
@@ -96,7 +96,7 @@ public sealed partial class StasisComponent : Component
     /// The amount of cold damage the stasis ability will heal in critical status, per second.
     /// </summary>
     [DataField] [AutoNetworkedField] public float StasisInCritColdHealPerSecond = 1f;
-    
+
     /// <summary>
     /// The amount of bleed the stasis ability will heal in critical status, per second.
     /// </summary>
@@ -121,7 +121,7 @@ public sealed partial class StasisComponent : Component
     /// The sound to play when entering stasis.
     /// </summary>
     [DataField] [AutoNetworkedField] public string StasisEnterSound = "/Audio/_Starlight/Misc/alien_teleport.ogg";
-    
+
     /// <summary>
     /// The prototype ID of the stasis effect to spawn when exiting stasis.
     /// </summary>
@@ -136,7 +136,7 @@ public sealed partial class StasisComponent : Component
     /// The sound to play when exiting stasis.
     /// </summary>
     [DataField] [AutoNetworkedField] public string StasisExitSound = "/Audio/_Starlight/Misc/alien_teleport.ogg";
-    
+
     /// <summary>
     /// The prototype ID of the stasis effect to spawn when stasis is currently in use.
     /// </summary>
