@@ -8,8 +8,10 @@ namespace Content.Client.DisplacementMap;
 
 public sealed class DisplacementMapSystem : EntitySystem
 {
-    [Dependency] private readonly ISerializationManager _serialization = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly ISerializationManager _serialization = null!;
+    [Dependency] private readonly SpriteSystem _sprite = null!;
+
+    private static readonly ProtoId<ShaderPrototype> UnshadedID = "unshaded";
 
     /// <summary>
     /// Attempting to apply a displacement map to a specific layer of SpriteComponent
@@ -34,7 +36,7 @@ public sealed class DisplacementMapSystem : EntitySystem
         if (data.ShaderOverride != null)
         {
             sprite.Comp.LayerSetShader(index,
-                (sprite.Comp[index] is SpriteComponent.Layer layer && layer.ShaderPrototype == "unshaded") //feels like a hack? want to know if there's a better way of doing this.
+                (sprite.Comp[index] is SpriteComponent.Layer layer && layer.ShaderPrototype == UnshadedID) //don't like doing a fixed comparison like this but it's the only real way to check if the current shader is unshaded atm. could expose parsedShader from the proto?
                     ? data.ShaderOverrideUnshaded
                     : data.ShaderOverride);
         }
