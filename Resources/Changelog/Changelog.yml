@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: SlamBamActionman
   changes:
-  - message: Tracking implants no longer announce on radio when someone goes into
-      critical health.
-    type: Remove
-  id: 8182
-  time: '2025-04-14T20:23:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35995
-- author: SlamBamActionman
-  changes:
   - message: Chest rig explosive resistance is increased from 50% to 90%.
     type: Tweak
   id: 8183
@@ -3911,3 +3903,10 @@
   id: 8694
   time: '2025-06-19T15:06:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38443
+- author: Sparlight
+  changes:
+  - message: Smart corgis can now wear various hardsuits, armors, and glasses items.
+    type: Add
+  id: 8695
+  time: '2025-06-19T19:49:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36875
