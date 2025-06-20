@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Sha-Seng
   changes:
-  - message: Undershirt sprites adjusted slightly to not show under short sleeve tops
-    type: Tweak
-  id: 1374
-  time: '2025-03-24T03:05:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2034
-- author: Sha-Seng
-  changes:
   - message: Decapoid clowns and mimes now have special vaporizers
     type: Add
   - message: Decapoids have special huge puffer coat sprites and circus clown sprites
@@ -4203,3 +4196,10 @@
   id: 1873
   time: '2025-06-20T04:29:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2827
+- author: DinnerCalzone
+  changes:
+  - message: Empty liquid storage tanks can now be ordered from Cargo.
+    type: Add
+  id: 1874
+  time: '2025-06-20T05:23:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2826
