@@ -37,4 +37,8 @@ public sealed partial class StunRadiusComponent : Component
 
     [DataField("ignorAlien")]
     public bool IgnorAlien = true;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("stunBorg")]
+    public bool StunBorg = false;
 }
