@@ -1,22 +1,31 @@
-﻿using Content.Server.GameTicking.Rules.VariationPass.Components;
+using Content.Server.GameTicking.Rules.VariationPass.Components;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Shared.Light.Components;
 using Robust.Shared.Random;
+using Content.Shared.Tag;
 
 namespace Content.Server.GameTicking.Rules.VariationPass;
 
 /// <inheritdoc cref="PoweredLightVariationPassComponent"/>
 public sealed class PoweredLightVariationPassSystem : VariationPassSystem<PoweredLightVariationPassComponent>
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
+
+    [ValidatePrototypeId<TagPrototype>]
+    public const string ExemptTag = "VariationExempt";
 
     protected override void ApplyVariation(Entity<PoweredLightVariationPassComponent> ent, ref StationVariationPassEvent args)
     {
+        var tagSystem = _entManager.EntitySysManager.GetEntitySystem<TagSystem>();
         var query = AllEntityQuery<PoweredLightComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var comp, out var xform))
         {
             if (!IsMemberOfStation((uid, xform), ref args))
+                continue;
+
+            if (tagSystem.HasTag(uid, ExemptTag))
                 continue;
 
             if (Random.Prob(ent.Comp.LightBreakChance))
