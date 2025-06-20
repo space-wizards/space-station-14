@@ -130,6 +130,8 @@
         amount: 4
       - id: MagazineShotgun
         amount: 4
+      - id: MagazineMagnumRifleSP
+        amount: 4
       - id: MagazineLightRifleBoxSP
         amount: 3
       - id: MagazineBoxLightRifleSP
@@ -354,3 +356,15 @@
       - id: EmpImplanter
       - id: ClothingShoesBootsMagSyndie
       - id: AgentIDCard
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledBullpup
+  name: pitbull bundle
+  description: "Contains the Pitbull Rifle and two additional magazines."
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRiflePitbull
+    - id: MagazineMagnumRifleSP
+      amount: 2
