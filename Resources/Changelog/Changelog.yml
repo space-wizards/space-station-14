@@ -1,103 +1,4 @@
 ﻿Entries:
-- author: YoungThugSS14
-  changes:
-  - message: Binoculars can now be worn on the neck.
-    type: Tweak
-  id: 8171
-  time: '2025-04-14T06:34:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35759
-- author: K-Dynamic
-  changes:
-  - message: Drawings from blue and green crayons now match their colours.
-    type: Tweak
-  id: 8172
-  time: '2025-04-14T08:58:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36532
-- author: PJB3005
-  changes:
-  - message: Fire extinguishers can now extinguish things like candles and cigarettes.
-    type: Add
-  - message: You can even use them to extinguish items that are held/worn!
-    type: Add
-  id: 8173
-  time: '2025-04-14T09:00:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36267
-- author: metalgearsloth
-  changes:
-  - message: Fix shuttle arrivals visualizer not updating with the target coordinates
-      updating.
-    type: Fix
-  id: 8174
-  time: '2025-04-14T14:34:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35772
-- author: CheesePlated
-  changes:
-  - message: The ID card console now works properly when setting job presets for replacement
-      IDs
-    type: Fix
-  id: 8175
-  time: '2025-04-14T15:02:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34921
-- author: BramvanZijp
-  changes:
-  - message: Deathsquad Hardsuit now provides 85% stamina damage resistance.
-    type: Add
-  id: 8176
-  time: '2025-04-14T15:27:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35580
-- author: benev0
-  changes:
-  - message: Stopped climbing movent while in containers
-    type: Fix
-  id: 8177
-  time: '2025-04-14T15:56:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32033
-- author: SlamBamActionman
-  changes:
-  - message: Hyposprays now shows contained chemicals in the sprite.
-    type: Tweak
-  id: 8178
-  time: '2025-04-14T15:58:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30703
-- author: SlamBamActionman
-  changes:
-  - message: Implanters are now named after the implant they contained, even after
-      the implanter has been used.
-    type: Tweak
-  - message: Syndicate implanters now remind you to scrub them in the item description.
-    type: Add
-  id: 8179
-  time: '2025-04-14T16:50:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36555
-- author: Golub
-  changes:
-  - message: Added the Knock spell to the wizard's grimoire
-    type: Add
-  id: 8180
-  time: '2025-04-14T18:57:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36562
-- author: metalgearsloth
-  changes:
-  - message: DamagePopups such as target dummies are now predicted.
-    type: Fix
-  id: 8181
-  time: '2025-04-14T19:10:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36547
-- author: SlamBamActionman
-  changes:
-  - message: Tracking implants no longer announce on radio when someone goes into
-      critical health.
-    type: Remove
-  id: 8182
-  time: '2025-04-14T20:23:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35995
-- author: SlamBamActionman
-  changes:
-  - message: Chest rig explosive resistance is increased from 50% to 90%.
-    type: Tweak
-  id: 8183
-  time: '2025-04-14T20:45:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35889
 - author: ArtisticRoomba
   changes:
   - message: Certain randomly filled bags will now have the correct number of contents
@@ -3912,3 +3813,100 @@
   id: 8683
   time: '2025-06-17T00:08:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38046
+- author: august-sun
+  changes:
+  - message: Added the Estoc DMR, a burst-fire marksman rifle with an optic. Available
+      for syndicate operatives at 18 TC.
+    type: Add
+  id: 8684
+  time: '2025-06-17T00:20:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38122
+- author: Citrea-Lingua
+  changes:
+  - message: Handheld artifact containers can now properly store handheld artifacts.
+    type: Fix
+  id: 8685
+  time: '2025-06-17T08:53:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38383
+- author: hoshizora-sayo
+  changes:
+  - message: Fixed oddities with the memory cell, APC, and black curtains crafting
+      menu entries.
+    type: Fix
+  id: 8686
+  time: '2025-06-17T09:22:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38372
+- author: KamTheSythe
+  changes:
+  - message: Explosive payloads no longer explode. Modular grenades with explosive
+      payloads remain unchanged, and can still be used to stack explosions.
+    type: Tweak
+  id: 8687
+  time: '2025-06-17T09:46:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38049
+- author: Kittygyat
+  changes:
+  - message: Increased borg drag speed, equivalent to Diona speeds.
+    type: Tweak
+  id: 8688
+  time: '2025-06-17T10:41:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38232
+- author: TheFlyingSentry
+  changes:
+  - message: Animal stealing thief objectives now actually check for the objective's
+      existence.
+    type: Tweak
+  id: 8689
+  time: '2025-06-17T11:06:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38332
+- author: kosticia
+  changes:
+  - message: Reflection chances are examinable now.
+    type: Add
+  id: 8690
+  time: '2025-06-18T00:50:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38199
+- author: Kittygyat
+  changes:
+  - message: Fixed vapes dealing unintended damage types to you when used.
+    type: Fix
+  id: 8691
+  time: '2025-06-18T12:06:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38423
+- author: beck-thompson
+  changes:
+  - message: Recycler now properly recycles item stacks.
+    type: Fix
+  id: 8692
+  time: '2025-06-18T21:14:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38433
+- author: Bhijn and Myr
+  changes:
+  - message: In interest of raising awareness of addiction to the game, the lobby
+      will now display your current playtime on a given day once it exceeds a threshold.
+    type: Add
+  id: 8693
+  time: '2025-06-19T01:06:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36483
+- author: ScarKy0
+  changes:
+  - message: APCs now have a wirepanel. It can be used to disallow the AI from accessing
+      it.
+    type: Add
+  id: 8694
+  time: '2025-06-19T15:06:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38443
+- author: Sparlight
+  changes:
+  - message: Smart corgis can now wear various hardsuits, armors, and glasses items.
+    type: Add
+  id: 8695
+  time: '2025-06-19T19:49:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36875
+- author: VerinSenpai
+  changes:
+  - message: Handcuffs no longer interfere with your daily tail wagging activities.
+    type: Fix
+  id: 8696
+  time: '2025-06-19T22:42:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38454
