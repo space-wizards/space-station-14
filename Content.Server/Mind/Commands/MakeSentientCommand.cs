@@ -27,7 +27,7 @@ public sealed class MakeSentientCommand : LocalizedEntityCommands
 
         if (!EntityManager.EntityExists(entId))
         {
-            shell.WriteLine("Invalid entity specified!");
+            shell.WriteError(Loc.GetString($"shell-entity-does-not-exist", ("uid", args[0])));
             return;
         }
 
