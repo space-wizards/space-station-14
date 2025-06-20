@@ -11,7 +11,7 @@
       map: [ "base" ]
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
+      enum.ToggleableVisuals.Enabled:
         base:
           True: { state: icon-on }
           False: { state: icon }
@@ -24,7 +24,7 @@
     enabled: false
     radius: 2
     energy: 1
-    color: "#6e7500"    
+    color: "#6e7500"
     netsync: false
   - type: Appearance
   - type: ItemToggle

@@ -30,7 +30,7 @@
     sprite: _Impstation/Objects/Weapons/Melee/energykatana.rsi
     layers:
     - state: off-icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
     angle: 60
     animation: WeaponArcSlash
   - type: Item
@@ -61,8 +61,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-     enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+     enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: on-icon}
           False: {state: off-icon}
   - type: Stamp

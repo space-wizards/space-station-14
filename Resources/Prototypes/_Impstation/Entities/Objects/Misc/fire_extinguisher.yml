@@ -8,7 +8,7 @@
     sprite: _Impstation/Objects/Misc/tcktck_extinguisher.rsi
     layers:
     - state: fire_extinguisher_closed
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: MeleeWeapon
     range: 0.9
     wideAnimationRotation: 180

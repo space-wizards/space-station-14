@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     # imp start
-    sprite: _Impstation/Objects/Tools/lighters.rsi 
+    sprite: _Impstation/Objects/Tools/lighters.rsi
     layers:
     - state: syndie-icon-base
       map: ["base"]
@@ -16,7 +16,7 @@
     - state: syndie-icon-open
       map: ["open"]
       visible: false
-    - state: flame-green 
+    - state: flame-green
     # /imp end
       map: ["flame"]
       visible: false
@@ -42,7 +42,7 @@
       showExamineText: false
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
+      enum.ToggleableVisuals.Enabled:
         flame:
           True: { visible: true }
           False: { visible: false }
@@ -56,14 +56,14 @@
           True: { visible: false }
           False: { visible: true }
   # imp start
-  - type: ToggleableLightVisuals 
+  - type: ToggleableLightVisuals
     spriteLayer: flame-green
     inhandVisuals:
       left:
       - state: syndie-inhand-left-lit
         shader: unshaded
       right:
-      - state: syndie-inhand-right-lit 
+      - state: syndie-inhand-right-lit
       # /imp end
         shader: unshaded
   - type: PointLight
