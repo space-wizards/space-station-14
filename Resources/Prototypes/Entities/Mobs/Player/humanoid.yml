@@ -124,9 +124,6 @@
   parent: RandomHumanoidSpawnerERTLeaderEVA
   suffix: ERTRole, Armed, EVA
   components:
-    - type: Sprite
-      sprite: Markers/jobs.rsi
-      state: ertleaderarmed
     - type: RandomHumanoidSpawner
       settings: ERTLeaderArmed
 
@@ -301,9 +298,6 @@
   id: RandomHumanoidSpawnerERTEngineerArmed
   suffix: ERTRole, Armed, EVA
   components:
-  - type: Sprite
-    sprite: Markers/jobs.rsi
-    state: ertengineerarmed
   - type: RandomHumanoidSpawner
     settings: ERTEngineerArmed
 
@@ -495,9 +489,6 @@
   id: RandomHumanoidSpawnerERTMedicalArmed
   suffix: ERTRole, Armed, EVA
   components:
-  #- type: Sprite
-  #  sprite: Markers/jobs.rsi
-  #  state: ertmedicalarmed # Todo: Add job sprites
   - type: RandomHumanoidSpawner
     settings: ERTMedicalArmed
 
