@@ -135,7 +135,6 @@ public abstract class SharedStunSystem : EntitySystem
             return;
 
         TryStun(args.OtherEntity, ent.Comp.Duration, true, status);
-
         TryKnockdown(args.OtherEntity, ent.Comp.Duration, true, status);
     }
 
@@ -365,14 +364,10 @@ public abstract class SharedStunSystem : EntitySystem
 
     #endregion
 
-    public void TryStunAnimation(EntityUid uid, TimeSpan time)
+    public virtual void TryStunAnimation(Entity<StunnedComponent?> entity)
     {
-        if (TryComp<StunnedComponent>(uid, out var comp))
-            TryStunAnimation((uid, comp), time);
-    }
-
-    public virtual void TryStunAnimation(Entity<StunnedComponent> entity, TimeSpan time)
-    {
+        if (!Resolve(entity, ref entity.Comp))
+            return;
         // Here so server can tell the client to do things
         entity.Comp.Visualized = true;
     }

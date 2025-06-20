@@ -380,7 +380,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         component.StaminaDamage = component.CritThreshold;
 
         if (StunSystem.TryParalyze(uid, component.StunTime, true))
-            StunSystem.TryStunAnimation(uid, component.StunTime);
+            StunSystem.TryStunAnimation(uid);
 
         // Give them buffer before being able to be re-stunned
         component.NextUpdate = Timing.CurTime + component.StunTime + StamCritBufferTime;
