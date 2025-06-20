@@ -184,9 +184,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             .OfType<LoadoutContainer>()
             .Any(c => c.Select.Pressed);
 
-        toggle.Modulate = anyActive
-            ? Color.Green
-            : Color.White;
+        toggle.Pressed = anyActive;
     }
 
     /// <summary>
