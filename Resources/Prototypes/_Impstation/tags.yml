@@ -85,6 +85,9 @@
   id: HudAdmin
 
 - type: Tag
+  id: HudSalvage
+
+- type: Tag
   id: JanitorialWelder
 
 - type: Tag

@@ -18,3 +18,8 @@
   id: RedSquare
   kind: source
   path: "/Textures/_Impstation/Shaders/red_square.swsl"
+
+- type: shader
+  id: SalvoScan
+  kind: source
+  path: "/Textures/_Impstation/Shaders/salvo_scan.swsl"

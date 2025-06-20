@@ -1,0 +1,63 @@
+- type: materialCompositionIcon
+  id: Steel
+  priority: 5
+  locationPreference: left
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/salvage_icons.rsi
+    state: Steel
+
+- type: materialCompositionIcon
+  id: Plastic
+  priority: 5
+  locationPreference: left
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/salvage_icons.rsi
+    state: Plastic
+
+- type: materialCompositionIcon
+  id: Glass
+  priority: 5
+  locationPreference: left
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/salvage_icons.rsi
+    state: Glass
+
+- type: materialCompositionIcon
+  id: Gold
+  priority: 5
+  locationPreference: left
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/salvage_icons.rsi
+    state: Gold
+
+- type: materialCompositionIcon
+  id: Silver
+  priority: 5
+  locationPreference: left
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/salvage_icons.rsi
+    state: Silver
+
+- type: materialCompositionIcon
+  id: Plasma
+  priority: 5
+  locationPreference: left
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/salvage_icons.rsi
+    state: Plasma
+
+- type: materialCompositionIcon
+  id: Uranium
+  priority: 5
+  locationPreference: left
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/salvage_icons.rsi
+    state: Uranium
+
+- type: materialCompositionIcon
+  id: Diamond
+  priority: 5
+  locationPreference: left
+  icon:
+    sprite: /Textures/_Impstation/Interface/Misc/salvage_icons.rsi
+    state: Diamond

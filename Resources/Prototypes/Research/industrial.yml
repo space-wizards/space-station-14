@@ -15,6 +15,7 @@
   - OreProcessorIndustrialMachineCircuitboard
   - ClothingMaskWeldingGas
   - BorgModuleMining # imp
+  - ClothingEyesHudSalvage #imp
 
 - type: technology
   id: SpaceScanning

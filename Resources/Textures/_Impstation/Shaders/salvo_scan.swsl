@@ -1,0 +1,21 @@
+light_mode unshaded;
+
+const highp float FADE_IN_DIST = 0.075;
+const highp vec4 col = vec4(0.0, 0.550, 1.0, 0.3);
+
+void fragment() {
+
+    highp float dist = distance(UV, vec2(0.5));
+    highp float edge0 = 0.5 - FADE_IN_DIST;
+    highp float edge1 = 0.5;
+	highp float alpha = clamp((dist - edge0) / (edge1 - edge0), 0.0, 1.0);
+
+	if (alpha >= 1.0) {
+	    alpha = 0.0;
+	} else if (alpha > 0.975) {
+        alpha = 0.25; //smoothing the edges off a bit
+    }
+
+    COLOR.rgb = col.rgb;
+    COLOR.a = col.a * alpha;
+}

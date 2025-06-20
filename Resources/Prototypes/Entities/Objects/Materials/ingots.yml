@@ -25,6 +25,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StatusIcon #imp edit. for the salvohud
 
 - type: entity
   parent: IngotBase

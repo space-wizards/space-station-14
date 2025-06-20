@@ -24,6 +24,7 @@
     - id: HandheldGPSBasic
     - id: RadioHandheld
     - id: AppraisalTool
+    - id: ClothingEyesHudSalvage #imp edit - give salvagers the salvohud!
     - id: Flare
       prob: 0.3
       rolls: !type:ConstantNumberSelector

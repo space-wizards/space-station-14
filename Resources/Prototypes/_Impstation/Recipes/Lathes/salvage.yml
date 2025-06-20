@@ -1,0 +1,9 @@
+- type: latheRecipe
+  id: ClothingEyesHudSalvage
+  result: ClothingEyesHudSalvage
+  completetime: 3
+  materials:
+    Steel: 1000
+    Glass: 300
+    Plastic: 300
+    Gold: 100
