@@ -56,4 +56,5 @@ shell-argument-username-optional-hint = [username]
 
 shell-child-attached-to-parent = Added {$child} to {$parent}.
 shell-failed-attach-child-to-parent = Unable to add {$child} to {$parent}.
+shell-entity-does-not-exist = No entity exists with uid {$uid}.
 
