@@ -45,7 +45,7 @@
   description: spellbook-cluwne-desc
   productAction: ActionCluwne
   cost:
-    WizCoin: 3
+    WizCoin: 300 #starlight make stupid expensive
   categories:
   - SpellbookOffensive
   conditions:
