@@ -1,5 +1,4 @@
-﻿
-- type: inventoryTemplate
+﻿- type: inventoryTemplate
   id: scurret
   slots:
   - name: ears
