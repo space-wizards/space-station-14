@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: You no longer have to contemplate the idea of using corporate-sanctioned
-      or unsanctioned violence to end another's life when wielding a gun. You can
-      now shoot for free with no thoughts or hesitation!!
-    type: Fix
-  - message: Uplink items should be CORRECT.
-    type: Fix
-  id: 1376
-  time: '2025-03-24T03:42:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2055
-- author: Sha-Seng
-  changes:
-  - message: You can now butcher your bomber jackets for a loose look
-    type: Add
-  id: 1377
-  time: '2025-03-24T03:54:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2033
 - author: Sha-Seng
   changes:
   - message: Simple tee, simple tank, and black flip flops added to the Clothesmate
@@ -4204,3 +4186,19 @@
   id: 1875
   time: '2025-06-20T05:30:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2825
+- author: youtubevideo3
+  changes:
+  - message: Nanotrasen's various tobacco product subsidiaries have consulted with
+      marketing firms in order to create fresh and unique brand identities.
+    type: Tweak
+  id: 1876
+  time: '2025-06-20T05:34:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2819
+- author: widgetbeck
+  changes:
+  - message: Eddid thi Vowel Rotation eccint treot, whoch rutetis ell vuwils tu thi
+      roght by uni. AEIOU -> EIOUA
+    type: Add
+  id: 1877
+  time: '2025-06-20T05:35:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2817
