@@ -37,9 +37,6 @@
       state: gib
   - type: EntityTargetAction
     event: !type:SmiteSpellEvent
-    damage: #starlight damage
-      types:
-        Shock: 400
   - type: SpeakOnAction
     sentence: action-speech-spell-smite
   - type: Magic

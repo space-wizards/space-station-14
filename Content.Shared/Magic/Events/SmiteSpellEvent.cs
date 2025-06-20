@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Damage;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Magic.Events;
 
@@ -13,5 +14,11 @@ public sealed partial class SmiteSpellEvent : EntityTargetActionEvent
     public bool DeleteNonBrainParts = false;
 
     [DataField]
-    public DamageSpecifier Damage;
+    public DamageSpecifier Damage = new()
+    {
+        DamageDict = new()
+        {
+            { "Shock", 400 }
+        }
+    };
 }
