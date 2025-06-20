@@ -86,6 +86,23 @@
       - !type:NestedSelector
         weight: 1
         tableId: RandomChemicalBarrelRadioactive
+      # imp edit start
+      - !type:NestedSelector
+        weight: 0.8
+        tableId: RandomChemicalBarrelCondiments
+      - !type:NestedSelector
+        weight: 0.8
+        tableId: RandomChemicalBarrelDrinks
+      - !type:NestedSelector
+        weight: 0.8
+        tableId: RandomChemicalBarrelBiological
+      - !type:NestedSelector
+        weight: 0.8
+        tableId: RandomChemicalBarrelCleaning
+      - !type:NestedSelector
+        weight: 0.8
+        tableId: RandomChemicalBarrelFunny
+      # imp edit end
 
 # Treasure: High-value scatterables that don't do a ton.
 

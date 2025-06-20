@@ -8,7 +8,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: eng
-    stateDoorOpen: eng_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: eng_tool_door
 
 # Radiation suit closet
@@ -21,7 +21,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: eng
-    stateDoorOpen: eng_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: eng_rad_door
 
 # Emergency closet
@@ -46,8 +46,8 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBaseClosed: n2
-    stateDoorOpen: n2_open
+    stateBaseClosed: fire #imp edit
+    stateDoorOpen: fire_open #imp edit
     stateDoorClosed: n2_door
 
 # Fire safety closet
@@ -73,7 +73,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: bomb
-    stateDoorOpen: bomb_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: bomb_door
 
 # Janitorial bomb suit closet
@@ -86,8 +86,8 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBaseClosed: janitor_bomb
-    stateDoorOpen: janitor_bomb_open
+    stateBaseClosed: janitor #imp edit
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: janitor_bomb_door
 
 # Biohazard
@@ -102,7 +102,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: bio
-    stateDoorOpen: bio_open
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: bio_door
 
 # Science Variant
@@ -113,7 +113,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: bio #imp edit
-    stateDoorOpen: bio_open #imp edit
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: bio_sci_door
 
 # Virology variant
@@ -124,7 +124,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: bio_viro
-    stateDoorOpen: bio_open #imp edit
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: bio_viro_door
 
 # Security variant
@@ -134,8 +134,8 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBaseClosed: bio_sec
-    stateDoorOpen: bio_open #imp edit
+    stateBaseClosed: fire #imp edit
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: bio_sec_door
 
 # Janitor variant
@@ -145,8 +145,8 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBaseClosed: bio_jan
-    stateDoorOpen: bio_open #imp edit
+    stateBaseClosed: janitor #imp edit
+    stateDoorOpen: generic_open_3 #imp edit
     stateDoorClosed: bio_jan_door
 
 # Maintenance closet

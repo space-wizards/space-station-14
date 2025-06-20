@@ -1,0 +1,25 @@
+- type: entity
+  id: MagazinePistolCaselessRifleEmpty
+  name: "pistol magazine (.25 caseless any)"
+  description: A 10-round .25 caseless pistol magazine with no apparent markings.
+  parent: BaseMagazinePistolCaselessRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+    capacity: 10
+  - type: MagazineVisuals
+    magState: mag
+    steps: 6
+    zeroVisible: false
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag

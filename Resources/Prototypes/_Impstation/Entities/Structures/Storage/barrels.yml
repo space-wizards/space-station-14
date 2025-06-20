@@ -1,0 +1,934 @@
+- type: entityTable
+  id: RandomChemicalBarrelCondiments
+  table: !type:GroupSelector
+    children:
+    - id: BarrelChemFilledBbqSauce
+    - id: BarrelChemFilledColdsauce
+    - id: BarrelChemFilledHotsauce
+    - id: BarrelChemFilledKetchup
+    - id: BarrelChemFilledMayo
+    - id: BarrelChemFilledMustard
+    - id: BarrelChemFilledSoysauce
+
+- type: entityTable
+  id: RandomChemicalBarrelDrinks
+  table: !type:GroupSelector
+    children:
+    # Alcohols
+    - id: BarrelChemFilledAle
+    - id: BarrelChemFilledBeer
+    - id: BarrelChemFilledSake
+    - id: BarrelChemFilledVodka
+    - id: BarrelChemFilledWhiskey
+    - id: BarrelChemFilledWine
+    # Imp Alcohols
+    - id: BarrelChemFilledCottonBool
+    - id: BarrelChemFilledThavenBad
+    - id: BarrelChemFilledUAP
+    - id: BarrelChemFilledVoxRocks
+    # Drinks
+    - id: BarrelChemFilledCoffee
+    - id: BarrelChemFilledGreenTea
+    - id: BarrelChemFilledLemonade
+    - id: BarrelChemFilledMilk
+    - id: BarrelChemFilledNothing
+    - id: BarrelChemFilledNuclearCola
+    - id: BarrelChemFilledTea
+    - id: BarrelChemFilledTonicWater
+    - id: BarrelChemFilledWater
+    - id: BarrelChemFilledIce
+    # Imp Drinks
+    - id: BarrelChemFilledRaktaccino
+    # Sodas
+    - id: BarrelChemFilledCola
+    - id: BarrelChemFilledEnergyDrink
+    - id: BarrelChemFilledGrapeSoda
+    - id: BarrelChemFilledRootBeer
+
+- type: entityTable
+  id: RandomChemicalBarrelBiological
+  table: !type:GroupSelector
+    children:
+    - id: BarrelChemFilledBlood
+    - id: BarrelChemFilledInsectBlood
+    - id: BarrelChemFilledSlime
+    - id: BarrelChemFilledSap
+    - id: BarrelChemFilledCopperBlood
+
+- type: entityTable
+  id: RandomChemicalBarrelCleaning
+  table: !type:GroupSelector
+    children:
+    - id: BarrelChemFilledBleach
+      weight: 0.25
+    - id: BarrelChemFilledSpaceCleaner
+      weight: 0.5
+    - id: BarrelChemFilledSoapReagent
+    - id: BarrelChemFilledSpaceGlue
+      weight: 0.5
+    - id: BarrelChemFilledLube
+      weight: 0.5
+
+- type: entityTable
+  id: RandomChemicalBarrelFunny
+  table: !type:GroupSelector
+    children:
+    # Fun
+    - id: BarrelChemFilledJuiceThatMakesYouWeh
+    - id: BarrelChemFilledJuiceThatMakesYouHew
+    - id: BarrelChemFilledLaughter
+    # Imp Fun
+    - id: BarrelChemFilledJuiceThatMakesYouUngh
+    - id: BarrelChemFilledMouseBites
+    - id: BarrelChemFilledSadness
+    # Narcotics
+    - id: BarrelChemFilledHappiness
+    # Toxins
+    - id: BarrelChemFilledHonk
+    - id: BarrelChemFilledVentCrud
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemBlackEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: black
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemBlueEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: blue
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemBrownEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: brown
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemCyanEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: cyan
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemGreenEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: green
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemOrangeEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: orange
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemPinkEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: pink
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemPurpleEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: purple
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemRedEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: red
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemWhiteEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: white
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemYellowEmpty
+  suffix: Empty
+  components:
+  - type: Sprite
+    state: yellow
+
+# Condiments
+- type: entity
+  parent: BarrelChemBrownEmpty
+  id: BarrelChemFilledBbqSauce
+  suffix: BbqSauce
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: BbqSauce
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemCyanEmpty
+  id: BarrelChemFilledColdsauce
+  suffix: Coldsauce
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Coldsauce
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemRedEmpty
+  id: BarrelChemFilledHotsauce
+  suffix: Hotsauce
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Hotsauce
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemRedEmpty
+  id: BarrelChemFilledKetchup
+  suffix: Ketchup
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemWhiteEmpty
+  id: BarrelChemFilledMayo
+  suffix: Mayo
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Mayo
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemYellowEmpty
+  id: BarrelChemFilledMustard
+  suffix: Mustard
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Mustard
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBrownEmpty
+  id: BarrelChemFilledSoysauce
+  suffix: Soysauce
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Soysauce
+          Quantity: 500
+
+# Alcohol
+- type: entity
+  parent: BarrelChemBrownEmpty
+  id: BarrelChemFilledAle
+  suffix: Ale
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Ale
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBrownEmpty
+  id: BarrelChemFilledBeer
+  suffix: Beer
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Beer
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemWhiteEmpty
+  id: BarrelChemFilledSake
+  suffix: Sake
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Sake
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemWhiteEmpty
+  id: BarrelChemFilledVodka
+  suffix: Vodka
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Vodka
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBrownEmpty
+  id: BarrelChemFilledWhiskey
+  suffix: Whiskey
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Whiskey
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemPurpleEmpty
+  id: BarrelChemFilledWine
+  suffix: Wine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Wine
+          Quantity: 500
+
+# Imp Alcohol aka Alchohol
+- type: entity
+  parent: BarrelChemWhiteEmpty
+  id: BarrelChemFilledCottonBool
+  suffix: CottonBool
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: CottonBool
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemGreenEmpty
+  id: BarrelChemFilledThavenBad
+  suffix: ThavenBad
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: ThavenBad
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBrownEmpty
+  id: BarrelChemFilledUAP
+  suffix: UAP
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: UAP
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemPinkEmpty
+  id: BarrelChemFilledVoxRocks
+  suffix: VoxRocks
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: VoxRocks
+          Quantity: 500
+
+# Drinks
+- type: entity
+  parent: BarrelChemBrownEmpty
+  id: BarrelChemFilledCoffee
+  suffix: Coffee
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Coffee
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemGreenEmpty
+  id: BarrelChemFilledGreenTea
+  suffix: GreenTea
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: GreenTea
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemYellowEmpty
+  id: BarrelChemFilledLemonade
+  suffix: Lemonade
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Lemonade
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemWhiteEmpty
+  id: BarrelChemFilledMilk
+  suffix: Milk
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Milk
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemWhiteEmpty
+  id: BarrelChemFilledNothing
+  suffix: Nothing
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Nothing
+          Quantity: 500
+
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledNuclearCola
+  suffix: NuclearCola
+  components:
+  - type: Sprite
+    state: radioactive #not actually radioactive
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: NuclearCola
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBrownEmpty
+  id: BarrelChemFilledTea
+  suffix: Tea
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Tea
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBlueEmpty
+  id: BarrelChemFilledTonicWater
+  suffix: TonicWater
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: TonicWater
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBlueEmpty
+  id: BarrelChemFilledWater
+  suffix: Water
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Water
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemCyanEmpty
+  id: BarrelChemFilledIce
+  suffix: Ice
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Ice
+          Quantity: 500
+
+# Imp Drinks
+- type: entity
+  parent: BarrelChemBlueEmpty #like the mug
+  id: BarrelChemFilledRaktaccino
+  suffix: Raktaccino
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Raktaccino
+          Quantity: 500
+
+# Soda
+- type: entity
+  parent: BarrelChemBrownEmpty
+  id: BarrelChemFilledCola
+  suffix: Cola
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Cola
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemGreenEmpty
+  id: BarrelChemFilledEnergyDrink
+  suffix: EnergyDrink
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: EnergyDrink
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemPurpleEmpty
+  id: BarrelChemFilledGrapeSoda
+  suffix: GrapeSoda
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: GrapeSoda
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBrownEmpty
+  id: BarrelChemFilledRootBeer
+  suffix: RootBeer
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: RootBeer
+          Quantity: 500
+
+# Biological
+- type: entity
+  parent: BarrelChemRedEmpty
+  id: BarrelChemFilledBlood
+  suffix: Blood
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Blood
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemGreenEmpty
+  id: BarrelChemFilledInsectBlood
+  suffix: InsectBlood
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: InsectBlood
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemGreenEmpty
+  id: BarrelChemFilledSlime
+  suffix: Slime
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Slime
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBrownEmpty
+  id: BarrelChemFilledSap
+  suffix: Sap
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Sap
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBlueEmpty
+  id: BarrelChemFilledCopperBlood
+  suffix: CopperBlood
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: CopperBlood
+          Quantity: 500
+
+# Imp Biological
+- type: entity
+  parent: BaseBarrelChemRadioactive
+  id: BaseBarrelChemRadioactiveFilledGrayBlood
+  suffix: GrayBlood
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: GrayBlood
+          Quantity: 500
+
+# Botany
+- type: entity
+  parent: BarrelChemGreenEmpty
+  id: BarrelChemFilledEZNutrient
+  suffix: EZNutrient
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: EZNutrient
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemGreenEmpty
+  id: BarrelChemFilledRobustHarvest
+  suffix: RobustHarvest
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: RobustHarvest
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemGreenEmpty
+  id: BarrelChemFilledAmmonia
+  suffix: Ammonia
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Ammonia
+          Quantity: 500
+
+# Cleaning
+- type: entity
+  parent: BarrelChemPurpleEmpty
+  id: BarrelChemFilledBleach
+  suffix: Bleach
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Bleach
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemPurpleEmpty
+  id: BarrelChemFilledSpaceCleaner
+  suffix: SpaceCleaner
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemPurpleEmpty
+  id: BarrelChemFilledSoapReagent
+  suffix: SoapReagent
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemWhiteEmpty
+  id: BarrelChemFilledSpaceGlue
+  suffix: SpaceGlue
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: SpaceGlue
+          Quantity: 500
+
+# Elements
+- type: entity
+  parent: BaseBarrelChem
+  id: BarrelChemFilledAluminium
+  suffix: Aluminium
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBlackEmpty
+  id: BarrelChemFilledCarbon
+  suffix: Carbon
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemYellowEmpty #banana
+  id: BarrelChemFilledPotassium
+  suffix: Potassium
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Potassium
+          Quantity: 500
+
+# Fun
+- type: entity
+  parent: BarrelChemGreenEmpty
+  id: BarrelChemFilledJuiceThatMakesYouWeh
+  suffix: JuiceThatMakesYouWeh
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemPurpleEmpty
+  id: BarrelChemFilledJuiceThatMakesYouHew
+  suffix: JuiceThatMakesYouHew
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: JuiceThatMakesYouHew
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemPinkEmpty
+  id: BarrelChemFilledLaughter
+  suffix: Laughter
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Laughter
+          Quantity: 500
+
+# Imp Fun
+- type: entity
+  parent: BarrelChemBlackEmpty
+  id: BarrelChemFilledJuiceThatMakesYouUngh
+  suffix: JuiceThatMakesYouUngh
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: JuiceThatMakesYouUngh
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemPinkEmpty
+  id: BarrelChemFilledMouseBites
+  suffix: MouseBites
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: MouseBites
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBlackEmpty
+  id: BarrelChemFilledSadness
+  suffix: Sadness
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Sadness
+          Quantity: 500
+
+# Narcotics
+- type: entity
+  parent: BarrelChemPinkEmpty
+  id: BarrelChemFilledHappiness
+  suffix: Happiness
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Happiness
+          Quantity: 500
+
+# Toxins
+- type: entity
+  parent: BarrelChemPinkEmpty
+  id: BarrelChemFilledHonk
+  suffix: Honk
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Honk
+          Quantity: 500
+
+- type: entity
+  parent: BarrelChemBlackEmpty
+  id: BarrelChemFilledVentCrud
+  suffix: VentCrud
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: VentCrud
+          Quantity: 500

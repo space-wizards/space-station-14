@@ -84,8 +84,8 @@
   description: Dying to this barrel would bring no honor. A true warrior must avoid it at all costs.
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Storage/plasticbarrel.rsi
-    state: icon
+    sprite: _Impstation/Structures/Storage/barrels.rsi
+    state: blue
     rotation: 0
     noRot: false
   - type: ImmovableRod

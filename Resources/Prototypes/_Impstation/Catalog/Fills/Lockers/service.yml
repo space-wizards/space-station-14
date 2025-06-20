@@ -10,3 +10,36 @@
     - id: BoxCardboardIngredientItalian
     - id: BoxCardboardIngredientSweets
     - id: BoxCardboardIngredientVegetarian
+
+# Janitor
+- type: entity
+  id: LockerJanitorFilled
+  suffix: Filled
+  parent: LockerJanitor
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerJanitor
+
+- type: entityTable
+  id: FillLockerJanitor
+  table: !type:AllSelector
+    children:
+    - id: WetFloorSign
+      amount: !type:ConstantNumberSelector
+        value: 3
+    - id: LightReplacer
+    - id: BoxLightMixed
+    - id: Holoprojector
+    - id: WeaponLauncherCleanerLake
+    - !type:AllSelector
+      rolls: !type:ConstantNumberSelector
+        value: 2
+      children:
+      - id: MopItem
+      - id: BoxMousetrap
+      - id: TrashBag
+      - id: SoapNT
+      - id: FlashlightLantern
+      - id: Plunger

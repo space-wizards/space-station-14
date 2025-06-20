@@ -132,3 +132,17 @@
     magState: mag
     steps: 7
     zeroVisible: false
+
+- type: entity
+  id: MagazineBREmpty
+  name: "magazine (.25 caseless any)"
+  description: A 24-round .25 caseless battle rifle magazine, with no apparent markings.
+  parent: MagazineBR
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+    capacity: 24
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false

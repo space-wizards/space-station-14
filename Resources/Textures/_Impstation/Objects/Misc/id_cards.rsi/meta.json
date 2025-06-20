@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e idcourier sprites made by honeyed-lemons (Github) for impstation in the impstation discord, idhospitalitydirector by DinnerCalzone(github) idboxer, idchaplain, idcurator, idlawyer, idreporter, and idzookeeper edited by msTheowo(github) for impstation",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d917f4c2a088419d5c3aec7656b7ff8cebd1822e idcourier sprites made by honeyed-lemons (Github) for impstation in the impstation discord, idhospitalitydirector by DinnerCalzone(github) idlawyer edited by msTheowo(github) for impstation",
   "size": {
     "x": 32,
     "y": 32
@@ -17,22 +17,7 @@
       "name": "idhospitalitydirector"
     },
     {
-      "name": "idboxer"
-    },
-    {
-      "name": "idchaplain"
-    },
-    {
-      "name": "idcurator"
-    },
-    {
       "name": "idlawyer"
-    },
-    {
-      "name": "idreporter"
-    },
-    {
-      "name": "idzookeeper"
     },
     {
       "name": "default-inhand-left",

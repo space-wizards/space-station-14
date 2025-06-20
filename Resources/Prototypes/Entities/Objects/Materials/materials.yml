@@ -450,6 +450,7 @@
     tags:
     - RawMaterial
     - Diamond
+  - type: StatusIcon #imp edit. for the salvohud
 
 - type: entity
   parent: MaterialDiamond

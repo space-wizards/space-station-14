@@ -162,6 +162,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 300
+  - type: StatusIcon #imp edit. for the salvohud
 
 - type: entity
   parent: TreasureCoinIron

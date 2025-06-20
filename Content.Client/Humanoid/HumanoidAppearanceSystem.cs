@@ -388,13 +388,13 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         // FLOOF ADD END
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {
-            // FLOOF CHANGE START
             var markingSprite = markingPrototype.Sprites[j];
             if (markingSprite is not SpriteSpecifier.Rsi rsi)
             {
                 continue;
             }
 
+            // FLOOF CHANGE START
             var layerSlot = markingPrototype.BodyPart;
             // first, try to see if there are any custom layers for this marking
             if (markingPrototype.Layering != null)
@@ -420,18 +420,17 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             var humanoid = entity.Comp1;
             var sprite = entity.Comp2;
 
-            if (!_sprite.LayerMapTryGet((entity.Owner, sprite), markingPrototype.BodyPart, out var targetLayer, false))
+            if (!_sprite.LayerMapTryGet((entity.Owner, sprite), layerSlot, out var targetLayer, false))
             {
-                return;
+                continue;
             }
 
             visible &= !IsHidden(humanoid, markingPrototype.BodyPart);
             visible &= humanoid.BaseLayers.TryGetValue(markingPrototype.BodyPart, out var setting)
             && setting.AllowsMarkings;
-            // THE UPSTREAM STUFF HAS ENDED NOW!!!
+            // FLOOF CHANGE END
 
             var layerId = $"{markingPrototype.ID}-{rsi.RsiState}";
-            // FLOOF CHANGE END
 
             if (!_sprite.LayerMapTryGet((entity.Owner, sprite), layerId, out layerIndex, false)) // imp layerindex
             {
@@ -444,13 +443,15 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
                 _sprite.LayerMapSet((entity.Owner, sprite), layerId, layer);
                 _sprite.LayerSetSprite((entity.Owner, sprite), layerId, rsi);
             }
+
             // imp special via beck. check if there's a shader defined in the markingPrototype's shader datafield, and if there is...
-			if (markingPrototype.Shader != null)
-			{
-			// use spriteComponent's layersetshader function to set the layer's shader to that which is specified.
-				sprite.LayerSetShader(layerId, markingPrototype.Shader);
-			}
+            if (markingPrototype.Shader != null)
+            {
+                // use spriteComponent's layersetshader function to set the layer's shader to that which is specified.
+                sprite.LayerSetShader(layerId, markingPrototype.Shader);
+            }
             // end imp special
+
             _sprite.LayerSetVisible((entity.Owner, sprite), layerId, visible);
 
             if (!visible || setting == null) // this is kinda implied
@@ -462,9 +463,9 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             // and we need to check the index is correct.
             // So if that happens just default to white?
             // FLOOF ADD =3
-            sprite.LayerSetColor(layerId, colorDict.TryGetValue(rsi.RsiState, out var color) ? color : Color.White);
+            _sprite.LayerSetColor((entity.Owner, sprite), layerId, colorDict.TryGetValue(rsi.RsiState, out var color) ? color : Color.White);
 
-            // FLOOF CHANGE
+            // FLOOF REMOVE
             // if (colors != null && j < colors.Count)
             // {
             //     _sprite.LayerSetColor((entity.Owner, sprite), layerId, colors[j]);

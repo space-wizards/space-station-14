@@ -93,3 +93,6 @@ trait-category-randomizers = Randomizers
 
 trait-unadapted-to-space-name = Unadapted to space
 trait-unadapted-to-space-desc = Your body hasn't adapted to space, making you take more damage from exposure to it.
+
+trait-vowelrotation-name = Vowel Rotation
+trait-vowelrotation-desc = Yua'ri frum en udd curnir uf speci whiri iviry vuwil os shoftid uvir by uni. AEIOU -> EIOUA

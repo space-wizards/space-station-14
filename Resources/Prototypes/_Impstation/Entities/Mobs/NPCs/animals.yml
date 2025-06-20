@@ -363,3 +363,20 @@
         Base: dead
       Dead:
         Base: dead
+
+# immune to zombification monkeys and kobolds, for cube boxes
+
+- type: entity
+  parent: MobMonkey
+  id: MobMonkeySanitized
+  name: monkey
+  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing. There's a small N branded into its hand, a sign that it's part of the Ancestor Immunization Program.
+  components:
+  - type: ZombieImmune
+
+- type: entity
+  parent: MobKobold
+  id: MobKoboldSanitized
+  description: Cousins to the sentient race of lizard people, kobolds blend in with their natural habitat and are as nasty as monkeys; ready to pull out your hair and stab you to death. There's a small N branded into its hand, a sign that it's part of the Ancestor Immunization Program.
+  components:
+  - type: ZombieImmune

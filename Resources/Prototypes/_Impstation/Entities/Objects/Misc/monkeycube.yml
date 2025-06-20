@@ -1,0 +1,56 @@
+- type: entity
+  parent: BoxCardboard
+  name: chef cube box
+  id: ChefCubeBox
+  description: All sorts of livestock, packed into a portable dehydrated form. Just add water!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/chefcubes.rsi
+    state: box
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        rolls: !type:RangeNumberSelector
+          range: 9, 9
+        tableId: RandomChefCubeTable
+
+#as more types of meat get recipes (lizards, snake, penguin, kodie, etc. etc.) add them to this table for chefs!
+#with more common options for livestock, the uncommon options will naturally get rarer.
+- type: entityTable
+  id: RandomChefCubeTable
+  table: !type:GroupSelector
+    children:
+    - id: XenoCube
+      weight: .5
+    - id: SpaceCarpCube
+      weight: 1
+    - id: BearCube
+      weight: 1
+    - id: SpiderCube
+      weight: 2
+    - id: FinfinCube
+      weight: 2
+    - id: LizardCube
+      weight: 4
+    - id: PenguinCube
+      weight: 4
+    - id: SnailCube
+      weight: 5
+    - id: MouseCube
+      weight: 5
+    - id: MonkeyCube
+      weight: 6
+    - id: KoboldCube
+      weight: 6
+    - id: DuckCube
+      weight: 8
+    - id: CrabCube
+      weight: 8
+    - id: CowCube
+      weight: 10
+    - id: GoatCube
+      weight: 10
+    - id: PigCube
+      weight: 12
+    - id: ChickenCube
+      weight: 12

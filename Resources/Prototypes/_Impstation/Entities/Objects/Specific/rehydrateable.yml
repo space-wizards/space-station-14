@@ -1,0 +1,119 @@
+#  id: RehydratableAnimalCube
+- type: entity
+  parent: RehydratableAnimalCube
+  id: PigCube
+  name: pig cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobPig
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: ChickenCube
+  name: chicken cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobChicken
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: DuckCube
+  name: duck cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobDuckWhite
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: CrabCube
+  name: crab cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobCrab
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: SnailCube
+  name: snail cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobSnail
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: BearCube
+  name: bear cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobBearSpace
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: FinfinCube
+  name: finfin cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobFinfin
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: SpiderCube
+  name: giant spider cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobGiantSpider
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: XenoCube
+  name: xeno cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobXenoPraetorian
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: LizardCube
+  name: lizard cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobLizard
+
+- type: entity
+  parent: RehydratableAnimalCube
+  id: PenguinCube
+  name: penguin cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobPenguin
+
+# zombie infection-less here
+
+- type: entity
+  parent: MonkeyCube
+  id: MonkeyCubeSanitized
+  name: sanitized monkey cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobMonkeySanitized
+
+- type: entity
+  parent: KoboldCube
+  id: KoboldCubeSanitized
+  name: sanitized kobold cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobKoboldSanitized

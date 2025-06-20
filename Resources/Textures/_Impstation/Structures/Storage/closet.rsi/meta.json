@@ -4,7 +4,7 @@
     "x": 32,
     "y": 32
   },
-  "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/pull/85491. Resprited for 32x32 dimensions by AftrLife(github). aa, bio_door, bio_jan, and janitor sprites by DinnerCalzone(github). Business Door resprite by MintyTheBinty. griffy locker by Widgetbeck. Contraband and belongings locker by AvianMaiden based on pre-existing ones.",
+  "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/pull/85491. Resprited for 32x32 dimensions by AftrLife(github). Courier sprites by AftrLife(github). AA sprites, Genpop sprites, HD sprites, Janitor sprites, Musician sprites, and bio_door by DinnerCalzone(github). Business Door resprite by MintyTheBinty. griffy locker by Widgetbeck. Contraband and belongings locker by AvianMaiden based on pre-existing ones.",
   "license": "CC-BY-SA-3.0",
   "states": [
       {
@@ -14,25 +14,16 @@
           "name": "aa_door"
       },
       {
-          "name": "aa_open"
-      },
-      {
           "name": "armory"
       },
       {
           "name": "armory_door"
       },
       {
-          "name": "armory_open"
-      },
-      {
           "name": "atmos"
       },
       {
           "name": "atmos_door"
-      },
-      {
-          "name": "atmos_open"
       },
       {
           "name": "atmos_wardrobe_door"
@@ -50,19 +41,10 @@
           "name": "bio_door"
       },
       {
-          "name": "bio_jan"
-      },
-      {
           "name": "bio_jan_door"
       },
       {
-          "name": "bio_open"
-      },
-      {
           "name": "bio_sci_door"
-      },
-      {
-          "name": "bio_sec"
       },
       {
           "name": "bio_sec_door"
@@ -86,12 +68,6 @@
           "name": "bomb_door"
       },
       {
-          "name": "bomb_open"
-      },
-      {
-          "name": "brigmedic"
-      },
-      {
           "name": "brigmedic_door"
       },
       {
@@ -113,25 +89,16 @@
           "name": "cap_door"
       },
       {
-          "name": "cap_open"
-      },
-      {
           "name": "cargo"
       },
       {
           "name": "cargo_door"
       },
       {
-          "name": "cargo_open"
-      },
-      {
           "name": "ce"
       },
       {
           "name": "ce_door"
-      },
-      {
-          "name": "ce_open"
       },
       {
           "name": "chemical_door"
@@ -143,16 +110,19 @@
           "name": "clown_door"
       },
       {
-          "name": "clown_open"
-      },
-      {
           "name": "cmo"
       },
       {
           "name": "cmo_door"
       },
       {
-          "name": "cmo_open"
+          "name": "command_open"
+      },
+      {
+          "name": "courier"
+      },
+      {
+          "name": "courier_door"
       },
       {
           "name": "emergency"
@@ -170,9 +140,6 @@
           "name": "eng_elec_door"
       },
       {
-          "name": "eng_open"
-      },
-      {
           "name": "eng_rad_door"
       },
       {
@@ -180,9 +147,6 @@
       },
       {
           "name": "eng_secure_door"
-      },
-      {
-          "name": "eng_secure_open"
       },
       {
           "name": "eng_tool_door"
@@ -230,6 +194,18 @@
           "name": "generic_open"
       },
       {
+          "name": "generic_open_2"
+      },
+      {
+          "name": "generic_open_3"
+      },
+      {
+          "name": "generic_open_4"
+      },
+      {
+          "name": "generic_open_5"
+      },
+      {
           "name": "genpop"
       },
       {
@@ -266,13 +242,16 @@
           "name": "grey_door"
       },
       {
+          "name": "hd"
+      },
+      {
+          "name": "hd_door"
+      },
+      {
           "name": "hop"
       },
       {
           "name": "hop_door"
-      },
-      {
-          "name": "hop_open"
       },
       {
           "name": "hos"
@@ -281,25 +260,22 @@
           "name": "hos_door"
       },
       {
-          "name": "hos_open"
-      },
-      {
           "name": "hydro"
       },
       {
           "name": "hydro_door"
       },
       {
-          "name": "hydro_open"
-      },
-      {
-          "name": "janitor_bomb"
+          "name": "janitor"
       },
       {
           "name": "janitor_bomb_door"
       },
       {
-          "name": "janitor_bomb_open"
+          "name": "janitor_door"
+      },
+      {
+          "name": "janitor_secure"
       },
       {
           "name": "locked"
@@ -311,16 +287,10 @@
           "name": "med_door"
       },
       {
-          "name": "med_open"
-      },
-      {
           "name": "med_secure"
       },
       {
           "name": "med_secure_door"
-      },
-      {
-          "name": "med_secure_open"
       },
       {
           "name": "mime"
@@ -329,25 +299,19 @@
           "name": "mime_door"
       },
       {
-          "name": "mime_open"
-      },
-      {
           "name": "mining"
       },
       {
           "name": "mining_door"
       },
       {
-          "name": "mining_open"
-      },
-      {
           "name": "mixed_door"
       },
       {
-          "name": "n2"
+          "name": "musician"
       },
       {
-          "name": "n2_open"
+          "name": "musician_door"
       },
       {
           "name": "n2_door"
@@ -362,9 +326,6 @@
           "name": "paramed_door"
       },
       {
-          "name": "paramed_open"
-      },
-      {
           "name": "pink_door"
       },
       {
@@ -374,16 +335,10 @@
           "name": "qm_door"
       },
       {
-          "name": "qm_open"
-      },
-      {
           "name": "rd"
       },
       {
           "name": "rd_door"
-      },
-      {
-          "name": "rd_open"
       },
       {
           "name": "red_door"
@@ -398,16 +353,16 @@
           "name": "science_door"
       },
       {
-          "name": "science_open"
-      },
-      {
           "name": "sec"
       },
       {
           "name": "sec_door"
       },
       {
-          "name": "sec_open"
+          "name": "sec_griffy"
+      },
+      {
+          "name": "sec_griffy_door"
       },
       {
           "name": "secure"
@@ -417,9 +372,6 @@
       },
       {
           "name": "secure_icon"
-      },
-      {
-          "name": "secure_open"
       },
       {
           "name": "shotgun"
@@ -463,9 +415,6 @@
           "name": "warden_door"
       },
       {
-          "name": "warden_open"
-      },
-      {
           "name": "welded"
       },
       {
@@ -473,12 +422,6 @@
       },
       {
           "name": "yellow_door"
-      },
-      {
-          "name": "sec_griffy"
-      },
-      {
-          "name": "sec_griffy_door"
       }
   ]
 }

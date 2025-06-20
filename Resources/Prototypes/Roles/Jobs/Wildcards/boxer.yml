@@ -7,7 +7,7 @@
   icon: "JobIconBoxer"
   supervisors: job-supervisors-hop
   access:
-  #- Service imp edit
+  - Service
   - Maintenance
   special:
   - !type:GiveItemOnHolidaySpecial

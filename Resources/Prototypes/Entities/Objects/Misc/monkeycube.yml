@@ -34,7 +34,7 @@
   components:
   - type: SpawnItemsOnUse
     items:
-    - id: MonkeyCube
+    - id: MonkeyCubeSanitized #imp
   - type: Sprite
     state: wrapper
   - type: Tag
@@ -79,7 +79,7 @@
   components:
   - type: SpawnItemsOnUse
     items:
-      - id: KoboldCube
+      - id: KoboldCubeSanitized #imp
   - type: Sprite
     state: wrapper_kobold
 

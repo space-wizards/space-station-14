@@ -42,8 +42,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
 
-    [Dependency] private readonly SharedMindSystem _mind = default!; //imp edit
-
     public AntagSelectionPlayerPool? CurrentAntagPool = null;
     public bool ForceAllPossible = false;
 
@@ -286,36 +284,4 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return traitors;
     }
 
-// imp addition
-    public List<(EntityUid Id, MindComponent Mind)> GetOtherAntagMindsAliveAndConnected(MindComponent ourMind)
-    {
-        List<(EntityUid Id, MindComponent Mind)> allAntags = new();
-
-        var query = EntityQueryEnumerator<AntagObjectivesComponent>();
-        while (query.MoveNext(out var uid, out var antag))
-        {
-            foreach (var role in GetOtherAntagMindsAliveAndConnected(ourMind, (uid, antag)))
-            {
-                if (!allAntags.Contains(role))
-                    allAntags.Add(role);
-            }
-        }
-
-        return allAntags;
-    }
-
-    private List<(EntityUid Id, MindComponent Mind)> GetOtherAntagMindsAliveAndConnected(MindComponent ourMind, Entity<AntagObjectivesComponent> rule)
-    {
-        var antags = new List<(EntityUid Id, MindComponent Mind)>();
-        foreach (var mind in _mind.GetAliveHumans(rule.Owner))
-        {
-
-            var mindEntity = mind.Comp.Owner;
-            antags.Add((mind, mind));
-        }
-
-        return antags;
-    }
-
-//end imp edit
 }

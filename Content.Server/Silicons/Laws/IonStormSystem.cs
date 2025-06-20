@@ -228,10 +228,10 @@ public sealed class IonStormSystem : EntitySystem
         var subjects = _robustRandom.Prob(0.5f) ? objectsThreats : Loc.GetString("ion-storm-people");
 
         // message logic!!!
-        return _robustRandom.Next(0, 35) switch
+        return _robustRandom.Next(0, 34) switch //imp edit, removed 1 law
         {
             0  => Loc.GetString("ion-storm-law-on-station", ("joined", joined), ("subjects", triple)),
-            1  => Loc.GetString("ion-storm-law-call-shuttle", ("joined", joined), ("subjects", triple)),
+          //1  => Loc.GetString("ion-storm-law-call-shuttle", ("joined", joined), ("subjects", triple)), //imp edit
             2  => Loc.GetString("ion-storm-law-crew-are", ("who", crewAll), ("joined", joined), ("subjects", objectsThreats)),
             3  => Loc.GetString("ion-storm-law-subjects-harmful", ("adjective", adjective), ("subjects", triple)),
             4  => Loc.GetString("ion-storm-law-must-harmful", ("must", must)),
@@ -263,7 +263,7 @@ public sealed class IonStormSystem : EntitySystem
             30 => Loc.GetString("ion-storm-law-crew-must-have", ("adjective", adjective), ("objects", objects), ("part", part)),
             31 => Loc.GetString("ion-storm-law-crew-must-eat", ("who", who), ("adjective", adjective), ("food", food), ("part", part)),
             32 => Loc.GetString("ion-storm-law-harm", ("who", harm)),
-            33 => Loc.GetString("ion-storm-law-protect", ("who", harm)),
+            1 => Loc.GetString("ion-storm-law-protect", ("who", harm)), // imp edit
             _ => Loc.GetString("ion-storm-law-concept-verb", ("concept", concept), ("verb", verb), ("subjects", triple))
         };
     }

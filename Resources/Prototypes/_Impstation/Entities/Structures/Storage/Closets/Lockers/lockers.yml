@@ -4,28 +4,9 @@
   parent: LockerBaseSecure
   name: courier's locker
   components:
-  - type: Sprite
-    sprite: _Impstation/Structures/Storage/couriercloset.rsi
-    noRot: true
-    layers:
-    - state: courier
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: courier_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
-      shader: unshaded
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: paper
-      visible: false
-      sprite: Structures/Storage/closet_labels.rsi
-      offset: "-0.065,0"
-      map: ["enum.PaperLabelVisuals.Layer"]
   - type: EntityStorageVisuals
     stateBaseClosed: courier
-    stateDoorOpen: courier_open
+    stateDoorOpen: generic_open_2
     stateDoorClosed: courier_door
   - type: AccessReader
     access: [["Courier"]]
@@ -36,32 +17,26 @@
   parent: LockerBaseSecure
   name: hospitality director's locker
   components:
-  - type: Appearance
-  - type: Sprite
-    sprite: _Impstation/Structures/Storage/hdcloset.rsi
-    noRot: true
-    layers:
-    - state: hd
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: hd_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
-      shader: unshaded
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: paper
-      visible: false
-      sprite: Structures/Storage/closet_labels.rsi
-      offset: "-0.065,0"
-      map: ["enum.PaperLabelVisuals.Layer"]
   - type: EntityStorageVisuals
     stateBaseClosed: hd
-    stateDoorOpen: hd_open
+    stateDoorOpen: command_open
     stateDoorClosed: hd_door
   - type: AccessReader
     access: [["HospitalityDirector"]]
+
+# Janitor
+- type: entity
+  id: LockerJanitor
+  parent: LockerBaseSecure
+  name: janitor's locker
+  description: It's a storage unit for janitorial gear.
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: janitor_secure
+    stateDoorOpen: generic_open_2
+    stateDoorClosed: janitor_door
+  - type: AccessReader
+    access: [["Janitor"]]
 
 # Musician
 - type: entity
@@ -69,29 +44,9 @@
   parent: LockerBaseSecure
   name: musician locker
   components:
-  - type: Appearance
-  - type: Sprite
-    sprite: _Impstation/Structures/Storage/musiciancloset.rsi
-    noRot: true
-    layers:
-    - state: musician
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: musician_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
-      shader: unshaded
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: paper
-      visible: false
-      sprite: Structures/Storage/closet_labels.rsi
-      offset: "-0.065,0"
-      map: ["enum.PaperLabelVisuals.Layer"]
   - type: EntityStorageVisuals
     stateBaseClosed: musician
-    stateDoorOpen: musician_open
+    stateDoorOpen: generic_open
     stateDoorClosed: musician_door
   - type: AccessReader
     access: [["Musician"]]
@@ -101,11 +56,11 @@
   id: LockerBelongings
   parent: LockerSecurity
   name: belongings locker
-  description: To safely store detainee and prisoner belongings during their stay. #imp
+  description: To safely store detainee and prisoner belongings during their stay.
   components:
-  - type: EntityStorageVisuals #imp
+  - type: EntityStorageVisuals
     stateBaseClosed: belongings
-    stateDoorOpen: sec_open
+    stateDoorOpen: generic_open_2
     stateDoorClosed: belongings_door
   - type: AccessReader
     access: [["Security"]]
@@ -117,28 +72,9 @@
   name: griffy suit locker
   description: A standard-issue Nanotrasen mascot storage unit.
   components:
-  - type: Sprite
-    sprite: _Impstation/Structures/Storage/closet.rsi
-    noRot: true
-    layers:
-    - state: sec_griffy
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: sec_griffy_door
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: locked
-      map: ["enum.LockVisualLayers.Lock"]
-      shader: unshaded
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-    - state: paper
-      visible: false
-      sprite: Structures/Storage/closet_labels.rsi
-      offset: "-0.065,0"
-      map: ["enum.PaperLabelVisuals.Layer"]
   - type: EntityStorageVisuals
     stateBaseClosed: sec_griffy
-    stateDoorOpen: sec_open
+    stateDoorOpen: generic_open_2
     stateDoorClosed: sec_griffy_door
   - type: AccessReader
     access: [["Security"]]

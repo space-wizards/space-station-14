@@ -21,4 +21,4 @@
     whitelist:
       tags:
         - MailCapsule
-    capacity: 4
+    capacity: 3

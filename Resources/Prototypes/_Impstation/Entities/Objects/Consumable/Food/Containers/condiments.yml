@@ -16,3 +16,23 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: packet-solid-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketPaprika
+  name: paprika
+  description: Pairs perfectly with chicken, has a heat no pepper can compare to.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Paprika
+          Quantity: 10
+  - type: Icon
+    state: packet-paprika
+    sprite: _Impstation/Objects/Consumable/Food/condiments.rsi
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-

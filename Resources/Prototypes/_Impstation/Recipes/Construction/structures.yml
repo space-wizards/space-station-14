@@ -38,6 +38,8 @@
 
 - type: construction
   id: SecretReinf
+  name: recipes-reinforced-secret-door-name
+  description: recipes-reinforced-secret-door-desc
   graph: SecretReinf
   startNode: start
   targetNode: reinfSecretDoor

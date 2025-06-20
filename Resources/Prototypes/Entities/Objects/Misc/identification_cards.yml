@@ -285,7 +285,6 @@
   name: chaplain ID card
   components:
     - type: Sprite
-      sprite: _Impstation/Objects/Misc/id_cards.rsi # imp edit
       layers:
         - state: default
         - state: idchaplain
@@ -362,7 +361,6 @@
   name: librarian ID card
   components:
     - type: Sprite
-      sprite: _Impstation/Objects/Misc/id_cards.rsi # imp edit
       layers:
         - state: default
         - state: idcurator
@@ -768,7 +766,6 @@
   name: reporter ID card
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Misc/id_cards.rsi # imp edit
     layers:
     - state: default
     - state: idreporter
@@ -781,7 +778,6 @@
   name: boxer ID card
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Misc/id_cards.rsi # imp edit
     layers:
     - state: default
     - state: idboxer
@@ -794,7 +790,6 @@
   name: zookeeper ID card
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Misc/id_cards.rsi # imp edit
     layers:
     - state: default
     - state: idzookeeper

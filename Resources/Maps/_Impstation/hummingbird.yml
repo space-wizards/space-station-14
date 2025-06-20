@@ -4,7 +4,7 @@ meta:
   engineVersion: 260.2.0
   forkId: ""
   forkVersion: ""
-  time: 06/15/2025 08:03:41
+  time: 06/19/2025 03:29:19
   entityCount: 25397
 maps:
 - 1
@@ -59562,18 +59562,6 @@ entities:
     - type: Transform
       pos: 6.5,-4.5
       parent: 2
-- proto: ClosetJanitorFilled
-  entities:
-  - uid: 9274
-    components:
-    - type: Transform
-      pos: 53.5,-1.5
-      parent: 2
-  - uid: 9275
-    components:
-    - type: Transform
-      pos: 131.5,4.5
-      parent: 2
 - proto: ClosetL3Filled
   entities:
   - uid: 23188
@@ -63736,7 +63724,7 @@ entities:
       pos: 78.5,61.5
       parent: 2
     - type: NavMapBeacon
-      text: Arboretum
+      defaultText: Arboretum
     - type: WarpPoint
       location: Arboretum
   - uid: 9901
@@ -63758,10 +63746,6 @@ entities:
     - type: Transform
       pos: 105.5,12.5
       parent: 2
-    - type: NavMapBeacon
-      text: Perma
-    - type: WarpPoint
-      location: Perma
 - proto: DefaultStationBeaconCaptainsQuarters
   entities:
   - uid: 9905
@@ -63852,7 +63836,7 @@ entities:
       pos: 53.5,-9.5
       parent: 2
     - type: NavMapBeacon
-      text: Restroom
+      defaultText: Restroom
     - type: WarpPoint
       location: Restroom
   - uid: 9917
@@ -63861,7 +63845,7 @@ entities:
       pos: 95.5,-26.5
       parent: 2
     - type: NavMapBeacon
-      text: Laundromat
+      defaultText: Laundromat
     - type: WarpPoint
       location: Laundromat
 - proto: DefaultStationBeaconEngineering
@@ -63879,7 +63863,7 @@ entities:
       pos: 53.5,47.5
       parent: 2
     - type: NavMapBeacon
-      text: Port Escape Pods
+      defaultText: Port Escape Pods
     - type: WarpPoint
       location: Port Escape Pods
   - uid: 9922
@@ -63888,7 +63872,7 @@ entities:
       pos: 102.5,45.5
       parent: 2
     - type: NavMapBeacon
-      text: Starboard Escape Pods
+      defaultText: Starboard Escape Pods
     - type: WarpPoint
       location: Starboard Escape Pods
 - proto: DefaultStationBeaconEvac
@@ -63904,7 +63888,7 @@ entities:
       pos: 121.5,-64.5
       parent: 2
     - type: NavMapBeacon
-      text: Annex Dock
+      defaultText: Annex Dock
     - type: WarpPoint
       location: Annex Dock
 - proto: DefaultStationBeaconEVAStorage
@@ -63913,6 +63897,13 @@ entities:
     components:
     - type: Transform
       pos: 66.5,39.5
+      parent: 2
+- proto: DefaultStationBeaconEvidence
+  entities:
+  - uid: 9947
+    components:
+    - type: Transform
+      pos: 117.5,-23.5
       parent: 2
 - proto: DefaultStationBeaconGravGen
   entities:
@@ -63950,7 +63941,7 @@ entities:
       pos: 53.5,-3.5
       parent: 2
     - type: NavMapBeacon
-      text: Port Janitorial
+      defaultText: Port Janitorial
     - type: WarpPoint
       location: Port Janitorial
   - uid: 9930
@@ -63959,7 +63950,7 @@ entities:
       pos: 128.5,6.5
       parent: 2
     - type: NavMapBeacon
-      text: Starboard Janitorial
+      defaultText: Starboard Janitorial
     - type: WarpPoint
       location: Starboard Janitorial
 - proto: DefaultStationBeaconKitchen
@@ -63985,15 +63976,6 @@ entities:
       parent: 2
 - proto: DefaultStationBeaconMedbay
   entities:
-  - uid: 9937
-    components:
-    - type: Transform
-      pos: 86.5,10.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Psychologist
-    - type: WarpPoint
-      location: Psychologist
   - uid: 9938
     components:
     - type: Transform
@@ -64007,7 +63989,7 @@ entities:
       pos: 60.5,32.5
       parent: 2
     - type: NavMapBeacon
-      text: Paramedic
+      defaultText: Paramedic
     - type: WarpPoint
       location: Paramedic
   - uid: 9940
@@ -64016,7 +63998,7 @@ entities:
       pos: 83.5,-14.5
       parent: 2
     - type: NavMapBeacon
-      text: Virology
+      defaultText: Virology
     - type: WarpPoint
       location: Virology
 - proto: DefaultStationBeaconPowerBank
@@ -64025,6 +64007,13 @@ entities:
     components:
     - type: Transform
       pos: 18.5,1.5
+      parent: 2
+- proto: DefaultStationBeaconPsychology
+  entities:
+  - uid: 9937
+    components:
+    - type: Transform
+      pos: 86.5,9.5
       parent: 2
 - proto: DefaultStationBeaconQMRoom
   entities:
@@ -64063,15 +64052,6 @@ entities:
       parent: 2
 - proto: DefaultStationBeaconSecurity
   entities:
-  - uid: 9947
-    components:
-    - type: Transform
-      pos: 117.5,-23.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Sec Storage
-    - type: WarpPoint
-      location: Sec Storage
   - uid: 9948
     components:
     - type: Transform
@@ -64083,7 +64063,7 @@ entities:
       pos: 113.5,-20.5
       parent: 2
     - type: NavMapBeacon
-      text: Shooting Range
+      defaultText: Shooting Range
     - type: WarpPoint
       location: Shooting Range
 - proto: DefaultStationBeaconServerRoom
@@ -64171,7 +64151,7 @@ entities:
       pos: 37.5,-20.5
       parent: 2
     - type: NavMapBeacon
-      text: Shuttle Workshop
+      defaultText: Shuttle Workshop
     - type: WarpPoint
       location: Shuttle Workshop
   - uid: 9961
@@ -117511,6 +117491,18 @@ entities:
     - type: Transform
       pos: 114.5,26.5
       parent: 2
+- proto: LockerJanitorFilled
+  entities:
+  - uid: 9274
+    components:
+    - type: Transform
+      pos: 53.5,-1.5
+      parent: 2
+  - uid: 9275
+    components:
+    - type: Transform
+      pos: 131.5,4.5
+      parent: 2
 - proto: LockerMedicineFilled
   entities:
   - uid: 16772
@@ -162563,7 +162555,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -214251.48
+      secondsUntilStateChange: -214355.98
       state: Opening
     - type: Airlock
       autoClose: False

@@ -25,14 +25,14 @@
         name: Mail
         startingItem: null
         whitelist:
-          tags:
-          - Book
-          - Document
-          - Mail
           components:
-          - Mail
+          - Delivery
           - Paper
           - HyperlinkBook
+          - Envelope
+          tags:
+          - Document
+          - Paper
         insertOnInteract: true
         priority: 3
       food_slot:
@@ -45,16 +45,6 @@
           - Food
         insertOnInteract: true
         priority: 2
-      cash_slot:
-        insertVerbText: Put in Cash
-        ejectVerbText: Take out Cash
-        name: Cash
-        startingItem: null
-        whitelist:
-          components:
-          - Currency
-        insertOnInteract: true
-        priority: 1
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -69,10 +59,6 @@
         showEnts: False
         occludes: true
         ent: null
-      cash_slot: !type:ContainerSlot
-        showEnts: False
-        occludes: true
-        ent: null
   - type: Appearance
   - type: ItemMapper
     mapLayers:
@@ -80,20 +66,16 @@
         whitelist:
           components:
           - Food
-      icon-cash:
-        whitelist:
-          components:
-          - Currency
       icon-mail:
         whitelist:
-          tags:
-          - Book
-          - Document
-          - Mail
           components:
-          - Mail
+          - Delivery
           - Paper
           - HyperlinkBook
+          - Envelope
+          tags:
+          - Document
+          - Paper
     sprite: _NF/Objects/Misc/mail_capsule.rsi
   - type: Dumpable
   - type: Damageable

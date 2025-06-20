@@ -1,0 +1,10 @@
+- type: cargoProduct
+  id: MaterialGenericTank
+  description: An empty tank for storing liquids.
+  icon:
+    sprite: _Impstation/Structures/Storage/tanks.rsi
+    state: generictank
+  product: GenericTank
+  cost: 600
+  category: cargoproduct-category-name-materials
+  group: market

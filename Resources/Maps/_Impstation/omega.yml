@@ -36079,7 +36079,7 @@ entities:
       pos: -54.5,-5.5
       parent: 2
     - type: NavMapBeacon
-      text: Auxiliary Power
+      defaultText: Auxiliary Power
 - proto: DefaultStationBeaconEscapePod
   entities:
   - uid: 5537
@@ -36175,7 +36175,7 @@ entities:
       pos: -9.5,-31.5
       parent: 2
     - type: NavMapBeacon
-      text: Psychologist
+      defaultText: Psychologist
     - type: WarpPoint
       location: Psychologist
   - uid: 5550

@@ -92,6 +92,13 @@
     Plastic: 50
 
 - type: latheRecipe
+  id: KnifePlastic
+  result: KnifePlastic
+  completetime: .4
+  materials:
+    Plastic: 50
+
+- type: latheRecipe
   id: PairedChopsticks
   result: PairedChopsticks
   completetime: .4

@@ -112,6 +112,15 @@
   components:
   - type: RelentlessPositivity
 
+- type: trait
+  id: VowelRotation
+  name: trait-vowelrotation-name
+  description: trait-vowelrotation-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: VowelRotation
+
 # 2 cost
 
 - type: trait

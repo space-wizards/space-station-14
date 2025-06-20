@@ -3,11 +3,11 @@
   id: BaseBarrelChem
   abstract: true
   name: chemical barrel
-  description: A small metal drum. How tropical.
+  description: A plastic chemical barrel. Luckily, it isn't perched up high. #imp edit, funny worf plastic barrel reference
   components:
   - type: Sprite
-    sprite: Structures/Storage/barrels.rsi
-    state: metalbarrel
+    sprite: _Impstation/Structures/Storage/barrels.rsi #imp edit
+    state: gray #imp edit
     noRot: true
   - type: Fixtures
     fixtures:
@@ -36,7 +36,7 @@
         solution: tank
       - !type:PlaySoundBehavior
         sound:
-          collection: MetalBreak
+          collection: HollowPlastic #imp edit, plastic now
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SolutionContainerManager
@@ -45,11 +45,11 @@
         maxVol: 500
   - type: PhysicalComposition
     materialComposition:
-      Steel: 3000 # 30 sheets, 1 stack
+      Plastic: 3000 # 30 sheets, 1 stack, imp edit to make plastic to match sprites
   - type: ExaminableSolution
     solution: tank
   - type: StaticPrice
-    price: 500
+    price: 600 # imp edit, plastic more spensive than steel
 
 - type: entity
   parent: BaseBarrelChem
@@ -59,7 +59,7 @@
   description: It seems to be leaking a bit. I don't think you'd want to be around this for long.
   components:
   - type: Sprite
-    state: radbarrel
+    state: radioactive #imp edit
   - type: RadiationSource
     intensity: 1.0
     slope: 0.25
@@ -75,8 +75,19 @@
     - id: BarrelChemFilledPhosphorus
     - id: BarrelChemFilledSilicon
     - id: BarrelChemFilledMercury
-    - id: BarrelChemFilledLube # oiled up...
-      weight: 0.1
+    # imp edit start
+    #- id: BarrelChemFilledLube moved to RandomCleaningBarrel
+    #  weight: 0.1
+    - id: BarrelChemFilledAluminium
+    - id: BarrelChemFilledCarbon
+    - id: BarrelChemFilledPotassium
+    - id: BarrelChemFilledEZNutrient
+      weight: 0.5
+    - id: BarrelChemFilledRobustHarvest
+      weight: 0.5
+    - id: BarrelChemFilledAmmonia
+      weight: 0.5
+    # imp edit
 
 - type: entityTable
   id: RandomChemicalBarrelRadioactive
@@ -86,6 +97,10 @@
       weight: 2
     - id: BaseBarrelChemRadioactiveFilledRadium
     - id: BaseBarrelChemRadioactiveFilledUranium
+    # imp edit start
+    - id: BaseBarrelChemRadioactiveFilledGrayBlood #can still be centrifuged into radium
+      weight: 0.25
+    # imp edit end
 
 - type: entity
   parent: BaseBarrelChem
@@ -106,7 +121,7 @@
           Quantity: 500
 
 - type: entity
-  parent: BaseBarrelChem
+  parent: BarrelChemPinkEmpty #imp edit
   id: BarrelChemFilledFluorine
   suffix: Fluorine
   components:
@@ -119,7 +134,7 @@
           Quantity: 500
 
 - type: entity
-  parent: BaseBarrelChem
+  parent: BarrelChemGreenEmpty #imp edit
   id: BarrelChemFilledChlorine
   suffix: Chlorine
   components:
@@ -132,7 +147,7 @@
           Quantity: 500
 
 - type: entity
-  parent: BaseBarrelChem
+  parent: BarrelChemWhiteEmpty #imp edit
   id: BarrelChemFilledEthanol
   suffix: Ethanol
   components:
@@ -145,7 +160,7 @@
           Quantity: 500
 
 - type: entity
-  parent: BaseBarrelChem
+  parent: BarrelChemYellowEmpty #imp edit
   id: BarrelChemFilledPhosphorus
   suffix: Phosphorus
   components:
@@ -176,7 +191,7 @@
   suffix: Silicon
   components:
   - type: Sprite
-    state: silicatebarrel
+    state: cyan #imp edit
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -192,7 +207,7 @@
   description: Slippery...
   components:
   - type: Sprite
-    state: silicatebarrel
+    state: purple #imp edit
   - type: SolutionContainerManager
     solutions:
       tank:
