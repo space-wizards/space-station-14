@@ -1,0 +1,58 @@
+﻿- type: entity
+  id: BaseFireplace
+  parent: BaseStructure
+  categories: [ ForkFiltered ]
+  abstract: true
+  components:
+  - type: Firebase
+    fuel: 1000
+  - type: InteractionOutline
+  - type: AmbientSound
+    enabled: false
+    volume: 5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/fireplace.ogg
+  - type: Appearance
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+  - type: Flammable
+    fireSpread: false
+    canResistFire: false
+    alwaysCombustible: true
+    canExtinguish: true
+    firestacksOnIgnite: 9999
+    damage:
+      types:
+        Heat: 0
+
+- type: entity
+  id: StoneBrazier
+  name: stone brazier
+  description: "A source of light"
+  parent: BaseFireplace
+  components:
+  - type: Sprite
+    sprite: _DarkAscent/Structures/Lighting/stone_brazier.rsi
+    noRot: true
+    state: stonebrazier
+  - type: FireVisuals
+    sprite: _DarkAscent/Structures/Lighting/stone_brazier.rsi
+    normalState: stonebrazier-on
+  - type: GenericVisualizer
+    visuals:
+      enum.FirebaseVisuals.State:
+        fuel:
+          Off: { state: stonebrazier }
+          On: { state: stonebrazier-on }
+  - type: Anchorable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

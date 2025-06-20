@@ -11,7 +11,13 @@
           "name": "lantern"
       },
       {
-          "name": "lantern-on"
+          "name": "lantern-on",
+          "delays": [
+              [
+                  0.6,
+                  0.6
+              ]
+          ]
       },
       {
           "name": "off-inhand-left",
