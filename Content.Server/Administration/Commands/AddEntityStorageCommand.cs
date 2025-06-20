@@ -6,43 +6,38 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class AddEntityStorageCommand : IConsoleCommand
+    public sealed class AddEntityStorageCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly EntityStorageSystem _storageSystem = default!;
 
-        public string Command => "addstorage";
-        public string Description => "Adds a given entity to a containing storage.";
-        public string Help => "Usage: addstorage <entity uid> <storage uid>";
+        public override string Command => "addstorage";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+                shell.WriteLine(Loc.GetString("shell-wrong-arguments-number-need-specific",
+                    ("$properAmount", 2),
+                    ("currentAmount", args.Length)));
                 return;
             }
 
-            if (!NetEntity.TryParse(args[0], out var entityUidNet) || !_entManager.TryGetEntity(entityUidNet, out var entityUid))
+            if (!NetEntity.TryParse(args[0], out var entityUidNet) || !EntityManager.TryGetEntity(entityUidNet, out var entityUid))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            if (!NetEntity.TryParse(args[1], out var storageUidNet) || !_entManager.TryGetEntity(storageUidNet, out var storageUid))
+            if (!NetEntity.TryParse(args[1], out var storageUidNet) || !EntityManager.TryGetEntity(storageUidNet, out var storageUid))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            if (_entManager.HasComponent<EntityStorageComponent>(storageUid) &&
-                _entManager.EntitySysManager.TryGetEntitySystem<EntityStorageSystem>(out var storageSys))
-            {
-                storageSys.Insert(entityUid.Value, storageUid.Value);
-            }
+            if (EntityManager.HasComponent<EntityStorageComponent>(storageUid))
+                _storageSystem.Insert(entityUid.Value, storageUid.Value);
             else
-            {
-                shell.WriteError("Could not insert into non-storage.");
-            }
+                shell.WriteError(Loc.GetString($"cmd-addstorage-failure"));
         }
     }
 }

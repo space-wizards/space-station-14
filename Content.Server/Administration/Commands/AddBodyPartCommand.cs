@@ -6,19 +6,19 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class AddBodyPartCommand : IConsoleCommand
+    public sealed class AddBodyPartCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
 
-        public string Command => "addbodypart";
-        public string Description => "Adds a given entity to a containing body.";
-        public string Help => "Usage: addbodypart <entity uid> <body uid> <part slot> <part type>";
+        public override string Command => "addbodypart";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 3)
             {
-                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+                shell.WriteLine(Loc.GetString("shell-wrong-arguments-number-need-specific",
+                    ("$properAmount", 3),
+                    ("currentAmount", args.Length)));
                 return;
             }
 
@@ -34,21 +34,18 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var childId = _entManager.GetEntity(childNetId);
-            var parentId = _entManager.GetEntity(parentNetId);
-            var bodySystem = _entManager.System<BodySystem>();
+            var childId = EntityManager.GetEntity(childNetId);
+            var parentId = EntityManager.GetEntity(parentNetId);
 
-
-
-            if (Enum.TryParse<BodyPartType>(args[3], out var partType) &&
-                bodySystem.TryCreatePartSlotAndAttach(parentId, args[2], childId, partType))
+            if (!Enum.TryParse<BodyPartType>(args[3], out var partType))
             {
-                shell.WriteLine($@"Added {childId} to {parentId}.");
+                shell.WriteError(Loc.GetString($"cmd-addbodypart-part-type-invalid", ("partType", args[3])));
+                return;
             }
-            else
-            {
-                shell.WriteError($@"Could not add {childId} to {parentId}.");
-            }
+
+            shell.WriteLine(_bodySystem.TryCreatePartSlotAndAttach(parentId, args[2], childId, partType)
+                ? Loc.GetString($"shell-child-attached-to-parent", ("child", childId), ("parent", childId))
+                : Loc.GetString($"shell-failed-attach-child-to-parent", ("child", childId), ("parent", childId)));
         }
     }
 }

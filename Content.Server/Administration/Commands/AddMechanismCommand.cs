@@ -5,44 +5,39 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class AddMechanismCommand : IConsoleCommand
+    public sealed class AddMechanismCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
 
-        public string Command => "addmechanism";
+        public override string Command => "addmechanism";
         public string Description => "Adds a given entity to a containing body.";
         public string Help => "Usage: addmechanism <entity uid> <bodypart uid>";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+                shell.WriteLine(Loc.GetString("shell-wrong-arguments-number-need-specific",
+                    ("$properAmount", 2),
+                    ("currentAmount", args.Length)));
                 return;
             }
 
-            if (!NetEntity.TryParse(args[0], out var organIdNet) || !_entManager.TryGetEntity(organIdNet, out var organId))
+            if (!NetEntity.TryParse(args[0], out var organIdNet) || !EntityManager.TryGetEntity(organIdNet, out var organId))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            if (!NetEntity.TryParse(args[1], out var partIdNet) || !_entManager.TryGetEntity(partIdNet, out var partId))
+            if (!NetEntity.TryParse(args[1], out var partIdNet) || !EntityManager.TryGetEntity(partIdNet, out var partId))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            var bodySystem = _entManager.System<BodySystem>();
-
-            if (bodySystem.AddOrganToFirstValidSlot(partId.Value, organId.Value))
-            {
-                shell.WriteLine($@"Added {organId} to {partId}.");
-            }
-            else
-            {
-                shell.WriteError($@"Could not add {organId} to {partId}.");
-            }
+            shell.WriteLine(_bodySystem.AddOrganToFirstValidSlot(partId.Value, organId.Value)
+                ? Loc.GetString($"shell-child-attached-to-parent", ("child", organId), ("parent", partId))
+                : Loc.GetString($"shell-failed-attach-child-to-parent", ("child", organId), ("parent", partId)));
         }
     }
 }
