@@ -152,7 +152,6 @@ public sealed class DumpableSystem : EntitySystem
         {
             dumped = true;
 
-            // Should this be a queue in the first place? none of the other cases use it as one
             while(dumpQueue.Count > 0)
             {
                 var dumpEntity = dumpQueue.Dequeue();

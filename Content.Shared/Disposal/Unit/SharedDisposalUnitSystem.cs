@@ -520,7 +520,6 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         if (delay <= 0 || userId == null)
         {
             DoInsertDisposalUnit(unitId, toInsertId, userId, unit, doContainerInsert: true, doAfterInsert: true);
-            AfterInsert(unitId, unit, toInsertId, userId);
             return true;
         }
 
