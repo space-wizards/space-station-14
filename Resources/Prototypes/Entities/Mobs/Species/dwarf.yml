@@ -64,9 +64,9 @@
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
   - type: Sanity # DS14
-  - type: FootPrints # Backmen-footsteps
-    leftBarePrint: "footprint-left-bare-dwarf"
-    rightBarePrint: "footprint-right-bare-dwarf"
+  # - type: FootPrints # Backmen-footsteps
+    # leftBarePrint: "footprint-left-bare-dwarf"
+    # rightBarePrint: "footprint-right-bare-dwarf"
 
 - type: entity
   parent: BaseSpeciesDummy

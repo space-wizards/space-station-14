@@ -50,7 +50,7 @@
       Unsexed: FemaleHuman
   - type: Speech
     speechSounds: Lizard
-  - type: FootPrints
+  # - type: FootPrints
 
 - type: entity
   parent: BaseSpeciesDummy
