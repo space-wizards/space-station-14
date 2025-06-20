@@ -429,6 +429,17 @@
   - !type:ListingLimitedStockCondition
     stock: 4
 
+- type: listing
+  id: WinterDrobeOuterInventory21
+  productEntity: ClothingOuterWinterCoatLong
+  cost:
+    SpaceCash: 65
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 6
+
 # Other
 
 - type: listing

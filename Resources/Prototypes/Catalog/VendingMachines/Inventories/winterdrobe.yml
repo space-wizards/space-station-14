@@ -9,6 +9,7 @@
     ClothingNeckScarfStripedLightBlue: 4
     ClothingNeckScarfStripedOrange: 4
     ClothingNeckScarfStripedPurple: 4
+    ClothingOuterWinterCoatLong: 4 # DS14
     ClothingNeckScarfStripedAce: 2 # DS14
     ClothingNeckScarfStripedAro: 2 # DS14
     ClothingNeckScarfStripedBiSexual: 2 # DS14
@@ -20,7 +21,6 @@
     ClothingNeckScarfStripedRainbow: 2 # DS14
     ClothingNeckScarfStripedTrans: 2 # DS14
     ClothingNeckScarfStripedLesbianLong: 2 # DS14
-
   emaggedInventory:
     ClothingNeckScarfStripedSyndieGreen: 4
     ClothingNeckScarfStripedSyndieRed: 4

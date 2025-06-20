@@ -1,0 +1,12 @@
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterCoatLong
+  name: длинное зимнее пальто
+  description: В этом стильном пальто даже вашим ногам будет тепло.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/WinterCoats/long_winter_coat.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/WinterCoats/long_winter_coat.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterDefault

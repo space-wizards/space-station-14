@@ -82,7 +82,7 @@
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtColorGrey
   result: ClothingUniformJumpskirtColorGrey
-  
+
 - type: latheRecipe
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitLoungewear
@@ -725,6 +725,15 @@
   parent: BaseCoatRecipe
   id: ClothingOuterWinterCoat
   result: ClothingOuterWinterCoat
+
+# DS14-start
+
+- type: latheRecipe
+  parent: BaseCoatRecipe
+  id: ClothingOuterWinterCoatLong
+  result: ClothingOuterWinterCoatLong
+
+# DS14-end
 
 - type: latheRecipe
   parent: BaseCoatRecipe
