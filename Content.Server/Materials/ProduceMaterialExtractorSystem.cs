@@ -42,13 +42,15 @@ public sealed class ProduceMaterialExtractorSystem : EntitySystem
             .Where(r => ent.Comp.ExtractionReagents.Contains(r.Reagent.Prototype))
             .Sum(r => r.Quantity.Float());
 
-        if (matAmount <= 0.1)
+        var changed = (int)matAmount;
+
+        if (changed == 0)
         {
             _popup.PopupEntity(Loc.GetString("material-extractor-comp-wrongreagent", ("used", args.Used)), args.User, args.User);
             return;
         }
 
-        _materialStorage.TryChangeMaterialAmount(ent, ent.Comp.ExtractedMaterial, (int) matAmount);
+        _materialStorage.TryChangeMaterialAmount(ent, ent.Comp.ExtractedMaterial, changed);
 
         _audio.PlayPvs(ent.Comp.ExtractSound, ent);
         QueueDel(args.Used);
