@@ -186,3 +186,6 @@
     sprite: Objects/Misc/holocuffs.rsi
     state: handcuff
     color: red
+  - type: TimedDespawn
+    lifetime: 120
+  - type: DestroyOnEmp
