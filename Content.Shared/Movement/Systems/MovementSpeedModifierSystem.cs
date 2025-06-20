@@ -52,7 +52,7 @@ namespace Content.Shared.Movement.Systems
             RefreshFrictionModifiers(entity);
         }
 
-    public void RefreshWeightlessModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)
+        public void RefreshWeightlessModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)
         {
             if (!Resolve(uid, ref move, false))
                 return;
