@@ -4,7 +4,7 @@ meta:
   engineVersion: 262.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/20/2025 06:28:50
+  time: 06/20/2025 07:32:17
   entityCount: 1070
 maps: []
 grids:
@@ -810,11 +810,9 @@ entities:
       pos: 5.5,2.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
-      - 424
       - 805
+      - 424
   - uid: 710
     components:
     - type: Transform
