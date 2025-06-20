@@ -200,6 +200,10 @@
     sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterWizardBase
@@ -211,6 +215,10 @@
     sprite: Clothing/OuterClothing/Misc/wizard.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/wizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterWizardBase
@@ -222,6 +230,10 @@
     sprite: Clothing/OuterClothing/Misc/redwizard.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/redwizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterBase
