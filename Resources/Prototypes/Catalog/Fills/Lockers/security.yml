@@ -27,7 +27,7 @@
         amount: 2
       - id: ClothingNeckBodyCamera # DS14
         amount: 4
-      - id: ClothingHandsGlovesArkalyse # DS14
+      # - id: ClothingHandsGlovesArkalyse # DS14
       - id: BoxTapeRecorder # DS14
 
 - type: entity
@@ -57,7 +57,7 @@
       - id: Binoculars
       - id: ClothingNeckBodyCamera # DS14
         amount: 4
-      - id: ClothingHandsGlovesArkalyse # DS14
+      # - id: ClothingHandsGlovesArkalyse # DS14
       - id: BoxTapeRecorder # DS14
 
 - type: entity

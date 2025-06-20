@@ -226,19 +226,19 @@
       tags:
       - NukeOpsUplink
 
-- type: listing
-  id: UplinkArkalyseBundle
-  name: uplink-arkalyse-bundle-name
-  description: uplink-arkalyse-bundle-desc
-  icon: { sprite: _DeadSpace/Objects/Specific/Arkalyse/arkalyse_book.rsi, state: icon }
-  productEntity: BoxArkalyse
-  discountCategory: usualDiscounts
-  discountDownTo:
-    Telecrystal: 5
-  cost:
-    Telecrystal: 10
-  categories:
-  - UplinkWeaponry
+# - type: listing
+#   id: UplinkArkalyseBundle
+#   name: uplink-arkalyse-bundle-name
+#   description: uplink-arkalyse-bundle-desc
+#   icon: { sprite: _DeadSpace/Objects/Specific/Arkalyse/arkalyse_book.rsi, state: icon }
+#   productEntity: BoxArkalyse
+#   discountCategory: usualDiscounts
+#   discountDownTo:
+#     Telecrystal: 5
+#   cost:
+#     Telecrystal: 10
+#   categories:
+#   - UplinkWeaponry
 
 - type: listing
   id: UplinkAdrenalineImplanter
