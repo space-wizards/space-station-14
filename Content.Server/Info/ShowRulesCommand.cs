@@ -10,25 +10,28 @@ using Robust.Shared.Network;
 namespace Content.Server.Info;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class ShowRulesCommand : IConsoleCommand
+public sealed class ShowRulesCommand : LocalizedCommands
 {
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
 
-    public string Command => "showrules";
-    public string Description => "Opens the rules popup for the specified player.";
-    public string Help => "showrules <username> [seconds]";
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "showrules";
+
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        string target;
         float seconds;
+
+        if (!_player.TryGetSessionByUsername(args[0], out var player))
+        {
+            shell.WriteError(Loc.GetString($"shell-target-player-does-not-exist"));
+            return;
+        }
 
         switch (args.Length)
         {
             case 1:
             {
-                target = args[0];
                 seconds = _configuration.GetCVar(CCVars.RulesWaitTime);
                 break;
             }
@@ -40,7 +43,6 @@ public sealed class ShowRulesCommand : IConsoleCommand
                     return;
                 }
 
-                target = args[0];
                 break;
             }
             default:
@@ -48,13 +50,6 @@ public sealed class ShowRulesCommand : IConsoleCommand
                 shell.WriteLine(Help);
                 return;
             }
-        }
-
-
-        if (!_player.TryGetSessionByUsername(target, out var player))
-        {
-            shell.WriteError("Unable to find a player with that name.");
-           return;
         }
 
         var coreRules = _configuration.GetCVar(CCVars.RulesFile);
