@@ -12,6 +12,7 @@ using Content.Server.Emp;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Flash;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Forensics;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Medical;
 using Content.Server.Polymorph.Components;
@@ -24,12 +25,15 @@ using Content.Server.Traits.Assorted;
 using Content.Server.Zombies;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.EntityEffects.EffectConditions;
 using Content.Shared.EntityEffects.Effects.PlantMetabolism;
-using Content.Shared.EntityEffects.Effects.StatusEffects;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.EntityEffects;
+using Content.Shared._Impstation.EntityEffects.Effects;
+using Content.Shared._Impstation.Ghost;
+using Content.Shared.Humanoid;
 using Content.Shared.Maps;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
@@ -38,7 +42,6 @@ using Content.Shared.Zombies;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -57,6 +60,7 @@ public sealed class EntityEffectSystem : EntitySystem
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
     [Dependency] private readonly FlashSystem _flash = default!;
+    [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -114,6 +118,7 @@ public sealed class EntityEffectSystem : EntitySystem
         SubscribeLocalEvent<ExecuteEntityEffectEvent<FlashReactionEffect>>(OnExecuteFlashReactionEffect);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<Ignite>>(OnExecuteIgnite);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<MakeSentient>>(OnExecuteMakeSentient);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<MakeSyndient>>(OnExecuteMakeSyndient);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<ModifyBleedAmount>>(OnExecuteModifyBleedAmount);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<ModifyBloodLevel>>(OnExecuteModifyBloodLevel);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<ModifyLungGas>>(OnExecuteModifyLungGas);
@@ -125,6 +130,7 @@ public sealed class EntityEffectSystem : EntitySystem
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PlantSpeciesChange>>(OnExecutePlantSpeciesChange);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<PolymorphEffect>>(OnExecutePolymorph);
         SubscribeLocalEvent<ExecuteEntityEffectEvent<ResetNarcolepsy>>(OnExecuteResetNarcolepsy);
+        SubscribeLocalEvent<ExecuteEntityEffectEvent<Medium>>(OnExecuteMedium); // Imp
     }
 
     private void OnCheckTemperature(ref CheckEntityEffectConditionEvent<TemperatureCondition> args)
@@ -771,6 +777,112 @@ public sealed class EntityEffectSystem : EntitySystem
         ghostRole.RoleDescription = Loc.GetString("ghost-role-information-cognizine-description");
     }
 
+    private void OnExecuteMakeSyndient(ref ExecuteEntityEffectEvent<MakeSyndient> args)
+    {
+        var entityManager = args.Args.EntityManager;
+        var uid = args.Args.TargetEntity;
+
+
+        // Let affected entities speak normally to make this effect different from, say, the "random sentience" event
+        // This also works on entities that already have a mind
+        // We call this before the mind check to allow things like player-controlled mice to be able to benefit from the effect
+        entityManager.RemoveComponent<ReplacementAccentComponent>(uid);
+        entityManager.RemoveComponent<MonkeyAccentComponent>(uid);
+
+        // Stops from adding a ghost role to things like people who already have a mind
+        if (entityManager.TryGetComponent<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind)
+        {
+            return;
+        }
+
+        //slightly hacky way to make sure it doesn't work on humanoid ghost roles that haven't been claimed yet
+        if (entityManager.TryGetComponent<HumanoidAppearanceComponent>(uid, out HumanoidAppearanceComponent? component))
+        {
+            return;
+        }
+        var forensicSys = args.Args.EntityManager.System<ForensicsSystem>();
+
+        //hide your children, it's time to figure out whose blood is in this shit
+        if (args.Args is EntityEffectReagentArgs reagentArgs)
+        {
+            //get all DNAs stored in the injected solution
+            List<DnaData> dnaDataList = new List<DnaData>();
+            if (reagentArgs.Source != null)
+            {
+                foreach (var reagent in reagentArgs.Source.Contents)
+                {
+                    foreach (var data in reagent.Reagent.EnsureReagentData())
+                    {
+                        if (data is DnaData)
+                        {
+                            dnaDataList.Add(((DnaData)data));
+                        }
+                    }
+                }
+
+                String? chosenName = null;
+
+                //we have all the DNA in the activated subjuzine. get a random one and find the DNA's source.
+                for (int i=0; i<dnaDataList.Count; i++)
+                {
+                    DnaData candidate = dnaDataList[i];
+                    String? candidateName = forensicSys.GetNameFromDNA(candidate.DNA);
+
+                    if (candidateName != null)
+                    {
+                        chosenName = candidateName;
+                    }
+                }
+
+                if (chosenName!=null)
+                {
+                    //we FINALLY have the name of the injector. jesus fuck.
+                    //now, we build the role name, description, etc.
+
+                    //Don't add a ghost role to things that already have ghost roles
+
+                    String rules = (Loc.GetString("ghost-role-information-subjuzine-rules-1"));
+                    rules = rules + chosenName;
+                    rules = rules + (Loc.GetString("ghost-role-information-subjuzine-rules-2"));
+
+                    if (entityManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
+                    {
+                        //if there already was a ghost role, change the role description and rules to make it clear it's been injected with subjuzine
+                        ghostRole = entityManager.GetComponent<GhostRoleComponent>(uid);
+                        ghostRole.RoleDescription = Loc.GetString("ghost-role-information-subjuzine-description");
+                        ghostRole.RoleRules = rules;
+                        return;
+                    }
+
+                    ghostRole = entityManager.AddComponent<GhostRoleComponent>(uid);
+                    entityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
+
+                    var entityData = entityManager.GetComponent<MetaDataComponent>(uid);
+                    ghostRole.RoleName = entityData.EntityName;
+                    ghostRole.RoleDescription = Loc.GetString("ghost-role-information-subjuzine-description");
+                    ghostRole.RoleRules = rules;
+
+
+                }
+                else //if there's no DNA in the DNA list, just act as if it was normal cognizine.
+                {
+                    //Don't add a ghost role to things that already have ghost roles
+                    if (entityManager.TryGetComponent(uid, out GhostRoleComponent? ghostRole))
+                    {
+                        return;
+                    }
+
+                    ghostRole = entityManager.AddComponent<GhostRoleComponent>(uid);
+                    entityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
+
+                    var entityData = entityManager.GetComponent<MetaDataComponent>(uid);
+                    ghostRole.RoleName = entityData.EntityName;
+                    ghostRole.RoleDescription = Loc.GetString("ghost-role-information-cognizine-description");
+                }
+            }
+        }
+    }
+
     private void OnExecuteModifyBleedAmount(ref ExecuteEntityEffectEvent<ModifyBleedAmount> args)
     {
         if (TryComp<BloodstreamComponent>(args.Args.TargetEntity, out var blood))
@@ -974,4 +1086,13 @@ public sealed class EntityEffectSystem : EntitySystem
 
         _narcolepsy.AdjustNarcolepsyTimer(args.Args.TargetEntity, args.Effect.TimerReset);
     }
+
+    private void OnExecuteMedium(ref ExecuteEntityEffectEvent<Medium> args)
+    {
+        var entityManager = args.Args.EntityManager;
+        var uid = args.Args.TargetEntity;
+
+        entityManager.EnsureComponent<MediumComponent>(uid);
+    }
+
 }
