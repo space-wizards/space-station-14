@@ -2,11 +2,11 @@
   parent: BaseAction
   id: ActionFireball
   name: Fireball
-  description: Fires an explosive fireball towards the clicked location.
+  description: Fires an explosive fireball towards the clicked location. (Cooldown of 10 minutes)
   components:
   - type: Magic
   - type: Action
-    useDelay: 15
+    useDelay: 600 #starlight, 10 minutes
     itemIconStyle: BigAction
     raiseOnUser: true
     sound: !type:SoundPathSpecifier
@@ -31,16 +31,16 @@
   parent: ActionFireball
   id: ActionFireballII
   name: Fireball II
-  description: Fires a fireball, but faster!
+  description: Fires a fireball, but faster! (Cooldown of 8 minutes)
   components:
   - type: Action
-    useDelay: 10
+    useDelay: 480 #starlight, 8 minutes
 
 - type: entity
   parent: ActionFireball
   id: ActionFireballIII
   name: Fireball III
-  description: The fastest fireball in the west!
+  description: The fastest fireball in the west! (Cooldown of 5 minutes)
   components:
   - type: Action
-    useDelay: 8
+    useDelay: 300 #starlight, 5 minutes
