@@ -133,7 +133,7 @@
     useDelay: 10
     icon:
       sprite: _DeadSpace/Spiders/cocoon.rsi
-      state: cocoon
+      state: SPIDER-WEBBING-1
     event: !type:LockCocoonEvent
     checkCanAccess: false
     range: 2
