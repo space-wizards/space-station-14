@@ -140,11 +140,8 @@ public abstract partial class InteractionTest
     hands:
       hand_right:
         location: Right
-      hand_left:
-        location: Left
     sortedHands:
     - hand_right
-    - hand_left
   - type: ComplexInteraction
   - type: MindContainer
   - type: Stripping
