@@ -1,6 +1,5 @@
 ﻿using System.Numerics;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Stunnable;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -18,8 +17,7 @@ namespace Content.Client.Stunnable
         [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
         private readonly int[] _sign = [-1, 1];
-        public const string StunnedAnimationKeyVector = "stunnedVector";
-        public const string StunnedAnimationKeyRotation = "stunnedAngle";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -86,7 +84,7 @@ namespace Content.Client.Stunnable
         }
 
         /// <summary>
-        /// A simple random rotation animation
+        /// A simple random rotation animation.
         /// </summary>
         /// <param name="sprite">The spriteComp we're rotating</param>
         /// <param name="frequency">How many times per second we're rotating</param>
@@ -129,11 +127,14 @@ namespace Content.Client.Stunnable
         }
 
         /// <summary>
-        /// A simple fatigue animation, a mild modification of the jittering animation
+        /// A simple fatigue animation, a mild modification of the jittering animation. The animation constructor is
+        /// quite complex, but that's because the AnimationSystem doesn't have proper adjustment layers. In a potential
+        /// future where proper adjustment layers are added feel free to clean this up to be an animation with two adjustment
+        /// layers rather than one mega layer.
         /// </summary>
         /// <param name="sprite">The spriteComponent we're adjusting the offset of</param>
         /// <param name="frequency">How many times per second does the animation run?</param>
-        /// <param name="jitters">How many times should we jitter during the animation?</param>
+        /// <param name="jitters">How many times should we jitter during the animation? Also determines breathing frequency</param>
         /// <param name="jitterX">Maximum jitter offset in the X direction</param>
         /// <param name="jitterY">Maximum jitter offset in the Y direction</param>
         /// <param name="breathing">Maximum breathing offset, this is in the Y direction</param>
@@ -160,6 +161,7 @@ namespace Content.Client.Stunnable
 
             var keyFrames = new List<AnimationTrackProperty.KeyFrame> { new(sprite.Offset, 0f) };
 
+            // Spits out a list of keyframes to feed to the AnimationPlayer based on the variables we've inputted
             for (var i = 1; i <= jitters; i++)
             {
                 var offset = new Vector2(_random.NextFloat(jitterX.Item1, jitterX.Item2),
@@ -180,15 +182,19 @@ namespace Content.Client.Stunnable
 
                 lastJitter = offset;
 
+                // For the first half of the jitter, we vertically displace the sprite upwards to simulate breathing in
                 if (i <= jitters / 2)
                 {
                     keyFrames.Add(new AnimationTrackProperty.KeyFrame(startOffset + breaths * i + offset, frames));
                 }
+                // For the next quarter we displace the sprite down, to about 12.5% breathing offset below our starting position
+                // Simulates breathing out
                 else if (i < jitters * 3 / 4)
                 {
                     keyFrames.Add(
                         new AnimationTrackProperty.KeyFrame(startOffset + breaths * ( jitters - i * 1.5f ) + offset, frames));
                 }
+                // Return to our starting position for breathing, jitter reaches its final position
                 else
                 {
                     keyFrames.Add(
@@ -212,19 +218,6 @@ namespace Content.Client.Stunnable
                 }
             };
         }
-
-        /// <summary>
-        ///     Raised on an entity when its stun animation ends.
-        ///     This is because animations bulldoze each other so they need to know who is next in line
-        /// </summary>
-        [ByRefEvent]
-        public record struct StunAnimationEndEvent;
-
-        /// <summary>
-        ///     Raised when you want a stunned entity to play its stun animation for a certain amount of time.
-        /// </summary>
-        [ByRefEvent]
-        public record struct StunAnimationEvent(TimeSpan Time);
     }
 
     public enum StunVisualLayers : byte
