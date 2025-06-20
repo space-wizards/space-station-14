@@ -360,3 +360,52 @@
     count: 5
   - type: Machine
     board: ShuttleGunKineticCircuitboard
+
+- type: entity
+  parent: ShuttleGunBase
+  id: ShuttleGunKineticOld
+  name: exomorphic dematerializer
+  description: An ancient ship gun, utilizing biomechanical systems to store and release energy. While unique in its design, it has been rendered obsolete due to its inferior charging and firing speed compared to mechanical constructions.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shuttles/xeno.rsi
+    layers:
+    - state: rail
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Gun
+    projectileSpeed: 20
+    fireRate: 0.2
+    selectedMode: SemiAuto
+    angleDecay: 45
+    minAngle: 5
+    maxAngle: 15
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+      params:
+        variation: 0.12
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 35
+    rechargeSound:
+      path: /Audio/Weapons/Guns/Bolt/lmg_bolt_closed.ogg
+      params:
+        pitch: 1.2
+        variation: 0.08
+  - type: BasicEntityAmmoProvider
+    proto: BulletKineticShuttle
+    capacity: 3
+    count: 3
+  - type: DeviceLinkSink
+    ports:
+    - Trigger

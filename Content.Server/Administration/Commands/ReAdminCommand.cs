@@ -5,30 +5,28 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AnyCommand]
-    public sealed class ReAdminCommand : IConsoleCommand
+    public sealed class ReAdminCommand : LocalizedCommands
     {
-        public string Command => "readmin";
-        public string Description => "Re-admins you if you previously de-adminned.";
-        public string Help => "Usage: readmin";
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "readmin";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine("You cannot use this command from the server console.");
+                shell.WriteLine(Loc.GetString($"shell-cannot-run-command-from-server"));
                 return;
             }
 
-            var mgr = IoCManager.Resolve<IAdminManager>();
-
-            if (mgr.GetAdminData(player, includeDeAdmin: true) == null)
+            if (_adminManager.GetAdminData(player, includeDeAdmin: true) == null)
             {
-                shell.WriteLine("You're not an admin.");
+                shell.WriteLine(Loc.GetString($"cmd-readmin-not-an-admin"));
                 return;
             }
 
-            mgr.ReAdmin(player);
+            _adminManager.ReAdmin(player);
         }
     }
 }

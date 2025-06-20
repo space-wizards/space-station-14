@@ -225,6 +225,10 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (!IsDragging && EntityManager.System<HandsSystem>().GetActiveHandEntity() == null)
             return;
 
+        // Do not rotate items unless we are either dragging them or hovering over a storage window.
+        if (DraggingGhost is null && UIManager.CurrentlyHovered is not StorageWindow)
+            return;
+
         //clamp it to a cardinal.
         DraggingRotation = (DraggingRotation + Math.PI / 2f).GetCardinalDir().ToAngle();
         if (DraggingGhost != null)
