@@ -92,20 +92,6 @@
   paperPrototype: PaperPrintedCommand
 
 - type: paperworkForm
-  id: Centcomm15
-  category: centcomm
-  name: paperwork-form-title-centcomm-15
-  text: "/Paperwork/Centcomm/15.xml"
-  paperPrototype: PaperPrintedCommand
-
-- type: paperworkForm
-  id: Centcomm16
-  category: centcomm
-  name: paperwork-form-title-centcomm-16
-  text: "/Paperwork/Centcomm/16.xml"
-  paperPrototype: PaperPrintedCommand
-
-- type: paperworkForm
   id: Centcomm17
   category: centcomm
   name: paperwork-form-title-centcomm-17
