@@ -1,43 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Implanters are now named after the implant they contained, even after
-      the implanter has been used.
-    type: Tweak
-  - message: Syndicate implanters now remind you to scrub them in the item description.
-    type: Add
-  id: 8179
-  time: '2025-04-14T16:50:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36555
-- author: Golub
-  changes:
-  - message: Added the Knock spell to the wizard's grimoire
-    type: Add
-  id: 8180
-  time: '2025-04-14T18:57:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36562
-- author: metalgearsloth
-  changes:
-  - message: DamagePopups such as target dummies are now predicted.
-    type: Fix
-  id: 8181
-  time: '2025-04-14T19:10:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36547
-- author: SlamBamActionman
-  changes:
-  - message: Tracking implants no longer announce on radio when someone goes into
-      critical health.
-    type: Remove
-  id: 8182
-  time: '2025-04-14T20:23:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35995
-- author: SlamBamActionman
-  changes:
-  - message: Chest rig explosive resistance is increased from 50% to 90%.
-    type: Tweak
-  id: 8183
-  time: '2025-04-14T20:45:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35889
 - author: ArtisticRoomba
   changes:
   - message: Certain randomly filled bags will now have the correct number of contents
@@ -3939,3 +3900,40 @@
   id: 8691
   time: '2025-06-18T12:06:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38423
+- author: beck-thompson
+  changes:
+  - message: Recycler now properly recycles item stacks.
+    type: Fix
+  id: 8692
+  time: '2025-06-18T21:14:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38433
+- author: Bhijn and Myr
+  changes:
+  - message: In interest of raising awareness of addiction to the game, the lobby
+      will now display your current playtime on a given day once it exceeds a threshold.
+    type: Add
+  id: 8693
+  time: '2025-06-19T01:06:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36483
+- author: ScarKy0
+  changes:
+  - message: APCs now have a wirepanel. It can be used to disallow the AI from accessing
+      it.
+    type: Add
+  id: 8694
+  time: '2025-06-19T15:06:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38443
+- author: Sparlight
+  changes:
+  - message: Smart corgis can now wear various hardsuits, armors, and glasses items.
+    type: Add
+  id: 8695
+  time: '2025-06-19T19:49:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36875
+- author: VerinSenpai
+  changes:
+  - message: Handcuffs no longer interfere with your daily tail wagging activities.
+    type: Fix
+  id: 8696
+  time: '2025-06-19T22:42:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38454
