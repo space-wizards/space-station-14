@@ -1,9 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
-using System.Text;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Eui;
-using Content.Client.Humanoid;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
