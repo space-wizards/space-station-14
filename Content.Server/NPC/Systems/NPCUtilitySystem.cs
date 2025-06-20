@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Hands.Systems;
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
@@ -31,7 +32,6 @@ using Robust.Server.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Server.Hands.Systems;
 
 namespace Content.Server.NPC.Systems;
 
@@ -259,7 +259,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             case TargetAmmoMatchesCon:
             {
                 if (!blackboard.TryGetValue(NPCBlackboard.ActiveHand, out string? activeHand, EntityManager) ||
-                    !_hands.TryGetHeldEntity(owner, activeHand, out var heldEntity) ||
+                    !_hands.TryGetHeldItem(owner, activeHand, out var heldEntity) ||
                     !TryComp<BallisticAmmoProviderComponent>(heldEntity, out var heldGun))
                 {
                     return 0f;

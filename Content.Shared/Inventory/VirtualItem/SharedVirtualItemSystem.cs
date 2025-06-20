@@ -120,7 +120,7 @@ public abstract class SharedVirtualItemSystem : EntitySystem
 
             foreach (var hand in _handsSystem.EnumerateHands(user))
             {
-                if (!_handsSystem.TryGetHeldEntity(user, hand, out var held))
+                if (!_handsSystem.TryGetHeldItem(user, hand, out var held))
                     continue;
 
                 if (held == blockingEnt)

@@ -186,7 +186,7 @@ namespace Content.Client.Inventory
 
             button.Pressed += SlotPressed;
 
-            var heldEntity = _hands.GetHeldEntityOrNull(ent.AsNullable(), handId);
+            var heldEntity = _hands.GetHeldItem(ent.AsNullable(), handId);
             if (EntMan.TryGetComponent<VirtualItemComponent>(heldEntity, out var virt))
             {
                 button.Blocked = true;

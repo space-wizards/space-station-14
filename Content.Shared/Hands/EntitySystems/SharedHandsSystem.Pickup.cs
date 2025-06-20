@@ -23,10 +23,10 @@ public abstract partial class SharedHandsSystem
             return;
         }
 
-        var didEquip = new DidEquipHandEvent(uid, args.Entity, hand);
+        var didEquip = new DidEquipHandEvent(uid, args.Entity, hand.Value);
         RaiseLocalEvent(uid, didEquip);
 
-        var gotEquipped = new GotEquippedHandEvent(uid, args.Entity, hand);
+        var gotEquipped = new GotEquippedHandEvent(uid, args.Entity, hand.Value);
         RaiseLocalEvent(args.Entity, gotEquipped);
     }
 
@@ -54,7 +54,7 @@ public abstract partial class SharedHandsSystem
         if (!Resolve(uid, ref handsComp, false))
             return false;
 
-        if (!TryGetEmptyHand(uid, out var hand, handsComp))
+        if (!TryGetEmptyHand((uid, handsComp), out var hand))
             return false;
 
         return TryPickup(uid, entity, hand, checkActionBlocker, animateUser, animate, handsComp, item);
@@ -112,7 +112,7 @@ public abstract partial class SharedHandsSystem
     /// By default it does check if it's possible to drop items.
     /// </summary>
     public bool TryForcePickup(
-        EntityUid uid,
+        Entity<HandsComponent?> ent,
         EntityUid entity,
         string hand,
         bool checkActionBlocker = true,
@@ -120,12 +120,12 @@ public abstract partial class SharedHandsSystem
         HandsComponent? handsComp = null,
         ItemComponent? item = null)
     {
-        if (!Resolve(uid, ref handsComp, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        TryDrop(uid, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp);
+        TryDrop(ent, hand, checkActionBlocker: checkActionBlocker);
 
-        return TryPickup(uid, entity, hand, checkActionBlocker, animate: animate, handsComp: handsComp, item: item);
+        return TryPickup(ent, entity, hand, checkActionBlocker, animate: animate, handsComp: handsComp, item: item);
     }
 
     /// <summary>
@@ -142,7 +142,7 @@ public abstract partial class SharedHandsSystem
 
         foreach (var hand in handsComp.Hands.Keys)
         {
-            if (TryDrop(uid, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp) &&
+            if (TryDrop((uid, handsComp), hand, checkActionBlocker: checkActionBlocker) &&
                 TryPickup(uid, entity, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp))
             {
                 return true;
@@ -156,7 +156,7 @@ public abstract partial class SharedHandsSystem
         if (!Resolve(uid, ref handsComp, false))
             return false;
 
-        if (!TryGetEmptyHand(uid, out var hand, handsComp))
+        if (!TryGetEmptyHand((uid, handsComp), out var hand))
             return false;
 
         return CanPickupToHand(uid, entity, hand, checkActionBlocker, handsComp, item);

@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Server.Inventory;
 using Content.Server.Stack;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
@@ -10,9 +9,7 @@ using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
-using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Stacks;
 using Content.Shared.Standing;
@@ -24,7 +21,6 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Hands.Systems
 {
@@ -87,7 +83,7 @@ namespace Content.Server.Hands.Systems
             if (ent.Comp.DisableExplosionRecursion)
                 return;
 
-            foreach (var held in EnumerateHeld(ent))
+            foreach (var held in EnumerateHeld(ent.AsNullable()))
             {
                 args.Contents.Add(held);
             }
@@ -111,7 +107,7 @@ namespace Content.Server.Hands.Systems
             args.Handled = true; // no shove/stun.
         }
 
-        private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)
+        private void HandleBodyPartAdded(Entity<HandsComponent> ent, ref BodyPartAddedEvent args)
         {
             if (args.Part.Comp.PartType != BodyPartType.Hand)
                 return;
@@ -126,7 +122,7 @@ namespace Content.Server.Hands.Systems
                 _ => throw new ArgumentOutOfRangeException(nameof(args.Part.Comp.Symmetry))
             };
 
-            AddHand(uid, args.Slot, location, component);
+            AddHand(ent.AsNullable(), args.Slot, location);
         }
 
         private void HandleBodyPartRemoved(EntityUid uid, HandsComponent component, ref BodyPartRemovedEvent args)
@@ -191,7 +187,7 @@ namespace Content.Server.Hands.Systems
                 return true;
 
             // This can grief the above event so we raise it afterwards
-            if (IsHolding((player, hands), throwEnt, out _) && !TryDrop(player, throwEnt.Value, handsComp: hands))
+            if (IsHolding((player, hands), throwEnt, out _) && !TryDrop(player, throwEnt.Value))
                 return false;
 
             _throwingSystem.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowSpeed, ev.PlayerUid, compensateFriction: !HasComp<LandAtCursorComponent>(ev.ItemUid));
@@ -206,11 +202,11 @@ namespace Content.Server.Hands.Systems
             var spreadMaxAngle = Angle.FromDegrees(DropHeldItemsSpread);
 
             var fellEvent = new FellDownEvent(entity);
-            RaiseLocalEvent(entity, fellEvent, false);
+            RaiseLocalEvent(entity, fellEvent);
 
             foreach (var hand in entity.Comp.Hands.Keys)
             {
-                if (!TryGetHeldEntity(entity.AsNullable(), hand, out var heldEntity))
+                if (!TryGetHeldItem(entity.AsNullable(), hand, out var heldEntity))
                     continue;
 
                 var throwAttempt = new FellDownThrowAttemptEvent(entity);
@@ -219,7 +215,7 @@ namespace Content.Server.Hands.Systems
                 if (throwAttempt.Cancelled)
                     continue;
 
-                if (!TryDrop(entity, hand, checkActionBlocker: false, handsComp: entity.Comp))
+                if (!TryDrop(entity.AsNullable(), hand, checkActionBlocker: false))
                     continue;
 
                 // Rotate the item's throw vector a bit for each item

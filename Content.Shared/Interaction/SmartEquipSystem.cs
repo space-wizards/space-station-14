@@ -121,7 +121,7 @@ public sealed class SmartEquipSystem : EntitySystem
                 return;
             }
 
-            _hands.TryDrop(uid, hands.ActiveHandId!, handsComp: hands);
+            _hands.TryDrop((uid, hands), hands.ActiveHandId!);
             _inventory.TryEquip(uid, handItem.Value, equipmentSlot, predicted: true, checkDoafter:true);
             return;
         }
@@ -149,7 +149,7 @@ public sealed class SmartEquipSystem : EntitySystem
                 return;
             }
 
-            _hands.TryDrop(uid, hands.ActiveHandId!, handsComp: hands);
+            _hands.TryDrop((uid, hands), hands.ActiveHandId!);
             _storage.Insert(slotItem, handItem.Value, out var stacked, out _);
 
             // if the hand item stacked with the things in inventory, but there's no more space left for the rest

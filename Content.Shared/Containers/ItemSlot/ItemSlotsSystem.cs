@@ -255,7 +255,7 @@ namespace Content.Shared.Containers.ItemSlots
             }
 
             // Drop the held item onto the floor. Return if the user cannot drop.
-            if (!_handsSystem.TryDrop(args.User, args.Used, handsComp: hands))
+            if (!_handsSystem.TryDrop(args.User, args.Used))
                 return;
 
             slots.Sort(SortEmpty);
@@ -428,16 +428,14 @@ namespace Content.Shared.Containers.ItemSlots
             if (!Resolve(ent, ref ent.Comp, false))
                 return false;
 
-            TryComp(user, out HandsComponent? handsComp);
-
             if (!TryGetAvailableSlot(ent,
                     item,
-                    user == null ? null : (user.Value, handsComp),
+                    user,
                     out var itemSlot,
                     emptyOnly: true))
                 return false;
 
-            if (user != null && !_handsSystem.TryDrop(user.Value, item, handsComp: handsComp))
+            if (user != null && !_handsSystem.TryDrop(user.Value, item))
                 return false;
 
             Insert(ent, itemSlot, item, user, excludeUserAudio: excludeUserAudio);
@@ -466,7 +464,7 @@ namespace Content.Shared.Containers.ItemSlots
                 && Resolve(user, ref user.Comp)
                 && _handsSystem.IsHolding(user, item))
             {
-                if (!_handsSystem.CanDrop(user, item, user.Comp))
+                if (!_handsSystem.CanDrop(user, item))
                     return false;
             }
 

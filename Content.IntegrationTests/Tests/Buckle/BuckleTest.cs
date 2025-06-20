@@ -295,7 +295,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // With items in all hands
                 foreach (var hand in hands.Hands.Keys)
                 {
-                    Assert.That(handsSys.GetHeldEntityOrNull((human, hands), hand), Is.Not.Null);
+                    Assert.That(handsSys.GetHeldItem((human, hands), hand), Is.Not.Null);
                 }
 
                 var bodySystem = entityManager.System<BodySystem>();
@@ -318,7 +318,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 // Now with no item in any hand
                 foreach (var hand in hands.Hands.Keys)
                 {
-                    Assert.That(handsSys.GetHeldEntityOrNull((human, hands), hand), Is.Null);
+                    Assert.That(handsSys.GetHeldItem((human, hands), hand), Is.Null);
                 }
 
                 buckleSystem.Unbuckle(human, human);

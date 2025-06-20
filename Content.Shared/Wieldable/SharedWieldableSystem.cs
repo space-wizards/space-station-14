@@ -373,7 +373,7 @@ public abstract class SharedWieldableSystem : EntitySystem
     /// <param name="force">If this is true we will bypass UnwieldAttemptEvent.</param>
     public void UnwieldAll(Entity<HandsComponent?> wielder, bool force = false)
     {
-        foreach (var held in _hands.EnumerateHeld(wielder.Owner, wielder.Comp))
+        foreach (var held in _hands.EnumerateHeld(wielder))
         {
             if (TryComp<WieldableComponent>(held, out var wieldable))
                 TryUnwield(held, wieldable, wielder, force);

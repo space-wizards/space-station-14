@@ -68,7 +68,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
 
         foreach (var hand in _hands.EnumerateHands(player.Value))
         {
-            if (!_hands.TryGetHeldEntity(player.Value, hand, out var heldEntity))
+            if (!_hands.TryGetHeldItem(player.Value, hand, out var heldEntity))
                 continue;
 
             if (!scannerQuery.TryGetComponent(heldEntity, out var heldScanner) || !heldScanner.Enabled)

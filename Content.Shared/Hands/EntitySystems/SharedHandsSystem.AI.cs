@@ -28,7 +28,7 @@ public abstract partial class SharedHandsSystem
 
         foreach (var hand in handsComp.Hands.Keys)
         {
-            if (!TryGetHeldEntity((uid, handsComp), hand, out var held))
+            if (!TryGetHeldItem((uid, handsComp), hand, out var held))
                 continue;
 
             if (TryComp(held, out component))

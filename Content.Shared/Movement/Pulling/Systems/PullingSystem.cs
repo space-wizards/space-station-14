@@ -109,12 +109,12 @@ public sealed class PullingSystem : EntitySystem
 
         // Try find hand that is doing this pull.
         // and clear it.
-        foreach (var held in _handsSystem.EnumerateHeld(uid, component))
+        foreach (var held in _handsSystem.EnumerateHeld((uid, component)))
         {
             if (!TryComp(held, out VirtualItemComponent? virtualItem) || virtualItem.BlockingEntity != args.PulledUid)
                 continue;
 
-            _handsSystem.TryDrop(args.PullerUid, held, handsComp: component);
+            _handsSystem.TryDrop((args.PullerUid, component), held);
             break;
         }
     }

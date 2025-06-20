@@ -124,7 +124,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (!target.Comp.CanBeStripped)
             return;
 
-        var heldEntity = _handsSystem.GetHeldEntityOrNull(target.Owner, handId);
+        var heldEntity = _handsSystem.GetHeldItem(target.Owner, handId);
 
         // Is the target a handcuff?
         if (TryComp<VirtualItemComponent>(heldEntity, out var virtualItem) &&
@@ -243,7 +243,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (!CanStripInsertInventory(user, target, held, slot))
             return;
 
-        if (!_handsSystem.TryDrop(user, handsComp: user.Comp))
+        if (!_handsSystem.TryDrop(user))
             return;
 
         _inventorySystem.TryEquip(user, target, held, slot, triggerHandContact: true);
@@ -452,7 +452,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (!CanStripInsertHand(user, target, held, handName))
             return;
 
-        _handsSystem.TryDrop(user, checkActionBlocker: false, handsComp: user.Comp);
+        _handsSystem.TryDrop(user, checkActionBlocker: false);
         _handsSystem.TryPickup(target, held, handName, checkActionBlocker: false, animateUser: stealth, animate: !stealth, handsComp: target.Comp);
         _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):actor} has placed the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
 
@@ -474,13 +474,13 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (!target.Comp.CanBeStripped)
             return false;
 
-        if (!_handsSystem.TryGetHand(target, handName, out _, target.Comp))
+        if (!_handsSystem.TryGetHand(target, handName, out _))
         {
             _popupSystem.PopupCursor(Loc.GetString("strippable-component-item-slot-free-message", ("owner", Identity.Entity(target, EntityManager))));
             return false;
         }
 
-        if (!_handsSystem.TryGetHeldEntity(target, handName, out var heldEntity))
+        if (!_handsSystem.TryGetHeldItem(target, handName, out var heldEntity))
             return false;
 
         if (HasComp<VirtualItemComponent>(heldEntity))
@@ -563,7 +563,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (!CanStripRemoveHand(user, target, item, handName))
             return;
 
-        _handsSystem.TryDrop(target, item, checkActionBlocker: false, handsComp: target.Comp);
+        _handsSystem.TryDrop(target, item, checkActionBlocker: false);
         _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth, handsComp: user.Comp);
         _adminLogger.Add(LogType.Stripping, LogImpact.High, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
 

@@ -131,7 +131,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         {
             var handButton = AddHand(name, hand.Location);
 
-            if (_handsSystem.TryGetHeldEntity(handsComp.AsNullable(), name, out var held) &&
+            if (_handsSystem.TryGetHeldItem(handsComp.AsNullable(), name, out var held) &&
                 _entities.TryGetComponent(held, out VirtualItemComponent? virt))
             {
                 handButton.SetEntity(virt.BlockingEntity);
@@ -258,11 +258,11 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         if (HandsGui != null &&
             _playerHandsComponent != null &&
             _player.LocalSession?.AttachedEntity is { } playerEntity &&
-            _handsSystem.TryGetHand(playerEntity, handName, out var hand, _playerHandsComponent))
+            _handsSystem.TryGetHand((playerEntity, _playerHandsComponent), handName, out var hand))
         {
-            var heldEnt = _handsSystem.GetHeldEntityOrNull((playerEntity, _playerHandsComponent), handName);
+            var heldEnt = _handsSystem.GetHeldItem((playerEntity, _playerHandsComponent), handName);
 
-            var foldedLocation = hand.Location.GetUILocation();
+            var foldedLocation = hand.Value.Location.GetUILocation();
             if (foldedLocation == HandUILocation.Left)
             {
                 _statusHandLeft = handControl;

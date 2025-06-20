@@ -50,7 +50,9 @@ public sealed class RetractableItemActionSystem : EntitySystem
             return;
 
         // Don't allow to summon an item if holding an unremoveable item unless that item is summoned by the action.
-        if (!_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid) && !_hands.CanDropHeld(args.Performer, activeHand, false))
+        if (_hands.GetActiveItem(ent.Owner) != null
+            && !_hands.IsHolding(args.Performer, ent.Comp.ActionItemUid)
+            && !_hands.CanDropHeld(args.Performer, activeHand, false))
         {
             _popups.PopupClient(Loc.GetString("retractable-item-hand-cannot-drop"), args.Performer, args.Performer);
             return;

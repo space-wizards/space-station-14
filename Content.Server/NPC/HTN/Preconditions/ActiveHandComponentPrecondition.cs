@@ -24,7 +24,7 @@ public sealed partial class ActiveHandComponentPrecondition : HTNPrecondition
             return Invert;
         }
 
-        if (!_entManager.System<HandsSystem>().TryGetHeldEntity(owner, hand, out var entity))
+        if (!_entManager.System<HandsSystem>().TryGetHeldItem(owner, hand, out var entity))
             return Invert;
 
         foreach (var comp in Components)

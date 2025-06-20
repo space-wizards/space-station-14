@@ -436,7 +436,7 @@ namespace Content.Shared.Cuffs
             var freeHands = 0;
             foreach (var hand in _hands.EnumerateHands((uid, handsComponent)))
             {
-                if (_hands.TryGetHeldEntity((uid, handsComponent), hand, out var held))
+                if (!_hands.TryGetHeldItem((uid, handsComponent), hand, out var held))
                 {
                     freeHands++;
                     continue;
@@ -446,7 +446,7 @@ namespace Content.Shared.Cuffs
                 if (HasComp<UnremoveableComponent>(held))
                     continue;
 
-                _hands.DoDrop(uid, hand, true, handsComponent);
+                _hands.DoDrop(uid, hand, true);
                 freeHands++;
                 if (freeHands == 2)
                     break;

@@ -120,7 +120,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task DeleteHeldEntity()
     {
-        if (HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)) is { } held)
+        if (HandSys.GetActiveItem((ToServer(Player), Hands)) is { } held)
         {
             await Server.WaitPost(() =>
             {
@@ -131,7 +131,7 @@ public abstract partial class InteractionTest
         }
 
         await RunTicks(1);
-        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.Null);
+        Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.Null);
     }
 
     /// <summary>
@@ -179,7 +179,7 @@ public abstract partial class InteractionTest
         });
 
         await RunTicks(1);
-        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.EqualTo(item));
+        Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.EqualTo(item));
         if (enableToggleable && itemToggle != null)
             Assert.That(itemToggle.Activated);
 
@@ -212,11 +212,11 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            Assert.That(HandSys.TryPickup(SEntMan.GetEntity(Player), uid.Value, Hands.ActiveHandId, false, false, false, Hands, item));
+            Assert.That(HandSys.TryPickup(ToServer(Player), uid.Value, Hands.ActiveHandId, false, false, false, Hands, item));
         });
 
         await RunTicks(1);
-        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.EqualTo(uid));
+        Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.EqualTo(uid));
     }
 
     /// <summary>
@@ -224,7 +224,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task Drop()
     {
-        if (HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)) == null)
+        if (HandSys.GetActiveItem((ToServer(Player), Hands)) == null)
         {
             Assert.Fail("Not holding any entity to drop");
             return;
@@ -232,11 +232,11 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            Assert.That(HandSys.TryDrop(SEntMan.GetEntity(Player), handsComp: Hands));
+            Assert.That(HandSys.TryDrop(ToServer(Player), handsComp: Hands));
         });
 
         await RunTicks(1);
-        Assert.That(HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)), Is.Null);
+        Assert.That(HandSys.GetActiveItem((ToServer(Player), Hands)), Is.Null);
     }
 
     #region Interact
@@ -246,7 +246,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task UseInHand()
     {
-        if (HandSys.GetActiveItem((SEntMan.GetEntity(Player), Hands)) is not { } target)
+        if (HandSys.GetActiveItem((ToServer(Player), Hands)) is not { } target)
         {
             Assert.Fail("Not holding any entity");
             return;
