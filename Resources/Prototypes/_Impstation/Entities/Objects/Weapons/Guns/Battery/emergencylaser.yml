@@ -5,7 +5,7 @@
   description: An emergency laser rifle, for when getting proper clearance isn't an option. Hand this in to security once the coast is clear.
   components:
   - type: Sprite
-    sprite: _Ronstation/Objects/Weapons/Guns/Battery/emergency_laser_gun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/emergency_laser_gun.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
