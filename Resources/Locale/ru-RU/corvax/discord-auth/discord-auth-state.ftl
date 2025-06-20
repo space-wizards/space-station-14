@@ -1,6 +1,12 @@
 discord-auth-title = Авторизация Discord
-discord-auth-info = Для доступа на сервер вам необходимо связать аккаунт SS14 с Discord
+discord-auth-info = Вы можете связать аккаунт SS14 с Discord
+discord-auth-info-notopt = Вам необходимо связать аккаунт SS14 с Discord
 discord-auth-warn = Не волнуйтесь, это всего пару кликов!
 discord-auth-link = Ссылка:
+discord-auth-or = или
 discord-auth-browser-btn = Открыть в браузере
 discord-auth-quit-btn = Выйти
+discord-auth-qrcode = Отсканируйте QrCode или скопируйте ссылку вручную
+discord-auth-bypass = Пропустить
+discord-auth-copy-btn = Скопировать ссылку
+role-required-discord = Требуется пройти Discord авторизацию!

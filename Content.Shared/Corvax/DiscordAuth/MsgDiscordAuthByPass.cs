@@ -4,10 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Corvax.DiscordAuth;
 
-/// <summary>
-/// Client sends this event to force server check player Discord verification state
-/// </summary>
-public sealed class MsgDiscordAuthCheck : NetMessage
+public sealed class MsgDiscordAuthByPass : NetMessage
 {
     public override MsgGroups MsgGroup => MsgGroups.Command;
 
