@@ -153,22 +153,9 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-- proto: ActionSleep
-  entities:
-  - uid: 223
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 222
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 222
 - proto: AirlockEngineeringLocked
   entities:
   - uid: 68
@@ -1638,24 +1625,6 @@ entities:
     - type: Transform
       pos: 4.5,-10.5
       parent: 1
-    - type: HealOnBuckle
-      sleepAction: 223
-    - type: ContainerContainer
-      containers:
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 223
-    - type: ActionsContainer
 - proto: SubstationBasic
   entities:
   - uid: 76

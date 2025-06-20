@@ -4,6 +4,7 @@ using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Buckle;
 using Content.Shared.Coordinates;
 using Content.Shared.Damage;
@@ -19,7 +20,6 @@ using Content.Shared.Popups;
 using Robust.Server.Audio;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -111,8 +111,8 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         if (_actions.AddAction(uid, ref component.Action, out var action, RevertPolymorphId))
         {
-            action.EntityIcon = component.Parent;
-            action.UseDelay = TimeSpan.FromSeconds(component.Configuration.Delay);
+            _actions.SetEntityIcon((component.Action.Value, action), component.Parent);
+            _actions.SetUseDelay(component.Action.Value, TimeSpan.FromSeconds(component.Configuration.Delay));
         }
     }
 
@@ -397,20 +397,19 @@ public sealed partial class PolymorphSystem : EntitySystem
         _metaData.SetEntityName(actionId.Value, Loc.GetString("polymorph-self-action-name", ("target", entProto.Name)), metaDataCache);
         _metaData.SetEntityDescription(actionId.Value, Loc.GetString("polymorph-self-action-description", ("target", entProto.Name)), metaDataCache);
 
-        if (!_actions.TryGetActionData(actionId, out var baseAction))
+        if (_actions.GetAction(actionId) is not {} action)
             return;
 
-        baseAction.Icon = new SpriteSpecifier.EntityPrototype(polyProto.Configuration.Entity);
-        if (baseAction is InstantActionComponent action)
-            action.Event = new PolymorphActionEvent(id);
+        _actions.SetIcon((action, action.Comp), new SpriteSpecifier.EntityPrototype(polyProto.Configuration.Entity));
+        _actions.SetEvent(action, new PolymorphActionEvent(id));
     }
 
     public void RemovePolymorphAction(ProtoId<PolymorphPrototype> id, Entity<PolymorphableComponent> target)
     {
-        if (target.Comp.PolymorphActions == null)
+        if (target.Comp.PolymorphActions is not {} actions)
             return;
 
-        if (target.Comp.PolymorphActions.TryGetValue(id, out var val))
-            _actions.RemoveAction(target, val);
+        if (actions.TryGetValue(id, out var action))
+            _actions.RemoveAction(target.Owner, action);
     }
 }
