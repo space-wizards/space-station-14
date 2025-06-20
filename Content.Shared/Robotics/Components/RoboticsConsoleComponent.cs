@@ -52,7 +52,7 @@ public sealed partial class RoboticsConsoleComponent : Component
     public TimeSpan NextDestroy = TimeSpan.Zero;
 
     /// <summary>
-    /// Controls if the console can disable or destroy any borg
+    /// Controls if the console can disable or destroy any borg.
     /// </summary>
     [DataField]
     public bool AllowBorgControl = true;

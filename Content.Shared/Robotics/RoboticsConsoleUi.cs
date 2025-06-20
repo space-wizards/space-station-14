@@ -1,4 +1,4 @@
-﻿﻿using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Utility;
@@ -20,7 +20,7 @@ public sealed class RoboticsConsoleState : BoundUserInterfaceState
     public Dictionary<string, CyborgControlData> Cyborgs;
 
     /// <summary>
-    /// If the UI will have the buttons to disable and destroy
+    /// If the UI will have the buttons to disable and destroy.
     /// </summary>
     public bool AllowBorgControl;
 
