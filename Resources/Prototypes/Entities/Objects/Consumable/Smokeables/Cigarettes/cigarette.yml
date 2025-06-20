@@ -645,12 +645,12 @@
         reagents:
         - ReagentId: Nicotine
           Quantity: 10
-        - ReagentId: Blackpepper
+        - ReagentId: Paprika # imp Wasn't coughy enough
           Quantity: 10
       food: # imp
         maxVol: 40
         reagents:
         - ReagentId: Nicotine
           Quantity: 10
-        - ReagentId: Blackpepper
+        - ReagentId: Paprika
           Quantity: 10

@@ -20,6 +20,7 @@
     FoodPlatePlastic: 10
     FoodPlateSmallPlastic: 10
   contrabandInventory:
+    FoodCondimentPacketPaprika: 5 # imp
     FoodShakerSalt: 1
     FoodShakerPepper: 1
     FoodCondimentBottleKetchup: 1

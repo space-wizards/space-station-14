@@ -30,3 +30,6 @@ reagent-desc-butterflies = The pure essence of that fluttery, nervous feeling yo
 
 reagent-name-butterfliesbigger = butterflies infestation
 reagent-desc-butterfliesbigger = The pure essence of that fluttery, nervous feeling you get sometimes in the pit of your stomach. This variant, however, is more akin to a panic attack.
+
+reagent-name-paprika = paprika
+reagent-desc-paprika = A spice like no other, can cause even the most hearty of Englishmen to toil at night.

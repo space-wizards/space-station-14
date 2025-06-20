@@ -287,3 +287,39 @@
           - "butterflies-effect-chaos-two"
           - "butterflies-effect-chaos-three"
         probability: 0.4
+
+- type: reagent
+  id: Paprika
+  name: reagent-name-paprika
+  group: Foods
+  desc: reagent-desc-paprika
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: spicy
+  color: "#a52a2a"
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:Emote
+        emote: Cough
+        showInChat: false
+        showInGuidebook: true
+        probability: 0.65
+      - !type:PopupMessage
+        type: Local
+        messages:
+          - "paprika-effect-throat"
+          - "paprika-effect-chills"
+          - "paprika-effect-eyes"
+        probability: 0.05
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:Emote
+        emote: Cough
+        showInGuidebook: true
+        conditions:
+        - !type:Breathing
+        - !type:Internals
+          usingInternals: false
