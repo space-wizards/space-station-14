@@ -21,6 +21,10 @@ public sealed class ChangeCvarCommand : IConsoleCommand
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
     [Dependency] private readonly CVarControlManager _cVarControlManager = default!;
 
+    public string Command => "changecvar";
+    public string Description { get; } = Loc.GetString("cmd-changecvar-desc");
+    public string Help { get; } = Loc.GetString("cmd-changecvar-help");
+
     /// <summary>
     /// Searches the list of cvars for a cvar that matches the search string.
     /// </summary>
@@ -66,9 +70,6 @@ public sealed class ChangeCvarCommand : IConsoleCommand
         return cvar.Name;
     }
 
-    public string Command => "changecvar";
-    public string Description { get; } = Loc.GetString("cmd-changecvar-desc");
-    public string Help { get; } = Loc.GetString("cmd-changecvar-help");
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
