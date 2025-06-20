@@ -124,7 +124,7 @@ public abstract partial class InteractionTest
         {
             await Server.WaitPost(() =>
             {
-                Assert.That(HandSys.TryDrop(SEntMan.GetEntity(Player), null, false, true, Hands));
+                Assert.That(HandSys.TryDrop((SEntMan.GetEntity(Player), Hands), null, false, true));
                 SEntMan.DeleteEntity(held);
                 SLogger.Debug($"Deleting held entity");
             });
@@ -232,7 +232,7 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            Assert.That(HandSys.TryDrop(ToServer(Player), handsComp: Hands));
+            Assert.That(HandSys.TryDrop((ToServer(Player), Hands)));
         });
 
         await RunTicks(1);
