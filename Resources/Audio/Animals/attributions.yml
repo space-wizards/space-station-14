@@ -158,15 +158,15 @@
   source: "https://github.com/space-wizards/space-station-14/pull/27578"
 
 - files:
-  - wawa-achoo.ogg
-  - wawa-chatter.ogg
-  - wawa-chillin.ogg
-  - wawa-depression.ogg
-  - wawa-exclaim.ogg
-  - wawa-mock.ogg
-  - wawa-protest.ogg
-  - wawa-question.ogg
-  - wawa-statement.ogg
+  - wawa_achoo.ogg
+  - wawa_chatter.ogg
+  - wawa_chillin.ogg
+  - wawa_depression.ogg
+  - wawa_exclaim.ogg
+  - wawa_mock.ogg
+  - wawa_protest.ogg
+  - wawa_question.ogg
+  - wawa_statement.ogg
   copyright: "created by FairlySadPanda"
   license: "CC-BY-4.0"
   source: "https://github.com/space-wizards/space-station-14/pull/37936"
