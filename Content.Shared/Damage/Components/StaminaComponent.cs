@@ -89,55 +89,55 @@ public sealed partial class StaminaComponent : Component
     /// <summary>
     /// Minimum y vector displacement for breathing at AnimationThreshold
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public float BreathingAmplitudeMin = 0.04f;
 
     /// <summary>
     /// Maximum y vector amount we add to the BreathingAmplitudeMin
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public float BreathingAmplitudeMod = 0.04f;
 
     /// <summary>
     /// Minimum vector displacement for jittering at AnimationThreshold
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public float JitterAmplitudeMin;
 
     /// <summary>
     /// Maximum vector amount we add to the JitterAmplitudeMin
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public float JitterAmplitudeMod = 0.05f;
 
     /// <summary>
     /// Min and max multipliers for JitterAmplitude in the X direction for the random value we will choose
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public (float, float) JitterMinMaxX = (0.5f, 1f);
 
     /// <summary>
     /// Min and max multipliers for JitterAmplitude in the X direction for the random value we will choose
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public (float, float) JitterMinMaxY = (0.125f, 0.25f);
 
     /// <summary>
     /// Minimum total animations per second
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public float FrequencyMin = 0.25f;
 
     /// <summary>
     /// Maximum amount we add to the Frequency min just before crit
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public float FrequencyMod = 1.75f;
 
     /// <summary>
     /// Jitter keyframes per animation
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public int Jitters = 4;
 
     [AutoNetworkedField, DataField]
@@ -149,24 +149,6 @@ public sealed partial class StaminaComponent : Component
     /// </summary>
     [AutoNetworkedField, DataField]
     public Vector2 StartOffset = Vector2.Zero;
-
-    /// <summary>
-    ///     The angle an entity had before twitching started.
-    /// </summary>
-    [AutoNetworkedField, DataField]
-    public Angle StartAngle = Angle.FromDegrees(90);
-
-    /// <summary>
-    /// Max angular displacement for our twitching in radians
-    /// </summary>
-    [AutoNetworkedField, DataField]
-    public float Torque = 0.08f;
-
-    /// <summary>
-    /// Total Rotation Animations per second
-    /// </summary>
-    [AutoNetworkedField, DataField]
-    public float RotationFrequency = 4f;
 
     #endregion
 }

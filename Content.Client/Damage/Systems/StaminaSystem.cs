@@ -3,7 +3,6 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Stunnable;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Damage.Systems;
@@ -11,6 +10,7 @@ namespace Content.Client.Damage.Systems;
 public sealed partial class StaminaSystem : SharedStaminaSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly StunSystem _stun = default!;
 
     private const string StaminaAnimationKey = "stamina";
@@ -21,8 +21,6 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
 
         SubscribeLocalEvent<StaminaComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         SubscribeLocalEvent<ActiveStaminaComponent, ComponentShutdown>(OnActiveStaminaShutdown);
-        SubscribeLocalEvent<StaminaComponent, StunSystem.StunAnimationEvent>(OnStunAnimation);
-        SubscribeLocalEvent<StaminaComponent, StunSystem.StunAnimationEndEvent>(OnStunAnimationEnd);
         SubscribeLocalEvent<StaminaComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
@@ -40,11 +38,6 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
             return;
 
         StopAnimation((entity, stamina));
-    }
-
-    private void OnStunAnimation(Entity<StaminaComponent> entity, ref StunSystem.StunAnimationEvent args)
-    {
-        StopAnimation(entity);
     }
 
     protected override void OnShutdown(Entity<StaminaComponent> entity, ref ComponentShutdown args)
@@ -89,11 +82,6 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
         entity.Comp.StartOffset = sprite.Offset;
     }
 
-    private void OnStunAnimationEnd(Entity<StaminaComponent> entity, ref StunSystem.StunAnimationEndEvent args)
-    {
-        TryStartAnimation(entity);
-    }
-
     private void OnAnimationCompleted(Entity<StaminaComponent> entity, ref AnimationCompletedEvent args)
     {
         if (args.Key != StaminaAnimationKey || !args.Finished || !TryComp<SpriteComponent>(entity, out var sprite))
@@ -103,7 +91,7 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
         if (entity.Comp.AnimationThreshold > entity.Comp.StaminaDamage)
         {
             _animation.Stop(entity.Owner, StaminaAnimationKey);
-            sprite.Offset = entity.Comp.StartOffset;
+            _sprite.SetOffset((entity, sprite), entity.Comp.StartOffset);
             return;
         }
 

@@ -13,7 +13,6 @@ namespace Content.Client.Stunnable
 {
     public sealed class StunSystem : SharedStunSystem
     {
-        [Dependency] private readonly AnimationPlayerSystem _animation = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly SpriteSystem _spriteSystem = default!;
@@ -26,7 +25,6 @@ namespace Content.Client.Stunnable
             base.Initialize();
 
             SubscribeLocalEvent<StunnedComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<StunnedComponent, AnimationCompletedEvent>(OnAnimationCompleted);
             SubscribeLocalEvent<StunnedComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<StunnedComponent, AppearanceChangeEvent>(OnAppearanceChanged);
         }
@@ -43,7 +41,7 @@ namespace Content.Client.Stunnable
                 return;
 
             _spriteSystem.LayerMapReserve((entity, sprite), StunVisualLayers.StamCrit);
-            _spriteSystem.LayerSetVisible((entity, sprite), StunVisualLayers.StamCrit, entity.Comp.Visualized);
+            _spriteSystem.LayerSetVisible((entity, sprite), StunVisualLayers.StamCrit, false);
             _spriteSystem.LayerSetOffset((entity, sprite), StunVisualLayers.StamCrit, new Vector2(0, 0.3125f));
 
             _spriteSystem.LayerSetRsi((entity.Owner, sprite), StunVisualLayers.StamCrit, new ResPath("Mobs/Effects/stunned.rsi"));
@@ -59,142 +57,42 @@ namespace Content.Client.Stunnable
 
         private void UpdateAppearance(Entity<SpriteComponent?, StunnedComponent> entity)
         {
-            if ( !Resolve(entity, ref entity.Comp1))
+            if (!Resolve(entity, ref entity.Comp1))
                 return;
 
             if (!_spriteSystem.LayerMapTryGet(entity, StunVisualLayers.StamCrit, out var index, false))
                 return;
 
+            // Don't animate if we're not conscious
+            if (!Blocker.CanConsciouslyPerformAction(entity))
+                entity.Comp2.Visualized = false;
+
             _spriteSystem.LayerSetVisible(entity, index, entity.Comp2.Visualized);
             _spriteSystem.LayerSetRsiState(entity, index, "stunned");
         }
 
+        private void OnMobStateChanged(Entity<StunnedComponent> entity, ref MobStateChangedEvent args)
+        {
+            if (!Blocker.CanConsciouslyPerformAction(entity))
+                entity.Comp.Visualized = false;
+
+            if (!TryComp<SpriteComponent>(entity, out var sprite))
+                return;
+
+            if (!_spriteSystem.LayerMapTryGet((entity, sprite), StunVisualLayers.StamCrit, out var index, false))
+                return;
+
+            _spriteSystem.LayerSetVisible((entity, sprite), index, entity.Comp.Visualized);
+        }
+
         /// <summary>
-        ///     Trys to play a default stun animation
+        /// A simple random rotation animation
         /// </summary>
-        public override void TryStunAnimation(Entity<StunnedComponent> ent, TimeSpan time)
-        {
-            base.TryStunAnimation(ent, time);
-
-            if (!TryComp<SpriteComponent>(ent, out var sprite) || !_timing.IsFirstTimePredicted)
-                return;
-
-            UpdateAppearance((ent, sprite, ent.Comp));
-
-            if (_animation.HasRunningAnimation(ent, StunnedAnimationKeyVector) || _animation.HasRunningAnimation(ent, StunnedAnimationKeyRotation))
-                return;
-
-            // Don't animate if we're dead
-            if (TryComp<MobStateComponent>(ent, out var state) && state.CurrentState == MobState.Dead)
-                return;
-
-            var newTime = _timing.CurTime + time;
-            ent.Comp.StartOffset = sprite.Offset;
-            ent.Comp.StartAngle = sprite.Rotation;
-
-            if (TimeSpan.Compare(newTime, ent.Comp.AnimationEnd) == 1)
-                    ent.Comp.AnimationEnd = newTime;
-
-            var ev = new StunAnimationEvent(time);
-            RaiseLocalEvent(ent, ref ev);
-
-            PlayStunnedAnimation(ent, sprite);
-        }
-
-        protected override void OnStunShutdown(Entity<StunnedComponent> ent, ref ComponentShutdown args)
-        {
-            base.OnStunShutdown(ent, ref args);
-
-            if (!_timing.IsFirstTimePredicted)
-                return;
-
-            // Standing system should handle the angle offset so we don't need to update that
-            if (TryComp(ent, out SpriteComponent? sprite))
-                _spriteSystem.SetOffset((ent, sprite), ent.Comp.StartOffset);
-
-            if (!HasComp<AnimationPlayerComponent>(ent))
-                return;
-
-            StopStunnedAnimation(ent);
-        }
-
-        private void OnMobStateChanged(Entity<StunnedComponent> ent, ref MobStateChangedEvent args)
-        {
-            if (args.NewMobState == MobState.Dead)
-                StopStunnedAnimation(ent);
-        }
-
-        private void OnAnimationCompleted(Entity<StunnedComponent> ent, ref AnimationCompletedEvent args)
-        {
-            if (args.Key != StunnedAnimationKeyVector && args.Key != StunnedAnimationKeyRotation || !args.Finished)
-                return;
-
-            if (_timing.CurTime < ent.Comp.AnimationEnd)
-            {
-                var ev = new StunAnimationEndEvent();
-                RaiseLocalEvent(ent, ref ev);
-                return;
-            }
-
-            if (!HasComp<AnimationPlayerComponent>(ent)
-                || !TryComp<SpriteComponent>(ent, out var sprite))
-                return;
-
-            switch (args.Key)
-            {
-                case StunnedAnimationKeyVector:
-                    _animation.Play(ent.Owner,
-                        GetFatigueAnimation(sprite,
-                            ent.Comp.Frequency,
-                            ent.Comp.Jitters,
-                            (ent.Comp.Amplitude/2, ent.Comp.Amplitude),
-                            (ent.Comp.Amplitude/8, ent.Comp.Amplitude/4),
-                            ent.Comp.BreathingAmplitude,
-                            ent.Comp.StartOffset,
-                            ref ent.Comp.LastJitter),
-                        StunnedAnimationKeyVector);
-                    break;
-                case StunnedAnimationKeyRotation:
-                    _animation.Play(ent.Owner,
-                        GetTwitchAnimation(sprite,
-                            ent.Comp.RotationFrequency,
-                            (ent.Comp.Torque/4, ent.Comp.Torque),
-                            ent.Comp.StartAngle),
-                        StunnedAnimationKeyRotation);
-                    break;
-            }
-        }
-
-        private void PlayStunnedAnimation(Entity<StunnedComponent> ent, SpriteComponent sprite)
-        {
-            _animation.Play(ent.Owner,
-                GetFatigueAnimation(sprite,
-                    ent.Comp.Frequency,
-                    ent.Comp.Jitters,
-                    (ent.Comp.Amplitude/2, ent.Comp.Amplitude),
-                    (ent.Comp.Amplitude/8, ent.Comp.Amplitude/4),
-                    ent.Comp.BreathingAmplitude,
-                    ent.Comp.StartOffset,
-                    ref ent.Comp.LastJitter),
-                StunnedAnimationKeyVector);
-
-            _animation.Play(ent.Owner,
-                GetTwitchAnimation(sprite,
-                    ent.Comp.RotationFrequency,
-                    (ent.Comp.Torque/4, ent.Comp.Torque),
-                    ent.Comp.StartAngle),
-                StunnedAnimationKeyRotation);
-        }
-
-        private void StopStunnedAnimation(Entity<StunnedComponent> ent)
-        {
-            var ev = new StunAnimationEndEvent();
-            RaiseLocalEvent(ent, ref ev);
-
-            _animation.Stop(ent.Owner, StunnedAnimationKeyVector);
-            _animation.Stop(ent.Owner, StunnedAnimationKeyRotation);
-        }
-
+        /// <param name="sprite">The spriteComp we're rotating</param>
+        /// <param name="frequency">How many times per second we're rotating</param>
+        /// <param name="rotateClamp">Maximum angle of rotation (in radians)</param>
+        /// <param name="startAngle">Default starting angle of rotation (used because we don't have adjustment layers)</param>
+        /// <returns></returns>
         public Animation GetTwitchAnimation(SpriteComponent sprite,
             float frequency,
             (float, float) rotateClamp,
@@ -230,6 +128,18 @@ namespace Content.Client.Stunnable
             };
         }
 
+        /// <summary>
+        /// A simple fatigue animation, a mild modification of the jittering animation
+        /// </summary>
+        /// <param name="sprite">The spriteComponent we're adjusting the offset of</param>
+        /// <param name="frequency">How many times per second does the animation run?</param>
+        /// <param name="jitters">How many times should we jitter during the animation?</param>
+        /// <param name="jitterX">Maximum jitter offset in the X direction</param>
+        /// <param name="jitterY">Maximum jitter offset in the Y direction</param>
+        /// <param name="breathing">Maximum breathing offset, this is in the Y direction</param>
+        /// <param name="startOffset">Starting offset because we don't have adjustment layers</param>
+        /// <param name="lastJitter">Last jitter so we don't jitter to the same quadrant</param>
+        /// <returns></returns>
         public Animation GetFatigueAnimation(SpriteComponent sprite,
             float frequency,
             int jitters,
@@ -243,7 +153,7 @@ namespace Content.Client.Stunnable
             if (frequency <= 0)
                 return new Animation();
 
-            var breaths = new Vector2(0, breathing) / jitters;
+            var breaths = new Vector2(0, breathing * 2) / jitters;
 
             var length =  1 / frequency;
             var frames = length / jitters;
