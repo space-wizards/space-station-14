@@ -10,7 +10,7 @@
     anchored: false
   - type: Sprite
     layers:
-      - sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi # imp
+      - sprite: _Impstation/Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi # imp
         state: closed
   - type: EntityTableSpawner
     table: !type:NestedSelector
