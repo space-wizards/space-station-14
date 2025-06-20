@@ -15,8 +15,8 @@ namespace Content.Client.Changelog
     [GenerateTypedNameReferences]
     public sealed partial class ChangelogWindow : FancyWindow
     {
-        [Dependency] private readonly ChangelogManager _changelog = default!;
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private readonly ChangelogManager _changelog = default!;
 
         public ChangelogWindow()
         {
@@ -112,15 +112,15 @@ namespace Content.Client.Changelog
     }
 
     [UsedImplicitly, AnyCommand]
-    public sealed class ChangelogCommand : IConsoleCommand
+    public sealed class ChangelogCommand : LocalizedCommands
     {
-        public string Command => "changelog";
-        public string Description => "Opens the changelog";
-        public string Help => "Usage: changelog";
+        [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "changelog";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<ChangelogUIController>().OpenWindow();
+            _uiManager.GetUIController<ChangelogUIController>().OpenWindow();
         }
     }
 }

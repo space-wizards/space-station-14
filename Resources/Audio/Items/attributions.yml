@@ -55,12 +55,12 @@
 
 - files: ["bottle_clunk.ogg"]
   license: "CC-BY-4.0"
-  copyright: "User volivieri on freesound.org. Modified by Velcroboy on github."
+  copyright: "User volivieri on freesound.org. Modified by Velcroboy on github. Made mono by perryprog."
   source: "https://freesound.org/people/volivieri/sounds/37190/"
 
 - files: ["bottle_clunk_2.ogg"]
   license: "CC-BY-4.0"
-  copyright: "User volivieri on freesound.org. Modified by Velcroboy on github."
+  copyright: "User volivieri on freesound.org. Modified by Velcroboy on github. Silence trimmed + made mono by perryprog."
   source: "https://freesound.org/people/volivieri/sounds/37190/"
 
 - files: ["bottle_close1.ogg"]

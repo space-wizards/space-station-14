@@ -246,4 +246,145 @@
   id: 29
   time: '2025-05-21T07:51:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37669
+- author: Southbridge
+  changes:
+  - message: On Amber, added sentry turrets to the AI core, armory, and vault.
+    type: Add
+  id: 30
+  time: '2025-05-27T23:08:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37859
+- author: Southbridge
+  changes:
+  - message: Added Decal Spawners
+    type: Add
+  id: 31
+  time: '2025-05-27T23:55:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37066
+- author: ArtisticRoomba
+  changes:
+  - message: The ATS has been updated to allow atmos techs to easily refill the ATS
+      with air after a spacing.
+    type: Tweak
+  id: 32
+  time: '2025-05-28T07:52:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37891
+- author: Spessmann
+  changes:
+  - message: Randomized maintenance rooms now use decal spawners, which prevent them
+      from having the decals oriented wrong
+    type: Tweak
+  id: 33
+  time: '2025-05-29T05:03:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37916
+- author: Southbridge
+  changes:
+  - message: On Box, added sentry turrets to the AI core, armory, and vault.
+    type: Add
+  id: 34
+  time: '2025-05-30T07:25:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37860
+- author: K-Dynamic
+  changes:
+  - message: Elkridge now has turrets within the AI core, vault and armory
+    type: Add
+  - message: Elkridge now has criminal records computer next to genpop within security
+      lobby
+    type: Add
+  id: 35
+  time: '2025-05-30T12:52:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37961
+- author: Boaz1111
+  changes:
+  - message: Marathon has Genpop now.
+    type: Add
+  id: 36
+  time: '2025-06-01T19:38:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37687
+- author: Mixelz
+  changes:
+  - message: On Plasma, added Genpop, Salv Job Board & AI Turrets! Along with several
+      other fixes & rebalanced maints loot.
+    type: Add
+  id: 37
+  time: '2025-06-03T04:30:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38028
+- author: JpegOfAFrog
+  changes:
+  - message: On Plasma Station evacuation shuttle, gas holding tanks are now filled
+      when the shuttle arrives.
+    type: Tweak
+  id: 38
+  time: '2025-06-03T05:58:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37768
+- author: Spessmann
+  changes:
+  - message: On Convex, added AI turrets to the AI core
+    type: Add
+  id: 39
+  time: '2025-06-03T23:08:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38053
+- author: spanky-spanky
+  changes:
+  - message: On Omega, sentry turrets have been added to the AI core and vault.
+    type: Add
+  id: 40
+  time: '2025-06-04T20:37:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38066
+- author: spanky-spanky
+  changes:
+  - message: On Fland, added sentry turrets to the AI, vault, and armory.
+    type: Add
+  id: 41
+  time: '2025-06-04T21:41:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38068
+- author: spanky-spanky
+  changes:
+  - message: Most emergency shuttles have been lightly overhauled to mitigate spacing
+      damage.
+    type: Tweak
+  id: 42
+  time: '2025-06-09T22:56:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38186
+- author: ArtisticRoomba
+  changes:
+  - message: Amber AI core LV powernet has been atomized, so each room gets its own
+      APC. Previously if you toggled the APC while the AI turrets were on it would
+      cause endless seizure-inducing flickering, so this is a tempfix until the proper
+      cause is found.
+    type: Tweak
+  id: 43
+  time: '2025-06-10T09:36:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38209
+- author: Vortebo
+  changes:
+  - message: On Relic, mapping errors have been fixed and more job-required equipment
+      is available.
+    type: Fix
+  id: 44
+  time: '2025-06-11T22:25:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38269
+- author: Deerstop
+  changes:
+  - message: On Elkridge, several areas have received major overhauls, including the
+      Vault, HoP, EVA, Genpop, and the Armoury.
+    type: Tweak
+  id: 45
+  time: '2025-06-13T19:17:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38259
+- author: SlamBamActionman
+  changes:
+  - message: Exo has received a "day 1 patch", fixing various incorrectly mapped features
+      and some smaller balance tweaks.
+    type: Fix
+  id: 46
+  time: '2025-06-16T16:43:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38348
+- author: SlamBamActionman
+  changes:
+  - message: Exo has received minor balance changes and fixes, along with having its
+      Atmos layout slightly modified.
+    type: Tweak
+  id: 47
+  time: '2025-06-19T04:06:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38435
 Order: 1

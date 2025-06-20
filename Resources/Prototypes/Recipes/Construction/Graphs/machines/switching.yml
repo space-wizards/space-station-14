@@ -52,10 +52,10 @@
             - tool: Screwing
               doAfter: 2.0
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 1
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
             - !type:DeleteEntity {}
@@ -81,10 +81,10 @@
             - tool: Screwing
               doAfter: 2.0
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 1
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
             - !type:DeleteEntity {}
@@ -110,10 +110,10 @@
             - tool: Screwing
               doAfter: 2.0
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 1
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
             - !type:DeleteEntity {}
@@ -139,10 +139,10 @@
             - tool: Screwing
               doAfter: 2.0
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 1
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
             - !type:DeleteEntity {}
@@ -168,10 +168,10 @@
             - tool: Screwing
               doAfter: 2.0
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 1
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
             - !type:DeleteEntity {}
@@ -197,10 +197,10 @@
             - tool: Screwing
               doAfter: 2.0
           completed:
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: SheetSteel1
               amount: 1
-            - !type:SpawnPrototype
+            - !type:GivePrototype
               prototype: CableApcStack1
               amount: 1
             - !type:DeleteEntity {}
