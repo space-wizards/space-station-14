@@ -17,6 +17,9 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Revolutionary.Components;
 using Content.Shared.StationRecords;
 using Content.Shared.UserInterface;
 using Robust.Server.Audio;
@@ -234,6 +237,9 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
             _stationRecords.RemoveRecord(key, stationRecords);
         }
+
+        //starlight remove headrev comp
+        RemComp<HeadRevolutionaryComponent>(ent.Owner);
 
         _chatSystem.DispatchStationAnnouncement(station.Value,
             Loc.GetString(
