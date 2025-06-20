@@ -21,18 +21,18 @@ public sealed partial class ParacusiaComponent : Component
     public float MaxSoundDistance;
 
     /// <summary>
-    /// The maximum time between incidents in seconds
+    /// The maximum time between incidents.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public float MaxTimeBetweenIncidents = 60f;
+    public TimeSpan MaxTimeBetweenIncidents = TimeSpan.FromSeconds(60);
 
     /// <summary>
-    /// The minimum time between incidents in seconds
+    /// The minimum time between incidents.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
-    public float MinTimeBetweenIncidents = 30f;
+    public TimeSpan MinTimeBetweenIncidents = TimeSpan.FromSeconds(30);
 
     [AutoPausedField]
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
@@ -41,9 +41,9 @@ public sealed partial class ParacusiaComponent : Component
     /// <summary>
     /// The sounds to choose from
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     [AutoNetworkedField]
-    public SoundSpecifier Sounds = default!;
+    public SoundSpecifier Sounds;
 
     public EntityUid? Stream;
 }

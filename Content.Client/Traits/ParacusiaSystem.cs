@@ -90,7 +90,6 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
     /// </summary>
     private void SetNewIncidentTime(Entity<ParacusiaComponent> ent)
     {
-        ent.Comp.NextIncidentTime +=
-            TimeSpan.FromSeconds(_random.NextFloat(ent.Comp.MinTimeBetweenIncidents, ent.Comp.MaxTimeBetweenIncidents));
+        ent.Comp.NextIncidentTime += _random.Next(ent.Comp.MinTimeBetweenIncidents, ent.Comp.MaxTimeBetweenIncidents);
     }
 }
