@@ -10,8 +10,6 @@ namespace Content.Server.Administration.Commands
         [Dependency] private readonly BodySystem _bodySystem = default!;
 
         public override string Command => "addmechanism";
-        public string Description => "Adds a given entity to a containing body.";
-        public string Help => "Usage: addmechanism <entity uid> <bodypart uid>";
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
