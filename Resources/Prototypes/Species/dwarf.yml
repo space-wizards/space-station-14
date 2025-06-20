@@ -7,3 +7,6 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobDwarfDummy
   skinColoration: HumanToned
+  youngAge: 60
+  oldAge: 300
+  maxAge: 600

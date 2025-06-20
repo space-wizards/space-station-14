@@ -12,6 +12,9 @@
   femaleFirstNames: NamesDionaFirst
   lastNames: NamesDionaLast
   naming: TheFirstofLast
+  youngAge: 300
+  oldAge: 600
+  maxAge: 1200
 
 - type: speciesBaseSprites
   id: MobDionaSprites
