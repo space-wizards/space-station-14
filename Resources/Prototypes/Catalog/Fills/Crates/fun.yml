@@ -472,6 +472,7 @@
     - id: DrinkTequilaBottleFull # ...that explains it.
     - id: DrinkShotGlass
       amount: 2
+    - id: Spear # self defence
     - id: ClothingHeadHatHardhatYellow
     - id: ClothingNeckMantleQM
     - id: ClothingHeadsetCargo
