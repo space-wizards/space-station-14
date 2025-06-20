@@ -12,14 +12,14 @@
   - type: Sprite
     sprite: _Impstation/Structures/Storage/tanks.rsi # imp
     layers:
-      - state: fueltank-2
-      - state: tank-2-1 # imp
+      - state: fueltank # imp
+      - state: tank-1 # imp
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 5 # imp
-    fillBaseName: tank-2- # imp
+    fillBaseName: tank- # imp
   - type: ExaminableSolution
     solution: tank
   - type: ReagentTank
@@ -58,13 +58,13 @@
   - type: Sprite
     sprite: _Impstation/Structures/Storage/tanks.rsi # imp
     layers:
-      - state: highfueltank-2
-      - state: hightank-2-1 # imp
+      - state: highfueltank # imp
+      - state: hightank-1 # imp
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 5 # imp
-    fillBaseName: hightank-2- # imp
+    fillBaseName: hightank- # imp
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -93,14 +93,14 @@
   - type: Sprite
     sprite: _Impstation/Structures/Storage/tanks.rsi # imp
     layers:
-      - state: watertank-2
-      - state: tank-2-1 # imp
+      - state: watertank # imp
+      - state: tank-1 # imp
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 5
-    fillBaseName: tank-2- # imp
+    fillBaseName: tank- # imp
   - type: ExaminableSolution
     solution: tank
 
@@ -180,14 +180,14 @@
   - type: Sprite
     sprite: _Impstation/Structures/Storage/tanks.rsi # imp
     layers:
-      - state: highwatertank-2
-      - state: hightank-2-1 # imp
+      - state: highwatertank # imp
+      - state: hightank-1 # imp
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 5 # imp
-    fillBaseName: hightank-2- # imp
+    fillBaseName: hightank- # imp
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -212,13 +212,13 @@
     - type: Sprite
       sprite: _Impstation/Structures/Storage/tanks.rsi # imp
       layers:
-        - state: generictank-1
-        - state: tank-2-1 # imp
+        - state: generictank # imp
+        - state: tank-1 # imp
           map: ["enum.SolutionContainerLayers.Fill"]
           visible: false
     - type: Appearance
     - type: SolutionContainerVisuals
       maxFillLevels: 5
-      fillBaseName: tank-2- # imp
+      fillBaseName: tank- # imp
     - type: ExaminableSolution
       solution: tank

@@ -142,7 +142,7 @@
   id: MaterialWaterTank
   icon:
     sprite: _Impstation/Structures/Storage/tanks.rsi # imp
-    state: watertank-2 # imp
+    state: watertank
   product: WaterTankFull
   cost: 1000
   category: cargoproduct-category-name-materials

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Tanks taken from Eris https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/objects.dmi",
+  "copyright": "Tanks taken from Eris https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/objects.dmi, edited by AfterLife(github), generictank edited by DinnerCalzone(github).",
   "size": {
     "x": 32,
     "y": 32
@@ -11,58 +11,46 @@
           "name": "fueltank"
       },
       {
-          "name": "fueltank-2"
-      },
-      {
-          "name": "generictank-1"
+          "name": "generictank"
       },
       {
           "name": "highfueltank"
       },
       {
-          "name": "highfueltank-2"
+          "name": "hightank-1"
       },
       {
-          "name": "hightank-2-1"
+          "name": "hightank-2"
       },
       {
-          "name": "hightank-2-2"
+          "name": "hightank-3"
       },
       {
-          "name": "hightank-2-3"
+          "name": "hightank-4"
       },
       {
-          "name": "hightank-2-4"
-      },
-      {
-          "name": "hightank-2-5"
+          "name": "hightank-5"
       },
       {
           "name": "highwatertank"
       },
       {
-          "name": "highwatertank-2"
+          "name": "tank-1"
       },
       {
-          "name": "tank-2-1"
+          "name": "tank-2"
       },
       {
-          "name": "tank-2-2"
+          "name": "tank-3"
       },
       {
-          "name": "tank-2-3"
+          "name": "tank-4"
       },
       {
-          "name": "tank-2-4"
-      },
-      {
-          "name": "tank-2-5"
+          "name": "tank-5"
       },
       {
           "name": "watertank"
-      },
-      {
-          "name": "watertank-2"
       }
   ]
 }
