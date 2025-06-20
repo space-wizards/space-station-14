@@ -175,7 +175,7 @@ public sealed partial class CloningSystem : EntitySystem
         if (prototype == null)
             return null;
 
-        var spawned = EntityManager.SpawnAtPosition(prototype, coords);
+        var spawned = SpawnAtPosition(prototype, coords);
 
         // copy over important component data
         var ev = new CloningItemEvent(spawned);

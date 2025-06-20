@@ -393,7 +393,7 @@ public sealed class WiresSystem : SharedWiresSystem
     {
         var player = args.Actor;
 
-        if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
+        if (!TryComp(player, out HandsComponent? handsComponent))
         {
             _popupSystem.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid, player);
             return;
@@ -414,7 +414,7 @@ public sealed class WiresSystem : SharedWiresSystem
             return;
 
         var activeHandEntity = activeHand.HeldEntity.Value;
-        if (!EntityManager.TryGetComponent(activeHandEntity, out ToolComponent? tool))
+        if (!TryComp(activeHandEntity, out ToolComponent? tool))
             return;
 
         TryDoWireAction(uid, player, activeHandEntity, args.Id, args.Action, component, tool);

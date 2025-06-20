@@ -106,12 +106,12 @@ public sealed class HealingSystem : EntitySystem
         if (entity.Owner != args.User)
         {
             _adminLogger.Add(LogType.Healed,
-                $"{EntityManager.ToPrettyString(args.User):user} healed {EntityManager.ToPrettyString(entity.Owner):target} for {total:damage} damage");
+                $"{ToPrettyString(args.User):user} healed {ToPrettyString(entity.Owner):target} for {total:damage} damage");
         }
         else
         {
             _adminLogger.Add(LogType.Healed,
-                $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
+                $"{ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
         }
 
         _audio.PlayPvs(healing.HealingEndSound, entity.Owner);

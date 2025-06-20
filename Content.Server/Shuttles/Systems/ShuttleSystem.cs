@@ -108,12 +108,12 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
     private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
     {
-        if (!EntityManager.HasComponent<MapGridComponent>(uid))
+        if (!HasComp<MapGridComponent>(uid))
         {
             return;
         }
 
-        if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
+        if (!TryComp(uid, out PhysicsComponent? physicsComponent))
         {
             return;
         }
@@ -128,7 +128,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
 
     public void Toggle(EntityUid uid, ShuttleComponent component)
     {
-        if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
+        if (!TryComp(uid, out PhysicsComponent? physicsComponent))
             return;
 
         component.Enabled = !component.Enabled;
@@ -166,7 +166,7 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     private void OnShuttleShutdown(EntityUid uid, ShuttleComponent component, ComponentShutdown args)
     {
         // None of the below is necessary for any cleanup if we're just deleting.
-        if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+        if (Comp<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
         Disable(uid);

@@ -37,7 +37,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
             component.FallAsleepTime = TimeSpan.Zero;
             if (component.ForcedSleepAdded) // Remove component only if it has been added by this system
             {
-                EntityManager.RemoveComponent<ForcedSleepingComponent>(uid);
+                RemComp<ForcedSleepingComponent>(uid);
                 component.ForcedSleepAdded = false;
             }
         }

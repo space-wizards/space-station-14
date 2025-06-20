@@ -43,7 +43,7 @@ namespace Content.Server.Rotatable
                 return;
 
             // Check if the object is anchored.
-            if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)
+            if (TryComp(uid, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)
                 return;
 
             Verb verb = new()
@@ -68,14 +68,14 @@ namespace Content.Server.Rotatable
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
             if (!component.RotateWhileAnchored &&
-                EntityManager.TryGetComponent(uid, out PhysicsComponent? physics) &&
+                TryComp(uid, out PhysicsComponent? physics) &&
                 physics.BodyType == BodyType.Static)
                 return;
 
             Verb resetRotation = new()
             {
                 DoContactInteraction = true,
-                Act = () => EntityManager.GetComponent<TransformComponent>(uid).LocalRotation = Angle.Zero,
+                Act = () => Comp<TransformComponent>(uid).LocalRotation = Angle.Zero,
                 Category = VerbCategory.Rotate,
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/refresh.svg.192dpi.png")),
                 Text = "Reset",
@@ -87,7 +87,7 @@ namespace Content.Server.Rotatable
             // rotate clockwise
             Verb rotateCW = new()
             {
-                Act = () => EntityManager.GetComponent<TransformComponent>(uid).LocalRotation -= component.Increment,
+                Act = () => Comp<TransformComponent>(uid).LocalRotation -= component.Increment,
                 Category = VerbCategory.Rotate,
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png")),
                 Priority = -1,
@@ -98,7 +98,7 @@ namespace Content.Server.Rotatable
             // rotate counter-clockwise
             Verb rotateCCW = new()
             {
-                Act = () => EntityManager.GetComponent<TransformComponent>(uid).LocalRotation += component.Increment,
+                Act = () => Comp<TransformComponent>(uid).LocalRotation += component.Increment,
                 Category = VerbCategory.Rotate,
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png")),
                 Priority = 0,
@@ -112,12 +112,12 @@ namespace Content.Server.Rotatable
         /// </summary>
         public void Flip(EntityUid uid, FlippableComponent component)
         {
-            var oldTransform = EntityManager.GetComponent<TransformComponent>(uid);
-            var entity = EntityManager.SpawnEntity(component.MirrorEntity, oldTransform.Coordinates);
-            var newTransform = EntityManager.GetComponent<TransformComponent>(entity);
+            var oldTransform = Comp<TransformComponent>(uid);
+            var entity = Spawn(component.MirrorEntity, oldTransform.Coordinates);
+            var newTransform = Comp<TransformComponent>(entity);
             newTransform.LocalRotation = oldTransform.LocalRotation;
             _transform.Unanchor(entity, newTransform);
-            EntityManager.DeleteEntity(uid);
+            Del(uid);
         }
 
         public bool HandleRotateObjectClockwise(ICommonSession? playerSession, EntityCoordinates coordinates, EntityUid entity)
@@ -134,7 +134,7 @@ namespace Content.Server.Rotatable
                 return false;
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
-            if (!rotatableComp.RotateWhileAnchored && EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) &&
+            if (!rotatableComp.RotateWhileAnchored && TryComp(entity, out PhysicsComponent? physics) &&
                 physics.BodyType == BodyType.Static)
             {
                 _popup.PopupEntity(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
@@ -159,7 +159,7 @@ namespace Content.Server.Rotatable
                 return false;
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
-            if (!rotatableComp.RotateWhileAnchored && EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) &&
+            if (!rotatableComp.RotateWhileAnchored && TryComp(entity, out PhysicsComponent? physics) &&
                 physics.BodyType == BodyType.Static)
             {
                 _popup.PopupEntity(Loc.GetString("rotatable-component-try-rotate-stuck"), entity, player);
@@ -184,7 +184,7 @@ namespace Content.Server.Rotatable
                 return false;
 
             // Check if the object is anchored.
-            if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)
+            if (TryComp(entity, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)
             {
                 _popup.PopupEntity(Loc.GetString("flippable-component-try-flip-is-stuck"), entity, player);
                 return false;
