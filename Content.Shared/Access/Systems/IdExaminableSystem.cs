@@ -51,13 +51,13 @@ public sealed class IdExaminableSystem : EntitySystem
         if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
         {
             // PDA
-            if (TryComp(idUid, out PdaComponent? pda) &&
+            if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda) &&
                 TryComp<IdCardComponent>(pda.ContainedId, out var id))
             {
                 return GetNameAndJob(id);
             }
             // ID Card
-            if (TryComp(idUid, out id))
+            if (EntityManager.TryGetComponent(idUid, out id))
             {
                 return GetNameAndJob(id);
             }

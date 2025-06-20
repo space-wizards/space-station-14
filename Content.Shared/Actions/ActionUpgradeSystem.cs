@@ -51,7 +51,10 @@ public sealed class ActionUpgradeSystem : EntitySystem
             return;
 
         upgradeComp.Level = args.NewLevel;
-        Del(uid);
+
+        // TODO: Preserve ordering of actions
+
+        _entityManager.DeleteEntity(uid);
     }
 
     public bool TryUpgradeAction(EntityUid? actionId, out EntityUid? upgradeActionId, ActionUpgradeComponent? actionUpgradeComponent = null, int newLevel = 0)
@@ -179,7 +182,10 @@ public sealed class ActionUpgradeSystem : EntitySystem
             return null;
 
         upgradeComp.Level = newLevel;
-        Del(actionId);
+
+        // TODO: Preserve ordering of actions
+
+        _entityManager.DeleteEntity(actionId);
 
         return upgradedActionId.Value;
     }

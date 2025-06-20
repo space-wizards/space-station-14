@@ -171,25 +171,30 @@ namespace Content.Client.Hands.Systems
 
             if (pressedHand == hands.ActiveHand && activeEntity != null)
             {
-                RaisePredictiveEvent(new RequestUseInHandEvent());
+                // use item in hand
+                // it will always be attack_self() in my heart.
+                EntityManager.RaisePredictiveEvent(new RequestUseInHandEvent());
                 return;
             }
 
             if (pressedHand != hands.ActiveHand && pressedEntity == null)
             {
-                RaisePredictiveEvent(new RequestSetHandEvent(handName));
+                // change active hand
+                EntityManager.RaisePredictiveEvent(new RequestSetHandEvent(handName));
                 return;
             }
 
             if (pressedHand != hands.ActiveHand && pressedEntity != null && activeEntity != null)
             {
-                RaisePredictiveEvent(new RequestHandInteractUsingEvent(pressedHand.Name));
+                // use active item on held item
+                EntityManager.RaisePredictiveEvent(new RequestHandInteractUsingEvent(pressedHand.Name));
                 return;
             }
 
             if (pressedHand != hands.ActiveHand && pressedEntity != null && activeEntity == null)
             {
-                RaisePredictiveEvent(new RequestMoveHandItemEvent(pressedHand.Name));
+                // move the item to the active hand
+                EntityManager.RaisePredictiveEvent(new RequestMoveHandItemEvent(pressedHand.Name));
             }
         }
 
@@ -199,7 +204,7 @@ namespace Content.Client.Hands.Systems
         /// </summary>
         public void UIHandActivate(string handName)
         {
-            RaisePredictiveEvent(new RequestActivateInHandEvent(handName));
+            EntityManager.RaisePredictiveEvent(new RequestActivateInHandEvent(handName));
         }
 
         public void UIInventoryExamine(string handName)

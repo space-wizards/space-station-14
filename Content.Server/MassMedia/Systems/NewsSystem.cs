@@ -369,7 +369,7 @@ public sealed class NewsSystem : SharedNewsSystem
         if (_webhookSendDuringRound)
             return;
 
-        var query = EntityQueryEnumerator<StationNewsComponent>();
+        var query = EntityManager.EntityQueryEnumerator<StationNewsComponent>();
 
         while (query.MoveNext(out _, out var comp))
         {

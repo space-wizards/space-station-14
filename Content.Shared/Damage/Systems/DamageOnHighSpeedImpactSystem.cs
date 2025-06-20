@@ -30,7 +30,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         if (!args.OurFixture.Hard || !args.OtherFixture.Hard)
             return;
 
-        if (!HasComp<DamageableComponent>(uid))
+        if (!EntityManager.HasComponent<DamageableComponent>(uid))
             return;
 
         //TODO: This should solve after physics solves

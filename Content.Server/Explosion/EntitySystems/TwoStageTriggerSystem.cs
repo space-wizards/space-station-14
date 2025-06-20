@@ -36,7 +36,7 @@ public sealed class TwoStageTriggerSystem : EntitySystem
                 RemComp(uid, c);
 
             _serializationManager.CopyTo(entry.Component, ref temp);
-            AddComp(uid, comp);
+            EntityManager.AddComponent(uid, comp);
         }
         component.ComponentsIsLoaded = true;
     }

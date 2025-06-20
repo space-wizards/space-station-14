@@ -111,7 +111,7 @@ namespace Content.Server.PowerSink
             foreach (var (entity, component) in toRemove)
             {
                 _explosionSystem.QueueExplosion(entity, "PowerSink", 2000f, 4f, 20f, canCreateVacuum: true);
-                RemComp(entity, component);
+                EntityManager.RemoveComponent(entity, component);
             }
         }
 

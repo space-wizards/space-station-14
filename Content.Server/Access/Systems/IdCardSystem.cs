@@ -47,12 +47,12 @@ public sealed class IdCardSystem : SharedIdCardSystem
                 {
                     _popupSystem.PopupCoordinates(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),
                      transformComponent.Coordinates, PopupType.Medium);
-                    Spawn("FoodBadRecipe",
+                    EntityManager.SpawnEntity("FoodBadRecipe",
                         transformComponent.Coordinates);
                 }
                 _adminLogger.Add(LogType.Action, LogImpact.Medium,
                     $"{ToPrettyString(args.Microwave)} burnt {ToPrettyString(uid):entity}");
-                QueueDel(uid);
+                EntityManager.QueueDeleteEntity(uid);
                 return;
             }
 

@@ -116,7 +116,8 @@ namespace Content.Shared.StatusEffect
 
             if (HasComp<T>(uid))
                 return true;
-            AddComp<T>(uid);
+
+            EntityManager.AddComponent<T>(uid);
             status.ActiveEffects[key].RelevantComponent = Factory.GetComponentName<T>();
             return true;
 
@@ -131,10 +132,10 @@ namespace Content.Shared.StatusEffect
             if (TryAddStatusEffect(uid, key, time, refresh, status))
             {
                 // If they already have the comp, we just won't bother updating anything.
-                if (!HasComp(uid, Factory.GetRegistration(component).Type))
+                if (!EntityManager.HasComponent(uid, Factory.GetRegistration(component).Type))
                 {
                     var newComponent = (Component) Factory.GetComponent(component);
-                    AddComp(uid, newComponent);
+                    EntityManager.AddComponent(uid, newComponent);
                     status.ActiveEffects[key].RelevantComponent = component;
                 }
                 return true;
@@ -272,7 +273,7 @@ namespace Content.Shared.StatusEffect
                 && Factory.TryGetRegistration(state.RelevantComponent, out var registration))
             {
                 var type = registration.Type;
-                RemComp(uid, type);
+                EntityManager.RemoveComponent(uid, type);
             }
 
             if (proto.Alert != null)

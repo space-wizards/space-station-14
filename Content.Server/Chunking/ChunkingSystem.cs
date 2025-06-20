@@ -82,7 +82,7 @@ public sealed class ChunkingSystem : EntitySystem
         MapGridComponent grid,
         ref QueryState state)
     {
-        var netGrid = GetNetEntity(uid);
+        var netGrid = state.EntityManager.GetNetEntity(uid);
         if (!state.Chunks.TryGetValue(netGrid, out var set))
         {
             state.Chunks[netGrid] = set = state.Pool.Get();

@@ -203,7 +203,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {
-            QueueDel(uid);
+            EntityManager.QueueDeleteEntity(uid);
             args.Handled = true;
         }
 

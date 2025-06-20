@@ -122,7 +122,7 @@ namespace Content.Server.Solar.EntitySystems
         private void UpdatePanelCoverage(Entity<SolarPanelComponent> panel)
         {
             var entity = panel.Owner;
-            var xform = Comp<TransformComponent>(entity);
+            var xform = EntityManager.GetComponent<TransformComponent>(entity);
 
             // So apparently, and yes, I *did* only find this out later,
             // this is just a really fancy way of saying "Lambert's law of cosines".

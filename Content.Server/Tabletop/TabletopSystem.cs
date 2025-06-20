@@ -78,7 +78,7 @@ namespace Content.Server.Tabletop
             if (!_cfg.GetCVar(CCVars.GameTabletopPlace))
                 return;
 
-            if (!TryComp(args.User, out HandsComponent? hands))
+            if (!EntityManager.TryGetComponent(args.User, out HandsComponent? hands))
                 return;
 
             if (component.Session is not { } session)
@@ -131,7 +131,7 @@ namespace Content.Server.Tabletop
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!TryComp(args.User, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             var playVerb = new ActivationVerb()
@@ -150,7 +150,7 @@ namespace Content.Server.Tabletop
                 return;
 
             // Check that a player is attached to the entity.
-            if (!TryComp(args.User, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             OpenSessionFor(actor.PlayerSession, uid);
@@ -174,7 +174,7 @@ namespace Content.Server.Tabletop
 
         private void OnGamerShutdown(EntityUid uid, TabletopGamerComponent component, ComponentShutdown args)
         {
-            if (!TryComp(uid, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(uid, out ActorComponent? actor))
                 return;
 
             if(component.Tabletop.IsValid())
@@ -193,7 +193,7 @@ namespace Content.Server.Tabletop
 
                 if (!TryComp(uid, out ActorComponent? actor))
                 {
-                    RemComp<TabletopGamerComponent>(uid);
+                    EntityManager.RemoveComponent<TabletopGamerComponent>(uid);
                     return;
                 }
 

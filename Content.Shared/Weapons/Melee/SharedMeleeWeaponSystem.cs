@@ -288,12 +288,12 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         // Use inhands entity if we got one.
-        if (TryComp(entity, out HandsComponent? hands) &&
+        if (EntityManager.TryGetComponent(entity, out HandsComponent? hands) &&
             hands.ActiveHandEntity is { } held)
         {
             // Make sure the entity is a weapon AND it doesn't need
             // to be equipped to be used (E.g boxing gloves).
-            if (TryComp(held, out melee) &&
+            if (EntityManager.TryGetComponent(held, out melee) &&
                 !melee.MustBeEquippedToUse)
             {
                 weaponUid = held;

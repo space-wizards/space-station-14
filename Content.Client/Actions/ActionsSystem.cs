@@ -211,7 +211,7 @@ namespace Content.Client.Actions
             else
             {
                 var request = new RequestPerformActionEvent(GetNetEntity(action));
-                RaisePredictiveEvent(request);
+                EntityManager.RaisePredictiveEvent(request);
             }
         }
 

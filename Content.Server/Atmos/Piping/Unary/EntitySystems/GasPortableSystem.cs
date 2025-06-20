@@ -27,7 +27,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPortableAnchorAttempt(EntityUid uid, GasPortableComponent component, AnchorAttemptEvent args)
         {
-            if (!TryComp(uid, out TransformComponent? transform))
+            if (!EntityManager.TryGetComponent(uid, out TransformComponent? transform))
                 return;
 
             // If we can't find any ports, cancel the anchoring.
@@ -52,7 +52,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             foreach (var entityUid in _mapSystem.GetLocal(gridId.Value, grid, coordinates))
             {
-                if (TryComp(entityUid, out port))
+                if (EntityManager.TryGetComponent(entityUid, out port))
                 {
                     return true;
                 }

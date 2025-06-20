@@ -230,7 +230,7 @@ public sealed class PullingSystem : EntitySystem
         if (component.Pulling != args.BlockingEntity)
             return;
 
-        if (TryComp(args.BlockingEntity, out PullableComponent? comp))
+        if (EntityManager.TryGetComponent(args.BlockingEntity, out PullableComponent? comp))
         {
             TryStopPull(args.BlockingEntity, comp);
         }
@@ -428,7 +428,7 @@ public sealed class PullingSystem : EntitySystem
             return false;
         }
 
-        if (!TryComp<PhysicsComponent>(pullableUid, out var physics))
+        if (!EntityManager.TryGetComponent<PhysicsComponent>(pullableUid, out var physics))
         {
             return false;
         }

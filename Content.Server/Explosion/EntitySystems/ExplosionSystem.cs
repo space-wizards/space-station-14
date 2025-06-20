@@ -167,7 +167,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
             user);
 
         if (explosive.DeleteAfterExplosion ?? delete)
-            QueueDel(uid);
+            EntityManager.QueueDeleteEntity(uid);
     }
 
     /// <summary>

@@ -110,7 +110,7 @@ namespace Content.Client.Examine
         {
             var entity = args.EntityUid;
 
-            if (!args.EntityUid.IsValid() || !Exists(entity))
+            if (!args.EntityUid.IsValid() || !EntityManager.EntityExists(entity))
             {
                 return false;
             }
@@ -225,7 +225,7 @@ namespace Content.Client.Examine
 
             vBox.AddChild(hBox);
 
-            if (HasComp<SpriteComponent>(target))
+            if (EntityManager.HasComponent<SpriteComponent>(target))
             {
                 var spriteView = new SpriteView
                 {
