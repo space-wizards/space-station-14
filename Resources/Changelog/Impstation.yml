@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Decapoid clowns and mimes now have special vaporizers
-    type: Add
-  - message: Decapoids have special huge puffer coat sprites and circus clown sprites
-    type: Tweak
-  id: 1375
-  time: '2025-03-24T03:34:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2002
 - author: AvianMaiden
   changes:
   - message: You no longer have to contemplate the idea of using corporate-sanctioned
@@ -4203,3 +4194,13 @@
   id: 1874
   time: '2025-06-20T05:23:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2826
+- author: MintyTheBinty
+  changes:
+  - message: Paprika is now available from tampered condiment vendors!
+    type: Add
+  - message: Changed the English Spice's and Lethal Poison Injector's pepper to paprika
+      for an extra kick!
+    type: Tweak
+  id: 1875
+  time: '2025-06-20T05:30:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2825
