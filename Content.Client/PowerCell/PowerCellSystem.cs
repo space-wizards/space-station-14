@@ -49,7 +49,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
             return;
 
         if (!_appearance.TryGetData<byte>(uid, PowerCellVisuals.ChargeLevel, out var level, args.Component))
-            return;
+            level = 0;
 
         var positiveCharge = level > 0;
         _sprite.LayerSetVisible((uid, args.Sprite), PowerCellVisualLayers.Unshaded, positiveCharge);
