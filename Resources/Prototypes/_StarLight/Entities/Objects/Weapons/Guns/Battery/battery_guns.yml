@@ -778,7 +778,7 @@
         shader: unshaded
   - type: MagazineVisuals
     magState: mag
-    steps: 5
+    steps: 6
     zeroVisible: false
   - type: Appearance
   - type: Clothing
