@@ -38,7 +38,7 @@ public sealed class AdminLogsEui : BaseEui
         LogsControl.PopOutButton.OnPressed += _ => PopOut();
         LogsControl.ExportLogs.OnPressed += _ => ExportLogs();
 
-        _sawmill = _log.GetSawmill("profile.editor");
+        _sawmill = _log.GetSawmill("admin.logs.ui");
     }
 
     private WindowRoot? Root { get; set; }
@@ -103,39 +103,34 @@ public sealed class AdminLogsEui : BaseEui
         try
         {
             await using var writer = new StreamWriter(file.Value.fileStream);
-            var textFile = new StringBuilder();
             foreach (var child in LogsControl.LogsContainer.Children)
             {
                 if (child is not AdminLogLabel log || !child.Visible)
                     continue;
 
-                var entry = new StringBuilder();
-
                 // I swear to god if someone adds ,s or "s to the other fields...
-                entry.Append(log.Log.Date);
-                entry.Append(',');
-                entry.Append(log.Log.Id);
-                entry.Append(',');
-                entry.Append(log.Log.Impact);
-                entry.Append(',');
+                await writer.WriteAsync(log.Log.Date.ToString());
+                await writer.WriteAsync(',');
+                await writer.WriteAsync(log.Log.Id.ToString());
+                await writer.WriteAsync(',');
+                await writer.WriteAsync(log.Log.Impact.ToString());
+                await writer.WriteAsync(',');
                 // Message
-                entry.Append('"');
-                entry.Append(log.Log.Message.Replace("\"", "\"\""));
-                entry.Append('"');
+                await writer.WriteAsync('"');
+                await writer.WriteAsync(log.Log.Message.Replace("\"", "\"\""));
+                await writer.WriteAsync('"');
                 // End of message
-                entry.Append(',');
+                await writer.WriteAsync(',');
 
                 for (var i = 0; i < log.Log.Players.Length; i++)
                 {
-                    entry.Append(log.Log.Players[i] + (i == log.Log.Players.Length - 1 ? "" : " "));
+                    await writer.WriteAsync(log.Log.Players[i] + (i == log.Log.Players.Length - 1 ? "" : " "));
                 }
 
-                entry.Append(',');
-                entry.Append(log.Log.Type);
-
-                textFile.AppendLine(entry.ToString());
+                await writer.WriteAsync(',');
+                await writer.WriteAsync(log.Log.Type.ToString());
+                await writer.WriteLineAsync();
             }
-            await writer.WriteLineAsync(textFile.ToString());
         }
         catch (Exception exc)
         {
