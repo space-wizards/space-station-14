@@ -8,6 +8,7 @@
   abstract: true
   parent: PlayerSiliconBase
   components:
+  - type: ZombieImmune
   - type: Replicator
   - type: NameIdentifier
     group: Replicator
@@ -104,6 +105,9 @@
     - Stun
     - KnockedDown
     - SlowedDown
+    - Flashed
+    - TemporaryBlindness
+    - StaminaModifier
   - type: DamageStateVisuals
     rotate: false
     states:
@@ -141,7 +145,6 @@
   - type: ThermalVision
     lightRadius: 7
     color: "#d70aa0"
-  - type: FlashImmunity
   - type: Prying
     pryPowered: true
     force: true
@@ -229,12 +232,6 @@
   - type: Loadout
     prototypes:
     - StartingGearReplicatorT1Weapon
-  - type: Speech
-    speechVerb: Robotic
-    speechSounds: Replicator
-  - type: Vocal
-    sounds:
-      Unsexed: UnisexSilicon
 
 # Tier 2: Deconstructors. These guys are a little bit tougher, and have tools to take things apart, but they don't have the ability to enter combat mode.
 - type: entity
@@ -285,12 +282,6 @@
   - type: Loadout
     prototypes:
       - StartingGearReplicatorTools
-  - type: Speech
-    speechVerb: Robotic
-    speechSounds: Replicator
-  - type: Vocal
-    sounds:
-      Unsexed: UnisexSilicon
 
 # Tier 2 ALT: Defender. These guys are our mid-level combatants. They have a slightly better stun laser, and a decent melee attack, but no utility functions.
 - type: entity
@@ -342,12 +333,6 @@
   - type: Loadout
     prototypes:
       - StartingGearReplicatorT2Alt
-  - type: Speech
-    speechVerb: Robotic
-    speechSounds: Replicator
-  - type: Vocal
-    sounds:
-      Unsexed: UnisexSilicon
 
 # Tier 3: These guys are tanks. Their job is to tear shit apart and kill things. They're slow, tanky, and have a weapon that does 25 blunt 30 struct.
 - type: entity
@@ -368,7 +353,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2 # same as slime
     baseSprintSpeed: 2.835 # this is the same speed as an engineering hardsuit + duffel
-    friction: 30 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
+    friction: 35 # these fellas are the tanks, they rely on the smaller guys stunning things for them.
   - type: Sprite
     granularLayersRendering: true
     drawDepth: Mobs
@@ -407,9 +392,3 @@
       types:
         Shock: -0.5
         Structural: -0.5
-  - type: Speech
-    speechVerb: Robotic
-    speechSounds: Replicator
-  - type: Vocal
-    sounds:
-      Unsexed: UnisexSilicon

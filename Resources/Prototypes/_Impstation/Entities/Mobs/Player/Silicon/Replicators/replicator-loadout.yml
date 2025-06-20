@@ -86,6 +86,9 @@
   - type: Icon
     sprite: _Impstation/Mobs/Replicator/replicator.rsi
     state: t2altweapon
+  - type: HitscanBatteryAmmoProvider
+    proto: HitscanReplicator2
+    fireCost: 150
 
 - type: entity
   id: ReplicatorT2AltMeleeWeapon
@@ -105,8 +108,8 @@
     animation: WeaponArcSlash
     damage:
       types:
-        Blunt: 5
-        Shock: 3
+        Blunt: 7
+        Shock: 7
         Structural: 15
 
 - type: entity
@@ -192,7 +195,7 @@
 
 - type: hitscan
   id: HitscanReplicator
-  staminaDamage: 25
+  staminaDamage: 18
   muzzleFlash:
     sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
     state: muzzle_repli
@@ -202,3 +205,16 @@
   impactFlash:
     sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
     state: impact_repli
+
+- type: hitscan
+  id: HitscanReplicator2
+  staminaDamage: 32
+  muzzleFlash:
+    sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
+    state: muzzle_repli2
+  travelFlash:
+    sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
+    state: beam_repli2
+  impactFlash:
+    sprite: _Impstation/Mobs/Replicator/replicator_gun.rsi
+    state: impact_repli2
