@@ -58,6 +58,7 @@ public abstract class SharedFlashSystem : EntitySystem
         SubscribeLocalEvent<PermanentBlindnessComponent, FlashAttemptEvent>(OnPermanentBlindnessFlashAttempt);
         SubscribeLocalEvent<TemporaryBlindnessComponent, FlashAttemptEvent>(OnTemporaryBlindnessFlashAttempt);
         Subs.SubscribeWithRelay<FlashImmunityComponent, FlashAttemptEvent>(OnFlashImmunityFlashAttempt, held: false);
+        SubscribeLocalEvent<FlashImmunityComponent, ExaminedEvent>(OnExamine);
 
         _statusEffectsQuery = GetEntityQuery<StatusEffectsComponent>();
         _damagedByFlashingQuery = GetEntityQuery<DamagedByFlashingComponent>();
@@ -255,5 +256,10 @@ public abstract class SharedFlashSystem : EntitySystem
     {
         if (ent.Comp.Enabled)
             args.Cancelled = true;
+    }
+
+    private void OnExamine(Entity<FlashImmunityComponent> ent, ref ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString("flash-protection"));
     }
 }
