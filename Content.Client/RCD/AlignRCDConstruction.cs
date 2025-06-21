@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Gameplay;
+using Content.Client.Hands.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.RCD.Components;
@@ -17,6 +18,7 @@ public sealed class AlignRCDConstruction : PlacementMode
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     private readonly SharedMapSystem _mapSystem;
+    private readonly HandsSystem _handsSystem;
     private readonly RCDSystem _rcdSystem;
     private readonly SharedTransformSystem _transformSystem;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -34,6 +36,7 @@ public sealed class AlignRCDConstruction : PlacementMode
     {
         IoCManager.InjectDependencies(this);
         _mapSystem = _entityManager.System<SharedMapSystem>();
+        _handsSystem = _entityManager.System<HandsSystem>();
         _rcdSystem = _entityManager.System<RCDSystem>();
         _transformSystem = _entityManager.System<SharedTransformSystem>();
 
@@ -88,10 +91,8 @@ public sealed class AlignRCDConstruction : PlacementMode
         }
 
         // Determine if player is carrying an RCD in their active hand
-        if (!_entityManager.TryGetComponent<HandsComponent>(player, out var hands))
+        if (!_handsSystem.TryGetActiveItem(player.Value, out var heldEntity))
             return false;
-
-        var heldEntity = hands.ActiveHand?.HeldEntity;
 
         if (!_entityManager.TryGetComponent<RCDComponent>(heldEntity, out var rcd))
             return false;

@@ -459,7 +459,7 @@ public sealed class FoodSystem : EntitySystem
 
         var usedTypes = UtensilType.None;
 
-        foreach (var item in _hands.EnumerateHeld(user, hands))
+        foreach (var item in _hands.EnumerateHeld((user, hands)))
         {
             // Is utensil?
             if (!TryComp<UtensilComponent>(item, out var utensil))
