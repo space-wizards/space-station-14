@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Alert.Components;
 
 /// <summary>
-/// This is used for an alert which simply displays a generic number
+/// This is used for an alert which simply displays a generic number over a texture.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class GenericCounterAlertComponent : Component
@@ -36,8 +36,9 @@ public sealed partial class GenericCounterAlertComponent : Component
     public Vector2i AlertSize = new(32, 32);
 
     /// <summary>
-    /// Digits that can be displayed by the alert.
-    /// Ones, Tens, Hundreds, etc.
+    /// Digits that can be displayed by the alert, represented by their sprite layer.
+    /// Order defined corresponds to the digit it affects. 1st defined will affect 1st digit, 2nd affect 2nd digit and so on.
+    /// In this case ones would be on layer "1", tens on layer "10" etc.
     /// </summary>
     [DataField]
     public List<string> DigitKeys = new()
@@ -58,5 +59,5 @@ public sealed partial class GenericCounterAlertComponent : Component
 [ByRefEvent]
 public record struct GetGenericAlertCounterAmountEvent(AlertPrototype Alert, int? Amount = null)
 {
-    public bool Handled => Amount != null;
+    public bool Handled => Amount.HasValue;
 }

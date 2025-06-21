@@ -27,12 +27,16 @@ public sealed class GenericCounterAlertSystem : EntitySystem
 
         if (!ev.Handled)
             return;
+            
+        // It cannot be null if its handled, but good to check to avoid ugly null ignores.
+        if (ev.Amount == null)
+            return;
 
         // How many digits can we display
         var maxDigitCount = GetMaxDigitCount((ent, ent, sprite));
 
         // Clamp it to a positive number that we can actually display in full (no rollover to 0)
-        var amount = (int) Math.Clamp(ev.Amount!.Value, 0, Math.Pow(10, maxDigitCount) - 1);
+        var amount = (int) Math.Clamp(ev.Amount.Value, 0, Math.Pow(10, maxDigitCount) - 1);
 
         // This is super wack but ig it works?
         var digitCount = ent.Comp.HideLeadingZeroes
@@ -59,7 +63,7 @@ public sealed class GenericCounterAlertSystem : EntitySystem
                 continue;
 
             var result = amount / (int) Math.Pow(10, i) % 10;
-            _sprite.LayerSetRsiState(ent.Owner, layer, $"{result}");
+            _sprite.LayerSetRsiState(ent.Owner, layer, result.ToString());
 
             if (ent.Comp.CenterGlyph)
             {
@@ -75,12 +79,9 @@ public sealed class GenericCounterAlertSystem : EntitySystem
     /// <returns>The number of digits.</returns>
     private int GetMaxDigitCount(Entity<GenericCounterAlertComponent, SpriteComponent> ent)
     {
-        var comp = ent.Comp1;
-        var sprite = ent.Comp2;
-
-        for (var i = comp.DigitKeys.Count - 1; i >= 0; i--)
+        for (var i = ent.Comp1.DigitKeys.Count - 1; i >= 0; i--)
         {
-            if (_sprite.LayerExists((ent.Owner, sprite), comp.DigitKeys[i]))
+            if (_sprite.LayerExists((ent.Owner, ent.Comp2), ent.Comp1.DigitKeys[i]))
                 return i + 1;
         }
 
