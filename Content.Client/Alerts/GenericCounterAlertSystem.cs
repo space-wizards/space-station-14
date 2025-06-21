@@ -27,7 +27,7 @@ public sealed class GenericCounterAlertSystem : EntitySystem
 
         if (!ev.Handled)
             return;
-            
+
         // It cannot be null if its handled, but good to check to avoid ugly null ignores.
         if (ev.Amount == null)
             return;
