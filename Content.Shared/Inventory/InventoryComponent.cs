@@ -1,20 +1,19 @@
 ﻿using Content.Shared.DisplacementMap;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Inventory;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(InventorySystem))]
-[AutoGenerateComponentState(true)]
 public sealed partial class InventoryComponent : Component
 {
-    [DataField("templateId", customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
-    [AutoNetworkedField]
-    public string TemplateId { get; set; } = "human";
+    [DataField]
+    public ProtoId<InventoryTemplatePrototype> TemplateId { get; set; } = "human";
 
-    [DataField("speciesId")] public string? SpeciesId { get; set; }
+    [DataField] public string? SpeciesId { get; set; }
 
     public SlotDefinition[] Slots = Array.Empty<SlotDefinition>();
     public ContainerSlot[] Containers = Array.Empty<ContainerSlot>();
@@ -33,6 +32,17 @@ public sealed partial class InventoryComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<string, DisplacementData> MaleDisplacements = new();
+}
+
+[Serializable, NetSerializable]
+public sealed class InventoryComponentState : ComponentState
+{
+    public ProtoId<InventoryTemplatePrototype> Template;
+
+    public InventoryComponentState(ProtoId<InventoryTemplatePrototype> template)
+    {
+        Template = template;
+    }
 }
 
 /// <summary>

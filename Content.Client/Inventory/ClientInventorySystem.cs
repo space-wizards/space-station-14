@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Clothing;
 using Content.Client.Examine;
 using Content.Client.Verbs.UI;
@@ -9,8 +10,10 @@ using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Inventory
 {
@@ -19,6 +22,8 @@ namespace Content.Client.Inventory
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
@@ -41,11 +46,61 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<InventorySlotsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<InventoryComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<InventoryComponent, ComponentHandleState>(OnHandleState);
 
             SubscribeLocalEvent<InventorySlotsComponent, DidEquipEvent>((_, comp, args) =>
                 _equipEventsQueue.Enqueue((comp, args)));
             SubscribeLocalEvent<InventorySlotsComponent, DidUnequipEvent>((_, comp, args) =>
                 _equipEventsQueue.Enqueue((comp, args)));
+        }
+
+        private void OnHandleState(Entity<InventoryComponent> ent, ref ComponentHandleState args)
+        {
+            if (args.Current is not InventoryComponentState state)
+                return;
+
+            ent.Comp.TemplateId = state.Template;
+
+            UpdateInventoryTemplate(ent);
+
+            Log.Debug("State received");
+        }
+
+        private void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
+        {
+            if (!TryComp<InventorySlotsComponent>(ent, out var slots))
+                return;
+
+            if (!_proto.TryIndex(ent.Comp.TemplateId, out var index))
+                return;
+
+            ent.Comp.Slots = index.Slots;
+
+            foreach (var slot in slots.SlotData)
+            {
+                Log.Debug("[Rem] Checking slot: " + slot.Key);
+                if (index.Slots.Any(s => s.Name == slot.Key))
+                {
+                    Log.Debug("Slot found, skipping.");
+                    continue;
+                }
+                Log.Debug("Attempting to remove: " + slot.Key);
+
+                TryRemoveSlotDef(ent, slots, slot.Value);
+            }
+
+            foreach (var slot in index.Slots)
+            {
+                Log.Debug("[Add] Checking slot: " + slot.Name);
+                if (slots.SlotData.Any(s => s.Key == slot.Name))
+                    continue;
+
+                Log.Debug("Attempting to add: " + slot.Name);
+
+                TryAddSlotDef(ent, slots, slot);
+            }
+
+            ReloadInventory();
         }
 
         public override void Update(float frameTime)
@@ -91,6 +146,14 @@ namespace Content.Client.Inventory
 
         private void OnShutdown(EntityUid uid, InventoryComponent component, ComponentShutdown args)
         {
+            if (!TryComp(uid, out InventorySlotsComponent? inventorySlots))
+                return;
+
+            foreach (var slot in component.Slots)
+            {
+                TryRemoveSlotDef(uid, inventorySlots, slot);
+            }
+
             if (uid == _playerManager.LocalEntity)
                 OnUnlinkInventory?.Invoke();
         }
@@ -165,6 +228,9 @@ namespace Content.Client.Inventory
         public void UpdateSlot(EntityUid owner, InventorySlotsComponent component, string slotName,
             bool? blocked = null, bool? highlight = null)
         {
+            if (!HasSlot(owner, slotName)) // TODO: This somehow breaks sprite updating. But without it it crashes. Got save me.
+                return;
+
             var oldData = component.SlotData[slotName];
             var newHighlight = oldData.Highlighted;
             var newBlocked = oldData.Blocked;
@@ -183,12 +249,29 @@ namespace Content.Client.Inventory
 
         public bool TryAddSlotDef(EntityUid owner, InventorySlotsComponent component, SlotDefinition newSlotDef)
         {
+            Log.Debug("Attempting to add: " + newSlotDef.Name);
             SlotData newSlotData = newSlotDef; //convert to slotData
             if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData))
                 return false;
 
             if (owner == _playerManager.LocalEntity)
                 OnSlotAdded?.Invoke(newSlotData);
+            Log.Debug("Adding def client:" + newSlotDef.Name);
+            return true;
+        }
+
+        public bool TryRemoveSlotDef(EntityUid owner, InventorySlotsComponent component, SlotDefinition newSlotDef)
+        {
+            SlotData newSlotData = newSlotDef; //convert to slotData
+            if (!component.SlotData.Remove(newSlotDef.Name))
+            {
+                return false;
+            }
+
+            Log.Debug("Removing def client:" + newSlotDef.Name);
+
+            if (owner == _playerManager.LocalEntity)
+                OnSlotRemoved?.Invoke(newSlotData);
             return true;
         }
 
@@ -235,7 +318,7 @@ namespace Content.Client.Inventory
             EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
         }
 
-        protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
+        /*protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
         {
             base.UpdateInventoryTemplate(ent);
 
@@ -247,7 +330,7 @@ namespace Content.Client.Inventory
                         slotData.SlotDef = slot;
                 }
             }
-        }
+        }*/
 
         public sealed class SlotData
         {
