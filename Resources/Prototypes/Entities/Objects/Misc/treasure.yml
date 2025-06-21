@@ -85,12 +85,13 @@
     size: Tiny
   - type: StaticPrice
     price: 750
-    #imp edit - restore physical composition
+    #imp edit - restore physical composition & add salvohud status icons
   - type: PhysicalComposition
     materialComposition: # big mats if you don't sell it
       Steel: 500
       Glass: 1000
       Silver: 300
+  - type: NonMobStatusIcon
 
 - type: entity
   parent: BaseItem
@@ -162,7 +163,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 300
-  - type: StatusIcon #imp edit. for the salvohud
+  - type: NonMobStatusIcon #imp edit. for the salvohud
 
 - type: entity
   parent: TreasureCoinIron

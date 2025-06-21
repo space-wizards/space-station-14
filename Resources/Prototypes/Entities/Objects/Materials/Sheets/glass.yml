@@ -49,7 +49,7 @@
     solutions:
       glass:
         canReact: false
-  - type: StatusIcon #imp edit. for the salvohud
+  - type: NonMobStatusIcon #imp edit. for the salvohud
 
 - type: entity
   parent: SheetGlassBase
