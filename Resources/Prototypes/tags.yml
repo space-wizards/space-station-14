@@ -574,6 +574,9 @@
   id: FireHelmet
 
 - type: Tag
+  id: FitInTeleporterConsole
+
+- type: Tag
   id: Flare
 
 - type: Tag
