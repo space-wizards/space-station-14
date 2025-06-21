@@ -46,8 +46,8 @@ public sealed partial class BanPanel : DefaultWindow
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
-    private static string ExpandedArrow = "▼";
-    private static string ContractedArrow = "▶";
+    private const string ExpandedArrow = "▼";
+    private const string ContractedArrow = "▶";
 
     private enum TabNumbers
     {
@@ -153,17 +153,24 @@ public sealed partial class BanPanel : DefaultWindow
 
         ReasonTextEdit.Placeholder = new Rope.Leaf(Loc.GetString("ban-panel-reason"));
 
-        // Normal jobs first
-        foreach (var proto in _protoMan.EnumeratePrototypes<DepartmentPrototype>().OrderBy(x => x.Weight))
+        var departmentJobs = _protoMan.EnumeratePrototypes<DepartmentPrototype>()
+                                      .OrderBy(x => x.Weight);
+        foreach (var proto in departmentJobs)
         {
-            CreateRoleGroup(proto.ID, proto.Color, proto.Roles.Select(x => _protoMan.Index(x)).OrderBy(x => x.ID));
+            var roles = proto.Roles.Select(x => _protoMan.Index(x))
+                             .OrderBy(x => x.ID);
+            CreateRoleGroup(proto.ID, proto.Color, roles);
         }
 
-        CreateRoleGroup("Antagonist", Color.Red, _protoMan.EnumeratePrototypes<AntagPrototype>().OrderBy(x => x.ID));
+        var antagRoles = _protoMan.EnumeratePrototypes<AntagPrototype>()
+                                  .OrderBy(x => x.ID);
+        CreateRoleGroup("Antagonist", Color.Red, antagRoles);
     }
 
-    // Creates a "Role group" which stores information and logic for one "group" of roll bans.
-    // For example, all antags are one group, logi is a group, medical is a group, etc...
+    /// <summary>
+    /// Creates a "Role group" which stores information and logic for one "group" of roll bans.
+    /// For example, all antags are one group, logi is a group, medical is a group, etc...
+    /// </summary>
     private void CreateRoleGroup<T>(string groupName, Color color, IEnumerable<T> roles) where T : class, IPrototype
     {
         var outerContainer = new BoxContainer
@@ -188,9 +195,10 @@ public sealed partial class BanPanel : DefaultWindow
             HorizontalExpand = true,
             Columns = 2,
             Visible = false,
+            Margin = new Thickness(15, 5, 0, 5),
         };
 
-        CreateRoleGroupHeader(groupName, roleGroupHeader, color, innerContainer, out var roleGroupCheckbox);
+        var roleGroupCheckbox = CreateRoleGroupHeader(groupName, roleGroupHeader, color, innerContainer);
 
         outerContainer.AddChild(roleGroupHeader);
 
@@ -199,6 +207,7 @@ public sealed partial class BanPanel : DefaultWindow
         {
             AddRoleCheckbox(groupName, role.ID, innerContainer, roleGroupCheckbox);
         }
+
         outerContainer.AddChild(innerContainer);
 
         RolesContainer.AddChild(new PanelContainer
@@ -212,9 +221,9 @@ public sealed partial class BanPanel : DefaultWindow
         RolesContainer.AddChild(new HSeparator());
     }
 
-    private void CreateRoleGroupHeader(string groupName, BoxContainer header, Color color, GridContainer innerContainer, out Button roleGroupCheckbox)
+    private Button CreateRoleGroupHeader(string groupName, BoxContainer header, Color color, GridContainer innerContainer)
     {
-        roleGroupCheckbox = new Button
+        var roleGroupCheckbox = new Button
         {
             Name = $"{groupName}GroupCheckbox",
             Text = "Ban all",
@@ -269,7 +278,9 @@ public sealed partial class BanPanel : DefaultWindow
         hideButton.OnPressed += args =>
         {
             innerContainer.Visible = args.Button.Pressed;
-            ((Button)args.Button).Text = args.Button.Pressed ? Loc.GetString("role-bans-contract-roles") + " " + ExpandedArrow : Loc.GetString("role-bans-expand-roles") + " " + ContractedArrow;
+            ((Button)args.Button).Text = args.Button.Pressed
+                ? Loc.GetString("role-bans-contract-roles") + " " + ExpandedArrow
+                : Loc.GetString("role-bans-expand-roles") + " " + ContractedArrow;
         };
         header.AddChild(new Label
         {
@@ -279,10 +290,13 @@ public sealed partial class BanPanel : DefaultWindow
         });
         header.AddChild(roleGroupCheckbox);
         header.AddChild(hideButton);
+        return roleGroupCheckbox;
     }
 
-    // Adds a checkbutton specifically for one "role" in a "group"
-    // E.g. it would add the Chief Medical Officer "role" into the "Medical" group.
+    /// <summary>
+    /// Adds a checkbutton specifically for one "role" in a "group"
+    /// E.g. it would add the Chief Medical Officer "role" into the "Medical" group.
+    /// </summary>
     private void AddRoleCheckbox(string group, string role, GridContainer roleGroupInnerContainer, Button roleGroupCheckbox)
     {
         var roleCheckboxContainer = new BoxContainer();
@@ -314,6 +328,7 @@ public sealed partial class BanPanel : DefaultWindow
             };
             roleCheckboxContainer.AddChild(jobIconTexture);
         }
+
         roleCheckboxContainer.AddChild(roleCheckButton);
 
         roleGroupInnerContainer.AddChild(roleCheckboxContainer);
@@ -537,9 +552,12 @@ public sealed partial class BanPanel : DefaultWindow
             if (_roleCheckboxes.Count == 0)
                 throw new DebugAssertException("RoleCheckboxes was empty");
 
-            foreach (var departmentButtons in _roleCheckboxes.Values)
+            foreach (var button in _roleCheckboxes.Values.SelectMany(departmentButtons => departmentButtons))
             {
-                rolesList.AddRange(departmentButtons.Where(c => c is { Pressed: true, Text: { } }).Select(c => c.Text!));
+                if (button is { Pressed: true, Text: not null })
+                {
+                    rolesList.Add(button.Text);
+                }
             }
 
             if (rolesList.Count == 0)
