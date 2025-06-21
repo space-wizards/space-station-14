@@ -8084,4 +8084,11 @@ Entries:
   id: 1116
   time: '2025-06-20T06:36:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/873
+- author: Citrea
+  changes:
+  - message: Rechargers charging power cells is now intended behaviour and works again.
+    type: Add
+  id: 1117
+  time: '2025-06-21T20:18:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/880
 
