@@ -33,11 +33,5 @@ public sealed partial class FirebaseComponent : Component
 
     [DataField]
     public TimeSpan NextUpdateTime = TimeSpan.Zero;
-
-    /// <summary>
-    /// Anmbient sound played by the firebase when burning.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier AmbientSound = new SoundPathSpecifier("/Audio/_DarkAscent/Items/campfire_whoosh.ogg");
 }
 

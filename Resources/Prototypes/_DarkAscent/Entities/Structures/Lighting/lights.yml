@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: BaseFireplace
+  id: Firebase
   parent: BaseStructure
   categories: [ ForkFiltered ]
   abstract: true
@@ -12,7 +12,7 @@
     volume: 5
     range: 5
     sound:
-      path: /Audio/Ambience/Objects/fireplace.ogg
+      path: /Audio/_DarkAscent/Objects/firebase.ogg
   - type: Appearance
   - type: Reactive
     groups:
@@ -32,7 +32,7 @@
   id: StoneBrazier
   name: stone brazier
   description: "A source of light"
-  parent: BaseFireplace
+  parent: Firebase
   components:
   - type: Sprite
     sprite: _DarkAscent/Structures/Lighting/stone_brazier.rsi
@@ -41,12 +41,6 @@
   - type: FireVisuals
     sprite: _DarkAscent/Structures/Lighting/stone_brazier.rsi
     normalState: stonebrazier-on
-  - type: GenericVisualizer
-    visuals:
-      enum.FirebaseVisuals.State:
-        fuel:
-          Off: { state: stonebrazier }
-          On: { state: stonebrazier-on }
   - type: Anchorable
   - type: Destructible
     thresholds:
