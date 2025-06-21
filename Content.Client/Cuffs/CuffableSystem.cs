@@ -49,14 +49,15 @@ public sealed class CuffableSystem : SharedCuffableSystem
             return;
         _sprite.LayerSetColor((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffState.Color!.Value);
 
+        var cuffIconState = $"{component.BaseCuffableState}-{cuffState.NumHandsCuffed}";
         if (!Equals(component.CurrentRSI, cuffState.RSI) && cuffState.RSI != null) // we don't want to keep loading the same RSI
         {
             component.CurrentRSI = cuffState.RSI;
-            _sprite.LayerSetRsi((uid, sprite), _sprite.LayerMapGet((uid, sprite), HumanoidVisualLayers.Handcuffs), new ResPath(component.CurrentRSI), cuffState.IconState);
+            _sprite.LayerSetRsi((uid, sprite), _sprite.LayerMapGet((uid, sprite), HumanoidVisualLayers.Handcuffs), new ResPath(component.CurrentRSI), cuffIconState);
         }
         else
         {
-            _sprite.LayerSetRsiState((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffState.IconState);
+            _sprite.LayerSetRsiState((uid, sprite), HumanoidVisualLayers.Handcuffs, cuffIconState);
         }
     }
 }

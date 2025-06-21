@@ -15,8 +15,13 @@ public sealed partial class CuffableComponent : Component
     /// <summary>
     /// The current RSI for the handcuff layer
     /// </summary>
-    [DataField("currentRSI"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? CurrentRSI;
+    /// <summary>
+    /// The base state of the handcuff layer on the parent entity.
+    /// </summary>
+    [DataField]
+    public string? BaseCuffableState;
 
     /// <summary>
     /// How many of this entity's hands are currently cuffed.
@@ -39,7 +44,7 @@ public sealed partial class CuffableComponent : Component
     /// <summary>
     /// Whether or not the entity can still interact (is not cuffed)
     /// </summary>
-    [DataField("canStillInteract"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool CanStillInteract = true;
 
     [DataField]
@@ -54,15 +59,13 @@ public sealed class CuffableComponentState : ComponentState
     public readonly bool CanStillInteract;
     public readonly int NumHandsCuffed;
     public readonly string? RSI;
-    public readonly string? IconState;
     public readonly Color? Color;
 
-    public CuffableComponentState(int numHandsCuffed, bool canStillInteract, string? rsiPath, string? iconState, Color? color)
+    public CuffableComponentState(int numHandsCuffed, bool canStillInteract, string? rsiPath, Color? color)
     {
         NumHandsCuffed = numHandsCuffed;
         CanStillInteract = canStillInteract;
         RSI = rsiPath;
-        IconState = iconState;
         Color = color;
     }
 }
