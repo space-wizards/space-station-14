@@ -337,7 +337,7 @@ namespace Content.Shared.Cuffs
                 return;
             args.Handled = true;
 
-            if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable))
+            if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable, component))
             {
                 component.Used = true;
                 _audio.PlayPredicted(component.EndCuffSound, uid, user);
@@ -463,7 +463,10 @@ namespace Content.Shared.Cuffs
             if (!Resolve(target, ref component) || !Resolve(handcuff, ref cuff))
                 return false;
 
-            if (!_interaction.InRangeUnobstructed(handcuff, target))
+
+            var tool = cuff?.HandcuffTool ?? handcuff;
+
+            if (!_interaction.InRangeUnobstructed(tool, target))
                 return false;
 
             // if the amount of hands the target has is equal to or less than the amount of hands that are cuffed
@@ -500,7 +503,7 @@ namespace Content.Shared.Cuffs
                 return true;
             }
 
-            if (!_hands.CanDrop(user, handcuff))
+            if (_hands.IsHolding(user, handcuff) && !_hands.CanDrop(user, handcuff))
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-cannot-drop-cuffs", ("target", Identity.Name(target, EntityManager, user))), user, user);
                 return false;
@@ -514,7 +517,9 @@ namespace Content.Shared.Cuffs
             if (HasComp<DisarmProneComponent>(target))
                 cuffTime = 0.0f; // cuff them instantly.
 
-            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, cuffTime, new AddCuffDoAfterEvent(), handcuff, target, handcuff)
+            var tool = handcuffComponent.HandcuffTool ?? handcuff;
+
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, cuffTime, new AddCuffDoAfterEvent(), handcuff, target, tool)
             {
                 BreakOnMove = true,
                 BreakOnWeightlessMove = false,
@@ -546,7 +551,7 @@ namespace Content.Shared.Cuffs
                     ("otherName", Identity.Name(user, EntityManager, target))), target, target);
             }
 
-            _audio.PlayPredicted(handcuffComponent.StartCuffSound, handcuff, user);
+            _audio.PlayPredicted(handcuffComponent.StartCuffSound, tool, user);
             return true;
         }
 
@@ -707,7 +712,11 @@ namespace Content.Shared.Cuffs
             if (_net.IsServer)
             {
                 // Handles spawning broken cuffs on server to avoid client misprediction
-                if (cuff.BreakOnRemove)
+                if (cuff.DestroyOnRemove)
+                {
+                    QueueDel(cuffsToRemove);
+                }
+                else if (cuff.BreakOnRemove)
                 {
                     QueueDel(cuffsToRemove);
                     var trash = Spawn(cuff.BrokenPrototype, Transform(cuffsToRemove).Coordinates);
@@ -777,6 +786,11 @@ namespace Content.Shared.Cuffs
                 }
             }
             cuff.Removing = false;
+        }
+
+        public void SetHandcuffTool(HandcuffComponent handcuffComp, EntityUid tool)
+        {
+            handcuffComp.HandcuffTool = tool;
         }
 
         #region ActionBlocker
