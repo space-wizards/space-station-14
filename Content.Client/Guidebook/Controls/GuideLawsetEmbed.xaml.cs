@@ -56,6 +56,7 @@ public sealed partial class GuideLawsetEmbed : Control, IDocumentTag, ISearchabl
         var lawsetNameString = lawset.Name == null ? lawset.ID : Loc.GetString(lawset.Name);
         FindControl<RichTextLabel>("LawsetName").SetMarkup($"[bold]{FormattedMessage.EscapeText(lawsetNameString)}[/bold]");
 
+        var container = FindControl<BoxContainer>("LawsetContainer");
         var i = 1;
         foreach (var lawID in lawset.Laws)
         {
@@ -68,7 +69,7 @@ public sealed partial class GuideLawsetEmbed : Control, IDocumentTag, ISearchabl
             };
             var locLawStatement = Loc.GetString("laws-number-wrapper", ("lawnumber", i), ("lawstring", locLawString));
             lawN.SetMarkup(locLawStatement);
-            FindControl<BoxContainer>("LawsetContainer").AddChild(lawN);
+            container.AddChild(lawN);
 
             i++;
         }
