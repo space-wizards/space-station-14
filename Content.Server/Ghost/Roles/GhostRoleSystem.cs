@@ -6,7 +6,6 @@ using Content.Server.Ghost.Roles.Events;
 using Content.Shared.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind;
-using Content.Server.Mind.Commands;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -822,18 +821,17 @@ public sealed class GhostRoleSystem : EntitySystem
 }
 
 [AnyCommand]
-public sealed class GhostRoles : IConsoleCommand
+public sealed class GhostRoles : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _e = default!;
+    [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
 
-    public string Command => "ghostroles";
-    public string Description => "Opens the ghost role request window.";
-    public string Help => $"{Command}";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "ghostroles";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player != null)
-            _e.System<GhostRoleSystem>().OpenEui(shell.Player);
+            _ghostRoleSystem.OpenEui(shell.Player);
         else
-            shell.WriteLine("You can only open the ghost roles UI on a client.");
+            shell.WriteLine($"shell-cannot-run-command-from-server");
     }
 }
