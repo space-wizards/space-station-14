@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Actions;
 using Content.Server.Inventory;
@@ -11,7 +12,6 @@ using Content.Shared.Inventory;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Storage.Components;
-using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -28,7 +28,7 @@ public sealed class ClothingEquipTest : InteractionTest
     private const string HardsuitProto = "ClothingOuterHardsuitEVA";
     private const string JumpsuitProto = "ClothingUniformJumpsuitColorGrey";
 
-    private readonly List<Type> _ignoredComponents =
+    private readonly HashSet<Type> _ignoredComponents =
     [
         // Mobs are a massive pain in this test
         // (Admeme mouse eating your cak, cancer mouse killing you... mice just dying...)
@@ -36,12 +36,7 @@ public sealed class ClothingEquipTest : InteractionTest
         typeof(RandomSpawnerComponent),
     ];
 
-    private readonly List<ProtoId<TagPrototype>> _ignoredTags =
-    [
-        "PetOnly",
-    ];
-
-    private readonly List<Type> _removedComponents =
+    private readonly HashSet<Type> _removedComponents =
     [
         // Material bag can pick up other clothing items.
         typeof(MagnetPickupComponent),
@@ -52,28 +47,25 @@ public sealed class ClothingEquipTest : InteractionTest
     [Test]
     public async Task EquipAllClothingTest()
     {
-        var clothingProtos = ProtoMan.EnumeratePrototypes<EntityPrototype>()
-            .Where(x => x.HasComponent<ClothingComponent>()
-                        && !x.HideSpawnMenu
-                        && !x.Abstract
-                        && !Pair.IsTestPrototype(x)
-                        && !(x.TryGetComponent<TagComponent>(out var tags, Factory)
-                             && Tags.HasAnyTag(tags, _ignoredTags))
-                        && !_ignoredComponents.Any(ignore => x.HasComponent(ignore)));
+        List<EntityPrototype> clothingProtos = [];
+        await Server.WaitPost(() =>
+        {
+            clothingProtos = ProtoMan.EnumeratePrototypes<EntityPrototype>()
+                .Where(x => x.HasComponent<ClothingComponent>()
+                            && !x.HideSpawnMenu
+                            && !x.Abstract
+                            && !Pair.IsTestPrototype(x)
+                            && !_ignoredComponents.Any(ignore => x.HasComponent(ignore)))
+                .ToList();
+        });
 
-        List<EntityUid> clothings = [];
+        // Offset where we spawn the clothing to avoid expensive SpriteFadeSystem.FadeIn calls.
+        var clothingCoords = ToServer(PlayerCoords).Offset(new Vector2(1.5f, 0f));
+
         EntityUid jumpsuit = default!;
         EntityUid hardsuit = default!;
         await Server.WaitPost(() =>
         {
-            foreach (var clothing in clothingProtos)
-            {
-                var ent = SEntMan.SpawnAtPosition(clothing.ID, ToServer(PlayerCoords));
-                clothings.Add(ent);
-
-                _removedComponents.ForEach(remove => SEntMan.RemoveComponent(ent, remove));
-            }
-
             jumpsuit = SEntMan.SpawnAtPosition(JumpsuitProto, ToServer(PlayerCoords));
             hardsuit = SEntMan.SpawnAtPosition(HardsuitProto, ToServer(PlayerCoords));
         });
@@ -86,13 +78,28 @@ public sealed class ClothingEquipTest : InteractionTest
         var actionSys = Server.System<ActionsSystem>();
         var baseActions = actionSys.GetActions(SPlayer).ToList();
 
-        foreach (var clothing in clothings)
+        foreach (var clothingProto in clothingProtos)
         {
+            EntityUid clothing = default;
+            await Server.WaitPost(() =>
+            {
+                clothing = SEntMan.SpawnAtPosition(clothingProto.ID, clothingCoords);
+                foreach (var badComp in _removedComponents)
+                {
+                    SEntMan.RemoveComponent(clothing, badComp);
+                }
+            });
+
+            await RunTicks(1);
+
             Assert.That(SEntMan.TryGetComponent<ClothingComponent>(clothing, out var clothingComp),
                 $"{SEntMan.ToPrettyString(clothing)} doesn't have ClothingComponent");
             foreach (var slot in invComp.Slots)
             {
                 if ((slot.SlotFlags & clothingComp!.Slots) == 0x0)
+                    continue;
+
+                if (!Whitelist.CheckBoth(clothing, slot.Blacklist, slot.Whitelist))
                     continue;
 
                 await Server.WaitAssertion(() =>
@@ -156,8 +163,10 @@ public sealed class ClothingEquipTest : InteractionTest
                     if (slot.SlotFlags == SlotFlags.SUITSTORAGE)
                         DoUnequip(invSystem, hardsuit, "outerClothing");
                 });
-                await RunTicks(1);
             }
+
+            await RunTicks(1);
+            await Server.WaitPost(() => SEntMan.DeleteEntity(clothing));
         }
     }
 
