@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404, Fildrance
-  changes:
-  - message: new ui for analysis console, new ui for node scanner. Artifact node activation
-      is now different.
-    type: Add
-  - message: artifacts cannot create massive distruction events, become guns or music
-      instruments. Sentient artifacts cannot activate nodes.
-    type: Remove
-  id: 8186
-  time: '2025-04-15T00:34:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33370
 - author: EmoGarbage404
   changes:
   - message: Skeletons once again become living skulls on death.
@@ -3913,3 +3902,10 @@
   id: 8698
   time: '2025-06-20T23:39:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38218
+- author: Tayrtahn
+  changes:
+  - message: Sloths... now... speak... slowly...
+    type: Add
+  id: 8699
+  time: '2025-06-21T06:32:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38142
