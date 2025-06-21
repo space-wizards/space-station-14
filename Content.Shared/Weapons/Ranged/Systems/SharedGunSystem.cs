@@ -22,6 +22,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Whitelist;
+using Content.Shared.Wieldable;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -520,6 +521,26 @@ public abstract partial class SharedGunSystem : EntitySystem
         const float impulseStrength = 25.0f;
         var impulseVector =  shotDirection * impulseStrength;
         Physics.ApplyLinearImpulse(user, -impulseVector, body: userPhysics);
+    }
+
+    public void AddFireDelay(Entity<GunComponent?> ent, TimeSpan addedDelay)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (Timing.ApplyingState)
+            return;
+
+        if (Paused(ent.Owner))
+            return;
+
+        var minimum = Timing.CurTime + addedDelay;
+
+        if (minimum < ent.Comp.NextFire)
+            return;
+
+        ent.Comp.NextFire = minimum;
+        Dirty(ent);
     }
 
     public void RefreshModifiers(Entity<GunComponent?> gun)
