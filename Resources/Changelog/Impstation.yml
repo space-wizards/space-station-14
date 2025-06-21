@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Ten tattoos and seven jewelry markings!
-    type: Add
-  id: 1380
-  time: '2025-03-24T05:20:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2059
 - author: DinnerCalzone
   changes:
   - message: The Dining Services and Station Specific departments no longer show up
@@ -4210,3 +4203,18 @@
   id: 1879
   time: '2025-06-20T05:43:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2669
+- author: CrystalClover
+  changes:
+  - message: Added Pulp, a mushy substance derived from wood products.
+    type: Add
+  - message: Moths now derive sustainence from Cellulose, with Fiber and Pulp being
+      digested into Cellulose.
+    type: Tweak
+  - message: Moths can now (slowly) eat Cardboard and Wood sheets.
+    type: Tweak
+  - message: The Nutribrick wrapper is now actually paper; it contains 10 Pulp and
+      recycles into Cardboard.
+    type: Tweak
+  id: 1880
+  time: '2025-06-21T01:08:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2806
