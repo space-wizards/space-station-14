@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: The Dining Services and Station Specific departments no longer show up
-      on the crew monitoring console.
-    type: Fix
-  id: 1381
-  time: '2025-03-24T05:28:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2066
 - author: argentsunshine
   changes:
   - message: Added nine new hairstyles (half-up styles, middle parts, mullets, and
@@ -4218,3 +4210,11 @@
   id: 1880
   time: '2025-06-21T01:08:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2806
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: The M-1 Energy Shotgun doesn't need to wait 30 seconds to recharge anymore,
+      but recharges a bit slower.
+    type: Tweak
+  id: 1881
+  time: '2025-06-21T01:12:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2802
