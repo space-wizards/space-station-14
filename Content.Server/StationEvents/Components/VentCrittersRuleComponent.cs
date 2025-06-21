@@ -1,4 +1,5 @@
-﻿using Content.Server.StationEvents.Events;
+﻿// Modifications ported by Ronstation from Delta-V, therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+using Content.Server.StationEvents.Events;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Storage;
 using Robust.Shared.Map; // DeltaV
