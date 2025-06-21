@@ -7,7 +7,7 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>..\bin\Content.Client\</OutputPath>
     <OutputType Condition="'$(FullRelease)' != 'True'">Exe</OutputType>
-    <WarningsAsErrors>nullable</WarningsAsErrors>
+    <WarningsAsErrors>RA0032;nullable</WarningsAsErrors>
     <Nullable>enable</Nullable>
     <Configurations>Debug;Release;Tools;DebugOpt</Configurations>
     <Platforms>AnyCPU</Platforms>
