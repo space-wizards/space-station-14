@@ -90,7 +90,7 @@
   - type: StationLimitedNetwork
   - type: Thieving
     stripTimeReduction: 9999
-    stealthy: true
+    stealthiness: Stealthy
   - type: Stripping
   - type: SolutionScanner
   - type: IgnoreUIRange

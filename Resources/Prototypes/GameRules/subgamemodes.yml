@@ -29,7 +29,7 @@
       - type: Pacified
       - type: Thieving
         stripTimeReduction: 2
-        stealthy: true
+        stealthiness: Stealthy
       mindRoles:
       - MindRoleThief
       briefing:
