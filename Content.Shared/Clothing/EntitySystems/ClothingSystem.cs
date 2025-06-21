@@ -6,6 +6,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Strip.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -15,6 +16,7 @@ public abstract class ClothingSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
     [Dependency] private readonly InventorySystem _invSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -29,6 +31,7 @@ public abstract class ClothingSystem : EntitySystem
         SubscribeLocalEvent<ClothingComponent, ClothingUnequipDoAfterEvent>(OnUnequipDoAfter);
 
         SubscribeLocalEvent<ClothingComponent, BeforeItemStrippedEvent>(OnItemStripped);
+        SubscribeLocalEvent<ClothingComponent, InventoryRelayedEvent<CheckWhitelistInventoryEvent>>(OnWhitelistInventoryCheck);
     }
 
     private void OnUseInHand(Entity<ClothingComponent> ent, ref UseInHandEvent args)
@@ -135,6 +138,15 @@ public abstract class ClothingSystem : EntitySystem
     private void OnItemStripped(Entity<ClothingComponent> ent, ref BeforeItemStrippedEvent args)
     {
         args.Additive += ent.Comp.StripDelay;
+    }
+
+    private void OnWhitelistInventoryCheck(Entity<ClothingComponent> ent, ref InventoryRelayedEvent<CheckWhitelistInventoryEvent> args)
+    {
+        if (args.Args.WhitelistHit)
+            return;
+
+        if (_whitelistSystem.IsValid(args.Args.Whitelist, ent))
+            args.Args.WhitelistHit = true;
     }
 
     #region Public API
