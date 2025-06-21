@@ -17,7 +17,7 @@
   id: Dev
   mapName: Dev
   # mapPath: /Maps/Test/dev_map.yml
-  mapPath: /Maps/_DarkAscent/roguetest.yml
+  mapPath: /Maps/_DarkAscent/roguetest_biome.yml
   minPlayers: 0
   stations:
     # Dev:
