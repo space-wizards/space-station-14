@@ -1,6 +1,8 @@
-﻿using Content.Shared.Bed.Sleep;
+﻿using Content.Server.StatusEffectNew;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
-using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -8,9 +10,6 @@ namespace Content.Server.Drowsiness;
 
 public sealed class DrowsinessSystem : SharedDrowsinessSystem
 {
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    private const string SleepKey = "ForcedSleep"; // Same one used by N2O and other sleep chems.
-
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
@@ -18,33 +17,37 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<DrowsinessComponent, ComponentStartup>(OnInit);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectAppliedEvent>(OnEffectApplied);
     }
 
-    private void OnInit(EntityUid uid, DrowsinessComponent component, ComponentStartup args)
+    private void OnEffectApplied(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        component.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.TimeBetweenIncidents.X, component.TimeBetweenIncidents.Y));
+        ent.Comp.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(ent.Comp.TimeBetweenIncidents.X, ent.Comp.TimeBetweenIncidents.Y));
     }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DrowsinessComponent>();
-        while (query.MoveNext(out var uid, out var component))
+        var query = EntityQueryEnumerator<DrowsinessStatusEffectComponent, StatusEffectComponent>();
+        while (query.MoveNext(out var uid, out var drowsiness, out var statusEffect))
         {
-            if (_timing.CurTime < component.NextIncidentTime)
+            if (_timing.CurTime < drowsiness.NextIncidentTime)
+                continue;
+
+            if (statusEffect.AppliedTo is null)
                 continue;
 
             // Set the new time.
-            component.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.TimeBetweenIncidents.X, component.TimeBetweenIncidents.Y));
+            drowsiness.NextIncidentTime = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(drowsiness.TimeBetweenIncidents.X, drowsiness.TimeBetweenIncidents.Y));
 
             // sleep duration
-            var duration = TimeSpan.FromSeconds(_random.NextFloat(component.DurationOfIncident.X, component.DurationOfIncident.Y));
+            var duration = TimeSpan.FromSeconds(_random.NextFloat(drowsiness.DurationOfIncident.X, drowsiness.DurationOfIncident.Y));
 
             // Make sure the sleep time doesn't cut into the time to next incident.
-            component.NextIncidentTime += duration;
+            drowsiness.NextIncidentTime += duration;
 
-            _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(uid, SleepKey, duration, false);
+            _statusEffects.TryAddStatusEffect(statusEffect.AppliedTo.Value, SleepingSystem.StatusEffectForcedSleeping, duration);
         }
     }
 }
