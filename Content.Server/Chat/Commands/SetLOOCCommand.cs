@@ -7,22 +7,21 @@ using Robust.Shared.Console;
 namespace Content.Server.Chat.Commands;
 
 [AdminCommand(AdminFlags.Server)]
-public sealed class SetLOOCCommand : IConsoleCommand
+public sealed class SetLoocCommand : LocalizedCommands
 {
-    public string Command => "setlooc";
-    public string Description => Loc.GetString("set-looc-command-description");
-    public string Help => Loc.GetString("set-looc-command-help");
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
-    {
-        var cfg = IoCManager.Resolve<IConfigurationManager>();
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
 
+    public override string Command => "setlooc";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
         if (args.Length > 1)
         {
-            shell.WriteError(Loc.GetString("set-looc-command-too-many-arguments-error"));
+            shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 0), ("upper", 1)));
             return;
         }
 
-        var looc = cfg.GetCVar(CCVars.LoocEnabled);
+        var looc = _configManager.GetCVar(CCVars.LoocEnabled);
 
         if (args.Length == 0)
         {
@@ -31,12 +30,12 @@ public sealed class SetLOOCCommand : IConsoleCommand
 
         if (args.Length == 1 && !bool.TryParse(args[0], out looc))
         {
-            shell.WriteError(Loc.GetString("set-looc-command-invalid-argument-error"));
+            shell.WriteError(Loc.GetString("shell-invalid-bool"));
             return;
         }
 
-        cfg.SetCVar(CCVars.LoocEnabled, looc);
+        _configManager.SetCVar(CCVars.LoocEnabled, looc);
 
-        shell.WriteLine(Loc.GetString(looc ? "set-looc-command-looc-enabled" : "set-looc-command-looc-disabled"));
+        shell.WriteLine(Loc.GetString(looc ? "cmd-setlooc-looc-enabled" : "cmd-setlooc-looc-disabled"));
     }
 }

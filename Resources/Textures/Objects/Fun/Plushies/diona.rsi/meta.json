@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Sprites by discord user Deos#5630",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "plushie_diona"
+        },
+        {
+            "name": "plushie_diona1"
+        }
+    ]
+}
