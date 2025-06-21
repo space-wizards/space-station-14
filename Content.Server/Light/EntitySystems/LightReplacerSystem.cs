@@ -1,61 +1,26 @@
 using System.Linq;
-using Content.Server.Light.Components;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Light.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Light.EntitySystems;
 
-[UsedImplicitly]
 public sealed class LightReplacerSystem : SharedLightReplacerSystem
 {
     [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LightReplacerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<LightReplacerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<LightReplacerComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<LightReplacerComponent, InteractUsingEvent>(HandleInteract);
         SubscribeLocalEvent<LightReplacerComponent, AfterInteractEvent>(HandleAfterInteract);
-    }
-
-    private void OnExamined(EntityUid uid, LightReplacerComponent component, ExaminedEvent args)
-    {
-        using (args.PushGroup(nameof(LightReplacerComponent)))
-        {
-            if (!component.InsertedBulbs.ContainedEntities.Any())
-            {
-                args.PushMarkup(Loc.GetString("comp-light-replacer-no-lights"));
-                return;
-            }
-
-            args.PushMarkup(Loc.GetString("comp-light-replacer-has-lights"));
-            var groups = new Dictionary<string, int>();
-            var metaQuery = GetEntityQuery<MetaDataComponent>();
-            foreach (var bulb in component.InsertedBulbs.ContainedEntities)
-            {
-                var metaData = metaQuery.GetComponent(bulb);
-                groups[metaData.EntityName] = groups.GetValueOrDefault(metaData.EntityName) + 1;
-            }
-
-            foreach (var (name, amount) in groups)
-            {
-                args.PushMarkup(Loc.GetString("comp-light-replacer-light-listing", ("amount", amount), ("name", name)));
-            }
-        }
     }
 
     private void OnMapInit(EntityUid uid, LightReplacerComponent component, MapInitEvent args)
@@ -70,8 +35,9 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
 
     private void OnInit(EntityUid uid, LightReplacerComponent replacer, ComponentInit args)
     {
-        replacer.InsertedBulbs = _container.EnsureContainer<Container>(uid, "light_replacer_storage");
+        replacer.InsertedBulbs = Container.EnsureContainer<Container>(uid, "light_replacer_storage");
     }
+
 
     private void HandleAfterInteract(EntityUid uid, LightReplacerComponent component, AfterInteractEvent eventArgs)
     {
@@ -142,7 +108,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         if (bulb.Valid) // FirstOrDefault can return default/invalid uid.
         {
             // try to remove it
-            var hasRemoved = _container.Remove(bulb, replacer.InsertedBulbs);
+            var hasRemoved = Container.Remove(bulb, replacer.InsertedBulbs);
             if (!hasRemoved)
                 return false;
         }
@@ -152,7 +118,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
             {
                 var msg = Loc.GetString("comp-light-replacer-missing-light",
                     ("light-replacer", replacerUid));
-                _popupSystem.PopupEntity(msg, replacerUid, userUid.Value);
+                PopupSystem.PopupEntity(msg, replacerUid, userUid.Value);
             }
             return false;
         }
@@ -161,7 +127,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         var wasReplaced = _poweredLight.ReplaceBulb(fixtureUid, bulb, fixture);
         if (wasReplaced)
         {
-            _audio.PlayPvs(replacer.Sound, replacerUid);
+            Audio.PlayPvs(replacer.Sound, replacerUid);
         }
 
         return wasReplaced;
@@ -185,19 +151,19 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
             if (showTooltip && userUid != null)
             {
                 var msg = Loc.GetString("comp-light-replacer-insert-broken-light");
-                _popupSystem.PopupEntity(msg, replacerUid, userUid.Value);
+                PopupSystem.PopupEntity(msg, replacerUid, userUid.Value);
             }
 
             return false;
         }
 
         // try insert light and show message
-        var hasInsert = _container.Insert(bulbUid, replacer.InsertedBulbs);
+        var hasInsert = Container.Insert(bulbUid, replacer.InsertedBulbs);
         if (hasInsert && showTooltip && userUid != null)
         {
             var msg = Loc.GetString("comp-light-replacer-insert-light",
                 ("light-replacer", replacerUid), ("bulb", bulbUid));
-            _popupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
+            PopupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
         }
 
         return hasInsert;
@@ -234,7 +200,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         if (insertedBulbs > 0 && userUid != null)
         {
             var msg = Loc.GetString("comp-light-replacer-refill-from-storage", ("light-replacer", replacerUid));
-            _popupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
+            PopupSystem.PopupEntity(msg, replacerUid, userUid.Value, PopupType.Medium);
         }
 
         return insertedBulbs > 0;
