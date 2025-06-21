@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Revenant;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -289,6 +290,19 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         UpdateVisuals(camera, component);
     }
 
+    /// <summary>
+    /// Set the name of a surveillance camera.
+    /// This is what will be seen on the camera console.
+    /// </summary>
+    public void SetName(EntityUid camera, string name, SurveillanceCameraComponent? component = null)
+    {
+        if (!Resolve(camera, ref component))
+            return;
+
+        component.CameraId = name;
+        component.NameSet = true;
+    }
+
     public void AddActiveViewer(EntityUid camera, EntityUid player, EntityUid? monitor = null, SurveillanceCameraComponent? component = null, ActorComponent? actor = null)
     {
         if (!Resolve(camera, ref component)
@@ -416,7 +430,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
     private void OnEmpPulse(EntityUid uid, SurveillanceCameraComponent component, ref EmpPulseEvent args)
     {
-        if (component.Active)
+        if (component.Active && component.EmpVulnerable)
         {
             args.Affected = true;
             args.Disabled = true;
@@ -426,6 +440,10 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
     private void OnEmpDisabledRemoved(EntityUid uid, SurveillanceCameraComponent component, ref EmpDisabledRemoved args)
     {
+        var ev = new SurveillanceCameraReactivateAfterEmpAttemptEvent();
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Cancelled)
+            return;
         SetActive(uid, true);
     }
 }
@@ -453,3 +471,6 @@ public sealed class SurveillanceCameraDeactivateEvent : EntityEventArgs
 
 [ByRefEvent]
 public record struct SurveillanceCameraSetActiveAttemptEvent(bool Cancelled);
+
+[ByRefEvent]
+public record struct SurveillanceCameraReactivateAfterEmpAttemptEvent(bool Cancelled);

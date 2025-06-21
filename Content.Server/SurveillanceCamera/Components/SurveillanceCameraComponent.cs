@@ -42,6 +42,12 @@ public sealed partial class SurveillanceCameraComponent : Component
     [DataField("networkSet")]
     public bool NetworkSet { get; set; }
 
+    /// <summary>
+    /// If the surveillance camera will be unusable for a short while when hit by an emp pulse.
+    /// </summary>
+    [DataField]
+    public bool EmpVulnerable = true;
+
     // This has to be device network frequency prototypes.
     [DataField("setupAvailableNetworks", customTypeSerializer:typeof(PrototypeIdListSerializer<DeviceFrequencyPrototype>))]
     public List<string> AvailableNetworks { get; private set; } = new();

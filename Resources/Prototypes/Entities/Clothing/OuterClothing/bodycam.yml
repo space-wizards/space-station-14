@@ -1,0 +1,54 @@
+- type: entity
+  id: BaseBodycam
+  abstract: true
+  components:
+  - type: Eye
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCameraSecurity
+    transmitFrequencyId: SurveillanceCamera
+    saveableAddress: false
+  - type: WiredNetworkConnection
+  - type: SurveillanceCamera
+    networkSet: true
+    nameSet: true
+  - type: Bodycam
+
+- type: entity
+  id: ClothingNeckBodycam
+  parent: [ClothingNeckBase, BaseBodycam]
+  name: bodycam
+  suffix: DO NOT MAP
+  description: A man-portable camera worn by security forces. Be wary of its short battery life.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/bling.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/bling.rsi
+  - type: Item
+    sprite: Clothing/Neck/Misc/bling.rsi
+
+- type: entity
+  id: ClothingNeckBodycamWithBattery
+  parent: ClothingNeckBodycam
+  suffix: battery
+  components:
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: PowerCellDraw
+    enabled: false
+    drawRate: 10 # about a minute
+    # turning off emp vulnerability because it is redundant
+    # the bodycam's cell will be drained when hit by an emp
+  - type: Bodycam
+    empVulnerable: false
+  - type: SurveillanceCamera
+    empVulnerable: false
