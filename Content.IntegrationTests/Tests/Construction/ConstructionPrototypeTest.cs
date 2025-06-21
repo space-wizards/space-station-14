@@ -1,10 +1,13 @@
+using System.Collections.Generic;
 using System.Numerics;
+using Content.Client.Construction;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Construction
 {
@@ -111,7 +114,7 @@ namespace Content.IntegrationTests.Tests.Construction
                     if (proto.Abstract || pair.IsTestPrototype(proto) || !proto.Components.TryGetValue(name, out var reg))
                         continue;
 
-                    var comp = (ConstructionComponent) reg.Component;
+                    var comp = (ConstructionComponent)reg.Component;
                     var target = comp.DeconstructionNode;
                     if (target == null)
                         continue;
@@ -155,6 +158,54 @@ namespace Content.IntegrationTests.Tests.Construction
                     Assert.That(entity.Components.ContainsKey("Construction"),
                         $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
 #pragma warning restore NUnit2045
+                }
+            });
+
+            await pair.CleanReturnAsync();
+        }
+
+        /// <summary>
+        /// Checks that every construction prototype has a unique display name in the construction window.
+        /// </summary>
+        [Test]
+        public async Task TestUniqueNames()
+        {
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings()
+            {
+                Connected = true,
+            });
+            var client = pair.Client;
+
+            var protoMan = client.ProtoMan;
+            var constructionSys = client.System<ConstructionSystem>();
+
+            // Create a dictionary mapping display names to prototypes that have that name
+            Dictionary<string, List<ProtoId<ConstructionPrototype>>> nameUsers = [];
+
+            // Populate the dictionary
+            foreach (var recipe in protoMan.EnumeratePrototypes<ConstructionPrototype>())
+            {
+                if (!constructionSys.TryGetRecipeName(recipe.ID, out var name))
+                    continue;
+
+                var users = nameUsers.GetOrNew(name);
+
+                // We don't care about recipes that aren't shown in the menu
+                if (recipe.Hide)
+                    continue;
+
+
+                // Track this use
+                users.Add(recipe);
+            }
+
+            Assert.Multiple(() =>
+            {
+                foreach (var (displayName, recipeList) in nameUsers)
+                {
+                    // Make sure that each name only has one use
+                    Assert.That(recipeList, Has.Count.AtMost(1),
+                        $"Multiple construction prototypes have the display name '{displayName}': {string.Join(", ", recipeList)}");
                 }
             });
 
