@@ -46,6 +46,7 @@
       - MindShieldImplant
       - FakeMindShieldImplant
       - RadioImplant
+      - ChameleonControllerImplant
       deimplantFailureDamage:
         types:
           Cellular: 50

@@ -1,109 +1,4 @@
 ﻿Entries:
-- author: benev0
-  changes:
-  - message: Stopped climbing movent while in containers
-    type: Fix
-  id: 8177
-  time: '2025-04-14T15:56:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32033
-- author: SlamBamActionman
-  changes:
-  - message: Hyposprays now shows contained chemicals in the sprite.
-    type: Tweak
-  id: 8178
-  time: '2025-04-14T15:58:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30703
-- author: SlamBamActionman
-  changes:
-  - message: Implanters are now named after the implant they contained, even after
-      the implanter has been used.
-    type: Tweak
-  - message: Syndicate implanters now remind you to scrub them in the item description.
-    type: Add
-  id: 8179
-  time: '2025-04-14T16:50:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36555
-- author: Golub
-  changes:
-  - message: Added the Knock spell to the wizard's grimoire
-    type: Add
-  id: 8180
-  time: '2025-04-14T18:57:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36562
-- author: metalgearsloth
-  changes:
-  - message: DamagePopups such as target dummies are now predicted.
-    type: Fix
-  id: 8181
-  time: '2025-04-14T19:10:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36547
-- author: SlamBamActionman
-  changes:
-  - message: Tracking implants no longer announce on radio when someone goes into
-      critical health.
-    type: Remove
-  id: 8182
-  time: '2025-04-14T20:23:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35995
-- author: SlamBamActionman
-  changes:
-  - message: Chest rig explosive resistance is increased from 50% to 90%.
-    type: Tweak
-  id: 8183
-  time: '2025-04-14T20:45:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35889
-- author: ArtisticRoomba
-  changes:
-  - message: Certain randomly filled bags will now have the correct number of contents
-      inside of them.
-    type: Fix
-  id: 8184
-  time: '2025-04-14T21:02:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36155
-- author: Will-Oliver-Br
-  changes:
-  - message: Now you can see if there's a beaker in the chemmaster.
-    type: Tweak
-  id: 8185
-  time: '2025-04-14T23:27:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36472
-- author: EmoGarbage404, Fildrance
-  changes:
-  - message: new ui for analysis console, new ui for node scanner. Artifact node activation
-      is now different.
-    type: Add
-  - message: artifacts cannot create massive distruction events, become guns or music
-      instruments. Sentient artifacts cannot activate nodes.
-    type: Remove
-  id: 8186
-  time: '2025-04-15T00:34:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33370
-- author: EmoGarbage404
-  changes:
-  - message: Skeletons once again become living skulls on death.
-    type: Fix
-  id: 8187
-  time: '2025-04-15T03:38:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36571
-- author: Crazydave91920
-  changes:
-  - message: Fixed Zookeeper not being on the double barrel shotgun contraband list
-    type: Fix
-  id: 8188
-  time: '2025-04-15T18:27:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36583
-- author: Minemoder5000
-  changes:
-  - message: The Syndicate Elite Hardsuit and Cybersun Juggernaut Suit have been restricted
-      to Nuclear Operative uplinks.
-    type: Tweak
-  - message: The Elite Web Vest has been added to the uplink for 5 tc. It has reduced
-      pierce resistance, but increased heat, radiation, blunt, slash, and caustic
-      resistance compared to the normal web vest.
-    type: Add
-  id: 8189
-  time: '2025-04-15T21:39:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36225
 - author: EmoGarbage404
   changes:
   - message: Sentient artifacts can once again activate themselves.
@@ -3912,3 +3807,102 @@
   id: 8689
   time: '2025-06-17T11:06:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38332
+- author: kosticia
+  changes:
+  - message: Reflection chances are examinable now.
+    type: Add
+  id: 8690
+  time: '2025-06-18T00:50:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38199
+- author: Kittygyat
+  changes:
+  - message: Fixed vapes dealing unintended damage types to you when used.
+    type: Fix
+  id: 8691
+  time: '2025-06-18T12:06:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38423
+- author: beck-thompson
+  changes:
+  - message: Recycler now properly recycles item stacks.
+    type: Fix
+  id: 8692
+  time: '2025-06-18T21:14:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38433
+- author: Bhijn and Myr
+  changes:
+  - message: In interest of raising awareness of addiction to the game, the lobby
+      will now display your current playtime on a given day once it exceeds a threshold.
+    type: Add
+  id: 8693
+  time: '2025-06-19T01:06:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36483
+- author: ScarKy0
+  changes:
+  - message: APCs now have a wirepanel. It can be used to disallow the AI from accessing
+      it.
+    type: Add
+  id: 8694
+  time: '2025-06-19T15:06:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38443
+- author: Sparlight
+  changes:
+  - message: Smart corgis can now wear various hardsuits, armors, and glasses items.
+    type: Add
+  id: 8695
+  time: '2025-06-19T19:49:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36875
+- author: VerinSenpai
+  changes:
+  - message: Handcuffs no longer interfere with your daily tail wagging activities.
+    type: Fix
+  id: 8696
+  time: '2025-06-19T22:42:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38454
+- author: BigfootBravo
+  changes:
+  - message: Chameleon Controller Implants can be deimplanted.
+    type: Fix
+  id: 8697
+  time: '2025-06-20T22:41:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38439
+- author: FairlySadPanda
+  changes:
+  - message: A new poster.
+    type: Add
+  - message: A new (very expensive) crate to order from cargo, worth 25,000 spesos
+      and containing a hydrated scurret. The hydrated scurret is a ghost role - a
+      non-antagonistic emotional support scurret.
+    type: Add
+  id: 8698
+  time: '2025-06-20T23:39:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38218
+- author: Tayrtahn
+  changes:
+  - message: Sloths... now... speak... slowly...
+    type: Add
+  id: 8699
+  time: '2025-06-21T06:32:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38142
+- author: whatston3
+  changes:
+  - message: Locked buttons must now be unlocked to trigger.
+    type: Fix
+  id: 8700
+  time: '2025-06-21T09:41:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38474
+- author: slarticodefast
+  changes:
+  - message: Fixed wallmount interaction rotation.
+    type: Fix
+  id: 8701
+  time: '2025-06-21T13:11:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38111
+- author: Prole0
+  changes:
+  - message: Flask Visuals & Sounds!
+    type: Add
+  - message: Flasks now need to be opened to be drunk from.
+    type: Tweak
+  id: 8702
+  time: '2025-06-21T14:52:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38032
