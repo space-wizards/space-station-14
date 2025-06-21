@@ -40,7 +40,7 @@ public sealed partial class WiresPanelComponent : Component
     /// The tool quality needed to open this panel.
     /// </summary>
     [DataField]
-    public ProtoId<ToolQualityPrototype> OpeningTool = "Screwing";
+    public ProtoId<ToolQualityPrototype> OpeningTool = Tools.Systems.SharedToolSystem.ScrewQuality;
 
     /// <summary>
     /// Text showed on examine when the panel is closed.
