@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
@@ -75,4 +76,79 @@ public sealed partial class StaminaComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<FixedPoint2, float> StunModifierThresholds = new() { {0, 1f }, { 60, 0.7f }, { 80, 0.5f } };
+
+    #region Animation Data
+
+    /// <summary>
+    /// Threshold at which low stamina animations begin playing. This should be set to a value that means something.
+    /// At 50, it is aligned so when you hit 60 stun the entity will be breathing once per second (well above hyperventilation).
+    /// </summary>
+    [DataField]
+    public float AnimationThreshold = 50;
+
+    /// <summary>
+    /// Minimum y vector displacement for breathing at AnimationThreshold
+    /// </summary>
+    [DataField]
+    public float BreathingAmplitudeMin = 0.04f;
+
+    /// <summary>
+    /// Maximum y vector amount we add to the BreathingAmplitudeMin
+    /// </summary>
+    [DataField]
+    public float BreathingAmplitudeMod = 0.04f;
+
+    /// <summary>
+    /// Minimum vector displacement for jittering at AnimationThreshold
+    /// </summary>
+    [DataField]
+    public float JitterAmplitudeMin;
+
+    /// <summary>
+    /// Maximum vector amount we add to the JitterAmplitudeMin
+    /// </summary>
+    [DataField]
+    public float JitterAmplitudeMod = 0.05f;
+
+    /// <summary>
+    /// Min and max multipliers for JitterAmplitude in the X direction for the random value we will choose
+    /// </summary>
+    [DataField]
+    public (float, float) JitterMinMaxX = (0.5f, 1f);
+
+    /// <summary>
+    /// Min and max multipliers for JitterAmplitude in the X direction for the random value we will choose
+    /// </summary>
+    [DataField]
+    public (float, float) JitterMinMaxY = (0.125f, 0.25f);
+
+    /// <summary>
+    /// Minimum total animations per second
+    /// </summary>
+    [DataField]
+    public float FrequencyMin = 0.25f;
+
+    /// <summary>
+    /// Maximum amount we add to the Frequency min just before crit
+    /// </summary>
+    [DataField]
+    public float FrequencyMod = 1.75f;
+
+    /// <summary>
+    /// Jitter keyframes per animation
+    /// </summary>
+    [DataField]
+    public int Jitters = 4;
+
+    [AutoNetworkedField, DataField]
+    public Vector2 LastJitter;
+
+    /// <summary>
+    ///     The offset that an entity had before jittering started,
+    ///     so that we can reset it properly.
+    /// </summary>
+    [AutoNetworkedField, DataField]
+    public Vector2 StartOffset = Vector2.Zero;
+
+    #endregion
 }
