@@ -268,20 +268,20 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     public (NetEntity, string)[] GetBands(EntityUid uid)
     {
-        var metadataQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
+        var metadataQuery = GetEntityQuery<MetaDataComponent>();
 
         if (Deleted(uid))
             return Array.Empty<(NetEntity, string)>();
 
         var list = new ValueList<(NetEntity, string)>();
-        var instrumentQuery = EntityManager.GetEntityQuery<InstrumentComponent>();
+        var instrumentQuery = GetEntityQuery<InstrumentComponent>();
 
         if (!TryComp(uid, out InstrumentComponent? originInstrument)
             || originInstrument.InstrumentPlayer is not {} originPlayer)
             return Array.Empty<(NetEntity, string)>();
 
         // It's probably faster to get all possible active instruments than all entities in range
-        var activeEnumerator = EntityManager.EntityQueryEnumerator<ActiveInstrumentComponent>();
+        var activeEnumerator = EntityQueryEnumerator<ActiveInstrumentComponent>();
         while (activeEnumerator.MoveNext(out var entity, out _))
         {
             if (entity == uid)
@@ -424,8 +424,8 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             _bandRequestQueue.Clear();
         }
 
-        var activeQuery = EntityManager.GetEntityQuery<ActiveInstrumentComponent>();
-        var transformQuery = EntityManager.GetEntityQuery<TransformComponent>();
+        var activeQuery = GetEntityQuery<ActiveInstrumentComponent>();
+        var transformQuery = GetEntityQuery<TransformComponent>();
 
         var query = AllEntityQuery<ActiveInstrumentComponent, InstrumentComponent>();
         while (query.MoveNext(out var uid, out _, out var instrument))

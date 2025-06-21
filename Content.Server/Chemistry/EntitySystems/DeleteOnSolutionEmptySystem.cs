@@ -32,7 +32,7 @@ namespace Content.Server.Chemistry.EntitySystems.DeleteOnSolutionEmptySystem
 
             if (_solutionContainerSystem.TryGetSolution((entity.Owner, solutions), entity.Comp.Solution, out _, out var solution))
                 if (solution.Volume <= 0)
-                    EntityManager.QueueDeleteEntity(entity);
+                    QueueDel(entity);
         }
     }
 }

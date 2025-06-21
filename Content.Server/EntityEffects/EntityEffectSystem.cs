@@ -521,7 +521,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
             var spreadAmount = (int) Math.Max(0, Math.Ceiling((reagentArgs.Quantity / args.Effect.OverflowThreshold).Float()));
             var splitSolution = reagentArgs.Source.SplitSolution(reagentArgs.Source.Volume);
-            var transform = EntityManager.GetComponent<TransformComponent>(reagentArgs.TargetEntity);
+            var transform = Comp<TransformComponent>(reagentArgs.TargetEntity);
             var mapCoords = _xform.GetMapCoordinates(reagentArgs.TargetEntity, xform: transform);
 
             if (!_mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
@@ -534,7 +534,7 @@ public sealed class EntityEffectSystem : EntitySystem
                 return;
 
             var coords = _map.MapToGrid(gridUid, mapCoords);
-            var ent = EntityManager.SpawnEntity(args.Effect.PrototypeId, coords.SnapToGrid());
+            var ent = Spawn(args.Effect.PrototypeId, coords.SnapToGrid());
 
             _smoke.StartSmoke(ent, splitSolution, args.Effect.Duration, spreadAmount);
 
@@ -644,7 +644,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecuteEmpReactionEffect(ref ExecuteEntityEffectEvent<EmpReactionEffect> args)
     {
-        var transform = EntityManager.GetComponent<TransformComponent>(args.Args.TargetEntity);
+        var transform = Comp<TransformComponent>(args.Args.TargetEntity);
 
         var range = args.Effect.EmpRangePerUnit;
 
@@ -700,7 +700,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecuteFlashReactionEffect(ref ExecuteEntityEffectEvent<FlashReactionEffect> args)
     {
-        var transform = EntityManager.GetComponent<TransformComponent>(args.Args.TargetEntity);
+        var transform = Comp<TransformComponent>(args.Args.TargetEntity);
 
         var range = 1f;
 
@@ -767,7 +767,7 @@ public sealed class EntityEffectSystem : EntitySystem
         ghostRole = AddComp<GhostRoleComponent>(uid);
         EnsureComp<GhostTakeoverAvailableComponent>(uid);
 
-        var entityData = EntityManager.GetComponent<MetaDataComponent>(uid);
+        var entityData = Comp<MetaDataComponent>(uid);
         ghostRole.RoleName = entityData.EntityName;
         ghostRole.RoleDescription = Loc.GetString("ghost-role-information-cognizine-description");
     }
@@ -850,7 +850,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantMutateChemicals(ref ExecuteEntityEffectEvent<PlantMutateChemicals> args)
     {
-        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
 
         if (plantholder.Seed == null)
             return;
@@ -884,7 +884,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantMutateConsumeGasses(ref ExecuteEntityEffectEvent<PlantMutateConsumeGasses> args)
     {
-        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
 
         if (plantholder.Seed == null)
             return;
@@ -906,7 +906,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantMutateExudeGasses(ref ExecuteEntityEffectEvent<PlantMutateExudeGasses> args)
     {
-        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
 
         if (plantholder.Seed == null)
             return;
@@ -928,7 +928,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantMutateHarvest(ref ExecuteEntityEffectEvent<PlantMutateHarvest> args)
     {
-        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
 
         if (plantholder.Seed == null)
             return;
@@ -941,7 +941,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantSpeciesChange(ref ExecuteEntityEffectEvent<PlantSpeciesChange> args)
     {
-        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
         if (plantholder.Seed == null)
             return;
 

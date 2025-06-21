@@ -77,7 +77,7 @@ public sealed class FrictionContactsSystem : EntitySystem
 
     private void OnRefreshFrictionModifiers(Entity<FrictionModifiedByContactComponent> entity, ref RefreshFrictionModifiersEvent args)
     {
-        if (!EntityManager.TryGetComponent<PhysicsComponent>(entity, out var physicsComponent))
+        if (!TryComp<PhysicsComponent>(entity, out var physicsComponent))
             return;
 
         var friction = 0.0f;

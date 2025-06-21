@@ -26,7 +26,7 @@ namespace Content.Server.Repairable
             if (args.Cancelled)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
+            if (!TryComp(uid, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
                 return;
 
             if (component.Damage != null)

@@ -23,7 +23,7 @@ namespace Content.Server.Stunnable
         private void TryDoCollideStun(EntityUid uid, StunOnCollideComponent component, EntityUid target)
         {
 
-            if (EntityManager.TryGetComponent<StatusEffectsComponent>(target, out var status))
+            if (TryComp<StatusEffectsComponent>(target, out var status))
             {
                 _stunSystem.TryStun(target, TimeSpan.FromSeconds(component.StunAmount), true, status);
 

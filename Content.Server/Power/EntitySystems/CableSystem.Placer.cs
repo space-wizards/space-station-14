@@ -48,7 +48,7 @@ public sealed partial class CableSystem
         if (TryComp<StackComponent>(placer, out var stack) && !_stack.Use(placer, 1, stack))
             return;
 
-        var newCable = EntityManager.SpawnEntity(component.CablePrototypeId, _map.GridTileToLocal(gridUid, grid, snapPos));
+        var newCable = Spawn(component.CablePrototypeId, _map.GridTileToLocal(gridUid, grid, snapPos));
         _adminLogger.Add(LogType.Construction, LogImpact.Low,
             $"{ToPrettyString(args.User):player} placed {ToPrettyString(newCable):cable} at {Transform(newCable).Coordinates}");
         args.Handled = true;
