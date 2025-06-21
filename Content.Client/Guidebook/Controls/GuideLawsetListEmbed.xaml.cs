@@ -16,7 +16,7 @@ namespace Content.Client.Guidebook.Controls;
 /// Control for iterating and embedding every SiliconLawsetPrototype into the guidebook.
 /// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
-public sealed partial class GuideLawsetListEmbed : BoxContainer, IDocumentTag
+public sealed partial class GuideLawsetListEmbed : Control, IDocumentTag
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
@@ -32,7 +32,7 @@ public sealed partial class GuideLawsetListEmbed : BoxContainer, IDocumentTag
         foreach (var lawset in _prototype.EnumeratePrototypes<SiliconLawsetPrototype>().OrderBy(x => x.ID))
         {
             GuideLawsetEmbed embed = new(lawset);
-            GroupContainer.AddChild(embed);
+            FindControl<BoxContainer>("GroupContainer").AddChild(embed);
         }
 
         control = this;

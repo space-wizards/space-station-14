@@ -12,6 +12,7 @@ using Robust.Shared.Prototypes;
 
 using Content.Shared.Silicons.Laws;
 using Robust.Shared.Utility;
+using Content.Shared.Contraband;
 
 namespace Content.Client.Guidebook.Controls;
 
@@ -19,7 +20,7 @@ namespace Content.Client.Guidebook.Controls;
 /// Control for embedding an AI Lawset in a guidebook
 /// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
-public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISearchableControl, IPrototypeRepresentationControl
+public sealed partial class GuideLawsetEmbed : Control, IDocumentTag, ISearchableControl, IPrototypeRepresentationControl
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
@@ -47,13 +48,13 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
     private void GenerateControl(SiliconLawsetPrototype lawset)
     {
         RepresentedPrototype = lawset;
-        NameBackground.PanelOverride = new StyleBoxFlat
+        FindControl<PanelContainer>("NameBackground").PanelOverride = new StyleBoxFlat
         {
             BackgroundColor = new(22, 22, 140)
         };
 
         var lawsetNameString = lawset.Name == null ? lawset.ID : Loc.GetString(lawset.Name);
-        LawsetName.SetMarkup($"[bold]{FormattedMessage.EscapeText(lawsetNameString)}[/bold]");
+        FindControl<RichTextLabel>("LawsetName").SetMarkup($"[bold]{FormattedMessage.EscapeText(lawsetNameString)}[/bold]");
 
         var i = 1;
         foreach (var lawID in lawset.Laws)
@@ -67,7 +68,7 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
             };
             var locLawStatement = Loc.GetString("laws-number-wrapper", ("lawnumber", i), ("lawstring", locLawString));
             lawN.SetMarkup(locLawStatement);
-            LawsetContainer.AddChild(lawN);
+            FindControl<BoxContainer>("LawsetContainer").AddChild(lawN);
 
             i++;
         }
