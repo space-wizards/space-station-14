@@ -6,7 +6,7 @@
   description: A generic white turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
     - state: trousers-icon
@@ -19,7 +19,7 @@
       - state: inhand-right
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -33,7 +33,7 @@
   description: A tasteful grey turtleneck that reminds you of the good old days.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#b3b3b3"
@@ -49,7 +49,7 @@
         color: "#b3b3b3"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -64,7 +64,7 @@
   description: A generic black turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#3f3f3f"
@@ -80,7 +80,7 @@
         color: "#3f3f3f"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -95,7 +95,7 @@
   description: A generic blue turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#52aecc"
@@ -111,7 +111,7 @@
         color: "#52aecc"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -126,7 +126,7 @@
   description: A generic dark blue turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#3285ba"
@@ -142,7 +142,7 @@
         color: "#3285ba"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -157,7 +157,7 @@
   description: A generic teal turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#77f3b7"
@@ -173,7 +173,7 @@
         color: "#77f3b7"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -188,7 +188,7 @@
   description: A generic green turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#9ed63a"
@@ -204,7 +204,7 @@
         color: "#9ed63a"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -219,7 +219,7 @@
   description: A generic dark green turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#79CC26"
@@ -235,7 +235,7 @@
         color: "#79CC26"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -250,7 +250,7 @@
   description: A generic orange turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#ff8c19"
@@ -266,7 +266,7 @@
         color: "#ff8c19"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -281,7 +281,7 @@
   description: A generic pink turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#ffa69b"
@@ -297,7 +297,7 @@
         color: "#ffa69b"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -312,7 +312,7 @@
   description: A generic red turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#eb0c07"
@@ -328,7 +328,7 @@
         color: "#eb0c07"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -343,7 +343,7 @@
   description: A generic yellow turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#ffe14d"
@@ -359,7 +359,7 @@
         color: "#ffe14d"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -374,7 +374,7 @@
   description: A generic light purple turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#9f70cc"
@@ -390,7 +390,7 @@
         color: "#9f70cc"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -405,7 +405,7 @@
   description: A generic light brown turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#c59431"
@@ -421,7 +421,7 @@
         color: "#c59431"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -436,7 +436,7 @@
   description: A generic brown turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#a17229"
@@ -452,7 +452,7 @@
         color: "#a17229"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -467,7 +467,7 @@
   description: A generic maroon turtleneck with no rank markings.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     layers:
     - state: icon
       color: "#cc295f"
@@ -483,7 +483,7 @@
         color: "#cc295f"
       - state: trousers-inhand-right
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/color_turtle.rsi
+    sprite: _Ronstation/Clothing/Uniforms/Jumpsuit/color_turtle.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
