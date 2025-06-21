@@ -224,7 +224,7 @@
     sprite: Structures/Wallmounts/posters.rsi
     state: poster55_legit
   product: CrateFunScurret
-  cost: 25000 # You will surely not regret buying this
+  cost: 10000 # You will surely not regret buying this
   category: cargoproduct-category-name-fun
   group: market
 
