@@ -1,10 +1,13 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.TileReactions;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Server.Spreader;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -59,6 +62,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly SpeedModifierContactsSystem _speedModContacts = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
 
     [ValidatePrototypeId<ReagentPrototype>]
     private const string Blood = "Blood";
@@ -310,12 +314,15 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _reactive.DoEntityReaction(args.Slipped, splitSol, ReactionMethod.Touch);
     }
 
+
+
     /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
         foreach (var ent in _deletionQueue)
         {
+            UpdateFlammable(ent, null);
             Del(ent);
         }
 
@@ -336,10 +343,22 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
 
         _deletionQueue.Remove(entity);
+        UpdateFlammable(entity, args.Solution);
         UpdateSlip((entity, entity.Comp), args.Solution);
         UpdateSlow(entity, args.Solution);
         UpdateEvaporation(entity, args.Solution);
         UpdateAppearance(entity, entity.Comp);
+    }
+
+    private void UpdateFlammable(EntityUid uid, Solution? solution)
+    {
+        if (solution is null)
+        {
+            _atmosSystem.SetFlammableAtTile(uid, 0);
+            return;
+        }
+        var flammability = solution.GetSolutionFlammability(_prototypeManager);
+        _atmosSystem.SetFlammableAtTile(uid, flammability);
     }
 
     private void UpdateAppearance(EntityUid uid, PuddleComponent? puddleComponent = null,
