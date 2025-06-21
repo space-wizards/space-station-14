@@ -147,3 +147,15 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+
+- type: entity
+  name: metal toolbox
+  parent: ToolboxBase
+  id: ToolboxMetal
+  description: A shiny toolbox, perfect for storing everything you want.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
