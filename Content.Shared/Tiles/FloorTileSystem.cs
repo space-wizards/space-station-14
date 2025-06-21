@@ -41,6 +41,11 @@ public sealed class FloorTileSystem : EntitySystem
 
     private static readonly Vector2 CheckRange = new(1f, 1f);
 
+    /// <summary>
+    ///     A recycled hashset used to check for walls when trying to place tiles on turfs.
+    /// </summary>
+    private readonly HashSet<EntityUid> _turfCheck = [];
+
     public override void Initialize()
     {
         base.Initialize();
@@ -107,7 +112,9 @@ public sealed class FloorTileSystem : EntitySystem
         // otherwise check it isn't blocked by a wall
         if (!canAccessCenter && _turf.TryGetTileRef(location, out var tileRef))
         {
-            foreach (var ent in _lookup.GetEntitiesInTile(tileRef.Value))
+            _turfCheck.Clear();
+            _lookup.GetEntitiesInTile(tileRef.Value, _turfCheck);
+            foreach (var ent in _turfCheck)
             {
                 if (physicQuery.TryGetComponent(ent, out var phys) &&
                     phys.BodyType == BodyType.Static &&
