@@ -118,11 +118,11 @@
     - id: WeaponPulseCarbine
       prob: 0.0001
       orGroup: Weapons
-    - id: WeaponGoldZipper
-      prob: 0.00001
-      orGroup: Weapons
     - id: WeaponRifleAk
       prob: 0.0001
+      orGroup: Weapons
+    - id: WeaponRifleMule #imp
+      prob: 0.0005
       orGroup: Weapons
     - id: WeaponLauncherPirateCannon
       prob: 0.001
@@ -172,11 +172,14 @@
     - id: WeaponTurretXeno
       prob: 0.01
       orGroup: Weapons
-    - id: WeaponGoldZipperFake
+    - id: WeaponGoldZipperFake #imp
       prob: 0.01
       orGroup: Weapons
     - id: WeaponRifleFoam
       prob: 0.03
+      orGroup: Weapons
+    - id: WeaponPistolZipper #imp
+      prob: 0.02
       orGroup: Weapons
     #clothing
     - id: ClothingUniformJumpsuitFamilyGuy
