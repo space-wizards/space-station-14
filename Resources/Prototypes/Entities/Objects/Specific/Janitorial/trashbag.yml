@@ -1,17 +1,17 @@
 - type: entity
-  name: trash bag
-  id: TrashBag
   parent: BaseStorageItem
+  id: TrashBag
+  name: trash bag
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/trashbag.rsi
     layers:
-      - state: icon-0
-        map: ["enum.StorageFillLayers.Fill"]
+    - state: icon-0
+      map: ["enum.StorageFillLayers.Fill"]
   - type: Storage
     maxItemSize: Normal
     grid:
-    - 0,0,7,5
+    - 0,0,7,5 # 48 storage total
     quickInsert: true
     areaInsert: true
     storageOpenSound:
@@ -20,8 +20,8 @@
       collection: trashBagRustle
     whitelist:
       tags:
-        - Cartridge
-        - Trash
+      - Cartridge
+      - Trash
   - type: UseDelay
     delay: 0.5
   - type: Tag
@@ -39,31 +39,44 @@
     size: Normal
 
 - type: entity
-  name: trash bag
-  id: TrashBagBlue
   parent: TrashBag
+  id: TrashBagHolding
+  name: trash bag of holding
+  description: An upgraded version of the janitor's trashbag, holds much more trash and picks up in a wider radius.
   components:
   - type: Sprite
     layers:
-      - state: blue-icon-0
-        map: ["enum.StorageFillLayers.Fill"]
+    - state: blue-icon-0
+      map: ["enum.StorageFillLayers.Fill"]
   - type: Item
     heldPrefix: blue
   - type: StorageFillVisualizer
     fillBaseName: blue-icon
+  - type: Storage
+    grid:
+    - 0,0,15,5 # 96 storage total
+    areaInsertRadius: 5
+    areaPickupLimit: 20
 
 - type: entity
-  name: spell of all-consuming cleanliness
+  parent: TrashBag
   id: BagOfSummoningGarbage
-  parent: TrashBagBlue
+  name: spell of all-consuming cleanliness
+  description: Dayum! And the trash is gone!
   components:
+  - type: Sprite
+    layers:
+    - state: blue-icon-0
+      map: ["enum.StorageFillLayers.Fill"]
+  - type: Item
+    heldPrefix: blue
+  - type: StorageFillVisualizer
+    fillBaseName: blue-icon
   - type: Storage
-    maxItemSize: Huge
     grid:
-    - 0,0,19,9
-    quickInsert: true
-    areaInsert: true
-    areaInsertRadius: 5
+    - 0,0,19,9 # 200 storage total
+    # areaInsertRadius: 30 # todo - fix SharedStorageSystem.cs so radius isn't hard-limited by interaction range
+    areaPickupLimit: 50
 
 - type: entity
   parent: TrashBag
@@ -72,6 +85,5 @@
   description: An upgraded trash bag with a larger internal volume, installed directly into a custodial cyborg.
   components:
   - type: Storage
-    maxItemSize: Huge
     grid:
-    - 0,0,7,6
+    - 0,0,7,6 # 56 storage total
