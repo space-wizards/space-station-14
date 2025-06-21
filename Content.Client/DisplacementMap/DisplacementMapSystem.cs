@@ -70,7 +70,7 @@ public sealed class DisplacementMapSystem : EntitySystem
         }
 
         var displacementLayer = _serialization.CreateCopy(displacementDataLayer, notNullableOverride: true);
-        displacementLayer.CopyToShaderParameters!.LayerKey = key.ToString() ?? "this is impossible";
+        displacementLayer.CopyToShaderParameters!.LayerKey = key ?? "this is impossible";
 
         _sprite.AddLayer(sprite.AsNullable(), displacementLayer, index);
         _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, index);
