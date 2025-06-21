@@ -36,7 +36,8 @@ shell-invalid-bool = Invalid boolean.
 shell-entity-uid-must-be-number = EntityUid must be a number.
 shell-could-not-find-entity = Could not find entity {$entity}
 shell-could-not-find-entity-with-uid = Could not find entity with uid {$uid}
-shell-entity-with-uid-lacks-component = Entity with uid {$uid} doesn't have {INDEFINITE($componentName)} {$componentName} component
+shell-entity-with-uid-lacks-component = Entity with uid {$uid} doesn't have {INDEFINITE($componentName)} {$componentName} component.
+shell-entity-with-uid-has-component = Entity with uid {$uid} already has {INDEFINITE($componentName)} {$componentName} component.
 shell-entity-target-lacks-component = Target entity doesn't have {INDEFINITE($componentName)} {$componentName} component
 shell-invalid-color-hex = Invalid color hex!
 shell-target-player-does-not-exist = Target player does not exist!
@@ -47,7 +48,13 @@ shell-argument-number-must-be-between = Argument {$index} must be a number betwe
 shell-argument-station-id-invalid = Argument {$index} must be a valid station id!
 shell-argument-map-id-invalid = Argument {$index} must be a valid map id!
 shell-argument-number-invalid = Argument {$index} must be a valid number!
+shell-argument-float-invalid Argument {$index} must be a valid float!
 
 # Hints
 shell-argument-username-hint = <username>
 shell-argument-username-optional-hint = [username]
+
+shell-child-attached-to-parent = Added {$child} to {$parent}.
+shell-failed-attach-child-to-parent = Unable to add {$child} to {$parent}.
+shell-entity-does-not-exist = No entity exists with uid {$uid}.
+

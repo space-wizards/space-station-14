@@ -1,7 +1,6 @@
-stat-values-desc = Dumps all stats for a particular category into a table.
-stat-values-server = Can't be run on the server!
-stat-values-args = Invalid number of args, need 1
-stat-values-invalid = {$arg} is not a valid stat!
+cmd-showvalues-desc = Dumps all stats for a particular category into a table.
+cmd-showvalues-help = Usage: showvalues <cargosell / lathesell / melee / itemsize>
+stat-values-invalid = {$arg} is not a valid option!
 
 # Cargo
 stat-cargo-values = Cargo sell prices

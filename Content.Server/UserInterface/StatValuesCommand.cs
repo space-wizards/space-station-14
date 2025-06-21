@@ -16,26 +16,27 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.UserInterface;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class StatValuesCommand : IConsoleCommand
+public sealed class StatValuesCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IComponentFactory _compFactory = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private readonly ItemSystem _itemSystem = default!;
+    [Dependency] private readonly PricingSystem _pricingSystem = default!;
 
-    public string Command => "showvalues";
-    public string Description => Loc.GetString("stat-values-desc");
-    public string Help => $"{Command} <cargosell / lathesell / melee / itemsize>";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "showvalues";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } pSession)
         {
-            shell.WriteError(Loc.GetString("stat-values-server"));
+            shell.WriteError(Loc.GetString("shell-cannot-run-command-on-server"));
             return;
         }
 
         if (args.Length != 1)
         {
-            shell.WriteError(Loc.GetString("stat-values-args"));
+            shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
             return;
         }
 
@@ -64,16 +65,14 @@ public sealed class StatValuesCommand : IConsoleCommand
         }
 
         var eui = new StatValuesEui();
-        _eui.OpenEui(eui, pSession);
+        _euiManager.OpenEui(eui, pSession);
         eui.SendMessage(message);
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-        {
             return CompletionResult.FromOptions(new[] { "cargosell", "lathesell", "melee", "itemsize", "drawrate" });
-        }
 
         return CompletionResult.Empty;
     }
@@ -84,10 +83,9 @@ public sealed class StatValuesCommand : IConsoleCommand
         // So we'll just get the first value for each prototype ID which is probably good enough for the majority.
 
         var values = new List<string[]>();
-        var priceSystem = _entManager.System<PricingSystem>();
-        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
+        var metaQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
         var prices = new HashSet<string>(256);
-        var ents = _entManager.GetEntities().ToArray();
+        var ents = EntityManager.GetEntities().ToArray();
 
         foreach (var entity in ents)
         {
@@ -100,7 +98,7 @@ public sealed class StatValuesCommand : IConsoleCommand
             if (id == null || !prices.Add(id))
                 continue;
 
-            var price = priceSystem.GetPrice(entity);
+            var price = _pricingSystem.GetPrice(entity);
 
             if (price == 0)
                 continue;
@@ -129,11 +127,10 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetItem()
     {
         var values = new List<string[]>();
-        var itemSystem = _entManager.System<ItemSystem>();
-        var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
-        var itemQuery = _entManager.GetEntityQuery<ItemComponent>();
+        var metaQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
+        var itemQuery = EntityManager.GetEntityQuery<ItemComponent>();
         var items = new HashSet<string>(1024);
-        var ents = _entManager.GetEntities().ToArray();
+        var ents = EntityManager.GetEntities().ToArray();
 
         foreach (var entity in ents)
         {
@@ -152,7 +149,7 @@ public sealed class StatValuesCommand : IConsoleCommand
             values.Add(new[]
             {
                 id,
-                $"{itemSystem.GetItemSizeLocale(itemComp.Size)}",
+                $"{_itemSystem.GetItemSizeLocale(itemComp.Size)}",
             });
         }
 
@@ -173,9 +170,9 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetMelee()
     {
         var values = new List<string[]>();
-        var meleeName = _entManager.ComponentFactory.GetComponentName<MeleeWeaponComponent>();
+        var meleeName = _compFactory.GetComponentName<MeleeWeaponComponent>();
 
-        foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
         {
             if (proto.Abstract ||
                 !proto.Components.TryGetValue(meleeName,
@@ -216,19 +213,18 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetLatheMessage()
     {
         var values = new List<string[]>();
-        var priceSystem = _entManager.System<PricingSystem>();
 
-        foreach (var proto in _proto.EnumeratePrototypes<LatheRecipePrototype>())
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<LatheRecipePrototype>())
         {
             var cost = 0.0;
 
             foreach (var (material, count) in proto.Materials)
             {
-                var materialPrice = _proto.Index(material).Price;
+                var materialPrice = _prototypeManager.Index(material).Price;
                 cost += materialPrice * count;
             }
 
-            var sell = priceSystem.GetLatheRecipePrice(proto);
+            var sell = _pricingSystem.GetLatheRecipePrice(proto);
 
             values.Add(new[]
             {
@@ -256,9 +252,9 @@ public sealed class StatValuesCommand : IConsoleCommand
     private StatValuesEuiMessage GetDrawRateMessage()
     {
         var values = new List<string[]>();
-        var powerName = _entManager.ComponentFactory.GetComponentName<ApcPowerReceiverComponent>();
+        var powerName = _compFactory.GetComponentName<ApcPowerReceiverComponent>();
 
-        foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<EntityPrototype>())
         {
             if (proto.Abstract ||
                 !proto.Components.TryGetValue(powerName,

@@ -6,33 +6,29 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class AddPolymorphActionCommand : IConsoleCommand
+public sealed class AddPolymorphActionCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly PolymorphSystem _polySystem = default!;
 
-    public string Command => "addpolymorphaction";
+    public override string Command => "addpolymorphaction";
 
-    public string Description => Loc.GetString("add-polymorph-action-command-description");
-
-    public string Help => Loc.GetString("add-polymorph-action-command-help-text");
-
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
         {
-            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number-need-specific",
+                ("$properAmount", 2),
+                ("currentAmount", args.Length)));
             return;
         }
 
-        if (!NetEntity.TryParse(args[0], out var entityUidNet) || !_entityManager.TryGetEntity(entityUidNet, out var entityUid))
+        if (!NetEntity.TryParse(args[0], out var entityUidNet) || !EntityManager.TryGetEntity(entityUidNet, out var entityUid))
         {
             shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
             return;
         }
 
-        var polySystem = _entityManager.EntitySysManager.GetEntitySystem<PolymorphSystem>();
-
-        var polymorphable = _entityManager.EnsureComponent<PolymorphableComponent>(entityUid.Value);
-        polySystem.CreatePolymorphAction(args[1], (entityUid.Value, polymorphable));
+        var polymorphable = EntityManager.EnsureComponent<PolymorphableComponent>(entityUid.Value);
+        _polySystem.CreatePolymorphAction(args[1], (entityUid.Value, polymorphable));
     }
 }

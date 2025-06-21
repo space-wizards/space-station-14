@@ -13,6 +13,10 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Emoting;
+using Content.Shared.Examine;
+using Content.Shared.Movement.Components;
+using Content.Shared.Speech;
 
 namespace Content.Server.Mind;
 
@@ -349,7 +353,26 @@ public sealed class MindSystem : SharedMindSystem
             return;
         }
 
-        MakeSentientCommand.MakeSentient(target, EntityManager);
+        MakeSentient(target);
         TransferTo(mindId, target, ghostCheckOverride: true, mind: mind);
+    }
+
+    public void MakeSentient(EntityUid uid, bool allowMovement = true, bool allowSpeech = true)
+    {
+        EntityManager.EnsureComponent<MindContainerComponent>(uid);
+        if (allowMovement)
+        {
+            EntityManager.EnsureComponent<InputMoverComponent>(uid);
+            EntityManager.EnsureComponent<MobMoverComponent>(uid);
+            EntityManager.EnsureComponent<MovementSpeedModifierComponent>(uid);
+        }
+
+        if (allowSpeech)
+        {
+            EntityManager.EnsureComponent<SpeechComponent>(uid);
+            EntityManager.EnsureComponent<EmotingComponent>(uid);
+        }
+
+        EntityManager.EnsureComponent<ExaminerComponent>(uid);
     }
 }
