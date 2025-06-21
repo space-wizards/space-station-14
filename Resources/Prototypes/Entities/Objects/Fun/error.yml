@@ -17,7 +17,7 @@
           Quantity: 5
   - type: Slippery
     slipData:
-      paralyzeTime: 3
+      knockdownTime: 3
       launchForwardsMultiplier: 3
   - type: StepTrigger
     intersectRatio: 0.2
