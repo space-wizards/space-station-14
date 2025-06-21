@@ -44,6 +44,9 @@
 
 - type: Tag
   id: Backpack
+  
+- type: tag
+  id: Bacon
 
 - type: Tag
   id: Balloon
@@ -293,6 +296,9 @@
 
 - type: Tag
   id: ChemDispensable # container that can go into the chem dispenser
+
+- type: Tag
+  id: Chili
 
 - type: Tag
   id: ChiliBowl
