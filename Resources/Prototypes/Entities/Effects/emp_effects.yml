@@ -18,7 +18,7 @@
       - HideContextMenu
   - type: EmitSoundOnSpawn
     sound: 
-      path: /Audio/Effects/Lightning/lightningbolt.ogg
+      collection: ExplosionEMP
   - type: AnimationPlayer
 
 - type: entity
