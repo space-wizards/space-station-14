@@ -22,7 +22,7 @@
       - id: PortableGeneratorJrPacmanMachineCircuitboard
       - id: JugWeldingFuel
       - id: InflatableDoorStack1
-      
+
 - type: entity
   id: CrateEngineeringAdvancedShittle
   parent: CrateEngineering
@@ -33,7 +33,7 @@
     contents:
       - id: WallmountSubstationElectronics
       - id: WallmountGeneratorAPUElectronics
-      - id: APCElectronics #added apc electronics, capacitor, and empty power cell from the upstream equivelant
-      - id: CapacitorStockPart
+      - id: APCElectronics #added apc electronics, manipulator, and empty power cell from the upstream equivelant
+      - id: MicroManipulatorStockPart
       - id: PowerCellSmallPrinted
 

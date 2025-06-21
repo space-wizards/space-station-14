@@ -6,8 +6,7 @@
   - type: MachineBoard
     prototype: MiniGyroscope
     stackRequirements:
-      Manipulator: 1
-      Capacitor: 1
+      Manipulator: 2
       Glass: 2
 
 - type: entity
@@ -21,8 +20,7 @@
     - type: MachineBoard
       prototype: ServiceTechFab
       stackRequirements:
-        MatterBin: 2
-        Manipulator: 2
+        Manipulator: 4
       tagRequirements:
         GlassBeaker:
           amount: 2
