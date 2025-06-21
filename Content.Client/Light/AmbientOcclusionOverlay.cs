@@ -1,6 +1,8 @@
 using System.Numerics;
+using Content.Shared.CCVar;
 using Content.Shared.Maps;
 using Robust.Client.Graphics;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -11,6 +13,7 @@ namespace Content.Client.Light;
 public sealed class AmbientOcclusionOverlay : Overlay
 {
     [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -35,14 +38,16 @@ public sealed class AmbientOcclusionOverlay : Overlay
         var mapId = args.MapId;
         var worldBounds = args.WorldBounds;
         var worldHandle = args.WorldHandle;
-        var color = Color.FromHex("#04080FAA");
+        var color = Color.FromHex(_cfgManager.GetCVar(CCVars.AmbientOcclusionColor));
+        var distance = _cfgManager.GetCVar(CCVars.AmbientOcclusionDistance);
         //var color = Color.Red;
         var target = viewport.RenderTarget;
         var lightScale = target.Size / (Vector2) viewport.Size;
         var scale = viewport.RenderScale / (Vector2.One / lightScale);
         var maps = _entManager.System<SharedMapSystem>();
         var lookups = _entManager.System<EntityLookupSystem>();
-        var xforms = _entManager.System<SharedTransformSystem>();
+        var query = _entManager.System<OccluderSystem>();
+        var xformSystem = _entManager.System<SharedTransformSystem>();
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
 
         if (_aoTarget?.Texture.Size != target.Size)
@@ -64,9 +69,6 @@ public sealed class AmbientOcclusionOverlay : Overlay
                 worldHandle.UseShader(_proto.Index<ShaderPrototype>("unshaded").Instance());
                 var invMatrix = _aoTarget.GetWorldToLocalMatrix(viewport.Eye!, scale);
 
-                var query = _entManager.System<OccluderSystem>();
-                var xformSystem = _entManager.System<SharedTransformSystem>();
-
                 foreach (var entry in query.QueryAabb(mapId, worldBounds))
                 {
                     DebugTools.Assert(entry.Component.Enabled);
@@ -75,7 +77,7 @@ public sealed class AmbientOcclusionOverlay : Overlay
 
                     worldHandle.SetTransform(localMatrix);
                     // 4 pixels
-                    worldHandle.DrawRect(Box2.UnitCentered.Enlarged(4f / EyeManager.PixelsPerMeter), Color.White);
+                    worldHandle.DrawRect(Box2.UnitCentered.Enlarged(distance / EyeManager.PixelsPerMeter), Color.White);
                 }
             }, Color.Transparent);
 
@@ -91,7 +93,7 @@ public sealed class AmbientOcclusionOverlay : Overlay
 
                 foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
                 {
-                    var transform = xforms.GetWorldMatrix(grid.Owner);
+                    var transform = xformSystem.GetWorldMatrix(grid.Owner);
                     var worldToTextureMatrix = Matrix3x2.Multiply(transform, invMatrix);
                     var tiles = maps.GetTilesEnumerator(grid.Owner, grid, worldBounds);
                     worldHandle.SetTransform(worldToTextureMatrix);

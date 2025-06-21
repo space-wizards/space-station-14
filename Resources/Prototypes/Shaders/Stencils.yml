@@ -7,7 +7,7 @@
     op: Replace
     func: Always
 
-# Draws to the stencil buffer if the alpha is set to 0.
+# Draws to the stencil buffer if the alpha is not set to 0.
 - type: shader
   id: StencilMask
   kind: source
