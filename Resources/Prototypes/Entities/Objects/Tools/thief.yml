@@ -43,27 +43,22 @@
   id: ToolboxThief
   name: undetermined thieving toolbox
   description: This is where your favorite thief's supplies lie. Try to remember which ones.
-  parent: [ BaseItem, BaseMinorContraband ]
+  parent: [ BaseItem, BaseSetSelector, BaseMinorContraband ]
   components:
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_thief.rsi
     state: icon
-  - type: ThiefUndeterminedBackpack
+  - type: SetSelector
     possibleSets:
     # TODO Thief pinpointer needed
-    - ChemistrySet
-    - ToolsSet
-    - ChameleonSet # TODO Chameleon stump PR needed
-    - SyndieSet
-    - SleeperSet
-    - CommunicatorSet
-    - SmugglerSet
-  - type: ActivatableUI
-    key: enum.ThiefBackpackUIKey.Key
-  - type: UserInterface
-    interfaces:
-      enum.ThiefBackpackUIKey.Key:
-        type: ThiefBackpackBoundUserInterface
+    - ThiefAnatomySet
+    - ThiefBreacherSet
+    - ThiefChameleonSet
+    - ThiefSyndieSet
+    - ThiefSleeperSet
+    - ThiefCommunicatorSet # TODO Chameleon stamp needed
+    - ThiefSmugglerSet
+    maxSelectedSets: 2
 
 - type: entity
   id: SatchelThief
@@ -76,5 +71,8 @@
     state: folded
   - type: Item
     storedRotation: 90
-  - type: ThiefUndeterminedBackpack
+  - type: SetSelector
     spawnedStoragePrototype: ClothingBackpackSatchelSmugglerUnanchored
+    spawnedStorageContainer: storagebase
+    approveSound:
+      collection: storageRustle
