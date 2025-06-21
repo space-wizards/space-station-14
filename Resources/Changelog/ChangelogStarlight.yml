@@ -8091,4 +8091,11 @@ Entries:
   id: 1117
   time: '2025-06-21T20:18:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/880
+- author: Citrea
+  changes:
+  - message: Cyborgs can now wear medals
+    type: Add
+  id: 1118
+  time: '2025-06-21T20:21:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/877
 
