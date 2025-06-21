@@ -41,3 +41,16 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: PAIEmotionControl
+  name: pai-emotion-control-name
+  description: pai-emotion-control-desc
+  productAction: ActionPAIEmotion
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

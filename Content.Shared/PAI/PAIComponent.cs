@@ -33,6 +33,15 @@ public sealed partial class PAIComponent : Component
     public EntityUid? ShopAction;
 
     /// <summary>
+    /// The action that allows the player to interact with the PAI's emotions.
+    /// </summary>
+    [DataField]
+    public EntProtoId EmotionActionId = "ActionPAIEmotion";
+
+    [DataField, AutoNetworkedField]
+    public EntityUid? EmotionAction;
+
+    /// <summary>
     /// When microwaved there is this chance to brick the pai, kicking out its player and preventing it from being used again.
     /// </summary>
     [DataField]
