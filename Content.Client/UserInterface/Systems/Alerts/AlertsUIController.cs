@@ -98,7 +98,8 @@ public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayS
         if (!EntityManager.TryGetComponent<SpriteComponent>(spriteViewEnt, out var sprite))
             return;
 
-        var ev = new UpdateAlertSpriteEvent((spriteViewEnt, sprite), alert);
+        var ev = new UpdateAlertSpriteEvent((spriteViewEnt, sprite), player, alert);
         EntityManager.EventBus.RaiseLocalEvent(player, ref ev);
+        EntityManager.EventBus.RaiseLocalEvent(spriteViewEnt, ref ev);
     }
 }
