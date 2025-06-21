@@ -25,8 +25,8 @@ namespace Content.IntegrationTests.Tests.Inventory;
 /// </summary>
 public sealed class ClothingEquipTest : InteractionTest
 {
-    private const string HardsuitProto = "ClothingOuterHardsuitEVA";
-    private const string JumpsuitProto = "ClothingUniformJumpsuitColorGrey";
+    private static readonly EntProtoId HardsuitProto = "ClothingOuterHardsuitEVA";
+    private static readonly EntProtoId JumpsuitProto = "ClothingUniformJumpsuitColorGrey";
 
     private readonly HashSet<Type> _ignoredComponents =
     [
