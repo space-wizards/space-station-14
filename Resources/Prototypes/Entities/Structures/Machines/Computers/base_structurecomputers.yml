@@ -52,7 +52,7 @@
     radius: 1.5
     energy: 1.6
     enabled: false
-    mask: /Textures/Effects/LightMasks/cone.png
+    lightMask: ConeSingle
     autoRot: true
     offset: "0, 0.4" # shine from the top, not bottom of the computer
     castShadows: false
