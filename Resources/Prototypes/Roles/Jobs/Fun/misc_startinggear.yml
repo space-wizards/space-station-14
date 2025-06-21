@@ -108,6 +108,13 @@
   equipment:
     ears: ClothingHeadsetEngineering
 
+# Emotional Support Scurret
+
+- type: startingGear
+  id: EmotionalSupportScurretGear
+  equipment:
+    id: ScurretPDA
+
 # DeathMatch Gear
 
 - type: startingGear
