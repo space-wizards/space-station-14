@@ -145,7 +145,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
                     subList.AddChild(proto);
                 }
 
-                UpdateToggleColor(toggle, subList);
+                UpdateSubGroupSelectedInfo(firstElement, toggle, subList);
             }
             else
             {
@@ -178,13 +178,19 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         return toggle;
     }
 
-    private void UpdateToggleColor(Button toggle, BoxContainer subList)
+    private void UpdateSubGroupSelectedInfo(LoadoutContainer loadout, Button toggle, BoxContainer subList)
     {
-        var anyActive = subList.Children
+        var countSubSelected = subList.Children
             .OfType<LoadoutContainer>()
-            .Any(c => c.Select.Pressed);
+            .Count(c => c.Select.Pressed);
 
-        toggle.Pressed = anyActive;
+        var anySelected = countSubSelected > 0;
+
+        if (anySelected)
+        {
+            loadout.Text += " " + Loc.GetString("loadouts-count-items-in-group", ("count", countSubSelected));
+            toggle.Pressed = anySelected;
+        }
     }
 
     /// <summary>
