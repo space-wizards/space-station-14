@@ -68,13 +68,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
 
     private bool IsTileBlockedByWeb(EntityCoordinates coords)
     {
-        if (!_turf.TryGetTileRef(coords, out var tile))
-            return false;
-
-        var bounds = _lookup.GetWorldBounds(tile.Value);
-        bounds.Box.Scale(0.9f);
-
-        foreach (var entity in _lookup.GetEntitiesIntersecting(tile.Value.GridUid, bounds, LookupFlags.Static))
+        foreach (var entity in _turf.GetEntitiesInTile(coords))
         {
             if (HasComp<SpiderWebObjectComponent>(entity))
                 return true;

@@ -107,10 +107,7 @@ public sealed class FloorTileSystem : EntitySystem
         // otherwise check it isn't blocked by a wall
         if (!canAccessCenter && _turf.TryGetTileRef(location, out var tileRef))
         {
-            var bounds = _lookup.GetWorldBounds(tileRef.Value);
-            bounds.Box.Scale(0.9f);
-
-            foreach (var ent in _lookup.GetEntitiesIntersecting(tileRef.Value.GridUid, bounds, LookupFlags.Static))
+            foreach (var ent in _lookup.GetEntitiesInTile(tileRef.Value))
             {
                 if (physicQuery.TryGetComponent(ent, out var phys) &&
                     phys.BodyType == BodyType.Static &&

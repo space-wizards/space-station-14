@@ -47,11 +47,9 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
         if (Whitelist != null)
         {
             var lookup = entityManager.System<EntityLookupSystem>();
-            var bounds = lookup.GetWorldBounds(tile);
-            bounds.Box.Scale(0.9f);
 
             int acc = 0;
-            foreach (var ent in lookup.GetEntitiesIntersecting(tile.GridUid, bounds, LookupFlags.Static))
+            foreach (var ent in lookup.GetEntitiesInTile(tile, LookupFlags.Static))
             {
                 var whitelistSystem = entityManager.System<EntityWhitelistSystem>();
                 if (whitelistSystem.IsWhitelistPass(Whitelist, ent))
