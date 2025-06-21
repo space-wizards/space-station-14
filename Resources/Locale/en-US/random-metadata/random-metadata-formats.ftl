@@ -19,6 +19,7 @@ name-format-nukie-operator = Operator {$part0}
 name-format-ert = {$part0} {$part1}
 name-format-military-leader = Sergeant {$part0}
 name-format-military-specialist = Specialist {$part0}
+name-format-military-pointman = Pointman {$part0}
 name-format-military-officer = Officer {$part0}
 name-format-military-rifle = Rifleman {$part0}
 name-format-military-grenade = Grenadier {$part0}

@@ -305,6 +305,10 @@
   id: ERTEngineerArmed
   parent: ERTEngineer
   components:
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-military-specialist
   - type: Loadout
     prototypes: [ ERTEngineerGearArmed ]
     roleLoadout: [ RoleSurvivalMilitaryDouble ]
@@ -340,7 +344,7 @@
       nameFormat: name-format-military-officer
     - type: Loadout
       prototypes: [ ERTSecurityGear ]
-      roleLoadout: [ RoleSurvivalExtended ]
+      roleLoadout: [ RoleSurvivalMilitaryDouble ]
 
 - type: entity
   id: RandomHumanoidSpawnerERTSecurityEVA
@@ -367,7 +371,7 @@
       job: ERTSecurity
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
-      roleLoadout: [ RoleSurvivalEVA ]
+      roleLoadout: [ RoleSurvivalMilitaryDouble ]
 
 - type: entity
   id: RandomHumanoidSpawnerERTSecurityArmedRifle
@@ -388,7 +392,7 @@
     nameFormat: name-format-military-rifle
   - type: Loadout
     prototypes: [ ERTSecurityGearArmedRifle ]
-    roleLoadout: [ RoleSurvivalEVA ]
+    roleLoadout: [ RoleSurvivalMilitaryDouble ]
 
 - type: entity
   parent: RandomHumanoidSpawnerERTSecurityEVA
@@ -409,7 +413,7 @@
     nameFormat: name-format-military-grenade
   - type: Loadout
     prototypes: [ ERTSecurityGearArmedGrenade ]
-    roleLoadout: [ RoleSurvivalEVA ]
+    roleLoadout: [ RoleSurvivalMilitaryDouble ]
 
 - type: entity
   parent: RandomHumanoidSpawnerERTSecurityEVA
@@ -430,7 +434,7 @@
     nameFormat: name-format-military-melee
   - type: Loadout
     prototypes: [ ERTSecurityGearArmedMelee ]
-    roleLoadout: [ RoleSurvivalEVA ]
+    roleLoadout: [ RoleSurvivalMilitaryDouble ]
 
 ## ERT Medic
 
@@ -463,7 +467,7 @@
       nameFormat: name-format-military-medic
     - type: Loadout
       prototypes: [ ERTMedicalGear ]
-      roleLoadout: [ RoleSurvivalExtended ]
+      roleLoadout: [ RoleSurvivalMilitaryDouble ]
 
 - type: entity
   id: RandomHumanoidSpawnerERTMedicalEVA
@@ -482,7 +486,7 @@
   components:
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
-      roleLoadout: [ RoleSurvivalEVA ]
+      roleLoadout: [ RoleSurvivalMilitaryDouble ]
 
 - type: entity
   parent: RandomHumanoidSpawnerERTMedicalEVA
@@ -498,7 +502,7 @@
   components:
   - type: Loadout
     prototypes: [ ERTMedicalGearArmed ]
-    roleLoadout: [ RoleSurvivalEVA ]
+    roleLoadout: [ RoleSurvivalMilitaryDouble ]
 
 ## CBURN
 
