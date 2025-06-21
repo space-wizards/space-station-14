@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
@@ -19,9 +18,7 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable;
@@ -36,7 +33,6 @@ public abstract partial class SharedStunSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
     [Dependency] protected readonly SharedStaminaSystem Stamina = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
@@ -183,7 +179,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (!Resolve(uid, ref status, false) || !TryComp<StandingStateComponent>(uid, out var standing))
+        if (!Resolve(uid, ref status, false))
             return false;
 
         if (!_statusEffect.CanApplyEffect(uid, "KnockedDown", status))
@@ -208,7 +204,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         }
         else
         {
-            RefreshKnockedMovement((uid, component), standing);
+            RefreshKnockedMovement((uid, component));
 
             // TODO: This cancellation does not predict on the client at all
             DoAfter.Cancel(component.DoAfter);

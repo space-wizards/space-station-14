@@ -90,9 +90,6 @@ public abstract partial class SharedStunSystem
 
         var ev = new KnockdownEndEvent();
         RaiseLocalEvent(entity, ref ev);
-
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
-        _movementSpeedModifier.RefreshFrictionModifiers(entity);
     }
 
     #endregion
@@ -345,15 +342,12 @@ public abstract partial class SharedStunSystem
 
     #region Movement and Friction
 
-    private void RefreshKnockedMovement(Entity<KnockedDownComponent> ent, StandingStateComponent? standing = null)
+    private void RefreshKnockedMovement(Entity<KnockedDownComponent> ent)
     {
-        if (!Resolve(ent, ref standing, false))
-            return;
-
         var ev = new KnockedDownRefreshEvent()
         {
-            SpeedModifier = standing.SpeedModifier,
-            FrictionModifier = standing.FrictionModifier,
+            SpeedModifier = 1f,
+            FrictionModifier = 1f,
         };
         RaiseLocalEvent(ent, ref ev);
 
