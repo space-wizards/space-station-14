@@ -203,7 +203,9 @@ public abstract class SharedFlashSystem : EntitySystem
         _entityLookup.GetEntitiesInRange(transform.Coordinates, range, _entSet);
         foreach (var entity in _entSet)
         {
-            if (!_random.Prob(probability)) // TODO: ProbPredicted to prevent server and client from desyncing
+            // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
+            var rand = new System.Random((int)_timing.CurTick.Value + GetNetEntity(entity).Id);
+            if (!rand.Prob(probability))
                 continue;
 
             // Is the entity affected by the flash either through status effects or by taking damage?
