@@ -1,7 +1,7 @@
 ﻿    using Content.Server.Atmos.Components;
-    using Content.Shared._DarkAscent.Temperature.Firebase;
+    using Content.Shared.Atmos;
     using Content.Shared.Audio;
-    using Robust.Server.GameObjects;
+    using Robust.Shared.Audio.Systems;
     using Robust.Shared.Timing;
 
     namespace Content.Server._DarkAscent.Temperature.Firebase;
@@ -10,13 +10,31 @@
     {
 
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
+
 
         public override void Initialize()
         {
-            base.Initialize();
+            SubscribeLocalEvent<FlammableComponent, IgnitedEvent>(OnIgnited);
+            SubscribeLocalEvent<FlammableComponent, ExtinguishedEvent>(OnExtinguished);
         }
 
+        private void OnIgnited(EntityUid uid, FlammableComponent comp, IgnitedEvent args)
+        {
+            if (EntityManager.TryGetComponent(uid, out AmbientSoundComponent ?ambient))
+            {
+                _ambient.SetAmbience(uid, true, ambient);
+            }
+        }
+
+        private void OnExtinguished(EntityUid uid, FlammableComponent comp, ExtinguishedEvent args)
+        {
+            if (EntityManager.TryGetComponent(uid, out AmbientSoundComponent ?ambient))
+            {
+                _ambient.SetAmbience(uid, false, ambient);
+            }
+        }
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -42,6 +60,7 @@
             {
                 // Decrease firestacks to extinguish the actual flame.
                 flammable.FirestackFade -= firebase.FireFadeTick;
+
                 return;
             }
 
@@ -50,26 +69,5 @@
 
             // Keep firestacks stable.
             flammable.FirestackFade = firebase.FireFadeTick;
-
-            UpdateAppearance(uid, firebase, flammable);
-        }
-
-        /// <summary>
-        /// Changes the appearence according to fuel amount
-        /// </summary>
-        private void UpdateAppearance(EntityUid uid, FirebaseComponent firebase, FlammableComponent flammable, AppearanceComponent? appearance = null)
-        {
-            if(!Resolve(uid, ref appearance))
-                return;
-
-            if (firebase.Fuel < firebase.FuelBurntPerUpdate)
-            {
-                _appearance.SetData(uid, FirebaseVisuals.State, FirebaseStatus.Off, appearance);
-            }
-            else
-            {
-                _appearance.SetData(uid, FirebaseVisuals.State, FirebaseStatus.On, appearance);
-            }
-
         }
     }
