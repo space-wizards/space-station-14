@@ -55,7 +55,7 @@ public sealed class InfoUIController : UIController, IOnStateExited<GameplayStat
         if (_infoWindow == null)
             return;
 
-        _infoWindow.Dispose();
+        _infoWindow.Close();
         _infoWindow = null;
     }
 
