@@ -1187,5 +1187,13 @@ Entries:
   id: 143
   time: '2025-06-21T01:13:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38261
+- author: SlamBamActionman
+  changes:
+  - message: customvote and cancelvote command permission has been moved from Moderator
+      to Round.
+    type: Tweak
+  id: 144
+  time: '2025-06-21T16:34:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38385
 Name: Admin
 Order: 2
