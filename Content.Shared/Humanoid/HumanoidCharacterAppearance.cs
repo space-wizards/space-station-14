@@ -270,7 +270,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
                 skinColor = Humanoid.SkinColor.ValidSkinTone(speciesProto.SkinColoration, skinColor);
             }
 
-            if (!Humanoid.EyeColor.VerifyEyeColor(speciesProto.EyeColoration, eyeColor))
+            if (!Humanoid.EyeColor.VerifyEyeColor(speciesProto.EyeColoration, eyeColor)) // Starlight
             {
                 eyeColor = Humanoid.EyeColor.ValidEyeColor(speciesProto.EyeColoration, eyeColor);
             }

@@ -442,7 +442,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         SetSex(uid, profile.Sex, false, humanoid);
         humanoid.EyeColor = profile.Appearance.EyeColor;
 
-        SetEyeColor(uid, humanoid.EyeColor, false);
+        SetEyeColor(uid, humanoid.EyeColor, false); // Starlight
 
         humanoid.EyeGlowing = profile.Appearance.EyeGlowing; //starlight
 
