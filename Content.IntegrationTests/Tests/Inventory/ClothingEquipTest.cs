@@ -11,6 +11,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Prototypes;
 using Content.Shared.Storage.Components;
+using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -35,6 +36,11 @@ public sealed class ClothingEquipTest : InteractionTest
         typeof(RandomSpawnerComponent),
     ];
 
+    private readonly List<ProtoId<TagPrototype>> _ignoredTags =
+    [
+        "PetOnly",
+    ];
+
     private readonly List<Type> _removedComponents =
     [
         // Material bag can pick up other clothing items.
@@ -51,6 +57,8 @@ public sealed class ClothingEquipTest : InteractionTest
                         && !x.HideSpawnMenu
                         && !x.Abstract
                         && !Pair.IsTestPrototype(x)
+                        && !(x.TryGetComponent<TagComponent>(out var tags, Factory)
+                             && Tags.HasAnyTag(tags, _ignoredTags))
                         && !_ignoredComponents.Any(ignore => x.HasComponent(ignore)));
 
         List<EntityUid> clothings = [];

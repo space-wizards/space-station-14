@@ -22,6 +22,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Tag;
 using Robust.Client.State;
 
 namespace Content.IntegrationTests.Tests.Interaction;
@@ -100,6 +101,7 @@ public abstract partial class InteractionTest
     protected SharedInteractionSystem InteractSys = default!;
     protected Content.Server.Construction.ConstructionSystem SConstruction = default!;
     protected SharedDoAfterSystem DoAfterSys = default!;
+    protected TagSystem Tags = default!;
     protected ToolSystem ToolSys = default!;
     protected ItemToggleSystem ItemToggleSys = default!;
     protected InteractionTestSystem STestSystem = default!;
@@ -167,6 +169,7 @@ public abstract partial class InteractionTest
         ToolSys = SEntMan.System<ToolSystem>();
         ItemToggleSys = SEntMan.System<ItemToggleSystem>();
         DoAfterSys = SEntMan.System<SharedDoAfterSystem>();
+        Tags = SEntMan.System<TagSystem>();
         Transform = SEntMan.System<SharedTransformSystem>();
         MapSystem = SEntMan.System<SharedMapSystem>();
         SConstruction = SEntMan.System<Server.Construction.ConstructionSystem>();
