@@ -28,11 +28,15 @@ public sealed class GenericCounterAlertSystem : EntitySystem
         if (!ev.Handled)
             return;
 
+        // It cannot be null if its handled, but good to check to avoid ugly null ignores.
+        if (ev.Amount == null)
+            return;
+
         // How many digits can we display
         var maxDigitCount = GetMaxDigitCount((ent, ent, sprite));
 
         // Clamp it to a positive number that we can actually display in full (no rollover to 0)
-        var amount = (int) Math.Clamp(ev.Amount!.Value, 0, Math.Pow(10, maxDigitCount) - 1);
+        var amount = (int) Math.Clamp(ev.Amount.Value, 0, Math.Pow(10, maxDigitCount) - 1);
 
         // This is super wack but ig it works?
         var digitCount = ent.Comp.HideLeadingZeroes

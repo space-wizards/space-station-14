@@ -37,7 +37,8 @@ public sealed partial class GenericCounterAlertComponent : Component
 
     /// <summary>
     /// Digits that can be displayed by the alert, represented by their sprite layer.
-    /// Ones would be on layer "1", tens on layer "10" etc.
+    /// Order defined corresponds to the digit it affects. 1st defined will affect 1st digit, 2nd affect 2nd digit and so on.
+    /// In this case ones would be on layer "1", tens on layer "10" etc.
     /// </summary>
     [DataField]
     public List<string> DigitKeys = new()
