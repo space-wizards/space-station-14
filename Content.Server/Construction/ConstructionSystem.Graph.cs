@@ -265,7 +265,10 @@ namespace Content.Server.Construction
                 PerformActions(uid, userUid, node.Actions);
 
             // An action might have deleted the entity... Account for this.
-            if (!Exists(uid))
+            // In general non-queued deletion should not occur, as if it is
+            // triggered by a DamageTrigger via a melee attack, there's still
+            // more processing that needs to occur.
+            if (EntityManager.IsQueuedForDeletion(uid) || !Exists(uid))
                 return false;
 
             UpdatePathfinding(uid, construction);
