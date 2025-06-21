@@ -28,4 +28,12 @@ public sealed partial class SpillableComponent : Component
     /// </summary>
     [DataField]
     public bool SpillWhenThrown = true;
+
+    /// <summary>
+    ///     If true, melee processing will stop if any reagent is transferred.
+    ///     Otherwise, melee processing keeps occuring allowing both reagent
+    ///     transfer and melee damage to happen.
+    /// </summary>
+    [DataField]
+    public bool PreventMelee = true;
 }
