@@ -52,6 +52,18 @@
     damage:
       types:
         Slash: 5
+  - type: Tag
+    tags:
+    - Knife
+  - type: Sharp # Remove if [36895] gets merged
+  - type: Utensil
+    types:
+    - Knife
+  - type: Tool # Slice does not work. This could be used, maybe if [36895] gets merged. Hopefully
+    qualities:
+    - Slicing
+    useSound:
+      path: /Audio/Items/Culinary/chop.ogg
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
