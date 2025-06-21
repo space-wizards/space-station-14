@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: Sentient artifacts can once again activate themselves.
-    type: Tweak
-  - message: Increased sentient artifact self activation cooldown.
-    type: Tweak
-  id: 8190
-  time: '2025-04-15T22:24:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36598
-- author: EmoGarbage404
-  changes:
   - message: When an artifact's node is unlocked, the effect will now also occur.
       Effects can still be triggered manually through interaction.
     type: Add
@@ -3906,3 +3897,10 @@
   id: 8702
   time: '2025-06-21T14:52:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38032
+- author: qrwas
+  changes:
+  - message: Loadout item group UI improvements
+    type: Tweak
+  id: 8703
+  time: '2025-06-21T22:20:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38488
