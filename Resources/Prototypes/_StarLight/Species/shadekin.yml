@@ -8,6 +8,7 @@
   markingLimits: MobShadekinMarkingLimits
   dollPrototype: MobShadekinDummy
   skinColoration: Hues
+  eyeColoration: Shadekin
   maleFirstNames: names_shadekin
   femaleFirstNames: names_shadekin
   naming: First
@@ -22,9 +23,9 @@
     Head: MobShadekinHead
     Snout: MobShadekinAnyMarkingFollowSkin
     Chest: MobShadekinTorso
-    HeadTop: MobShadekinAnyMarkingFollowSkin
+    HeadTop: MobShadekinAnyMarking
     HeadSide: MobShadekinAnyMarkingFollowSkin
-    Tail: MobShadekinAnyMarkingFollowSkin
+    Tail: MobShadekinAnyMarking
     Eyes: MobShadekinEyes
     LArm: MobShadekinLArm
     RArm: MobShadekinRArm
@@ -52,12 +53,6 @@
       points: 1
       required: true
       defaultMarkings: [EarsShadekin]
-    UndergarmentTop:
-      points: 1
-      required: false
-    UndergarmentBottom:
-      points: 1
-      required: false
     Chest:
       points: 2
       required: false
@@ -71,6 +66,9 @@
 - type: humanoidBaseSprite
   id: MobShadekinAnyMarkingFollowSkin
   markingsMatchSkin: true
+
+- type: humanoidBaseSprite
+  id: MobShadekinAnyMarking
 
 - type: humanoidBaseSprite
   id: MobShadekinEyes

@@ -1101,7 +1101,7 @@
   parent: BaseShadekinPlushie
   id: ShadekinPlush
   name: Shadekin Plushie
-  description: A plushie of a Shadowkin. It's very soft.
+  description: A plushie of a Shadekin. It's very soft.
   components:
   - type: Item
     size: Small

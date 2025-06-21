@@ -76,8 +76,7 @@ public sealed class ShadekinSystem : EntitySystem
         if (!TryComp<HumanoidAppearanceComponent>(uid, out var humanoid))
             return;
 
-        humanoid.EyeColor = Color.Black;
-        humanoid.EyeGlowing = true;
+        humanoid.EyeGlowing = false;
         Dirty(uid, humanoid);
     }
 

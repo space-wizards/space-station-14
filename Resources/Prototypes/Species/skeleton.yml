@@ -10,6 +10,7 @@
   femaleFirstNames: NamesSkeletonFirst
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues
+  eyeColoration: Hues # Starlight
 
 - type: speciesBaseSprites
   id: MobSkeletonSprites

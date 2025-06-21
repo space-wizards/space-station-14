@@ -7,6 +7,7 @@
   markingLimits: MobVoxMarkingLimits
   dollPrototype: MobVoxDummy
   skinColoration: VoxFeathers
+  eyeColoration: Hues # Starlight
   defaultSkinTone: "#6c741d"
   maleFirstNames: NamesVox
   femaleFirstNames: NamesVox

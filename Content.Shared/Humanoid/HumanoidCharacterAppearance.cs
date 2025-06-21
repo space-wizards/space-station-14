@@ -189,7 +189,20 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
 
         // TODO: Add random markings
 
+        var eyeType = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species).EyeColoration; // Starlight
+
         var newEyeColor = random.Pick(RealisticEyeColors);
+
+        // Starlight - Start
+        switch (eyeType)
+        {
+            case HumanoidEyeColor.Hues:
+                break;
+            case HumanoidEyeColor.Shadekin:
+                newEyeColor = Humanoid.EyeColor.MakeShadekinValid(newEyeColor);
+                break;
+        }
+        // Starlight - End
 
         var skinType = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species).SkinColoration;
 
@@ -255,6 +268,11 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             if (!Humanoid.SkinColor.VerifySkinColor(speciesProto.SkinColoration, skinColor))
             {
                 skinColor = Humanoid.SkinColor.ValidSkinTone(speciesProto.SkinColoration, skinColor);
+            }
+
+            if (!Humanoid.EyeColor.VerifyEyeColor(speciesProto.EyeColoration, eyeColor))
+            {
+                eyeColor = Humanoid.EyeColor.ValidEyeColor(speciesProto.EyeColoration, eyeColor);
             }
 
             markingSet.EnsureSpecies(species, skinColor, markingManager);

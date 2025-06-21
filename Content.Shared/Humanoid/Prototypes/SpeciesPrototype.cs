@@ -90,6 +90,13 @@ public sealed partial class SpeciesPrototype : IPrototype
     [DataField(required: true)]
     public HumanoidSkinColor SkinColoration { get; private set; }
 
+    /// <summary>
+    /// Starlight
+    /// Method of eyes coloration used by the species.
+    /// </summary>
+    [DataField(required: true)]
+    public HumanoidEyeColor EyeColoration { get; private set; }
+
     [DataField]
     public ProtoId<LocalizedDatasetPrototype> MaleFirstNames { get; private set; } = "NamesFirstMale";
 
