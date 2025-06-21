@@ -858,9 +858,23 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         EntityUid? inTargetHand = null;
 
-        if (targetHandsComponent?.ActiveHand is { IsEmpty: false })
+        if (targetHandsComponent is not null)
         {
-            inTargetHand = targetHandsComponent.ActiveHand.HeldEntity!.Value;
+            if (targetHandsComponent.ActiveHand is { IsEmpty: false })
+            {
+                inTargetHand = targetHandsComponent.ActiveHand.HeldEntity!.Value;
+            }
+            else
+            {
+                foreach (var hand in targetHandsComponent.Hands.Values)
+                {
+                    if (hand.HeldEntity != null)
+                    {
+                        inTargetHand = hand.HeldEntity!.Value;
+                        break;
+                    }
+                }
+            }
         }
 
         var attemptEvent = new DisarmAttemptEvent(target.Value, user, inTargetHand);
@@ -890,7 +904,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return false;
         }
 
-        var eventArgs = new DisarmedEvent(target.Value, user, 1 - chance);
+        var eventArgs = new DisarmedEvent(target.Value, user, 1 - chance, inTargetHand);
         RaiseLocalEvent(target.Value, ref eventArgs);
 
         // Nothing handled it so abort.
