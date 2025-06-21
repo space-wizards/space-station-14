@@ -59,7 +59,10 @@ public abstract class SharedConveyorController : VirtualController
     private void OnConveyedFriction(Entity<ConveyedComponent> ent, ref TileFrictionEvent args)
     {
         // Conveyed entities don't get friction, they just get wishdir applied so will inherently slowdown anyway.
-        args.Modifier = 0f;
+        if (ent.Comp.Conveying) //check if the item is actually being conveyed, otherwise normal friction should apply
+        {
+            args.Modifier = 0f;
+        }
     }
 
     private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
