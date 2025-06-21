@@ -29,13 +29,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 150
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 75
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -67,7 +67,23 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 75
+        damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
