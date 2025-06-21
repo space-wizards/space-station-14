@@ -57,6 +57,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKey = "Electrocution";
@@ -135,19 +136,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     {
         if (!electrified.Enabled)
             return false;
-        if (electrified.NoWindowInTile)
-        {
-            var tileRef = transform.Coordinates.GetTileRef(EntityManager, _mapManager);
-
-            if (tileRef != null)
-            {
-                foreach (var entity in _entityLookup.GetLocalEntitiesIntersecting(tileRef.Value, flags: LookupFlags.StaticSundries))
-                {
-                    if (_tag.HasTag(entity, WindowTag))
-                        return false;
-                }
-            }
-        }
         if (electrified.UsesApcPower)
         {
             if (!this.IsPowered(uid, EntityManager))
@@ -161,7 +149,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
     {
-        if (electrified.OnBump)
+        if (electrified.OnBump && _interaction.InRangeUnobstructed(args.OurEntity, args.OtherEntity, overlapCheck: false))
             TryDoElectrifiedAct(uid, args.OtherEntity, 1, electrified);
     }
 
