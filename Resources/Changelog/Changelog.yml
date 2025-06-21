@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Crazydave91920
-  changes:
-  - message: Fixed Zookeeper not being on the double barrel shotgun contraband list
-    type: Fix
-  id: 8188
-  time: '2025-04-15T18:27:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36583
 - author: Minemoder5000
   changes:
   - message: The Syndicate Elite Hardsuit and Cybersun Juggernaut Suit have been restricted
@@ -3909,3 +3902,10 @@
   id: 8700
   time: '2025-06-21T09:41:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38474
+- author: slarticodefast
+  changes:
+  - message: Fixed wallmount interaction rotation.
+    type: Fix
+  id: 8701
+  time: '2025-06-21T13:11:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38111
