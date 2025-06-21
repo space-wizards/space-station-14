@@ -171,30 +171,60 @@ public sealed class TurfSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Returns all of the entities within a given turf.
+    ///     Collects all of the entities intersecting with the turf at a given position into a provided <see cref="HashSet{EntityUid}"/>
     /// </summary>
-    /// <param name="turf">The turf in question.</param>
-    /// <param name="flags">A set of lookup categories to match the entities against.</param>
-    /// <returns>An enumerable containing all of the entities within the given turf.</returns>
-    public IEnumerable<EntityUid> GetEntitiesInTile(TileRef turf, LookupFlags flags = LookupFlags.Static)
+    /// <param name="coords">The position of the turf to search for entities.</param>
+    /// <param name="intersecting">The hashset used to collect the relevant entities.</param>
+    /// <param name="flags">A set of lookup categories to search for relevant entities.</param>
+    public void GetEntitiesInTile(EntityCoordinates coords, HashSet<EntityUid> intersecting, LookupFlags flags = LookupFlags.Static)
     {
-        var bounds = _entityLookup.GetWorldBounds(turf);
-        bounds.Box = bounds.Box.Scale(0.9f); // Shrink bounds slightly so we don't clip into adjacent tiles.
+        if (!TryGetTileRef(coords, out var tileRef))
+            return;
 
-        return _entityLookup.GetEntitiesIntersecting(turf.GridUid, bounds, flags);
+        _entityLookup.GetEntitiesInTile(tileRef.Value, intersecting, flags);
     }
 
     /// <summary>
-    ///     Returns all of the entities with the turf at a given position.
+    ///     Returns a collection containing all of the entities overlapping with the turf at a given position.
     /// </summary>
-    /// <param name="coords">A position within the turf in question.</param>
-    /// <param name="flags">A set of lookup categories to match the entities against.</param>
-    /// <returns>An enumerable containing all of the entities within the given turf.</returns>
-    public IEnumerable<EntityUid> GetEntitiesInTile(EntityCoordinates coords, LookupFlags flags = LookupFlags.Static)
+    /// <inheritdoc cref="GetEntitiesInTile(EntityCoordinates, HashSet{EntityUid}, LookupFlags)"/>
+    /// <returns>A hashset containing all of the entities overlapping with the turf in question.</returns>
+    public HashSet<EntityUid> GetEntitiesInTile(EntityCoordinates coords, LookupFlags flags = LookupFlags.Static)
     {
         if (!TryGetTileRef(coords, out var tileRef))
             return [];
 
-        return GetEntitiesInTile(tileRef.Value, flags);
+        return _entityLookup.GetEntitiesInTile(tileRef.Value, flags);
+    }
+}
+
+/// <summary>
+///     Extension methods for looking up entities with respect to given turfs.
+/// </summary>
+public static partial class TurfLookupExtensions
+{
+    /// <summary>
+    ///     Collects all of the entities overlapping with a given turf into a provided <see cref="HashSet{EntityUid}"/>.
+    /// </summary>
+    /// <param name="turf">The turf in question.</param>
+    /// <param name="intersecting">The hashset used to collect the relevant entities.</param>
+    /// <param name="flags">A set of lookup categories to search for relevant entities.</param>
+    public static void GetEntitiesInTile(this EntityLookupSystem lookupSystem, TileRef turf, HashSet<EntityUid> intersecting, LookupFlags flags = LookupFlags.Static)
+    {
+        var bounds = lookupSystem.GetWorldBounds(turf);
+        bounds.Box = bounds.Box.Scale(0.9f); // Otherwise the box can clip into neighboring tiles.
+        lookupSystem.GetEntitiesIntersecting(turf.GridUid, bounds, intersecting, flags);
+    }
+
+    /// <summary>
+    ///     Returns a collection containing all of the entities overlapping with a given turf.
+    /// </summary>
+    /// <inheritdoc cref="GetEntitiesInTile(EntityLookupSystem, TileRef, HashSet{EntityUid}, LookupFlags)"/>
+    /// <returns>A hashset containing all of the entities overlapping with the turf in question.</returns>
+    public static HashSet<EntityUid> GetEntitiesInTile(this EntityLookupSystem lookupSystem, TileRef turf, LookupFlags flags = LookupFlags.Static)
+    {
+        var intersecting = new HashSet<EntityUid>();
+        lookupSystem.GetEntitiesInTile(turf, intersecting, flags);
+        return intersecting;
     }
 }
