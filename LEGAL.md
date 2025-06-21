@@ -20,12 +20,20 @@ Where code from other authors is used, you must follow the terms of both the AGP
 
 For MIT this means you **must not** remove the copy of the MIT license from any distribution.
 
-- Code created by Delta-V contributors is found in `_DV` Namespaces.
+Content under these subdirectories originate from their respective forks and may contain modifications.
+| Subdirectory | Fork Name | Fork Repository | License |
+|--------------|-----------|-----------------|---------|
+| `_Ronstation` | Ronstation | https://github.com/RonRonstation/ronstation/ | AGPL 3.0 |
+| `Ronstation` | Ronstation(Legacy) | https://github.com/RonRonstation/ronstation/ | MIT* |
+| `_Impstation` | Impstation | https://github.com/impstation/imp-station-14 | AGPL 3.0 |
+| `EstacaoPirata` | Estacao Pirata | https://github.com/estacao-pirata/estacao-pirata | AGPL 3.0 |
 
-- Upstream code from [Space Station 14](https://github.com/space-wizards/space-station-14) was taken under [the MIT license](/LICENSE-MIT.txt).
-  Any code not in a specific Namespace, excluding `Nyanotrasen` subdirectories, is sublicensed as MIT plus AGPLv3 from the Space Wizards Federation.
+Additional repos that we have ported features from without subdirectories are listed below.
+| Subdirectory | Fork Name | Fork Repository | License |
+|--------------|-----------|-----------------|---------|
+| Space Station 14 | https://github.com/space-wizards/space-station-14 | MIT* |
 
-- Code taken from [the Starlight project](https://github.com/ss14Starlight/space-station-14) in the `_Starlight` namespace was taken under [their custom MIT-like license](/LICENSE-Starlight.txt) and sublicensed to AGPLv3.
+- * MIT-licensed code that contains modifications from Ronstation are sublicensed as MIT plus AGPLv3 from the Space Wizards Federation, unless otherwise stated.
 
 Assets have distinct licenses in `attributions.yml` and `meta.json` files which must be followed individually.
 
@@ -40,4 +48,4 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Legacy code
 
-If you do not agree to the terms of these software licenses you may use legacy code from before [this commit](https://github.com/DeltaV-Station/Delta-v/commit/87c70a89a67d0521a56388e6b1c3f2cb947943e4) or the [legacy repository](https://github.com/DeltaV-Station/Delta-v-Legacy) which may be used under the MIT license.
+If you do not agree to the terms of these software licenses you may use legacy code from before [commit 8daa9ab599e9354b0d8e5044feebd1a256c2d8ca](https://github.com/RonRonstation/ronstation/commit/8daa9ab599e9354b0d8e5044feebd1a256c2d8ca) which may be used under the MIT license.
