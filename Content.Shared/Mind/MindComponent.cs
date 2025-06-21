@@ -56,7 +56,7 @@ public sealed partial class MindComponent : Component
     public bool IsVisitingEntity => VisitingEntity != null;
 
     /// <summary>
-    /// The entity that it's currently visiting. Used for ghosts and the ability to return to body.
+    /// The entity that this mind may be currently visiting. Used, for example, to allow admin ghosting to not make the owner's body catatonic, as opposed to when normally ghosting.
     /// </summary>
     [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
     public EntityUid? VisitingEntity { get; set; }
