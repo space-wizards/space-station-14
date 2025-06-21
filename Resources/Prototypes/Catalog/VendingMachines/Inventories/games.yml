@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: vendingMachineInventory
   id: GoodCleanFunInventory
   startingInventory:
@@ -16,8 +17,10 @@
     PaperCNCSheet: 6
     MysteryFigureBox: 2
     BooksBag: 3
+    # start of modifications
     CardBoxPokerFilled: 4
     BriefcasePokerSet: 1
+    # end of modifications
   contrabandInventory:
     Basketball: 1
     FoodSnackBoritos: 3

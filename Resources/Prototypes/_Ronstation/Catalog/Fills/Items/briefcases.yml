@@ -1,0 +1,21 @@
+- type: entity
+  id: BriefcasePokerSet
+  parent: BriefcaseBrown
+  suffix: Filled, Poker
+  name: poker set
+  description: Feeling lucky? Comes with two decks of cards and enough chips for a full table of 8 players, or two tables of 4.
+  components:
+  - type: Sprite
+    sprite: _Ronstation/Objects/Storage/Briefcases/briefcase_poker.rsi
+    state: icon
+  - type: Item
+    sprite: _Ronstation/Objects/Storage/Briefcases/briefcase_poker.rsi
+  - type: StorageFill
+    contents:
+      - id: CardBoxPokerFilled
+      - id: PokerChipRed
+      - id: PokerChipBlue
+      - id: PokerChipWhite
+      - id: PokerChipGreen
+      - id: PokerChipBlack
+      - id: CardBoxPokerFilled

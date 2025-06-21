@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: vendingMachineInventory
   id: PTechInventory
   startingInventory:
@@ -16,7 +17,9 @@
     EncryptionKeyScience: 2
     EncryptionKeySecurity: 1
     EncryptionKeyService: 3
+    # start of modifications
     CardBoxNanotrasen: 1
+    # end of modifications
   contrabandInventory:
     BalloonNT: 2
     LuxuryPen: 1
