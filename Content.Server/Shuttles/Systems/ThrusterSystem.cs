@@ -56,6 +56,7 @@ public sealed class ThrusterSystem : EntitySystem
         SubscribeLocalEvent<ThrusterComponent, ExaminedEvent>(OnThrusterExamine);
 
         SubscribeLocalEvent<ShuttleComponent, TileChangedEvent>(OnShuttleTileChange);
+        SubscribeLocalEvent<ShuttleComponent, MassDataChangedEvent>(OnShuttleMassChange);
     }
 
     private void OnThrusterExamine(EntityUid uid, ThrusterComponent component, ExaminedEvent args)
@@ -96,6 +97,8 @@ public sealed class ThrusterSystem : EntitySystem
     {
         foreach (var change in args.Changes)
         {
+            // BUG: TileChangedEvent is called prior to updating the PhysicsComponent, so we are always one-update behind.
+
             // If the old tile was space but the new one isn't then disable all adjacent thrusters
             if (_turf.IsSpace(change.NewTile) || !_turf.IsSpace(change.OldTile))
                 continue;
@@ -132,7 +135,25 @@ public sealed class ThrusterSystem : EntitySystem
                 }
             }
         }
+    }
 
+    private void OnShuttleMassChange(Entity<ShuttleComponent> ent, ref MassDataChangedEvent args)
+    {
+        // The shuttle's inertia has changed, so subtraction would be incorrect. We have to re-accumulate.
+        ent.Comp.AngularThrust = 0f;
+
+        foreach (var thrusterUid in ent.Comp.AngularThrusters)
+        {
+            if (!TryComp<ThrusterComponent>(thrusterUid, out var thrusterComp))
+                continue;
+
+            ent.Comp.AngularThrust += thrusterComp.Thrust * GetInertiaThresholdScale((thrusterUid, thrusterComp));
+
+            if (!TryComp<ApcPowerReceiverComponent>(thrusterUid, out var thrusterPowerReceiver))
+                continue;
+
+            UpdatePowerLoad((thrusterUid, thrusterComp), thrusterPowerReceiver);
+        }
     }
 
     private void OnActivateThruster(EntityUid uid, ThrusterComponent component, ActivateInWorldEvent args)
@@ -152,6 +173,14 @@ public sealed class ThrusterSystem : EntitySystem
             EnableThruster(uid, component);
             args.Handled = true;
         }
+    }
+
+    private void UpdatePowerLoad(Entity<ThrusterComponent> ent, ApcPowerReceiverComponent? apcPowerReceiver = null)
+    {
+        if (!Resolve(ent, ref apcPowerReceiver))
+            return;
+
+        apcPowerReceiver.Load = ent.Comp.BasePowerLoad * GetInertiaThresholdScale(ent);
     }
 
     /// <summary>
@@ -200,11 +229,13 @@ public sealed class ThrusterSystem : EntitySystem
             // If no parent change doesn't matter for angular.
             if (component.Type == ThrusterType.Angular)
             {
-                oldShuttleComponent.AngularThrust -= component.Thrust;
+                var angularThrust = component.Thrust * GetInertiaThresholdScale((uid, component), xform);
+
+                oldShuttleComponent.AngularThrust -= angularThrust;
                 DebugTools.Assert(oldShuttleComponent.AngularThrusters.Contains(uid));
                 oldShuttleComponent.AngularThrusters.Remove(uid);
 
-                shuttleComponent.AngularThrust += component.Thrust;
+                shuttleComponent.AngularThrust += angularThrust;
                 DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Add(uid);
                 return;
@@ -283,10 +314,11 @@ public sealed class ThrusterSystem : EntitySystem
             return;
         }
 
-        component.IsOn = true;
 
         if (!EntityManager.TryGetComponent(xform.GridUid, out ShuttleComponent? shuttleComponent))
             return;
+
+        component.IsOn = true;
 
         // Logger.DebugS("thruster", $"Enabled thruster {uid}");
 
@@ -310,7 +342,7 @@ public sealed class ThrusterSystem : EntitySystem
 
                 break;
             case ThrusterType.Angular:
-                shuttleComponent.AngularThrust += component.Thrust;
+                shuttleComponent.AngularThrust += component.Thrust * GetInertiaThresholdScale((uid, component), xform);
                 DebugTools.Assert(!shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Add(uid);
                 break;
@@ -330,6 +362,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         _ambient.SetAmbience(uid, true);
         RefreshCenter(uid, shuttleComponent);
+        UpdatePowerLoad((uid, component));
     }
 
     /// <summary>
@@ -380,10 +413,10 @@ public sealed class ThrusterSystem : EntitySystem
             return;
         }
 
-        component.IsOn = false;
-
         if (!EntityManager.TryGetComponent(gridId, out ShuttleComponent? shuttleComponent))
             return;
+
+        component.IsOn = false;
 
         // Logger.DebugS("thruster", $"Disabled thruster {uid}");
 
@@ -398,7 +431,7 @@ public sealed class ThrusterSystem : EntitySystem
                 shuttleComponent.LinearThrusters[direction].Remove(uid);
                 break;
             case ThrusterType.Angular:
-                shuttleComponent.AngularThrust -= component.Thrust;
+                shuttleComponent.AngularThrust -= component.Thrust * GetInertiaThresholdScale((uid, component), xform);
                 DebugTools.Assert(shuttleComponent.AngularThrusters.Contains(uid));
                 shuttleComponent.AngularThrusters.Remove(uid);
                 break;
@@ -425,6 +458,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         component.Colliding.Clear();
         RefreshCenter(uid, shuttleComponent);
+        UpdatePowerLoad((uid, component));
     }
 
     public bool CanEnable(EntityUid uid, ThrusterComponent component)
@@ -562,7 +596,7 @@ public sealed class ThrusterSystem : EntitySystem
         DebugTools.Assert(component.ThrustDirections == DirectionFlag.None);
     }
 
-    public void SetAngularThrust(ShuttleComponent component, bool on)
+    public void SetAngularThrustVisualState(ShuttleComponent component, bool on)
     {
         var appearanceQuery = GetEntityQuery<AppearanceComponent>();
         var thrusterQuery = GetEntityQuery<ThrusterComponent>();
@@ -594,6 +628,17 @@ public sealed class ThrusterSystem : EntitySystem
     }
 
     #endregion
+
+    public float GetInertiaThresholdScale(Entity<ThrusterComponent> ent, TransformComponent? xform = null, PhysicsComponent? physComp = null)
+    {
+        if (!Resolve(ent.Owner, ref xform) ||
+            xform.GridUid == null ||
+            !Resolve(xform.GridUid.Value, ref physComp))
+            return 1f;
+
+        // Throttles linearly up to the threshold
+        return physComp.Inertia / MathF.Max(physComp.Inertia, ent.Comp.inertiaThreshold);
+    }
 
     private int GetFlagIndex(DirectionFlag flag)
     {

@@ -17,6 +17,12 @@ namespace Content.Server.Shuttles.Components
         public bool Enabled { get; set; } = true;
 
         /// <summary>
+        /// Base power for the <see cref="ApcPowerReceiverComponent"/>, scaled by thruster setting.
+        /// </summary>
+        [DataField]
+        public float BasePowerLoad = 1500;
+
+        /// <summary>
         /// This determines whether the thruster is actually enabled for the purposes of thrust
         /// </summary>
         public bool IsOn;
@@ -24,6 +30,12 @@ namespace Content.Server.Shuttles.Components
         // Need to serialize this because RefreshParts isn't called on Init and this will break post-mapinit maps!
         [ViewVariables(VVAccess.ReadWrite), DataField("thrust")]
         public float Thrust = 100f;
+
+        /// <summary>
+        /// Throttles the influence of gyroscopes on small shuttles. The default value is half the inertia of the standard 4-door cargo shuttle.
+        /// </summary>
+        [DataField]
+        public float inertiaThreshold = 850f;
 
         [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;
