@@ -123,6 +123,8 @@ public sealed partial class HumanoidAppearanceComponent : Component
     };
     [DataField("voice", customTypeSerializer: typeof(PrototypeIdSerializer<VoicePrototype>))]
     public string? Voice { get; set; }
+    [DataField("voice", customTypeSerializer: typeof(PrototypeIdSerializer<VoicePrototype>))]
+    public string? SiliconVoice { get; set; }
 
     /// <summary>
     ///     The displacement maps that will be applied to specific layers of the humanoid.

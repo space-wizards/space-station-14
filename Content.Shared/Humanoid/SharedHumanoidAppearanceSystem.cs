@@ -505,7 +505,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         EnsureDefaultMarkings(uid, humanoid);
         SetTTSVoice(uid, profile.Voice, humanoid);
-        SetSiliconTTSVoice(uid, profile.SiliconVoice, humanoid);
 
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))
@@ -622,14 +621,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             return;
 
         humanoid.Voice = voiceId;
-        comp.VoicePrototypeId = voiceId;
-    }
-    public void SetSiliconTTSVoice(EntityUid uid, string voiceId, HumanoidAppearanceComponent silicon)
-    {
-        if (!TryComp<TextToSpeechComponent>(uid, out var comp))
-            return;
-
-        silicon.Voice = voiceId;  
         comp.VoicePrototypeId = voiceId;
     }
     /// <summary>
