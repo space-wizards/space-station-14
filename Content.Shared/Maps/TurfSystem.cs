@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
@@ -167,5 +168,33 @@ public sealed class TurfSystem : EntitySystem
     public ContentTileDefinition GetContentTileDefinition(TileRef tile)
     {
         return GetContentTileDefinition(tile.Tile);
+    }
+
+    /// <summary>
+    ///     Returns all of the entities within a given turf.
+    /// </summary>
+    /// <param name="turf">The turf in question.</param>
+    /// <param name="flags">A set of lookup categories to match the entities against.</param>
+    /// <returns>An enumerable containing all of the entities within the given turf.</returns>
+    public IEnumerable<EntityUid> GetEntitiesInTile(TileRef turf, LookupFlags flags = LookupFlags.Static)
+    {
+        var bounds = _entityLookup.GetWorldBounds(turf);
+        bounds.Box = bounds.Box.Scale(0.9f); // Shrink bounds slightly so we don't clip into adjacent tiles.
+
+        return _entityLookup.GetEntitiesIntersecting(turf.GridUid, bounds, flags);
+    }
+
+    /// <summary>
+    ///     Returns all of the entities with the turf at a given position.
+    /// </summary>
+    /// <param name="coords">A position within the turf in question.</param>
+    /// <param name="flags">A set of lookup categories to match the entities against.</param>
+    /// <returns>An enumerable containing all of the entities within the given turf.</returns>
+    public IEnumerable<EntityUid> GetEntitiesInTile(EntityCoordinates coords, LookupFlags flags = LookupFlags.Static)
+    {
+        if (!TryGetTileRef(coords, out var tileRef))
+            return [];
+
+        return GetEntitiesInTile(tileRef.Value, flags);
     }
 }
