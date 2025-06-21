@@ -73,3 +73,5 @@
     - ashtray10
   - type: Appearance
   - type: Dumpable
+    dumpsTables: false
+    dumpsBins: true
