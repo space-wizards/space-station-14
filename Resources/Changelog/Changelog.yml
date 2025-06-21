@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Minemoder5000
-  changes:
-  - message: The Syndicate Elite Hardsuit and Cybersun Juggernaut Suit have been restricted
-      to Nuclear Operative uplinks.
-    type: Tweak
-  - message: The Elite Web Vest has been added to the uplink for 5 tc. It has reduced
-      pierce resistance, but increased heat, radiation, blunt, slash, and caustic
-      resistance compared to the normal web vest.
-    type: Add
-  id: 8189
-  time: '2025-04-15T21:39:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36225
 - author: EmoGarbage404
   changes:
   - message: Sentient artifacts can once again activate themselves.
@@ -3909,3 +3897,12 @@
   id: 8701
   time: '2025-06-21T13:11:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38111
+- author: Prole0
+  changes:
+  - message: Flask Visuals & Sounds!
+    type: Add
+  - message: Flasks now need to be opened to be drunk from.
+    type: Tweak
+  id: 8702
+  time: '2025-06-21T14:52:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38032
