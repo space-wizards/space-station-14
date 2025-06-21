@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Skeletons once again become living skulls on death.
-    type: Fix
-  id: 8187
-  time: '2025-04-15T03:38:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36571
 - author: Crazydave91920
   changes:
   - message: Fixed Zookeeper not being on the double barrel shotgun contraband list
@@ -3909,3 +3902,10 @@
   id: 8699
   time: '2025-06-21T06:32:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38142
+- author: whatston3
+  changes:
+  - message: Locked buttons must now be unlocked to trigger.
+    type: Fix
+  id: 8700
+  time: '2025-06-21T09:41:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38474
