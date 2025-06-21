@@ -1,18 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: When an artifact's node is unlocked, the effect will now also occur.
-      Effects can still be triggered manually through interaction.
-    type: Add
-  - message: Artifacts will now have more nodes on average.
-    type: Tweak
-  - message: Higher-class artifact nodes now grant significantly more points.
-    type: Tweak
-  id: 8191
-  time: '2025-04-15T22:38:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36604
-- author: EmoGarbage404
-  changes:
   - message: Restored Artifexium's interaction with artifacts. Now, a single spray
       will randomly activate one of the triggers for a node, allowing you to subvert
       puzzling artifacts.
@@ -3904,3 +3892,10 @@
   id: 8703
   time: '2025-06-21T22:20:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38488
+- author: perryprog
+  changes:
+  - message: Wet mops no longer have zero melee damage.
+    type: Fix
+  id: 8704
+  time: '2025-06-21T22:23:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38486
