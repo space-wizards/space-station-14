@@ -1195,5 +1195,12 @@ Entries:
   id: 144
   time: '2025-06-21T16:34:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38385
+- author: beck-thompson
+  changes:
+  - message: Role ban panel is now prettier!
+    type: Tweak
+  id: 145
+  time: '2025-06-21T17:54:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37952
 Name: Admin
 Order: 2
