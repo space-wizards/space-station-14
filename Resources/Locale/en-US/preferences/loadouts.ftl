@@ -9,7 +9,7 @@ loadouts-min-limit = Min count: {$count}
 loadouts-max-limit = Max count: {$count}
 loadouts-points-limit = Points: {$count} / {$max}
 
-loadouts-count-items-in-group = and {$count} other {$count ->
+loadouts-count-items-in-group = {$item} and {$count} other {$count ->
 [1] item
 *[other] items
 }
