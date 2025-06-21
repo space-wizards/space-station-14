@@ -11,6 +11,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 
 using Content.Shared.Silicons.Laws;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Guidebook.Controls;
 
@@ -46,23 +47,22 @@ public sealed partial class GuideLawsetEmbed : BoxContainer, IDocumentTag, ISear
     private void GenerateControl(SiliconLawsetPrototype lawset)
     {
         RepresentedPrototype = lawset;
-        // Setting it here makes it easier for a later system to change it later
         NameBackground.PanelOverride = new StyleBoxFlat
         {
             BackgroundColor = new(22, 22, 140)
         };
-        LawsetName.SetMarkup($"[bold]{Loc.GetString(lawset.Name ?? lawset.ID)}[/bold]");
+
+        var lawsetNameString = lawset.Name == null ? lawset.ID : Loc.GetString(lawset.Name);
+        LawsetName.SetMarkup($"[bold]{FormattedMessage.EscapeText(lawsetNameString)}[/bold]");
+
         var i = 1;
         foreach (var lawID in lawset.Laws)
         {
             var lawPrototype = _prototype.Index<SiliconLawPrototype>(lawID);
-            var locLawString = string.Empty;
-
-            locLawString = Loc.GetString(lawPrototype.LawString);
+            var locLawString = Loc.GetString(lawPrototype.LawString);
 
             RichTextLabel lawN = new()
             {
-                HorizontalExpand = true,
                 Margin = new(0, 5, 0, 1)
             };
             var locLawStatement = Loc.GetString("laws-number-wrapper", ("lawnumber", i), ("lawstring", locLawString));

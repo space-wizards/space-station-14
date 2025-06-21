@@ -29,8 +29,6 @@ public sealed partial class GuideLawsetListEmbed : BoxContainer, IDocumentTag
 
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
     {
-        control = null;
-
         foreach (var lawset in _prototype.EnumeratePrototypes<SiliconLawsetPrototype>().OrderBy(x => x.ID))
         {
             GuideLawsetEmbed embed = new(lawset);

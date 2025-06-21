@@ -7,16 +7,11 @@
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#777777"/>
         </PanelContainer.PanelOverride>
-        <BoxContainer Orientation="Vertical">
-            <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
-                <BoxContainer Name="LawsetContainer" Orientation="Vertical" HorizontalExpand="True">
-                    <PanelContainer Name="NameBackground" HorizontalExpand="True" VerticalExpand="False">
-                        <RichTextLabel Name="LawsetName" VerticalAlignment="Top" HorizontalExpand="True" HorizontalAlignment="Center"/>
-                    </PanelContainer>
-                    
-                    <!--RichTextLabels containing the individual laws are inserted here-->
-                </BoxContainer>
-            </BoxContainer>
+        <BoxContainer Orientation="Vertical" Margin="5 5 5 5" Name="LawsetContainer" HorizontalExpand="True">
+            <PanelContainer Name="NameBackground">
+                <RichTextLabel Name="LawsetName" HorizontalAlignment="Center"/>
+            </PanelContainer>
+            <!--RichTextLabels containing the individual laws are inserted here-->
         </BoxContainer>
     </PanelContainer>
 </BoxContainer>
