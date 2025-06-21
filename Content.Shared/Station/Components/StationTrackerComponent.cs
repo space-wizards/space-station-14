@@ -15,4 +15,11 @@ public sealed partial class StationTrackerComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? Station;
+
+    /// <summary>
+    /// The station that this entity was last on, if any.
+    /// Null only if the entity has never been on a station.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? LastSeenStation;
 }
