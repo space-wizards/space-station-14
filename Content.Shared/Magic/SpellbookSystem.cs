@@ -1,4 +1,5 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
+﻿using Content.Shared.Actions.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
@@ -56,7 +57,7 @@ public sealed class SpellbookSystem : EntitySystem
 
         if (!ent.Comp.LearnPermanently)
         {
-            _actions.GrantActions(args.Args.User, ent.Comp.Spells, ent);
+            _actions.GrantActions(args.Args.User, ent.Comp.Spells, ent.Owner);
             return;
         }
 

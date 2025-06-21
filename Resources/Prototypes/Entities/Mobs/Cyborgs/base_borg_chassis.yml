@@ -1,6 +1,6 @@
 - type: entity
   parent: [BaseMob, StripableInventoryBase]
-  id: BaseBorgChassis
+  id: BaseBorgChassisNotIonStormable
   name: cyborg
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
   save: false
@@ -25,7 +25,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.35
-        density: 150
+        density: 300
         mask:
         - MobMask
         layer:
@@ -83,7 +83,6 @@
     stunTime: 5
   - type: SiliconLawProvider
     laws: Crewsimov
-  - type: IonStormTarget
   - type: Inventory
     templateId: borg
   - type: Hands
@@ -156,7 +155,7 @@
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
-    screamAction: null
+    wilhelmProbability: 0
   - type: DamagedSiliconAccent
   - type: UnblockableSpeech
   - type: FootstepModifier
@@ -221,7 +220,8 @@
       minValue: 0.1
       maxValue: 2.0
       isLooped: true
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
+    spriteLayer: light
   - type: PointLight
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
@@ -252,6 +252,13 @@
 
 - type: entity
   abstract: true
+  parent: BaseBorgChassisNotIonStormable
+  id: BaseBorgChassis
+  components:
+  - type: IonStormTarget
+
+- type: entity
+  abstract: true
   id: BaseBorgTransponder
   components:
   - type: BorgTransponder
@@ -278,6 +285,26 @@
     intensitySlope: 20
     maxIntensity: 20
     canCreateVacuum: false # its for killing the borg not the station
+
+- type: entity
+  abstract: true
+  parent: BaseBorgTransponder
+  id: BaseXenoborgTransponder
+  components:
+  - type: DeviceNetwork
+    receiveFrequencyId: Xenoborg
+    transmitFrequencyId: Mothership
+  - type: SurveillanceCamera # they act like cameras for the mothership
+    networkSet: true
+    nameSet: True
+    id: Xenoborg
+  - type: Explosive
+    explosionType: Minibomb
+    deleteAfterExplosion: false # let damage threshold gib the borg
+    totalIntensity: 200 # bigger kaboom
+    intensitySlope: 20
+    maxIntensity: 100
+    canCreateVacuum: false
 
 - type: entity
   id: BaseBorgChassisNT
@@ -358,3 +385,115 @@
   - type: IonStormTarget
     chance: 1
   - type: ShowJobIcons
+
+- type: entity
+  parent: BaseBorgChassisNotIonStormable
+  id: BaseXenoborgChassis
+  name: xenoborg
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army.
+  save: false
+  abstract: true
+  components:
+  - type: RandomMetadata
+    nameSegments:
+    - NamesXenoborg
+  - type: Sprite
+    sprite: Mobs/Silicon/chassis.rsi
+  - type: MobThresholds
+    thresholds: # slightly tankier than a normal borg
+      0: Alive
+      125: Critical
+      250: Dead
+  - type: EmagSiliconLaw # should xenoborgs be emagable?
+    stunTime: 5
+  - type: SiliconLawProvider
+    laws: XenoborgLawset # custom laws here
+    subverted: true
+  - type: IntrinsicRadioTransmitter # can only use binary and xenoborg channel
+    channels:
+    - Xenoborg
+    - Binary
+  - type: ActiveRadio # but can hear the mothership channel
+    channels:
+    - Mothership
+    - Xenoborg
+    - Binary
+  - type: Repairable
+    doAfterDelay: 13 # 25% more HP, so 30% more time to heal
+  - type: BorgChassis
+    maxModules: 0
+    hasMindState: robot_e
+    noMindState: robot_e_r
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+  - type: TypingIndicator
+    proto: xenoborg
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Xenoborg
+    allowedEmotes:
+    - Laugh
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconXenoborg
+    screamAction: null
+  - type: DamagedSiliconAccent
+  - type: UnblockableSpeech
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepXenoborg
+  # - type: SpamEmitSound # makes a creppy noise randomly
+  #   minInterval: 30
+  #   maxInterval: 45
+  #   sound:
+  #     path: /Audio/Machines/genetics.ogg
+  #     params:
+  #       volume: -8
+  #       maxDistance: 5
+  #       variation: 0.05
+  - type: NpcFactionMember
+    factions:
+    - Xenoborg
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 90
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 375
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PointLight
+    color: "#0033ff"
+  - type: GuideHelp
+    guides:
+    - Cyborgs
+    - Robotics
+    # TODO: add Xenoborg guide (part 7 spoilers)
+  - type: Access
+    enabled: false
+    tags:
+    - Xenoborg
+  - type: AccessReader
+    access: [["Xenoborg"]]
+  - type: ShowJobIcons # not sure if it is needed
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
