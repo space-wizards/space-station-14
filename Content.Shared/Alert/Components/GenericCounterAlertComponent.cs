@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Alert.Components;
 
 /// <summary>
-/// This is used for an alert which simply displays a generic number
+/// This is used for an alert which simply displays a generic number over a texture.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class GenericCounterAlertComponent : Component
@@ -58,5 +58,5 @@ public sealed partial class GenericCounterAlertComponent : Component
 [ByRefEvent]
 public record struct GetGenericAlertCounterAmountEvent(AlertPrototype Alert, int? Amount = null)
 {
-    public bool Handled => Amount != null;
+    public bool Handled => Amount.HasValue;
 }

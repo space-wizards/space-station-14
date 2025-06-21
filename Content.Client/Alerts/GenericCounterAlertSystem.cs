@@ -59,7 +59,7 @@ public sealed class GenericCounterAlertSystem : EntitySystem
                 continue;
 
             var result = amount / (int) Math.Pow(10, i) % 10;
-            _sprite.LayerSetRsiState(ent.Owner, layer, $"{result}");
+            _sprite.LayerSetRsiState(ent.Owner, layer, result.ToString());
 
             if (ent.Comp.CenterGlyph)
             {
