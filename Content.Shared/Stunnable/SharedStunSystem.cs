@@ -188,7 +188,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (!Resolve(uid, ref status, false) || !TryComp<StandingStateComponent>(uid, out var standing))
+        if (!Resolve(uid, ref status, false))
             return false;
 
         if (!_statusEffect.CanApplyEffect(uid, "KnockedDown", status))
