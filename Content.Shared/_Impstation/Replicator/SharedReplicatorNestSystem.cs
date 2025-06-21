@@ -143,6 +143,7 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
         if (TryComp<StackComponent>(tripper, out var stackComp))
         {
             ent.Comp.TotalPoints += stackComp.Count;
+            ent.Comp.SpawningProgress += stackComp.Count;
         }
 
         // you get a bonus point if the item is Large, 2 bonus points if it's Huge, and 3 bonus points if it's above that.
@@ -155,7 +156,7 @@ public abstract class SharedReplicatorNestSystem : EntitySystem
             else if (_item.GetSizePrototype(itemComp.Size) >= _item.GetSizePrototype("Ginormous"))
                 ent.Comp.TotalPoints += 30;
             // regardless, items only net 1 spawning progress.
-            ent.Comp.SpawningProgress++;
+            ent.Comp.SpawningProgress += 10;
         }
 
         // if it wasn't an item and was anchorable, you get 3 bonus points.
