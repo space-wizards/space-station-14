@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: argentsunshine
-  changes:
-  - message: Added nine new hairstyles (half-up styles, middle parts, mullets, and
-      a curly undercut and side shave).
-    type: Add
-  id: 1382
-  time: '2025-03-24T05:35:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2060
 - author: Mousetrinity
   changes:
   - message: Introducing the Kaiju cloak, a way to hide your tails, wings, and spare
@@ -4218,3 +4210,10 @@
   id: 1881
   time: '2025-06-21T01:12:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2802
+- author: ruddygreat
+  changes:
+  - message: Sechuds no longer try to figure out if you should arrest materials!
+    type: Fix
+  id: 1882
+  time: '2025-06-21T01:13:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2834
