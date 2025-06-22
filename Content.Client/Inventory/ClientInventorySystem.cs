@@ -23,7 +23,6 @@ namespace Content.Client.Inventory
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
@@ -228,7 +227,7 @@ namespace Content.Client.Inventory
         public void UpdateSlot(EntityUid owner, InventorySlotsComponent component, string slotName,
             bool? blocked = null, bool? highlight = null)
         {
-            if (!HasSlot(owner, slotName)) // TODO: This somehow breaks sprite updating. But without it it crashes. Got save me.
+            if (!HasSlot(owner, slotName)) // TODO: This somehow breaks sprite updating. But without it it crashes. God save me.
                 return;
 
             var oldData = component.SlotData[slotName];
@@ -256,6 +255,7 @@ namespace Content.Client.Inventory
 
             if (owner == _playerManager.LocalEntity)
                 OnSlotAdded?.Invoke(newSlotData);
+            
             Log.Debug("Adding def client:" + newSlotDef.Name);
             return true;
         }
@@ -317,20 +317,6 @@ namespace Content.Client.Inventory
 
             EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
         }
-
-        /*protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
-        {
-            base.UpdateInventoryTemplate(ent);
-
-            if (TryComp(ent, out InventorySlotsComponent? inventorySlots))
-            {
-                foreach (var slot in ent.Comp.Slots)
-                {
-                    if (inventorySlots.SlotData.TryGetValue(slot.Name, out var slotData))
-                        slotData.SlotDef = slot;
-                }
-            }
-        }*/
 
         public sealed class SlotData
         {
