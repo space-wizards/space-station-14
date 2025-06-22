@@ -514,48 +514,38 @@
         amount: -5
 
 - type: reagent
-  id: Barozine
-  name: reagent-name-barozine
+  id: Pyroxazine
+  name: reagent-name-leporazine
   group: Medicine
-  desc: reagent-desc-barozine
-  physicalDesc: reagent-physical-desc-viscous
+  desc: reagent-desc-leporazine
+  physicalDesc: reagent-physical-desc-pungent
   flavor: medicine
-  color: "#ff867d"
+  color: "#8a24a6"
   metabolisms:
     Medicine:
       effects:
       - !type:HealthChange
-        probability: 0.3
         damage:
           types:
-            Heat: 0.5
-      - !type:HealthChange
+            Heat: -10
+      - !type:AdjustTemperature
         conditions:
-          - !type:ReagentThreshold
-            min: 30
-        damage:
-          types:
-            Poison: 3
-      - !type:ChemVomit
-        probability: 0.15
+        - !type:Temperature
+          max: 293.15
+        amount: 100000 # thermal energy, not temperature!
+      - !type:AdjustTemperature
         conditions:
-          - !type:ReagentThreshold
-            min: 30
-      - !type:GenericStatusEffect
-        key: PressureImmunity
-        component: PressureImmunity
-      - !type:GenericStatusEffect
-        key: Stutter
-        component: StutteringAccent
-      - !type:Jitter
-      - !type:Emote
-        emote: Scream
-        probability: 0.2
+        - !type:Temperature
+          min: 100
+        amount: -10000
       - !type:PopupMessage
         type: Local
-        visualType: Large
-        messages: [ "barozine-effect-skin-burning", "barozine-effect-muscle-contract" ]
-        probability: 0.1
+        visualType: Medium
+        messages: [ "leporazine-effect-temperature-adjusting" ]
+        probability: 0.2
+      - !type:AdjustReagent
+        reagent: Fresium
+        amount: 2
 
 - type: reagent
   id: Phalanximine
