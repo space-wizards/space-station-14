@@ -372,7 +372,7 @@
     - type: SalvageMobRestrictions
 
 - type: entity
-  parent: SimpleSpaceMobBase
+  parent: [SimpleSpaceMobBase, FlyingMobBase]
   id: MobSheepSpace
   name: space sheep
   description: A sheep... in space!.
@@ -403,9 +403,9 @@
           radius: 0.35
         density: 150
         mask:
-          - MobMask
+          - FlyingMobMask
         layer:
-          - MobLayer
+          - FlyingMobLayer
   - type: Tag
     tags:
       # let moths eat wool directly
@@ -479,9 +479,16 @@
   - type: HTN
     rootTask:
       task: RuminantCompound
+  - type: ActiveJetpack # Pretty particles
+    effectCooldown: 4
+    maxDistance: 0.3
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.6
-    baseSprintSpeed: 0.8
+    baseSprintSpeed: 2.0
+  - type: PointLight # Glows a little bit to see better in deep space.
+    radius: 2.0
+    energy: 1.0
+    color: "#4795ff" # Light blue colour.
 
 
 - type: entity
