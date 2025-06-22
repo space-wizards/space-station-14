@@ -4,17 +4,7 @@
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     state: margherita-slice
   product: CrateFoodPizza
-  cost: 550 # IMP 450 > 550
-  category: cargoproduct-category-name-food
-  group: market
-
-- type: cargoProduct
-  id: FoodPizzaLarge
-  icon:
-    sprite: Objects/Consumable/Food/Baked/pizza.rsi
-    state: margherita
-  product: CrateFoodPizzaLarge
-  cost: 1800
+  cost: 1600
   category: cargoproduct-category-name-food
   group: market
 
