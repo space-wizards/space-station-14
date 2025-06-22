@@ -34,7 +34,7 @@ public sealed partial class SericultureComponent : Component
     [DataField(required: true)]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public EntProtoId Action;
+    public EntProtoId Action = "ActionSericulture";
 
     [AutoNetworkedField]
     [DataField("actionEntity")]
