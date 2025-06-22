@@ -372,7 +372,7 @@
     - type: SalvageMobRestrictions
 
 - type: entity
-  parent: [SimpleSpaceMobBase, FlyingMobBase]
+  parent: [SimpleSpaceMobBase, FlyingMobBase, MobSheep]
   id: MobSheepSpace
   name: space sheep
   description: A sheep... in space!.
@@ -390,12 +390,6 @@
         sprite: Mobs/Animals/sheep.rsi
   - type: ToggleableVisuals
     spriteLayer: space_sheep_harvested
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleableVisuals.Enabled:
-        enum.ToggleableVisuals.Layer:
-          True: { visible: true }
-          False: { visible: false }
   - type: Fixtures
     fixtures:
       fix1:
@@ -406,20 +400,8 @@
           - FlyingMobMask
         layer:
           - FlyingMobLayer
-  - type: Tag
-    tags:
-      # let moths eat wool directly
-      - ClothMade
-      - DoorBumpOpener
-      - Sheep
-  - type: Reproductive
-    partnerWhitelist:
-      tags:
-        - Sheep
     offspring:
       - id: MobSheep
-  - type: ReproductivePartner
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -428,57 +410,12 @@
         Base: space_sheep_dead
       Dead:
         Base: space_sheep_dead
-  - type: SolutionContainerManager
-    solutions:
-      udder:
-        maxVol: 250
-        reagents:
-          - ReagentId: MilkSheep
-            Quantity: 30
-      wool:
-        maxVol: 250
-        reagents:
-          - ReagentId: Fiber
-            Quantity: 25
-  - type: Udder
-    reagentId: MilkSheep
-    quantityPerUpdate: 25
-    growthDelay: 20
-  - type: Wooly
   - type: Shearable
     targetSolutionName: wool
     shearedProductID: Cotton # Cotton is spawned because there is no wool item.
     productsPerSolution: 0.2 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton. 1 ÷ 5 = 0.2
     HungerUsage: 3f # You don't get much so reduce the hunger cost a bit.
     toolQuality: Cutting # Wirecutters and barber's scissors.
-  - type: Food
-    solution: wool
-    requiresSpecialDigestion: true
-    # Wooly prevents eating wool deleting the sheep so its fine
-    requireDead: false
-  - type: Butcherable
-    spawned:
-      - id: FoodMeat
-        amount: 4
-  - type: Grammar
-    attributes:
-      gender: female # Here because of UdderComponent
-  - type: InteractionPopup
-    successChance: 0.8 #SHEEP so FRIEND!!! HUG! SQUISHY! SOFT!
-    interactDelay: 1
-    interactSuccessString: petting-success-sheep
-    interactFailureString: petting-failure-sheep
-    interactSuccessSpawn: EffectHearts #🥰
-    interactSuccessSound:
-      collection: Sheep
-  - type: NpcFactionMember
-    factions:
-      - Passive
-  - type: Body
-    prototype: AnimalRuminant
-  - type: HTN
-    rootTask:
-      task: RuminantCompound
   - type: ActiveJetpack # Pretty particles
     effectCooldown: 4
     maxDistance: 0.3
