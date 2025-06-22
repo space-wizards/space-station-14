@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using Content.Client.Clothing;
 using Content.Client.Examine;
@@ -73,9 +74,18 @@ namespace Content.Client.Inventory
             if (!_proto.TryIndex(ent.Comp.TemplateId, out var index))
                 return;
 
+            foreach (var slot in ent.Comp.Slots)
+            {
+                Log.Debug("Pre-Found slot: " + slot.Name + " " + Array.IndexOf(ent.Comp.Slots, slot));
+            }
+
+            foreach (var slot in ent.Comp.Containers)
+            {
+                Log.Debug("Pre-Found container: " + slot.ID + " " + Array.IndexOf(ent.Comp.Containers, slot));
+            }
+
             ent.Comp.Slots = index.Slots;
-            // TODO: Find a way to recreate Containers. Enumerator shits itself without them.
-            // ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
+            // TODO: Find a way to recreate Containers. Enumerator shits itself without them
 
             foreach (var slot in slots.SlotData)
             {
@@ -101,21 +111,37 @@ namespace Content.Client.Inventory
                 TryAddSlotDef(ent, slots, slot);
             }
 
-            if (TryGetSlots(ent.Owner, out var definitions))
+            foreach (var slot in ent.Comp.Slots)
             {
-                foreach (var definition in definitions)
-                {
-                    if (!TryGetSlotContainer(ent.Owner, definition.Name, out var container, out _))
-                        continue;
+                Log.Debug("Pre-Update Found slot: " + slot.Name + " " + Array.IndexOf(ent.Comp.Slots, slot));
+            }
 
-                    if (!slots.SlotData.TryGetValue(definition.Name, out var data))
-                    {
-                        data = new SlotData(definition);
-                        slots.SlotData[definition.Name] = data;
-                    }
+            foreach (var slot in ent.Comp.Containers)
+            {
+                Log.Debug("Pre-Update Found container: " + Array.IndexOf(ent.Comp.Containers, slot));
+            }
 
-                    data.Container = container;
-                }
+            ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
+
+            for (var i = 0; i < ent.Comp.Containers.Length; i++)
+            {
+                Log.Debug("Checking slot index " + i + " for " + ent.Comp.Slots[i].Name);
+                var slot = ent.Comp.Slots[i];
+                if (!TryGetSlotContainer(ent.Owner, slot.Name, out var slotContainer, out var _))
+                    return;
+
+                slotContainer.OccludesLight = false;
+                // ent.Comp.Containers[i] = slotContainer; //TODO: This somehow causes Out of Index. Everything here is out of index GRAHHH.
+            }
+
+            foreach (var slot in ent.Comp.Slots)
+            {
+                Log.Debug("Found slot: " + slot.Name);
+            }
+
+            foreach (var slot in ent.Comp.Containers)
+            {
+                Log.Debug("Found container: " + slot.ID);
             }
 
             ReloadInventory();
