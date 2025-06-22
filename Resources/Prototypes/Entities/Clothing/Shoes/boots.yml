@@ -255,8 +255,8 @@
   description: With the Expression.
   components:
   - type: Sprite
-    sprite: /Clothing/Shoes/Boots/snakeskin.rsi
+    sprite: Clothing/Shoes/Boots/snakeskin.rsi
   - type: Clothing
-    sprite: /Clothing/Shoes/Boots/snakeskin.rsi
+    sprite: Clothing/Shoes/Boots/snakeskin.rsi
   - type: ClothingSlowOnDamageModifier
     modifier: 0.5
