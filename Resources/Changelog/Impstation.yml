@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: SixValentine
   changes:
-  - message: Slimes need to put in some more hutzpah to kill themselves via vapebomb
-      on Luna
-    type: Fix
-  id: 1386
-  time: '2025-03-25T01:43:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2069
-- author: SixValentine
-  changes:
   - message: The Drunken Carp on Train is no longer a death trap
     type: Fix
   id: 1387
@@ -4236,3 +4228,12 @@
   id: 1885
   time: '2025-06-22T06:29:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2843
+- author: msTheowo
+  changes:
+  - message: Pen holders
+    type: Add
+  - message: Paper bins are now craftable
+    type: Tweak
+  id: 1886
+  time: '2025-06-22T06:31:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2844
