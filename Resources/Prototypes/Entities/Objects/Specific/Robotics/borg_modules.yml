@@ -506,6 +506,7 @@
     - Shovel
     - MineralScannerUnpowered
     - BorgOreBag
+    - RadioHandheldExpedition # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
@@ -525,6 +526,7 @@
     - Shovel
     - AdvancedMineralScannerUnpowered
     - OreBagOfHolding
+    - RadioHandheldExpedition # Starlight
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-mining-module }
 
