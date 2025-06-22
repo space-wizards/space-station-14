@@ -15,7 +15,7 @@ public sealed partial class InventoryComponent : Component
     public ProtoId<InventoryTemplatePrototype> TemplateId { get; set; } = "human";
 
     [DataField]
-    public ProtoId<SpeciesPrototype>? SpeciesId { get; set; }
+    public string? SpeciesId { get; set; }
 
     [ViewVariables(VVAccess.ReadWrite)]
     public SlotDefinition[] Slots = Array.Empty<SlotDefinition>();
@@ -43,9 +43,9 @@ public sealed partial class InventoryComponent : Component
 public sealed class InventoryComponentState : ComponentState
 {
     public ProtoId<InventoryTemplatePrototype> Template;
-    public ProtoId<SpeciesPrototype>? Species;
+    public string? Species;
 
-    public InventoryComponentState(ProtoId<InventoryTemplatePrototype> template, ProtoId<SpeciesPrototype>? species)
+    public InventoryComponentState(ProtoId<InventoryTemplatePrototype> template, string? species)
     {
         Template = template;
         Species = species;
