@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
+using Content.Shared.AlertLevel;
 using Content.Shared.CCVar;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -106,6 +107,21 @@ public sealed class AlertLevelSystem : EntitySystem
         return alert.CurrentLevel;
     }
 
+    /// <summary>
+    /// If the current level can be selected on station
+    /// </summary>
+    public bool IsSelectable(AlertLevelComponent? alert = null)
+    {
+
+        if (alert == null || alert.AlertLevels == null ||
+            !alert.AlertLevels.Levels.TryGetValue(alert.CurrentLevel, out var level))
+        {
+            return false;
+        }
+
+        return level.Selectable && !level.DisableSelection && !alert.IsLevelLocked;
+    }
+
     public float GetAlertLevelDelay(EntityUid station, AlertLevelComponent? alert = null)
     {
         if (!Resolve(station, ref alert))
@@ -205,6 +221,8 @@ public sealed class AlertLevelSystem : EntitySystem
             _chatSystem.DispatchStationAnnouncement(station, announcementFull, playDefaultSound: playDefault,
                 colorOverride: detail.Color, sender: stationName);
         }
+
+        Dirty(station, component);
 
         RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
     }

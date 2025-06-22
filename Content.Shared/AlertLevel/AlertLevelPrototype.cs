@@ -1,7 +1,7 @@
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.AlertLevel;
+namespace Content.Shared.AlertLevel;
 
 [Prototype("alertLevels")]
 public sealed partial class AlertLevelPrototype : IPrototype
