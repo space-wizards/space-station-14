@@ -27,7 +27,7 @@ If you believe someone is violating the code of conduct, we ask that you report 
 
 Original text courtesy of the [Speak Up! project](http://web.archive.org/web/20141109123859/http://speakup.io/coc.html).
 
-## On Comunity Moderation
+## On Community Moderation
 
 Deviating from the Code of Conduct on the Github repository may result in moderative actions taken by project Maintainers. This can involve your content being edited or deleted, and may result in a temporary or permanent block from the repository.
 

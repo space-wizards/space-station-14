@@ -1,82 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404, Fildrance
-  changes:
-  - message: new ui for analysis console, new ui for node scanner. Artifact node activation
-      is now different.
-    type: Add
-  - message: artifacts cannot create massive distruction events, become guns or music
-      instruments. Sentient artifacts cannot activate nodes.
-    type: Remove
-  id: 8186
-  time: '2025-04-15T00:34:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33370
-- author: EmoGarbage404
-  changes:
-  - message: Skeletons once again become living skulls on death.
-    type: Fix
-  id: 8187
-  time: '2025-04-15T03:38:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36571
-- author: Crazydave91920
-  changes:
-  - message: Fixed Zookeeper not being on the double barrel shotgun contraband list
-    type: Fix
-  id: 8188
-  time: '2025-04-15T18:27:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36583
-- author: Minemoder5000
-  changes:
-  - message: The Syndicate Elite Hardsuit and Cybersun Juggernaut Suit have been restricted
-      to Nuclear Operative uplinks.
-    type: Tweak
-  - message: The Elite Web Vest has been added to the uplink for 5 tc. It has reduced
-      pierce resistance, but increased heat, radiation, blunt, slash, and caustic
-      resistance compared to the normal web vest.
-    type: Add
-  id: 8189
-  time: '2025-04-15T21:39:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36225
-- author: EmoGarbage404
-  changes:
-  - message: Sentient artifacts can once again activate themselves.
-    type: Tweak
-  - message: Increased sentient artifact self activation cooldown.
-    type: Tweak
-  id: 8190
-  time: '2025-04-15T22:24:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36598
-- author: EmoGarbage404
-  changes:
-  - message: When an artifact's node is unlocked, the effect will now also occur.
-      Effects can still be triggered manually through interaction.
-    type: Add
-  - message: Artifacts will now have more nodes on average.
-    type: Tweak
-  - message: Higher-class artifact nodes now grant significantly more points.
-    type: Tweak
-  id: 8191
-  time: '2025-04-15T22:38:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36604
-- author: EmoGarbage404
-  changes:
-  - message: Restored Artifexium's interaction with artifacts. Now, a single spray
-      will randomly activate one of the triggers for a node, allowing you to subvert
-      puzzling artifacts.
-    type: Add
-  id: 8192
-  time: '2025-04-15T22:49:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36595
-- author: slarticodefast, Flareguy
-  changes:
-  - message: Added the Desynchronizer, an experimental device that allows the user
-      to temporarily make themselves invincible, invisible, & immobile. Unlock it
-      through experimental science today!
-    type: Add
-  - message: Gravity Manipulation technology is now a tier 2 technology.
-    type: Tweak
-  id: 8193
-  time: '2025-04-16T01:33:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35752
 - author: RedBookcase
   changes:
   - message: Minor blueprint tweaks and a new stored sprite for blueprints.
@@ -3913,3 +3835,63 @@
   id: 8698
   time: '2025-06-20T23:39:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38218
+- author: Tayrtahn
+  changes:
+  - message: Sloths... now... speak... slowly...
+    type: Add
+  id: 8699
+  time: '2025-06-21T06:32:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38142
+- author: whatston3
+  changes:
+  - message: Locked buttons must now be unlocked to trigger.
+    type: Fix
+  id: 8700
+  time: '2025-06-21T09:41:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38474
+- author: slarticodefast
+  changes:
+  - message: Fixed wallmount interaction rotation.
+    type: Fix
+  id: 8701
+  time: '2025-06-21T13:11:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38111
+- author: Prole0
+  changes:
+  - message: Flask Visuals & Sounds!
+    type: Add
+  - message: Flasks now need to be opened to be drunk from.
+    type: Tweak
+  id: 8702
+  time: '2025-06-21T14:52:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38032
+- author: qrwas
+  changes:
+  - message: Loadout item group UI improvements
+    type: Tweak
+  id: 8703
+  time: '2025-06-21T22:20:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38488
+- author: perryprog
+  changes:
+  - message: Wet mops no longer have zero melee damage.
+    type: Fix
+  id: 8704
+  time: '2025-06-21T22:23:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38486
+- author: keronshb
+  changes:
+  - message: Added the Hypereutactic Blade back to the Traitor Uplink
+    type: Add
+  - message: Added the Hypereutatic Blade to the Nukie uplink
+    type: Add
+  id: 8705
+  time: '2025-06-22T16:50:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37182
+- author: Cojoke-dot
+  changes:
+  - message: Pacifists can now use the Staff of Healing
+    type: Tweak
+  id: 8706
+  time: '2025-06-22T19:38:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38509
