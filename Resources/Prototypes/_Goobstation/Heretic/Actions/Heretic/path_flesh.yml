@@ -1,29 +1,34 @@
 - type: entity
+  parent: BaseAction
   id: ActionHereticFleshSurgery
   name: flesh surgery
   description: Remove a random organ from someone, or heal your teammates.
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 30
-    event: !type:EventHereticFleshSurgery
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: flesh_surgery
+  - type: TargetAction
+  - type: EntityTargetAction
+    event: !type:EventHereticFleshSurgery
   - type: HereticAction
     messageLoc: heretic-speech-flesh-surgery
 
 - type: entity
+  parent: BaseAction
   id: ActionPolymorphHereticHorror
   name: REALITY UNCOIL
   description: Transform into an eldritch horror.
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 60
-    event: !type:EventHereticFleshAscend
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: final_hymn
+  - type: InstantAction
+    event: !type:EventHereticFleshAscend
   - type: HereticAction
     messageLoc: heretic-speech-flesh-worm
