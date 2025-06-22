@@ -214,7 +214,7 @@ public sealed partial class ZombieSystem
         _popup.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
 
         //Make it sentient if it's an animal or something
-        MakeSentientCommand.MakeSentient(target, EntityManager);
+        _mind.MakeSentient(target);
 
         //Make the zombie not die in the cold. Good for space zombies
         if (TryComp<TemperatureComponent>(target, out var tempComp))

@@ -5,7 +5,7 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Shared.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
-using Content.Server.Mind.Commands;
+using Content.Server.Mind;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -13,7 +13,6 @@ using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
-using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Players;
@@ -46,7 +45,7 @@ public sealed class GhostRoleSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly FollowerSystem _followerSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -693,7 +692,7 @@ public sealed class GhostRoleSystem : EntitySystem
         RaiseLocalEvent(mob, spawnedEvent);
 
         if (ghostRole.MakeSentient)
-            MakeSentientCommand.MakeSentient(mob, EntityManager, ghostRole.AllowMovement, ghostRole.AllowSpeech);
+            _mindSystem.MakeSentient(mob, ghostRole.AllowMovement, ghostRole.AllowSpeech);
 
         EnsureComp<MindContainerComponent>(mob);
 
@@ -740,7 +739,7 @@ public sealed class GhostRoleSystem : EntitySystem
         }
 
         if (ghostRole.MakeSentient)
-            MakeSentientCommand.MakeSentient(uid, EntityManager, ghostRole.AllowMovement, ghostRole.AllowSpeech);
+            _mindSystem.MakeSentient(uid, ghostRole.AllowMovement, ghostRole.AllowSpeech);
 
         GhostRoleInternalCreateMindAndTransfer(args.Player, uid, uid, ghostRole);
         UnregisterGhostRole((uid, ghostRole));
@@ -822,18 +821,17 @@ public sealed class GhostRoleSystem : EntitySystem
 }
 
 [AnyCommand]
-public sealed class GhostRoles : IConsoleCommand
+public sealed class GhostRoles : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _e = default!;
+    [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
 
-    public string Command => "ghostroles";
-    public string Description => "Opens the ghost role request window.";
-    public string Help => $"{Command}";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "ghostroles";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player != null)
-            _e.System<GhostRoleSystem>().OpenEui(shell.Player);
+            _ghostRoleSystem.OpenEui(shell.Player);
         else
-            shell.WriteLine("You can only open the ghost roles UI on a client.");
+            shell.WriteLine($"shell-cannot-run-command-from-server");
     }
 }
