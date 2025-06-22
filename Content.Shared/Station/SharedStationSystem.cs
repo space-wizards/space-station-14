@@ -94,6 +94,10 @@ public abstract partial class SharedStationSystem : EntitySystem
             return;
 
         ent.Comp.Station = station;
+
+        if (station.HasValue)
+            ent.Comp.LastSeenStation = station;
+
         Dirty(ent);
     }
 
@@ -107,5 +111,17 @@ public abstract partial class SharedStationSystem : EntitySystem
             return null;
 
         return ent.Comp.Station;
+    }
+
+    /// <summary>
+    /// Gets the station an entity was last on, if any.
+    /// </summary>
+    [PublicAPI]
+    public EntityUid? GetLastStation(Entity<StationTrackerComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return null;
+
+        return ent.Comp.LastSeenStation;
     }
 }

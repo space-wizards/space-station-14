@@ -302,7 +302,7 @@ namespace Content.Server.PDA
         private void UpdateAlertLevel(EntityUid uid, PdaComponent pda)
         {
             var station = _station.GetOwningStation(uid);
-            if (!TryComp(station, out AlertLevelComponent? alertComp) ||
+            if (!TryComp(station, out Shared.AlertLevel.AlertLevelComponent? alertComp) ||
                 alertComp.AlertLevels == null)
                 return;
             pda.StationAlertLevel = alertComp.CurrentLevel;

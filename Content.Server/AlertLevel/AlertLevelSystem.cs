@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
+using Content.Shared.AlertLevel;
 using Content.Shared.CCVar;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -28,7 +29,7 @@ public sealed class AlertLevelSystem : EntitySystem
 
     public override void Update(float time)
     {
-        var query = EntityQueryEnumerator<AlertLevelComponent>();
+        var query = EntityQueryEnumerator<Shared.AlertLevel.AlertLevelComponent>();
 
         while (query.MoveNext(out var station, out var alert))
         {
@@ -48,7 +49,7 @@ public sealed class AlertLevelSystem : EntitySystem
 
     private void OnStationInitialize(StationInitializedEvent args)
     {
-        if (!TryComp<AlertLevelComponent>(args.Station, out var alertLevelComponent))
+        if (!TryComp<Shared.AlertLevel.AlertLevelComponent>(args.Station, out var alertLevelComponent))
             return;
 
         if (!_prototypeManager.TryIndex(alertLevelComponent.AlertLevelPrototype, out AlertLevelPrototype? alerts))
@@ -76,7 +77,7 @@ public sealed class AlertLevelSystem : EntitySystem
             return;
         }
 
-        var query = EntityQueryEnumerator<AlertLevelComponent>();
+        var query = EntityQueryEnumerator<Shared.AlertLevel.AlertLevelComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
             comp.AlertLevels = alerts;
@@ -96,7 +97,7 @@ public sealed class AlertLevelSystem : EntitySystem
         RaiseLocalEvent(new AlertLevelPrototypeReloadedEvent());
     }
 
-    public string GetLevel(EntityUid station, AlertLevelComponent? alert = null)
+    public string GetLevel(EntityUid station, Shared.AlertLevel.AlertLevelComponent? alert = null)
     {
         if (!Resolve(station, ref alert))
         {
@@ -106,7 +107,7 @@ public sealed class AlertLevelSystem : EntitySystem
         return alert.CurrentLevel;
     }
 
-    public float GetAlertLevelDelay(EntityUid station, AlertLevelComponent? alert = null)
+    public float GetAlertLevelDelay(EntityUid station, Shared.AlertLevel.AlertLevelComponent? alert = null)
     {
         if (!Resolve(station, ref alert))
         {
@@ -121,7 +122,7 @@ public sealed class AlertLevelSystem : EntitySystem
     /// Returns an empty string if the station has no alert levels defined.
     /// </summary>
     /// <param name="station">The station entity.</param>
-    public string GetDefaultLevel(Entity<AlertLevelComponent?> station)
+    public string GetDefaultLevel(Entity<Shared.AlertLevel.AlertLevelComponent?> station)
     {
         if (!Resolve(station.Owner, ref station.Comp) || station.Comp.AlertLevels == null)
         {
@@ -140,7 +141,7 @@ public sealed class AlertLevelSystem : EntitySystem
     /// <param name="force">Force the alert change. This applies if the alert level is not selectable or not.</param>
     /// <param name="locked">Will it be possible to change level by crew.</param>
     public void SetLevel(EntityUid station, string level, bool playSound, bool announce, bool force = false,
-        bool locked = false, MetaDataComponent? dataComponent = null, AlertLevelComponent? component = null)
+        bool locked = false, MetaDataComponent? dataComponent = null, Shared.AlertLevel.AlertLevelComponent? component = null)
     {
         if (!Resolve(station, ref component, ref dataComponent)
             || component.AlertLevels == null

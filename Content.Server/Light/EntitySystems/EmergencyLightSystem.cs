@@ -56,7 +56,7 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
                         Loc.GetString(component.BatteryStateText[component.State]))));
 
             // Show alert level on the light itself.
-            if (!TryComp<AlertLevelComponent>(_station.GetOwningStation(uid), out var alerts))
+            if (!TryComp<Shared.AlertLevel.AlertLevelComponent>(_station.GetOwningStation(uid), out var alerts))
                 return;
 
             if (alerts.AlertLevels == null)
@@ -94,7 +94,7 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
 
     private void OnAlertLevelChanged(AlertLevelChangedEvent ev)
     {
-        if (!TryComp<AlertLevelComponent>(ev.Station, out var alert))
+        if (!TryComp<Shared.AlertLevel.AlertLevelComponent>(ev.Station, out var alert))
             return;
 
         if (alert.AlertLevels == null || !alert.AlertLevels.Levels.TryGetValue(ev.AlertLevel, out var details))
@@ -173,7 +173,7 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
         if (!TryComp<ApcPowerReceiverComponent>(entity.Owner, out var receiver))
             return;
 
-        if (!TryComp<AlertLevelComponent>(_station.GetOwningStation(entity.Owner), out var alerts))
+        if (!TryComp<Shared.AlertLevel.AlertLevelComponent>(_station.GetOwningStation(entity.Owner), out var alerts))
             return;
 
         if (alerts.AlertLevels == null || !alerts.AlertLevels.Levels.TryGetValue(alerts.CurrentLevel, out var details))

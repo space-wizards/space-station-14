@@ -81,7 +81,7 @@ namespace Content.Server.AlertLevel.Commands
         private string[] GetStationLevelNames(EntityUid station)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            if (!entityManager.TryGetComponent<AlertLevelComponent>(station, out var alertLevelComp))
+            if (!entityManager.TryGetComponent<Shared.AlertLevel.AlertLevelComponent>(station, out var alertLevelComp))
                 return new string[]{};
 
             if (alertLevelComp.AlertLevels == null)
