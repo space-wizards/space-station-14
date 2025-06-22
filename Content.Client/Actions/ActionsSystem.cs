@@ -5,29 +5,23 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Mapping;
 using Content.Shared.Maps;
-using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Sequence;
 using Robust.Shared.Serialization.Markdown.Value;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
 namespace Content.Client.Actions
 {
-    [UsedImplicitly]
     public sealed class ActionsSystem : SharedActionsSystem
     {
-        public delegate void OnActionReplaced(EntityUid actionId);
-
         [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -40,7 +34,6 @@ namespace Content.Client.Actions
         public event Action<ActionsComponent>? LinkActions;
         public event Action? UnlinkActions;
         public event Action? ClearAssignments;
-        public event Action<List<SlotAssignment>>? AssignSlot;
 
         private readonly List<EntityUid> _removed = new();
         private readonly List<Entity<ActionComponent>> _added = new();
@@ -238,7 +231,6 @@ namespace Content.Client.Actions
 
             ClearAssignments?.Invoke();
 
-            var assignments = new List<SlotAssignment>();
             foreach (var entry in sequence.Sequence)
             {
                 if (entry is not MappingDataNode map)
@@ -366,7 +358,5 @@ namespace Content.Client.Actions
 
             args.FoundTarget = true;
         }
-
-        public record struct SlotAssignment(byte Hotbar, byte Slot, EntityUid ActionId);
     }
 }
