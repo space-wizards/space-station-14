@@ -90,17 +90,6 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         SyncTechnologyList(UnlockedCardsContainer, unlockedTech);
     }
 
-    public void Update(Entity<ResearchServerComponent> ent)
-    {
-        ResearchServerComponent server = ent;
-
-        _serverPoints = server.Points;
-        _rediscoverCost = server.RediscoverCost;
-        _nextRediscover = server.NextRediscover;
-
-        UpdateRediscoverButton();
-    }
-
     private void UpdateRediscoverButton()
     {
         RediscoverButton.Disabled = !HasAccess() || _serverPoints < _rediscoverCost || _timing.CurTime < _nextRediscover;
