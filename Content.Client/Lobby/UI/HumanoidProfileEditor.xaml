@@ -104,7 +104,7 @@
                                     <Button Name="VoicePreviewButton" Text="{Loc 'humanoid-profile-editor-voice-play'}" MaxWidth="80" />
                                 </BoxContainer>
                                 <BoxContainer HorizontalExpand="True">
-                                    <Label Text="{Loc 'humanoid-profile-editor-voice-label'}" />
+                                    <Label Text="{Loc 'humanoid-profile-editor-silicon-voice-label'}" />
                                     <Control HorizontalExpand="True"/>
                                     <OptionButton Name="SiliconVoiceButton" HorizontalAlignment="Left" />
                                     <Button Name="SiliconVoicePreviewButton" Text="{Loc 'humanoid-profile-editor-voice-play'}" MaxWidth="80" />
