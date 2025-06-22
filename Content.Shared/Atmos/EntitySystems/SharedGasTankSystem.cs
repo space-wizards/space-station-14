@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.AirTank;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Examine;
@@ -20,6 +21,7 @@ public abstract class SharedGasTankSystem : EntitySystem
     [Dependency] private   readonly SharedInternalsSystem _internals = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
     [Dependency] private   readonly UseDelaySystem _delay = default!;
+    [Dependency] private   readonly AirTankLooksLikeSystem _airTankLooks = default!;
 
     public const string GasTankDelay = "gasTank";
 
@@ -116,7 +118,7 @@ public abstract class SharedGasTankSystem : EntitySystem
         return internalsComp != null && internalsComp.BreathTools.Count != 0 && !ent.Comp.IsValveOpen;
     }
 
-    public bool ConnectToInternals(Entity<GasTankComponent> ent, EntityUid? user = null)
+    public bool ConnectToInternals(Entity<GasTankComponent> ent, EntityUid? user = null, bool noSafety = false)
     {
         var (owner, component) = ent;
         if (component.IsConnected || !CanConnectToInternals(ent))
@@ -125,6 +127,13 @@ public abstract class SharedGasTankSystem : EntitySystem
         TryGetInternalsComp(ent, out var internalsUid, out var internalsComp, ent.Comp.User);
         if (internalsUid == null || internalsComp == null)
             return false;
+
+        if ((user is {} notNull) && !noSafety && !_airTankLooks.CheckShouldBreathe(notNull, ent))
+        {
+            // it  3am
+            _airTankLooks.CreateShouldntBreathePopup(notNull, ent);
+            return false;
+        }
 
         if (!_delay.TryResetDelay(ent.Owner, checkDelayed: true, id: GasTankDelay))
             return false;

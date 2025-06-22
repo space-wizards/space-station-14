@@ -1,3 +1,4 @@
+using Content.Shared.AirTank;
 using Content.Shared.Alert;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -105,7 +106,7 @@ public abstract class SharedInternalsSystem : EntitySystem
             return StartToggleInternalsDoAfter(user, (target, internals), mode);
         }
 
-        // Toggle off.
+         // Toggle off.
         if (TryComp(internals.GasTankEntity, out GasTankComponent? gas))
         {
             if (mode == ToggleMode.On)
@@ -120,7 +121,7 @@ public abstract class SharedInternalsSystem : EntitySystem
         if (mode == ToggleMode.Off)
             return false;
 
-        return _gasTank.ConnectToInternals(tank.Value, user: user);
+        return _gasTank.ConnectToInternals(tank.Value, user: user, noSafety: force);
     }
 
     private bool StartToggleInternalsDoAfter(EntityUid user, Entity<InternalsComponent> targetEnt, ToggleMode mode)

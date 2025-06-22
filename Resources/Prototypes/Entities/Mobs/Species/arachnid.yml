@@ -118,6 +118,10 @@
   - type: Inventory
     templateId: arachnid
     speciesId: arachnid
+  - type: AirTankShouldBreathe
+    tankTypes:
+    - Oxygen
+    - RegularAir
 
 
 - type: entity
@@ -128,7 +132,7 @@
   - type: HumanoidAppearance
     species: Arachnid
   - type: Inventory
-    speciesId: arachnid 
+    speciesId: arachnid
 
 
 #>88w88<
