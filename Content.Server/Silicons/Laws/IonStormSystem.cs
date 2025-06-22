@@ -58,6 +58,7 @@ public sealed class IonStormSystem : EntitySystem
     [ValidatePrototypeId<DatasetPrototype>]
     private const string Foods = "IonStormFoods";
 
+    // imp add start
     public override void Initialize()
     {
         base.Initialize();
@@ -72,8 +73,6 @@ public sealed class IonStormSystem : EntitySystem
     {
         var lawBound = ent.Comp;
         EnsureComp<IonStormTargetComponent>(ent, out var target);
-        if (!_robustRandom.Prob(target.Chance))
-            return;
 
         var laws = _siliconLaw.GetLaws(ent, lawBound);
         if (laws.Laws.Count == 0)
