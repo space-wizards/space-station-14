@@ -58,7 +58,6 @@ public sealed class IonStormSystem : EntitySystem
     [ValidatePrototypeId<DatasetPrototype>]
     private const string Foods = "IonStormFoods";
 
-    // imp add start
     public override void Initialize()
     {
         base.Initialize();
