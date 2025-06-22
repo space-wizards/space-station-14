@@ -1443,7 +1443,7 @@
       - !type:HealthChange
         damage:
           types:
-            Heat: -6
+            Heat: -3
             Cold: 1
       - !type:HealthChange
         conditions:
