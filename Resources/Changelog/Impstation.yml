@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: bigsantino1
-  changes:
-  - message: Cluwne and monkey polymorphs now revert on crit.
-    type: Tweak
-  - message: Wizards can no longer make you a cluwne permanently.
-    type: Fix
-  id: 1388
-  time: '2025-03-25T01:45:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2071
 - author: DinnerCalzone
   changes:
   - message: The default supermatter radiator setup has been tweaked to allow more
@@ -4237,3 +4228,10 @@
   id: 1887
   time: '2025-06-22T06:33:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2849
+- author: starlighthowls
+  changes:
+  - message: NTAS WW now has a zoo!
+    type: Add
+  id: 1888
+  time: '2025-06-22T06:35:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2840
