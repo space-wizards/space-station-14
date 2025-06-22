@@ -7,7 +7,6 @@
 - type: dataset
   id: ThavenMoodsShared
   values:
-    - SecretMoodsShared
     - FashionIsCritical
     - FashionReroll
     - HonorDepartment
@@ -28,14 +27,6 @@
     - Holiday
 #   - OutOfFashion
 #   - InFashion
-
-# Keep Your Moods Secret: Thaven moods are a strictly-kept secret, and should never be revealed to anyone.
-- type: thavenMood
-  id: SecretMoodsShared
-  moodName: thaven-mood-secret-moods-shared-name
-  moodDesc: thaven-mood-secret-moods-shared-desc
-  conflicts:
-    - SecretMoods
 
 # Fashion Is Critical: Thaven pay close attention to appearances, and regard one's fashion choices as an indication of their character.
 - type: thavenMood
