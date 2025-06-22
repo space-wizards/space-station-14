@@ -20,7 +20,7 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
         var query = EntityQueryEnumerator<IonStormTargetComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var target, out var xform))
         {
-            // only affect law holders on the station, and check random chance
+            // only affect entities on the station, and check random chance
             if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation ||
                 !_random.Prob(target.Chance))
                 continue;
@@ -29,9 +29,3 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
         }
     }
 }
-
-/// <summary>
-/// Event raised on an entity with <see cref="IonStormTargetComponent"/> when an ion storm occurs on the attached station.
-/// </summary>
-[ByRefEvent]
-public record struct IonStormEvent(bool Adminlog = true);
