@@ -155,6 +155,15 @@
   - type: Sprite
     sprite: Objects/Fun/AI.rsi
     state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/AI.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.06"
 
 - type: entity
   parent: BaseFigurineCheapo
