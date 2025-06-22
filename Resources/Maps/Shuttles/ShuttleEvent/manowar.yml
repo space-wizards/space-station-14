@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 250.0.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/29/2025 03:19:37
+  entityCount: 448
+maps: []
+grids:
+- 1
+orphans:
+- 1
+nullspace: []
 tilemap:
   0: Space
   2: FloorBrokenWood
@@ -932,6 +943,46 @@ entities:
     components:
     - type: Transform
       pos: 4.5,-1.5
+      parent: 1
+  - uid: 441
+    components:
+    - type: Transform
+      pos: 0.5,8.5
+      parent: 1
+  - uid: 442
+    components:
+    - type: Transform
+      pos: 0.5,9.5
+      parent: 1
+  - uid: 443
+    components:
+    - type: Transform
+      pos: 0.5,10.5
+      parent: 1
+  - uid: 444
+    components:
+    - type: Transform
+      pos: 0.5,11.5
+      parent: 1
+  - uid: 445
+    components:
+    - type: Transform
+      pos: 0.5,12.5
+      parent: 1
+  - uid: 446
+    components:
+    - type: Transform
+      pos: 0.5,13.5
+      parent: 1
+  - uid: 447
+    components:
+    - type: Transform
+      pos: 3.5,-3.5
+      parent: 1
+  - uid: 448
+    components:
+    - type: Transform
+      pos: -2.5,-3.5
       parent: 1
 - proto: CableHV
   entities:

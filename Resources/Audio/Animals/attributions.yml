@@ -139,20 +139,34 @@
   source: "https://github.com/ParadiseSS13/Paradise/commit/a34f1054cef5a44a67fdac3b67b811137c6071dd"
 
 - files:
-    - fox1.ogg
-    - fox2.ogg
-    - fox3.ogg
-    - fox4.ogg
-    - fox5.ogg
-    - fox6.ogg
-    - fox7.ogg
-    - fox8.ogg
-    - fox9.ogg
-    - fox10.ogg
-    - fox11.ogg
-    - fox12.ogg
-    - fox13.ogg
-    - fox14.ogg
+  - fox1.ogg
+  - fox2.ogg
+  - fox3.ogg
+  - fox4.ogg
+  - fox5.ogg
+  - fox6.ogg
+  - fox7.ogg
+  - fox8.ogg
+  - fox9.ogg
+  - fox10.ogg
+  - fox11.ogg
+  - fox12.ogg
+  - fox13.ogg
+  - fox14.ogg
   copyright: "Created by fujiwaranao"
   license: "CC-BY-NC-SA-4.0"
   source: "https://github.com/space-wizards/space-station-14/pull/27578"
+
+- files:
+  - wawa_achoo.ogg
+  - wawa_chatter.ogg
+  - wawa_chillin.ogg
+  - wawa_depression.ogg
+  - wawa_exclaim.ogg
+  - wawa_mock.ogg
+  - wawa_protest.ogg
+  - wawa_question.ogg
+  - wawa_statement.ogg
+  copyright: "created by FairlySadPanda"
+  license: "CC-BY-4.0"
+  source: "https://github.com/space-wizards/space-station-14/pull/37936"

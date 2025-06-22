@@ -6,12 +6,27 @@
   components:
   - type: StorageFill
     contents:
-      - id: Handcuffs
-        amount: 4
+    - id: Handcuffs
+      amount: 4
   - type: Sprite
     layers:
-      - state: box_security
-      - state: handcuff
+    - state: box_security
+    - state: handcuff
+
+- type: entity
+  name: ziptie box
+  parent: BoxCardboard
+  id: BoxZiptie
+  description: A box full of zipties.
+  components:
+  - type: StorageFill
+    contents:
+    - id: Zipties
+      amount: 9
+  - type: Sprite
+    layers:
+    - state: box_security
+    - state: ziptie
 
 - type: entity
   name: flashbang box
@@ -21,48 +36,87 @@
   components:
   - type: StorageFill
     contents:
-      - id: GrenadeFlashBang
-        amount: 4
+    - id: GrenadeFlashBang
+      amount: 4
   - type: Sprite
     layers:
-      - state: box_security
-      - state: flashbang
+    - state: box_security
+    - state: flashbang
+
+- type: entity
+  name: stinger grenade box
+  parent: BoxCardboard
+  id: BoxStinger
+  description: A box full of stinger grenades. Disperse!
+  components:
+  - type: StorageFill
+    contents:
+    - id: GrenadeStinger
+      amount: 4
+  - type: Sprite
+    layers:
+    - state: box_security
+    - state: flashbang
+
+- type: entity
+  name: tear gas grenade box
+  parent: BoxCardboard
+  id: BoxTearGas
+  description: A box full of tear gas grenades. Hold your breath.
+  components:
+  - type: StorageFill
+    contents:
+    - id: TearGasGrenade
+      amount: 4
+  - type: Sprite
+    layers:
+    - state: box_security
+    - state: flashbang
 
 - type: entity
   name: sechud box
   parent: BoxCardboard
   id: BoxSechud
+  description: A box of sechuds.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingEyesHudSecurity
+      amount: 4
+  - type: Sprite
+    layers:
+    - state: box_security
+    - state: sechud
+
+- type: entity
+  name: secglasses box
+  parent: BoxCardboard
+  id: BoxSecglasses
   description: A box of security glasses.
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesHudSecurity
-        amount: 4
+    - id: ClothingEyesGlassesSecurity
+      amount: 4
   - type: Sprite
     layers:
-      - state: box_security
-      - state: sechud
+    - state: box_security
+    - state: secglasses
 
 - type: entity
-  name: ziptie box
+  name: sunglasses box
   parent: BoxCardboard
-  id: BoxZiptie
-  description: A box full of zipties.
+  id: BoxSunglasses
+  description: A box of cool flash-proof sunglasses.
   components:
-  - type: Storage
-    grid:
-    - 0,0,4,3
-    whitelist:
-      components:
-      - Handcuff
   - type: StorageFill
     contents:
-      - id: Zipties
-        amount: 10
+    - id: ClothingEyesGlassesSunglasses
+      amount: 4
   - type: Sprite
     layers:
-      - state: box_security
-      - state: ziptie
+    - state: box_security
+    - state: sunglasses
 
 - type: entity
   name: forensic pad box
@@ -79,5 +133,5 @@
       amount: 9
   - type: Sprite
     layers:
-      - state: box_security
-      - state: forensic
+    - state: box_security
+    - state: forensic

@@ -36,9 +36,9 @@ public sealed class SharedAnomalyCoreSystem : EntitySystem
         var (uid, comp) = ent;
 
         // don't waste charges on non-anchorable non-anomalous static bodies.
-        if (!HasComp<AnomalyComponent>(args.Hit)
-            && !HasComp<AnchorableComponent>(args.Hit)
-            && TryComp<PhysicsComponent>(args.Hit, out var body)
+        if (!HasComp<AnomalyComponent>(args.Target)
+            && !HasComp<AnchorableComponent>(args.Target)
+            && TryComp<PhysicsComponent>(args.Target, out var body)
             && body.BodyType == BodyType.Static)
             return;
 
