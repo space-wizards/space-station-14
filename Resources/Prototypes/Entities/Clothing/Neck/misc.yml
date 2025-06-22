@@ -1,3 +1,4 @@
+#TODO this should be able to be changed to upstream implementation with toggleablevisuals being fixed
 - type: entity
   parent: ClothingNeckPullableBase # imp
   id: ClothingNeckHeadphones

@@ -1,47 +1,50 @@
 # actions
 - type: entity
+  parent: BaseAction
   id: ActionHereticOpenStore
   name: Open Knowledge Store
   description: Open the Knowledge Store.
-  categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: open_store
+  - type: InstantAction
     event: !type:EventHereticOpenStore {}
   - type: HereticAction
     requireMagicItem: false
 
 - type: entity
+  parent: BaseAction
   id: ActionHereticMansusGrasp
   name: Mansus Grasp
   description: Channel the power of the Old Gods through your grip.
-  categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: mansus_grasp
+  - type: InstantAction
     event: !type:EventHereticMansusGrasp {}
   - type: HereticAction
     requireMagicItem: false
 
 - type: entity
+  parent: BaseAction
   id: ActionHereticMansusLink
   name: Manse Link
   description: Pierce through reality and connect minds to one another. Default radio key is :z
-  categories: [ HideSpawnMenu ]
   components:
-  - type: EntityTargetAction
+  - type: Action
     useDelay: 10
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: mansus_link
+  - type: EntityTargetAction
     event: !type:EventHereticMansusLink {}
   - type: HereticAction
     requireMagicItem: false

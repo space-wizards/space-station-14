@@ -204,15 +204,16 @@
 
 # Begin CD - Character Records
 - type: entity
+  parent: BaseAction
   id: ActionAGhostShowCharacterRecords
   name: Character Records Interface
   description: View all of the character records
-  categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: station_records } #imp edit - use a real sprite for this since it's going on the AI as well.
     iconOn: Interface/Actions/actions_ai.rsi/station_records.png
     keywords: [ "AI", "console", "interface" ]
     priority: -10
+  - type: InstantAction
     event: !type:ToggleIntrinsicUIEvent { key: enum.CharacterRecordConsoleKey.Key }
 # Edn CD - Character Records

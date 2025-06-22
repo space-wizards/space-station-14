@@ -1,53 +1,56 @@
 - type: entity
+  parent: BaseAction
   id: ActionHereticVoidBlast
   name: Void Blast
   description: Fire off a cone of ice in front of you.
-  categories: [ HideSpawnMenu ]
   components:
-  - type: WorldTargetAction
+  - type: Action
     useDelay: 15
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: void_blast
-    event: !type:HereticVoidBlastEvent
-    checkCanAccess: false
+  - type: TargetAction
     range: 0
+  - type: WorldTargetAction
+    event: !type:HereticVoidBlastEvent
   - type: HereticAction
     requireMagicItem: true
     messageLoc: heretic-speech-void-blast
 
 - type: entity
+  parent: BaseAction
   id: ActionHereticVoidPhase
   name: Void Phase
   description: Shift through the void, knocking down everyone around you.
-  categories: [ HideSpawnMenu ]
   components:
-  - type: WorldTargetAction
+  - type: Action
     useDelay: 15
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: void_phase
-    event: !type:HereticVoidBlinkEvent
-    checkCanAccess: false
+  - type: TargetAction
     range: 0
+  - type: WorldTargetAction
+    event: !type:HereticVoidBlinkEvent
   - type: HereticAction
     requireMagicItem: true
     messageLoc: heretic-speech-void-phase
 
 - type: entity
+  parent: BaseAction
   id: ActionHereticVoidPull
   name: Void Pull
   description: Pull and damage nearby heathens.
-  categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 20
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: void_pull
+  - type: InstantAction
     event: !type:HereticVoidPullEvent
   - type: HereticAction
     requireMagicItem: true

@@ -1,11 +1,13 @@
 - type: entity
+  parent: BaseAction
   id: ActionFabricateGumball
   name: Fabricate Gumball
   description: Fabricate a gumball full of sugar and medicine to treat small injuries.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: _DV/Objects/Consumable/Food/candy.rsi, state: gumball }
     iconColor: '#FFAED7'
     useDelay: 40
+  - type: InstantAction
     event: !type:FabricateCandyActionEvent
       item: FoodGumball

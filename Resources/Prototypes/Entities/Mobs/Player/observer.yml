@@ -91,20 +91,22 @@
     followEntity: true
   - type: IgnoreUIRange # imp. pretty much all this does is make it so that ghosts can see IDs and health info at any range, since ghosts don't have hands or complexinteract
 
-# imp - ActionAghostShowRadar except with CheckCanInteract set to false, and a UseDelay
+# imp - ActionAghostShowRadar except with BaseMentalAction parent and a UseDelay
 - type: entity
+  parent: BaseMentalAction
   id: ActionGhostShowRadar
   name: Mass Scanner Interface
   description: View a Mass Scanner Interface.
   components:
-  - type: InstantAction
+  - type: Action
     checkCanInteract: false
     icon: { sprite: Interface/Actions/actions_ai.rsi, state: mass_scanner }
     iconOn: Interface/Actions/actions_ai.rsi/mass_scanner.png
     keywords: [ "AI", "console", "interface" ]
     priority: -6
-    event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
     useDelay: 60 # to discourage everyone from opening it at once and causing potential perf issues.
+  - type: InstantAction
+    event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
 
 - type: entity
   parent: BaseMentalAction

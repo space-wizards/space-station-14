@@ -7,17 +7,19 @@
   - type: ShowStaticPriceIcon
 
 - type: entity
+  parent: BaseAction
   id: ActionActivateSalvoHud
   name: Activate S.A.L.V.O hud
   description: Activates the S.A.L.V.O hud, showing the composition of nearby items
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
-    event: !type:ActivateSalvoHudEvent
     sound: !type:SoundPathSpecifier
       path: /Audio/Machines/sonar-ping.ogg
       params:
         volume: -10
+  - type: InstantAction
+    event: !type:ActivateSalvoHudEvent
 
 - type: entity
   parent: [ClothingEyesBase, BaseLensSlot, ShowSalvageIcons]

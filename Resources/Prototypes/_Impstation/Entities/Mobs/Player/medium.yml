@@ -1,10 +1,12 @@
 - type: entity
+  parent: BaseAction
   id: ActionToggleGhostsMedium
   name: Toggle Ghosts
   description: Toggle the visibility of ghosts.
   components:
-  - type: InstantAction
+  - type: Action
     icon: { sprite: Mobs/Ghosts/ghost_human.rsi, state: icon }
     clientExclusive: true
     checkCanInteract: false
+  - type: InstantAction
     event: !type:ToggleGhostsMediumActionEvent

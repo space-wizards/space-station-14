@@ -1,16 +1,21 @@
 - type: entity
+  parent: BaseAction
   id: ActionSpawnSpaceGreaseSpell
   name: Space Grease
   description: This spell summons a pool of space grease centered on the clicked location.
   components:
-  - type: WorldTargetAction
+  - type: Magic
+  - type: Action
     useDelay: 20
-    range: 30
+    itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/blink.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: space_grease
+  - type: TargetAction
+    range: 30
+  - type: WorldTargetAction
     event: !type:WorldSpawnSpellEvent
       prototypes:
       - id: MagicInstantEffectSpaceGrease

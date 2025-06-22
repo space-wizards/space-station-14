@@ -1,100 +1,106 @@
 - type: entity
+  parent: BaseAction
   id: ActionHereticJaunt
   name: Ashen Passage
   description: A short range spell that allows you to pass unimpeded through walls.
-  categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 20
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: ashen_shift
+  - type: InstantAction
     event: !type:EventHereticAshenShift
   - type: HereticAction
     requireMagicItem: true
     messageLoc: heretic-speech-ash-jaunt
 
 - type: entity
+  parent: BaseAction
   id: ActionHereticBlazingDash
   name: Blazing Dash
   description: A spell that sets you ablaze and temporarily grants you the speed of a wildfire. Be sure to bring a firesuit.
-  categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: ashen_shift
+  - type: InstantAction
     event: !type:EventHereticBlazingDash
   - type: HereticAction
     requireMagicItem: true
     messageLoc: heretic-speech-ash-dash
 
 - type: entity
+  parent: BaseAction
   id: ActionHereticVolcanoBlast
   name: Volcanic Blast
   description: Charge up a blast of fire that chains between nearby targets, setting them ablaze.
-  categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 10
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: volcano_blast
+  - type: InstantAction
     event: !type:EventHereticVolcanoBlast
   - type: HereticAction
     requireMagicItem: true
     messageLoc: heretic-speech-ash-volcano
 
 - type: entity
+  parent: BaseAction
   id: ActionHereticNightwatcherRebirth
   name: Nightwatcher's Rebirth
   description: A spell that extinguishes you and drains nearby heathens engulfed in flames of their life force.
-  categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 15
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: nightwatcher_rebirth
+  - type: InstantAction
     event: !type:EventHereticNightwatcherRebirth
   - type: HereticAction
     requireMagicItem: true
     messageLoc: heretic-speech-ash-rebirth
 
 - type: entity
+  parent: BaseAction
   id: ActionHereticAscension1
   name: Oath of Flame
   description: For a minute, you will passively create a ring of fire around you.
-  categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 90
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: ashlord_rite1
+  - type: InstantAction
     event: !type:EventHereticFlames
   - type: HereticAction
     requireMagicItem: true
     messageLoc: heretic-speech-ash-flame
 
 - type: entity
+  parent: BaseAction
   id: ActionHereticAscension2
   name: Fire Cascade
   description: Heats the air around you.
-  categories: [ HideSpawnMenu ]
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 30
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Heretic/abilities_heretic.rsi
       state: ashlord_rite2
+  - type: InstantAction
     event: !type:EventHereticCascade
   - type: HereticAction
     requireMagicItem: true

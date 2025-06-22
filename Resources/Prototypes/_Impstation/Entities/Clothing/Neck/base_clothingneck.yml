@@ -6,11 +6,13 @@
   - type: Neck
 
 - type: entity
+  parent: BaseAction
   id: ActionToggleNeck
   name: Toggle Neck
   description: Something changes...
   components:
-  - type: InstantAction
+  - type: Action
     icon: Interface/Default/blocked.png
     iconOn: { sprite: Clothing/Neck/Misc/headphones.rsi, state: icon-on } # this should probably be somewhere else
+  - type: InstantAction
     event: !type:ToggleNeckEvent
