@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: E1M1 can no longer be spaced.
-    type: Tweak
-  id: 1385
-  time: '2025-03-25T01:41:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2076
 - author: SixValentine
   changes:
   - message: Slimes need to put in some more hutzpah to kill themselves via vapebomb
@@ -4235,3 +4228,11 @@
   id: 1884
   time: '2025-06-22T06:19:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2823
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: The Portable Sensor Array can be manufactured at the Security Techfab
+      alongside the protolathe with a cost adjustment.
+    type: Tweak
+  id: 1885
+  time: '2025-06-22T06:29:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2843
