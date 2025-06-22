@@ -123,6 +123,11 @@ namespace Content.Client.Inventory
 
             ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
 
+            foreach (var slot in ent.Comp.Containers)
+            {
+                Log.Debug("Post-Update Found container: " + Array.IndexOf(ent.Comp.Containers, slot));
+            }
+
             for (var i = 0; i < ent.Comp.Containers.Length; i++)
             {
                 Log.Debug("Checking slot index " + i + " for " + ent.Comp.Slots[i].Name);
@@ -131,7 +136,7 @@ namespace Content.Client.Inventory
                     return;
 
                 slotContainer.OccludesLight = false;
-                // ent.Comp.Containers[i] = slotContainer; //TODO: This somehow causes Out of Index. Everything here is out of index GRAHHH.
+                // ent.Comp.Containers[i] = slotContainer; TODO: This somehow causes Out of Index. Everything here is out of index GRAHHH.
             }
 
             foreach (var slot in ent.Comp.Slots)
