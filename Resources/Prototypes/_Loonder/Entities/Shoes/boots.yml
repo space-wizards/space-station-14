@@ -1,0 +1,12 @@
+- type: entity
+  parent: [ClothingShoesMilitaryBase, BaseSecurityContraband]
+  id: ClothingShoesBootsSnake
+  name: snakeskin boots
+  description: With the Expression.
+  components:
+  - type: Sprite
+    sprite: _KS14/Clothing/Shoes/Boots/snakeskin.rsi
+  - type: Clothing
+    sprite: _KS14/Clothing/Shoes/Boots/snakeskin.rsi
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.5

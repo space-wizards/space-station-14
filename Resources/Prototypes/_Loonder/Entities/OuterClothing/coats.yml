@@ -1,0 +1,27 @@
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, ClothingOuterArmorBase]
+  id: ClothingOuterCoatDiscoBlazer
+  name: disco ass blazer
+  description: In it your face... Adorned...
+  components:
+  - type: Sprite
+    sprite: _KS14/Clothing/OuterClothing/Coats/discoassblazer.rsi
+  - type: Clothing
+    sprite: _KS14/Clothing/OuterClothing/Coats/discoassblazer.rsi
+  - type: StorageFill
+    contents:
+    - id: SmokingPipeFilledTobacco
+    - id: FlippoEngravedLighter
+  - type: Armor # goidamed
+    coverage:
+    - Chest
+    - Groin
+    - Tail
+    - Arm
+    - Leg
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.65
+        Heat: 0.7

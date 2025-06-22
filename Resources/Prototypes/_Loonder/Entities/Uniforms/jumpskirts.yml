@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtVampire
+  name: Strange Vampire Dress.
+  description: Pose for the fans fr....
+  components:
+  - type: Sprite
+    sprite: _KS14/Clothing/Uniform/Jumpskirts/strangevampiredress.rsi
+  - type: Clothing
+    sprite: _KS14/Clothing/Uniform/Jumpskirts/strangevampiredress.rsi
