@@ -164,8 +164,8 @@ public sealed partial class ResearchSystem
         if (args.Server != null)
             return;
         component.MainDiscipline = null;
-        component.CurrentTechnologyCards = new ();
-        component.SupportedDisciplines = new ();
+        component.CurrentTechnologyCards = new();
+        component.SupportedDisciplines = new();
         component.UnlockedTechnologies = new();
         component.UnlockedRecipes = new();
         Dirty(uid, component);

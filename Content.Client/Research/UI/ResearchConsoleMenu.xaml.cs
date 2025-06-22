@@ -172,9 +172,9 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
 
     private bool HasAccess()
     {
-        return _player.LocalEntity is not { } local ||
-               !_entity.TryGetComponent<AccessReaderComponent>(Entity, out var access) ||
-               _accessReader.IsAllowed(local, Entity, access);
+        return _player.LocalEntity is not { } local
+               || !_entity.TryGetComponent<AccessReaderComponent>(Entity, out var access)
+               || _accessReader.IsAllowed(local, Entity, access);
     }
 
     /// <summary>

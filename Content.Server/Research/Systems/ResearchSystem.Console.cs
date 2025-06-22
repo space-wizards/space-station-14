@@ -157,6 +157,7 @@ public sealed partial class ResearchSystem
 
         args.Handled = true;
     }
+
     private bool HasAccess(EntityUid uid, EntityUid act)
     {
         return TryComp<AccessReaderComponent>(uid, out var access) && _accessReader.IsAllowed(act, uid, access);
