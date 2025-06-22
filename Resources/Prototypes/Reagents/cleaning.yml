@@ -71,6 +71,7 @@
   id: SpaceLube
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
+  evaporationSpeed: 0.1
   slipData:
     requiredSlipSpeed: 1
     superSlippery: true
