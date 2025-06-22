@@ -82,7 +82,6 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
                 continue;
 
             var meta = MetaData(ent);
-
             if (meta.EntityPrototype is null)
                 continue;
 
@@ -103,11 +102,14 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
         if (effectComp.Alert is not null)
         {
-            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null ? null : (_timing.CurTime, effectComp.EndEffectTime.Value);
+            (TimeSpan Start, TimeSpan End)? cooldown = effectComp.EndEffectTime is null
+                ? null
+                : (_timing.CurTime, effectComp.EndEffectTime.Value);
             _alerts.ShowAlert(
                 effectComp.AppliedTo.Value,
                 effectComp.Alert.Value,
-                cooldown: cooldown);
+                cooldown: cooldown
+            );
         }
     }
 
@@ -124,11 +126,14 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             effectComp.EndEffectTime = _timing.CurTime + duration;
             Dirty(effect, effectComp);
 
-            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null ? null : (_timing.CurTime, effectComp.EndEffectTime.Value);
+            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null
+                ? null
+                : (_timing.CurTime, effectComp.EndEffectTime.Value);
             _alerts.ShowAlert(
                 effectComp.AppliedTo.Value,
                 effectComp.Alert.Value,
-                cooldown: cooldown);
+                cooldown: cooldown
+            );
         }
     }
 
@@ -139,11 +144,14 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
         if (ent.Comp.Alert is not null)
         {
-            (TimeSpan, TimeSpan)? cooldown = ent.Comp.EndEffectTime is null ? null : (_timing.CurTime, ent.Comp.EndEffectTime.Value);
+            (TimeSpan, TimeSpan)? cooldown = ent.Comp.EndEffectTime is null
+                ? null
+                : (_timing.CurTime, ent.Comp.EndEffectTime.Value);
             _alerts.ShowAlert(
                 ent.Comp.AppliedTo.Value,
                 ent.Comp.Alert.Value,
-                cooldown: cooldown);
+                cooldown: cooldown
+            );
         }
     }
 

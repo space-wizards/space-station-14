@@ -7,7 +7,7 @@ namespace Content.Shared.StatusEffectNew;
 public abstract partial class SharedStatusEffectsSystem
 {
     /// <summary>
-    /// Attempts to add a status effect to the specified entity. Returns True if the effect is added or exists
+    /// Attempts to add a status effect to the specified entity. Returns True if the effect is added or it already exists
     /// and has been successfully extended in time, returns False if the status effect cannot be applied to this entity,
     /// or for any other reason.
     /// </summary>
@@ -18,10 +18,12 @@ public abstract partial class SharedStatusEffectsSystem
     /// If True, the effect duration time will be reset and reapplied. If False, the effect duration time will be overlaid with the existing one.
     /// In the other case, the effect will either be added for the specified time or its time will be extended for the specified time.
     /// </param>
-    public bool TryAddStatusEffect(EntityUid target,
+    public bool TryAddStatusEffect(
+        EntityUid target,
         EntProtoId effectProto,
         TimeSpan? duration = null,
-        bool resetCooldown = false)
+        bool resetCooldown = false
+    )
     {
         if (TryGetStatusEffect(target, effectProto, out var existedEffect))
         {
@@ -33,13 +35,14 @@ public abstract partial class SharedStatusEffectsSystem
                 SetStatusEffectTime(existedEffect.Value, duration.Value);
             else
                 EditStatusEffectTime(existedEffect.Value, duration.Value);
+
             return true;
         }
 
         if (!CanAddStatusEffect(target, effectProto))
             return false;
 
-        EnsureComp<StatusEffectContainerComponent>(target, out var container);
+        var container = EnsureComp<StatusEffectContainerComponent>(target);
 
         //And only if all checks passed we spawn the effect
         var effect = PredictedSpawnAttachedTo(effectProto, Transform(target).Coordinates);
@@ -141,10 +144,12 @@ public abstract partial class SharedStatusEffectsSystem
     /// <param name="effectProto">The prototype ID of the status effect to retrieve.</param>
     /// <param name="time">The output tuple containing the effect entity and its remaining time.</param>
     /// <param name="container">Optional. The status effect container component of the entity.</param>
-    public bool TryGetTime(EntityUid uid,
+    public bool TryGetTime(
+        EntityUid uid,
         EntProtoId effectProto,
         out (EntityUid EffectEnt, TimeSpan? RemainingTime) time,
-        StatusEffectContainerComponent? container = null)
+        StatusEffectContainerComponent? container = null
+    )
     {
         time = default;
         if (!Resolve(uid, ref container))
@@ -171,8 +176,11 @@ public abstract partial class SharedStatusEffectsSystem
     /// </summary>
     /// <param name="uid">The target entity on which the effect is applied.</param>
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
-    /// <param name="time">The time adjustment to apply to the status effect. Positive values extend the duration,
-    /// while negative values reduce it.</param>
+    /// <param name="time">
+    /// The time adjustment to apply to the status effect. Positive values extend the duration,
+    /// while negative values reduce it.
+    /// </param>
+    /// <returns> True if duration was edited successfully, false otherwise.</returns>
     public bool TryEditTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
     {
         if (!_containerQuery.TryComp(uid, out var container))
@@ -196,6 +204,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// <param name="uid">The target entity on which the effect is applied.</param>
     /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
     /// <param name="time">The new duration for the status effect.</param>
+    /// <returns> True if duration was set successfully, false otherwise.</returns>
     public bool TrySetTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
     {
         if (!_containerQuery.TryComp(uid, out var container))
@@ -231,20 +240,23 @@ public abstract partial class SharedStatusEffectsSystem
     }
 
     /// <summary>
-    /// Returns all status effects that have the specified component
+    /// Returns all status effects that have the specified component.
     /// </summary>
-    public bool TryEffectsWithComp<T>(EntityUid? target, out HashSet<Entity<T>> effects) where T : IComponent
+    public bool TryEffectsWithComp<T>(EntityUid? target, [NotNullWhen(true)] out HashSet<Entity<T>>? effects) where T : IComponent
     {
-        effects = new();
+        effects = null;
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
         foreach (var effect in container.ActiveStatusEffects)
         {
             if (TryComp<T>(effect, out var comp))
+            {
+                effects ??= [];
                 effects.Add((effect, comp));
+            }
         }
 
-        return true;
+        return effects != null;
     }
 }

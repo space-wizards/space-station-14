@@ -46,7 +46,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
 
     private void OnStatusEffectPlayerAttached(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectPlayerAttachedEvent args)
     {
-        if (args.Target != _player.LocalEntity)
+        if (_player.LocalEntity != args.Target)
             return;
 
         _overlayMan.AddOverlay(_overlay);
@@ -54,7 +54,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
 
     private void OnStatusEffectPlayerDetached(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectPlayerDetachedEvent args)
     {
-        if (args.Target != _player.LocalEntity)
+        if (_player.LocalEntity != args.Target)
             return;
 
         if (!_statusEffects.HasEffectComp<DrowsinessStatusEffectComponent>(_player.LocalEntity.Value))

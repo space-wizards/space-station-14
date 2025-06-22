@@ -31,6 +31,7 @@ public sealed partial class ModifyStatusEffect : EntityEffect
     [DataField]
     public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Add;
 
+    /// <inheritdoc />
     public override void Effect(EntityEffectBaseArgs args)
     {
         var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedStatusEffectsSystem>();
@@ -53,10 +54,13 @@ public sealed partial class ModifyStatusEffect : EntityEffect
         }
     }
 
-    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => Loc.GetString(
-        "reagent-effect-guidebook-status-effect",
-        ("chance", Probability),
-        ("type", Type),
-        ("time", Time),
-        ("key", prototype.Index(EffectProto).Name));
+    /// <inheritdoc />
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString(
+            "reagent-effect-guidebook-status-effect",
+            ("chance", Probability),
+            ("type", Type),
+            ("time", Time),
+            ("key", prototype.Index(EffectProto).Name)
+        );
 }
