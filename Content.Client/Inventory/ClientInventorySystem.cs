@@ -104,6 +104,23 @@ namespace Content.Client.Inventory
                 ent.Comp.Containers[i] = container;
             }
 
+            if (TryGetSlots(ent, out var definitions))
+            {
+                foreach (var definition in definitions)
+                {
+                    if (!TryGetSlotContainer(ent, definition.Name, out var container, out _))
+                        continue;
+
+                    if (!slots.SlotData.TryGetValue(definition.Name, out var data))
+                    {
+                        data = new SlotData(definition);
+                        slots.SlotData[definition.Name] = data;
+                    }
+
+                    data.Container = container;
+                }
+            }
+
             _clothingVisualsSystem.InitClothing(ent, ent.Comp);
             ReloadInventory();
         }
