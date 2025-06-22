@@ -121,7 +121,7 @@ public abstract class SharedInternalsSystem : EntitySystem
         if (mode == ToggleMode.Off)
             return false;
 
-        return _gasTank.ConnectToInternals(tank.Value, user: user, noSafety: force);
+        return _gasTank.ConnectToInternals(tank.Value, user: user, safety: !force);
     }
 
     private bool StartToggleInternalsDoAfter(EntityUid user, Entity<InternalsComponent> targetEnt, ToggleMode mode)

@@ -10,21 +10,19 @@ public sealed class AirTankLooksLikeSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly INetManager _netMan = default!;
 
-    public readonly string PopupPrefix = "air-tank-looks-like-";
-    public readonly string ConfirmText = "air-tank-looks-like-confirm";
+    public readonly LocId PopupText = "air-tank-looks-like";
+
+    public readonly LocId ConfirmText = "air-tank-looks-like-confirm";
 
     public void CreateShouldntBreathePopup(EntityUid user, EntityUid tank)
     {
-        if (_netMan.IsServer)
-            return;
-
         if (!TryComp(tank, out AirTankLooksLikeComponent? airTankLooksLike))
             return;
 
-        string PopupTextLoc = _localization.GetString(PopupPrefix + airTankLooksLike.Contains.ToString().ToLower());
+        string PopupTextLoc = _localization.GetString(PopupText, ("state", airTankLooksLike.Contains));
         string ConfirmTextLoc = _localization.GetString(ConfirmText);
 
-        _popupSystem.PopupEntity(PopupTextLoc + "\n" + ConfirmTextLoc, user, PopupType.MediumCaution);
+        _popupSystem.PopupPredicted(PopupTextLoc + "\n" + ConfirmTextLoc, null, user, user, PopupType.MediumCaution);
     }
 
     public bool CheckShouldBreathe(EntityUid user, EntityUid tank)

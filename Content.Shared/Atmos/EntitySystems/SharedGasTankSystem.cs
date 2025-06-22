@@ -118,7 +118,7 @@ public abstract class SharedGasTankSystem : EntitySystem
         return internalsComp != null && internalsComp.BreathTools.Count != 0 && !ent.Comp.IsValveOpen;
     }
 
-    public bool ConnectToInternals(Entity<GasTankComponent> ent, EntityUid? user = null, bool noSafety = false)
+    public bool ConnectToInternals(Entity<GasTankComponent> ent, EntityUid? user = null, bool safety = true)
     {
         var (owner, component) = ent;
         if (component.IsConnected || !CanConnectToInternals(ent))
@@ -128,7 +128,7 @@ public abstract class SharedGasTankSystem : EntitySystem
         if (internalsUid == null || internalsComp == null)
             return false;
 
-        if ((user is {} notNull) && !noSafety && !_airTankLooks.CheckShouldBreathe(notNull, ent))
+        if ((user is {} notNull) && safety && !_airTankLooks.CheckShouldBreathe(notNull, ent))
         {
             // it  3am
             _airTankLooks.CreateShouldntBreathePopup(notNull, ent);
