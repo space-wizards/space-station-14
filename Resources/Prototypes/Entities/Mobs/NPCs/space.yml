@@ -380,16 +380,16 @@
   - type: Sprite
     drawdepth: Mobs
     layers:
-      - state: space_sheep_harvested
+      - state: space_sheep_bare
         map: ["enum.DamageStateVisualLayers.Base"]
         visible: true
         sprite: Mobs/Animals/sheep.rsi
-      - state: space_sheep_glowmask
+      - state: space_sheep_wool_glowmask
         map: ["enum.ToggleableVisuals.Layer"]
         visible: true
         sprite: Mobs/Animals/sheep.rsi
   - type: ToggleableVisuals
-    spriteLayer: space_sheep_harvested
+    spriteLayer: space_sheep_bare
   - type: Fixtures
     fixtures:
       fix1:

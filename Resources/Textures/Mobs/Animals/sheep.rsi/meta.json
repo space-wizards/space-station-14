@@ -8,7 +8,7 @@
   "copyright": "Taken from https://github.com/tgstation/tgstation/pull/69318. Space sheep edits by Aleksh.",
   "states": [
     {
-      "name": "sheep",
+      "name": "sheep_bare",
       "directions": 4,
       "delays": [
         [
@@ -26,25 +26,7 @@
       ]
     },
     {
-      "name": "sheep_harvested",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "dead",
+      "name": "sheep_dead",
       "delays": [
         [
           1
@@ -60,7 +42,7 @@
       ]
     },
     {
-      "name": "wool_greyscale_dead",
+      "name": "sheep_wool_dead",
       "delays": [
         [
           1
@@ -68,7 +50,7 @@
       ]
     },
     {
-      "name": "wool_greyscale",
+      "name": "sheep_wool",
       "directions": 4,
       "delays": [
         [
@@ -86,7 +68,7 @@
       ]
     },
     {
-      "name": "space_sheep_harvested",
+      "name": "space_sheep_bare",
       "directions": 4,
       "delays": [
         [
@@ -112,7 +94,7 @@
       ]
     },
     {
-      "name": "space_sheep_glowmask",
+      "name": "space_sheep_wool_glowmask",
       "directions": 4,
       "delays": [
         [

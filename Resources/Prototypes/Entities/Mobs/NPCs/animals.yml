@@ -1105,16 +1105,16 @@
   - type: Sprite
     drawdepth: Mobs
     layers:
-    - state: sheep_harvested
+    - state: sheep_bare
       map: [ "enum.DamageStateVisualLayers.Base" ]
       visible: true
       sprite: Mobs/Animals/sheep.rsi
-    - state: wool_greyscale
+    - state: sheep_wool
       map: [ "enum.ToggleableVisuals.Layer" ]
       visible: true
       sprite: Mobs/Animals/sheep.rsi
   - type: ToggleableVisuals
-    spriteLayer: sheep_harvested
+    spriteLayer: sheep_bare
   - type: GenericVisualizer
     visuals:
       enum.ToggleableVisuals.Enabled:
@@ -1149,11 +1149,11 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: sheep_harvested
+        Base: sheep_bare
       Critical:
-        Base: dead
+        Base: sheep_dead
       Dead:
-        Base: dead
+        Base: sheep_dead
   - type: SolutionContainerManager
     solutions:
       udder:
