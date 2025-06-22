@@ -39,6 +39,7 @@
   recipes:
   - PRIbarPlusConversionKit
   - ClothingEyesNightVisionSecurityGoggles
+  - PortableSensorArray
 
 - type: latheRecipePack
   id: SecurityAmmoImp
