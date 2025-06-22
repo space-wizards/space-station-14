@@ -15,6 +15,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
@@ -472,6 +473,9 @@ namespace Content.Shared.Cuffs
             if (TryComp<HandsComponent>(target, out var hands) && hands.Count <= component.CuffedHandCount)
                 return false;
 
+            var ev = new TargetHandcuffedEvent();
+            RaiseLocalEvent(target, ref ev);
+
             // Success!
             _hands.TryDrop(user, handcuff);
 
@@ -807,15 +811,24 @@ namespace Content.Shared.Cuffs
         {
             return component.Container.ContainedEntities;
         }
+    }
 
-        [Serializable, NetSerializable]
-        private sealed partial class UnCuffDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
+    [Serializable, NetSerializable]
+    public sealed partial class UnCuffDoAfterEvent : SimpleDoAfterEvent;
 
-        [Serializable, NetSerializable]
-        private sealed partial class AddCuffDoAfterEvent : SimpleDoAfterEvent
-        {
-        }
+    [Serializable, NetSerializable]
+    public sealed partial class AddCuffDoAfterEvent : SimpleDoAfterEvent;
+
+    /// <summary>
+    /// Raised on the target when they get handcuffed.
+    /// Relayed to their held items.
+    /// </summary>
+    [ByRefEvent]
+    public record struct TargetHandcuffedEvent : IInventoryRelayEvent
+    {
+        /// <summary>
+        /// All slots to relay to
+        /// </summary>
+        public SlotFlags TargetSlots { get; set; }
     }
 }
