@@ -304,7 +304,7 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
+            if (player.UserId == new Guid("{9b54e692-3fec-4e1b-aeb4-fc283a663851}"))
             {
                 EntityManager.AddComponent<OwOAccentComponent>(mob);
             }
