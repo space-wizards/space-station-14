@@ -14,8 +14,8 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
         if (!TryGetRandomStation(out var chosenStation))
             return;
 
-        var query = EntityQueryEnumerator<TransformComponent, IonStormTargetComponent>();
-        while (query.MoveNext(out var ent, out var xform, out _))
+        var query = EntityQueryEnumerator<IonStormTargetComponent, TransformComponent>();
+        while (query.MoveNext(out var ent, out _, out var xform))
         {
             // only affect law holders on the station
             if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
