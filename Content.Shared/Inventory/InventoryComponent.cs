@@ -17,7 +17,10 @@ public sealed partial class InventoryComponent : Component
     [DataField]
     public ProtoId<SpeciesPrototype>? SpeciesId { get; set; }
 
+    [ViewVariables(VVAccess.ReadWrite)]
     public SlotDefinition[] Slots = Array.Empty<SlotDefinition>();
+
+    [ViewVariables(VVAccess.ReadWrite)]
     public ContainerSlot[] Containers = Array.Empty<ContainerSlot>();
 
     [DataField]

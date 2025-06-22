@@ -24,6 +24,7 @@ namespace Content.Client.Inventory
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
@@ -131,23 +132,15 @@ namespace Content.Client.Inventory
 
             for (var i = 0; i < ent.Comp.Containers.Length; i++)
             {
-                Log.Debug("Checking slot index " + i + " for " + ent.Comp.Slots[i].Name);
                 var slot = ent.Comp.Slots[i];
-                if (!TryGetSlotContainer(ent.Owner, slot.Name, out var slotContainer, out var _))
-                    return;
-
-                slotContainer.OccludesLight = false;
-                // ent.Comp.Containers[i] = slotContainer; TODO: This somehow causes Out of Index. Everything here is out of index GRAHHH.
+                var container = _container.EnsureContainer<ContainerSlot>(ent, slot.Name);
+                container.OccludesLight = false;
+                ent.Comp.Containers[i] = container;
             }
 
             foreach (var slot in ent.Comp.Slots)
             {
                 Log.Debug("Found slot: " + slot.Name);
-            }
-
-            foreach (var slot in ent.Comp.Containers)
-            {
-                Log.Debug("Found container: " + slot.ID);
             }
 
             ReloadInventory();
