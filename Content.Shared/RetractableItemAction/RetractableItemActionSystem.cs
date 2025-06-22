@@ -1,7 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Cuffs;
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
@@ -69,7 +68,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
         }
         else
         {
-            SummonRetractableItem(args.Performer, ent.Comp.ActionItemUid.Value, userHand, ent.Owner);
+            SummonRetractableItem(args.Performer, ent.Comp.ActionItemUid.Value, activeHand, ent.Owner);
         }
 
         args.Handled = true;
@@ -95,7 +94,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
         if (action.Comp.AttachedEntity == null)
             return;
 
-        if (_hands.GetActiveHand(action.Comp.AttachedEntity.Value) is not { } userHand)
+        if (_hands.GetActiveHand(action.Comp.AttachedEntity.Value) is not { })
             return;
 
         RetractRetractableItem(action.Comp.AttachedEntity.Value, ent, action.Owner);
@@ -130,7 +129,7 @@ public sealed class RetractableItemActionSystem : EntitySystem
         _audio.PlayPredicted(action.Comp.RetractSounds, holder, holder);
     }
 
-    private void SummonRetractableItem(EntityUid holder, EntityUid item, Hand hand, Entity<RetractableItemActionComponent?> action)
+    private void SummonRetractableItem(EntityUid holder, EntityUid item, string hand, Entity<RetractableItemActionComponent?> action)
     {
         if (!Resolve(action, ref action.Comp, false))
             return;
