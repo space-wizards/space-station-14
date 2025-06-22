@@ -9,6 +9,7 @@ using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
@@ -72,6 +73,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedPlayerRateLimitManager _rateLimit = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private readonly SharedHandsSystem _hands = default!;
 
         private EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery;
         private EntityQuery<FixturesComponent> _fixtureQuery;
@@ -1334,7 +1336,7 @@ namespace Content.Shared.Interaction
         ///     be used as a general interaction check, as these kinda of interactions should generally trigger a
         ///     do-after and a warning for the other player.
         /// </summary>
-        public bool CanAccessEquipment(EntityUid user, EntityUid target)
+        public bool CanAccessEquipment(EntityUid user, EntityUid target, float range = InteractionRange)
         {
             if (Deleted(target))
                 return false;
@@ -1343,16 +1345,16 @@ namespace Content.Shared.Interaction
                 return false;
 
             var wearer = container.Owner;
-            if (!_inventory.TryGetSlot(wearer, container.ID, out var slotDef))
+            if (!_inventory.TryGetSlot(wearer, container.ID, out var slotDef) && !_hands.IsHolding(wearer, target))
                 return false;
 
             if (wearer == user)
                 return true;
 
-            if (_strippable.IsStripHidden(slotDef, user))
+            if (slotDef != null && _strippable.IsStripHidden(slotDef, user))
                 return false;
 
-            return InRangeUnobstructed(user, wearer) && _containerSystem.IsInSameOrParentContainer(user, wearer);
+            return InRangeUnobstructed(user, wearer, range) && _containerSystem.IsInSameOrParentContainer(user, wearer);
         }
 
         protected bool ValidateClientInput(

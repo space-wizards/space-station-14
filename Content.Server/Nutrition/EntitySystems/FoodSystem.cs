@@ -64,7 +64,7 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public const float MaxFeedDistance = 1.0f;
@@ -324,7 +324,7 @@ public sealed class FoodSystem : EntitySystem
             if (stack.Count > 1)
             {
                 // Check for any food-eating objectives - you've eaten one food in the stack.
-                CheckFoodObjectives(entity, args.Target.Value);
+                CheckConsumedFoodObjectives(entity, args.Target.Value);
 
                 _stack.SetCount(entity.Owner, stack.Count - 1);
                 _solutionContainer.TryAddSolution(soln.Value, split);
@@ -337,7 +337,7 @@ public sealed class FoodSystem : EntitySystem
         }
 
         // Check for any food-eating objectives - entity is being deleted.
-        CheckFoodObjectives(entity, args.Target.Value);
+        CheckConsumedFoodObjectives(entity, args.Target.Value);
 
         // don't try to repeat if its being deleted
         args.Repeat = false;
@@ -457,7 +457,7 @@ public sealed class FoodSystem : EntitySystem
             if (ent.Comp1.SpecialDigestible == null)
                 continue;
             // Check if the food is in the whitelist
-            if (_whitelistSystem.IsWhitelistPass(ent.Comp1.SpecialDigestible, food))
+            if (_whitelist.IsWhitelistPass(ent.Comp1.SpecialDigestible, food))
                 return true;
 
             // If their diet is whitelist exclusive, then they cannot eat anything but what follows their whitelisted tags. Else, they can eat their tags AND human food.
@@ -537,13 +537,19 @@ public sealed class FoodSystem : EntitySystem
         }
     }
 
-    private void CheckFoodObjectives(EntityUid food, EntityUid consumer)
+    /// <summary>
+    /// Updates any objectives related to consuming food entities.
+    /// Runs before any deletion.
+    /// </summary>
+    /// <param name="food">The food which was consumed.</param>
+    /// <param name="consumer">The entity which consumed the food.</param>
+    private void CheckConsumedFoodObjectives(EntityUid food, EntityUid consumer)
     {
         if (_mind.TryGetObjectiveComps<EatSpecificFoodConditionComponent>(consumer, out var objectives))
         {
             foreach (var objective in objectives)
             {
-                if (_whitelistSystem.IsWhitelistPass(objective.Whitelist, food))
+                if (_whitelist.IsWhitelistPass(objective.Whitelist, food))
                     objective.FoodEaten++;
             }
         }
