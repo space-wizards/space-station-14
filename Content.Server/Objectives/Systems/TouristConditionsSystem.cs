@@ -65,6 +65,7 @@ public sealed class TouristConditionsSystem : EntitySystem
             ? Loc.GetString(condition.Comp.DescriptionTextMultiple, ("itemName", localizedName), ("count", count))
             : Loc.GetString(condition.Comp.DescriptionText, ("itemName", localizedName));
 
+        _metaData.SetEntityName(condition.Owner, Loc.GetString(condition.Comp.TitleText, ("itemName", localizedName)), args.Meta);
         _metaData.SetEntityDescription(condition.Owner, description, args.Meta);
         _objectives.SetIcon(condition.Owner, condition.Comp.Sprite, args.Objective);
     }

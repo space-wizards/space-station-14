@@ -436,6 +436,37 @@ public abstract partial class SharedMindSystem : EntitySystem
         return false;
     }
 
+    public bool TryGetObjectiveComps<T>(EntityUid uid, [NotNullWhen(true)] out List<T>? objectives) where T : IComponent
+    {
+        if (TryGetMind(uid, out var mindId, out var mind) && TryGetObjectiveComps(mindId, out objectives, mind))
+        {
+            return true;
+        }
+        objectives = default;
+        return false;
+    }
+
+    public bool TryGetObjectiveComps<T>(EntityUid mindId, [NotNullWhen(true)] out List<T>? objectives, MindComponent? mind = null) where T : IComponent
+    {
+        objectives = new List<T>();
+        if (Resolve(mindId, ref mind))
+        {
+            var query = GetEntityQuery<T>();
+            foreach (var uid in mind.Objectives)
+            {
+                if (query.TryGetComponent(uid, out var objective))
+                {
+                    objectives.Add(objective);
+                }
+            }
+        }
+        if (objectives.Count > 0)
+            return true;
+
+        objectives = default;
+        return false;
+    }
+
     /// <summary>
     /// Copies objectives from one mind to another, so that they are shared between two players.
     /// </summary>

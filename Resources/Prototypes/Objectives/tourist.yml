@@ -1,0 +1,136 @@
+# Base objectives
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseTouristObjective
+  components:
+  - type: Objective
+    # difficulty isn't used since all objectives are picked
+    difficulty: 1.5
+    issuer: objective-issuer-tourist
+
+- type: entity
+  abstract: true
+  parent: BaseTouristObjective
+  id: BaseEatFoodObjective
+  components:
+  - type: EatSpecificFoodCondition
+    titleText: eat-food-condition-title
+    descriptionText: eat-food-condition-description
+    descriptionTextMultiple: eat-food-condition-description-multiple
+  - type: NumberObjective
+    min: 1
+    max: 1
+
+- type: entity
+  abstract: true
+  parent: BaseEatFoodObjective
+  id: BaseEatFoodNonRestrictedObjective # Food for species without food restrictions
+  components:
+  - type: EatSpecificFoodCondition
+    titleText: eat-food-condition-title
+    descriptionText: eat-food-condition-description
+    descriptionTextMultiple: eat-food-condition-description-multiple
+  - type: SpeciesRequirement
+    allowedSpecies: # Reptilians and Moths have diets that restrict food
+    - Human
+    - Dwarf
+    - Slimeperson
+    - Arachnid
+    - Vox
+
+- type: entity
+  abstract: true
+  parent: BaseEatFoodObjective
+  id: BaseEatFoodReptilianObjective # Food that reptilians can eat
+  components:
+  - type: EatSpecificFoodCondition
+    titleText: eat-food-condition-title
+    descriptionText: eat-food-condition-description
+    descriptionTextMultiple: eat-food-condition-description-multiple
+  - type: SpeciesRequirement
+    allowedSpecies:
+    - Reptilian
+    - Human # Everything below can eat anything reptilians can
+    - Dwarf
+    - Slimeperson
+    - Arachnid
+    - Vox
+
+- type: entity
+  abstract: true
+  parent: BaseEatFoodObjective
+  id: BaseEatFoodMothObjective # Food that moths can eat
+  components:
+  - type: EatSpecificFoodCondition
+    titleText: eat-food-condition-title
+    descriptionText: eat-food-condition-description
+    descriptionTextMultiple: eat-food-condition-description-multiple
+  - type: SpeciesRequirement
+    allowedSpecies:
+    - Moth
+
+# Stamp objective
+
+- type: entity
+  parent: BaseTouristObjective
+  id: StampObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Misc/stamps.rsi
+      state: stamp-cap
+  - type: NumberObjective
+    min: 6
+    max: 8
+    title: objective-condition-stamp-title
+    description: objective-condition-stamp-description
+  - type: StampedPapersCondition
+
+# Eat food objectives
+
+- type: entity
+  parent: BaseEatFoodReptilianObjective
+  id: EatFoodCubanCarpObjective
+  components:
+  - type: EatSpecificFoodCondition
+    whitelist:
+      tags:
+      - CubanCarp
+    name: eat-food-cubancarp
+    sprite:
+      sprite: Objects/Consumable/Food/meals.rsi
+      state: cubancarp
+
+- type: entity
+  parent: BaseEatFoodNonRestrictedObjective
+  id: EatFoodPancakeObjective
+  components:
+  - type: EatSpecificFoodCondition
+    whitelist:
+      tags:
+      - Pancake
+    name: eat-food-pancake
+    sprite:
+      sprite: Objects/Consumable/Food/Baked/misc.rsi
+      state: pancakes1
+  - type: NumberObjective
+    min: 4
+    max: 5
+
+- type: entity
+  parent: BaseEatFoodMothObjective
+  id: EatFoodPlushieLizardObjective
+  components:
+  - type: EatSpecificFoodCondition
+    whitelist:
+      tags:
+      - PlushieLizard
+    name: eat-food-plushie_lizard
+    sprite:
+      sprite: Objects/Fun/toys.rsi
+      state: plushie_lizard
+  - type: NumberObjective
+    min: 3
+    max: 4

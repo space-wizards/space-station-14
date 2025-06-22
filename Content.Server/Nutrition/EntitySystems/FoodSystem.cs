@@ -37,6 +37,7 @@ using Content.Shared.Whitelist;
 using Content.Shared.Destructible;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Tag;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -59,6 +60,7 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
@@ -306,12 +308,7 @@ public sealed class FoodSystem : EntitySystem
 
         // Post-eating functionality
 
-        // Check for any food-eating objectives
-        if (_mind.TryGetObjectiveComp<EatSpecificFoodConditionComponent>(args.Target.Value, out var objective))
-        {
-            if (TryComp<FoodObjectiveTagComponent>(entity, out var foodTag) && foodTag.Tags.Contains(objective.ChosenTag))
-                objective.FoodEaten++;
-        }
+
 
         // Try to break all used utensils
         foreach (var utensil in utensils)
@@ -326,6 +323,9 @@ public sealed class FoodSystem : EntitySystem
             //Not deleting whole stack piece will make troubles with grinding object
             if (stack.Count > 1)
             {
+                // Check for any food-eating objectives - you've eaten one food in the stack.
+                CheckFoodObjectives(entity, args.Target.Value);
+
                 _stack.SetCount(entity.Owner, stack.Count - 1);
                 _solutionContainer.TryAddSolution(soln.Value, split);
                 return;
@@ -335,6 +335,9 @@ public sealed class FoodSystem : EntitySystem
         {
             return;
         }
+
+        // Check for any food-eating objectives - entity is being deleted.
+        CheckFoodObjectives(entity, args.Target.Value);
 
         // don't try to repeat if its being deleted
         args.Repeat = false;
@@ -534,6 +537,17 @@ public sealed class FoodSystem : EntitySystem
         }
     }
 
+    private void CheckFoodObjectives(EntityUid food, EntityUid consumer)
+    {
+        if (_mind.TryGetObjectiveComps<EatSpecificFoodConditionComponent>(consumer, out var objectives))
+        {
+            foreach (var objective in objectives)
+            {
+                if (_whitelistSystem.IsWhitelistPass(objective.Whitelist, food))
+                    objective.FoodEaten++;
+            }
+        }
+    }
 
     /// <summary>
     ///     Check whether the target's mouth is blocked by equipment (masks or head-wear).
