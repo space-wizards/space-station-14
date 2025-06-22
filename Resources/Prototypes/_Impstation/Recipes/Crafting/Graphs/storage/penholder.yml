@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: PenHolder
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: penholder
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 4
+  - node: penholder
+    entity: PenHolder

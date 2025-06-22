@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: PaperBin
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: paperbin
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 4
+  - node: paperbin
+    entity: PaperBin

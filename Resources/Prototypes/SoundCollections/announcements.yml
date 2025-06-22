@@ -22,6 +22,10 @@
   - /Audio/_Impstation/RoundEnd/whymad.ogg
   - /Audio/_Impstation/RoundEnd/winning.ogg
   - /Audio/_Impstation/RoundEnd/wuhey.ogg
+  - /Audio/_Impstation/RoundEnd/specialstew.ogg
+  - /Audio/_Impstation/RoundEnd/propermeal.ogg
+  - /Audio/_Impstation/RoundEnd/vegetables.ogg
+  - /Audio/_Impstation/RoundEnd/nanaostorment.ogg
 
 - type: soundCollection
   id: PowerOn

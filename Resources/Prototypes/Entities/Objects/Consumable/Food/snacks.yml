@@ -789,10 +789,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10 # imp
+        maxVol: 15 # imp
         reagents:
-        - ReagentId: Fiber
-          Quantity: 5 # imp - matching the nutribrick nerf
+        - ReagentId: Pulp #imp
+          Quantity: 10 # imp - matching the nutribrick nerf
+  - type: PhysicalComposition #imp - the wrapper is not made of steel and plastic
+    materialComposition:
+      Cardboard: 100
   - type: Tag
     tags:
     - ClothMade

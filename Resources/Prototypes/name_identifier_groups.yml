@@ -61,3 +61,15 @@
   prefix: TELE
   minValue: 0
   maxValue: 999
+
+- type: nameIdentifierGroup #imp change
+  id: Anomaly
+  prefix: ANOM
+  minValue: 0
+  maxValue: 99
+
+- type: nameIdentifierGroup #imp change
+  id: Artifact
+  prefix: ARTI
+  minValue: 0
+  maxValue: 99

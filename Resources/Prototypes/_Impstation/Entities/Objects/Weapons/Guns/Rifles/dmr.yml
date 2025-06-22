@@ -169,3 +169,35 @@
   - type: MeleeThrowOnHit
     distance: 0.8
     speed: 5
+
+- type: entity
+  name: Mule's Leg
+  parent: [ BaseWeaponShotgun, BaseSecurityContraband ]
+  id: WeaponRifleMule
+  description: Show them you bring 'em in for the law, not the reward. Uses .50 slug or stun shells.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Rifles/mule.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,1
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Rifles/mule.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Gun
+    fireRate: 1.5
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/mule.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ShellSlug
+      - ShellShotgunBeanbag
+    capacity: 5
+    proto: ShellShotgunSlug
+    soundRack:
+      path: /Audio/_Impstation/Weapons/Guns/Cock/basic_cock.ogg

@@ -1,0 +1,15 @@
+﻿- type: construction
+  id: PenHolder
+  graph: PenHolder
+  startNode: start
+  targetNode: penholder
+  category: construction-category-storage
+  objectType: Item
+
+- type: construction
+  id: PaperBin
+  graph: PaperBin
+  startNode: start
+  targetNode: paperbin
+  category: construction-category-storage
+  objectType: Structure

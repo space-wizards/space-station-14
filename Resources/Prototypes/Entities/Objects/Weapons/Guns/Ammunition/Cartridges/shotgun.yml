@@ -55,6 +55,11 @@
     layers:
       - state: slug
         map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: Tag #imp
+    tags:
+    - Cartridge
+    - ShellShotgun
+    - ShellSlug #imp
   - type: CartridgeAmmo
     proto: PelletShotgunSlug
   - type: SpentAmmoVisuals

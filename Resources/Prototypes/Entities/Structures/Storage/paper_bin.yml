@@ -37,6 +37,14 @@
   - type: ContainerContainer
     containers:
       bin-container: !type:Container
+  # imp edit start
+  - type: Construction
+    graph: PaperBin
+    node: paperbin
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+  # imp edit end
 
 - type: entity
   parent: PaperBin

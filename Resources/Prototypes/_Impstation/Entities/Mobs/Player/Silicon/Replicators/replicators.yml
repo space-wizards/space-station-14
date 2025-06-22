@@ -8,6 +8,9 @@
   abstract: true
   parent: PlayerSiliconBase
   components:
+  - type: Puller
+    needsHands: false
+    applySpeedModifier: false
   - type: ZombieImmune
   - type: Replicator
   - type: NameIdentifier
@@ -153,7 +156,7 @@
       path: /Audio/Items/crowbar.ogg
   - type: NpcFactionMember
     factions:
-    - SimpleHostile
+    - Replicator
   - type: Inventory
     templateId: replicator
   - type: InventorySlots
@@ -185,9 +188,6 @@
     - ActionReplicatorUpgrade2
     - ActionReplicatorUpgrade2Alt
   - type: CombatMode
-  - type: Puller
-    needsHands: false
-    applySpeedModifier: false
   - type: StaminaDamageOnHit
     damage: 20
     sound: /Audio/Weapons/egloves.ogg
@@ -246,8 +246,6 @@
     upgradeActions:
     - ActionReplicatorUpgrade3
     readyToUpgradeMessage: replicator-upgrade-t2
-  - type: Puller
-    needsHands: false
   - type: MovementSpeedModifier
     baseWalkSpeed: 2 # same as slime
     baseSprintSpeed: 4.2
@@ -297,8 +295,6 @@
     upgradeActions:
     - ActionReplicatorUpgrade3
     readyToUpgradeMessage: replicator-upgrade-t2
-  - type: Puller
-    needsHands: false
   - type: MovementSpeedModifier
     baseWalkSpeed: 2 # same as slime
     baseSprintSpeed: 4.2
@@ -346,9 +342,6 @@
   - type: CombatMode
   - type: Replicator
     upgradeStage: 2
-  - type: Puller
-    needsHands: false
-    applySpeedModifier: false
   - type: MovementAlwaysTouching
   - type: MovementSpeedModifier
     baseWalkSpeed: 2 # same as slime

@@ -133,7 +133,8 @@
     animation: WeaponArcSlash
     damage:
       types:
-        Blunt: 30
+        Blunt: 22
+        Shock: 8 # split up damage groups to make them a little more effective against armored/blunt resistant targets
         Structural: 45
   - type: Unremoveable
   - type: Prying

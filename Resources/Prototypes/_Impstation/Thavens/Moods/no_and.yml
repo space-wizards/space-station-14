@@ -4,7 +4,6 @@
 - type: dataset
   id: ThavenMoodsNoAnd
   values:
-    - SecretMoods
     - NoModernMedicine
     - DepartmentDisapproval
     - DontSpeakToCommand
@@ -38,14 +37,6 @@
     - MadHatter
     - Crawler
     - Elevated
-
-# Your Moods are a strictly-kept secret, and should never be revealed to anyone.
-- type: thavenMood
-  id: SecretMoods
-  moodName: thaven-mood-secret-moods-name
-  moodDesc: thaven-mood-secret-moods-desc
-  conflicts:
-    - SecretMoodsShared
 
 # You do not approve of modern medicine and abstain from treatment with it.
 - type: thavenMood

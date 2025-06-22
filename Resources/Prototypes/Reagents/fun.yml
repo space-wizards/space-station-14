@@ -37,10 +37,13 @@
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        conditions:
-        - !type:OrganType
-          type: Moth
+      #- !type:SatiateHunger #imp
+      #  conditions:
+      #  - !type:OrganType
+      #    type: Moth
+      - !type:AdjustReagent #imp
+        reagent: Cellulose
+        amount: 1
 
 - type: reagent
   id: Trash

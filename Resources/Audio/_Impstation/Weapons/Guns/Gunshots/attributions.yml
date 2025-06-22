@@ -2,62 +2,67 @@
   license: "CC0-1.0"
   copyright: "Made by Carlfnf on Freesound"
   source: "https://freesound.org/s/690099/"
-  
+
 - files: ["autodisabler"]
   license: "CC-BY-3.0"
   copyright: "Made by flyingsaucerinvasion on Freesound and edited by DVD Player"
   source: "https://freesound.org/people/flyingsaucerinvasion/sounds/615811/"
-  
+
 - files: ["blastercannon"]
   license: "CC-BY-SA-3.0"
   copyright: "Made by Q009 on opengameart and edited by DVD Player"
   source: "https://opengameart.org/content/q009s-weapon-sounds"
-  
+
 - files: ["blasterpist"]
   license: "CC0-1.0"
   copyright: "Made by SuperPhat on freesound and edited by DVD Player"
   source: "https://freesound.org/people/SuperPhat/sounds/531861/"
-  
+
 - files: ["blasterrunner"]
   license: "CC-BY-4.0"
   copyright: "Made by jerry.berumen on freesound"
   source: "https://freesound.org/people/jerry.berumen/sounds/584366/"
-  
+
 - files: ["blasterweak"]
   license: "CC-BY-4.0"
   copyright: "Made by Universfield on Freesound"
   source: "https://freesound.org/people/Universfield/sounds/750234/"
- 
+
 - files: ["daito"]
   license: "CC0-1.0"
   copyright: "Made by SuperPhat on Freesound"
   source: "https://freesound.org/people/SuperPhat/sounds/404561/"
-  
+
 - files: ["eshotgun"]
   license: "CC-BY-SA-3.0"
   copyright: "Made by Q009 on opengameart and edited by DVD Player"
   source: "https://opengameart.org/content/q009s-weapon-sounds"
- 
+
 - files: ["goldlaser"]
   license: "CC0-1.0"
   copyright: "Made by JakeAMT on Freesound"
   source: "https://freesound.org/people/JakeAMT/sounds/681960/"
-  
+
 - files: ["lasermil"]
   license: "CC-BY-4.0"
   copyright: "Made by 211redman112 on freesound and edited by DVD Player"
   source: "https://freesound.org/people/211redman112/sounds/234083/"
-  
+
 - files: ["light-pistol"]
   license: "CC-BY-SA-3.0"
   copyright: "Made by Michael Klier on opengameart"
   source: "https://opengameart.org/content/futuristic-weapons-assault-rifle"
-  
+
 - files: ["light-pistol2"]
   license: "CC-BY-SA-3.0"
   copyright: "Made by Q009 on opengameart"
   source: "https://opengameart.org/content/q009s-weapon-sounds"
-  
+
+- files: ["mule"]
+  license: "CC0-1.0"
+  copyright: "Made by SuperPhat on Freesound, layered with basic_cock by AvianMaiden"
+  source: "https://freesound.org/people/SuperPhat/sounds/416417/"
+
 - files: ["nemesis"]
   license: "CC-BY-4.0"
   copyright: "Made by keybal on Freesound and edited by DVD Player"
@@ -72,7 +77,7 @@
   license: "CC-BY-4.0"
   copyright: "Made by Lubini on Freesound"
   source: "https://freesound.org/people/Lubini/sounds/338045/"
-  
+
 - files: ["pistolsturm"]
   license: "CC-BY-4.0"
   copyright: "Made by KuraiWolf on opengameart"

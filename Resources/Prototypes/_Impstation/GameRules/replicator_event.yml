@@ -7,9 +7,9 @@
   components:
   - type: StationEvent
     earliestStart: 20
-    weight: 6.5
+    weight: 5.5
     duration: null
-    minimumPlayers: 25
+    minimumPlayers: 30
     maxOccurrences: 1
   - type: RandomSpawnRule
     prototype: SpawnPointGhostReplicatorQueen

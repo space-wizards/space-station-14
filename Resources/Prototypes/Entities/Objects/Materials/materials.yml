@@ -48,13 +48,20 @@
     - state: cardboard_3
       map: ["base"]
   - type: Appearance
+  - type: Food #imp
+    requiresSpecialDigestion: true
+    delay: 10
+  - type: FlavorProfile #imp
+    flavors:
+    - paper
   - type: Extractable
-    grindableSolutionName: cardboard
+    grindableSolutionName: food #imp
   - type: SolutionContainerManager
     solutions:
-      cardboard:
+      food: #imp
+        maxVol: 6 #imp
         reagents:
-        - ReagentId: Cellulose
+        - ReagentId: Pulp #imp
           Quantity: 6
   - type: Item
     heldPrefix: cardboard
@@ -72,6 +79,11 @@
     - ChairCardboard
     - TileCardboard
     - DoorCardboard
+  - type: Tag #imp
+    tags:
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
 
 
 - type: entity
@@ -270,6 +282,12 @@
     - state: wood
       map: ["base"]
   - type: Appearance
+  - type: Food #imp
+    requiresSpecialDigestion: true
+    delay: 30
+  - type: FlavorProfile #imp
+    flavors:
+    - paper
   - type: Item
     heldPrefix: wood
   - type: Tag
@@ -277,13 +295,15 @@
     - Wooden
     - DroneUsable
     - RawMaterial
+    - ClothMade #imp
   - type: Extractable
-    grindableSolutionName: wood
+    grindableSolutionName: food #imp
   - type: SolutionContainerManager
     solutions:
-      wood:
+      food: #imp
+        maxVol: 10 #imp
         reagents:
-        - ReagentId: Cellulose
+        - ReagentId: Pulp #imp
           Quantity: 10
 # imp edits below
   - type: UserInterface
@@ -450,7 +470,7 @@
     tags:
     - RawMaterial
     - Diamond
-  - type: StatusIcon #imp edit. for the salvohud
+  - type: NonMobStatusIcon #imp edit. for the salvohud
 
 - type: entity
   parent: MaterialDiamond

@@ -1,0 +1,43 @@
+﻿- type: entity
+  parent: BaseStorageItem
+  id: PenHolder
+  name: "pen holder"
+  description: For the distinguished bureaucrat.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Storage/penholder.rsi
+    noRot: true
+    drawdepth: SmallObjects
+    state: penholder0
+  - type: Appearance
+  - type: Storage
+    grid:
+    - 0,0,3,1
+    whitelist:
+      tags:
+      - Pen
+  - type: Item
+    size: Tiny
+  - type: ItemMapper
+    sprite: _Impstation/Objects/Storage/penholder.rsi
+    mapLayers:
+      penholder1:
+        whitelist:
+          tags:
+          - Pen
+  - type: Construction
+    graph: PenHolder
+    node: penholder
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+
+- type: entity
+  parent: PenHolder
+  id: PenHolderFilled
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: Pen
+      amount: 8

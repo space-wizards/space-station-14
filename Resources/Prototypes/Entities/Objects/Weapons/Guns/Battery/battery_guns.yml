@@ -982,11 +982,12 @@
   - type: Battery
     maxCharge: 1200
     startingCharge: 1200
-  - type: BatterySelfRecharger
+  - type: BatterySelfRecharger #imp removed the recharge pause but made the recharge even slower
     autoRecharge: true
-    autoRechargeRate: 24
-    autoRechargePause: true
-    autoRechargePauseTime: 30
+   # autoRechargeRate: 24
+   # autoRechargePause: true
+   # autoRechargePauseTime: 30
+    autoRechargeRate: 18.5 #imp
 #imp edit begin; weapon melee
   - type: MeleeWeapon
     attackRate: 0.6

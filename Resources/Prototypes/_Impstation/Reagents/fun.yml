@@ -323,3 +323,18 @@
         - !type:Breathing
         - !type:Internals
           usingInternals: false
+          
+- type: reagent
+  id: Pulp
+  name: reagent-name-pulp
+  desc: reagent-desc-pulp
+  physicalDesc: reagent-physical-desc-pulpy
+  flavor: paper
+  color: "#806a44"
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent #imp
+        reagent: Cellulose
+        amount: 0.5
+          

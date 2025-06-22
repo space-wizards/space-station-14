@@ -49,6 +49,9 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch]
+  - type: WarpPoint # imp addition
+  - type: NameIdentifier # imp addition
+    group: Artifact
 
 - type: entity
   parent: BaseAction

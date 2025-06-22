@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "by msTheowo(github) for impstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "penholder0"
+    },
+    {
+      "name": "penholder1"
+    }
+  ]
+}

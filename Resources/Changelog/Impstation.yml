@@ -1,99 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Ten tattoos and seven jewelry markings!
-    type: Add
-  id: 1380
-  time: '2025-03-24T05:20:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2059
-- author: DinnerCalzone
-  changes:
-  - message: The Dining Services and Station Specific departments no longer show up
-      on the crew monitoring console.
-    type: Fix
-  id: 1381
-  time: '2025-03-24T05:28:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2066
-- author: argentsunshine
-  changes:
-  - message: Added nine new hairstyles (half-up styles, middle parts, mullets, and
-      a curly undercut and side shave).
-    type: Add
-  id: 1382
-  time: '2025-03-24T05:35:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2060
-- author: Mousetrinity
-  changes:
-  - message: Introducing the Kaiju cloak, a way to hide your tails, wings, and spare
-      legs, is now in uplinks and maintenance lockers near you!
-    type: Add
-  id: 1383
-  time: '2025-03-24T05:46:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2065
-- author: hivehum
-  changes:
-  - message: The wrapper on a nutribrick is no longer one of the most calorie-dense
-      substances known to mothkind.
-    type: Tweak
-  id: 1384
-  time: '2025-03-25T01:41:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2067
-- author: DinnerCalzone
-  changes:
-  - message: E1M1 can no longer be spaced.
-    type: Tweak
-  id: 1385
-  time: '2025-03-25T01:41:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2076
-- author: SixValentine
-  changes:
-  - message: Slimes need to put in some more hutzpah to kill themselves via vapebomb
-      on Luna
-    type: Fix
-  id: 1386
-  time: '2025-03-25T01:43:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2069
-- author: SixValentine
-  changes:
-  - message: The Drunken Carp on Train is no longer a death trap
-    type: Fix
-  id: 1387
-  time: '2025-03-25T01:44:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2070
-- author: bigsantino1
-  changes:
-  - message: Cluwne and monkey polymorphs now revert on crit.
-    type: Tweak
-  - message: Wizards can no longer make you a cluwne permanently.
-    type: Fix
-  id: 1388
-  time: '2025-03-25T01:45:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2071
-- author: DinnerCalzone
-  changes:
-  - message: The default supermatter radiator setup has been tweaked to allow more
-      gas to flow. Be sure to check up on the engine every once in a while to make
-      sure it has enough gas!
-    type: Tweak
-  id: 1389
-  time: '2025-03-25T01:47:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2079
-- author: FutureExalt
-  changes:
-  - message: removed racism from some italian accent substitutions
-    type: Fix
-  id: 1390
-  time: '2025-03-25T01:51:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2077
-- author: DinnerCalzone
-  changes:
-  - message: Chaplain, Clown, Mime, and Musician all now have Service access.
-    type: Add
-  - message: Security jobs no longer have Service access.
-    type: Remove
-  id: 1391
-  time: '2025-03-25T02:08:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2081
 - author: hivehum
   changes:
   - message: Vox can caw like a crow.
@@ -4210,3 +4115,119 @@
   id: 1879
   time: '2025-06-20T05:43:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2669
+- author: CrystalClover
+  changes:
+  - message: Added Pulp, a mushy substance derived from wood products.
+    type: Add
+  - message: Moths now derive sustainence from Cellulose, with Fiber and Pulp being
+      digested into Cellulose.
+    type: Tweak
+  - message: Moths can now (slowly) eat Cardboard and Wood sheets.
+    type: Tweak
+  - message: The Nutribrick wrapper is now actually paper; it contains 10 Pulp and
+      recycles into Cardboard.
+    type: Tweak
+  id: 1880
+  time: '2025-06-21T01:08:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2806
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: The M-1 Energy Shotgun doesn't need to wait 30 seconds to recharge anymore,
+      but recharges a bit slower.
+    type: Tweak
+  id: 1881
+  time: '2025-06-21T01:12:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2802
+- author: ruddygreat
+  changes:
+  - message: Sechuds no longer try to figure out if you should arrest materials!
+    type: Fix
+  id: 1882
+  time: '2025-06-21T01:13:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2834
+- author: widgetbeck
+  changes:
+  - message: Replicators no longer get points or levelup progress from humanoids.
+      They still provide enough spawning progress for a new ghostrole, however.
+    type: Remove
+  - message: Reduced the amount of time Replicators are stunned by EMPs.
+    type: Tweak
+  - message: Gave Replicators their own faction, meaning they should now be counted
+      as hostile by carp and rats.
+    type: Tweak
+  - message: Adjusted Replicator Tier 2 pulling speeds.
+    type: Tweak
+  - message: Adjusted Replicator Tier 3 damage.
+    type: Tweak
+  - message: Increased minimum playercount and decreased event weight for the ReplicatorSpawn
+      event.
+    type: Tweak
+  - message: Fixed Replicator Nests incorrectly assigning spawning progress to certain
+      items. Stacked items should now contribute to spawning more ghostroles.
+    type: Fix
+  id: 1883
+  time: '2025-06-21T22:41:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2847
+- author: widgetbeck
+  changes:
+  - message: Removed the Thaven "your moods are secret" mood - It's more interesting
+      if you treat the moods as secret by default.
+    type: Remove
+  - message: Changed the wording of the Thaven guidebook entry's section on Moods
+      to discourage some LRP behavior.
+    type: Tweak
+  id: 1884
+  time: '2025-06-22T06:19:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2823
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: The Portable Sensor Array can be manufactured at the Security Techfab
+      alongside the protolathe with a cost adjustment.
+    type: Tweak
+  id: 1885
+  time: '2025-06-22T06:29:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2843
+- author: msTheowo
+  changes:
+  - message: Pen holders
+    type: Add
+  - message: Paper bins are now craftable
+    type: Tweak
+  id: 1886
+  time: '2025-06-22T06:31:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2844
+- author: EpicToast
+  changes:
+  - message: Packed now supports genpop.
+    type: Add
+  id: 1887
+  time: '2025-06-22T06:33:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2849
+- author: starlighthowls
+  changes:
+  - message: NTAS WW now has a zoo!
+    type: Add
+  id: 1888
+  time: '2025-06-22T06:35:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2840
+- author: sev7ves
+  changes:
+  - message: can now teleport to artifacts and anomalies as ghost.
+    type: Tweak
+  id: 1889
+  time: '2025-06-22T08:33:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2552
+- author: CombustibleToast
+  changes:
+  - message: Condensers no longer work slower at higher pressures.
+    type: Fix
+  id: 1890
+  time: '2025-06-22T09:46:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2799
+- author: SixValentine
+  changes:
+  - message: Luna is now compliant with modern mapping standards
+    type: Add
+  id: 1891
+  time: '2025-06-22T14:27:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2828

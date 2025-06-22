@@ -15,7 +15,7 @@ public sealed partial class ReplicatorComponent : Component
     /// The duration for which a replicator of this type will be stunned upon recieving an EMP effect.
     /// </summary>
     [DataField]
-    public TimeSpan EmpStunTime = TimeSpan.FromSeconds(10);
+    public TimeSpan EmpStunTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// If a replicator is Queen, it will spawn a nest when it spawns.
