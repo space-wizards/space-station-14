@@ -77,7 +77,11 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if (!TryComp<ChangelingIdentityComponent>(ent, out var identity))
             return;
 
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), ent, null, PopupType.MediumCaution);
+        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"),
+            Loc.GetString("changeling-transform-attempt-others", ("user", ent)),
+            ent,
+            ent,
+            PopupType.MediumCaution);
 
         if(_net.IsServer) // Gotta do this on the server and with PlayPvs cause PlayPredicted doesn't return the Entity
             ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent, new AudioParams())!.Value.Entity;
@@ -102,7 +106,11 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         var selectedIdentity = args.TargetIdentity;
 
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), ent, null, PopupType.MediumCaution);
+        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"),
+            Loc.GetString("changeling-transform-attempt-others", ("user", ent)),
+            ent,
+            ent,
+            PopupType.MediumCaution);
 
         if(_net.IsServer)
            ent.Comp.CurrentTransformSound = _audio.PlayPvs(ent.Comp.TransformAttemptNoise, ent, new AudioParams())!.Value.Entity;
