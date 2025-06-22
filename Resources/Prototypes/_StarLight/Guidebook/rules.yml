@@ -1,5 +1,5 @@
 - type: guideEntry
-  id: StarlightRulesetr
+  id: StarlightRuleset
   name: guide-entry-rules
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/StarlightRules.xml"
