@@ -70,11 +70,11 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
-    omicron:
-      announcement: alert-level-omicron-announcement
+    omega:
+      announcement: alert-level-omega-announcement
       selectable: false
       sound:
-        path: /Audio/Misc/omicron.ogg
+        path: /Audio/Misc/omega.ogg
         params:
           volume: -2
       disableSelection: true
