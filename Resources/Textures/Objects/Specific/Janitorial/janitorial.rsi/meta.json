@@ -38,6 +38,29 @@
       "name": "mopbucket_carpplush"
     },
     {
+      "name": "mopbucket_magicarpplush"
+    },
+    {
+      "name": "mopbucket_holocarpplush",
+      "delays": [
+          [
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1,
+              0.1
+          ]
+      ]
+    },
+    {
       "name": "mopbucket_cube"
     },
     {
