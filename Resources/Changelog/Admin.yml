@@ -1202,5 +1202,12 @@ Entries:
   id: 145
   time: '2025-06-21T17:54:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37952
+- author: beck-thompson
+  changes:
+  - message: You can now export round logs to CSV files
+    type: Add
+  id: 146
+  time: '2025-06-22T19:28:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38206
 Name: Admin
 Order: 2
