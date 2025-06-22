@@ -30,8 +30,6 @@ public partial class InventorySystem : EntitySystem
         args.State = new InventoryComponentState(ent.Comp.TemplateId, ent.Comp.SpeciesId);
 
         UpdateInventoryTemplate(ent);
-
-        Log.Debug("State sent");
     }
 
     private void ShutdownSlots()

@@ -60,12 +60,13 @@ namespace Content.Client.Inventory
             if (args.Current is not InventoryComponentState state)
                 return;
 
+            if (state.Template == ent.Comp.TemplateId && state.Species == ent.Comp.SpeciesId)
+                return;
+
             ent.Comp.TemplateId = state.Template;
             ent.Comp.SpeciesId = state.Species;
 
             UpdateInventoryTemplate(ent);
-
-            Log.Debug("State received");
         }
 
         private void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
@@ -76,58 +77,23 @@ namespace Content.Client.Inventory
             if (!_proto.TryIndex(ent.Comp.TemplateId, out var index))
                 return;
 
-            foreach (var slot in ent.Comp.Slots)
-            {
-                Log.Debug("Pre-Found slot: " + slot.Name + " " + Array.IndexOf(ent.Comp.Slots, slot));
-            }
-
-            foreach (var slot in ent.Comp.Containers)
-            {
-                Log.Debug("Pre-Found container: " + slot.ID + " " + Array.IndexOf(ent.Comp.Containers, slot));
-            }
-
             ent.Comp.Slots = index.Slots;
-            // TODO: Find a way to recreate Containers. Enumerator shits itself without them
+            ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
 
             foreach (var slot in slots.SlotData)
             {
-                Log.Debug("[Rem] Checking slot: " + slot.Key);
                 if (index.Slots.Any(s => s.Name == slot.Key))
-                {
-                    Log.Debug("Slot found, skipping.");
                     continue;
-                }
-                Log.Debug("Attempting to remove: " + slot.Key);
 
                 TryRemoveSlotDef(ent, slots, slot.Value);
             }
 
             foreach (var slot in index.Slots)
             {
-                Log.Debug("[Add] Checking slot: " + slot.Name);
                 if (slots.SlotData.Any(s => s.Key == slot.Name))
                     continue;
 
-                Log.Debug("Attempting to add: " + slot.Name);
-
                 TryAddSlotDef(ent, slots, slot);
-            }
-
-            foreach (var slot in ent.Comp.Slots)
-            {
-                Log.Debug("Pre-Update Found slot: " + slot.Name + " " + Array.IndexOf(ent.Comp.Slots, slot));
-            }
-
-            foreach (var slot in ent.Comp.Containers)
-            {
-                Log.Debug("Pre-Update Found container: " + Array.IndexOf(ent.Comp.Containers, slot));
-            }
-
-            ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
-
-            foreach (var slot in ent.Comp.Containers)
-            {
-                Log.Debug("Post-Update Found container: " + Array.IndexOf(ent.Comp.Containers, slot));
             }
 
             for (var i = 0; i < ent.Comp.Containers.Length; i++)
@@ -138,11 +104,7 @@ namespace Content.Client.Inventory
                 ent.Comp.Containers[i] = container;
             }
 
-            foreach (var slot in ent.Comp.Slots)
-            {
-                Log.Debug("Found slot: " + slot.Name);
-            }
-
+            _clothingVisualsSystem.InitClothing(ent, ent.Comp);
             ReloadInventory();
         }
 
@@ -292,7 +254,6 @@ namespace Content.Client.Inventory
 
         public bool TryAddSlotDef(EntityUid owner, InventorySlotsComponent component, SlotDefinition newSlotDef)
         {
-            Log.Debug("Attempting to add: " + newSlotDef.Name);
             SlotData newSlotData = newSlotDef; //convert to slotData
             if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData))
                 return false;
@@ -300,7 +261,6 @@ namespace Content.Client.Inventory
             if (owner == _playerManager.LocalEntity)
                 OnSlotAdded?.Invoke(newSlotData);
 
-            Log.Debug("Adding def client:" + newSlotDef.Name);
             return true;
         }
 
@@ -311,8 +271,6 @@ namespace Content.Client.Inventory
             {
                 return false;
             }
-
-            Log.Debug("Removing def client:" + newSlotDef.Name);
 
             if (owner == _playerManager.LocalEntity)
                 OnSlotRemoved?.Invoke(newSlotData);
