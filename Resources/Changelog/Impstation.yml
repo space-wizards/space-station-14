@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FutureExalt
-  changes:
-  - message: removed racism from some italian accent substitutions
-    type: Fix
-  id: 1390
-  time: '2025-03-25T01:51:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2077
 - author: DinnerCalzone
   changes:
   - message: Chaplain, Clown, Mime, and Musician all now have Service access.
@@ -4233,3 +4226,10 @@
   id: 1889
   time: '2025-06-22T08:33:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2552
+- author: CombustibleToast
+  changes:
+  - message: Condensers no longer work slower at higher pressures.
+    type: Fix
+  id: 1890
+  time: '2025-06-22T09:46:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2799
