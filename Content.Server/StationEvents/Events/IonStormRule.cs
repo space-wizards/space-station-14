@@ -1,4 +1,3 @@
-using Content.Server.Silicons.Laws;
 using Content.Server.StationEvents.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Silicons.Laws.Components;
@@ -8,8 +7,6 @@ namespace Content.Server.StationEvents.Events;
 
 public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
 {
-    [Dependency] private readonly IonStormSystem _ionStorm = default!;
-
     protected override void Started(EntityUid uid, IonStormRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, comp, gameRule, args);
@@ -17,14 +14,20 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
         if (!TryGetRandomStation(out var chosenStation))
             return;
 
-        var query = EntityQueryEnumerator<SiliconLawBoundComponent, TransformComponent, IonStormTargetComponent>();
-        while (query.MoveNext(out var ent, out var lawBound, out var xform, out var target))
+        var query = EntityQueryEnumerator<TransformComponent, IonStormTargetComponent>();
+        while (query.MoveNext(out var ent, out var xform, out _))
         {
             // only affect law holders on the station
             if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
                 continue;
-
-            _ionStorm.IonStormTarget((ent, lawBound, target));
+            var ev = new IonStormEvent();
+            RaiseLocalEvent(ent, ref ev);
         }
     }
 }
+
+/// <summary>
+/// Event raised on an entity with <see cref="IonStormTargetComponent"/> when an ion storm occurs on the attached station.
+/// </summary>
+[ByRefEvent]
+public record struct IonStormEvent(bool Adminlog = true);

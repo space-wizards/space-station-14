@@ -1,3 +1,4 @@
+using Content.Server.StationEvents.Events;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -9,7 +10,6 @@ namespace Content.Server.Silicons.Laws;
 /// </summary>
 public sealed class StartIonStormedSystem : EntitySystem
 {
-    [Dependency] private readonly IonStormSystem _ionStorm = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SiliconLawSystem _siliconLaw = default!;
 
@@ -28,7 +28,8 @@ public sealed class StartIonStormedSystem : EntitySystem
 
         for (int currentIonStorm = 0; currentIonStorm < ent.Comp.IonStormAmount; currentIonStorm++)
         {
-            _ionStorm.IonStormTarget((ent.Owner, lawBound, target), false);
+            var ev = new IonStormEvent(false);
+            RaiseLocalEvent(ent, ref ev);
         }
 
         var laws = _siliconLaw.GetLaws(ent.Owner, lawBound);
