@@ -294,11 +294,11 @@
             Heat: 12
             Structural: 15
   # Disabled until the wield active sfx no longer stacks
-  - type: ItemToggleActiveSound
-    activeSound:
-      path: /Audio/Weapons/ebladehum.ogg
-      params:
-        volume: -9999999
+  #- type: ItemToggleActiveSound
+  #  activeSound:
+  #    path: /Audio/Weapons/ebladehum.ogg
+  #    params:
+    #    volume: 3
   - type: ComponentToggler
     components:
     - type: Sharp
@@ -389,7 +389,7 @@
   parent: HyperEutacticBlade
   id: HyperEutaticBlade
   name: hypereutatic-blade
-  description: Often mistaken for the HyperEutactic Blade. This mass produced, off-brand, knockoff gets the same job done but with less reflection.
+  description: Often mistaken for the Hypereutactic Blade. This mass produced, off-brand, knockoff gets the same job done but with less reflection.
   components:
   - type: Reflect
     reflectProb: 0.75
