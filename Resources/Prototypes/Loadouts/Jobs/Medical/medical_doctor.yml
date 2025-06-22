@@ -82,13 +82,13 @@
   id: MedicalDoctorJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitMedicalDoctor
-  groupBy: "jumpsuit"
+  groupBy: "base"
 
 - type: loadout
   id: MedicalDoctorJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtMedicalDoctor
-  groupBy: "jumpskirt"
+  groupBy: "base"
 
 - type: loadout
   id: SeniorPhysicianJumpsuit
@@ -97,7 +97,7 @@
     proto: SeniorPhysician
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorPhysician
-  groupBy: "jumpsuit"
+  groupBy: "physician"
 
 - type: loadout
   id: SeniorPhysicianJumpskirt
@@ -106,7 +106,7 @@
     proto: SeniorPhysician
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorPhysician
-  groupBy: "jumpskirt"
+  groupBy: "physician"
 
 - type: loadout
   id: MedicalBlueScrubs

@@ -14,25 +14,25 @@
   id: ClownSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitClown
-  groupBy: "jumpsuit"
+  groupBy: "clown"
 
 - type: loadout
   id: ClownSkirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtClown
-  groupBy: "jumpskirt"
+  groupBy: "clown"
 
 - type: loadout
   id: JesterSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitJester
-  groupBy: "jumpsuit"
+  groupBy: "jester"
 
 - type: loadout
   id: JesterAltSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitJesterAlt
-  groupBy: "jumpsuit"
+  groupBy: "jester"
 
 # Back
 - type: loadout

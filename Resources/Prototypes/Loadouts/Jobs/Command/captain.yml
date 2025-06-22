@@ -13,25 +13,25 @@
   id: CaptainJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCaptain
-  groupBy: "jumpsuit"
+  groupBy: "base"
 
 - type: loadout
   id: CaptainJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCaptain
-  groupBy: "jumpskirt"
+  groupBy: "base"
 
 - type: loadout
   id: CaptainFormalSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitCapFormal
-  groupBy: "jumpsuit"
+  groupBy: "formal"
 
 - type: loadout
   id: CaptainFormalSkirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCapFormalDress
-  groupBy: "jumpskirt"
+  groupBy: "formal"
 
 # Head
 - type: loadout

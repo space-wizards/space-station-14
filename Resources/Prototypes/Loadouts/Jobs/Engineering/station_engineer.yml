@@ -54,19 +54,19 @@
   id: StationEngineerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitEngineering
-  groupBy: "jumpsuit"
+  groupBy: "base"
 
 - type: loadout
   id: StationEngineerJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtEngineering
-  groupBy: "jumpskirt"
+  groupBy: "base"
 
 - type: loadout
   id: StationEngineerHazardsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitEngineeringHazard
-  groupBy: "jumpsuit"
+  groupBy: "hazard"
 
 - type: loadout
   id: SeniorEngineerJumpsuit
@@ -75,7 +75,7 @@
     proto: SeniorEngineering
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorEngineer
-  groupBy: "jumpsuit"
+  groupBy: "senior"
 
 - type: loadout
   id: SeniorEngineerJumpskirt
@@ -84,7 +84,7 @@
     proto: SeniorEngineering
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorEngineer
-  groupBy: "jumpskirt"
+  groupBy: "senior"
 
 # Back
 - type: loadout

@@ -43,25 +43,25 @@
   id: ScientistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitScientist
-  groupBy: "jumpsuit"
+  groupBy: "base"
 
 - type: loadout
   id: ScientistJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtScientist
-  groupBy: "jumpskirt"
+  groupBy: "base"
 
 - type: loadout
   id: RoboticistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitRoboticist
-  groupBy: "jumpsuit"
+  groupBy: "roboticist"
 
 - type: loadout
   id: RoboticistJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtRoboticist
-  groupBy: "jumpskirt"
+  groupBy: "roboticist"
 
 - type: loadout
   id: SeniorResearcherJumpsuit
@@ -70,7 +70,7 @@
     proto: SeniorResearcher
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorResearcher
-  groupBy: "jumpsuit"
+  groupBy: "senior"
 
 - type: loadout
   id: SeniorResearcherJumpskirt
@@ -79,7 +79,7 @@
     proto: SeniorResearcher
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorResearcher
-  groupBy: "jumpskirt"
+  groupBy: "senior"
 
 # Back
 - type: loadout
