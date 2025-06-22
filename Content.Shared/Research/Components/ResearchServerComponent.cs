@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Research.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class ResearchServerComponent : Component
 {
     /// <summary>
@@ -48,6 +48,18 @@ public sealed partial class ResearchServerComponent : Component
 
     [DataField]
     public TimeSpan ResearchConsoleUpdateTime = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// Time when next reroll for tech to research will be available.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextRediscover;
+
+    /// <summary>
+    /// Minimal interval between rediscover actions.
+    /// </summary>
+    [DataField]
+    public TimeSpan RediscoverInterval = TimeSpan.FromSeconds(1);
 }
 
 /// <summary>

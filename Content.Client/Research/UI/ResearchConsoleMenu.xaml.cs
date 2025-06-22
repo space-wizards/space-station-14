@@ -12,6 +12,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Research.UI;
@@ -26,9 +27,19 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
     private readonly ResearchSystem _research;
     private readonly SpriteSystem _sprite;
     private readonly AccessReaderSystem _accessReader;
+
+    // if set to null  - we are waiting for server info and should not let rerolls
+    private TimeSpan? _nextRediscover;
+    private int _rediscoverCost;
+    private int _serverPoints;
+
+    private TimeSpan _nextUpdate;
+    private readonly TimeSpan _updateInterval = TimeSpan.FromMilliseconds(500);
 
     public EntityUid Entity;
 
@@ -42,7 +53,7 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         _accessReader = _entity.System<AccessReaderSystem>();
 
         ServerButton.OnPressed += _ => OnServerButtonPressed?.Invoke();
-        RediscoverButton.OnPressed += _ => OnTechnologyRediscoverPressed?.Invoke();
+        RediscoverButton.OnPressed += OnRediscoverPressed;
     }
 
     public void SetEntity(EntityUid entity)
@@ -82,8 +93,18 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
     public void Update(Entity<ResearchServerComponent> ent)
     {
         ResearchServerComponent server = ent;
-        RediscoverButton.Disabled = !HasAccess() || server.Points < server.RediscoverCost;
-        RediscoverButton.Text = Loc.GetString("research-console-menu-server-rediscover-button", ("cost", server.RediscoverCost));
+
+        _serverPoints = server.Points;
+        _rediscoverCost = server.RediscoverCost;
+        _nextRediscover = server.NextRediscover;
+
+        UpdateRediscoverButton();
+    }
+
+    private void UpdateRediscoverButton()
+    {
+        RediscoverButton.Disabled = !HasAccess() || _serverPoints < _rediscoverCost || _timing.CurTime < _nextRediscover;
+        RediscoverButton.Text = Loc.GetString("research-console-menu-server-rediscover-button", ("cost", _rediscoverCost));
     }
 
     public void UpdateInformationPanel(ResearchConsoleBoundInterfaceState state)
@@ -144,6 +165,20 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
             };
             TierDisplayContainer.AddChild(control);
         }
+
+        _serverPoints = state.Points;
+        _rediscoverCost = state.RediscoverCost;
+        _nextRediscover = state.NextRediscover;
+
+        UpdateRediscoverButton();
+    }
+
+    private void OnRediscoverPressed(BaseButton.ButtonEventArgs args)
+    {
+        RediscoverButton.Disabled = true;
+        _nextRediscover = null;
+
+        OnTechnologyRediscoverPressed?.Invoke();
     }
 
     private bool HasAccess()
@@ -192,6 +227,25 @@ public sealed partial class ResearchConsoleMenu : FancyWindow
         {
             container.Children.Remove(techControl);
         }
+    }
+
+    /// <inheritdoc />
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        if(_nextUpdate > _timing.CurTime)
+            return;
+
+        _nextUpdate = _timing.CurTime + _updateInterval;
+
+        if (!RediscoverButton.Disabled)
+            return;
+
+        if (_nextRediscover == null || _nextRediscover > _timing.CurTime)
+            return;
+
+        UpdateRediscoverButton();
     }
 }
 

@@ -60,6 +60,7 @@ public sealed class ResearchConsoleBoundUserInterface(EntityUid owner, Enum uiKe
 
         if (state is not ResearchConsoleBoundInterfaceState castState)
             return;
+
         _consoleMenu?.UpdatePanels(castState);
         _consoleMenu?.UpdateInformationPanel(castState);
     }

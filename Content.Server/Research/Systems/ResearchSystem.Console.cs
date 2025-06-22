@@ -46,9 +46,14 @@ public sealed partial class ResearchSystem
         if (!TryGetClientServer(uid, out var serverEnt, out var serverComponent))
             return;
 
+        if(serverComponent.NextRediscover > _timing.CurTime)
+            return;
+
         var rediscoverCost = serverComponent.RediscoverCost;
         if (rediscoverCost > serverComponent.Points)
             return;
+
+        serverComponent.NextRediscover = _timing.CurTime + serverComponent.RediscoverInterval;
 
         ModifyServerPoints(serverEnt.Value, -rediscoverCost);
         UpdateTechnologyCards(serverEnt.Value);
@@ -105,13 +110,15 @@ public sealed partial class ResearchSystem
 
         
         var points = 0;
-        if (TryGetClientServer(uid, out _, out var serverComponent, clientComponent))
+        var nextRediscover = TimeSpan.MaxValue;
+        var rediscoverCost = 0;
+        if (TryGetClientServer(uid, out _, out var serverComponent, clientComponent) && clientComponent.ConnectedToServer)
         {
-            points = clientComponent.ConnectedToServer
-                ? serverComponent.Points
-                : 0;
+            points = serverComponent.Points;
+            nextRediscover = serverComponent.NextRediscover;
+            rediscoverCost = serverComponent.RediscoverCost;
         }
-        var state = new ResearchConsoleBoundInterfaceState(points);
+        var state = new ResearchConsoleBoundInterfaceState(points, nextRediscover, rediscoverCost);
 
         _uiSystem.SetUiState(uid, ResearchConsoleUiKey.Key, state);
     }
