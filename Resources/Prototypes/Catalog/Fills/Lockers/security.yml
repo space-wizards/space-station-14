@@ -136,6 +136,9 @@
       - id: HoloprojectorSecurity
       - id: BoxEvidenceMarkers
       - id: HandLabeler
+      - id: ClothingShoesBootsSnake
+      - id: ClothingOuterCoatDiscoBlazer
+      - id: ClothingNeckTieDisco #THE DISCO LARP IS REAL!!!
 
 - type: entity
   id: ClosetBombFilled

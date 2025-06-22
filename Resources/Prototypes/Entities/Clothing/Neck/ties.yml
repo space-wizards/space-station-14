@@ -25,7 +25,7 @@
     sprite: Clothing/Neck/Ties/dettie.rsi
   - type: Clothing
     sprite: Clothing/Neck/Ties/dettie.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckTieSci
@@ -42,3 +42,14 @@
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingNeckTieRed
+  id: ClothingNeckTieDisco
+  name: Horrific Tie
+  description: A mirror hangs on the bathroom wall.
+  components:
+  - type: Sprite
+    sprite: _KS14/Clothing/Neck/Ties/horrific_necktie.rsi
+  - type: Clothing
+    sprite: _KS14/Clothing/Neck/Ties/horrific_necktie.rsi

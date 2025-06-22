@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Flora made dis",
+  "copyright": "Flora made it.",
   "size": {
     "x": 32,
     "y": 32
@@ -11,8 +11,12 @@
       "name": "icon"
     },
     {
-      "name": "equipped-FEET",
+      "name": "equipped-OUTERCLOTHING",
       "directions": 4
+    },
+    {
+        "name": "equipped-OUTERCLOTHING-vox",
+        "directions": 4
     }
   ]
 }
