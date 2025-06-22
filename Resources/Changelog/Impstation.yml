@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The wrapper on a nutribrick is no longer one of the most calorie-dense
-      substances known to mothkind.
-    type: Tweak
-  id: 1384
-  time: '2025-03-25T01:41:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2067
 - author: DinnerCalzone
   changes:
   - message: E1M1 can no longer be spaced.
@@ -4232,3 +4224,14 @@
   id: 1883
   time: '2025-06-21T22:41:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2847
+- author: widgetbeck
+  changes:
+  - message: Removed the Thaven "your moods are secret" mood - It's more interesting
+      if you treat the moods as secret by default.
+    type: Remove
+  - message: Changed the wording of the Thaven guidebook entry's section on Moods
+      to discourage some LRP behavior.
+    type: Tweak
+  id: 1884
+  time: '2025-06-22T06:19:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2823
