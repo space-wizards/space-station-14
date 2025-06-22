@@ -41,8 +41,8 @@ public sealed class WallmountDebugOverlay : Overlay
 
     private void DrawArc(DrawingHandleWorld handle, Vector2 position, float radius, Angle rot, Angle arc)
     {
-        // 16 segments for a full circle, but 2 at least
-        var segments = Math.Max((int)(arc.Theta / Math.Tau * 16), 2);
+        // 32 segments for a full circle, but 2 at least
+        var segments = Math.Max((int)(arc.Theta / Math.Tau * 32), 2);
         var step = arc.Theta / (segments - 1);
         var verts = new Vector2[segments + 1];
 
