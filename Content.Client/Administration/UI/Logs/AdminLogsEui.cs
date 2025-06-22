@@ -103,30 +103,33 @@ public sealed class AdminLogsEui : BaseEui
             await using var writer = new StreamWriter(file.Value.fileStream);
             foreach (var child in LogsControl.LogsContainer.Children)
             {
-                if (child is not AdminLogLabel log || !child.Visible)
+                if (child is not AdminLogLabel logLabel || !child.Visible)
                     continue;
 
+                var log = logLabel.Log;
+
                 // I swear to god if someone adds ,s or "s to the other fields...
-                await writer.WriteAsync(log.Log.Date.ToString());
+                await writer.WriteAsync(log.Date.ToString("s", System.Globalization.CultureInfo.InvariantCulture));
                 await writer.WriteAsync(',');
-                await writer.WriteAsync(log.Log.Id.ToString());
+                await writer.WriteAsync(log.Id.ToString());
                 await writer.WriteAsync(',');
-                await writer.WriteAsync(log.Log.Impact.ToString());
+                await writer.WriteAsync(log.Impact.ToString());
                 await writer.WriteAsync(',');
                 // Message
                 await writer.WriteAsync('"');
-                await writer.WriteAsync(log.Log.Message.Replace("\"", "\"\""));
+                await writer.WriteAsync(log.Message.Replace("\"", "\"\""));
                 await writer.WriteAsync('"');
                 // End of message
                 await writer.WriteAsync(',');
 
-                for (var i = 0; i < log.Log.Players.Length; i++)
+                var players = log.Players;
+                for (var i = 0; i < players.Length; i++)
                 {
-                    await writer.WriteAsync(log.Log.Players[i] + (i == log.Log.Players.Length - 1 ? "" : " "));
+                    await writer.WriteAsync(players[i] + (i == players.Length - 1 ? "" : " "));
                 }
 
                 await writer.WriteAsync(',');
-                await writer.WriteAsync(log.Log.Type.ToString());
+                await writer.WriteAsync(log.Type.ToString());
                 await writer.WriteLineAsync();
             }
         }
