@@ -52,6 +52,14 @@
       ]
     },
     {
+      "name": "space_sheep_dead",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
       "name": "wool_greyscale_dead",
       "delays": [
         [
@@ -79,24 +87,6 @@
     },
     {
       "name": "space_sheep_harvested",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "space_sheep_wool",
       "directions": 4,
       "delays": [
         [
