@@ -39,6 +39,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     private void OnClone(Entity<SericultureComponent> ent, ref CloningEvent args)
     {
         var comp = EnsureComp<SericultureComponent>(args.CloneUid);
+        comp.PopupText = ent.Comp.PopupText;
         comp.ProductionLength = ent.Comp.ProductionLength;
         comp.HungerCost = ent.Comp.HungerCost;
         comp.EntityProduced = ent.Comp.EntityProduced;
