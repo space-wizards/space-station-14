@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: The default supermatter radiator setup has been tweaked to allow more
-      gas to flow. Be sure to check up on the engine every once in a while to make
-      sure it has enough gas!
-    type: Tweak
-  id: 1389
-  time: '2025-03-25T01:47:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2079
 - author: FutureExalt
   changes:
   - message: removed racism from some italian accent substitutions
@@ -4235,3 +4226,10 @@
   id: 1888
   time: '2025-06-22T06:35:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2840
+- author: sev7ves
+  changes:
+  - message: can now teleport to artifacts and anomalies as ghost.
+    type: Tweak
+  id: 1889
+  time: '2025-06-22T08:33:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2552
