@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: slarticodefast, Flareguy
-  changes:
-  - message: Added the Desynchronizer, an experimental device that allows the user
-      to temporarily make themselves invincible, invisible, & immobile. Unlock it
-      through experimental science today!
-    type: Add
-  - message: Gravity Manipulation technology is now a tier 2 technology.
-    type: Tweak
-  id: 8193
-  time: '2025-04-16T01:33:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35752
 - author: RedBookcase
   changes:
   - message: Minor blueprint tweaks and a new stored sprite for blueprints.
@@ -3899,3 +3888,10 @@
   id: 8705
   time: '2025-06-22T16:50:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37182
+- author: Cojoke-dot
+  changes:
+  - message: Pacifists can now use the Staff of Healing
+    type: Tweak
+  id: 8706
+  time: '2025-06-22T19:38:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38509
