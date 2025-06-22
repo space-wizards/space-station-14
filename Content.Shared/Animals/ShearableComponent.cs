@@ -46,7 +46,7 @@ public sealed partial class ShearableComponent : Component
     public string ToolQuality = string.Empty;
 
     /// <summary>
-    ///     The solution to add reagent to.
+    ///     This is just for caching the resolved solution.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public Entity<SolutionComponent>? Solution;
