@@ -60,6 +60,7 @@ namespace Content.Client.Inventory
                 return;
 
             ent.Comp.TemplateId = state.Template;
+            ent.Comp.SpeciesId = state.Species;
 
             UpdateInventoryTemplate(ent);
 

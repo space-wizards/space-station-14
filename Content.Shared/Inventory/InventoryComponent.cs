@@ -1,4 +1,5 @@
 ﻿using Content.Shared.DisplacementMap;
+using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -13,7 +14,8 @@ public sealed partial class InventoryComponent : Component
     [DataField]
     public ProtoId<InventoryTemplatePrototype> TemplateId { get; set; } = "human";
 
-    [DataField] public string? SpeciesId { get; set; }
+    [DataField]
+    public ProtoId<SpeciesPrototype>? SpeciesId { get; set; }
 
     public SlotDefinition[] Slots = Array.Empty<SlotDefinition>();
     public ContainerSlot[] Containers = Array.Empty<ContainerSlot>();
@@ -38,10 +40,12 @@ public sealed partial class InventoryComponent : Component
 public sealed class InventoryComponentState : ComponentState
 {
     public ProtoId<InventoryTemplatePrototype> Template;
+    public ProtoId<SpeciesPrototype>? Species;
 
-    public InventoryComponentState(ProtoId<InventoryTemplatePrototype> template)
+    public InventoryComponentState(ProtoId<InventoryTemplatePrototype> template, ProtoId<SpeciesPrototype>? species)
     {
         Template = template;
+        Species = species;
     }
 }
 

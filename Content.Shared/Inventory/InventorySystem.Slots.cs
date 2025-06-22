@@ -27,7 +27,7 @@ public partial class InventorySystem : EntitySystem
 
     private void OnGetState(Entity<InventoryComponent> ent, ref ComponentGetState args)
     {
-        args.State = new InventoryComponentState(ent.Comp.TemplateId);
+        args.State = new InventoryComponentState(ent.Comp.TemplateId, ent.Comp.SpeciesId);
 
         UpdateInventoryTemplate(ent);
 
