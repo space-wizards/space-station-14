@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Chaplain, Clown, Mime, and Musician all now have Service access.
-    type: Add
-  - message: Security jobs no longer have Service access.
-    type: Remove
-  id: 1391
-  time: '2025-03-25T02:08:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2081
 - author: hivehum
   changes:
   - message: Vox can caw like a crow.
@@ -4233,3 +4224,10 @@
   id: 1890
   time: '2025-06-22T09:46:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2799
+- author: SixValentine
+  changes:
+  - message: Luna is now compliant with modern mapping standards
+    type: Add
+  id: 1891
+  time: '2025-06-22T14:27:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2828
