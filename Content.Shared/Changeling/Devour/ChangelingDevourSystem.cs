@@ -135,7 +135,6 @@ public sealed class ChangelingDevourSystem : EntitySystem
             return;
         }
 
-        //Why does your dad let you have Two IsFirstTimePredicted checks
         if (_net.IsServer)
             ent.Comp.CurrentDevourSound = _audio.PlayPvs(ent.Comp.DevourWindupNoise!, ent,  new AudioParams())!.Value.Entity;
 

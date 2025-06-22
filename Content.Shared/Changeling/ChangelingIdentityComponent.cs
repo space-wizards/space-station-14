@@ -11,9 +11,10 @@ public sealed partial class ChangelingIdentityComponent : Component
 {
     /// <summary>
     /// The list of entity UID's that exist in nullspace, they are paused clones of the victims that the ling has consumed
+    /// Is a value of Realspace victim and their identity clone
     /// </summary>
     [DataField, AutoNetworkedField]
-    public List<EntityUid> ConsumedIdentities = [];
+    public Dictionary<EntityUid,EntityUid> ConsumedIdentities = [];
 
     /// <summary>
     /// The last Consumed Identity of the ling, used by the UI for double pressing the action to quick transform.

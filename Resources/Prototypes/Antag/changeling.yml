@@ -61,11 +61,14 @@
   - SouthernAccent
   - SpanishAccent
   - StutteringAccent
+  - Inventory
   - Fixtures
   eventComponents:
   - Wagging
   - Vocal
   - Storage
+  - Rootable
+  - Sericulture
   copyEquipment: null
   copyInternalStorage: false
   copyImplants: false
