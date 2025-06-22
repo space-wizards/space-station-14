@@ -1,6 +1,7 @@
 - type: tile
   id: FloorPlanetDirt
   name: tiles-dirt-floor
+  prefix: planet
   sprite: /Textures/Tiles/Planet/dirt.rsi/dirt.png
   variants: 4
   placementVariants:
@@ -58,6 +59,7 @@
 - type: tile
   id: FloorPlanetGrass
   name: tiles-grass-planet-floor
+  prefix: planet
   sprite: /Textures/Tiles/Planet/Grass/grass.png
   variants: 4
   placementVariants:
