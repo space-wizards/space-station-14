@@ -74,6 +74,8 @@ namespace Content.Client.Inventory
                 return;
 
             ent.Comp.Slots = index.Slots;
+            // TODO: Find a way to recreate Containers. Enumerator shits itself without them.
+            // ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
 
             foreach (var slot in slots.SlotData)
             {
@@ -97,6 +99,23 @@ namespace Content.Client.Inventory
                 Log.Debug("Attempting to add: " + slot.Name);
 
                 TryAddSlotDef(ent, slots, slot);
+            }
+
+            if (TryGetSlots(ent.Owner, out var definitions))
+            {
+                foreach (var definition in definitions)
+                {
+                    if (!TryGetSlotContainer(ent.Owner, definition.Name, out var container, out _))
+                        continue;
+
+                    if (!slots.SlotData.TryGetValue(definition.Name, out var data))
+                    {
+                        data = new SlotData(definition);
+                        slots.SlotData[definition.Name] = data;
+                    }
+
+                    data.Container = container;
+                }
             }
 
             ReloadInventory();
@@ -255,7 +274,7 @@ namespace Content.Client.Inventory
 
             if (owner == _playerManager.LocalEntity)
                 OnSlotAdded?.Invoke(newSlotData);
-            
+
             Log.Debug("Adding def client:" + newSlotDef.Name);
             return true;
         }
