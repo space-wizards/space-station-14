@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Linq;
 using Content.Client.Clothing;
 using Content.Client.Examine;
@@ -60,6 +59,7 @@ namespace Content.Client.Inventory
             if (args.Current is not InventoryComponentState state)
                 return;
 
+            // If nothing changed, just skip the update.
             if (state.Template == ent.Comp.TemplateId && state.Species == ent.Comp.SpeciesId)
                 return;
 
@@ -80,15 +80,17 @@ namespace Content.Client.Inventory
             ent.Comp.Slots = index.Slots;
             ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
 
+            // Remove any slots from the inventory slots that arent in the new updated template.
             foreach (var slot in slots.SlotData)
             {
-                if (index.Slots.Any(s => s.Name == slot.Key))
+                if (ent.Comp.Slots.Any(s => s.Name == slot.Key))
                     continue;
 
                 TryRemoveSlotDef(ent, slots, slot.Value);
             }
 
-            foreach (var slot in index.Slots)
+            // Add new slots that are missing from the new template
+            foreach (var slot in ent.Comp.Slots)
             {
                 if (slots.SlotData.Any(s => s.Key == slot.Name))
                     continue;
@@ -96,6 +98,8 @@ namespace Content.Client.Inventory
                 TryAddSlotDef(ent, slots, slot);
             }
 
+            // As the contaienrs got cleared, we need to reassign them to ensure they're all in the same order as the slots.
+            // And they need to be in the same order cause inventory enumeration expects them to be.
             for (var i = 0; i < ent.Comp.Containers.Length; i++)
             {
                 var slot = ent.Comp.Slots[i];
@@ -104,23 +108,7 @@ namespace Content.Client.Inventory
                 ent.Comp.Containers[i] = container;
             }
 
-            if (TryGetSlots(ent, out var definitions))
-            {
-                foreach (var definition in definitions)
-                {
-                    if (!TryGetSlotContainer(ent, definition.Name, out var container, out _))
-                        continue;
-
-                    if (!slots.SlotData.TryGetValue(definition.Name, out var data))
-                    {
-                        data = new SlotData(definition);
-                        slots.SlotData[definition.Name] = data;
-                    }
-
-                    data.Container = container;
-                }
-            }
-
+            UpdateContainerData((ent, slots));
             _clothingVisualsSystem.InitClothing(ent, ent.Comp);
             ReloadInventory();
         }
@@ -185,26 +173,11 @@ namespace Content.Client.Inventory
             OnUnlinkInventory?.Invoke();
         }
 
-        private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, LocalPlayerAttachedEvent args)
+        private void OnPlayerAttached(Entity<InventorySlotsComponent> ent, ref LocalPlayerAttachedEvent args)
         {
-            if (TryGetSlots(uid, out var definitions))
-            {
-                foreach (var definition in definitions)
-                {
-                    if (!TryGetSlotContainer(uid, definition.Name, out var container, out _))
-                        continue;
+            UpdateContainerData(ent);
 
-                    if (!component.SlotData.TryGetValue(definition.Name, out var data))
-                    {
-                        data = new SlotData(definition);
-                        component.SlotData[definition.Name] = data;
-                    }
-
-                    data.Container = container;
-                }
-            }
-
-            OnLinkInventorySlots?.Invoke(uid, component);
+            OnLinkInventorySlots?.Invoke(ent, ent.Comp);
         }
 
         public override void Shutdown()
@@ -292,6 +265,30 @@ namespace Content.Client.Inventory
             if (owner == _playerManager.LocalEntity)
                 OnSlotRemoved?.Invoke(newSlotData);
             return true;
+        }
+
+        /// <summary>
+        /// Updates the containers in InventorySlotsComponent according to their slots.
+        /// </summary>
+        /// <param name="ent">Entity to update.</param>
+        public void UpdateContainerData(Entity<InventorySlotsComponent> ent)
+        {
+            if (TryGetSlots(ent, out var definitions))
+            {
+                foreach (var definition in definitions)
+                {
+                    if (!TryGetSlotContainer(ent, definition.Name, out var container, out _))
+                        continue;
+
+                    if (!ent.Comp.SlotData.TryGetValue(definition.Name, out var data))
+                    {
+                        data = new SlotData(definition);
+                        ent.Comp.SlotData[definition.Name] = data;
+                    }
+
+                    data.Container = container;
+                }
+            }
         }
 
         public void UIInventoryActivate(string slot)
