@@ -70,7 +70,7 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
-    omega:
+    omega: # begin starlight
       announcement: alert-level-omega-announcement
       selectable: false
       sound:
@@ -81,4 +81,4 @@
       color: '#454545'
       emergencyLightColor: '#454545'
       forceEnableEmergencyLights: true
-      shuttleTime: 1200
+      shuttleTime: 1200 # end starlight
