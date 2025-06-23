@@ -37,13 +37,15 @@ soviet-eva-desc = A rugged space suit with the hammer and sickle emblazoned on t
 soviet-eva-helm-name = Soviet EVA Helmet
 soviet-eva-helm-desc = A sturdy EVA helmet with a red star emblazoned on the front. Glory to the workers of space!
 soviet-bandolier-name = Marine bandolier (SSF)
-soviet-bandolier-desc = The marines have sent their standard that can hold ammo, knives and radio.
+soviet-bandolier-desc = The marines have surplus bandoliers that can hold ammo, knives and radio.
 soviet-gas-mask-name = GP-32 gas mask
 soviet-gas-mask-desc = An old uncomfortable mechanical gas mask. Has eye and flash protection.
 soviet-coat-name = Soviet great coat
 soviet-coat-desc = Offers minor protection from bullets, major protection from fashion.
 glasses-name = cheap sunglasses
 glasses-desc = A downgrade that shows the brainwashing parasite above them.
+soviet-hardsuit-name = Marine hardsuit (SSF)
+soviet-hardsuit-desc = Old robust design, still holds up to this day.
 
 # Implants
 stolen-implanter-name = Implanter (NT)

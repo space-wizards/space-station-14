@@ -50,3 +50,16 @@
       - id: MeatwheatBushel
       - id: ClothingHeadHatStrawHat
 
+- type: entity
+  id: ClothingBackpackDuffelMarineHardsuitBundle
+  name: SSF marine hardsuit bundle
+  parent: ClothingBackpackDuffelSSF
+  description: Contains the USSP's elite marine hardsuit.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitSovietMarine
+      - id: ClothingHandsGlovesCombat
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+

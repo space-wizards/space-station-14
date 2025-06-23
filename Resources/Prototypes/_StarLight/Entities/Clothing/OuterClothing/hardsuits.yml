@@ -188,3 +188,50 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+
+#USSP
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseSovietContraband]
+  id: ClothingOuterHardsuitSovietMarine
+  name: SSF marine hardsuit
+  description: SMIRNO!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/sovietmarine.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/sovietmarine.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.2
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.40
+        Heat: 0.35
+        Radiation: 0.1
+        Caustic: 0.4
+    staminaModifier: 1
+    ingoreKnockdown: true
+  - type: ClothingSpeedModifier
+    walkModifier: 0.90
+    sprintModifier: 0.90
+  - type: HeldSpeedModifier
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHeavy
+      params:
+        volume: -6
+        variation: 0.09
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSovietMarine
+  - type: Tag
+    tags:
+    - MonkeyWearable
+    - WhitelistChameleon
+    - FootstepSound
+  - type: Item
+    size: Huge

@@ -229,6 +229,20 @@
     stockLimit: 1
 
 - type: listing
+  id: SSFHardsuit
+  name: soviet-hardsuit-name
+  description: soviet-hardsuit-desc
+  productEntity: ClothingBackpackDuffelMarineHardsuitBundle
+  icon: { sprite: _Starlight/Clothing/OuterClothing/Hardsuits/sovietmarine.rsi, state: icon }
+  cost:
+    Telebond: 35
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
   id: USSPCoat
   name: soviet-coat-name
   description: soviet-coat-desc
