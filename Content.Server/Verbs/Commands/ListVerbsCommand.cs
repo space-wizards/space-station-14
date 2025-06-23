@@ -25,8 +25,9 @@ public sealed class ListVerbsCommand : LocalizedEntityCommands
             return;
         }
 
+        // get the 'player' entity (defaulting to command user, otherwise uses a uid)
         ICommonSession? session;
-        if (args[0] == "self" && shell.Player?.AttachedEntity != null)
+        if (args[0] == "self")
             session = shell.Player;
         else if (!_playerManager.TryGetSessionByUsername(args[0], out session))
             shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
