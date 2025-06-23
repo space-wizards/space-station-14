@@ -1,4 +1,5 @@
 using Content.Server.AlertLevel;
+using Content.Server.Administration.Logs;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Station.Systems;
 
@@ -6,6 +7,7 @@ namespace Content.Server.AlertLevel.Systems;
 
 public sealed class AlertLevelChangeOnTriggerSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
     [Dependency] private readonly StationSystem _station = default!;
 
@@ -23,5 +25,6 @@ public sealed class AlertLevelChangeOnTriggerSystem : EntitySystem
             return;
 
         _alertLevelSystem.SetLevel(stationUid.Value, ent.Comp.Level, ent.Comp.PlaySound, ent.Comp.Announce, ent.Comp.Force);
+        _adminLog.Add(Shared.Database.LogType.Trigger, Shared.Database.LogImpact.Medium, $"Entity {ent.Owner} changed alert level to {ent.Comp.Level} on station {stationUid.Value} with a trigger.");
     }
 }
