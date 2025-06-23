@@ -251,7 +251,7 @@
 - type: entity
   parent: [ClothingShoesMilitaryBase, BaseSecurityContraband]
   id: ClothingShoesBootsSnake
-  name: snakeskin boots
+  name: snakeskin shoes
   description: With the Expression.
   components:
   - type: Sprite
