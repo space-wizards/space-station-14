@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Vox can caw like a crow.
-    type: Add
-  - message: Goblins can hiss.
-    type: Add
-  - message: Vox's 'coo' and the three slime emotes have different icons.
-    type: Tweak
-  id: 1392
-  time: '2025-03-25T02:12:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2042
 - author: Kandiyaki
   changes:
   - message: Added the Infinite Archives, the source of all mansus knowledge.
@@ -4231,3 +4220,10 @@
   id: 1891
   time: '2025-06-22T14:27:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2828
+- author: Jellvisk
+  changes:
+  - message: metamorphic holes can now properly be deconstructed
+    type: Fix
+  id: 1892
+  time: '2025-06-23T01:54:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2852
