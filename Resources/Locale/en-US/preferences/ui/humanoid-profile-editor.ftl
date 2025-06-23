@@ -1,4 +1,5 @@
 humanoid-profile-editor-randomize-everything-button = Randomize everything
+humanoid-profile-editor-randomize-appearance-button = Randomize appearance
 humanoid-profile-editor-name-label = Name:
 humanoid-profile-editor-name-random-button = Randomize
 humanoid-profile-editor-appearance-tab = Appearance
@@ -33,6 +34,8 @@ humanoid-profile-editor-preference-backpack = Backpack
 humanoid-profile-editor-preference-satchel = Satchel
 humanoid-profile-editor-preference-duffelbag = Duffelbag
 humanoid-profile-editor-guidebook-button-tooltip = Click for more info
+
+
 
 # Spawn priority
 humanoid-profile-editor-preference-spawn-priority-none = None
