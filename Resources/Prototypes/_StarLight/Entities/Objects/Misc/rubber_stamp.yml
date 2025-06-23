@@ -62,9 +62,9 @@
   - type: Stamp
     stampedName: "Central Cargo Division"
     stampedColor: "#B45F06"
-    stampState: "paper_stamp-ce"
+    stampState: "paper_stamp-qm"
   - type: Sprite
-    state: stamp-ce
+    state: stamp-detective
 
 - type: entity
   name: Central Engineering Division rubber stamp
@@ -77,7 +77,7 @@
     stampedColor: "#FEFF38"
     stampState: "paper_stamp-ntrep"
   - type: Sprite
-    state: stamp-qm
+    state: stamp-ce
 
 - type: entity
   name: Central Intelligence Division rubber stamp
