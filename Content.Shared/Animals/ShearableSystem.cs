@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -39,6 +40,7 @@ public sealed class SharedShearableSystem : EntitySystem
 
         SubscribeLocalEvent<ShearableComponent, GetVerbsEvent<AlternativeVerb>>(AddShearVerb);
         SubscribeLocalEvent<ShearableComponent, InteractUsingEvent>(OnClicked);
+        SubscribeLocalEvent<ShearableComponent, ExaminedEvent>(Examined);
     }
 
     /// <summary>
@@ -47,6 +49,7 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <param name="targetEntity">The shearable entity that will be checked.</param>
     /// <param name="comp">The shearable component (e.g. ent.Comp).</param>
     /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
+    /// <param name="checkItem">If false then skip checking for the correct shearing tool.</param>
     /// <returns>
     ///     A <c>ShearableComponent.CheckShearReturns</c> enum of the result.
     /// </returns>
@@ -54,17 +57,22 @@ public sealed class SharedShearableSystem : EntitySystem
     public ShearableComponent.CheckShearReturns CheckShear(
         EntityUid targetEntity,
         ShearableComponent comp,
-        EntityUid? usedItem
+        EntityUid? usedItem = null,
+        bool checkItem = true
     )
     {
-        if (
-            // Is the player holding an item?
-            usedItem == null
-            ||
-            // Does the held item have the correct toolQuality component quality?
-            !_tool.HasQuality((EntityUid)usedItem, comp.ToolQuality)
-        )
-            return ShearableComponent.CheckShearReturns.WrongTool;
+        // If false then skip checking for a tool, otherwise return on wrong tool.
+        if (checkItem)
+        {
+            if (
+                // Is the player holding an item?
+                usedItem == null
+                ||
+                // Does the held item have the correct toolQuality component quality?
+                !_tool.HasQuality((EntityUid)usedItem, comp.ToolQuality)
+            )
+                return ShearableComponent.CheckShearReturns.WrongTool;
+        }
 
         // Everything below this point is just calculating whether the animal
         // has enough solution to spawn at least one item in the specified stack.
@@ -219,5 +227,50 @@ public sealed class SharedShearableSystem : EntitySystem
             };
         // Add verb to the player.
         args.Verbs.Add(verb);
+    }
+
+    private void Examined(Entity<ShearableComponent> ent, ref ExaminedEvent args)
+    {
+        // Shearable description additions are optional, return if unset.
+        // Saves some time if neither have been configured.
+        if (string.IsNullOrEmpty(ent.Comp.ShearableMarkupText) && string.IsNullOrEmpty(ent.Comp.UnShearableMarkupText))
+        {
+            return;
+        }
+
+        // Checks whether the entity can be sheared and applies appropriate examine additions.
+        switch (CheckShear(ent, ent.Comp, checkItem: false))
+        {
+            case ShearableComponent.CheckShearReturns.Success:
+                // Check again if this description has been set.
+                if (string.IsNullOrEmpty(ent.Comp.ShearableMarkupText))
+                {
+                    break;
+                }
+                // ALL SYSTEMS GO!
+                args.PushMarkup(
+                    Loc.GetString(
+                        ent.Comp.ShearableMarkupText,
+                        ("target", Identity.Entity(ent.Owner, EntityManager)),
+                        ("toolQuality", ent.Comp.ToolQuality.ToLower())
+                    )
+                );
+                return;
+            case ShearableComponent.CheckShearReturns.WrongTool:
+                return;
+            case ShearableComponent.CheckShearReturns.InsufficientSolution:
+                // Check again if this description has been set.
+                if (string.IsNullOrEmpty(ent.Comp.UnShearableMarkupText))
+                {
+                    break;
+                }
+                args.PushMarkup(
+                    Loc.GetString(
+                        ent.Comp.UnShearableMarkupText,
+                        ("target", Identity.Entity(ent.Owner, EntityManager))
+                    )
+                );
+                return;
+        }
     }
 }

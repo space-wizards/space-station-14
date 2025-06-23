@@ -45,6 +45,21 @@ public sealed partial class ShearableComponent : Component
     [DataField]
     public string ToolQuality = string.Empty;
 
+
+    /// <summary>
+    ///     A localised string added to the description box when the entity is shearable.
+    ///     e.g. "She has a fleece of fluffy wool."
+    /// </summary>
+    [DataField]
+    public string ShearableMarkupText = string.Empty;
+
+    /// <summary>
+    ///     A localised string added to the description box when the entity is not shearable.
+    ///     e.g. "Her fleece is freshly sheared and bare."
+    /// </summary>
+    [DataField]
+    public string UnShearableMarkupText = string.Empty;
+
     /// <summary>
     ///     This is just for caching the resolved solution.
     /// </summary>

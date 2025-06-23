@@ -1100,7 +1100,7 @@
   name: sheep
   parent: SimpleMobBase
   id: MobSheep
-  description: A wooly sheep, her soft fluffy coat looks amazing to hug.
+  description: An adorable genetically engineered chemical factory producing milk and cotton.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -1176,6 +1176,8 @@
     shearedProductID: Cotton # Cotton is spawned because there is no wool item.
     productsPerSolution: 0.2 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton. 1 ÷ 5 = 0.2
     toolQuality: Cutting # Wirecutters and barber's scissors.
+    shearableMarkupText: sheep-shearable-examine-markup
+    unShearableMarkupText: sheep-not-shearable-examine-markup
   - type: Food
     solution: wool
     requiresSpecialDigestion: true
