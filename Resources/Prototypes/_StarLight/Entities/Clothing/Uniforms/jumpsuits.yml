@@ -327,3 +327,27 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/formal_blueshield.rsi
 
 # Fashion-O-Mat END
+
+# USSP
+- type: entity
+  parent: [ UnsensoredClothingUniformBase, BaseSovietContraband ]
+  id: ClothingUniformJumpsuitSovietAdmiral
+  name: soviet admiral jumpsuit
+  description: They are one phone call away from ruining your life.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietadmiral.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietadmiral.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitTrackSuit
+  name: black tracksuit
+  description: Tider? Nyet, gopnik.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/track_suit.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/track_suit.rsi
+

@@ -31,6 +31,7 @@
   - type: Clothing
     sprite: _Starlight/Clothing/Head/Hats/beret_corpsman.rsi
 
+#USSP
 - type: entity
   parent: [ClothingHeadBase, BaseSovietContraband]
   id: ClothingHeadHatUshankaAlt
@@ -44,3 +45,24 @@
   - type: TemperatureProtection
     heatingCoefficient: 1.025
     coolingCoefficient: 0.65
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - HamsterWearable
+
+- type: entity
+  parent: [ClothingHeadBase, BaseSovietContraband]
+  id: ClothingHeadHatSovietAdmiralHat
+  name: soviet admiral hat
+  description: This hat clearly belongs to someone very important.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/sovietadmiralhat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/sovietadmiralhat.rsi 
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - HamsterWearable
