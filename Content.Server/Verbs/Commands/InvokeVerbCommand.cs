@@ -40,17 +40,9 @@ public sealed class InvokeVerbCommand : LocalizedEntityCommands
         }
 
         // gets the target entity
-        if (!int.TryParse(args[1], out var intUid))
+        if (!NetEntity.TryParse(args[1], out var netEnt) || !EntityManager.TryGetEntity(netEnt, out var target))
         {
-            shell.WriteError(Loc.GetString("invoke-verb-command-invalid-target-uid"));
-            return;
-        }
-
-        var targetNet = new NetEntity(intUid);
-
-        if (!EntityManager.TryGetEntity(targetNet, out var target))
-        {
-            shell.WriteError(Loc.GetString("invoke-verb-command-invalid-target-entity"));
+            shell.WriteLine(Loc.GetString($"shell-invalid-entity-uid", ("uid", args[1])));
             return;
         }
 
