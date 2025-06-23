@@ -107,6 +107,7 @@ namespace Content.Shared.Localizations
             }
         }
 
+        // TODO: allow fluent to take in lists of strings so this can be a format function like it should be.
         /// <summary>
         /// Formats a list as per english grammar rules.
         /// </summary>
