@@ -1,103 +1,4 @@
 - type: entity
-  parent: [ClothingBeltStorageBase, BaseSovietContraband]
-  id: ClothingSovietBelt
-  name: soviet belt
-  description: Can hold various OUR things.
-  components:
-  - type: Sprite
-    sprite: _Starlight/Clothing/Belt/soviet.rsi
-  - type: Clothing
-    sprite: _Starlight/Clothing/Belt/soviet.rsi
-  - type: Storage
-    grid:
-    - 0,0,9,1
-    whitelist:
-      tags:
-        - Powerdrill
-        - Wirecutter
-        - Crowbar
-        - Screwdriver
-        - Flashlight
-        - Wrench
-        - GeigerCounter
-        - Flare
-        - CableCoil
-        - CigPack
-        - Radio
-        - Knife
-        - Multitool
-        - AppraisalTool
-        - JawsOfLife
-        - GPS
-        - WeldingMask
-      components:
-        - SprayPainter
-        - NetworkConfigurator
-        - Welder
-        - PowerCell
-        - Geiger
-        - TrayScanner
-        - GasAnalyzer
-        - HandLabeler
-        - Stunbaton
-        - FlashOnTrigger
-        - SmokeOnTrigger
-        - Flash
-        - Handcuff
-        - BallisticAmmoProvider
-        - Ammo
-  - type: ItemMapper
-    mapLayers:
-      flashbang:
-        whitelist:
-          components:
-          - FlashOnTrigger
-      stunbaton:
-        whitelist:
-          components:
-          - Stunbaton
-      tear_gas_grenade:
-        whitelist:
-          components:
-          - SmokeOnTrigger
-      drill:
-        whitelist:
-          tags:
-          - Powerdrill
-      cutters_red:
-        whitelist:
-          tags:
-          - Wirecutter
-      crowbar:
-        whitelist:
-          tags:
-          - Crowbar
-      crowbar_red:
-        whitelist:
-          tags:
-          - CrowbarRed
-      jaws:
-        whitelist:
-          tags:
-          - JawsOfLife
-      screwdriver_nuke:
-        whitelist:
-          tags:
-          - Screwdriver
-      wrench:
-        whitelist:
-          tags:
-          - Wrench
-      multitool:
-        whitelist:
-          tags:
-            - Multitool
-    sprite: Clothing/Belt/belt_overlay.rsi
-  - type: Appearance
-  - type: StaticPrice
-    price: 1000
-    
-- type: entity
   parent: [ ClothingBeltStorageBase, BaseMajorContraband ]
   id: ClothingAbductorBelt
   name: abductor belt
@@ -253,3 +154,130 @@
       components:
         - BallisticAmmoProvider
         - Ammo
+
+# USSP 
+
+- type: entity
+  parent: [ClothingBeltStorageBase, BaseSovietContraband]
+  id: ClothingSovietBelt
+  name: soviet belt
+  description: Can hold various OUR things.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/soviet.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/soviet.rsi
+  - type: Storage
+    grid:
+    - 0,0,9,1
+    whitelist:
+      tags:
+        - Powerdrill
+        - Wirecutter
+        - Crowbar
+        - Screwdriver
+        - Flashlight
+        - Wrench
+        - GeigerCounter
+        - Flare
+        - CableCoil
+        - CigPack
+        - Radio
+        - Knife
+        - Multitool
+        - AppraisalTool
+        - JawsOfLife
+        - GPS
+        - WeldingMask
+      components:
+        - SprayPainter
+        - NetworkConfigurator
+        - Welder
+        - PowerCell
+        - Geiger
+        - TrayScanner
+        - GasAnalyzer
+        - HandLabeler
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - Ammo
+  - type: ItemMapper
+    mapLayers:
+      flashbang:
+        whitelist:
+          components:
+          - FlashOnTrigger
+      stunbaton:
+        whitelist:
+          components:
+          - Stunbaton
+      tear_gas_grenade:
+        whitelist:
+          components:
+          - SmokeOnTrigger
+      drill:
+        whitelist:
+          tags:
+          - Powerdrill
+      cutters_red:
+        whitelist:
+          tags:
+          - Wirecutter
+      crowbar:
+        whitelist:
+          tags:
+          - Crowbar
+      crowbar_red:
+        whitelist:
+          tags:
+          - CrowbarRed
+      jaws:
+        whitelist:
+          tags:
+          - JawsOfLife
+      screwdriver_nuke:
+        whitelist:
+          tags:
+          - Screwdriver
+      wrench:
+        whitelist:
+          tags:
+          - Wrench
+      multitool:
+        whitelist:
+          tags:
+            - Multitool
+    sprite: Clothing/Belt/belt_overlay.rsi
+  - type: Appearance
+  - type: StaticPrice
+    price: 1000
+
+- type: entity
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSovietContraband]
+  id: ClothingBeltSovietMarineWebbing
+  name: SSF marine chest rig
+  description:  A set of tactical webbing worn by the iconic soviet elite marines.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/soviet_webbing.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/soviet_webbing.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+
+- type: entity
+  parent: ClothingBeltSovietMarineWebbing
+  id: ClothingBeltSovietMarineWebbingLoadout
+  name: SSF marine chest rig
+  description:  A set of tactical webbing worn by the iconic soviet elite marines.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MagazineLightRifleFMJ
+      - id: MagazineLightRifleFMJ
+      - id: MagazineLightRifleFMJ
+      - id: MagazineLightRifleFMJ

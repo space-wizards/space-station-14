@@ -351,3 +351,14 @@
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/track_suit.rsi
 
+- type: entity
+  parent: [ UnsensoredClothingUniformBase, BaseSovietContraband ]
+  id: ClothingUniformJumpsuitSovietFatigues
+  name: SSF marine combat fatigues
+  description: Not one step back.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietuniform.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sovietuniform.rsi
+

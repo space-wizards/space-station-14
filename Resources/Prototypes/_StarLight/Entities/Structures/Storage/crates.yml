@@ -1,7 +1,7 @@
 - type: entity
   parent: CrateGenericSteel
   id: CrateSoviet
-  name: SSF crate
+  name: SSF marine crate
   description: A sturdy crate adorned with the insignia of the USSP marine forces.
   components:
   - type: Icon

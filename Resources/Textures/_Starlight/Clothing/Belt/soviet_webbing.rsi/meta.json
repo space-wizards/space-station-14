@@ -11,15 +11,7 @@
       "name": "icon"
     },
     {
-      "name": "equipped-EYES",
-      "directions": 4
-    },
-    {
-      "name": "equipped-EYES-arachnid",
-      "directions": 4
-    },
-    {
-      "name": "equipped-EYES-moth",
+      "name": "equipped-BELT",
       "directions": 4
     },
     {

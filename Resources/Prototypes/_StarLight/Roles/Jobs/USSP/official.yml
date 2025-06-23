@@ -4,7 +4,7 @@
   id: CommissarGearSNKVD
   equipment:
     jumpsuit: ClothingUniformJumpsuitSecBlue #need soviet office clothing
-    back: ClothingBackpackSatchelLeather
+    back: ClothingSatchelLeatherSovietOfficialLoadout
     neck: ClothingNeckCloakCommissar
     mask: CigaretteDylovene
     shoes: ClothingShoesBootsLaceup
@@ -13,23 +13,16 @@
     gloves: ClothingHandsGlovesColorLightBrown
     outerClothing: ClothingOuterSovietCoat
     id: SovietIdCard
-    #ears: ClothingHeadsetAltCentCom Need soviet headset
+    ears: ClothingHeadsetAltSoviet
     belt: WeaponPistolAPS
     pocket1: USSPUplinkRadioPresetDebug
     pocket2: ClothingSovietMedals
-  storage:
-    back:
-    - Finka
-    - PenExploding
-    - BoxFolderBlack
-    - BoxFolderClipboard
-    - BodyBagFolded
 
 - type: startingGear
   id: CommissarGearSKP
   equipment:
     jumpsuit: ClothingUniformJumpsuitSoviet
-    back: ClothingBackpackSatchelLeather
+    back: ClothingSatchelLeatherSovietOfficialLoadout
     neck: ClothingNeckCloakCommissar
     mask: CigaretteDylovene
     shoes: ClothingShoesLeather
@@ -38,16 +31,8 @@
     gloves: ClothingHandsGlovesColorLightBrown
     outerClothing: ClothingOuterSovietCoat
     id: SovietIdCard
-    #ears: ClothingHeadsetAltCentCom Need soviet headset
+    ears: ClothingHeadsetAltSoviet
     belt: WeaponPistolMakarov
     pocket1: USSPUplinkRadioPresetDebug
     pocket2: ClothingSovietMedals
     suitstorage: WeaponSubMachineGunPPSH
-  storage:
-    back:
-    - Sledgehammer
-    - Wrench
-    - PenExploding
-    - BoxFolderBlack
-    - BoxFolderClipboard
-    - BodyBagFolded

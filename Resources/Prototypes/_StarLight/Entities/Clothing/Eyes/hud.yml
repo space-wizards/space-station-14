@@ -86,3 +86,27 @@
     - HudMedical
   - type: EyeProtection
     protectionTime: 5
+
+#USSP
+- type: entity
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSovietContraband]
+  id: ClothingEyesHudSovietMarine
+  name: SSF marine goggles
+  description: Versatile goggles in use broadly by the soviet marines.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Soviet/marine_goggles.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Soviet/marine_goggles.rsi
+  #- type: ShowSovietIcons  need faction
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: EyeProtection
+    protectionTime: 5
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: FlashImmunity
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.95

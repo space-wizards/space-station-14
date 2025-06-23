@@ -2,7 +2,7 @@
   parent: [ClothingBackpackDuffel, BaseSovietContraband]
   id: ClothingBackpackDuffelSSF
   name: SSF duffel bag
-  description: For some- it's cumbersome, for others- it's home.
+  description: Bulky olive-drab bag stamped with a faded SSF insignia.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Back/Duffels/soviet_marine_duffel.rsi
@@ -62,4 +62,42 @@
       - id: ClothingHandsGlovesCombat
       - id: DoubleEmergencyOxygenTankFilled
       - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entity
+  id: ClothingBackpackDuffelMarineLoadout
+  name: SSF duffel bag
+  parent: ClothingBackpackDuffelSSF
+  description: Bulky olive-drab bag stamped with a faded SSF insignia.
+  components:
+  - type: StorageFill
+    contents:
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+      - id: BoxMRE
+      - id: FoodTinMRE
+      - id: FoodTinBeans
+      - id: DrinkVodkizineBottleFull
+      - id: WeaponPistolMakarov
+      - id: ToolDebug
+      - id: WelderIndustrial
+      - id: Multitool
+
+- type: entity
+  id: ClothingSatchelLeatherSovietOfficialLoadout
+  name: leather satchel
+  parent: ClothingBackpackSatchelLeather
+  description: A trend-setting satchel from a bygone era.
+  components:
+  - type: StorageFill
+    contents:
+      - id: Finka
+      - id: PenExploding
+      - id: BoxFolderBase
+      - id: BoxFolderClipboard
+      - id: BodyBagFolded
+      - id: DrinkVodkizineBottleFull
+      - id: Flash
+      - id: CigarGoldCase
+      - id: FlippoEngravedLighter
+      - id: MagazinePistolSP
 
