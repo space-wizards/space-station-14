@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -128,9 +127,8 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
     {
         var random = IoCManager.Resolve<IRobustRandom>();
         var markingManager = IoCManager.Resolve<MarkingManager>();
-        var proto = IoCManager.Resolve<IPrototypeManager>(); // imp
+        var proto = IoCManager.Resolve<IPrototypeManager>();
 
-        // begin massive imp edit
         var newFacialHairStyle = HairStyles.DefaultFacialHairStyle;
         var newHairStyle = HairStyles.DefaultHairStyle;
         List<Marking> newMarkings = [];

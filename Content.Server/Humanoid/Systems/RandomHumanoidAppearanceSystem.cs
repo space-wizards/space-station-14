@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.CharacterAppearance.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
