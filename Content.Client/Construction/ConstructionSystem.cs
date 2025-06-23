@@ -276,7 +276,7 @@ namespace Content.Client.Construction
             if (!TryGetRecipePrototype(prototype.ID, out var targetProtoId) || !PrototypeManager.TryIndex(targetProtoId, out EntityPrototype? targetProto))
                 return false;
 
-            if (GhostPresent(loc))
+            if (HasReachedMaximumGhosts(loc))
                 return false;
 
             var predicate = GetPredicate(prototype.CanBuildInImpassable, _transformSystem.ToMapCoordinates(loc));
@@ -361,17 +361,15 @@ namespace Content.Client.Construction
         }
 
         /// <summary>
-        /// Checks if any construction ghosts are present at the given position
+        /// Checks if the maximum number of construction ghosts has been reached at the given location.
         /// </summary>
-        private bool GhostPresent(EntityCoordinates loc)
+        private bool HasReachedMaximumGhosts(EntityCoordinates loc)
         {
-            foreach (var ghost in _ghosts)
-            {
-                if (EntityManager.GetComponent<TransformComponent>(ghost.Value).Coordinates.Equals(loc))
-                    return true;
-            }
-
-            return false;
+            // Count ghosts at the given location and allow up to 6 per tile
+            var ghostCount = _ghosts.Values.Count(ghost => 
+                EntityManager.GetComponent<TransformComponent>(ghost).Coordinates.Equals(loc));
+            
+            return ghostCount >= 6;
         }
 
         public void TryStartConstruction(EntityUid ghostId, ConstructionGhostComponent? ghostComp = null)
