@@ -21,7 +21,8 @@ public sealed class AdminLogsEui : BaseEui
     [Dependency] private readonly ILogManager _log = default!;
 
     private const char CsvSeparator = ',';
-    private const char CsvQuote = '"';
+    private const string CsvQuote = "\"";
+    private const string CsvDoubleQuote = "\"\"";
     private const string CsvHeader = "Date,ID,PlayerID,Severity,Type,Message";
 
     private ISawmill _sawmill;
@@ -136,7 +137,7 @@ public sealed class AdminLogsEui : BaseEui
                 await writer.WriteAsync(CsvSeparator);
                 // Message
                 await writer.WriteAsync(CsvQuote);
-                await writer.WriteAsync(log.Message.Replace("\"", "\"\""));
+                await writer.WriteAsync(log.Message.Replace(CsvQuote, CsvDoubleQuote));
                 await writer.WriteAsync(CsvQuote);
 
                 await writer.WriteLineAsync();
