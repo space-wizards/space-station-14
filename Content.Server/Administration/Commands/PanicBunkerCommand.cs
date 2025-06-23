@@ -14,7 +14,7 @@ public sealed class PanicBunkerCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var toggle = Toggle(CCVars.PanicBunkerEnabled, shell, args, _cfg, Loc);
+        var toggle = Toggle(CCVars.PanicBunkerEnabled, shell, args, _cfg, LocalizationManager);
         if (toggle == null)
             return;
 
@@ -56,7 +56,7 @@ public sealed class PanicBunkerDisableWithAdminsCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerDisableWithAdmins, shell, args, _cfg, Loc);
+        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerDisableWithAdmins, shell, args, _cfg, LocalizationManager);
         if (toggle == null)
             return;
 
@@ -76,7 +76,7 @@ public sealed class PanicBunkerEnableWithoutAdminsCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerEnableWithoutAdmins, shell, args, _cfg, Loc);
+        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerEnableWithoutAdmins, shell, args, _cfg, LocalizationManager);
         if (toggle == null)
             return;
 
@@ -96,7 +96,7 @@ public sealed class PanicBunkerCountDeadminnedCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerCountDeadminnedAdmins, shell, args, _cfg, Loc);
+        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerCountDeadminnedAdmins, shell, args, _cfg, LocalizationManager);
         if (toggle == null)
             return;
 
@@ -116,7 +116,7 @@ public sealed class PanicBunkerShowReasonCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerShowReason, shell, args, _cfg, Loc);
+        var toggle = PanicBunkerCommand.Toggle(CCVars.PanicBunkerShowReason, shell, args, _cfg, LocalizationManager);
         if (toggle == null)
             return;
 
