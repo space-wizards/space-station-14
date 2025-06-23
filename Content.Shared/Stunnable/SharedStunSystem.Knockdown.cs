@@ -202,7 +202,7 @@ public abstract partial class SharedStunSystem
         if (!HasComp<StandingStateComponent>(entity) || !CanStand(entity))
             return;
 
-        if (GetStandingColliders(entity.Owner))
+        if (IntersectingStandingColliders(entity.Owner))
         {
             _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
             return;
@@ -251,7 +251,7 @@ public abstract partial class SharedStunSystem
     ///     Checks if standing would cause us to collide with something and potentially get stuck.
     ///     Returns true if we will collide with something, and false if we will not.
     /// </summary>
-    private bool GetStandingColliders(Entity<TransformComponent?> entity)
+    private bool IntersectingStandingColliders(Entity<TransformComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
             return false;
@@ -364,7 +364,7 @@ public abstract partial class SharedStunSystem
         if (StandingBlocked(entity))
             return;
 
-        if (GetStandingColliders(entity.Owner))
+        if (IntersectingStandingColliders(entity.Owner))
         {
             _popup.PopupClient(Loc.GetString("knockdown-component-stand-no-room"), entity, entity, PopupType.SmallCaution);
             return;
