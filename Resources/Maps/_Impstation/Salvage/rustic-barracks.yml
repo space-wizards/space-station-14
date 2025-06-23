@@ -64,15 +64,6 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-- proto: ActionToggleBlock
-  entities:
-  - uid: 98
-    components:
-    - type: Transform
-      parent: 97
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 97
 - proto: AlwaysPoweredLightUV
   entities:
   - uid: 110
@@ -935,14 +926,6 @@ entities:
     - type: Transform
       pos: -2.7185454,1.5823051
       parent: 1
-    - type: Blocking
-      blockingToggleActionEntity: 98
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 98
 - proto: WoodenSupportWall
   entities:
   - uid: 28

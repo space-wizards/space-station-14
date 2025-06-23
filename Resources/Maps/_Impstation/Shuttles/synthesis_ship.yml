@@ -265,15 +265,6 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-- proto: ActionToggleInternals
-  entities:
-  - uid: 206
-    components:
-    - type: Transform
-      parent: 205
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 205
 - proto: AirAlarm
   entities:
   - uid: 185
@@ -1919,14 +1910,6 @@ entities:
     - type: Transform
       pos: -5.294921,2.4863107
       parent: 1
-    - type: GasTank
-      toggleActionEntity: 206
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 206
 - proto: OperatingTable
   entities:
   - uid: 367

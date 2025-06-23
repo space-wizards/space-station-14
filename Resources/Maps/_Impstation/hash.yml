@@ -78,9 +78,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
   - uid: 2
@@ -79322,13 +79320,13 @@ entities:
         stampedColor: '#009100FF'
         stampedName: Bladud Moeller
       content: >-
-        To Whom It May Concern, 
+        To Whom It May Concern,
 
 
-        Cargo has been deliniated additional materials to distribute to other departments. Please assure your fellow departments receive their due in a timely manner. 
+        Cargo has been deliniated additional materials to distribute to other departments. Please assure your fellow departments receive their due in a timely manner.
 
 
-        Sincerely 
+        Sincerely
 
 
         Director of Maintenance Bladud Moeller
@@ -79368,19 +79366,19 @@ entities:
         stampedColor: '#2F4F4FFF'
         stampedName: Bladud Moeller
       content: >
-        ATMOSPHERICS CAN ROOM AUDIT: 
+        ATMOSPHERICS CAN ROOM AUDIT:
 
 
-        1 Plasma Canister 
+        1 Plasma Canister
 
 
         1 Carbon Dioxide Canister
 
 
-        2 75|25 NitroOxy Mix Canisters 
+        2 75|25 NitroOxy Mix Canisters
 
 
-        2 Nitrogen Canisters 
+        2 Nitrogen Canisters
 
 
         2 Oxygen Canisters

@@ -6363,9 +6363,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
 - proto: AccordionInstrument
@@ -6382,14 +6380,6 @@ entities:
     - type: Transform
       pos: 59.43206,34.45604
       parent: 2
-- proto: ActionToggleInternals
-  entities:
-  - uid: 5500
-    components:
-    - type: Transform
-      parent: 5530
-    - type: InstantAction
-      container: 5530
 - proto: AirAlarm
   entities:
   - uid: 5
@@ -42972,14 +42962,6 @@ entities:
     - type: Transform
       pos: 74.515,18.613554
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 5500
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 5500
 - proto: Dresser
   entities:
   - uid: 6900

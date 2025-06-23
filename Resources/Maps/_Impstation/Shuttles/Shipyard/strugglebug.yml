@@ -128,15 +128,6 @@ entities:
     - type: RadiationGridResistance
     - type: SalvageShuttle
     - type: ImplicitRoof
-- proto: ActionToggleLight
-  entities:
-  - uid: 3
-    components:
-    - type: Transform
-      parent: 2
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 2
 - proto: AirlockShuttle
   entities:
   - uid: 30
@@ -334,20 +325,6 @@ entities:
     - type: Transform
       pos: 0.42792046,-3.6808763
       parent: 1
-    - type: HandheldLight
-      toggleActionEntity: 3
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 3
-    - type: ActionsContainer
 - proto: GeneratorRTG
   entities:
   - uid: 32

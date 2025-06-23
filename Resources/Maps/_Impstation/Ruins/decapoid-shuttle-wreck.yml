@@ -193,33 +193,6 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-- proto: ActionToggleInternals
-  entities:
-  - uid: 3
-    components:
-    - type: Transform
-      parent: 2
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 2
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 4
-    components:
-    - type: Transform
-      parent: 2
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 2
-- proto: ActionToggleLight
-  entities:
-  - uid: 6
-    components:
-    - type: Transform
-      parent: 5
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 5
 - proto: AirlockMiningGlass
   entities:
   - uid: 7
@@ -1265,20 +1238,6 @@ entities:
     - type: Transform
       pos: 7.512316,2.5026875
       parent: 1
-    - type: HandheldLight
-      toggleActionEntity: 6
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 6
-    - type: ActionsContainer
 - proto: FloodlightBroken
   entities:
   - uid: 118
@@ -1357,17 +1316,6 @@ entities:
     - type: Transform
       pos: 8.809191,5.783368
       parent: 1
-    - type: GasTank
-      toggleActionEntity: 3
-    - type: Jetpack
-      toggleActionEntity: 4
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 4
-          - 3
 - proto: MeteorRock
   entities:
   - uid: 130

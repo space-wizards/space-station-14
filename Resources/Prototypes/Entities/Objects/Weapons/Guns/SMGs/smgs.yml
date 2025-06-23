@@ -213,7 +213,7 @@
               - CartridgePistol
     - type: MagazineVisuals
       magState: mag
-      steps: 5
+      steps: 1 #imp edit
       zeroVisible: true
     - type: Appearance
 #imp edit begin; weapon melee

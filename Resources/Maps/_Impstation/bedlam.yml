@@ -64,9 +64,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
   - uid: 2
@@ -1783,24 +1781,6 @@ entities:
       id: Bedlam
     - type: NavMap
     - type: ImplicitRoof
-- proto: ActionToggleBlock
-  entities:
-  - uid: 3734
-    components:
-    - type: Transform
-      parent: 2103
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 2103
-- proto: ActionToggleLight
-  entities:
-  - uid: 3375
-    components:
-    - type: Transform
-      parent: 3374
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 3374
 - proto: AirAlarm
   entities:
   - uid: 69
@@ -22804,20 +22784,6 @@ entities:
     - type: Transform
       pos: 25.377485,-21.276358
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 3375
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 3375
-    - type: ActionsContainer
 - proto: FlippoLighter
   entities:
   - uid: 916
@@ -40279,14 +40245,6 @@ entities:
     - type: Transform
       pos: 26.200016,8.379815
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 3734
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 3734
 - proto: RustedThruster
   entities:
   - uid: 721

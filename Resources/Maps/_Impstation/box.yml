@@ -75,9 +75,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
   - uid: 5691
@@ -8858,87 +8856,6 @@ entities:
     - type: Transform
       pos: 20.439417,0.67220914
       parent: 8364
-- proto: ActionToggleBlock
-  entities:
-  - uid: 67
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 59
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 59
-  - uid: 9356
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 9346
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 9346
-  - uid: 9669
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 9667
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 9667
-  - uid: 10066
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 10065
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 10065
-  - uid: 10149
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 10148
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 10148
-- proto: ActionToggleInternals
-  entities:
-  - uid: 14097
-    components:
-    - type: Transform
-      parent: 14179
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 14179
-  - uid: 21735
-    components:
-    - type: Transform
-      parent: 28192
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 28192
-  - uid: 21804
-    components:
-    - type: Transform
-      parent: 28257
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 28257
-- proto: ActionToggleLight
-  entities:
-  - uid: 7283
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 9405
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 9405
 - proto: AirAlarm
   entities:
   - uid: 256
@@ -81645,14 +81562,6 @@ entities:
     - type: Transform
       pos: -53.3726,-18.488764
       parent: 8364
-    - type: GasTank
-      toggleActionEntity: 14097
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 14097
 - proto: EmergencyOxygenTankFilled
   entities:
   - uid: 4653
@@ -124117,22 +124026,8 @@ entities:
     - type: Transform
       pos: 12.177838,26.962627
       parent: 8364
-    - type: HandheldLight
-      toggleActionEntity: 7283
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7283
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 10857
     components:
     - type: Transform
@@ -127636,27 +127531,11 @@ entities:
     - type: Transform
       pos: 1.5375605,-81.310455
       parent: 8364
-    - type: GasTank
-      toggleActionEntity: 21735
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 21735
   - uid: 28257
     components:
     - type: Transform
       pos: 1.7094355,-81.529205
       parent: 8364
-    - type: GasTank
-      toggleActionEntity: 21804
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 21804
   - uid: 28262
     components:
     - type: Transform
@@ -140149,27 +140028,11 @@ entities:
     - type: Transform
       pos: -10.841405,50.47637
       parent: 8364
-    - type: Blocking
-      blockingToggleActionEntity: 67
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 67
   - uid: 9346
     components:
     - type: Transform
       pos: -10.367014,50.49115
       parent: 8364
-    - type: Blocking
-      blockingToggleActionEntity: 9356
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 9356
 - proto: RiotLaserShield
   entities:
   - uid: 10043
@@ -140182,14 +140045,6 @@ entities:
     - type: Transform
       pos: -10.636135,52.335625
       parent: 8364
-    - type: Blocking
-      blockingToggleActionEntity: 10066
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 10066
 - proto: RiotShield
   entities:
   - uid: 9667
@@ -140197,27 +140052,11 @@ entities:
     - type: Transform
       pos: -10.622246,51.35573
       parent: 8364
-    - type: Blocking
-      blockingToggleActionEntity: 9669
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 9669
   - uid: 10148
     components:
     - type: Transform
       pos: -10.198635,51.29323
       parent: 8364
-    - type: Blocking
-      blockingToggleActionEntity: 10149
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 10149
 - proto: RockGuitarInstrument
   entities:
   - uid: 25902

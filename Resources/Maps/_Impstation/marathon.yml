@@ -83,9 +83,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
   - uid: 2
@@ -7628,59 +7626,6 @@ entities:
     - type: Transform
       pos: -0.39634466,12.638008
       parent: 2
-- proto: ActionToggleInternals
-  entities:
-  - uid: 6858
-    components:
-    - type: Transform
-      parent: 6857
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 6857
-  - uid: 6862
-    components:
-    - type: Transform
-      parent: 6861
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 6861
-  - uid: 6864
-    components:
-    - type: Transform
-      parent: 6863
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 6863
-  - uid: 6866
-    components:
-    - type: Transform
-      parent: 6865
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 6865
-  - uid: 6868
-    components:
-    - type: Transform
-      parent: 6867
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 6867
-  - uid: 15833
-    components:
-    - type: Transform
-      parent: 15740
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 15740
-- proto: ActionToggleJetpack
-  entities:
-  - uid: 15832
-    components:
-    - type: Transform
-      parent: 15740
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 15740
 - proto: AirAlarm
   entities:
   - uid: 4
@@ -105078,17 +105023,6 @@ entities:
     - type: Transform
       pos: -10.346219,-47.359364
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 15833
-    - type: Jetpack
-      toggleActionEntity: 15832
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 15832
-          - 15833
 - proto: JetpackMini
   entities:
   - uid: 15741
@@ -108674,76 +108608,34 @@ entities:
     components:
     - type: Transform
       parent: 6853
-    - type: GasTank
-      toggleActionEntity: 6858
-    - type: Physics
-      canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6858
     - type: InsideEntityStorage
   - uid: 6861
     components:
     - type: Transform
       parent: 6853
-    - type: GasTank
-      toggleActionEntity: 6862
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6862
     - type: InsideEntityStorage
   - uid: 6863
     components:
     - type: Transform
       parent: 6853
-    - type: GasTank
-      toggleActionEntity: 6864
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6864
     - type: InsideEntityStorage
   - uid: 6865
     components:
     - type: Transform
       parent: 6853
-    - type: GasTank
-      toggleActionEntity: 6866
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6866
     - type: InsideEntityStorage
   - uid: 6867
     components:
     - type: Transform
       parent: 6853
-    - type: GasTank
-      toggleActionEntity: 6868
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 6868
     - type: InsideEntityStorage
 - proto: PlasticFlapsAirtightClear
   entities:

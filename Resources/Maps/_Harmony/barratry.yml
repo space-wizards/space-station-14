@@ -15080,9 +15080,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
@@ -15093,14 +15091,6 @@ entities:
     - type: Transform
       pos: 28.538687,-28.497456
       parent: 1
-- proto: ActionToggleLight
-  entities:
-  - uid: 7458
-    components:
-    - type: Transform
-      parent: 7940
-    - type: InstantAction
-      container: 7940
 - proto: AirAlarm
   entities:
   - uid: 6077
@@ -86655,22 +86645,8 @@ entities:
     - type: Transform
       pos: -58.53795,64.84835
       parent: 1
-    - type: HandheldLight
-      toggleActionEntity: 7458
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7458
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 9008
     components:
     - type: Transform
