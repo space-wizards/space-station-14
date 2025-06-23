@@ -8112,4 +8112,11 @@ Entries:
   id: 1120
   time: '2025-06-23T17:37:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/890
+- author: Gensy
+  changes:
+  - message: Fixed aghost drip
+    type: Fix
+  id: 1121
+  time: '2025-06-23T17:49:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/891
 
