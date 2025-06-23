@@ -67,6 +67,10 @@
     coolingCoefficient: 0.005
   - type: FireProtection
     reduction: 0.2
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Engineering Hardsuit
 - type: entity
@@ -279,6 +283,10 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Brigmedic Hardsuit
 - type: entity
@@ -305,10 +313,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
-  - type: Tag
-    tags:
-    - CorgiWearable
-    - WhitelistChameleon
 
 #Warden's Hardsuit
 - type: entity
@@ -396,7 +400,6 @@
     tags:
     - CorgiWearable
     - WhitelistChameleon
-
 
 #Research Director's Hardsuit
 - type: entity
