@@ -135,7 +135,7 @@ public abstract partial class InteractionTest
   - type: DoAfter
   - type: Hands
     hands:
-      hand_right:
+      hand_right: # only one hand, so that they do not accidentally pick up deconstruction products
         location: Right
     sortedHands:
     - hand_right

@@ -31,7 +31,6 @@ namespace Content.Client.Hands.Systems
         [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly DisplacementMapSystem _displacement = default!;
 
-        public event Action<string, HandLocation>? OnPlayerAddHand;
         public event Action<string>? OnPlayerRemoveHand;
         public event Action<string?>? OnPlayerSetActiveHand;
         public event Action<Entity<HandsComponent>>? OnPlayerHandsAdded;
@@ -64,19 +63,18 @@ namespace Content.Client.Hands.Systems
             var newHands = state.Hands.Keys.Except(ent.Comp.Hands.Keys); // hands that were added between states
             var oldHands = ent.Comp.Hands.Keys.Except(state.Hands.Keys); // hands that were removed between states
 
-            foreach (var handId in state.SortedHands.Intersect(newHands))
-            {
-                AddHand(ent.AsNullable(), handId, state.Hands[handId]);
-            }
-
-            SetActiveHand(ent.AsNullable(), state.ActiveHandId);
-
             foreach (var handId in oldHands)
             {
                 RemoveHand(ent.AsNullable(), handId);
             }
 
-            ent.Comp.SortedHands = state.SortedHands;
+            foreach (var handId in state.SortedHands.Intersect(newHands))
+            {
+                AddHand(ent.AsNullable(), handId, state.Hands[handId]);
+            }
+            ent.Comp.SortedHands = new (state.SortedHands);
+
+            SetActiveHand(ent.AsNullable(), state.ActiveHandId);
 
             _stripSys.UpdateUi(ent);
         }
@@ -246,16 +244,18 @@ namespace Content.Client.Hands.Systems
         /// <summary>
         ///     Update the players sprite with new in-hand visuals.
         /// </summary>
-        private void UpdateHandVisuals(EntityUid uid, EntityUid held, string handId, HandsComponent? handComp = null, SpriteComponent? sprite = null)
+        private void UpdateHandVisuals(Entity<HandsComponent?, SpriteComponent?> ent, EntityUid held, string handId)
         {
-            if (!Resolve(uid, ref handComp, ref sprite, false))
+            if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, false))
                 return;
+            var handComp = ent.Comp1;
+            var sprite = ent.Comp2;
 
-            if (!TryGetHand((uid, handComp), handId, out var hand))
+            if (!TryGetHand((ent, handComp), handId, out var hand))
                 return;
 
             // visual update might involve changes to the entity's effective sprite -> need to update hands GUI.
-            if (uid == _playerManager.LocalEntity)
+            if (ent == _playerManager.LocalEntity)
                 OnPlayerItemAdded?.Invoke(handId, held);
 
             if (!handComp.ShowInHands)
@@ -267,7 +267,7 @@ namespace Content.Client.Hands.Systems
             {
                 foreach (var key in revealedLayers)
                 {
-                    _sprite.RemoveLayer((uid, sprite), key);
+                    _sprite.RemoveLayer((ent, sprite), key);
                 }
 
                 revealedLayers.Clear();
@@ -278,19 +278,19 @@ namespace Content.Client.Hands.Systems
                 handComp.RevealedLayers[hand.Value.Location] = revealedLayers;
             }
 
-            if (HandIsEmpty((uid, handComp), handId))
+            if (HandIsEmpty((ent, handComp), handId))
             {
                 // the held item was removed.
-                RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers), true);
+                RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(ent, revealedLayers), true);
                 return;
             }
 
-            var ev = new GetInhandVisualsEvent(uid, hand.Value.Location);
+            var ev = new GetInhandVisualsEvent(ent, hand.Value.Location);
             RaiseLocalEvent(held, ev);
 
             if (ev.Layers.Count == 0)
             {
-                RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers), true);
+                RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(ent, revealedLayers), true);
                 return;
             }
 
@@ -303,7 +303,7 @@ namespace Content.Client.Hands.Systems
                     continue;
                 }
 
-                var index = _sprite.LayerMapReserve((uid, sprite), key);
+                var index = _sprite.LayerMapReserve((ent, sprite), key);
 
                 // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
                 if (layerData.RsiPath == null
@@ -311,12 +311,12 @@ namespace Content.Client.Hands.Systems
                     && sprite[index].Rsi == null)
                 {
                     if (TryComp<ItemComponent>(held, out var itemComponent) && itemComponent.RsiPath != null)
-                        _sprite.LayerSetRsi((uid, sprite), index, new ResPath(itemComponent.RsiPath));
+                        _sprite.LayerSetRsi((ent, sprite), index, new ResPath(itemComponent.RsiPath));
                     else if (TryComp(held, out SpriteComponent? clothingSprite))
-                        _sprite.LayerSetRsi((uid, sprite), index, clothingSprite.BaseRSI);
+                        _sprite.LayerSetRsi((ent, sprite), index, clothingSprite.BaseRSI);
                 }
 
-                _sprite.LayerSetData((uid, sprite), index, layerData);
+                _sprite.LayerSetData((ent, sprite), index, layerData);
 
                 // Add displacement maps
                 var displacement = hand.Value.Location switch
@@ -326,11 +326,11 @@ namespace Content.Client.Hands.Systems
                     _ => handComp.HandDisplacement
                 };
 
-                if (displacement is not null && _displacement.TryAddDisplacement(displacement, (uid, sprite), index, key, out var displacementKey))
+                if (displacement is not null && _displacement.TryAddDisplacement(displacement, (ent, sprite), index, key, out var displacementKey))
                     revealedLayers.Add(displacementKey);
             }
 
-            RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(uid, revealedLayers), true);
+            RaiseLocalEvent(held, new HeldVisualsUpdatedEvent(ent, revealedLayers), true);
         }
 
         private void OnVisualsChanged(EntityUid uid, HandsComponent component, VisualsChangedEvent args)
@@ -338,7 +338,7 @@ namespace Content.Client.Hands.Systems
             // update hands visuals if this item is in a hand (rather then inventory or other container).
             if (!component.Hands.ContainsKey(args.ContainerId))
                 return;
-            UpdateHandVisuals(uid, GetEntity(args.Item), args.ContainerId, component);
+            UpdateHandVisuals((uid, component), GetEntity(args.Item), args.ContainerId);
         }
         #endregion
 
@@ -367,20 +367,6 @@ namespace Content.Client.Hands.Systems
         }
         #endregion
 
-        public override void AddHand(Entity<HandsComponent?> ent, string handName, Hand hand)
-        {
-            base.AddHand(ent, handName, hand);
-
-            if (ent.Owner == _playerManager.LocalEntity)
-                OnPlayerAddHand?.Invoke(handName, hand.Location);
-
-            if (ent.Comp == null)
-                return;
-
-            if (ent.Comp.ActiveHandId == null)
-                SetActiveHand(ent, handName);
-        }
-
         public override void RemoveHand(Entity<HandsComponent?> ent, string handName)
         {
             if (ent == _playerManager.LocalEntity && ent.Comp != null &&
@@ -400,12 +386,6 @@ namespace Content.Client.Hands.Systems
 
             if (_playerManager.LocalEntity != hand.Owner)
                 return;
-
-            if (hand.Comp.ActiveHandId == null)
-            {
-                OnPlayerSetActiveHand?.Invoke(null);
-                return;
-            }
 
             OnPlayerSetActiveHand?.Invoke(hand.Comp.ActiveHandId);
         }

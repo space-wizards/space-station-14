@@ -7,6 +7,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Timing;
+using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
@@ -28,7 +29,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     private readonly Dictionary<string, int> _handContainerIndices = new();
     private readonly Dictionary<string, HandButton> _handLookup = new();
     private HandsComponent? _playerHandsComponent;
-    private HandButton? _activeHand = null;
+    private HandButton? _activeHand;
 
     // We only have two item status controls (left and right hand),
     // but we may have more than two hands.
@@ -38,7 +39,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
     private HandButton? _statusHandLeft;
     private HandButton? _statusHandRight;
 
-    private int _backupSuffix = 0; //this is used when autogenerating container names if they don't have names
+    private int _backupSuffix; //this is used when autogenerating container names if they don't have names
 
     private HotbarGui? HandsGui => UIManager.GetActiveUIWidgetOrNull<HotbarGui>();
 
@@ -292,7 +293,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         button.Pressed += HandPressed;
 
         if (!_handLookup.TryAdd(handName, button))
-            throw new Exception("Tried to add hand with duplicate name to UI. Name:" + handName);
+            return _handLookup[handName];
 
         if (HandsGui != null)
         {
@@ -362,6 +363,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         RemoveHand(handName, out _);
     }
 
+    [PublicAPI]
     private bool RemoveHand(string handName, out HandButton? handButton)
     {
         if (!_handLookup.TryGetValue(handName, out handButton))
@@ -377,7 +379,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             _statusHandRight = null;
 
         _handLookup.Remove(handName);
-        handButton.Dispose();
+        handButton.Orphan();
         UpdateVisibleStatusPanels();
         return true;
     }

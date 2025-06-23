@@ -24,6 +24,7 @@ public abstract partial class SharedHandsSystem
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualSystem = default!;
 
+    public event Action<string, HandLocation>? OnPlayerAddHand;
     protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
 
     public override void Initialize()
@@ -71,7 +72,7 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     /// Adds a hand with the given container id and supplied hand definition to the given entity.
     /// </summary>
-    public virtual void AddHand(Entity<HandsComponent?> ent, string handName, Hand hand)
+    public void AddHand(Entity<HandsComponent?> ent, string handName, Hand hand)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
@@ -86,21 +87,27 @@ public abstract partial class SharedHandsSystem
         ent.Comp.SortedHands.Add(handName);
         Dirty(ent);
 
+        OnPlayerAddHand?.Invoke(handName, hand.Location);
+
         if (ent.Comp.ActiveHandId == null)
             SetActiveHand(ent, handName);
 
         RaiseLocalEvent(ent, new HandCountChangedEvent(ent));
     }
 
+    /// <summary>
+    /// Removes the specified hand from the specified entity
+    /// </summary>
     public virtual void RemoveHand(Entity<HandsComponent?> ent, string handName)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
+        TryDrop(ent, handName, null, false);
+
         if (!ent.Comp.Hands.Remove(handName))
             return;
 
-        TryDrop(ent, handName, null, false);
         if (ContainerSystem.TryGetContainer(ent, handName, out var container))
             ContainerSystem.ShutdownContainer(container);
 
@@ -156,6 +163,9 @@ public abstract partial class SharedHandsSystem
         return false;
     }
 
+    /// <summary>
+    /// Attempts to retrieve the item held in the entity's active hand.
+    /// </summary>
     public bool TryGetActiveItem(Entity<HandsComponent?> entity, [NotNullWhen(true)] out EntityUid? item)
     {
         item = null;
@@ -182,6 +192,11 @@ public abstract partial class SharedHandsSystem
         return item.Value;
     }
 
+    /// <summary>
+    /// Gets the current active hand's Id for the specified entity
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
     public string? GetActiveHand(Entity<HandsComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp, false))
@@ -190,6 +205,11 @@ public abstract partial class SharedHandsSystem
         return entity.Comp.ActiveHandId;
     }
 
+    /// <summary>
+    /// Gets the current active hand's held entity for the specified entity
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
     public EntityUid? GetActiveItem(Entity<HandsComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp, false))
@@ -318,6 +338,9 @@ public abstract partial class SharedHandsSystem
         return false;
     }
 
+    /// <summary>
+    /// Attempts to retrieve the associated hand struct corresponding to a hand ID on a given entity.
+    /// </summary>
     public bool TryGetHand(Entity<HandsComponent?> ent, [NotNullWhen(true)] string? handId, [NotNullWhen(true)] out Hand? hand)
     {
         hand = null;

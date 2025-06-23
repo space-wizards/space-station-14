@@ -103,7 +103,7 @@ public sealed partial class HandsComponent : Component
 
 [DataDefinition]
 [Serializable, NetSerializable]
-public  partial record struct Hand
+public partial record struct Hand
 {
     [DataField]
     public HandLocation Location = HandLocation.Right;
