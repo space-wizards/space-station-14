@@ -9,6 +9,7 @@ namespace Content.Client.Corvax.DiscordAuth;
 
 public sealed class DiscordAuthState : State
 {
+    [Dependency] private readonly IClipboardManager _clipboard = default!;
     [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
     [Dependency] private readonly IClientNetManager _netManager = default!;
 
@@ -17,7 +18,7 @@ public sealed class DiscordAuthState : State
 
     protected override void Startup()
     {
-        _gui = new DiscordAuthGui();
+        _gui = new DiscordAuthGui(_clipboard);
         _userInterfaceManager.StateRoot.AddChild(_gui);
 
         Timer.SpawnRepeating(TimeSpan.FromSeconds(5), () =>

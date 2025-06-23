@@ -31,3 +31,4 @@ stamp-component-stamped-name-senior-officer = Инструктор СБ
 stamp-component-stamped-name-senior-researcher = Ведущий учёный
 stamp-component-stamped-name-senior-physician = Ведущий врач
 stamp-component-stamped-name-senior-salvage = Ведущий утилизатор
+stamp-component-stamped-name-special-operation-officer = Офицер Специальных Операций

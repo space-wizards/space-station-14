@@ -102,14 +102,14 @@
   - type: PickRandomPerson
     ignoredJobs:
     - Passenger
-    - TypanAtmosTech
-    - TypanBotanist
-    - TypanCargotech
-    - TypanChef
-    - TypanMedic
-    - TypanRD
-    - TypanScience
-    - TypanTelecommunicationsOfficer
+    - TaipanAtmosTech
+    - TaipanBotanist
+    - TaipanCargotech
+    - TaipanChef
+    - TaipanMedic
+    - TaipanRD
+    - TaipanScience
+    - TaipanTelecommunicationsOfficer
   - type: KillPersonCondition
     # don't count missing evac as killing as heads are higher profile, so you really need to do the dirty work
     # if ce flies a shittle to centcom you better find a way onto it

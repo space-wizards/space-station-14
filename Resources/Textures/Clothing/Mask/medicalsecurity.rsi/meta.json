@@ -43,6 +43,10 @@
       "directions": 4
     },
     {
+      "name": "equipped-MASK-gorilla",
+      "directions": 4
+    },
+    {
       "name": "up-equipped-MASK",
       "directions": 4
     },

@@ -242,6 +242,48 @@
   - UnderwearTopBraBrigmedic
   - UnderwearBottomPantiesBrigmedic
 
+- type: loadoutGroup
+  id: SecurityOfficerMedal
+  name: loadout-group-security-officer-medal
+  loadouts:
+  - SecurityOfficerMedal
+
+- type: loadoutGroup
+  id: DetectiveMedal
+  name: loadout-group-detective-medal
+  loadouts:
+  - DetectiveMedal
+
+- type: loadoutGroup
+  id: WardenMedal
+  name: loadout-group-warden-medal
+  loadouts:
+  - WardenMedal
+
+- type: loadoutGroup
+  id: SeniorOfficerMedal
+  name: loadout-group-senior-officer-medal
+  loadouts:
+  - SeniorOfficerMedal
+
+- type: loadoutGroup
+  id: HeadOfSecurityMedal
+  name: loadout-group-head-of-security-medal
+  loadouts:
+  - HeadOfSecurityMedal
+
+- type: loadoutGroup
+  id: BrigMedicMedal
+  name: loadout-group-brigmedic-medal
+  loadouts:
+  - BrigMedicMedal
+
+- type: loadoutGroup
+  id: SecurityPilotMedal
+  name: loadout-group-security-pilot-medal
+  loadouts:
+  - SecurityPilotMedal
+
 # Medical
 - type: loadoutGroup
   id: SeniorPhysicianHead

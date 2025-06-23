@@ -809,6 +809,10 @@
       rules: ghost-role-information-rules-team-antagonist
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 36000 # 10 hours
       raffle:
         settings: default
     - type: Loadout
@@ -828,6 +832,13 @@
       rules: ghost-role-information-rules-team-antagonist
       mindRoles:
       - MindRoleGhostRoleTeamAntagonist
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 36000 # 10 hours
+      - !type:DepartmentTimeRequirement
+        department: Command
+        time: 36000 # 10 hours
       raffle:
         settings: default
     - type: Loadout

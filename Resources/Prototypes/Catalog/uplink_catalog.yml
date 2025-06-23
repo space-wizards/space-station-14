@@ -1332,7 +1332,7 @@
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-ancestor }
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 4
+    Telecrystal: 3
   cost:
     Telecrystal: 4
   categories:
@@ -1351,7 +1351,7 @@
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio-ancestor }
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 4
+    Telecrystal: 3
   cost:
     Telecrystal: 4
   categories:

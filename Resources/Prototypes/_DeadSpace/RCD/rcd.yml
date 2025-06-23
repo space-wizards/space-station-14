@@ -26,7 +26,7 @@
 # Windows
 - type: rcd
   id: WindowCE
-  category: WindowsAndGrillesCE
+  category: WindowsAndGrilles
   sprite: /Textures/Interface/Radial/RCD/window.png
   mode: ConstructObject
   prototype: Window

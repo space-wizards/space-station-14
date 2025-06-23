@@ -8,6 +8,8 @@
   description: Маленький ядовитый паучок.
   components:
   - type: ImmunEgg
+  - type: ZombieImmune
+  - type: ImmunitetInfectionDead
   - type: Metabolizer
     removeEmpty: true
     solutionOnBody: false
@@ -582,6 +584,7 @@
     soundGunshot: /Audio/_DeadSpace/Necromorfs/bluet.ogg
   - type: BallisticAmmoProvider
     proto: BulletAcid
+    cycleable: false
     capacity: 1000
   - type: GhostTakeoverAvailable
 

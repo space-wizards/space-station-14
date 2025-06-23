@@ -50,7 +50,7 @@
   id: PlushieAinnetelSpeech
   values:
     prefix: plushies-ainnetel-
-    count: 4
+    count: 5
 
 - type: localizedDataset
   id: PlushieAlexSpeech
@@ -141,3 +141,45 @@
   values:
     prefix: plushies-sharp-
     count: 5
+
+- type: localizedDataset
+  id: PlushieEsoSpeech
+  values:
+    prefix: plushies-eso-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieReneTakalaSpeech
+  values:
+    prefix: plushies-rene-takala-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieKelSpeech
+  values:
+    prefix: plushies-kel-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieWeaverSpeech
+  values:
+    prefix: plushies-weaver-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieEyrinLihtSpeech
+  values:
+    prefix: plushies-eyrin-liht-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieKelicKatoSpeech
+  values:
+    prefix: plushies-kelic-kato-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieTimAkkermanSpeech
+  values:
+    prefix: plushies-tim-akkerman-
+    count: 6

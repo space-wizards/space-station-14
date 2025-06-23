@@ -40,6 +40,8 @@
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
     - id: WizardSpawn
+    - id: ShadowDemonInvasion
+    - id: DemonsInvasion
 
 - type: entity
   id: BaseStationEvent
@@ -335,9 +337,9 @@
   - type: StationEvent
     weight: 1 # rare
     duration: 1
-    earliestStart: 30
+    earliestStart: 50 # DS14
     reoccurrenceDelay: 60
-    minimumPlayers: 10
+    minimumPlayers: 30 # DS14
   - type: AntagSelection
     agentName: wizard-round-end-name
     definitions:

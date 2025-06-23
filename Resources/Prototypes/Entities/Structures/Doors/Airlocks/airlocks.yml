@@ -141,6 +141,9 @@
     sprite: Structures/Doors/Airlocks/Standard/mining.rsi
   - type: Wires
     layoutId: AirlockCargo
+  - type: Construction # DS14
+    graph: MiningAirlock
+    node: airlock
 
 - type: entity
   parent: AirlockCommand # if you get centcom door somehow it counts as command, also inherit panel
@@ -298,6 +301,9 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/mining.rsi
+  - type: Construction # DS14
+    graph: MiningAirlock
+    node: glassAirlock
 
 - type: entity
   parent: AirlockCommandGlass # see standard

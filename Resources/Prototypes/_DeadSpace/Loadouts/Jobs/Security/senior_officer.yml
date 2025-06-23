@@ -91,3 +91,19 @@
     proto: FemaleUnderwear
   equipment:
     underweart: ClothingUnderwearTopBraSeniorOfficer
+
+# Медаль
+- type: loadoutEffectGroup
+  id: SeniorOfficerMedal
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSeniorOfficer
+      time: 270000 # 75 hours
+
+- type: loadout
+  id: SeniorOfficerMedal
+  storage:
+    back:
+    - ClothingNeckSecuritySeniorOfficerMedal

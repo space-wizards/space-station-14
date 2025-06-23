@@ -1,0 +1,321 @@
+# Capes
+- type: listing
+  id: ClothesMateCapeInventory1
+  productEntity: ClothingNeckCapeFlame
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory2
+  productEntity: ClothingNeckCapeLua
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory3
+  productEntity: ClothingNeckCapeSirius
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory4
+  productEntity: ClothingNeckCapeGalaxy
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory5
+  productEntity: ClothingNeckCapeViolet
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory6
+  productEntity: ClothingNeckCapeCrystal
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory7
+  productEntity: ClothingNeckCapeNeon
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+# Cloaks
+- type: listing
+  id: ClothesMateCapeInventory8
+  productEntity: ClothingNeckCloakSunset
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory9
+  productEntity: ClothingNeckCloakNanotrasenVip
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory10
+  productEntity: ClothingNeckCloakSr
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory11
+  productEntity: ClothingNeckCloakJanitorFilled
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothesMateCapeInventory12
+  productEntity: ClothingNeckCloakHangler
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory13
+  productEntity: ClothingNeckCloakFoxyorg
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory14
+  productEntity: ClothingNeckCloakAro
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory15
+  productEntity: ClothingNeckCloakEnby
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory16
+  productEntity: ClothingNeckCloakAce
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory17
+  productEntity: ClothingNeckCloakLesbian
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory18
+  productEntity: ClothingNeckCloakGay
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory19
+  productEntity: ClothingNeckCloakVoid
+  cost:
+    SpaceCash: 40
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory20
+  productEntity: ClothingNeckCloakIntersex
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory21
+  productEntity: ClothingNeckCloakPan
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory22
+  productEntity: ClothingNeckCloakMoth
+  cost:
+    SpaceCash: 70
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory23
+  productEntity: ClothingNeckCloakBi
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory24
+  productEntity: ClothingNeckCloakTrans
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory25
+  productEntity: ClothingNeckCloakAdmin
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory26
+  productEntity: ClothingNeckCloakGoliathCloak
+  cost:
+    SpaceCash: 60
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: ClothesMateCapeInventory27
+  productEntity: ClothingNeckCloakHerald
+  cost:
+    SpaceCash: 60
+  categories:
+  - ClothesMateCapeInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+# EMAG
+- type: listing
+  id: ClothesMateCapeInventoryEmag1
+  productEntity: ADTClothingNeckGothicCloak
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothesMateCapeInventoryEmag
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothesMateCapeInventoryEmag2
+  productEntity: ADTClothingNeckDarkGreyCloak
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothesMateCapeInventoryEmag
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2

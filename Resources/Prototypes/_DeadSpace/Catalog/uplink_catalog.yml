@@ -226,19 +226,19 @@
       tags:
       - NukeOpsUplink
 
-- type: listing
-  id: UplinkArkalyseBundle
-  name: uplink-arkalyse-bundle-name
-  description: uplink-arkalyse-bundle-desc
-  icon: { sprite: _DeadSpace/Objects/Specific/Arkalyse/arkalyse_book.rsi, state: icon }
-  productEntity: BoxArkalyse
-  discountCategory: usualDiscounts
-  discountDownTo:
-    Telecrystal: 5
-  cost:
-    Telecrystal: 10
-  categories:
-  - UplinkWeaponry
+# - type: listing
+#   id: UplinkArkalyseBundle
+#   name: uplink-arkalyse-bundle-name
+#   description: uplink-arkalyse-bundle-desc
+#   icon: { sprite: _DeadSpace/Objects/Specific/Arkalyse/arkalyse_book.rsi, state: icon }
+#   productEntity: BoxArkalyse
+#   discountCategory: usualDiscounts
+#   discountDownTo:
+#     Telecrystal: 5
+#   cost:
+#     Telecrystal: 10
+#   categories:
+#   - UplinkWeaponry
 
 - type: listing
   id: UplinkAdrenalineImplanter
@@ -282,3 +282,98 @@
       whitelist:
         tags:
           - NukeOpsUplink
+
+- type: listing
+  id: UplinkTommyGunBundleAgent
+  name: Набор "ПП Томпсона"
+  description: Древняя классика. Содержит ПП Томпсона и 1 дополнительный магазин к нему. "Мистер Анджело? Мистер Сальери передаёт привет."
+  icon: { sprite: /Textures/_DeadSpace/Items/Toys/TommyGun/tommy_gun.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledSMGTommyGunAgent
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 11
+  cost:
+    Telecrystal: 15
+  categories:
+  - UplinkWeaponry
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+        - NukeOpsUplink
+
+- type: listing
+  id: UplinkTommyGunBundle
+  name: Набор "ПП Томпсона"
+  description: Древняя классика. Содержит ПП Томпсона и 3 дополнительных магазина к нему.
+  icon: { sprite: /Textures/_DeadSpace/Items/Toys/TommyGun/tommy_gun.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledSMGTommyGun
+  cost:
+    Telecrystal: 15
+  categories:
+  - UplinkWeaponry
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkMagazineTommyGun
+  name: Магазин для ПП томпсона на 20 патронов.
+  description: Магазин для ПП томпсона на 20 патронов.
+  icon: { sprite: /Textures/_DeadSpace/Items/Toys/TommyGun/magazine.rsi, state: base }
+  productEntity: MagazineTommyGun
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkMagazineTommyGunDrum
+  name: Барабан для ПП томпсона (9x19 мм)
+  description: Барабан для ПП томпсона на 50 патронов.
+  icon: { sprite: /Textures/_DeadSpace/Items/Toys/TommyGun/round_magazine.rsi, state: base }
+  productEntity: MagazineDrumTommyGun
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkAmmo
+
+- type: listing
+  id: UplinkTommyGunXLAmmoBundle
+  name: набор барабанов для ПП томпсона
+  description: Набор, содержащий 3 барабана для ПП томпсона по цене 2.
+  icon: { sprite: /Textures/_DeadSpace/Items/Toys/TommyGun/round_magazine.rsi, state: base }
+  productEntity: ClothingBackpackDuffelSyndicateFilledSMGTommyGunAmmoXL
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkReagentContainerAmatoxin
+  name: uplink-reagent-container-amatoxin-name
+  description: uplink-reagent-container-amatoxin-desc
+  productEntity: ReagentContainerAmatoxin
+  discountDownTo:
+    Telecrystal: 2
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Chef
+

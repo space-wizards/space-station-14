@@ -9,16 +9,18 @@
     ClothingNeckScarfStripedLightBlue: 4
     ClothingNeckScarfStripedOrange: 4
     ClothingNeckScarfStripedPurple: 4
-    ClothingOuterCoatTrench: 6
-    ClothingOuterWinterCoat: 6
-    ClothingOuterFlannelRed: 2
-    ClothingOuterFlannelBlue: 2
-    ClothingOuterFlannelGreen: 2
-    ClothingShoesBootsWinter: 8
-    ClothingOuterCoatBomber: 4
-    ClothingHeadHatSantahat: 2
-    ClothingHeadHatXmasCrown: 2
-
+    ClothingOuterWinterCoatLong: 4 # DS14
+    ClothingNeckScarfStripedAce: 2 # DS14
+    ClothingNeckScarfStripedAro: 2 # DS14
+    ClothingNeckScarfStripedBiSexual: 2 # DS14
+    ClothingNeckScarfStripedGay: 2 # DS14
+    ClothingNeckScarfStripedInter: 2 # DS14
+    ClothingNeckScarfStripedLesbian: 2 # DS14
+    ClothingNeckScarfStripedPan: 2 # DS14
+    ClothingNeckScarfStripedNonBinary: 2 # DS14
+    ClothingNeckScarfStripedRainbow: 2 # DS14
+    ClothingNeckScarfStripedTrans: 2 # DS14
+    ClothingNeckScarfStripedLesbianLong: 2 # DS14
   emaggedInventory:
     ClothingNeckScarfStripedSyndieGreen: 4
     ClothingNeckScarfStripedSyndieRed: 4

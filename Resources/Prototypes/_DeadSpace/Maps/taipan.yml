@@ -1,0 +1,22 @@
+﻿- type: gameMap
+  id: DSTaipan
+  mapName: 'Сектор Тайпана'
+  mapPath: /Maps/ds_taipan.yml
+  minPlayers: 0
+  stations:
+    Taipan:
+      stationProto: StandardTaipanStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: '{0}-Тайпан-{1}'
+        nameGenerator: !type:TaipanNameGenerator
+      - type: StationJobs
+        availableJobs:
+          TaipanAtmosTech: [ 0, 2 ]
+          TaipanBotanist: [ 0, 1 ]
+          TaipanCargotech: [ 0, 2 ]
+          TaipanChef: [ 0, 1 ]
+          TaipanMedic: [ 0, 2 ]
+          TaipanRD: [ 0, 1 ]
+          TaipanScience: [ 0, 2 ]
+          TaipanTelecommunicationsOfficer: [ 0, 1 ]

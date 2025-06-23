@@ -1,0 +1,62 @@
+- type: entity
+  parent: BaseItem
+  id: AccessConfiguratorTaipan
+  name: конфигуратор доступа
+  description: Используется для изменения требований уровня доступа к шлюзам и другим запираемым объектам.
+  suffix: Тайпан
+  components:
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/Items/multitool_drop.ogg
+    - type: Sprite
+      sprite: _DeadSpace/Objects/Tools/access_configurator.rsi
+      state: icon
+    - type: Item
+      size: Small
+    - type: Clothing
+      sprite: _DeadSpace/Objects/Tools/access_configurator.rsi
+      quickEquip: false
+      slots:
+        - Belt
+    - type: AccessOverrider
+      accessLevels:
+      - TaipanArmory
+      - TaipanAtmospherics
+      - TaipanCargo
+      - TaipanCommand
+      - TaipanCommunicationsOfficer
+      - TaipanEngineering
+      - TaipanMaint
+      - TaipanMedical
+      - TaipanProtection
+      - TaipanResearchDirector
+      - TaipanScience
+      - TaipanService
+      - TaipanTechnicalOperationsSupervisor
+      - TaipanVault
+      - TaipanExternal
+      privilegedIdSlot:
+        name: id-card-console-privileged-id
+        ejectSound: /Audio/Machines/id_swipe.ogg
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          components:
+          - IdCard
+      denialSound:
+        path: /Audio/Machines/custom_deny.ogg
+      doAfter: 0.5
+    - type: UserInterface
+      interfaces:
+        enum.AccessOverriderUiKey.Key:
+          type: AccessOverriderBoundUserInterface
+    - type: ActivatableUI
+      key: enum.AccessOverriderUiKey.Key
+      requiresComplex: true
+      requireActiveHand: false
+      singleUser: true
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        AccessOverrider-privilegedId: !type:ContainerSlot

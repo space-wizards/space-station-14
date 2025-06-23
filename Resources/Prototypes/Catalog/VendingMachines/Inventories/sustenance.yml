@@ -3,6 +3,7 @@
   startingInventory:
     DrinkMREFlask: 3
     FoodSnackNutribrick: 5
+    FoodSnackFabricbrick: 5 # DS14
     FoodSnackMREBrownie: 5
     FoodCondimentPacketKetchup: 5
   contrabandInventory:

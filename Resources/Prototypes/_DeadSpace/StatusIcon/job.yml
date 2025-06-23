@@ -4,31 +4,31 @@
   icon:
     sprite: /Textures/_DeadSpace/Interface/Misc/job_icons.rsi
     state: atmospheric_technician
-  jobName: job-name-typan-atmos-tech
+  jobName: job-name-taipan-atmos-tech
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconTypanBotanist
+  id: JobIconTaipanBotanist
   icon:
     sprite: /Textures/_DeadSpace/Interface/Misc/job_icons.rsi
     state: botanist
-  jobName: job-name-typan-botanist
+  jobName: job-name-taipan-botanist
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconTypanCargotech
+  id: JobIconTaipanCargotech
   icon:
     sprite: /Textures/_DeadSpace/Interface/Misc/job_icons.rsi
     state: cargo_technician
-  jobName: job-name-typan-cargotech
+  jobName: job-name-taipan-cargotech
 
 - type: jobIcon
   parent: JobIcon
-  id: JobIconTypanChef
+  id: JobIconTaipanChef
   icon:
     sprite: /Textures/_DeadSpace/Interface/Misc/job_icons.rsi
     state: chef
-  jobName: job-name-typan-chef
+  jobName: job-name-taipan-chef
 
 - type: jobIcon
   parent: JobIcon
@@ -36,7 +36,7 @@
   icon:
     sprite: /Textures/_DeadSpace/Interface/Misc/job_icons.rsi
     state: medical_doctor
-  jobName: job-name-typan-medic
+  jobName: job-name-taipan-medic
 
 - type: jobIcon
   parent: JobIcon
@@ -44,7 +44,7 @@
   icon:
     sprite: /Textures/_DeadSpace/Interface/Misc/job_icons.rsi
     state: research_director
-  jobName: job-name-typan-rd
+  jobName: job-name-taipan-rd
 
 - type: jobIcon
   parent: JobIcon
@@ -52,7 +52,7 @@
   icon:
     sprite: /Textures/_DeadSpace/Interface/Misc/job_icons.rsi
     state: scientist
-  jobName: job-name-typan-science
+  jobName: job-name-taipan-science
 
 - type: jobIcon
   parent: JobIcon
@@ -60,4 +60,4 @@
   icon:
     sprite: /Textures/_DeadSpace/Interface/Misc/job_icons.rsi
     state: security_officer
-  jobName: job-name-typan-telecommunications-officer
+  jobName: job-name-taipan-telecommunications-officer

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at 0d9c9a8233dfc3fc55edc538955a761a6328bee0, resprited by andrew_fenriz (discord) for SS14 server Мёртвый космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cpu_syndicate"
+    },
+    {
+      "name": "syndicate"
+    },
+    {
+      "name": "door_electronics_syndicate"
+    }
+  ]
+}

@@ -344,7 +344,7 @@
   parent: BasePlushieDeadSpaceMisc
   id: PlushieElizabeth
   name: плюшевая Элизабет Фламар
-  description: Милая плюшевая игрушка розоволосей фелинидки. Она похожа на маленького ангелочка, но, возможно, это не так.
+  description: Милая плюшевая игрушка розоволосой фелинидки. Она похожа на маленького ангелочка, но, возможно, это не так.
   components:
   - type: Sprite
     state: elizabeth
@@ -370,7 +370,7 @@
   parent: BasePlushieDeadSpaceMisc
   id: PlushieKermuth
   name: плюшевый Кемлухт К’Хфнг 
-  description: ППлюшевая игрушка представителя расы Ниан. Его глаза словно смотрят вам в душу. Пахнет сигаретным дымом
+  description: Плюшевая игрушка представителя расы Ниан. Его глаза словно смотрят вам в душу. Пахнет сигаретным дымом
   components:
   - type: Sprite
     state: kermuth
@@ -383,7 +383,7 @@
   parent: BasePlushieDeadSpaceMisc
   id: PlushieLucius
   name: плюшевый Люций Ван'Астрея
-  description: Плюшевая игрушка представителя расы аркан. На бирке надпись гласит, что эта игрушка создана корпорацией 1’А. На ощупь такой мягкий, что с ним можно спать в обнинку.
+  description: Плюшевая игрушка представителя расы аркан. На бирке надпись гласит, что эта игрушка создана корпорацией 1’А. На ощупь такой мягкий, что с ним можно спать в обнимку.
   components:
   - type: Sprite
     state: lucius
@@ -396,12 +396,12 @@
   parent: BasePlushieDeadSpaceMisc
   id: PlushieEvelina
   name: плюшевая Эвелиина Ридницохккаль Синаиккало
-  description: Плюшевая игрушка полуночно-синей арканы. Даже в виде плюшки выглядит так, словно вот-вот провалится в сон. На ощупь такая мягкая, что с ней можно спать в обнинку.
+  description: Плюшевая игрушка полуночно-синей арканы. Даже в виде плюшки выглядит так, словно вот-вот провалится в сон. На ощупь такая мягкая, что с ней можно спать в обнимку.
   components:
   - type: Sprite
     state: evelina
   - type: TTS
-    voice: Guillaume
+    voice: Mercy
   - type: SpeakOnTrigger
     pack: PlushieEvelinaSpeech
 
@@ -420,13 +420,113 @@
     pack: PlushieLieutenantSpeech
 
 - type: entity
-  id: MagazineTommyCapGun
-  name: магазин для игрушечного томми гана
+  parent: WeaponSMGTommyGun
+  id: WeaponSMGTommyGunCap
+  name: пистолет-пулемёт Томпсона
+  description: "- Это ещё что такое? куда они везут капитана?\n- Прости, капитан в сделку не входил"
+  suffix: игрушечный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/TommyGun/tommy_gun.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _DeadSpace/Items/Toys/TommyGun/tommy_gun.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: Item
+    size: Normal
+  - type: AmmoCounter
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
+  - type: Gun
+    fireRate: 8
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
+    availableModes:
+    - FullAuto
+    - SemiAuto
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineTommyGunCap
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineTommyGunCap
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeCap
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCap
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  id: MagazineDrumTommyGunCap
+  name: игрушечный барабан для пистолет-пулемёта Томпсона
+  description: большой магазин для больших бандитов
   parent: BaseItem
+  suffix: Игрушечный
   components:
   - type: Tag
     tags:
-      - MagazineTommyCapGun
+      - MagazineTommyGunCap
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeCap
+    proto: CartridgeCap
+    capacity: 50
+  - type: Item
+    size: Normal
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/TommyGun/toy_round_magazine.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazineTommyGunCap
+  name: игрушечный магазин для пистолет-пулемёта Томпсона
+  parent: BaseItem
+  suffix: Игрушечный
+  components:
+  - type: Tag
+    tags:
+      - MagazineTommyGunCap
   - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:
@@ -440,7 +540,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    sprite: _DeadSpace/Items/Toys/TommyGun/magazine.rsi  
+    sprite: _DeadSpace/Items/Toys/TommyGun/toy_magazine.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]

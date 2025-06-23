@@ -287,6 +287,39 @@
               amount: 2
               doAfter: 1
 
+        # DS14-start
+        - to: miningWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 4
+            - tool: Welding
+              doAfter: 2
+            - material: Plasteel
+              amount: 2
+              doAfter: 1
+
+        - to: diagonalMiningWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 4
+            - material: Plasteel
+              amount: 2
+              doAfter: 1
+            - material: Steel
+              amount: 1
+              doAfter: 1
+        # DS14-end
+
         - to: shuttleWall
           completed:
             - !type:SnapToGrid
@@ -383,6 +416,54 @@
                   data: 0
             - tool: Cutting
               doAfter: 1
+
+    # DS14-start
+    - node: miningWall
+      entity: WallMining
+      edges:
+        - to: reinforcedGirder
+          steps:
+            - tool: Cutting
+              doAfter: 2
+            - tool: Screwing
+              doAfter: 2
+            - tool: Welding
+              doAfter: 5
+            - tool: Prying
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 1
+            - tool: Prying
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 2
+            - tool: Cutting
+              doAfter: 3
+          
+    - node: diagonalMiningWall
+      entity: WallMiningDiagonal
+      edges:
+        - to: reinforcedGirder
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+            - tool: Welding
+              doAfter: 5
+            - tool: Prying
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 1
+            - tool: Prying
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+            - tool: Cutting
+              doAfter: 1
+    # DS14-end
 
     - node: shuttleWall
       entity: WallShuttle

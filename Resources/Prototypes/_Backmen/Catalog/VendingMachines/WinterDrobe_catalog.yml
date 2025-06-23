@@ -1,0 +1,532 @@
+# Scarfs
+- type: listing
+  id: WinterDrobeScarfsInventory1
+  productEntity: ClothingNeckScarfStripedRed
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeScarfsInventory2
+  productEntity: ClothingNeckScarfStripedGreen
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeScarfsInventory3
+  productEntity: ClothingNeckScarfStripedBlue
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeScarfsInventory4
+  productEntity: ClothingNeckScarfStripedBlack
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeScarfsInventory5
+  productEntity: ClothingNeckScarfStripedBrown
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeScarfsInventory6
+  productEntity: ClothingNeckScarfStripedLightBlue
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeScarfsInventory7
+  productEntity: ClothingNeckScarfStripedOrange
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeScarfsInventory8
+  productEntity: ClothingNeckScarfStripedPurple
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeScarfsInventory9
+  productEntity: ClothingNeckScarfStripedAce
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeScarfsInventory10
+  productEntity: ClothingNeckScarfStripedAro
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeScarfsInventory11
+  productEntity: ClothingNeckScarfStripedBiSexual
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeScarfsInventory12
+  productEntity: ClothingNeckScarfStripedGay
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeScarfsInventory13
+  productEntity: ClothingNeckScarfStripedInter
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeScarfsInventory14
+  productEntity: ClothingNeckScarfStripedLesbian
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeScarfsInventory15
+  productEntity: ClothingNeckScarfStripedPan
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeScarfsInventory16
+  productEntity: ClothingNeckScarfStripedNonBinary
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeScarfsInventory17
+  productEntity: ClothingNeckScarfStripedRainbow
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeScarfsInventory18
+  productEntity: ClothingNeckScarfStripedTrans
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeScarfsInventory19
+  productEntity: ClothingNeckScarfStripedLesbianLong
+  cost:
+    SpaceCash: 25
+  categories:
+  - WinterDrobeScarfsInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+# Outer
+- type: listing
+  id: WinterDrobeOuterInventory1
+  productEntity: ClothingOuterCoatTrench
+  cost:
+    SpaceCash: 50
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 6
+
+- type: listing
+  id: WinterDrobeOuterInventory2
+  productEntity: ClothingOuterWinterCoat
+  cost:
+    SpaceCash: 55
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 6
+
+- type: listing
+  id: WinterDrobeOuterInventory3
+  productEntity: ClothingOuterFlannelRed
+  cost:
+    SpaceCash: 30
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeOuterInventory4
+  productEntity: ClothingOuterFlannelBlue
+  cost:
+    SpaceCash: 30
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeOuterInventory5
+  productEntity: ClothingOuterFlannelGreen
+  cost:
+    SpaceCash: 30
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeOuterInventory6
+  productEntity: ClothingOuterCoatBomber
+  cost:
+    SpaceCash: 45
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory7
+  productEntity: ADTClothingOuterBrownFurCoat
+  cost:
+    SpaceCash: 90
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WinterDrobeOuterInventory8
+  productEntity: ADTClothingOuterBlackFurCoat
+  cost:
+    SpaceCash: 90
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WinterDrobeOuterInventory9
+  productEntity: ClothingOuterCoatExpensive
+  cost:
+    SpaceCash: 100
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: WinterDrobeOuterInventory10
+  productEntity: ClothingOuterWinterColorBlack
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory11
+  productEntity: ClothingOuterWinterColorPurple
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory12
+  productEntity: ClothingOuterWinterColorRed
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory13
+  productEntity: ClothingOuterWinterColorBlue
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory14
+  productEntity: ClothingOuterWinterColorBrown
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory15
+  productEntity: ClothingOuterWinterColorGray
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory16
+  productEntity: ClothingOuterWinterColorGreen
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory17
+  productEntity: ClothingOuterWinterColorLightBrown
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory18
+  productEntity: ClothingOuterWinterColorOrange
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory19
+  productEntity: ClothingOuterWinterColorWhite
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory20
+  productEntity: ClothingOuterWinterColorYellow
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeOuterInventory21
+  productEntity: ClothingOuterWinterCoatLong
+  cost:
+    SpaceCash: 65
+  categories:
+  - WinterDrobeOuterInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 6
+
+# Other
+
+- type: listing
+  id: WinterDrobeOtherInventory1
+  productEntity: ClothingHeadHatSantahat
+  cost:
+    SpaceCash: 25
+  categories:
+  - WinterDrobeOtherInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeOtherInventory2
+  productEntity: ClothingHeadHatXmasCrown
+  cost:
+    SpaceCash: 25
+  categories:
+  - WinterDrobeOtherInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeOtherInventory3
+  productEntity: ClothingHeadHatUshanka
+  cost:
+    SpaceCash: 40
+  categories:
+  - WinterDrobeOtherInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: WinterDrobeOtherInventory4
+  productEntity: ClothingShoesBootsWinter
+  cost:
+    SpaceCash: 20
+  categories:
+  - WinterDrobeOtherInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 8
+
+# Emag
+- type: listing
+  id: WinterDrobeInventoryEmag1
+  productEntity: ClothingNeckScarfStripedSyndieGreen
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeInventoryEmag
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeInventoryEmag2
+  productEntity: ClothingNeckScarfStripedSyndieRed
+  cost:
+    SpaceCash: 15
+  categories:
+  - WinterDrobeInventoryEmag
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeInventoryEmag3
+  productEntity: ClothingShoesBootsWinterSyndicate
+  cost:
+    SpaceCash: 40
+  categories:
+  - WinterDrobeInventoryEmag
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: WinterDrobeInventoryEmag4
+  productEntity: ClothingOuterWinterSyndie
+  cost:
+    SpaceCash: 60
+  categories:
+  - WinterDrobeInventoryEmag
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4

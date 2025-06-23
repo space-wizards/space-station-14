@@ -45,6 +45,7 @@
     - id: FoodSnackEnergy
     - id: FoodSnackMREBrownie
     - id: FoodSnackNutribrick
+    - id: FoodSnackFabricbrick
     - id: FoodSnackPistachios
     - id: FoodSnackPopcorn
     - id: FoodSnackRaisins

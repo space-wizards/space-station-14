@@ -155,3 +155,16 @@
     stampState: "paper_stamp-senior-salvage"
   - type: Sprite
     state: stamp-senior-salvage
+
+- type: entity
+  parent: RubberStampBase
+  id: RubberStampCentcomSpecialOperationOfficer
+  name: special operation officer rubber stamp 
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-special-operation-officer
+    stampedColor: "#323232"
+    stampState: "paper_stamp-greytide"
+  - type: Sprite
+    state: stamp-greytide

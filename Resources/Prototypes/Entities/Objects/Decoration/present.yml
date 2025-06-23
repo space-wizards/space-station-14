@@ -76,6 +76,8 @@
         orGroup: GiftPool
       - id: WeaponLauncherChinaLakeToy
         orGroup: GiftPool
+      - id: WeaponSMGTommyGunCap
+        orGroup: GiftPool
 
 - type: entity
   id: PresentToys

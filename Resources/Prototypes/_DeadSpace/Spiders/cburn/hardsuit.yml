@@ -9,11 +9,24 @@
     sprite: _DeadSpace/Spiders/cburn/cburncommanderhelmet.rsi
     layers:
     - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
   - type: Clothing
     clothingVisuals:
       head:
-      - state: on-equipped-HELMET
       - state: off-equipped-HELMET
+      - state: equipped-head-unshaded
+        shader: unshaded
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+      - state: equipped-head-unshaded
         shader: unshaded
   - type: PointLight
     color: orange
@@ -88,11 +101,24 @@
     sprite: _DeadSpace/Spiders/cburn/cburnxenohelmet.rsi
     layers:
     - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: light-overlay
+      visible: false
+      shader: unshaded
+      map: [ "light" ]
   - type: Clothing
     clothingVisuals:
       head:
-      - state: on-equipped-HELMET
       - state: off-equipped-HELMET
+      - state: equipped-head-unshaded
+        shader: unshaded
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+      - state: equipped-head-unshaded
         shader: unshaded
   - type: PointLight
     color: orange

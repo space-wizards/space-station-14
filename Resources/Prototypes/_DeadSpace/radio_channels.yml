@@ -22,8 +22,8 @@
   longRange: true
 
 - type: radioChannel
-  id: Typan
-  name: chat-radio-typan
+  id: Taipan
+  name: chat-radio-taipan
   keycode: 'й' # DS14-Localization
   frequency: 6542
   color: "#8f0d4b"

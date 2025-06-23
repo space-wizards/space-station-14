@@ -3,8 +3,10 @@ figurine-hqdishka-2 = Мы теперь говнари!
 figurine-hqdishka-3 = Антихайп.
 figurine-hqdishka-4 = Женщина благих намерений.
 figurine-hqdishka-5 = Я люблю Хакса.
+
 figurine-hackslua-1 = Апстрим скоро.
 figurine-hackslua-2 = Я люблю Айрис.
+
 plushies-jeleshka-1 = Может всё таки начать выполнять свои задачи по разработке...?
 plushies-jeleshka-2 = Ты поддерживаешь политику НТ? Сосал?
 plushies-jeleshka-3 = Увы и ах.
@@ -13,104 +15,169 @@ plushies-jeleshka-5 = Почему меня приняли на Главу СБ?
 plushies-jeleshka-6 = СПЛИК ПРЕДАТЕЛЬ! ПОВТОРЯЮ, СПЛИК ПРЕДАТЕЛЬ!
 plushies-jeleshka-7 = Слава Д.О.С.
 plushies-jeleshka-8 = Капитан, уверяю вас, вы можете доверить мне командование станцией.
+
 plushies-ahahaahahaha-1 = Сервер успешно упал.
 plushies-ahahaahahaha-2 = @l4d2.
 plushies-ahahaahahaha-3 = Возможно всё.
 plushies-ahahaahahaha-4 = Апстрим скоро.
+
 plushies-dobryash-1 = Йоу!
 plushies-dobryash-2 = Показываю фокус с исчезновением... Твоей карты!
 plushies-dobryash-3 = Глава Персонала, уверяю вас, мне можно доверить доступ в техи.
 plushies-dobryash-4 = Да, я действительно тайный представитель Центрального командования. А теперь дай мне свою карту.
+
 plushies-kriss-1 = Хуй!
 plushies-kriss-2 = За нами Паша Техник. Лови момент.
 plushies-kriss-3 = Дайте мне Егерьмейстер.
 plushies-kriss-4 = 40к долларов в Хамстер-коинах.
 plushies-kriss-5 = Душно.
+
 plushies-ostwind-1 = Я шизу не лечу, она у меня не болит.
 plushies-ostwind-2 = ГОЛДА!!!
 plushies-ostwind-3 = Кошка бросила котят, это Реймон виноват
 plushies-ostwind-4 = Мы как мученики попадём в рай, а они просто сдохнут.
 plushies-ostwind-5 = Запомните твари, забудьте.
+
 plushies-willie-1 = Бедность в Карго? Пффф! Чушь! Не слыхал о таком!
 plushies-willie-2 = Служу сектору Титан!
 plushies-willie-3 = Ради моей жены, Игны Айрон, я готов покорить хоть весь космос.
 plushies-willie-4 = Эта станция набухнет от большого количества руды в НИО!
 plushies-willie-5 = Сон? Не слыхал о таком.
+
 plushies-ainnetel-1 = Двойной малиновый гранд латте, пожалуйста.
 plushies-ainnetel-2 = Критическая неудача.
 plushies-ainnetel-3 = Я слышу эти странные молитвы…
 plushies-ainnetel-4 = Вот бы сибас… отсюда желательно.
+plushies-ainnetel-5 = Книги пишет кто угодно. Есть даже книга о том, что мир был создан за семь дней. Кстати, бестселлер.
+
 plushies-alex-1 = Отпуск? А что это?
 plushies-alex-2 = Капитан, вы не можете назначить клоуна на ВрИО ПЦК.
 plushies-alex-3 = Сотня отчётов готова, ещё тысяча на подходе...
 plushies-alex-4 = Вот в мое время командование себе такого не позволяло.
+
 plushies-elizabeth-1 = Я не гном UWU!
 plushies-elizabeth-2 = Чевтила OWO!
 plushies-elizabeth-3 = В чем вазница между жуком навозником и скавабеем?
 plushies-elizabeth-4 = Ты афигев?!
 plushies-elizabeth-5 = Я бувочка.
+
 plushies-ellis-1 = March-March-March!
 plushies-ellis-2 = Хойлд, я не дам тебе шоколадки, Хойлд...
 plushies-ellis-3 = Ребят? ВЫ ГДЕ?!
 plushies-ellis-4 = Пиу-пиу-пиу.
 plushies-ellis-5 = Ainnetel мой милый пупс.
+
 plushies-kermuth-1 = Тцк.
 plushies-kermuth-2 = У меня перекур.
 plushies-kermuth-3 = Плюну в заказ этому Бригмедику.
 plushies-kermuth-4 = Не забывайте про пользу Криокапсул!
 plushies-kermuth-5 = Вколите мне Норэпинефриновую, чтобы я не видел этого ужаса.
+
 plushies-lucius-1 = Кто-то сказал фрезон..? Есть немного. Надеюсь ведь не для продажи?
 plushies-lucius-2 = Вполне реально взорвать атмос и станцию, но последствия не позволяют.
 plushies-lucius-3 = А вы знали что арканы самая совместимая...
 plushies-lucius-4 = Женщину бы.
 plushies-lucius-5 = Хайп.
+
 plushies-evelina-1 = Хррр-мимими...
 plushies-evelina-2 = Кхххх...
 plushies-evelina-3 = Главное не уснуть... главное не уснуть...
 plushies-evelina-4 = Опять одна в отделе...
 plushies-evelina-5 = Ней, Люц... Я скучаю по вам...
+
 plushies-lieutenant-1 = Офицер микроскоп, куда же тебя занесла судьба...
 plushies-lieutenant-2 = I was always two steps ahead...
-plushies-lieutenant-3 = Уверяю вас, вы можете доверить мне коды ядерных боеголовкок в ближайших секторах.
+plushies-lieutenant-3 = Уверяю вас, вы можете доверить мне коды ядерных боеголовок в ближайших секторах.
 plushies-lieutenant-4 = Иногда я лейтенант Центрального Командования, иногда работаю кое где ещё...
 plushies-lieutenant-5 = Ты лицом к лицу с хомяком, что продал мир
+
 plushies-azrail-1 = Химики, заказ на Дезоксиэфедрин и Диловен от Синего Щита выполняем в первую очередь
 plushies-azrail-2 = Уээээ
 plushies-azrail-3 = Кто то сказал МЕТ!?
 plushies-azrail-4 = В смысле три интерна и нет ведущего врача?
 plushies-azrail-5 = Синий Щит, я разрешу вам поставить трекер, если вы закуете меня в наручники и введёте его силой.
+
 plushies-krivazora-1 = Ты что, не знаешь, что смесь для тэга имеет идеальное соотношение 98,18 процентов кислорода и 1,82 плазмы?
 plushies-krivazora-2 = Фрезон не датчики - рак не вызывает
 plushies-krivazora-3 = Скажи-ка, кэп. А ведь не даром, вся станция, спаленная пожаром - огузкам отдана!!
 plushies-krivazora-4 = А ты уже записался в инженеры?
 plushies-krivazora-5 = Азот!! У меня кончается азот!!
+
 plushies-emilia-1 = Сб! Я свидетельствую о нарушении этим дармоедом статьи 207. Задержите его!
 plushies-emilia-2 = Я здесь власть! Закон! И порядок! Подчиняйся мне!
 plushies-emilia-3 = Отдохнёшь на том свете. Работать!
 plushies-emilia-4 = Это пойдёт в твоё личное дело.
 plushies-emilia-5 = Уволен!!!
+
 plushies-aily-1 = Котятки!
 plushies-aily-2 = Мурр!
 plushies-aily-3 = Ты мой котёнок, а я твоя мама кошка.
 plushies-aily-4 = Ррядовой Индиго опять забухал?!
 plushies-aily-5 = Аррестуйте капитана.
+
 plushies-eva-1 = Нас окружают одни бандиты
 plushies-eva-2 = Жужасы или нет?
 plushies-eva-3 = Нас ждут изящные беды.
 plushies-eva-4 = Интерн, вы готовы к экзамену?
 plushies-eva-5 = Вы и я — остатки прошлого, но мы не исчезнем.
+
 plushies-aizek-1 = Нет, иди нахуй.
 plushies-aizek-2 = Убейте их всех!!
 plushies-aizek-3 = Голоса не покидают меня...
 plushies-aizek-4 = Я точно не маньяк.
 plushies-aizek-5 = Ненавижу воксов.
+
 plushies-sharp-1 = Дидербубльбуб.
 plushies-sharp-2 = Бог дал нам вторую почку как стартовый капитал в казино.
 plushies-sharp-3 = Ткач съел мои трусы!
 plushies-sharp-4 = Тётя Мэй, возьмите трубку.
 plushies-sharp-5 = Прости, что разочаровал тебя... Это повторится.
+
 plushies-azrail-hardsuit-1 = Единым можно быть только с монолитом, а не то, что проповедуют еретики.
 plushies-azrail-hardsuit-2 = Он исполнит твоё желание, но только один раз.
 plushies-azrail-hardsuit-3 = Умри.
 plushies-azrail-hardsuit-4 = Помолимся же.
 plushies-azrail-hardsuit-5 = В смысле обелиск? Что, говорите, делают? Неверные!
+
+plushies-eso-1 = Не болей.
+plushies-eso-2 = Горе.
+plushies-eso-3 = На сегодняшнюю смену я - твой ангел похоронитель.
+plushies-eso-4 = Не кабинет, а настоящий скотомогильник!!
+plushies-eso-5 = Упс.. Это было не лекарство!
+
+plushies-rene-takala-1 = РЕНЕБУМ!!!
+plushies-rene-takala-2 = Интересный факт, самая полезная раса - фелениды.....они богаты жирами, белками и углеводами.
+plushies-rene-takala-3 = Рене инвестировала весь бюджет станции в икру.
+plushies-rene-takala-4 = Рене умная!!!
+plushies-rene-takala-5 = Шалость удалась.
+
+plushies-kel-1 = Коронерское проклятие
+plushies-kel-2 = Коронер ничего не боится, кроме пустого морга
+plushies-kel-3 = Пора написать целую историю о смерти клиента
+plushies-kel-4 = Может чайку?
+plushies-kel-5 = Поверь коронер ещё не злился, а убийство того интерна не в счёт
+
+plushies-weaver-1 = Вся украденная одежда Ликаона будет направлена в организацию по защите Молей
+plushies-weaver-2 = Я точно не съедаю трусы своих пациентов, наверное...
+plushies-weaver-3 = Магия датчиков спасёт каждую обречённую душу!
+plushies-weaver-4 = Вех!
+plushies-weaver-5 = Включаем датчики!!!
+
+plushies-eyrin-liht-1 = ПИВА БЛЯТЬ МНЕ В ГОРШОК!!!
+plushies-eyrin-liht-2 = Причина корёжки?
+plushies-eyrin-liht-3 = Ты бумагу правильно заполни, а потом поговорим.
+plushies-eyrin-liht-4 = Келик, брось мыло!
+plushies-eyrin-liht-5 = Рррь
+
+plushies-kelic-kato-1 = Пивком полей меня...
+plushies-kelic-kato-2 = Эмэ
+plushies-kelic-kato-3 = Дай мне мыла, кусочечек
+plushies-kelic-kato-4 = По статистике высокие гуманоиды умнее низких
+plushies-kelic-kato-5 = Рррр
+
+plushies-tim-akkerman-1 = Морпехам быть. Даже Ахахич сдела @ждун морпехи!
+plushies-tim-akkerman-2 = Дайте кодеров. Пора выполнять задачи
+plushies-tim-akkerman-3 = Иди нахуй. Я любя
+plushies-tim-akkerman-4 = Знаете почему я люблю тритий? Он похож на ЦК. Также легко поджечь
+plushies-tim-akkerman-5 = Вы допустили Орфографическую ошибку? Отказ. Эвакуация? Отказ. Отказ!
+plushies-tim-akkerman-6 = Я не признаю ОПРС Вульп, хотя сам имею вульпу в виде жены. Она человек? Что?

@@ -10,6 +10,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.NPC.Systems;
+using Content.Shared.Silicons.Borgs.Components;
 
 namespace Content.Server.DeadSpace.Abilities.StunRadius;
 
@@ -55,9 +56,11 @@ public sealed partial class StunRadiusSystem : EntitySystem
             if (EntityManager.HasComponent<MobStateComponent>(ent))
             {
                 if (component.IgnorAlien && _npcFaction.IsEntityFriendly(uid, ent))
-                {
                     continue;
-                }
+
+                if (HasComp<BorgChassisComponent>(ent) && !component.StunBorg)
+                    continue;
+
                 if (TryComp(ent, out PhysicsComponent? physics))
                 {
                     _physics.SetLinearVelocity(ent, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);

@@ -1,0 +1,141 @@
+- type: entity
+  id: WallIndestructible
+  suffix: Неразрушимое
+  abstract: true
+  components:
+  - type: Godmode
+
+- type: entity
+  parent: [ WallSolid, WallIndestructible ]
+  id: WallSolidIndestructible
+
+- type: entity
+  parent: [ WallSolidRust, WallIndestructible ]
+  id: WallSolidRustIndestructible
+
+- type: entity
+  parent: [ WallReinforced, WallIndestructible ]
+  id: WallReinforcedIndestructible
+
+- type: entity
+  parent: [ WallReinforcedRust, WallIndestructible ]
+  id: WallReinforcedRustIndestructible
+
+- type: entity
+  parent: [ WallRiveted, WallIndestructible ]
+  id: WallRivetedIndestructible
+
+- type: entity
+  parent: [ WallRock, WallIndestructible ]
+  id: WallRockIndestructible
+
+- type: entity
+  parent: [ MeteorRock, WallIndestructible ]
+  id: MeteorRockIndestructible
+
+- type: entity
+  parent: [ WallRockChromite, WallIndestructible ]
+  id: WallRockChromiteIndestructible
+
+- type: entity
+  parent: [ WallRockSand, WallIndestructible ]
+  id: WallRockSandIndestructible
+
+- type: entity
+  parent: [ WallRockAndesite, WallIndestructible ]
+  id: WallRockAndesiteIndestructible
+
+- type: entity
+  parent: [ WallCobblebrick, WallIndestructible ]
+  id: WallCobblebrickIndestructible
+
+- type: entity
+  parent: [ WallBasaltCobblebrick, WallIndestructible ]
+  id: WallBasaltCobblebrickIndestructible
+
+- type: entity
+  parent: [ WallWood, WallIndestructible ]
+  id: WallWoodIndestructible
+
+- type: entity
+  parent: [ WallClown, WallIndestructible ]
+  id: WallClownIndestructible
+
+- type: entity
+  parent: [ WallNecropolis, WallIndestructible ]
+  id: allNecropolisIndestructible
+
+- type: entity
+  parent: [ Window, WallIndestructible ]
+  id: WindowIndestructible
+
+- type: entity
+  parent: [ WindowDirectional, WallIndestructible ]
+  id: WindowDirectionalIndestructible
+
+- type: entity
+  parent: [ ReinforcedWindow, WallIndestructible ]
+  id: ReinforcedWindowIndestructible
+
+- type: entity
+  parent: [ WindowReinforcedDirectional, WallIndestructible ]
+  id: WindowReinforcedDirectionalIndestructible
+
+- type: entity
+  parent: [ PlasmaWindow, WallIndestructible ]
+  id: PlasmaWindowIndestructible
+
+- type: entity
+  parent: [ PlasmaWindowDirectional, WallIndestructible ]
+  id: PlasmaWindowDirectionalIndestructible
+
+- type: entity
+  parent: [ ReinforcedPlasmaWindow, WallIndestructible ]
+  id: ReinforcedPlasmaWindowIndestructible
+
+- type: entity
+  parent: [ PlasmaReinforcedWindowDirectional, WallIndestructible ]
+  id: PlasmaReinforcedWindowDirectionalIndestructible
+
+- type: entity
+  parent: [ UraniumWindow, WallIndestructible ]
+  id: UraniumWindowIndestructible
+
+- type: entity
+  parent: [ UraniumWindowDirectional, WallIndestructible ]
+  id: UraniumWindowDirectionalIndestructible
+
+- type: entity
+  parent: [ ReinforcedUraniumWindow, WallIndestructible ]
+  id: ReinforcedUraniumWindowIndestructible
+
+- type: entity
+  parent: [ UraniumReinforcedWindowDirectional, WallIndestructible ]
+  id: UraniumReinforcedWindowDirectionalIndestructible
+
+- type: entity
+  id: InvisibleWall
+  parent: BaseStructure
+  name: вечная невидимая стена
+  description: Have we all become invisible?
+  suffix: Включите BB в панели песочницы
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Tag
+    tags:
+      - ForceFixRotations
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        mask:
+        - FullTileMask
+        layer:
+        - TableLayer # Не пропускает хитбоксы существ
+  - type: Airtight

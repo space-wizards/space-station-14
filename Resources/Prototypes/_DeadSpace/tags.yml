@@ -56,12 +56,30 @@
   id: Necro
 
 - type: Tag
-  id: MagazineTommyCapGun
+  id: MagazineTommyGun
+
+- type: Tag
+  id: MagazineTommyGunCap
 
 - type: Tag
   id: ToySword
 
 - type: Tag
   id: SnapPop
+
+- type: Tag
+  id: WeldingMaskFlame
+
+- type: Tag
+  id: WeldingMaskFlameBlue
+
+- type: Tag
+  id: WeldingMaskGray
+
+- type: Tag
+  id: WeldingMaskPainted
+
+- type: Tag
+  id: WeldingMaskWhite
 
   # Обязательно в алфавитном порядке

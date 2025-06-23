@@ -8,7 +8,7 @@
     duration: 10
     earliestStart: 45
     reoccurrenceDelay: 60
-    minimumPlayers: 20
+    minimumPlayers: 30
   - type: RandomSpawnRule
     prototype: MobGhostHerald
 
@@ -22,6 +22,6 @@
     duration: 10
     earliestStart: 45
     reoccurrenceDelay: 60
-    minimumPlayers: 20
+    minimumPlayers: 30
   - type: RandomSpawnRule
     prototype: MobDemonShadow

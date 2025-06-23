@@ -1,14 +1,42 @@
+# Pets
 - type: entity
   parent: IDCardStandard
-  id: TypanIDCardCargo
+  id: MukhtarIDCard
+  name: mukhtar ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idsecurityofficer
+  - type: PresetIdCard
+    job: SecurityOfficer
+    name: Мухтар
+
+- type: entity
+  parent: IDCardStandard
+  id: LargoIDCard
+  name: largo ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idcargotechnician
+  - type: PresetIdCard
+    job: CargoTechnician
+    name: Ларго
+
+# Typan
+- type: entity
+  parent: IDCardStandard
+  id: TaipanIDCardCargo
   name: ID-карта
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/typancargo.rsi
+    sprite: _DeadSpace/Objects/Misc/taipancargo.rsi
     layers:
-    - state: typancardcargo
+    - state: taipancardcargo
   - type: PresetIdCard
-    job: TypanCargotech
+    job: TaipanCargotech
   - type: Access
     tags:
     - SyndicateAgent
@@ -17,13 +45,13 @@
 
 - type: entity
   parent: IDCardStandard
-  id: TypanIDCardCom
+  id: TaipanIDCardCom
   name: ID-карта
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/typansec.rsi
+    sprite: _DeadSpace/Objects/Misc/taipansec.rsi
     layers:
-    - state: typancardcom
+    - state: taipancardcom
   - type: Access
     tags:
     - Armory
@@ -39,13 +67,13 @@
 
 - type: entity
   parent: IDCardStandard
-  id: TypanIDCardEng
+  id: TaipanIDCardEng
   name: ID-карта
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/typaneng.rsi
+    sprite: _DeadSpace/Objects/Misc/taipaneng.rsi
     layers:
-    - state: typancardeng
+    - state: taipancardeng
   - type: Access
     tags:
     - Engineering
@@ -56,13 +84,13 @@
 
 - type: entity
   parent: IDCardStandard
-  id: TypanIDCardMed
+  id: TaipanIDCardMed
   name: ID-карта
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/typanmed.rsi
+    sprite: _DeadSpace/Objects/Misc/taipanmed.rsi
     layers:
-    - state: typancardmed
+    - state: taipancardmed
   - type: Access
     tags:
     - SyndicateAgent
@@ -72,15 +100,15 @@
 
 - type: entity
   parent: IDCardStandard
-  id: TypanIDCardRd
+  id: TaipanIDCardRd
   name: ID-карта
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/typanrd.rsi
+    sprite: _DeadSpace/Objects/Misc/taipanrd.rsi
     layers:
-    - state: typancardrd
+    - state: taipancardrd
   - type: PresetIdCard
-    job: TypanRD
+    job: TaipanRD
   - type: Access
     tags:
     - SyndicateAgent
@@ -90,15 +118,15 @@
 
 - type: entity
   parent: IDCardStandard
-  id: TypanIDCardScience
+  id: TaipanIDCardScience
   name: ID-карта
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/typanscien.rsi
+    sprite: _DeadSpace/Objects/Misc/taipanscien.rsi
     layers:
-    - state: typancardscience
+    - state: taipancardscience
   - type: PresetIdCard
-    job: TypanScience
+    job: TaipanScience
   - type: Access
     tags:
     - SyndicateAgent
@@ -108,15 +136,15 @@
 
 - type: entity
   parent: IDCardStandard
-  id: TypanIDCardBotanist
+  id: TaipanIDCardBotanist
   name: ID-карта
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/typanbotan.rsi
+    sprite: _DeadSpace/Objects/Misc/taipanbotan.rsi
     layers:
-    - state: typancardbotanist
+    - state: taipancardbotanist
   - type: PresetIdCard
-    job: TypanBotanist
+    job: TaipanBotanist
   - type: Access
     tags:
     - SyndicateAgent
@@ -126,15 +154,15 @@
 
 - type: entity
   parent: IDCardStandard
-  id: TypanIDCardChef
+  id: TaipanIDCardChef
   name: ID-карта
   components:
   - type: Sprite
-    sprite: _DeadSpace/Objects/Misc/typanchef.rsi
+    sprite: _DeadSpace/Objects/Misc/taipanchef.rsi
     layers:
-    - state: typancardchef
+    - state: taipancardchef
   - type: PresetIdCard
-    job: TypanChef
+    job: TaipanChef
   - type: Access
     tags:
     - SyndicateAgent

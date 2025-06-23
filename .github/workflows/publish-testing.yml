@@ -13,28 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3.6.0
+    - uses: actions/checkout@v4.2.2
       with:
         submodules: 'recursive'
 
-    # DS14-secrets-start
-    - name: Setup secrets
-      env:
-        SSH_KEY: ${{ secrets.SECRETS_PRIVATE_KEY }}
-      if: ${{ env.SSH_KEY != '' }}
-      run: |
-        mkdir ~/.ssh
-        echo "${{ secrets.SECRETS_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        echo "HOST *" > ~/.ssh/config
-        echo "StrictHostKeyChecking no" >> ~/.ssh/config
-        git clone git@github.com:dead-space-server/space-station-14-secrets.git Secrets
-        cp -R Secrets/Resources/Prototypes Resources/Prototypes/DeadSpaceSecrets
-        cp -R Secrets/Resources/ServerPrototypes Resources/Prototypes/DeadSpaceSecretsServer
-        cp -R Secrets/Resources/Locale Resources/Locale/ru-RU/deadspace-secrets
-        cp -R Secrets/Resources/Textures Resources/Textures/DeadSpaceSecrets
-    # DS14-secrets-end
-        
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3.2.0
       with:
@@ -52,13 +34,13 @@ jobs:
       run: dotnet build Content.Packaging --configuration Release --no-restore /m
 
     - name: Package server
-      run: dotnet run --project Content.Packaging server --platform win-x64 --platform linux-x64 --platform osx-x64 --platform linux-arm64
+      run: dotnet run --project Content.Packaging server --platform linux-x64 # only linux, no: --platform win-x64 --platform osx-x64 --platform linux-arm64
 
     - name: Package client
       run: dotnet run --project Content.Packaging client --no-wipe-release
 
     - name: Publish version
-      run: Tools/publish_multi_request.py --fork-id fobos-testing
+      run: Tools/publish_multi_request.py --fork-id dstest
       env:
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}

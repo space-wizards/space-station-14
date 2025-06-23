@@ -505,3 +505,91 @@
       interfaces:
         enum.StoreUiKey.Key:
           type: StoreBoundUserInterface
+
+- type: entity
+  parent: VendingMachineClothing
+  id: BackmenVendingMachineClothing
+  name: ОдеждоМат
+  description: Торговый автомат для одежды.
+  suffix: Backmen, Платный
+  components:
+  - type: Store
+    categories:
+      - ClothingBackpackMachineInventory
+      - ClothingHeadMachineInventory
+      - ClothingOuterMachineInventory
+      - ClothingJumpsuitMachineInventory
+      - ClothingJumpskirtMachineInventory
+      - ClothingShoesMachineInventory
+      - ClothingNeckMachineInventory
+      - ClothingEyesMachineInventory
+      - ClothingHandsMachineInventory
+    currencyWhitelist:
+    - SpaceCash
+    balance:
+      SpaceCash: 0
+  - type: BuyStoreBank
+    emagCategories:
+      - ClothingEmagMachineInventory
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+    singleUser: true
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+
+- type: entity
+  parent: VendingMachineWinter
+  id: BackmenVendingMachineWinter
+  name: Зимнешкаф
+  description: Лучшее место, чтобы насладиться холодом!
+  suffix: Backmen, Платный
+  components:
+  - type: Store
+    categories:
+    - WinterDrobeOuterInventory
+    - WinterDrobeScarfsInventory
+    - WinterDrobeOtherInventory
+    currencyWhitelist:
+    - SpaceCash
+    balance:
+      SpaceCash: 0
+  - type: BuyStoreBank
+    emagCategories:
+    - WinterDrobeInventoryEmag
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+    singleUser: true
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+
+- type: entity
+  parent: VendingMachineClothingCapes
+  id: BackmenVendingMachineClothingCapes
+  name: Плащвенд
+  description: Автомат с различными плащами.
+  suffix: Backmen, Платный
+  components:
+  - type: Store
+    categories:
+    - ClothesMateCapeInventory
+    currencyWhitelist:
+    - SpaceCash
+    balance:
+      SpaceCash: 0
+  - type: BuyStoreBank
+    emagCategories:
+    - ClothesMateCapeInventoryEmag
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+    singleUser: true
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface

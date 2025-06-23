@@ -1,0 +1,17 @@
+- type: entity
+  id: MarkerLightSource
+  name: источник света
+  description: И сказал админ "Да будет свет!"
+  suffix: Спавнер
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  - type: PointLight
+    color: "#ffffff"
+    radius: 7
+    energy: 1
+    softness: 1
+  - type: Marker

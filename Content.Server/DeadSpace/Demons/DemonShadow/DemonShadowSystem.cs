@@ -31,6 +31,8 @@ using Robust.Shared.Prototypes;
 using Content.Shared.DeadSpace.Abilities.Cocoon;
 using Content.Shared.Interaction;
 using Content.Server.DeadSpace.Abilities.Cocoon;
+using Content.Server.DeadSpace.Demons.DemonShadow.Components;
+using Content.Server.StationEvents.Events;
 
 namespace Content.Server.DeadSpace.Demons.DemonShadow;
 
@@ -52,6 +54,7 @@ public sealed class DemonShadowSystem : SharedDemonShadowSystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     public override void Initialize()
     {
@@ -121,34 +124,23 @@ public sealed class DemonShadowSystem : SharedDemonShadowSystem
 
     public void ShadowCheck(EntityUid uid, DemonShadowComponent component)
     {
-        MapCoordinates lightPosition;
-        MapCoordinates entityPosition = _transform.GetMapCoordinates(uid);
-
-        var pointLightQuery = EntityQueryEnumerator<PointLightComponent, TransformComponent>();
-
-        while (pointLightQuery.MoveNext(out var ent, out var lightComp, out var xform))
+        if (!IsShadowPosition(uid, component))
         {
-            if (Transform(uid).MapID != xform.MapID)
-                continue;
-
-            lightPosition = _transform.GetMapCoordinates(ent);
-
-            if (_examine.InRangeUnOccluded(entityPosition, lightPosition, lightComp.Radius, null) && lightComp.Enabled)
-            {
-                component.IsShadowPosition = false;
-                _appearance.SetData(uid, DemonShadowVisuals.Hide, false);
-                component.TimeToCheck = _gameTiming.CurTime + component.CheckDuration;
-                component.MovementSpeedMultiply = 1f;
-                _movement.RefreshMovementSpeedModifiers(uid);
-                return;
-            }
+            component.IsShadowPosition = false;
+            _appearance.SetData(uid, DemonShadowVisuals.Hide, false);
+            component.TimeToCheck = _gameTiming.CurTime + component.CheckDuration;
+            component.MovementSpeedMultiply = 1f;
+            _movement.RefreshMovementSpeedModifiers(uid);
         }
-
-        component.IsShadowPosition = true;
-        _appearance.SetData(uid, DemonShadowVisuals.Hide, true);
-        component.MovementSpeedMultiply = 3f;
-        _movement.RefreshMovementSpeedModifiers(uid);
-        component.TimeToCheck = _gameTiming.CurTime + component.CheckDuration;
+        else
+        {
+            component.IsShadowPosition = true;
+            if (!component.IsShadowCrawl)
+                _appearance.SetData(uid, DemonShadowVisuals.Hide, true);
+            component.MovementSpeedMultiply = 3f;
+            _movement.RefreshMovementSpeedModifiers(uid);
+            component.TimeToCheck = _gameTiming.CurTime + component.CheckDuration;
+        }
 
         return;
     }
@@ -157,7 +149,8 @@ public sealed class DemonShadowSystem : SharedDemonShadowSystem
     {
         _appearance.SetData(uid, DemonShadowVisuals.Astral, false);
         _appearance.SetData(uid, DemonShadowVisuals.Hide, false);
-        _appearance.SetData(uid, DemonShadowVisuals.DemonShadow, true);
+        _appearance.SetData(uid, DemonShadowVisuals.Shadow, true);
+        _appearance.SetData(uid, DemonShadowVisuals.DemonShadow, false);
 
         if (TryComp<NpcFactionMemberComponent>(uid, out var factionComp))
             component.OldFaction = GetFirstElement(factionComp.Factions);
@@ -299,6 +292,8 @@ public sealed class DemonShadowSystem : SharedDemonShadowSystem
             _actionsSystem.SetEnabled(component.DemonShadowGrappleActionEntity, false);
             ToggleVisible(uid, false);
             ToggleFixtures(uid, false);
+            _appearance.SetData(uid, DemonShadowVisuals.Shadow, true);
+            _appearance.SetData(uid, DemonShadowVisuals.DemonShadow, true);
 
             _faction.ClearFactions(uid, dirty: false);
         }
@@ -307,6 +302,8 @@ public sealed class DemonShadowSystem : SharedDemonShadowSystem
             _actionsSystem.SetEnabled(component.DemonShadowGrappleActionEntity, true);
             ToggleVisible(uid, true);
             ToggleFixtures(uid, true);
+            _appearance.SetData(uid, DemonShadowVisuals.Shadow, false);
+            _appearance.SetData(uid, DemonShadowVisuals.DemonShadow, false);
 
             if (component.OldFaction != null)
             {
@@ -365,6 +362,35 @@ public sealed class DemonShadowSystem : SharedDemonShadowSystem
         _transform.AttachToGridOrMap(target);
     }
 
+    public bool IsShadowPosition(EntityUid uid, DemonShadowComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        MapCoordinates lightPosition;
+        MapCoordinates entityPosition = _transform.GetMapCoordinates(uid);
+        float cocoonRange = 10f;
+
+        var entities = _lookup.GetEntitiesInRange<ShadowCocoonComponent>(_transform.GetMapCoordinates(uid, Transform(uid)), cocoonRange);
+
+        if (entities.Count > 0)
+            return true;
+
+        var pointLightQuery = EntityQueryEnumerator<PointLightComponent, TransformComponent>();
+
+        while (pointLightQuery.MoveNext(out var ent, out var lightComp, out var xform))
+        {
+            if (Transform(uid).MapID != xform.MapID)
+                continue;
+
+            lightPosition = _transform.GetMapCoordinates(ent);
+
+            if (_examine.InRangeUnOccluded(entityPosition, lightPosition, lightComp.Radius, null) && lightComp.Enabled)
+                return false;
+        }
+
+        return true;
+    }
     public void MakeVisible(bool visible)
     {
         var query = EntityQueryEnumerator<DemonShadowComponent, VisibilityComponent>();
@@ -372,13 +398,13 @@ public sealed class DemonShadowSystem : SharedDemonShadowSystem
         {
             if (visible)
             {
-                _visibility.AddLayer((uid, vis), (int) VisibilityFlags.Normal, false);
-                _visibility.RemoveLayer((uid, vis), (int) VisibilityFlags.Ghost, false);
+                _visibility.AddLayer((uid, vis), (int)VisibilityFlags.Normal, false);
+                _visibility.RemoveLayer((uid, vis), (int)VisibilityFlags.Ghost, false);
             }
             else
             {
-                _visibility.AddLayer((uid, vis), (int) VisibilityFlags.Ghost, false);
-                _visibility.RemoveLayer((uid, vis), (int) VisibilityFlags.Normal, false);
+                _visibility.AddLayer((uid, vis), (int)VisibilityFlags.Ghost, false);
+                _visibility.RemoveLayer((uid, vis), (int)VisibilityFlags.Normal, false);
             }
 
             _visibility.RefreshVisibility(uid, vis);

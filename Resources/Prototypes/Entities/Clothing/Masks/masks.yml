@@ -692,6 +692,8 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - WeldingMask # DS14
+    - WeldingMaskWhite # DS14
 
 # Entity tables
 - type: entityTable

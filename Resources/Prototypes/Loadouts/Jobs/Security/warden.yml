@@ -66,3 +66,19 @@
     proto: FemaleUnderwear
   equipment:
     underweart: ClothingUnderwearTopBraWarden
+
+# Медаль
+- type: loadoutEffectGroup
+  id: WardenMedal
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobWarden
+      time: 270000 # 75 hours
+
+- type: loadout
+  id: WardenMedal
+  storage:
+    back:
+    - ClothingNeckSecurityWardenMedal

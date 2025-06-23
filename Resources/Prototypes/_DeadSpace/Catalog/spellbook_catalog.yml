@@ -1,0 +1,13 @@
+- type: listing
+  id: SpellbookClothingOuterHardsuitWizard
+  name: spellbook-clothing-outer-hardsuit-name
+  description: spellbook-clothing-outer-hardsuit-description
+  icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/wizard.rsi, state: icon }
+  productEntity: CrateWizardHardsuitBundle
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

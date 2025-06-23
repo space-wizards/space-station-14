@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/dc89ef0239830774bd3d9d7d6c8da2856da2b869",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/dc89ef0239830774bd3d9d7d6c8da2856da2b869, [state: welding, weldingblue, weldingflame, weldinggasmask, weldingpaint] by pyfya (discord) for Space Station 14 server Мёртвый Космос",
   "size": {
     "x": 32,
     "y": 32
@@ -141,6 +141,21 @@
     },
     {
       "name": "wrench_medical"
+    },
+    {
+      "name": "welding"
+    },
+    {
+      "name": "welding_flame"
+    },
+    {
+      "name": "welding_flameblue"
+    },
+    {
+      "name": "welding_gasmask"
+    },
+    {
+      "name": "welding_painted"
     },
     {
       "name": "analyzer-equipped-BELT",

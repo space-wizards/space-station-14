@@ -34,8 +34,8 @@
 
 - type: entity
   parent: ClothingHeadsetAlt
-  id: ClothingHeadsetAltTypan
-  name: полноразмерная кроваво - красная гарнитура 
+  id: ClothingHeadsetAltTaipan
+  name: полноразмерная кроваво - красная гарнитура
   description: Модифицированный модульный интерком синдиката.
   components:
   - type: Headset
@@ -45,7 +45,7 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyTypan
+      - EncryptionKeyTaipan
   - type: Sprite
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing

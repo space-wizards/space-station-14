@@ -54,6 +54,20 @@
 
 - type: entity
   parent: BoxSurvival
+  id: BoxSurvivalMoth
+  suffix: Standart for moths
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabricbrick
+    - id: DrinkWaterBottleFull
+
+- type: entity
+  parent: BoxSurvival
   id: BoxSurvivalNonBreather
   suffix: Standard for non breathers
   components:
@@ -133,6 +147,20 @@
     - id: DrinkBeerCan
 
 - type: entity
+  parent: BoxSurvivalEngineering
+  id: BoxSurvivalEngineeringMoth
+  suffix: Extended moth
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: ExtendedEmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabricbrick
+    - id: DrinkWaterBottleFull
+
+- type: entity
   parent: BoxCardboard
   id: BoxSurvivalSecurity
   name: survival box
@@ -187,6 +215,20 @@
     - id: DrinkBeerCan
 
 - type: entity
+  parent: BoxSurvivalSecurity
+  id: BoxSurvivalSecurityMoth
+  suffix: Security moth
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasSecurity
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabricbrick
+    - id: DrinkWaterBottleFull
+
+- type: entity
   parent: BoxCardboard
   id: BoxSurvivalMedical
   name: survival box
@@ -239,6 +281,20 @@
     - id: Flare
     - id: FoodSnackNutribrick
     - id: DrinkBeerCan
+
+- type: entity
+  parent: BoxSurvivalMedical
+  id: BoxSurvivalMedicalMoth
+  suffix: Medical moth
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedical
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabricbrick
+    - id: DrinkWaterBottleFull
 
 - type: entity
   parent: BoxCardboard
@@ -296,6 +352,20 @@
     - id: DrinkBeerCan
 
 - type: entity
+  parent: BoxHug
+  id: BoxHugMoth
+  suffix: Emergency moth
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyFunnyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabricbrick
+    - id: DrinkWaterBottleFull
+
+- type: entity
   parent: BoxSurvival
   id: BoxMime
   suffix: Mime, Emergency
@@ -344,6 +414,20 @@
     - id: DrinkBeerCan
 
 - type: entity
+  parent: BoxSurvivalNitrogen
+  id: BoxMimeMoth
+  suffix: Mime, Emergency moth
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodBreadBaguetteCotton
+    - id: DrinkWaterBottleFull
+
+- type: entity
   parent: BoxCardboard
   id: BoxSurvivalSyndicate
   name: extended-capacity survival box
@@ -380,6 +464,19 @@
     - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity
+  parent: BoxSurvivalSyndicate
+  id: BoxSurvivalSyndicateMoth
+  suffix: Syndicate moth
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasSyndicate
+    - id: ExtendedEmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabricbrick
 
 - type: entity
   name: survival box
@@ -430,3 +527,18 @@
     - id: Flare
     - id: FoodSnackNutribrick
     - id: DrinkBeerCan
+
+- type: entity
+  name: survival box
+  parent: BoxSurvivalSecurity
+  id: BoxSurvivalBrigmedicMoth
+  suffix: Brigmedic moth
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedicalSecurity
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackFabricbrick
+    - id: DrinkWaterBottleFull

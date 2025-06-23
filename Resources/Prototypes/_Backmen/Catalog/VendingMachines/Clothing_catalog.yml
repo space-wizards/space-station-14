@@ -1,0 +1,2156 @@
+# Backpack
+- type: listing
+  id: ClothingBackpackMachineInventory1
+  productEntity: ClothingBackpack
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingBackpackMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingBackpackMachineInventory2
+  productEntity: ClothingBackpackDuffel
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingBackpackMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingBackpackMachineInventory3
+  productEntity: ClothingBackpackSatchel
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingBackpackMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingBackpackMachineInventory4
+  productEntity: ClothingBackpackSatchelLeather
+  cost:
+    SpaceCash: 40
+  categories:
+  - ClothingBackpackMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingBackpackMachineInventory5
+  productEntity: ClothingBeltStorageWaistbag
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingBackpackMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+# Head
+- type: listing
+  id: ClothingHeadMachineInventory1
+  productEntity: ClothingHeadHatBeret
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingHeadMachineInventory2
+  productEntity: ClothingHeadBandBlack
+  cost:
+    SpaceCash: 10
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory3
+  productEntity: ClothingHeadBandBlue
+  cost:
+    SpaceCash: 10
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory4
+  productEntity: ClothingHeadBandGreen
+  cost:
+    SpaceCash: 10
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory5
+  productEntity: ClothingHeadBandRed
+  cost:
+    SpaceCash: 10
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory6
+  productEntity: ClothingHeadBandSkull
+  cost:
+    SpaceCash: 10
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory7
+  productEntity: ClothingHeadHatGreyFlatcap
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingHeadMachineInventory8
+  productEntity: ClothingHeadHatBrownFlatcap
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingHeadMachineInventory9
+  productEntity: ClothingHeadHatGreysoft
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingHeadMachineInventory10
+  productEntity: ClothingHeadHatMimesoft
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingHeadMachineInventory11
+  productEntity: ClothingHeadHatBluesoft
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory12
+  productEntity: ClothingHeadHatYellowsoft
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory13
+  productEntity: ClothingHeadHatGreensoft
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory14
+  productEntity: ClothingHeadHatOrangesoft
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory15
+  productEntity: ClothingHeadHatRedsoft
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory16
+  productEntity: ClothingHeadHatBlacksoft
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory17
+  productEntity: ClothingHeadHatPurplesoft
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory18
+  productEntity: ClothingHeadHatCorpsoft
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory19
+  productEntity: ClothingHeadFishCap
+  cost:
+    SpaceCash: 30
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory20
+  productEntity: ClothingHeadRastaHat
+  cost:
+    SpaceCash: 30
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory21
+  productEntity: ClothingHeadHatFez
+  cost:
+    SpaceCash: 30
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHeadMachineInventory22
+  productEntity: ADTClothingHeadPinkHat
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingHeadMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+# Outer
+- type: listing
+  id: ClothingOuterMachineInventory1
+  productEntity: ClothingOuterCoatLetterman
+  cost:
+    SpaceCash: 30
+  categories:
+  - ClothingOuterMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingOuterMachineInventory2
+  productEntity: ClothingOuterCoatLettermanN
+  cost:
+    SpaceCash: 30
+  categories:
+  - ClothingOuterMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingOuterMachineInventory3
+  productEntity: ClothingOuterCoatLettermanRed
+  cost:
+    SpaceCash: 30
+  categories:
+  - ClothingOuterMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingOuterMachineInventory4
+  productEntity: ClothingOuterDiscoAssBlazer
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingOuterMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingOuterMachineInventory5
+  productEntity: ClothingOuterCoatJensen
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingOuterMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingOuterMachineInventory6
+  productEntity: ClothingOuterCoatGentle
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingOuterMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingOuterMachineInventory7
+  productEntity: ClothingOuterAerostaticBomberJacket
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingOuterMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+# Jumpsuit
+- type: listing
+  id: ClothingJumpsuitMachineInventory1
+  productEntity: ClothingUniformJumpsuitColorGrey
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory2
+  productEntity: ClothingUniformJumpsuitColorWhite
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory3
+  productEntity: ClothingUniformJumpsuitColorBlack
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory4
+  productEntity: ClothingUniformJumpsuitColorBlue
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory5
+  productEntity: ClothingUniformJumpsuitColorYellow
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory6
+  productEntity: ClothingUniformJumpsuitColorGreen
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory7
+  productEntity: ClothingUniformJumpsuitColorOrange
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory8
+  productEntity: ClothingUniformJumpsuitColorRed
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory9
+  productEntity: ClothingUniformJumpsuitColorPurple
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory10
+  productEntity: ClothingUniformJumpsuitColorPink
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory11
+  productEntity: ClothingUniformJumpsuitColorDarkBlue
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory12
+  productEntity: ClothingUniformJumpsuitColorDarkGreen
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory13
+  productEntity: ClothingUniformJumpsuitColorTeal
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory14
+  productEntity: ClothingUniformJumpsuitColorLightBrown
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory15
+  productEntity: ClothingUniformJumpsuitColorBrown
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory16
+  productEntity: ClothingUniformJumpsuitColorMaroon
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory17
+  productEntity: ClothingUniformColorRainbow
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory18
+  productEntity: ADTClothingUniformTurleneckBlack
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory19
+  productEntity: ADTClothingUniformTurleneckBlue
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory20
+  productEntity: ADTClothingUniformTurleneckBlueBlack
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory21
+  productEntity: ADTClothingUniformTurleneckGolub
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory22
+  productEntity: ADTClothingUniformTurleneckGolubBlack
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory23
+  productEntity: ADTClothingUniformTurleneckGreen
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory24
+  productEntity: ADTClothingUniformTurleneckGreenBlack
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory25
+  productEntity: ADTClothingUniformTurleneckOrange
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory26
+  productEntity: ADTClothingUniformTurleneckOrangeBlack
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory27
+  productEntity: ADTClothingUniformTurleneckPurpur
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory28
+  productEntity: ADTClothingUniformTurleneckPurpurBlack
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory29
+  productEntity: ADTClothingUniformTurleneckRed
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory30
+  productEntity: ADTClothingUniformTurleneckRedBlack
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory31
+  productEntity: ADTClothingUniformTurleneckSalat
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory32
+  productEntity: ADTClothingUniformTurleneckSalatBlack
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory33
+  productEntity: ADTClothingUniformTurleneckWhite
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory34
+  productEntity: ADTClothingUniformTurleneckWhiteBlack
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory35
+  productEntity: ADTClothingUniformTurleneckBlackSleeveless
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory36
+  productEntity: ADTClothingUniformTurleneckWhiteSleeveless
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory37
+  productEntity: ADTClothingUniformTurleneckWhiteBlackSleeveless
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory38
+  productEntity: ClothingUniformJumpsuitFlannel
+  cost:
+    SpaceCash: 40
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory39
+  productEntity: ClothingUniformJumpsuitSuitCheckered
+  cost:
+    SpaceCash: 70
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory40
+  productEntity: ClothingUniformJumpsuitSuitTan
+  cost:
+    SpaceCash: 70
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory41
+  productEntity: ClothingRandomSpawner
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 8
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory42
+  productEntity: ClothingUniformJumpsuitFamilyGuy
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory43
+  productEntity: ClothingUniformJumpsuitAerostatic
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory44
+  productEntity: ClothingUniformJumpsuitSuperstarCop
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpsuitMachineInventory45
+  productEntity: ClothingUniformJumpsuitLoungewear
+  cost:
+    SpaceCash: 10
+  categories:
+  - ClothingJumpsuitMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+# Jumpskirt
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory1
+  productEntity: ADTClothingUniformTurleneckBlackWomen
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory2
+  productEntity: ADTClothingUniformTurleneckBlueWomen
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory3
+  productEntity: ADTClothingUniformTurleneckGolubWomen
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory4
+  productEntity: ADTClothingUniformTurleneckGreenWomen
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory5
+  productEntity: ADTClothingUniformTurleneckOrangeWomen
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory6
+  productEntity: ADTClothingUniformTurleneckPurpurWomen
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory7
+  productEntity: ADTClothingUniformTurleneckRedWomen
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory8
+  productEntity: ADTClothingUniformTurleneckSalatWomen
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory9
+  productEntity: ADTClothingUniformTurleneckWhiteWomen
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory10
+  productEntity: ADTClothingUniformTurleneckBlackWomenSleeveless
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory11
+  productEntity: ADTClothingUniformTurleneckWhiteWomenSleeveless
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory12
+  productEntity: ClothingUniformJumpskirtCasualBlue
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory13
+  productEntity: ClothingUniformJumpskirtCasualPurple
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory14
+  productEntity: ClothingUniformJumpskirtCasualRed
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory15
+  productEntity: ClothingUniformJumpskirtCasualGreen
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory16
+  productEntity: ClothingUniformJumpskirtBlackElegantDress
+  cost:
+    SpaceCash: 45
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory17
+  productEntity: ClothingUniformJumpskirtRedElegantDress
+  cost:
+    SpaceCash: 45
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory18
+  productEntity: ClothingUniformJumpskirtGreenElegantDress
+  cost:
+    SpaceCash: 45
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory19
+  productEntity: ClothingUniformJumpskirtBlueElegantDress
+  cost:
+    SpaceCash: 45
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory20
+  productEntity: ClothingUniformJumpskirtPurpleElegantDress
+  cost:
+    SpaceCash: 45
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory21
+  productEntity: ClothingUniformJumpskirtCyanStripedDress
+  cost:
+    SpaceCash: 45
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory22
+  productEntity: ClothingUniformJumpskirtRedStripedDress
+  cost:
+    SpaceCash: 45
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory23
+  productEntity: ClothingUniformJumpskirtGreenStripedDress
+  cost:
+    SpaceCash: 45
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory24
+  productEntity: ClothingUniformJumpskirtPinkStripedDress
+  cost:
+    SpaceCash: 45
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory25
+  productEntity: ClothingUniformJumpskirtOrangeStripedDress
+  cost:
+    SpaceCash: 45
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory26
+  productEntity: ClothingUniformJumpskirtPurpleTurtleneckDress
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory27
+  productEntity: ClothingUniformJumpskirtRedTurtleneckDress
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory28
+  productEntity: ClothingUniformJumpskirtGreenTurtleneckDress
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory29
+  productEntity: ClothingUniformJumpskirtBlueTurtleneckDress
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory30
+  productEntity: ClothingUniformJumpskirtYellowTurtleneckDress
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory31
+  productEntity: ClothingUniformJumpskirtYellowOldDress
+  cost:
+    SpaceCash: 45
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory32
+  productEntity: ClothingUniformJumpskirtDressRed
+  cost:
+    SpaceCash: 80
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory33
+  productEntity: ADTClothingUniformLilitBlackDress
+  cost:
+    SpaceCash: 70
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory34
+  productEntity: ADTClothingUniformYunaBlackDress
+  cost:
+    SpaceCash: 70
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory35
+  productEntity: ClothingUniformJumpskirtColorGrey
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory36
+  productEntity: ClothingUniformJumpskirtColorWhite
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory37
+  productEntity: ClothingUniformJumpskirtColorBlack
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory38
+  productEntity: ClothingUniformJumpskirtColorBlue
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory39
+  productEntity: ClothingUniformJumpskirtColorYellow
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory40
+  productEntity: ClothingUniformJumpskirtColorGreen
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory41
+  productEntity: ClothingUniformJumpskirtColorOrange
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory42
+  productEntity: ClothingUniformJumpskirtColorRed
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory43
+  productEntity: ClothingUniformJumpskirtColorPurple
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory44
+  productEntity: ClothingUniformJumpskirtColorPink
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory45
+  productEntity: ClothingUniformJumpskirtColorDarkBlue
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory46
+  productEntity: ClothingUniformJumpskirtColorDarkGreen
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory47
+  productEntity: ClothingUniformJumpskirtColorTeal
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory48
+  productEntity: ClothingUniformJumpskirtColorLightBrown
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory49
+  productEntity: ClothingUniformJumpskirtColorBrown
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory50
+  productEntity: ClothingUniformJumpskirtColorMaroon
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+# Продолжение нумерации (id: 51-61)
+- type: listing
+  id: ClothingJumpskirtMachineInventory51
+  productEntity: ClothingUniformJumpskirtPencilBlack
+  cost:
+    SpaceCash: 40
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory52
+  productEntity: ClothingUniformJumpskirtPencilBurgandy
+  cost:
+    SpaceCash: 40
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory53
+  productEntity: ClothingUniformJumpskirtPencilCheckered
+  cost:
+    SpaceCash: 40
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory54
+  productEntity: ClothingUniformJumpskirtPencilNavy
+  cost:
+    SpaceCash: 40
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory55
+  productEntity: ClothingUniformJumpskirtPencilTan
+  cost:
+    SpaceCash: 40
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory56
+  productEntity: ClothingUniformJumpskirtGothic
+  cost:
+    SpaceCash: 80
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory57
+  productEntity: ClothingUniformColorJumpskirtRainbow
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory58
+  productEntity: ClothingUniformJumpskirtTango
+  cost:
+    SpaceCash: 80
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory59
+  productEntity: ClothingUniformJumpskirtVictorianBlack
+  cost:
+    SpaceCash: 80
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingJumpskirtMachineInventory60
+  productEntity: ClothingUniformJumpskirtVictorianrRed
+  cost:
+    SpaceCash: 80
+  categories:
+  - ClothingJumpskirtMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+# Shoes
+- type: listing
+  id: ClothingShoesMachineInventory1
+  productEntity: ClothingShoesColorBlack
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingShoesMachineInventory2
+  productEntity: ClothingShoesColorBrown
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingShoesMachineInventory3
+  productEntity: ClothingShoesColorWhite
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingShoesMachineInventory4
+  productEntity: ClothingShoesColorBlue
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingShoesMachineInventory5
+  productEntity: ClothingShoesColorYellow
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingShoesMachineInventory6
+  productEntity: ClothingShoesColorGreen
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingShoesMachineInventory7
+  productEntity: ClothingShoesColorOrange
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingShoesMachineInventory8
+  productEntity: ClothingShoesColorRed
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingShoesMachineInventory9
+  productEntity: ClothingShoesColorPurple
+  cost:
+    SpaceCash: 20
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingShoesMachineInventory10
+  productEntity: ADTClothingFootWrapsWhite
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingShoesMachineInventory11
+  productEntity: ADTClothingFootWrapsBlack
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingShoesMachineInventory12
+  productEntity: ADTClothingFootWrapsHighWhite
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingShoesMachineInventory13
+  productEntity: ADTClothingFootWrapsHighBlack
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingShoesMachineInventory14
+  productEntity: ADTClothingSandals
+  cost:
+    SpaceCash: 10
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingShoesMachineInventory15
+  productEntity: ClothingShoesTourist
+  cost:
+    SpaceCash: 10
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingShoesMachineInventory16
+  productEntity: ClothingShoesSlippers
+  cost:
+    SpaceCash: 30
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingShoesMachineInventory17
+  productEntity: ClothingShoesAerostatic
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingShoesMachineInventory18
+  productEntity: ClothingShoesLeather
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingShoesMachineInventory19
+  productEntity: ClothingShoesBootsLaceup
+  cost:
+    SpaceCash: 70
+  categories:
+  - ClothingShoesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+# Neck
+- type: listing
+  id: ClothingNeckMachineInventory1
+  productEntity: ClothingNeckWingsAngel
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingNeckMachineInventory2
+  productEntity: ClothingNeckWingsSkeleton
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingNeckMachineInventory3
+  productEntity: ClothingNeckWingsSkeletonBlack
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingNeckMachineInventory4
+  productEntity: ClothingNeckHorrific
+  cost:
+    SpaceCash: 30
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingNeckMachineInventory5
+  productEntity: ClothingNeckTieRed
+  cost:
+    SpaceCash: 30
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingNeckMachineInventory6
+  productEntity: ClothingNeckTieDet
+  cost:
+    SpaceCash: 30
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingNeckMachineInventory7
+  productEntity: ClothingNeckUSSPPin
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingNeckMachineInventory8
+  productEntity: ClothingNeckDonkPin
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingNeckMachineInventory9
+  productEntity: ClothingNeckEarthPin
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingNeckMachineInventory10
+  productEntity: ClothingNeckLogistikaPin
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingNeckMachineInventory11
+  productEntity: ClothingNeckDeForestPin
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingNeckMachineInventory12
+  productEntity: ClothingNeckNakamuraPin
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingNeckMachineInventory13
+  productEntity: ClothingNeckNanoTrasenPin
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingNeckMachineInventory14
+  productEntity: ClothingNeckVitezstviPin
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingNeckMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+# Eyes
+- type: listing
+  id: ClothingEyesMachineInventory1
+  productEntity: ClothingEyesGlasses
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingEyesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingEyesMachineInventory2
+  productEntity: ClothingEyesGlassesBigSunglasses
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingEyesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingEyesMachineInventory3
+  productEntity: ClothingEyesBinoclardLenses
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingEyesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingEyesMachineInventory4
+  productEntity: ClothingEyesSalesman
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingEyesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingEyesMachineInventory5
+  productEntity: ClothingEyesGlassesJensen
+  cost:
+    SpaceCash: 25
+  categories:
+  - ClothingEyesMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+# Hands
+- type: listing
+  id: ClothingHandsMachineInventory1
+  productEntity: ClothingHandsGlovesColorBlack
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHandsMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHandsMachineInventory2
+  productEntity: ClothingHandsGlovesColorGray
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHandsMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHandsMachineInventory3
+  productEntity: ClothingHandsGlovesColorBrown
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHandsMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingHandsMachineInventory4
+  productEntity: ClothingHandsGlovesColorWhite
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHandsMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingHandsMachineInventory5
+  productEntity: ClothingHandsGlovesColorRed
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHandsMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingHandsMachineInventory6
+  productEntity: ClothingHandsGlovesColorBlue
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHandsMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingHandsMachineInventory7
+  productEntity: ClothingHandsGlovesColorTeal
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHandsMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingHandsMachineInventory8
+  productEntity: ClothingHandsGlovesColorGreen
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHandsMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingHandsMachineInventory9
+  productEntity: ClothingHandsGlovesColorOrange
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHandsMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingHandsMachineInventory10
+  productEntity: ClothingHandsGlovesColorPurple
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingHandsMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingHandsMachineInventory11
+  productEntity: ADTClothingHandsLongRedGloves
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingHandsMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+# EMAG
+- type: listing
+  id: ClothingEmagMachineInventory1
+  productEntity: ClothingMaskNeckGaiter
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingEmagMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: ClothingEmagMachineInventory2
+  productEntity: ClothingUniformJumpsuitTacticool
+  cost:
+    SpaceCash: 100
+  categories:
+  - ClothingEmagMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingEmagMachineInventory3
+  productEntity: ClothingUniformJumpskirtTacticool
+  cost:
+    SpaceCash: 100
+  categories:
+  - ClothingEmagMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingEmagMachineInventory4
+  productEntity: ToyFigurinePassenger
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingEmagMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingEmagMachineInventory5
+  productEntity: ToyFigurineGreytider
+  cost:
+    SpaceCash: 50
+  categories:
+  - ClothingEmagMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: ClothingEmagMachineInventory6
+  productEntity: ClothingOuterCoatLettermanS
+  cost:
+    SpaceCash: 30
+  categories:
+  - ClothingEmagMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+
+- type: listing
+  id: ClothingEmagMachineInventory7
+  productEntity: ClothingNeckSyndicakePin
+  cost:
+    SpaceCash: 15
+  categories:
+  - ClothingEmagMachineInventory
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
