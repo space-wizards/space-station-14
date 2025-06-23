@@ -42,13 +42,12 @@
     - GasVent
     - GasScrubber
   - type: AtmosAlarmableVisuals
-    layerMap: "airAlarmBase"
+    layerMap: "airAlarmState"
     alarmStates:
       Normal: alarm0
-      Warning: alarm2
-      Danger: alarm1
-    setOnDepowered:
-      airAlarmBase: alarmp
+      Warning: alarm1
+      Danger: alarm2
+    hideOnDepowered: [ "airAlarmState" ]
   - type: Tag
     tags:
       - AirAlarm
@@ -81,8 +80,10 @@
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
     layers:
+    - state: alarmp
+      map: ["airAlarmBase"]
     - state: alarm0
-      map: ["airAlarmBase"] # TODO: fire alarm enum
+      map: ["airAlarmState"] # TODO: fire alarm enum
     - state: alarmx
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Transform
@@ -146,3 +147,31 @@
     node: assembly
   - type: Transform
     anchored: true
+
+- type: entity
+  id: AirAlarmXeno
+  parent: AirAlarm
+  name: air alarm
+  description: An alien air alarm. Hopefully they didn't breathe poison.
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors_xeno.rsi
+    layers:
+    - state: alarm0
+      map: ["airAlarmBase"] # TODO: fire alarm enum
+    - state: alarmx
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Construction
+
+- type: entity
+  id: AirAlarmAssemblyXeno
+  parent: AirAlarmAssembly
+  name: air alarm assembly
+  description: An alien air alarm. Why are the wires pulsating?...
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors_xeno.rsi
+    layers:
+    - state: alarm_b1
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Construction
