@@ -6,10 +6,8 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    public override void Update(float frameTime)
+    private void UpdateAutoFire()
     {
-        base.Update(frameTime);
-
         /*
          * On server because client doesn't want to predict other's guns.
          */
