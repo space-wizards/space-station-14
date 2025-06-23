@@ -126,6 +126,10 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
   - type: HideLayerClothing
     slots:
       - Tail
@@ -310,6 +314,10 @@
     node: suit
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterBase
