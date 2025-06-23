@@ -1,0 +1,127 @@
+- type: entity
+  id: DoorElectronicsTaipan
+  parent: BaseElectronics
+  name: микросхема шлюза
+  description: Электронная плата, используемая в дверях и шлюзах.
+  suffix: Тайпан
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Objects/Misc/module.rsi
+      state: door_electronics_syndicate
+    - type: DoorElectronics
+    - type: StaticPrice
+      price: 55
+    - type: AccessReader
+    - type: ActivatableUI
+      key: enum.DoorElectronicsConfigurationUiKey.Key
+      requiredItems:
+        tags:
+        - DoorElectronicsConfigurator
+    - type: UserInterface
+      interfaces:
+        enum.DoorElectronicsConfigurationUiKey.Key:
+          type: DoorElectronicsBoundUserInterface
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanAtmospherics
+  suffix: Тайпан, Атмосферный, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanAtmospherics"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanCargo
+  suffix: Тайпан, Снабжение, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanCargo"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanCommand
+  suffix: Тайпан, Командование, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanCommand"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanEngineering
+  suffix: Тайпан, Инженерный, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanEngineering"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanMaintenance
+  suffix: Тайпан, Технический, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanMaint"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanMedical
+  suffix: Тайпан, Медицинский, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanMedical"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanProtection
+  suffix: Тайпан, Охрана, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanProtection"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanResearchDirector
+  suffix: Тайпан, Директор исследований, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanResearchDirector"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanScience
+  suffix: Тайпан, Научный, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanScience"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanService
+  suffix: Тайпан, Сервис, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanService"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanTechnicalOperationsSupervisor
+  suffix: Тайпан, Руководитель техобеспечения, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanTechnicalOperationsSupervisor"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanVault
+  suffix: Тайпан, Хранилище, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanVault"]]
+
+- type: entity
+  parent: DoorElectronicsTaipan
+  id: DoorElectronicsTaipanExternal
+  suffix: Тайпан, Внешний, Закрыт
+  components:
+  - type: AccessReader
+    access: [["TaipanExternal"]]
