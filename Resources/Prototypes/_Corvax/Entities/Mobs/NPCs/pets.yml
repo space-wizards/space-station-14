@@ -49,6 +49,7 @@
       tags:
         - CannotSuicide
     # DS14-start
+        - DoorBumpOpener
     - type: Inventory
       speciesId: gorilla
       templateId: largo
