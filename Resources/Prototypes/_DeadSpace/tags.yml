@@ -67,4 +67,19 @@
 - type: Tag
   id: SnapPop
 
+- type: Tag
+  id: WeldingMaskFlame
+
+- type: Tag
+  id: WeldingMaskFlameBlue
+
+- type: Tag
+  id: WeldingMaskGray
+
+- type: Tag
+  id: WeldingMaskPainted
+
+- type: Tag
+  id: WeldingMaskWhite
+
   # Обязательно в алфавитном порядке

@@ -78,6 +78,28 @@
         whitelist:
           tags:
             - Multitool
+      # DS14-start
+      welding:
+        whitelist:
+          tags:
+          - WeldingMaskGray
+      welding_flameblue:
+        whitelist:
+          tags:
+          - WeldingMaskFlameBlue
+      welding_flame:
+        whitelist:
+          tags:
+          - WeldingMaskFlame
+      welding_gasmask:
+        whitelist:
+          tags:
+          - WeldingMaskWhite
+      welding_painted:
+        whitelist:
+          tags:
+          - WeldingMaskPainted
+      # DS14-end
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
 
