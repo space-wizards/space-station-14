@@ -1,13 +1,16 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
+using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Verbs.Commands;
 
 [AdminCommand(AdminFlags.Moderator)]
 public sealed class ListVerbsCommand : LocalizedEntityCommands
 {
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
 
     public override string Command => "listverbs";
@@ -22,32 +25,22 @@ public sealed class ListVerbsCommand : LocalizedEntityCommands
             return;
         }
 
-        // get the 'player' entity (defaulting to command user, otherwise uses a uid)
-        EntityUid? playerEntity;
+        ICommonSession? session;
+        if (args[0] == "self" && shell.Player?.AttachedEntity != null)
+            session = shell.Player;
+        else if (!_playerManager.TryGetSessionByUsername(args[0], out session))
+            shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
 
-        if (!int.TryParse(args[0], out var intPlayerUid))
+        if (session?.AttachedEntity is not { } user)
         {
-            if (args[0] == "self" && shell.Player?.AttachedEntity != null)
-                playerEntity = shell.Player.AttachedEntity;
-            else
-            {
-                shell.WriteError(Loc.GetString("list-verbs-command-invalid-player-uid"));
-                return;
-            }
+            shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
+            return;
         }
-        else
-            EntityManager.TryGetEntity(new NetEntity(intPlayerUid), out playerEntity);
 
         // gets the target entity
         if (!int.TryParse(args[1], out var intUid))
         {
             shell.WriteError(Loc.GetString("list-verbs-command-invalid-target-uid"));
-            return;
-        }
-
-        if (playerEntity == null)
-        {
-            shell.WriteError(Loc.GetString("list-verbs-command-invalid-player-entity"));
             return;
         }
 
@@ -59,7 +52,7 @@ public sealed class ListVerbsCommand : LocalizedEntityCommands
             return;
         }
 
-        var verbs = _verbSystem.GetLocalVerbs(target.Value, playerEntity.Value, Verb.VerbTypes);
+        var verbs = _verbSystem.GetLocalVerbs(target.Value, user, Verb.VerbTypes);
 
         foreach (var verb in verbs)
         {
