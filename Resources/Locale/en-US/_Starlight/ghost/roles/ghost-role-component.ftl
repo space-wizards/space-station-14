@@ -9,4 +9,4 @@ ghost-role-information-chaospaper-description = Try to get mindshielded crew to 
 
 ghost-role-information-soviet-marine-name = SSF Marine
 ghost-role-information-soviet-marine-desc = You are an elite marine of the USSP's finest fleet. Await orders from an admiral, an official, or the commissariat.
-ghost-role-information-Death-Squad-rules = You are required to obey orders given by your superior, you are effectively their [color={role-type-familiar-color}][bold]{role-type-familiar-name}[/bold][/color].
+ghost-role-information-soviet-marine-rules = You are required to obey orders given by your superior, you are effectively their [color={role-type-familiar-color}][bold]{role-type-familiar-name}[/bold][/color].

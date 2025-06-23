@@ -72,7 +72,7 @@
     - type: GhostRole
       name: ghost-role-information-soviet-marine-name
       description: ghost-role-information-soviet-marine-desc
-      rules: ghost-role-information-Death-Squad-rules
+      rules: ghost-role-information-soviet-marine-rules
       raffle:
         settings: default
       mindRoles:
