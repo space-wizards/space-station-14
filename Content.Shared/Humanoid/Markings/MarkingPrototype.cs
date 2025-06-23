@@ -49,5 +49,14 @@ namespace Content.Shared.Humanoid.Markings
         {
             return new Marking(ID, Sprites.Count);
         }
+
+        /// <summary>
+        /// Chance this marking will be added by appearance randomizer.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 1.
+        /// </remarks>
+        [DataField]
+        public float RandomWeight = 1f;
     }
 }
