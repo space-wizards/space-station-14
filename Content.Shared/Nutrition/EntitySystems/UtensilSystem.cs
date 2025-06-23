@@ -44,7 +44,7 @@ public sealed class UtensilSystem : EntitySystem
         //Prevents food usage with a wrong utensil
         if ((food.Utensil & utensil.Comp.Types) == 0)
         {
-            _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", utensil.Owner)), user, user);
+            _popupSystem.PopupClient(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", utensil.Owner)), user, user);
             return (false, true);
         }
 

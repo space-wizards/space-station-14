@@ -374,12 +374,12 @@
       Dead:
         Base: basilisk_dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3
-    baseSprintSpeed : 3.5
+    baseWalkSpeed : 2
+    baseSprintSpeed : 3
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Dead
+      75: Dead
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite
@@ -391,6 +391,7 @@
         Piercing: 5
   - type: Gun
     fireRate: 0.75
+    projectileSpeed: 10.0 # When we get predicted guns and projectiles this should be raised to like 15, 15 mis-predicts too much right now unfortunately.
     selectedMode: SemiAuto
     showExamineText: false
     availableModes: [ SemiAuto ]
