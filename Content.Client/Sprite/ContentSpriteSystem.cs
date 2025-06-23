@@ -25,14 +25,16 @@ public sealed class ContentSpriteSystem : EntitySystem
     [Dependency] private readonly IResourceManager _resManager = default!;
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
     [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
-    private ContentSpriteControl _control = new();
+    private ContentSpriteControl _control = default!;
 
     public static readonly ResPath Exports = new ResPath("/Exports");
 
     public override void Initialize()
     {
         base.Initialize();
+        _control = new ContentSpriteControl(_sprite);
 
         _resManager.UserData.CreateDir(Exports);
         _ui.RootControl.AddChild(_control);
@@ -104,7 +106,7 @@ public sealed class ContentSpriteSystem : EntitySystem
         var texture = _clyde.CreateRenderTarget(new Vector2i(size.X, size.Y), new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "export");
         var tcs = new TaskCompletionSource(cancelToken);
 
-        _control.QueuedTextures.Enqueue((texture, direction, entity, includeId, tcs));
+        _control.QueuedTextures.Enqueue((texture, direction, (entity, spriteComp), includeId, tcs));
 
         await tcs.Task;
     }
@@ -144,19 +146,21 @@ public sealed class ContentSpriteSystem : EntitySystem
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly ILogManager _logMan = default!;
         [Dependency] private readonly IResourceManager _resManager = default!;
+        private readonly SpriteSystem _sprite;
 
         internal Queue<(
             IRenderTexture Texture,
             Direction Direction,
-            EntityUid Entity,
+            Entity<SpriteComponent> Entity,
             bool IncludeId,
             TaskCompletionSource Tcs)> QueuedTextures = new();
 
         private ISawmill _sawmill;
 
-        public ContentSpriteControl()
+        public ContentSpriteControl(SpriteSystem spriteSys)
         {
             IoCManager.InjectDependencies(this);
+            _sprite = spriteSys;
             _sawmill = _logMan.GetSawmill("sprite.export");
         }
 
@@ -175,19 +179,29 @@ public sealed class ContentSpriteSystem : EntitySystem
                         continue;
 
                     var filename = metadata.EntityName;
-                    var result = queued;
 
-                    handle.RenderInRenderTarget(queued.Texture, () =>
-                    {
-                        handle.DrawEntity(result.Entity, result.Texture.Size / 2, Vector2.One, Angle.Zero,
-                            overrideDirection: result.Direction);
-                    }, Color.Transparent);
+                    // We want to render this unscaled to avoid exporting pixelated blobs
+                    // for small scales, or cutting off parts of the sprite for large scales.
+                    var oldScale = queued.Entity.Comp.Scale;
+                    _sprite.SetScale(queued.Entity.AsNullable(), Vector2.One);
+
+                    var result = queued;
+                    handle.RenderInRenderTarget(queued.Texture,
+                        () => handle.DrawEntity(result.Entity,
+                            result.Texture.Size / 2,
+                            Vector2.One,
+                            Angle.Zero,
+                            overrideDirection: result.Direction,
+                            sprite: result.Entity.Comp),
+                        Color.Transparent);
+
+                    _sprite.SetScale(queued.Entity.AsNullable(), oldScale);
 
                     ResPath fullFileName;
 
                     if (queued.IncludeId)
                     {
-                        fullFileName = Exports / $"{filename}-{queued.Direction}-{queued.Entity}.png";
+                        fullFileName = Exports / $"{filename}-{queued.Direction}-{queued.Entity.Owner}.png";
                     }
                     else
                     {
