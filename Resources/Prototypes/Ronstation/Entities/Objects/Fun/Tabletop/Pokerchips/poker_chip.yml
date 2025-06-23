@@ -23,9 +23,12 @@
     - chip
     - chip_2
     - chip_3
+    - chip_4
+    - chip_10
+    - chip_20
     layerFunction: Threshold
   - type: StackLayerThreshold
-    thresholds: [1, 2, 3]
+    thresholds: [1, 2, 3, 4, 10, 20]
   - type: Sprite
     sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_red.rsi
     state: chip
