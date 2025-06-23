@@ -3,6 +3,8 @@
   start: start
   graph:
   - node: start
+    actions:
+    - !type:DestroyEntity {}
     edges:
     - to: metamorphicLightHole
       steps:
@@ -14,16 +16,13 @@
     entity: PoweredFloorLightEmpty
     edges:
     - to: start
-      conditions:
-      - !type:ContainerEmpty
-      steps:
-      - tool: Screwing
-        doAfter: 2.0
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
         amount: 2
-      - !type:DeleteEntity {}
+      steps:
+      - tool: Screwing
+        doAfter: 2.0
 #bulbs
     - to: smallFloorLight
       steps:
