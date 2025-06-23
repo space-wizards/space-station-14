@@ -21,7 +21,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    private SoundCollectionPrototype _lobbyMusicCollection = default!;
+    private SoundCollectionPrototype? _lobbyMusicCollection = default!;
     private string[]? _lobbyPlaylist;
 
     public override void Initialize()
@@ -34,7 +34,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
             CCVars.LobbyMusicCollection,
             x =>
             {
-                //Checks to see if the sound collection exists. If it does change it if not set a empty prototype
+                //Checks to see if the sound collection exists. If it does change it if not defaults to null
                 // as the new _lobbyMusicCollection meaning it wont play anything in the lobby.
                 if(_prototypeManager.TryIndex<SoundCollectionPrototype>(x, out var outputSoundCollection))
                 {
@@ -42,7 +42,8 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
                 }
                 else
                 {
-                    _lobbyMusicCollection = new SoundCollectionPrototype();
+                    Log.Error("Attempted to change Lobby Music Sound collection. No matching collection was found. Defaulting to null");
+                    _lobbyMusicCollection = null;
                 }
 
                 _lobbyPlaylist = ShuffleLobbyPlaylist();
@@ -95,11 +96,16 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
 
     private string[] ShuffleLobbyPlaylist()
     {
+        if (_lobbyMusicCollection == null)
+        {
+            return [];
+        }
+
         var playlist = _lobbyMusicCollection.PickFiles
                                             .Select(x => x.ToString())
                                             .ToArray();
-         _robustRandom.Shuffle(playlist);
+        _robustRandom.Shuffle(playlist);
 
-         return playlist;
+        return playlist;
     }
 }
