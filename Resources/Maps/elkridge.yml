@@ -11258,8 +11258,6 @@ entities:
 - proto: ActionToggleBlock
   entities:
   - uid: 6
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 5
@@ -11267,8 +11265,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 5
   - uid: 8
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 7
@@ -11276,8 +11272,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 7
   - uid: 10
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 9
@@ -11308,8 +11302,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 23
   - uid: 28
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 27
@@ -11333,8 +11325,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 23
   - uid: 29
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 27

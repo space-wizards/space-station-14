@@ -75311,8 +75311,6 @@ entities:
 - proto: KnifePlastic
   entities:
   - uid: 665
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 663
@@ -75323,8 +75321,6 @@ entities:
     - type: Physics
       canCollide: False
   - uid: 666
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 663

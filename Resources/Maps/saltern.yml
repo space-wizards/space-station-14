@@ -5649,8 +5649,6 @@ entities:
 - proto: ActionToggleBlock
   entities:
   - uid: 12
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 11
@@ -5658,8 +5656,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 11
   - uid: 14
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 13
