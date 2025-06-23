@@ -8,6 +8,7 @@
       - id: FoodPacketBoritosTrash
       - id: FoodPacketCheesieTrash
       - id: FoodPacketChipsTrash
+      - id: FoodPacketChitsTrash # Moffstation - Added Chits
       - id: FoodPacketChocolateTrash
       - id: FoodPacketChowMeinTrash
       - id: FoodPacketCnDsTrash

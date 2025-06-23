@@ -2,6 +2,7 @@
   id: GetmoreChocolateCorpInventory
   startingInventory:
     FoodSnackRaisins: 3
+    FoodSnackChits: 3 # Moffstation - Added Chits
     FoodSnackChocolate: 3
     FoodSnackCnDs: 3
     FoodSnackPistachios: 3

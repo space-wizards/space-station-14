@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Chits created by lilly_the_moth (Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "chits"
+        },
+        {
+            "name": "chits-trash"
+        }
+    ]
+}

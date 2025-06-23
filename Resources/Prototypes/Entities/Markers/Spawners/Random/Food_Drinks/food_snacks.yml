@@ -37,6 +37,7 @@
     - id: FoodSnackBoritos
     - id: FoodSnackCheesie
     - id: FoodSnackChips
+    - id: FoodSnackChits # Moffstation - Added Chits
     - id: FoodSnackChocolate
     - id: FoodSnackChocolateBar
     - id: FoodSnackChowMein

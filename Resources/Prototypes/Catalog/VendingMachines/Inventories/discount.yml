@@ -3,6 +3,7 @@
   startingInventory:
     FoodSnackCheesie: 3
     FoodSnackChips: 3
+    FoodSnackChits: 3 # Moffstation - Added Chits
     FoodSnackBoritos: 3
     DrinkEnergyDrinkCan: 4
     FoodSnackPopcorn: 3
