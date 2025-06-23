@@ -8098,4 +8098,11 @@ Entries:
   id: 1118
   time: '2025-06-21T20:21:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/877
+- author: biteless-dot
+  changes:
+  - message: Added the cargo expedition radio to the salvage borg mining modules
+    type: Add
+  id: 1119
+  time: '2025-06-23T13:05:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/886
 
