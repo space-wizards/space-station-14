@@ -498,13 +498,7 @@
     contents:
     - id: SmokingPipeFilledTobacco
     - id: FlippoEngravedLighter
-  - type: Armor # goidamed
-    coverage:
-    - Chest
-    - Groin
-    - Tail
-    - Arm
-    - Leg
+  - type: Armor 
     modifiers:
       coefficients:
         Blunt: 0.65
