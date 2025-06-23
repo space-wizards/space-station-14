@@ -371,7 +371,6 @@ public sealed class FoodSystem : EntitySystem
                 _hands.TryPickupAnyHand(user, spawnedTrash);
             }
         }
-
     }
 
     private void AddEatVerb(Entity<FoodComponent> entity, ref GetVerbsEvent<AlternativeVerb> ev)
