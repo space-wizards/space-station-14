@@ -65,7 +65,7 @@ public sealed class InvokeVerbCommand : LocalizedEntityCommands
             if (verb != null)
             {
                 _verbSystem.ExecuteVerb(verb, user, target.Value, forced: true);
-                shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
+                shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", session)));
                 return;
             }
         }
@@ -73,7 +73,7 @@ public sealed class InvokeVerbCommand : LocalizedEntityCommands
         foreach (var verb in verbs.Where(verb => verb.Text.Equals(verbName, StringComparison.InvariantCultureIgnoreCase)))
         {
             _verbSystem.ExecuteVerb(verb, user, target.Value, forced: true);
-            shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verb.Text), ("target", target), ("player", playerEntity)));
+            shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verb.Text), ("target", target), ("player", session)));
             return;
         }
 
