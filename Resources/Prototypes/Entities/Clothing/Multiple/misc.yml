@@ -15,6 +15,7 @@
     slots:
     - HEAD
     - EARS
+    - NECK
   - type: ToggleableVisuals
     spriteLayer: enum.ToggleableVisuals.Layer
     clothingVisuals:
@@ -22,6 +23,8 @@
       - state: on-equipped-HELMET
       ears:
       - state: on-equipped-EARS
+      neck:
+      - state: on-equipped-NECK
   - type: Appearance
   - type: GenericVisualizer
     visuals:

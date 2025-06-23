@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da, icon, icon-on, inhand-left and inhand-right edited by Boaz1111 (github), on-equipped-NECK renamed to on-equipped-HEAD and on-equipped-EARS, off-equipped-NECK renamed to off-equipped-HEAD and off-equipped-EARS by Boaz1111 (github).",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/5a73e8f825ff279e82949b9329783a9e3070e2da, icon, inhand-left and inhand-right edited by Boaz1111 (github), on-equipped-NECK renamed to on-equipped-HEAD and on-equipped-EARS, off-equipped-NECK renamed to off-equipped-HEAD and off-equipped-EARS by Boaz1111 (github), icon-on made by TiniestShark (github) based on icon, on-equipped-NECK and off-equipped-NECK made by TiniestShark (github).",
   "size": {
     "x": 32,
     "y": 32
@@ -97,6 +97,52 @@
     },
     {
       "name": "off-equipped-EARS",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-NECK",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "off-equipped-NECK",
       "directions": 4
     },
     {
