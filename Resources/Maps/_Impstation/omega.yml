@@ -54,9 +54,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
   - uid: 2
@@ -4701,47 +4699,6 @@ entities:
     - type: Transform
       pos: -10.386757,8.623476
       parent: 2
-- proto: ActionToggleInternals
-  entities:
-  - uid: 5
-    components:
-    - type: Transform
-      parent: 4
-    - type: InstantAction
-      container: 4
-- proto: ActionToggleLight
-  entities:
-  - uid: 7
-    components:
-    - type: Transform
-      parent: 6
-    - type: InstantAction
-      container: 6
-  - uid: 9
-    components:
-    - type: Transform
-      parent: 8
-    - type: InstantAction
-      container: 8
-  - uid: 11
-    components:
-    - type: Transform
-      parent: 10
-    - type: InstantAction
-      container: 10
-  - uid: 13
-    components:
-    - type: Transform
-      parent: 12
-    - type: InstantAction
-      container: 12
-  - uid: 15
-    components:
-    - type: Transform
-      parent: 14
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 14
 - proto: AirAlarm
   entities:
   - uid: 16
@@ -33750,20 +33707,6 @@ entities:
     - type: Transform
       pos: -55.397217,-3.2222428
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 9
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 9
-    - type: ActionsContainer
 - proto: ClothingHeadHatHardhatYellow
   entities:
   - uid: 5234
@@ -39189,14 +39132,6 @@ entities:
     - type: Transform
       pos: -56.496254,-3.3942704
       parent: 2
-    - type: GasTank
-      toggleActionEntity: 5
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 5
   - uid: 6073
     components:
     - type: Transform
@@ -41870,39 +41805,11 @@ entities:
     - type: Transform
       pos: -55.50659,-3.4409928
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 11
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 11
-    - type: ActionsContainer
   - uid: 12
     components:
     - type: Transform
       pos: -55.91284,-3.2847428
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 13
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 13
-    - type: ActionsContainer
   - uid: 6424
     components:
     - type: Transform
@@ -63880,22 +63787,8 @@ entities:
     - type: Transform
       pos: 24.580408,-19.166311
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 7
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 7
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 9543
     components:
     - type: Transform
@@ -64091,22 +63984,8 @@ entities:
     - type: Transform
       pos: -11.664409,-32.257893
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 15
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 15
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 9555
     components:
     - type: Transform

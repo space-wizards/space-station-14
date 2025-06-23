@@ -67,9 +67,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
   - uid: 2
@@ -25291,8 +25289,8 @@ entities:
         [bold]Official car o bou ty manifest[/bold] (ID#NT624)
 
         It m  anifes :
-         -  a e  ll b t 
-         e a d  $4 
+         -  a e  ll b t
+         e a d  $4
 
         [color=DarkCyan][italic]hiya next shift whats good.
 
