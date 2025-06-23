@@ -34,7 +34,6 @@ public abstract class SharedFlashSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
@@ -101,9 +100,9 @@ public abstract class SharedFlashSystem : EntitySystem
     }
 
     /// <summary>
-    // Use charges and set the visuals.
-    // Returns false if no charges are left or the flash is currently in use.
+    /// Use charges and set the visuals.
     /// </summary>
+    /// <returns>False if no charges are left or the flash is currently in use.</returns>
     private bool UseFlash(Entity<FlashComponent> ent, EntityUid? user)
     {
         if (_useDelay.IsDelayed(ent.Owner))
@@ -115,7 +114,6 @@ public abstract class SharedFlashSystem : EntitySystem
 
         _sharedCharges.TryUseCharge((ent.Owner, charges));
         _audio.PlayPredicted(ent.Comp.Sound, ent.Owner, user);
-        Log.Debug($"{ent.Owner} {user}");
 
         var active = EnsureComp<ActiveFlashComponent>(ent.Owner);
         active.ActiveUntil = _timing.CurTime + ent.Comp.FlashingTime;

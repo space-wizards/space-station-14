@@ -31,13 +31,13 @@ public sealed partial class FlashComponent : Component
     public TimeSpan FlashingTime = TimeSpan.FromSeconds(4);
 
     /// <summary>
-    /// How long the target will loose vision when melee attacked with the flash.
+    /// For how long the target will lose vision when melee attacked with the flash.
     /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan MeleeDuration = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// How long the target will loose vision when used in hand.
+    /// For how long the target will lose vision when used in hand.
     /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan AoeFlashDuration = TimeSpan.FromSeconds(2);
