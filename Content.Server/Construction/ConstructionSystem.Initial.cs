@@ -24,7 +24,6 @@ namespace Content.Server.Construction
 {
     public sealed partial class ConstructionSystem
     {
-        [Dependency] private readonly IComponentFactory _factory = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -210,7 +209,7 @@ namespace Content.Server.Construction
                     case ArbitraryInsertConstructionGraphStep arbitraryStep:
                         foreach (var entity in new HashSet<EntityUid>(EnumerateNearby(user)))
                         {
-                            if (!arbitraryStep.EntityValid(entity, EntityManager, _factory))
+                            if (!arbitraryStep.EntityValid(entity, EntityManager, Factory))
                                 continue;
 
                             if (used.Contains(entity))
@@ -510,7 +509,7 @@ namespace Content.Server.Construction
                 switch (step)
                 {
                     case EntityInsertConstructionGraphStep entityInsert:
-                        if (entityInsert.EntityValid(holding, EntityManager, _factory))
+                        if (entityInsert.EntityValid(holding, EntityManager, Factory))
                             valid = true;
                         break;
                     case ToolConstructionGraphStep _:

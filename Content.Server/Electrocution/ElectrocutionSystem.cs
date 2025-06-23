@@ -17,6 +17,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
 using Content.Shared.Maps;
+using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
 using Content.Shared.Popups;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
@@ -55,6 +57,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKey = "Electrocution";
@@ -135,7 +138,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
         if (electrified.NoWindowInTile)
         {
-            var tileRef = transform.Coordinates.GetTileRef(EntityManager, _mapManager);
+            var tileRef = _turf.GetTileRef(transform.Coordinates);
 
             if (tileRef != null)
             {

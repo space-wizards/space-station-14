@@ -146,8 +146,17 @@ public sealed class EntityStorageComponentState : ComponentState
     }
 }
 
+/// <summary>
+/// Raised on the entity being inserted whenever checking if an entity can be inserted into an entity storage.
+/// </summary>
 [ByRefEvent]
 public record struct InsertIntoEntityStorageAttemptEvent(EntityUid ItemToInsert, bool Cancelled = false);
+
+/// <summary>
+/// Raised on the entity storage whenever checking if an entity can be inserted into it.
+/// </summary>
+[ByRefEvent]
+public record struct EntityStorageInsertedIntoAttemptEvent(EntityUid ItemToInsert, bool Cancelled = false);
 
 [ByRefEvent]
 public record struct StorageOpenAttemptEvent(EntityUid User, bool Silent, bool Cancelled = false);

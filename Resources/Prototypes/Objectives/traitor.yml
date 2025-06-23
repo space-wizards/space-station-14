@@ -233,6 +233,16 @@
     stealGroup: BoxFolderQmClipboard
     owner: job-name-qm
 
+- type: entity
+  parent: BaseTraitorStealObjective
+  id: KnuckleDustersStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Quartermaster
+  - type: StealCondition
+    stealGroup: ClothingHandsKnuckleDustersQM
+    owner: job-name-qm
+
 ## hop
 
 - type: entity

@@ -96,7 +96,7 @@ public sealed partial class GunSystem
         if (component is ProjectileBatteryAmmoProviderComponent battery)
         {
             if (ProtoManager.Index<EntityPrototype>(battery.Prototype).Components
-                .TryGetValue(_factory.GetComponentName(typeof(ProjectileComponent)), out var projectile))
+                .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
             {
                 var p = (ProjectileComponent) projectile.Component;
 

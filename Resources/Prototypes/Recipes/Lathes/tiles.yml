@@ -1,17 +1,49 @@
-# Base Prototypes
+# Base prototypes
 
 - type: latheRecipe
   abstract: true
   id: BaseTileRecipe
   applyMaterialDiscount: false
+  categories:
+  - Tiles
   completetime: 0.5
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseTileRecipe
+  id: BaseSteelTileRecipe
+  categories:
+  - Steel
   materials:
     Steel: 25
 
 - type: latheRecipe
   abstract: true
+  parent: BaseSteelTileRecipe
+  id: BaseDarkTileRecipe
+  categories:
+  - Dark
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseSteelTileRecipe
+  id: BaseWhiteTileRecipe
+  categories:
+  - White
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseSteelTileRecipe
+  id: BaseMaintTileRecipe
+  categories:
+  - Maints
+
+- type: latheRecipe
+  abstract: true
   parent: BaseTileRecipe
   id: BaseWoodTileRecipe
+  categories:
+  - Wood
   materials:
     Wood: 25
 
@@ -19,172 +51,187 @@
   abstract: true
   parent: BaseTileRecipe
   id: BaseConcreteTileRecipe
+  categories:
+  - Concrete
   materials:
     Steel: 25
     Plastic: 25
 
-# Recipes
+## Recipes
 
+# Steel tiles
 - type: latheRecipe
-  parent: BaseTileRecipe
-  id: FloorTileItemDark
-  result: FloorTileItemDark
-
-- type: latheRecipe
-  parent: BaseTileRecipe
-  id: FloorTileItemDarkDiagonalMini
-  result: FloorTileItemDarkDiagonalMini
-
-- type: latheRecipe
-  parent: BaseTileRecipe
-  id: FloorTileItemDarkDiagonal
-  result: FloorTileItemDarkDiagonal
-
-- type: latheRecipe
-  parent: BaseTileRecipe
-  id: FloorTileItemDarkHerringbone
-  result: FloorTileItemDarkHerringbone
-
-- type: latheRecipe
-  parent: BaseTileRecipe
-  id: FloorTileItemDarkMini
-  result: FloorTileItemDarkMini
-
-- type: latheRecipe
-  parent: BaseTileRecipe
-  id: FloorTileItemDarkMono
-  result: FloorTileItemDarkMono
-
-- type: latheRecipe
-  parent: BaseTileRecipe
-  id: FloorTileItemDarkPavement
-  result: FloorTileItemDarkPavement
-
-- type: latheRecipe
-  parent: BaseTileRecipe
-  id: FloorTileItemDarkPavementVertical
-  result: FloorTileItemDarkPavementVertical
-
-- type: latheRecipe
-  parent: BaseTileRecipe
-  id: FloorTileItemDarkOffset
-  result: FloorTileItemDarkOffset
-
-- type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSteelTileRecipe
   id: FloorTileItemSteelCheckerDark
   result: FloorTileItemSteelCheckerDark
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSteelTileRecipe
+  id: FloorTileItemSteelCheckerLight
+  result: FloorTileItemSteelCheckerLight
+
+- type: latheRecipe
+  parent: BaseSteelTileRecipe
   id: FloorTileItemSteel
   result: FloorTileItemSteel
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSteelTileRecipe
   id: FloorTileItemSteelOffset
   result: FloorTileItemSteelOffset
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSteelTileRecipe
   id: FloorTileItemSteelDiagonalMini
   result: FloorTileItemSteelDiagonalMini
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSteelTileRecipe
   id: FloorTileItemSteelDiagonal
   result: FloorTileItemSteelDiagonal
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSteelTileRecipe
   id: FloorTileItemSteelHerringbone
   result: FloorTileItemSteelHerringbone
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSteelTileRecipe
   id: FloorTileItemSteelMini
   result: FloorTileItemSteelMini
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSteelTileRecipe
   id: FloorTileItemSteelMono
   result: FloorTileItemSteelMono
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSteelTileRecipe
   id: FloorTileItemSteelPavement
   result: FloorTileItemSteelPavement
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseSteelTileRecipe
   id: FloorTileItemSteelPavementVertical
   result: FloorTileItemSteelPavementVertical
 
+# Dark tiles
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDark
+  result: FloorTileItemDark
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkDiagonalMini
+  result: FloorTileItemDarkDiagonalMini
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkDiagonal
+  result: FloorTileItemDarkDiagonal
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkHerringbone
+  result: FloorTileItemDarkHerringbone
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkMini
+  result: FloorTileItemDarkMini
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkMono
+  result: FloorTileItemDarkMono
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkPavement
+  result: FloorTileItemDarkPavement
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkPavementVertical
+  result: FloorTileItemDarkPavementVertical
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkOffset
+  result: FloorTileItemDarkOffset
+
+- type: latheRecipe
+  parent: BaseDarkTileRecipe
+  id: FloorTileItemDarkSquiggly
+  result: FloorTileItemDarkSquiggly
+
+# White steel tiles
+- type: latheRecipe
+  parent: BaseWhiteTileRecipe
   id: FloorTileItemWhite
   result: FloorTileItemWhite
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseWhiteTileRecipe
   id: FloorTileItemWhiteOffset
   result: FloorTileItemWhiteOffset
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseWhiteTileRecipe
   id: FloorTileItemWhiteDiagonalMini
   result: FloorTileItemWhiteDiagonalMini
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseWhiteTileRecipe
   id: FloorTileItemWhiteDiagonal
   result: FloorTileItemWhiteDiagonal
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseWhiteTileRecipe
   id: FloorTileItemWhiteHerringbone
   result: FloorTileItemWhiteHerringbone
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseWhiteTileRecipe
   id: FloorTileItemWhiteMini
   result: FloorTileItemWhiteMini
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseWhiteTileRecipe
   id: FloorTileItemWhiteMono
   result: FloorTileItemWhiteMono
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseWhiteTileRecipe
   id: FloorTileItemWhitePavement
   result: FloorTileItemWhitePavement
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseWhiteTileRecipe
   id: FloorTileItemWhitePavementVertical
   result: FloorTileItemWhitePavementVertical
 
-- type: latheRecipe
-  parent: BaseTileRecipe
-  id: FloorTileItemSteelCheckerLight
-  result: FloorTileItemSteelCheckerLight
-
 # Other steel
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseMaintTileRecipe
   id: FloorTileItemGratingMaint
   result: FloorTileItemGratingMaint
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseMaintTileRecipe
   id: FloorTileItemTechmaint
   result: FloorTileItemTechmaint
 
 - type: latheRecipe
-  parent: BaseTileRecipe
+  parent: BaseMaintTileRecipe
   id: FloorTileItemSteelMaint
   result: FloorTileItemSteelMaint
+
+- type: latheRecipe
+  parent: BaseTileRecipe
+  id: FloorTileItemTechmaintDark
+  result: FloorTileItemTechmaintDark
 
 # Wood
 - type: latheRecipe

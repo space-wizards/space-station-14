@@ -191,8 +191,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckAutismPin
-  name: autism pin
-  description: Be autism do crime.
+  name: neurodivergent pin
+  description: Be neurodivergent, do crime.
   components:
   - type: Sprite
     state: autism
@@ -202,8 +202,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckGoldAutismPin
-  name: golden autism pin
-  description: Be autism do warcrime.
+  name: autism pin
+  description: Be autistic, do crime.
   components:
   - type: Sprite
     state: goldautism

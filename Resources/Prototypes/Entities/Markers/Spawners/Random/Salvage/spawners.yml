@@ -236,8 +236,7 @@
     - !type:NestedSelector
       tableId: MaintFluffTable
       weight: 5
-      rolls: !type:RangeNumberSelector
-        range: 1, 2
+      rolls: 1, 2
 
 - type: entity
   parent: MarkerBase
@@ -426,17 +425,15 @@
         children:
         - id: MobSharkSalvage
         - id: MobCarpSalvage
-          amount: !type:ConstantNumberSelector
-            value: 2
+          amount: 2
         - !type:NestedSelector
-          rolls: !type:RangeNumberSelector
-            range: 1, 3
+          rolls: 1, 3
           tableId: SalvageTreasureSpawnerValuable
         - !type:NestedSelector
-          rolls: !type:RangeNumberSelector
-            range: 7, 10
+          rolls: 7, 10
           tableId: TreasureCoinPileRare
       #- id: MobHivebot (solo hivebot spawn)
+
 
 - type: entity
   parent: MarkerBase
@@ -525,8 +522,7 @@
       children:
       - id: MobSharkSalvage
       - id: MobCarpSalvage
-        amount: !type:ConstantNumberSelector
-          value: 3
+        amount: 3
 
 - type: entity
   parent: MarkerBase
@@ -542,7 +538,8 @@
     table: !type:GroupSelector
       children:
       - id: MobGoliath
-        weight: 65
+        weight: 45
       - id: MobHivelord
         weight: 35
-
+      - id: MobBasilisk
+        weight: 20
