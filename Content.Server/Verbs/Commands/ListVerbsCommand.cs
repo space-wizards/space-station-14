@@ -38,7 +38,7 @@ public sealed class ListVerbsCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!NetEntity.TryParse(args[0], out var netEnt) || !EntityManager.TryGetEntity(netEnt, out var target))
+        if (!NetEntity.TryParse(args[1], out var netEnt) || !EntityManager.TryGetEntity(netEnt, out var target))
         {
             shell.WriteLine(Loc.GetString($"shell-invalid-entity-uid", ("uid", args[1])));
             return;
