@@ -454,7 +454,7 @@ public sealed class MappingState : GameplayStateBase
         switch (prototype)
         {
             case EntityPrototype entity:
-                textures.AddRange(SpriteComponent.GetPrototypeTextures(entity, _resources).Select(t => t.Default));
+                textures.AddRange(_sprite.GetPrototypeTextures(entity).Select(t => t.Default));
                 break;
             case DecalPrototype decal:
                 textures.Add(_sprite.Frame0(decal.Sprite));
@@ -793,7 +793,7 @@ public sealed class MappingState : GameplayStateBase
 
             if (_mapMan.TryFindGridAt(mapPos, out var gridUid, out var grid) &&
                 _entityManager.System<SharedMapSystem>().TryGetTileRef(gridUid, grid, coords, out var tileRef) &&
-                _allPrototypesDict.TryGetValue(tileRef.GetContentTileDefinition(), out button))
+                _allPrototypesDict.TryGetValue(_entityManager.System<TurfSystem>().GetContentTileDefinition(tileRef), out button))
             {
                 OnSelected(button);
                 return true;
