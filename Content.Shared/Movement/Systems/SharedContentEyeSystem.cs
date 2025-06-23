@@ -5,6 +5,7 @@ using Content.Shared.Camera;
 using Content.Shared.Ghost;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
+using Content.Shared.Eye.Blinding.Components;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
@@ -146,7 +147,8 @@ public abstract class SharedContentEyeSystem : EntitySystem
         RaiseLocalEvent(eye, ref ev);
 
         var evRelayed = new GetEyeOffsetRelayedEvent();
-        RaiseLocalEvent(eye, ref evRelayed);
+        if (!TryComp<EyeClosingComponent>(eye.Owner, out var eyeClosing) || !eyeClosing.EyesClosed)
+            RaiseLocalEvent(eye, ref evRelayed);
 
         _eye.SetOffset(eye, ev.Offset + evRelayed.Offset, eye);
     }
