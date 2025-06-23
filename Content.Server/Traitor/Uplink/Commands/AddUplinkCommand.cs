@@ -18,7 +18,7 @@ public sealed class AddUplinkCommand : LocalizedEntityCommands
     {
         if (args.Length > 3)
         {
-            shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 0), ("upper", 3)));
+            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
             return;
         }
 
