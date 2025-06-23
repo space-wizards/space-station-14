@@ -2,13 +2,16 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
+using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Player;
 
 namespace Content.Server.Verbs.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
 public sealed class InvokeVerbCommand : LocalizedEntityCommands
 {
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
 
     public override string Command => "invokeverb";
@@ -24,31 +27,22 @@ public sealed class InvokeVerbCommand : LocalizedEntityCommands
         }
 
         // get the 'player' entity (defaulting to command user, otherwise uses a uid)
-        EntityUid? playerEntity;
+        ICommonSession? session;
+        if (args[0] == "self" && shell.Player?.AttachedEntity != null)
+            session = shell.Player;
+        else if (!_playerManager.TryGetSessionByUsername(args[0], out session))
+            shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
 
-        if (!int.TryParse(args[0], out var intPlayerUid))
+        if (session?.AttachedEntity is not { } user)
         {
-            if (args[0] == "self" && shell.Player?.AttachedEntity != null)
-                playerEntity = shell.Player.AttachedEntity.Value;
-            else
-            {
-                shell.WriteError(Loc.GetString("invoke-verb-command-invalid-player-uid"));
-                return;
-            }
+            shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
+            return;
         }
-        else
-            EntityManager.TryGetEntity(new NetEntity(intPlayerUid), out playerEntity);
 
         // gets the target entity
         if (!int.TryParse(args[1], out var intUid))
         {
             shell.WriteError(Loc.GetString("invoke-verb-command-invalid-target-uid"));
-            return;
-        }
-
-        if (playerEntity == null)
-        {
-            shell.WriteError(Loc.GetString("invoke-verb-command-invalid-player-entity"));
             return;
         }
 
@@ -61,7 +55,7 @@ public sealed class InvokeVerbCommand : LocalizedEntityCommands
         }
 
         var verbName = args[2].ToLowerInvariant();
-        var verbs = _verbSystem.GetLocalVerbs(target.Value, playerEntity.Value, Verb.VerbTypes, true);
+        var verbs = _verbSystem.GetLocalVerbs(target.Value, user, Verb.VerbTypes, true);
 
         // if the "verb name" is actually a verb-type, try run any verb of that type.
         var verbType = Verb.VerbTypes.FirstOrDefault(x => x.Name == verbName);
@@ -70,7 +64,7 @@ public sealed class InvokeVerbCommand : LocalizedEntityCommands
             var verb = verbs.FirstOrDefault(v => v.GetType() == verbType);
             if (verb != null)
             {
-                _verbSystem.ExecuteVerb(verb, playerEntity.Value, target.Value, forced: true);
+                _verbSystem.ExecuteVerb(verb, user, target.Value, forced: true);
                 shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
                 return;
             }
@@ -78,7 +72,7 @@ public sealed class InvokeVerbCommand : LocalizedEntityCommands
 
         foreach (var verb in verbs.Where(verb => verb.Text.Equals(verbName, StringComparison.InvariantCultureIgnoreCase)))
         {
-            _verbSystem.ExecuteVerb(verb, playerEntity.Value, target.Value, forced: true);
+            _verbSystem.ExecuteVerb(verb, user, target.Value, forced: true);
             shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verb.Text), ("target", target), ("player", playerEntity)));
             return;
         }
