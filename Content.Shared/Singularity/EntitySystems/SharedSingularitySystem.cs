@@ -45,7 +45,7 @@ public abstract class SharedSingularitySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SingularityComponent, ComponentStartup>(OnSingularityStartup);
-        SubscribeLocalEvent<RadiationSourceComponent, SingularityLevelChangedEvent>(UpdateRadiation);
+        //SubscribeLocalEvent<RadiationSourceComponent, SingularityLevelChangedEvent>(UpdateRadiation);
         SubscribeLocalEvent<SingularityDistortionComponent, SingularityLevelChangedEvent>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotInsertedIntoContainerMessage>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotRemovedFromContainerMessage>(UpdateDistortion);
@@ -137,6 +137,11 @@ public abstract class SharedSingularitySystem : EntitySystem
         if (TryComp<AppearanceComponent>(uid, out var appearance))
         {
             _visualizer.SetData(uid, SingularityAppearanceKeys.Singularity, singularity.Level, appearance);
+        }
+
+        if (TryComp<RadiationSourceComponent>(uid, out var radiationSource))
+        {
+            UpdateRadiation(uid, singularity, radiationSource);
         }
 
         RaiseLocalEvent(uid, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
@@ -344,17 +349,6 @@ public abstract class SharedSingularitySystem : EntitySystem
         var factor = DistortionContainerScaling - 1;
         comp.FalloffPower = absFalloffPower > 1 ? comp.FalloffPower * MathF.Pow(absFalloffPower, factor) : comp.FalloffPower;
         comp.Intensity = absIntensity > 1 ? comp.Intensity * MathF.Pow(absIntensity, factor) : comp.Intensity;
-    }
-
-    /// <summary>
-    /// Updates the amount of radiation a singularity emits when the singularities level changes.
-    /// </summary>
-    /// <param name="uid">The entity that the singularity is attached to.</param>
-    /// <param name="comp">The radiation source associated with the singularity.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateRadiation(EntityUid uid, RadiationSourceComponent comp, SingularityLevelChangedEvent args)
-    {
-        UpdateRadiation(uid, args.Singularity, comp);
     }
 
 #endregion EventHandlers
