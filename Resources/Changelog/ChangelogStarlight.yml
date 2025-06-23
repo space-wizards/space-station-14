@@ -8105,4 +8105,11 @@ Entries:
   id: 1119
   time: '2025-06-23T13:05:57.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/886
+- author: Gensy
+  changes:
+  - message: CC Division Stamps
+    type: Add
+  id: 1120
+  time: '2025-06-23T17:37:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/890
 
