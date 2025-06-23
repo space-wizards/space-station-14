@@ -1,12 +1,16 @@
-﻿name: Publish Testing
+name: Publish Public
 
 concurrency:
-  group: publish-testing
+  group: publish-public
 
 on:
   workflow_dispatch:
   # schedule:
    # - cron: '0 10 * * *'
+  workflow_run:
+    workflows: ["Publish"]
+    types:
+      - completed
 
 jobs:
   build:
@@ -34,13 +38,13 @@ jobs:
       run: dotnet build Content.Packaging --configuration Release --no-restore /m
 
     - name: Package server
-      run: dotnet run --project Content.Packaging server --platform linux-x64 # only linux, no: --platform win-x64 --platform osx-x64 --platform linux-arm64
+      run: dotnet run --project Content.Packaging server --platform win-x64 --platform linux-x64 --platform osx-x64 --platform linux-arm64
 
     - name: Package client
       run: dotnet run --project Content.Packaging client --no-wipe-release
 
     - name: Publish version
-      run: Tools/publish_multi_request.py --fork-id dstest
+      run: Tools/publish_multi_request.py --fork-id dspublicfobos
       env:
-        PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        PUBLISH_TOKEN: ${{ secrets.PUBLISH_PUBLIC_TOKEN }}
         GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
