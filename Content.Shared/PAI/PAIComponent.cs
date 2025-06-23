@@ -33,10 +33,10 @@ public sealed partial class PAIComponent : Component
     public EntityUid? ShopAction;
 
     /// <summary>
-    /// The action that allows the player to interact with the PAI's emotions.
+    /// The action that allows the player to customize the PAI's appearance.
     /// </summary>
     [DataField]
-    public EntProtoId EmotionActionId = "ActionPAIEmotion";
+    public EntProtoId CustomizationActionId = "ActionPAICustomization";
 
     [DataField, AutoNetworkedField]
     public EntityUid? EmotionAction;

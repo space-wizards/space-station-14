@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.PAI.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class PAIEmotionMenu : FancyWindow
+public sealed partial class PAICustomizationMenu : FancyWindow
 {
     private PAIEmotion _currentEmotion;
 
@@ -20,7 +20,7 @@ public sealed partial class PAIEmotionMenu : FancyWindow
 
     public event Action<PAIEmotion>? OnEmotionSelected;
 
-    public PAIEmotionMenu(PAIEmotion currentEmotion)
+    public PAICustomizationMenu(PAIEmotion currentEmotion)
     {
         RobustXamlLoader.Load(this);
         _currentEmotion = currentEmotion;

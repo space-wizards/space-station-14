@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.PAI;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class PAIEmotionComponent : Component
+public sealed partial class PAICustomizationComponent : Component
 {
     /// <summary>
     /// The current emotion of the PAI.
@@ -43,7 +43,7 @@ public sealed class PAIEmotionMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public enum PAIEmotionUiKey : byte
+public enum PAICustomizationUiKey : byte
 {
     Key,
 }

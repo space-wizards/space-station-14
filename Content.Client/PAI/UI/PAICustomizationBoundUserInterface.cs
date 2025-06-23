@@ -3,11 +3,11 @@ using Content.Shared.PAI;
 
 namespace Content.Client.PAI;
 
-public sealed class PAIEmotionBoundUserInterface : BoundUserInterface
+public sealed class PAICustomizationBoundUserInterface : BoundUserInterface
 {
-    private PAIEmotionMenu? _menu;
+    private PAICustomizationMenu? _menu;
 
-    public PAIEmotionBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public PAICustomizationBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
@@ -17,10 +17,10 @@ public sealed class PAIEmotionBoundUserInterface : BoundUserInterface
 
         // Retrieve the current emotion from the PAIEmotionComponent
         var currentEmotion = PAIEmotion.Neutral;
-        if (EntMan.TryGetComponent<PAIEmotionComponent>(Owner, out var emotionComp))
+        if (EntMan.TryGetComponent<PAICustomizationComponent>(Owner, out var emotionComp))
             currentEmotion = emotionComp.CurrentEmotion;
 
-        _menu = new PAIEmotionMenu(currentEmotion);
+        _menu = new PAICustomizationMenu(currentEmotion);
         _menu.OpenCentered();
         _menu.OnClose += Close;
         _menu.OnEmotionSelected += OnEmotionSelected;

@@ -43,10 +43,10 @@
     stock: 1
 
 - type: listing
-  id: PAIEmotionControl
-  name: pai-emotion-control-name
-  description: pai-emotion-control-desc
-  productAction: ActionPAIEmotion
+  id: PAICustomizationControl
+  name: pai-customization-control-name
+  description: pai-customization-control-desc
+  productAction: ActionPAICustomization
   cost:
     SiliconMemory: 5
   categories:

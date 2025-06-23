@@ -27,8 +27,8 @@
       enum.StationMapUiKey.Key:
         type: StationMapBoundUserInterface
         requireInputValidation: false
-      enum.PAIEmotionUiKey.Key:
-        type: PAIEmotionBoundUserInterface
+      enum.PAICustomizationUiKey.Key:
+        type: PAICustomizationBoundUserInterface
         requireInputValidation: false
   - type: Sprite
   - type: Input
@@ -103,7 +103,7 @@
       shader: unshaded
       map: ["emotion"]
       visible: false
-  - type: PAIEmotion
+  - type: PAICustomization
   - type: ToggleableGhostRole
     examineTextMindPresent: pai-system-pai-installed
     examineTextMindSearching: pai-system-still-searching
@@ -269,13 +269,13 @@
 
 - type: entity
   parent: BaseMentalAction
-  id: ActionPAIEmotion
-  name: Emotion Display
-  description: Display your emotions to your owner.
+  id: ActionPAICustomization
+  name: Customuzation Display
+  description: Open your customization display to change your appearance.
   components:
   - type: Action
     icon: Interface/Actions/pai-emotions.png
     itemIconStyle: NoItem
   - type: InstantAction
     event: !type:OpenUiActionEvent
-      key: enum.PAIEmotionUiKey.Key
+      key: enum.PAICustomizationUiKey.Key

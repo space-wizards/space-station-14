@@ -3,7 +3,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.PAI;
 
-public sealed partial class PAIEmotionSystem : EntitySystem
+public sealed partial class PAICustomizationSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
@@ -12,18 +12,18 @@ public sealed partial class PAIEmotionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PAIEmotionComponent, ComponentInit>(OnEmotionInit);
+        SubscribeLocalEvent<PAICustomizationComponent, ComponentInit>(Customization);
         SubscribeLocalEvent<PAIComponent, PAIEmotionMessage>(OnEmotionMessage);
     }
 
-    private void OnEmotionInit(Entity<PAIEmotionComponent> ent, ref ComponentInit args)
+    private void Customization(Entity<PAICustomizationComponent> ent, ref ComponentInit args)
     {
         _appearance.SetData(ent.Owner, PAIEmotionVisuals.Emotion, ent.Comp.CurrentEmotion);
     }
 
     private void OnEmotionMessage(Entity<PAIComponent> ent, ref PAIEmotionMessage args)
     {
-        if (!TryComp<PAIEmotionComponent>(ent.Owner, out var emotionComp))
+        if (!TryComp<PAICustomizationComponent>(ent.Owner, out var emotionComp))
             return;
 
         if (emotionComp.CurrentEmotion == args.Emotion)
@@ -34,6 +34,6 @@ public sealed partial class PAIEmotionSystem : EntitySystem
 
         _appearance.SetData(ent.Owner, PAIEmotionVisuals.Emotion, args.Emotion);
 
-        _ui.ServerSendUiMessage(ent.Owner, PAIEmotionUiKey.Key, new PAIEmotionStateMessage(args.Emotion));
+        _ui.ServerSendUiMessage(ent.Owner, PAICustomizationUiKey.Key, new PAIEmotionStateMessage(args.Emotion));
     }
 }

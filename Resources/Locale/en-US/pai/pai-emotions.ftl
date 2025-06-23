@@ -3,5 +3,5 @@ pai-emotion-happy = Happy
 pai-emotion-sad = Sad
 pai-emotion-angry = Angry
 
-pai-emotion-ui-menu = Emotion Display
+pai-customization-ui-menu = Customization Display
 pai-emotion-ui-set-label = Change emotion to display
