@@ -8,8 +8,6 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-
     protected override void InitializeBallistic()
     {
         base.InitializeBallistic();
@@ -60,7 +58,7 @@ public sealed partial class GunSystem
             var entity = new Entity<BallisticAmmoProviderComponent>(uid, ammo);
             if (!refiller.AutoRefill ||
                 IsFull(entity) ||
-                _timing.CurTime < refiller.NextAutoRefill)
+                Timing.CurTime < refiller.NextAutoRefill)
                 continue;
 
             var ammoEntity = Spawn(refiller.AmmoProto);
@@ -73,7 +71,7 @@ public sealed partial class GunSystem
                 continue;
             }
 
-            refiller.NextAutoRefill = _timing.CurTime + refiller.AutoRefillRate;
+            refiller.NextAutoRefill = Timing.CurTime + refiller.AutoRefillRate;
             Dirty(uid, refiller);
         }
     }
