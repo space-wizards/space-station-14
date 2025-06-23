@@ -165,6 +165,7 @@
           whitelist:
             tags:
               - Plunger
+              - GoldenPlunger # DS14
           priority: 8
         wetfloorsign_slot4:
           name: janitorial-trolley-slot-component-slot-name-sign
@@ -215,6 +216,7 @@
           whitelist:
             tags:
               - TrashBag
+              - TrashBagBlue # DS14
           priority: 3 # Higher than drinking priority
     - type: Fixtures
       fixtures:
@@ -274,6 +276,12 @@
           whitelist:
             tags:
               - Plunger
+        # DS14-start
+        cart_plunger_golden:
+          whitelist:
+            tags:
+            - GoldenPlunger
+        # DS14-end
         cart_mop:
           whitelist:
             tags:
@@ -286,6 +294,12 @@
           whitelist:
             tags:
               - TrashBag
+        # DS14-start
+        cart_garbage_blue:
+          whitelist:
+            tags:
+            - TrashBagBlue
+        # DS14-end
         cart_replacer:
           whitelist:
             components:

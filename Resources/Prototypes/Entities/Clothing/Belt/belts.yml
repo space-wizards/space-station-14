@@ -247,9 +247,13 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
-      components:
+        # DS14-start
+        - SoapSyndie
+        - TrashBagBlue
+        - GoldenPlunger
         - LightReplacer
-        - SmokeOnTrigger
+        - CleanerGrenade
+        # DS14-end
     maxItemSize: Large
   - type: ItemMapper
     mapLayers:
@@ -261,10 +265,48 @@
         whitelist:
           tags:
           - Spray
-      wrench:
+      # DS14-start
+      soap:
         whitelist:
           tags:
-          - Wrench
+          - Soap
+      soapsyndie:
+        whitelist:
+          tags:
+          - SoapSyndie
+      trashbag:
+        whitelist:
+          tags:
+          - TrashBag
+      trashbag_blue:
+        whitelist:
+          tags:
+          - TrashBagBlue
+      wetfloorsign:
+        whitelist:
+          tags:
+          - WetFloorSign
+      holosign:
+        whitelist:
+          tags:
+          - HolosignProjector
+      plunger:
+        whitelist:
+          tags:
+          - Plunger
+      golden_plunger:
+        whitelist:
+          tags:
+          - GoldenPlunger
+      cleaner_grenade:
+        whitelist:
+          tags:
+          - CleanerGrenade
+      light_replacer:
+        whitelist:
+          tags:
+          - LightReplacer
+      # DS14-end
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
 
