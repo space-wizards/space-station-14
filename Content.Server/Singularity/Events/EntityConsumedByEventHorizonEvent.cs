@@ -4,30 +4,10 @@ using Robust.Shared.Containers;
 namespace Content.Server.Singularity.Events;
 
 /// <summary>
-///     Event raised on the event horizon entity whenever an event horizon consumes an entity.
+/// A by-ref event raised on a <paramref name="EventHorizon"/> when it consumes an <paramref name="Entity"/>.
 /// </summary>
+/// <param name="EventHorizon">The event horizon consuming the <paramref name="Entity"/>.</param>
+/// <param name="Entity">The entity being consumed by the <paramref name="EventHorizon"/>.</param>
+/// <param name="OuterContainer">If the entity is being consumed because its container is being consumed, this is the outermost container that isn't being consumed.</param>
 [ByRefEvent]
-public readonly record struct EntityConsumedByEventHorizonEvent
-(EntityUid entity, EntityUid eventHorizonUid, EventHorizonComponent eventHorizon, BaseContainer? container)
-{
-    /// <summary>
-    /// The entity being consumed by the event horizon.
-    /// </summary>
-    public readonly EntityUid Entity = entity;
-
-    /// <summary>
-    /// The uid of the event horizon consuming the entity.
-    /// </summary>
-    public readonly EntityUid EventHorizonUid = eventHorizonUid;
-
-    /// <summary>
-    /// The event horizon consuming the entity.
-    /// </summary>
-    public readonly EventHorizonComponent EventHorizon = eventHorizon;
-
-    /// <summary>
-    /// The innermost container of the entity being consumed by the event horizon that is not also in the process of being consumed by the event horizon.
-    /// Used to correctly dump out the contents containers that are consumed by the event horizon.
-    /// </summary>
-    public readonly BaseContainer? Container = container;
-}
+public readonly record struct EntityConsumedByEventHorizonEvent(Entity<EventHorizonComponent> EventHorizon, EntityUid Entity, BaseContainer? OuterContainer);
