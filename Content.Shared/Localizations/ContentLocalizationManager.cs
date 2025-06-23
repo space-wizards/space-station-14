@@ -123,6 +123,9 @@ namespace Content.Shared.Localizations
                                  ("last", list.LastOrDefault() ?? ""));
         }
 
+        /// <summary>
+        /// Formats a list as per english grammar rules, but uses or instead of and.
+        /// </summary>
         public static string FormatListToOr(List<string> list)
         {
             if (list.Count == 0) return string.Empty;
