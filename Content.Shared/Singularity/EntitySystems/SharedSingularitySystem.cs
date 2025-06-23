@@ -45,7 +45,6 @@ public abstract class SharedSingularitySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SingularityComponent, ComponentStartup>(OnSingularityStartup);
-        //SubscribeLocalEvent<RadiationSourceComponent, SingularityLevelChangedEvent>(UpdateRadiation);
         SubscribeLocalEvent<SingularityDistortionComponent, SingularityLevelChangedEvent>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotInsertedIntoContainerMessage>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotRemovedFromContainerMessage>(UpdateDistortion);
