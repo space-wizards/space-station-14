@@ -6,7 +6,7 @@
   components:
   - type: Action
     itemIconStyle: BigItem
-    useDelay: 5
+    useDelay: 2.5
   - type: InstantAction
     event: !type:ToggleActionEvent
 
