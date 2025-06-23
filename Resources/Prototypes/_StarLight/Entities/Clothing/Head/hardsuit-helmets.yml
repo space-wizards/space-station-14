@@ -145,6 +145,21 @@
       head:
       - state: on-equipped-HELMET-unshaded
         shader: unshaded
+      head-vox:
+      - state: on-equipped-HELMET-unshaded-vox
+        shader: unshaded
+      head-resomi:
+      - state: on-equipped-HELMET-unshaded-resomi
+        shader: unshaded
+      head-felionoid:
+      - state: on-equipped-HELMET-unshaded-felionoid
+        shader: unshaded
+      head-cyclorite:
+      - state: on-equipped-HELMET-unshaded-cyclorite
+        shader: unshaded
+      head-vulpkanin:
+      - state: on-equipped-HELMET-unshaded-vulpkanin
+        shader: unshaded
   - type: PointLight
     color: green
     radius: 6
