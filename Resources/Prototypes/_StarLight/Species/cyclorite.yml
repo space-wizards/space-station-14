@@ -7,7 +7,6 @@
   markingLimits: MobCycloriteMarkingLimits
   dollPrototype: MobCycloriteDummy
   skinColoration: Hues
-  eyeColoration: Hues
   defaultSkinTone: "#FFFFFF"
   maleFirstNames: names_cyclorite
   femaleFirstNames: names_cyclorite

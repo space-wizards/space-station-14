@@ -94,7 +94,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// Starlight
     /// Method of eyes coloration used by the species.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public HumanoidEyeColor EyeColoration { get; private set; }
 
     [DataField]

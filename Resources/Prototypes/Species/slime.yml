@@ -8,7 +8,6 @@
   markingLimits: MobSlimeMarkingLimits
   dollPrototype: MobSlimePersonDummy
   skinColoration: Hues
-  eyeColoration: Hues # Starlight
   customName: true # Starlight
 
 - type: speciesBaseSprites

@@ -8,7 +8,6 @@
   markingLimits: MobReptilianMarkingLimits
   dollPrototype: MobReptilianDummy
   skinColoration: Hues
-  eyeColoration: Hues # Starlight
   maleFirstNames: NamesReptilianMale
   femaleFirstNames: NamesReptilianFemale
   naming: FirstDashFirst

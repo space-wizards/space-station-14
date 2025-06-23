@@ -7,5 +7,4 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobDwarfDummy
   skinColoration: HumanToned
-  eyeColoration: Hues # Starlight
   customName: true # Starlight

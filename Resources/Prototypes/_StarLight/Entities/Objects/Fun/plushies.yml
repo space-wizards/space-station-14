@@ -1099,7 +1099,7 @@
 
 - type: entity
   parent: BaseShadekinPlushie
-  id: ShadekinPlush
+  id: PlushieShadekin
   name: Shadekin Plushie
   description: A plushie of a Shadekin. It's very soft.
   components:

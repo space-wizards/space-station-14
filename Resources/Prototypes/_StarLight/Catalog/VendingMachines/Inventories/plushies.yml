@@ -342,8 +342,8 @@
     stock: 1
 
 - type: listing
-  id: VendorShadekinPlush
-  productEntity: ShadekinPlush
+  id: VendorPlushieShadekin
+  productEntity: PlushieShadekin
   cost:
     NTCredit: 10
   categories:

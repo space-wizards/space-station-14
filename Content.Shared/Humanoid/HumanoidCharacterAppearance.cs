@@ -196,11 +196,12 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         // Starlight - Start
         switch (eyeType)
         {
-            case HumanoidEyeColor.Hues:
-                break;
             case HumanoidEyeColor.Shadekin:
                 newEyeColor = Humanoid.EyeColor.MakeShadekinValid(newEyeColor);
                 break;
+            default:
+                break;
+                
         }
         // Starlight - End
 
@@ -270,10 +271,12 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
                 skinColor = Humanoid.SkinColor.ValidSkinTone(speciesProto.SkinColoration, skinColor);
             }
 
-            if (!Humanoid.EyeColor.VerifyEyeColor(speciesProto.EyeColoration, eyeColor)) // Starlight
+            // Starlight - Start
+            if (!Humanoid.EyeColor.VerifyEyeColor(speciesProto.EyeColoration, eyeColor))
             {
                 eyeColor = Humanoid.EyeColor.ValidEyeColor(speciesProto.EyeColoration, eyeColor);
             }
+            // Starlight - End
 
             markingSet.EnsureSpecies(species, skinColor, markingManager);
             markingSet.EnsureSexes(sex, markingManager);

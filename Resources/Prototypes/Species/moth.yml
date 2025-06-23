@@ -8,7 +8,6 @@
   markingLimits: MobMothMarkingLimits
   dollPrototype: MobMothDummy
   skinColoration: Hues
-  eyeColoration: Hues # Starlight
   maleFirstNames: NamesMothFirstMale
   femaleFirstNames: NamesMothFirstFemale
   lastNames: NamesMothLast
