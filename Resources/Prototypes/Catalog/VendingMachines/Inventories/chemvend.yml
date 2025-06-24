@@ -40,9 +40,9 @@
   startingInventory:
     HandLabeler: 3
     Syringe: 5
-    BoxPillCanister: 3
-    BoxVial: 3
-    BoxBottle: 3
+    BoxPillCanister: 2
+    BoxVial: 2
+    BoxBottle: 2
     Beaker: 5
     LargeBeaker: 5
     Jug: 4
