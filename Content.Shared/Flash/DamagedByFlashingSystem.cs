@@ -1,7 +1,8 @@
-using Content.Server.Flash.Components;
+using Content.Shared.Flash.Components;
 using Content.Shared.Damage;
 
-namespace Content.Server.Flash;
+namespace Content.Shared.Flash;
+
 public sealed class DamagedByFlashingSystem : EntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -12,11 +13,14 @@ public sealed class DamagedByFlashingSystem : EntitySystem
 
         SubscribeLocalEvent<DamagedByFlashingComponent, FlashAttemptEvent>(OnFlashAttempt);
     }
+
+    // TODO: Attempt events should not be doing state changes. But using AfterFlashedEvent does not work because this entity cannot get the status effect.
+    // Best wait for Ed's status effect system rewrite.
     private void OnFlashAttempt(Entity<DamagedByFlashingComponent> ent, ref FlashAttemptEvent args)
     {
         _damageable.TryChangeDamage(ent, ent.Comp.FlashDamage);
 
-        //TODO: It would be more logical if different flashes had different power,
-        //and the damage would be inflicted depending on the strength of the flash.
+        // TODO: It would be more logical if different flashes had different power,
+        // and the damage would be inflicted depending on the strength of the flash.
     }
 }
