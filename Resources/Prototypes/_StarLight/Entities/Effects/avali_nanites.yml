@@ -1,0 +1,53 @@
+- type: entity
+  id: EffectNanitesEnter
+  categories: [ HideSpawnMenu ]
+  name: nanite shell (building)
+  components:
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Sprite
+    sprite: _Starlight/Effects/avali_nanites.rsi
+    state: nanite-building
+    scale: 0.9, 0.9
+  - type: TimedDespawn
+    lifetime: 5.0
+
+- type: entity
+  id: EffectNanitesCurrent
+  categories: [ HideSpawnMenu ]
+  name: nanite shell
+  components:
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Sprite
+    sprite: _Starlight/Effects/avali_nanites.rsi
+    state: shell
+    scale: 0.9, 0.9
+  - type: TimedDespawn
+    lifetime: 5.0
+  - type: HideLayerClothing
+    slots:
+    - HeadTop
+    - HeadSide
+    - Head
+
+- type: entity
+  id: EffectNanitesExit
+  categories: [ HideSpawnMenu ]
+  name: nanite shell (deconstructing)
+  components:
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Sprite
+    sprite: _Starlight/Effects/avali_nanites.rsi
+    state: nanite-deconstructing
+    scale: 0.9, 0.9
+  - type: TimedDespawn
+    lifetime: 5.0

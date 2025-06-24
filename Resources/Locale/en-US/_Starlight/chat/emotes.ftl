@@ -23,5 +23,5 @@ chat-emote-msg-growl = growls
 chat-emote-msg-bark = barks
 chat-emote-msg-yip = yips
 chat-emote-msg-whine = whines
-chat-emote-msg-mar = mars
+chat-emote-msg-mar = marrs
 chat-emote-msg-wurble = wurbles

@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: names_avali_first
+  values:
+    prefix: names-avali-first-dataset-
+    count: 20
+
+- type: localizedDataset
+  id: names_avali_packs
+  values:
+    prefix: names-avali-packs-dataset-
+    count: 14

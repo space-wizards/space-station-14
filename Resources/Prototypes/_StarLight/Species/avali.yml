@@ -1,0 +1,169 @@
+- type: species
+  id: Avali
+  name: species-name-avali
+  roundStart: true
+  prototype: MobAvali
+  sprites: MobAvaliSprites
+  defaultSkinTone: "#D2B48C"
+  markingLimits: MobAvaliMarkingLimits
+  dollPrototype: MobAvaliDummy
+  skinColoration: Hues
+  maleFirstNames: names_avali_first
+  femaleFirstNames: names_avali_first
+  lastNames: names_avali_packs
+  naming: FirstLast
+  minAge: 23
+  youngAge: 103
+  oldAge: 257
+  maxAge: 430
+
+- type: speciesBaseSprites
+  id: MobAvaliSprites
+  sprites:
+    Head: MobAvaliHead
+    Chest: MobAvaliTorso
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking
+    Eyes: MobAvaliEyes
+    LArm: MobAvaliLArm
+    RArm: MobAvaliRArm
+    LHand: MobAvaliLHand
+    RHand: MobAvaliRHand
+    LLeg: MobAvaliLLeg
+    RLeg: MobAvaliRLeg
+    LFoot: MobAvaliLFoot
+    RFoot: MobAvaliRFoot
+
+- type: humanoidBaseSprite
+  id: MobAvaliEyes
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: eyes
+
+- type: markingPoints
+  id: MobAvaliMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 1
+      required: false
+    FacialHair:
+      points: 0
+      required: false
+    Tail:
+      points: 1
+      required: true
+      defaultMarkings: [ AvaliTailBase ]
+    Snout:
+      points: 1
+      required: false
+    HeadTop:
+      points: 1
+      required: false
+    HeadSide:
+      points: 1
+      required: true
+      defaultMarkings: [ AvaliEarsBase ]
+    Chest:
+      points: 1
+      required: false
+    Legs:
+      points: 2
+      required: false
+    Arms:
+      points: 4
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobAvaliHead
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobAvaliHeadMale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobAvaliHeadFemale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobAvaliTorso
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobAvaliTorsoMale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobAvaliTorsoFemale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobAvaliLLeg
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobAvaliLHand
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobAvaliLArm
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobAvaliLFoot
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobAvaliRLeg
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobAvaliRHand
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobAvaliRArm
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobAvaliRFoot
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Avali/parts.rsi
+    state: r_foot
+
+- type: entity
+  id: Stasis
+  name: Avali Stasis
+  description: Allows Avali to enter nanite induced stasis.
+  components:
+    - type: Stasis
+      enterStasisAction: ActionStasisEnter
+      exitStasisAction: ActionStasisExit
