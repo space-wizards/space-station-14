@@ -250,7 +250,7 @@
         Caustic: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.35
-  - type: StaminaResistance
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
     damageCoefficient: 0.45
   - type: ClothingSpeedModifier
     walkModifier: 0.9

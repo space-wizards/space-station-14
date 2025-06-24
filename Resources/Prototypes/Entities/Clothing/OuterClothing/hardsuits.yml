@@ -556,7 +556,7 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
-  - type: StaminaResistance
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
     damageCoefficient: 0.75
   - type: Armor
     modifiers:
@@ -621,7 +621,7 @@
     damageCoefficient: 0.2
   - type: FireProtection
     reduction: 0.8
-  - type: StaminaResistance
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
     damageCoefficient: 0.6
   - type: Armor
     modifiers:
@@ -662,7 +662,7 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
-  - type: StaminaResistance
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
     damageCoefficient: 0.6
   - type: Armor
     modifiers:
@@ -702,8 +702,7 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.3
-  - type: StaminaResistance # Should not have stamina resistance, this is purely so people know it was not forgotten.
-    damageCoefficient: 0.99
+  # - type: StaminaResistance # Should not have stamina resistance, this is purely so people know it was not forgotten.
   - type: Armor
     modifiers:
       coefficients:
