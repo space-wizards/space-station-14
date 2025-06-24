@@ -8119,4 +8119,36 @@ Entries:
   id: 1121
   time: '2025-06-23T17:49:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/891
+- author: RoadTrain
+  changes:
+  - message: NanoTrasenSilicon and SyndicateSilicon as seperate factions. They mimic
+      the NanoTrasen/Syndicate relations, except for not being hostile to zeds.
+    type: Add
+  id: 1122
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: RoadTrain
+  changes:
+  - message: Added warning texts to the zombie greeting/ghost role rules informing
+      people that they should NOT attack silicons unless in self defense as they cannot
+      be zombified.
+    type: Add
+  id: 1123
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: RoadTrain
+  changes:
+  - message: Zombie AI no longer tries to attack any form of silicon (NT/Syndicate/Xenoborg)
+    type: Fix
+  id: 1124
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: RoadTrain
+  changes:
+  - message: Zeds are no longer hostile against xenoborgs (but xenoborgs are still
+      hostile to zombies for having a brain)
+    type: Remove
+  id: 1125
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
 
