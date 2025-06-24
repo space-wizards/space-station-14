@@ -1,8 +1,8 @@
 using Robust.Shared.Configuration;
 
-namespace Content.Shared.CCVar;
+namespace Content.Shared.Starlight.CCVar;
 
-public sealed partial class CCVars
+public sealed partial class StarlightCCVars
 {
     /// <summary>
     ///     The maximum number of construction ghosts allowed per tile.
