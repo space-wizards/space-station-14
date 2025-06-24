@@ -25,3 +25,12 @@
     id: SupplyAssistantPDA
     ears: ClothingHeadsetCargo
     pocket1: BookLogistics
+
+- type: chameleonOutfit
+  id: SupplyAssistantChameleonOutfit
+  job: SupplyAssistant
+  equipment:
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    neck: ClothingNeckScarfStripedBrown
+    gloves: ClothingHandsGlovesColorBlack

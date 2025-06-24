@@ -29,3 +29,13 @@
   storage:
     back:
     - Flash
+
+- type: chameleonOutfit
+  id: AdministrativeAssistantChameleonOutfit
+  job: AdministrativeAssistant
+  hasMindShield: true
+  equipment:
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterWinterColorBlack
+    gloves: ClothingHandsGlovesColorBlack

@@ -31,3 +31,12 @@
     ears: ClothingHeadsetBrigmedic
     id: BrigmedicPDA
     belt: ClothingBeltMedicalEMTFilled
+
+- type: chameleonOutfit
+  id: BrigmedicChameleonOutfit
+  job: Brigmedic
+  equipment:
+    head: ClothingHeadHatBeretBrigmedic
+    mask: ClothingMaskGasSecurity
+    neck: ClothingNeckScarfStripedLightBlue
+    gloves: ClothingHandsGlovesNitrile
