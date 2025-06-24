@@ -64,7 +64,6 @@
           Quantity: 10
   - type: Tag
     tags:
-    - ClothMade
     - Trash
   - type: Sprite
     sprite: _DeadSpace/Objects/Consumable/Food/snacks.rsi
