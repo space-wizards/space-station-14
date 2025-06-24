@@ -9,6 +9,8 @@ shell-cannot-run-command-from-server = You cannot run this command from the serv
 shell-only-players-can-run-this-command = Only players can run this command.
 shell-must-be-attached-to-entity = You must be attached to an entity to run this command.
 
+shell-unknown-error = An unknown error has occured.
+
 ## Arguments
 
 shell-need-exactly-one-argument = Need exactly one argument.
