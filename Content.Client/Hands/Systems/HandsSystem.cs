@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using Content.Client.DisplacementMap;
 using Content.Client.Examine;
 using Content.Client.Strip;
@@ -350,13 +351,27 @@ namespace Content.Client.Hands.Systems
 
                 _sprite.LayerSetData((uid, sprite), index, layerData);
 
+                var offset = hand.Location switch
+                {
+                    HandLocation.Left => handComp.LeftHandSpriteOffset,
+                    HandLocation.Right => handComp.RightHandSpriteOffset,
+                    _ => handComp.SpriteOffset,
+                };
+
+                // Fallback to the SpriteOffset.
+                if (offset == Vector2.Zero)
+                    offset = handComp.SpriteOffset;
+
+                if (sprite[index] is SpriteComponent.Layer layer)
+                    _sprite.LayerSetOffset(layer, layer.Offset + offset);
+
                 // Add displacement maps
                 var displacement = hand.Location switch
                 {
                     HandLocation.Left => handComp.LeftHandDisplacement,
                     HandLocation.Right => handComp.RightHandDisplacement,
-                    _ => handComp.HandDisplacement
-                };
+                    _ => handComp.HandDisplacement,
+                } ?? handComp.HandDisplacement;
 
                 if (displacement is not null && _displacement.TryAddDisplacement(displacement, (uid, sprite), index, key, out var displacementKey))
                     revealedLayers.Add(displacementKey);

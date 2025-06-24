@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Containers;
@@ -101,6 +102,30 @@ public sealed partial class HandsComponent : Component
     /// </summary>
     [DataField]
     public bool CanBeStripped = true;
+
+    /// <summary>
+    ///     The offset applied to the hand sprites.
+    ///     Used to shunt held items around on something with hands without using displacement maps, which clip when moving sprites as a whole.
+    ///     Note that for cleaner pixels, try and stick to multiples of 0.03125 (1/32). E.g. moving two pixels left is -0.0625,0.
+    /// </summary>
+    [DataField]
+    public Vector2 SpriteOffset = Vector2.Zero;
+
+    /// <summary>
+    ///     The offset applied to the left hand sprites. Overrides <see cref="SpriteOffset"/> if not zero.
+    ///     Used to shunt held items around on something with hands without using displacement maps, which clip when moving sprites as a whole.
+    ///     Note that for cleaner pixels, try and stick to multiples of 0.03125 (1/32). E.g. moving two pixels left is -0.0625,0.
+    /// </summary>
+    [DataField]
+    public Vector2 LeftHandSpriteOffset = Vector2.Zero;
+
+    /// <summary>
+    ///     The offset applied to the right hand sprites. Overrides <see cref="SpriteOffset"/> if not zero.
+    ///     Used to shunt held items around on something with hands without using displacement maps, which clip when moving sprites as a whole.
+    ///     Note that for cleaner pixels, try and stick to multiples of 0.03125 (1/32). E.g. moving two pixels left is -0.0625,0.
+    /// </summary>
+    [DataField]
+    public Vector2 RightHandSpriteOffset = Vector2.Zero;
 }
 
 [Serializable, NetSerializable]
