@@ -64,10 +64,8 @@
       - id: ClothingBeltSecurityFilled
       - id: Flash
       - id: ClothingEyesGlassesSecurity
-      - id: ClothingHeadsetSecurity
       - id: ClothingHandsGlovesColorBlack
       - id: ClothingShoesBootsJack
-      - id: HoloprojectorSecurity
       - id: BookSpaceLaw
 
 - type: entity
