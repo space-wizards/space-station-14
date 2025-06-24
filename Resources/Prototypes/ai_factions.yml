@@ -13,6 +13,7 @@
     - Heretic # imp
     - Dino # imp
     - Penguin # imp
+    - SimpleHostile # imp
 
 - type: npcFaction
   id: NanoTrasen
