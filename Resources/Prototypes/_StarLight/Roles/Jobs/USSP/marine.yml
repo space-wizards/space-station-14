@@ -12,7 +12,7 @@
     belt: ClothingBeltSovietMarineWebbingLoadout
     pocket1: GrenadeShrapnel
     pocket2: CigPackSoviet
-    suitstorage: JetpackMiniFilled
+    suitstorage: JetpackSSFMarineFilled
   inhand:
   - WeaponRifleAk
 
