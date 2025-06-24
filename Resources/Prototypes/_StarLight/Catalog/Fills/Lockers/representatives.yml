@@ -52,6 +52,7 @@
       - id: ClothingNeckCloakBsoElite
       - id: ClothingNeckCloakBsoElite
       - id: RadioHandheldSecurity
+      - id: RubberStampBSO
 
 - type: entity
   id: LockerBSOFilledBluespaced
