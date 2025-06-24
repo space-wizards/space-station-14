@@ -8235,4 +8235,11 @@ Entries:
   id: 1136
   time: '2025-06-24T13:03:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/887
+- author: aedler
+  changes:
+  - message: Added SSF Marine loadouts and officials.
+    type: Add
+  id: 1137
+  time: '2025-06-24T13:20:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/896
 
