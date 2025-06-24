@@ -113,6 +113,7 @@
   id: Xeno
   hostile:
     - NanoTrasen
+    - NanoTrasenSilicon # starlight
     - Syndicate
     - SyndicateSilicon # starlight
     - DungeonSyndicate
