@@ -58,15 +58,11 @@
   - type: StorageFill
     contents:
       - id: FlashlightSeclite
-        prob: 0.8
       - id: WeaponDisabler
-      - id: ClothingUniformJumpsuitSecGrey
-        prob: 0.3
       - id: ClothingHeadHelmetBasic
       - id: ClothingOuterArmorBasic
       - id: ClothingBeltSecurityFilled
       - id: Flash
-        prob: 0.5
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHeadsetSecurity
       - id: ClothingHandsGlovesColorBlack
@@ -74,9 +70,7 @@
       - id: WeaponMeleeNeedle
         prob: 0.1
       - id: HoloprojectorSecurity
-        prob: 0.6
       - id: BookSpaceLaw
-        prob: 0.5
 
 - type: entity
   id: LockerBrigmedicFilled
