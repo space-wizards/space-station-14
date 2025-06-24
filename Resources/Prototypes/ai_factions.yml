@@ -2,7 +2,7 @@
   id: Dragon
   hostile:
     - NanoTrasen
-    - NanotrasenSilicon # starlight
+    - NanoTrasenSilicon # starlight
     - Syndicate
     - SyndicateSilicon # starlight
     - DungeonSyndicate
@@ -67,7 +67,7 @@
   id: SimpleHostile
   hostile:
     - NanoTrasen
-    - NanotrasenSilicon # starlight
+    - NanoTrasenSilicon # starlight
     - Syndicate
     - SyndicateSilicon # starlight
     - DungeonSyndicate
@@ -93,7 +93,7 @@
   id: Syndicate
   hostile:
     - NanoTrasen
-    - NanotrasenSilicon # starlight
+    - NanoTrasenSilicon # starlight
     - SimpleHostile
     - Xeno
     - PetsNT
@@ -154,7 +154,7 @@
   id: Revolutionary
   hostile:
     - NanoTrasen
-    - NanotrasenSilicon # starlight
+    - NanoTrasenSilicon # starlight
     - Zombie
     - SimpleHostile
     - Dragon
@@ -170,7 +170,7 @@
   id: Changeling
   hostile:
     - NanoTrasen
-    - NanotrasenSilicon # starlight
+    - NanoTrasenSilicon # starlight
     - Syndicate
     - SyndicateSilicon # starlight
     - Zombie
@@ -182,7 +182,7 @@
   id: Vampire
   hostile:
     - NanoTrasen
-    - NanotrasenSilicon # starlight
+    - NanoTrasenSilicon # starlight
     - Syndicate
     - SyndicateSilicon # starlight
     - Zombie
@@ -196,7 +196,7 @@
   id: HonkHostile
   hostile:
     - NanoTrasen
-    - NanotrasenSilicon # starlight
+    - NanoTrasenSilicon # starlight
     - Syndicate
     - SyndicateSilicon # starlight
     - Passive
@@ -222,7 +222,7 @@
   id: AllHostile
   hostile:
     - NanoTrasen
-    - NanotrasenSilicon # starlight
+    - NanoTrasenSilicon # starlight
     - Dragon
     - Mouse
     - Passive
@@ -246,7 +246,7 @@
   id: Wizard
   hostile:
     - NanoTrasen
-    - NanotrasenSilicon # starlight
+    - NanoTrasenSilicon # starlight
     - Dragon
     - Mouse
     - Passive
@@ -275,7 +275,7 @@
     - Wizard
     # rivalry
     - Xeno
-    - NanotrasenSilicon # starlight
+    - NanoTrasenSilicon # starlight
     - SyndicateSilicon # starlight
     # cause they are hostile to them
     - SimpleHostile
