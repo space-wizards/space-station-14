@@ -94,7 +94,7 @@
   id: SyndicateCommanderGearFull
   parent: SyndicateOperativeGearFull
   equipment:
-    neck: SyndicateWhistle
+    neck: CommanderWhistle #Starlight
     ears: ClothingHeadsetAltSyndicateCommander #Starlight
     outerClothing: ClothingOuterHardsuitSyndieCommander
     id: CommanderPDA
