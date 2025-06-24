@@ -32,7 +32,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ContentEyeComponent, ComponentStartup>(OnContentEyeStartup);
-        SubscribeLocalEvent<ContentEyeComponent, BlindnessChangedEvent>(OnBlindnessChangedEvent);
         SubscribeAllEvent<RequestTargetZoomEvent>(OnContentZoomRequest);
         SubscribeAllEvent<RequestPvsScaleEvent>(OnPvsScale);
         SubscribeAllEvent<RequestEyeEvent>(OnRequestEye);
@@ -126,12 +125,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnBlindnessChangedEvent(Entity<ContentEyeComponent> ent, ref BlindnessChangedEvent args)
-    {
-        ent.Comp.UseRelayedOffsets = !args.Blind;
-        Dirty(ent);
-    }
-
     public void ResetZoom(EntityUid uid, ContentEyeComponent? component = null)
     {
         _eye.SetPvsScale(uid, 1);
@@ -153,8 +146,11 @@ public abstract class SharedContentEyeSystem : EntitySystem
         var ev = new GetEyeOffsetEvent();
         RaiseLocalEvent(eye, ref ev);
 
+        var evRelayedAttempt = new GetEyeOffsetRelayedAttemptEvent();
+        RaiseLocalEvent(eye, ref evRelayedAttempt);
+
         var evRelayed = new GetEyeOffsetRelayedEvent();
-        if (!TryComp<ContentEyeComponent>(eye.Owner, out var contentEye) || contentEye.UseRelayedOffsets)
+        if (!evRelayedAttempt.Cancelled)
             RaiseLocalEvent(eye, ref evRelayed);
 
         _eye.SetOffset(eye, ev.Offset + evRelayed.Offset, eye);
@@ -168,8 +164,12 @@ public abstract class SharedContentEyeSystem : EntitySystem
         var ev = new GetEyePvsScaleEvent();
         RaiseLocalEvent(uid, ref ev);
 
+        var evRelayedAttempt = new GetEyePvsScaleRelayedAttemptEvent();
+        RaiseLocalEvent(uid, ref evRelayedAttempt);
+
         var evRelayed = new GetEyePvsScaleRelayedEvent();
-        RaiseLocalEvent(uid, ref evRelayed);
+        if (!evRelayedAttempt.Cancelled)
+            RaiseLocalEvent(uid, ref evRelayed);
 
         _eye.SetPvsScale((uid, eye), 1 + ev.Scale + evRelayed.Scale);
     }

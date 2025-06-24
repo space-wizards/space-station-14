@@ -21,10 +21,4 @@ public sealed partial class ContentEyeComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("maxZoom"), AutoNetworkedField]
     public Vector2 MaxZoom = Vector2.One;
-
-    /// <summary>
-    /// Should eye offset be modified by relayed event.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool UseRelayedOffsets = true;
 }
