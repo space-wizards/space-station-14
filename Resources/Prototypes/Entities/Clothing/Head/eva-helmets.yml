@@ -28,9 +28,9 @@
     sprite: Clothing/Head/Helmets/eva_large.rsi
   - type: Tag
     tags:
-      - HelmetEVA
-      - WhitelistChameleon
-      - CorgiWearable
+    - HelmetEVA
+    - WhitelistChameleon
+    - CorgiWearable
 
 #Syndicate EVA Helmet
 - type: entity
@@ -93,8 +93,6 @@
       - state: equipped-head-light-reptilian
       head-dog:
       - state: equipped-head-light-dog
-      head-reptilian:
-      - state: equipped-head-light-reptilian
   - type: Clothing
     clothingVisuals:
       head:
@@ -105,8 +103,6 @@
       - state: equipped-head-reptilian
       head-dog:
       - state: equipped-head-dog
-      head-reptilian:
-      - state: equipped-head-reptilian
   - type: TemperatureProtection
     heatingCoefficient: 0.1
     coolingCoefficient: 0.1

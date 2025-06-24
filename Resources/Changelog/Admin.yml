@@ -1171,5 +1171,43 @@ Entries:
   id: 141
   time: '2025-06-08T03:47:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38134
+- author: ScarKy0
+  changes:
+  - message: 'addaction/rmaction commands. NOTE: Addaction will not work correctly
+      if the action requires the entity to have a component (such as Dragon''s Devour).'
+    type: Add
+  id: 142
+  time: '2025-06-16T10:25:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38317
+- author: Errant, crazybrain
+  changes:
+  - message: The admin player and object tabs now show entries in the correct visual
+      style.
+    type: Fix
+  id: 143
+  time: '2025-06-21T01:13:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38261
+- author: SlamBamActionman
+  changes:
+  - message: customvote and cancelvote command permission has been moved from Moderator
+      to Round.
+    type: Tweak
+  id: 144
+  time: '2025-06-21T16:34:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38385
+- author: beck-thompson
+  changes:
+  - message: Role ban panel is now prettier!
+    type: Tweak
+  id: 145
+  time: '2025-06-21T17:54:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37952
+- author: beck-thompson
+  changes:
+  - message: You can now export round logs to CSV files
+    type: Add
+  id: 146
+  time: '2025-06-22T19:28:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38206
 Name: Admin
 Order: 2
