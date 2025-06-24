@@ -17,6 +17,7 @@ public sealed class DrowsinessOverlay : Overlay
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    private readonly SharedStatusEffectsSystem _statusEffects = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
@@ -33,6 +34,7 @@ public sealed class DrowsinessOverlay : Overlay
     public DrowsinessOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _statusEffects = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
 
         _statusQuery = _entityManager.GetEntityQuery<StatusEffectComponent>();
         _drowsinessShader = _prototypeManager.Index<ShaderPrototype>("Drowsiness").InstanceUnique();
@@ -45,19 +47,14 @@ public sealed class DrowsinessOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        var statusSys = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
-
-        if (!statusSys.TryEffectsWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var drowsinessEffects))
+        if (!_statusEffects.TryEffectsWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var drowsinessEffects))
             return;
 
         TimeSpan? remainingTime = TimeSpan.Zero;
-        foreach (var effect in drowsinessEffects)
+        foreach (var (effect, statusEffectComp) in drowsinessEffects)
         {
-            if (!_statusQuery.TryComp(effect, out var statusEffect))
-                continue;
-
-            if (statusEffect.EndEffectTime > remainingTime)
-                remainingTime = statusEffect.EndEffectTime;
+            if (statusEffectComp.EndEffectTime > remainingTime)
+                remainingTime = statusEffectComp.EndEffectTime;
         }
 
         if (remainingTime is null)

@@ -1,5 +1,6 @@
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
+using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.StatusEffectNew;
@@ -19,7 +20,7 @@ public sealed partial class ClientStatusEffectsSystem : SharedStatusEffectsSyste
         if (args.Current is not StatusEffectContainerComponentState state)
             return;
 
-        var toRemove = new List<EntityUid>();
+        var toRemove = new ValueList<EntityUid>();
         foreach (var effect in ent.Comp.ActiveStatusEffects)
         {
             if (state.ActiveStatusEffects.Contains(GetNetEntity(effect)))

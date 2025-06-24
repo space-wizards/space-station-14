@@ -34,7 +34,7 @@ public abstract partial class SharedStatusEffectsSystem
             if (resetCooldown)
                 SetStatusEffectTime(existedEffect.Value, duration.Value);
             else
-                EditStatusEffectTime(existedEffect.Value, duration.Value);
+                AddStatusEffectTime(existedEffect.Value, duration.Value);
 
             return true;
         }
@@ -147,7 +147,7 @@ public abstract partial class SharedStatusEffectsSystem
     public bool TryGetTime(
         EntityUid uid,
         EntProtoId effectProto,
-        out (EntityUid EffectEnt, TimeSpan? RemainingTime) time,
+        out (EntityUid EffectEnt, TimeSpan? EndEffectTime) time,
         StatusEffectContainerComponent? container = null
     )
     {
@@ -181,7 +181,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// while negative values reduce it.
     /// </param>
     /// <returns> True if duration was edited successfully, false otherwise.</returns>
-    public bool TryEditTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
+    public bool TryAddTime(EntityUid uid, EntProtoId effectProto, TimeSpan time)
     {
         if (!_containerQuery.TryComp(uid, out var container))
             return false;
@@ -191,7 +191,7 @@ public abstract partial class SharedStatusEffectsSystem
             var meta = MetaData(effect);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
             {
-                EditStatusEffectTime(effect, time);
+                AddStatusEffectTime(effect, time);
                 return true;
             }
         }
@@ -242,7 +242,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// <summary>
     /// Returns all status effects that have the specified component.
     /// </summary>
-    public bool TryEffectsWithComp<T>(EntityUid? target, [NotNullWhen(true)] out HashSet<Entity<T>>? effects) where T : IComponent
+    public bool TryEffectsWithComp<T>(EntityUid? target, [NotNullWhen(true)] out HashSet<(Entity<T>, StatusEffectComponent comp)>? effects) where T : IComponent
     {
         effects = null;
         if (!_containerQuery.TryComp(target, out var container))
@@ -250,10 +250,12 @@ public abstract partial class SharedStatusEffectsSystem
 
         foreach (var effect in container.ActiveStatusEffects)
         {
+            if (!TryComp<StatusEffectComponent>(effect, out var statusComp))
+                continue;
             if (TryComp<T>(effect, out var comp))
             {
                 effects ??= [];
-                effects.Add((effect, comp));
+                effects.Add(((effect, comp), statusComp));
             }
         }
 

@@ -89,18 +89,15 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         }
     }
 
-    private void EditStatusEffectTime(EntityUid effect, TimeSpan delta)
+    private void AddStatusEffectTime(EntityUid effect, TimeSpan delta)
     {
         if (!_effectQuery.TryComp(effect, out var effectComp))
-            return;
-
-        if (effectComp.AppliedTo is null)
             return;
 
         effectComp.EndEffectTime += delta;
         Dirty(effect, effectComp);
 
-        if (effectComp.Alert is not null)
+        if (effectComp.Alert is not null && effectComp.AppliedTo is not null)
         {
             (TimeSpan Start, TimeSpan End)? cooldown = effectComp.EndEffectTime is null
                 ? null
@@ -118,14 +115,11 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return;
 
-        if (effectComp.AppliedTo is null)
-            return;
+        effectComp.EndEffectTime = _timing.CurTime + duration;
+        Dirty(effect, effectComp);
 
-        if (effectComp.Alert is not null)
+        if (effectComp.Alert is not null && effectComp.AppliedTo is not null)
         {
-            effectComp.EndEffectTime = _timing.CurTime + duration;
-            Dirty(effect, effectComp);
-
             (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null
                 ? null
                 : (_timing.CurTime, effectComp.EndEffectTime.Value);
@@ -139,10 +133,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
     private void OnStatusEffectApplied(Entity<StatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        if (ent.Comp.AppliedTo is null)
-            return;
-
-        if (ent.Comp.Alert is not null)
+        if (ent.Comp.AppliedTo is not null && ent.Comp.Alert is not null)
         {
             (TimeSpan, TimeSpan)? cooldown = ent.Comp.EndEffectTime is null
                 ? null
@@ -160,7 +151,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         if (ent.Comp.AppliedTo is null)
             return;
 
-        if (ent.Comp.Alert is not null)
+        if (ent.Comp.AppliedTo is not null && ent.Comp.Alert is not null)
             _alerts.ClearAlert(ent.Comp.AppliedTo.Value, ent.Comp.Alert.Value);
     }
 
