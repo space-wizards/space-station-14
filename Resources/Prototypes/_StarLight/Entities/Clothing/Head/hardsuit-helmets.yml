@@ -124,8 +124,6 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
-=======
-
 # USSP
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, BaseSovietContraband]
