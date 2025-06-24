@@ -5,5 +5,5 @@
 
 - type: preloadedGrid
   id: SyndieSynthesisShip
-  path: /Maps/_Impstation/Shuttles/synthesis_ship.yml
+  path: /Maps/_Impstation/Shuttles/ShuttleEvent/synthesis_ship.yml
   copies: 1
