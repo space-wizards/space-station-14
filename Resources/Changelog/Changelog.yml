@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: UpAndLeaves
-  changes:
-  - message: Most clothing will no longer provide protection against zombification
-    type: Tweak
-  - message: Blunt/Slash/Piercing resistance will now provide weak protection against
-      zombification.
-    type: Tweak
-  - message: Winter coats are now moderately effective against zombification.
-    type: Tweak
-  - message: Bio suits are now very effective against zombification.
-    type: Tweak
-  - message: Security bio suits are now lightly armored.
-    type: Tweak
-  - message: Bio suits now only have 5% slowdown.
-    type: Tweak
-  id: 8199
-  time: '2025-04-16T18:21:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36485
 - author: ScarKy0
   changes:
   - message: A basic sheet crate can now be ordered for 1660 spesos. It contains 30
@@ -3895,3 +3877,10 @@
   id: 8711
   time: '2025-06-24T20:47:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38042
+- author: AreYouConfused
+  changes:
+  - message: Bulldog bundle now accurately says what is included
+    type: Fix
+  id: 8712
+  time: '2025-06-24T21:58:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38558
