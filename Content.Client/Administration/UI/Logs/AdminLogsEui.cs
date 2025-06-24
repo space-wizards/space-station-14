@@ -22,7 +22,6 @@ public sealed class AdminLogsEui : BaseEui
 
     private const char CsvSeparator = ',';
     private const string CsvQuote = "\"";
-    private const string CsvDoubleQuote = "\"\"";
     private const string CsvHeader = "Date,ID,PlayerID,Severity,Type,Message";
 
     private ISawmill _sawmill;
@@ -105,8 +104,8 @@ public sealed class AdminLogsEui : BaseEui
 
         try
         {
-            await using var writer = new StreamWriter(file.Value.fileStream, bufferSize: 4096);
             // Buffer is set to 4KB for performance reasons. As the average export of 1000 logs is ~200KB
+            await using var writer = new StreamWriter(file.Value.fileStream, bufferSize: 4096);
             await writer.WriteLineAsync(CsvHeader);
             foreach (var child in LogsControl.LogsContainer.Children)
             {
@@ -137,7 +136,7 @@ public sealed class AdminLogsEui : BaseEui
                 await writer.WriteAsync(CsvSeparator);
                 // Message
                 await writer.WriteAsync(CsvQuote);
-                await writer.WriteAsync(log.Message.Replace(CsvQuote, CsvDoubleQuote));
+                await writer.WriteAsync(log.Message.Replace(CsvQuote, CsvQuote + CsvQuote));
                 await writer.WriteAsync(CsvQuote);
 
                 await writer.WriteLineAsync();
