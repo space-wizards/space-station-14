@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fixes tippy messages being too sh-
-    type: Fix
-  id: 8196
-  time: '2025-04-16T12:23:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36616
 - author: SlamBamActionman
   changes:
   - message: Closed pet carriers no longer push players or lockers.
@@ -3896,3 +3889,11 @@
   id: 8708
   time: '2025-06-24T07:56:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38276
+- author: BramvanZijp
+  changes:
+  - message: Added Stamina Damage resistance to the raid/hard-suits used by Nuclear
+      Operatives and Emergency Response Teams.
+    type: Tweak
+  id: 8709
+  time: '2025-06-24T13:04:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38526
