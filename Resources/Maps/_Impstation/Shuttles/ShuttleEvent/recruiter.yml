@@ -6162,15 +6162,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,-1.5
       parent: 2
-- proto: RubberStampSyndicate
-  entities:
-  - uid: 251
-    components:
-    - type: Transform
-      pos: -1.9270834,1.7043083
-      parent: 2
-    - type: Physics
-      canCollide: False
 - proto: Screwdriver
   entities:
   - uid: 519
