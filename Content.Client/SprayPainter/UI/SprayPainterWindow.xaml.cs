@@ -174,6 +174,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
 
                     var dataList = styles
                         .Select(e => new SpriteListData(group, e.Key, e.Value, 0))
+                        .OrderBy(d => Loc.GetString($"spray-painter-style-{group.ToLower()}-{d.Style.ToLower()}"))
                         .ToList();
                     control.PopulateList(dataList);
                 }
