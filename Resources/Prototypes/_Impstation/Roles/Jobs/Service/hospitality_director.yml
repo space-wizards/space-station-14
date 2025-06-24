@@ -50,9 +50,9 @@
   job: HospitalityDirector
   hasMindShield: true
   equipment:
-    head: HospitalityDirectorBellhopHD
+    head: ClothingHeadHatBellhopHD
     eyes: ClothingEyesGlassesCheapSunglasses
     mask: ClothingMaskBreath
-    neck: HospitalityDirectorCloak
-    outerClothing: HospitalityDirectorWintercoat
-    gloves: JanitorRubberGloves
+    neck: ClothingNeckCloakHd
+    outerClothing: ClothingOuterWinterHD
+    gloves: ClothingHandsGlovesJanitor

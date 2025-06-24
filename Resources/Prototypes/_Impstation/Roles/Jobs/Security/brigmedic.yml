@@ -38,5 +38,5 @@
   equipment:
     head: ClothingHeadHatBeretBrigmedic
     mask: ClothingMaskGasSecurity
-    neck: ScarfLightBlue
-    gloves: NitrileGloves
+    neck: ClothingNeckScarfStripedLightBlue
+    gloves: ClothingHandsGlovesNitrile

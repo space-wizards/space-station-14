@@ -37,5 +37,5 @@
   equipment:
     eyes: ClothingEyesGlassesCheapSunglasses
     mask: ClothingMaskBreath
-    outerClothing: WinterCoatBlack
+    outerClothing: ClothingOuterWinterColorBlack
     gloves: ClothingHandsGlovesColorBlack
