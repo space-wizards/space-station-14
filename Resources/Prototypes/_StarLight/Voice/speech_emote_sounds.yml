@@ -246,7 +246,7 @@
     variation: 0.125
   sounds:
     Scream:
-      collection: MaleScreams
+      collection: ShadekinMaleScreams
     Laugh:
       collection: MaleLaugh
     Sneeze:
@@ -286,7 +286,7 @@
     variation: 0.125
   sounds:
     Scream:
-      collection: FemaleScreams
+      collection: ShadekinFemaleScreams
     Laugh:
       collection: FemaleLaugh
     Sneeze:
