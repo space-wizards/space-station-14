@@ -5,7 +5,7 @@ using Content.Shared.Camera;
 using Content.Shared.Ghost;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
-using Content.Shared.Eye.Blinding.Components;
+using Content.Shared.Eye.Blinding.Systems;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
@@ -32,6 +32,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ContentEyeComponent, ComponentStartup>(OnContentEyeStartup);
+        SubscribeLocalEvent<ContentEyeComponent, BlindnessChangedEvent>(OnBlindnessChangedEvent);
         SubscribeAllEvent<RequestTargetZoomEvent>(OnContentZoomRequest);
         SubscribeAllEvent<RequestPvsScaleEvent>(OnPvsScale);
         SubscribeAllEvent<RequestEyeEvent>(OnRequestEye);
@@ -125,6 +126,12 @@ public abstract class SharedContentEyeSystem : EntitySystem
         Dirty(uid, component);
     }
 
+    private void OnBlindnessChangedEvent(Entity<ContentEyeComponent> ent, ref BlindnessChangedEvent args)
+    {
+        ent.Comp.UseRelayedOffsets = !args.Blind;
+        Dirty(ent);
+    }
+
     public void ResetZoom(EntityUid uid, ContentEyeComponent? component = null)
     {
         _eye.SetPvsScale(uid, 1);
@@ -146,8 +153,9 @@ public abstract class SharedContentEyeSystem : EntitySystem
         var ev = new GetEyeOffsetEvent();
         RaiseLocalEvent(eye, ref ev);
 
+
         var evRelayed = new GetEyeOffsetRelayedEvent();
-        if (!TryComp<EyeClosingComponent>(eye.Owner, out var eyeClosing) || !eyeClosing.EyesClosed)
+        if (!TryComp<ContentEyeComponent>(eye.Owner, out var contentEye) || contentEye.UseRelayedOffsets)
             RaiseLocalEvent(eye, ref evRelayed);
 
         _eye.SetOffset(eye, ev.Offset + evRelayed.Offset, eye);
