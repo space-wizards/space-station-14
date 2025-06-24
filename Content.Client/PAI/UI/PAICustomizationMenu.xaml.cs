@@ -9,6 +9,7 @@ namespace Content.Client.PAI.UI;
 public sealed partial class PAICustomizationMenu : FancyWindow
 {
     private PAIEmotion _currentEmotion;
+    private EntityUid _paiEntity;
 
     private readonly Dictionary<PAIEmotion, string> _emotions = new()
     {
@@ -20,11 +21,16 @@ public sealed partial class PAICustomizationMenu : FancyWindow
 
     public event Action<PAIEmotion>? OnEmotionSelected;
 
-    public PAICustomizationMenu(PAIEmotion currentEmotion)
+    public PAICustomizationMenu(PAIEmotion currentEmotion, EntityUid paiEntity)
     {
         RobustXamlLoader.Load(this);
         _currentEmotion = currentEmotion;
+        _paiEntity = paiEntity;
 
+        // Setup preview sprite
+        PAIPreviewSprite.SetEntity(_paiEntity);
+
+        // Setup emotion options
         foreach (var emotion in _emotions)
         {
             EmotionOptions.AddItem(Loc.GetString(emotion.Value));
@@ -35,10 +41,16 @@ public sealed partial class PAICustomizationMenu : FancyWindow
             var emotion = (PAIEmotion)idx.Id;
             OnEmotionSelected?.Invoke(emotion);
             EmotionOptions.SelectId(idx.Id);
+
+            // Update preview immediately when emotion changes
+            UpdatePreview(emotion);
         };
 
         // Initialize the current emotion in the dropdown
         EmotionOptions.TrySelectId((int)currentEmotion);
+
+        // Set initial preview
+        UpdatePreview(currentEmotion);
     }
 
     public void UpdateEmotion(PAIEmotion newEmotion)
@@ -48,5 +60,14 @@ public sealed partial class PAICustomizationMenu : FancyWindow
 
         _currentEmotion = newEmotion;
         EmotionOptions.TrySelectId((int)newEmotion);
+        UpdatePreview(newEmotion);
+    }
+
+    private void UpdatePreview(PAIEmotion emotion)
+    {
+        // The preview will automatically update through the appearance system
+        // when the server sends back the emotion change confirmation
+        // For immediate feedback, we could potentially simulate the appearance change here
+        // but it's better to let the server handle the state synchronization
     }
 }

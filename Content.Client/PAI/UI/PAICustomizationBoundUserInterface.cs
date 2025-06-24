@@ -15,12 +15,13 @@ public sealed class PAICustomizationBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        // Retrieve the current emotion from the PAIEmotionComponent
+        // Retrieve the current emotion from the PAICustomizationComponent
         var currentEmotion = PAIEmotion.Neutral;
         if (EntMan.TryGetComponent<PAICustomizationComponent>(Owner, out var emotionComp))
             currentEmotion = emotionComp.CurrentEmotion;
 
-        _menu = new PAICustomizationMenu(currentEmotion);
+        // Pass both current emotion and the PAI entity for preview
+        _menu = new PAICustomizationMenu(currentEmotion, Owner);
         _menu.OpenCentered();
         _menu.OnClose += Close;
         _menu.OnEmotionSelected += OnEmotionSelected;
