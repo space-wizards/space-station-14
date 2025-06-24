@@ -11,6 +11,8 @@ using Content.Shared.Clothing;
 using Content.Shared.DetailExaminable;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
@@ -106,6 +108,15 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             }
         }
 
+        //Attach voices to mind 🌟Starlight🌟
+        if(profile != null)
+            if (TryComp<MindContainerComponent>(entity, out var mindContainer) && mindContainer.HasMind 
+            && TryComp<MindComponent>(mindContainer.Mind, out var mind))
+            {
+                mind.Voice = profile.Voice;
+                mind.SiliconVoice = profile.SiliconVoice;
+            }
+
         // If we're not spawning a humanoid, we're gonna exit early without doing all the humanoid stuff.
         if (prototype?.JobEntity != null)
         {
@@ -121,9 +132,9 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
             DoJobSpecials(job, jobEntity);
             _identity.QueueIdentityUpdate(jobEntity);
-            if(profile != null)
+            /*if(profile != null)
                 if(TryComp<TextToSpeechComponent>(jobEntity, out var tts))
-                    tts.VoicePrototypeId = profile.SiliconVoice;
+                    tts.VoicePrototypeId = profile.SiliconVoice;*/
             return jobEntity;
         }
 
