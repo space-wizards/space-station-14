@@ -8266,4 +8266,25 @@ Entries:
   id: 1140
   time: '2025-06-24T13:38:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/308
+- author: FoxxoTrystan
+  changes:
+  - message: New Shadekin Markings!
+    type: Add
+  id: 1141
+  time: '2025-06-24T13:41:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/883
+- author: FoxxoTrystan
+  changes:
+  - message: Shadekin Eyes can now be collored (tho limited in tint)
+    type: Tweak
+  id: 1142
+  time: '2025-06-24T13:41:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/883
+- author: FoxxoTrystan
+  changes:
+  - message: Fixed Shadekin not needed water/food.
+    type: Fix
+  id: 1143
+  time: '2025-06-24T13:41:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/883
 
