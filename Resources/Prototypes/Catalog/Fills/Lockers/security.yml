@@ -120,11 +120,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesGlassesNoir
-      - id: ClothingHeadHatDetGadget
-      - id: ClothingNeckTieDet
-      - id: ClothingOuterVestDetective
-      - id: ClothingOuterCoatDetectiveLoadout
       - id: FlippoEngravedLighter
       - id: FlashlightSeclite
       - id: ForensicScanner
