@@ -264,20 +264,6 @@ public sealed class ActionContainerSystem : EntitySystem
         return true;
     }
 
-    public bool HasAction(EntityUid uid, string pId, ActionsContainerComponent? actions = null)
-    {
-        if (!Resolve(uid, ref actions, false))
-            return false;
-
-        foreach (var act in actions.Container.ContainedEntities)
-            if (TryComp<MetaDataComponent>(act, out var metaData))
-                if (TryPrototype(act, out var actProto, metaData))
-                    if (pId == actProto.ID)
-                        return true;
-
-        return false;
-    }
-
     /// <summary>
     /// Removes an action from its container and any action-performer and moves the action to null-space
     /// </summary>
