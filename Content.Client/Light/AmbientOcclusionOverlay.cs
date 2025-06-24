@@ -10,6 +10,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Light;
 
+/// <summary>
+/// Applies ambient-occlusion to the viewport.
+/// </summary>
 public sealed class AmbientOcclusionOverlay : Overlay
 {
     [Dependency] private readonly IClyde _clyde = default!;
@@ -34,6 +37,17 @@ public sealed class AmbientOcclusionOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        /*
+         * tl;dr
+         * - we draw a black square on each "ambient occlusion" entity.
+         * - we blur this.
+         * - We apply it to the viewport.
+         *
+         * We do this while ignoring lighting because it will wash out the actual effect.
+         * In 3D ambient occlusion is more complicated due top having to calculate normals but in 2D
+         * we don't have a concept of depth / corners necessarily.
+         */
+
         var viewport = args.Viewport;
         var mapId = args.MapId;
         var worldBounds = args.WorldBounds;

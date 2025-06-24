@@ -9,6 +9,9 @@ public sealed class PlanetLightSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
+    /// <summary>
+    /// Enables / disables the ambient occlusion overlay.
+    /// </summary>
     public bool AmbientOcclusion
     {
         get => _ambientOcclusion;
