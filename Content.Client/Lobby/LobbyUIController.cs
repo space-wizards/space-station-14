@@ -90,11 +90,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
     private void OnRequirementsUpdated()
     {
-        if (_profileEditor != null)
-        {
-            _profileEditor.RefreshAntags();
-            _profileEditor.RefreshJobs();
-        }
+        _profileEditor?.RefreshAntags();
+        _profileEditor?.RefreshJobs();
+        _jobPriorityEditor?.RefreshJobs();
     }
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)

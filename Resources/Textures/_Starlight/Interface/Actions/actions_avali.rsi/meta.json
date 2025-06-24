@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Taken from tgstation, redrawn by darkrell, and redrawn again by Killer Tamashi (Discord)",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "empty"
+		},
+		{
+			"name": "heal"
+		},
+		{
+			"name": "healoff"
+		}
+	]
+}
+

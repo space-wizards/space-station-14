@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by JustAdler for https://github.com/ss14Starlight/space-station-14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-EYES",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-resomi",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-cyclorite",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-unshaded",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-unshaded-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-unshaded-resomi",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-unshaded-cyclorite",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

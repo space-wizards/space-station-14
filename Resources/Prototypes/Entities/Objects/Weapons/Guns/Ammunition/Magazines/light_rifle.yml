@@ -221,7 +221,7 @@
       - MagazineLightRiflePan
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleSP
-    capacity: 96
+    capacity: 47
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/maxim.rsi
 
