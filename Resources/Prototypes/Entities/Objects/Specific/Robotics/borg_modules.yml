@@ -446,7 +446,7 @@
     items:
     - BorgFireExtinguisher
     - BorgHandheldGPSBasic
-    - HandheldStationMapBorg
+    - HandheldStationMapUnpowered
     - HandHeldMassScannerBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: extinguisher-module }
