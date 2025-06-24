@@ -109,6 +109,9 @@
         prob: 0.35
       - id: RubberStampBrigmedic
         amount: 2
+      - id: PlushieMorgana
+      - id: PlushieKiller
+
 
 - type: entity
   id: LockerWardenLargeFilled

@@ -687,8 +687,6 @@ entities:
           endTime: 0
           startTime: 0
           length: 0.5
-    - type: Blocking
-      blockingToggleActionEntity: 40
     - type: EmitSoundOnCollide
       nextSound: -124.7240603
     - type: Physics
@@ -711,8 +709,6 @@ entities:
           endTime: 0
           startTime: 0
           length: 0.5
-    - type: Blocking
-      blockingToggleActionEntity: 81
     - type: EmitSoundOnCollide
       nextSound: -124.8630021
     - type: Physics
@@ -735,8 +731,6 @@ entities:
           endTime: 0
           startTime: 0
           length: 0.5
-    - type: Blocking
-      blockingToggleActionEntity: 87
     - type: EmitSoundOnCollide
       nextSound: -126.2885337
     - type: Physics
@@ -759,8 +753,6 @@ entities:
           endTime: 0
           startTime: 0
           length: 0.5
-    - type: Blocking
-      blockingToggleActionEntity: 97
     - type: EmitSoundOnCollide
       nextSound: -126.4153074
     - type: Physics

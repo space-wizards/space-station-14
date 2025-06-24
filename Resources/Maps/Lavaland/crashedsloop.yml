@@ -1714,10 +1714,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         65:
-        - - Left
-          - Trigger
-        - - Right
-          - Trigger
+        - Left: Trigger
+        - Right: Trigger
   - uid: 175
     components:
     - type: Transform
@@ -1726,10 +1724,8 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         66:
-        - - Left
-          - Trigger
-        - - Right
-          - Trigger
+        - Left: Trigger
+        - Right: Trigger
   - uid: 176
     components:
     - type: Transform

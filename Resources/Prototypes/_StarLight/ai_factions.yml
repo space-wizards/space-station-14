@@ -1,49 +1,72 @@
 - type: npcFaction
   id: Abyss
   hostile:
-  - DungeonSoviet
-  - DungeonSyndicate
-  - Dragon
-  - NanoTrasen
-  - Mouse
-  - PetsNT
-  - SimpleHostile
-  - Syndicate
-  - Xeno
-  - Zombie
-  - Revolutionary
-  - Vampire
-  - Changeling
-  - AllHostile
+    - DungeonSoviet
+    - DungeonSyndicate
+    - Dragon
+    - NanoTrasen
+    - Mouse
+    - PetsNT
+    - SimpleHostile
+    - Syndicate
+    - Xeno
+    - Zombie
+    - Revolutionary
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Gorilla
 
 - type: npcFaction
   id: DungeonSoviet
   hostile:
-  - NanoTrasen
-  - SimpleHostile
-  - Xeno
-  - PetsNT
-  - Syndicate
-  - DungeonSyndicate
-  - Zombie
-  - Revolutionary
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
+    - NanoTrasen
+    - SimpleHostile
+    - Xeno
+    - PetsNT
+    - Syndicate
+    - DungeonSyndicate
+    - Zombie
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Gorilla
 
 - type: npcFaction
   id: DungeonSyndicate
   hostile:
-  - NanoTrasen
-  - SimpleHostile
-  - Xeno
-  - PetsNT
-  - Syndicate
-  - DungeonSoviet
-  - Zombie
-  - Revolutionary
-  - Abyss
-  - Vampire
-  - Changeling
-  - AllHostile
+    - NanoTrasen
+    - SimpleHostile
+    - Xeno
+    - PetsNT
+    - Syndicate
+    - DungeonSoviet
+    - Zombie
+    - Revolutionary
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Gorilla
+
+- type: npcFaction
+  id: Gorilla
+  hostile:
+    - NanoTrasen
+    - Dragon
+    - PetsNT
+    - SimpleHostile
+    - Syndicate
+    - Xeno
+    - Zombie
+    - Revolutionary
+    - HonkNeutral
+    - HonkHostile
+    - Vampire
+    - Changeling
+    - Wizard
+    - Abyss
+    - DungeonSoviet
+    - DungeonSyndicate

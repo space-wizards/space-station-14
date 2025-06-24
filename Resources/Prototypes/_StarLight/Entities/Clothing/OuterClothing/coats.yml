@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterStorageFoldableBase
+  parent: [ ClothingOuterStorageFoldableBase, BaseCommandContraband ]
   id: ClothingOuterCoatNtrep
   name: nt representive jacket
   description: A fancy black jacket, standart issue to Nanotrasen Representives.
@@ -18,12 +18,12 @@
         Piercing: 0.8
 
 - type: entity
-  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatNtrep]
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatNtrep, BaseCommandContraband ]
   id: ClothingOuterCoatNtrepOpen
   name: nt representive jacket
 
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterCoatCorpsman
   name: Corpsman's Armored Jacket
   description: Tacticool never looked so good..However, impractical armor placement makes it just as effective as the normal coat.

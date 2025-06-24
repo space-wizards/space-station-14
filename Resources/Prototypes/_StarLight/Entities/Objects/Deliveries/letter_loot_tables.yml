@@ -5,3 +5,6 @@
   table: !type:GroupSelector
     children:
       - id: MailSyndicateSpamLetter
+        weight: .25
+      - id: MailSpamDontYouWantMore
+        weight: .75

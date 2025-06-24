@@ -11,6 +11,7 @@
   maleFirstNames: NamesMothFirstMale
   femaleFirstNames: NamesMothFirstFemale
   lastNames: NamesMothLast
+  customName: true # Starlight
 
 - type: speciesBaseSprites
   id: MobMothSprites

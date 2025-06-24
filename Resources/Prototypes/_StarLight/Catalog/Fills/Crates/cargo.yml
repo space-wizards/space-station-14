@@ -8,3 +8,16 @@
     contents:
       - id: MailBag
         amount: 2
+
+- type: entity
+  id: CrateEmergencySpaceHazard
+  parent: CrateGenericSteel
+  name: space hazard suit crate
+  description: For all your disasterous shifts.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterHardsuitSpaceHazard
+    - id: ClothingMaskBreath
+    - id: OxygenTankFilled
+    - id: NitrogenTankFilled

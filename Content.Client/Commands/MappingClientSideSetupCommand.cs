@@ -29,4 +29,3 @@ internal sealed class MappingClientSideSetupCommand : LocalizedCommands
         }
     }
 }
-

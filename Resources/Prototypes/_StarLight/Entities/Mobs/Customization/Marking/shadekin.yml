@@ -1,0 +1,83 @@
+# Ears
+
+- type: marking
+  id: EarsShadekin
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  forcedColoring: true
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+
+- type: marking
+  id: EarsShadekinStriped
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Shadekin]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring
+    layers:
+      shadekin_stripes:
+        type:
+          !type:SimpleColoring
+            color: "#FFFFFF"
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin
+    - sprite: _Starlight/Mobs/Customization/shadekin/ears.rsi
+      state: shadekin_stripes
+
+# Tails
+
+- type: marking
+  id: TailShadekin
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Shadekin]
+  forcedColoring: true
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
+      state: shadekin
+
+- type: marking
+  id: TailShadekinBig
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Shadekin]
+  forcedColoring: true
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
+      state: shadekin_big
+
+# - type: marking
+#   id: TailShadekinBigFluff
+#   bodyPart: Tail
+#   markingCategory: Tail
+#   speciesRestriction: [Shadekin]
+#   forcedColoring: true
+#   sprites:
+#     - sprite: _Starlight/Mobs/Customization/shadekin/tails64x32.rsi
+#       state: shadekin_big_fluff
+
+- type: marking
+  id: TailShadekinShorter
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Shadekin]
+  forcedColoring: true
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails32x32.rsi
+      state: shadekin_shorter
+
+- type: marking
+  id: TailShadekinMedium
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Shadekin]
+  forcedColoring: true
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/shadekin/tails32x32.rsi
+      state: shadekin_medium

@@ -912,20 +912,15 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         106:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         104:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         107:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         103:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         108:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 134
     components:
     - type: MetaData

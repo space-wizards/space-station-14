@@ -70,6 +70,8 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: fill
+    inHandsMaxFillLevels: 1
+    inHandsFillBaseName: -fill-
 
 - type: entity
   parent: DrinkGlassBase

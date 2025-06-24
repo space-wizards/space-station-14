@@ -1,0 +1,18 @@
+﻿<BoxContainer
+    xmlns="https://spacestation14.io"
+    HorizontalExpand="True"
+    Orientation="Vertical">
+
+    <!-- Save and reset buttons up top -->
+    <BoxContainer Orientation="Horizontal" SetHeight="64" HorizontalAlignment="Center" Margin="0 5">
+        <Button Name="SaveButton" StyleClasses="ButtonBig" Margin="10 0" MinSize="120 40"
+                Text="{Loc 'humanoid-profile-editor-save-button'}"/>
+        <Button Name="ResetButton" StyleClasses="ButtonBig" Margin="10 0" MinSize="120 40"
+                Text="{Loc 'humanoid-profile-editor-reset-button'}"/>
+    </BoxContainer>
+
+    <!-- We stuff the priority selectors in here -->
+    <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+        <BoxContainer Name="JobList" Orientation="Vertical" />
+    </ScrollContainer>
+</BoxContainer>

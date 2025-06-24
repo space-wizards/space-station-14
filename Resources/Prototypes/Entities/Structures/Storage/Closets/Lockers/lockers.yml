@@ -155,6 +155,20 @@
   - type: AccessReader
     access: [ [ "Engineering" ] ]
 
+# Evac Repair
+- type: entity
+  parent: LockerBase
+  id: LockerEvacRepair
+  name: evac repair locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: eng
+    stateDoorOpen: eng_open
+    stateDoorClosed: eng_evac_door
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
+
 # Freezer
 - type: entity
   id: LockerFreezerBase

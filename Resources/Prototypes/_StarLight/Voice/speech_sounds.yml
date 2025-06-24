@@ -1,0 +1,8 @@
+- type: speechSounds
+  id: Gorilla
+  saySound:
+    path: /Audio/_Starlight/Voice/gorilla.ogg
+  askSound:
+    path: /Audio/_Starlight/Voice/gorilla.ogg
+  exclaimSound:
+    path: /Audio/_Starlight/Voice/gorilla.ogg

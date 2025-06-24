@@ -23,7 +23,7 @@
     size: Normal
 
 - type: entity
-  parent: ClothingOuterArmorBasic
+  parent: [ ClothingOuterArmorBasic, BaseMajorContraband ]
   id: ClothingOuterArmorAbductor
   name: agent vest
   components:
@@ -173,3 +173,27 @@
     damageCoefficient: 0.5
   - type: FireProtection
     reduction: 0.85
+    
+- type: entity
+  parent: [ClothingOuterArmorBase, BaseCentcommContraband]
+  id: ClothingOuterVestNTCC
+  name: nt cc consortium officer's vest
+  description: Much better than a standard type-1 security vest. Don't lose it, you will NOT get a replacement.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Vests/ntcc_vest.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Vests/ntcc_vest.rsi
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.7
+  - type: ExplosionResistance
+    damageCoefficient: 0.80
+  - type: Item
+    size: Normal

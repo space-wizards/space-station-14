@@ -1,7 +1,7 @@
 # Rubber
 - type: entity
   name: Drozd
-  parent: WeaponSubMachineGunDrozd
+  parent: [WeaponSubMachineGunDrozd, BaseSecurityContraband]
   id: WeaponSubMachineGunDrozdRubber
   suffix: Non-Lethal
   components:
@@ -26,7 +26,7 @@
             
 - type: entity
   name: SP-91-RC
-  parent: [BaseWeaponSubMachineGun, BaseRestrictedContraband]
+  parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunSP91RC
   description: Compact submachine gun designed for riot control.
   components:

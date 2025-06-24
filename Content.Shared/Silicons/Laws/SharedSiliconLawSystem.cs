@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Emag.Systems;
 using Content.Shared.Mind;
 using Content.Shared.Popups;
+using Content.Shared.Silicons.Borgs.Components; // Starlight
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Wires;
@@ -47,6 +48,13 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             _popup.PopupClient(Loc.GetString("law-emag-require-panel"), uid, args.UserUid);
             return;
         }
+
+        //#region Starlight
+        if (args.DestroyTransponder)
+        {
+            RemComp<BorgTransponderComponent>(uid);
+        }
+        //#endregion Starlight
 
         var ev = new SiliconEmaggedEvent(args.UserUid);
         RaiseLocalEvent(uid, ref ev);

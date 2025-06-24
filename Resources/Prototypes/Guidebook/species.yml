@@ -15,6 +15,7 @@
   - Cyclorite
   - Vulpkanin
   - Resomi
+  - Shadekin
 
 - type: guideEntry
   id: Arachnid
@@ -75,3 +76,8 @@
   id: Resomi
   name: species-name-resomi
   text: "/ServerInfo/Guidebook/Mobs/Resomi.xml"
+
+- type: guideEntry
+  id: Shadekin
+  name: species-name-shadekin
+  text: "/ServerInfo/Guidebook/Mobs/Shadekin.xml"
