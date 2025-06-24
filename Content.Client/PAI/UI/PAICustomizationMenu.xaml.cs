@@ -65,9 +65,5 @@ public sealed partial class PAICustomizationMenu : FancyWindow
 
     private void UpdatePreview(PAIEmotion emotion)
     {
-        // The preview will automatically update through the appearance system
-        // when the server sends back the emotion change confirmation
-        // For immediate feedback, we could potentially simulate the appearance change here
-        // but it's better to let the server handle the state synchronization
     }
 }
