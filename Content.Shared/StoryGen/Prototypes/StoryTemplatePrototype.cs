@@ -6,7 +6,7 @@ namespace Content.Shared.StoryGen;
 /// <summary>
 /// Prototype for a story template that can be filled in with words chosen from <see cref="DatasetPrototype"/>s.
 /// </summary>
-[Serializable, Prototype("storyTemplate")]
+[Serializable, Prototype]
 public sealed partial class StoryTemplatePrototype : IPrototype
 {
     /// <summary>

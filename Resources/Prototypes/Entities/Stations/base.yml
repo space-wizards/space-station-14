@@ -10,6 +10,13 @@
   components:
     - type: StationBankAccount
     - type: StationCargoOrderDatabase
+      orders:
+        Cargo: [ ]
+        Engineering: [ ]
+        Medical: [ ]
+        Science: [ ]
+        Security: [ ]
+        Service: [ ]
     - type: StationCargoBountyDatabase
 
 - type: entity
@@ -61,17 +68,39 @@
           stationGrid: false
           paths:
           - /Maps/Ruins/abandoned_outpost.yml
+          - /Maps/Ruins/atmos_interchange.yml
           - /Maps/Ruins/chunked_tcomms.yml
           - /Maps/Ruins/biodome_satellite.yml
           - /Maps/Ruins/derelict.yml
           - /Maps/Ruins/djstation.yml
           - /Maps/Ruins/empty_flagship.yml
+          - /Maps/Ruins/hydro_outpost.yml
           - /Maps/Ruins/old_ai_sat.yml
           - /Maps/Ruins/ruined_prison_ship.yml
           - /Maps/Ruins/syndicate_dropship.yml
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
           - /Maps/Ruins/wrecklaimer.yml
+          - /Maps/Ruins/displaced_telescience.yml
+        wrecks: !type:DungeonSpawnGroup
+          minimumDistance: 150
+          maximumDistance: 300
+          stationGrid: false
+          minCount: 12
+          maxCount: 16
+          addComponents:
+          - type: Gravity
+            enabled: true
+            inherent: true
+          - type: IFF
+            flags: HideLabel
+            color: "#88b0d1"
+          protos:
+          - ChunkDebrisSmall
+          - ChunkDebrisSmall
+          - ChunkDebrisSmall
+          - ChunkDebrisSmall
+          - ChunkDebris
         vgroid: !type:DungeonSpawnGroup
           minimumDistance: 300
           maximumDistance: 350
@@ -114,6 +143,27 @@
   abstract: true
   components:
     - type: SalvageMagnetData
+
+- type: entity
+  id: BaseStationSalvageJobs
+  abstract: true
+  components:
+  - type: SalvageJobsData
+    rankThresholds:
+      0:
+        title: salvage-job-rank-title-0
+        bountyGroup: SalvageJobTier1
+      3:
+        title: salvage-job-rank-title-1
+        bountyGroup: SalvageJobTier2
+        unlockedMarket: SalvageJobReward2
+      6:
+        title: salvage-job-rank-title-2
+        bountyGroup: SalvageJobTier3
+        unlockedMarket: SalvageJobReward3
+    maxRank:
+      title: salvage-job-rank-title-MAX
+      unlockedMarket: SalvageJobRewardMAX
 
 - type: entity
   id: BaseStationSiliconLawCrewsimov

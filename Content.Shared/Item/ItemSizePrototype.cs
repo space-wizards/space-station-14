@@ -5,7 +5,7 @@ namespace Content.Shared.Item;
 /// <summary>
 /// This is a prototype for a category of an item's size.
 /// </summary>
-[Prototype("itemSize")]
+[Prototype]
 public sealed partial class ItemSizePrototype : IPrototype, IComparable<ItemSizePrototype>
 {
     /// <inheritdoc/>

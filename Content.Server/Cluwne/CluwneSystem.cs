@@ -1,9 +1,9 @@
-using Content.Server.Administration.Commands;
 using Content.Server.Popups;
 using Content.Shared.Popups;
 using Content.Shared.Mobs;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
+using Content.Server.Clothing.Systems;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Stunnable;
@@ -13,7 +13,6 @@ using Robust.Shared.Prototypes;
 using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cluwne;
-using Content.Shared.Interaction.Components;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Clumsy;
@@ -31,6 +30,7 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
+    [Dependency] private readonly OutfitSystem _outfitSystem = default!;
 
     public override void Initialize()
     {
@@ -78,7 +78,7 @@ public sealed class CluwneSystem : EntitySystem
 
         _nameMod.RefreshNameModifiers(uid);
 
-        SetOutfitCommand.SetOutfit(uid, "CluwneGear", EntityManager);
+        _outfitSystem.SetOutfit(uid, "CluwneGear");
     }
 
     /// <summary>

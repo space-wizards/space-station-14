@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/31dd6749bfe32810c46e7913efc99a187479cd51/icons/obj/meteor.dmi",
+  "copyright": "Taken from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/31dd6749bfe32810c46e7913efc99a187479cd51/icons/obj/meteor.dmi. cow_pixel - taken from https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b and modified by B_Kirill. potato by Chaoticaa (GitHub), modified by B_Kirill. clown_pixel - assembly of [Human sprite - taken from https://github.com/tgstation/tgstation/blob/8024397cc81c5f47f74cf4279e35728487d0a1a7/icons/mob/human_parts_greyscale.dmi and modified by DrSmugleaf ; Clown wig and mask - taken from https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e ; Clown suit - taken from https://github.com/tgstation/tgstation/commit/c838ba21dae97db345e0113f99596decd1d66039 ; Clown shoes - taken from https://github.com/tgstation/tgstation/commit/7e4e9d432d88981fb9bb463970c5b98ce85c0abe ; Giggles von honkerton - taken from https://github.com/tgstation/tgstation/commit/547852588166c8e091b441e4e67169e156bb09c1] by B_Kirill.",
   "size": {
     "x": 32,
     "y": 32
@@ -266,6 +266,43 @@
     },
     {
       "name": "firework"
+    },
+    {
+      "name": "cow_pixel",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "clown_pixel",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "potato",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }

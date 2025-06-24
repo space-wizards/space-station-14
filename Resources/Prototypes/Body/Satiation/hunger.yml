@@ -86,6 +86,11 @@
   baseDecayRate: 0.01666666666
 
 - type: satiation
+  id: ScurretHunger
+  parent: SimpleMobBaseHunger
+  baseDecayRate: 0.05 # They get a lil' hungy
+
+- type: satiation
   id: DionaHunger
   parent: NormalSatiationHunger
   baseDecayRate: 0.0083

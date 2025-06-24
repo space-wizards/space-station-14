@@ -3,42 +3,36 @@ using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.EntitySerialization;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Round | AdminFlags.Spawn)]
-    public sealed class LoadGameMapCommand : IConsoleCommand
+    public sealed class LoadGameMapCommand : LocalizedEntityCommands
     {
-        public string Command => "loadgamemap";
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
+        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
-        public string Description => "Loads the given game map at the given coordinates.";
+        public override string Command => "loadgamemap";
 
-        public string Help => "loadgamemap <mapid> <gamemap> [<x> <y> [<name>]] ";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
-            var mapSys = entityManager.EntitySysManager.GetEntitySystem<SharedMapSystem>();
-
             if (args.Length is not (2 or 4 or 5))
             {
                 shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
 
-            if (!prototypeManager.TryIndex<GameMapPrototype>(args[1], out var gameMap))
+            if (!_prototypeManager.TryIndex<GameMapPrototype>(args[1], out var gameMap))
             {
                 shell.WriteError($"The given map prototype {args[0]} is invalid.");
                 return;
             }
 
             if (!int.TryParse(args[0], out var mapId))
-                    return;
+                return;
 
             var stationName = args.Length == 5 ? args[4] : null;
 
@@ -48,14 +42,14 @@ namespace Content.Server.Administration.Commands
 
             var id = new MapId(mapId);
 
-            var grids = mapSys.MapExists(id)
-                ? gameTicker.MergeGameMap(gameMap, id, stationName: stationName, offset: offset)
-                : gameTicker.LoadGameMapWithId(gameMap, id, stationName: stationName, offset: offset);
+            var grids = _mapSystem.MapExists(id)
+                ? _gameTicker.MergeGameMap(gameMap, id, stationName: stationName, offset: offset)
+                : _gameTicker.LoadGameMapWithId(gameMap, id, stationName: stationName, offset: offset);
 
             shell.WriteLine($"Loaded {grids.Count} grids.");
         }
 
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             switch (args.Length)
             {
@@ -79,26 +73,20 @@ namespace Content.Server.Administration.Commands
     }
 
     [AdminCommand(AdminFlags.Round | AdminFlags.Spawn)]
-    public sealed class ListGameMaps : IConsoleCommand
+    public sealed class ListGameMaps : LocalizedCommands
     {
-        public string Command => "listgamemaps";
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public string Description => "Lists the game maps that can be used by loadgamemap";
+        public override string Command => "listgamemaps";
 
-        public string Help => "listgamemaps";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
-
             if (args.Length != 0)
             {
                 shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
-            foreach (var prototype in prototypeManager.EnumeratePrototypes<GameMapPrototype>())
+            foreach (var prototype in _prototypeManager.EnumeratePrototypes<GameMapPrototype>())
             {
                 shell.WriteLine($"{prototype.ID} - {prototype.MapName}");
             }
