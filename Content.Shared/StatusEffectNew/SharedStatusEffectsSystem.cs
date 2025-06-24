@@ -1,5 +1,4 @@
 using Content.Shared.Alert;
-using Content.Shared.StatusEffect;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
@@ -97,7 +96,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         effectComp.EndEffectTime += delta;
         Dirty(effect, effectComp);
 
-        if (effectComp.Alert is not null && effectComp.AppliedTo is not null)
+        if (effectComp is { AppliedTo: not null, Alert: not null })
         {
             (TimeSpan Start, TimeSpan End)? cooldown = effectComp.EndEffectTime is null
                 ? null
@@ -118,7 +117,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         effectComp.EndEffectTime = _timing.CurTime + duration;
         Dirty(effect, effectComp);
 
-        if (effectComp.Alert is not null && effectComp.AppliedTo is not null)
+        if (effectComp is { AppliedTo: not null, Alert: not null })
         {
             (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null
                 ? null
@@ -133,7 +132,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
     private void OnStatusEffectApplied(Entity<StatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        if (ent.Comp.AppliedTo is not null && ent.Comp.Alert is not null)
+        if (ent.Comp is { AppliedTo: not null, Alert: not null })
         {
             (TimeSpan, TimeSpan)? cooldown = ent.Comp.EndEffectTime is null
                 ? null
@@ -151,7 +150,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         if (ent.Comp.AppliedTo is null)
             return;
 
-        if (ent.Comp.AppliedTo is not null && ent.Comp.Alert is not null)
+        if (ent.Comp is { AppliedTo: not null, Alert: not null })
             _alerts.ClearAlert(ent.Comp.AppliedTo.Value, ent.Comp.Alert.Value);
     }
 

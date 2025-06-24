@@ -51,7 +51,7 @@ public sealed class DrowsinessOverlay : Overlay
             return;
 
         TimeSpan? remainingTime = TimeSpan.Zero;
-        foreach (var (effect, statusEffectComp) in drowsinessEffects)
+        foreach (var (_, _, statusEffectComp) in drowsinessEffects)
         {
             if (statusEffectComp.EndEffectTime > remainingTime)
                 remainingTime = statusEffectComp.EndEffectTime;

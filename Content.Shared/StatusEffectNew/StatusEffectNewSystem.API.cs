@@ -242,7 +242,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// <summary>
     /// Returns all status effects that have the specified component.
     /// </summary>
-    public bool TryEffectsWithComp<T>(EntityUid? target, [NotNullWhen(true)] out HashSet<(Entity<T>, StatusEffectComponent comp)>? effects) where T : IComponent
+    public bool TryEffectsWithComp<T>(EntityUid? target, [NotNullWhen(true)] out HashSet<Entity<T, StatusEffectComponent>>? effects) where T : IComponent
     {
         effects = null;
         if (!_containerQuery.TryComp(target, out var container))
@@ -252,10 +252,11 @@ public abstract partial class SharedStatusEffectsSystem
         {
             if (!TryComp<StatusEffectComponent>(effect, out var statusComp))
                 continue;
+
             if (TryComp<T>(effect, out var comp))
             {
                 effects ??= [];
-                effects.Add(((effect, comp), statusComp));
+                effects.Add((effect, comp, statusComp));
             }
         }
 
