@@ -140,6 +140,9 @@ public sealed partial class StaminaComponent : Component
     [DataField]
     public int Jitters = 4;
 
+    /// <summary>
+    /// Vector of the last Jitter so we can make sure we don't jitter in the same quadrant twice in a row.
+    /// </summary>
     [DataField]
     public Vector2 LastJitter;
 
