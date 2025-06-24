@@ -107,6 +107,12 @@ public sealed partial class ImplanterComponent : Component
     [AutoNetworkedField]
     public EntProtoId? DeimplantChosen = null;
 
+    /// <summary>
+    /// STARLIGHT: If true, the implanter will be deleted after successful use
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool DissolveOnUse = false;
+
     public bool UiUpdateNeeded;
 }
 

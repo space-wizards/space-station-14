@@ -43,6 +43,9 @@
   id: MagazineRifleM52
 
 - type: Tag
+  id: MagazineSMGPPSH
+  
+- type: Tag
   id: MagazineSMGUzi
 
 - type: Tag

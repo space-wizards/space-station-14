@@ -4,7 +4,15 @@
   keycode: "l"
   frequency: 1780
   color: "#ff178b"
-  
+
+- type: radioChannel
+  id: Soviet
+  name: chat-radio-soviet
+  keycode: "w"
+  frequency: 1922
+  color: "#ed7300"
+  longRange: true
+
 - type: radioChannel
   id: Expedition
   name: chat-radio-expedition
