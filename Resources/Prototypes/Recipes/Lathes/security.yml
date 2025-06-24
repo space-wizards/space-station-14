@@ -92,15 +92,6 @@
 
 - type: latheRecipe
   parent: BaseWeaponRecipeLong
-  id: WeaponLaserRifle # DS14
-  result: WeaponLaserRifle
-  materials:
-    Steel: 2000
-    Plastic: 750
-    Silver: 500
-
-- type: latheRecipe
-  parent: BaseWeaponRecipeLong
   id: WeaponLaserSvalinn
   result: WeaponLaserSvalinn
   materials:
