@@ -22,7 +22,7 @@ public sealed partial class AnyFlagsRequirement : JobRequirement
         ICommonSession? player,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
-        IReadOnlyDictionary<string, TimeSpan> playTimes,
+        IReadOnlyDictionary<string, TimeSpan>? playTimes,
         [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = new FormattedMessage();

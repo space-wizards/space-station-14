@@ -234,3 +234,47 @@
     - trilling.
     - trilling!
     - trilling?
+
+- type: emote
+  id: Mar
+  name: chat-emote-name-mar
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-mar"]
+  chatTriggers:
+    - mar
+    - mar.
+    - mar!
+    - mar?
+    - mars
+    - mars.
+    - mars!
+    - mars?
+
+- type: emote
+  id: Wurble
+  name: chat-emote-name-wurble
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-wurble"]
+  chatTriggers:
+    - wurble
+    - wurble.
+    - wurble!
+    - wurble?
+    - wurbles
+    - wurbles.
+    - wurbles!
+    - wurbles?

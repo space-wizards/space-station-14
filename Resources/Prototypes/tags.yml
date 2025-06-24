@@ -227,8 +227,6 @@
 - type: Tag
   id: CanPilot
 
-- type: Tag
-  id: CapacitorStockPart
 
 - type: Tag
   id: CaptainSabre
@@ -1022,6 +1020,9 @@
 
 - type: Tag
   id: MimeHappyHonk
+
+- type: Tag
+  id: FakeMindShieldImplant
 
 - type: Tag
   id: MindTransferTarget

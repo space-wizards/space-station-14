@@ -638,10 +638,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("job_name");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("priority");
-
                     b.Property<int>("ProfileId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("profile_id");
@@ -654,11 +650,39 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasIndex("ProfileId", "JobName")
                         .IsUnique();
 
-                    b.HasIndex(new[] { "ProfileId" }, "IX_job_one_high_priority")
+                    b.ToTable("job", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.JobPriorityEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("job_priority_entry_id");
+
+                    b.Property<string>("JobName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("job_name");
+
+                    b.Property<int>("PreferenceId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("preference_id");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("priority");
+
+                    b.HasKey("Id")
+                        .HasName("PK_job_priority_entry");
+
+                    b.HasIndex("PreferenceId");
+
+                    b.HasIndex(new[] { "PreferenceId" }, "IX_job_one_high_priority")
                         .IsUnique()
                         .HasFilter("priority = 3");
 
-                    b.ToTable("job", (string)null);
+                    b.ToTable("job_priority_entry", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.PlayTime", b =>
@@ -790,10 +814,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("construction_favorites");
 
-                    b.Property<int>("SelectedCharacterSlot")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("selected_character_slot");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT")
                         .HasColumnName("user_id");
@@ -822,6 +842,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("char_name");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("enabled");
 
                     b.Property<string>("EyeColor")
                         .IsRequired()
@@ -877,10 +901,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Property<int>("PreferenceId")
                         .HasColumnType("INTEGER")
                         .HasColumnName("preference_id");
-
-                    b.Property<int>("PreferenceUnavailable")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("pref_unavailable");
 
                     b.Property<string>("Sex")
                         .IsRequired()
@@ -1329,6 +1349,31 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("server_unban", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.StarLightModel+StarLightProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("star_light_profile_id");
+
+                    b.Property<string>("CustomSpecieName")
+                        .HasMaxLength(32)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("custom_specie_name");
+
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("profile_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_star_light_profile");
+
+                    b.HasIndex("ProfileId")
+                        .IsUnique();
+
+                    b.ToTable("star_light_profile", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
                 {
                     b.Property<int>("Id")
@@ -1688,6 +1733,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Profile");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.JobPriorityEntry", b =>
+                {
+                    b.HasOne("Content.Server.Database.Preference", "Preference")
+                        .WithMany("JobPriorities")
+                        .HasForeignKey("PreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_job_priority_entry_preference_preference_id");
+
+                    b.Navigation("Preference");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Player", b =>
                 {
                     b.OwnsOne("Content.Server.Database.TypedHwid", "LastSeenHWId", b1 =>
@@ -1949,6 +2006,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Ban");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.StarLightModel+StarLightProfile", b =>
+                {
+                    b.HasOne("Content.Server.Database.Profile", "Profile")
+                        .WithOne("StarLightProfile")
+                        .HasForeignKey("Content.Server.Database.StarLightModel+StarLightProfile", "ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_star_light_profile_profile_profile_id");
+
+                    b.Navigation("Profile");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -2041,6 +2110,8 @@ namespace Content.Server.Database.Migrations.Sqlite
 
             modelBuilder.Entity("Content.Server.Database.Preference", b =>
                 {
+                    b.Navigation("JobPriorities");
+
                     b.Navigation("Profiles");
                 });
 
@@ -2051,6 +2122,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Jobs");
 
                     b.Navigation("Loadouts");
+
+                    b.Navigation("StarLightProfile");
 
                     b.Navigation("Traits");
                 });

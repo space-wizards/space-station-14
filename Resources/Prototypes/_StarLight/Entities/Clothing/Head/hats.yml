@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ ClothingHeadBase, BaseCommandContraband ]
   id: ClothingHeadHatCapNtrep
   name: nt representive cap
   description: The cap of justice over command!
@@ -47,3 +47,40 @@
     - Recyclable
     - HamsterWearable
     - WhitelistChameleon
+
+#USSP
+- type: entity
+  parent: [ClothingHeadBase, BaseSovietContraband]
+  id: ClothingHeadHatUshankaAlt
+  name: SNKVD ushanka
+  description: Disappearances are entirely voluntary, tovarisch.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/Ushanka.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/Ushanka.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 1.025
+    coolingCoefficient: 0.65
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingHeadBase, BaseSovietContraband]
+  id: ClothingHeadHatSovietAdmiralHat
+  name: soviet admiral hat
+  description: This hat clearly belongs to someone very important.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/sovietadmiralhat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/sovietadmiralhat.rsi 
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - HamsterWearable

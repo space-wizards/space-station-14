@@ -221,7 +221,8 @@
       minValue: 0.1
       maxValue: 2.0
       isLooped: true
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
+    spriteLayer: light
   - type: PointLight
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
@@ -318,7 +319,7 @@
     - NamesBorg
   - type: NpcFactionMember
     factions:
-    - NanoTrasen
+    - NanoTrasenSilicon # starlight
   - type: Access
     enabled: false
     groups:
@@ -340,7 +341,7 @@
   - type: TextToSpeech
   - type: NpcFactionMember
     factions:
-    - Syndicate
+    - SyndicateSilicon # starlight
   - type: Access
     tags:
     - NuclearOperative
@@ -356,6 +357,7 @@
     - Syndicate
   - type: ActiveRadio
     channels:
+    - Binary
     - Syndicate
   - type: ShowSyndicateIcons
   - type: MovementAlwaysTouching
@@ -376,7 +378,7 @@
   components:
   - type: NpcFactionMember
     factions:
-    - NanoTrasen #The seemingly best fit. It was a regular NT cyborg once, after all.
+    - NanoTrasenSilicon #The seemingly best fit. It was a regular NT cyborg once, after all. starlight
   - type: Access
     enabled: false
     groups:

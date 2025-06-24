@@ -1,0 +1,182 @@
+- type: entity
+  name: gorilla
+  parent: [SimpleMobBase, MobCombat]
+  id: BaseMobGorilla
+  description: A ground-dwelling, predominantly herbivorous ape that inhabits the forests of central Africa on Earth.
+  abstract: true
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: crawling
+          sprite: Mobs/Animals/gorilla.rsi
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PhysShapeCircle
+            radius: 0.48
+          density: 200
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: crawling
+        Critical:
+          Base: dead
+        Dead:
+          Base: dead
+    - type: Butcherable
+      spawned:
+        - id: FoodMeat
+          amount: 4
+    - type: Bloodstream
+      bloodMaxVolume: 300
+      # if you fuck with the gorilla he will harambe you
+    - type: MeleeWeapon
+      soundHit:
+        collection: Punch
+      damage:
+        types:
+          Blunt: 18
+          Structural: 20
+      animation: WeaponArcFist
+    - type: MeleeThrowOnHit
+      speed: 20
+      distance: 5
+    - type: NPCRetaliation
+    - type: FactionException
+    - type: NpcFactionMember
+      factions:
+        - Gorilla
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+      blackboard:
+        NavClimb: !type:Bool
+          true
+        NavInteract: !type:Bool
+          true
+        NavPry: !type:Bool
+          true
+        NavSmash: !type:Bool
+          true
+    - type: Hands
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 2
+    - type: NoSlip
+    - type: Puller
+      needsHands: false
+    - type: StatusEffects
+      allowed:
+        - KnockedDown
+        - Stutter
+        - Electrocution
+        - ForcedSleep
+        - TemporaryBlindness
+        - Pacified
+        - Flashed
+        - RadiationProtection
+        - Drowsiness
+        - Adrenaline
+    - type: Prying
+      pryPowered: true
+      force: true
+      speedModifier: 1.5
+      useSound:
+        path: /Audio/Items/crowbar.ogg
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        200: Critical
+        250: Dead
+    - type: MeleeSpeech
+      Battlecry: Gorilla punch!
+    - type: UserInterface
+      interfaces:
+        enum.MeleeSpeechUiKey.Key:
+          type: MeleeSpeechBoundUserInterface
+    - type: Speech
+      speechVerb: Monkey
+    - type: Damageable
+      damageContainer: Biological
+      damageModifierSet: Gorilla
+    - type: InteractionPopup
+      successChance: 0
+      interactFailureString: petting-failure-generic
+      interactFailureSound:
+        path: /Audio/_Starlight/Voice/gorilla.ogg
+    - type: Tag
+      tags:
+        - DoorBumpOpener
+
+- type: entity
+  parent: BaseMobGorilla
+  id: MobGorilla
+  components:
+    - type: MonkeyAccent
+
+- type: entity
+  name: Rampaging Gorilla
+  parent: BaseMobGorilla
+  id: MobGorillaRampaging
+  description: A gorilla that has gone wild. Run!
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: crawling
+          sprite: Mobs/Animals/gorilla.rsi
+          color: "#FF0000"
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        350: Critical
+        400: Dead
+    - type: MeleeWeapon
+      soundHit:
+        collection: Punch
+      damage:
+        types:
+          Blunt: 35
+          Structural: 20
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 4
+    - type: Damageable
+      damageContainer: Biological
+      damageModifierSet: GorillaRampaging
+
+- type: entity
+  name: Cargorilla
+  parent: BaseMobGorilla
+  id: MobCargorilla
+  description: Cargo's pet gorilla. He seems to have an 'I love Mom' tattoo.
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: cargo_crawling
+          sprite: Mobs/Animals/gorilla.rsi
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: cargo_crawling
+        Critical:
+          Base: cargo_dead
+        Dead:
+          Base: cargo_dead
+    - type: HTN
+      rootTask:
+        task: IdleCompound
+      blackboard:
+        NavClimb: !type:Bool true
+        NavInteract: !type:Bool true
+    - type: Pacified

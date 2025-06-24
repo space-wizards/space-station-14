@@ -4,6 +4,7 @@ using Content.Server.Cargo.Systems;
 using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Cargo;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;

@@ -27,6 +27,9 @@ using Content.Shared.DetailExaminable;
 using Content.Shared.Store.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
+using Content.Server.Polymorph.Systems; // Starlight
+using Content.Shared.Zombies; // Starlight
+using Robust.Shared.Player; // Starlight
 
 namespace Content.Server.Implants;
 
@@ -45,6 +48,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private readonly PolymorphSystem _polymorphSystem = default!; // Starlight
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private HashSet<Entity<MapGridComponent>> _targetGrids = [];
@@ -60,6 +64,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         SubscribeLocalEvent<SubdermalImplantComponent, ActivateImplantEvent>(OnActivateImplantEvent);
         SubscribeLocalEvent<SubdermalImplantComponent, UseScramImplantEvent>(OnScramImplant);
         SubscribeLocalEvent<SubdermalImplantComponent, UseDnaScramblerImplantEvent>(OnDnaScramblerImplant);
+        SubscribeLocalEvent<SubdermalImplantComponent, UseMagillitisSerumImplantEvent>(OnMagillitisSerumImplantImplant); // Starlight
 
     }
 
@@ -160,7 +165,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         {
             var valid = false;
 
-            var range = (float) Math.Sqrt(radius);
+            var range = (float)Math.Sqrt(radius);
             var box = Box2.CenteredAround(userCoords.Position, new Vector2(range, range));
             var tilesInRange = _mapSystem.GetTilesEnumerator(targetGrid.Value.Owner, targetGrid.Value.Comp, box, false);
             var tileList = new ValueList<Vector2i>();
@@ -182,7 +187,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
                     if (body.BodyType != BodyType.Static ||
                         !body.Hard ||
-                        (body.CollisionLayer & (int) CollisionGroup.MobMask) == 0)
+                        (body.CollisionLayer & (int)CollisionGroup.MobMask) == 0)
                         continue;
 
                     valid = false;
@@ -229,4 +234,47 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         args.Handled = true;
         QueueDel(uid);
     }
+
+    /// <summary>
+    /// Starlight: Tries to get all implants from an entity
+    /// </summary>
+    /// <param name="uid">The entity to get implants from</param>
+    /// <param name="implants">The list of implants found</param>
+    /// <returns>True if the entity has implants, false otherwise</returns>
+    public bool TryGetImplants(EntityUid uid, out List<EntityUid> implants)
+    {
+        implants = new List<EntityUid>();
+
+        if (!TryComp<ImplantedComponent>(uid, out var implanted))
+            return false;
+
+        var implantContainer = implanted.ImplantContainer;
+
+        if (implantContainer.ContainedEntities.Count == 0)
+            return false;
+
+        implants.AddRange(implantContainer.ContainedEntities);
+        return true;
+    }
+
+    private void OnMagillitisSerumImplantImplant(EntityUid uid, SubdermalImplantComponent component, UseMagillitisSerumImplantEvent args)
+    {
+        if (component.ImplantedEntity is not { } ent)
+            return;
+
+        if (HasComp<ZombieComponent>(uid))
+            return;
+
+        var polymorph = _polymorphSystem.PolymorphEntity(ent, "RampagingGorilla");
+
+        if (!polymorph.HasValue)
+            return;
+
+        _popup.PopupEntity(Loc.GetString("magillitisserum-implant-activated-others", ("entity", polymorph.Value)), polymorph.Value, Filter.PvsExcept(polymorph.Value), true);
+        _popup.PopupEntity(Loc.GetString("magillitisserum-implant-activated-user"), polymorph.Value, polymorph.Value);
+
+        args.Handled = true;
+        QueueDel(uid);
+    }
+    // Starlight End
 }

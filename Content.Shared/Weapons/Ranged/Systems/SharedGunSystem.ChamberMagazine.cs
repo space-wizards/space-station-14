@@ -87,7 +87,7 @@ public abstract partial class SharedGunSystem
     /// </summary>
     private void OnChamberActivationVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null || !component.CanRack)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Hands == null || component.BoltClosed == null || !component.CanRack)
             return;
 
         args.Verbs.Add(new ActivationVerb()
@@ -140,7 +140,7 @@ public abstract partial class SharedGunSystem
     /// </summary>
     private void OnChamberInteractionVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Hands == null || component.BoltClosed == null)
             return;
 
         args.Verbs.Add(new InteractionVerb()

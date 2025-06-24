@@ -1,5 +1,5 @@
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseLawContraband ]
   id: EncryptionKeyLaw
   name: law encryption key
   description: An encryption key used by the most meticulous person.
@@ -12,3 +12,21 @@
       layers:
       - state: crypt_silver
       - state: nano_label
+
+- type: entity
+  parent: [ EncryptionKey, BaseSovietContraband ]
+  id: EncryptionKeySoviet
+  name: soviet encryption key
+  description: Priyom. Priyom.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Soviet
+    defaultChannel: Soviet
+  - type: Sprite
+    layers:
+    - sprite: _Starlight/Objects/Devices/encryption_keys.rsi
+      state: crypt_soviet
+    - sprite: _Starlight/Objects/Devices/encryption_keys.rsi
+      state: soviet_label
+    

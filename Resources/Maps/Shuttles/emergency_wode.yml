@@ -2760,17 +2760,13 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         557:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         556:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         569:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         570:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: LockerSecurityFilled
   entities:
   - uid: 552
@@ -3281,17 +3277,13 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         71:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         344:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         335:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         350:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SignBridge
   entities:
   - uid: 129

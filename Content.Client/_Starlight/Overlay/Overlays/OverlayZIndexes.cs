@@ -7,4 +7,5 @@ public enum OverlayZIndexes
     NightVision,
     ThermalVisionEntityHighlight,
     ThermalVision,
+    NullSpace,
 }

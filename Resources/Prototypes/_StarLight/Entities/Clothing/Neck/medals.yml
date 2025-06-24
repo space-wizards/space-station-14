@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingSovietMedals
+  name: soviet sets of medals
+  description: A collection of medals meant to be replicas of the ones decorated. Wait, I think these actually might be real.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Medals/SovietMedals.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Neck/Medals/SovietMedals.rsi
+  - type: Tag
+    tags:
+      - Medal
+  - type: StaticPrice
+    price: 250

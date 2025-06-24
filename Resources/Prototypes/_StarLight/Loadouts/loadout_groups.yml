@@ -20,6 +20,24 @@
   loadouts:
   - RoboticistCap
   - SkullBandana
+
+- type: loadoutGroup
+  id: RoboticistGloves
+  name: loadout-group-roboticist-gloves
+  minLimit: 0
+  loadouts:
+  - LatexGloves
+  - PurpleGloves
+  - RobohandsGloves
+
+- type: loadoutGroup
+  id: RoboticistGoggles
+  name: loadout-group-roboticist-goggles
+  minLimit: 0
+  loadouts:
+  - RoboticistWeldingGoggles
+  - RoboticistDiagnosticsHud
+  
   
 - type: loadoutGroup
   id: RoboticistBackpack
@@ -81,4 +99,88 @@
   loadouts:
   - SecurityMk58
   - SecurityPistolDP
+
+# Assorted Boots
+- type: loadoutGroup
+  id: RoboticistShoes
+  name: loadout-group-roboticist-shoes
+  minLimit: 1
+  loadouts:
+  - BlackShoes
+  - ScienceWinterBoots
+  - Heels
+  - LeatherShoes
+
+- type: loadoutGroup
+  id: CaptainShoes
+  name: loadout-group-captain-shoes
+  minLimit: 1
+  loadouts:
+  - LaceupShoes
+  - Heels
+  - LeatherShoes
+  - CowboyBootsBrown
+  - CowboyBootsBlack
+  - CowboyBootsWhite
+
+- type: loadoutGroup
+  id: HoPShoes
+  name: loadout-group-hop-shoes
+  minLimit: 1
+  loadouts:
+  - BrownShoes
+  - Heels
+  - LaceupShoes
+  - LeatherShoes
+
+- type: loadoutGroup
+  id: MagistrateShoes
+  name: loadout-group-magistrate-shoes
+  minLimit: 1
+  loadouts:
+  - LaceupShoes
+  - Heels
+
+- type: loadoutGroup
+  id: NanotrasenRepresentativeShoes
+  name: loadout-group-nanotrasenrepresentative-shoes
+  minLimit: 1
+  loadouts:
+  - LaceupShoes
+  - Heels
+  - LeatherShoes
+
+- type: loadoutGroup
+  id: DetectiveShoes
+  name: loadout-group-detective-shoes
+  minLimit: 1
+  loadouts:
+  - JackBoots
+  - SecurityWinterBoots
+  - LaceupShoes
+  - CowboyBootsBrown
+  - CowboyBootsBlack
+  - CowboyBootsWhite
+
+- type: loadoutGroup
+  id: CivilianShoes
+  name: loadout-group-civilian-shoes
+  minLimit: 1
+  loadouts:
+  - BlackShoes
+  - WhiteShoes
+  - GreenShoes
+  - LeatherShoes
+  - Heels
+  - LaceupShoes
+
+- type: loadoutGroup
+  id: LawyerShoes
+  name: loadout-group-iia-shoes
+  minLimit: 1
+  loadouts:
+  - BlackShoes
+  - LaceupShoes
+  - Heels
+  - LeatherShoes
 

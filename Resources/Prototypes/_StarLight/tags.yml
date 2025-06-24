@@ -4,6 +4,9 @@
   id: Arachnid
 
 - type: Tag
+  id: Avali
+
+- type: Tag
   id: CantInteract
 
 - type: Tag
@@ -43,10 +46,16 @@
   id: MagazineRifleM52
 
 - type: Tag
+  id: MagazineSMGPPSH
+  
+- type: Tag
   id: MagazineSMGUzi
 
 - type: Tag
   id: MedCyberEyes
+
+- type: Tag
+  id: MicroManipulatorStockPart
 
 - type: Tag
   id: OmniCyberEyes

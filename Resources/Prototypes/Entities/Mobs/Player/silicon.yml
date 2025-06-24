@@ -260,7 +260,7 @@
   - type: BlockMovement
     blockInteraction: false
   - type: SiliconLawProvider
-    laws: CrewsimovAI
+    laws: NTDefault # Starlight
   - type: SiliconLawBound
   - type: ActionGrant
     actions:
@@ -301,6 +301,10 @@
       state: ai_female
   - type: NameIdentifier
     group: StationAi
+    #region Starlight
+  - type: IonStormTarget
+    chance: 0.6 # lets just try it at 3/4th the chance of a borg and see how bad it gets
+    #endregion
 
 # Hologram projection that the AI's eye tracks.
 - type: entity

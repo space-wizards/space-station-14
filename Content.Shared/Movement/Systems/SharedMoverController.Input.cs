@@ -1,4 +1,6 @@
-using System.Numerics;
+﻿using System.Numerics;
+using System.Security.Cryptography;
+using Content.Shared._Starlight.Actions.Jump;
 using Content.Shared.Alert;
 using Content.Shared.CCVar;
 using Content.Shared.Follower.Components;
@@ -40,6 +42,7 @@ namespace Content.Shared.Movement.Systems
                 .Bind(EngineKeyFunctions.MoveLeft, moveLeftCmdHandler)
                 .Bind(EngineKeyFunctions.MoveRight, moveRightCmdHandler)
                 .Bind(EngineKeyFunctions.MoveDown, moveDownCmdHandler)
+                .Bind(ContentKeyFunctions.Jump, new JumpInputCmdHandler(_action, _charges, Timing)) // 🌟Starlight🌟
                 .Bind(EngineKeyFunctions.Walk, new WalkInputCmdHandler(this))
                 .Bind(EngineKeyFunctions.CameraRotateLeft, new CameraRotateInputCmdHandler(this, Direction.East))
                 .Bind(EngineKeyFunctions.CameraRotateRight, new CameraRotateInputCmdHandler(this, Direction.West))
@@ -104,7 +107,7 @@ namespace Content.Shared.Movement.Systems
             RaiseLocalEvent(entity, ref moveEvent);
             Dirty(entity, entity.Comp);
 
-            var ev = new SpriteMoveEvent(entity.Comp.HeldMoveButtons != MoveButtons.None);
+            var ev = new SpriteMoveEvent(entity.Comp.HasDirectionalMovement);
             RaiseLocalEvent(entity, ref ev);
         }
 
@@ -134,7 +137,7 @@ namespace Content.Shared.Movement.Systems
                 entity.Comp.HeldMoveButtons = state.HeldMoveButtons;
                 RaiseLocalEvent(entity.Owner, ref moveEvent);
 
-                var ev = new SpriteMoveEvent(entity.Comp.HeldMoveButtons != MoveButtons.None);
+                var ev = new SpriteMoveEvent(entity.Comp.HasDirectionalMovement);
                 RaiseLocalEvent(entity, ref ev);
             }
         }

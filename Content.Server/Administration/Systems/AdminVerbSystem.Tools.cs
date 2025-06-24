@@ -43,6 +43,8 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.Overlays; // 🌟Starlight🌟
+using Content.Shared.Contraband; // 🌟Starlight🌟
 
 namespace Content.Server.Administration.Systems;
 
@@ -766,7 +768,58 @@ public sealed partial class AdminVerbSystem
             args.Verbs.Add(setCapacity);
         }
 
-        // 🌟Starlight🌟 start
+        // 🌟Starlight🌟 start 
+        // Add toggle overlays verb
+        Verb toggleOverlays = new()
+        {
+            Text = "Toggle All Overlays",
+            Category = VerbCategory.Tricks,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/_Starlight/Interface/AdminActions/ToggleOverlays.png")),
+            Act = () =>
+            {
+                // List of overlay components to toggle
+                var overlaysPresent = false;
+                overlaysPresent |= TryComp<ShowHealthBarsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowHealthIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowJobIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowMindShieldIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowSyndicateIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowCriminalRecordIconsComponent>(args.Target, out _);
+                overlaysPresent |= TryComp<ShowContrabandDetailsComponent>(args.Target, out _);
+
+                if (overlaysPresent)
+                {
+                    RemComp<ShowHealthBarsComponent>(args.Target);
+                    RemComp<ShowHealthIconsComponent>(args.Target);
+                    RemComp<ShowJobIconsComponent>(args.Target);
+                    RemComp<ShowMindShieldIconsComponent>(args.Target);
+                    RemComp<ShowSyndicateIconsComponent>(args.Target);
+                    RemComp<ShowCriminalRecordIconsComponent>(args.Target);
+                    RemComp<ShowContrabandDetailsComponent>(args.Target);
+                }
+                else
+                {
+                    var showHealthBars = EnsureComp<ShowHealthBarsComponent>(args.Target);
+                    showHealthBars.DamageContainers.Add("Biological");
+                    showHealthBars.HealthStatusIcon = "HealthIcon";
+
+                    var showHealthIcons = EnsureComp<ShowHealthIconsComponent>(args.Target);
+                    showHealthIcons.DamageContainers.Add("Biological");
+
+                    EnsureComp<ShowJobIconsComponent>(args.Target);
+                    EnsureComp<ShowMindShieldIconsComponent>(args.Target);
+                    EnsureComp<ShowSyndicateIconsComponent>(args.Target);
+                    EnsureComp<ShowCriminalRecordIconsComponent>(args.Target);
+                    EnsureComp<ShowContrabandDetailsComponent>(args.Target);
+                }
+            },
+            Impact = LogImpact.Medium,
+            Message = Loc.GetString("admin-trick-toggle-overlays-description"),
+            Priority = (int)TricksVerbPriorities.ToggleOverlays,
+        };
+        args.Verbs.Add(toggleOverlays);
+
+        // Reaper arm verb
         if (TryComp<BodyComponent>(args.Target, out var bodyComp))
         {
             Verb reaperArm = new()
@@ -944,5 +997,6 @@ public sealed partial class AdminVerbSystem
         SnapJoints = -29,
         MakeMinigun = -30,
         SetBulletAmount = -31,
+        ToggleOverlays = -32, // #🌟Starlight🌟
     }
 }

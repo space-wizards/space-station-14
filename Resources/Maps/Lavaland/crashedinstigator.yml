@@ -449,8 +449,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         127:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 127
     components:
     - type: Transform
@@ -466,8 +465,7 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         125:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
 - proto: AirlockMaint
   entities:
   - uid: 43
@@ -2943,14 +2941,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         208:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         209:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         210:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
   - uid: 330
     components:
     - type: MetaData
@@ -2962,14 +2957,11 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         211:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         212:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
         213:
-        - - Pressed
-          - Toggle
+        - Pressed: Toggle
 - proto: SMESBasic
   entities:
   - uid: 198

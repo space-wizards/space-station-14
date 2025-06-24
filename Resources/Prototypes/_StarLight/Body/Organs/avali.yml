@@ -1,0 +1,59 @@
+- type: entity
+  id: OrganAvaliStomach
+  parent: OrganAnimalStomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Meat
+      - Pill
+      - Crayon
+      - Paper
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+
+- type: entity
+  id: OrganAvaliHeart
+  parent: OrganHumanHeart
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [Avali]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  id: OrganAvaliLiver
+  parent: OrganHumanLiver
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    updateInterval: 1.5
+    maxReagents: 1
+    metabolizerTypes: [Avali]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+
+- type: entity
+  id: OrganAvaliKidneys
+  parent: OrganHumanKidneys
+  categories: [ HideSpawnMenu ]
+#Placeholder until sprited
+
+- type: entity
+  id: OrganAvaliLungs
+  parent: OrganHumanLungs
+  categories: [ HideSpawnMenu ]
+#Placeholder until sprited

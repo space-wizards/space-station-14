@@ -7,6 +7,7 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Log;
+using Content.Shared.TextScreen;
 
 
 namespace Content.Server.Screen.Systems;

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Shared.Containers;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Map;
@@ -162,6 +163,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         [NotNullWhen(true)] out Entity<SolutionComponent>? entity,
         bool errorOnMissing = false)
     {
+        // use connected container instead of entity from arguments, if it exists.
+        var ev = new GetConnectedContainerEvent();
+        RaiseLocalEvent(container, ref ev);
+        if (ev.ContainerEntity.HasValue)
+            container = ev.ContainerEntity.Value;
+
         EntityUid uid;
         if (name is null)
             uid = container;

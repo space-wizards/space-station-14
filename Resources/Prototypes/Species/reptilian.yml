@@ -11,6 +11,7 @@
   maleFirstNames: NamesReptilianMale
   femaleFirstNames: NamesReptilianFemale
   naming: FirstDashFirst
+  customName: true # Starlight
 
 - type: speciesBaseSprites
   id: MobReptilianSprites
