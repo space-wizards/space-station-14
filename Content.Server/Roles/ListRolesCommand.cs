@@ -7,24 +7,21 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class ListRolesCommand : IConsoleCommand
+    public sealed class ListRolesCommand : LocalizedCommands
     {
-        public string Command => "listroles";
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public string Description => "Lists roles";
+        public override string Command => "listroles";
 
-        public string Help => "listroles";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 0)
             {
-                shell.WriteLine("Expected no arguments.");
+                shell.WriteLine(Loc.GetString($"shell-need-exactly-zero-arguments"));
                 return;
             }
 
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            foreach(var job in prototypeManager.EnumeratePrototypes<JobPrototype>())
+            foreach(var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
             {
                 shell.WriteLine(job.ID);
             }
