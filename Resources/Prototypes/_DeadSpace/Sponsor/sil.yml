@@ -7,7 +7,7 @@
   id: SilHypospray
   entity: HypospraySil
   sponsorOnly: true
-  whitelistJobs: [ChiefMedicalOfficer, MedicalDoctor, Chemist]
+  whitelistJobs: [ChiefMedicalOfficer, SeniorPhysician, Chemist, MedicalDoctor, Paramedic, Coroner, MedicalIntern]
 
 # Hardsuit
 - type: entity
@@ -45,7 +45,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellSmall
+        startingItem: PowerCellMicroreactor
         disableEject: true
         whitelist:
           tags:
