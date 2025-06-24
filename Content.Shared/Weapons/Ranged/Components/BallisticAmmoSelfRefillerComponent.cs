@@ -37,10 +37,18 @@ public sealed partial class BallisticAmmoSelfRefillerComponent : Component
     public TimeSpan AutoRefillPauseDuration = TimeSpan.Zero;
 
     /// <summary>
-    /// What entity to spawn and attempt to insert into the owner.
+    /// What entity to spawn and attempt to insert into the owner. If null, uses
+    /// <see cref="BallisticAmmoProviderComponent.Proto"/>. If that's also null, this component does nothing but log
+    /// errors.
     /// </summary>
-    [DataField(required: true), ViewVariables, AutoNetworkedField]
-    public EntProtoId AmmoProto;
+    [DataField, ViewVariables, AutoNetworkedField]
+    public EntProtoId? AmmoProto;
+
+    /// <summary>
+    /// If true, EMPs will pause this component's behavior.
+    /// </summary>
+    [DataField, ViewVariables, AutoNetworkedField]
+    public bool AffectedByEmp = false;
 
     /// <summary>
     /// When the next auto refill should occur. This is just implementation state.
