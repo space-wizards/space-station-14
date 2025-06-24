@@ -46,6 +46,8 @@
     fire: ClosetFire
     janitor: ClosetJanitor
     legal: ClosetLegal
+    nitrogen: ClosetEmergencyN2
+    oxygen: ClosetEmergency
     radiation: ClosetRadiationSuit
     tool: ClosetTool
 
