@@ -143,12 +143,6 @@
     - state: pai-off-overlay
       shader: unshaded
       map: ["screen"]
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Command
-  - type: ActiveRadio
-    channels:
-    - Command
   - type: Appearance
   - type: StaticPrice
     price: 5000
