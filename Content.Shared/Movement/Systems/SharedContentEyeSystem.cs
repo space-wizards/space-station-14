@@ -153,7 +153,6 @@ public abstract class SharedContentEyeSystem : EntitySystem
         var ev = new GetEyeOffsetEvent();
         RaiseLocalEvent(eye, ref ev);
 
-
         var evRelayed = new GetEyeOffsetRelayedEvent();
         if (!TryComp<ContentEyeComponent>(eye.Owner, out var contentEye) || contentEye.UseRelayedOffsets)
             RaiseLocalEvent(eye, ref evRelayed);
