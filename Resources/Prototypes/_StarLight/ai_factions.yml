@@ -5,10 +5,12 @@
     - DungeonSyndicate
     - Dragon
     - NanoTrasen
+    - NanoTrasenSilicon
     - Mouse
     - PetsNT
     - SimpleHostile
     - Syndicate
+    - SyndicateSilicon
     - Xeno
     - Zombie
     - Revolutionary
@@ -21,10 +23,12 @@
   id: DungeonSoviet
   hostile:
     - NanoTrasen
+    - NanoTrasenSilicon
     - SimpleHostile
     - Xeno
     - PetsNT
     - Syndicate
+    - SyndicateSilicon
     - DungeonSyndicate
     - Zombie
     - Revolutionary
@@ -38,10 +42,12 @@
   id: DungeonSyndicate
   hostile:
     - NanoTrasen
+    - NanoTrasenSilicon
     - SimpleHostile
     - Xeno
     - PetsNT
     - Syndicate
+    - SyndicateSilicon
     - DungeonSoviet
     - Zombie
     - Revolutionary
@@ -55,10 +61,12 @@
   id: Gorilla
   hostile:
     - NanoTrasen
+    - NanoTrasenSilicon
     - Dragon
     - PetsNT
     - SimpleHostile
     - Syndicate
+    - SyndicateSilicon
     - Xeno
     - Zombie
     - Revolutionary
@@ -70,3 +78,42 @@
     - Abyss
     - DungeonSoviet
     - DungeonSyndicate
+
+- type: npcFaction
+  id: NanoTrasenSilicon # purely making this so zombies STOP ATTACKING FUCKING SILICONS
+  hostile:
+  - SimpleHostile
+  - Syndicate
+  - SyndicateSilicon
+  - DungeonSyndicate
+  - DungeonSoviet
+  - Xeno
+  - Revolutionary
+  - Abyss
+  - Vampire
+  - Changeling
+  - AllHostile
+  - Wizard
+  - Xenoborg
+  - Dragon
+  - Gorilla
+
+- type: npcFaction
+  id: SyndicateSilicon # Again, zombies fuck you.
+  hostile:
+    - NanoTrasen
+    - NanoTrasenSilicon
+    - SimpleHostile
+    - Xeno
+    - PetsNT
+    - Zombie
+    - DungeonSyndicate
+    - DungeonSoviet
+    - Abyss
+    - Vampire
+    - Changeling
+    - AllHostile
+    - Wizard
+    - Xenoborg
+    - Dragon
+    - Gorilla
