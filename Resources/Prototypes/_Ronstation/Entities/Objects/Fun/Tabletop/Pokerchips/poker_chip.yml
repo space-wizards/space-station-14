@@ -1,9 +1,8 @@
 - type: entity
   parent: BaseItem
   id: PokerChipBaseRed
-  name: poker chip
+  name: red pokerchip
   description: Raise or fold?
-  abstract: true
   components:
   - type: Item
     shape:
@@ -52,9 +51,8 @@
 - type: entity
   parent: BaseItem
   id: PokerChipBaseBlue
-  name: poker chip
+  name: blue pokerchip
   description: Raise or fold?
-  abstract: true
   components:
   - type: Item
     shape:
@@ -103,9 +101,8 @@
 - type: entity
   parent: BaseItem
   id: PokerChipBaseWhite
-  name: poker chip
+  name: white pokerchip
   description: Raise or fold?
-  abstract: true
   components:
   - type: Item
     shape:
@@ -154,9 +151,8 @@
 - type: entity
   parent: BaseItem
   id: PokerChipBaseGreen
-  name: poker chip
+  name: green pokerchip
   description: Raise or fold?
-  abstract: true
   components:
   - type: Item
     shape:
@@ -205,9 +201,8 @@
 - type: entity
   parent: BaseItem
   id: PokerChipBaseBlack
-  name: poker chip
+  name: black pokerchip
   description: Raise or fold?
-  abstract: true
   components:
   - type: Item
     shape:
