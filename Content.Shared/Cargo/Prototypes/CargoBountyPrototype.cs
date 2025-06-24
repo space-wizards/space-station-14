@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Cargo.Prototypes;
 
@@ -39,6 +40,18 @@ public sealed partial class CargoBountyPrototype : IPrototype
     /// </summary>
     [DataField]
     public string IdPrefix = "NT";
+
+    /// <summary>
+    /// A group used for categorizing this bounty.
+    /// </summary>
+    [DataField]
+    public ProtoId<CargoBountyGroupPrototype> Group = "StationBounty";
+
+    /// <summary>
+    /// Optional sprite representing this bounty.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? Sprite;
 }
 
 [DataDefinition, Serializable, NetSerializable]

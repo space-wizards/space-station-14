@@ -2,7 +2,7 @@
 
 namespace Content.Shared.HUD
 {
-    [Prototype("hudTheme")]
+    [Prototype]
     public sealed partial class HudThemePrototype : IPrototype, IComparable<HudThemePrototype>
     {
         [DataField("name", required: true)]

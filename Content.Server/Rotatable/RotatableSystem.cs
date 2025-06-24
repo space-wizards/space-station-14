@@ -21,6 +21,7 @@ namespace Content.Server.Rotatable
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -36,7 +37,9 @@ namespace Content.Server.Rotatable
 
         private void AddFlipVerb(EntityUid uid, FlippableComponent component, GetVerbsEvent<Verb> args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess
+                || !args.CanInteract
+                || !args.CanComplexInteract)
                 return;
 
             // Check if the object is anchored.
@@ -59,6 +62,7 @@ namespace Content.Server.Rotatable
         {
             if (!args.CanAccess
                 || !args.CanInteract
+                || !args.CanComplexInteract
                 || Transform(uid).NoLocalRotation) // Good ol prototype inheritance, eh?
                 return;
 
@@ -112,7 +116,7 @@ namespace Content.Server.Rotatable
             var entity = EntityManager.SpawnEntity(component.MirrorEntity, oldTransform.Coordinates);
             var newTransform = EntityManager.GetComponent<TransformComponent>(entity);
             newTransform.LocalRotation = oldTransform.LocalRotation;
-            newTransform.Anchored = false;
+            _transform.Unanchor(entity, newTransform);
             EntityManager.DeleteEntity(uid);
         }
 
@@ -124,7 +128,9 @@ namespace Content.Server.Rotatable
             if (!TryComp<RotatableComponent>(entity, out var rotatableComp))
                 return false;
 
-            if (!_actionBlocker.CanInteract(player, entity) || !_interaction.InRangeAndAccessible(player, entity))
+            if (!_actionBlocker.CanInteract(player, entity)
+                || !_actionBlocker.CanComplexInteract(player)
+                || !_interaction.InRangeAndAccessible(player, entity))
                 return false;
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
@@ -147,7 +153,9 @@ namespace Content.Server.Rotatable
             if (!TryComp<RotatableComponent>(entity, out var rotatableComp))
                 return false;
 
-            if (!_actionBlocker.CanInteract(player, entity) || !_interaction.InRangeAndAccessible(player, entity))
+            if (!_actionBlocker.CanInteract(player, entity)
+                || !_actionBlocker.CanComplexInteract(player)
+                || !_interaction.InRangeAndAccessible(player, entity))
                 return false;
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
@@ -170,7 +178,9 @@ namespace Content.Server.Rotatable
             if (!TryComp<FlippableComponent>(entity, out var flippableComp))
                 return false;
 
-            if (!_actionBlocker.CanInteract(player, entity) || !_interaction.InRangeAndAccessible(player, entity))
+            if (!_actionBlocker.CanInteract(player, entity)
+                || !_actionBlocker.CanComplexInteract(player)
+                || !_interaction.InRangeAndAccessible(player, entity))
                 return false;
 
             // Check if the object is anchored.

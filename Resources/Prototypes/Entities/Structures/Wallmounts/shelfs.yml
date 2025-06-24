@@ -12,7 +12,7 @@
   - type: Clickable
   - type: Tag
     tags:
-      - Structure
+    - Structure
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Storage/Shelfs/wood.rsi
@@ -74,7 +74,6 @@
   - type: EntityStorageVisuals
     stateDoorOpen: open
     stateDoorClosed: closed
-
   - type: AccessReader
 
 # Normal
@@ -86,6 +85,15 @@
   components:
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 60
@@ -122,6 +130,15 @@
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 120
@@ -136,9 +153,6 @@
             max: 4
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Tag
-    tags:
-    - Structure
   - type: Construction
     graph: Shelf
     node: ShelfMetal
@@ -157,6 +171,15 @@
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -171,9 +194,6 @@
             max: 2
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Tag
-    tags:
-    - Structure
   - type: Construction
     graph: Shelf
     node: ShelfGlass
@@ -198,6 +218,15 @@
       shader: unshaded
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 215
@@ -226,6 +255,15 @@
     sprite: Structures/Storage/Shelfs/metal.rsi
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 900
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 450
@@ -260,6 +298,15 @@
     sprite: Structures/Storage/Shelfs/glass.rsi
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 250
@@ -304,6 +351,15 @@
     fillBaseName: bar
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -322,13 +378,6 @@
     grid:
     - 0,0,5,1
     - 0,3,5,4
-    maxItemSize: Normal
-    whitelist:
-      tags:
-        - DrinkGlass
-        - DrinkBottle
-        - DrinkCan
-        - Beer
   - type: Construction
     graph: Shelf
     node: ShelfBar
@@ -352,6 +401,15 @@
     fillBaseName: kitchen
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 150
@@ -376,25 +434,6 @@
     grid:
     - 0,0,5,1
     - 0,3,5,4
-    maxItemSize: Normal
-    whitelist:
-      tags:
-        - DrinkBottle
-        - DrinkCan
-        - DrinkCup
-        - DrinkGlass
-        - BoxCardboard
-        - MonkeyCube
-        - Enzyme
-        - Mayo
-        - Packet
-        - Cleaver
-        - Knife
-        - KitchenKnife
-        - RollingPin
-        - Ingredient
-        - Trash
-        - Plastic
   - type: Construction
     graph: Shelf
     node: ShelfKitchen
@@ -424,6 +463,15 @@
     fillBaseName: chem
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 330
@@ -448,17 +496,9 @@
     grid:
     - 0,0,5,1
     - 0,3,5,4
-    maxItemSize: Normal
-    whitelist:
-      tags:
-        - ChemDispensable
-        - GlassBeaker
-        - Bottle
   - type: Construction
     graph: Shelf
     node: ShelfChemistry
-
-
 
 # Access presets
 # Try to keep alphabetical sorting if adding more
