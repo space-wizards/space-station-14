@@ -117,3 +117,13 @@
     FoodCheeseSlice: 2
     FoodTomato: 2
     FoodCabbage: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMashedPotatoes
+  name: mashed potatoes recipe
+  result: MashedPotatoes
+  time: 20
+  reagents:
+    Milk: 10
+  solids:
+    FoodPotato: 2
