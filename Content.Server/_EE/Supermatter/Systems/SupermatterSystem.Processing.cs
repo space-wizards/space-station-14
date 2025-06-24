@@ -2,9 +2,9 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using Content.Server.Chat.Systems;
-using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Singularity.Components;
+using Content.Server.StationEvents.Events;
 using Content.Shared._EE.CCVar;
 using Content.Shared._EE.Supermatter.Components;
 using Content.Shared._Impstation.Thaven.Components;
@@ -710,21 +710,22 @@ public sealed partial class SupermatterSystem
 
         foreach (var mob in mobLookup)
         {
+            // Scramble thaven moods
+            if (TryComp<ThavenMoodsComponent>(mob, out var moods))
+                _moods.RefreshMoods((mob, moods));
+
             // Scramble laws for silicons, then ignore other effects
             if (TryComp<SiliconLawBoundComponent>(mob, out var law))
             {
                 var target = EnsureComp<IonStormTargetComponent>(mob); // they hit the fucking ai
                 var oldChance = target.Chance;
                 target.Chance = 1f;
-                _ionStorm.IonStormTarget((mob.Owner, law, target));
+                var ev = new IonStormEvent();
+                RaiseLocalEvent(mob, ref ev);
                 target.Chance = oldChance; // hacky fucking code. whatever. don't look at me
 
                 continue;
             }
-
-            // Scramble thaven moods
-            if (TryComp<ThavenMoodsComponent>(mob, out var moods))
-                _moods.RefreshMoods((mob, moods));
 
             // Add effects to all mobs
             // TODO: change paracusia to actual hallucinations whenever those are real
