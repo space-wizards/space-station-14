@@ -4,56 +4,56 @@ using Content.Shared.Administration;
 using Content.Shared.Alert;
 using Robust.Shared.Console;
 
-namespace Content.Server.Alert.Commands
+namespace Content.Server.Alert.Commands;
+
+[AdminCommand(AdminFlags.Debug)]
+public sealed class ShowAlert : LocalizedEntityCommands
 {
-    [AdminCommand(AdminFlags.Debug)]
-    public sealed class ShowAlert : IConsoleCommand
+    [Dependency] private readonly AlertsSystem _alerts = default!;
+
+    public override string Command => "showalert";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        [Dependency] private readonly IEntityManager _e = default!;
-
-        public string Command => "showalert";
-        public string Description => "Shows an alert for a player, defaulting to current player";
-        public string Help => "showalert <alertType> <severity, -1 if no severity> <name or userID, omit for current player>";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        var player = shell.Player;
+        if (player?.AttachedEntity is not { } playerEntity)
         {
-            var player = shell.Player;
-            if (player?.AttachedEntity == null)
-            {
-                shell.WriteLine("You cannot run this from the server or without an attached entity.");
-                return;
-            }
-
-            var attachedEntity = player.AttachedEntity.Value;
-
-            if (args.Length > 2)
-            {
-                var target = args[2];
-                if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out attachedEntity)) return;
-            }
-
-            if (!_e.TryGetComponent(attachedEntity, out AlertsComponent? alertsComponent))
-            {
-                shell.WriteLine("user has no alerts component");
-                return;
-            }
-
-            var alertType = args[0];
-            var severity = args[1];
-            var alertsSystem = _e.System<AlertsSystem>();
-            if (!alertsSystem.TryGet(alertType, out var alert))
-            {
-                shell.WriteLine("unrecognized alertType " + alertType);
-                return;
-            }
-            if (!short.TryParse(severity, out var sevint))
-            {
-                shell.WriteLine("invalid severity " + sevint);
-                return;
-            }
-
-            short? severity1 = sevint == -1 ? null : sevint;
-            alertsSystem.ShowAlert(attachedEntity, alert.ID, severity1, null);
+            shell.WriteLine(Loc.GetString($"shell-cannot-run-command-from-server"));
+            return;
         }
+
+        switch (args.Length)
+        {
+            case 2:
+                break;
+            case 3:
+                var target = args[2];
+                if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out playerEntity))
+                    return;
+                break;
+            default:
+                shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 2), ("upper", 3)));
+                return;
+        }
+
+        if (!EntityManager.TryGetComponent(playerEntity, out AlertsComponent? _))
+        {
+            shell.WriteLine(Loc.GetString($"shell-entity-target-lacks-component", ("componentName", nameof(AlertsComponent))));
+            return;
+        }
+
+        if (!_alerts.TryGet(args[0], out var alert))
+        {
+            shell.WriteLine("unrecognized alertType " + args[0]);
+            return;
+        }
+        if (!short.TryParse(args[1], out var sevint))
+        {
+            shell.WriteLine("invalid severity " + sevint);
+            return;
+        }
+
+        short? severity1 = sevint == -1 ? null : sevint;
+        _alerts.ShowAlert(playerEntity, alert.ID, severity1);
     }
 }
