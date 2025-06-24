@@ -31,7 +31,7 @@
   - type: StackLayerThreshold
     thresholds: [1, 2, 3, 4, 10, 20, 60]
   - type: Sprite
-    sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_red.rsi
+    sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_red.rsi
     state: chip
     layers:
     - state: chip
@@ -74,11 +74,15 @@
     - chip
     - chip_2
     - chip_3
+    - chip_4
+    - chip_10
+    - chip_20
+    - chip_60
     layerFunction: Threshold
   - type: StackLayerThreshold
-    thresholds: [1, 2, 3]
+    thresholds: [1, 2, 3, 4, 10, 20, 60]
   - type: Sprite
-    sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_blue.rsi
+    sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_blue.rsi
     state: chip
     layers:
     - state: chip
@@ -121,11 +125,15 @@
     - chip
     - chip_2
     - chip_3
+    - chip_4
+    - chip_10
+    - chip_20
+    - chip_60
     layerFunction: Threshold
   - type: StackLayerThreshold
-    thresholds: [1, 2, 3]
+    thresholds: [1, 2, 3, 4, 10, 20, 60]
   - type: Sprite
-    sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_white.rsi
+    sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_white.rsi
     state: chip
     layers:
     - state: chip
@@ -168,11 +176,15 @@
     - chip
     - chip_2
     - chip_3
+    - chip_4
+    - chip_10
+    - chip_20
+    - chip_60
     layerFunction: Threshold
   - type: StackLayerThreshold
-    thresholds: [1, 2, 3]
+    thresholds: [1, 2, 3, 4, 10, 20, 60]
   - type: Sprite
-    sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_green.rsi
+    sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_green.rsi
     state: chip
     layers:
     - state: chip
@@ -215,11 +227,15 @@
     - chip
     - chip_2
     - chip_3
+    - chip_4
+    - chip_10
+    - chip_20
+    - chip_60
     layerFunction: Threshold
   - type: StackLayerThreshold
-    thresholds: [1, 2, 3]
+    thresholds: [1, 2, 3, 4, 10, 20, 60]
   - type: Sprite
-    sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_black.rsi
+    sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_black.rsi
     state: chip
     layers:
     - state: chip
@@ -242,7 +258,7 @@
   name: chip
   unit: materials-unit-bill
   stackEntity: PokerChipBaseRed
-  icon: { sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_red.rsi, state: chip }
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_red.rsi, state: chip }
   price: 0
 
 - type: material
@@ -250,7 +266,7 @@
   name: chip
   unit: materials-unit-bill
   stackEntity: PokerChipBaseBlue
-  icon: { sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_blue.rsi, state: chip }
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_blue.rsi, state: chip }
   price: 0
 
 - type: material
@@ -258,7 +274,7 @@
   name: chip
   unit: materials-unit-bill
   stackEntity: PokerChipBaseWhite
-  icon: { sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_white.rsi, state: chip }
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_white.rsi, state: chip }
   price: 0
 
 - type: material
@@ -266,7 +282,7 @@
   name: chip
   unit: materials-unit-bill
   stackEntity: PokerChipBaseGreen
-  icon: { sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_green.rsi, state: chip }
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_green.rsi, state: chip }
   price: 0
 
 - type: material
@@ -274,37 +290,37 @@
   name: chip
   unit: materials-unit-bill
   stackEntity: PokerChipBaseBlack
-  icon: { sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_black.rsi, state: chip }
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_black.rsi, state: chip }
   price: 0
 
 - type: stack
   id: PokerChipStackRed
   name: stack-poker-chips
-  icon: { sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_red.rsi, state: chip}
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_red.rsi, state: chip}
   spawn: PokerChipRed
 
 - type: stack
   id: PokerChipStackBlue
   name: stack-poker-chips
-  icon: { sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_blue.rsi, state: chip}
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_blue.rsi, state: chip}
   spawn: PokerChipBlue
 
 - type: stack
   id: PokerChipStackWhite
   name: stack-poker-chips
-  icon: { sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_white.rsi, state: chip}
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_white.rsi, state: chip}
   spawn: PokerChipWhite
 
 - type: stack
   id: PokerChipStackGreen
   name: stack-poker-chips
-  icon: { sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_green.rsi, state: chip}
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_green.rsi, state: chip}
   spawn: PokerChipGreen
 
 - type: stack
   id: PokerChipStackBlack
   name: stack-poker-chips
-  icon: { sprite: Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_black.rsi, state: chip}
+  icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_black.rsi, state: chip}
   spawn: PokerChipBlack
 
 - type: entity

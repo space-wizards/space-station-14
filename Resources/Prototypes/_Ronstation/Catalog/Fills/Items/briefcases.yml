@@ -3,7 +3,7 @@
   parent: BriefcaseBrown
   suffix: Filled, Poker
   name: poker set
-  description: Feeling lucky? Comes with two decks of cards and enough chips for a full table of 8 players, or two tables of 4.
+  description: Comes with two decks of playing cards and enough chips for a full table of 8 players, or two tables of 4. What game you play is still up to you.
   components:
   - type: Sprite
     sprite: _Ronstation/Objects/Storage/Briefcases/briefcase_poker.rsi
