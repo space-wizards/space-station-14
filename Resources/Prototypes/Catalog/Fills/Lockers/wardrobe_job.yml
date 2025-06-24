@@ -128,9 +128,7 @@
        - id: ClothingOuterCoatLab
        - id: ClothingUniformJumpskirtMedicalDoctor
        - id: ClothingHandsGlovesLatex
-         prob: 0.4
        - id: ClothingEyesGlasses
-         prob: 0.3
 
  - type: entity
    id: WardrobeChapelFilled

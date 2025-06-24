@@ -1,6 +1,13 @@
 - type: vendingMachineInventory
   id: ChemVendInventory
   startingInventory:
+    HandLabeler: 3
+    Syringe: 5
+    BoxPillCanister: 3
+    BoxVial: 3
+    BoxBottle: 3
+    Beaker: 5
+    LargeBeaker: 5
     Jug: 4
     JugAluminium: 2
     JugCarbon: 4
@@ -31,6 +38,13 @@
 - type: vendingMachineInventory
   id: ChemVendInventorySyndicate
   startingInventory:
+    HandLabeler: 3
+    Syringe: 5
+    BoxPillCanister: 3
+    BoxVial: 3
+    BoxBottle: 3
+    Beaker: 5
+    LargeBeaker: 5
     Jug: 4
     JugAluminium: 2
     JugCarbon: 4
