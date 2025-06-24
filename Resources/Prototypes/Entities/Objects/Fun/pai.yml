@@ -270,7 +270,7 @@
 - type: entity
   parent: BaseMentalAction
   id: ActionPAICustomization
-  name: Customuzation Display
+  name: Customization Display
   description: Open your customization display to change your appearance.
   components:
   - type: Action
