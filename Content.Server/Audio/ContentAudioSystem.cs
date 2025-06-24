@@ -42,7 +42,7 @@ public sealed class ContentAudioSystem : SharedContentAudioSystem
                 }
                 else
                 {
-                    Log.Error("Attempted to change Lobby Music Sound collection. No matching collection was found. Defaulting to null");
+                    Log.Error($"Invalid Lobby Music sound collection specified: {x}");
                     _lobbyMusicCollection = null;
                 }
 
