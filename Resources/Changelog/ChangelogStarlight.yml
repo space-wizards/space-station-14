@@ -8242,4 +8242,28 @@ Entries:
   id: 1137
   time: '2025-06-24T13:20:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/896
+- author: Killer Tamashi (Code), Zeyria (Sprites), Taro Varné (Unique Species features
+    concepts), Fasuh (Avali Stasis Code)
+  changes:
+  - message: Added Avali (New playable race)
+    type: Add
+  id: 1138
+  time: '2025-06-24T13:38:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/308
+- author: Killer Tamashi (Code), Zeyria (Sprites), Taro Varné (Unique Species features
+    concepts), Fasuh (Avali Stasis Code)
+  changes:
+  - message: Added Vulp speech noises/prefixes
+    type: Add
+  id: 1139
+  time: '2025-06-24T13:38:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/308
+- author: Killer Tamashi (Code), Zeyria (Sprites), Taro Varné (Unique Species features
+    concepts), Fasuh (Avali Stasis Code)
+  changes:
+  - message: Added Vulp temperature ranges
+    type: Add
+  id: 1140
+  time: '2025-06-24T13:38:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/308
 
