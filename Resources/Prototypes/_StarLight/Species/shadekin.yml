@@ -15,6 +15,7 @@
   minAge: 18
   maxAge: 300
   youngAge: 30
+  oldAge: 250
   customName: true
 
 - type: speciesBaseSprites
