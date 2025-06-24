@@ -109,13 +109,10 @@ public abstract class SharedStunSystem : EntitySystem
 
     }
 
-    private void OnStunShutdown(Entity<StunnedComponent> ent, ref ComponentShutdown args)
+    protected virtual void OnStunShutdown(Entity<StunnedComponent> ent, ref ComponentShutdown args)
     {
         // This exists so the client can end their funny animation if they're playing one.
         UpdateCanMove(ent, ent.Comp, args);
-
-        if (_timing.IsFirstTimePredicted)
-            ent.Comp.Visualized = false;
     }
 
     private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
@@ -368,8 +365,14 @@ public abstract class SharedStunSystem : EntitySystem
     {
         if (!Resolve(entity, ref entity.Comp))
             return;
+
         // Here so server can tell the client to do things
+        // Don't dirty the component if we don't need to
+        if (entity.Comp.Visualized)
+            return;
+
         entity.Comp.Visualized = true;
+        Dirty(entity);
     }
 }
 

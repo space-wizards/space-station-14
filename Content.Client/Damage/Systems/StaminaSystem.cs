@@ -70,16 +70,16 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
 
         entity.Comp.StartOffset = sprite.Offset;
 
-        PlayAnimation(entity, sprite);
+        PlayAnimation((entity, entity.Comp, sprite));
     }
 
-    private void StopAnimation(Entity<StaminaComponent> entity, SpriteComponent? sprite = null)
+    private void StopAnimation(Entity<StaminaComponent, SpriteComponent?> entity)
     {
-        if(!Resolve(entity, ref sprite))
+        if(!Resolve(entity, ref entity.Comp2))
             return;
 
         _animation.Stop(entity.Owner, StaminaAnimationKey);
-        entity.Comp.StartOffset = sprite.Offset;
+        entity.Comp1.StartOffset = entity.Comp2.Offset;
     }
 
     private void OnAnimationCompleted(Entity<StaminaComponent> entity, ref AnimationCompletedEvent args)
@@ -98,28 +98,28 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
         if (!HasComp<AnimationPlayerComponent>(entity))
             return;
 
-        PlayAnimation(entity, sprite);
+        PlayAnimation((entity, entity.Comp, sprite));
     }
 
-    private void PlayAnimation(Entity<StaminaComponent> entity, SpriteComponent sprite)
+    private void PlayAnimation(Entity<StaminaComponent, SpriteComponent> entity)
     {
-        var step = Math.Clamp((entity.Comp.StaminaDamage - entity.Comp.AnimationThreshold) /
-                              (entity.Comp.CritThreshold - entity.Comp.AnimationThreshold),
+        var step = Math.Clamp((entity.Comp1.StaminaDamage - entity.Comp1.AnimationThreshold) /
+                              (entity.Comp1.CritThreshold - entity.Comp1.AnimationThreshold),
             0f,
             1f); // The things I do for project 0 warnings
-        var frequency = entity.Comp.FrequencyMin + step * entity.Comp.FrequencyMod;
-        var jitter = entity.Comp.JitterAmplitudeMin + step * entity.Comp.JitterAmplitudeMod;
-        var breathing = entity.Comp.BreathingAmplitudeMin + step * entity.Comp.BreathingAmplitudeMod;
+        var frequency = entity.Comp1.FrequencyMin + step * entity.Comp1.FrequencyMod;
+        var jitter = entity.Comp1.JitterAmplitudeMin + step * entity.Comp1.JitterAmplitudeMod;
+        var breathing = entity.Comp1.BreathingAmplitudeMin + step * entity.Comp1.BreathingAmplitudeMod;
 
         _animation.Play(entity.Owner,
-            _stun.GetFatigueAnimation(sprite,
+            _stun.GetFatigueAnimation(entity.Comp2,
                 frequency,
-                entity.Comp.Jitters,
-                (jitter * entity.Comp.JitterMinMaxX.Item1, jitter * entity.Comp.JitterMinMaxX.Item2),
-                (jitter * entity.Comp.JitterMinMaxY.Item1, jitter * entity.Comp.JitterMinMaxY.Item2),
+                entity.Comp1.Jitters,
+                jitter * entity.Comp1.JitterMin,
+                jitter * entity.Comp1.JitterMax,
                 breathing,
-                entity.Comp.StartOffset,
-                ref entity.Comp.LastJitter),
+                entity.Comp1.StartOffset,
+                ref entity.Comp1.LastJitter),
             StaminaAnimationKey);
     }
 }

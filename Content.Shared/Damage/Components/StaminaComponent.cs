@@ -108,19 +108,19 @@ public sealed partial class StaminaComponent : Component
     /// Maximum vector amount we add to the JitterAmplitudeMin
     /// </summary>
     [DataField]
-    public float JitterAmplitudeMod = 0.05f;
+    public float JitterAmplitudeMod = 0.04f;
 
     /// <summary>
-    /// Min and max multipliers for JitterAmplitude in the X direction for the random value we will choose
+    /// Min multipliers for JitterAmplitude in the X and Y directions, animation randomly chooses between these min and max multipliers
     /// </summary>
     [DataField]
-    public (float, float) JitterMinMaxX = (0.5f, 1f);
+    public Vector2 JitterMin = Vector2.Create(0.5f, 0.125f);
 
     /// <summary>
-    /// Min and max multipliers for JitterAmplitude in the X direction for the random value we will choose
+    /// Max multipliers for JitterAmplitude in the X and Y directions, animation randomly chooses between these min and max multipliers
     /// </summary>
     [DataField]
-    public (float, float) JitterMinMaxY = (0.125f, 0.25f);
+    public Vector2 JitterMax = Vector2.Create(1f, 0.25f);
 
     /// <summary>
     /// Minimum total animations per second
@@ -140,14 +140,14 @@ public sealed partial class StaminaComponent : Component
     [DataField]
     public int Jitters = 4;
 
-    [AutoNetworkedField, DataField]
+    [DataField]
     public Vector2 LastJitter;
 
     /// <summary>
     ///     The offset that an entity had before jittering started,
     ///     so that we can reset it properly.
     /// </summary>
-    [AutoNetworkedField, DataField]
+    [DataField]
     public Vector2 StartOffset = Vector2.Zero;
 
     #endregion

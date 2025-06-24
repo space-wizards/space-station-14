@@ -90,7 +90,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
     private void OnStartup(Entity<StaminaComponent> entity, ref ComponentStartup args)
     {
-        UpdateStaminaVisuals(entity);
+        SetStaminaAlert(entity);
     }
 
     [PublicAPI]
@@ -114,7 +114,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         entity.Comp.StaminaDamage = 0;
         AdjustSlowdown(entity.Owner);
         RemComp<ActiveStaminaComponent>(entity);
-        UpdateStaminaVisuals(entity);
+        SetStaminaAlert(entity);
         Dirty(entity);
     }
 
