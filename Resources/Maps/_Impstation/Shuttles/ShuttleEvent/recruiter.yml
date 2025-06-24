@@ -1081,39 +1081,6 @@ entities:
     - type: ContainedSolution
       containerName: plastic
       container: 527
-- proto: ActionPAIOpenMap
-  entities:
-  - uid: 293
-    components:
-    - type: Transform
-      parent: 292
-    - type: InstantAction
-      container: 292
-      attachedEntity: 292
-- proto: ActionPAIPlayMidi
-  entities:
-  - uid: 294
-    components:
-    - type: Transform
-      parent: 292
-    - type: InstantAction
-      container: 292
-      attachedEntity: 292
-- proto: ActionToggleLight
-  entities:
-  - uid: 397
-    components:
-    - type: Transform
-      parent: 396
-    - type: InstantAction
-      container: 396
-  - uid: 398
-    components:
-    - type: Transform
-      parent: 396
-    - type: InstantAction
-      container: 396
-      attachedEntity: 396
 - proto: AirCanister
   entities:
   - uid: 247
@@ -5302,25 +5269,6 @@ entities:
     - type: Transform
       pos: -3.4560933,-1.0165493
       parent: 2
-    - type: HandheldLight
-      selfToggleActionEntity: 398
-      toggleActionEntity: 397
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 399
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 397
-          - 398
-    - type: ActionsContainer
-    - type: Actions
-      actions:
-      - 398
 - proto: LuxuryPen
   entities:
   - uid: 479
@@ -6394,22 +6342,8 @@ entities:
     components:
     - type: Transform
       parent: 265
-    - type: PAI
-      mapAction: 293
-      midiAction: 294
-    - type: Actions
-      actions:
-      - 294
-      - 293
     - type: Physics
       canCollide: False
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 294
-          - 293
 - proto: SyndicateShuttleConsoleCircuitboard
   entities:
   - uid: 305
