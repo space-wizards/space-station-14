@@ -19,16 +19,18 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
     {
         base.Initialize();
 
+        SubscribeNetworkEvent<StaminaAnimationEvent>(OnStartAnimation);
         SubscribeLocalEvent<StaminaComponent, AnimationCompletedEvent>(OnAnimationCompleted);
         SubscribeLocalEvent<ActiveStaminaComponent, ComponentShutdown>(OnActiveStaminaShutdown);
         SubscribeLocalEvent<StaminaComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
-    protected override void UpdateStaminaVisuals(Entity<StaminaComponent> entity)
+    private void OnStartAnimation(StaminaAnimationEvent ev)
     {
-        base.UpdateStaminaVisuals(entity);
+        var uid = GetEntity(ev.Entity);
 
-        TryStartAnimation(entity);
+        if (Exists(uid) && TryComp<StaminaComponent>(uid, out var stamina))
+            TryStartAnimation((uid, stamina));
     }
 
     private void OnActiveStaminaShutdown(Entity<ActiveStaminaComponent> entity, ref ComponentShutdown args)

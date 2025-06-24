@@ -38,11 +38,13 @@ public sealed class StunSystem : SharedStunSystem
         if (!TryComp<SpriteComponent>(entity, out var sprite))
             return;
 
-        _spriteSystem.LayerMapReserve((entity, sprite), StunVisualLayers.StamCrit);
-        _spriteSystem.LayerSetVisible((entity, sprite), StunVisualLayers.StamCrit, false);
-        _spriteSystem.LayerSetOffset((entity, sprite), StunVisualLayers.StamCrit, new Vector2(0, 0.3125f));
+        var spriteEntity = (entity.Owner, sprite);
 
-        _spriteSystem.LayerSetRsi((entity.Owner, sprite), StunVisualLayers.StamCrit, new ResPath("Mobs/Effects/stunned.rsi"));
+        _spriteSystem.LayerMapReserve(spriteEntity, StunVisualLayers.StamCrit);
+        _spriteSystem.LayerSetVisible(spriteEntity, StunVisualLayers.StamCrit, false);
+        _spriteSystem.LayerSetOffset(spriteEntity, StunVisualLayers.StamCrit, new Vector2(0, 0.3125f));
+
+        _spriteSystem.LayerSetRsi(spriteEntity, StunVisualLayers.StamCrit, new ResPath("Mobs/Effects/stunned.rsi"));
 
         UpdateAppearance((entity,  entity.Comp, sprite));
     }
@@ -54,7 +56,12 @@ public sealed class StunSystem : SharedStunSystem
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        _spriteSystem.LayerSetVisible((ent, sprite), StunVisualLayers.StamCrit, false);
+        var entity = (ent, sprite);
+
+        if (!_spriteSystem.LayerMapTryGet(entity, StunVisualLayers.StamCrit, out var index, false))
+            return;
+
+        _spriteSystem.LayerSetVisible(entity, index, false);
     }
 
     private void OnAppearanceChanged(Entity<StunnedComponent> entity, ref AppearanceChangeEvent args)

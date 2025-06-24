@@ -20,6 +20,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
@@ -90,7 +91,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
     private void OnStartup(Entity<StaminaComponent> entity, ref ComponentStartup args)
     {
-        SetStaminaAlert(entity);
+        UpdateStaminaVisuals(entity);
     }
 
     [PublicAPI]
@@ -114,7 +115,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         entity.Comp.StaminaDamage = 0;
         AdjustSlowdown(entity.Owner);
         RemComp<ActiveStaminaComponent>(entity);
-        SetStaminaAlert(entity);
+        UpdateStaminaVisuals(entity);
         Dirty(entity);
     }
 
@@ -212,10 +213,14 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         TakeStaminaDamage(target, component.Damage, source: uid, sound: component.Sound);
     }
 
-    protected virtual void UpdateStaminaVisuals(Entity<StaminaComponent> entity)
+    private void UpdateStaminaVisuals(Entity<StaminaComponent> entity)
     {
         SetStaminaAlert(entity, entity.Comp);
+        SetStaminaAnimation(entity);
     }
+
+    // Here so server can properly tell all clients in PVS range to start the animation
+    protected virtual void SetStaminaAnimation(Entity<StaminaComponent> entity){}
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
     {
@@ -431,5 +436,11 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         }
 
         StunSystem.UpdateStunModifiers(ent, ent.Comp.StunModifierThresholds[closest]);
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class StaminaAnimationEvent(NetEntity entity) : EntityEventArgs
+    {
+        public NetEntity Entity = entity;
     }
 }
