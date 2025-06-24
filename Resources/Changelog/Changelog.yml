@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Unfolded bandanas/lab coats now fit in crates again.
-    type: Fix
-  id: 8195
-  time: '2025-04-16T11:54:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36625
-- author: metalgearsloth
-  changes:
-  - message: Fixes tippy messages being too sh-
-    type: Fix
-  id: 8196
-  time: '2025-04-16T12:23:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36616
-- author: SlamBamActionman
-  changes:
-  - message: Closed pet carriers no longer push players or lockers.
-    type: Fix
-  id: 8197
-  time: '2025-04-16T14:12:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36627
 - author: Flareguy, ArtisticRoomba
   changes:
   - message: Added the Temperature Gun. It can shoot body-temperature-changing bolts.
@@ -3896,3 +3875,25 @@
   id: 8707
   time: '2025-06-23T11:32:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37640
+- author: metalgearsloth
+  changes:
+  - message: Added ambient occlusion to walls so they have shadows around them.
+    type: Add
+  id: 8708
+  time: '2025-06-24T07:56:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38276
+- author: BramvanZijp
+  changes:
+  - message: Added Stamina Damage resistance to the raid/hard-suits used by Nuclear
+      Operatives and Emergency Response Teams.
+    type: Tweak
+  id: 8709
+  time: '2025-06-24T13:04:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38526
+- author: Kittygyat
+  changes:
+  - message: Added a handheld station map to the borg thruster module!
+    type: Add
+  id: 8710
+  time: '2025-06-24T15:35:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38541
