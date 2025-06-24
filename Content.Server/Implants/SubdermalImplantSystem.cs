@@ -85,7 +85,13 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         if (metaData.EntityPrototype == null || !HasComp<ItemComponent>(item))
             return;
 
-        _gameplayMetrics.RecordMetric(Campaigns.StorageImplant, $"{status},{metaData.EntityPrototype.ID},{owner}");
+        _gameplayMetrics.RecordMetric( "StorageImplant",
+        new Dictionary<string, string?>
+        {
+            { "status", status },
+            { "itemProto", metaData.EntityPrototype.ID },
+            { "ownerUid", owner.ToString() },
+        });
     }
 
     private void OnStoreRelay(EntityUid uid, StoreComponent store, ImplantRelayEvent<AfterInteractUsingEvent> implantRelay)

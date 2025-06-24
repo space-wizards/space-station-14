@@ -258,7 +258,13 @@ namespace Content.Server.Cargo.Systems
                 LogImpact.Low,
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] on account {order.Account} with balance at {accountBalance}");
 
-            _gameplayMetrics.RecordMetric(Campaigns.CargoOrders, $"{order.ProductId},{order.OrderQuantity},{cost}");
+            _gameplayMetrics.RecordMetric("CargoOrder",
+            new Dictionary<string, string?>
+            {
+                { "productProto", order.ProductId },
+                { "quantity", order.OrderQuantity.ToString() },
+                { "cost", cost.ToString() },
+            });
 
             orderDatabase.Orders[component.Account].Remove(order);
             UpdateBankAccount((station.Value, bank), -cost, order.Account);

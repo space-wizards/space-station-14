@@ -1087,13 +1087,10 @@ namespace Content.Server.Database
         public DateTime CreatedAt { get; set; }
 
         [Required]
-        public int RoundNumber { get; set; }
+        public string ServerName { get; set; } = default!;
 
-        [Required]
-        public string Campaign { get; set; } = string.Empty;
-
-        [Required]
-        public string Metadata { get; set; } = string.Empty;
+        [Required, Column(TypeName = "jsonb")]
+        public JsonDocument LogData { get; set; } = default!;
     }
 
     // Note: this interface isn't used by the game, but it *is* used by SS14.Admin.

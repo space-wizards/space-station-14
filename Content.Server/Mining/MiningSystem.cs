@@ -44,7 +44,13 @@ public sealed class MiningSystem : EntitySystem
             Spawn(proto.OreEntity, coords.Offset(_random.NextVector2(0.2f)));
         }
 
-        _gameplayMetrics.RecordMetric(Campaigns.MiningOre, $"{proto.ID},{toSpawn}");
+        _gameplayMetrics.RecordMetric("MiningOre",
+        new Dictionary<string, string?>
+        {
+            { "oreProto", _gameplayMetrics.GetEntProtoIdOrNull(uid) },
+            { "oreSpawnedType", proto.ID },
+            { "amount", toSpawn.ToString() },
+        });
     }
 
     private void OnMapInit(EntityUid uid, OreVeinComponent component, MapInitEvent args)

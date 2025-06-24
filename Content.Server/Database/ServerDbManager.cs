@@ -345,7 +345,7 @@ namespace Content.Server.Database
 
         #region Basic Gameplay Metrics
 
-        Task<int> RecordGameplayMetric(int round, string campaign, string metadata);
+        Task<int> RecordGameplayMetric(string serverName, JsonDocument logData);
 
         #endregion
 
@@ -1058,10 +1058,10 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.CleanIPIntelCache(range));
         }
 
-        public Task<int> RecordGameplayMetric(int round, string campaign, string metadata)
+        public Task<int> RecordGameplayMetric(string serverName, JsonDocument logData)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.RecordGameplayMetric(round, campaign, metadata));
+            return RunDbCommand(() => _db.RecordGameplayMetric(serverName, logData));
         }
 
         public void SubscribeToNotifications(Action<DatabaseNotification> handler)
