@@ -15,6 +15,34 @@
       "directions": 4
     },
     {
+      "name": "equipped-EYES-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-resomi",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-cyclorite",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-unshaded",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-unshaded-vox",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-unshaded-resomi",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-unshaded-cyclorite",
+      "directions": 4
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },

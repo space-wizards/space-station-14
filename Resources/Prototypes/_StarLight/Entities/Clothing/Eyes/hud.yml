@@ -92,12 +92,29 @@
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSovietContraband]
   id: ClothingEyesHudSovietMarine
   name: SSF marine goggles
-  description: Versatile goggles in use broadly by the soviet marines.
+  description: The iconic soviet goggles, in use broadly by the soviet forces throughout.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Eyes/Soviet/marine_goggles.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Eyes/Soviet/marine_goggles.rsi
+    clothingVisuals:
+      eyes:
+      - state: equipped-EYES
+      - state: equipped-EYES-unshaded
+        shader: unshaded
+      eyes-vox:
+      - state: equipped-EYES-vox
+      - state: equipped-EYES-unshaded-vox
+        shader: unshaded
+      eyes-resomi:
+      - state: equipped-EYES-resomi
+      - state: equipped-EYES-unshaded-resomi
+        shader: unshaded
+      eyes-cyclorite:
+      - state: equipped-EYES-cyclorite
+      - state: equipped-EYES-unshaded-cyclorite
+        shader: unshaded
   #- type: ShowSovietIcons  need faction
   - type: ShowJobIcons
   - type: ShowMindShieldIcons

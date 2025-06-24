@@ -147,10 +147,10 @@
   - type: Clothing
     sprite: _Starlight/Clothing/OuterClothing/Hardsuits/spacehazard.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5
+    highPressureMultiplier: 0.2
     lowPressureMultiplier: 1000
-  - type: Pierceable
-    level: Metal
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
   - type: Armor
     modifiers:
       coefficients:
@@ -205,6 +205,10 @@
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.4
+  - type: BreathMask
+    allowedSlots: [ MASK, HEAD, OUTERCLOTHING ]
+  - type: IngestionBlocker
+  - type: IdentityBlocker
   - type: Armor
     modifiers:
       coefficients:
