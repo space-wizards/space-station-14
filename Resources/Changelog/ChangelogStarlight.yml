@@ -8151,4 +8151,80 @@ Entries:
   id: 1125
   time: '2025-06-24T12:52:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Union of Soviet Socialist Planets, comrade! (Revolution Expansion)
+    type: Add
+  id: 1126
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added full library of soviet prototypes, clothing, banners and more.
+    type: Add
+  id: 1127
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Lore & prototype references of USSP new agencies. SKGB, SNKVD, SSF and
+      the Soviet People's Commissariat (NKOZ) (Soviet CC)
+    type: Add
+  id: 1128
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Head Revolutionaries are now SKGB agents/recruiters.
+    type: Tweak
+  id: 1129
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added a new Global Stock System shared among all soviet agents. It runs
+      on an outdated ticket system & those are pretty loud.
+    type: Add
+  id: 1130
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added Svyaz-UZL uplink, used among USSP agencies and ministries.
+    type: Add
+  id: 1131
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added Telebond ticket currency. Gained from conversion.
+    type: Add
+  id: 1132
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added Total Conversion currency. A unique currency gained from conversion,
+      that is not spent in the uplink, and it is shared among all SKGB agents.
+    type: Add
+  id: 1133
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: SKGB agents now start with an SKGB implanter that contains a Svyaz-UZL
+      radio uplink. Why is it an implant and not a roundstart subdermal you may ask?
+      That's for you to find out.
+    type: Add
+  id: 1134
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: 'NOTE: The agent''s Svyaz-UZL radio uplink tracks global currency and
+      telebonds before implant use. So don''t be afraid to convert people before implanting.'
+    type: Tweak
+  id: 1135
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
 
