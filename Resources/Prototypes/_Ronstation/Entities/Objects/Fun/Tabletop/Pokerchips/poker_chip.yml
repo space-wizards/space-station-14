@@ -292,35 +292,35 @@
   id: PokerChipStackRed
   name: stack-poker-chips
   icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_red.rsi, state: chip}
-  spawn: PokerChipRed
+  spawn: PokerChipBaseRed
   maxCount: 100
 
 - type: stack
   id: PokerChipStackBlue
   name: stack-poker-chips
   icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_blue.rsi, state: chip}
-  spawn: PokerChipBlue
+  spawn: PokerChipBaseBlue
   maxCount: 100
 
 - type: stack
   id: PokerChipStackWhite
   name: stack-poker-chips
   icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_white.rsi, state: chip}
-  spawn: PokerChipWhite
+  spawn: PokerChipBaseWhite
   maxCount: 100
 
 - type: stack
   id: PokerChipStackGreen
   name: stack-poker-chips
   icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_green.rsi, state: chip}
-  spawn: PokerChipGreen
+  spawn: PokerChipBaseGreen
   maxCount: 100
 
 - type: stack
   id: PokerChipStackBlack
   name: stack-poker-chips
   icon: { sprite: _Ronstation/Objects/Fun/Tabletop/Cards/Poker/Pokerchips/pokerchip_black.rsi, state: chip}
-  spawn: PokerChipBlack
+  spawn: PokerChipBaseBlack
   maxCount: 100
 
 - type: entity
@@ -329,7 +329,6 @@
   name: red pokerchip
   components:
     - type: Stack
-      stackType: PokerChipStackRed
       count: 40
 
 - type: entity
@@ -338,7 +337,6 @@
   name: blue pokerchip
   components:
     - type: Stack
-      stackType: PokerChipStackBlue
       count: 40
 
 - type: entity
@@ -347,7 +345,6 @@
   name: white pokerchip
   components:
     - type: Stack
-      stackType: PokerChipStackWhite
       count: 40
 
 - type: entity
@@ -356,7 +353,6 @@
   name: green pokerchip
   components:
     - type: Stack
-      stackType: PokerChipStackGreen
       count: 40
 
 - type: entity
@@ -365,5 +361,4 @@
   name: black pokerchip
   components:
     - type: Stack
-      stackType: PokerChipStackBlack
       count: 40
