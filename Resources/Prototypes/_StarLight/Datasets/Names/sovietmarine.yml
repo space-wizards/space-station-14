@@ -1,0 +1,17 @@
+﻿- type: localizedDataset
+  id: NamesSovietMarinesFirstLeader
+  values:
+    prefix: names-soviet-marine-leader-first-dataset-
+    count: 4
+
+- type: localizedDataset
+  id: NamesSovietMarinesFirst
+  values:
+    prefix: names-soviet-marine-first-dataset-
+    count: 5
+
+- type: localizedDataset
+  id: NamesSovietMarinesLast
+  values:
+    prefix: names-soviet-marine-last-dataset-
+    count: 43

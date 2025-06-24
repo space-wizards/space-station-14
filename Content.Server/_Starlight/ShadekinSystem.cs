@@ -19,12 +19,14 @@ using Content.Shared.Damage;
 using Content.Server.Chat.Managers;
 using Robust.Shared.Player;
 using Content.Shared.Chat;
+using Robust.Shared.Timing;
 
 
 namespace Content.Server._Starlight;
 
 public sealed class ShadekinSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -127,41 +129,34 @@ public sealed class ShadekinSystem : EntitySystem
     {
         var illumination = 0f;
 
-        var lightQuery = _lookup.GetEntitiesInRange(uid, 20)
-                .Where(x => HasComp<PointLightComponent>(x));
+        var lightQuery = _lookup.GetEntitiesInRange<PointLightComponent>(Transform(uid).Coordinates, 20, LookupFlags.Uncontained);
 
         foreach (var light in lightQuery)
         {
-            if (_container.IsEntityInContainer(light))
-                continue;
-
-            if (!TryComp<PointLightComponent>(light, out var pointLight))
-                continue;
-
             if (HasComp<DarkLightComponent>(light))
                 continue;
 
-            if (!pointLight.Enabled
-                || pointLight.Radius < 1
-                || pointLight.Energy <= 0)
+            if (!light.Comp.Enabled
+                || light.Comp.Radius < 1
+                || light.Comp.Energy <= 0)
                 continue;
 
             var (lightPos, lightRot) = _transform.GetWorldPositionRotation(light);
-            lightPos += lightRot.RotateVec(pointLight.Offset);
+            lightPos += lightRot.RotateVec(light.Comp.Offset);
 
-            if (!_examine.InRangeUnOccluded(light, uid, pointLight.Radius, null))
+            if (!_examine.InRangeUnOccluded(light, uid, light.Comp.Radius, null))
                 continue;
 
             Transform(uid).Coordinates.TryDistance(EntityManager, Transform(light).Coordinates, out var dist);
 
-            var denom = dist / pointLight.Radius;
+            var denom = dist / light.Comp.Radius;
             var attenuation = 1 - (denom * denom);
             var calculatedLight = 0f;
 
-            if (pointLight.MaskPath is not null)
+            if (light.Comp.MaskPath is not null)
             {
-                var angleToTarget = GetAngle(light, pointLight, uid);
-                foreach (var cone in lightMasks[pointLight.MaskPath])
+                var angleToTarget = GetAngle(light, light.Comp, uid);
+                foreach (var cone in lightMasks[light.Comp.MaskPath])
                 {
                     var coneLight = 0f;
                     var angleAttenuation = (float)Math.Min((float)Math.Max(cone.OuterWidth - angleToTarget, 0f), cone.InnerWidth) / cone.OuterWidth;
@@ -170,15 +165,15 @@ public sealed class ShadekinSystem : EntitySystem
                         continue;
                     else if (angleToTarget.Degrees - cone.Direction > cone.InnerWidth
                         && angleToTarget.Degrees - cone.Direction < cone.OuterWidth)
-                        coneLight = pointLight.Energy * attenuation * attenuation * angleAttenuation;
+                        coneLight = light.Comp.Energy * attenuation * attenuation * angleAttenuation;
                     else
-                        coneLight = pointLight.Energy * attenuation * attenuation;
+                        coneLight = light.Comp.Energy * attenuation * attenuation;
 
                     calculatedLight = Math.Max(calculatedLight, coneLight);
                 }
             }
             else
-                calculatedLight = pointLight.Energy * attenuation * attenuation;
+                calculatedLight = light.Comp.Energy * attenuation * attenuation;
 
             illumination += calculatedLight; //Math.Max(illumination, calculatedLight);
         }
@@ -251,15 +246,10 @@ public sealed class ShadekinSystem : EntitySystem
         var query = EntityQueryEnumerator<ShadekinComponent>();
         while (query.MoveNext(out var uid, out var component))
         {
-            component.Accumulator += frameTime;
-
-            if (_mobState.IsDead(uid))
+            if (_timing.CurTime < component.NextUpdate)
                 continue;
 
-            if (component.Accumulator <= 1)
-                continue;
-
-            component.Accumulator = 0;
+            component.NextUpdate = _timing.CurTime + component.UpdateCooldown;
 
             var lightExposure = 0f;
 

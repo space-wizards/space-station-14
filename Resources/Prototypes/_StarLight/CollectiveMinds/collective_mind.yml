@@ -77,6 +77,6 @@
   id: Empathy
   name: collective-mind-empathy
   keycode: 'e'
-  color: "#8a0060"
+  color: "#ff00f2"
   requiredComponents: 
   - Shadekin

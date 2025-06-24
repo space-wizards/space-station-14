@@ -22,6 +22,7 @@
     - id: ClothingHandsKnuckleDustersQM
     - id: MailTeleporterMachineCircuitboard
     - id: PlushieLance #starlight
+    - id: RadioHandheldExpedition #starlight
 
 - type: entity
   id: LockerQuarterMasterFilled

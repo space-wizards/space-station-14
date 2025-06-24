@@ -32,13 +32,19 @@
       "name": "idmailtech"
     },
     {
+      "name": "sovietid"
+    },
+    {
       "name": "syndi"
     },
-    { "name": "idcommander"
+    { 
+      "name": "idcommander"
     },
-    { "name": "idsyndiagent"
+    { 
+      "name": "idsyndiagent"
     },
-    { "name": "idoperative"
+    { 
+      "name": "idoperative"
     }
   ]
 }
