@@ -24,7 +24,8 @@ public abstract partial class SharedHandsSystem
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualSystem = default!;
 
-    public event Action<string, HandLocation>? OnPlayerAddHand;
+    public event Action<Entity<HandsComponent>, string, HandLocation>? OnPlayerAddHand;
+    public event Action<Entity<HandsComponent>, string>? OnPlayerRemoveHand;
     protected event Action<Entity<HandsComponent>?>? OnHandSetActive;
 
     public override void Initialize()
@@ -87,7 +88,7 @@ public abstract partial class SharedHandsSystem
         ent.Comp.SortedHands.Add(handName);
         Dirty(ent);
 
-        OnPlayerAddHand?.Invoke(handName, hand.Location);
+        OnPlayerAddHand?.Invoke((ent, ent.Comp), handName, hand.Location);
 
         if (ent.Comp.ActiveHandId == null)
             SetActiveHand(ent, handName);
@@ -102,6 +103,8 @@ public abstract partial class SharedHandsSystem
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return;
+
+        OnPlayerRemoveHand?.Invoke((ent, ent.Comp), handName);
 
         TryDrop(ent, handName, null, false);
 

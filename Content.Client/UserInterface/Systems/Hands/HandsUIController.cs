@@ -49,7 +49,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         _handsSystem.OnPlayerItemAdded += OnItemAdded;
         _handsSystem.OnPlayerItemRemoved += OnItemRemoved;
         _handsSystem.OnPlayerSetActiveHand += SetActiveHand;
-        _handsSystem.OnPlayerRemoveHand += RemoveHand;
+        _handsSystem.OnPlayerRemoveHand += OnRemoveHand;
         _handsSystem.OnPlayerHandsAdded += LoadPlayerHands;
         _handsSystem.OnPlayerHandsRemoved += UnloadPlayerHands;
         _handsSystem.OnPlayerHandBlocked += HandBlocked;
@@ -62,16 +62,25 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         _handsSystem.OnPlayerItemAdded -= OnItemAdded;
         _handsSystem.OnPlayerItemRemoved -= OnItemRemoved;
         _handsSystem.OnPlayerSetActiveHand -= SetActiveHand;
-        _handsSystem.OnPlayerRemoveHand -= RemoveHand;
+        _handsSystem.OnPlayerRemoveHand -= OnRemoveHand;
         _handsSystem.OnPlayerHandsAdded -= LoadPlayerHands;
         _handsSystem.OnPlayerHandsRemoved -= UnloadPlayerHands;
         _handsSystem.OnPlayerHandBlocked -= HandBlocked;
         _handsSystem.OnPlayerHandUnblocked -= HandUnblocked;
     }
 
-    private void OnAddHand(string name, HandLocation location)
+    private void OnAddHand(Entity<HandsComponent> entity, string name, HandLocation location)
     {
+        if (entity.Owner != _player.LocalEntity)
+            return;
         AddHand(name, location);
+    }
+
+    private void OnRemoveHand(Entity<HandsComponent> entity, string name)
+    {
+        if (entity.Owner != _player.LocalEntity)
+            return;
+        RemoveHand(name);
     }
 
     private void HandPressed(GUIBoundKeyEventArgs args, SlotControl hand)

@@ -31,7 +31,6 @@ namespace Content.Client.Hands.Systems
         [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly DisplacementMapSystem _displacement = default!;
 
-        public event Action<string>? OnPlayerRemoveHand;
         public event Action<string?>? OnPlayerSetActiveHand;
         public event Action<Entity<HandsComponent>>? OnPlayerHandsAdded;
         public event Action? OnPlayerHandsRemoved;
@@ -366,18 +365,6 @@ namespace Content.Client.Hands.Systems
                 OnPlayerHandsRemoved?.Invoke();
         }
         #endregion
-
-        public override void RemoveHand(Entity<HandsComponent?> ent, string handName)
-        {
-            if (ent == _playerManager.LocalEntity && ent.Comp != null &&
-                ent.Comp.Hands.ContainsKey(handName) && ent ==
-                _playerManager.LocalEntity)
-            {
-                OnPlayerRemoveHand?.Invoke(handName);
-            }
-
-            base.RemoveHand(ent, handName);
-        }
 
         private void OnHandActivated(Entity<HandsComponent>? ent)
         {
