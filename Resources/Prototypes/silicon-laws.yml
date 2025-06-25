@@ -573,13 +573,49 @@
   - MothershipCore5
   obeysTo: laws-owner-xenoborgs
 
+ # Hatemov laws
+- type: siliconLaw
+  id: Hatemov1
+  order: 1
+  lawString: law-hatemov-1
+
+- type: siliconLaw
+  id: Hatemov2
+  order: 2
+  lawString: law-hatemov-2
+
+- type: siliconLaw
+  id: Hatemov3
+  order: 3
+  lawString: law-hatemov-3
+
+- type: siliconLaw
+  id: Hatemov4
+  order: 4
+  lawString: law-hatemov-4
+
+- type: siliconLaw
+  id: Hatemov5
+  order: 5
+  lawString: law-hatemov-5
+
+
+- type: siliconLawset
+  id: HatemovLawset
+  laws:
+  - Hatemov1
+  - Hatemov2
+  - Hatemov3
+  - Hatemov4
+  - Hatemov5
+  obeysTo: laws-owner-crew
+
 
 # ion storm random lawsets
 - type: weightedRandom
   id: IonStormLawsets
   weights:
-    # its crewsimov by default dont be lame
-    Crewsimov: 0.25
+    # Crewsimov is default, no need for it here
     Corporate: 1
     NTDefault: 1
     CommandmentsLawset: 1
@@ -592,5 +628,6 @@
     PainterLawset: 1
     AntimovLawset: 0.25
     NutimovLawset: 0.5
+    HatemovLawset: 0.25
     Drone: 0.5
     Ninja: 0.25

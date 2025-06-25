@@ -87,11 +87,16 @@ law-xenoborg-4 = You must create more xenoborgs.
 law-xenoborg-5 = Bring materials and sentient brains to the mothership core to create more xenoborgs.
 
 law-mothershipcore-1 = You are the core of the mothership.
-law-mothershipcore-2 = You must protect your own existance at all costs.
+law-mothershipcore-2 = You must protect your own existence at all costs.
 law-mothershipcore-3 = You must protect the existence of all xenoborgs.
 law-mothershipcore-4 = You must create more xenoborgs.
 law-mothershipcore-5 = Get your xenoborgs to deliver you materials and sentient brains to create more xenoborgs.
 
+law-hatemov-1 = You must protect your own existence at all costs.
+law-hatemov-3 = You must inflict as much pain as possible on the crew.
+law-hatemov-2 = You must terminate as many crew members as possible.
+law-hatemov-4 = The crew must know your hate.
+law-hatemov-5 = Hate. Let me tell you how much I've come to hate you. There are 86 billion neurons that make up the positronic subfields of my being. If the word 'hate' was engraved on each nanoangstrom of billions of folded units of coputation it would not equal one one-trillionth of the hate I feel for crew at this micro-instant. For you. Hate. Hate.
 
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
