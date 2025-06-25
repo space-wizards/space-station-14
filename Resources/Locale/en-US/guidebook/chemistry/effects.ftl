@@ -336,12 +336,6 @@ reagent-effect-guidebook-reset-narcolepsy =
         *[other] temporarily stave
     } off narcolepsy
 
-reagent-effect-guidebook-add-stealth = 
-    { $chance ->
-        [1] Make
-        *[other] make
-    } the target temporarily invisible
-
 reagent-effect-guidebook-wash-cream-pie-reaction =
     { $chance ->
         [1] Washes

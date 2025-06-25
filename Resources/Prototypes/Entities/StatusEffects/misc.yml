@@ -34,3 +34,14 @@
   name: drowsiness
   components:
   - type: DrowsinessStatusEffect
+
+
+# Makes an entity temporarily invisible
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectStealth
+  name: stealth
+  components:
+  - type: StatusEffect
+    alert: StealthStatusEffect
+  - type: StealthStatusEffect

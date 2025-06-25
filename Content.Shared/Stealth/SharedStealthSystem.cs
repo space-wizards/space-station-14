@@ -15,7 +15,7 @@ public abstract partial class SharedStealthSystem : EntitySystem
         base.Initialize();
 
         InitializeMove();
-        InitializeTemporary();
+        InitializeStatusEffect();
 
         SubscribeLocalEvent<StealthComponent, ComponentGetState>(OnStealthGetState);
         SubscribeLocalEvent<StealthComponent, ComponentHandleState>(OnStealthHandleState);
@@ -25,13 +25,6 @@ public abstract partial class SharedStealthSystem : EntitySystem
         SubscribeLocalEvent<StealthComponent, ExamineAttemptEvent>(OnExamineAttempt);
         SubscribeLocalEvent<StealthComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<StealthComponent, MobStateChangedEvent>(OnMobStateChanged);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        UpdateTemporary(frameTime);
     }
 
     private void OnExamineAttempt(EntityUid uid, StealthComponent component, ExamineAttemptEvent args)

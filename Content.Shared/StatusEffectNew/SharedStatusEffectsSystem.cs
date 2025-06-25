@@ -132,6 +132,8 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
     private void OnStatusEffectApplied(Entity<StatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
+        ent.Comp.StartEffectTime = _timing.CurTime;
+
         if (ent.Comp is { AppliedTo: not null, Alert: not null })
         {
             (TimeSpan, TimeSpan)? cooldown = ent.Comp.EndEffectTime is null

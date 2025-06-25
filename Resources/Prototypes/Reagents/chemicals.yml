@@ -196,4 +196,8 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:AddStealth
+      - !type:ModifyStatusEffect
+        refresh: false
+        effectProto: StatusEffectStealth
+        time: 1.5
+        type: Add
