@@ -8353,4 +8353,11 @@ Entries:
   id: 1152
   time: '2025-06-25T02:50:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/900
+- author: Killer Tamashi
+  changes:
+  - message: Vulp heat damage rate was set to 2.5, this changes it to 1.75
+    type: Fix
+  id: 1153
+  time: '2025-06-25T03:04:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/901
 
