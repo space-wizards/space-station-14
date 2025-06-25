@@ -182,7 +182,7 @@ public sealed class MachineFrameSystem : EntitySystem
             return true;
         }
 
-        var splitStack = _stack.Split(used, needed, Transform(uid).Coordinates, stack);
+        var splitStack = _stack.Split((used, stack), needed, Transform(uid).Coordinates);
 
         if (splitStack == null)
             return false;
