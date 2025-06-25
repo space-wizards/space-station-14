@@ -330,7 +330,7 @@
   description: lse-1200c-desc
   productEntity: ShuttleGunPerforator
   cost:
-    Telebond: 12
+    Telebond: 8
   categories:
   - RevUplinkShuttle
   conditions:
