@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates.Helpers;
+using Content.Shared.Damage;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Hands.Components;
@@ -62,6 +63,8 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    //starlight
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
 
@@ -389,7 +392,11 @@ public abstract class SharedMagicSystem : EntitySystem
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;
 
-        _body.GibBody(ev.Target, true, body);
+        //_body.GibBody(ev.Target, true, body); //starlight commented out
+        //starlight start
+        //apply damage to the target
+        _damageable.TryChangeDamage(ev.Target, ev.Damage, true); //ignore resistances
+        //starlight end
     }
 
     // End Touch Spells

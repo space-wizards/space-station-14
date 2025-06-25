@@ -39,7 +39,8 @@ spellbook-animate-name = Animate
 spellbook-animate-description = Bring an inanimate object to life!
 
 spellbook-smite-name = Smite
-spellbook-smite-desc = Don't like them? EXPLODE them into giblets! Requires Wizard Robe & Hat.
+#starlight edit
+spellbook-smite-desc = Don't like them? SHOCK them into death! Requires Wizard Robe & Hat.
 
 spellbook-cluwne-name = Cluwne's Curse
 spellbook-cluwne-desc = For when you really hate someone and Smite isn't enough. Requires Wizard Robe & Hat.
