@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - name: Fail if we are attempting to run on the master branch
-      if: ${{GITHUB.REF_NAME == 'master'}} && github.repository == 'space-wizards/space-station-14'
+      if: ${{GITHUB.REF_NAME == 'master' && github.repository == 'space-wizards/space-station-14'}}
       run: exit 1
 
     - name: Install dependencies
