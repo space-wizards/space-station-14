@@ -289,6 +289,8 @@ public sealed class RespiratorSystem : EntitySystem
             if (_solutionContainerSystem.ResolveSolution(organUid, lung.SolutionName, ref lung.Solution))
                 _solutionContainerSystem.RemoveAllSolution(lung.Solution.Value);
         }
+
+        _atmosSys.Merge(gas, outGas);
     }
 
     /// <summary>
@@ -480,14 +482,14 @@ public sealed class RespiratorSystem : EntitySystem
     private void OnGasInhaled(Entity<BodyComponent> entity, ref InhaledGasEvent args)
     {
         args.Handled = true;
-        
+
         args.Succeeded = TryInhaleGasToBody((entity, entity.Comp), args.Gas);
     }
 
     private void OnGasExhaled(Entity<BodyComponent> entity, ref ExhaledGasEvent args)
     {
         args.Handled = true;
-        
+
         RemoveGasFromBody(entity, args.Gas);
     }
 }
