@@ -33,6 +33,9 @@ public sealed partial class StorageSystem : SharedStorageSystem
 
     private void OnClone(Entity<StorageComponent> ent, ref CloningEvent args)
     {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
         var cloneStorageComponent = EnsureComp<StorageComponent>(args.CloneUid);
         cloneStorageComponent.Grid = ent.Comp.Grid;
         cloneStorageComponent.MaxItemSize = ent.Comp.MaxItemSize;

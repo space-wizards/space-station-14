@@ -32,6 +32,9 @@ public sealed class WaggingSystem : EntitySystem
 
     private void OnCloning(Entity<WaggingComponent> ent, ref CloningEvent args)
     {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
         EnsureComp<WaggingComponent>(args.CloneUid);
     }
 

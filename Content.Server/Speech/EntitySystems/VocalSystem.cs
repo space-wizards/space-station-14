@@ -35,6 +35,9 @@ public sealed class VocalSystem : EntitySystem
 
     private void OnCloning(Entity<VocalComponent> ent, ref CloningEvent args)
     {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
         var v = EnsureComp<VocalComponent>(args.CloneUid);
         v.EmoteSounds = ent.Comp.EmoteSounds;
         v.Sounds = ent.Comp.Sounds;
