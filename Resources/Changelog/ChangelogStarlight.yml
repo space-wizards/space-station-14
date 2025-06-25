@@ -8318,7 +8318,7 @@ Entries:
   url: https://github.com/ss14Starlight/space-station-14/pull/879
 - author: Happyrobot33
   changes:
-  - message: Increased wizard fireball cooldown significantly, to 10, 8 and 5 minutes
+  - message: Increased wizard fireball cooldown significantly, to 5, 3 and 2 minutes
       per the respective fireball level
     type: Tweak
   id: 1148
