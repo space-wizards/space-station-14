@@ -29,7 +29,7 @@ namespace Content.Shared.Lathe
         /// The lathe's construction queue
         /// </summary>
         [DataField]
-        public Queue<LatheRecipePrototype> Queue = new();
+        public Queue<ProtoId<LatheRecipePrototype>> Queue = new();
 
         /// <summary>
         /// The sound that plays when the lathe is producing an item, if any

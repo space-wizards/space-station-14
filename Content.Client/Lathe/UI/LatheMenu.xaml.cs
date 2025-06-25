@@ -223,13 +223,14 @@ public sealed partial class LatheMenu : DefaultWindow
     /// Populates the build queue list with all queued items
     /// </summary>
     /// <param name="queue"></param>
-    public void PopulateQueueList(Queue<LatheRecipePrototype> queue)
+    public void PopulateQueueList(Queue<ProtoId<LatheRecipePrototype>> queue)
     {
         QueueList.DisposeAllChildren();
 
         var idx = 1;
-        foreach (var recipe in queue)
+        foreach (var recipeProto in queue)
         {
+            var recipe = _prototypeManager.Index(recipeProto);
             var queuedRecipeBox = new BoxContainer();
             queuedRecipeBox.Orientation = BoxContainer.LayoutOrientation.Horizontal;
 

@@ -195,7 +195,8 @@ namespace Content.Server.Lathe
             if (component.CurrentRecipe != null || component.Queue.Count <= 0 || !this.IsPowered(uid, EntityManager))
                 return false;
 
-            var recipe = component.Queue.Dequeue();
+            var recipeProto = component.Queue.Dequeue();
+            var recipe = _proto.Index(recipeProto);
 
             var time = _reagentSpeed.ApplySpeed(uid, recipe.CompleteTime) * component.TimeMultiplier;
 
@@ -268,7 +269,7 @@ namespace Content.Server.Lathe
             if (!Resolve(uid, ref component))
                 return;
 
-            var producing = component.CurrentRecipe ?? component.Queue.FirstOrDefault();
+            var producing = component.CurrentRecipe ?? (component.Queue.TryPeek(out var protoId) ? _proto.Index(protoId) : null);
 
             var state = new LatheUpdateState(GetAvailableRecipes(uid, component), component.Queue, producing);
             _uiSys.SetUiState(uid, LatheUiKey.Key, state);
