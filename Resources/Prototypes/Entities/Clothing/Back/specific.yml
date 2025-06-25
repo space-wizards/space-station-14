@@ -98,3 +98,24 @@
   - type: Construction
     graph: ClothingBagPet
     node: bagPet
+
+- type: entity
+  parent: Clothing
+  id: ClothingBackpackRIG
+  name: R.I.G
+  description: Robust Integrated Gearset
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/waterbackpack.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    slots: BACK
+    sprite: Clothing/Back/Backpacks/waterbackpack.rsi
+  - type: ExtraHandsEquipment
+    hands:
+      extra_hand_1:
+        location: Middle # middle hands to prevent overlapping inhand sprites
+      extra_hand_2:
+        location: Middle
