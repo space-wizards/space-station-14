@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   parent: BaseItem
   id: BaseBeaker
@@ -544,7 +545,9 @@
   - type: Injector
     delay: 2.5
     injectOnly: false
-    maxTransferAmount: 25
+    # start of modifications
+    maxTransferAmount: 25 # Ronstation edit - Bluespace syringes are still pretty whatever, but its something
+    # end of modifications
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: syringe
