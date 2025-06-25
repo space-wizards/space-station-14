@@ -46,7 +46,8 @@ public sealed partial class MarkingPoints
                 Points = points.Points,
                 Required = points.Required,
                 OnlyWhitelisted = points.OnlyWhitelisted,
-                DefaultMarkings = points.DefaultMarkings
+                DefaultMarkings = points.DefaultMarkings,
+                Weight = points.Weight
             };
         }
 

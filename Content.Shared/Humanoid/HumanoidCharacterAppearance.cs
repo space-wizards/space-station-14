@@ -227,14 +227,14 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             // if it's facial hair, there are entries in the category, and the character is not female, roll & assign a random one. else bald
             if (category == MarkingCategories.FacialHair)
             {
-                newFacialHairStyle = markings.Count == 0 || sex == Sex.Female || random.Prob(categorySet.Weight) ?
+                newFacialHairStyle = markings.Count == 0 || sex == Sex.Female || !random.Prob(categorySet.Weight) ?
                     HairStyles.DefaultFacialHairStyle : random.Pick(markingWeights);
             }
 
             // if it's hair, and there are hair styles, roll one. else bald
             else if (category == MarkingCategories.Hair)
             {
-                newHairStyle = markings.Count == 0 || random.Prob(categorySet.Weight) ?
+                newHairStyle = markings.Count == 0 || !random.Prob(categorySet.Weight) ?
                     HairStyles.DefaultHairStyle : random.Pick(markingWeights);
             }
 
