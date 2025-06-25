@@ -1,3 +1,4 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,8 +48,9 @@ public class MapLoadBenchmark
         PoolManager.Shutdown();
     }
 
-    public static readonly string[] MapsSource = { "Empty", "Saltern", "Box", "Bagel", "Dev", "CentComm", "Core", "TestTeg", "Packed", "Omega", "Reach", "Meta", "Marathon", "MeteorArena", "Fland", "Oasis", "Convex", "Saltern2", "Cluster2", "Atlas2"};
-
+    // start of modifications
+    public static readonly string[] MapsSource = { "Empty", "Saltern", "Box", "Bagel", "Dev", "CentComm", "Core", "TestTeg", "Packed", "Omega", "Reach", "Meta", "Marathon", "MeteorArena", "Fland", "Oasis", "Convex", "Saltern2", "Cluster2", "Atlas2" }; // Ronstation edit - Saltern2, Cluster2, and Atlas2
+    // end of modifications
     [ParamsSource(nameof(MapsSource))]
     public string Map;
 
