@@ -14,6 +14,7 @@ public sealed class SimpleFloorPlanPopulatorSystem : BaseWorldSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinition = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -29,8 +30,8 @@ public sealed class SimpleFloorPlanPopulatorSystem : BaseWorldSystem
         var enumerator = _map.GetAllTilesEnumerator(uid, grid);
         while (enumerator.MoveNext(out var tile))
         {
-            var coords = grid.GridTileToLocal(tile.Value.GridIndices);
-            var selector = tile.Value.Tile.GetContentTileDefinition(_tileDefinition).ID;
+            var coords = _map.GridTileToLocal(uid, grid, tile.Value.GridIndices);
+            var selector = _turf.GetContentTileDefinition(tile.Value).ID;
             if (!component.Caches.TryGetValue(selector, out var cache))
                 continue;
 

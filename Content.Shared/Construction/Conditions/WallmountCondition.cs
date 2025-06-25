@@ -24,7 +24,7 @@ namespace Content.Shared.Construction.Conditions
             // get blueprint and user position
             var transformSystem = entManager.System<SharedTransformSystem>();
             var userWorldPosition = transformSystem.GetWorldPosition(user);
-            var objWorldPosition = location.ToMap(entManager, transformSystem).Position;
+            var objWorldPosition = transformSystem.ToMapCoordinates(location).Position;
 
             // find direction from user to blueprint
             var userToObject = (objWorldPosition - userWorldPosition);
