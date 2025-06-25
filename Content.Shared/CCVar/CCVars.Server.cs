@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Configuration;
+﻿// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -17,8 +18,10 @@ public sealed partial class CCVars
     /// <summary>
     ///     Guide Entry Prototype ID to be displayed as the server rules.
     /// </summary>
+    // start of modifications
     public static readonly CVarDef<string> RulesFile =
-        CVarDef.Create("server.rules_file", "RonstationRules", CVar.REPLICATED | CVar.SERVER);
+        CVarDef.Create("server.rules_file", "RonstationRules", CVar.REPLICATED | CVar.SERVER); // Ronstation - Our rules instead of the default
+    // end of modifications
 
     /// <summary>
     ///     Guide entry that is displayed by default when a guide is opened.
