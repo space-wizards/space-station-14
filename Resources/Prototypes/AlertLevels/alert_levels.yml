@@ -74,7 +74,7 @@
       announcement: alert-level-omega-announcement
       selectable: false
       sound:
-        path: /Audio/Misc/omega.ogg
+        path: /Audio/_Starlight/Misc/omega.ogg
         params:
           volume: -2
       disableSelection: true
