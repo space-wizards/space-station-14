@@ -24,7 +24,7 @@ public sealed partial class CCVars
     ///     Even when true, these are only loaded if the game is compiled with <c>DEVELOPMENT</c> set.
     /// </summary>
     public static readonly CVarDef<bool> ConfigPresetDevelopment =
-        CVarDef.Create("config.preset_development", true, CVar.SERVERONLY);
+        CVarDef.Create("config.preset_development", false, CVar.SERVERONLY);
 
     /// <summary>
     ///     Whether to load the preset debug CVars.
