@@ -44,6 +44,7 @@ public static class EyeColor
 
 public enum HumanoidEyeColor : byte
 {
+    Standard,
     Shadekin,
 }
 
