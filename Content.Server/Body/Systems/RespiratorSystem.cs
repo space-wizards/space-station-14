@@ -217,10 +217,11 @@ public sealed class RespiratorSystem : EntitySystem
             return false;
 
         // If we don't have a body we can't be poisoned by gas, yet...
-        if (!TryComp<BodyComponent>(ent, out var body))
-            return TryMetabolizeGas(ent);
+        var success = !TryComp<BodyComponent>(ent, out var body) ? TryMetabolizeGas(ent) : TryMetabolizeGas((ent, ent.Comp, body));
 
-        return TryMetabolizeGas((ent, ent.Comp, body));
+        // Don't keep that gas in our lungs lest it poisons a poor nuclear operative.
+        Exhale(ent);
+        return success;
     }
 
     /// <summary>
