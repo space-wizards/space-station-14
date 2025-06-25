@@ -69,6 +69,12 @@
   id: LockerFillChemistry
   table: !type:AllSelector
     children:
+    - id: BoxSyringe
+    - id: BoxBeaker
+      amount: 2
+    - id: BoxPillCanister
+    - id: BoxBottle
+    - id: BoxVial
     - id: PlasmaChemistryVial
     - id: ClothingHandsGlovesLatex
     - id: ClothingMaskSterile
