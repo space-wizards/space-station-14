@@ -57,6 +57,7 @@
     containers:
       entity_storage: !type:NestedSelector
         tableId: LockerFillWarden
+# end of modifications
 
 - type: entity
   id: LockerSecurityFilled
