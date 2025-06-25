@@ -1,6 +1,3 @@
-using Content.Server.Objectives.Systems;
-using Content.Shared.Ninja.Systems;
-
 namespace Content.Server.Objectives.Components;
 
 /// <summary>

@@ -1,7 +1,4 @@
-using Content.Shared.Objectives.Components;
-using Content.Shared.Tag;
 using Content.Shared.Whitelist;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Components;

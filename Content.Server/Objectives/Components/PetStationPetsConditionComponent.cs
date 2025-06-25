@@ -1,7 +1,3 @@
-using Content.Shared.Objectives.Components;
-using Content.Shared.Whitelist;
-using Robust.Shared.Utility;
-
 namespace Content.Server.Objectives.Components;
 
 /// <summary>
