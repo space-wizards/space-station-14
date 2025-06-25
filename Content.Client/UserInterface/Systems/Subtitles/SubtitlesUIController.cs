@@ -104,8 +104,9 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
         }
 
         var mapPos = _eyeManager.CurrentEye.Position;
-        var upAngle = _eyeManager.CurrentEye.Rotation.ToVec();
-        var rightAngle = new Vector2(-upAngle.Y, upAngle.X);
+        var downAngle = _eyeManager.CurrentEye.Rotation.ToWorldVec();
+        var upAngle = new Vector2(downAngle.X, -downAngle.Y);
+        var rightAngle = new Vector2(upAngle.Y, upAngle.X);
 
         var pos = mapPos.Position;
         var maxVector = new Vector2(1f, 1f);
@@ -128,9 +129,9 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
                 countedSounds++;
 
                 var soundPos = _xformSystem.GetMapCoordinates(sound.Comp2);
-                var soundDelta = pos - soundPos.Position;
+                var soundDelta = Vector2.Normalize(pos - soundPos.Position);
                 var dotProduct = Vector2.Dot(upAngle, soundDelta);
-                if (dotProduct <= 0.5)
+                if (Math.Abs(dotProduct) >= 0.75)
                 {
                     left = true;
                     right = true;
