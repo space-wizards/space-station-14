@@ -2,19 +2,11 @@
 - type: nameIdentifierGroup
   id: Monkey
   prefix: MK
-  fullName: true
 
 # KB-123
 - type: nameIdentifierGroup
   id: Kobold
   prefix: KB
-  fullName: true
-
-# WA-123
-- type: nameIdentifierGroup
-  id: Scurret
-  prefix: WA
-  fullName: true
 
 # SC-123
 - type: nameIdentifierGroup
@@ -68,6 +60,7 @@
 # Used to suffix a number to any mob to identify player controlled mob griefing.
 - type: nameIdentifierGroup
   id: GenericNumber
+  prefix: ID
 
 - type: nameIdentifierGroup
   id: Bounty
