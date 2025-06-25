@@ -2,9 +2,9 @@ namespace Content.Shared.GameplayMetrics;
 
 public abstract class SharedBasicGameplayMetricsSystem : EntitySystem
 {
-    public abstract void RecordMetric(string name, Dictionary<string, object?> logData, ExtraInfo extraInfo = ExtraInfo.Basic);
+    public abstract void RecordMetric(string name, Dictionary<string, object?> metricData, ExtraInfo extraInfo = ExtraInfo.Basic);
 
-    // This exists mainly so people don't start putting in like "null" or "" for if it doesn't exist.
+    // This exists so people don't start putting in like "null" or "" for if the entity prototype doesn't exist.
     public string? GetEntProtoIdOrNull(EntityUid uid)
     {
         return MetaData(uid).EntityPrototype?.ID;
@@ -17,7 +17,6 @@ public abstract class SharedBasicGameplayMetricsSystem : EntitySystem
 public enum ExtraInfo
 {
     None = 0,
-    All = ~None,
 
     RoundNumber = 1 << 0,
     GameTime = 1 << 1,

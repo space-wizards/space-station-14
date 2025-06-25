@@ -1824,7 +1824,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #region Basic Gameplay Metrics
 
-        public async Task<int> RecordGameplayMetric(string serverName, JsonDocument logData)
+        public async Task<int> RecordGameplayMetric(string serverName, JsonDocument metricDataa)
         {
             await using var db = await GetDb();
 
@@ -1832,7 +1832,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             {
                 CreatedAt = DateTime.UtcNow,
                 ServerName = serverName,
-                LogData = logData,
+                MetricData = metricDataa,
             };
             db.DbContext.BasicGameplayMetrics.Add(entry);
             await db.DbContext.SaveChangesAsync();

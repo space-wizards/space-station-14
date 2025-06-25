@@ -86,7 +86,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             return;
 
         _gameplayMetrics.RecordMetric( "StorageImplant",
-        new Dictionary<string, string?>
+        new Dictionary<string, object?>
         {
             { "status", status },
             { "itemProto", metaData.EntityPrototype.ID },

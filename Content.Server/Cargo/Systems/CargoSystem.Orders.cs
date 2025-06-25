@@ -259,7 +259,7 @@ namespace Content.Server.Cargo.Systems
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] on account {order.Account} with balance at {accountBalance}");
 
             _gameplayMetrics.RecordMetric("CargoOrder",
-            new Dictionary<string, string?>
+            new Dictionary<string, object?>
             {
                 { "productProto", order.ProductId },
                 { "quantity", order.OrderQuantity.ToString() },

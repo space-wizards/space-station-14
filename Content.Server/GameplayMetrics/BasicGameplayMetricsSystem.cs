@@ -9,6 +9,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameplayMetrics;
 
+/// <summary>
+/// System for creating basic
+/// </summary>
 public sealed class BasicGameplayMetricsSystem : SharedBasicGameplayMetricsSystem
 {
     [Dependency] private readonly IServerDbManager _db = default!;
@@ -20,6 +23,8 @@ public sealed class BasicGameplayMetricsSystem : SharedBasicGameplayMetricsSyste
     private bool _enabled;
     private string _serverName = string.Empty;
 
+    private const string NameReserve = "name";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -28,33 +33,37 @@ public sealed class BasicGameplayMetricsSystem : SharedBasicGameplayMetricsSyste
         _cfg.OnValueChanged(CCVars.BasicMetricsServerName, x => _serverName = x, true);
     }
 
-    public override void RecordMetric(string name, Dictionary<string, object?> logData, ExtraInfo extraInfo = ExtraInfo.Basic)
+    /// <summary>
+    /// Record a metric to the database.
+    /// </summary>
+    /// <remarks>There are several reserved words. Specifically "name" and the enums in <see cref="ExtraInfo"/></remarks>
+    public override void RecordMetric(string name, Dictionary<string, object?> metricData, ExtraInfo extraInfo = ExtraInfo.Basic)
     {
-        if (_enabled)
+        if (!_enabled)
             return;
 
-        if (!logData.TryAdd("name", name))
-            throw new DebugAssertException("You can't use reserved word \"name\" in log data.");
+        if (!metricData.TryAdd(NameReserve, name))
+            throw new DebugAssertException($"You can't use reserved word \"{NameReserve}\" in log data.");
 
-        AddExtraAndCheckInformation(logData, extraInfo);
+        AddExtraAndCheckInformation(metricData, extraInfo);
 
-        var jsonDoc = JsonSerializer.SerializeToDocument(logData);
+        var jsonDoc = JsonSerializer.SerializeToDocument(metricData);
 
         _db.RecordGameplayMetric(_serverName, jsonDoc);
     }
 
-    private void AddExtraAndCheckInformation(Dictionary<string, object?> metaData, ExtraInfo extraInfo)
+    private void AddExtraAndCheckInformation(Dictionary<string, object?> metricData, ExtraInfo extraInfo)
     {
         var roundNumber = ExtraInfo.RoundNumber.ToString();
-        if (metaData.ContainsKey(roundNumber))
+        if (metricData.ContainsKey(roundNumber))
             throw new DebugAssertException($"You can't use reserved word \"{roundNumber}\" in log data.");
         if (extraInfo.HasFlag(ExtraInfo.RoundNumber))
-            metaData.Add(roundNumber, _ticker.RoundId.ToString());
+            metricData.Add(roundNumber, _ticker.RoundId.ToString());
 
         var gameTime = ExtraInfo.GameTime.ToString();
-        if (metaData.ContainsKey(gameTime))
+        if (metricData.ContainsKey(gameTime))
             throw new DebugAssertException($"You can't use reserved word \"{gameTime}\" in log data.");
         if (extraInfo.HasFlag(ExtraInfo.GameTime))
-            metaData.Add(gameTime, _timing.CurTime.Subtract(_ticker.RoundStartTimeSpan).ToString());
+            metricData.Add(gameTime, _timing.CurTime.Subtract(_ticker.RoundStartTimeSpan).ToString());
     }
 }

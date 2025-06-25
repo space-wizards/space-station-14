@@ -1090,7 +1090,7 @@ namespace Content.Server.Database
         public string ServerName { get; set; } = default!;
 
         [Required, Column(TypeName = "jsonb")]
-        public JsonDocument LogData { get; set; } = default!;
+        public JsonDocument MetricData { get; set; } = default!;
     }
 
     // Note: this interface isn't used by the game, but it *is* used by SS14.Admin.

@@ -79,7 +79,7 @@ namespace Content.Server.Database
                 .HasConversion(jsonStringConverter);
 
             modelBuilder.Entity<BasicGameplayMetrics>()
-                .Property(metric => metric.LogData)
+                .Property(metric => metric.MetricData)
                 .HasConversion(jsonStringConverter);
 
             modelBuilder.Entity<Profile>()
