@@ -16,8 +16,8 @@ public sealed class BlindableSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<BlindableComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<BlindableComponent, EyeDamageChangedEvent>(OnDamageChanged);
-        SubscribeLocalEvent<BlindableComponent, GetEyePvsScaleRelayedAttemptEvent>(OnGetEyePvsScaleRelayedAttemptEvent);
-        SubscribeLocalEvent<BlindableComponent, GetEyeOffsetRelayedAttemptEvent>(OnGetEyeOffsetRelayedAttemptEvent);
+        SubscribeLocalEvent<BlindableComponent, GetEyePvsScaleAttemptEvent>(OnGetEyePvsScaleAttemptEvent);
+        SubscribeLocalEvent<BlindableComponent, GetEyeOffsetAttemptEvent>(OnGetEyeOffsetAttemptEvent);
     }
 
     private void OnRejuvenate(Entity<BlindableComponent> ent, ref RejuvenateEvent args)
@@ -31,16 +31,16 @@ public sealed class BlindableSystem : EntitySystem
         _eyelids.UpdateEyesClosable((ent.Owner, ent.Comp));
     }
 
-    private void OnGetEyePvsScaleRelayedAttemptEvent(Entity<BlindableComponent> ent, ref GetEyePvsScaleRelayedAttemptEvent args)
+    private void OnGetEyePvsScaleAttemptEvent(Entity<BlindableComponent> ent, ref GetEyePvsScaleAttemptEvent args)
     {
         if (ent.Comp.IsBlind)
-            args.Cancel();
+            args.Cancelled = true;
     }
 
-    private void OnGetEyeOffsetRelayedAttemptEvent(Entity<BlindableComponent> ent, ref GetEyeOffsetRelayedAttemptEvent args)
+    private void OnGetEyeOffsetAttemptEvent(Entity<BlindableComponent> ent, ref GetEyeOffsetAttemptEvent args)
     {
         if (ent.Comp.IsBlind)
-            args.Cancel();
+            args.Cancelled = true;
     }
 
     [PublicAPI]

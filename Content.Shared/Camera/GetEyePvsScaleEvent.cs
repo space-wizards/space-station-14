@@ -21,11 +21,11 @@ namespace Content.Shared.Camera;
 public record struct GetEyePvsScaleEvent(float Scale);
 
 /// <summary>
-///     Riased before the <see cref="GetEyePvsScaleRelayedEvent"/>, to check if any on the subscribed
+///     Riased before the <see cref="GetEyePvsScaleEvent"/> and <see cref="GetEyePvsScaleRelayedEvent"/>, to check if any on the subscribed
 ///     systems want to cancel PVS changes.
 /// </summary>
 [ByRefEvent]
-public sealed class GetEyePvsScaleRelayedAttemptEvent : CancellableEntityEventArgs;
+public record struct GetEyePvsScaleAttemptEvent(bool Cancelled);
 
 /// <summary>
 ///     Raised on any equipped and in-hand items that may modify the eye offset.
