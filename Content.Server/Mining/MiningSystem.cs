@@ -47,8 +47,8 @@ public sealed class MiningSystem : EntitySystem
         _gameplayMetrics.RecordMetric("MiningOre",
         new Dictionary<string, object?>
         {
-            { "oreProto", _gameplayMetrics.GetEntProtoIdOrNull(uid) },
-            { "oreSpawnedType", proto.ID },
+            { "minedProto", _gameplayMetrics.GetEntProtoIdOrNull(uid) },
+            { "oreSpawnedProto", proto.ID },
             { "amount", toSpawn.ToString() },
         });
     }
