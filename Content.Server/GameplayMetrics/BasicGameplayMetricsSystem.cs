@@ -54,13 +54,13 @@ public sealed class BasicGameplayMetricsSystem : SharedBasicGameplayMetricsSyste
 
     private void AddExtraAndCheckInformation(Dictionary<string, object?> metricData, ExtraInfo extraInfo)
     {
-        var roundNumber = ExtraInfo.RoundNumber.ToString();
+        var roundNumber = nameof(ExtraInfo.RoundNumber);
         if (metricData.ContainsKey(roundNumber))
             throw new DebugAssertException($"You can't use reserved word \"{roundNumber}\" in log data.");
         if (extraInfo.HasFlag(ExtraInfo.RoundNumber))
             metricData.Add(roundNumber, _ticker.RoundId.ToString());
 
-        var gameTime = ExtraInfo.GameTime.ToString();
+        var gameTime = nameof(ExtraInfo.GameTime);
         if (metricData.ContainsKey(gameTime))
             throw new DebugAssertException($"You can't use reserved word \"{gameTime}\" in log data.");
         if (extraInfo.HasFlag(ExtraInfo.GameTime))
