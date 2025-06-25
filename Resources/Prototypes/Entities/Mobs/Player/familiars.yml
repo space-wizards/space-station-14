@@ -1,6 +1,6 @@
 - type: entity
   name: Remilia
-  parent: MobBat
+  parent: [BaseUniqueMob, MobBat]
   id: MobBatRemilia
   description: The chaplain's familiar. Likes fruit.
   components:

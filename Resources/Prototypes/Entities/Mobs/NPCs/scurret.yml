@@ -7,7 +7,8 @@
   parent: MobBaseAncestor
   abstract: true
   components:
-  # Custom names
+  - type: NameIdentifier
+    group: Scurret
   - type: ReplacementAccent
     accent: scurret
   - type: Sprite
@@ -124,7 +125,7 @@
   name: scurret
   description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds's Pizza's "loyal workforce".
   id: MobScurret
-  parent: MobBaseScurret
+  parent: [BaseUniqueMob, MobBaseScurret]
   components:
   # The have a rich culture
   - type: RandomMetadata

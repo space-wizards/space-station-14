@@ -3,7 +3,7 @@
 
 - type: entity
   name: Ian
-  parent: MobCorgi
+  parent: [BaseUniqueMob, MobCorgi]
   id: MobCorgiIan
   description: Favorite pet corgi.
   components:
@@ -23,7 +23,6 @@
         Base: ian_dead
   - type: Grammar
     attributes:
-      proper: true
       gender: male
   - type: Butcherable
     spawned:
@@ -82,7 +81,6 @@
         Base: lisa_dead
   - type: Grammar
     attributes:
-      proper: true
       gender: female
 
 - type: entity
@@ -105,7 +103,6 @@
         Base: real_mouse_dead
   - type: Grammar
     attributes:
-      proper: true
       gender: female
 
 - type: entity
@@ -116,7 +113,6 @@
   components:
   - type: Grammar
     attributes:
-      proper: true
       gender: male
   - type: Butcherable # A puppy? You monster...
     spawned:
@@ -128,7 +124,7 @@
 
 - type: entity
   name: Runtime
-  parent: MobCat
+  parent: [BaseUniqueMob, MobCat]
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
@@ -140,7 +136,6 @@
       task: SimpleHostileCompound
   - type: Grammar
     attributes:
-      proper: true
       gender: female
   - type: Tag
     tags:
@@ -160,7 +155,6 @@
       - PetsNT
   - type: Grammar
     attributes:
-      proper: true
       gender: male
   - type: Tag
     tags:
@@ -198,13 +192,12 @@
 
 - type: entity
   name: Bandito
-  parent: MobFerret
+  parent: [BaseUniqueMob, MobFerret]
   id: MobBandito
   description: Just a silly little guy!
   components:
   - type: Grammar
     attributes:
-      proper: true
       gender: male
   - type: Tag
     tags:
@@ -213,7 +206,7 @@
 
 - type: entity
   name: Bingus
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [BaseUniqueMob, SimpleMobBase, StripableInventoryBase]
   id: MobBingus
   description: Bingus my beloved...
   components:
@@ -257,10 +250,6 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/cat_meow.ogg
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: epicene
   - type: Tag
     tags:
     - CannotSuicide
@@ -270,7 +259,7 @@
 
 - type: entity
   name: McGriff
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [BaseUniqueMob, SimpleMobBase, StripableInventoryBase]
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
   components:
@@ -318,7 +307,6 @@
       path: /Audio/Animals/small_dog_bark_happy.ogg
   - type: Grammar
     attributes:
-      proper: true
       gender: male
   - type: Speech
     speechVerb: Canine
@@ -332,7 +320,7 @@
 
 - type: entity
   name: Paperwork
-  parent: MobSloth
+  parent: [BaseUniqueMob, MobSloth]
   id: MobPaperwork
   description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
   components:
@@ -361,12 +349,11 @@
     interactSuccessSpawn: EffectHearts
   - type: Grammar
     attributes:
-      proper: true
       gender: male
 
 - type: entity
   name: Walter
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [BaseUniqueMob, SimpleMobBase, StripableInventoryBase]
   id: MobWalter
   description: He likes chems and treats. Walter.
   components:
@@ -414,7 +401,6 @@
       path: /Audio/Animals/small_dog_bark_happy.ogg
   - type: Grammar
     attributes:
-      proper: true
       gender: male
   - type: Tag
     tags:
@@ -428,7 +414,7 @@
 
 - type: entity
   name: Morty
-  parent: MobPossum
+  parent: [BaseUniqueMob, MobPossum]
   id: MobPossumMorty
   description: The station's resident Didelphis virginiana. A sensitive but resilient kind of guy.
   components:
@@ -441,7 +427,6 @@
       path: /Audio/Animals/snake_hiss.ogg
   - type: Grammar
     attributes:
-      proper: true
       gender: male
   - type: Tag
     tags:
@@ -477,7 +462,6 @@
   components:
   - type: Grammar
     attributes:
-      proper: true
       gender: female
   - type: Sprite
     drawdepth: Mobs
@@ -494,7 +478,7 @@
 
 - type: entity
   name: Morticia
-  parent: MobRaccoon
+  parent: [BaseUniqueMob, MobRaccoon]
   id: MobRaccoonMorticia
   description: A powerful creature of the night. Her eyeshadow is always on point.
   components:
@@ -507,7 +491,6 @@
       path: /Audio/Animals/raccoon_chatter.ogg
   - type: Grammar
     attributes:
-      proper: true
       gender: female
   - type: Tag
     tags:
@@ -516,7 +499,7 @@
 
 - type: entity
   name: Alexander
-  parent: MobPig
+  parent: [BaseUniqueMob, MobPig]
   id: MobAlexander
   description: Chef's finest colleague.
   components:
@@ -529,7 +512,6 @@
       path: /Audio/Animals/pig_oink.ogg
   - type: Grammar
     attributes:
-      proper: true
       gender: male
   - type: Tag
     tags:
@@ -538,7 +520,7 @@
 
 - type: entity
   name: Renault
-  parent: MobFox
+  parent: [BaseUniqueMob, MobFox]
   id: MobFoxRenault
   description: The captain's trustworthy fox.
   components:
@@ -557,7 +539,6 @@
       amount: 1
   - type: Grammar
     attributes:
-      proper: true
       gender: female
   - type: Tag
     tags:
@@ -568,7 +549,7 @@
 
 - type: entity
   name: Hamlet
-  parent: MobHamster
+  parent: [BaseUniqueMob, MobHamster]
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
   components:
@@ -606,7 +587,6 @@
       amount: 1
   - type: Grammar
     attributes:
-      proper: true
       gender: male
   - type: Tag
     tags:
@@ -621,7 +601,7 @@
 
 - type: entity
   name: Shiva
-  parent: MobGiantSpider
+  parent: [BaseUniqueMob, MobGiantSpider]
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
@@ -673,7 +653,6 @@
         Poison: 8
   - type: Grammar
     attributes:
-      proper: true
       gender: female
   - type: Tag
     tags:
@@ -686,7 +665,7 @@
 
 - type: entity
   name: Willow
-  parent: MobKangaroo
+  parent: [BaseUniqueMob, MobKangaroo]
   id: MobKangarooWillow
   description: Willow the boxing kangaroo.
   components:
@@ -699,7 +678,6 @@
       path: /Audio/Animals/kangaroo_grunt.ogg
   - type: Grammar
     attributes:
-      proper: true
       gender: female
   - type: Tag
     tags:
@@ -718,7 +696,7 @@
 - type: entity
   name: Smile
   id: MobSlimesPet
-  parent: [MobAdultSlimes, StripableInventoryBase]
+  parent: [BaseUniqueMob, MobAdultSlimes, StripableInventoryBase]
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
   - type: Sprite
@@ -794,12 +772,11 @@
     raffle: null
   - type: Grammar
     attributes:
-      proper: true
       gender: female
 
 - type: entity
   name: Pun Pun
-  parent: MobMonkey
+  parent: [BaseUniqueMob, MobMonkey]
   id: MobMonkeyPunpun
   description: A prominent representative of monkeys with unlimited access to alcohol.
   components:
@@ -829,12 +806,11 @@
     prototypes: [ MobMonkeyGear ]
   - type: Grammar
     attributes:
-      proper: true
       gender: male
 
 - type: entity
   name: Tropico
-  parent: MobCrab
+  parent: [BaseUniqueMob, MobCrab]
   id: MobCrabAtmos
   description: The noble and stalwart defender of Atmosia. Viva!
   components:
@@ -853,7 +829,6 @@
     - CannotSuicide
   - type: Grammar
     attributes:
-      proper: true
       gender: male
 #  - type: AlwaysRevolutionaryConvertible
   - type: StealTarget
