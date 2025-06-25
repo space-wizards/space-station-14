@@ -9,6 +9,7 @@ namespace Content.Shared.Changeling;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ChangelingIdentityComponent : Component
 {
+    public override bool SendOnlyToOwner => true;
     /// <summary>
     /// The list of entity UID's that exist in nullspace, they are paused clones of the victims that the ling has consumed
     /// Is a value of Realspace victim and their identity clone

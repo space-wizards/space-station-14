@@ -14,6 +14,7 @@ namespace Content.Shared.Changeling.Transform;
 [Access(typeof(SharedChangelingTransformSystem))]
 public sealed partial class ChangelingTransformComponent : Component
 {
+    public override bool SendOnlyToOwner => true;
     /// <summary>
     /// The action Prototype for Transforming
     /// </summary>

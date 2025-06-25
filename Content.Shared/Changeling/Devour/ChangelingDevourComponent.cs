@@ -17,6 +17,7 @@ namespace Content.Shared.Changeling.Devour;
 [Access(typeof(ChangelingDevourSystem))]
 public sealed partial class ChangelingDevourComponent : Component
 {
+    public override bool SendOnlyToOwner => true;
     /// <summary>
     /// The Action for devouring
     /// </summary>
