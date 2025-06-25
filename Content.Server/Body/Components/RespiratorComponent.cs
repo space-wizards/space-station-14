@@ -1,4 +1,6 @@
 using Content.Server.Body.Systems;
+using Content.Shared.Alert;
+using Content.Shared.Atmos;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
@@ -9,6 +11,34 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Access(typeof(RespiratorSystem))]
     public sealed partial class RespiratorComponent : Component
     {
+        /// <summary>
+        ///     Gas container for this entity
+        /// </summary>
+        [DataField]
+        public GasMixture Air = new()
+        {
+            Volume = 6, // 6 liters, the average lung capacity for a human according to Google
+            Temperature = Atmospherics.NormalBodyTemperature
+        };
+
+        /// <summary>
+        ///     The gas our entity breathes
+        /// </summary>
+        [DataField]
+        public Gas MetabolizedGas = Gas.Oxygen;
+
+        /// <summary>
+        ///     The gas our entity exhales
+        /// </summary>
+        [DataField]
+        public Gas ByproductGas = Gas.Oxygen;
+
+        /// <summary>
+        ///     How much of the gas we inhale is metabolized? Value range is (0, 1]
+        /// </summary>
+        [DataField]
+        public float Ratio = 1.0f;
+
         /// <summary>
         ///     The next time that this body will inhale or exhale.
         /// </summary>
@@ -62,6 +92,12 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField]
         public ProtoId<EmotePrototype> GaspEmote = "Gasp";
+
+        /// <summary>
+        /// The type of gas this respirator needs. Used only for the breathing alerts, not actual metabolism.
+        /// </summary>
+        [DataField]
+        public ProtoId<AlertPrototype> Alert = "LowOxygen";
 
         /// <summary>
         ///     How many cycles in a row has the mob been under-saturated?
