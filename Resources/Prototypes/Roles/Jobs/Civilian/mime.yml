@@ -45,3 +45,12 @@
       state: full
   - type: InstantAction
     event: !type:InvisibleWallActionEvent
+
+- type: chameleonOutfit
+  id: MimeChameleonOutfit
+  job: Mime
+  equipment:
+    head: ClothingHeadHatMimesoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    neck: ClothingNeckScarfStripedZebra
+    outerClothing: ClothingOuterWinterMime

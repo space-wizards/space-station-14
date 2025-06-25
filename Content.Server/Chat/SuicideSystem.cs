@@ -1,9 +1,9 @@
 using Content.Server.Ghost;
+using Content.Server.Hands.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -22,6 +22,7 @@ public sealed class SuicideSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -116,10 +117,9 @@ public sealed class SuicideSystem : EntitySystem
         var suicideByEnvironmentEvent = new SuicideByEnvironmentEvent(victim);
 
         // Try to suicide by raising an event on the held item
-        if (EntityManager.TryGetComponent(victim, out HandsComponent? handsComponent)
-            && handsComponent.ActiveHandEntity is { } item)
+        if (_hands.TryGetActiveItem(victim.Owner, out var item))
         {
-            RaiseLocalEvent(item, suicideByEnvironmentEvent);
+            RaiseLocalEvent(item.Value, suicideByEnvironmentEvent);
             if (suicideByEnvironmentEvent.Handled)
             {
                 args.Handled = suicideByEnvironmentEvent.Handled;

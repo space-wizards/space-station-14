@@ -103,11 +103,9 @@
     - SlowedDown
     - Stutter
     - Electrocution
-    - ForcedSleep
     - TemporaryBlindness
     - Pacified
     - RadiationProtection
-    - Drowsiness
     - Adrenaline
   - type: Temperature
     heatDamageThreshold: 800
@@ -253,9 +251,17 @@
   - type: Action
     icon: { sprite : Interface/Actions/devour.rsi, state: icon }
     iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
+    itemIconStyle: BigAction
     priority: 1
   - type: TargetAction
   - type: EntityTargetAction
+    canTargetSelf: false
+    whitelist:
+      components:
+      - MobState
+      - Door
+      tags:
+      - Wall
     event: !type:DevourActionEvent
 
 - type: entity
