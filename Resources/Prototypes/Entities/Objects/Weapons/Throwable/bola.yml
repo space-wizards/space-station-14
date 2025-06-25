@@ -1,6 +1,6 @@
 - type: entity
   name: bola
-  parent: [BaseItem, BaseRestrictedContraband]
+  parent: [BaseItem, BaseSecurityContraband]
   id: Bola
   description: Linked together with some spare cuffs and metal.
   components:
@@ -47,4 +47,5 @@
     staminaDamage: 0 # anything but this is gamebreaking
     canThrowTrigger: true
     canMoveBreakout: true
+    maxEnsnares: 1
   - type: LandAtCursor

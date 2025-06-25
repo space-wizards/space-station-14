@@ -9,6 +9,16 @@
   group: market
 
 - type: cargoProduct
+  id: ServiceCleanerGrenades
+  icon:
+    sprite: Objects/Weapons/Grenades/janitor.rsi
+    state: icon
+  product: CrateServiceCleanerGrenades
+  cost: 400
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
   id: ServiceLightsReplacement
   icon:
     sprite: Objects/Power/light_bulb.rsi
@@ -24,6 +34,16 @@
     sprite: Objects/Power/light_bulb.rsi
     state: normal
   product: CrateServiceHolidayLights
+  cost: 800
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceLightsColorful
+  icon:
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  product: CrateServiceColorfulLights
   cost: 800
   category: cargoproduct-category-name-service
   group: market
@@ -52,7 +72,7 @@
   id: ServiceSmokeables
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    state: closed
+    state: icon
   product: CrateServiceSmokeables
   cost: 1500
   category: cargoproduct-category-name-service
@@ -62,7 +82,7 @@
   id: ServiceCustomSmokable
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    state: closed
+    state: icon
   product: CrateServiceCustomSmokable
   cost: 1000
   category: cargoproduct-category-name-service
@@ -217,5 +237,3 @@
   cost: 500
   category: cargoproduct-category-name-service
   group: market
-
-

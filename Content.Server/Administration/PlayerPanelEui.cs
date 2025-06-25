@@ -8,6 +8,7 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Eui;
+using Content.Shared.Follower;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 
@@ -33,11 +34,13 @@ public sealed class PlayerPanelEui : BaseEui
     private bool _frozen;
     private bool _canFreeze;
     private bool _canAhelp;
+    private FollowerSystem _follower;
 
     public PlayerPanelEui(LocatedPlayerData player)
     {
         IoCManager.InjectDependencies(this);
         _targetPlayer = player;
+        _follower = _entity.System<FollowerSystem>();
     }
 
     public override void Opened()
@@ -140,6 +143,16 @@ public sealed class PlayerPanelEui : BaseEui
                     _adminLog.Add(LogType.Action,$"{Player:actor} deleted {_entity.ToPrettyString(session.AttachedEntity):subject}");
                     _entity.DeleteEntity(session.AttachedEntity);
                 }
+                break;
+            case PlayerPanelFollowMessage:
+                if (!_admins.HasAdminFlag(Player, AdminFlags.Admin) ||
+                    !_player.TryGetSessionById(_targetPlayer.UserId, out session) ||
+                    session.AttachedEntity == null ||
+                    Player.AttachedEntity is null ||
+                    session.AttachedEntity == Player.AttachedEntity)
+                    return;
+
+                _follower.StartFollowingEntity(Player.AttachedEntity.Value, session.AttachedEntity.Value);
                 break;
         }
     }

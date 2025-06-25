@@ -82,7 +82,7 @@ public sealed class TileConstructionTests : InteractionTest
         AssertGridCount(1);
 
         // Lattice -> Plating
-        await InteractUsing(Steel);
+        await InteractUsing(FloorItem);
         Assert.That(Hands.ActiveHandEntity, Is.Null);
         await AssertTile(Plating);
         AssertGridCount(1);

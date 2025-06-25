@@ -6,6 +6,10 @@ lathe-menu-search-designs = Search designs
 lathe-menu-category-all = All
 lathe-menu-search-filter = Filter:
 lathe-menu-amount = Amount:
+lathe-menu-recipe-count = { $count ->
+    [1] {$count} Recipe
+    *[other] {$count} Recipes
+}
 lathe-menu-reagent-slot-examine = It has a slot for a beaker on the side.
 lathe-reagent-dispense-no-container = Liquid pours out of {THE($name)} onto the floor!
 lathe-menu-result-reagent-display = {$reagent} ({$amount}u)
@@ -21,6 +25,7 @@ lathe-menu-material-amount-missing = { $amount ->
     *[other] {NATURALFIXED($amount, 2)} {MAKEPLURAL($unit)} of {$material} ([color=red]{NATURALFIXED($missingAmount, 2)} {MAKEPLURAL($unit)} missing[/color])
 }
 lathe-menu-no-materials-message = No materials loaded.
+lathe-menu-silo-linked-message = Silo Linked
 lathe-menu-fabricating-message = Fabricating...
 lathe-menu-materials-title = Materials
 lathe-menu-queue-title = Build Queue

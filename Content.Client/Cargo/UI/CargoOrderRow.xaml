@@ -1,19 +1,20 @@
 ﻿<PanelContainer xmlns="https://spacestation14.io"
-                HorizontalExpand="True">
+                HorizontalExpand="True"
+                Margin="0 1">
     <BoxContainer Orientation="Horizontal"
                   HorizontalExpand="True">
         <TextureRect Name="Icon"
                      Access="Public"
                      MinSize="32 32"
                      RectClipContent="True" />
+        <Control MinWidth="5"/>
         <BoxContainer Orientation="Vertical"
                       HorizontalExpand="True"
                       VerticalExpand="True">
-            <Label Name="ProductName"
+            <RichTextLabel Name="ProductName"
                    Access="Public"
                    HorizontalExpand="True"
-                   StyleClasses="LabelSubText"
-                   ClipText="True" />
+                   StyleClasses="LabelSubText" />
             <Label Name="Description"
                    Access="Public"
                    HorizontalExpand="True"
@@ -23,10 +24,10 @@
         <Button Name="Approve"
                 Access="Public"
                 Text="{Loc 'cargo-console-menu-cargo-order-row-approve-button'}"
-                StyleClasses="LabelSubText" />
+                StyleClasses="OpenRight" />
         <Button Name="Cancel"
                 Access="Public"
                 Text="{Loc 'cargo-console-menu-cargo-order-row-cancel-button'}"
-                StyleClasses="LabelSubText" />
+                StyleClasses="OpenLeft" />
     </BoxContainer>
 </PanelContainer>

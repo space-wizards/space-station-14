@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
@@ -10,12 +11,11 @@ namespace Content.Shared.Clothing.Components;
 /// <summary>
 ///     This handles entities which can be equipped.
 /// </summary>
-[NetworkedComponent]
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(ClothingSystem), typeof(InventorySystem))]
 public sealed partial class ClothingComponent : Component
 {
-    [DataField("clothingVisuals")]
+    [DataField]
     public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
 
     /// <summary>
@@ -24,26 +24,28 @@ public sealed partial class ClothingComponent : Component
     [DataField]
     public string? MappedLayer;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("quickEquip")]
+    [DataField]
     public bool QuickEquip = true;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("slots", required: true)]
+    /// <summary>
+    /// The slots in which the clothing is considered "worn" or "equipped". E.g., putting shoes in your pockets does not
+    /// equip them as far as clothing related events are concerned.
+    /// </summary>
+    /// <remarks>
+    /// Note that this may be a combination of different slot flags, not a singular bit.
+    /// </remarks>
+    [DataField(required: true)]
     [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)]
     public SlotFlags Slots = SlotFlags.NONE;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("equipSound")]
+    [DataField]
     public SoundSpecifier? EquipSound;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("unequipSound")]
+    [DataField]
     public SoundSpecifier? UnequipSound;
 
     [Access(typeof(ClothingSystem))]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("equippedPrefix")]
+    [DataField, AutoNetworkedField]
     public string? EquippedPrefix;
 
     /// <summary>
@@ -51,23 +53,37 @@ public sealed partial class ClothingComponent : Component
     /// useful when prototyping INNERCLOTHING items into OUTERCLOTHING items without duplicating/modifying RSIs etc.
     /// </summary>
     [Access(typeof(ClothingSystem))]
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("equippedState")]
+    [DataField, AutoNetworkedField]
     public string? EquippedState;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sprite")]
     public string? RsiPath;
 
     /// <summary>
-    /// Name of the inventory slot the clothing is in.
+    /// Name of the inventory slot the clothing is currently in.
+    /// Note that this being non-null does not mean the clothing is considered "worn" or "equipped" unless the slot
+    /// satisfies the <see cref="Slots"/> flags.
     /// </summary>
+    [DataField, AutoNetworkedField]
     public string? InSlot;
+    // TODO CLOTHING
+    // Maybe keep this null unless its in a valid slot?
+    // To lazy to figure out ATM if that would break anything.
+    // And when doing this, combine InSlot and InSlotFlag, as it'd be a breaking change for downstreams anyway
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Slot flags of the slot the clothing is currently in. See also <see cref="InSlot"/>.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SlotFlags? InSlotFlag;
+    // TODO CLOTHING
+    // Maybe keep this null unless its in a valid slot?
+    // And when doing this, combine InSlot and InSlotFlag, as it'd be a breaking change for downstreams anyway
+
+    [DataField]
     public TimeSpan EquipDelay = TimeSpan.Zero;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan UnequipDelay = TimeSpan.Zero;
 
     /// <summary>
@@ -76,17 +92,6 @@ public sealed partial class ClothingComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan StripDelay = TimeSpan.Zero;
-}
-
-[Serializable, NetSerializable]
-public sealed class ClothingComponentState : ComponentState
-{
-    public string? EquippedPrefix;
-
-    public ClothingComponentState(string? equippedPrefix)
-    {
-        EquippedPrefix = equippedPrefix;
-    }
 }
 
 public enum ClothingMask : byte

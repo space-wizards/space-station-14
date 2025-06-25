@@ -200,11 +200,11 @@ public sealed class IonStormSystem : EntitySystem
         // i dont think theres a way to do this in fluent
         var (who, plural) = _robustRandom.Next(0, 5) switch
         {
-            0 => (Loc.GetString("ion-storm-you"), false),
-            1 => (Loc.GetString("ion-storm-the-station"), true),
-            2 => (Loc.GetString("ion-storm-the-crew"), true),
-            3 => (Loc.GetString("ion-storm-the-job", ("job", crew2)), false),
-            _ => (area, true) // THE SINGULARITY REQUIRES THE HAPPY CLOWNS
+            0 => (Loc.GetString("ion-storm-you"), true),
+            1 => (Loc.GetString("ion-storm-the-station"), false),
+            2 => (Loc.GetString("ion-storm-the-crew"), false),
+            3 => (Loc.GetString("ion-storm-the-job", ("job", crew2)), true),
+            _ => (area, false) // THE SINGULARITY REQUIRES THE HAPPY CLOWNS
         };
         var jobChange = _robustRandom.Next(0, 3) switch
         {
@@ -231,7 +231,7 @@ public sealed class IonStormSystem : EntitySystem
         return _robustRandom.Next(0, 35) switch
         {
             0  => Loc.GetString("ion-storm-law-on-station", ("joined", joined), ("subjects", triple)),
-            1  => Loc.GetString("ion-storm-law-no-shuttle", ("joined", joined), ("subjects", triple)),
+            1  => Loc.GetString("ion-storm-law-call-shuttle", ("joined", joined), ("subjects", triple)),
             2  => Loc.GetString("ion-storm-law-crew-are", ("who", crewAll), ("joined", joined), ("subjects", objectsThreats)),
             3  => Loc.GetString("ion-storm-law-subjects-harmful", ("adjective", adjective), ("subjects", triple)),
             4  => Loc.GetString("ion-storm-law-must-harmful", ("must", must)),
