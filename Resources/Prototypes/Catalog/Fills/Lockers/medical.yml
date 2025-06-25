@@ -76,6 +76,7 @@
     - id: BoxBottle
     - id: BoxVial
     - id: PlasmaChemistryVial
+    - id: ChemBag
     - id: ClothingHandsGlovesLatex
     - id: ClothingMaskSterile
     - id: HandLabeler
