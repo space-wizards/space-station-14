@@ -296,7 +296,7 @@ public abstract partial class SharedHandsSystem
         if (handId == ent.Comp.ActiveHandId)
             return false;
 
-        if (TryGetHeldItem(ent, handId, out var oldHeld))
+        if (TryGetActiveItem(ent, out var oldHeld))
             RaiseLocalEvent(oldHeld.Value, new HandDeselectedEvent(ent));
 
         if (handId == null)
