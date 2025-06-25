@@ -8316,4 +8316,26 @@ Entries:
   id: 1147
   time: '2025-06-25T00:40:51.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/879
+- author: Happyrobot33
+  changes:
+  - message: Increased wizard fireball cooldown significantly, to 10, 8 and 5 minutes
+      per the respective fireball level
+    type: Tweak
+  id: 1148
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
+- author: Happyrobot33
+  changes:
+  - message: Smite now no longer gibs, doing 400 shock damage instead, bypassing resistances
+    type: Tweak
+  id: 1149
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
+- author: Happyrobot33
+  changes:
+  - message: Cluwne spell is no longer purchasable, requiring 300 wizcoins
+    type: Tweak
+  id: 1150
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
 
