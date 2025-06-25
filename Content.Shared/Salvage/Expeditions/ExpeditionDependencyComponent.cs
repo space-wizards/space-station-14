@@ -4,7 +4,7 @@ using Robust.Shared.Map;
 namespace Content.Shared.Salvage.Expeditions;
 
 /// <summary>
-/// Cancels a non-active salvage mission when an entity with this component is shut down.
+/// Cancels an inactive salvage mission when an entity with this component is shut down.
 /// </summary>
 [RegisterComponent]
 public sealed partial class SalvageMissionDependencyComponent : Component
