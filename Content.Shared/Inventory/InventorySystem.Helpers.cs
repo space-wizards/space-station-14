@@ -16,12 +16,9 @@ public partial class InventorySystem
     {
         if (Resolve(user.Owner, ref user.Comp1, false))
         {
-            foreach (var hand in user.Comp1.Hands.Values)
+            foreach (var held in _handsSystem.EnumerateHeld(user))
             {
-                if (hand.HeldEntity == null)
-                    continue;
-
-                yield return hand.HeldEntity.Value;
+                yield return held;
             }
         }
 
