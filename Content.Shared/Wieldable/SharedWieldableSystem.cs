@@ -112,7 +112,7 @@ public abstract class SharedWieldableSystem : EntitySystem
 
     private void OnDeselectWieldable(EntityUid uid, WieldableComponent component, HandDeselectedEvent args)
     {
-        if (_hands.GetHandCount(uid) > 2)
+        if (_hands.GetHandCount(args.User) > 2)
             return;
 
         TryUnwield(uid, component, args.User);
