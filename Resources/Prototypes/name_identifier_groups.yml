@@ -54,3 +54,9 @@
   prefix: TELE
   minValue: 0
   maxValue: 999
+
+# Used to remove name identification from mobs we don't want to have it (i.e. mobs with proper noun names)
+- type: nameIdentifierGroup
+  id: Disabled
+  minValue: 0
+  maxValue: 0
