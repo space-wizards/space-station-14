@@ -27,8 +27,24 @@
 
   A device with no access requirements set, like a public access airlock, can be modified using any valid station ID card.
 
-  ## Repairing damaged ID card readers
-  Syndicate agents may attempt to hack access-restricted devices through the use of a [color=#a4885c]Cryptographic Sequencer (EMAG)[/color]. This nefarious tool will completely short out any ID card readers that are attached to the device.
+  ## Repairing access-broken ID card readers
+  Syndicate agents may attempt to hack access-restricted devices through the use of an [color=#a4885c]Authentication Disruptor[/color].
+  This nefarious tool will completely short out any ID card readers that are attached to the device, making it all-access.
 
-  Engineers will need to partially de/reconstruct affected devices, and then set appropriate access permissions afterwards using the access configurator (or network configurator, for airlocks), to re-establish access restrictions.
+  <Box>
+    <GuideEntityEmbed Entity="AccessBreaker"/>
+  </Box>
+
+  To repair the damage, you'll commonly need to partially deconstruct the device and reconstruct it.
+  This will reset the access requirements to defaults, allowing you to reconfigure the device as needed.
+
+  ## Repairing access-broken Airlocks
+  Airlocks can be repaired multiple ways if their access requirements have been tampered with.
+
+  If you have an Access Configurator, you can use a [color=#a4885c]Screwdriver[/color] to remove the airlock's maintenance panel, and then use the Access Configurator to reconfigure the airlock's access requirements.
+  No partial deconstruction is needed.
+
+  If you don't have an Access Configurator, you can still fix the airlock by partially deconstructing it until you remove the door electronics, and then reconstructing it.
+  This will reset the airlock to the default access requirements it had at the start of the shift.
+
 </Document>

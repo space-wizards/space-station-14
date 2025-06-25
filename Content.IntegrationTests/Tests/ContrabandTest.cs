@@ -17,23 +17,26 @@ public sealed class ContrabandTest
 
         await client.WaitAssertion(() =>
         {
-            foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+            Assert.Multiple(() =>
             {
-                if (proto.Abstract || pair.IsTestPrototype(proto))
-                    continue;
+                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (proto.Abstract || pair.IsTestPrototype(proto))
+                        continue;
 
-                if (!proto.TryGetComponent<ContrabandComponent>(out var contraband, componentFactory))
-                    continue;
+                    if (!proto.TryGetComponent<ContrabandComponent>(out var contraband, componentFactory))
+                        continue;
 
-                Assert.That(protoMan.TryIndex(contraband.Severity, out var severity, false),
-                    @$"{proto.ID} has a ContrabandComponent with a unknown severity.");
+                    Assert.That(protoMan.TryIndex(contraband.Severity, out var severity, false),
+                        @$"{proto.ID} has a ContrabandComponent with a unknown severity.");
 
-                if (!severity.ShowDepartmentsAndJobs)
-                    continue;
+                    if (!severity.ShowDepartmentsAndJobs)
+                        continue;
 
-                Assert.That(contraband.AllowedDepartments.Count + contraband.AllowedJobs.Count, Is.Not.EqualTo(0),
-                    @$"{proto.ID} has a ContrabandComponent with ShowDepartmentsAndJobs but no allowed departments or jobs.");
-            }
+                    Assert.That(contraband.AllowedDepartments.Count + contraband.AllowedJobs.Count, Is.Not.EqualTo(0),
+                        @$"{proto.ID} has a ContrabandComponent with ShowDepartmentsAndJobs but no allowed departments or jobs.");
+                }
+            });
         });
 
         await pair.CleanReturnAsync();

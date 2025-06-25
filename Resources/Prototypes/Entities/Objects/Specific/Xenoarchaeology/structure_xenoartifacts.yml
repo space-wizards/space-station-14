@@ -1,0 +1,50 @@
+﻿- type: entity
+  parent: [BaseStructureDynamic, BaseXenoArtifact]
+  id: BaseXenoArtifactStructure
+  name: artifact
+  abstract: true
+  noSpawn: true
+  components:
+  # Visual
+  - type: Sprite
+    drawdepth: SmallObjects
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    noRot: true
+    layers:
+    - state: ano30
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+    - state: ano30_on
+      map: [ "enum.ArtifactsVisualLayers.UnlockingEffect" ]
+      visible: false
+    - state: artifact-activation
+      map: [ "enum.ArtifactsVisualLayers.ActivationEffect" ]
+      visible: false
+  - type: RandomArtifactSprite
+    maxSprite: 36
+  - type: RandomSprite
+    available:
+    - enum.ArtifactsVisualLayers.UnlockingEffect:
+        ano01_on: Rainbow
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 75
+        layer: # doesn't collide with artifact storage
+        - Opaque
+        mask:
+        - MachineMask
+
+- type: entity
+  parent: BaseXenoArtifactStructure
+  id: ComplexXenoArtifact
+  components:
+  - type: XenoArtifact
+    nodeCount:
+      min: 9
+      max: 13
+

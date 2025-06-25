@@ -5,7 +5,7 @@ namespace Content.Shared.NPC.Prototypes;
 /// <summary>
 /// Contains data about this faction's relations with other factions.
 /// </summary>
-[Prototype("npcFaction")]
+[Prototype]
 public sealed partial class NpcFactionPrototype : IPrototype
 {
     [ViewVariables]

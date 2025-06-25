@@ -69,6 +69,7 @@
       requiresComplex: true
       requireActiveHand: false
       singleUser: true
+      inHandsOnly: true
     - type: ItemSlots
     - type: ContainerContainer
       containers:
@@ -90,6 +91,8 @@
     - Armory
     - Atmospherics
     - Bar
+    - BasicSilicon
+    - Borg
     - Brig
     - Detective
     - Captain
@@ -99,6 +102,8 @@
     - ChiefEngineer
     - ChiefMedicalOfficer
     - Command
+    - Cryogenics
+    - EmergencyShuttleRepealAll
     - Engineering
     - External
     - HeadOfPersonnel
@@ -115,13 +120,18 @@
     - Salvage
     - Security
     - Service
+    - StationAi
     - Theatre
     - CentralCommand
     - NuclearOperative
     - SyndicateAgent
     - Wizard
+    - Xenoborg
+    - GenpopEnter
+    - GenpopLeave
     privilegedIdSlot:
       name: id-card-console-privileged-id
+      startingItem: UniversalIDCard
       ejectSound: /Audio/Machines/id_swipe.ogg
       insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
       ejectOnBreak: true

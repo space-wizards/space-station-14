@@ -16,6 +16,7 @@
   - HandheldGPSBasic
   - TRayScanner
   - UtilityBelt
+  - ClothingOuterVestTank
   - HandheldStationMap
   - ClothingHeadHatWelding
   - ClothingHeadHatCone
@@ -58,6 +59,8 @@
   - PowerDrill
   - WelderExperimental
   - JawsOfLife
+  - Fulton
+  - FultonBeacon
 
 - type: latheRecipePack
   id: AtmosTools

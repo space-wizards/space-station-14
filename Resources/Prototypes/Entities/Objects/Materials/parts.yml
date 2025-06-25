@@ -117,3 +117,21 @@
   - type: Stack
     lingering: true
     count: 0
+
+- type: entity
+  parent: FloorTileItemWhite
+  id: FloorTileItemWhiteLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
