@@ -5,38 +5,38 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 
-namespace Content.Client.Stunnable
+namespace Content.Client.Stunnable;
+
+public sealed class StunSystem : SharedStunSystem
 {
-    public sealed class StunSystem : SharedStunSystem
+    // TODO: Clientside prediction
+    // DoAfter mis-predicts on client hard when in shared so it's gonna need it's own special system because it hates me.
+
+    [Dependency] private readonly SharedCombatModeSystem _combat = default!;
+    [Dependency] private readonly InputSystem _input = default!;
+
+    public override void Initialize()
     {
-        // TODO: Clientside prediction
-        // DoAfter mis-predicts on client hard when in shared so it's gonna need it's own special system because it hates me.
+        base.Initialize();
 
-        [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-        [Dependency] private readonly InputSystem _input = default!;
+        CommandBinds.Builder
+            .BindAfter(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(OnUseSecondary, true, true), typeof(SharedInteractionSystem))
+            .Register<StunSystem>();
+    }
 
-        public override void Initialize()
-        {
-            base.Initialize();
+    private bool OnUseSecondary(in PointerInputCmdHandler.PointerInputCmdArgs args)
+    {
+        if (args.Session?.AttachedEntity is not {Valid: true} uid)
+            return false;
 
-            CommandBinds.Builder
-                .BindAfter(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(OnUseSecondary, true, true), typeof(SharedInteractionSystem))
-                .Register<StunSystem>();
-        }
+        if (_input.Predicted)
+            return false;
 
-        private bool OnUseSecondary(in PointerInputCmdHandler.PointerInputCmdArgs args)
-        {
-            if (args.Session?.AttachedEntity is not {Valid: true} uid)
-                return false;
+        if (args.EntityUid != uid || !HasComp<KnockedDownComponent>(uid) || !_combat.IsInCombatMode(uid))
+            return false;
 
-            if (_input.Predicted)
-                return false;
-
-            if (args.EntityUid != uid || !HasComp<KnockedDownComponent>(uid) || !_combat.IsInCombatMode(uid))
-                return false;
-
-            RaisePredictiveEvent(new ForceStandUpEvent());
-            return true;
-        }
+        RaisePredictiveEvent(new ForceStandUpEvent());
+        return true;
     }
 }
+
