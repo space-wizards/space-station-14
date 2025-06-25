@@ -38,7 +38,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
 
     private void OnClone(Entity<SericultureComponent> ent, ref CloningEvent args)
     {
-        if(!args.Settings.EventComponents.Contains("Sericulture"))
+        if(!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
             return;
 
         var comp = EnsureComp<SericultureComponent>(args.CloneUid);
@@ -47,7 +47,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         comp.HungerCost = ent.Comp.HungerCost;
         comp.EntityProduced = ent.Comp.EntityProduced;
         comp.MinHungerThreshold = ent.Comp.MinHungerThreshold;
-        Dirty<SericultureComponent>((args.CloneUid, comp));
+        Dirty(args.CloneUid, comp);
     }
 
     /// <summary>
