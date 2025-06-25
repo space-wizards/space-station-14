@@ -29,6 +29,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        InitializeRelay();
 
         SubscribeLocalEvent<StatusEffectComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);
         SubscribeLocalEvent<StatusEffectComponent, StatusEffectRemovedEvent>(OnStatusEffectRemoved);
