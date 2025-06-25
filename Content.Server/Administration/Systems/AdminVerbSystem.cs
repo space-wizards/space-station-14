@@ -4,7 +4,6 @@ using Content.Server.Administration.UI;
 using Content.Server.Disposal.Tube;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
-using Content.Server.Mind.Commands;
 using Content.Server.Mind;
 using Content.Server.Prayer;
 using Content.Server.Silicons.Laws;
@@ -16,7 +15,6 @@ using Content.Shared.Configurable;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
-using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
@@ -458,7 +456,7 @@ namespace Content.Server.Administration.Systems
                     Text = Loc.GetString("make-sentient-verb-get-data-text"),
                     Category = VerbCategory.Debug,
                     Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/sentient.svg.192dpi.png")),
-                    Act = () => MakeSentientCommand.MakeSentient(args.Target, EntityManager),
+                    Act = () => _mindSystem.MakeSentient(args.Target),
                     Impact = LogImpact.Medium
                 };
                 args.Verbs.Add(verb);
