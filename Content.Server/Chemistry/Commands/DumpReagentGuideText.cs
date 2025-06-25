@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Server.Administration;
+﻿using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Console;
@@ -36,10 +35,13 @@ public sealed class DumpReagentGuideText : LocalizedEntityCommands
             return;
         }
 
-        foreach (var effect in reagent.Metabolisms.Values.SelectMany(entry => entry.Effects))
+        foreach (var entry in reagent.Metabolisms.Values)
         {
-            shell.WriteLine(effect.GuidebookEffectDescription(_prototype, EntityManager.EntitySysManager) ??
-                            Loc.GetString($"cmd-dumpreagentguidetext-skipped", ("effect", effect.GetType())));
+            foreach (var effect in entry.Effects)
+            {
+                shell.WriteLine(effect.GuidebookEffectDescription(_prototype, EntityManager.EntitySysManager) ??
+                                Loc.GetString($"cmd-dumpreagentguidetext-skipped", ("effect", effect.GetType())));
+            }
         }
     }
 }
