@@ -125,7 +125,7 @@ public sealed class RespiratorSystem : EntitySystem
         // Inhale gas
         var ev = new InhaleLocationEvent
         {
-            Respirator = (entity, entity.Comp),
+            Respirator = entity.Comp,
         };
         RaiseLocalEvent(entity, ref ev);
 
@@ -499,7 +499,7 @@ public sealed class RespiratorSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct InhaleLocationEvent(GasMixture? Gas, Entity<RespiratorComponent> Respirator);
+public record struct InhaleLocationEvent(GasMixture? Gas, RespiratorComponent Respirator);
 
 [ByRefEvent]
 public record struct ExhaleLocationEvent(GasMixture? Gas);
