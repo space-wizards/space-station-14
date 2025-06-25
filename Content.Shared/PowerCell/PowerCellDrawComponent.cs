@@ -44,9 +44,12 @@ public sealed partial class PowerCellDrawComponent : Component
     public float DrawRate = 1f;
 
     /// <summary>
-    /// How much power is used whenever the entity is "used".
+    /// How much power is used whenever the entity is "used" (in Joules).
     /// This is used to ensure the UI won't open again without a minimum use power.
     /// </summary>
+    /// <remarks>
+    /// This is not a rate how the datafield name implies, but a one-time cost.
+    /// </remarks>
     [DataField]
     public float UseRate;
 
