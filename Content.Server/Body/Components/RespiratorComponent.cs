@@ -31,7 +31,7 @@ namespace Content.Server.Body.Components
         ///     The gas our entity exhales
         /// </summary>
         [DataField]
-        public Gas ByproductGas = Gas.Oxygen;
+        public Gas ByproductGas = Gas.CarbonDioxide;
 
         /// <summary>
         ///     How much of the gas we inhale is metabolized? Value range is (0, 1]
