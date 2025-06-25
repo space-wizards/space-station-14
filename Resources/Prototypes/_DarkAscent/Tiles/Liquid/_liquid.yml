@@ -1,0 +1,5 @@
+﻿- type: tile
+  id: FloorLiquidBase
+  abstract: true
+  isSubfloor: false
+  baseTurf: FloorTerrainDirt1

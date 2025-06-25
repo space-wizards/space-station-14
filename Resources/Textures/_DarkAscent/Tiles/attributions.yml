@@ -1,0 +1,18 @@
+# Finding individual authors is an unfeasible task. If you can reference the author please do so.
+
+# Things we don't know much about.
+# If you prove or reasonably claim to be the author of these, contact us to have them credited or removed.
+- files: ["cobble1.png", "grass1.png", "grass2.png", "iron1.png", "iron2.png",
+          "acid1.png", "lava1.png",
+          "wood1.png", "wood2.png", "wood3.png", "wood4.png", "wood5.png", "wood6.png"
+          "dirt1.png",
+          "grass1.png", "grass2.png", "grass3.png"]
+  license: "N/A"
+  copyright: "N/A"
+  source: "https://github.com/Rotwood-Vale/Ratwood-Keep"
+
+- files: ["cobble2.png",
+          "brick1.png", "brick2.png", "brick3.png", "brick4.png", "brick5.png", "brick6.png", "brick7.png", "brick8.png", "brick9.png", "brick10.png", "brick11.png"]
+  license: "CC-BY-SA 4.0"
+  copyright: "Created by kino1208 for Ratwood"
+  source: "https://github.com/Rotwood-Vale/Ratwood-Keep"

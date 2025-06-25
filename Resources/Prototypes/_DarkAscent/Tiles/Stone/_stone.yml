@@ -1,0 +1,6 @@
+﻿- type: tile
+  id: FloorStoneBase
+  abstract: true
+  isSubfloor: false
+  heatCapacity: 10000
+  baseTurf: FloorTerrainDirt1

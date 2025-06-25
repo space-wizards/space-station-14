@@ -15,7 +15,7 @@ orphans: []
 nullspace: []
 tilemap:
   1: Space
-  0: FloorCobble
+  0: FloorStoneCobble1
 entities:
 - proto: ""
   entities:

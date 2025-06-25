@@ -1,0 +1,7 @@
+﻿- type: soundCollection
+  id: Grass
+  files:
+  - /Audio/_DarkAscent/Objects/Grass/plantcross1.ogg
+  - /Audio/_DarkAscent/Objects/Grass/plantcross2.ogg
+  - /Audio/_DarkAscent/Objects/Grass/plantcross3.ogg
+  - /Audio/_DarkAscent/Objects/Grass/plantcross4.ogg

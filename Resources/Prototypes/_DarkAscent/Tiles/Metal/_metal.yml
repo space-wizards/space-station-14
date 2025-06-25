@@ -1,0 +1,5 @@
+﻿- type: tile
+  id: FloorMetalBase
+  abstract: true
+  isSubfloor: false
+  baseTurf: FloorTerrainDirt1

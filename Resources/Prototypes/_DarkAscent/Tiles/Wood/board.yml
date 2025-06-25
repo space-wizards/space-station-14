@@ -1,0 +1,27 @@
+﻿- type: tile
+  id: FloorWoodBoardBase
+  parent: FloorWoodBase
+  name: wooden boards
+  abstract: true
+  footstepSounds:
+    collection: FootstepFloor
+
+- type: tile
+  id: FloorWood3
+  parent: FloorWoodBoardBase
+  sprite: /Textures/_DarkAscent/Tiles/Wood/wood3.png
+
+- type: tile
+  id: FloorWood4
+  parent: FloorWoodBoardBase
+  sprite: /Textures/_DarkAscent/Tiles/Wood/wood4.png
+
+- type: tile
+  id: FloorWood5
+  parent: FloorWoodBoardBase
+  sprite: /Textures/_DarkAscent/Tiles/Wood/wood5.png
+
+- type: tile
+  id: FloorWood6
+  parent: FloorWoodBoardBase
+  sprite: /Textures/_DarkAscent/Tiles/Wood/wood6.png

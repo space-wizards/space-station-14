@@ -1,0 +1,25 @@
+﻿- type: tile
+  id: FloorWoodTwigBase
+  parent: FloorWoodBase
+  abstract: true
+  name: wooden twigs
+  footstepSounds:
+    collection: FootstepFloor
+
+- type: tile
+  id: FloorWood1
+  parent: FloorWoodBase
+  sprite: /Textures/_DarkAscent/Tiles/Wood/wood1.png
+  variants: 2
+  placementVariants:
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorWood2
+  parent: FloorWoodBase
+  sprite: /Textures/_DarkAscent/Tiles/Wood/wood2.png
+  variants: 2
+  placementVariants:
+  - 1.0
+  - 1.0

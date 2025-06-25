@@ -1,0 +1,13 @@
+﻿- type: tile
+  id: FloorTerrainDirtBase
+  parent: FloorTerrainBase
+  name: dirt
+  abstract: true
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepFloor
+
+- type: tile
+  id: FloorTerrainDirt1
+  parent: FloorTerrainDirtBase
+  sprite: /Textures/_DarkAscent/Tiles/Terrain/Dirt/dirt1.png

@@ -1,0 +1,20 @@
+﻿- type: entity
+  parent: MarkerBase
+  id: GrassRandom
+  name: random grass spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: _DarkAscent/Structures/Flora/grass.rsi
+      state: grass1
+  - type: RandomSpawner
+    offset: 0.7
+    prototypes:
+    - Grass1
+    - Grass2
+    - Grass3
+    - Grass4
+    - Grass5
+    - Grass6
+    chance: 0.5

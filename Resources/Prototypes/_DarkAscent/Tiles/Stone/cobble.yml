@@ -1,0 +1,23 @@
+﻿- type: tile
+  id: FloorStoneCobbleBase
+  parent: FloorStoneBase
+  name: cobble
+  abstract: true
+  footstepSounds:
+    collection: FootstepFloor #change
+
+- type: tile
+  id: FloorStoneCobble1
+  parent: FloorStoneCobbleBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Cobble/cobble1.png
+
+- type: tile
+  id: FloorStoneCobble2
+  parent: FloorStoneCobbleBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Cobble/cobble2.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0

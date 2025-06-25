@@ -1,0 +1,140 @@
+﻿
+# Grass
+- type: biomeTemplate
+  id: DarkAscent
+  layers:
+#  # Sparse vegetation
+#  - !type:BiomeEntityLayer
+#    allowedTiles:
+#    - FloorTerrainGrass1
+#    - FloorTerrainGrass2
+#    - FloorTerrainGrass3
+#    divisions: 2
+#    threshold: -0.50
+#    noise:
+#      seed: 0
+#      noiseType: Cellular
+#      frequency: 1
+#    entities:
+#      GrassRandom
+  - !type:BiomeDecalLayer
+    allowedTiles:
+    - FloorTerrainGrass1
+    - FloorTerrainGrass2
+    - FloorTerrainGrass3
+    noise:
+      seed: 0
+      noiseType: OpenSimplex2
+      frequency: 1
+    divisions: 1
+    threshold: 0.8
+    decals:
+    - FlowersBROne
+    - FlowersBRTwo
+    - FlowersBRThree
+  # Dense vegetation
+  - !type:BiomeEntityLayer
+    allowedTiles:
+    - FloorTerrainGrass1
+    - FloorTerrainGrass2
+    - FloorTerrainGrass3
+    divisions: 1
+    threshold: -0.35
+    noise:
+      seed: 0
+      noiseType: Cellular
+      frequency: 0.2
+      fractalType: FBm
+      octaves: 5
+      lacunarity: 2
+      cellularDistanceFunction: Euclidean
+      cellularReturnType: Distance2
+    entities:
+    - GrassRandom
+  - !type:BiomeEntityLayer
+    threshold: 0.5
+    noise:
+      seed: 0
+      noiseType: OpenSimplex2
+      fractalType: FBm
+      frequency: 2
+    allowedTiles:
+    - FloorTerrainGrass1
+    - FloorTerrainGrass2
+    - FloorTerrainGrass3
+    entities:
+    - FloraTree
+    - FloraTreeLarge
+  # Rock formations
+  - !type:BiomeEntityLayer
+    allowedTiles:
+    - FloorTerrainGrass1
+    - FloorTerrainGrass2
+    - FloorTerrainGrass3
+    - FloorTerrainDirt1
+    threshold: -0.30
+    noise:
+      seed: 0
+      noiseType: Cellular
+      frequency: 0.05
+      lacunarity: 2
+      fractalType: FBm
+      octaves: 5
+      cellularDistanceFunction: Euclidean
+      cellularReturnType: Distance2
+    entities:
+    - WallRock
+  - !type:BiomeDummyLayer
+    id: Loot
+  # Water
+  - !type:BiomeEntityLayer
+    allowedTiles:
+    - FloorTerrainGrass1
+    - FloorTerrainGrass2
+    - FloorTerrainGrass3
+    - FloorTerrainDirt1
+    threshold: 0.95
+    noise:
+      seed: 3
+      noiseType: OpenSimplex2
+      frequency: 0.003
+      lacunarity: 1.50
+      fractalType: Ridged
+      octaves: 1
+    entities:
+    - FloorWaterEntity
+  # Fill remainder with dirt.
+  - !type:BiomeTileLayer
+    threshold: -1.0
+    tile: FloorTerrainDirt1
+  - !type:BiomeTileLayer
+    threshold: -0.90
+    tile: FloorTerrainGrass2
+    noise:
+      seed: 0
+      frequency: 0.02
+      fractalType: None
+  # Water sand
+  - !type:BiomeTileLayer
+    tile: FloorTerrainDirt1
+    threshold: 0.95
+    noise:
+      seed: 3
+      noiseType: OpenSimplex2
+      frequency: 0.003
+      lacunarity: 1.50
+      fractalType: Ridged
+      octaves: 1
+  # Rock formation sand
+  - !type:BiomeTileLayer
+    tile: FloorTerrainDirt1
+    threshold: -0.30
+    noise:
+      seed: 0
+      noiseType: Cellular
+      frequency: 0.05
+      lacunarity: 2
+      fractalType: FBm
+      octaves: 5
+      cellularDistanceFunction: Euclidean
+      cellularReturnType: Distance2

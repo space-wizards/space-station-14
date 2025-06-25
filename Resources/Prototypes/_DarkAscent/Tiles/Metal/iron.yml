@@ -1,0 +1,33 @@
+﻿- type: tile
+  id: FloorMetalIronBase
+  parent: FloorMetalBase
+  name: iron
+  abstract: true
+  footstepSounds:
+    collection: FootstepFloor
+
+- type: tile
+  id: FloorMetalIron1
+  parent: FloorMetalIronBase
+  sprite: /Textures/_DarkAscent/Tiles/Metal/iron1.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorMetalIron2
+  parent: FloorMetalIronBase
+  sprite: /Textures/_DarkAscent/Tiles/Metal/iron2.png
+  variants: 8
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0

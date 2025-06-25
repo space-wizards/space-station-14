@@ -1,0 +1,30 @@
+﻿- type: tile
+  id: FloorLiquidAcidBase
+  parent: FloorLiquidBase
+  name: acid
+  abstract: true
+
+#TODO: add effects
+- type: tile
+  id: FloorLiquidAcid1
+  parent: FloorLiquidAcidBase
+  sprite: /Textures/_DarkAscent/Tiles/Liquid/acid1.png
+  variants: 16
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+

@@ -1,8 +1,0 @@
-﻿- type: tile
-  id: FloorCobble
-  name: tiles-floor-cobble
-  sprite: /Textures/_DarkAscent/Tiles/cobble.png
-  isSubfloor: false
-  footstepSounds:
-    collection: FootstepFloor
-  heatCapacity: 10000

@@ -1,0 +1,29 @@
+﻿{
+    "version": 1,
+    "license": "N/A",
+    "copyright": "Taken from Ratwood",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "grass1"
+        },
+        {
+            "name": "grass2"
+        },
+        {
+            "name": "grass3"
+        },
+        {
+            "name": "grass4"
+        },
+        {
+            "name": "grass5"
+        },
+        {
+            "name": "grass6"
+        }
+    ]
+}

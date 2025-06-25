@@ -1,0 +1,4 @@
+﻿- type: tile
+  id: FloorTerrainBase
+  abstract: true
+  isSubfloor: false

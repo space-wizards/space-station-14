@@ -1,0 +1,86 @@
+﻿- type: entity
+  id: GrassBase
+  name: grass
+  description: A little bit of nature.
+  abstract: true
+  components:
+  - type: Transform
+    noRot: true
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DarkAscent/Structures/Flora/grass.rsi
+    noRot: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/plant_rustle.ogg
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - SlipLayer
+        mask:
+        - ItemMask
+        density: 500
+        hard: false
+  - type: AnimationPlayer
+  - type: StepTrigger
+  - type: AnimateOnStepTrigger
+    sound:
+      collection: Grass
+
+
+
+- type: entity
+  id: Grass1
+  parent: GrassBase
+  components:
+  - type: Sprite
+    state: grass1
+
+- type: entity
+  id: Grass2
+  parent: GrassBase
+  components:
+  - type: Sprite
+    state: grass2
+
+- type: entity
+  id: Grass3
+  parent: GrassBase
+  components:
+  - type: Sprite
+    state: grass3
+
+- type: entity
+  id: Grass4
+  parent: GrassBase
+  components:
+  - type: Sprite
+    state: grass4
+
+- type: entity
+  id: Grass5
+  parent: GrassBase
+  components:
+  - type: Sprite
+    state: grass5
+
+- type: entity
+  id: Grass6
+  parent: GrassBase
+  components:
+  - type: Sprite
+    state: grass6

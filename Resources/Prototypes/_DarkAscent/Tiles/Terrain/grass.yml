@@ -1,0 +1,58 @@
+﻿- type: tile
+  id: FloorTerrainGrassBase
+  parent: FloorTerrainBase
+  name: grass
+  abstract: true
+  isSubfloor: false
+  baseTurf: FloorTerrainDirt1
+  footstepSounds:
+    collection: FootstepFloor
+
+- type: tile
+  id: FloorTerrainGrass1
+  parent: FloorTerrainGrassBase
+  sprite: /Textures/_DarkAscent/Tiles/Terrain/Grass/grass1.png
+  variants: 12
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorTerrainGrass2
+  parent: FloorTerrainGrassBase
+  sprite: /Textures/_DarkAscent/Tiles/Terrain/Grass/grass2.png
+  variants: 8
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorTerrainGrass3
+  parent: FloorTerrainGrassBase
+  sprite: /Textures/_DarkAscent/Tiles/Terrain/Grass/grass3.png
+  variants: 8
+  placementVari1ants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0

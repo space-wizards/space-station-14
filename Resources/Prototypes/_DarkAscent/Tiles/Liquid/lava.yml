@@ -1,0 +1,29 @@
+﻿- type: tile
+  id: FloorLiquidLavaBase
+  parent: FloorLiquidBase
+  name: lava
+  abstract: true
+
+#TODO: add effects
+- type: tile
+  id: FloorLiquidLava1
+  parent: FloorLiquidLavaBase
+  sprite: /Textures/_DarkAscent/Tiles/Liquid/lava1.png
+  variants: 16
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0

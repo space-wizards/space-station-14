@@ -1,7 +1,4 @@
-﻿using Content.Server._DarkAscent.Temperature.Firebase;
-using Robust.Shared.Audio;
-
-namespace Content.Server._DarkAscent.Temperature.Firebase;
+﻿namespace Content.Server._DarkAscent.Temperature.Firebase;
 
 [RegisterComponent, Access(typeof(FirebaseSystem))]
 public sealed partial class FirebaseComponent : Component

@@ -1,18 +1,15 @@
 ﻿    using Content.Server.Atmos.Components;
     using Content.Shared.Atmos;
     using Content.Shared.Audio;
-    using Robust.Shared.Audio.Systems;
     using Robust.Shared.Timing;
 
     namespace Content.Server._DarkAscent.Temperature.Firebase;
 
-    public sealed partial class FirebaseSystem : EntitySystem
+    public sealed class FirebaseSystem : EntitySystem
     {
 
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
-
 
         public override void Initialize()
         {

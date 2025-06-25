@@ -1,0 +1,123 @@
+﻿- type: tile
+  id: FloorStoneBrickBase
+  parent: FloorStoneBase
+  name: brick
+  abstract: true
+  footstepSounds:
+    collection: FootstepFloor #change
+
+- type: tile
+  id: FloorStoneBrick1
+  parent: FloorStoneBrickBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Brick/brick1.png
+
+- type: tile
+  id: FloorStoneBrick2
+  parent: FloorStoneBrickBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Brick/brick2.png
+  variants: 2
+  placementVariants:
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorStoneBrick3
+  parent: FloorStoneBrickBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Brick/brick3.png
+  variants: 16
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorStoneBrick4
+  parent: FloorStoneBrickBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Brick/brick4.png
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorStoneBrick5
+  parent: FloorStoneBrickBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Brick/brick5.png
+  variants: 2
+  placementVariants:
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorStoneBrick6
+  parent: FloorStoneBrickBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Brick/brick6.png
+  variants: 2
+  placementVariants:
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorStoneBrick7
+  parent: FloorStoneBrickBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Brick/brick7.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorStoneBrick8
+  parent: FloorStoneBrickBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Brick/brick8.png
+  variants: 5
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorStoneBrick9
+  parent: FloorStoneBrickBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Brick/brick9.png
+  variants: 2
+  placementVariants:
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorStoneBrick10
+  parent: FloorStoneBrickBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Brick/brick10.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+
+- type: tile
+  id: FloorStoneBrick11
+  parent: FloorStoneBrickBase
+  sprite: /Textures/_DarkAscent/Tiles/Stone/Brick/brick11.png
+  variants: 5
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
