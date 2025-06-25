@@ -18,6 +18,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared._Impstation.CCVar;
 using Robust.Shared.Audio.Systems;
+using Content.Server.StationEvents.Events;
 
 namespace Content.Server._Impstation.Thaven;
 
@@ -58,6 +59,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         SubscribeLocalEvent<ThavenMoodsComponent, ComponentShutdown>(OnThavenMoodShutdown);
         SubscribeLocalEvent<ThavenMoodsComponent, ToggleMoodsScreenEvent>(OnToggleMoodsScreen);
         SubscribeLocalEvent<ThavenMoodsComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
+        SubscribeLocalEvent<ThavenMoodsComponent, IonStormEvent>(OnIonStorm);
         SubscribeLocalEvent<RoundRestartCleanupEvent>((_) => NewSharedMoods());
     }
 
@@ -94,7 +96,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 
     private bool SharedMoodConflicts(ThavenMood mood)
     {
-        return mood.ProtoId is {} id &&
+        return mood.ProtoId is { } id &&
             (GetConflicts(_sharedMoods).Contains(id) ||
             GetMoodProtoSet(_sharedMoods).Overlaps(mood.Conflicts));
     }
@@ -323,7 +325,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 
         foreach (var mood in moods)
         {
-            if (mood.ProtoId is {} id)
+            if (mood.ProtoId is { } id)
                 conflicts.Add(id); // Specific moods shouldn't be added twice
             conflicts.UnionWith(mood.Conflicts);
         }
@@ -349,7 +351,7 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
         _moodProtos.Clear();
         foreach (var mood in moods)
         {
-            if (mood.ProtoId is {} id)
+            if (mood.ProtoId is { } id)
                 _moodProtos.Add(id);
         }
 
@@ -391,5 +393,39 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
             return;
 
         AddWildcardMood(ent);
+    }
+
+    public void OnIonStorm(Entity<ThavenMoodsComponent> ent, ref IonStormEvent args)
+    {
+        if (!ent.Comp.IonStormable)
+            return;
+
+        // remove mood
+        if (_random.Prob(ent.Comp.IonStormRemoveChance) && ent.Comp.Moods.Count > 1)
+        {
+            ent.Comp.Moods.RemoveAt(0);
+            Dirty(ent);
+            NotifyMoodChange(ent);
+        }
+
+        // add mood
+        else if (_random.Prob(ent.Comp.IonStormAddChance) && ent.Comp.Moods.Count <= ent.Comp.MaxIonMoods)
+        {
+            if (_random.Prob(ent.Comp.IonStormWildcardChance))
+                AddWildcardMood(ent);
+            else
+                TryAddRandomMood(ent);
+        }
+
+        // replace mood
+        else
+        {
+            if (ent.Comp.Moods.Count > 1)
+                ent.Comp.Moods.RemoveAt(0);
+            if (_random.Prob(ent.Comp.IonStormWildcardChance))
+                AddWildcardMood(ent);
+            else
+                TryAddRandomMood(ent);
+        }
     }
 }

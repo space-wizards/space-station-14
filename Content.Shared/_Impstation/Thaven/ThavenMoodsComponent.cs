@@ -28,6 +28,36 @@ public sealed partial class ThavenMoodsComponent : Component
     public bool CanBeEmagged = true;
 
     /// <summary>
+    /// Whether to allow ion storms to add a random mood.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IonStormable = true;
+
+    /// <summary>
+    /// The probability that an ion storm will remove a mood.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float IonStormRemoveChance = 0.25f;
+
+    /// <summary>
+    /// The probability that an ion storm will add a mood.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float IonStormAddChance = 0.25f;
+
+    /// <summary>
+    /// The probability that an ion storm will pull a mood from the wildcard dataset.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float IonStormWildcardChance = 0.2f;
+
+    /// <summary>
+    /// The maximum number of moods that en entity can be given by ion storms.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int MaxIonMoods = 4;
+
+    /// <summary>
     /// Notification sound played if your moods change.
     /// </summary>
     [DataField, AutoNetworkedField]

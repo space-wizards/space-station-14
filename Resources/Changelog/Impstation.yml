@@ -1,24 +1,4 @@
 ﻿Entries:
-- author: Kandiyaki
-  changes:
-  - message: Added the Infinite Archives, the source of all mansus knowledge.
-    type: Add
-  - message: Removed Hell (and replaced it with the archives).
-    type: Remove
-  - message: A new book, "On the Nature of the Mansus"!
-    type: Add
-  - message: Some text has been altered to give heretics more consistent theming.
-    type: Tweak
-  id: 1393
-  time: '2025-03-25T02:19:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2038
-- author: FlippenPage
-  changes:
-  - message: Added THIRTY FUCKING BARSIGNS. ENJOY.
-    type: Add
-  id: 1394
-  time: '2025-03-25T09:49:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1891
 - author: jtfg-dev
   changes:
   - message: Made 100 more words and concepts relentlessly positive. Do let your metal
@@ -4227,3 +4207,17 @@
   id: 1892
   time: '2025-06-23T01:54:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2852
+- author: crocodilecarousel
+  changes:
+  - message: fish have decided they hate snakes now
+    type: Fix
+  id: 1893
+  time: '2025-06-24T14:33:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2857
+- author: mqole
+  changes:
+  - message: Thaven are now vulnerable to Ion Storms.
+    type: Add
+  id: 1894
+  time: '2025-06-24T23:15:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2850
