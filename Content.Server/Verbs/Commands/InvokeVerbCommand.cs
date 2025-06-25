@@ -20,7 +20,7 @@ public sealed class InvokeVerbCommand : LocalizedEntityCommands
     {
         if (args.Length != 3)
         {
-            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number-specific",
+            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number-need-specific",
                 ("properAmount", 3),
                 ("currentAmount", args.Length)));
             return;
@@ -42,7 +42,7 @@ public sealed class InvokeVerbCommand : LocalizedEntityCommands
         // gets the target entity
         if (!NetEntity.TryParse(args[1], out var netEnt) || !EntityManager.TryGetEntity(netEnt, out var target))
         {
-            shell.WriteLine(Loc.GetString($"shell-invalid-entity-uid", ("uid", args[1])));
+            shell.WriteLine(Loc.GetString("shell-invalid-entity-uid", ("uid", args[1])));
             return;
         }
 
