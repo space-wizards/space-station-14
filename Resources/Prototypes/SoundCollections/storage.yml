@@ -1,0 +1,11 @@
+- type: soundCollection
+  id: storageOpen
+  caption: caption-storage-open
+  files:
+  - /Audio/Effects/closetopen.ogg
+
+- type: soundCollection
+  id: storageClose
+  caption: caption-storage-close
+  files:
+  - /Audio/Effects/closetclose.ogg
