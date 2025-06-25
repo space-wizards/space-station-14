@@ -8345,4 +8345,12 @@ Entries:
   id: 1151
   time: '2025-06-25T02:43:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/899
+- author: Killer Tamashi
+  changes:
+  - message: Avali now remember to pack their survival boxes so they can, you know,
+      survive.
+    type: Fix
+  id: 1152
+  time: '2025-06-25T02:50:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/900
 
