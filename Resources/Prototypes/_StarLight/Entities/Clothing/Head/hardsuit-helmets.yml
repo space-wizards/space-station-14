@@ -186,6 +186,9 @@
     color: "#addbff"
   - type: Pierceable
     level: HardenedMetal
+  - type: Armor
+    modifiers:
+      coefficients:
         Heat: 0.9
   - type: Tag
     tags:
