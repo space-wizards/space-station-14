@@ -21,7 +21,7 @@ namespace Content.Shared.Camera;
 public record struct GetEyePvsScaleEvent(float Scale);
 
 /// <summary>
-///     Riased before the <see cref="GetEyePvsScaleEvent"/> and <see cref="GetEyePvsScaleRelayedEvent"/>, to check if any on the subscribed
+///     Raised before the <see cref="GetEyePvsScaleEvent"/> and <see cref="GetEyePvsScaleRelayedEvent"/>, to check if any on the subscribed
 ///     systems want to cancel PVS changes.
 /// </summary>
 [ByRefEvent]

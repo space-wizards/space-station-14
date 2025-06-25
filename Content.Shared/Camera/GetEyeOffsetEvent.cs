@@ -20,7 +20,7 @@ namespace Content.Shared.Camera;
 public record struct GetEyeOffsetEvent(Vector2 Offset);
 
 /// <summary>
-///     Riased before the <see cref="GetEyeOffsetEvent"/> and <see cref="GetEyeOffsetRelayedEvent"/>, to check if any of the subscribed
+///     Raised before the <see cref="GetEyeOffsetEvent"/> and <see cref="GetEyeOffsetRelayedEvent"/>, to check if any of the subscribed
 ///     systems want to cancel offset changes.
 /// </summary>
 [ByRefEvent]
