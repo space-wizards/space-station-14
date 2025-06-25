@@ -1172,7 +1172,7 @@
       - NukeOpsUplink
 
 - type: listing
-  id: UplinkHatemovCircuitBoard
+  id: UplinkNukieHatemovCircuitBoard
   name: uplink-hatemov-law-name
   description: uplink-hatemov-law-desc
   productEntity: HatemovCircuitBoard
