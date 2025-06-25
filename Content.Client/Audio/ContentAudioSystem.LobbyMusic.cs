@@ -8,8 +8,10 @@ using Robust.Client;
 using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Mixers;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -22,8 +24,16 @@ public sealed partial class ContentAudioSystem
     [Dependency] private readonly ClientGameTicker _gameTicker = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-    private readonly AudioParams _lobbySoundtrackParams = new(-5f, 1, 0, 0, 0, false, 0f);
-    private readonly AudioParams _roundEndSoundEffectParams = new(-5f, 1, 0, 0, 0, false, 0f);
+    private static readonly ProtoId<AudioMixerPrototype> LobbyMusicMixer = "LobbyMusic";
+
+    private readonly AudioParams _lobbySoundtrackParams = new(-5f, 1, 0, 0, 0, false, 0f)
+    {
+        MixerProto = LobbyMusicMixer,
+    };
+    private readonly AudioParams _roundEndSoundEffectParams = new(-5f, 1, 0, 0, 0, false, 0f)
+    {
+        MixerProto = LobbyMusicMixer,
+    };
 
     /// <summary>
     /// EntityUid of lobby restart sound component.
@@ -68,7 +78,6 @@ public sealed partial class ContentAudioSystem
     private void InitializeLobbyMusic()
     {
         Subs.CVar(_configManager, CCVars.LobbyMusicEnabled, LobbyMusicCVarChanged);
-        Subs.CVar(_configManager, CCVars.LobbyMusicVolume, LobbyMusicVolumeCVarChanged);
 
         _state.OnStateChanged += StateManagerOnStateChanged;
 
@@ -99,17 +108,6 @@ public sealed partial class ContentAudioSystem
     private void OnLeave(object? sender, PlayerEventArgs args)
     {
         EndLobbyMusic();
-    }
-
-    private void LobbyMusicVolumeCVarChanged(float volume)
-    {
-        if (_lobbySoundtrackInfo != null)
-        {
-            _audio.SetVolume(
-                _lobbySoundtrackInfo.MusicStreamEntityUid,
-                _lobbySoundtrackParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume))
-            );
-        }
     }
 
     private void LobbyMusicCVarChanged(bool musicEnabled)
@@ -182,7 +180,7 @@ public sealed partial class ContentAudioSystem
             soundtrackFilename,
             Filter.Local(),
             false,
-            _lobbySoundtrackParams.WithVolume(_lobbySoundtrackParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume)))
+            _lobbySoundtrackParams
         );
         if (playResult == null)
         {
@@ -227,7 +225,7 @@ public sealed partial class ContentAudioSystem
             file,
             Filter.Local(),
             false,
-            _roundEndSoundEffectParams.WithVolume(_roundEndSoundEffectParams.Volume + SharedAudioSystem.GainToVolume(_configManager.GetCVar(CCVars.LobbyMusicVolume)))
+            _roundEndSoundEffectParams
         )?.Entity;
     }
 
