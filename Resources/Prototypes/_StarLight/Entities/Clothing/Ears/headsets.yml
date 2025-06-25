@@ -58,3 +58,22 @@
   - type: RadioChime
     sound:
       path: /Audio/_Starlight/Effects/Radio/warden.ogg
+
+- type: entity
+  parent: [ ClothingHeadsetAlt, BaseSovietContraband ]
+  id: ClothingHeadsetAltSoviet
+  name: SSF marine over-ear headset
+  description: Priyom.
+  components:
+  - type: Headset
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySoviet
+  - type: Sprite
+    sprite: _Starlight/Clothing/Ears/Headsets/soviet_headset.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Ears/Headsets/soviet_headset.rsi
+  - type: RadioChime
+    sound:
+      path: /Audio/_Starlight/Effects/Radio/soviet.ogg

@@ -8084,4 +8084,280 @@ Entries:
   id: 1116
   time: '2025-06-20T06:36:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/873
+- author: Citrea
+  changes:
+  - message: Rechargers charging power cells is now intended behaviour and works again.
+    type: Add
+  id: 1117
+  time: '2025-06-21T20:18:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/880
+- author: Citrea
+  changes:
+  - message: Cyborgs can now wear medals
+    type: Add
+  id: 1118
+  time: '2025-06-21T20:21:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/877
+- author: biteless-dot
+  changes:
+  - message: Added the cargo expedition radio to the salvage borg mining modules
+    type: Add
+  id: 1119
+  time: '2025-06-23T13:05:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/886
+- author: Gensy
+  changes:
+  - message: CC Division Stamps
+    type: Add
+  id: 1120
+  time: '2025-06-23T17:37:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/890
+- author: Gensy
+  changes:
+  - message: Fixed aghost drip
+    type: Fix
+  id: 1121
+  time: '2025-06-23T17:49:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/891
+- author: RoadTrain
+  changes:
+  - message: NanoTrasenSilicon and SyndicateSilicon as seperate factions. They mimic
+      the NanoTrasen/Syndicate relations, except for not being hostile to zeds.
+    type: Add
+  id: 1122
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: RoadTrain
+  changes:
+  - message: Added warning texts to the zombie greeting/ghost role rules informing
+      people that they should NOT attack silicons unless in self defense as they cannot
+      be zombified.
+    type: Add
+  id: 1123
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: RoadTrain
+  changes:
+  - message: Zombie AI no longer tries to attack any form of silicon (NT/Syndicate/Xenoborg)
+    type: Fix
+  id: 1124
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: RoadTrain
+  changes:
+  - message: Zeds are no longer hostile against xenoborgs (but xenoborgs are still
+      hostile to zombies for having a brain)
+    type: Remove
+  id: 1125
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Union of Soviet Socialist Planets, comrade! (Revolution Expansion)
+    type: Add
+  id: 1126
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added full library of soviet prototypes, clothing, banners and more.
+    type: Add
+  id: 1127
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Lore & prototype references of USSP new agencies. SKGB, SNKVD, SSF and
+      the Soviet People's Commissariat (NKOZ) (Soviet CC)
+    type: Add
+  id: 1128
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Head Revolutionaries are now SKGB agents/recruiters.
+    type: Tweak
+  id: 1129
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added a new Global Stock System shared among all soviet agents. It runs
+      on an outdated ticket system & those are pretty loud.
+    type: Add
+  id: 1130
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added Svyaz-UZL uplink, used among USSP agencies and ministries.
+    type: Add
+  id: 1131
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added Telebond ticket currency. Gained from conversion.
+    type: Add
+  id: 1132
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added Total Conversion currency. A unique currency gained from conversion,
+      that is not spent in the uplink, and it is shared among all SKGB agents.
+    type: Add
+  id: 1133
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: SKGB agents now start with an SKGB implanter that contains a Svyaz-UZL
+      radio uplink. Why is it an implant and not a roundstart subdermal you may ask?
+      That's for you to find out.
+    type: Add
+  id: 1134
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: 'NOTE: The agent''s Svyaz-UZL radio uplink tracks global currency and
+      telebonds before implant use. So don''t be afraid to convert people before implanting.'
+    type: Tweak
+  id: 1135
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Citrea
+  changes:
+  - message: Survival and Kessler Syndrome game modes can no longer spawn instantly
+      roundending threats.
+    type: Remove
+  id: 1136
+  time: '2025-06-24T13:03:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/887
+- author: aedler
+  changes:
+  - message: Added SSF Marine loadouts and officials.
+    type: Add
+  id: 1137
+  time: '2025-06-24T13:20:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/896
+- author: Killer Tamashi (Code), Zeyria (Sprites), Taro Varné (Unique Species features
+    concepts), Fasuh (Avali Stasis Code)
+  changes:
+  - message: Added Avali (New playable race)
+    type: Add
+  id: 1138
+  time: '2025-06-24T13:38:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/308
+- author: Killer Tamashi (Code), Zeyria (Sprites), Taro Varné (Unique Species features
+    concepts), Fasuh (Avali Stasis Code)
+  changes:
+  - message: Added Vulp speech noises/prefixes
+    type: Add
+  id: 1139
+  time: '2025-06-24T13:38:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/308
+- author: Killer Tamashi (Code), Zeyria (Sprites), Taro Varné (Unique Species features
+    concepts), Fasuh (Avali Stasis Code)
+  changes:
+  - message: Added Vulp temperature ranges
+    type: Add
+  id: 1140
+  time: '2025-06-24T13:38:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/308
+- author: FoxxoTrystan
+  changes:
+  - message: New Shadekin Markings!
+    type: Add
+  id: 1141
+  time: '2025-06-24T13:41:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/883
+- author: FoxxoTrystan
+  changes:
+  - message: Shadekin Eyes can now be collored (tho limited in tint)
+    type: Tweak
+  id: 1142
+  time: '2025-06-24T13:41:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/883
+- author: FoxxoTrystan
+  changes:
+  - message: Fixed Shadekin not needed water/food.
+    type: Fix
+  id: 1143
+  time: '2025-06-24T13:41:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/883
+- author: Fasuh
+  changes:
+  - message: Increase amount of construction ghosts allowed per tile.
+    type: Tweak
+  id: 1144
+  time: '2025-06-24T19:16:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/893
+- author: Killer Tamashi
+  changes:
+  - message: Added BSO stamp
+    type: Add
+  id: 1145
+  time: '2025-06-24T20:00:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/776
+- author: Killer Tamashi
+  changes:
+  - message: Added Brigmedic stamp
+    type: Add
+  id: 1146
+  time: '2025-06-24T20:00:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/776
+- author: Happyrobot33
+  changes:
+  - message: Fixed Headrevs cyroing not being considered removed from revolution,
+      preventing the game from ending.
+    type: Fix
+  id: 1147
+  time: '2025-06-25T00:40:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/879
+- author: Happyrobot33
+  changes:
+  - message: Increased wizard fireball cooldown significantly, to 5, 3 and 2 minutes
+      per the respective fireball level
+    type: Tweak
+  id: 1148
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
+- author: Happyrobot33
+  changes:
+  - message: Smite now no longer gibs, doing 400 shock damage instead, bypassing resistances
+    type: Tweak
+  id: 1149
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
+- author: Happyrobot33
+  changes:
+  - message: Cluwne spell is no longer purchasable, requiring 300 wizcoins
+    type: Tweak
+  id: 1150
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
+- author: Happyrobot33
+  changes:
+  - message: Fixed All eye colors, not just shadekin, getting limited
+    type: Fix
+  id: 1151
+  time: '2025-06-25T02:43:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/899
+- author: Killer Tamashi
+  changes:
+  - message: Avali now remember to pack their survival boxes so they can, you know,
+      survive.
+    type: Fix
+  id: 1152
+  time: '2025-06-25T02:50:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/900
+- author: Killer Tamashi
+  changes:
+  - message: Vulp heat damage rate was set to 2.5, this changes it to 1.75
+    type: Fix
+  id: 1153
+  time: '2025-06-25T03:04:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/901
 

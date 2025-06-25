@@ -110,3 +110,33 @@
 - type: storeCategory
   id: SalvageConsumeables
   name: Consumeables
+
+# USSP
+
+- type: storeCategory
+  id: RevUplinkWeaponry
+  name: Armaments
+
+- type: storeCategory
+  id: RevUplinkPassive
+  name: GLOBAL
+
+- type: storeCategory
+  id: RevUplinkWearables
+  name: Wearables
+
+- type: storeCategory
+  id: RevUplinkImplants
+  name: Implants
+
+- type: storeCategory
+  id: RevUplinkShuttle
+  name: Artillery
+
+- type: storeCategory
+  id: RevUplinkDeception
+  name: Deception
+
+- type: storeCategory
+  id: RevUplinkPointless
+  name: Glory
