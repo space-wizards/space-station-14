@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
@@ -15,14 +16,12 @@ namespace Content.Server.Nutrition;
 [AdminCommand(AdminFlags.Debug)]
 public sealed class Unsatiate : LocalizedEntityCommands
 {
-    public override string Command => "unsatiate";
-
     [Dependency] private readonly SatiationSystem _satiation = default!;
+
+    public override string Command => "unsatiate";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var withoutArgs = args.Length == 0;
-
         var player = shell.Player;
         if (player == null)
         {
@@ -44,9 +43,9 @@ public sealed class Unsatiate : LocalizedEntityCommands
             return;
         }
 
-        if (withoutArgs)
+        if (args.Length == 0)
         {
-            ExecuteWithoutArgs(shell, (playerEntity, satiation));
+            ExecuteWithoutArgs((playerEntity, satiation));
         }
         else
         {
@@ -54,7 +53,7 @@ public sealed class Unsatiate : LocalizedEntityCommands
         }
     }
 
-    private void ExecuteWithoutArgs(IConsoleShell shell, Entity<SatiationComponent> entity)
+    private void ExecuteWithoutArgs(Entity<SatiationComponent> entity)
     {
         foreach (var satiation in entity.Comp.Satiations.Keys)
         {
@@ -82,8 +81,9 @@ public sealed class Unsatiate : LocalizedEntityCommands
     }
 
     // Always suggest any satiation types which aren't already in the arg list.
-    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args) =>
-        CompletionResult.FromHintOptions(
-            _satiation.GetTypes().Select(type => type.ID).Where(type => !args.Contains(type)),
-            nameof(SatiationTypePrototype));
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        var absentSatiationTypeIds = _satiation.GetTypes().Select(type => type.ID).Where(type => !args.Contains(type));
+        return CompletionResult.FromHintOptions(absentSatiationTypeIds, nameof(SatiationTypePrototype));
+    }
 }

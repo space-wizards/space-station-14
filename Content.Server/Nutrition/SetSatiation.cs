@@ -9,13 +9,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition;
 
-// TODO maybe change this to "set satiation" or something.
 [AdminCommand(AdminFlags.Debug)]
 public sealed class SetSatiation : LocalizedEntityCommands
 {
-    public override string Command => "setsatiation";
-
     [Dependency] private readonly SatiationSystem _satiation = null!;
+
+    public override string Command => "setsatiation";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {

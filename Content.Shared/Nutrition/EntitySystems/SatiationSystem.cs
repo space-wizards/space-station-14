@@ -274,7 +274,7 @@ public sealed class SatiationSystem : EntitySystem
 
     /// <summary>
     /// The beating heart of this system, this function sets the given <paramref name="entity"/>'s
-    /// <paramref name="satiationWithProtoResolved">satiation</paramref> to <paramref name="value"/>. This involves
+    /// <paramref name="satiation"/> to <paramref name="value"/>. This involves
     /// updating obvious fields on the <see cref="SatiationComponent"/>, but since changes to the value also affect the
     /// current threshold, we need to consider all of the effects that has as well.
     /// </summary>
