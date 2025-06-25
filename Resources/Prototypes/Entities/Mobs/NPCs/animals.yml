@@ -2992,6 +2992,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
   - type: Physics
+  - type: Puller
+    needsHands: false
   - type: Fixtures
     fixtures:
       fix1:
@@ -3108,7 +3110,7 @@
     factions:
     - Syndicate
   - type: Access
-    tags: 
+    tags:
     - NuclearOperative
     - SyndicateAgent
   - type: MeleeWeapon
