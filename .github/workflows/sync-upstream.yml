@@ -1,0 +1,49 @@
+name: Sync from Space Station 14
+
+on:
+  schedule:
+    - cron: '0 4 * * *'  # Every day at 04:00 UTC
+  workflow_dispatch:     # Allow manual trigger
+
+jobs:
+  sync-upstream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout your repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote
+        run: git remote add upstream https://github.com/space-wizards/space-station-14.git
+
+      - name: Fetch upstream
+        run: git fetch upstream
+
+      - name: Create sync branch
+        run: |
+          git checkout -b sync-upstream-$(date +%s)
+          git merge upstream/master --allow-unrelated-histories --no-edit || echo "Manual conflict resolution may be needed."
+
+      - name: Push branch to origin
+        env:
+          TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          git push "https://x-access-token:${TOKEN}@github.com/${{ github.repository }}" HEAD
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          commit-message: "Sync with upstream Space Station 14"
+          title: "🔄 Sync with space-wizards/space-station-14"
+          body: |
+            Automated sync with upstream repository.
+          branch: ${{ github.ref_name }}
+          base: main
