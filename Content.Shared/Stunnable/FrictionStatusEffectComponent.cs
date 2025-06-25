@@ -6,7 +6,7 @@ namespace Content.Shared.Stunnable;
 /// This is used to apply a friction modifier to an entity temporarily
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStunSystem))]
-public sealed partial class FrictionStatusComponent : Component
+public sealed partial class FrictionStatusEffectComponent : Component
 {
     /// <summary>
     /// Friction modifier applied as a status.

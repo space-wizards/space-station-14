@@ -15,10 +15,12 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable;
@@ -37,6 +39,9 @@ public abstract partial class SharedStunSystem : EntitySystem
     [Dependency] protected readonly SharedStaminaSystem Stamina = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
+    [Dependency] private readonly SharedStatusEffectsSystem _status = default!;
+
+    public static readonly EntProtoId StatusEffectFriciton = "StatusEffectFriction";
 
     public override void Initialize()
     {
@@ -44,10 +49,10 @@ public abstract partial class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
         SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
-        SubscribeLocalEvent<FrictionStatusComponent, ComponentInit>(OnFrictionInit);
-        SubscribeLocalEvent<FrictionStatusComponent, ComponentShutdown>(OnFrictionRemove);
-        SubscribeLocalEvent<FrictionStatusComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionStatus);
-        SubscribeLocalEvent<FrictionStatusComponent, TileFrictionEvent>(OnRefreshTileFrictionStatus);
+        SubscribeLocalEvent<FrictionStatusEffectComponent, ComponentInit>(OnFrictionInit);
+        SubscribeLocalEvent<FrictionStatusEffectComponent, ComponentShutdown>(OnFrictionRemove);
+        SubscribeLocalEvent<FrictionStatusEffectComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionStatus);
+        SubscribeLocalEvent<FrictionStatusEffectComponent, TileFrictionEvent>(OnRefreshTileFrictionStatus);
 
         SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
         SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
@@ -136,12 +141,12 @@ public abstract partial class SharedStunSystem : EntitySystem
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
-    private void OnFrictionInit(Entity<FrictionStatusComponent> ent, ref ComponentInit args)
+    private void OnFrictionInit(Entity<FrictionStatusEffectComponent> ent, ref ComponentInit args)
     {
         _movementSpeedModifier.RefreshFrictionModifiers(ent);
     }
 
-    private void OnFrictionRemove(Entity<FrictionStatusComponent> ent, ref ComponentShutdown args)
+    private void OnFrictionRemove(Entity<FrictionStatusEffectComponent> ent, ref ComponentShutdown args)
     {
         ent.Comp.FrictionModifier = 1f;
         ent.Comp.AccelerationModifier = 1f;
@@ -182,7 +187,8 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (!Resolve(uid, ref status, false))
             return false;
 
-        if (!_statusEffect.CanApplyEffect(uid, "KnockedDown", status))
+        // Can't fall down if you can't actually be downed.
+        if (!HasComp<StandingStateComponent>(uid))
             return false;
 
         var evAttempt = new KnockDownAttemptEvent()
@@ -289,10 +295,10 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (!_statusEffect.TryAddStatusEffect<FrictionStatusComponent>(uid, "Friction", time, refresh, status))
+        if (!_status.TryAddStatusEffect(uid, "Friction", time, refresh))
             return false;
 
-        var frictionStatus = Comp<FrictionStatusComponent>(uid);
+        var frictionStatus = Comp<FrictionStatusEffectComponent>(uid);
 
         frictionStatus.FrictionModifier *= friction;
         frictionStatus.AccelerationModifier *= acceleration;
@@ -360,13 +366,13 @@ public abstract partial class SharedStunSystem : EntitySystem
         args.ModifySpeed(comp.WalkSpeedModifier, comp.SprintSpeedModifier);
     }
 
-    private void OnRefreshFrictionStatus(Entity<FrictionStatusComponent> ent, ref RefreshFrictionModifiersEvent args)
+    private void OnRefreshFrictionStatus(Entity<FrictionStatusEffectComponent> ent, ref RefreshFrictionModifiersEvent args)
     {
         args.ModifyFriction(ent.Comp.FrictionModifier);
         args.ModifyAcceleration(ent.Comp.AccelerationModifier);
     }
 
-    private void OnRefreshTileFrictionStatus(Entity<FrictionStatusComponent> ent, ref TileFrictionEvent args)
+    private void OnRefreshTileFrictionStatus(Entity<FrictionStatusEffectComponent> ent, ref TileFrictionEvent args)
     {
         args.Modifier *= ent.Comp.FrictionModifier;
     }

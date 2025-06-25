@@ -121,7 +121,6 @@
     allowed:
     - Stun
     - Friction
-    - KnockedDown
     - SlowedDown
     - Stutter
     - SeeingRainbows

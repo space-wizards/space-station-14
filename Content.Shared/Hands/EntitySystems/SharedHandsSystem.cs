@@ -179,7 +179,7 @@ public abstract partial class SharedHandsSystem
 
         foreach (var hand in EnumerateHands(entity))
         {
-            if (!hand.IsEmpty)
+            if (HandIsEmpty(entity, hand))
                 continue;
             hands++;
             emptyHand = true;
