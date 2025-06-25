@@ -22,14 +22,20 @@
     canInteract: true
   - type: GhostHearing
   - type: Hands
+    hands:
+      hand_right:
+        location: Right
+      hand_left:
+        location: Left
+    sortedHands:
+    - hand_right
+    - hand_left
   - type: ComplexInteraction
   - type: Puller
     needsHands: false
   - type: CombatMode
   - type: Physics
     ignorePaused: true
-  - type: Body
-    prototype: Aghost
   - type: Access
     groups:
     - AllAccess

@@ -2,6 +2,8 @@
   id: Mirror
   name: mirror
   description: 'Mirror mirror on the wall , who''s the most robust of them all?'
+  placement:
+    mode: SnapgridCenter
   components:
   - type: WallMount
   - type: Sprite
@@ -24,3 +26,11 @@
     interfaces:
       enum.MagicMirrorUiKey.Key:
         type: MagicMirrorBoundUserInterface
+
+- type: entity
+  parent: Mirror
+  id: MirrorModern
+  suffix: rectangle
+  components:
+  - type: Sprite
+    state: rectangle-mirror
