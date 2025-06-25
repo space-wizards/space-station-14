@@ -146,4 +146,16 @@ public sealed partial class StasisComponent : Component
     /// The entity reference for the continuous stasis effect.
     /// </summary>
     [DataField] [AutoNetworkedField] public EntityUid? ContinuousEffectEntity;
+
+    /// <summary>
+    /// Client-side reference to the continuous stasis effect entity.
+    /// This is used to properly track and clean up the visual effect.
+    /// </summary>
+    [DataField] public EntityUid? ClientContinuousEffectEntity;
+
+    /// <summary>
+    /// Client-side reference to the enter stasis effect entity.
+    /// This is used to properly track and clean up the visual effect.
+    /// </summary>
+    [DataField] public EntityUid? ClientEnterEffectEntity;
 }
