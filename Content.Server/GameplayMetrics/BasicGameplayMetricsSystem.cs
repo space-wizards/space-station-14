@@ -5,6 +5,7 @@ using Content.Shared.CCVar;
 using Content.Shared.GameplayMetrics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameplayMetrics;
 
@@ -15,39 +16,45 @@ public sealed class BasicGameplayMetricsSystem : SharedBasicGameplayMetricsSyste
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    // basic record metric (nothing but name)
-    // "advanced" (not really advanced) but adds stuff like round id, round time, gamemode, etc...
-    // or have an enum with a bunch of settings you can control? That might be nicer
+    // ccvars
+    private bool _enabled;
+    private string _serverName = string.Empty;
 
-    public override void RecordMetric(string name, Dictionary<string, string?> metaData, ExtraInfo extraInfo = ExtraInfo.Basic)
+    public override void Initialize()
     {
-        // todo: cache this
-        if (!_cfg.GetCVar(CCVars.MetricLoggingEnabled))
-            return;
+        base.Initialize();
 
-        if (!metaData.TryAdd("name", name))
-            throw new Exception("used reserve word name");
-
-        AddExtraAndCheckInformation(metaData, extraInfo);
-
-        var jsonDoc = JsonSerializer.SerializeToDocument(metaData);
-        if (jsonDoc == null)
-            throw new Exception();
-
-        // TODO: cache the server name
-        _db.RecordGameplayMetric(_cfg.GetCVar(CCVars.MetricsServerName), jsonDoc);
+        _cfg.OnValueChanged(CCVars.BasicMetricLoggingEnabled, x => _enabled = x, true);
+        _cfg.OnValueChanged(CCVars.BasicMetricsServerName, x => _serverName = x, true);
     }
 
-    private void AddExtraAndCheckInformation(Dictionary<string, string?> metaData, ExtraInfo extraInfo)
+    public override void RecordMetric(string name, Dictionary<string, object?> logData, ExtraInfo extraInfo = ExtraInfo.Basic)
     {
-        if (metaData.ContainsKey(ExtraInfo.RoundNumber.ToString()))
-            throw new Exception("used reserve word");
-        if (extraInfo.HasFlag(ExtraInfo.RoundNumber))
-            metaData.Add(ExtraInfo.RoundNumber.ToString(), _ticker.RoundId.ToString());
+        if (_enabled)
+            return;
 
-        if (metaData.ContainsKey(ExtraInfo.GameTime.ToString()))
-            throw new Exception("used reserve word");
+        if (!logData.TryAdd("name", name))
+            throw new DebugAssertException("You can't use reserved word \"name\" in log data.");
+
+        AddExtraAndCheckInformation(logData, extraInfo);
+
+        var jsonDoc = JsonSerializer.SerializeToDocument(logData);
+
+        _db.RecordGameplayMetric(_serverName, jsonDoc);
+    }
+
+    private void AddExtraAndCheckInformation(Dictionary<string, object?> metaData, ExtraInfo extraInfo)
+    {
+        var roundNumber = ExtraInfo.RoundNumber.ToString();
+        if (metaData.ContainsKey(roundNumber))
+            throw new DebugAssertException($"You can't use reserved word \"{roundNumber}\" in log data.");
+        if (extraInfo.HasFlag(ExtraInfo.RoundNumber))
+            metaData.Add(roundNumber, _ticker.RoundId.ToString());
+
+        var gameTime = ExtraInfo.GameTime.ToString();
+        if (metaData.ContainsKey(gameTime))
+            throw new DebugAssertException($"You can't use reserved word \"{gameTime}\" in log data.");
         if (extraInfo.HasFlag(ExtraInfo.GameTime))
-            metaData.Add(ExtraInfo.GameTime.ToString(), _timing.CurTime.Subtract(_ticker.RoundStartTimeSpan).ToString());
+            metaData.Add(gameTime, _timing.CurTime.Subtract(_ticker.RoundStartTimeSpan).ToString());
     }
 }

@@ -2,7 +2,7 @@ namespace Content.Shared.GameplayMetrics;
 
 public abstract class SharedBasicGameplayMetricsSystem : EntitySystem
 {
-    public abstract void RecordMetric(string name, Dictionary<string, string?> metaData, ExtraInfo extraInfo = ExtraInfo.Basic);
+    public abstract void RecordMetric(string name, Dictionary<string, object?> logData, ExtraInfo extraInfo = ExtraInfo.Basic);
 
     // This exists mainly so people don't start putting in like "null" or "" for if it doesn't exist.
     public string? GetEntProtoIdOrNull(EntityUid uid)

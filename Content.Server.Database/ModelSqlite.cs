@@ -78,6 +78,10 @@ namespace Content.Server.Database
                 .Property(log => log.Json)
                 .HasConversion(jsonStringConverter);
 
+            modelBuilder.Entity<BasicGameplayMetrics>()
+                .Property(metric => metric.LogData)
+                .HasConversion(jsonStringConverter);
+
             modelBuilder.Entity<Profile>()
                 .Property(log => log.Markings)
                 .HasConversion(jsonByteArrayConverter);
