@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Linkbro1
-  changes:
-  - message: changed MV and HV cable item sprites, changed MV cable structure sprites
-    type: Tweak
-  id: 8202
-  time: '2025-04-16T20:26:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34955
 - author: ciaran
   changes:
   - message: Fixed duplicate crew monitor console entries for crew with tracking implants
@@ -3882,3 +3875,10 @@
   id: 8714
   time: '2025-06-25T17:52:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38570
+- author: Lukasz825700516
+  changes:
+  - message: Closed eyes and binoculars no longer allow you to see through walls.
+    type: Fix
+  id: 8715
+  time: '2025-06-25T20:22:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38534
