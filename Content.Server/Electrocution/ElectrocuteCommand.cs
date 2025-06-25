@@ -3,55 +3,47 @@ using Content.Shared.Administration;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Console;
 
-namespace Content.Server.Electrocution
+namespace Content.Server.Electrocution;
+
+[AdminCommand(AdminFlags.Fun)]
+public sealed class ElectrocuteCommand : LocalizedEntityCommands
 {
-    [AdminCommand(AdminFlags.Fun)]
-    public sealed class ElectrocuteCommand : IConsoleCommand
+    [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+
+    public override string Command => "electrocute";
+
+    [ValidatePrototypeId<StatusEffectPrototype>]
+    private const string ElectrocutionStatusEffect = "Electrocution";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        [Dependency] private readonly IEntityManager _entManager = default!;
-
-        public string Command => "electrocute";
-        public string Description => Loc.GetString("electrocute-command-description");
-        public string Help => $"{Command} <uid> <seconds> <damage>";
-
-        [ValidatePrototypeId<StatusEffectPrototype>]
-        public const string ElectrocutionStatusEffect = "Electrocution";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        if (args.Length is < 1 or > 3)
         {
-            if (args.Length < 1)
-            {
-                // TODO: Localize this.
-                shell.WriteError("Not enough arguments!");
-                return;
-            }
-
-            if (!NetEntity.TryParse(args[0], out var uidNet) ||
-                !_entManager.TryGetEntity(uidNet, out var uid) ||
-                !_entManager.EntityExists(uid))
-            {
-                shell.WriteError($"Invalid entity specified!");
-                return;
-            }
-
-            if (!_entManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>().CanApplyEffect(uid.Value, ElectrocutionStatusEffect))
-            {
-                shell.WriteError(Loc.GetString("electrocute-command-entity-cannot-be-electrocuted"));
-                return;
-            }
-
-            if (args.Length < 2 || !int.TryParse(args[1], out var seconds))
-            {
-                seconds = 10;
-            }
-
-            if (args.Length < 3 || !int.TryParse(args[2], out var damage))
-            {
-                damage = 10;
-            }
-
-            _entManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>()
-                .TryDoElectrocution(uid.Value, null, damage, TimeSpan.FromSeconds(seconds), refresh: true, ignoreInsulation: true);
+            shell.WriteError(Loc.GetString($"shell-need-between-arguments",
+                ("lower", 1),
+                ("upper", 3)));
+            return;
         }
+
+        if (!NetEntity.TryParse(args[0], out var uidNet) || !EntityManager.TryGetEntity(uidNet, out var uid) || !EntityManager.EntityExists(uid))
+        {
+            shell.WriteError(Loc.GetString($"shell-could-not-find-entity-with-uid", ("uid", args[0])));
+            return;
+        }
+
+        if (!_statusEffects.CanApplyEffect(uid.Value, ElectrocutionStatusEffect))
+        {
+            shell.WriteError(Loc.GetString("cmd-electrocute-entity-cannot-be-electrocuted"));
+            return;
+        }
+
+        if (args.Length < 2 || !int.TryParse(args[1], out var seconds))
+            seconds = 10;
+
+        if (args.Length < 3 || !int.TryParse(args[2], out var damage))
+            damage = 10;
+
+        _electrocution.TryDoElectrocution(uid.Value, null, damage, TimeSpan.FromSeconds(seconds), refresh: true, ignoreInsulation: true);
     }
 }
