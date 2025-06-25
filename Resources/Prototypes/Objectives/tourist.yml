@@ -28,10 +28,6 @@
   parent: BaseEatFoodObjective
   id: BaseEatFoodNonRestrictedObjective # Food for species without food restrictions
   components:
-  - type: EatSpecificFoodCondition
-    titleText: eat-food-condition-title
-    descriptionText: eat-food-condition-description
-    descriptionTextMultiple: eat-food-condition-description-multiple
   - type: SpeciesRequirement
     allowedSpecies: # Reptilians and Moths have diets that restrict food
     - Human
@@ -45,10 +41,6 @@
   parent: BaseEatFoodObjective
   id: BaseEatFoodReptilianObjective # Food that reptilians can eat
   components:
-  - type: EatSpecificFoodCondition
-    titleText: eat-food-condition-title
-    descriptionText: eat-food-condition-description
-    descriptionTextMultiple: eat-food-condition-description-multiple
   - type: SpeciesRequirement
     allowedSpecies:
     - Reptilian
@@ -63,13 +55,99 @@
   parent: BaseEatFoodObjective
   id: BaseEatFoodMothObjective # Food that moths can eat
   components:
-  - type: EatSpecificFoodCondition
-    titleText: eat-food-condition-title
-    descriptionText: eat-food-condition-description
-    descriptionTextMultiple: eat-food-condition-description-multiple
   - type: SpeciesRequirement
     allowedSpecies:
     - Moth
+
+- type: entity
+  abstract: true
+  parent: BaseTouristObjective
+  id: BasePhotographObjectObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Weapons/Melee/flash.rsi
+      state: icon
+  - type: UseNearObjectiveCondition
+    useWhitelist:
+      components:
+      - Flash # Replace this with the polaroid camera once that's in
+    titleText: photograph-object-condition-title
+    descriptionText: photograph-object-condition-description
+    descriptionTextDeleted: photograph-object-condition-description-deleted
+
+# Photography objective
+
+- type: entity
+  parent: BaseTouristObjective
+  id: PhotographLocationObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Weapons/Melee/flash.rsi
+      state: icon
+  - type: UseNearObjectiveCondition
+    targetSingleEntity: true
+    targetWhitelist:
+      components:
+      - NavMapBeacon
+    useWhitelist:
+      components:
+      - Flash # Replace this with the polaroid camera once that's in
+    titleText: photograph-location-condition-title
+    descriptionText: photograph-location-condition-description
+    descriptionTextDeleted: photograph-condition-condition-description-deleted
+
+- type: entity
+  parent: BaseTouristObjective
+  id: PhotographPlayerObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Weapons/Melee/flash.rsi
+      state: icon
+  - type: TargetObjective
+    title: photograph-person-condition-title
+  - type: PickRandomHead
+  - type: UseNearObjectiveCondition
+    targetSingleEntity: true
+    preventOcclusion: true
+    useWhitelist:
+      components:
+      - Flash # Replace this with the polaroid camera once that's in
+    descriptionText: photograph-person-condition-description
+    descriptionTextDeleted: photograph-person-condition-description-deleted
+
+# Get drunk objective
+
+- type: entity
+  parent: BaseTouristObjective
+  id: DrunkInBarObjective
+  name: Get Drunk in the Bar.
+  description: Get drunk (or at least tipsy) in the station's bar!
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Consumable/Drinks/beer.rsi
+      state: icon
+  - type: DrunkInBarCondition
+
+# Pet station pets objective
+
+- type: entity
+  parent: BaseTouristObjective
+  id: PetStationPets
+  components:
+  - type: Objective
+    icon:
+      sprite: Mobs/Animals/hamster.rsi
+      state: icon-0
+  - type: NumberObjective
+    min: 5
+    max: 7
+    title: pet-station-pets-condition-title
+    description: pet-station-pets-condition-description
+  - type: PetStationPetsCondition
 
 # Stamp objective
 

@@ -1336,7 +1336,7 @@ namespace Content.Shared.Interaction
         ///     be used as a general interaction check, as these kinda of interactions should generally trigger a
         ///     do-after and a warning for the other player.
         /// </summary>
-        public bool CanAccessEquipment(EntityUid user, EntityUid target, float range = InteractionRange)
+        public bool CanAccessEquipment(EntityUid user, EntityUid target, float range = InteractionRange, CollisionGroup? collisionMask = null)
         {
             if (Deleted(target))
                 return false;
@@ -1354,7 +1354,7 @@ namespace Content.Shared.Interaction
             if (slotDef != null && _strippable.IsStripHidden(slotDef, user))
                 return false;
 
-            return InRangeUnobstructed(user, wearer, range) && _containerSystem.IsInSameOrParentContainer(user, wearer);
+            return InRangeUnobstructed(user, wearer, range, collisionMask ?? default) && _containerSystem.IsInSameOrParentContainer(user, wearer);
         }
 
         protected bool ValidateClientInput(

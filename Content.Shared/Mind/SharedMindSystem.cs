@@ -452,15 +452,15 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns a list of objective components of a specific type T belonging to a mind entity.
+    /// Returns a list of objective entities of a specific type T belonging to a mind entity.
     /// </summary>
     /// <param name="uid">The entity to check objectives for.</param>
     /// <param name="objectives">Return list of the objective component.</param>
     /// <typeparam name="T">The objective component to check for.</typeparam>
     /// <returns>Returns true if any objectives were found.</returns>
-    public bool TryGetObjectiveComps<T>(EntityUid uid, [NotNullWhen(true)] out List<T>? objectives) where T : IComponent
+    public bool TryGetObjectiveEntities<T>(EntityUid uid, [NotNullWhen(true)] out List<Entity<T>>? objectives) where T : IComponent
     {
-        if (TryGetMind(uid, out var mindId, out var mind) && TryGetObjectiveComps(mindId, out objectives, mind))
+        if (TryGetMind(uid, out var mindId, out var mind) && TryGetObjectiveEntities(mindId, out objectives, mind))
         {
             return true;
         }
@@ -469,16 +469,16 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns a list of objective components of a specific type T belonging to a mind entity.
+    /// Returns a list of objective entities of a specific type T belonging to a mind entity.
     /// </summary>
     /// <param name="mindId">The mind entity to check objectives for.</param>
     /// <param name="objectives">Return list of the objective component.</param>
     /// <param name="mind">MindComponent for the mind entity.</param>
     /// <typeparam name="T">The objective component to check for.</typeparam>
     /// <returns>Returns true if any objectives were found.</returns>
-    public bool TryGetObjectiveComps<T>(EntityUid mindId, [NotNullWhen(true)] out List<T>? objectives, MindComponent? mind = null) where T : IComponent
+    public bool TryGetObjectiveEntities<T>(EntityUid mindId, [NotNullWhen(true)] out List<Entity<T>>? objectives, MindComponent? mind = null) where T : IComponent
     {
-        objectives = new List<T>();
+        objectives = new List<Entity<T>>();
         if (Resolve(mindId, ref mind))
         {
             var query = GetEntityQuery<T>();
@@ -486,7 +486,7 @@ public abstract partial class SharedMindSystem : EntitySystem
             {
                 if (query.TryGetComponent(uid, out var objective))
                 {
-                    objectives.Add(objective);
+                    objectives.Add((uid, objective));
                 }
             }
         }
@@ -496,6 +496,7 @@ public abstract partial class SharedMindSystem : EntitySystem
         objectives = default;
         return false;
     }
+
 
     /// <summary>
     /// Copies objectives from one mind to another, so that they are shared between two players.

@@ -545,12 +545,12 @@ public sealed class FoodSystem : EntitySystem
     /// <param name="consumer">The entity which consumed the food.</param>
     private void CheckConsumedFoodObjectives(EntityUid food, EntityUid consumer)
     {
-        if (_mind.TryGetObjectiveComps<EatSpecificFoodConditionComponent>(consumer, out var objectives))
+        if (_mind.TryGetObjectiveEntities<EatSpecificFoodConditionComponent>(consumer, out var objectives))
         {
             foreach (var objective in objectives)
             {
-                if (_whitelist.IsWhitelistPass(objective.Whitelist, food))
-                    objective.FoodEaten++;
+                if (_whitelist.IsWhitelistPass(objective.Comp.Whitelist, food))
+                    objective.Comp.FoodEaten++;
             }
         }
     }

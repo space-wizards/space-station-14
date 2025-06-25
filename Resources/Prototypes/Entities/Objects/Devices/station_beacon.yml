@@ -544,6 +544,7 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-bar
+  - type: DrunkInBarTarget
 
 - type: entity
   parent: DefaultStationBeaconService

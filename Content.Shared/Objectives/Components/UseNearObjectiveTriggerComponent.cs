@@ -3,7 +3,7 @@
 namespace Content.Shared.Objectives.Components;
 
 /// <summary>
-/// Allows an object to affect targets of the UseNearEntityCondition objective.
+/// Allows an object to affect targets of the UseNearObjectiveCondition objective.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class UseNearObjectiveTriggerComponent : Component
