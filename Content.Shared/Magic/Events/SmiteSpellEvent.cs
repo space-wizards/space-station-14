@@ -13,6 +13,7 @@ public sealed partial class SmiteSpellEvent : EntityTargetActionEvent
     [DataField]
     public bool DeleteNonBrainParts = false;
 
+    //starlight start
     [DataField]
     public DamageSpecifier Damage = new()
     {
@@ -21,4 +22,5 @@ public sealed partial class SmiteSpellEvent : EntityTargetActionEvent
             { "Shock", 400 }
         }
     };
+    //starlight end
 }
