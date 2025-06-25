@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Spells
 spellbook-fireball-name = Fireball
 spellbook-fireball-desc = Get most crew exploding with rage when they see this fireball heading toward them! Upgradeable.
@@ -41,8 +42,10 @@ spellbook-animate-description = Bring an inanimate object to life!
 spellbook-smite-name = Smite
 spellbook-smite-desc = Don't like them? EXPLODE them into giblets! Requires Wizard Robe & Hat.
 
+# start of modifications
 spellbook-cellular-smite-name = Smite
 spellbook-cellular-smite-desc = Don't like them? Smite em! Requires Wizard Robe & Hat.
+# end of modifications
 
 spellbook-cluwne-name = Cluwne's Curse
 spellbook-cluwne-desc = For when you really hate someone and Smite isn't enough. Requires Wizard Robe & Hat.
