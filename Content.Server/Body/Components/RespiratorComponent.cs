@@ -34,10 +34,22 @@ namespace Content.Server.Body.Components
         public Gas ByproductGas = Gas.CarbonDioxide;
 
         /// <summary>
+        ///     Volume of our breath in liters
+        /// </summary>
+        [DataField]
+        public float BreathVolume = Atmospherics.BreathVolume;
+
+        /// <summary>
         ///     How much of the gas we inhale is metabolized? Value range is (0, 1]
         /// </summary>
         [DataField]
         public float Ratio = 1.0f;
+
+        /// <summary>
+        ///     Saturation per mol of gas
+        /// </summary>
+        [DataField]
+        public float SaturationMultiplier = Atmospherics.BreathMolesToReagentMultiplier;
 
         /// <summary>
         ///     The next time that this body will inhale or exhale.

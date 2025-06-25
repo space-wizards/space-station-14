@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Body.Components;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -9,6 +10,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Internals;
 using Content.Shared.Inventory;
 using Content.Shared.Roles;
+using NetCord.Rest;
 
 namespace Content.Server.Body.Systems;
 
@@ -27,6 +29,7 @@ public sealed class InternalsSystem : SharedInternalsSystem
         _internalsQuery = GetEntityQuery<InternalsComponent>();
 
         SubscribeLocalEvent<InternalsComponent, InhaleLocationEvent>(OnInhaleLocation);
+        SubscribeLocalEvent<InternalsComponent, InhaledGasEvent>(OnInhaledGas);
         SubscribeLocalEvent<InternalsComponent, StartingGearEquippedEvent>(OnStartingGear);
     }
 
@@ -58,9 +61,14 @@ public sealed class InternalsSystem : SharedInternalsSystem
         if (AreInternalsWorking(ent))
         {
             var gasTank = Comp<GasTankComponent>(ent.Comp.GasTankEntity!.Value);
-            args.Gas = _gasTank.RemoveAirVolume((ent.Comp.GasTankEntity.Value, gasTank), Atmospherics.BreathVolume);
+            args.Gas = _gasTank.RemoveAirVolume((ent.Comp.GasTankEntity.Value, gasTank), args.Respirator.Comp.BreathVolume);
             // TODO: Should listen to gas tank updates instead I guess?
             _alerts.ShowAlert(ent, ent.Comp.InternalsAlert, GetSeverity(ent));
         }
+    }
+
+    private void OnInhaledGas(Entity<InternalsComponent> ent, ref InhaledGasEvent args)
+    {
+
     }
 }

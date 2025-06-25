@@ -123,7 +123,10 @@ public sealed class RespiratorSystem : EntitySystem
             return false;
 
         // Inhale gas
-        var ev = new InhaleLocationEvent();
+        var ev = new InhaleLocationEvent
+        {
+            Respirator = (entity, entity.Comp),
+        };
         RaiseLocalEvent(entity, ref ev);
 
         ev.Gas ??= _atmosSys.GetContainingMixture(entity.Owner, excite: true);
@@ -133,7 +136,7 @@ public sealed class RespiratorSystem : EntitySystem
             return false;
         }
 
-        var gas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);
+        var gas = ev.Gas.RemoveVolume(entity.Comp.BreathVolume);
 
         var inhaleEv = new InhaledGasEvent(gas);
         RaiseLocalEvent(entity, ref inhaleEv);
@@ -239,7 +242,7 @@ public sealed class RespiratorSystem : EntitySystem
 
         gas = new GasMixture(gas);
         var lungRatio = 1.0f / organs.Count;
-        gas.Multiply(MathF.Min(lungRatio * gas.Volume / Atmospherics.BreathVolume, lungRatio));
+        gas.Multiply(MathF.Min(lungRatio * gas.Volume / ent.Comp.BreathVolume, lungRatio));
         var solution = _lungSystem.GasToReagent(gas);
 
         float saturation = 0;
@@ -391,7 +394,7 @@ public sealed class RespiratorSystem : EntitySystem
     {
         var moles = gas[(int)entity.Comp.MetabolizedGas];
 
-        return Math.Max(0, moles * Atmospherics.BreathMolesToReagentMultiplier);
+        return Math.Max(0, moles * entity.Comp.SaturationMultiplier);
     }
 
     /// <summary>
@@ -496,7 +499,7 @@ public sealed class RespiratorSystem : EntitySystem
 }
 
 [ByRefEvent]
-public record struct InhaleLocationEvent(GasMixture? Gas);
+public record struct InhaleLocationEvent(GasMixture? Gas, Entity<RespiratorComponent> Respirator);
 
 [ByRefEvent]
 public record struct ExhaleLocationEvent(GasMixture? Gas);
