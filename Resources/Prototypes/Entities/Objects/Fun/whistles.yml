@@ -1,9 +1,11 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   abstract: true
   parent: BaseItem
   id: BaseWhistle
   name: whistle
-  description: Did someone forget to turn the kettle off?
+  description: Did someone forget to turn the kettle off? # modified by Ronstation contributor(s)
   components:
   - type: Item
     sprite: Objects/Fun/whistles.rsi
@@ -40,6 +42,7 @@
   - type: Whistle
     distance: 5
 
+# start of modifications
 - type: entity
   parent: BaseWhistle
   id: WardenWhistle
@@ -57,6 +60,7 @@
     distance: 8
   - type: StealTarget
     stealGroup: WardenWhistle
+# end of modifications
 
 - type: entity
   parent: [BaseWhistle, BaseMinorContraband]
