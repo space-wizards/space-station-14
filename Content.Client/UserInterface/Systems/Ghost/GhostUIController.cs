@@ -18,7 +18,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
     [UISystemDependency] private readonly GhostSystem? _system = default;
 
     private TimeSpan _lastUpdateTime;
-    private const float UpdateInterval = 5f;
+    private static readonly TimeSpan UpdateInterval = TimeSpan.FromSeconds(5f);
 
     private GhostGui? Gui => UIManager.GetActiveUIWidgetOrNull<GhostGui>();
 
@@ -39,7 +39,7 @@ public sealed class GhostUIController : UIController, IOnSystemChanged<GhostSyst
             || Gui?.Visible == false)
             return;
 
-        if (_lastUpdateTime + TimeSpan.FromSeconds(UpdateInterval) > _gameTiming.CurTime
+        if (_lastUpdateTime + UpdateInterval > _gameTiming.CurTime
             || !Gui!.TargetWindow.IsOpen)
             return;
 
