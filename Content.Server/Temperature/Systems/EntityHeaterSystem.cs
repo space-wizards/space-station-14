@@ -65,6 +65,8 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
     /// </remarks>
     protected override void ChangeSetting(Entity<EntityHeaterComponent> ent, EntityHeaterSetting setting, EntityUid? user = null)
     {
+        base.ChangeSetting(ent, setting, user);
+
         if (!TryComp<ApcPowerReceiverComponent>(ent, out var power))
             return;
 
