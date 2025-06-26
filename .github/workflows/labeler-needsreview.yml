@@ -4,11 +4,13 @@ on:
   pull_request_target:
     types: [review_requested]
 
+permissions:
+  pull-requests: write
+  issues: write
+  contents: write
+
 jobs:
   add_label:
-    permissions:
-      contents: read
-      pull-requests: write
     runs-on: ubuntu-latest
     steps:
     - uses: actions-ecosystem/action-add-labels@v1
