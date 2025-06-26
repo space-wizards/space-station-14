@@ -59,8 +59,8 @@ public sealed partial class HereticKnowledgeSystem : EntitySystem
                 var actionName = (EntityPrototype) _proto.Index(typeof(EntityPrototype), act);
                 // jesus christ.
                 foreach (var action in _action.GetActions(uid))
-                    if (Name(action.Id) == actionName.Name)
-                        _action.RemoveAction(action.Id);
+                    if (Name(action.Owner) == actionName.Name)
+                        _action.RemoveAction(action.Owner);
             }
         }
 

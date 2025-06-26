@@ -95,6 +95,7 @@
     node: webberet
 
 #Paramedic Siren Hat
+#TODO fix the light not toggling
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatParamedicSirenCap
@@ -171,14 +172,14 @@
         name: power-cell-slot-component-slot-name-default
 
 - type: entity
+  parent: BaseToggleAction
   id: ActionToggleParamedicSirenCap
   name: Toggle Paramedic Siren Cap
   description: Toggles the paramedic siren cap on and off.
   components:
-  - type: InstantAction
+  - type: Action
     useDelay: 1
     itemIconStyle: BigItem
-    event: !type:ToggleActionEvent
 
 - type: entity
   parent: ClothingHeadBase

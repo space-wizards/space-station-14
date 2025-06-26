@@ -44,3 +44,15 @@
   storage:
     back:
     - Flash
+
+- type: chameleonOutfit
+  id: HospitalityDirectorChameleonOutfit
+  job: HospitalityDirector
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBellhopHD
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    neck: ClothingNeckCloakHd
+    outerClothing: ClothingOuterWinterHD
+    gloves: ClothingHandsGlovesJanitor

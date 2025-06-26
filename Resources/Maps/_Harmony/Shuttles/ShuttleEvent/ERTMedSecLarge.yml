@@ -912,14 +912,6 @@ entities:
     - type: GasTileOverlay
     - type: SpreaderGrid
     - type: GridPathfinding
-- proto: ActionToggleLight
-  entities:
-  - uid: 3
-    components:
-    - type: Transform
-      parent: 2
-    - type: InstantAction
-      container: 2
 - proto: AirAlarm
   entities:
   - uid: 399
@@ -5742,22 +5734,8 @@ entities:
     - type: Transform
       pos: 0.35053897,15.837923
       parent: 1
-    - type: HandheldLight
-      toggleActionEntity: 3
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 3
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
 - proto: LockerChemistryFilled
   entities:
   - uid: 54

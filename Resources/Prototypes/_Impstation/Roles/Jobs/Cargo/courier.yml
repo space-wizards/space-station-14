@@ -22,3 +22,13 @@
     belt: MailBag
     pocket1: HoloBellProjector
 
+- type: chameleonOutfit
+  id: CourierChameleonOutfit
+  job: Courier
+  equipment:
+    head: ClothingHeadHatCouriersoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterWinterCourier
+    neck: ClothingNeckScarfStripedBlue
+    gloves: ClothingHandsGlovesFingerless

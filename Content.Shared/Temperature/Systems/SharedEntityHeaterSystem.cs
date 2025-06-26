@@ -31,6 +31,9 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
 
     private void OnExamined(Entity<EntityHeaterComponent> ent, ref ExaminedEvent args)
     {
+        if (!ent.Comp.RequirePower) //Imp edit
+            return;
+
         if (!args.IsInDetailsRange)
             return;
 
@@ -40,6 +43,9 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
     private void OnGetVerbs(Entity<EntityHeaterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (!ent.Comp.RequirePower) //Imp edit
             return;
 
         var nextSettingIndex = ((int)ent.Comp.Setting + 1) % _settingCount;

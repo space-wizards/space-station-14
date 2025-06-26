@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by AftrLife(github) based on closet sprites taken from tgstation from https://github.com/tgstation/tgstation/pull/85491. atmos, black, and blue door by DinnerCalzone(github).",
+  "copyright": "Sprited by AftrLife(github) based on closet sprites taken from tgstation from https://github.com/tgstation/tgstation/pull/85491. atmos, black, and blue door by DinnerCalzone(github). Evac lockers by EmoGarbage404 (GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -33,6 +33,15 @@
       },
       {
           "name": "emergencynit_open"
+      },
+      {
+          "name": "eng"
+      },
+      {
+          "name": "eng_evac_door"
+      },
+      {
+          "name": "eng_open"
       },
       {
           "name": "fire"

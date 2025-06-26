@@ -34,3 +34,14 @@
     back:
     - RubberStampLawyer
     - BookSpaceLaw
+
+- type: chameleonOutfit
+  id: LawyerChameleonOutfit
+  job: Lawyer
+  equipment:
+    head: ClothingHeadHatBowlerHat
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    neck: ClothingNeckLawyerbadge
+    outerClothing: ClothingOuterWinterColorBlack
+    gloves: ClothingHandsGlovesColorBlack

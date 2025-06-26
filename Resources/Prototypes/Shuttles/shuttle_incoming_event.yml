@@ -99,7 +99,4 @@
   path: /Maps/Shuttles/ShuttleEvent/spacebus.yml
   copies: 1
 
-- type: preloadedGrid
-  id: SyndieRecruiterShip
-  path: /Maps/Shuttles/ShuttleEvent/recruiter.yml
-  copies: 1
+

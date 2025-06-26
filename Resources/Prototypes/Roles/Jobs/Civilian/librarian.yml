@@ -24,3 +24,14 @@
     - TapeRecorder # DeltaV addition
     - CassetteTape
     - CassetteTape
+
+- type: chameleonOutfit
+  id: LibrarianChameleonOutfit
+  job: Librarian
+  equipment:
+    head: ClothingHeadHatCanadaBeanie
+    eyes: ClothingEyesGlassesJamjar
+    mask: ClothingMaskGas
+    neck: ClothingNeckScarfStripedGreen
+    outerClothing: ClothingOuterWinterColorGreen
+    gloves: ClothingHandsGlovesColorBlack

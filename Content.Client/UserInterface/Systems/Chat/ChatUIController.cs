@@ -47,9 +47,10 @@ using static Content.Client.CharacterInfo.CharacterInfoSystem;
 using Content.Shared._Impstation.CCVar;
 
 
+
 namespace Content.Client.UserInterface.Systems.Chat;
 
-public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterInfoSystem>
+public sealed partial class ChatUIController : UIController, IOnSystemChanged<CharacterInfoSystem>
 {
     [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IChatManager _manager = default!;
@@ -72,7 +73,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     [UISystemDependency] private readonly TransformSystem? _transform = default;
     [UISystemDependency] private readonly MindSystem? _mindSystem = default!;
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
-    [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
 
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "ChatNames";
@@ -159,23 +159,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
-    /// <summary>
-    ///     A list of words to be highlighted in the chatbox.
-    /// </summary>
-    private List<string> _highlights = [];
-
-    /// <summary>
-    ///     The color (hex) in witch the words will be highlighted as.
-    /// </summary>
-    private string? _highlightsColor;
-
-    private bool _autoFillHighlightsEnabled;
-
-    /// <summary>
-    ///     A bool to keep track if the 'CharacterUpdated' event is a new player attaching or the opening of the character info panel.
-    /// </summary>
-    private bool _charInfoIsAttach = false;
-
     // TODO add a cap for this for non-replays
     public readonly List<(GameTick Tick, ChatMessage Msg)> History = new();
 
@@ -199,7 +182,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     public event Action<ChatSelectChannel>? SelectableChannelsChanged;
     public event Action<ChatChannel, int?>? UnreadMessageCountsUpdated;
     public event Action<ChatMessage>? MessageAdded;
-    public event Action<string>? HighlightsUpdated;
 
     public override void Initialize()
     {
@@ -271,19 +253,7 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
 
         _config.OnValueChanged(CCVars.ChatWindowOpacity, OnChatWindowOpacityChanged);
 
-        _config.OnValueChanged(ImpCCVars.ChatAutoFillHighlights, (value) => { _autoFillHighlightsEnabled = value; });
-        _autoFillHighlightsEnabled = _config.GetCVar(ImpCCVars.ChatAutoFillHighlights);
-
-        _config.OnValueChanged(ImpCCVars.ChatHighlightsColor, (value) => { _highlightsColor = value; });
-        _highlightsColor = _config.GetCVar(ImpCCVars.ChatHighlightsColor);
-
-        // Load highlights if any were saved.
-        string highlights = _config.GetCVar(ImpCCVars.ChatHighlights);
-
-        if (!string.IsNullOrEmpty(highlights))
-        {
-            UpdateHighlights(highlights);
-        }
+        InitializeHighlights();
     }
 
     public void OnScreenLoad()
@@ -299,16 +269,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     public void OnScreenUnload()
     {
         SetMainChat(false);
-    }
-
-    public void OnSystemLoaded(CharacterInfoSystem system)
-    {
-        system.OnCharacterUpdate += CharacterUpdated;
-    }
-
-    public void OnSystemUnloaded(CharacterInfoSystem system)
-    {
-        system.OnCharacterUpdate -= CharacterUpdated;
     }
 
     private void OnChatWindowOpacityChanged(float opacity)
@@ -507,11 +467,7 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     {
         UpdateChannelPermissions();
 
-        if (_autoFillHighlightsEnabled)
-        {
-            _charInfoIsAttach = true;
-            _characterInfo.RequestCharacterInfo();
-        }
+        UpdateAutoFillHighlights();
     }
 
     private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
@@ -677,31 +633,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
             _unreadMessages[channel] = 0;
             UnreadMessageCountsUpdated?.Invoke(channel, 0);
         }
-    }
-
-    public void UpdateHighlights(string highlights)
-    {
-        // Save the newly provided list of highlighs if different.
-        if (!_config.GetCVar(ImpCCVars.ChatHighlights).Equals(highlights, StringComparison.CurrentCultureIgnoreCase))
-        {
-            _config.SetCVar(ImpCCVars.ChatHighlights, highlights);
-            _config.SaveToFile();
-        }
-
-        // If the word is surrounded by "" we replace them with a whole-word regex tag.
-        highlights = highlights.Replace("\"", "\\b");
-
-        // Fill the array with the highlights separated by newlines, disregarding empty entries.
-        string[] arrHighlights = highlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        _highlights.Clear();
-        foreach (var keyword in arrHighlights)
-        {
-            _highlights.Add(keyword);
-        }
-
-        // Arrange the list in descending order so that when highlighting,
-        // the full word (eg. "Security") appears before the abbreviation (eg. "Sec").
-        _highlights.Sort((x, y) => y.Length.CompareTo(x.Length));
     }
 
     public override void FrameUpdate(FrameEventArgs delta)
@@ -963,7 +894,7 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
                 msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
         }
 
-        // Color any words choosen by the client.
+        // Color any words chosen by the client.
         foreach (var highlight in _highlights)
         {
             msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, highlight, "color", _highlightsColor);

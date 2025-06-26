@@ -160,6 +160,20 @@
   - type: AccessReader
     access: [ [ "Engineering" ] ]
 
+# Evac Repair
+- type: entity
+  parent: LockerBase
+  id: LockerEvacRepair
+  name: evac repair locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: eng
+    stateDoorOpen: generic_open_3
+    stateDoorClosed: eng_evac_door #TODO make imp version of this
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
+
 # Freezer
 - type: entity
   id: LockerFreezerBase
