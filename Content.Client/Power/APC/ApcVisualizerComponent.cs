@@ -1,4 +1,4 @@
-// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+// Modified by Ronstation contributor(s),  legacy changes licensed as MIT.
 using Content.Shared.APC;
 
 namespace Content.Client.Power.APC;

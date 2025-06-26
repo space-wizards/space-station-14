@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s),  legacy changes licensed as MIT.
 - type: entity
   categories: [ HideSpawnMenu ]
   id: BaseAPC
@@ -27,7 +28,9 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
+    # start of modifications
     sprite: Ronstation/Structures/Power/apc.rsi
+    # start of modifications
     layers:
     - state: base
     - state: panel
@@ -76,7 +79,9 @@
     sourceNode: input
     loadNode: output
     collectionName: apc
+    # start of modifications
     sprite: Ronstation/Structures/Power/apc.rsi
+    # end of modifications
     state: static
   - type: BatteryCharger
     voltage: Medium
@@ -169,7 +174,9 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
+    # start of modifications
     sprite: Ronstation/Structures/Power/apc.rsi
+    # end of modifications
     state: frame
   - type: Construction
     graph: APC

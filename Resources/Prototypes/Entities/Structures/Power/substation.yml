@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s),  legacy changes licensed as MIT.
 # Core logic shared between regular and wall-mount substation
 - type: entity
   abstract: true
@@ -75,7 +76,9 @@
     mode: SnapgridCenter
   components:
   - type: Sprite # TODO: add sprite for maintenance panel open
+    # start of modifications
     sprite: Ronstation/Structures/Power/substation.rsi
+    # end of modifications
     snapCardinals: true
     layers:
     - state: substation
@@ -92,7 +95,9 @@
     color: "#00db00"
     castShadows: false
   - type: PowerMonitoringDevice
+    # start of modifications
     sprite: Ronstation/Structures/Power/substation.rsi
+    # end of modifications
     state: substation_static
   - type: Destructible
     thresholds:
@@ -178,7 +183,9 @@
     anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
+    # start of modifications
     sprite: Ronstation/Structures/Power/substation.rsi
+    # end of modifications
     layers:
     - state: substation_wall
     - state: screen_wall
@@ -187,7 +194,9 @@
     maxCharge: 2000000
     startingCharge: 0
   - type: PowerMonitoringDevice
+    # start of modifications
     sprite: Ronstation/Structures/Power/substation.rsi
+    # end of modifications
     state: substation_wall_static
   - type: Destructible
     thresholds:
@@ -274,7 +283,9 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
+    # start of modifications
     sprite: Ronstation/Structures/Power/substation.rsi
+    # end of modifications
     layers:
     - state: substation_wall
   - type: Construction
