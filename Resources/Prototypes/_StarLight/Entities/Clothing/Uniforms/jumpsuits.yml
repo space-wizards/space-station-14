@@ -80,7 +80,7 @@
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/eliteblueshield.rsi
 
-    - type: entity
+- type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitBlueShieldCaptain
   name: Blueshield Officer's shirt
