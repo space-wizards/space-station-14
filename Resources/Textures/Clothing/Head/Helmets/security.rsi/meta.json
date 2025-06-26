@@ -11,6 +11,9 @@
       "name": "icon"
     },
     {
+      "name": "icon-flash"
+    },
+    {
       "name": "equipped-HELMET",
       "directions": 4
     },
@@ -24,6 +27,10 @@
     },
     {
       "name": "lighton-equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "lighton-equipped-HELMET-vox",
       "directions": 4
     },
     {
