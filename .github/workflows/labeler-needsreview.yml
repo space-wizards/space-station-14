@@ -3,10 +3,13 @@
 on:
   pull_request_target:
     types: [review_requested]
+  pull_request_review:
+    types: [submitted]
 
 permissions:
-  contents: read
   pull-requests: write
+  issues: write
+  contents: write
 
 jobs:
   add_label:
