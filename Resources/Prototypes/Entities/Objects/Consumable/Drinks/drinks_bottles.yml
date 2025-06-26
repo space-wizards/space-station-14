@@ -789,7 +789,7 @@
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
   id: DrinkNTCahorsBottleFull
   name: nt cahors bottle
-  description: Fancy wine, made with fancy grapes.
+  description: Fancy space wine, made with fancy space grapes.
   components:
   - type: SolutionContainerManager
     solutions:
