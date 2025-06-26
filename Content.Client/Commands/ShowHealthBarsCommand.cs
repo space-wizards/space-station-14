@@ -19,7 +19,7 @@ public sealed class ShowHealthBarsCommand : LocalizedEntityCommands
             return;
         }
 
-        if (player.AttachedEntity is not {} playerEntity)
+        if (player.AttachedEntity is not { } playerEntity)
         {
             shell.WriteError(Loc.GetString("shell-must-be-attached-to-entity"));
             return;
