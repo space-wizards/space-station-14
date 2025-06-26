@@ -8389,4 +8389,11 @@ Entries:
   id: 1157
   time: '2025-06-26T12:53:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/915
+- author: Aedler
+  changes:
+  - message: Changed USSP revs uplink costs to be more realistically approachable.
+    type: Tweak
+  id: 1158
+  time: '2025-06-26T12:55:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/908
 
