@@ -324,7 +324,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         }
 
         // Don't need the modifier anymore if it's not actually modifying anything.
-        if (MathHelper.CloseTo(entity.Comp.FrictionModifier, 1f))
+        if (MathHelper.CloseTo(entity.Comp.FrictionModifier, 1f) && MathHelper.CloseTo(entity.Comp.AccelerationModifier, 1f))
             RemComp<FrictionStatusModifierComponent>(entity);
 
         _movementSpeedModifier.RefreshFrictionModifiers(entity);
