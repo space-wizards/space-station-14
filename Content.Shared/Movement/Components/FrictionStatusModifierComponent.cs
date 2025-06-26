@@ -5,9 +5,10 @@ namespace Content.Shared.Movement.Components;
 
 /// <summary>
 /// This is used to apply a friction modifier to an entity temporarily
+/// To be used only in conjunction with <see cref="FrictionStatusEffectComponent"/>, on the status effect entity.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStunSystem))]
-public sealed partial class FrictionModifierComponent : Component
+public sealed partial class FrictionStatusModifierComponent : Component
 {
     /// <summary>
     /// Friction modifier applied.
