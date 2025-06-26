@@ -8427,4 +8427,11 @@ Entries:
   id: 1162
   time: '2025-06-26T13:03:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/902
+- author: Quantumcross
+  changes:
+  - message: Fixes to ready up button after changing job priorities in some cases
+    type: Fix
+  id: 1163
+  time: '2025-06-26T13:04:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/911
 
