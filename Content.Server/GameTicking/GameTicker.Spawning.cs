@@ -36,7 +36,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly AdminSystem _admin = default!;
-        [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         public const string ObserverPrototypeName = "MobObserver";
@@ -126,7 +125,7 @@ namespace Content.Server.GameTicking
                 var playerSession = _playerManager.GetSessionById(player);
 
                 // Select a profile for the player
-                var playerPrefs = _preferencesManager.GetPreferences(player);
+                var playerPrefs = _prefsManager.GetPreferences(player);
                 var playerProfiles = playerPrefs.GetAllEnabledProfilesForJob(job.Value);
 
                 // Filter out job requirements
@@ -268,7 +267,7 @@ namespace Content.Server.GameTicking
                 restrictedRoles.UnionWith(jobBans);
 
             // Pick best job best on prefs.
-            var playerPreferences = _preferencesManager.GetPreferences(player.UserId);
+            var playerPreferences = _prefsManager.GetPreferences(player.UserId);
             var jobPrioritiesFiltered = playerPreferences.JobPrioritiesFiltered();
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station,
                 jobPrioritiesFiltered,
