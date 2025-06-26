@@ -111,7 +111,7 @@ namespace Content.Client.Lobby.UI
 
         private List<VoicePrototype> _voices = [];
 
-        private List<VoicePrototype> _siliconVoices = [];
+        private List<VoicePrototype> _siliconVoices = []; // 🌟Starlight🌟
 
         public HumanoidProfileEditor(
             IClientPreferencesManager preferencesManager,
@@ -492,7 +492,7 @@ namespace Content.Client.Lobby.UI
             VoicePreviewButton.OnPressed +=
                 _ => _entManager.System<TextToSpeechSystem>().RequestPreviewTts(Profile?.Voice ?? "");
 
-
+            // 🌟Starlight🌟 start
             _siliconVoices = _prototypeManager
                 .EnumeratePrototypes<VoicePrototype>()
                 .Where(o => o.Silicon)
@@ -506,6 +506,7 @@ namespace Content.Client.Lobby.UI
             };
             SiliconVoicePreviewButton.OnPressed +=
                 _ => _entManager.System<TextToSpeechSystem>().RequestPreviewTts(Profile?.SiliconVoice ?? "");
+            // 🌟Starlight🌟 end
         }
         private void UpdateVoicesControls()
         {
@@ -530,11 +531,11 @@ namespace Content.Client.Lobby.UI
                     Profile.Voice = available[index].ID;
                 }
             }
-
             var voiceChoiceId = _voices.FindIndex(x => x.ID == Profile.Voice);
             if (voiceChoiceId != -1)
                 VoiceButton.TrySelectId(voiceChoiceId);
         }
+        // 🌟Starlight🌟 Start
         private void UpdateSiliconVoicesControls()
         {
             if (Profile is null)
@@ -563,6 +564,8 @@ namespace Content.Client.Lobby.UI
             if (siliconVoiceChoiceId != -1)
                 SiliconVoiceButton.TrySelectId(siliconVoiceChoiceId);
         }
+        // 🌟Starlight🌟 end
+
         /// <summary>
         /// Refreshes the flavor text editor status.
         /// </summary>
@@ -868,7 +871,7 @@ namespace Content.Client.Lobby.UI
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
             UpdateVoicesControls();
-            UpdateSiliconVoicesControls();
+            UpdateSiliconVoicesControls(); // 🌟Starlight🌟
 
             RefreshAntags();
             RefreshJobs();
@@ -1275,7 +1278,7 @@ namespace Content.Client.Lobby.UI
             Markings.SetSex(newSex);
             ReloadPreview();
             UpdateVoicesControls();
-            UpdateSiliconVoicesControls();
+            UpdateSiliconVoicesControls(); // 🌟Starlight🌟
         }
 
         private void SetGender(Gender newGender)

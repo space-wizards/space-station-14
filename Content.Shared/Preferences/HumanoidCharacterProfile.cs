@@ -69,7 +69,7 @@ namespace Content.Shared.Preferences
         public string Voice { get; set; } = "";
 
         [DataField]
-        public string SiliconVoice { get; set; } = "";
+        public string SiliconVoice { get; set; } = ""; // 🌟Starlight🌟
 
         /// <summary>
         /// Detailed text that can appear for the character if <see cref="CCVars.FlavorText"/> is enabled.
@@ -130,7 +130,7 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile(
             string name,
             string voice,
-            string siliconVoice,
+            string siliconVoice, // 🌟Starlight🌟
             string flavortext,
             string species,
             string customspeciename, // Starlight
@@ -147,7 +147,7 @@ namespace Content.Shared.Preferences
         {
             Name = name;
             Voice = voice;
-            SiliconVoice = siliconVoice;
+            SiliconVoice = siliconVoice; // 🌟Starlight🌟
             FlavorText = flavortext;
             Species = species;
             CustomSpecieName = customspeciename; // Starlight
@@ -167,7 +167,7 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile(HumanoidCharacterProfile other)
             : this(other.Name,
                 other.Voice,
-                other.SiliconVoice,
+                other.SiliconVoice, // 🌟Starlight🌟
                 other.FlavorText,
                 other.Species,
                 other.CustomSpecieName, // Starlight
@@ -293,6 +293,7 @@ namespace Content.Shared.Preferences
             return new(this) { Voice = id };
         }
 
+        // 🌟Starlight🌟
         public HumanoidCharacterProfile WithSiliconVoice(string id)
         {
             return new(this) { SiliconVoice = id };

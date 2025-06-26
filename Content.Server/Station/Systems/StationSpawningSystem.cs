@@ -17,7 +17,6 @@ using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
-using Content.Shared.Starlight.TextToSpeech;
 using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
@@ -132,9 +131,6 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
             DoJobSpecials(job, jobEntity);
             _identity.QueueIdentityUpdate(jobEntity);
-            /*if(profile != null)
-                if(TryComp<TextToSpeechComponent>(jobEntity, out var tts))
-                    tts.VoicePrototypeId = profile.SiliconVoice;*/
             return jobEntity;
         }
 
