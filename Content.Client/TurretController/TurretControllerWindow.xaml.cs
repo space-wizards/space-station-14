@@ -115,6 +115,7 @@ public sealed partial class TurretControllerWindow : BaseWindow
             TurretArmamentSetting.Safe => SafeButton,
             TurretArmamentSetting.Stun => StunButton,
             TurretArmamentSetting.Lethal => LethalButton,
+            _ => throw new NotImplementedException(),
         };
         setPressedOn.Pressed = true;
 
