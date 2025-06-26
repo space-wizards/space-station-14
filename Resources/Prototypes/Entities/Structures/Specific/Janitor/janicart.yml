@@ -125,6 +125,18 @@
             - ReagentId: Water
               Quantity: 600
 
+- type: entity
+  parent: BaseWrappedCube
+  name: mop bucket cube
+  id: MopBucketCubeWrapped
+  description: Unwrap this to get a mop bucket cube.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+    - id: MopBucketCube
+  - type: Sprite
+    state: wrapper
+
 # Janicart
 - type: entity
   name: janitorial trolley

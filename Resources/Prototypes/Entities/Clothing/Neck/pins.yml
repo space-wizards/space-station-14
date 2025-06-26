@@ -135,6 +135,17 @@
 
 - type: entity
   parent: ClothingNeckPinBase
+  id: ClothingNeckPluralPin
+  name: plural pin
+  description: Be plural, do crimes.
+  components:
+  - type: Sprite
+    state: plural
+  - type: Clothing
+    equippedPrefix: plural
+
+- type: entity
+  parent: ClothingNeckPinBase
   id: ClothingNeckOmnisexualPin
   name: omnisexual pin
   description: Be omni do crime.
@@ -157,6 +168,17 @@
 
 - type: entity
   parent: ClothingNeckPinBase
+  id: ClothingNeckGenderfluidPin
+  name: genderfluid pin
+  description: be gender, be fluid
+  components:
+  - type: Sprite
+    state: fluid
+  - type: Clothing
+    equippedPrefix: fluid
+
+- type: entity
+  parent: ClothingNeckPinBase
   id: ClothingNeckTransPin
   name: transgender pin
   description: Be trans do crime.
@@ -169,8 +191,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckAutismPin
-  name: autism pin
-  description: Be autism do crime.
+  name: neurodivergent pin
+  description: Be neurodivergent, do crime.
   components:
   - type: Sprite
     state: autism
@@ -180,8 +202,8 @@
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckGoldAutismPin
-  name: golden autism pin
-  description: Be autism do warcrime.
+  name: autism pin
+  description: Be autistic, do crime.
   components:
   - type: Sprite
     state: goldautism

@@ -18,6 +18,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Construction.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -819,7 +820,7 @@ public sealed partial class AdminVerbSystem
         }
         else if (TryComp<HandsComponent>(target, out var hands))
         {
-            foreach (var held in _handsSystem.EnumerateHeld(target, hands))
+            foreach (var held in _handsSystem.EnumerateHeld((target, hands)))
             {
                 if (HasComp<AccessComponent>(held))
                 {

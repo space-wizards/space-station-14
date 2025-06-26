@@ -231,7 +231,7 @@ public sealed class AdminSystem : EntitySystem
         var antag = false;
 
         // Starting role, antagonist status and role type
-        RoleTypePrototype roleType = new();
+        RoleTypePrototype? roleType = null;
         var startingRole = string.Empty;
         LocId? subtype = null;
         if (_minds.TryGetMind(session, out var mindId, out var mindComp) && mindComp is not null)
@@ -244,7 +244,7 @@ public sealed class AdminSystem : EntitySystem
                 subtype = mindComp.Subtype;
             }
             else
-                Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(roleType.Name)}' instead");
+                Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(RoleTypePrototype.FallbackName)}' instead");
 
             antag = _role.MindIsAntagonist(mindId);
             startingRole = _jobs.MindTryGetJobName(mindId);
@@ -270,7 +270,7 @@ public sealed class AdminSystem : EntitySystem
             identityName,
             startingRole,
             antag,
-            roleType,
+            roleType?.ID,
             subtype,
             sortWeight,
             GetNetEntity(session?.AttachedEntity),
@@ -433,9 +433,9 @@ public sealed class AdminSystem : EntitySystem
 
             if (TryComp(entity, out HandsComponent? hands))
             {
-                foreach (var hand in _hands.EnumerateHands(entity, hands))
+                foreach (var hand in _hands.EnumerateHands((entity, hands)))
                 {
-                    _hands.TryDrop(entity, hand, checkActionBlocker: false, doDropInteraction: false, handsComp: hands);
+                    _hands.TryDrop((entity, hands), hand, checkActionBlocker: false, doDropInteraction: false);
                 }
             }
 

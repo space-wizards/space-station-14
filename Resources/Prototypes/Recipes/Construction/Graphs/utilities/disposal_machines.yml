@@ -64,7 +64,7 @@
         - to: frame_mailing
           steps:
             - tag: MailingUnitElectronics
-              name: mailing unit electronics
+              name: construction-graph-tag-mailing-unit-electronics
               icon:
                 sprite: "Objects/Misc/module.rsi"
                 state: "net_wired"

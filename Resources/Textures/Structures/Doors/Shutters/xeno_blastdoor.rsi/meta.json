@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by SlamBamActionman (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "assembly"
+        },
+        {
+            "name": "closing",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.07,
+                    0.43
+                ]
+            ]
+        },
+        {
+            "name": "opening",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.07,
+                    0.07,
+                    0.46
+                ]
+            ]
+        },
+        {
+            "name": "open"
+        },
+        {
+            "name": "closed"
+        }
+    ]
+}

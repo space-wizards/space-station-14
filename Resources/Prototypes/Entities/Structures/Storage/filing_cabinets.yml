@@ -29,7 +29,7 @@
       children:
       - !type:AllSelector
         weight: 0.2
-        children: 
+        children:
         - id: RubberStampApproved
         - id: RubberStampDenied
       - id: RubberStampGreytide
@@ -78,6 +78,15 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -131,9 +140,6 @@
   id: filingCabinetDrawer
   description: A small drawer for all your filing needs, Now with wheels!
   components:
-  - type: Storage
-    grid:
-    - 0,0,7,2
   - type: Sprite
     state: chestdrawer
     layers:

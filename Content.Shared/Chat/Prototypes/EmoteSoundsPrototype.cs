@@ -10,8 +10,8 @@ namespace Content.Shared.Chat.Prototypes;
 ///     Sounds collection for each <see cref="EmotePrototype"/>.
 ///     Different entities may use different sounds collections.
 /// </summary>
-[Prototype, Serializable, NetSerializable]
-public sealed class EmoteSoundsPrototype : IPrototype, IInheritingPrototype
+[Prototype]
+public sealed partial class EmoteSoundsPrototype : IPrototype, IInheritingPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

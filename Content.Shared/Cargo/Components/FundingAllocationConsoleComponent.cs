@@ -24,10 +24,14 @@ public sealed partial class FundingAllocationConsoleComponent : Component
 public sealed class SetFundingAllocationBuiMessage : BoundUserInterfaceMessage
 {
     public Dictionary<ProtoId<CargoAccountPrototype>, int> Percents;
+    public double PrimaryCut;
+    public double LockboxCut;
 
-    public SetFundingAllocationBuiMessage(Dictionary<ProtoId<CargoAccountPrototype>, int> percents)
+    public SetFundingAllocationBuiMessage(Dictionary<ProtoId<CargoAccountPrototype>, int> percents, double primaryCut, double lockboxCut)
     {
         Percents = percents;
+        PrimaryCut = primaryCut;
+        LockboxCut = lockboxCut;
     }
 }
 
