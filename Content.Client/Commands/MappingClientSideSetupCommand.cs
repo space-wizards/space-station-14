@@ -10,6 +10,7 @@ internal sealed class MappingClientSideSetupCommand : LocalizedEntityCommands
     [Dependency] private readonly ILightManager _lightManager = default!;
     [Dependency] private readonly ActionsSystem _actionSystem = default!;
     [Dependency] private readonly MarkerSystem _markerSystem = default!;
+    [Dependency] private readonly SubFloorHideSystem _subfloorSystem = default!;
 
     public override string Command => "mappingclientsidesetup";
 
@@ -20,7 +21,7 @@ internal sealed class MappingClientSideSetupCommand : LocalizedEntityCommands
 
         _markerSystem.MarkersVisible = true;
         _lightManager.Enabled = false;
-        shell.ExecuteCommand("showsubfloor"); // boop
+        _subfloorSystem.ShowAll = true;
         _actionSystem.LoadActionAssignments("/mapping_actions.yml", false);
     }
 }
