@@ -20,10 +20,6 @@ public sealed partial class AdminCameraEui : BaseEui
     // If not null the camera is in "popped out" mode and is in an external window.
     private OSWindow? _OSWindow;
 
-    // The last location the window was located at in game.
-    // Is used for getting knowing where to "pop in" external windows.
-    private Vector2? _lastLocation;
-
     public AdminCameraEui()
     {
         _window = new AdminCameraWindow();
@@ -46,8 +42,6 @@ public sealed partial class AdminCameraEui : BaseEui
     // Pop the window out into an external OS window
     private void PopOut()
     {
-        _lastLocation = _window.Position;
-
         // TODO: When there is a way to have a minimum window size, enforce something!
         _OSWindow = new OSWindow
         {
@@ -81,8 +75,6 @@ public sealed partial class AdminCameraEui : BaseEui
         _window.Contents.AddChild(_control);
 
         _window.Visible = true;
-
-        LayoutContainer.SetPosition(_window, _lastLocation ?? new Vector2(0.5f, 0.5f));
 
         _control.IsPoppedOut = false;
         _control.PopControl.Text = Loc.GetString("admin-camera-window-pop-out");
