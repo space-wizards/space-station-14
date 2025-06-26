@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reaction
   id: Dylovene
   reactants:
@@ -663,6 +665,8 @@
   products:
     Haloperidol: 5
 
+# start of modifications
+# Ronstation - new cryonics is Good, actually
 - type: reaction
   id: Traumoxadone
   impact: Medium
@@ -692,3 +696,4 @@
     Stelloxadone: 5
     Water: 3
     Fiber: 2
+# end of modifications

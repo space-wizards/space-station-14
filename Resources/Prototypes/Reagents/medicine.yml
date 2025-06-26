@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: reagent
   id: Cryptobiolin
   name: reagent-name-cryptobiolin
@@ -174,7 +175,9 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: medicine
   color: "#0091ff"
-  worksOnTheDead: true
+  # start of modifications
+  worksOnTheDead: true # Ronstation - part of the reimplementation of new cryonics
+  # end of modifications
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: -5
@@ -1286,6 +1289,7 @@
             Shock: -4.0
             Caustic: -1.5
 
+# start of modifications
 - type: reagent
   id: Traumoxadone
   name: reagent-name-traumoxadone
@@ -1304,6 +1308,7 @@
           max: 213.0
         damage:
           Brute: -4
+# end of modifications
 
 - type: reagent
   id : Mannitol # currently this is just a way to create psicodine
@@ -1448,6 +1453,7 @@
         reagent: MindbreakerToxin
         amount: -3.0
 
+# start of modifications
 - type: reagent
   id: Stelloxadone
   name: reagent-name-stelloxadone
@@ -1471,3 +1477,4 @@
           types:
             Poison: -6
             Radiation: -3
+# end of modifications
