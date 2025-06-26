@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Pinpointer;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -26,12 +27,22 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
             var eye = _eyeManager.CurrentEye;
             var angle = pinpointer.ArrowAngle + eye.Rotation;
 
+            if (!_sprite.TryGetLayer((uid, sprite), PinpointerLayers.Screen, out var layer, true))
+                return;
+
+            const float halfPixel = 0.5f / EyeManager.PixelsPerMeter;
+
             switch (pinpointer.DistanceToTarget)
             {
                 case Distance.Close:
                 case Distance.Medium:
                 case Distance.Far:
-                    _sprite.LayerSetRotation((uid, sprite), PinpointerLayers.Screen, angle);
+                    // The point that the screen should be rotated is in the middle of a pixel
+                    // We need to translate half a pixel, rotate, then translate back.
+                    var translation = new Vector2(halfPixel, -halfPixel);
+                    layer.LocalMatrix = Matrix3x2.CreateTranslation(translation) *
+                                        Matrix3x2.CreateRotation((float)angle.Theta) *
+                                        Matrix3x2.CreateTranslation(-translation);
                     break;
                 default:
                     _sprite.LayerSetRotation((uid, sprite), PinpointerLayers.Screen, Angle.Zero);
