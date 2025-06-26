@@ -1,6 +1,4 @@
-using Content.Server.GameplayMetrics;
 using Content.Shared.Destructible;
-using Content.Shared.GameplayMetrics;
 using Content.Shared.Mining;
 using Content.Shared.Mining.Components;
 using Content.Shared.Random;
