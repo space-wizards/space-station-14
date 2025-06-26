@@ -102,7 +102,7 @@
       - Flash # Replace this with the polaroid camera once that's in
     titleText: photograph-location-condition-title
     descriptionText: photograph-location-condition-description
-    descriptionTextDeleted: photograph-condition-description-deleted
+    descriptionTextDeleted: photograph-location-condition-description-deleted
 
 - type: entity
   parent: BaseTouristObjective
