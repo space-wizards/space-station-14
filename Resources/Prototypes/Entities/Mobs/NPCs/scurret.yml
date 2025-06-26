@@ -109,7 +109,7 @@
   - type: Hunger
     baseDecayRate: 0.05 # They get a lil' hungy
   - type: BodyEmotes # Grants them clapping and so on.
-    soundsId: GeneralBodyEmotes
+    soundsId: ReptilianBodyEmotes # Has normal body emotes + tail thump sound
   - type: Tag
     tags:
     - DoorBumpOpener
