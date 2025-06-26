@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Base prototypes
 
 - type: latheRecipe
@@ -198,6 +199,7 @@
     Plastic: 200
     Steel: 100
 
+# start of modifications
 - type: latheRecipe
   parent: BaseToolRecipe
   id: Tourniquet
@@ -206,6 +208,7 @@
   materials:
     Plastic: 25
     Steel: 10
+# end of modifications
 
 ## Weapons
 
