@@ -223,7 +223,7 @@ public sealed partial class LatheMenu : DefaultWindow
     /// Populates the build queue list with all queued items
     /// </summary>
     /// <param name="queue"></param>
-    public void PopulateQueueList(Queue<ProtoId<LatheRecipePrototype>> queue)
+    public void PopulateQueueList(IReadOnlyCollection<ProtoId<LatheRecipePrototype>> queue)
     {
         QueueList.DisposeAllChildren();
 
