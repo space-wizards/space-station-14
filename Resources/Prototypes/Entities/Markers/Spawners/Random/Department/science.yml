@@ -26,8 +26,6 @@
     - PowerCellSmall
     - PowerCellMedium
     - FlashlightLantern
-    - MatterBinStockPart
-    - CapacitorStockPart
     - MicroManipulatorStockPart
     - Beaker
     chance: 0.8
@@ -63,8 +61,6 @@
       - id: SheetGlass10
       - id: ToolboxElectricalFilled
       - id: ToolboxMechanicalFilled
-      - id: MatterBinStockPart
-      - id: CapacitorStockPart
       - id: MicroManipulatorStockPart
     # Rare Group
     - !type:GroupSelector
