@@ -474,13 +474,12 @@
   - type: Icon
     state: pda-qm
   - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
     preinstalled:
-      - CrewManifestCartridge
-      - NotekeeperCartridge
-      - NanoTaskCartridge
-      - NewsReaderCartridge
-      - AstroNavCartridge
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - AstroNavCartridge
 
 - type: entity
   parent: BasePDA
