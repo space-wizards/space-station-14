@@ -106,7 +106,9 @@ public abstract partial class SharedVendingMachineSystem
     {
         if (args.Cancelled)
         {
-            ent.Comp.RestockStream = Audio.Stop(ent.Comp.RestockStream);
+            // Future predicted ticks can clobber the RestockStream with null while not stopping anything
+            if (Timing.IsFirstTimePredicted)
+                ent.Comp.RestockStream = Audio.Stop(ent.Comp.RestockStream);
             return;
         }
 
