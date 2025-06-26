@@ -217,7 +217,11 @@ public sealed class AlertLevelSystem : EntitySystem
         {
             callerString = "UNKNOWN";
         }
-        _adminLog.Add(Shared.Database.LogType.Trigger, Shared.Database.LogImpact.Medium, $"Entity {callerString} changed alert level to {level} on station {station}.");
+        else
+        {
+            callerString = ToPrettyString(caller);
+        }
+        _adminLog.Add(Shared.Database.LogType.Trigger, Shared.Database.LogImpact.Medium, $"{callerString} changed alert level to {level} on station {station}.");
 
     }
 }
