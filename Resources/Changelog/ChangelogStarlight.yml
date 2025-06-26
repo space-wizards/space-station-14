@@ -8462,4 +8462,11 @@ Entries:
   id: 1167
   time: '2025-06-26T18:55:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/881
+- author: walksantora
+  changes:
+  - message: you can now butcher the CMOs cat for cat paw gloves
+    type: Add
+  id: 1168
+  time: '2025-06-26T21:22:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/920
 
