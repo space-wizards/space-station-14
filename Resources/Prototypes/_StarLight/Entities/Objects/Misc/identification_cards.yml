@@ -123,7 +123,17 @@
     - state: idmailtech
   - type: PresetIdCard
     job: MailTech
-    
+
+- type: entity
+  parent: IDCardStandard
+  id: SovietIdCard
+  name: soviet id card
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/id_cards.rsi
+    layers: 
+    - state: sovietid
+
 - type: entity
   parent: [ IDCardStandard, BaseSyndicateContraband ]
   id: CommanderIDCard

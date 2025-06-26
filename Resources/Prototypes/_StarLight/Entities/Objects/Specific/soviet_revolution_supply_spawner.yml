@@ -1,0 +1,20 @@
+- type: entity
+  id: SovietRevolutionSupplySpawner
+  name: soviet revolution supply spawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+          state: base
+    - type: RandomSpawner
+      prototypes:
+        - WeaponSniperMosin
+        - Finka
+        - WeaponPistolMakarov
+        - SpearUranium
+        - ClothingOuterArmorBasic
+        - MedkitFilled
+      chance: 1.0
+      offset: 0.0

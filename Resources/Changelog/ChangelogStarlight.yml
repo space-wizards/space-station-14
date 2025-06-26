@@ -8105,4 +8105,340 @@ Entries:
   id: 1119
   time: '2025-06-23T13:05:57.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/886
+- author: Gensy
+  changes:
+  - message: CC Division Stamps
+    type: Add
+  id: 1120
+  time: '2025-06-23T17:37:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/890
+- author: Gensy
+  changes:
+  - message: Fixed aghost drip
+    type: Fix
+  id: 1121
+  time: '2025-06-23T17:49:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/891
+- author: RoadTrain
+  changes:
+  - message: NanoTrasenSilicon and SyndicateSilicon as seperate factions. They mimic
+      the NanoTrasen/Syndicate relations, except for not being hostile to zeds.
+    type: Add
+  id: 1122
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: RoadTrain
+  changes:
+  - message: Added warning texts to the zombie greeting/ghost role rules informing
+      people that they should NOT attack silicons unless in self defense as they cannot
+      be zombified.
+    type: Add
+  id: 1123
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: RoadTrain
+  changes:
+  - message: Zombie AI no longer tries to attack any form of silicon (NT/Syndicate/Xenoborg)
+    type: Fix
+  id: 1124
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: RoadTrain
+  changes:
+  - message: Zeds are no longer hostile against xenoborgs (but xenoborgs are still
+      hostile to zombies for having a brain)
+    type: Remove
+  id: 1125
+  time: '2025-06-24T12:52:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/895
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Union of Soviet Socialist Planets, comrade! (Revolution Expansion)
+    type: Add
+  id: 1126
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added full library of soviet prototypes, clothing, banners and more.
+    type: Add
+  id: 1127
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Lore & prototype references of USSP new agencies. SKGB, SNKVD, SSF and
+      the Soviet People's Commissariat (NKOZ) (Soviet CC)
+    type: Add
+  id: 1128
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Head Revolutionaries are now SKGB agents/recruiters.
+    type: Tweak
+  id: 1129
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added a new Global Stock System shared among all soviet agents. It runs
+      on an outdated ticket system & those are pretty loud.
+    type: Add
+  id: 1130
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added Svyaz-UZL uplink, used among USSP agencies and ministries.
+    type: Add
+  id: 1131
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added Telebond ticket currency. Gained from conversion.
+    type: Add
+  id: 1132
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: Added Total Conversion currency. A unique currency gained from conversion,
+      that is not spent in the uplink, and it is shared among all SKGB agents.
+    type: Add
+  id: 1133
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: SKGB agents now start with an SKGB implanter that contains a Svyaz-UZL
+      radio uplink. Why is it an implant and not a roundstart subdermal you may ask?
+      That's for you to find out.
+    type: Add
+  id: 1134
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Aedler, InanimateIJK, BORT, Cringe_Cursed, Happyrobot33
+  changes:
+  - message: 'NOTE: The agent''s Svyaz-UZL radio uplink tracks global currency and
+      telebonds before implant use. So don''t be afraid to convert people before implanting.'
+    type: Tweak
+  id: 1135
+  time: '2025-06-24T13:00:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/673
+- author: Citrea
+  changes:
+  - message: Survival and Kessler Syndrome game modes can no longer spawn instantly
+      roundending threats.
+    type: Remove
+  id: 1136
+  time: '2025-06-24T13:03:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/887
+- author: aedler
+  changes:
+  - message: Added SSF Marine loadouts and officials.
+    type: Add
+  id: 1137
+  time: '2025-06-24T13:20:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/896
+- author: Killer Tamashi (Code), Zeyria (Sprites), Taro Varné (Unique Species features
+    concepts), Fasuh (Avali Stasis Code)
+  changes:
+  - message: Added Avali (New playable race)
+    type: Add
+  id: 1138
+  time: '2025-06-24T13:38:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/308
+- author: Killer Tamashi (Code), Zeyria (Sprites), Taro Varné (Unique Species features
+    concepts), Fasuh (Avali Stasis Code)
+  changes:
+  - message: Added Vulp speech noises/prefixes
+    type: Add
+  id: 1139
+  time: '2025-06-24T13:38:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/308
+- author: Killer Tamashi (Code), Zeyria (Sprites), Taro Varné (Unique Species features
+    concepts), Fasuh (Avali Stasis Code)
+  changes:
+  - message: Added Vulp temperature ranges
+    type: Add
+  id: 1140
+  time: '2025-06-24T13:38:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/308
+- author: FoxxoTrystan
+  changes:
+  - message: New Shadekin Markings!
+    type: Add
+  id: 1141
+  time: '2025-06-24T13:41:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/883
+- author: FoxxoTrystan
+  changes:
+  - message: Shadekin Eyes can now be collored (tho limited in tint)
+    type: Tweak
+  id: 1142
+  time: '2025-06-24T13:41:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/883
+- author: FoxxoTrystan
+  changes:
+  - message: Fixed Shadekin not needed water/food.
+    type: Fix
+  id: 1143
+  time: '2025-06-24T13:41:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/883
+- author: Fasuh
+  changes:
+  - message: Increase amount of construction ghosts allowed per tile.
+    type: Tweak
+  id: 1144
+  time: '2025-06-24T19:16:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/893
+- author: Killer Tamashi
+  changes:
+  - message: Added BSO stamp
+    type: Add
+  id: 1145
+  time: '2025-06-24T20:00:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/776
+- author: Killer Tamashi
+  changes:
+  - message: Added Brigmedic stamp
+    type: Add
+  id: 1146
+  time: '2025-06-24T20:00:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/776
+- author: Happyrobot33
+  changes:
+  - message: Fixed Headrevs cyroing not being considered removed from revolution,
+      preventing the game from ending.
+    type: Fix
+  id: 1147
+  time: '2025-06-25T00:40:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/879
+- author: Happyrobot33
+  changes:
+  - message: Increased wizard fireball cooldown significantly, to 5, 3 and 2 minutes
+      per the respective fireball level
+    type: Tweak
+  id: 1148
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
+- author: Happyrobot33
+  changes:
+  - message: Smite now no longer gibs, doing 400 shock damage instead, bypassing resistances
+    type: Tweak
+  id: 1149
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
+- author: Happyrobot33
+  changes:
+  - message: Cluwne spell is no longer purchasable, requiring 300 wizcoins
+    type: Tweak
+  id: 1150
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
+- author: Happyrobot33
+  changes:
+  - message: Fixed All eye colors, not just shadekin, getting limited
+    type: Fix
+  id: 1151
+  time: '2025-06-25T02:43:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/899
+- author: Killer Tamashi
+  changes:
+  - message: Avali now remember to pack their survival boxes so they can, you know,
+      survive.
+    type: Fix
+  id: 1152
+  time: '2025-06-25T02:50:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/900
+- author: Killer Tamashi
+  changes:
+  - message: Vulp heat damage rate was set to 2.5, this changes it to 1.75
+    type: Fix
+  id: 1153
+  time: '2025-06-25T03:04:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/901
+- author: Fasuh
+  changes:
+  - message: Avali animation lingering after leaving stasis
+    type: Fix
+  id: 1154
+  time: '2025-06-25T11:28:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/905
+- author: Citrea
+  changes:
+  - message: Reverted a change; Cyborg maintenance panels are now once again opened
+      with screwdrivers
+    type: Tweak
+  id: 1155
+  time: '2025-06-26T00:55:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/907
+- author: PubliclyExecutedPig
+  changes:
+  - message: Re-Added Lone Operatives to survival
+    type: Tweak
+  id: 1156
+  time: '2025-06-26T12:53:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/915
+- author: PubliclyExecutedPig
+  changes:
+  - message: Loneops minpop 20 -> 35
+    type: Tweak
+  id: 1157
+  time: '2025-06-26T12:53:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/915
+- author: Aedler
+  changes:
+  - message: Changed USSP revs uplink costs to be more realistically approachable.
+    type: Tweak
+  id: 1158
+  time: '2025-06-26T12:55:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/908
+- author: RoadTrain
+  changes:
+  - message: Added admin spawners for the Syndie medical borg, both as just 'filled'
+      and a ghost role
+    type: Add
+  id: 1159
+  time: '2025-06-26T13:01:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/904
+- author: RoadTrain
+  changes:
+  - message: The L6 can now be used by all borgs (given you can get it from the exosuit
+      fab).
+    type: Tweak
+  id: 1160
+  time: '2025-06-26T13:01:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/904
+- author: RoadTrain
+  changes:
+  - message: All syndie borgs get 1 more module slot (3 > 4). Assault borg gets tools,
+      saboteur gets RCD. Medical borg copies the NT version
+    type: Tweak
+  id: 1161
+  time: '2025-06-26T13:01:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/904
+- author: Killer Tamashi
+  changes:
+  - message: Avali can now eat the MRE brick.
+    type: Fix
+  id: 1162
+  time: '2025-06-26T13:03:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/902
+- author: Quantumcross
+  changes:
+  - message: Fixes to ready up button after changing job priorities in some cases
+    type: Fix
+  id: 1163
+  time: '2025-06-26T13:04:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/911
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added the snub-nose revolver (currently unobtainable in game)
+    type: Add
+  id: 1164
+  time: '2025-06-26T13:22:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/820
 

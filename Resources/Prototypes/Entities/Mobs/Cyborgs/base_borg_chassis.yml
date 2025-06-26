@@ -113,7 +113,6 @@
       - BorgChassis
       - RoboticsConsole
   - type: WiresPanel
-    openingTool: Prying
   - type: ActivatableUIRequiresPanel
   - type: NameIdentifier
     group: Silicon
@@ -319,7 +318,7 @@
     - NamesBorg
   - type: NpcFactionMember
     factions:
-    - NanoTrasen
+    - NanoTrasenSilicon # starlight
   - type: Access
     enabled: false
     groups:
@@ -341,7 +340,7 @@
   - type: TextToSpeech
   - type: NpcFactionMember
     factions:
-    - Syndicate
+    - SyndicateSilicon # starlight
   - type: Access
     tags:
     - NuclearOperative
@@ -378,7 +377,7 @@
   components:
   - type: NpcFactionMember
     factions:
-    - NanoTrasen #The seemingly best fit. It was a regular NT cyborg once, after all.
+    - NanoTrasenSilicon #The seemingly best fit. It was a regular NT cyborg once, after all. starlight
   - type: Access
     enabled: false
     groups:

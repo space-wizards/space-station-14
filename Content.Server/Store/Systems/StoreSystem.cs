@@ -68,6 +68,9 @@ public sealed partial class StoreSystem : EntitySystem
             RefreshAllListings(component);
         }
 
+        // STARLIGHT: Ensure the store has a StockLimitedProcessingComponent
+        EnsureComp<StockLimitedProcessingComponent>(uid);
+
         var ev = new StoreAddedEvent();
         RaiseLocalEvent(uid, ref ev, true);
     }
