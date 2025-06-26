@@ -8469,4 +8469,11 @@ Entries:
   id: 1168
   time: '2025-06-26T21:22:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/920
+- author: Fasuh
+  changes:
+  - message: Fix Avali becoming invisible after stasis.
+    type: Fix
+  id: 1169
+  time: '2025-06-26T21:23:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/917
 
