@@ -29,7 +29,6 @@ public sealed class InternalsSystem : SharedInternalsSystem
         _internalsQuery = GetEntityQuery<InternalsComponent>();
 
         SubscribeLocalEvent<InternalsComponent, InhaleLocationEvent>(OnInhaleLocation);
-        SubscribeLocalEvent<InternalsComponent, InhaledGasEvent>(OnInhaledGas);
         SubscribeLocalEvent<InternalsComponent, StartingGearEquippedEvent>(OnStartingGear);
     }
 
@@ -65,10 +64,5 @@ public sealed class InternalsSystem : SharedInternalsSystem
             // TODO: Should listen to gas tank updates instead I guess?
             _alerts.ShowAlert(ent, ent.Comp.InternalsAlert, GetSeverity(ent));
         }
-    }
-
-    private void OnInhaledGas(Entity<InternalsComponent> ent, ref InhaledGasEvent args)
-    {
-
     }
 }
