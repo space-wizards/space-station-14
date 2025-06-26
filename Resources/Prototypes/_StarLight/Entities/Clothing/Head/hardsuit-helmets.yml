@@ -193,6 +193,3 @@
     modifiers:
       coefficients:
         Heat: 0.9
-  - type: Tag
-    tags:
-    - WhitelistChameleon
