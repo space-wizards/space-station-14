@@ -264,6 +264,7 @@ namespace Content.Server.Cargo.Systems
                 { "productProto", order.ProductId },
                 { "quantity", order.OrderQuantity.ToString() },
                 { "cost", cost.ToString() },
+                { "account", order.Account.Id },
             });
 
             orderDatabase.Orders[component.Account].Remove(order);
