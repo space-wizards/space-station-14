@@ -121,7 +121,6 @@ ghost-role-information-skeleton-biker-name = Скелет-байкер
 ghost-role-information-skeleton-biker-description = Колесите на своём прекрасном байке.
 ghost-role-information-closet-skeleton-name = Скелет из шкафа
 ghost-role-information-closet-skeleton-description = Вы, похоже, один из старейших сотрудников станции! Это ваш шанс вернуться в раунд.
-ghost-role-information-closet-skeleton-rules = Вы НЕ антагонист неизвестно как попавший на станцию. Только вы вершите свою судьбу.
 ghost-role-information-remilia-name = Ремилия, фамильяр священника
 ghost-role-information-remilia-description = Слушайтесь и повинуйтесь священнику. Ешьте фрукты. Громко кричите людям в уши и списывайте это на эхолокацию.
 ghost-role-information-cerberus-name = Цербер, злой фамильяр
