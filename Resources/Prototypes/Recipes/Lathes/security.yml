@@ -47,6 +47,14 @@
   id: BaseWeaponRecipeSidearm
   completetime: 6
 
+- type: latheRecipe
+  abstract: true
+  parent: BaseWeaponRecipe
+  id: BaseWeaponRecipeMechWeapons
+  completetime: 10
+  categories:
+  - MechWeapons
+
 ## Recipes
 
 # Clothing
@@ -290,10 +298,9 @@
 
 # Mech Weapons
 - type: latheRecipe
+  parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatImmolationGun
   result: WeaponMechCombatImmolationGun
-  category: MechWeapons
-  completetime: 10
   materials:
     Steel: 2800
     Plastic: 1000
@@ -301,10 +308,9 @@
     Glass: 500
 
 - type: latheRecipe
+  parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatSolarisLaser
   result: WeaponMechCombatSolarisLaser
-  category: MechWeapons
-  completetime: 10
   materials:
     Steel: 1650
     Plastic: 300
@@ -312,10 +318,9 @@
     Glass: 200
 
 - type: latheRecipe
+  parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatFiredartLaser
   result: WeaponMechCombatFiredartLaser
-  category: MechWeapons
-  completetime: 10
   materials:
     Steel: 1200
     Plastic: 200
@@ -323,68 +328,61 @@
     Glass: 50
 
 - type: latheRecipe
+  parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatUltraRifle
   result: WeaponMechCombatUltraRifle
-  category: MechWeapons
-  completetime: 10
   materials:
     Steel: 1000
     Plastic: 200
 
 - type: latheRecipe
+  parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatShotgun
   result: WeaponMechCombatShotgun
-  category: MechWeapons
-  completetime: 10
   materials:
     Steel: 1600
     Plastic: 550
 
 - type: latheRecipe
+  parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatShotgunIncendiary
   result: WeaponMechCombatShotgunIncendiary
-  category: MechWeapons
-  completetime: 10
   materials:
     Steel: 1500
     Plastic: 800
     Plasma: 300
 
 - type: latheRecipe
+  parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatDisabler
   result: WeaponMechCombatDisabler
-  category: MechWeapons
-  completetime: 10
   materials:
     Steel: 750
     Glass: 250
     Plastic: 300
 
 - type: latheRecipe
+  parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatFlashbangLauncher
   result: WeaponMechCombatFlashbangLauncher
-  category: MechWeapons
-  completetime: 10
   materials:
     Steel: 1200
     Glass: 300
     Plastic: 450
 
 - type: latheRecipe
+  parent: BaseWeaponRecipeMechWeapons
   id: WeaponMechCombatMissileRack8
   result: WeaponMechCombatMissileRack8
-  category: MechWeapons
-  completetime: 10
   materials:
     Steel: 2500
     Glass: 1500
     Plastic: 750
 
 - type: latheRecipe
+  parent: BaseWeaponRecipeMechWeapons
   id: MechEquipmentKineticAccelerator
   result: WeaponMechIndustrialKineticAccelerator
-  category: MechEquipment
-  completetime: 10
   materials:
     Steel: 1500
     Glass: 750

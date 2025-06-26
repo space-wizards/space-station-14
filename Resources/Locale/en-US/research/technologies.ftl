@@ -43,8 +43,6 @@ research-technology-basic-shuttle-armament = Shuttle basic armament
 research-technology-advanced-shuttle-weapon = Advanced shuttle weapons
 research-technology-explosive-mech-ammunition = Explosive Mech Ammunition
 research-technology-kinetic-modifications = Kinetic Modifications
-research-technology-basic-shuttle-armament = Shuttle Basic Armament
-research-technology-advanced-shuttle-weapon = Advanced Shuttle Weapons
 research-technology-thermal-weaponry = Thermal Weaponry
 
 research-technology-basic-robotics = Basic Robotics
