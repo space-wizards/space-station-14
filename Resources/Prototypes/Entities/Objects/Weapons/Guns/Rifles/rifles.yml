@@ -101,10 +101,10 @@
   - type: Appearance
 
 - type: entity
-  name: M-90gl
+  name: M90 GL
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleM90GrenadeLauncher
-  description: "A somewhat outdated bullpup rifle in a grenadier configuration. It still has the underbarrel grenade launcher, but it looks broken beyond repair.\nFeeds from .20 rifle magazines."
+  description: "A somewhat outdated bullpup rifle in a grenadier configuration. The rifle is serviceable, but the underbarrel grenade launcher looks non-functional.\nFeeds from .20 rifle magazines."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
@@ -145,7 +145,7 @@
   - type: Appearance
 
 - type: entity
-  name: Lecter
+  name: Mk23 Lecter
   parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleLecter
   description: "Popular gas-operated combat rifle used heavily by Nanotrasen and SolGov. Operating in semi or fully automatic, its accuracy, stopping power, and reliability make it excel in all manner of environments.\nFeeds from .20 rifle magazines."
