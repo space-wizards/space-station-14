@@ -1529,8 +1529,6 @@
     catchChance: 0.8
     catchSuccessSound:
       path: /Audio/Effects/Footsteps/bounce.ogg
-    catchFailSound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: EmitSoundOnCollide
     sound:
       path: /Audio/Effects/Footsteps/bounce.ogg
