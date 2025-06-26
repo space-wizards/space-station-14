@@ -84,6 +84,8 @@ LABEL_UNTRIAGED = "S: Untriaged"
 LABEL_NEEDS_REVIEW = "S: Needs Review"
 LABEL_AWAITING_CHANGES = "S: Awaiting Changes"
 LABEL_APPROVED = "S: Approved"
+LABEL_P0 = "P0: Critical"
+LABEL_P1 = "P1: High"
 
 REPO_CONFIG = [
     Repo("space-wizards", "space-station-14", queries={
@@ -102,6 +104,8 @@ REPO_CONFIG = [
         "pr_needs_review_count": PullRequestQuery(states=[PullRequestState.OPEN], labels=[LABEL_NEEDS_REVIEW]),
         "pr_awaiting_changes_count": PullRequestQuery(states=[PullRequestState.OPEN], labels=[LABEL_AWAITING_CHANGES]),
         "pr_approved_count": PullRequestQuery(states=[PullRequestState.OPEN], labels=[LABEL_APPROVED]),
+        "pr_p0_count": PullRequestQuery(states=[PullRequestState.OPEN], labels=[LABEL_P0]),
+        "pr_p1_count": PullRequestQuery(states=[PullRequestState.OPEN], labels=[LABEL_P1]),
     }),
     Repo("space-wizards", "RobustToolbox", queries={
         # Issue queries
@@ -118,6 +122,18 @@ REPO_CONFIG = [
         "pr_untriaged_count": PullRequestQuery(states=[PullRequestState.OPEN], labels=[LABEL_UNTRIAGED]),
         "pr_needs_review_count": PullRequestQuery(states=[PullRequestState.OPEN], labels=[LABEL_NEEDS_REVIEW]),
         "pr_awaiting_changes_count": PullRequestQuery(states=[PullRequestState.OPEN], labels=[LABEL_AWAITING_CHANGES]),
+    }),
+    Repo("space-wizards", "docs", queries={
+        # Issue queries
+        "issue_total_count": IssueQuery(),
+        "issue_open_count": IssueQuery(states=[IssueState.OPEN]),
+        "issue_closed_count": IssueQuery(states=[IssueState.CLOSED]),
+
+        # PR queries
+        "pr_total_count": PullRequestQuery(),
+        "pr_open_count": PullRequestQuery(states=[PullRequestState.OPEN]),
+        "pr_closed_count": PullRequestQuery(states=[PullRequestState.CLOSED]),
+        "pr_merged_count": PullRequestQuery(states=[PullRequestState.MERGED]),
     }),
 ]
 
