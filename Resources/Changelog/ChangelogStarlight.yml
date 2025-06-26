@@ -8455,4 +8455,11 @@ Entries:
   id: 1166
   time: '2025-06-26T18:08:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/817
+- author: Abby / Conflee
+  changes:
+  - message: Added NTCC Consortium Medical Hardsuits, for event use
+    type: Add
+  id: 1167
+  time: '2025-06-26T18:55:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/881
 
