@@ -8367,4 +8367,12 @@ Entries:
   id: 1154
   time: '2025-06-25T11:28:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/905
+- author: Citrea
+  changes:
+  - message: Reverted a change; Cyborg maintenance panels are now once again opened
+      with screwdrivers
+    type: Tweak
+  id: 1155
+  time: '2025-06-26T00:55:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/907
 
