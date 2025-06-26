@@ -342,13 +342,9 @@ public sealed class FoodSystem : EntitySystem
         var dev = new DestructionEventArgs();
         RaiseLocalEvent(food, dev);
 
-        // don't predict deletes on client
-        if (_net.IsClient)
-            return;
-
         if (component.Trash.Count == 0)
         {
-            QueueDel(food);
+            PredictedQueueDel(food);
             return;
         }
 
@@ -359,7 +355,7 @@ public sealed class FoodSystem : EntitySystem
         var trashes = component.Trash;
         var tryPickup = _hands.IsHolding(user, food, out _);
 
-        Del(food);
+        PredictedDel(food);
         foreach (var trash in trashes)
         {
             var spawnedTrash = Spawn(trash, position);
