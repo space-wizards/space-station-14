@@ -1,3 +1,4 @@
+using System; //temp
 using System.Linq;
 using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
@@ -542,6 +543,7 @@ public sealed partial class GunSystem : SharedGunSystem
             }
 
             Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+            Console.WriteLine("Gunshot"); //temp
 
             return effects;
 
