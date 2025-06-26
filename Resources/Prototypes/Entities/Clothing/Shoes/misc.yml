@@ -127,7 +127,7 @@
     sprite: Clothing/Shoes/Boots/speedboots.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Shoes/Boots/speedboots.rsi
   - type: ToggleClothing
@@ -138,8 +138,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
           True: {state: icon-on}
           False: {state: icon}
   - type: StaticPrice
@@ -155,12 +155,14 @@
     tags: []
 
 - type: entity
+  parent: BaseAction
   id: ActionToggleSpeedBoots
   name: Toggle Speed Boots
   description: Toggles the speed boots on and off.
   components:
-  - type: InstantAction
+  - type: Action
     itemIconStyle: BigItem
+  - type: InstantAction
     event: !type:ToggleActionEvent
 
 - type: entity

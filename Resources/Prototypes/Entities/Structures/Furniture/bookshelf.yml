@@ -57,7 +57,7 @@
   - type: Occluder
   - type: Storage
     grid:
-    - 0,0,15,3
+    - 0,0,9,3
     maxItemSize: Normal
     whitelist:
       tags:

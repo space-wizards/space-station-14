@@ -74,6 +74,7 @@ public abstract partial class SharedMoverController : VirtualController
 
     public override void Initialize()
     {
+        UpdatesBefore.Add(typeof(TileFrictionController));
         base.Initialize();
 
         MoverQuery = GetEntityQuery<InputMoverComponent>();
@@ -98,7 +99,6 @@ public abstract partial class SharedMoverController : VirtualController
         Subs.CVar(_configManager, CCVars.MinFriction, value => _minDamping = value, true);
         Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
         Subs.CVar(_configManager, CCVars.OffgridFriction, value => _offGridDamping = value, true);
-        UpdatesBefore.Add(typeof(TileFrictionController));
     }
 
     public override void Shutdown()
