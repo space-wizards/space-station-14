@@ -224,7 +224,7 @@ public sealed class AdminSystem : EntitySystem
         // Visible (identity) name can be different from real name
         if (session?.AttachedEntity != null)
         {
-            entityName = EntityManager.GetComponent<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
+            entityName = Comp<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
             identityName = Identity.Name(session.AttachedEntity.Value, EntityManager);
         }
 
