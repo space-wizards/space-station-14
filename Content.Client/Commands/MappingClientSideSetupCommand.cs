@@ -5,7 +5,7 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Commands;
 
-internal sealed class MappingClientSideSetupCommand : LocalizedCommands
+internal sealed class MappingClientSideSetupCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly ILightManager _lightManager = default!;
     [Dependency] private readonly ActionsSystem _actionSystem = default!;
