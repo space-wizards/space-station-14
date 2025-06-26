@@ -8476,4 +8476,12 @@ Entries:
   id: 1169
   time: '2025-06-26T21:23:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/917
+- author: walksanatora
+  changes:
+  - message: having cat ear+tail markings allows you to meow, mew, and trill as a
+      human
+    type: Add
+  id: 1170
+  time: '2025-06-26T21:38:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/764
 
