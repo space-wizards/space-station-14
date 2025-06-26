@@ -2,8 +2,6 @@
     <BoxContainer Margin="8,0,8,8" Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Name="StoreItemName" HorizontalExpand="True" />
-            <Label Name="DiscountSubText"
-                   HorizontalAlignment="Right"/>
         </BoxContainer>
         <PanelContainer StyleClasses="HighDivider" Margin="0,1,0,2"/>
         <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
@@ -21,6 +19,8 @@
                 VerticalAlignment="Top"
                 Margin="0,4,0,0"
                 Access="Public" />
+            <Label Name="DiscountSubText"
+                   HorizontalAlignment="Center"/>
             </BoxContainer>
             <Control MinWidth="4"/>
             <RichTextLabel Name="StoreItemDescription" VerticalAlignment="Top"/>
