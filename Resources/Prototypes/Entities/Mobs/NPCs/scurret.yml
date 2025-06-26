@@ -106,8 +106,10 @@
             state: neck
   - type: InventorySlots
   - type: Food
-  - type: Hunger
-    baseDecayRate: 0.05 # They get a lil' hungy
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: ScurretHunger
   - type: BodyEmotes # Grants them clapping and so on.
     soundsId: GeneralBodyEmotes
   - type: Tag

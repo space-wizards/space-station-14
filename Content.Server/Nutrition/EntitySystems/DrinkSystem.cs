@@ -20,6 +20,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -44,6 +45,8 @@ public sealed class DrinkSystem : SharedDrinkSystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly ForensicsSystem _forensics = default!;
+
+    private static readonly ProtoId<SatiationTypePrototype> ThirstSatiation = "Thirst";
 
     public override void Initialize()
     {
@@ -82,9 +85,9 @@ public sealed class DrinkSystem : SharedDrinkSystem
                 foreach (var effect in entry.Effects)
                 {
                     // ignores any effect conditions, just cares about how much it can hydrate
-                    if (effect is SatiateThirst thirst)
+                    if (effect is Satiate satiate && satiate.SatiationType == ThirstSatiation)
                     {
-                        total += thirst.HydrationFactor * quantity.Quantity.Float();
+                        total += satiate.Factor * quantity.Quantity.Float();
                     }
                 }
             }
