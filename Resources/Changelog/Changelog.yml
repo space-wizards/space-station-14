@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DissidentBullet
-  changes:
-  - message: Monkeys can now wear juggernaut suits
-    type: Add
-  id: 8205
-  time: '2025-04-16T23:14:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34121
 - author: SpaceRox1244
   changes:
   - message: Cargo can now order handheld artifact containers for transporting small
@@ -3882,3 +3875,10 @@
   id: 8717
   time: '2025-06-26T15:29:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38603
+- author: slarticodefast
+  changes:
+  - message: Fixed smart equip not retrieving items.
+    type: Fix
+  id: 8718
+  time: '2025-06-26T16:17:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38605
