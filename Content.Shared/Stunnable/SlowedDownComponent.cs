@@ -3,12 +3,22 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Stunnable;
 
+/// <summary>
+/// This is used to apply a movement speed modifier to an entity temporarily
+/// To be used only in conjunction with <see cref="SlowdownStatusEffectComponent"/>, on the status effect entity.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStunSystem))]
 public sealed partial class SlowedDownComponent : Component
 {
-    [ViewVariables, DataField("sprintSpeedModifier"), AutoNetworkedField]
+    /// <summary>
+    /// Multiplicative sprint modifier, with bounds of [0, 1)
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public float SprintSpeedModifier = 0.5f;
 
-    [ViewVariables, DataField("walkSpeedModifier"), AutoNetworkedField]
+    /// <summary>
+    /// Multiplicative walk modifier, with bounds of [0, 1)
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public float WalkSpeedModifier = 0.5f;
 }

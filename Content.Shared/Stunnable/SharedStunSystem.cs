@@ -14,12 +14,14 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Stunnable;
 
@@ -30,8 +32,11 @@ public abstract class SharedStunSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
+    [Dependency] private readonly SharedStatusEffectsSystem _status = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
+
+    public static readonly EntProtoId Slowdown = "StatusEffectSlowdown";
 
     /// <summary>
     /// Friction modifier for knocked down players.
@@ -220,31 +225,55 @@ public abstract class SharedStunSystem : EntitySystem
     /// <summary>
     ///     Slows down the mob's walking/running speed temporarily
     /// </summary>
-    public bool TrySlowdown(EntityUid uid, TimeSpan time, bool refresh,
-        float walkSpeedMultiplier = 1f, float runSpeedMultiplier = 1f,
-        StatusEffectsComponent? status = null)
+    public bool TrySlowdown(EntityUid uid,
+        TimeSpan time,
+        bool refresh,
+        float walkSpeedMultiplier = 1f,
+        float sprintSpeedMultiplier = 1f)
     {
-        if (!Resolve(uid, ref status, false))
-            return false;
-
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (_statusEffect.TryAddStatusEffect<SlowedDownComponent>(uid, "SlowedDown", time, refresh, status))
+        if (!_status.TryAddStatusEffect(uid,Slowdown, time, refresh))
+            return false;
+
+        if (!_status.TryGetStatusEffect(uid, Slowdown, out var status)
+            || !TryComp<SlowdownStatusEffectComponent>(status, out var slowedStatus))
+            return false;
+
+        slowedStatus.SprintSpeedModifier = sprintSpeedMultiplier;
+        slowedStatus.WalkSpeedModifier = walkSpeedMultiplier;
+
+        UpdateSlowedStatus(uid);
+
+        return true;
+    }
+
+    private void UpdateSlowedStatus(Entity<SlowedDownComponent?> entity, EntityUid? ignore = null)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        if (!_status.TryEffectsWithComp<SlowdownStatusEffectComponent>(entity, out var slowEffects))
+            return;
+
+        entity.Comp.WalkSpeedModifier = 1f;
+        entity.Comp.SprintSpeedModifier = 1f;
+
+        foreach (var effect in slowEffects)
         {
-            var slowed = Comp<SlowedDownComponent>(uid);
-            // Doesn't make much sense to have the "TrySlowdown" method speed up entities now does it?
-            walkSpeedMultiplier = Math.Clamp(walkSpeedMultiplier, 0f, 1f);
-            runSpeedMultiplier = Math.Clamp(runSpeedMultiplier, 0f, 1f);
+            if (effect == ignore)
+                continue;
 
-            slowed.WalkSpeedModifier *= walkSpeedMultiplier;
-            slowed.SprintSpeedModifier *= runSpeedMultiplier;
-
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
-            return true;
+            entity.Comp.WalkSpeedModifier *= effect.Comp1.WalkSpeedModifier;
+            entity.Comp.SprintSpeedModifier *= effect.Comp1.SprintSpeedModifier;
         }
 
-        return false;
+        // If it's not modifying anything then we don't need it
+        if (MathHelper.CloseTo(entity.Comp.WalkSpeedModifier, 1f) && MathHelper.CloseTo(entity.Comp.SprintSpeedModifier, 1f))
+            RemComp<SlowedDownComponent>(entity);
+
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
     }
 
     /// <summary>
@@ -256,17 +285,17 @@ public abstract class SharedStunSystem : EntitySystem
     /// </summary>
     /// <param name="ent">Entity whose movement speed should be updated.</param>
     /// <param name="walkSpeedModifier">New walk speed modifier. Default is 1f (normal speed).</param>
-    /// <param name="runSpeedModifier">New run (sprint) speed modifier. Default is 1f (normal speed).</param>
+    /// <param name="sprintSpeedModifier">New run (sprint) speed modifier. Default is 1f (normal speed).</param>
     public void UpdateStunModifiers(Entity<StaminaComponent?> ent,
-        float walkSpeedModifier = 1f,
-        float runSpeedModifier = 1f)
+        float walkSpeedModifier,
+        float sprintSpeedModifier)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
         if (
-            (MathHelper.CloseTo(walkSpeedModifier, 1f) && MathHelper.CloseTo(runSpeedModifier, 1f) && ent.Comp.StaminaDamage == 0f) ||
-            (walkSpeedModifier == 0f && runSpeedModifier == 0f)
+            (MathHelper.CloseTo(walkSpeedModifier, 1f) && MathHelper.CloseTo(sprintSpeedModifier, 1f) && ent.Comp.StaminaDamage == 0f) ||
+            (walkSpeedModifier == 0f && sprintSpeedModifier == 0f)
         )
         {
             RemComp<SlowedDownComponent>(ent);
@@ -277,7 +306,7 @@ public abstract class SharedStunSystem : EntitySystem
 
         comp.WalkSpeedModifier = walkSpeedModifier;
 
-        comp.SprintSpeedModifier = runSpeedModifier;
+        comp.SprintSpeedModifier = sprintSpeedModifier;
 
         _movementSpeedModifier.RefreshMovementSpeedModifiers(ent);
 
