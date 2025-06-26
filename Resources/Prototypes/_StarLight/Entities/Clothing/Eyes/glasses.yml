@@ -98,6 +98,7 @@
   id: ClothingEyesGlassesSKBGlasses
   name: cheap sunglasses
   description: A pair of black sunglasses. Doesn't block light well, more of an accessory than something useful.
+  suffix: SKB
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
