@@ -3,7 +3,6 @@ using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -29,6 +28,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         InitializeRelay();
 
         SubscribeLocalEvent<StatusEffectComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);

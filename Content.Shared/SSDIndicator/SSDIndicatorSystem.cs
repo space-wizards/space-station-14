@@ -1,4 +1,3 @@
-﻿using Content.Shared.Bed.Sleep;
 using Content.Shared.CCVar;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Configuration;
@@ -13,13 +12,14 @@ namespace Content.Shared.SSDIndicator;
 /// </summary>
 public sealed class SSDIndicatorSystem : EntitySystem
 {
+    public static readonly EntProtoId StatusEffectSSDSleeping = "StatusEffectSSDSleeping";
+
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedStatusEffectsSystem _statusEffects = default!;
 
     private bool _icSsdSleep;
     private float _icSsdSleepTime;
-    public static readonly EntProtoId StatusEffectSSDSleeping = "StatusEffectSSDSleeping";
 
     public override void Initialize()
     {
