@@ -1,40 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: The medical and security techfabs now announce new recipes that they
-      can fabricate as they are researched
-    type: Add
-  id: 8201
-  time: '2025-04-16T19:29:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34959
-- author: Linkbro1
-  changes:
-  - message: changed MV and HV cable item sprites, changed MV cable structure sprites
-    type: Tweak
-  id: 8202
-  time: '2025-04-16T20:26:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34955
-- author: ciaran
-  changes:
-  - message: Fixed duplicate crew monitor console entries for crew with tracking implants
-    type: Fix
-  id: 8203
-  time: '2025-04-16T21:14:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35918
-- author: Seam_Less
-  changes:
-  - message: Standardized the In-Hand Sprites for all gloves
-    type: Tweak
-  id: 8204
-  time: '2025-04-16T22:15:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35997
-- author: DissidentBullet
-  changes:
-  - message: Monkeys can now wear juggernaut suits
-    type: Add
-  id: 8205
-  time: '2025-04-16T23:14:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34121
 - author: SpaceRox1244
   changes:
   - message: Cargo can now order handheld artifact containers for transporting small
@@ -3883,3 +3847,38 @@
   id: 8713
   time: '2025-06-25T01:46:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38557
+- author: rumaks-xyz
+  changes:
+  - message: The action of reverting from a polymorph now has to be confirmed.
+    type: Tweak
+  id: 8714
+  time: '2025-06-25T17:52:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38570
+- author: Lukasz825700516
+  changes:
+  - message: Closed eyes and binoculars no longer allow you to see through walls.
+    type: Fix
+  id: 8715
+  time: '2025-06-25T20:22:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38534
+- author: Hitlinemoss
+  changes:
+  - message: Various hats have had their descriptions updated.
+    type: Tweak
+  id: 8716
+  time: '2025-06-25T20:27:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38156
+- author: slarticodefast
+  changes:
+  - message: Multi-handed items can be picked up again.
+    type: Fix
+  id: 8717
+  time: '2025-06-26T15:29:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38603
+- author: slarticodefast
+  changes:
+  - message: Fixed smart equip not retrieving items.
+    type: Fix
+  id: 8718
+  time: '2025-06-26T16:17:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38605
