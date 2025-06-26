@@ -64,7 +64,7 @@ public sealed partial class AdminCameraEui : BaseEui
 
         _OSWindow.Root.AddChild(_control);
 
-        // Only close when the user actually clicks the close button (this won't trigger when its popped back in)
+        // Only close when the user actually clicks the close button (this doesn't trigger when its popped back in)
         _OSWindow.RequestClosed += _ => _window.Close();
 
         // You can't close the window, otherwise the EUI will complain that your sending requests without it open.
