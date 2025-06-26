@@ -169,6 +169,9 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+  - type: Tag
+    tags:
+    - WhitelistChameleon
         
 ##ntcc-medics
         
