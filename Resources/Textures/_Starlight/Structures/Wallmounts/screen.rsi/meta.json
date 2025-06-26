@@ -1,15 +1,12 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "From tgstation: https://github.com/tgstation/tgstation/commit/9a9b428b61f388a0f6d7a20bbba05147e61023d0",
+  "copyright": "made by https://github.com/stickycheZ101"
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-    {
-      "name": "screen"
-    },
     {
       "name": "omega",
       "delays": [
