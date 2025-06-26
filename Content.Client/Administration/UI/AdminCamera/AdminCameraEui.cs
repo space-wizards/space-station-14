@@ -78,13 +78,11 @@ public sealed partial class AdminCameraEui : BaseEui
     private void PopIn()
     {
         _control.Orphan();
-
         _window.Contents.AddChild(_control);
 
-        if (_lastLocation != null)
-            _window.Open(_lastLocation.Value);
-        else
-            _window.OpenCentered();
+        _window.Visible = true;
+
+        LayoutContainer.SetPosition(_window, _lastLocation ?? new Vector2(0.5f, 0.5f));
 
         _control.IsPoppedOut = false;
         _control.PopControl.Text = Loc.GetString("admin-camera-window-pop-out");
