@@ -106,8 +106,7 @@ public abstract partial class SharedVendingMachineSystem
     {
         if (args.Cancelled)
         {
-            if (Timing.IsFirstTimePredicted)
-                ent.Comp.RestockStream = Audio.Stop(ent.Comp.RestockStream);
+            ent.Comp.RestockStream = Audio.Stop(ent.Comp.RestockStream);
             return;
         }
 
