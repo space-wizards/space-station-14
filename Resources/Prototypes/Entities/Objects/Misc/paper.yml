@@ -217,6 +217,25 @@
   - type: StaticPrice
     price: 0
   - type: NanoTaskPrinted
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper_receipt
+    - state: paper_receipt_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_nanotask.svg.96dpi.png"
+    headerMargin: 0.0, 0.0, 0.0, 6.0
+    backgroundImageTile: true
+    backgroundPatchMargin: 0.0, 6.0, 0.0, 6.0
+    contentMargin: 12.0, 0.0, 12.0, 0.0
+    # This is a narrow piece of paper
+    maxWritableArea: 256.0, 0.0
 
 - type: entity
   id: PaperCargoBountyManifest

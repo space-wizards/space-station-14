@@ -118,6 +118,8 @@
     steps: 6
     zeroVisible: true
   - type: Appearance
+  - type: StaticPrice
+    price: 5000
 
 - type: entity
   name: Drozd
