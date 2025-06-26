@@ -15,6 +15,11 @@ public sealed partial class StasisComponent : Component
     [DataField] [AutoNetworkedField] public bool IsInStasis = false;
 
     /// <summary>
+    /// Whether the entity should be visible. This is synced to ensure proper PVS handling.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public bool IsVisible = true;
+
+    /// <summary>
     /// The second entity needed to preform stasis. This is used to leave stasis.
     /// </summary>
     [DataField(required: true)] [ViewVariables(VVAccess.ReadWrite)] [AutoNetworkedField]

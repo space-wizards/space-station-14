@@ -5,7 +5,6 @@ using Robust.Shared.Timing;
 using Robust.Client.GameObjects;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 using Content.Shared._Starlight.Actions.Stasis;
-using Robust.Shared.GameStates;
 
 namespace Content.Client._Starlight.Actions.Stasis;
 
@@ -22,6 +21,7 @@ public sealed class StasisSystem : SharedStasisSystem
     public override void Initialize()
     {
         base.Initialize();
+        
         SubscribeNetworkEvent<StasisAnimationEvent>(OnStasisAnimation);
     }
 
@@ -31,6 +31,12 @@ public sealed class StasisSystem : SharedStasisSystem
 
         // Periodic cleanup of orphaned effects
         CleanupOrphanedEffects();
+        
+        // Periodic visibility state check to ensure consistency
+        CheckVisibilityStates();
+        
+        // Periodic continuous effect check to ensure PVS synchronization
+        CheckContinuousEffects();
     }
 
     private void CleanupOrphanedEffects()
@@ -142,6 +148,9 @@ public sealed class StasisSystem : SharedStasisSystem
             comp.ClientEnterEffectEntity = null;
             Dirty(uid, comp);
         }
+        
+        // Update visibility based on server state
+        UpdateEntityVisibility(uid, comp);
     }
 
     private void StasisExitAnimation(EntityUid uid, StasisComponent comp)
@@ -167,11 +176,11 @@ public sealed class StasisSystem : SharedStasisSystem
         // Play the sound effect.
         _audioSystem.PlayPvs(comp.StasisExitSound, effectEnt);
 
-        // Restore entity visibility
-        if (TryComp<SpriteComponent>(uid, out var entitySprite))
-        {
-            entitySprite.Color = entitySprite.Color.WithAlpha(1f);
-        }
+        // End the continuous animation.
+        EndStasisContinuousAnimation(uid, comp);
+        
+        // Update visibility based on server state
+        UpdateEntityVisibility(uid, comp);
     }
 
     private void StartStasisContinuousAnimation(EntityUid uid, StasisComponent comp)
@@ -198,12 +207,6 @@ public sealed class StasisSystem : SharedStasisSystem
             sprite.NoRotation = true;
             // Make it visible if the parent entity is visible.
             sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
-        }
-
-        // Make the entity fully transparent, to hide it from being seen while stasis is active.
-        if (TryComp<SpriteComponent>(uid, out var entitySprite))
-        {
-            entitySprite.Color = entitySprite.Color.WithAlpha(0f);
         }
 
         // Store the continuous effect in the component
@@ -241,6 +244,60 @@ public sealed class StasisSystem : SharedStasisSystem
             if (comp.ClientEnterEffectEntity != null && Exists(comp.ClientEnterEffectEntity.Value))
             {
                 QueueDel(comp.ClientEnterEffectEntity.Value);
+            }
+        }
+    }
+
+    private void UpdateEntityVisibility(EntityUid uid, StasisComponent comp)
+    {
+        // Check if the entity still exists
+        if (!Exists(uid))
+            return;
+
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
+            return;
+
+        // Update visibility based on server state
+        if (comp.IsVisible)
+        {
+            // Entity should be visible
+            sprite.Color = sprite.Color.WithAlpha(1f);
+        }
+        else
+        {
+            // Entity should be invisible
+            sprite.Color = sprite.Color.WithAlpha(0f);
+        }
+    }
+
+    private void CheckVisibilityStates()
+    {
+        var query = AllEntityQuery<StasisComponent, SpriteComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var sprite))
+        {
+            // Skip if the entity is being deleted
+            if (EntityManager.IsQueuedForDeletion(uid))
+                continue;
+
+            // Update visibility based on server state
+            UpdateEntityVisibility(uid, comp);
+        }
+    }
+
+    private void CheckContinuousEffects()
+    {
+        var query = AllEntityQuery<StasisComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            // Skip if the entity is being deleted
+            if (EntityManager.IsQueuedForDeletion(uid))
+                continue;
+
+            // If entity is in stasis but doesn't have the continuous effect, reapply it
+            // This handles cases where players enter PVS range after the animation events were sent
+            if (comp.IsInStasis && comp.ClientContinuousEffectEntity == null)
+            {
+                StartStasisContinuousAnimation(uid, comp);
             }
         }
     }
