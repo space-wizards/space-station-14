@@ -219,7 +219,7 @@
         Radiation: 0.1
         Caustic: 0.4
     staminaModifier: 1
-    ingoreKnockdown: true
+    ingoreKnockdown: false
   - type: ClothingSpeedModifier
     walkModifier: 0.90
     sprintModifier: 0.90
