@@ -8420,4 +8420,11 @@ Entries:
   id: 1161
   time: '2025-06-26T13:01:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/904
+- author: Killer Tamashi
+  changes:
+  - message: Avali can now eat the MRE brick.
+    type: Fix
+  id: 1162
+  time: '2025-06-26T13:03:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/902
 
