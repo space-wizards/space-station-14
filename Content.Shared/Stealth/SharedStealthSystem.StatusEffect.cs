@@ -6,13 +6,11 @@ namespace Content.Shared.Stealth;
 
 public abstract partial class SharedStealthSystem
 {
-    [Dependency] private readonly SharedStatusEffectsSystem _statusEffects = default!;
-
     private void InitializeStatusEffect()
     {
         SubscribeLocalEvent<StealthStatusEffectComponent, StatusEffectAppliedEvent>(OnEffectApplied);
         SubscribeLocalEvent<StealthStatusEffectComponent, StatusEffectRemovedEvent>(OnEffectRemoved);
-        SubscribeLocalEvent<StatusEffectContainerComponent, GetVisibilityModifiersEvent>(OnGetTempVisibilityModifiers); //TODO: We 100% need some status effect events relay!
+        SubscribeLocalEvent<StealthStatusEffectComponent, StatusEffectRelayedEvent<GetVisibilityModifiersEvent>>(OnGetTempVisibilityModifiers);
     }
 
     private void OnEffectRemoved(Entity<StealthStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
@@ -28,37 +26,34 @@ public abstract partial class SharedStealthSystem
 
     private void OnEffectApplied(Entity<StealthStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        ent.Comp.RemoveStealth = !EnsureComp<StealthComponent>(args.Target, out var stealth);
+        ent.Comp.RemoveStealth = !EnsureComp<StealthComponent>(args.Target, out _);
     }
 
-    private void OnGetTempVisibilityModifiers(Entity<StatusEffectContainerComponent> ent, ref GetVisibilityModifiersEvent args)
+    private void OnGetTempVisibilityModifiers(Entity<StealthStatusEffectComponent> ent, ref StatusEffectRelayedEvent<GetVisibilityModifiersEvent> args)
     {
-        if (!_statusEffects.TryEffectsWithComp<StealthStatusEffectComponent>(ent, out var stealthEffects))
+        if (!TryComp<StatusEffectComponent>(ent, out var statusEffectComp))
             return;
 
-        foreach (var effect in stealthEffects)
-        {
-            var currentTime = _timing.CurTime;
-            var elapsed = currentTime - effect.Comp2.StartEffectTime;
-            var duration = effect.Comp2.EndEffectTime - effect.Comp2.StartEffectTime;
+        var currentTime = _timing.CurTime;
+        var elapsed = currentTime - statusEffectComp.StartEffectTime;
+        var duration = statusEffectComp.EndEffectTime - statusEffectComp.StartEffectTime;
 
-            // Phase 1 - Fade in
-            if (elapsed < effect.Comp1.FadeInTime)
-            {
-                var progress = (float)(elapsed / effect.Comp1.FadeInTime);
-                args.FlatModifier += effect.Comp1.TargetVisibility * progress;
-            }
-            // Phase 2 - Main duration
-            else if (elapsed < effect.Comp1.FadeInTime + duration)
-            {
-                args.FlatModifier += effect.Comp1.TargetVisibility;
-            }
-            // Phase 3 - Fade out
-            else if (duration is not null && elapsed < effect.Comp1.FadeInTime + duration + effect.Comp1.FadeOutTime)
-            {
-                var progress = (float)((elapsed - effect.Comp1.FadeInTime - duration) / effect.Comp1.FadeOutTime);
-                args.FlatModifier += effect.Comp1.TargetVisibility * (1f - progress);
-            }
+        // Phase 1 - Fade in
+        if (elapsed < ent.Comp.FadeInTime)
+        {
+            var progress = (float)(elapsed / ent.Comp.FadeInTime);
+            args.Args.FlatModifier += ent.Comp.TargetVisibility * progress;
+        }
+        // Phase 2 - Main duration
+        else if (elapsed < ent.Comp.FadeInTime + duration)
+        {
+            args.Args.FlatModifier += ent.Comp.TargetVisibility;
+        }
+        // Phase 3 - Fade out
+        else if (duration is not null && elapsed < ent.Comp.FadeInTime + duration + ent.Comp.FadeOutTime)
+        {
+            var progress = (float)((elapsed - ent.Comp.FadeInTime - duration) / ent.Comp.FadeOutTime);
+            args.Args.FlatModifier += ent.Comp.TargetVisibility * (1f - progress);
         }
     }
 }

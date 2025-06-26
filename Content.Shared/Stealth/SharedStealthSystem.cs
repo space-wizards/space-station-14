@@ -168,26 +168,26 @@ public abstract partial class SharedStealthSystem : EntitySystem
 
         return Math.Clamp(component.LastVisibility + ev.FlatModifier, component.MinVisibility, component.MaxVisibility);
     }
+}
+
+/// <summary>
+///     Used to run through any stealth effecting components on the entity.
+/// </summary>
+public sealed class GetVisibilityModifiersEvent : EntityEventArgs
+{
+    public readonly StealthComponent Stealth;
+    public readonly float SecondsSinceUpdate;
 
     /// <summary>
-    ///     Used to run through any stealth effecting components on the entity.
+    ///     Calculate this and add to it. Do not divide, multiply, or overwrite.
+    ///     The sum will be added to the stealth component's visibility.
     /// </summary>
-    private sealed class GetVisibilityModifiersEvent : EntityEventArgs
+    public float FlatModifier;
+
+    public GetVisibilityModifiersEvent(EntityUid uid, StealthComponent stealth, float secondsSinceUpdate, float flatModifier)
     {
-        public readonly StealthComponent Stealth;
-        public readonly float SecondsSinceUpdate;
-
-        /// <summary>
-        ///     Calculate this and add to it. Do not divide, multiply, or overwrite.
-        ///     The sum will be added to the stealth component's visibility.
-        /// </summary>
-        public float FlatModifier;
-
-        public GetVisibilityModifiersEvent(EntityUid uid, StealthComponent stealth, float secondsSinceUpdate, float flatModifier)
-        {
-            Stealth = stealth;
-            SecondsSinceUpdate = secondsSinceUpdate;
-            FlatModifier = flatModifier;
-        }
+        Stealth = stealth;
+        SecondsSinceUpdate = secondsSinceUpdate;
+        FlatModifier = flatModifier;
     }
 }
