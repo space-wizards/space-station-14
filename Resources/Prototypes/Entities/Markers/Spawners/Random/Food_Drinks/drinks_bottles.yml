@@ -58,3 +58,4 @@
   table: !type:GroupSelector
     children:
     - id: DrinkPoisonWinebottleFull
+    - id: DrinkNTCahorsBottleFull
