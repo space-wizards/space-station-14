@@ -11,6 +11,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -18,14 +19,16 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Mind;
 
-public abstract class SharedMindSystem : EntitySystem
+public abstract partial class SharedMindSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
     [Dependency] private readonly SharedPlayerSystem _player = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
@@ -40,6 +43,8 @@ public abstract class SharedMindSystem : EntitySystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
         SubscribeLocalEvent<MindComponent, ComponentStartup>(OnMindStartup);
         SubscribeLocalEvent<MindComponent, EntityRenamedEvent>(OnRenamed);
+
+        InitializeRelay();
     }
 
     public override void Shutdown()
@@ -149,23 +154,31 @@ public abstract class SharedMindSystem : EntitySystem
         if (!mindContainer.ShowExamineInfo || !args.IsInDetailsRange)
             return;
 
-        // TODO predict we can't right now because session stuff isnt networked
+        // TODO: Move this out of the SharedMindSystem into its own comp and predict it
         if (_net.IsClient)
             return;
 
         var dead = _mobState.IsDead(uid);
-        var hasUserId = CompOrNull<MindComponent>(mindContainer.Mind)?.UserId;
-        var hasSession = CompOrNull<MindComponent>(mindContainer.Mind)?.Session;
+        var mind = CompOrNull<MindComponent>(mindContainer.Mind);
+        var hasUserId = mind?.UserId;
+        var hasActiveSession = hasUserId != null && _playerManager.ValidSessionId(hasUserId.Value);
+
+        // Scenarios:
+        // 1. Dead + No User ID: Entity is permanently dead with no player ever attached
+        // 2. Dead + Has User ID + No Session: Player died and disconnected
+        // 3. Dead + Has Session: Player is dead but still connected
+        // 4. Alive + No User ID: Entity was never controlled by a player
+        // 5. Alive + No Session: Player disconnected while alive (SSD)
 
         if (dead && hasUserId == null)
             args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
-        else if (dead && hasSession == null)
+        else if (dead && !hasActiveSession)
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
         else if (dead)
             args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
         else if (hasUserId == null)
             args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
-        else if (hasSession == null)
+        else if (!hasActiveSession)
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
     }
 
@@ -238,6 +251,24 @@ public abstract class SharedMindSystem : EntitySystem
             return true;
         // They might actually be alive.
         return _mobState.IsDead(mind.OwnedEntity.Value, targetMobState);
+    }
+
+    /// <summary>
+    ///     True if the OwnedEntity of this mind is physically unrevivable.
+    ///     This is mainly to check whether a mind is able to inherit their "original" character again without the need for creating a new one.
+    ///     In cases of being a brain, being borged or a zombie they are "unrevivable"
+    /// </summary>
+    public bool IsCharacterUnrevivablePhysically(MindComponent mind)
+    {
+        if (mind.OwnedEntity == null)
+            return true;
+
+        // This entity cannot be dead, alive or crit, so it makes sense it cannot be revived to begin with.
+        if (!HasComp<MobStateComponent>(mind.OwnedEntity))
+            return true;
+
+        // Could use checks for the amount of damage they have, but with chemistry you can never tell what damage means someone is truly "unrevivable".
+        return false;
     }
 
     public virtual void Visit(EntityUid mindId, EntityUid entity, MindComponent? mind = null)
@@ -364,6 +395,16 @@ public abstract class SharedMindSystem : EntitySystem
         var title = Name(objective);
         _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) removed from the mind of {MindOwnerLoggingString(mind)}");
         mind.Objectives.Remove(objective);
+
+        // garbage collection - only delete the objective entity if no mind uses it anymore
+        // This comes up for stuff like paradox clones where the objectives share the same entity
+        var mindQuery = AllEntityQuery<MindComponent>();
+        while (mindQuery.MoveNext(out _, out var queryComp))
+        {
+            if (queryComp.Objectives.Contains(objective))
+                return true;
+        }
+
         Del(objective);
         return true;
     }
@@ -396,6 +437,33 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
+    /// Copies objectives from one mind to another, so that they are shared between two players.
+    /// </summary>
+    /// <remarks>
+    /// Only copies the reference to the objective entity, not the entity itself.
+    /// This relies on the fact that objectives are never changed after spawning them.
+    /// If someone ever changes that, they will have to address this.
+    /// </remarks>
+    /// <param name="source"> mind entity of the player to copy from </param>
+    /// <param name="target"> mind entity of the player to copy to </param>
+    /// <param name="except"> whitelist for objectives that should be copied </param>
+    /// <param name="except"> blacklist for objectives that should not be copied </param>
+    public void CopyObjectives(Entity<MindComponent?> source, Entity<MindComponent?> target, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
+    {
+        if (!Resolve(source, ref source.Comp) || !Resolve(target, ref target.Comp))
+            return;
+
+        foreach (var objective in source.Comp.Objectives)
+        {
+            if (target.Comp.Objectives.Contains(objective))
+                continue; // target already has this objective
+
+            if (_whitelist.CheckBoth(objective, blacklist, whitelist))
+                AddObjective(target, target.Comp, objective);
+        }
+    }
+
+    /// <summary>
     /// Tries to find an objective that has the same prototype as the argument.
     /// </summary>
     /// <remarks>
@@ -417,12 +485,6 @@ public abstract class SharedMindSystem : EntitySystem
         }
 
         return false;
-    }
-
-    public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out ICommonSession? session)
-    {
-        session = null;
-        return TryComp(mindId, out MindComponent? mind) && (session = mind.Session) != null;
     }
 
     /// <summary>
@@ -484,19 +546,6 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets a role component from a player's mind.
-    /// </summary>
-    /// <returns>Whether a role was found</returns>
-    public bool TryGetRole<T>(EntityUid user, [NotNullWhen(true)] out T? role) where T : IComponent
-    {
-        role = default;
-        if (!TryComp<MindContainerComponent>(user, out var mindContainer) || mindContainer.Mind == null)
-            return false;
-
-        return TryComp(mindContainer.Mind, out role);
-    }
-
-    /// <summary>
     /// Sets the Mind's UserId, Session, and updates the player's PlayerData. This should have no direct effect on the
     /// entity that any mind is connected to, except as a side effect of the fact that it may change a player's
     /// attached entity. E.g., ghosts get deleted.
@@ -526,6 +575,27 @@ public abstract class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
+    ///     True if this Mind is 'sufficiently unrevivable' IC (Objectives, EndText).
+    ///     Note that this is *IC logic*, it's not necessarily tied to any specific truth.
+    ///     "If administrators decide that zombies are unrevivable, this returns true for zombies."
+    ///     Alternative IsCharacterDeadIC that checks for whether they will be able to inherit their body again.
+    ///     State in which they must be given a new body to "live" (borging, being a brain, etc) should count as "unrevivable".
+    /// </summary>
+    public bool IsCharacterUnrevivableIc(MindComponent mind)
+    {
+        if (mind.OwnedEntity is { } owned)
+        {
+            var ev = new GetCharacterUnrevivableIcEvent(null);
+            RaiseLocalEvent(owned, ref ev);
+
+            if (ev.Unrevivable != null)
+                return ev.Unrevivable.Value;
+        }
+
+        return IsCharacterUnrevivablePhysically(mind);
+    }
+
+    /// <summary>
     ///     A string to represent the mind for logging
     /// </summary>
     public string MindOwnerLoggingString(MindComponent mind)
@@ -545,22 +615,19 @@ public abstract class SharedMindSystem : EntitySystem
     /// <summary>
     /// Returns a list of every living humanoid player's minds, except for a single one which is exluded.
     /// </summary>
-    public List<EntityUid> GetAliveHumansExcept(EntityUid exclude)
+    public HashSet<Entity<MindComponent>> GetAliveHumans(EntityUid? exclude = null)
     {
-        var mindQuery = EntityQuery<MindComponent>();
-
-        var allHumans = new List<EntityUid>();
+        var allHumans = new HashSet<Entity<MindComponent>>();
         // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
-        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent>();
-        while (query.MoveNext(out var uid, out var mc, out var mobState, out _))
+        var query = EntityQueryEnumerator<MobStateComponent, HumanoidAppearanceComponent>();
+        while (query.MoveNext(out var uid, out var mobState, out _))
         {
-            // the player needs to have a mind and not be the excluded one
-            if (mc.Mind == null || mc.Mind == exclude)
+            // the player needs to have a mind and not be the excluded one +
+            // the player has to be alive
+            if (!TryGetMind(uid, out var mind, out var mindComp) || mind == exclude || !_mobState.IsAlive(uid, mobState))
                 continue;
 
-            // the player has to be alive
-            if (_mobState.IsAlive(uid, mobState))
-                allHumans.Add(mc.Mind.Value);
+            allHumans.Add(new Entity<MindComponent>(mind, mindComp));
         }
 
         return allHumans;
@@ -574,3 +641,11 @@ public abstract class SharedMindSystem : EntitySystem
 /// <param name="Dead"></param>
 [ByRefEvent]
 public record struct GetCharactedDeadIcEvent(bool? Dead);
+
+/// <summary>
+/// Raised on an entity to determine whether or not they are "unrevivable" in IC-logic.
+/// Used to check for things such as being borged or a zombie.
+/// </summary>
+/// <param name="Unrevivable"></param>
+[ByRefEvent]
+public record struct GetCharacterUnrevivableIcEvent(bool? Unrevivable);

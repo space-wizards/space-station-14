@@ -127,8 +127,8 @@ public sealed partial class GameTicker
         metadata["gamemode"] = new ValueDataNode(CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty);
         metadata["roundEndPlayers"] = _serialman.WriteValue(_replayRoundPlayerInfo);
         metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
-        metadata["server_id"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.ServerId));
-        metadata["server_name"] = new ValueDataNode(_configurationManager.GetCVar(CCVars.AdminLogsServerName));
+        metadata["server_id"] = new ValueDataNode(_cfg.GetCVar(CCVars.ServerId));
+        metadata["server_name"] = new ValueDataNode(_cfg.GetCVar(CCVars.AdminLogsServerName));
         metadata["roundId"] = new ValueDataNode(RoundId.ToString());
     }
 

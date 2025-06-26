@@ -25,15 +25,20 @@
     offset: "0.0,0.3"
     sprite: Structures/Furniture/potted_plants.rsi
     noRot: true
+  - type: Speech
+    speechVerb: Plant # for pais (In the secret stash)
   - type: SecretStash
     tryInsertItemSound: /Audio/Effects/plant_rustle.ogg
     tryRemoveItemSound: /Audio/Effects/plant_rustle.ogg
-    hasVerbs: false
     secretStashName: secret-stash-plant
   - type: ContainerContainer
     containers:
       stash: !type:ContainerSlot {}
   - type: Pullable
+  - type: MultiHandedItem
+  - type: Item
+    sprite: Structures/Furniture/potted_plants.rsi
+    size: Huge
   - type: Damageable
     damageContainer: StructuralInorganic # The pot. Not the plant. Or is it plastic?
   - type: Destructible

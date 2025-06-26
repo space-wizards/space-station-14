@@ -76,6 +76,7 @@ food-sequence-content-berries = berries
 food-sequence-content-spacemans-trumpet = spaceman's trupmet
 food-sequence-content-cherry = cherry
 food-sequence-content-snail = snail
+food-sequence-content-anomaly-berry = anomaly berry
 
 # BURGERS
 
@@ -116,8 +117,47 @@ food-sequence-burger-content-suppermatter = supper
 food-sequence-burger-content-hamster = hams
 food-sequence-burger-content-berries = berri
 food-sequence-burger-content-spacemans-trumpet = spacetrump
+food-sequence-burger-content-anomaly-berry = anom
 food-sequence-burger-content-extradimensional-orange = 3d
 food-sequence-burger-content-world-pea = peace
+
+# COTTON BURGERS
+
+food-sequence-cotton-burger-gen = {$content}burger
+
+food-sequence-cotton-burger-content-cotton-bol = cotton
+food-sequence-cotton-burger-content-pyrotton-bol = pyro
+food-sequence-cotton-burger-content-plushie-throngler = throngle
+food-sequence-cotton-burger-content-plushie-ghost = spooky
+food-sequence-cotton-burger-content-plushie-revenant = spookier
+food-sequence-cotton-burger-content-plushie-bee = buzzzy
+food-sequence-cotton-burger-content-plushie-hamptr = hampt
+food-sequence-cotton-burger-content-plushie-nukie = nukie
+food-sequence-cotton-burger-content-plushie-rouny = rouny
+food-sequence-cotton-burger-content-plushie-lamp = lamp
+food-sequence-cotton-burger-content-plushie-arachnid = spider
+food-sequence-cotton-burger-content-plushie-lizard = weh
+food-sequence-cotton-burger-content-plushie-experiment = experimental
+food-sequence-cotton-burger-content-plushie-spacelizard = space
+food-sequence-cotton-burger-content-plushie-lizard-inversed = hew
+food-sequence-cotton-burger-content-plushie-diona = dion
+food-sequence-cotton-burger-content-plushie-shark = shonk
+food-sequence-cotton-burger-content-plushie-ratvar = ratvarian
+food-sequence-cotton-burger-content-plushie-narsie = nar'
+food-sequence-cotton-burger-content-plushie-carp = carp
+food-sequence-cotton-burger-content-plushie-magicarp = magi
+food-sequence-cotton-burger-content-plushie-holocarp = holo
+food-sequence-cotton-burger-content-plushie-slime = slime
+food-sequence-cotton-burger-content-plushie-snake = snek
+food-sequence-cotton-burger-content-plushie-mouse = mouse
+food-sequence-cotton-burger-content-plushie-vox = skree
+food-sequence-cotton-burger-content-plushie-atmosian = atmos
+food-sequence-cotton-burger-content-plushie-xeno = xeno
+food-sequence-cotton-burger-content-plushie-penguin = peng
+food-sequence-cotton-burger-content-plushie-human = uristmc
+food-sequence-cotton-burger-content-plushie-moth = fluff
+food-sequence-cotton-burger-content-plushie-ian = corgi
+food-sequence-cotton-burger-content-among-pequeno = sus
 
 # TACO
 

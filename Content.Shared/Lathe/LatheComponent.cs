@@ -1,4 +1,5 @@
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -10,16 +11,19 @@ namespace Content.Shared.Lathe
     public sealed partial class LatheComponent : Component
     {
         /// <summary>
-        /// All of the recipes that the lathe has by default
+        /// All of the recipe packs that the lathe has by default
         /// </summary>
         [DataField]
-        public List<ProtoId<LatheRecipePrototype>> StaticRecipes = new();
+        public List<ProtoId<LatheRecipePackPrototype>> StaticPacks = new();
 
         /// <summary>
-        /// All of the recipes that the lathe is capable of researching
+        /// All of the recipe packs that the lathe is capable of researching
         /// </summary>
         [DataField]
-        public List<ProtoId<LatheRecipePrototype>> DynamicRecipes = new();
+        public List<ProtoId<LatheRecipePackPrototype>> DynamicPacks = new();
+        // Note that this shouldn't be modified dynamically.
+        // I.e., this + the static recipies should represent all recipies that the lathe can ever make
+        // Otherwise the material arbitrage test and/or LatheSystem.GetAllBaseRecipes needs to be updated
 
         /// <summary>
         /// The lathe's construction queue
@@ -80,15 +84,16 @@ namespace Content.Shared.Lathe
     public sealed class LatheGetRecipesEvent : EntityEventArgs
     {
         public readonly EntityUid Lathe;
+        public readonly LatheComponent Comp;
 
-        public bool getUnavailable;
+        public bool GetUnavailable;
 
         public HashSet<ProtoId<LatheRecipePrototype>> Recipes = new();
 
-        public LatheGetRecipesEvent(EntityUid lathe, bool forced)
+        public LatheGetRecipesEvent(Entity<LatheComponent> lathe, bool forced)
         {
-            Lathe = lathe;
-            getUnavailable = forced;
+            (Lathe, Comp) = lathe;
+            GetUnavailable = forced;
         }
     }
 

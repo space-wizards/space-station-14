@@ -42,7 +42,7 @@
             - !type:EntityAnchored
           steps:
             - tag: SignalTrigger
-              name: a signal trigger
+              name: construction-graph-tag-signal-trigger
               icon:
                 sprite: Objects/Devices/signaltrigger.rsi
                 state: signaltrigger

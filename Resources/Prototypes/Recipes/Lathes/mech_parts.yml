@@ -1,3 +1,39 @@
+# Base prototypes
+
+- type: latheRecipe
+  abstract: true
+  id: BaseMechPartRecipe
+  categories:
+  - Mech
+  completetime: 10
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseMechPartRecipe
+  id: BaseRipleyLimbRecipe
+  materials:
+    Steel: 1000
+    Glass: 750
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseMechPartRecipe
+  id: BaseHonkerLimbRecipe
+  materials:
+    Steel: 2000
+    Glass: 750
+    Bananium: 250
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseMechPartRecipe
+  id: BaseHamtrLimbRecipe
+  materials:
+    Steel: 800
+    Glass: 600
+
+## Recipes
+
 # Clarke
 - type: latheRecipe
   id: ClarkeHarness
@@ -172,49 +208,32 @@
 
 # Ripley
 - type: latheRecipe
+  parent: BaseMechPartRecipe
   id: RipleyHarness
   result: RipleyHarness
-  category: Ripley
-  completetime: 10
   materials:
     Steel: 1500
     Glass: 1200
 
 - type: latheRecipe
+  parent: BaseRipleyLimbRecipe
   id: RipleyLArm
   result: RipleyLArm
-  category: Ripley
-  completetime: 10
-  materials:
-    Steel: 1000
-    Glass: 750
 
 - type: latheRecipe
+  parent: BaseRipleyLimbRecipe
   id: RipleyLLeg
   result: RipleyLLeg
-  category: Ripley
-  completetime: 10
-  materials:
-    Steel: 1000
-    Glass: 750
 
 - type: latheRecipe
+  parent: BaseRipleyLimbRecipe
   id: RipleyRLeg
   result: RipleyRLeg
-  category: Ripley
-  completetime: 10
-  materials:
-    Steel: 1000
-    Glass: 750
 
 - type: latheRecipe
+  parent: BaseRipleyLimbRecipe
   id: RipleyRArm
   result: RipleyRArm
-  category: Ripley
-  completetime: 10
-  materials:
-    Steel: 1000
-    Glass: 750
 
 # Ripley MK-II
 - type: latheRecipe
@@ -236,156 +255,68 @@
 
 # H.O.N.K.
 - type: latheRecipe
+  parent: BaseMechPartRecipe
   id: HonkerHarness
   result: HonkerHarness
-  category: Honker
-  completetime: 10
   materials:
     Steel: 3000
     Glass: 1200
     Bananium: 500
 
 - type: latheRecipe
+  parent: BaseHonkerLimbRecipe
   id: HonkerLArm
   result: HonkerLArm
-  category: Honker
-  completetime: 10
-  materials:
-    Steel: 3000
-    Glass: 1200
-    Bananium: 500
 
 - type: latheRecipe
+  parent: BaseHonkerLimbRecipe
   id: HonkerLLeg
   result: HonkerLLeg
-  category: Honker
-  completetime: 10
-  materials:
-    Steel: 3000
-    Glass: 1200
-    Bananium: 500
 
 - type: latheRecipe
+  parent: BaseHonkerLimbRecipe
   id: HonkerRLeg
   result: HonkerRLeg
-  category: Honker
-  completetime: 10
-  materials:
-    Steel: 3000
-    Glass: 1200
-    Bananium: 500
 
 - type: latheRecipe
+  parent: BaseHonkerLimbRecipe
   id: HonkerRArm
   result: HonkerRArm
-  category: Honker
-  completetime: 10
-  materials:
-    Steel: 3000
-    Glass: 1200
-    Bananium: 500
 
 # HAMTR
 - type: latheRecipe
+  parent: BaseMechPartRecipe
   id: HamtrHarness
   result: HamtrHarness
-  category: Hamptr
-  completetime: 10
   materials:
     Steel: 1200
     Glass: 1000
 
 - type: latheRecipe
+  parent: BaseHamtrLimbRecipe
   id: HamtrLArm
   result: HamtrLArm
-  category: Hamptr
-  completetime: 10
-  materials:
-    Steel: 800
-    Glass: 600
 
 - type: latheRecipe
+  parent: BaseHamtrLimbRecipe
   id: HamtrLLeg
   result: HamtrLLeg
-  category: Hamptr
-  completetime: 10
-  materials:
-    Steel: 800
-    Glass: 600
 
 - type: latheRecipe
+  parent: BaseHamtrLimbRecipe
   id: HamtrRLeg
   result: HamtrRLeg
-  category: Hamptr
-  completetime: 10
-  materials:
-    Steel: 800
-    Glass: 600
 
 - type: latheRecipe
+  parent: BaseHamtrLimbRecipe
   id: HamtrRArm
   result: HamtrRArm
-  category: Hamptr
-  completetime: 10
-  materials:
-    Steel: 800
-    Glass: 600
 
-# Vim
 - type: latheRecipe
+  parent: BaseMechPartRecipe
   id: VimHarness
   result: VimHarness
-  category: Vim
   completetime: 5
-  materials:
-    Steel: 500
-    Glass: 200
-
-
-# Equipment
-- type: latheRecipe
-  id: MechEquipmentDrill
-  result: WeaponMechMelleDrill
-  category: MechEquipment
-  completetime: 10
-  materials:
-    Steel: 1000
-    Glass: 250
-
-- type: latheRecipe
-  id: MechEquipmentDrillDiamond
-  result: WeaponMechMelleDrillDiamond
-  category: MechEquipment
-  completetime: 10
-  materials:
-    Steel: 1000
-    Plastic: 150
-    Silver: 350
-    Diamond: 150
-
-- type: latheRecipe
-  id: MechEquipmentGrabber
-  result: MechEquipmentGrabber
-  category: MechEquipment
-  completetime: 10
-  materials:
-    Steel: 500
-    Plastic: 200
-
-- type: latheRecipe
-  id: MechEquipmentGrabberSmall
-  result: MechEquipmentGrabberSmall
-  category: MechEquipment
-  completetime: 10
-  materials:
-    Steel: 400
-    Plastic: 100
-
-- type: latheRecipe
-  id: MechEquipmentHorn
-  result: MechEquipmentHorn
-  category: MechEquipment
-  completetime: 10
   materials:
     Steel: 500
     Bananium: 200

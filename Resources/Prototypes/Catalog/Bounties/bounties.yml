@@ -7,7 +7,7 @@
     amount: 1
     whitelist:
       components:
-      - Artifact
+      - XenoArtifact
 
 - type: cargoBounty
   id: BountyBaseballBat
@@ -529,6 +529,9 @@
     whitelist:
       components:
       - HitscanBatteryAmmoProvider
+    blacklist:
+      components:
+      - PowerCell
 
 - type: cargoBounty
   id: BountyFood
@@ -561,6 +564,8 @@
       - Cake
       - Pie
       - Bread
+      - Pistachios
+      - Creamsicle
 
 - type: cargoBounty
   id: BountyVegetable
@@ -745,23 +750,12 @@
       - Flash
 
 - type: cargoBounty
-  id: BountyTeethSpaceCarp
-  reward: 800
-  description: bounty-description-tooth-space-carp
+  id: BountyRing
+  reward: 12500
+  description: bounty-description-ring
   entries:
-  - name: bounty-item-tooth-space-carp
-    amount: 8
+  - name: bounty-item-ring
+    amount: 2
     whitelist:
       tags:
-      - ToothSpaceCarp
-
-- type: cargoBounty
-  id: BountyTeethSharkminnow
-  reward: 1500
-  description: bounty-description-tooth-sharkminnow
-  entries:
-  - name: bounty-item-tooth-sharkminnow
-    amount: 5
-    whitelist:
-      tags:
-      - ToothSharkminnow
+      - Ring

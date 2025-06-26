@@ -12,7 +12,7 @@
         "sfrifle_cock.ogg": "https://github.com/discordia-space/CEV-Eris/blob/01f7518e0f8177734a6579aba2bbf76024aa96c4/sound/weapons/guns/interact/sfrifle_cock.ogg"
     },
     "Empty": {
-        "empty.ogg": "https://github.com/discordia-space/CEV-Eris/blob/fbde37a8647a82587d363da999a94cf02c2e128c/sound/weapons/guns/misc/gun_empty.ogg",
+        "empty.ogg": "https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0",
         "lmg_empty.ogg": "https://github.com/vgstation-coders/vgstation13/blob/217aa33a41e891e144ceec710fbe1877df747adb/sound/weapons/empty.ogg"
     },
     "EmptyAlarm": {

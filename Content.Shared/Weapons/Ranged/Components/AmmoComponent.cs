@@ -13,27 +13,27 @@ public partial class AmmoComponent : Component, IShootable
 {
     // Muzzle flash stored on ammo because if we swap a gun to whatever we may want to override it.
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("muzzleFlash", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? MuzzleFlash = "MuzzleFlashEffect";
+    [DataField]
+    public EntProtoId? MuzzleFlash = "MuzzleFlashEffect";
 }
 
 /// <summary>
 /// Spawns another prototype to be shot instead of itself.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class CartridgeAmmoComponent : AmmoComponent
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Prototype = default!;
+    [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true)]
+    public EntProtoId Prototype;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("spent")]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     [AutoNetworkedField]
-    public bool Spent = false;
+    public bool Spent;
 
     /// <summary>
     /// Caseless ammunition.
     /// </summary>
-    [DataField("deleteOnSpawn")]
+    [DataField]
     public bool DeleteOnSpawn;
 
     [DataField("soundEject")]

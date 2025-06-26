@@ -7,6 +7,11 @@
   copyright: "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432"
   source: "https://github.com/tgstation/tgstation"
 - files:
+  - clap-single.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel Station at https://github.com/Citadel-Station-13/Citadel-Station-13/commit/e145bdafe83e2cf38d148c39f073da5e7b0cb456"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13"
+- files:
     - snap1.ogg
     - snap2.ogg
     - snap3.ogg

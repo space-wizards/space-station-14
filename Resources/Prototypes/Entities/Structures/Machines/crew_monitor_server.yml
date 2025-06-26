@@ -1,14 +1,20 @@
-﻿- type: entity
+- type: entity
   id: CrewMonitoringServer
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: crew monitoring server
   description: Receives and relays the status of all active suit sensors on the station.
   components:
     - type: Sprite
       sprite: Structures/Machines/server.rsi
+      snapCardinals: true
       layers:
-        - state: server
+        - state: server-off
+        - state: server-on
+          visible: false
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
         - state: variant-crew
+        - state: server_o
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Construction
       graph: Machine
       node: machine
@@ -34,6 +40,8 @@
     - type: ApcPowerReceiver
       powerLoad: 200
     - type: ExtensionCableReceiver
+    - type: WiresPanel
+    - type: WiresVisuals
     - type: Destructible
       thresholds:
         - trigger:
@@ -56,9 +64,20 @@
                 SheetSteel1:
                   min: 1
                   max: 2
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: {visible: true}
+            False: {visible: false}
     - type: AmbientOnPowered
     - type: AmbientSound
       volume: -9
       range: 5
+      enabled: false
       sound:
         path: /Audio/Ambience/Objects/server_fans.ogg
+    - type: GuideHelp
+      guides:
+      - Medical

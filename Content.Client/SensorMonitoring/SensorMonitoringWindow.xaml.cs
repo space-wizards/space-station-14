@@ -28,6 +28,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
     public SensorMonitoringWindow()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
     }
 
     public void UpdateState(ConsoleUIState state)

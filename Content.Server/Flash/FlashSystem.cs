@@ -21,6 +21,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Flash
 {
@@ -28,7 +29,7 @@ namespace Content.Server.Flash
     {
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
-        [Dependency] private readonly SharedChargesSystem _charges = default!;
+        [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
@@ -39,10 +40,12 @@ namespace Content.Server.Flash
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
+        private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
+
         public override void Initialize()
         {
             base.Initialize();
-
+            SubscribeLocalEvent<FlashImmunityComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
             // ran before toggling light for extra-bright lantern
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand, before: new[] { typeof(HandheldLightSystem) });
@@ -51,7 +54,13 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<PermanentBlindnessComponent, FlashAttemptEvent>(OnPermanentBlindnessFlashAttempt);
             SubscribeLocalEvent<TemporaryBlindnessComponent, FlashAttemptEvent>(OnTemporaryBlindnessFlashAttempt);
         }
+        
+        private void OnExamine(Entity<FlashImmunityComponent> ent, ref ExaminedEvent args)
 
+        {
+            args.PushMarkup(Loc.GetString("flash-protection"));
+        }
+        
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
         {
             if (!args.IsHit ||
@@ -83,18 +92,18 @@ namespace Content.Server.Flash
                 return false;
 
             TryComp<LimitedChargesComponent>(uid, out var charges);
-            if (_charges.IsEmpty(uid, charges))
+            if (_sharedCharges.IsEmpty((uid, charges)))
                 return false;
 
-            _charges.UseCharge(uid, charges);
+            _sharedCharges.TryUseCharge((uid, charges));
             _audio.PlayPvs(comp.Sound, uid);
             comp.Flashing = true;
             _appearance.SetData(uid, FlashVisuals.Flashing, true);
 
-            if (_charges.IsEmpty(uid, charges))
+            if (_sharedCharges.IsEmpty((uid, charges)))
             {
                 _appearance.SetData(uid, FlashVisuals.Burnt, true);
-                _tag.AddTag(uid, "Trash");
+                _tag.AddTag(uid, TrashTag);
                 _popup.PopupEntity(Loc.GetString("flash-component-becomes-empty"), user);
             }
 

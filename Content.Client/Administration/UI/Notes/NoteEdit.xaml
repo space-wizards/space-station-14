@@ -8,6 +8,7 @@
             <Label Name="ExpiryLabel" Text="{Loc admin-note-editor-expiry-label}" Visible="False" />
             <HistoryLineEdit Name="ExpiryLineEdit" PlaceHolder="{Loc admin-note-editor-expiry-placeholder}"
                              Visible="False" HorizontalExpand="True" />
+            <OptionButton Name="ExpiryLengthDropdown" Visible="False" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <OptionButton Name="TypeOption" HorizontalAlignment="Center" />

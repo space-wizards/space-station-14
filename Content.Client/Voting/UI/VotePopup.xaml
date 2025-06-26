@@ -1,10 +1,11 @@
-﻿<Control xmlns="https://spacestation14.io" MinWidth="300" MaxWidth="500">
+<Control xmlns="https://spacestation14.io" MinWidth="300" MaxWidth="500">
     <PanelContainer StyleClasses="AngleRect" />
     <BoxContainer Margin="4" Orientation="Vertical">
         <Label Name="VoteCaller" />
         <RichTextLabel Name="VoteTitle" />
-
-        <GridContainer Columns="3" Name="VoteOptionsContainer" />
+        <Button Margin="4 4" Name="FollowVoteTarget" Text="{Loc 'ui-vote-follow-button-popup'}" Visible="False"></Button>
+        
+        <GridContainer Columns="3" Name="VoteOptionsContainer"/>
         <BoxContainer Orientation="Horizontal">
             <ProgressBar Margin="4" HorizontalExpand="True" Name="TimeLeftBar" MinValue="0" MaxValue="1" />
             <Label Name="TimeLeftText" />

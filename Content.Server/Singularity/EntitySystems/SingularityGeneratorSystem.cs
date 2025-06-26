@@ -1,14 +1,23 @@
 using Content.Server.ParticleAccelerator.Components;
-using Content.Server.Singularity.Components;
+using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.EntitySystems;
+using Robust.Server.GameObjects;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
 
-public sealed class SingularityGeneratorSystem : EntitySystem
+public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSystem
 {
     #region Dependencies
     [Dependency] private readonly IViewVariablesManager _vvm = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
     #endregion Dependencies
 
     public override void Initialize()
@@ -100,11 +109,37 @@ public sealed class SingularityGeneratorSystem : EntitySystem
     /// <param name="args">The state of the beginning of the collision.</param>
     private void HandleParticleCollide(EntityUid uid, ParticleProjectileComponent component, ref StartCollideEvent args)
     {
-        if (EntityManager.TryGetComponent<SingularityGeneratorComponent>(args.OtherEntity, out var singularityGeneratorComponent))
+        if (!EntityManager.TryGetComponent<SingularityGeneratorComponent>(args.OtherEntity, out var generatorComp))
+            return;
+
+        if (_timing.CurTime < _metadata.GetPauseTime(uid) + generatorComp.NextFailsafe && !generatorComp.FailsafeDisabled)
+        {
+            EntityManager.QueueDeleteEntity(uid);
+            return;
+        }
+
+        var contained = true;
+        if (!generatorComp.FailsafeDisabled)
+        {
+            var transform = Transform(args.OtherEntity);
+            var directions = Enum.GetValues<Direction>().Length;
+            for (var i = 0; i < directions - 1; i += 2) // Skip every other direction, checking only cardinals
+            {
+                if (!CheckContainmentField((Direction)i, new Entity<SingularityGeneratorComponent>(args.OtherEntity, generatorComp), transform))
+                    contained = false;
+            }
+        }
+
+        if (!contained && !generatorComp.FailsafeDisabled)
+        {
+            generatorComp.NextFailsafe = _timing.CurTime + generatorComp.FailsafeCooldown;
+            PopupSystem.PopupEntity(Loc.GetString("comp-generator-failsafe", ("target", args.OtherEntity)), args.OtherEntity, PopupType.LargeCaution);
+        }
+        else
         {
             SetPower(
                 args.OtherEntity,
-                singularityGeneratorComponent.Power + component.State switch
+                generatorComp.Power + component.State switch
                 {
                     ParticleAcceleratorPowerState.Standby => 0,
                     ParticleAcceleratorPowerState.Level0 => 1,
@@ -113,10 +148,46 @@ public sealed class SingularityGeneratorSystem : EntitySystem
                     ParticleAcceleratorPowerState.Level3 => 8,
                     _ => 0
                 },
-                singularityGeneratorComponent
+                generatorComp
             );
-            EntityManager.QueueDeleteEntity(uid);
         }
+
+        EntityManager.QueueDeleteEntity(uid);
     }
     #endregion Event Handlers
+
+    /// <summary>
+    /// Checks whether there's a containment field in a given direction away from the generator
+    /// </summary>
+    /// <param name="transform">The transform component of the singularity generator.</param>
+    /// <remarks>Mostly copied from <see cref="ContainmentFieldGeneratorSystem"/> </remarks>
+    private bool CheckContainmentField(Direction dir, Entity<SingularityGeneratorComponent> generator, TransformComponent transform)
+    {
+        var component = generator.Comp;
+
+        var (worldPosition, worldRotation) = _transformSystem.GetWorldPositionRotation(transform);
+        var dirRad = dir.ToAngle() + worldRotation;
+
+        var ray = new CollisionRay(worldPosition, dirRad.ToVec(), component.CollisionMask);
+        var rayCastResults = _physics.IntersectRay(transform.MapID, ray, component.FailsafeDistance, generator, false);
+        var genQuery = GetEntityQuery<ContainmentFieldComponent>();
+
+        RayCastResults? closestResult = null;
+
+        foreach (var result in rayCastResults)
+        {
+            if (genQuery.HasComponent(result.HitEntity))
+                closestResult = result;
+
+            break;
+        }
+
+        if (closestResult == null)
+            return false;
+
+        var ent = closestResult.Value.HitEntity;
+
+        // Check that the field can't be moved. The fields' transform parenting is weird, so skip that
+        return TryComp<PhysicsComponent>(ent, out var collidableComponent) && collidableComponent.BodyType == BodyType.Static;
+    }
 }

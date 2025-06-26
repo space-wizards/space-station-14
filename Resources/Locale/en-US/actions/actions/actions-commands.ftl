@@ -1,6 +1,7 @@
 ﻿## Actions Commands loc
 
 ## Upgradeaction command loc
+upgradeaction-command-help = Usage: upgradeaction <entityUid> [level]
 upgradeaction-command-need-one-argument = upgradeaction needs at least one argument, the action entity uid. The second optional argument is a specified level.
 upgradeaction-command-max-two-arguments = upgradeaction has a maximum of two arguments, the action entity uid and the (optional) level to set.
 upgradeaction-command-second-argument-not-number = upgradeaction's second argument can only be a number.

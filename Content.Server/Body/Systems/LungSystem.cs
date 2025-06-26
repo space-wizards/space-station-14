@@ -1,4 +1,3 @@
-using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -6,6 +5,8 @@ using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
+using BreathToolComponent = Content.Shared.Atmos.Components.BreathToolComponent;
+using InternalsComponent = Content.Shared.Body.Components.InternalsComponent;
 
 namespace Content.Server.Body.Systems;
 
@@ -14,7 +15,6 @@ public sealed class LungSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
     public static string LungSolutionName = "Lung";
 
@@ -24,12 +24,11 @@ public sealed class LungSystem : EntitySystem
         SubscribeLocalEvent<LungComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<BreathToolComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<BreathToolComponent, GotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<BreathToolComponent, ItemMaskToggledEvent>(OnMaskToggled);
     }
 
     private void OnGotUnequipped(Entity<BreathToolComponent> ent, ref GotUnequippedEvent args)
     {
-        _atmosphereSystem.DisconnectInternals(ent);
+        _atmos.DisconnectInternals(ent);
     }
 
     private void OnGotEquipped(Entity<BreathToolComponent> ent, ref GotEquippedEvent args)
@@ -38,8 +37,6 @@ public sealed class LungSystem : EntitySystem
         {
             return;
         }
-
-        ent.Comp.IsFunctional = true;
 
         if (TryComp(args.Equipee, out InternalsComponent? internals))
         {
@@ -54,24 +51,6 @@ public sealed class LungSystem : EntitySystem
         {
             solution.MaxVolume = 100.0f;
             solution.CanReact = false; // No dexalin lungs
-        }
-    }
-
-    private void OnMaskToggled(Entity<BreathToolComponent> ent, ref ItemMaskToggledEvent args)
-    {
-        if (args.IsToggled || args.IsEquip)
-        {
-            _atmos.DisconnectInternals(ent);
-        }
-        else
-        {
-            ent.Comp.IsFunctional = true;
-
-            if (TryComp(args.Wearer, out InternalsComponent? internals))
-            {
-                ent.Comp.ConnectedInternalsEntity = args.Wearer;
-                _internals.ConnectBreathTool((args.Wearer, internals), ent);
-            }
         }
     }
 
@@ -93,7 +72,7 @@ public sealed class LungSystem : EntitySystem
             if (moles <= 0)
                 continue;
 
-            var reagent = _atmosphereSystem.GasReagents[i];
+            var reagent = _atmos.GasReagents[i];
             if (reagent is null)
                 continue;
 

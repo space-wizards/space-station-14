@@ -1,3 +1,4 @@
+using Content.Shared.Guidebook;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Doors.Components
@@ -23,12 +24,14 @@ namespace Content.Shared.Doors.Components
         /// Maximum pressure difference before the firelock will refuse to open, in kPa.
         /// </summary>
         [DataField("pressureThreshold"), ViewVariables(VVAccess.ReadWrite)]
+        [GuidebookData]
         public float PressureThreshold = 20;
 
         /// <summary>
         /// Maximum temperature difference before the firelock will refuse to open, in k.
         /// </summary>
         [DataField("temperatureThreshold"), ViewVariables(VVAccess.ReadWrite)]
+        [GuidebookData]
         public float TemperatureThreshold = 330;
         // this used to check for hot-spots, but because accessing that data is a a mess this now just checks
         // temperature. This does mean a cold room will trigger hot-air pop-ups
@@ -79,6 +82,52 @@ namespace Content.Shared.Doors.Components
         /// </summary>
         [DataField, AutoNetworkedField]
         public bool Powered;
+
+        #endregion
+
+        #region Client animation
+
+        /// <summary>
+        /// The sprite state used to animate the airlock frame when the airlock opens.
+        /// </summary>
+        [DataField]
+        public string OpeningLightSpriteState = "opening_unlit";
+
+        /// <summary>
+        /// The sprite state used to animate the airlock frame when the airlock closes.
+        /// </summary>
+        [DataField]
+        public string ClosingLightSpriteState = "closing_unlit";
+
+        /// <summary>
+        /// The sprite state used to animate the airlock panel when the airlock opens.
+        /// </summary>
+        [DataField]
+        public string OpeningPanelSpriteState = "panel_opening";
+
+        /// <summary>
+        /// The sprite state used to animate the airlock panel when the airlock closes.
+        /// </summary>
+        [DataField]
+        public string ClosingPanelSpriteState = "panel_closing";
+
+        /// <summary>
+        /// The sprite state used for the open airlock lights.
+        /// </summary>
+        [DataField]
+        public string OpenLightSpriteState = "open_unlit";
+
+        /// <summary>
+        /// The sprite state used for the closed airlock lights.
+        /// </summary>
+        [DataField]
+        public string WarningLightSpriteState = "closed_unlit";
+
+        /// <summary>
+        /// The sprite state used for the 'access denied' lights animation.
+        /// </summary>
+        [DataField]
+        public string DenySpriteState = "deny_unlit";
 
         #endregion
     }

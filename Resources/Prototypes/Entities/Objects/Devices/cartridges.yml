@@ -16,6 +16,25 @@
       state: book_icon
   - type: NotekeeperCartridge
 
+
+- type: entity
+  parent: BaseItem
+  id: NanoTaskCartridge
+  name: NanoTask cartridge
+  description: A program that allows you to keep a list of tasks to do.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-nav
+  - type: Cartridge
+    programName: nano-task-program-name
+    icon:
+      sprite: Interface/Misc/program_icons.rsi
+      state: nano_task
+  - type: UIFragment
+    ui: !type:NanoTaskUi
+  - type: NanoTaskCartridge
+
 - type: entity
   parent: BaseItem
   id: NewsReaderCartridge
@@ -116,3 +135,41 @@
   - type: WantedListCartridge
   - type: StealTarget
     stealGroup: WantedListCartridge
+
+- type: entity
+  parent: BaseItem
+  id: MedTekCartridge
+  name: MedTek cartridge
+  description: A program that provides medical diagnostic tools.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-med
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-med
+    - type: Cartridge
+      programName: med-tek-program-name
+      icon:
+        sprite: Objects/Specific/Medical/healthanalyzer.rsi
+        state: icon
+    - type: MedTekCartridge
+
+- type: entity
+  parent: BaseItem
+  id: AstroNavCartridge
+  name: AstroNav cartridge
+  description: A program for navigation that provides GPS coordinates.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-nav
+    - type: Icon
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-nav
+    - type: Cartridge
+      programName: astro-nav-program-name
+      icon:
+        sprite: Objects/Devices/gps.rsi
+        state: icon
+    - type: AstroNavCartridge
