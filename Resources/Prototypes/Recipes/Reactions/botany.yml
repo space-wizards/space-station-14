@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reaction
   id: EZNutrient
   reactants:
@@ -24,6 +26,7 @@
 - type: reaction
   id: Sedin
   reactants:
+# start of modifications
     RobustHarvest:
       amount: 3
     Diethylamine:
@@ -33,6 +36,7 @@
       catalyst: true
   products:
     Sedin: 2
+# end of modifications
 
 - type: reaction
   id: Left4Zed

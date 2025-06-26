@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reaction
   id: Ammonia
   reactants:
@@ -65,10 +67,12 @@
 - type: reaction
   id: PolytrinicAcid
   reactants:
+# start of modifications
     PenteticAcid:
       amount: 2
     HexeticAcid:
       amount: 2
+# end of modifications
   products:
     PolytrinicAcid: 3
 

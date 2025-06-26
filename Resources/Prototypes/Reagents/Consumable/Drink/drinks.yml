@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reagent
   id: Coffee
   name: reagent-name-coffee
@@ -19,9 +21,9 @@
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
-      - !type:AdjustReagent
-        reagent: Caffeine
-        amount: 0.5
+      - !type:AdjustReagent # Ronstation
+        reagent: Caffeine # Ronstation
+        amount: 0.5 # Ronstation
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/coffeeglass.rsi
     state: icon_empty
@@ -112,9 +114,9 @@
         key: Drowsiness
         time: 2.0
         type: Remove
-      - !type:AdjustReagent
-        reagent: Caffeine
-        amount: 0.2
+      - !type:AdjustReagent # Ronstation
+        reagent: Caffeine # Ronstation
+        amount: 0.2 # Ronstation
 
 - type: reagent
   id: GreenTea
@@ -171,9 +173,9 @@
         key: Drowsiness
         time: 2.0
         type: Remove
-      - !type:AdjustReagent
-        reagent: Caffeine
-        amount: 0.2
+      - !type:AdjustReagent # Ronstation
+        reagent: Caffeine # Ronstation
+        amount: 0.2 # Ronstation
 
 - type: reagent
   id: IcedGreenTea

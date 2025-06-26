@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reagent
   id: Cryptobiolin
   name: reagent-name-cryptobiolin
@@ -416,13 +418,13 @@
   color: "#422912"
   metabolisms:
     Medicine:
-      metabolismRate: 0.25
+      metabolismRate: 0.25 # Ronstation
       effects:
       - !type:ChemVomit
         conditions:
         - !type:ReagentThreshold
-          min: 2
-        probability: 0.7
+          min: 2 # Ronstation
+        probability: 0.7 # Ronstation
 
 - type: reagent
   id: Inaprovaline
@@ -511,8 +513,8 @@
         messages: [ "leporazine-effect-temperature-adjusting" ]
         probability: 0.2
       - !type:AdjustReagent
-        reagent: Arcticine
-        amount: -10.0
+        reagent: Arcticine # Ronstation
+        amount: -10.0 # Ronstation
 
 - type: reagent
   id: Barozine
@@ -524,6 +526,7 @@
   color: "#ff867d"
   metabolisms:
     Medicine:
+# start of modifications
       metabolismRate: 0.25
       effects:
       - !type:HealthChange
@@ -558,6 +561,7 @@
         visualType: Large
         messages: [ "barozine-effect-skin-burning", "barozine-effect-muscle-contract" ]
         probability: 0.1
+# end of modifications
 
 - type: reagent
   id: Phalanximine
@@ -768,6 +772,7 @@
         - !type:TotalDamage
           max: 50
         damage:
+# start of modifications
           groups:
             Brute: -1.5
           types:
@@ -775,6 +780,7 @@
             Heat: -0.5
             Shock: -0.5
             Cold: -0.5
+# end of modifications
 
 - type: reagent
   id: Lipozine
@@ -1226,6 +1232,7 @@
   metabolisms:
     Medicine:
       effects:
+# start of modifications
         - !type:EvenHealthChange
           conditions:
           - !type:Temperature
@@ -1234,6 +1241,7 @@
             Brute: -4.0
             Burn: -4.0
             Toxin: -4.0
+# end of modifications
 
 - type: reagent
   id : Aloxadone
@@ -1257,9 +1265,9 @@
             Heat: -4.0
             Shock: -4.0
             Caustic: -1.5
-      - !type:AdjustReagent
-        reagent: Arcticine
-        amount: -10.0
+      - !type:AdjustReagent # Ronstation
+        reagent: Arcticine # Ronstation
+        amount: -10.0 # Ronstation
 
 - type: reagent
   id: Traumoxadone

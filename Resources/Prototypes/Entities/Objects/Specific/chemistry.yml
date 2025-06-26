@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   parent: BaseItem
   id: BaseBeaker
@@ -24,7 +26,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 60
+        maxVol: 60 # Ronstation
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -122,7 +124,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 60
+        maxVol: 60 # Ronstation
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -178,7 +180,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 50
+        maxVol: 60 # Ronstation
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -245,7 +247,7 @@
       beaker:
         reagents:
         - ReagentId: Cryoxadone
-          Quantity: 60
+          Quantity: 60 # Ronstation
 
 - type: entity
   name: large beaker
@@ -268,7 +270,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 120
+        maxVol: 120 # Ronstation
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -543,7 +545,7 @@
   - type: Injector
     delay: 2.5
     injectOnly: false
-    maxTransferAmount: 25
+    maxTransferAmount: 25 # Ronstation
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: syringe
