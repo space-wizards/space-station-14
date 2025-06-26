@@ -40,12 +40,12 @@
         key: KnockedDown
         time: 3
         type: Remove
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Haloperidol
           max: 0.01
-        key: Drowsiness
+        effectProto: StatusEffectDrowsiness
         time: 10
         type: Remove
     Medicine:
@@ -88,12 +88,12 @@
         key: KnockedDown
         time: 1
         type: Remove
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Haloperidol
           max: 0.01
-        key: Drowsiness
+        effectProto: StatusEffectDrowsiness
         time: 10
         type: Remove
       - !type:PopupMessage
@@ -152,16 +152,16 @@
         component: StaminaModifier
         time: 3
         type: Add
-      - !type:GenericStatusEffect
-        key: ForcedSleep
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectForcedSleeping
         time: 3
         type: Remove
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Haloperidol
           max: 0.01
-        key: Drowsiness
+        effectProto: StatusEffectDrowsiness
         time: 10
         type: Remove
     Medicine:
@@ -296,14 +296,13 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Nocturine
           min: 8
-        key: ForcedSleep
-        component: ForcedSleeping
-        refresh: false
+        effectProto: StatusEffectForcedSleeping
+        time: 3
         type: Add
 
 - type: reagent
@@ -376,7 +375,7 @@
   desc: reagent-desc-tear-gas
   physicalDesc: reagent-physical-desc-milky
   flavor: salty
-  color: "#96a8b5"
+  color: "#ffffff4d"
   boilingPoint: 255.0
   meltingPoint: 36.0
   metabolisms:
@@ -402,18 +401,28 @@
         - norepinephricacid-effect-eye-pain
         - norepinephricacid-effect-darkness
         - norepinephricacid-effect-blindness
-        conditions:
-        - !type:ReagentThreshold
-          min: 15
       - !type:Emote
         emote: Scream
+        probability: 0.08
+        conditions:
+        - !type:ReagentThreshold
+          min: 4
+      - !type:Emote
+        emote: Cough
         probability: 0.08
       - !type:GenericStatusEffect
         key: TemporaryBlindness
         component: TemporaryBlindness
         conditions:
         - !type:ReagentThreshold
-          min: 20
+          min: 4
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+        statusLifetime: 1.5
+        conditions: # because of the remainding after effect, threshold is given so the effects ends simultaniously
+        - !type:ReagentThreshold
+          min: 4
 
 - type: reagent
   id: Happiness

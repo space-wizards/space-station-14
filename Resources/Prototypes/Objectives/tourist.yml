@@ -36,7 +36,7 @@
     allowedSpecies: # Reptilians and Moths have diets that restrict food
     - Human
     - Dwarf
-    - Slimeperson
+    - SlimePerson
     - Arachnid
     - Vox
     - Diona
@@ -51,7 +51,7 @@
     - Reptilian
     - Human # Everything below can eat anything reptilians can
     - Dwarf
-    - Slimeperson
+    - SlimePerson
     - Arachnid
     - Vox
     - Diona

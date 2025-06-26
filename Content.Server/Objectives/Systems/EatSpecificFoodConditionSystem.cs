@@ -1,4 +1,6 @@
 using Content.Server.Objectives.Components;
+using Content.Shared.Nutrition;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 
