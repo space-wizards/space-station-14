@@ -461,7 +461,7 @@
       projectile:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
+          bounds: "-0.05,-0.05,0.05,0.05"
         hard: false
         mask:
         - Opaque
@@ -910,7 +910,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
+    sprite: Objects/Fun/capgun.rsi
     layers:
       - state: capbullet
   - type: Projectile

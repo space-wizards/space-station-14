@@ -1,3 +1,4 @@
+using Content.Client.Hands.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.RCD;
@@ -15,6 +16,7 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPlacementManager _placementManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
 
     private string _placementMode = typeof(AlignRCDConstruction).Name;
     private Direction _placementDirection = default;
@@ -33,12 +35,11 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
             return;
 
         // Determine if player is carrying an RCD in their active hand
-        var player = _playerManager.LocalSession?.AttachedEntity;
-
-        if (!TryComp<HandsComponent>(player, out var hands))
+        if (_playerManager.LocalSession?.AttachedEntity is not { } player)
             return;
 
-        var heldEntity = hands.ActiveHand?.HeldEntity;
+        if (!_hands.TryGetActiveItem(player, out var heldEntity))
+            return;
 
         if (!TryComp<RCDComponent>(heldEntity, out var rcd))
         {

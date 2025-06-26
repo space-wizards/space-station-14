@@ -355,4 +355,36 @@
   id: 43
   time: '2025-06-10T09:36:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38209
+- author: Vortebo
+  changes:
+  - message: On Relic, mapping errors have been fixed and more job-required equipment
+      is available.
+    type: Fix
+  id: 44
+  time: '2025-06-11T22:25:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38269
+- author: Deerstop
+  changes:
+  - message: On Elkridge, several areas have received major overhauls, including the
+      Vault, HoP, EVA, Genpop, and the Armoury.
+    type: Tweak
+  id: 45
+  time: '2025-06-13T19:17:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38259
+- author: SlamBamActionman
+  changes:
+  - message: Exo has received a "day 1 patch", fixing various incorrectly mapped features
+      and some smaller balance tweaks.
+    type: Fix
+  id: 46
+  time: '2025-06-16T16:43:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38348
+- author: SlamBamActionman
+  changes:
+  - message: Exo has received minor balance changes and fixes, along with having its
+      Atmos layout slightly modified.
+    type: Tweak
+  id: 47
+  time: '2025-06-19T04:06:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38435
 Order: 1
