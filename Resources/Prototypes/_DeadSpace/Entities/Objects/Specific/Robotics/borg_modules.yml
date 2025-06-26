@@ -18,6 +18,23 @@
     - Fulton0
   - type: BorgModuleIcon
     icon: { sprite: /Textures/_DeadSpace/Interface/Actions/actions_borg.rsi, state: adv-mining-module }
+  - type: Item
+    sprite: Objects/Specific/Robotics/borgmodule.rsi
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#EBD8B7"
+      - state: base-module-inhand-left
+        color: "#613D1D"
+      - state: base-stripes-inhand-left
+        color: "#593718"
+      right:
+      - state: base-icon-inhand-right
+        color: "#EBD8B7"
+      - state: base-module-inhand-right
+        color: "#613D1D"
+      - state: base-stripes-inhand-right
+        color: "#593718"
 
 - type: entity
   id: BorgModuleMiningWeapon
@@ -35,3 +52,20 @@
     - WeaponCrusherDagger
   - type: BorgModuleIcon
     icon: { sprite: /Textures/_DeadSpace/Interface/Actions/actions_borg.rsi, state: pka-mining-module }
+  - type: Item
+    sprite: Objects/Specific/Robotics/borgmodule.rsi
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#EBD8B7"
+      - state: base-module-inhand-left
+        color: "#613D1D"
+      - state: base-stripes-inhand-left
+        color: "#593718"
+      right:
+      - state: base-icon-inhand-right
+        color: "#EBD8B7"
+      - state: base-module-inhand-right
+        color: "#613D1D"
+      - state: base-stripes-inhand-right
+        color: "#593718"

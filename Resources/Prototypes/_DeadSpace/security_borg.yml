@@ -242,9 +242,28 @@
   parent: BaseBorgModule
   abstract: true
   components:
-    - type: Tag
-      tags:
-        - BorgModuleSecurity
+  - type: Item
+    sprite: Objects/Specific/Robotics/borgmodule.rsi
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#EBD8B7"
+      - state: base-module-inhand-left
+        color: "#34476c"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#404040"
+      right:
+      - state: base-icon-inhand-right
+        color: "#EBD8B7"
+      - state: base-module-inhand-right
+        color: "#34476c"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#404040"
+  - type: Tag
+    tags:
+    - BorgModuleSecurity
 
 - type: entity
   name: челюсти жизни киборга СБ
