@@ -8375,4 +8375,18 @@ Entries:
   id: 1155
   time: '2025-06-26T00:55:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/907
+- author: PubliclyExecutedPig
+  changes:
+  - message: Re-Added Lone Operatives to survival
+    type: Tweak
+  id: 1156
+  time: '2025-06-26T12:53:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/915
+- author: PubliclyExecutedPig
+  changes:
+  - message: Loneops minpop 20 -> 35
+    type: Tweak
+  id: 1157
+  time: '2025-06-26T12:53:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/915
 
