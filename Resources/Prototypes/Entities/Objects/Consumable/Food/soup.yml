@@ -916,8 +916,6 @@
           Quantity: 1 # imp
         - ReagentId: Water # imp
           Quantity: 4
-        - ReagentId: Nutriment
-          Quantity: 8
 
   - type: Tag
     tags:

@@ -142,17 +142,9 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Reptilian]
-  # imp edit below
-  layering:
-    tail_large_front: TailBehindBackpack
-    tail_large_behind: TailBehind
-  colorLinks:
-    tail_large_behind: tail_large_front
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: tail_large_front
-  - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: tail_large_behind
+    state: tail_large
 
 - type: marking
   id: LizardTailSpikes
