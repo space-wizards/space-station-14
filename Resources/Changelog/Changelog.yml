@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SpaceRox1244
-  changes:
-  - message: Cargo can now order handheld artifact containers for transporting small
-      artifacts.
-    type: Add
-  id: 8206
-  time: '2025-04-16T23:35:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33327
 - author: ScarKy0
   changes:
   - message: Hydroponics tray flatpacks can now be bought for 750 spesos.
@@ -3882,3 +3874,10 @@
   id: 8718
   time: '2025-06-26T16:17:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38605
+- author: Hitlinemoss
+  changes:
+  - message: The Quartermaster's PDA now comes with AstroNav preinstalled.
+    type: Tweak
+  id: 8719
+  time: '2025-06-26T22:09:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38445
