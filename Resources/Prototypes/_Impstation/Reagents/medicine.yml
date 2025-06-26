@@ -7,12 +7,6 @@
   flavor: magical
   color: "#a50ed8"
   contraband: Tier2Contraband
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:MakeSentient
-        conditions:
-        - !type:ReagentThreshold
 
 - type: reagent
   id: ActivatedSubjuzine
