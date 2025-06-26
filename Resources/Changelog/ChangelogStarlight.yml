@@ -8434,4 +8434,11 @@ Entries:
   id: 1163
   time: '2025-06-26T13:04:22.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/911
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added the snub-nose revolver (currently unobtainable in game)
+    type: Add
+  id: 1164
+  time: '2025-06-26T13:22:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/820
 
