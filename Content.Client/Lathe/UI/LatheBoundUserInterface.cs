@@ -43,7 +43,7 @@ namespace Content.Client.Lathe.UI
                         _menu.Recipes = msg.Recipes;
                     _menu?.PopulateRecipes();
                     _menu?.UpdateCategories();
-                    _menu?.PopulateQueueList(msg.Queue.Value);
+                    _menu?.PopulateQueueList(msg.Queue);
                     _menu?.SetQueueInfo(msg.CurrentlyProducing);
                     break;
             }

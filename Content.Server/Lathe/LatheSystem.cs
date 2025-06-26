@@ -274,7 +274,7 @@ namespace Content.Server.Lathe
             if (producing == null && component.Queue.TryPeek(out var next))
                 producing = next;
 
-            var state = new LatheUpdateState(GetAvailableRecipes(uid, component), new(component.Queue.ToArray()), producing);
+            var state = new LatheUpdateState(GetAvailableRecipes(uid, component), component.Queue.ToArray(), producing);
             _uiSys.SetUiState(uid, LatheUiKey.Key, state);
         }
 
