@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Hydroponics tray flatpacks can now be bought for 750 spesos.
-    type: Add
-  id: 8207
-  time: '2025-04-16T23:51:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36630
 - author: EmoGarbage404
   changes:
   - message: Fixed artifacts sometimes having negative research values.
@@ -3881,3 +3874,10 @@
   id: 8719
   time: '2025-06-26T22:09:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38445
+- author: BigfootBravo
+  changes:
+  - message: Bladed flatcaps are now minor contraband.
+    type: Tweak
+  id: 8720
+  time: '2025-06-26T22:57:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38597
