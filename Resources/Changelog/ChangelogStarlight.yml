@@ -8448,4 +8448,11 @@ Entries:
   id: 1165
   time: '2025-06-26T17:39:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/918
+- author: IamSidzilla
+  changes:
+  - message: Adds Kasane Teto Clothing (Trieste Port!)
+    type: Add
+  id: 1166
+  time: '2025-06-26T18:08:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/817
 
