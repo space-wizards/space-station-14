@@ -55,6 +55,7 @@
       - id: ClothingUniformJumpsuitBlueShieldCaptain
       - id: ClothingOuterCoatBlueShield
       - id: ClothingNeckCloakBsoCape
+      - id: RubberStampBSO
 
 - type: entity
   id: LockerBSOFilledBluespaced
