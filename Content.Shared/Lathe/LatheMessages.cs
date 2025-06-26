@@ -12,9 +12,9 @@ public sealed class LatheUpdateState : BoundUserInterfaceState
 
     public NetListAsArray<ProtoId<LatheRecipePrototype>> Queue;
 
-    public LatheRecipePrototype? CurrentlyProducing;
+    public ProtoId<LatheRecipePrototype>? CurrentlyProducing;
 
-    public LatheUpdateState(List<ProtoId<LatheRecipePrototype>> recipes, NetListAsArray<ProtoId<LatheRecipePrototype>> queue, LatheRecipePrototype? currentlyProducing = null)
+    public LatheUpdateState(List<ProtoId<LatheRecipePrototype>> recipes, NetListAsArray<ProtoId<LatheRecipePrototype>> queue, ProtoId<LatheRecipePrototype>? currentlyProducing = null)
     {
         Recipes = recipes;
         Queue = queue;

@@ -244,11 +244,13 @@ public sealed partial class LatheMenu : DefaultWindow
         }
     }
 
-    public void SetQueueInfo(LatheRecipePrototype? recipe)
+    public void SetQueueInfo(ProtoId<LatheRecipePrototype>? recipeProto)
     {
-        FabricatingContainer.Visible = recipe != null;
-        if (recipe == null)
+        FabricatingContainer.Visible = recipeProto != null;
+        if (recipeProto == null)
             return;
+
+        var recipe = _prototypeManager.Index(recipeProto.Value);
 
         FabricatingDisplayContainer.Children.Clear();
         FabricatingDisplayContainer.AddChild(GetRecipeDisplayControl(recipe));

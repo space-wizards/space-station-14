@@ -64,7 +64,7 @@ namespace Content.Shared.Lathe
         /// The recipe the lathe is currently producing
         /// </summary>
         [ViewVariables]
-        public LatheRecipePrototype? CurrentRecipe;
+        public ProtoId<LatheRecipePrototype>? CurrentRecipe;
 
         #region MachineUpgrading
         /// <summary>
