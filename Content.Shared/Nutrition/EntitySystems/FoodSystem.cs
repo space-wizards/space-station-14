@@ -26,7 +26,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Nutrition.EntitySystems;
@@ -54,7 +53,6 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     public const float MaxFeedDistance = 1.0f;
 
@@ -358,7 +356,7 @@ public sealed class FoodSystem : EntitySystem
         PredictedDel(food);
         foreach (var trash in trashes)
         {
-            var spawnedTrash = Spawn(trash, position);
+            var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
 
             // If the user is holding the item
             if (tryPickup)
