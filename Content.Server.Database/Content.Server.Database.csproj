@@ -28,12 +28,5 @@
     <ProjectReference Include="..\Content.Shared.Database\Content.Shared.Database.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Migrations\Sqlite\20250625232416_gameplay_metrics_1.cs" />
-    <Compile Remove="Migrations\Sqlite\20250625232416_gameplay_metrics_1.Designer.cs" />
-    <Compile Remove="Migrations\Postgres\20250625232423_gameplay_metrics_1.cs" />
-    <Compile Remove="Migrations\Postgres\20250625232423_gameplay_metrics_1.Designer.cs" />
-  </ItemGroup>
-
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
 </Project>
