@@ -15,6 +15,10 @@
   parent: BaseTouristObjective
   id: BaseEatFoodObjective
   components:
+  - type: JobExistsRequirement # You're not cooking your own food on your vacation!
+    jobs:
+    - Chef
+    - ServiceWorker
   - type: EatSpecificFoodCondition
     titleText: eat-food-condition-title
     descriptionText: eat-food-condition-description
@@ -35,6 +39,7 @@
     - Slimeperson
     - Arachnid
     - Vox
+    - Diona
 
 - type: entity
   abstract: true
@@ -49,6 +54,7 @@
     - Slimeperson
     - Arachnid
     - Vox
+    - Diona
 
 - type: entity
   abstract: true
@@ -60,14 +66,14 @@
     - Moth
 
 - type: entity
-  abstract: true
+  abstract: true # Abstract, to fill in the targetWhitelist for UseNearObjectiveCondition
   parent: BaseTouristObjective
   id: BasePhotographObjectObjective
   components:
   - type: Objective
     icon:
       sprite: Objects/Weapons/Melee/flash.rsi
-      state: icon
+      state: flash
   - type: UseNearObjectiveCondition
     useWhitelist:
       components:
@@ -85,7 +91,7 @@
   - type: Objective
     icon:
       sprite: Objects/Weapons/Melee/flash.rsi
-      state: icon
+      state: flash
   - type: UseNearObjectiveCondition
     targetSingleEntity: true
     targetWhitelist:
@@ -105,7 +111,7 @@
   - type: Objective
     icon:
       sprite: Objects/Weapons/Melee/flash.rsi
-      state: icon
+      state: flash
   - type: TargetObjective
     title: photograph-person-condition-title
   - type: PickRandomHead
