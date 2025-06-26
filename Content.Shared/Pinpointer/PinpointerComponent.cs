@@ -62,6 +62,9 @@ public sealed partial class PinpointerComponent : Component
 
     [ViewVariables]
     public bool HasTarget => DistanceToTarget != Distance.Unknown;
+
+    [ViewVariables]
+    public Angle? CurrentRenderedAngle;
 }
 
 [Serializable, NetSerializable]
