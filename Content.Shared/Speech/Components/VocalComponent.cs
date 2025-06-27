@@ -49,5 +49,5 @@ public sealed partial class VocalComponent : Component
     /// </summary>
     [ViewVariables]
     [AutoNetworkedField]
-    public EmoteSoundsPrototype? EmoteSounds = null;
+    public ProtoId<EmoteSoundsPrototype>? EmoteSounds = null;
 }

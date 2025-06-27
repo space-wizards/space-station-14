@@ -94,7 +94,7 @@ namespace Content.Server.Shuttles.Systems
         private void OnShutdown(EntityUid uid, DockingComponent component, ComponentShutdown args)
         {
             if (component.DockedWith == null ||
-                EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage > EntityLifeStage.MapInitialized)
+                Comp<MetaDataComponent>(uid).EntityLifeStage > EntityLifeStage.MapInitialized)
             {
                 return;
             }
@@ -137,8 +137,8 @@ namespace Content.Server.Shuttles.Systems
             dockA.DockJointId = null;
 
             // If these grids are ever null then need to look at fixing ordering for unanchored events elsewhere.
-            var gridAUid = EntityManager.GetComponent<TransformComponent>(dockAUid).GridUid;
-            var gridBUid = EntityManager.GetComponent<TransformComponent>(dockBUid.Value).GridUid;
+            var gridAUid = Comp<TransformComponent>(dockAUid).GridUid;
+            var gridBUid = Comp<TransformComponent>(dockBUid.Value).GridUid;
 
             var msg = new UndockEvent
             {
@@ -159,7 +159,7 @@ namespace Content.Server.Shuttles.Systems
             var component = entity.Comp;
 
             // Use startup so transform already initialized
-            if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored)
+            if (!Comp<TransformComponent>(uid).Anchored)
                 return;
 
             // This little gem is for docking deserialization
@@ -169,7 +169,7 @@ namespace Content.Server.Shuttles.Systems
                 if (MetaData(component.DockedWith.Value).EntityLifeStage < EntityLifeStage.Initialized)
                     return;
 
-                var otherDock = EntityManager.GetComponent<DockingComponent>(component.DockedWith.Value);
+                var otherDock = Comp<DockingComponent>(component.DockedWith.Value);
                 DebugTools.Assert(otherDock.DockedWith != null);
 
                 Dock((uid, component), (component.DockedWith.Value, otherDock));
@@ -220,8 +220,8 @@ namespace Content.Server.Shuttles.Systems
             // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
 
             // We could also potentially use a prismatic joint? Depending if we want clamps that can extend or whatever
-            var dockAXform = EntityManager.GetComponent<TransformComponent>(dockAUid);
-            var dockBXform = EntityManager.GetComponent<TransformComponent>(dockBUid);
+            var dockAXform = Comp<TransformComponent>(dockAUid);
+            var dockBXform = Comp<TransformComponent>(dockBUid);
 
             DebugTools.Assert(dockAXform.GridUid != null);
             DebugTools.Assert(dockBXform.GridUid != null);
@@ -235,8 +235,8 @@ namespace Content.Server.Shuttles.Systems
                 SharedJointSystem.LinearStiffness(
                     2f,
                     0.7f,
-                    EntityManager.GetComponent<PhysicsComponent>(gridA).Mass,
-                    EntityManager.GetComponent<PhysicsComponent>(gridB).Mass,
+                    Comp<PhysicsComponent>(gridA).Mass,
+                    Comp<PhysicsComponent>(gridB).Mass,
                     out var stiffness,
                     out var damping);
 
@@ -255,8 +255,8 @@ namespace Content.Server.Shuttles.Systems
                     joint = _jointSystem.GetOrCreateWeldJoint(gridA, gridB, DockingJoint + dockAUid);
                 }
 
-                var gridAXform = EntityManager.GetComponent<TransformComponent>(gridA);
-                var gridBXform = EntityManager.GetComponent<TransformComponent>(gridB);
+                var gridAXform = Comp<TransformComponent>(gridA);
+                var gridBXform = Comp<TransformComponent>(gridB);
 
                 var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
                 var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;

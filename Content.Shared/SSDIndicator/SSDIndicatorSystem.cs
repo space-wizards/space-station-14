@@ -1,8 +1,8 @@
-﻿using Content.Shared.Bed.Sleep;
 using Content.Shared.CCVar;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.SSDIndicator;
@@ -12,6 +12,8 @@ namespace Content.Shared.SSDIndicator;
 /// </summary>
 public sealed class SSDIndicatorSystem : EntitySystem
 {
+    public static readonly EntProtoId StatusEffectSSDSleeping = "StatusEffectSSDSleeping";
+
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedStatusEffectsSystem _statusEffects = default!;
@@ -37,11 +39,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
         if (_icSsdSleep)
         {
             component.FallAsleepTime = TimeSpan.Zero;
-            if (component.ForcedSleepAdded) // Remove component only if it has been added by this system
-            {
-                _statusEffects.TryRemoveStatusEffect(uid, SleepingSystem.StatusEffectForcedSleeping);
-                component.ForcedSleepAdded = false;
-            }
+            _statusEffects.TryRemoveStatusEffect(uid, StatusEffectSSDSleeping);
         }
 
         Dirty(uid, component);
@@ -87,8 +85,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
                 ssd.FallAsleepTime <= _timing.CurTime &&
                 !TerminatingOrDeleted(uid))
             {
-                _statusEffects.TryAddStatusEffect(uid, SleepingSystem.StatusEffectForcedSleeping);
-                ssd.ForcedSleepAdded = true;
+                _statusEffects.TryAddStatusEffect(uid, StatusEffectSSDSleeping);
             }
         }
     }

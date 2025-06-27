@@ -121,7 +121,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (melee.NextAttack > component.NextFire)
         {
             component.NextFire = melee.NextAttack;
-            EntityManager.DirtyField(uid, component, nameof(GunComponent.NextFire));
+            DirtyField(uid, component, nameof(GunComponent.NextFire));
         }
     }
 
@@ -201,7 +201,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
         gun.Target = null;
-        EntityManager.DirtyField(uid, gun, nameof(GunComponent.ShotCounter));
+        DirtyField(uid, gun, nameof(GunComponent.ShotCounter));
     }
 
     /// <summary>
@@ -212,7 +212,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         gun.ShootCoordinates = toCoordinates;
         AttemptShoot(user, gunUid, gun);
         gun.ShotCounter = 0;
-        EntityManager.DirtyField(gunUid, gun, nameof(GunComponent.ShotCounter));
+        DirtyField(gunUid, gun, nameof(GunComponent.ShotCounter));
     }
 
     /// <summary>
@@ -281,7 +281,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // NextFire has been touched regardless so need to dirty the gun.
-        EntityManager.DirtyField(gunUid, gun, nameof(GunComponent.NextFire));
+        DirtyField(gunUid, gun, nameof(GunComponent.NextFire));
 
         // Get how many shots we're actually allowed to make, due to clip size or otherwise.
         // Don't do this in the loop so we still reset NextFire.
@@ -335,7 +335,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         // Even if we don't actually shoot update the ShotCounter. This is to avoid spamming empty sounds
         // where the gun may be SemiAuto or Burst.
         gun.ShotCounter += shots;
-        EntityManager.DirtyField(gunUid, gun, nameof(GunComponent.ShotCounter));
+        DirtyField(gunUid, gun, nameof(GunComponent.ShotCounter));
 
         if (ev.Ammo.Count <= 0)
         {
