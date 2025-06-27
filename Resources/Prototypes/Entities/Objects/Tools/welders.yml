@@ -1,7 +1,11 @@
+#Big imp edit. Takes everything from the Welder entity and makes the BaseWelder abstract entity from it.
+#Needed for making some welders spillable without making them all spillable.
+#Imp specific changes are marked with #imp comments within this entity, otherwise it represents its state from upstream.
 - type: entity
   name: welding tool
   parent: BaseItem
-  id: Welder
+  id: BaseWelder #imp edit, Welder before
+  abstract: true #imp edit
   description: "Melts anything as long as it's fueled, don't forget your eye protection!"
   components:
   - type: EmitSoundOnLand
@@ -108,7 +112,7 @@
   - type: Tag
     tags:
     - DroneUsable
-  # imp edits #
+  # imp edits
     - WeldingTool
   - type: ItemToggleDamageOtherOnHit
     activatedDamage:
@@ -120,7 +124,13 @@
       types:
         Blunt: 8
     staminaCost: 7.5
-  # end imp edits #
+  # end imp edits
+
+# imp edit start, see note at the top of the file
+- type: entity
+  parent: [BaseWelder, WelderSpillable]
+  id: Welder
+# imp edit end
 
 - type: entity
   name: industrial welding tool
@@ -162,7 +172,7 @@
 
 - type: entity
   name: experimental welding tool
-  parent: Welder
+  parent: BaseWelder #imp edit, keeps it from being spillable
   id: WelderExperimental
   description: "An experimental welder capable of self-fuel generation and less harmful to the eyes."
   components:
@@ -189,6 +199,13 @@
         Quantity: 1
   - type: RequiresEyeProtection
     statusEffectTime: 5 # less harmful; sunglasses can block it
+  # imp edit start
+  - type: SolutionPurge
+    solution: Welder
+    preserve:
+    - WeldingFuel
+    quantity: 2
+  # imp edit end
 
 - type: entity
   name: emergency welding tool
@@ -218,7 +235,7 @@
     color: orange
 
 - type: entity
-  parent: [ Welder, BaseXenoborgContraband ]
+  parent: [ BaseWelder, BaseXenoborgContraband ] #imp edit, Welder into BaseWelder
   id: RefuelingWelder
   name: refuling welding tool
   description: "An slow welder that can refuel itself over time."
@@ -234,3 +251,10 @@
       reagents:
       - ReagentId: WeldingFuel
         Quantity: 0.1
+  # imp edit start
+  - type: SolutionPurge
+    solution: Welder
+    preserve:
+    - WeldingFuel
+    quantity: 0.2
+  # imp edit end
