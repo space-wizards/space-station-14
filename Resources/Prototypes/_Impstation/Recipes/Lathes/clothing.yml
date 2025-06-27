@@ -29,6 +29,32 @@
   id: ClothingOuterWinterCourier
   result: ClothingOuterWinterCourier
 
+# CMO
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitCMOCasual
+  result: ClothingUniformJumpsuitCMOCasual
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtCMOCasual
+  result: ClothingUniformJumpskirtCMOCasual
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitCMOFormal
+  result: ClothingUniformJumpsuitCMOFormal
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtCMOFormal
+  result: ClothingUniformJumpskirtCMOFormal
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitCMOScrubs
+  result: ClothingUniformJumpsuitCMOScrubs
+
 # Hospitality Director
 
 - type: latheRecipe

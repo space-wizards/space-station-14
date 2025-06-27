@@ -73,6 +73,8 @@
         orGroup: CMOHat
       - id: ClothingHeadMirror
         orGroup: CMOHat
+      - id: ClothingHeadHatCMOClip
+        orGroup: CMOHat
       - id: ClothingCloakCmo
         orGroup: CMONeck
       - id: ClothingNeckMantleCMO
@@ -83,15 +85,27 @@
         orGroup: CMOJumpsuit
       - id: ClothingUniformJumpsuitCMO
         orGroup: CMOJumpsuit
+      - id: ClothingUniformJumpsuitCMOFormal
+        orGroup: CMOJumpsuit
+      - id: ClothingUniformJumpsuitCMOCasual
+        orGroup: CMOJumpsuit
+      - id: ClothingUniformJumpsuitCMOScrubs
+        orGroup: CMOJumpsuit
       - id: ClothingUniformJumpskirtCMOTurtle
         orGroup: CMOJumpskirt
       - id: ClothingUniformJumpskirtCMO
+        orGroup: CMOJumpskirt
+      - id: ClothingUniformJumpskirtCMOFormal
+        orGroup: CMOJumpskirt
+      - id: ClothingUniformJumpskirtCMOCasual
         orGroup: CMOJumpskirt
       - id: ClothingOuterCoatLabCmo
         orGroup: CMOOuter
       - id: ClothingOuterWinterCMO
         orGroup: CMOOuter
       - id: ClothingOuterCoatCMO
+        orGroup: CMOOuter
+      - id: ClothingOuterApronCMO
         orGroup: CMOOuter
       - id: ClothingEyesGlasses
 

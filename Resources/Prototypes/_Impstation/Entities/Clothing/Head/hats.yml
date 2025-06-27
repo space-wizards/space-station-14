@@ -381,3 +381,14 @@
     tags:
     - ClothMade
     - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatCMOClip
+  name: chief medical officer's hairclip
+  description: A shiny plastic hairclip fashioned after the iconic green medical cross.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Misc/cmo_clip.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Misc/cmo_clip.rsi

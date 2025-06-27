@@ -408,7 +408,7 @@
     tags:
     - WhitelistChameleon
     - ClothMade
-    
+
 - type: entity
   parent: [ClothingUniformBase]
   id: ClothingUniformSailorSuit
@@ -443,7 +443,7 @@
   parent: [ClothingUniformBase, BaseCentcommContraband]
   id: ClothingUniformImpishOutfit
   name: impish outfit
-  description: 
+  description:
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Other/impishoutfit.rsi
@@ -452,3 +452,36 @@
   - type: Tag
     tags:
     - ClothMade
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitCMOCasual
+  name: chief medical officer's casual outfit
+  description: A comfy casual outfit for the CMO.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cmo_casual.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cmo_casual.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitCMOFormal
+  name: chief medical officer's formal suit
+  description: The CMO's formal attire, perfect for meetings and hands-off work.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cmo_formal.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cmo_formal.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitCMOScrubs
+  name: chief medical officer's scrubs
+  description: Comfortable scrubs that are easy to move in and even easier to stain.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cmo_scrubs.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cmo_scrubs.rsi

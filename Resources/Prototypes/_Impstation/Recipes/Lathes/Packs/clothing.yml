@@ -12,6 +12,11 @@
   id: ClothingCommandImp
   recipes:
   - ClothingHeadHatBeretCaptain
+  - ClothingUniformJumpskirtCMOCasual
+  - ClothingUniformJumpsuitCMOCasual
+  - ClothingUniformJumpskirtCMOFormal
+  - ClothingUniformJumpsuitCMOFormal
+  - ClothingUniformJumpsuitCMOScrubs
 
 - type: latheRecipePack
   id: ClothingServiceImp

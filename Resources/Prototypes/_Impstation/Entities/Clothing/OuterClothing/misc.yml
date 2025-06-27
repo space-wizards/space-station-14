@@ -8,3 +8,18 @@
     sprite: _Impstation/Clothing/OuterClothing/Misc/apronhd.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/OuterClothing/Misc/apronhd.rsi
+
+- type: entity
+  parent: [ClothingOuterStorageBase, BaseCommandContraband]
+  id: ClothingOuterApronCMO
+  name: chief medical officer's surgical apron
+  description: A snug duraplastic apron to repel all kinds of awful yuckydisgusting fluids.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/aproncmo.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/aproncmo.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.90 #no one will even notice this its just for me
