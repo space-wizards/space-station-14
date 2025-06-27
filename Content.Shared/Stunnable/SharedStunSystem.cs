@@ -281,8 +281,7 @@ public abstract class SharedStunSystem : EntitySystem
             return false;
 
         // If it's not modifying anything then we don't need it
-        if (slowEffects.Count <= 0)
-            return false;
+        var modified = false;
 
         entity.Comp.WalkSpeedModifier = 1f;
         entity.Comp.SprintSpeedModifier = 1f;
@@ -292,13 +291,14 @@ public abstract class SharedStunSystem : EntitySystem
             if (effect == ignore)
                 continue;
 
+            modified = true;
             entity.Comp.WalkSpeedModifier *= effect.Comp1.WalkSpeedModifier;
             entity.Comp.SprintSpeedModifier *= effect.Comp1.SprintSpeedModifier;
         }
 
         _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
 
-        return true;
+        return modified;
     }
 
     /// <summary>
