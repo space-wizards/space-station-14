@@ -175,3 +175,25 @@
     - Engineering
     - Maintenance
   - type: DroneVision
+
+# jermov board
+# credit to moomoobeef (github) for the original pr, teensarlacc (discord) for the original text
+- type: entity
+  id: JermovCircuitBoard
+  parent: BaseLawBoard
+  name: law board (Jermov)
+  description: An electronics board containing the Jermov lawset. Everyone and everything exists for the sake of Chat.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: JermovLawset
+  - type: DetailedInspect
+    verbMessage: verbs-detailed-inspect-lawset
+    tickEntries: false
+    numberedEntries: true
+    examineText:
+      - law-jermov-1
+      - law-jermov-2
+      - law-jermov-3
