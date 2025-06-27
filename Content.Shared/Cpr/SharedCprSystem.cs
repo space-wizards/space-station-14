@@ -32,15 +32,21 @@ public abstract partial class SharedCprSystem : EntitySystem
     public const float CprDoAfterDelay = 0.7f;
     public const float CprAnimationLength = 0.2f;
     public const float CprAnimationEndTime = 1f; // This is set to much higher than the actual animation length to avoid it stopping prematurely, as it did in testing. Shouldnt affect anything
+
+    // This determines how long the effects of a CPR interaction last, and so how often it needs to be repeated.
+    // Damage will automatically scale to the less frequent "hits", to retain the overall dps of resuscitation
+    public const float CprManualEffectDuration = 5f;
+
+    // The total time window for a "correctly timed" CPR interaction. Outside this, the player will be told they are too fast/slow.
+    public const float CprManualThreshold = 1.5f;
+
     private bool _cprRepeat;
-    private float _cprEffectDuration;
 
     public override void Initialize()
     {
         base.Initialize();
 
         _config.OnValueChanged(CCVars.CprRepeat, value => _cprRepeat = value, true);
-        _config.OnValueChanged(CCVars.CprEffectDuration, value => _cprEffectDuration = value, true);
 
         SubscribeLocalEvent<CprComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
         SubscribeLocalEvent<CprComponent, CprDoAfterEvent>(OnCprDoAfter);
@@ -110,12 +116,22 @@ public abstract partial class SharedCprSystem : EntitySystem
         DoLunge(args.User);
 
         _audio.PlayPredicted(cpr.Sound, ent.Owner, args.User);
-        _damage.TryChangeDamage(ent, cpr.Change, interruptsDoAfters: false, damageable: damage, ignoreResistances: true);
+
+        // If CPR is set to manual, multiply the damage done by how much slower the CPR attempts are expected to be performed
+        var scaledDamage = _cprRepeat
+            ? cpr.Change
+            : cpr.Change * ((CprManualEffectDuration - CprManualThreshold) / CprDoAfterDelay);
+
+        _damage.TryChangeDamage(ent, scaledDamage, interruptsDoAfters: false, damageable: damage, ignoreResistances: true);
 
         // assist respiration of the target
         var assist = EnsureComp<AssistedRespirationComponent>(ent);
 
-        var newUntil = Timing.CurTime + TimeSpan.FromSeconds(CprDoAfterDelay * _cprEffectDuration);
+        // Determine how long the CPR's effect will last, depending on whether it's autorepeat or manual
+        // This is to prevent people from optimising their game into suffering, by manually doing "slow" CPR when it's set to repeat
+        var newUntil = _cprRepeat
+            ? Timing.CurTime + TimeSpan.FromSeconds(CprDoAfterDelay + 0.25f)
+            :  Timing.CurTime + TimeSpan.FromSeconds(CprManualEffectDuration);
         // comparing just in case other future sources may provide a longer timeframe of assisted respiration
         if (newUntil > assist.AssistedUntil)
             assist.AssistedUntil = newUntil;
@@ -172,7 +188,7 @@ public abstract partial class SharedCprSystem : EntitySystem
             timeLeft = comp.AssistedUntil - Timing.CurTime;
 
         // The recommended wait between compressions, leaving room for imperfect timing
-        var recommendedRate = Math.Truncate(_cprEffectDuration * CprDoAfterDelay * 0.95); //TODO:ERRANT
+        var recommendedRate = Math.Round(CprManualEffectDuration - CprManualThreshold);
         // A new CPR attempt is starting
         if (comp is null)
         {
@@ -180,13 +196,13 @@ public abstract partial class SharedCprSystem : EntitySystem
             var othersString = Loc.GetString("cpr-start", ("person", Identity.Entity(giver, EntityManager)), ("target", Identity.Entity(recipient, EntityManager)));
             _popup.PopupPredicted(localString, othersString, giver, giver, PopupType.Medium); //TODO:ERRANT only shows for others
         }
-        // If the last CPR attempt came after the Assist affect has already worn off
+        // If the last CPR attempt came too late (eventually leading to gasping), warn the player
         else if (timeLeft <= TimeSpan.Zero)
         {
             _popup.PopupCursor(Loc.GetString("cpr-too-slow", ("seconds", recommendedRate)), giver, PopupType.Large); //TODO:ERRANT why does only popupcursor work??
         }
-        // If the CPR attempt came too soon (causing unnecessary blunt damage over time due to extra compressions)
-        else if (timeLeft > TimeSpan.FromSeconds(recommendedRate))
+        // If the CPR attempt came too soon (causing unnecessary blunt damage over time due to extra compressions), warn the player
+        else if (timeLeft > TimeSpan.FromSeconds(CprManualEffectDuration - CprManualThreshold))
         {
             _popup.PopupCursor(Loc.GetString("cpr-too-fast", ("seconds", recommendedRate)), giver, PopupType.Large); //TODO:ERRANT why does only popupcursor work??
         }
