@@ -5,7 +5,6 @@
   - type: HereticRule
   - type: GameRule
     minPlayers: 20
-    cancelPresetOnTooFewPlayers: false
     delay:
       min: 30
       max: 60

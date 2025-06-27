@@ -12,7 +12,6 @@
     - SpaceTrafficControlEventScheduler
     - SpaceTrafficControlFriendlyEventScheduler
     - BasicRoundstartVariation
-    - MidpopLimiter
 
 - type: gamePreset
   id: KesslerSyndrome
@@ -29,7 +28,6 @@
     - RampingStationEventScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - MidpopLimiter
 
 - type: gamePreset
   id: AllAtOnce
@@ -166,7 +164,6 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - MidpopLimiter
 
 - type: gamePreset
   id: SpyVsSpy
@@ -184,7 +181,6 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - MidpopLimiter
 
 - type: gamePreset
   id: SpyVsSpy3TC
@@ -259,8 +255,6 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - MidpopLimiter
-
 
 - type: gamePreset
   id: Revolutionary
@@ -279,7 +273,6 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
-    - MidpopLimiter
 
 - type: gamePreset
   id: Wizard
@@ -315,7 +308,6 @@
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - MidpopLimiter
 
 - type: gamePreset
   id: Zombieteors
@@ -333,4 +325,3 @@
   - KesslerSyndromeScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
-  - MidpopLimiter
