@@ -303,6 +303,9 @@ public sealed class ItemGridPiece : Control, IEntityControl
     public EntityUid? UiEntity => Entity;
 }
 
+/// <summary>
+///     This event gets raised before a sprite gets drawn in a grid and lets to change the sprite color for several gameobjects that have special sprites to render in containers.
+/// </summary>
 public sealed class BeforeRenderInGridEvent : EntityEventArgs
 {
     public Color Color { get; set; }

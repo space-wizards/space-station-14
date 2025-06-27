@@ -29,6 +29,9 @@ public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisual
         }
     }
 
+    /// <summary>
+    ///     This method is used to change the color of the pipe in the container grid.
+    /// </summary>
     private void OnDrawInGrid(Entity<PipeColorVisualsComponent> item, ref BeforeRenderInGridEvent args)
     {
         if (TryComp(item.Owner, out AtmosPipeColorComponent? pipeColor))
