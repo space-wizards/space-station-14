@@ -1,12 +1,12 @@
-using Content.Shared.CPR;
+using Content.Shared.Cpr;
 using Robust.Client.GameObjects;
 using Robust.Client.Animations;
 using Robust.Shared.Animations;
 using System.Numerics;
 
-namespace Content.Client.CPR;
+namespace Content.Client.Cpr;
 
-public sealed partial class CPRSystem : SharedCPRSystem
+public sealed partial class CprSystem : SharedCprSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
 
@@ -16,16 +16,17 @@ public sealed partial class CPRSystem : SharedCPRSystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<CPRLungeEvent>(OnCPRLunge);
+        SubscribeNetworkEvent<CprLungeEvent>(OnCprLunge);
     }
     /// <summary>
     /// Used for playing the animation of other entities doing CPR
     /// </summary>
     /// <param name="args">The lunge event</param>
-    public void OnCPRLunge(CPRLungeEvent args)
+    public void OnCprLunge(CprLungeEvent args)
     {
         var ent = GetEntity(args.Ent);
-        if (Exists(ent)) DoLunge(ent);
+        if (Exists(ent))
+            DoLunge(ent);
     }
 
     public override void DoLunge(EntityUid user)
@@ -40,7 +41,7 @@ public sealed partial class CPRSystem : SharedCPRSystem
 
     private Animation GetLungeAnimation(Vector2 direction)
     {
-        const float endLength = CPRAnimationLength;
+        const float endLength = CprAnimationLength;
 
         var animationTrack = new AnimationTrackComponentProperty()
         {
@@ -58,7 +59,7 @@ public sealed partial class CPRSystem : SharedCPRSystem
 
         return new Animation
         {
-            Length = TimeSpan.FromSeconds(CPRAnimationEndTime),
+            Length = TimeSpan.FromSeconds(CprAnimationEndTime),
             AnimationTracks =
             {
                 animationTrack

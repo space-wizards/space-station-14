@@ -2,7 +2,7 @@ using Content.Shared.Damage;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.CPR;
+namespace Content.Shared.Cpr;
 
 /// <summary>
 /// Stores info about the mob's CPR mechanics
@@ -10,7 +10,7 @@ namespace Content.Shared.CPR;
 /// Has fields that specify how much this mob should be healed when CPR is done on them and the pump sound
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class CPRComponent : Component
+public sealed partial class CprComponent : Component
 {
     /// <summary>
     /// What damage should be changed when CPR is done - negative for healing

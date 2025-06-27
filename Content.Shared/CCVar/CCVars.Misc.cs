@@ -114,7 +114,7 @@ public sealed partial class CCVars
     ///     Enabled: CPR action will auto-repeat as long as the target is still crit
     ///     Disabled: CPR has to be performed by repeated manual interaction
     /// </summary>
-    public static readonly CVarDef<bool> CPRRepeat =
+    public static readonly CVarDef<bool> CprRepeat =
         CVarDef.Create("cpr.repeat", true, CVar.SERVER);
 
     /// <summary>
@@ -123,6 +123,6 @@ public sealed partial class CCVars
     ///     Players will never be able to do this perfectly in manual mode, due to reflexes and potential lag
     ///     So an increased multiplier makes it easier not to leave "gaps" in the CPR where the targets's breathing may skip a phase
     /// </summary>
-    public static readonly CVarDef<float> CPREffectDuration =
+    public static readonly CVarDef<float> CprEffectDuration =
         CVarDef.Create("cpr.effect_duration", 7f, CVar.SERVER);
 }

@@ -1,17 +1,16 @@
-using System.Numerics;
 using Robust.Shared.Serialization;
+
+namespace Content.Shared.Cpr;
 
 /// <summary>
 /// Data for CPR animations
 /// </summary>
-namespace Content.Shared.CPR;
-
 [Serializable, NetSerializable]
-public sealed partial class CPRLungeEvent : EntityEventArgs
+public sealed partial class CprLungeEvent : EntityEventArgs
 {
     public NetEntity Ent;
 
-    public CPRLungeEvent(NetEntity entity)
+    public CprLungeEvent(NetEntity entity)
     {
         Ent = entity;
     }

@@ -216,7 +216,7 @@
   abstract: true
   components:
   - type: Internals
-  - type: CPR
+  - type: Cpr
     change:
       types:
         Bloodloss: -0.5

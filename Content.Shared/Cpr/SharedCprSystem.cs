@@ -13,11 +13,11 @@ using Robust.Shared.Utility;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 
-namespace Content.Shared.CPR;
+namespace Content.Shared.Cpr;
 /// <summary>
 /// Used for handling CPR on critical breathing mobs
 /// </summary>
-public abstract partial class SharedCPRSystem : EntitySystem
+public abstract partial class SharedCprSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
@@ -28,10 +28,10 @@ public abstract partial class SharedCPRSystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-    public const float CPRInteractionRangeMultiplier = 0.25f;
-    public const float CPRDoAfterDelay = 0.7f;
-    public const float CPRAnimationLength = 0.2f;
-    public const float CPRAnimationEndTime = 1f; // This is set to much higher than the actual animation length to avoid it stopping prematurely, as it did in testing. Shouldnt affect anything
+    public const float CprInteractionRangeMultiplier = 0.25f;
+    public const float CprDoAfterDelay = 0.7f;
+    public const float CprAnimationLength = 0.2f;
+    public const float CprAnimationEndTime = 1f; // This is set to much higher than the actual animation length to avoid it stopping prematurely, as it did in testing. Shouldnt affect anything
     private bool _cprRepeat;
     private float _cprEffectDuration;
 
@@ -39,19 +39,19 @@ public abstract partial class SharedCPRSystem : EntitySystem
     {
         base.Initialize();
 
-        _config.OnValueChanged(CCVars.CPRRepeat, value => _cprRepeat = value, true);
-        _config.OnValueChanged(CCVars.CPREffectDuration, value => _cprEffectDuration = value, true);
+        _config.OnValueChanged(CCVars.CprRepeat, value => _cprRepeat = value, true);
+        _config.OnValueChanged(CCVars.CprEffectDuration, value => _cprEffectDuration = value, true);
 
-        SubscribeLocalEvent<CPRComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
-        SubscribeLocalEvent<CPRComponent, CPRDoAfterEvent>(OnCPRDoAfter);
+        SubscribeLocalEvent<CprComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
+        SubscribeLocalEvent<CprComponent, CprDoAfterEvent>(OnCprDoAfter);
     }
     /// <summary>
     /// Returns true if the CPRComponent has not been given care long enough to allow a new caretaker
     /// </summary>
     /// <param name="cpr">The CPRComponent</param>
-    public bool CPRCaretakerOutdated(CPRComponent cpr)
+    public bool CprCaretakerOutdated(CprComponent cpr)
     {
-        return Timing.CurTime.Seconds - cpr.LastTimeGivenCare.Seconds > CPRDoAfterDelay;
+        return Timing.CurTime.Seconds - cpr.LastTimeGivenCare.Seconds > CprDoAfterDelay;
     }
 
     /// <summary>
@@ -59,9 +59,9 @@ public abstract partial class SharedCPRSystem : EntitySystem
     /// </summary>
     /// <param name="recipient">The one receiving CPR</param>
     /// <param name="giver">The one giving CPR</param>
-    public bool CanDoCPR(EntityUid recipient, EntityUid giver)
+    public bool CanDoCpr(EntityUid recipient, EntityUid giver)
     {
-        if (!TryComp<CPRComponent>(recipient, out var cpr) ||
+        if (!TryComp<CprComponent>(recipient, out var cpr) ||
             !TryComp<MobThresholdsComponent>(recipient, out var thresholds) ||
             !TryComp<MobThresholdsComponent>(giver, out var myThresholds))
             return false;
@@ -73,7 +73,7 @@ public abstract partial class SharedCPRSystem : EntitySystem
 
         // return false if someone else has very recently given care already
         if (cpr.LastCaretaker.HasValue &&
-            !CPRCaretakerOutdated(cpr) &&
+            !CprCaretakerOutdated(cpr) &&
             cpr.LastCaretaker.Value != giver)
             return false;
 
@@ -84,9 +84,9 @@ public abstract partial class SharedCPRSystem : EntitySystem
     /// </summary>
     /// <param name="recipient">The one receiving CPR</param>
     /// <param name="giver">The one giving CPR</param>
-    public bool InRangeForCPR(EntityUid recipient, EntityUid giver)
+    public bool InRangeForCpr(EntityUid recipient, EntityUid giver)
     {
-        return _interactionSystem.InRangeUnobstructed(giver, recipient, SharedInteractionSystem.InteractionRange * CPRInteractionRangeMultiplier);
+        return _interactionSystem.InRangeUnobstructed(giver, recipient, SharedInteractionSystem.InteractionRange * CprInteractionRangeMultiplier);
     }
 
     /// <summary>
@@ -94,16 +94,16 @@ public abstract partial class SharedCPRSystem : EntitySystem
     /// </summary>
     /// <param name="ent">The recipient</param>
     /// <param name="args">DoAfter arguments</param>
-    public void OnCPRDoAfter(Entity<CPRComponent> ent, ref CPRDoAfterEvent args)
+    public void OnCprDoAfter(Entity<CprComponent> ent, ref CprDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
             return;
 
-        if (!CanDoCPR(ent, args.User))
+        if (!CanDoCpr(ent, args.User))
             return;
 
         if (!TryComp<DamageableComponent>(ent, out var damage) ||
-            !TryComp<CPRComponent>(ent, out var cpr) ||
+            !TryComp<CprComponent>(ent, out var cpr) ||
             !TryComp<MobThresholdsComponent>(ent, out var thresholds))
             return;
 
@@ -115,7 +115,7 @@ public abstract partial class SharedCPRSystem : EntitySystem
         // assist respiration of the target
         var assist = EnsureComp<AssistedRespirationComponent>(ent);
 
-        var newUntil = Timing.CurTime + TimeSpan.FromSeconds(CPRDoAfterDelay * _cprEffectDuration);
+        var newUntil = Timing.CurTime + TimeSpan.FromSeconds(CprDoAfterDelay * _cprEffectDuration);
         // comparing just in case other future sources may provide a longer timeframe of assisted respiration
         if (newUntil > assist.AssistedUntil)
             assist.AssistedUntil = newUntil;
@@ -144,13 +144,13 @@ public abstract partial class SharedCPRSystem : EntitySystem
     /// </summary>
     /// <param name="recipient">The one receiving CPR</param>
     /// <param name="giver">The one giving CPR</param>
-    public void TryStartCPR(EntityUid recipient, EntityUid giver)
+    public void TryStartCpr(EntityUid recipient, EntityUid giver)
     {
         var doAfterEventArgs = new DoAfterArgs(
             EntityManager,
             giver,
-            TimeSpan.FromSeconds(CPRDoAfterDelay),
-            new CPRDoAfterEvent(),
+            TimeSpan.FromSeconds(CprDoAfterDelay),
+            new CprDoAfterEvent(),
             recipient,
             giver
             )
@@ -162,8 +162,8 @@ public abstract partial class SharedCPRSystem : EntitySystem
         };
 
         // try starting CPR
-        if (!CanDoCPR(recipient, giver)
-            || !InRangeForCPR(recipient, giver)
+        if (!CanDoCpr(recipient, giver)
+            || !InRangeForCpr(recipient, giver)
             || !_doAfter.TryStartDoAfter(doAfterEventArgs))
             return;
 
@@ -172,7 +172,7 @@ public abstract partial class SharedCPRSystem : EntitySystem
             timeLeft = comp.AssistedUntil - Timing.CurTime;
 
         // The recommended wait between compressions, leaving room for imperfect timing
-        var recommendedRate = Math.Truncate(_cprEffectDuration * CPRDoAfterDelay * 0.95); //TODO:ERRANT
+        var recommendedRate = Math.Truncate(_cprEffectDuration * CprDoAfterDelay * 0.95); //TODO:ERRANT
         // A new CPR attempt is starting
         if (comp is null)
         {
@@ -192,18 +192,18 @@ public abstract partial class SharedCPRSystem : EntitySystem
         }
     }
 
-    private void OnGetAlternativeVerbs(EntityUid uid, CPRComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetAlternativeVerbs(EntityUid uid, CprComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!CanDoCPR(uid, args.User))
+        if (!CanDoCpr(uid, args.User))
             return;
 
-        var inRange = InRangeForCPR(uid, args.User);
+        var inRange = InRangeForCpr(uid, args.User);
 
         var verb = new AlternativeVerb()
         {
             Act = () =>
             {
-                TryStartCPR(uid, args.User);
+                TryStartCpr(uid, args.User);
             },
             Text = Loc.GetString("cpr-verb-text"),
             Disabled = !inRange,
@@ -219,7 +219,7 @@ public abstract partial class SharedCPRSystem : EntitySystem
 /// Do-after event used for CPR
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class CPRDoAfterEvent : DoAfterEvent
+public sealed partial class CprDoAfterEvent : DoAfterEvent
 {
     public override DoAfterEvent Clone() => this;
 }

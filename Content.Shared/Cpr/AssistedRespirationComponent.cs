@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.CPR;
+namespace Content.Shared.Cpr;
 
 /// <summary>
 /// The entity has their breathing assisted by external means, and can breathe even in crit
