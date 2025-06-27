@@ -93,7 +93,7 @@
   suffix: Armory
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Standard/warden.rsi
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/armory.rsi
   - type: Wires
     layoutId: AirlockArmory
 
@@ -317,7 +317,7 @@
   suffix: Armory
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Glass/warden.rsi
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/armory.rsi
   - type: Wires
     layoutId: AirlockArmory
 

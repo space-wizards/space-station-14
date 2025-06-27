@@ -202,7 +202,7 @@
   suffix: Salvage
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi # imp
+    sprite: Structures/Doors/Airlocks/Standard/salvage.rsi
     state: "assembly"
 
 - type: entity
@@ -211,7 +211,7 @@
   suffix: Salvage, Glass
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Glass/salvage.rsi # imp
+    sprite: Structures/Doors/Airlocks/Glass/salvage.rsi
     state: "assembly"
 
 #Science

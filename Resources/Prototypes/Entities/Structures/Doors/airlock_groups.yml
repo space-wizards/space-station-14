@@ -3,7 +3,7 @@
   iconPriority: 100
   stylePaths:
     atmospherics: Structures/Doors/Airlocks/Standard/atmospherics.rsi
-    service:     Structures/Doors/Airlocks/Standard/basic.rsi #imp edit
+    #basic:       Structures/Doors/Airlocks/Standard/basic.rsi #imp edit, changed to service
     cargo:       Structures/Doors/Airlocks/Standard/cargo.rsi
     chemistry:   Structures/Doors/Airlocks/Standard/chemistry.rsi
     command:     Structures/Doors/Airlocks/Standard/command.rsi
@@ -12,12 +12,12 @@
     hydroponics: Structures/Doors/Airlocks/Standard/hydroponics.rsi
     maintenance: Structures/Doors/Airlocks/Standard/maint.rsi
     medical:     Structures/Doors/Airlocks/Standard/medical.rsi
-    salvage:     _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi #imp edit
+    salvage:     Structures/Doors/Airlocks/Standard/salvage.rsi
     science:     Structures/Doors/Airlocks/Standard/science.rsi
     security:    _Impstation/Structures/Doors/Airlocks/Standard/security.rsi #imp edit
     virology:    Structures/Doors/Airlocks/Standard/virology.rsi
     #begin imp edit
-    armory:      _Impstation/Structures/Doors/Airlocks/Standard/warden.rsi
+    armory:      _Impstation/Structures/Doors/Airlocks/Standard/armory.rsi
     basic:       _Impstation/Structures/Doors/Airlocks/Standard/public.rsi
     bar:         _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi
     brig:        Structures/Doors/Airlocks/Standard/security.rsi
@@ -42,6 +42,7 @@
     qm:          _Impstation/Structures/Doors/Airlocks/Standard/qm.rsi
     rd:          _Impstation/Structures/Doors/Airlocks/Standard/rd.rsi
     reporter:    _Impstation/Structures/Doors/Airlocks/Standard/reporter.rsi
+    service:     Structures/Doors/Airlocks/Standard/basic.rsi
     theatre:     _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
     #end imp edit
 
@@ -50,22 +51,23 @@
   iconPriority: 90
   stylePaths:
     atmospherics: Structures/Doors/Airlocks/Glass/atmospherics.rsi
-    service:     Structures/Doors/Airlocks/Glass/basic.rsi #imp edit
+    #basic:       Structures/Doors/Airlocks/Glass/basic.rsi #imp edit, changed to service
     cargo:       Structures/Doors/Airlocks/Glass/cargo.rsi
     command:     Structures/Doors/Airlocks/Glass/command.rsi
     chemistry:   Structures/Doors/Airlocks/Glass/chemistry.rsi
     science:     Structures/Doors/Airlocks/Glass/science.rsi
     engineering: Structures/Doors/Airlocks/Glass/engineering.rsi
-    basic:       Structures/Doors/Airlocks/Glass/glass.rsi #imp edit
+    #glass:       Structures/Doors/Airlocks/Glass/glass.rsi #imp edit, changed to basic
     hydroponics: Structures/Doors/Airlocks/Glass/hydroponics.rsi
     maintenance: Structures/Doors/Airlocks/Glass/maint.rsi
     medical:     Structures/Doors/Airlocks/Glass/medical.rsi
+    salvage:     Structures/Doors/Airlocks/Glass/salvage.rsi
     security:    _Impstation/Structures/Doors/Airlocks/Glass/security.rsi #imp edit
-    salvage:     _Impstation/Structures/Doors/Airlocks/Glass/salvage.rsi #imp edit
     virology:    Structures/Doors/Airlocks/Glass/virology.rsi
     #begin imp edit
-    armory:      _Impstation/Structures/Doors/Airlocks/Glass/warden.rsi
+    armory:      _Impstation/Structures/Doors/Airlocks/Glass/armory.rsi
     bar:         _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi
+    basic:       Structures/Doors/Airlocks/Glass/glass.rsi
     brig:        Structures/Doors/Airlocks/Glass/security.rsi
     captain:     _Impstation/Structures/Doors/Airlocks/Glass/captain.rsi
     ce:          _Impstation/Structures/Doors/Airlocks/Glass/ce.rsi
@@ -88,6 +90,7 @@
     qm:          _Impstation/Structures/Doors/Airlocks/Glass/qm.rsi
     rd:          _Impstation/Structures/Doors/Airlocks/Glass/rd.rsi
     reporter:    _Impstation/Structures/Doors/Airlocks/Glass/reporter.rsi
+    service:     Structures/Doors/Airlocks/Glass/basic.rsi
     theatre:     _Impstation/Structures/Doors/Airlocks/Glass/theatre.rsi
     #end imp edit
 

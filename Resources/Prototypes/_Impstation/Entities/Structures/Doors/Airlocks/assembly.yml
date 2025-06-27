@@ -5,7 +5,7 @@
   suffix: Armory
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Standard/warden.rsi
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/armory.rsi
     state: "assembly"
 
 - type: entity
@@ -14,7 +14,7 @@
   suffix: Armory, Glass
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Glass/warden.rsi
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/armory.rsi
     state: "assembly"
 
 #Bar

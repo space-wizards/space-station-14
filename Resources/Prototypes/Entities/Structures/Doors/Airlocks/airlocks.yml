@@ -46,7 +46,7 @@
   suffix: Salvage
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Standard/salvage.rsi # imp
+    sprite: Structures/Doors/Airlocks/Standard/salvage.rsi
   - type: Wires
     layoutId: AirlockCargo
 
@@ -224,7 +224,7 @@
   suffix: Salvage
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Doors/Airlocks/Glass/salvage.rsi # imp
+    sprite: Structures/Doors/Airlocks/Glass/salvage.rsi
   - type: Wires
     layoutId: AirlockCargo
 
