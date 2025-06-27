@@ -8,7 +8,7 @@ public sealed partial class CCVars
     /// Allow users to submit bug reports. You should have some kind of system to listen for the reports.
     /// </summary>
     public static readonly CVarDef<bool> EnablePlayerBugReports =
-        CVarDef.Create("bug_reports.enable_player_bug_reports", true, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("bug_reports.enable_player_bug_reports", false, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     /// Minimum playtime that players need to have played to submit bug reports.
