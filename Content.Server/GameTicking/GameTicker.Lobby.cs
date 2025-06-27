@@ -174,7 +174,7 @@ namespace Content.Server.GameTicking
             }
 
             // Ensure that the player has a character enabled with a compatible job that can even join.
-            var readyPossible = (_preferences.GetPreferencesOrNull(player.UserId)?.JobPrioritiesFiltered().Count ?? 0) != 0;
+            var readyPossible = (_prefsManager.GetPreferencesOrNull(player.UserId)?.JobPrioritiesFiltered().Count ?? 0) != 0;
 
             _playerGameStatuses[player.UserId] = ready && readyPossible
                 ? PlayerGameStatus.ReadyToPlay

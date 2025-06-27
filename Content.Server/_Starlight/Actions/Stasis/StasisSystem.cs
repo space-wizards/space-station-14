@@ -8,6 +8,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared._Starlight.Actions.Stasis;
+using Robust.Shared.Player;
 
 namespace Content.Server._Starlight.Actions.Stasis;
 
@@ -66,7 +67,7 @@ public sealed class StasisSystem : SharedStasisSystem
         // Send animation event to all clients
         var ev = new StasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
             StasisAnimationType.Prepare);
-        RaiseNetworkEvent(ev);
+        RaiseNetworkEvent(ev, Filter.Pvs(uid, entityManager: EntityManager));
 
         // Schedule the enter stasis event after delay
         Timer.Spawn(TimeSpan.FromSeconds(comp.StasisEnterEffectLifetime), () =>
@@ -83,6 +84,7 @@ public sealed class StasisSystem : SharedStasisSystem
         EnterStasisActionEvent args)
     {
         comp.IsInStasis = true;
+        comp.IsVisible = false; // Entity becomes invisible when entering stasis to better show the effect
 
         Dirty(uid, comp);
 
@@ -95,12 +97,14 @@ public sealed class StasisSystem : SharedStasisSystem
         // Send animation event to all clients
         var ev = new StasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
             StasisAnimationType.Enter);
-        RaiseNetworkEvent(ev);
+        RaiseNetworkEvent(ev, Filter.Pvs(uid, entityManager: EntityManager));
     }
 
     protected override void OnExitStasisStart(EntityUid uid, StasisComponent comp, ExitStasisActionEvent args)
     {
         comp.IsInStasis = false;
+        comp.IsVisible = true; // Entity becomes visible when exiting stasis
+
         Dirty(uid, comp);
 
         _actionsSystem.RemoveAction(uid, comp.ExitStasisActionEntity);
@@ -112,7 +116,7 @@ public sealed class StasisSystem : SharedStasisSystem
         // Send animation event to all clients
         var ev = new StasisAnimationEvent(GetNetEntity(uid), GetNetCoordinates(Transform(uid).Coordinates),
             StasisAnimationType.Exit);
-        RaiseNetworkEvent(ev);
+        RaiseNetworkEvent(ev, Filter.Pvs(uid, entityManager: EntityManager));
     }
 
     public override void Update(float frameTime)
