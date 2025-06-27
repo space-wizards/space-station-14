@@ -1,0 +1,18 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from paradise station at commit https://github.com/ParadiseSS13/Paradise/commit/1f87a821e1577146fd013a4f65367ed8b11e9769, edited by msTheowo(github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-NECK",
+            "directions": 4
+        }
+    ]
+}

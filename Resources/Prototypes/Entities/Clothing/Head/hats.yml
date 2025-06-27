@@ -346,9 +346,9 @@
   description: A grand, stylish head of personnel's cap.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/hopcap.rsi
+    sprite: _DV/Clothing/Head/Hats/hopcap.rsi # Delta-v edit
   - type: Clothing
-    sprite: Clothing/Head/Hats/hopcap.rsi
+    sprite: _DV/Clothing/Head/Hats/hopcap.rsi # Delta-v edit
   - type: Tag
     tags:
     - ClothMade

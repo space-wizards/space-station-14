@@ -44,9 +44,9 @@
   description: A good HOP knows that paper pushing is only half the job... petting your dog and looking fashionable is the other half.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/mantles/hopmantle.rsi
+    sprite: _DV/Clothing/Neck/mantles/hopmantle.rsi # Delta-v edit
   - type: Clothing
-    sprite: Clothing/Neck/mantles/hopmantle.rsi
+    sprite: _DV/Clothing/Neck/mantles/hopmantle.rsi # Delta-v edit
   - type: StealTarget # imp
     stealGroup: HeadCloak
 
@@ -98,4 +98,4 @@
   - type: Sprite
     sprite: Clothing/Neck/mantles/mantle.rsi
   - type: Clothing
-    sprite: Clothing/Neck/mantles/mantle.rsi 
+    sprite: Clothing/Neck/mantles/mantle.rsi

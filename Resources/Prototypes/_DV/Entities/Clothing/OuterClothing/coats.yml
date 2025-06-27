@@ -1,4 +1,17 @@
 ﻿- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatHoPFormal
+  name: head of personnel's formal jacket
+  description: A showy and over-the-top jacket with gold buttons and red trim. More tacky than classy.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/OuterClothing/Coats/repcoat.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/OuterClothing/Coats/repcoat.rsi
+  - type: TemperatureProtection
+    coolingCoefficient: 0.1
+
+- type: entity
   parent: [ ClothingOuterStorageBase, Tier1Contraband ] # imp - contraband
   id: ClothingOuterCoatCybersunWindbreaker
   name: Cybersun windbreaker # imp edit; preferential to capitalizing company names

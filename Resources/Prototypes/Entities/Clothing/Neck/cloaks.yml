@@ -82,7 +82,7 @@
   description: A blue cloak with red shoulders and gold buttons, proving you are the gatekeeper to any airlock on the station.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Cloaks/hop.rsi
+    sprite: _DV/Clothing/Neck/Cloaks/hop.rsi # Delta-v edit
   - type: StealTarget
     stealGroup: HeadCloak
 

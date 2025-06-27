@@ -13,6 +13,10 @@
   # Administrative Assistant
   - ClothingUniformJumpsuitAdminAssistant
   - ClothingUniformJumpskirtAdminAssistant
+  # Head of Personnel
+  - ClothingUniformJumpsuitHoPMess
+  - ClothingUniformJumpskirtHoPMess
+  - ClothingOuterCoatHoPFormal
 
 - type: latheRecipePack
   id: ClothingEpistemics

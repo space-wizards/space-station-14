@@ -1,4 +1,21 @@
-﻿# Jumpsuits - Security
+﻿# Head of Personnel - Jumpsuits
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitHoPMess
+  result: ClothingUniformJumpsuitHoPMess
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtHoPMess
+  result: ClothingUniformJumpskirtHoPMess
+
+# Head of Personnel - Outerwear
+- type: latheRecipe
+  parent: BaseCommandCoatRecipe
+  id: ClothingOuterCoatHoPFormal
+  result: ClothingOuterCoatHoPFormal
+
+# Jumpsuits - Security
 
 - type: latheRecipe
   parent: BaseJumpsuitRecipe

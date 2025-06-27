@@ -1,4 +1,43 @@
-﻿- type: loadout
+﻿# Jumpsuit
+- type: loadout
   id: HoPBoatswain
   equipment:
     jumpsuit: ClothingUniformJumpsuitBoatswain
+
+- type: loadout
+  id: HoPMessSkirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoPMess
+
+- type: loadout
+  id: HoPMessSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoPMess
+
+# Back
+- type: loadout
+  id: BackpackHoP
+  equipment:
+    back: ClothingBackpackHoP
+
+- type: loadout
+  id: SatchelHoP
+  equipment:
+    back: ClothingSatchelHoP
+
+- type: loadout
+  id: HopDuffel
+  equipment:
+    back: ClothingHopDuffel
+
+# Outerclothing
+- type: loadout
+  id: HoPFormalCoat
+  equipment:
+    outerClothing: ClothingOuterCoatHoPFormal
+
+# Shoes
+- type: loadout
+  id: HoPWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterHeadOfPersonel

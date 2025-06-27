@@ -1,0 +1,9 @@
+﻿- type: entity
+  parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterHeadOfPersonel
+  name: head of personnel's winter boots # imp edit
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Shoes/Boots/winterbootshop.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Shoes/Boots/winterbootshop.rsi

@@ -1,0 +1,9 @@
+﻿- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackHoP
+  name: head of personnel's backpack # imp edit
+  description: To store all your stamps and paperwork
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Back/Backpacks/hop.rsi
+    state: icon

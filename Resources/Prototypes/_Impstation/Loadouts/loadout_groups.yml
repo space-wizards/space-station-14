@@ -334,6 +334,7 @@
   - WhiteDressShoes
   - BlackCommandHeels
   - BlueCommandHeels
+  - HoPWinterBoots # Delta-V
 
 - type: loadoutGroup
   id: AdminAssistantBackpack

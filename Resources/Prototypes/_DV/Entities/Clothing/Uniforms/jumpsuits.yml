@@ -11,6 +11,17 @@
   - type: Clothing
     sprite: _DV/Clothing/Uniforms/Jumpsuit/boatswain.rsi
 
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHoPMess
+  name: head of personnel's mess kit
+  description: A swanky uniform with tasteful gold and red trim. Keep your latte away from this.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/hopmesskit.rsi
+  - type: Clothing
+    sprite: _DV/Clothing/Uniforms/Jumpsuit/hopmesskit.rsi
+
 # Detective
 
 - type: entity

@@ -1,0 +1,9 @@
+﻿- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingHopDuffel
+  name: head of personnel's duffel bag # imp edit
+  description: For those that HoPe more carry space will help them.
+  components:
+  - type: Sprite
+    sprite: _DV/Clothing/Back/Duffels/hop.rsi
+    state: icon
