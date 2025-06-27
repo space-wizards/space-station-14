@@ -1,3 +1,5 @@
+using Content.Shared.Whitelist;
+
 namespace Content.Server.NPC.Components;
 
 /// <summary>
@@ -24,4 +26,12 @@ public sealed partial class NPCProximitySleepComponent : Component
     /// </summary>
     [DataField]
     public float UnpauseProximity = 25.0f;
+
+    /// <summary>
+    /// Entities that match the whitelist will be ignored for proximity calculations.
+    /// </summary>
+    public EntityWhitelist ProximityIgnore = new(components:
+    [
+        "Ghost",
+    ]);
 }

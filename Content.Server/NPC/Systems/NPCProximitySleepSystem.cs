@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
+using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -13,6 +14,7 @@ public sealed class NPCProximitySleepSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Update(float frameTime)
     {
@@ -29,11 +31,14 @@ public sealed class NPCProximitySleepSystem : EntitySystem
             var npcPosition = _transform.GetMapCoordinates(uid);
 
             var pause = true;
-            if (actorLocations.TryGetValue(npcPosition.MapId, out var cordList))
+            if (actorLocations.TryGetValue(npcPosition.MapId, out var actors))
             {
-                foreach (var cord in cordList)
+                foreach (var cordActor in actors)
                 {
-                    var distance = (cord - npcPosition.Position).Length();
+                    if (_whitelist.IsWhitelistPass(proxComp.ProximityIgnore, cordActor.Actor))
+                        continue;
+
+                    var distance = (cordActor.Location - npcPosition.Position).Length();
 
                     if (distance >= proxComp.UnpauseProximity)
                         continue;
@@ -54,9 +59,9 @@ public sealed class NPCProximitySleepSystem : EntitySystem
     }
 
     // Get a dictionary of maps -> actor cords in that map.
-    private Dictionary<MapId, List<Vector2>> GetActorLocations()
+    private Dictionary<MapId, List<(Vector2 Location, EntityUid Actor)>> GetActorLocations()
     {
-        var actorLocations = new Dictionary<MapId, List<Vector2>>();
+        var actorLocations = new Dictionary<MapId, List<(Vector2, EntityUid)>>();
 
         var actorEnumerator = EntityQueryEnumerator<ActorComponent>();
         while (actorEnumerator.MoveNext(out var actorUid, out _))
@@ -64,10 +69,11 @@ public sealed class NPCProximitySleepSystem : EntitySystem
             var actorPos = _transform.GetMapCoordinates(actorUid);
 
             // Add the actors location
+            var pair = (actorPos.Position, actorUid);
             if (!actorLocations.TryGetValue(actorPos.MapId, out var cordList))
-                actorLocations.Add(actorPos.MapId, [actorPos.Position]);
+                actorLocations.Add(actorPos.MapId, [pair]);
             else
-                cordList.Add(actorPos.Position);
+                cordList.Add(pair);
         }
 
         return actorLocations;
