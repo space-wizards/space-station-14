@@ -119,16 +119,24 @@ namespace Content.Server.NPC.Systems
             EnsureComp<ActiveNPCComponent>(uid);
         }
 
+        /// <summary>
+        /// Sleep the given NPC. If no category is provided, will remove all sleeping information and just sleep the NPC
+        /// without restriction.
+        /// </summary>
         public void SleepNPC(EntityUid uid, NPCSleepingCategories? category = NPCSleepingCategories.Default, HTNComponent? component = null)
         {
             if (!Resolve(uid, ref component, false))
             {
                 return;
             }
-
-            EnsureComp<NPCSleepingComponent>(uid, out var sleepingComp);
-            if (category != null)
-                sleepingComp.SleepReferences.Add(category.Value);
+            if (category == null)
+                RemComp<NPCSleepingComponent>(uid);
+            else
+            {
+                EnsureComp<NPCSleepingComponent>(uid, out var sleepingComp);
+                if (category != null)
+                    sleepingComp.SleepReferences.Add(category.Value);
+            }
 
             // Don't bother with an event
             if (TryComp<HTNComponent>(uid, out var htn))
