@@ -60,24 +60,25 @@ public sealed class IonStormSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SiliconLawBoundComponent, IonStormEvent>(IonStormTarget);
+        SubscribeLocalEvent<IonStormSiliconLawComponent, IonStormEvent>(IonStormTarget);
     }
 
     /// <summary>
     /// Randomly alters the laws of an individual silicon.
     /// </summary>
-    public void IonStormTarget(Entity<SiliconLawBoundComponent> ent, ref IonStormEvent args)
+    public void IonStormTarget(Entity<IonStormSiliconLawComponent> ent, ref IonStormEvent args)
     {
-        var lawBound = ent.Comp;
+        if (!TryComp<SiliconLawBoundComponent>(ent, out var lawBound))
+            return;
 
         var laws = _siliconLaw.GetLaws(ent, lawBound);
         if (laws.Laws.Count == 0)
             return;
 
         // try to swap it out with a random lawset
-        if (_robustRandom.Prob(lawBound.IonRandomLawsetChance))
+        if (_robustRandom.Prob(ent.Comp.IonRandomLawsetChance))
         {
-            var lawsets = _proto.Index(lawBound.IonRandomLawsets);
+            var lawsets = _proto.Index(ent.Comp.IonRandomLawsets);
             var lawset = lawsets.Pick(_robustRandom);
             laws = _siliconLaw.GetLawset(lawset);
         }
@@ -85,7 +86,7 @@ public sealed class IonStormSystem : EntitySystem
         laws = laws.Clone();
 
         // shuffle them all
-        if (_robustRandom.Prob(lawBound.IonShuffleChance))
+        if (_robustRandom.Prob(ent.Comp.IonShuffleChance))
         {
             // hopefully work with existing glitched laws if there are multiple ion storms
             var baseOrder = FixedPoint2.New(1);
@@ -105,7 +106,7 @@ public sealed class IonStormSystem : EntitySystem
         }
 
         // see if we can remove a random law
-        if (laws.Laws.Count > 0 && _robustRandom.Prob(lawBound.IonRemoveChance))
+        if (laws.Laws.Count > 0 && _robustRandom.Prob(ent.Comp.IonRemoveChance))
         {
             var i = _robustRandom.Next(laws.Laws.Count);
             laws.Laws.RemoveAt(i);
@@ -115,7 +116,7 @@ public sealed class IonStormSystem : EntitySystem
         var newLaw = GenerateLaw();
 
         // see if the law we add will replace a random existing law or be a new glitched order one
-        if (laws.Laws.Count > 0 && _robustRandom.Prob(lawBound.IonReplaceChance))
+        if (laws.Laws.Count > 0 && _robustRandom.Prob(ent.Comp.IonReplaceChance))
         {
             var i = _robustRandom.Next(laws.Laws.Count);
             laws.Laws[i] = new SiliconLaw()

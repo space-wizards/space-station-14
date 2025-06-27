@@ -3,7 +3,7 @@ namespace Content.Shared.Silicons.Laws.Components;
 /// <summary>
 /// Component that designates an entity to be affected by ion storms.
 /// During the ion storm event, this entity will have <see cref="IonStormEvent"/> raised on it, in addition to <see cref="IonStormLawsEvent"/>  if it has laws.
-/// New laws can be modified in multiple ways depending on the fields in <see cref="SiliconLawBoundComponent"/> .
+/// New laws can be modified in multiple ways depending on the fields in <see cref="IonStormSiliconLawComponent"/> .
 /// </summary>
 [RegisterComponent]
 public sealed partial class IonStormTargetComponent : Component
