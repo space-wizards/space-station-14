@@ -36,9 +36,9 @@ public abstract partial class SharedStatusEffectsSystem
                 return true;
 
             if (resetCooldown)
-                SetStatusEffectTime(existedEffect.Value, duration.Value);
+                SetStatusEffectTime(existingEffect.Value, duration.Value);
             else
-                AddStatusEffectTime(existedEffect.Value, duration.Value);
+                AddStatusEffectTime(existingEffect.Value, duration.Value);
 
             return true;
         }
