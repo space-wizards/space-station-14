@@ -6,6 +6,12 @@ meta:
   forkVersion: 1732131340
   time: 06/27/2025 21:25:06
   entityCount: 272
+maps: []
+grids:
+- 1
+orphans:
+- 1
+nullspace: []
 tilemap:
   0: Space
   3: FloorDarkMini
