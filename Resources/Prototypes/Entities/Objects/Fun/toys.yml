@@ -155,6 +155,15 @@
   - type: Sprite
     sprite: Objects/Fun/AI.rsi
     state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/AI.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.06"
 
 - type: entity
   parent: BaseFigurineCheapo
@@ -165,6 +174,15 @@
   - type: Sprite
     sprite: Objects/Fun/toy_nuke.rsi
     state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toy_nuke.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.12"
   - type: Tag
     tags:
     - Payload
@@ -198,6 +216,15 @@
   - type: Sprite
     sprite: Objects/Fun/toy_ian.rsi
     state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toy_ian.rsi
+    slots:
+      - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.06"
   - type: Item
     size: Tiny
   - type: EmitSoundOnUse
@@ -478,11 +505,17 @@
     sprite: Objects/Fun/toy_singularity.rsi
     state: icon
   - type: SingularityDistortion
-    intensity: 2000
+    intensity: 25
     falloffPower: 2.6
   - type: Item
     size: Normal
-    sprite: Objects/Fun/icon.rsi
+    inhandVisuals:
+      left:
+      - state: singu-inhand-left
+        shader: unshaded
+      right:
+      - state: singu-inhand-right
+        shader: unshaded
 
 - type: entity
   parent: BaseItem
@@ -495,6 +528,14 @@
     shader: unshaded
     layers:
     - state: tesla_projectile
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: tesla-inhand-left
+        shader: unshaded
+      right:
+      - state: tesla-inhand-right
+        shader: unshaded
   - type: PointLight
     enabled: true
     radius: 5
@@ -632,6 +673,22 @@
     - state: base
       map: [ "enum.DamageStateVisualLayers.Base" ]
     - state: visor
+  - type: Clothing
+    sprite: Objects/Fun/pequeno.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET-body
+      - state: equipped-HELMET-vis
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-body
+      - state: inhand-left-vis
+      right:
+      - state: inhand-right-body
+      - state: inhand-right-vis
   - type: RandomSprite
     available:
     - enum.DamageStateVisualLayers.Base:
