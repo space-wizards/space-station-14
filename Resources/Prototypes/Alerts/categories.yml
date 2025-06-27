@@ -5,6 +5,9 @@
   id: Temperature
 
 - type: alertCategory
+  id: AirTemperature
+
+- type: alertCategory
   id: Breathing
 
 - type: alertCategory
