@@ -311,6 +311,8 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (!_status.TryEffectsWithComp<FrictionStatusEffectComponent>(entity, out var frictionEffects))
             return;
 
+        var modified = false;
+
         entity.Comp.FrictionModifier = 1f;
         entity.Comp.AccelerationModifier = 1f;
 
@@ -319,12 +321,13 @@ public abstract partial class SharedStunSystem : EntitySystem
             if (effect.Owner == ignore)
                 continue;
 
+            modified = true;
             entity.Comp.FrictionModifier *= effect.Comp1.FrictionModifier;
             entity.Comp.AccelerationModifier *= effect.Comp1.AccelerationModifier;
         }
 
         // Don't need the modifier anymore if it's not actually modifying anything.
-        if (MathHelper.CloseTo(entity.Comp.FrictionModifier, 1f) && MathHelper.CloseTo(entity.Comp.AccelerationModifier, 1f))
+        if (!modified)
             RemComp<FrictionStatusModifierComponent>(entity);
 
         _movementSpeedModifier.RefreshFrictionModifiers(entity);
