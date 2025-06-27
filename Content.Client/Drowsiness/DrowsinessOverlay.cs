@@ -1,5 +1,7 @@
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
-using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
@@ -15,10 +17,13 @@ public sealed class DrowsinessOverlay : Overlay
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    private readonly SharedStatusEffectsSystem _statusEffects = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
     private readonly ShaderInstance _drowsinessShader;
+
+    private EntityQuery<StatusEffectComponent> _statusQuery;
 
     public float CurrentPower = 0.0f;
 
@@ -29,6 +34,9 @@ public sealed class DrowsinessOverlay : Overlay
     public DrowsinessOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _statusEffects = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
+
+        _statusQuery = _entityManager.GetEntityQuery<StatusEffectComponent>();
         _drowsinessShader = _prototypeManager.Index<ShaderPrototype>("Drowsiness").InstanceUnique();
     }
 
@@ -39,16 +47,21 @@ public sealed class DrowsinessOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_entityManager.HasComponent<DrowsinessComponent>(playerEntity)
-            || !_entityManager.TryGetComponent<StatusEffectsComponent>(playerEntity, out var status))
+        if (!_statusEffects.TryEffectsWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var drowsinessEffects))
             return;
 
-        var statusSys = _sysMan.GetEntitySystem<StatusEffectsSystem>();
-        if (!statusSys.TryGetTime(playerEntity.Value, SharedDrowsinessSystem.DrowsinessKey, out var time, status))
+        TimeSpan? remainingTime = TimeSpan.Zero;
+        foreach (var (_, _, statusEffectComp) in drowsinessEffects)
+        {
+            if (statusEffectComp.EndEffectTime > remainingTime)
+                remainingTime = statusEffectComp.EndEffectTime;
+        }
+
+        if (remainingTime is null)
             return;
 
         var curTime = _timing.CurTime;
-        var timeLeft = (float)(time.Value.Item2 - curTime).TotalSeconds;
+        var timeLeft = (float)(remainingTime - curTime).Value.TotalSeconds;
 
         CurrentPower += 8f * (0.5f * timeLeft - CurrentPower) * args.DeltaSeconds / (timeLeft + 1);
     }
