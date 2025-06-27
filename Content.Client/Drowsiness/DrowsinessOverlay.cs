@@ -1,7 +1,5 @@
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Drowsiness;
 using Content.Shared.StatusEffectNew;
-using Content.Shared.StatusEffectNew.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
@@ -23,8 +21,6 @@ public sealed class DrowsinessOverlay : Overlay
     public override bool RequestScreenTexture => true;
     private readonly ShaderInstance _drowsinessShader;
 
-    private EntityQuery<StatusEffectComponent> _statusQuery;
-
     public float CurrentPower = 0.0f;
 
     private const float PowerDivisor = 250.0f;
@@ -34,9 +30,9 @@ public sealed class DrowsinessOverlay : Overlay
     public DrowsinessOverlay()
     {
         IoCManager.InjectDependencies(this);
+
         _statusEffects = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
 
-        _statusQuery = _entityManager.GetEntityQuery<StatusEffectComponent>();
         _drowsinessShader = _prototypeManager.Index<ShaderPrototype>("Drowsiness").InstanceUnique();
     }
 

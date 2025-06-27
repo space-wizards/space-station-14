@@ -260,7 +260,7 @@ public abstract partial class SharedStatusEffectsSystem
             }
         }
 
-        return effects != null;
+        return effects is not null;
     }
 
     /// <summary>

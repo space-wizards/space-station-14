@@ -1,6 +1,5 @@
 using Content.Shared.CCVar;
 using Content.Shared.Drugs;
-using Content.Shared.StatusEffect;
 using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -39,6 +38,7 @@ public sealed class RainbowOverlay : Overlay
     public RainbowOverlay()
     {
         IoCManager.InjectDependencies(this);
+
         _statusEffects = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
 
         _rainbowShader = _prototypeManager.Index<ShaderPrototype>("Rainbow").InstanceUnique();
