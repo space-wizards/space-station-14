@@ -282,7 +282,7 @@
   id: SpellbookStaffRGB
   name: spellbook-staff-RGB-name
   description: spellbook-staff-RGB-description
-  pruductEntity: RGBStaff
+  productEntity: RGBStaff
   cost:
     WizCoin: 0
   categories:
