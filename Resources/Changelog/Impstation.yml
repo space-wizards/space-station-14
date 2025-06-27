@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ruddygreat
-  changes:
-  - message: former Revolutionaries are no longer cosmic cultists!
-    type: Fix
-  id: 1398
-  time: '2025-03-25T11:50:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2093
 - author: SixValentine
   changes:
   - message: Trains fixes despite her being perfect
@@ -4220,3 +4213,18 @@
   id: 1897
   time: '2025-06-27T13:29:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2539
+- author: Stonylogray, mousesweater, and Dinner
+  changes:
+  - message: The syndicate has harnessed Dark Forces to allow traitorous chaplains
+      to produce profaned versions of nullrod items. Go forth and spread chaos!
+    type: Add
+  - message: The aureate quiver has been transmogrified into a belt-slot container
+      rather than a magazine.
+    type: Tweak
+  - message: Nullrods and nullrod items are no longer contraband.
+    type: Tweak
+  - message: The aureole arc now has functioning wielding sprites.
+    type: Fix
+  id: 1898
+  time: '2025-06-27T14:15:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2631
