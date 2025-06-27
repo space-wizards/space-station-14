@@ -8,7 +8,7 @@ namespace Content.Shared.Atmos.Components;
 [AutoGenerateComponentState]
 public sealed partial class AtmosPipeColorComponent : Component
 {
-    [DataField("color"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     [AutoNetworkedField]
     public Color Color { get; set; } = Color.White;
 

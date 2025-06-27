@@ -18,34 +18,22 @@ public sealed class AtmosPipeColorSystem : EntitySystem
 
     private void OnStartup(Entity<AtmosPipeColorComponent> item, ref ComponentStartup args)
     {
-        if (!TryComp<AppearanceComponent>(item.Owner, out var appearance))
-            return;
-
-        _appearance.SetData(item.Owner, PipeColorVisuals.Color, item.Comp.Color, appearance);
+        _appearance.SetData(item.Owner, PipeColorVisuals.Color, item.Comp.Color);
     }
 
     private void OnShutdown(Entity<AtmosPipeColorComponent> item, ref ComponentShutdown args)
     {
-        if (!TryComp<AppearanceComponent>(item.Owner, out var appearance))
-            return;
-
-        _appearance.SetData(item.Owner, PipeColorVisuals.Color, Color.White, appearance);
+        _appearance.SetData(item.Owner, PipeColorVisuals.Color, Color.White);
     }
 
     public void SetColor(Entity<AtmosPipeColorComponent> item, Color color)
     {
         item.Comp.Color = color;
 
-        if (!TryComp<AppearanceComponent>(item.Owner, out var appearance))
-            return;
+        Comp<AtmosPipeColorComponent>(item.Owner).Color = color;
+        Dirty(item.Owner, Comp<AtmosPipeColorComponent>(item.Owner));
 
-        if (TryComp<AtmosPipeColorComponent>(item.Owner, out var colorSync))
-        {
-            colorSync.Color = color;
-            Dirty(item.Owner, colorSync);
-        }
-
-        _appearance.SetData(item.Owner, PipeColorVisuals.Color, color, appearance);
+        _appearance.SetData(item.Owner, PipeColorVisuals.Color, color);
     }
 }
 

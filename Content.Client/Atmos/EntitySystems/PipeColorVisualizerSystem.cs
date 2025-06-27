@@ -22,7 +22,7 @@ public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisual
 
     private void OnGetVisuals(Entity<PipeColorVisualsComponent> item, ref GetInhandVisualsEvent args)
     {
-        foreach (var (key, layerData) in args.Layers)
+        foreach (var (_, layerData) in args.Layers)
         {
             if (TryComp(item.Owner, out AtmosPipeColorComponent? pipeColor))
                 layerData.Color = pipeColor.Color;
