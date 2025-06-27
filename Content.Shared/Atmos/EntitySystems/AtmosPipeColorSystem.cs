@@ -29,11 +29,8 @@ public sealed class AtmosPipeColorSystem : EntitySystem
     public void SetColor(Entity<AtmosPipeColorComponent> item, Color color)
     {
         item.Comp.Color = color;
-
-        Comp<AtmosPipeColorComponent>(item.Owner).Color = color;
-        Dirty(item.Owner, Comp<AtmosPipeColorComponent>(item.Owner));
-
         _appearance.SetData(item.Owner, PipeColorVisuals.Color, color);
+        Dirty(item);
     }
 }
 
