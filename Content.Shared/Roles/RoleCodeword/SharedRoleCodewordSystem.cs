@@ -6,6 +6,6 @@ public abstract class SharedRoleCodewordSystem : EntitySystem
     {
         var data = new CodewordsData(color, codewords);
         ent.Comp.RoleCodewords[key] = data;
-        Dirty(ent, ent.Comp);
+        Dirty(ent);
     }
 }
