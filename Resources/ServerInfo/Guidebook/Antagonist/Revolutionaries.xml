@@ -73,9 +73,9 @@
   The uplink stocks are shared among all who use the uplink, and additionally it shows who has last purchased the item.
 
   <Box>
-    <GuideEntityEmbed Entity="ClothingEyesGlassesSKBGlasses" Caption="Visible MindShields glasses"/>
-    <GuideEntityEmbed Entity="RevolutionaryHeldBanner" Caption="Stun in 3 or 4"/>
-    <GuideEntityEmbed Entity="EncryptionKeySoviet" Caption="Blyat."/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesSKBGlasses" Caption="Sees MindShield™"/>
+    <GuideEntityEmbed Entity="RevolutionaryHeldBanner" Caption="'Stuns in 3 or 4'"/>
+    <GuideEntityEmbed Entity="EncryptionKeySoviet" Caption="'Send help genpop'"/>
   </Box>
 
   ## Supply Rift
