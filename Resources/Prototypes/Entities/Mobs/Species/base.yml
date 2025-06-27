@@ -121,7 +121,6 @@
     allowed:
     - KnockedDown
     - Stutter
-    - SeeingRainbows
     - Electrocution
     - Drunk
     - SlurredSpeech

@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed some intense explosion types using incorrect overlay sprites.
-    type: Fix
-  id: 8210
-  time: '2025-04-17T10:12:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36644
 - author: Beck Thompson, SlamBamActionman
   changes:
   - message: Fixed trash bag visuals. The appearance will now update correctly depending
@@ -3885,3 +3878,10 @@
   id: 8722
   time: '2025-06-27T02:03:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38586
+- author: slarticodefast
+  changes:
+  - message: Fixed RCD ghosts not disappearing when dropping the RCD.
+    type: Fix
+  id: 8723
+  time: '2025-06-27T16:39:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38622
