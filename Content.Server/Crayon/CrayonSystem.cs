@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Logs;
 using Content.Server.Decals;
+using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Shared.Crayon;
 using Content.Shared.Database;
@@ -27,6 +28,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
 
     public override void Initialize()
     {
@@ -77,7 +79,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         component.Charges--;
         Dirty(uid, component);
 
-        _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{ToPrettyString(args.User):user} drew a {component.Color:color} {component.SelectedState}");
+        _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{ToPrettyString(args.User):user} drew a {component.Color:color} {component.State}");
         args.Handled = true;
 
         if (component.DeleteEmpty && component.Charges <= 0)
@@ -133,9 +135,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private void OnCrayonBoundUIPreviewMode(EntityUid uid, CrayonComponent component, CrayonPreviewModeMessage args)
     {
-        if (TryComp<HandsComponent>(args.Actor, out var hands) &&
-            TryComp<CrayonComponent>(hands.ActiveHandEntity, out var crayon) &&
-            hands.ActiveHandEntity == uid)
+        if (_hands.TryGetActiveItem(args.Actor, out var usedCrayon) && uid == usedCrayon)
         {
             // Only toggle the overlay if the user is holding a crayon in their active hand
             // and check if it is the same crayon that sent the request
