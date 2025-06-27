@@ -127,12 +127,6 @@
     <GuideEntityEmbed Entity="ToyFigurineSalvage" Caption="'...'"/>
   </Box>
 
-  <Box>
-    <GuideEntityEmbed Entity="ToyFigurineCargoTech" Caption="'Where are the thrusters?'"/>
-    <GuideEntityEmbed Entity="ToyFigurineScientist" Caption="'Shadow anomaly!'"/>
-    <GuideEntityEmbed Entity="ExosuitFabricator" Caption="Exosuit Fabricator"/>
-  </Box>
-
   - [bold][color=#5c5c5c]Telebonds[/color][/bold] can be withdrawn and shared among all who use the [color=#ed7300]uplink[/color]. As such, if you want to purchase [bold]one of the more expensive items[/bold], it's best to meet with your [color=#ed7300]Head Revolutionaries[/color] later on in the round if no prior [bold][color=#5c5c5c]Telebonds[/color][/bold] purchases were made.
 
   <Box>
