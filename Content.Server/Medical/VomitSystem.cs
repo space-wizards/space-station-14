@@ -10,6 +10,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Movement.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.StatusEffect;
@@ -29,6 +30,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly StunSystem _stun = default!;
+        [Dependency] private readonly SlowedStatusSystem _slowed = default!;
         [Dependency] private readonly ThirstSystem _thirst = default!;
         [Dependency] private readonly ForensicsSystem _forensics = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
@@ -60,7 +62,7 @@ namespace Content.Server.Medical
             var solutionSize = (MathF.Abs(thirstAdded) + MathF.Abs(hungerAdded)) / 6;
             // Apply a bit of slowdown
             if (TryComp<StatusEffectsComponent>(uid, out var status))
-                _stun.TrySlowdown(uid, TimeSpan.FromSeconds(solutionSize), true, 0.5f, 0.5f);
+                _slowed.TrySlowdown(uid, TimeSpan.FromSeconds(solutionSize), true, 0.5f, 0.5f);
 
             // TODO: Need decals
             var solution = new Solution();

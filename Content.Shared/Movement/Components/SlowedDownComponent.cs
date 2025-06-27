@@ -1,13 +1,13 @@
+using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
-namespace Content.Shared.Stunnable;
+namespace Content.Shared.Movement.Components;
 
 /// <summary>
 /// This is used to apply a movement speed modifier to an entity temporarily
-/// To be used only in conjunction with <see cref="SlowdownStatusEffectComponent"/>, on the status effect entity.
+/// To be used only in conjunction with <see cref="Movement.Components.SlowdownStatusEffectComponent"/>, on the status effect entity.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStunSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SlowedStatusSystem))]
 public sealed partial class SlowedDownComponent : Component
 {
     /// <summary>

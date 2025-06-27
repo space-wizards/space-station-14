@@ -1,7 +1,6 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
-namespace Content.Shared.Stunnable;
+namespace Content.Shared.Movement.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SlowdownStatusEffectComponent : Component

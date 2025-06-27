@@ -1,4 +1,5 @@
 using Content.Server.Stunnable.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using JetBrains.Annotations;
@@ -12,6 +13,7 @@ namespace Content.Server.Stunnable
     internal sealed class StunOnCollideSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly SlowedStatusSystem _slowed = default!;
 
         public override void Initialize()
         {
@@ -30,7 +32,7 @@ namespace Content.Server.Stunnable
                 _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(component.KnockdownAmount), true,
                     status);
 
-                _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(component.SlowdownAmount), true,
+                _slowed.TrySlowdown(target, TimeSpan.FromSeconds(component.SlowdownAmount), true,
                     component.WalkSpeedMultiplier, component.RunSpeedMultiplier);
             }
         }
