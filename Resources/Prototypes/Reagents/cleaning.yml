@@ -107,7 +107,6 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:GenericStatusEffect
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
         time: 5
