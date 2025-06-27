@@ -3,7 +3,6 @@ using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -30,11 +29,11 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
     {
         base.Initialize();
 
+        InitializeRelay();
+
         SubscribeLocalEvent<StatusEffectComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);
         SubscribeLocalEvent<StatusEffectComponent, StatusEffectRemovedEvent>(OnStatusEffectRemoved);
 
-        SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerAttachedEvent>(OnStatusEffectContainerAttached);
-        SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerDetachedEvent>(OnStatusEffectContainerDetached);
         SubscribeLocalEvent<StatusEffectContainerComponent, ComponentGetState>(OnGetState);
 
         _containerQuery = GetEntityQuery<StatusEffectContainerComponent>();
@@ -44,24 +43,6 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
     private void OnGetState(Entity<StatusEffectContainerComponent> ent, ref ComponentGetState args)
     {
         args.State = new StatusEffectContainerComponentState(GetNetEntitySet(ent.Comp.ActiveStatusEffects));
-    }
-
-    private void OnStatusEffectContainerAttached(Entity<StatusEffectContainerComponent> ent, ref LocalPlayerAttachedEvent args)
-    {
-        foreach (var effect in ent.Comp.ActiveStatusEffects)
-        {
-            var ev = new StatusEffectPlayerAttachedEvent(ent);
-            RaiseLocalEvent(effect, ref ev);
-        }
-    }
-
-    private void OnStatusEffectContainerDetached(Entity<StatusEffectContainerComponent> ent, ref LocalPlayerDetachedEvent args)
-    {
-        foreach (var effect in ent.Comp.ActiveStatusEffects)
-        {
-            var ev = new StatusEffectPlayerDetachedEvent(ent);
-            RaiseLocalEvent(effect, ref ev);
-        }
     }
 
     public override void Update(float frameTime)
@@ -186,20 +167,6 @@ public readonly record struct StatusEffectAppliedEvent(EntityUid Target);
 /// </summary>
 [ByRefEvent]
 public readonly record struct StatusEffectRemovedEvent(EntityUid Target);
-
-/// <summary>
-/// Called on a status effect entity inside <see cref="StatusEffectContainerComponent"/>
-/// after a player has been <see cref="LocalPlayerAttachedEvent"/> to this container entity.
-/// </summary>
-[ByRefEvent]
-public readonly record struct StatusEffectPlayerAttachedEvent(EntityUid Target);
-
-/// <summary>
-/// Called on a status effect entity inside <see cref="StatusEffectContainerComponent"/>
-/// after a player has been <see cref="LocalPlayerDetachedEvent"/> to this container entity.
-/// </summary>
-[ByRefEvent]
-public readonly record struct StatusEffectPlayerDetachedEvent(EntityUid Target);
 
 /// <summary>
 /// Raised on an entity before a status effect is added to determine if adding it should be cancelled.
