@@ -63,9 +63,7 @@
   - type: Item
     heldPrefix: off
     size: Normal
-  - type: ToggleableVisuals
-    spriteLayer: light
-  - type: ItemTogglePointLight
+  - type: ToggleableLightVisuals
   - type: PointLight
     enabled: false
     radius: 3
@@ -112,9 +110,8 @@
   id: ClothingHeadEVAHelmetBase
   name: base space helmet
   components:
-# SlotBlocker blocked until UI change
-#  - type: SlotBlock
-#    slots: [ears, eyes, mask]
+  - type: SlotBlock
+    slots: [ears, eyes, mask]
   - type: BreathMask
   - type: Item
     size: Normal
@@ -150,9 +147,8 @@
   name: base hardsuit helmet
   categories: [ HideSpawnMenu ]
   components:
-# SlotBlocker blocked until UI change
-#  - type: SlotBlock
-#    slots: [ears, eyes, mask]
+  - type: SlotBlock
+    slots: [ears, eyes, mask]
   - type: BreathMask
   - type: Sprite
     state: icon # default state used by most inheritors
@@ -200,9 +196,8 @@
   name: base hardsuit helmet with light
   categories: [ HideSpawnMenu ]
   components:
-# SlotBlocker blocked until UI change
-#  - type: SlotBlock
-#    slots: [ears, eyes, mask]
+  - type: SlotBlock
+    slots: [ears, eyes, mask]
   - type: Sprite
     layers:
     - state: icon
@@ -211,9 +206,7 @@
       map: [ "light" ]
   - type: Clothing
     equippedPrefix: off
-  - type: ToggleableVisuals
-    spriteLayer: light
-  - type: ItemTogglePointLight
+  - type: ToggleableLightVisuals
   - type: PointLight
     enabled: false
     radius: 3

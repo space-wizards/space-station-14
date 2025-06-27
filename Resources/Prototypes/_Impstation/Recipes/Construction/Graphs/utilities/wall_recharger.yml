@@ -54,7 +54,7 @@
     edges:
     - to: electronics
       steps:
-      - material: Manipulator
+      - material: Capacitor
         store: machine_parts
         amount: 2
         doAfter: 1

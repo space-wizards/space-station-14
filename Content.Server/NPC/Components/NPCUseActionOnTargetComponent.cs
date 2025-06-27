@@ -1,5 +1,5 @@
 using Content.Server.NPC.Systems;
-using Content.Shared.Actions.Components;
+using Content.Shared.Actions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.Components;
@@ -20,7 +20,7 @@ public sealed partial class NPCUseActionOnTargetComponent : Component
     /// Action that's going to attempt to be used.
     /// </summary>
     [DataField(required: true)]
-    public EntProtoId<TargetActionComponent> ActionId;
+    public EntProtoId<EntityWorldTargetActionComponent> ActionId;
 
     [DataField]
     public EntityUid? ActionEnt;

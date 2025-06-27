@@ -70,18 +70,18 @@
     - state: flame
       visible: false
       shader: unshaded
-      map: ["enum.ToggleableVisuals.Layer"]
+      map: ["enum.ToggleVisuals.Layer"]
   - type: GenericVisualizer
     visuals:
-      enum.ToggleableVisuals.Enabled:
-        enum.ToggleableVisuals.Layer:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
   - type: EntityStorageVisuals
     stateBaseClosed: lamp
     stateDoorOpen: lamp
     stateDoorClosed: lamptop
-  - type: ToggleableVisuals
+  - type: ToggleableLightVisuals
     spriteLayer: flame
     inhandVisuals:
       left:

@@ -1,5 +1,4 @@
-- type: entity
-  parent: BaseAction
+﻿- type: entity
   id: ActionRepulse
   name: Repulse
   description: Pushes entities away from the user.
@@ -11,12 +10,11 @@
       components:
       - MobMover
       - Item
-  - type: Action
+  - type: InstantAction
     useDelay: 40
     raiseOnAction: true
     itemIconStyle: BigAction
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: repulse
-  - type: InstantAction
     event: !type:RepulseAttractActionEvent

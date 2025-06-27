@@ -1,6 +1,6 @@
-﻿using Robust.Shared.Prototypes;
+﻿using System.Threading;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Spawners.Components;
 
@@ -10,7 +10,6 @@ namespace Content.Server.Spawners.Components;
 /// and min/max number of entities to spawn.
 /// </summary>
 [RegisterComponent, EntityCategory("Spawner")]
-[AutoGenerateComponentPause]
 public sealed partial class TimedSpawnerComponent : Component, ISerializationHooks
 {
     /// <summary>
@@ -31,7 +30,7 @@ public sealed partial class TimedSpawnerComponent : Component, ISerializationHoo
     /// Length of the interval between spawn attempts.
     /// </summary>
     [DataField]
-    public TimeSpan IntervalSeconds = TimeSpan.FromSeconds(60);
+    public int IntervalSeconds = 60;
 
     /// <summary>
     /// The minimum number of entities that can be spawned when an interval elapses.
@@ -45,11 +44,7 @@ public sealed partial class TimedSpawnerComponent : Component, ISerializationHoo
     [DataField]
     public int MaximumEntitiesSpawned = 1;
 
-    /// <summary>
-    /// The time at which the current interval will have elapsed and entities may be spawned.
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
-    public TimeSpan NextFire = TimeSpan.Zero;
+    public CancellationTokenSource? TokenSource;
 
     void ISerializationHooks.AfterDeserialization()
     {

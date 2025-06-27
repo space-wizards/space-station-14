@@ -1,13 +1,10 @@
 - type: entity
-  parent: BaseToggleAction
   id: ActionToggleWaddling
   name: Toggle Waddling
   description: Toggles your mirthful gait.
   components:
-  - type: Action
-    itemIconStyle: BigItem
-    useDelay: 2.5
   - type: InstantAction
+    itemIconStyle: BigItem
     event: !type:ToggleActionEvent
 
 - type: entity

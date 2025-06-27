@@ -9,7 +9,7 @@
     sprite: Clothing/Shoes/Boots/magboots.rsi
     layers:
     - state: icon
-      map: [ "enum.ToggleableVisuals.Layer" ]
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots.rsi
   - type: ToggleClothing
@@ -29,8 +29,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleableVisuals.Enabled:
-        enum.ToggleableVisuals.Layer:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
           True: {state: icon-on}
           False: {state: icon}
   - type: StaticPrice
@@ -137,12 +137,10 @@
   - type: RadarBlipStealth #imp edit. hide this jetpack from mass scanners.
 
 - type: entity
-  parent: BaseAction
   id: ActionToggleMagboots
   name: Toggle Magboots
   description: Toggles the magboots on and off.
   components:
-  - type: Action
-    itemIconStyle: BigItem
   - type: InstantAction
+    itemIconStyle: BigItem
     event: !type:ToggleActionEvent

@@ -28,12 +28,12 @@
     sprite: Objects/Misc/landmine.rsi
     layers:
     - state: landmine-inactive
-      map: [ "enum.ToggleableVisuals.Layer" ]
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleableVisuals.Enabled:
-        enum.ToggleableVisuals.Layer:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
           True: {state: landmine}
           False: {state: landmine-inactive}
   - type: Damageable

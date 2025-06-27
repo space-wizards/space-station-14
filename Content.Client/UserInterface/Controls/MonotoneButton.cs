@@ -7,7 +7,7 @@ namespace Content.Client.UserInterface.Controls;
 /// <summary>
 /// A button intended for use with a monotone color palette
 /// </summary>
-public sealed class MonotoneButton : Button
+public sealed class MonotoneButton : ContainerButton
 {
     /// <summary>
     /// Specifies the color of the label text when the button is pressed.
@@ -15,9 +15,43 @@ public sealed class MonotoneButton : Button
     [ViewVariables]
     public Color AltTextColor { set; get; } = new Color(0.2f, 0.2f, 0.2f);
 
+    /// <summary>
+    /// The label that holds the button text.
+    /// </summary>
+    public Label Label { get; }
+
+    /// <summary>
+    /// The text displayed by the button.
+    /// </summary>
+    [PublicAPI, ViewVariables]
+    public string? Text { get => Label.Text; set => Label.Text = value; }
+
+    /// <summary>
+    /// How to align the text inside the button.
+    /// </summary>
+    [PublicAPI, ViewVariables]
+    public AlignMode TextAlign { get => Label.Align; set => Label.Align = value; }
+
+    /// <summary>
+    /// If true, the button will allow shrinking and clip text
+    /// to prevent the text from going outside the bounds of the button.
+    /// If false, the minimum size will always fit the contained text.
+    /// </summary>
+    [PublicAPI, ViewVariables]
+    public bool ClipText
+    {
+        get => Label.ClipText;
+        set => Label.ClipText = value;
+    }
+
     public MonotoneButton()
     {
-        RemoveStyleClass("button");
+        Label = new Label
+        {
+            StyleClasses = { StyleClassButton }
+        };
+
+        AddChild(Label);
         UpdateAppearance();
     }
 

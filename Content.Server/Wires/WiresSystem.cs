@@ -579,14 +579,14 @@ public sealed class WiresSystem : SharedWiresSystem
     ///     Tries to get all the wires on this entity by the wire action type.
     /// </summary>
     /// <returns>Enumerator of all wires in this entity according to the given type.</returns>
-    public IEnumerable<Wire> TryGetWires<T>(EntityUid uid, WiresComponent? wires = null) where T: IWireAction
+    public IEnumerable<Wire> TryGetWires<T>(EntityUid uid, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
             yield break;
 
         foreach (var wire in wires.WiresList)
         {
-            if (wire.Action?.GetType() == typeof(T))
+            if (wire.GetType() == typeof(T))
             {
                 yield return wire;
             }

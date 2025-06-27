@@ -142,9 +142,17 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Reptilian]
+  # imp edit below
+  layering:
+    tail_large_front: TailBehindBackpack
+    tail_large_behind: TailBehind
+  colorLinks:
+    tail_large_behind: tail_large_front
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: tail_large
+    state: tail_large_front
+  - sprite: Mobs/Customization/reptilian_parts.rsi
+    state: tail_large_behind
 
 - type: marking
   id: LizardTailSpikes
@@ -369,15 +377,6 @@
     state: tail_smooth_wagging_primary
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_smooth_wagging_secondary
-
-- type: marking
-  id: LizardTailLargeAnimated
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: []
-  sprites:
-  - sprite: Mobs/Customization/reptilian_parts.rsi
-    state: tail_large_wagging
 
 - type: marking
   id: LizardTailSpikesAnimated

@@ -1,7 +1,6 @@
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
-using Content.Shared.Machines.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Utility;
 using System.Diagnostics;
@@ -11,8 +10,6 @@ using Content.Shared.Power;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
-using Content.Shared.ParticleAccelerator;
-using Content.Shared.Machines.Events;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -23,11 +20,12 @@ public sealed partial class ParticleAcceleratorSystem
 
     private void InitializeControlBoxSystem()
     {
+        SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, PowerChangedEvent>(OnControlBoxPowerChange);
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ParticleAcceleratorSetEnableMessage>(OnUISetEnableMessage);
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ParticleAcceleratorSetPowerStateMessage>(OnUISetPowerMessage);
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ParticleAcceleratorRescanPartsMessage>(OnUIRescanMessage);
-        SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, MultipartMachineAssemblyStateChanged>(OnMachineAssembledChanged);
     }
 
     public override void Update(float frameTime)
@@ -42,12 +40,14 @@ public sealed partial class ParticleAcceleratorSystem
     }
 
     [Conditional("DEBUG")]
-    private void EverythingIsWellToFire(ParticleAcceleratorControlBoxComponent controller,
-        Entity<MultipartMachineComponent> machine)
+    private void EverythingIsWellToFire(ParticleAcceleratorControlBoxComponent controller)
     {
         DebugTools.Assert(controller.Powered);
         DebugTools.Assert(controller.SelectedStrength != ParticleAcceleratorPowerState.Standby);
-        DebugTools.Assert(machine.Comp.IsAssembled);
+        DebugTools.Assert(controller.Assembled);
+        DebugTools.Assert(EntityManager.EntityExists(controller.PortEmitter));
+        DebugTools.Assert(EntityManager.EntityExists(controller.ForeEmitter));
+        DebugTools.Assert(EntityManager.EntityExists(controller.StarboardEmitter));
     }
 
     public void Fire(EntityUid uid, TimeSpan curTime, ParticleAcceleratorControlBoxComponent? comp = null)
@@ -58,17 +58,12 @@ public sealed partial class ParticleAcceleratorSystem
         comp.LastFire = curTime;
         comp.NextFire = curTime + comp.ChargeTime;
 
-        if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
-            return;
-
-        var machine = (uid, machineComp);
-        EverythingIsWellToFire(comp, machine);
+        EverythingIsWellToFire(comp);
 
         var strength = comp.SelectedStrength;
-
-        FireEmitter(_multipartMachine.GetPartEntity(machine, AcceleratorParts.PortEmitter)!.Value, strength);
-        FireEmitter(_multipartMachine.GetPartEntity(machine, AcceleratorParts.ForeEmitter)!.Value, strength);
-        FireEmitter(_multipartMachine.GetPartEntity(machine, AcceleratorParts.StarboardEmitter)!.Value, strength);
+        FireEmitter(comp.PortEmitter!.Value, strength);
+        FireEmitter(comp.ForeEmitter!.Value, strength);
+        FireEmitter(comp.StarboardEmitter!.Value, strength);
     }
 
     public void SwitchOn(EntityUid uid, EntityUid? user = null, ParticleAcceleratorControlBoxComponent? comp = null)
@@ -76,7 +71,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (!Resolve(uid, ref comp))
             return;
 
-        DebugTools.Assert(_multipartMachine.IsAssembled((uid, null)));
+        DebugTools.Assert(comp.Assembled);
 
         if (comp.Enabled || !comp.CanBeEnabled)
             return;
@@ -87,11 +82,9 @@ public sealed partial class ParticleAcceleratorSystem
         comp.Enabled = true;
         UpdatePowerDraw(uid, comp);
 
-        if (!TryComp<PowerConsumerComponent>(_multipartMachine.GetPartEntity(uid, AcceleratorParts.PowerBox), out var powerConsumer)
-            || powerConsumer.ReceivedPower >= powerConsumer.DrawRate * ParticleAcceleratorControlBoxComponent.RequiredPowerRatio)
-        {
+        if (!TryComp<PowerConsumerComponent>(comp.PowerBox, out var powerConsumer)
+        || powerConsumer.ReceivedPower >= powerConsumer.DrawRate * ParticleAcceleratorControlBoxComponent.RequiredPowerRatio)
             PowerOn(uid, comp);
-        }
 
         UpdateUI(uid, comp);
     }
@@ -119,7 +112,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         DebugTools.Assert(comp.Enabled);
-        DebugTools.Assert(_multipartMachine.IsAssembled((uid, null)));
+        DebugTools.Assert(comp.Assembled);
 
         if (comp.Powered)
             return;
@@ -218,10 +211,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         }
 
-        if (!TryComp<MultipartMachineComponent>(uid, out var machine))
-            return;
-
-        EverythingIsWellToFire(comp, (uid, machine));
+        EverythingIsWellToFire(comp);
 
         var curTime = _gameTiming.CurTime;
         comp.LastFire = curTime;
@@ -233,8 +223,7 @@ public sealed partial class ParticleAcceleratorSystem
     {
         if (!Resolve(uid, ref comp))
             return;
-
-        if (!TryComp<PowerConsumerComponent>(_multipartMachine.GetPartEntity(uid, AcceleratorParts.PowerBox), out var powerConsumer))
+        if (!TryComp<PowerConsumerComponent>(comp.PowerBox, out var powerConsumer))
             return;
 
         var powerDraw = comp.BasePowerDraw;
@@ -255,35 +244,30 @@ public sealed partial class ParticleAcceleratorSystem
         var draw = 0f;
         var receive = 0f;
 
-        if (TryComp<PowerConsumerComponent>(_multipartMachine.GetPartEntity(uid, AcceleratorParts.PowerBox), out var powerConsumer))
+        if (TryComp<PowerConsumerComponent>(comp.PowerBox, out var powerConsumer))
         {
             draw = powerConsumer.DrawRate;
             receive = powerConsumer.ReceivedPower;
         }
 
-        if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
-            return;
-
-        var machine = (uid, machineComp);
-
-        var uiState = new ParticleAcceleratorUIState(
-            machineComp.IsAssembled,
+        _uiSystem.SetUiState(uid,
+            ParticleAcceleratorControlBoxUiKey.Key,
+            new ParticleAcceleratorUIState(
+            comp.Assembled,
             comp.Enabled,
             comp.SelectedStrength,
-            (int)draw,
-            (int)receive,
-            _multipartMachine.HasPart(machine, AcceleratorParts.StarboardEmitter),
-            _multipartMachine.HasPart(machine, AcceleratorParts.ForeEmitter),
-            _multipartMachine.HasPart(machine, AcceleratorParts.PortEmitter),
-            _multipartMachine.HasPart(machine, AcceleratorParts.PowerBox),
-            _multipartMachine.HasPart(machine, AcceleratorParts.FuelChamber),
-            _multipartMachine.HasPart(machine, AcceleratorParts.EndCap),
+            (int) draw,
+            (int) receive,
+            comp.StarboardEmitter != null,
+            comp.ForeEmitter != null,
+            comp.PortEmitter != null,
+            comp.PowerBox != null,
+            comp.FuelChamber != null,
+            comp.EndCap != null,
             comp.InterfaceDisabled,
             comp.MaxStrength,
             comp.StrengthLocked
-        );
-
-        _uiSystem.SetUiState(uid, ParticleAcceleratorControlBoxUiKey.Key, uiState);
+        ));
     }
 
     private void UpdateAppearance(EntityUid uid, ParticleAcceleratorControlBoxComponent? comp = null, AppearanceComponent? appearance = null)
@@ -308,58 +292,55 @@ public sealed partial class ParticleAcceleratorSystem
 
         var state = controller.Powered ? (ParticleAcceleratorVisualState) controller.SelectedStrength : ParticleAcceleratorVisualState.Unpowered;
 
-        if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
-            return;
-
-        var machine = (uid, machineComp);
-
         // UpdatePartVisualState(ControlBox); (We are the control box)
-        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.FuelChamber, out var fuelChamber))
-            _appearanceSystem.SetData(fuelChamber.Value, ParticleAcceleratorVisuals.VisualState, state);
-        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.PowerBox, out var powerBox))
-            _appearanceSystem.SetData(powerBox.Value, ParticleAcceleratorVisuals.VisualState, state);
-        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.PortEmitter, out var portEmitter))
-            _appearanceSystem.SetData(portEmitter.Value, ParticleAcceleratorVisuals.VisualState, state);
-        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.ForeEmitter, out var foreEmitter))
-            _appearanceSystem.SetData(foreEmitter.Value, ParticleAcceleratorVisuals.VisualState, state);
-        if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.StarboardEmitter, out var starboardEmitter))
-            _appearanceSystem.SetData(starboardEmitter.Value, ParticleAcceleratorVisuals.VisualState, state);
+        if (controller.FuelChamber.HasValue)
+            _appearanceSystem.SetData(controller.FuelChamber!.Value, ParticleAcceleratorVisuals.VisualState, state);
+        if (controller.PowerBox.HasValue)
+            _appearanceSystem.SetData(controller.PowerBox!.Value, ParticleAcceleratorVisuals.VisualState, state);
+        if (controller.PortEmitter.HasValue)
+            _appearanceSystem.SetData(controller.PortEmitter!.Value, ParticleAcceleratorVisuals.VisualState, state);
+        if (controller.ForeEmitter.HasValue)
+            _appearanceSystem.SetData(controller.ForeEmitter!.Value, ParticleAcceleratorVisuals.VisualState, state);
+        if (controller.StarboardEmitter.HasValue)
+            _appearanceSystem.SetData(controller.StarboardEmitter!.Value, ParticleAcceleratorVisuals.VisualState, state);
         //no endcap because it has no powerlevel-sprites
     }
 
-    /// <summary>
-    /// Handles when a multipart machine has had some assembled/disassembled state change, or had parts added/removed.
-    /// </summary>
-    /// <param name="ent">Multipart machine entity</param>
-    /// <param name="args">Args for this event</param>
-    private void OnMachineAssembledChanged(Entity<ParticleAcceleratorControlBoxComponent> ent, ref MultipartMachineAssemblyStateChanged args)
+    private IEnumerable<EntityUid> AllParts(EntityUid uid, ParticleAcceleratorControlBoxComponent? comp = null)
     {
-        if (args.IsAssembled)
+        if (Resolve(uid, ref comp))
         {
-            UpdatePowerDraw(ent, ent.Comp);
-            UpdateUI(ent, ent.Comp);
+            if (comp.FuelChamber.HasValue)
+                yield return comp.FuelChamber.Value;
+            if (comp.EndCap.HasValue)
+                yield return comp.EndCap.Value;
+            if (comp.PowerBox.HasValue)
+                yield return comp.PowerBox.Value;
+            if (comp.PortEmitter.HasValue)
+                yield return comp.PortEmitter.Value;
+            if (comp.ForeEmitter.HasValue)
+                yield return comp.ForeEmitter.Value;
+            if (comp.StarboardEmitter.HasValue)
+                yield return comp.StarboardEmitter.Value;
         }
-        else
+    }
+
+    private void OnComponentStartup(EntityUid uid, ParticleAcceleratorControlBoxComponent comp, ComponentStartup args)
+    {
+        if (TryComp<ParticleAcceleratorPartComponent>(uid, out var part))
+            part.Master = uid;
+    }
+
+    private void OnComponentShutdown(EntityUid uid, ParticleAcceleratorControlBoxComponent comp, ComponentShutdown args)
+    {
+        if (TryComp<ParticleAcceleratorPartComponent>(uid, out var partStatus))
+            partStatus.Master = null;
+
+        var partQuery = GetEntityQuery<ParticleAcceleratorPartComponent>();
+        foreach (var part in AllParts(uid, comp))
         {
-            if (ent.Comp.Powered)
-            {
-                SwitchOff(ent, args.User, ent.Comp);
-            }
-            else
-            {
-                UpdateAppearance(ent, ent.Comp);
-                UpdateUI(ent, ent.Comp);
-            }
-
-            // Because the parts are already removed from the multipart machine, updating the visual appearance won't find any valid entities.
-            // We know which parts have been removed so we can update the visual state to unpowered in a more manual way here.
-            foreach (var (key, part) in args.PartsRemoved)
-            {
-                if (key is AcceleratorParts.EndCap)
-                    continue; // No endcap powerlevel-sprites
-
-                _appearanceSystem.SetData(part, ParticleAcceleratorVisuals.VisualState, ParticleAcceleratorVisualState.Unpowered);
-            }
+            if (partQuery.TryGetComponent(part, out var partData))
+                partData.Master = null;
         }
     }
 
@@ -384,7 +365,7 @@ public sealed partial class ParticleAcceleratorSystem
 
         if (msg.Enabled)
         {
-            if (_multipartMachine.IsAssembled((uid, null)))
+            if (comp.Assembled)
                 SwitchOn(uid, msg.Actor, comp);
         }
         else
@@ -416,13 +397,9 @@ public sealed partial class ParticleAcceleratorSystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
 
-        if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
-            return;
+        RescanParts(uid, msg.Actor, comp);
 
-        // User has requested a manual rescan of the machine, if anything HAS changed that the multipart
-        // machine system has missed then a AssemblyStateChanged event will be raised at the machine.
-        var machine = new Entity<MultipartMachineComponent>(uid, machineComp);
-        _multipartMachine.Rescan(machine, msg.Actor);
+        UpdateUI(uid, comp);
     }
 
     public static int GetPANumericalLevel(ParticleAcceleratorPowerState state)

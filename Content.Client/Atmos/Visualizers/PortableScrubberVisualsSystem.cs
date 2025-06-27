@@ -9,6 +9,8 @@ namespace Content.Client.Atmos.Visualizers;
 /// </summary>
 public sealed class PortableScrubberSystem : VisualizerSystem<PortableScrubberVisualsComponent>
 {
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, PortableScrubberVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -18,15 +20,15 @@ public sealed class PortableScrubberSystem : VisualizerSystem<PortableScrubberVi
             && AppearanceSystem.TryGetData<bool>(uid, PortableScrubberVisuals.IsRunning, out var isRunning, args.Component))
         {
             var runningState = isRunning ? component.RunningState : component.IdleState;
-            SpriteSystem.LayerSetRsiState((uid, args.Sprite), PortableScrubberVisualLayers.IsRunning, runningState);
+            _sprite.LayerSetRsiState((uid, args.Sprite), PortableScrubberVisualLayers.IsRunning, runningState);
 
             var fullState = isFull ? component.FullState : component.ReadyState;
-            SpriteSystem.LayerSetRsiState((uid, args.Sprite), PowerDeviceVisualLayers.Powered, fullState);
+            _sprite.LayerSetRsiState((uid, args.Sprite), PowerDeviceVisualLayers.Powered, fullState);
         }
 
         if (AppearanceSystem.TryGetData<bool>(uid, PortableScrubberVisuals.IsDraining, out var isDraining, args.Component))
         {
-            SpriteSystem.LayerSetVisible((uid, args.Sprite), PortableScrubberVisualLayers.IsDraining, isDraining);
+            _sprite.LayerSetVisible((uid, args.Sprite), PortableScrubberVisualLayers.IsDraining, isDraining);
         }
     }
 }

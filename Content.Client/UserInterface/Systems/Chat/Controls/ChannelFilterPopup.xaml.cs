@@ -1,4 +1,4 @@
-using Content.Shared.Chat;
+﻿using Content.Shared.Chat;
 using Content.Shared.CCVar;
 using Robust.Shared.Utility;
 using Robust.Shared.Configuration;
@@ -43,16 +43,16 @@ public sealed partial class ChannelFilterPopup : Popup
         RobustXamlLoader.Load(this);
 
         HighlightButton.OnPressed += HighlightsEntered;
-        // Add a placeholder text to the highlights TextEdit.
+
         HighlightEdit.Placeholder = new Rope.Leaf(Loc.GetString("hud-chatbox-highlights-placeholder"));
 
         // Load highlights if any were saved.
         var cfg = IoCManager.Resolve<IConfigurationManager>();
-        string highlights = cfg.GetCVar(CCVars.ChatHighlights);
+        string highlights = cfg.GetCVar(ImpCCVars.ChatHighlights);
 
         if (!string.IsNullOrEmpty(highlights))
         {
-            UpdateHighlights(highlights);
+            SetHighlights(highlights);
         }
     }
 
@@ -113,7 +113,7 @@ public sealed partial class ChannelFilterPopup : Popup
         }
     }
 
-    public void UpdateHighlights(string highlights)
+    public void SetHighlights(string highlights)
     {
         HighlightEdit.TextRope = new Rope.Leaf(highlights);
     }

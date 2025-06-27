@@ -42,9 +42,7 @@
       color: "#FFC458"
       netsync: false
     - type: Appearance
-    - type: ToggleableVisuals
-      spriteLayer: light
-    - type: ItemTogglePointLight
+    - type: ToggleableLightVisuals
     - type: PowerCellSlot
       cellSlotId: cell_slot
     - type: ItemSlots

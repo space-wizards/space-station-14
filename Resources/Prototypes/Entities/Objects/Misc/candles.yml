@@ -41,7 +41,7 @@
     - type: FireVisuals
       sprite: Objects/Misc/candles.rsi
       normalState: fire-big
-    - type: ToggleableVisuals
+    - type: ToggleableLightVisuals
       spriteLayer: null
       inhandVisuals:
         left:

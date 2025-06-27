@@ -100,7 +100,8 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         var tiles = new List<(Vector2i Index, Tile Tile)>();
         var seed = _random.Next();
         var random = new Random(seed);
-        var mapUid = _maps.CreateMap();
+        var mapId = _mapManager.CreateMap();
+        var mapUid = _mapManager.GetMapEntityId(mapId);
 
         var gatewayName = _salvage.GetFTLName(_protoManager.Index<LocalizedDatasetPrototype>(PlanetNames), seed);
         _metadata.SetEntityName(mapUid, gatewayName);
@@ -120,7 +121,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         {
             for (var y = -2; y <= 2; y++)
             {
-                tiles.Add((new Vector2i(x, y) + origin, new Tile(tileDef.TileId, variant: _tile.PickVariant((ContentTileDefinition)tileDef, random))));
+                tiles.Add((new Vector2i(x, y) + origin, new Tile(tileDef.TileId, variant: _tile.PickVariant((ContentTileDefinition) tileDef, random))));
             }
         }
 

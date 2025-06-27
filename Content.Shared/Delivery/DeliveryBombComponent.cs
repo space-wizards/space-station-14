@@ -16,7 +16,7 @@ public sealed partial class DeliveryBombComponent : Component
     /// How often will this bomb retry to explode.
     /// </summary>
     [DataField]
-    public TimeSpan ExplosionRetryDelay = TimeSpan.FromSeconds(3);
+    public TimeSpan ExplosionRetryDelay = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// The time at which the next retry will happen
@@ -28,7 +28,7 @@ public sealed partial class DeliveryBombComponent : Component
     /// The chance this bomb explodes each time it attempts to do so.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ExplosionChance = 0.05f;
+    public float ExplosionChance = 0.01f;
 
     /// <summary>
     /// How much should the chance of explosion increase each failed retry?

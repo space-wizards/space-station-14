@@ -42,10 +42,9 @@ public abstract partial class EntityTableSelector
 
     public IEnumerable<EntProtoId> GetSpawns(System.Random rand,
         IEntityManager entMan,
-        IPrototypeManager proto,
-        EntityTableContext ctx)
+        IPrototypeManager proto)
     {
-        if (!CheckConditions(entMan, proto, ctx))
+        if (!CheckConditions(entMan, proto))
             yield break;
 
         var rolls = Rolls.Get(rand);
@@ -54,14 +53,14 @@ public abstract partial class EntityTableSelector
             if (!rand.Prob(Prob))
                 continue;
 
-            foreach (var spawn in GetSpawnsImplementation(rand, entMan, proto, ctx))
+            foreach (var spawn in GetSpawnsImplementation(rand, entMan, proto))
             {
                 yield return spawn;
             }
         }
     }
 
-    public bool CheckConditions(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    public bool CheckConditions(IEntityManager entMan, IPrototypeManager proto)
     {
         if (Conditions.Count == 0)
             return true;
@@ -69,7 +68,7 @@ public abstract partial class EntityTableSelector
         var success = false;
         foreach (var condition in Conditions)
         {
-            var res = condition.Evaluate(this, entMan, proto, ctx);
+            var res = condition.Evaluate(entMan, proto);
 
             if (RequireAll && !res)
                 return false; // intentional break out of loop and function
@@ -85,6 +84,5 @@ public abstract partial class EntityTableSelector
 
     protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
         IEntityManager entMan,
-        IPrototypeManager proto,
-        EntityTableContext ctx);
+        IPrototypeManager proto);
 }

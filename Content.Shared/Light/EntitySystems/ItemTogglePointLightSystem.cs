@@ -1,15 +1,16 @@
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Light.Components;
+using Content.Shared.Toggleable;
 using ItemTogglePointLightComponent = Content.Shared.Light.Components.ItemTogglePointLightComponent;
 
 namespace Content.Shared.Light.EntitySystems;
 
 /// <summary>
-/// Implements the behavior of <see cref="ItemTogglePointLightComponent"/>, causing <see cref="ItemToggledEvent"/>s to
-/// enable and disable lights on the entity.
+/// Handles ItemToggle for PointLight
 /// </summary>
 public sealed class ItemTogglePointLightSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedHandheldLightSystem _handheldLight = default!;
 
@@ -24,6 +25,7 @@ public sealed class ItemTogglePointLightSystem : EntitySystem
         if (!_light.TryGetLight(ent.Owner, out var light))
             return;
 
+        _appearance.SetData(ent, ToggleableLightVisuals.Enabled, args.Activated);
         _light.SetEnabled(ent.Owner, args.Activated, comp: light);
         if (TryComp<HandheldLightComponent>(ent.Owner, out var handheldLight))
         {

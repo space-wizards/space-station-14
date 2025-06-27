@@ -1,9 +1,11 @@
 - type: entity
   parent: [BaseWeaponEnergyTurret, ConstructibleMachine]
   id: WeaponEnergyTurretStation
-  name: security turret
+  name: sentry turret
   description: A high-tech autonomous weapons system designed to keep unauthorized personnel out of sensitive areas.
   components:
+  
+  # Physics
   - type: Fixtures
     fixtures:
       body:
@@ -23,6 +25,8 @@
         layer:
           - MachineLayer
         hard: false
+        
+  # Sprites and appearance
   - type: Sprite
     sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi
     drawdepth: HighFloorObjects
@@ -66,14 +70,20 @@
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }
           False: { visible: true }
+  
+  # HTN
   - type: HTN
     enabled: false
+  
+  # Faction / control
   - type: StationAiWhitelist
   - type: NpcFactionMember
     factions:
     - AllHostile
   - type: AccessReader
     access: [["Security"]]
+    
+  # Weapon systems
   - type: ProjectileBatteryAmmoProvider
     proto: BulletEnergyTurretDisabler
     fireCost: 100
@@ -88,6 +98,8 @@
     - Security
     - Borg
     - BasicSilicon
+    
+  # Defenses / destruction
   - type: DeployableTurret
     retractedDamageModifierSetId: Metallic
     deployedDamageModifierSetId: FlimsyMetallic
@@ -118,6 +130,8 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      
+  # Device network
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: TurretControl
@@ -127,6 +141,8 @@
     examinableAddress: true
   - type: DeviceNetworkRequiresPower
   - type: WiredNetworkConnection
+  
+  # Wires
   - type: UserInterface
     interfaces:
       enum.WiresUiKey.Key:
@@ -140,6 +156,8 @@
     locked: true
     unlockOnClick: false
   - type: LockedWiresPanel
+  
+  # General properties  
   - type: Machine
     board: WeaponEnergyTurretStationMachineCircuitboard
   - type: UseDelay
@@ -152,7 +170,7 @@
   description: A high-tech autonomous weapons system under the direct control of a local artifical intelligence.
   components:
   - type: AccessReader
-    access: [["StationAi"], ["ResearchDirector"]]
+    access: [["StationAi"]]
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Borg
@@ -162,4 +180,3 @@
   - type: DeviceNetwork
     receiveFrequencyId: TurretControlAI
     transmitFrequencyId: TurretAI
-

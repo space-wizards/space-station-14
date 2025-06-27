@@ -1,14 +1,14 @@
+using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.NodeContainer;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.Piping.EntitySystems;
 
-public sealed partial class AtmosPipeAppearanceSystem : SharedAtmosPipeAppearanceSystem
+public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -34,12 +34,9 @@ public sealed partial class AtmosPipeAppearanceSystem : SharedAtmosPipeAppearanc
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
             return;
 
-        var numberOfPipeLayers = GetNumberOfPipeLayers(uid, out var atmosPipeLayers);
-
         // get connected entities
         var anyPipeNodes = false;
-        HashSet<(EntityUid, AtmosPipeLayer)> connected = new();
-
+        HashSet<EntityUid> connected = new();
         foreach (var node in container.Nodes.Values)
         {
             if (node is not PipeNode)
@@ -49,8 +46,8 @@ public sealed partial class AtmosPipeAppearanceSystem : SharedAtmosPipeAppearanc
 
             foreach (var connectedNode in node.ReachableNodes)
             {
-                if (connectedNode is PipeNode { } pipeNode)
-                    connected.Add((connectedNode.Owner, pipeNode.CurrentPipeLayer));
+                if (connectedNode is PipeNode)
+                    connected.Add(connectedNode.Owner);
             }
         }
 
@@ -58,22 +55,14 @@ public sealed partial class AtmosPipeAppearanceSystem : SharedAtmosPipeAppearanc
             return;
 
         // find the cardinal directions of any connected entities
-        var connectedDirections = new PipeDirection[numberOfPipeLayers];
-        Array.Fill(connectedDirections, PipeDirection.None);
-
-        var tile = _map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
-
-        foreach (var (neighbour, pipeLayer) in connected)
+        var netConnectedDirections = PipeDirection.None;
+        var tile = _map.TileIndicesFor((xform.GridUid.Value, grid), xform.Coordinates);
+        foreach (var neighbour in connected)
         {
-            var pipeIndex = (int)pipeLayer;
+            // TODO z-levels, pipes across grids - we shouldn't assume that the neighboring tile's transform is on the same grid
+            var otherTile = _map.TileIndicesFor((xform.GridUid.Value, grid), Transform(neighbour).Coordinates);
 
-            if (pipeIndex >= numberOfPipeLayers)
-                continue;
-
-            var otherTile = _map.TileIndicesFor(xform.GridUid.Value, grid, Transform(neighbour).Coordinates);
-            var pipeLayerDirections = connectedDirections[pipeIndex];
-
-            pipeLayerDirections |= (otherTile - tile) switch
+            netConnectedDirections |= (otherTile - tile) switch
             {
                 (0, 1) => PipeDirection.North,
                 (0, -1) => PipeDirection.South,
@@ -81,15 +70,7 @@ public sealed partial class AtmosPipeAppearanceSystem : SharedAtmosPipeAppearanc
                 (-1, 0) => PipeDirection.West,
                 _ => PipeDirection.None
             };
-
-            connectedDirections[pipeIndex] = pipeLayerDirections;
         }
-
-        // Convert the pipe direction array into a single int for serialization
-        var netConnectedDirections = 0;
-
-        for (var i = numberOfPipeLayers - 1; i >= 0; i--)
-            netConnectedDirections += (int)connectedDirections[i] << (PipeDirectionHelpers.PipeDirections * i);
 
         _appearance.SetData(uid, PipeVisuals.VisualState, netConnectedDirections, appearance);
     }

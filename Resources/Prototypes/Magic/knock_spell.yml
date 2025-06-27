@@ -1,10 +1,9 @@
-- type: entity
-  parent: BaseAction
+﻿- type: entity
   id: ActionKnock
   name: Knock
   description: This spell opens nearby doors.
   components:
-  - type: Action
+  - type: InstantAction
     useDelay: 10
     itemIconStyle: BigAction
     sound: !type:SoundPathSpecifier
@@ -12,7 +11,6 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: knock
-  - type: InstantAction
     event: !type:KnockSpellEvent
   - type: SpeakOnAction
     sentence: action-speech-spell-knock

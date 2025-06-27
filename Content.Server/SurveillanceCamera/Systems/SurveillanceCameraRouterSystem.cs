@@ -92,7 +92,7 @@ public sealed class SurveillanceCameraRouterSystem : EntitySystem
 
     private void AddVerbs(EntityUid uid, SurveillanceCameraRouterComponent component, GetVerbsEvent<AlternativeVerb> verbs)
     {
-        if (!_actionBlocker.CanInteract(verbs.User, uid) || !_actionBlocker.CanComplexInteract(verbs.User))
+        if (!_actionBlocker.CanInteract(verbs.User, uid))
         {
             return;
         }

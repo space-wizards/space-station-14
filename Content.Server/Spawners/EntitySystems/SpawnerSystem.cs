@@ -1,41 +1,25 @@
+using System.Threading;
 using Content.Server.Spawners.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Spawners.EntitySystems;
 
 public sealed class SpawnerSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<TimedSpawnerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<TimedSpawnerComponent, ComponentInit>(OnSpawnerInit);
+        SubscribeLocalEvent<TimedSpawnerComponent, ComponentShutdown>(OnTimedSpawnerShutdown);
     }
 
-    public override void Update(float frameTime)
+    private void OnSpawnerInit(EntityUid uid, TimedSpawnerComponent component, ComponentInit args)
     {
-        base.Update(frameTime);
-
-        var curTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<TimedSpawnerComponent>();
-        while (query.MoveNext(out var uid, out var timedSpawner))
-        {
-            if (timedSpawner.NextFire > curTime)
-                continue;
-
-            OnTimerFired(uid, timedSpawner);
-
-            timedSpawner.NextFire += timedSpawner.IntervalSeconds;
-        }
-    }
-
-    private void OnMapInit(Entity<TimedSpawnerComponent> ent, ref MapInitEvent args)
-    {
-        ent.Comp.NextFire = _timing.CurTime + ent.Comp.IntervalSeconds;
+        component.TokenSource?.Cancel();
+        component.TokenSource = new CancellationTokenSource();
+        uid.SpawnRepeatingTimer(TimeSpan.FromSeconds(component.IntervalSeconds), () => OnTimerFired(uid, component), component.TokenSource.Token);
     }
 
     private void OnTimerFired(EntityUid uid, TimedSpawnerComponent component)
@@ -51,5 +35,10 @@ public sealed class SpawnerSystem : EntitySystem
             var entity = _random.Pick(component.Prototypes);
             SpawnAtPosition(entity, coordinates);
         }
+    }
+
+    private void OnTimedSpawnerShutdown(EntityUid uid, TimedSpawnerComponent component, ComponentShutdown args)
+    {
+        component.TokenSource?.Cancel();
     }
 }

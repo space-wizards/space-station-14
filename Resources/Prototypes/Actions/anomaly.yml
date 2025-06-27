@@ -1,11 +1,9 @@
 - type: entity
-  parent: BaseAction
   id: ActionAnomalyPulse
   name: Anomaly pulse
   description: Release a pulse of energy of your abnormal nature
   components:
-  - type: Action
-    useDelay: 30
-    icon: Structures/Specific/anomaly.rsi/anom1.png
   - type: InstantAction
+    icon: Structures/Specific/anomaly.rsi/anom1.png
     event: !type:ActionAnomalyPulseEvent
+    useDelay: 30

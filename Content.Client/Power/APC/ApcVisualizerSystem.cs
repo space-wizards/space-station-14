@@ -6,6 +6,7 @@ namespace Content.Client.Power.APC;
 public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
 {
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, ApcVisualsComponent comp, ref AppearanceChangeEvent args)
     {
@@ -13,8 +14,8 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
             return;
 
         // get the mapped layer index of the first lock layer and the first channel layer
-        var lockIndicatorOverlayStart = SpriteSystem.LayerMapGet((uid, args.Sprite), ApcVisualLayers.InterfaceLock);
-        var channelIndicatorOverlayStart = SpriteSystem.LayerMapGet((uid, args.Sprite), ApcVisualLayers.Equipment);
+        var lockIndicatorOverlayStart = _sprite.LayerMapGet((uid, args.Sprite), ApcVisualLayers.InterfaceLock);
+        var channelIndicatorOverlayStart = _sprite.LayerMapGet((uid, args.Sprite), ApcVisualLayers.Equipment);
 
         // Handle APC screen overlay:
         if (!AppearanceSystem.TryGetData<ApcChargeState>(uid, ApcVisuals.ChargeState, out var chargeState, args.Component))
@@ -22,7 +23,7 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
 
         if (chargeState >= 0 && chargeState < ApcChargeState.NumStates)
         {
-            SpriteSystem.LayerSetRsiState((uid, args.Sprite), ApcVisualLayers.ChargeState, $"{comp.ScreenPrefix}-{comp.ScreenSuffixes[(sbyte)chargeState]}");
+            _sprite.LayerSetRsiState((uid, args.Sprite), ApcVisualLayers.ChargeState, $"{comp.ScreenPrefix}-{comp.ScreenSuffixes[(sbyte)chargeState]}");
 
             // LockState does nothing currently. The backend doesn't exist.
             if (AppearanceSystem.TryGetData<byte>(uid, ApcVisuals.LockState, out var lockStates, args.Component))
@@ -31,8 +32,8 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
                 {
                     var layer = (byte)lockIndicatorOverlayStart + i;
                     var lockState = (sbyte)((lockStates >> (i << (sbyte)ApcLockState.LogWidth)) & (sbyte)ApcLockState.All);
-                    SpriteSystem.LayerSetRsiState((uid, args.Sprite), layer, $"{comp.LockPrefix}{i}-{comp.LockSuffixes[lockState]}");
-                    SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, true);
+                    _sprite.LayerSetRsiState((uid, args.Sprite), layer, $"{comp.LockPrefix}{i}-{comp.LockSuffixes[lockState]}");
+                    _sprite.LayerSetVisible((uid, args.Sprite), layer, true);
                 }
             }
 
@@ -43,8 +44,8 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
                 {
                     var layer = (byte)channelIndicatorOverlayStart + i;
                     var channelState = (sbyte)((channelStates >> (i << (sbyte)ApcChannelState.LogWidth)) & (sbyte)ApcChannelState.All);
-                    SpriteSystem.LayerSetRsiState((uid, args.Sprite), layer, $"{comp.ChannelPrefix}{i}-{comp.ChannelSuffixes[channelState]}");
-                    SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, true);
+                    _sprite.LayerSetRsiState((uid, args.Sprite), layer, $"{comp.ChannelPrefix}{i}-{comp.ChannelSuffixes[channelState]}");
+                    _sprite.LayerSetVisible((uid, args.Sprite), layer, true);
                 }
             }
 
@@ -56,16 +57,16 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
         else
         {
             /// Overrides all of the lock and channel indicators.
-            SpriteSystem.LayerSetRsiState((uid, args.Sprite), ApcVisualLayers.ChargeState, comp.EmaggedScreenState);
+            _sprite.LayerSetRsiState((uid, args.Sprite), ApcVisualLayers.ChargeState, comp.EmaggedScreenState);
             for (var i = 0; i < comp.LockIndicators; ++i)
             {
                 var layer = (byte)lockIndicatorOverlayStart + i;
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, false);
+                _sprite.LayerSetVisible((uid, args.Sprite), layer, false);
             }
             for (var i = 0; i < comp.ChannelIndicators; ++i)
             {
                 var layer = (byte)channelIndicatorOverlayStart + i;
-                SpriteSystem.LayerSetVisible((uid, args.Sprite), layer, false);
+                _sprite.LayerSetVisible((uid, args.Sprite), layer, false);
             }
 
             if (TryComp<PointLightComponent>(uid, out var light))

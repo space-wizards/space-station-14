@@ -225,7 +225,7 @@
         - id: ClothingEyesChameleon
         - id: ClothingHeadsetChameleon
         - id: ClothingShoesChameleon
-        - id: ChameleonControllerImplanter
+        - id: BarberScissors
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

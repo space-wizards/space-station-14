@@ -1907,7 +1907,7 @@ entities:
           occludes: True
           ents:
           - 52
-        manipulator: !type:Container
+        capacitor: !type:Container
           showEnts: False
           occludes: True
           ents:

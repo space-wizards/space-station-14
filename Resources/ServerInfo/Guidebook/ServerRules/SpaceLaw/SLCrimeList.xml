@@ -141,7 +141,7 @@
     </ColorBox>
     <ColorBox Color="#453a59">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Station-Wide Destruction (D)
+        Terrorism (D)
       </Box>
     </ColorBox>
     <ColorBox>
@@ -867,7 +867,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Station-Wide Destruction
+        Terrorism
       </Box>
     </ColorBox>
     <ColorBox>
@@ -877,7 +877,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Summed up; extreme sabotage of station systems or setting off self-destruction systems. This includes any means causing the entire station to become uninhabitable, such as through station-wide atmospherics sabotage.
+        Summed up; extreme sabotage of station systems or setting off self-destruction systems.
       </Box>
     </ColorBox>
     <ColorBox>
