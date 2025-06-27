@@ -1754,11 +1754,11 @@
     Telecrystal: 12
   categories:
   - UplinkWearables
-  conditions:
-  - !type:StoreWhitelistCondition
-    whitelist:
-      tags:
-      - NukeOpsUplink
+#  conditions:
+#  - !type:StoreWhitelistCondition
+#    whitelist:
+#      tags:
+#      - NukeOpsUplink # imp, put back into traitor uplink
 
 - type: listing
   id: UplinkClothingOuterHardsuitJuggernaut
@@ -1770,11 +1770,11 @@
     Telecrystal: 12
   categories:
   - UplinkWearables
-  conditions:
-  - !type:StoreWhitelistCondition
-    whitelist:
-      tags:
-      - NukeOpsUplink
+#  conditions:
+#  - !type:StoreWhitelistCondition
+#    whitelist:
+#      tags:
+#      - NukeOpsUplink # imp, put back into traitor uplink
 
 - type: listing
   id: UplinkClothingEyesHudSyndicate
