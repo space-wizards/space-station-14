@@ -16,7 +16,7 @@ public sealed class ValidPlayerBugReportReceivedEvent(string title, string descr
     public string Description = description;
 
     /// <summary>
-    /// Metadata for the bug report. This is not player controlled.
+    /// Metadata for bug report, containing data collected by server.
     /// </summary>
     public BugReportMetaData MetaData = metaData;
 }
@@ -24,7 +24,7 @@ public sealed class ValidPlayerBugReportReceivedEvent(string title, string descr
 /// <summary>
 /// Metadata for a bug report. Holds relevant data for bug reports that aren't directly player controlled.
 /// </summary>
-public class BugReportMetaData
+public sealed class BugReportMetaData
 {
     /// <summary>
     /// Bug reporter SS14 username.
@@ -40,11 +40,12 @@ public class BugReportMetaData
 
     /// <summary>
     /// Date and time on which player submitted report (NOT round time).
+    /// The time is UTC and based off the servers clock.
     /// </summary>
     public required DateTime SubmittedTime;
 
     /// <summary>
-    /// Time that has elapsed in the round. Can be null if bug was reported not during round.
+    /// Time that has elapsed in the round. Can be null if bug was not reported during a round.
     /// </summary>
     public TimeSpan? RoundTime;
 

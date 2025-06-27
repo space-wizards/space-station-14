@@ -47,9 +47,9 @@ public sealed class BugReportManager : IBugReportManager, IPostInjectInit
         _cfg.OnValueChanged(CCVars.MaximumBugReportDescriptionLength, x => _limits.DescriptionMaxLength = x, true);
         _cfg.OnValueChanged(CCVars.MinimumBugReportDescriptionLength, x => _limits.DescriptionMinLength = x, true);
 
-        _cfg.OnValueChanged(CCVars.MinimumPlaytimeBugReports, x => _limits.MinimumPlaytimeToEnableBugReports = TimeSpan.FromMinutes(x), true);
+        _cfg.OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, x => _limits.MinimumPlaytimeToEnableBugReports = TimeSpan.FromMinutes(x), true);
         _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, x => _limits.MaximumBugReportsForPlayerPerRound = x, true);
-        _cfg.OnValueChanged(CCVars.MinimumTimeBetweenBugReports, x => _limits.MinimumTimeBetweenBugReports = TimeSpan.FromSeconds(x), true);
+        _cfg.OnValueChanged(CCVars.MinimumSecondsBetweenBugReports, x => _limits.MinimumTimeBetweenBugReports = TimeSpan.FromSeconds(x), true);
 
     }
 

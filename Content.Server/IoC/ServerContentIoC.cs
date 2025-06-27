@@ -60,6 +60,7 @@ namespace Content.Server.IoC
             IoCManager.Register<GhostKickManager>();
             IoCManager.Register<ISharedAdminLogManager, AdminLogManager>();
             IoCManager.Register<IAdminLogManager, AdminLogManager>();
+            IoCManager.Register<IBugReportManager, BugReportManager>();
             IoCManager.Register<PlayTimeTrackingManager>();
             IoCManager.Register<UserDbDataManager>();
             IoCManager.Register<ServerInfoManager>();
@@ -80,7 +81,6 @@ namespace Content.Server.IoC
 
             IoCManager.Register<DiscordLink>();
             IoCManager.Register<DiscordChatLink>();
-            IoCManager.Register<IBugReportManager, BugReportManager>();
         }
     }
 }

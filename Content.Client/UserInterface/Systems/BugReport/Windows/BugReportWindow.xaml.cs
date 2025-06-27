@@ -47,8 +47,8 @@ public sealed partial class BugReportWindow : DefaultWindow
         IoCManager.InjectDependencies(this);
 
         _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, v => _enablePlayerBugReports = v, true);
-        _cfg.OnValueChanged(CCVars.MinimumPlaytimeBugReports, v => _minimumPlaytimeBugReports = v, true);
-        _cfg.OnValueChanged(CCVars.MinimumTimeBetweenBugReports, v => _minimumTimeBetweenBugReports = v, true);
+        _cfg.OnValueChanged(CCVars.MinimumPlaytimeInMinutesToEnableBugReports, v => _minimumPlaytimeBugReports = v, true);
+        _cfg.OnValueChanged(CCVars.MinimumSecondsBetweenBugReports, v => _minimumTimeBetweenBugReports = v, true);
         _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, v => _maximumBugReportsPerRound = v, true);
 
         _cfg.OnValueChanged(CCVars.MaximumBugReportTitleLength, v => _maximumBugReportTitleLength = v, true);
