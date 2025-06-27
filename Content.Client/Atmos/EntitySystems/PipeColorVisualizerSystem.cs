@@ -20,6 +20,9 @@ public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisual
         SubscribeLocalEvent<PipeColorVisualsComponent, BeforeRenderInGridEvent>(OnDrawInGrid);
     }
 
+    /// <summary>
+    ///     This method is used to display the color changes of the pipe on the screen..
+    /// </summary>
     private void OnGetVisuals(Entity<PipeColorVisualsComponent> item, ref GetInhandVisualsEvent args)
     {
         foreach (var (_, layerData) in args.Layers)
@@ -30,7 +33,7 @@ public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisual
     }
 
     /// <summary>
-    ///     This method is used to change the color of the pipe in the container grid.
+    ///     This method is used to change the pipe's color in a container grid.
     /// </summary>
     private void OnDrawInGrid(Entity<PipeColorVisualsComponent> item, ref BeforeRenderInGridEvent args)
     {
