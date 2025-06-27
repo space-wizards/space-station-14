@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: horseplinko
-  changes:
-  - message: Added tags to decapoid plushie
-    type: Tweak
-  id: 1409
-  time: '2025-03-28T21:33:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2102
 - author: Kandiyaki
   changes:
   - message: Sacrificing someone without a mind no longer has a chance to crash the
@@ -4231,3 +4224,11 @@
   id: 1908
   time: '2025-06-27T14:52:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2862
+- author: sev7ves,GoGlitch,Wolfie
+  changes:
+  - message: A new pest has managed to catch a ride on a grey ship and has infested
+      the station!
+    type: Add
+  id: 1909
+  time: '2025-06-27T14:53:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2658
