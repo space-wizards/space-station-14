@@ -74,6 +74,9 @@ trait-transatlantic-desc = You sound like a hardboiled detective, or a peppy new
 trait-positivity-name = Relentless positivity
 trait-positivity-desc = You're always making speeches about the power of friendship. Enjoy your shift!
 
+trait-pg-name = PG vocabulary
+trait-pg-desc = You've sworn off swearing.
+
 trait-imperfect-clone-name = Imperfect clone
 trait-imperfect-clone-desc = Something went wrong during the cloning process, and you came out a little different.
                              You will roll 1-3 random quirks or disabilities at the start of each shift.

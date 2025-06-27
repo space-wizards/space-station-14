@@ -113,6 +113,15 @@
   - type: RelentlessPositivity
 
 - type: trait
+  id: PGAccent
+  name: trait-pg-name
+  description: trait-pg-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: PGAccent
+
+- type: trait
   id: VowelRotation
   name: trait-vowelrotation-name
   description: trait-vowelrotation-desc

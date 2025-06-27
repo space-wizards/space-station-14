@@ -89,8 +89,8 @@
       #    min: 6
       #  probability: 0.20
       - !type:GenericStatusEffect # imp
-        key: RelentlessPositivity
-        component: RelentlessPositivity
+        key: PGAccent
+        component: PGAccent
     #Drink: # imp
     #  effects:
       #- !type:ChemVomit

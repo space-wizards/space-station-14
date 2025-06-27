@@ -146,6 +146,7 @@
     - Masculinized # DeltaV - Hormone system
     - GrayLanguage # imp
     - RelentlessPositivity # imp
+    - PGAccent # imp
   - type: Body
     prototype: Human
     requiredLegs: 2
