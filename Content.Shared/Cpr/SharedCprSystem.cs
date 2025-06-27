@@ -223,6 +223,7 @@ public abstract partial class SharedCprSystem : EntitySystem
                 TryStartCpr(uid, args.User);
             },
             Text = Loc.GetString("cpr-verb-text"),
+            Priority = 5,
             Disabled = !inRange,
             Message = inRange ? null : Loc.GetString("cpr-verb-text-disabled"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cpr.svg.192dpi.png"))
