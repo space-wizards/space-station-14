@@ -28,9 +28,9 @@ public abstract partial class SharedStatusEffectsSystem
     )
     {
         statusEffect = null;
-        if (TryGetStatusEffect(target, effectProto, out var existedEffect))
+        if (TryGetStatusEffect(target, effectProto, out var existingEffect))
         {
-            statusEffect = existedEffect;
+            statusEffect = existingEffect;
             //We don't need to add the effect if it already exists
             if (duration is null)
                 return true;
