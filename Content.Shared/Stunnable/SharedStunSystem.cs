@@ -279,6 +279,9 @@ public abstract partial class SharedStunSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    ///     Applies a friction de-buff to the player.
+    /// </summary>
     public bool TryFriction(EntityUid uid,
         TimeSpan time,
         bool refresh,
@@ -298,18 +301,23 @@ public abstract partial class SharedStunSystem : EntitySystem
         frictionStatus.FrictionModifier = friction;
         frictionStatus.AccelerationModifier = acceleration;
 
-        UpdateFrictionStatus(uid);
+
+        if (!TryUpdateFrictionStatus(uid))
+            RemComp<FrictionStatusModifierComponent>(uid);
 
         return true;
     }
 
-    private void UpdateFrictionStatus(Entity<FrictionStatusModifierComponent?> entity, EntityUid? ignore = null)
+    /// <summary>
+    ///     Tries to update the friction modifiers on the friction de-buff, returns true if it was able to apply modifiers.
+    /// </summary>
+    private bool TryUpdateFrictionStatus(Entity<FrictionStatusModifierComponent?> entity, EntityUid? ignore = null)
     {
         if (!Resolve(entity, ref entity.Comp))
-            return;
+            return false;
 
         if (!_status.TryEffectsWithComp<FrictionStatusEffectComponent>(entity, out var frictionEffects))
-            return;
+            return false;
 
         var modified = false;
 
@@ -326,11 +334,9 @@ public abstract partial class SharedStunSystem : EntitySystem
             entity.Comp.AccelerationModifier *= effect.Comp1.AccelerationModifier;
         }
 
-        // Don't need the modifier anymore if it's not actually modifying anything.
-        if (!modified)
-            RemComp<FrictionStatusModifierComponent>(entity);
-
         _movementSpeedModifier.RefreshFrictionModifiers(entity);
+
+        return modified;
     }
 
     /// <summary>
