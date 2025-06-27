@@ -48,7 +48,7 @@
   - [bold]Visibly be destroyed upon being implanted into a [color=#ed7300]Head Revolutionary[/color][/bold], giving you away
   - NOT protect against flash disorientation
 
-  Assume all of [color=#cb0000]Security[/color], [color=#1b67a5]Command[/color] and [color=#a86819]Salvage specialists[/color] to be implanted with mindshields already, [bold]however they can be removed using an empty implanter, obtainable from the Medical department's MedFab, or in your [color=#ed7300]uplink.[/color][/bold]
+  Assume all of [color=#cb0000]Security[/color], [color=#1b67a5]Command[/color] and [color=#a86819]Salvage specialists[/color] to be implanted with [color=cyan]MindShields™[/color] already, [bold]however they can be removed using an empty implanter, obtainable from the Medical department's MedFab, or in your [color=#ed7300]uplink.[/color][/bold]
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineSecurity" Caption=""/>
@@ -111,7 +111,7 @@
     <GuideEntityEmbed Entity="ToyFigurineParamedic" Caption="Paramedic being validhunted"/>
   </Box>
 
-  - It's very beneficial in the long-run to start as one or convert [color=#f5be51]Cargo/Mail Technicians[/color] and [color=#a319ff]Scientists[/color], due to their sufficient ability to [bold]stop incoming orders of mindshields[/bold] or to [bold]provide you with flashes made from an [color=blue]Exosuit Fabricator[/color][/bold], respectively.
+  - It's very beneficial in the long-run to start as one or convert [color=#f5be51]Cargo/Mail Technicians[/color] and [color=#a319ff]Scientists[/color], due to their sufficient ability to [bold]stop incoming orders of [color=cyan]MindShields™[/color][/bold] or to [bold]provide you with flashes made from an [color=blue]Exosuit Fabricator[/color][/bold], respectively.
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineCargoTech" Caption="'Where are the thrusters?'"/>
