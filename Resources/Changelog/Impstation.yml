@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Trains fixes despite her being perfect
-    type: Fix
-  id: 1399
-  time: '2025-03-25T11:54:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2092
-- author: jtfg-dev & mqole
-  changes:
-  - message: Rogue Ascendants' moods are mood-ier.
-    type: Tweak
-  - message: Rogue Ascendants have been temporarily taken back to the garage for bugfixes.
-    type: Remove
-  id: 1400
-  time: '2025-03-26T07:19:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2084
 - author: CombustibleToast
   changes:
   - message: Decreased Robust Harvest requirement for Dionae becoming trees from 80u
@@ -4228,3 +4212,21 @@
   id: 1898
   time: '2025-06-27T14:15:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2631
+- author: Darkmajia
+  changes:
+  - message: Lowpop rounds no longer have specifically lower-intensity gamemodes.
+      Chaos reigns upon the world.
+    type: Remove
+  id: 1899
+  time: '2025-06-27T14:17:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2830
+- author: DinnerCalzone
+  changes:
+  - message: Scientist no longer has a playtime requirement.
+    type: Tweak
+  - message: Research Assistant has been limited to 1 slot per map and locks out after
+      5 hours of Science playtime.
+    type: Tweak
+  id: 1900
+  time: '2025-06-27T14:17:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2829
