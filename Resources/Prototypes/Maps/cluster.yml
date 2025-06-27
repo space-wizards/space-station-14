@@ -16,7 +16,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationJobs
-          availableJobs: # Total of 45 jobs roundstart, max of 54 inc. latejoins and trainees.
+          availableJobs: # Total of 45 jobs roundstart, max of 53 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -45,9 +45,9 @@
             Chemist: [ 1, 1 ]
             MedicalDoctor: [ 2, 2 ]
             MedicalIntern: [ 2, 2 ]
-            # science - 6-8
+            # science - 6-7
             Borg: [ 2, 2 ]
-            ResearchAssistant: [ 2, 2 ]
+            ResearchAssistant: [ 1, 1 ]
             Scientist: [ 3, 3 ]
             StationAi: [ 1, 1 ]
             # security - 7-9

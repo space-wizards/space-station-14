@@ -14,7 +14,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'R4' # R4407/Goon. GS isn't as cool sounding.
         - type: StationJobs
-          availableJobs: # total of 43 jobs roundstart, max of 56 inc. latejoins and trainees.
+          availableJobs: # total of 43 jobs roundstart, max of 54 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -44,9 +44,9 @@
             MedicalDoctor: [ 2, 2 ]
             MedicalIntern: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
-            # science - 5-8
+            # science - 5-6
             Borg: [ 2, 2 ]
-            ResearchAssistant: [ 3, 3 ]
+            ResearchAssistant: [ 1, 1 ]
             Scientist: [ 2, 2 ]
             StationAi: [ 1, 1 ]
             # security - 6-9

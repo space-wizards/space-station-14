@@ -19,7 +19,7 @@
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_fland.yml
         - type: StationJobs
-          availableJobs: # Total of 62 jobs roundstart, max of 74 inc. latejoins and trainees.
+          availableJobs: # Total of 62 jobs roundstart, max of 72 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -52,9 +52,9 @@
             MedicalIntern: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
             Psychologist: [ 1, 1 ]
-            # science - 8-11
+            # science - 8-9
             Borg: [ 4, 4 ]
-            ResearchAssistant: [ 3, 3 ]
+            ResearchAssistant: [ 1, 1 ]
             Scientist: [ 3, 3 ]
             StationAi: [ 1, 1 ]
             # security - 7-10

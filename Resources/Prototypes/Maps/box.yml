@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml
         - type: StationJobs
-          availableJobs: # Total of 66 jobs roundstart, max of 83 inc. latejoins and trainees.
+          availableJobs: # Total of 66 jobs roundstart, max of 80 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -48,9 +48,9 @@
             MedicalIntern: [ 4, 4 ]
             Paramedic: [ 1, 1 ]
             Psychologist: [ 1, 1 ]
-            # science - 8-12
+            # science - 8-9
             Borg: [ 2, 2 ]
-            ResearchAssistant: [ 4, 4 ]
+            ResearchAssistant: [ 1, 1 ]
             Scientist: [ 5, 5 ]
             StationAi: [ 1, 1 ]
             # security - 10-14

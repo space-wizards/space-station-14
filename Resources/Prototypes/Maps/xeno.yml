@@ -18,7 +18,7 @@
         - type: StationCargoShuttle
           path: /Maps/Shuttles/cargo_xeno.yml
         - type: StationJobs
-          availableJobs: # Total of 61 jobs roundstart, max of 77 inc. latejoins and trainees.
+          availableJobs: # Total of 61 jobs roundstart, max of 75 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -49,9 +49,9 @@
             MedicalDoctor: [ 4, 4 ]
             MedicalIntern: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
-            # science - 7-10
+            # science - 7-8
             Borg: [ 2, 2 ]
-            ResearchAssistant: [ 3, 3 ]
+            ResearchAssistant: [ 1, 1 ]
             Scientist: [ 4, 4 ]
             StationAi: [ 1, 1 ]
             # security - 9-13

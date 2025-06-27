@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/_Impstation/Shuttles/emergency_courser_hummingbird.yml
         - type: StationJobs
-          availableJobs: # Total of 69 nice jobs roundstart, max of 82 inc. latejoins and trainees.
+          availableJobs: # Total of 69 nice jobs roundstart, max of 80 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -49,9 +49,9 @@
             MedicalIntern: [ 3, 3 ]
             Paramedic: [ 1, 1 ]
             Psychologist: [ 1, 1 ]
-            # science - 7-10
+            # science - 7-8
             Borg: [ 2, 2 ]
-            ResearchAssistant: [ 3, 3 ]
+            ResearchAssistant: [ 1, 1 ]
             Scientist: [ 4, 4 ]
             StationAi: [ 1, 1 ]
             # security - 9-12

@@ -50,7 +50,7 @@
             Paramedic: [ 1, 1 ]
             # science - 8
             Borg: [ 2, 2 ]
-            ResearchAssistant: [ 2, 2 ]
+            ResearchAssistant: [ 1, 1 ]
             Scientist: [ 3, 3 ]
             StationAi: [ 1, 1 ]
             # security - 10

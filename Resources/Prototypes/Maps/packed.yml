@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_crimson.yml
         - type: StationJobs
-          availableJobs: # Total of 50 jobs roundstart, max of 60 inc. latejoins and trainees.
+          availableJobs: # Total of 50 jobs roundstart, max of 59 inc. latejoins and trainees.
             # command - 8
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -46,9 +46,9 @@
             MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 2, 2 ] #intern, not counted
             Paramedic: [ 1, 1 ]
-            # science - 5-7
+            # science - 5-6
             Borg: [ 1, 1 ]
-            ResearchAssistant: [ 2, 2 ]
+            ResearchAssistant: [ 1, 1 ]
             Scientist: [ 3, 3 ]
             StationAi: [ 1, 1 ]
             # security - 7-9
