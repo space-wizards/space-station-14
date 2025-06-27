@@ -135,7 +135,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             _alerts.ClearAlert(ent.Comp.AppliedTo.Value, ent.Comp.Alert.Value);
     }
 
-    private bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
+    public bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
     {
         if (!_proto.TryIndex(effectProto, out var effectProtoData))
             return false;
