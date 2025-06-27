@@ -221,7 +221,6 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
         private readonly TimeSpan _curTime;
         private readonly float _maxY;
         private readonly SensorMonitoringWindow _parentWindow;
-        private readonly object _bufferLock = new();
 
         public GraphView(Queue<SensorSample> samples,
             TimeSpan startTime,
@@ -247,38 +246,34 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
             var lastPoint = new Vector2(float.NaN, float.NaN);
             var requiredVertices = 6 * (_samples.Count - 1);
 
-            // We're now performing operations on the shared vertices array.
-            lock (_bufferLock)
+            var vertices = _parentWindow.GetSharedVertices(requiredVertices);
+
+            foreach (var (time, sample) in _samples)
             {
-                var vertices = _parentWindow.GetSharedVertices(requiredVertices);
+                var relTime = (float)(time - _startTime).TotalSeconds;
 
-                foreach (var (time, sample) in _samples)
+                var posY = PixelHeight - (sample / _maxY) * PixelHeight;
+                var posX = (relTime / window) * PixelWidth;
+
+                var newPoint = new Vector2(posX, posY);
+
+                if (float.IsFinite(lastPoint.X))
                 {
-                    var relTime = (float)(time - _startTime).TotalSeconds;
+                    handle.DrawLine(lastPoint, newPoint, Color.White);
 
-                    var posY = PixelHeight - (sample / _maxY) * PixelHeight;
-                    var posX = (relTime / window) * PixelWidth;
-
-                    var newPoint = new Vector2(posX, posY);
-
-                    if (float.IsFinite(lastPoint.X))
-                    {
-                        handle.DrawLine(lastPoint, newPoint, Color.White);
-
-                        vertices[countVtx++] = lastPoint;
-                        vertices[countVtx++] = lastPoint with { Y = PixelHeight };
-                        vertices[countVtx++] = newPoint;
-                        vertices[countVtx++] = newPoint;
-                        vertices[countVtx++] = lastPoint with { Y = PixelHeight };
-                        vertices[countVtx++] = newPoint with { Y = PixelHeight };
-                    }
-
-                    lastPoint = newPoint;
+                    vertices[countVtx++] = lastPoint;
+                    vertices[countVtx++] = lastPoint with { Y = PixelHeight };
+                    vertices[countVtx++] = newPoint;
+                    vertices[countVtx++] = newPoint;
+                    vertices[countVtx++] = lastPoint with { Y = PixelHeight };
+                    vertices[countVtx++] = newPoint with { Y = PixelHeight };
                 }
-                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList,
-                    vertices.AsSpan(0, countVtx),
-                    Color.White.WithAlpha(0.1f));
+
+                lastPoint = newPoint;
             }
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList,
+                vertices.AsSpan(0, countVtx),
+                Color.White.WithAlpha(0.1f));
         }
     }
 }
