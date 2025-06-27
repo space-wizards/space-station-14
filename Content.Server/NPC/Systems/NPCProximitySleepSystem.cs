@@ -35,7 +35,8 @@ public sealed class NPCProximitySleepSystem : EntitySystem
             {
                 foreach (var cordActor in actors)
                 {
-                    if (_whitelist.IsWhitelistPass(proxComp.ProximityIgnore, cordActor.Actor))
+                    if (_whitelist.IsWhitelistPass(proxComp.ProximityIgnore, cordActor.Actor) &&
+                        _whitelist.IsWhitelistFail(proxComp.ProximityDontIgnore, cordActor.Actor))
                         continue;
 
                     var distance = (cordActor.Location - npcPosition.Position).Length();

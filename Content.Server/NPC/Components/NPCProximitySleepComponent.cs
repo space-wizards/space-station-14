@@ -30,8 +30,16 @@ public sealed partial class NPCProximitySleepComponent : Component
     /// <summary>
     /// Entities that match the whitelist will be ignored for proximity calculations.
     /// </summary>
-    public EntityWhitelist ProximityIgnore = new(components:
-    [
-        "Ghost",
-    ]);
+    public EntityWhitelist ProximityIgnore = new()
+    {
+        Components = [ "Ghost" ],
+    };
+
+    /// <summary>
+    /// A blacklist for the whitelist... This is literally just for aghosts ;(
+    /// </summary>
+    public EntityWhitelist ProximityDontIgnore = new()
+    {
+        Tags = [ "AllowBiomeLoading" ],
+    };
 }
