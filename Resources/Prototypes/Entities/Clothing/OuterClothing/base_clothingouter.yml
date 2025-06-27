@@ -120,6 +120,11 @@
   - type: HeldSpeedModifier
   - type: Item
     size: Ginormous
+  - type: Clothing #imp edit
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
+    equipDelay: 2
+    unequipDelay: 2
   - type: Armor
     modifiers:
       coefficients:

@@ -649,6 +649,10 @@
     sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_juggernaut.rsi #imp edit
   - type: Clothing
     sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_juggernaut.rsi #imp edit
+    equipSound: /Audio/Mecha/mechmove03.ogg #imp edit start
+    unequipSound: /Audio/Mecha/mechmove03.ogg
+    equipDelay: 5
+    unequipDelay: 5 #imp edit end
   - type: PressureProtection
     highPressureMultiplier: 0.2
     lowPressureMultiplier: 1000
