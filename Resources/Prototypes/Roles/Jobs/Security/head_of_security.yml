@@ -53,11 +53,3 @@
     - Flash
     # - MagazinePistol imp loadouts
 
-
-- type: chameleonOutfit
-  id: HeadOfSecurityChameleonOutfit
-  job: HeadOfSecurity
-  hasMindShield: true
-  equipment:
-    mask: ClothingMaskGasSecurity
-    neck: ClothingNeckCloakHos

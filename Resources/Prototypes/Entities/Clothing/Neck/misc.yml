@@ -1,4 +1,3 @@
-#TODO this should be able to be changed to upstream implementation with toggleablevisuals being fixed
 - type: entity
   parent: ClothingNeckPullableBase # imp
   id: ClothingNeckHeadphones
@@ -14,20 +13,20 @@
   #  sprite: Clothing/Neck/Misc/headphones.rsi
   #  layers:
   #  - state: icon
-  #    map: [ "enum.ToggleableVisuals.Layer" ]
+  #    map: [ "enum.ToggleVisuals.Layer" ]
   #- type: Clothing
   #  equippedPrefix: off
   #  sprite: Clothing/Neck/Misc/headphones.rsi
   #- type: ToggleableLightVisuals
-  #  spriteLayer: enum.ToggleableVisuals.Layer
+  #  spriteLayer: enum.ToggleVisuals.Layer
   #  clothingVisuals:
   #    neck:
   #    - state: on-equipped-NECK
   #- type: Appearance
   #- type: GenericVisualizer
   #  visuals:
-  #    enum.ToggleableVisuals.Enabled:
-  #      enum.ToggleableVisuals.Layer:
+  #    enum.ToggleVisuals.Toggled:
+  #      enum.ToggleVisuals.Layer:
   #        True: {state: icon-on}
   #        False: {state: icon}
   #- type: ItemToggle
@@ -56,20 +55,17 @@
   - type: Stethoscope
 
 - type: entity
-  parent: BaseAction
   id: ActionStethoscope
   name: Listen with stethoscope
   components:
-  - type: Action
+  - type: EntityTargetAction
     icon:
       sprite: Clothing/Neck/Misc/stethoscope.rsi
       state: icon
+    event: !type:StethoscopeActionEvent
+    checkCanInteract: false
     priority: -1
     itemIconStyle: BigAction
-    checkCanInteract: false
-  - type: TargetAction
-  - type: EntityTargetAction
-    event: !type:StethoscopeActionEvent
 
 - type: entity
   parent: ClothingNeckBase

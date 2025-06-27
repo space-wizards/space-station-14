@@ -54,15 +54,13 @@
     group: Artifact
 
 - type: entity
-  parent: BaseAction
   id: ActionArtifactActivate
   name: Activate Artifact
   description: Activate yourself, causing chaos to those near you.
   components:
-  - type: Action
+  - type: InstantAction
     icon:
       sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
       state: ano29
     useDelay: 300
-  - type: InstantAction
     event: !type:ArtifactSelfActivateEvent

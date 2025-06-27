@@ -23,17 +23,13 @@ public sealed partial class TurretTargetSettingsSystem : EntitySystem
     /// <param name="ent">The entity and its <see cref="TurretTargetSettingsComponent"/></param>
     /// <param name="exemption">The proto ID for the access level</param>
     /// <param name="enabled">Set 'true' to add the exemption, or 'false' to remove it</param>
-    /// <param name="dirty">Set 'true' to dirty the component</param>
     [PublicAPI]
-    public void SetAccessLevelExemption(Entity<TurretTargetSettingsComponent> ent, ProtoId<AccessLevelPrototype> exemption, bool enabled, bool dirty = true)
+    public void SetAccessLevelExemption(Entity<TurretTargetSettingsComponent> ent, ProtoId<AccessLevelPrototype> exemption, bool enabled)
     {
         if (enabled)
             ent.Comp.ExemptAccessLevels.Add(exemption);
         else
             ent.Comp.ExemptAccessLevels.Remove(exemption);
-
-        if (dirty)
-            Dirty(ent);
     }
 
     /// <summary>
@@ -46,9 +42,7 @@ public sealed partial class TurretTargetSettingsSystem : EntitySystem
     public void SetAccessLevelExemptions(Entity<TurretTargetSettingsComponent> ent, ICollection<ProtoId<AccessLevelPrototype>> exemptions, bool enabled)
     {
         foreach (var exemption in exemptions)
-            SetAccessLevelExemption(ent, exemption, enabled, false);
-
-        Dirty(ent);
+            SetAccessLevelExemption(ent, exemption, enabled);
     }
 
     /// <summary>

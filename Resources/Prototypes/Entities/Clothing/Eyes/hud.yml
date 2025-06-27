@@ -44,7 +44,6 @@
   - type: Tag
     tags:
     - HudMedical
-    - WhitelistChameleon
 
 - type: entity
   parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, BaseSecurityContraband] # BaseLensSlot from imp
@@ -59,7 +58,6 @@
   - type: Tag
     tags:
     - HudSecurity
-    - WhitelistChameleon
 
 - type: entity
   parent: [ClothingEyesBase, BaseLensSlot, BaseCommandContraband] # BaseLensSlot from imp

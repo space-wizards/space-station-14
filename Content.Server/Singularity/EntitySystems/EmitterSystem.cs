@@ -62,7 +62,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnActivate(EntityUid uid, EmitterComponent component, ActivateInWorldEvent args)
         {
-            if (args.Handled || !args.Complex)
+            if (args.Handled)
                 return;
 
             if (TryComp(uid, out LockComponent? lockComp) && lockComp.Locked)
@@ -101,7 +101,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnGetVerb(EntityUid uid, EmitterComponent component, GetVerbsEvent<Verb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Hands == null)
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
                 return;
 
             if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked)

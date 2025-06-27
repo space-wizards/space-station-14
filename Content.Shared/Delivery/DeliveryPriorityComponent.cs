@@ -15,13 +15,13 @@ public sealed partial class DeliveryPriorityComponent : Component
     /// The multiplier to apply when delivered in time.
     /// </summary>
     [DataField]
-    public float InTimeMultiplierOffset = 0.25f;
+    public float InTimeMultiplierOffset = 0.2f;
 
     /// <summary>
     /// The multiplier to apply when delivered late.
     /// </summary>
     [DataField]
-    public float ExpiredMultiplierOffset = -0.15f;
+    public float ExpiredMultiplierOffset = -0.1f;
 
     /// <summary>
     /// Whether this delivery was delivered on time.

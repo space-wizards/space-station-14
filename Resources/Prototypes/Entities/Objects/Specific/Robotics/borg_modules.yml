@@ -49,15 +49,13 @@
       provided_container: !type:Container { }
 
 - type: entity
-  parent: BaseAction
   id: ActionBorgSwapModule
   name: Swap Module
   description: Select this module, enabling you to use the tools it provides.
   components:
-  - type: Action
+  - type: InstantAction
     itemIconStyle: BigAction
     useDelay: 0.5
-  - type: InstantAction
     event: !type:BorgModuleActionSelectedEvent
 
 - type: entity

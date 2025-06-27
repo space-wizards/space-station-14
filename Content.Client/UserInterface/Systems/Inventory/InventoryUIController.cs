@@ -243,7 +243,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         if (_inventoryHotbar == null)
         {
-            Log.Warning("Tried to toggle inventory bar when none are assigned");
+            Logger.Warning("Tried to toggle inventory bar when none are assigned");
             return;
         }
 

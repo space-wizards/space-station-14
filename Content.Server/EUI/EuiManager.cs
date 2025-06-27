@@ -9,11 +9,8 @@ namespace Content.Server.EUI
 {
     public sealed class EuiManager : IPostInjectInit
     {
-        [Dependency] private readonly ILogManager _log = default!;
         [Dependency] private readonly IPlayerManager _players = default!;
         [Dependency] private readonly IServerNetManager _net = default!;
-
-        private ISawmill? _sawmill;
 
         private readonly Dictionary<ICommonSession, PlayerEuiData> _playerData =
             new();
@@ -37,7 +34,6 @@ namespace Content.Server.EUI
             _net.RegisterNetMessage<MsgEuiCtl>();
             _net.RegisterNetMessage<MsgEuiState>();
             _net.RegisterNetMessage<MsgEuiMessage>(RxMsgMessage);
-            _sawmill = _log.GetSawmill("eui");
         }
 
         public void SendUpdates()
@@ -103,7 +99,7 @@ namespace Content.Server.EUI
 
             if (!dat.OpenUIs.TryGetValue(message.Id, out var eui))
             {
-                _sawmill?.Warning($"Got EUI message from player {ply} for non-existing UI {message.Id}");
+                Logger.WarningS("eui", $"Got EUI message from player {ply} for non-existing UI {message.Id}");
                 return;
             }
 

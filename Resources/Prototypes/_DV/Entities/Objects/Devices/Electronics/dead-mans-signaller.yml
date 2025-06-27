@@ -13,12 +13,12 @@
     sprite: _DV/Objects/Devices/deadmanssignaller.rsi
     layers:
     - state: inactive
-      map: [ "enum.ToggleableVisuals.Layer" ]
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ToggleableVisuals.Enabled:
-        enum.ToggleableVisuals.Layer:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
           True: {state: active}
           False: {state: inactive}
   - type: WirelessNetworkConnection

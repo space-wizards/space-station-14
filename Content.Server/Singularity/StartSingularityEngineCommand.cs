@@ -1,11 +1,9 @@
 using Content.Server.Administration;
-using Content.Server.Machines.EntitySystems;
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Administration;
-using Content.Shared.Machines.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Console;
 
@@ -47,15 +45,12 @@ namespace Content.Server.Singularity
             }
 
             // Setup PA
-            var multipartMachineManager = entitySystemManager.GetEntitySystem<MultipartMachineSystem>();
             var paSystem = entitySystemManager.GetEntitySystem<ParticleAcceleratorSystem>();
             var paQuery = entityManager.EntityQueryEnumerator<ParticleAcceleratorControlBoxComponent>();
             while (paQuery.MoveNext(out var paId, out var paControl))
             {
-                if (!entityManager.TryGetComponent<MultipartMachineComponent>(paId, out var machine))
-                    continue;
-
-                if (!multipartMachineManager.Rescan((paId, machine)))
+                paSystem.RescanParts(paId, controller: paControl);
+                if (!paControl.Assembled)
                     continue;
 
                 paSystem.SetStrength(paId, ParticleAcceleratorPowerState.Level0, comp: paControl);

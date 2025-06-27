@@ -89,7 +89,7 @@
     sprite: _Impstation/Objects/Weapons/Melee/stunbaton.rsi
     layers:
     - state: stunbaton_off
-      map: [ "enum.ToggleableVisuals.Layer" ]
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: Stunbaton
     energyPerUse: 1
   - type: ItemToggle
@@ -133,8 +133,8 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-     enum.ToggleableVisuals.Enabled:
-        enum.ToggleableVisuals.Layer:
+     enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
           True: {state: stunbaton_on}
           False: {state: stunbaton_off}
   - type: GuideHelp

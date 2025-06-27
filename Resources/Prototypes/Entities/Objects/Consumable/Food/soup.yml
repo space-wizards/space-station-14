@@ -916,7 +916,6 @@
           Quantity: 1 # imp
         - ReagentId: Water # imp
           Quantity: 4
-
   - type: Tag
     tags:
     - ChiliBowl
@@ -1208,13 +1207,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 35 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 15 # imp
         - ReagentId: Vitamin
           Quantity: 15 # imp
-
 # Tastes like sweet potato.
 
 - type: entity

@@ -1,14 +1,14 @@
 - type: entity
-  parent: BaseMentalAction
   id: ActionViewMoods
   name: View Moods
   description: View your current moods.
   components:
-  - type: Action
+  - type: InstantAction
     itemIconStyle: NoItem
+    checkCanInteract: false
+    checkConsciousness: false
     icon:
       sprite: Interface/Actions/actions_borg.rsi
       state: state-laws
-    useDelay: 0.5
-  - type: InstantAction
     event: !type:ToggleMoodsScreenEvent
+    useDelay: 0.5

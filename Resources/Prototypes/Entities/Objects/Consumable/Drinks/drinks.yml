@@ -138,8 +138,6 @@
     - type: SolutionContainerVisuals
       maxFillLevels: 5
       fillBaseName: fill
-      inHandsMaxFillLevels: 1
-      inHandsFillBaseName: -fill-
 
 - type: entity
   parent: DrinkGlass
@@ -149,10 +147,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: Absinthe
-          Quantity: 20
+          Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/absintheglass.rsi
     state: icon

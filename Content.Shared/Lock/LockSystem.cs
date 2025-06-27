@@ -322,7 +322,7 @@ public sealed class LockSystem : EntitySystem
 
     private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
+        if (!args.CanAccess || !args.CanInteract)
             return;
 
         AlternativeVerb verb = new()

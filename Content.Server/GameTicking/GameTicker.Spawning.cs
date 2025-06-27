@@ -275,7 +275,7 @@ namespace Content.Server.GameTicking
 
             _mind.TransferTo(newMind, mob);
 
-            _roles.MindAddJobRole(newMind, silent: silent, jobPrototype: jobId);
+            _roles.MindAddJobRole(newMind, silent: silent, jobPrototype:jobId);
             var jobName = _jobs.MindTryGetJobName(newMind);
             _admin.UpdatePlayerList(player);
 
@@ -475,17 +475,17 @@ namespace Content.Server.GameTicking
                 return spawn;
             }
 
-            if (_map.MapExists(DefaultMap))
+            if (_mapManager.MapExists(DefaultMap))
             {
-                var mapUid = _map.GetMapOrInvalid(DefaultMap);
+                var mapUid = _mapManager.GetMapEntityId(DefaultMap);
                 if (!TerminatingOrDeleted(mapUid))
                     return new EntityCoordinates(mapUid, Vector2.Zero);
             }
 
             // Just pick a point at this point I guess.
-            foreach (var map in _map.GetAllMapIds())
+            foreach (var map in _mapManager.GetAllMapIds())
             {
-                var mapUid = _map.GetMapOrInvalid(map);
+                var mapUid = _mapManager.GetMapEntityId(map);
 
                 if (!metaQuery.TryGetComponent(mapUid, out var meta)
                     || meta.EntityPaused
