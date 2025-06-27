@@ -873,8 +873,11 @@
         reagent: Ethanol
         amount: 0.15
       - !type:AdjustReagent
+        conditions:
+          - !type:ReagentThreshold
+            min: 90
         reagent: Romerol
-        amount: 0.51
+        amount: .75
 
 - type: reagent
   id: CorpseReviver2
@@ -899,8 +902,11 @@
         reagent: Ethanol
         amount: 0.15
       - !type:AdjustReagent
+        conditions:
+          - !type:ReagentThreshold
+            min: 100
         reagent: Necrosol
-        amount: 0.55
+        amount: 1.5
 
 
 - type: reagent
