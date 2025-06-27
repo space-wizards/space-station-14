@@ -96,6 +96,21 @@ public sealed partial class CCVars
         CVarDef.Create("pointing.cooldown_seconds", 0.5f, CVar.SERVERONLY);
 
     /// <summary>
+    ///     The last time the client recorded a valid connection to a game server.
+    ///     Used in conjunction with <see cref="PlaytimeMinutesToday"/> to track how long the player has been playing for the given day.
+    /// </summary>
+    public static readonly CVarDef<string> PlaytimeLastConnectDate =
+        CVarDef.Create("playtime.last_connect_date", "", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     The total minutes that the client has spent since the date of last connection.
+    ///     This is reset to 0 when the last connect date is updated.
+    ///     Do not read this value directly, use <code>ClientsidePlaytimeTrackingManager</code> instead.
+    /// </summary>
+    public static readonly CVarDef<float> PlaytimeMinutesToday =
+        CVarDef.Create("playtime.minutes_today", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     ///     Enabled: CPR action will auto-repeat as long as the target is still crit
     ///     Disabled: CPR has to be performed by repeated manual interaction
     /// </summary>

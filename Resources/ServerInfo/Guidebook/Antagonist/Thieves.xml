@@ -14,15 +14,10 @@
   Unlike other antagonists, [bold]staying out of trouble is almost a requirement for you[/bold] because of your implant.
   You can only run if [color=#cb0000]Security[/color] picks a fight with you, and because you work alone you don't have any friends to pull you out of danger.
 
-  But against all odds, you'll sucessfully swipe what you want using determination, sleight of hand, a few tools and your [color=cyan]thieving gloves.[/color]
+  But against all odds, you'll successfully swipe what you want using determination, sleight of hand, a few tools and your [color=cyan]light fingers.[/color]
 
-  The pair of gloves you have give you a major advantage: [bold]the ability to take things off of people without them even noticing.[/bold] With a little practice, you can steal their wallet and keep up a conversation at the same time.
-
-  They're also made of the highest quality [bold]holographic chameleon fibers[/bold] you could steal, but while they can take the appearance of insulated gloves you'll still need to find a real pair to keep your hands from burning.
-
-  <Box>
-    <GuideEntityEmbed Entity="ClothingHandsChameleonThief" Caption="your thieving gloves"/>
-  </Box>
+  Your years of experience have given you the ability to [bold]swiftly take things off another person's body without them even noticing.[/bold]
+  With a little practice, you can even steal their wallet and keep up a conversation at the same time.
 
   ## Tools of the Trade
   You've got two more aces up your stolen sleeves: your [color=cyan]beacon[/color] and your [color=cyan]satchel.[/color]
@@ -42,14 +37,14 @@
     <GuideEntityEmbed Entity="SatchelThief"/>
   </Box>
   <Box>
-    <GuideEntityEmbed Entity="StorageImplanter" Caption="Anatomy"/>
+    <GuideEntityEmbed Entity="Implanter" Caption="Anatomy"/>
     <GuideEntityEmbed Entity="C4" Caption="Breacher"/>
     <GuideEntityEmbed Entity="ChameleonProjector" Caption="Chameleon"/>
-    <GuideEntityEmbed Entity="EncryptionKeyStationMaster" Caption="Communicator"/>
+    <GuideEntityEmbed Entity="BaseUplinkRadio" Caption="Communicator"/>
   </Box>
   <Box>
     <GuideEntityEmbed Entity="NitrousOxideTank" Caption="Sleeper"/>
-    <GuideEntityEmbed Entity="Emag" Caption="Smuggler"/>
+    <GuideEntityEmbed Entity="Fulton" Caption="Smuggler"/>
     <GuideEntityEmbed Entity="Telecrystal" Caption="Syndie"/>
   </Box>
 
@@ -65,10 +60,10 @@
   Things that you may desire include but are not limited to:
 
   <Box>
-   <GuideEntityEmbed Entity="ToyFigurineGreytider" Caption="Figurines"/>
-   <GuideEntityEmbed Entity="PassengerIDCard" Caption="ID cards"/>
-   <GuideEntityEmbed Entity="ChemDispenser" Caption="Structures"/>
-   <GuideEntityEmbed Entity="MobCorgiIan" Caption="Animals/Pets"/>
+    <GuideEntityEmbed Entity="ToyFigurineGreytider" Caption="Figurines"/>
+    <GuideEntityEmbed Entity="PassengerIDCard" Caption="ID cards"/>
+    <GuideEntityEmbed Entity="ChemDispenser" Caption="Structures"/>
+    <GuideEntityEmbed Entity="MobCorgiIan" Caption="Animals/Pets"/>
   </Box>
 
 </Document>
