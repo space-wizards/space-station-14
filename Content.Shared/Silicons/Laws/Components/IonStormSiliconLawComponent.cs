@@ -14,34 +14,34 @@ namespace Content.Shared.Silicons.Laws.Components;
 public sealed partial class IonStormSiliconLawComponent : Component
 {
     /// <summary>
-    /// <see cref="WeightedRandomPrototype"/> for a random lawset to possibly replace the old one with on an ion storm.
+    /// <see cref="WeightedRandomPrototype"/> for a random lawset to possibly replace the old one.
     /// </summary>
     [DataField]
     public ProtoId<WeightedRandomPrototype> IonRandomLawsets = "IonStormLawsets";
 
     /// <summary>
-    /// Chance to replace the lawset with a random one on an ion storm.
+    /// Chance to replace the lawset with a random one.
     /// </summary>
     [DataField]
-    public float IonRandomLawsetChance = 0.25f;
+    public float RandomLawsetChance = 0.25f;
 
     /// <summary>
-    /// Chance to remove a random law on an ion storm.
+    /// Chance to remove a random law.
     /// </summary>
     [DataField]
-    public float IonRemoveChance = 0.2f;
+    public float RemoveChance = 0.2f;
 
     /// <summary>
-    /// Chance to replace a random law with the new one on an ion storm, rather than have it be a glitched-order law.
+    /// Chance to replace a random law with the new one, rather than have it be a glitched-order law.
     /// </summary>
     [DataField]
-    public float IonReplaceChance = 0.2f;
+    public float ReplaceChance = 0.2f;
 
     /// <summary>
-    /// Chance to shuffle laws after everything is done on an ion storm..
+    /// Chance to shuffle laws after everything is done.
     /// </summary>
     [DataField]
-    public float IonShuffleChance = 0.2f;
+    public float ShuffleChance = 0.2f;
 }
 
 /// <summary>
