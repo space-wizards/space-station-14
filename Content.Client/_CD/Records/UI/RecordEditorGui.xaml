@@ -3,6 +3,8 @@
     <BoxContainer Orientation="Vertical">
          <ScrollContainer VerticalExpand="True">
              <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="10">
+                 <!-- RP disclaimer, imp edit -->
+                 <RichTextLabel Name="RecordsDisclaimer" Text="{Loc 'humanoid-profile-editor-cd-records-disclaimer'}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True"/>
                  <!-- Height, Weight -->
                  <GridContainer Columns="2">
                      <BoxContainer HorizontalExpand="True" SeparationOverride="2">
