@@ -1,0 +1,196 @@
+- type: entity
+  id: BasePleebnarOrganUnGibbable
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Organ
+  - type: Food
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Gray/organs.rsi
+  - type: StaticPrice
+    price: 50
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+    - cigarettes
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+
+- type: entity
+  id: BasePleebnarOrgan
+  parent: BasePleebnarOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
+
+- type: entity
+  id: OrganPleebnarLungs
+  parent: BasePleebnarOrgan
+  name: yupp
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: lung-l
+    - state: lung-r
+  - type: Organ
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Animal ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      Lung:
+        maxVol: 100.0
+        canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Lungs
+  - type: Item
+    size: Small
+    heldPrefix: lungs
+
+
+- type: entity
+  id: OrganPleebnarStomach
+  parent: BasePleebnarOrgan
+  name: sluumi
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: stomach
+  - type: Organ
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 40
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+  - type: Metabolizer
+    maxReagents: 3
+    metabolizerTypes: [ Animal ]
+    groups:
+    - id: Food
+    - id: Drink
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Stomach
+  - type: Item
+    size: Small
+    heldPrefix: stomach
+
+
+
+- type: entity
+  id: OrganPleebnarLiver
+  parent: BasePleebnarOrgan
+  name: grubi
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: liver
+  - type: Organ
+  - type: Metabolizer
+    maxReagents: 1
+    metabolizerTypes: [ Animal ]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Liver
+  - type: Item
+    size: Small
+    heldPrefix: liver
+
+- type: entity
+  id: OrganPleebnarHeart
+  parent: BasePleebnarOrgan
+  name: clui
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: heart-on
+  - type: Organ
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [ Animal ]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Heart
+  - type: Item
+    size: Small
+    heldPrefix: heart
+
+- type: entity
+  id: OrganPleebnarKidneys
+  parent: BasePleebnarOrgan
+  name: spum
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: kidney-r
+  - type: Organ
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [ Animal ]
+    removeEmpty: true
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Kidneys
+  - type: Item
+    size: Small
+    heldPrefix: kidneys
+
+- type: entity
+  id: OrganPleebnarEyes
+  parent: BasePleebnarOrgan
+  name: shuui
+  description: "Soulful."
+  components:
+  - type: Sprite
+    layers:
+    - state: eyeball-l
+    - state: eyeball-r
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Eyes

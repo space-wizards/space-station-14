@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by discord user GoGlitch",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pleebnar",
+      "directions": 4
+    },
+    {
+      "name": "pleebnar_harm",
+      "directions": 4
+    },
+    {
+      "name": "0-equipped-HELMET",
+      "directions": 4
+    }
+  ]
+}

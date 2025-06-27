@@ -865,6 +865,21 @@
     DefaultDeathgasp:
       path: /Audio/_EE/Supermatter/status/ohfuck.ogg
 
+- type: emoteSounds
+  id: Pleebnar
+  params:
+    variation: 0.05
+  sounds:
+    Scream:
+      path: /Audio/_Impstation/Animals/pleebnar_scream.ogg
+    Squeak:
+      path: /Audio/_Impstation/Animals/pleebnar_squeak.ogg
+    Blink:
+      collection: Blinks
+      params:
+        volume: -3
+        variation: 0.1
+
 #body emotes
 - type: emoteSounds
   id: SlimeBodyEmotes

@@ -1,0 +1,16 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      Title="{Loc 'pleebnar-telepathy-window'}"
+                      MinSize="10 25"
+                      SetSize="200 400">
+    <BoxContainer Margin="5 5 5 5" Orientation="Vertical">
+        <ScrollContainer HScrollEnabled="False"
+                         HorizontalExpand="True"
+                         VerticalExpand="True"
+                         MinHeight="50"
+                         SizeFlagsStretchRatio="2.5"
+                         Margin="5">
+            <BoxContainer Name="visionsVbox" Access="Public" Align="Center"/>
+        </ScrollContainer>
+    </BoxContainer>
+</controls:FancyWindow>

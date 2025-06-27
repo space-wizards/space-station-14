@@ -147,3 +147,16 @@
     specialEntries:
     - id: SalvageHumanCorpse
       prob: 0
+
+- type: entity
+  id: PleebnarMigration
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    weight: 3
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobPleebnar
+      prob: 0.05

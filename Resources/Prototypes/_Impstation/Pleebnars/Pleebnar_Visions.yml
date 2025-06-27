@@ -1,0 +1,419 @@
+- type: pleebnarVision
+  id: newports
+  name: pleebnar-vision-newports-name
+  visionString: pleebnar-vision-newports
+
+- type: pleebnarVision
+  id: flowers
+  name: pleebnar-vision-flowers-name
+  visionString: pleebnar-vision-flowers
+
+- type: pleebnarVision
+  id: fear
+  name: pleebnar-vision-fear-name
+  visionString: pleebnar-vision-fear
+
+- type: pleebnarVision
+  id: tully
+  name: pleebnar-vision-tully-name
+  visionString: pleebnar-vision-tully
+
+- type: pleebnarVision
+  id: sandwich
+  name: pleebnar-vision-sandwich-name
+  visionString: pleebnar-vision-sandwich
+
+- type: pleebnarVision
+  id: teo
+  name: pleebnar-vision-teo-name
+  visionString: pleebnar-vision-teo
+
+- type: pleebnarVision
+  id: milk
+  name: pleebnar-vision-milk-name
+  visionString: pleebnar-vision-milk
+
+- type: pleebnarVision
+  id: wash
+  name: pleebnar-vision-wash-name
+  visionString: pleebnar-vision-wash
+
+- type: pleebnarVision
+  id: beast
+  name: pleebnar-vision-beast-name
+  visionString: pleebnar-vision-beast
+
+- type: pleebnarVision
+  id: ant
+  name: pleebnar-vision-ant-name
+  visionString: pleebnar-vision-ant
+
+- type: pleebnarVision
+  id: meter
+  name: pleebnar-vision-meter-name
+  visionString: pleebnar-vision-meter
+
+- type: pleebnarVision
+  id: organ
+  name: pleebnar-vision-organ-name
+  visionString: pleebnar-vision-organ
+
+- type: pleebnarVision
+  id: life
+  name: pleebnar-vision-life-name
+  visionString: pleebnar-vision-life
+
+- type: pleebnarVision
+  id: monolith
+  name: pleebnar-vision-monolith-name
+  visionString: pleebnar-vision-monolith
+
+- type: pleebnarVision
+  id: pyramid
+  name: pleebnar-vision-pyramid-name
+  visionString: pleebnar-vision-pyramid
+
+- type: pleebnarVision
+  id: machine
+  name: pleebnar-vision-machine-name
+  visionString: pleebnar-vision-machine
+
+- type: pleebnarVision
+  id: egg
+  name: pleebnar-vision-egg-name
+  visionString: pleebnar-vision-egg
+
+- type: pleebnarVision
+  id: worm
+  name: pleebnar-vision-worm-name
+  visionString: pleebnar-vision-worm
+
+- type: pleebnarVision
+  id: agony
+  name: pleebnar-vision-agony-name
+  visionString: pleebnar-vision-agony
+
+- type: pleebnarVision
+  id: child
+  name: pleebnar-vision-child-name
+  visionString: pleebnar-vision-child
+
+- type: pleebnarVision
+  id: universe
+  name: pleebnar-vision-universe-name
+  visionString: pleebnar-vision-universe
+
+- type: pleebnarVision
+  id: jester
+  name: pleebnar-vision-jester-name
+  visionString: pleebnar-vision-jester
+
+- type: pleebnarVision
+  id: pig
+  name: pleebnar-vision-pig-name
+  visionString: pleebnar-vision-pig
+
+- type: pleebnarVision
+  id: skull
+  name: pleebnar-vision-skull-name
+  visionString: pleebnar-vision-skull
+
+- type: pleebnarVision
+  id: maze
+  name: pleebnar-vision-maze-name
+  visionString: pleebnar-vision-maze
+
+- type: pleebnarVision
+  id: cube
+  name: pleebnar-vision-cube-name
+  visionString: pleebnar-vision-cube
+
+- type: pleebnarVision
+  id: wall
+  name: pleebnar-vision-wall-name
+  visionString: pleebnar-vision-wall
+
+- type: pleebnarVision
+  id: barn
+  name: pleebnar-vision-barn-name
+  visionString: pleebnar-vision-barn
+
+- type: pleebnarVision
+  id: coin
+  name: pleebnar-vision-coin-name
+  visionString: pleebnar-vision-coin
+
+- type: pleebnarVision
+  id: computer
+  name: pleebnar-vision-computer-name
+  visionString: pleebnar-vision-computer
+
+- type: pleebnarVision
+  id: lava
+  name: pleebnar-vision-lava-name
+  visionString: pleebnar-vision-lava
+
+- type: pleebnarVision
+  id: ranch
+  name: pleebnar-vision-ranch-name
+  visionString: pleebnar-vision-ranch
+
+- type: pleebnarVision
+  id: wheel
+  name: pleebnar-vision-wheel-name
+  visionString: pleebnar-vision-wheel
+
+- type: pleebnarVision
+  id: oldports
+  name: pleebnar-vision-oldports-name
+  visionString: pleebnar-vision-oldports
+
+- type: pleebnarVision
+  id: blood
+  name: pleebnar-vision-blood-name
+  visionString: pleebnar-vision-blood
+
+- type: pleebnarVision
+  id: train
+  name: pleebnar-vision-train-name
+  visionString: pleebnar-vision-train
+
+- type: pleebnarVision
+  id: pizza
+  name: pleebnar-vision-pizza-name
+  visionString: pleebnar-vision-pizza
+
+- type: pleebnarVision
+  id: suit
+  name: pleebnar-vision-suit-name
+  visionString: pleebnar-vision-suit
+
+- type: pleebnarVision
+  id: home
+  name: pleebnar-vision-home-name
+  visionString: pleebnar-vision-home
+
+- type: pleebnarVision
+  id: door
+  name: pleebnar-vision-door-name
+  visionString: pleebnar-vision-door
+
+- type: pleebnarVision
+  id: new
+  name: pleebnar-vision-new-name
+  visionString: pleebnar-vision-new
+
+- type: pleebnarVision
+  id: you
+  name: pleebnar-vision-you-name
+  visionString: pleebnar-vision-you
+
+- type: pleebnarVision
+  id: dark
+  name: pleebnar-vision-dark-name
+  visionString: pleebnar-vision-dark
+
+- type: pleebnarVision
+  id: eel
+  name: pleebnar-vision-eel-name
+  visionString: pleebnar-vision-eel
+
+- type: pleebnarVision
+  id: pie
+  name: pleebnar-vision-pie-name
+  visionString: pleebnar-vision-pie
+
+- type: pleebnarVision
+  id: snow
+  name: pleebnar-vision-snow-name
+  visionString: pleebnar-vision-snow
+
+- type: pleebnarVision
+  id: monster
+  name: pleebnar-vision-monster-name
+  visionString: pleebnar-vision-monster
+
+- type: pleebnarVision
+  id: horse
+  name: pleebnar-vision-horse-name
+  visionString: pleebnar-vision-horse
+
+- type: pleebnarVision
+  id: money
+  name: pleebnar-vision-money-name
+  visionString: pleebnar-vision-money
+
+- type: pleebnarVision
+  id: weed
+  name: pleebnar-vision-weed-name
+  visionString: pleebnar-vision-weed
+
+- type: pleebnarVision
+  id: voicemail
+  name: pleebnar-vision-voicemail-name
+  visionString: pleebnar-vision-voicemail
+
+- type: pleebnarVision
+  id: failure
+  name: pleebnar-vision-failure-name
+  visionString: pleebnar-vision-failure
+
+- type: pleebnarVision
+  id: theater
+  name: pleebnar-vision-theater-name
+  visionString: pleebnar-vision-theater
+
+- type: pleebnarVision
+  id: dog
+  name: pleebnar-vision-dog-name
+  visionString: pleebnar-vision-dog
+
+- type: pleebnarVision
+  id: stars
+  name: pleebnar-vision-stars-name
+  visionString: pleebnar-vision-stars
+
+- type: pleebnarVision
+  id: death
+  name: pleebnar-vision-death-name
+  visionString: pleebnar-vision-death
+
+- type: pleebnarVision
+  id: grinch
+  name: pleebnar-vision-grinch-name
+  visionString: pleebnar-vision-grinch
+
+- type: pleebnarVision
+  id: sport
+  name: pleebnar-vision-sport-name
+  visionString: pleebnar-vision-sport
+
+- type: pleebnarVision
+  id: cheese
+  name: pleebnar-vision-cheese-name
+  visionString: pleebnar-vision-cheese
+
+- type: pleebnarVision
+  id: before
+  name: pleebnar-vision-before-name
+  visionString: pleebnar-vision-before
+
+- type: pleebnarVision
+  id: danger
+  name: pleebnar-vision-danger-name
+  visionString: pleebnar-vision-danger
+
+- type: pleebnarVision
+  id: battle
+  name: pleebnar-vision-battle-name
+  visionString: pleebnar-vision-battle
+
+- type: pleebnarVision
+  id: books
+  name: pleebnar-vision-books-name
+  visionString: pleebnar-vision-books
+
+- type: pleebnarVision
+  id: hotdog
+  name: pleebnar-vision-hotdog-name
+  visionString: pleebnar-vision-hotdog
+
+- type: pleebnarVision
+  id: fire
+  name: pleebnar-vision-fire-name
+  visionString: pleebnar-vision-fire
+
+- type: pleebnarVision
+  id: larva
+  name: pleebnar-vision-larva-name
+  visionString: pleebnar-vision-larva
+
+- type: pleebnarVision
+  id: myhouse
+  name: pleebnar-vision-myhouse-name
+  visionString: pleebnar-vision-myhouse
+
+- type: pleebnarVision
+  id: puppy
+  name: pleebnar-vision-puppy-name
+  visionString: pleebnar-vision-puppy
+
+- type: pleebnarVision
+  id: newtonscradle
+  name: pleebnar-vision-newtonscradle-name
+  visionString: pleebnar-vision-newtonscradle
+
+- type: pleebnarVision
+  id: nuclearbomb
+  name: pleebnar-vision-nuclearbomb-name
+  visionString: pleebnar-vision-nuclearbomb
+
+- type: pleebnarVision
+  id: bunnies
+  name: pleebnar-vision-bunnies-name
+  visionString: pleebnar-vision-bunnies
+
+- type: pleebnarVision
+  id: tower
+  name: pleebnar-vision-tower-name
+  visionString: pleebnar-vision-tower
+
+- type: pleebnarVision
+  id: stage
+  name: pleebnar-vision-stage-name
+  visionString: pleebnar-vision-stage
+
+- type: pleebnarVision
+  id: cradle
+  name: pleebnar-vision-cradle-name
+  visionString: pleebnar-vision-cradle
+
+- type: pleebnarVision
+  id: bugs
+  name: pleebnar-vision-bugs-name
+  visionString: pleebnar-vision-bugs
+
+- type: pleebnarVision
+  id: soylentgray
+  name: pleebnar-vision-soylentgray-name
+  visionString: pleebnar-vision-soylentgray
+
+- type: pleebnarVision
+  id: paradoxclone
+  name: pleebnar-vision-paradoxclone-name
+  visionString: pleebnar-vision-paradoxclone
+
+- type: pleebnarVision
+  id: latenight
+  name: pleebnar-vision-latenight-name
+  visionString: pleebnar-vision-latenight
+
+- type: pleebnarVision
+  id: enemies
+  name: pleebnar-vision-enemies-name
+  visionString: pleebnar-vision-enemies
+
+- type: pleebnarVision
+  id: fourthwall
+  name: pleebnar-vision-fourthwall-name
+  visionString: pleebnar-vision-fourthwall
+
+- type: pleebnarVision
+  id: organist
+  name: pleebnar-vision-organist-name
+  visionString: pleebnar-vision-organist
+
+- type: pleebnarVision
+  id: family
+  name: pleebnar-vision-family-name
+  visionString: pleebnar-vision-family
+
+- type: pleebnarVision
+  id: theimp
+  name: pleebnar-vision-theimp-name
+  visionString: pleebnar-vision-theimp
+- type: pleebnarVision
+  id: alian
+  name: pleebnar-vision-alian-name
+  visionString: pleebnar-vision-alian
+
