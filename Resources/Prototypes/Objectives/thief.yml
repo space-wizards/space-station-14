@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   abstract: true
   parent: BaseObjective
@@ -177,10 +179,10 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: ClothingHeadHatWardenStealObjective
+  id: WardenWhistleStealObjective # modified by Ronstation contributor(s)
   components:
   - type: StealCondition
-    stealGroup: ClothingHeadHatWarden
+    stealGroup: WardenWhistle # modified by Ronstation contributor(s)
   - type: Objective
     difficulty: 1.2
 
