@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: More laser gun names and descriptions match now!
-    type: Add
-  - message: Melee tweaks for a few guns to match the weapons properly.
-    type: Tweak
-  id: 1414
-  time: '2025-03-28T21:39:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2117
 - author: DVDPlayerOfDiscordFame
   changes:
   - message: Improvised Pistol and Basilisk-11 changes.
@@ -4239,3 +4230,10 @@
   id: 1913
   time: '2025-06-27T19:12:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2861
+- author: sev7ves
+  changes:
+  - message: god has decided pleebnars were too powerful. they are weak now.
+    type: Fix
+  id: 1914
+  time: '2025-06-27T19:41:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2883
