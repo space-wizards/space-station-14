@@ -1,8 +1,13 @@
+using Linguini.Syntax.Ast;
+using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using static Content.Shared.Administration.Notes.AdminMessageEuiState;
 
 namespace Content.Server.Discord;
 
@@ -16,6 +21,7 @@ public sealed class DiscordWebhook : IPostInjectInit
     private const string BaseUrl = "https://discord.com/api/v10/webhooks";
     private readonly HttpClient _http = new();
     private ISawmill _sawmill = default!;
+    private readonly int _retryDepth = 3;
 
     private string GetUrl(WebhookIdentifier identifier)
     {
@@ -73,6 +79,8 @@ public sealed class DiscordWebhook : IPostInjectInit
         var url = $"{GetUrl(identifier)}?wait=true";
         var response = await _http.PostAsJsonAsync(url, payload, JsonOptions);
 
+        response = await RetryAfterTimeout(response, 0, "Create", identifier, payload, null);
+
         LogResponse(response, "Create");
 
         return response;
@@ -88,6 +96,8 @@ public sealed class DiscordWebhook : IPostInjectInit
     {
         var url = $"{GetUrl(identifier)}/messages/{messageId}";
         var response = await _http.DeleteAsync(url);
+
+        response = await RetryAfterTimeout(response, 0, "Delete", identifier, null, messageId);
 
         LogResponse(response, "Delete");
 
@@ -105,6 +115,8 @@ public sealed class DiscordWebhook : IPostInjectInit
     {
         var url = $"{GetUrl(identifier)}/messages/{messageId}";
         var response = await _http.PatchAsJsonAsync(url, payload, JsonOptions);
+
+        response = await RetryAfterTimeout(response, 0, "Edit", identifier, payload, messageId);
 
         LogResponse(response, "Edit");
 
@@ -139,5 +151,53 @@ public sealed class DiscordWebhook : IPostInjectInit
         }
     }
 
+    /// <summary>
+    ///     Recursivly retries call if discord rate limits the webhook calls. Number of retries is controlled by the _retryDepth.  
+    /// </summary>
+    /// <param name="response">The HTTP response received from the Discord API.</param>
+    /// <param name="currentDepth">The current depth of the call stack. Should be 0 on initial call. </param>
+    /// <param name="type">The type of call to be made to the webhook. </param>
+    /// <param name="identifier">The webhook identifier for the webhook call. </param>
+    /// <param name="payload">The payload of the call for the webhook </param>
+    /// <param name="messageId">The messageId for the call to be made to the webhook. </param>
+    private async Task<HttpResponseMessage> RetryAfterTimeout(HttpResponseMessage response, int currentDepth, string type, WebhookIdentifier identifier, WebhookPayload? payload, ulong? messageId)
+    {
+        string url;
 
+        //Looks for the retryAfter header to determind if this response is rate limited or not.
+        //Returns if a valid response. 
+        if (!response.Headers.TryGetValues("Retry-After", out var retryAfter))
+        {
+            return response;
+        }
+
+
+        int delay = 1000 * int.Parse(retryAfter.Single());
+        await Task.Delay(delay);
+
+        switch (type)
+        {
+            case "Create":
+                url = $"{GetUrl(identifier)}?wait=true";
+                response = await _http.PostAsJsonAsync(url, payload, JsonOptions);
+                break;
+            case "Delete":
+                url = $"{GetUrl(identifier)}/messages/{messageId}";
+                response = await _http.DeleteAsync(url);
+                break;
+            case "Edit":
+                url = $"{GetUrl(identifier)}/messages/{messageId}";
+                response = await _http.PatchAsJsonAsync(url, payload, JsonOptions);
+                break;
+        }
+
+        currentDepth++;
+        //increment the current depth by one and then check to see if it has reached the limit. 
+        if(currentDepth >= _retryDepth)
+        {
+            return response;
+        }
+
+        return await RetryAfterTimeout(response, currentDepth, type, identifier, payload, messageId);
+    }
 }
