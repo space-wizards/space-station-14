@@ -47,22 +47,11 @@ public sealed class DrowsinessOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_statusEffects.TryEffectsWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var drowsinessEffects))
+        if (!_statusEffects.TryGetEffectsEndTimeWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var endTime))
             return;
 
-        TimeSpan? remainingTime = TimeSpan.Zero;
-        foreach (var (_, _, statusEffectComp) in drowsinessEffects)
-        {
-            if (statusEffectComp.EndEffectTime > remainingTime)
-                remainingTime = statusEffectComp.EndEffectTime;
-        }
-
-        if (remainingTime is null)
-            return;
-
-        var curTime = _timing.CurTime;
-        var timeLeft = (float)(remainingTime - curTime).Value.TotalSeconds;
-
+        endTime ??= TimeSpan.MaxValue;
+        var timeLeft = (float)(endTime - _timing.CurTime).Value.TotalSeconds;
         CurrentPower += 8f * (0.5f * timeLeft - CurrentPower) * args.DeltaSeconds / (timeLeft + 1);
     }
 
