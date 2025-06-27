@@ -110,6 +110,13 @@
                             HorizontalAlignment="Left"
                             Margin="130 0 0 0">
                         </Label>
+                        <Button
+                            Name="DeleteFabricating"
+                            Margin="0"
+                            StyleClasses="Caution"
+                            Text="✖"
+                            SetSize="38 32"
+                            HorizontalAlignment="Right"/>
                     </PanelContainer>
                 </BoxContainer>
                 <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
