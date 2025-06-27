@@ -114,6 +114,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             component.CommandCheck = _timing.CurTime + component.TimerWait;
 
+            //starlight, check if revs have lost
+            if (CheckRevsLose())
+            {
+                GameTicker.EndGameRule(uid, gameRule);
+            }
+
             if (CheckCommandLose())
             {
                 // Starlight Start

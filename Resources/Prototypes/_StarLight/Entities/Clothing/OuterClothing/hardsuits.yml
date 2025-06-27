@@ -31,7 +31,6 @@
     damageCoefficient: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBlueshield
-
 #NTRep Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
@@ -65,7 +64,6 @@
     damageCoefficient: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitNtrep
-
 #Clown Battlesuit
 - type: entity
   parent: [ClothingOuterHardsuitBase]
@@ -100,7 +98,6 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetBattlesuitClown
-    
 #Mercenary Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseMajorContraband]
@@ -176,7 +173,7 @@
   parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ] #sl Change
   id: ClothingOuterHardsuitNTCCConsortium
   name: nt cc consortium hardsuit
-  description: A protective hardsuit worn by NT-CC Consotrium Officers.
+  description: A protective hardsuit worn by NT-CC Consortium Officers.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_hardsuit.rsi
@@ -254,6 +251,26 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitInfiltration
     
+    
+#CCNT Consortium medics
+- type: entity
+  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieMedic ] #sl Change
+  id: ClothingOuterHardsuitNTCCConsortiumMedic
+  name: nt cc consortium medic hardsuit
+  description: A protective hardsuit worn by NT-CC Consortium medical personnel.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_med_hardsuit.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_med_hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitNTCCConsortiumMedic
+  - type: Tag
+    tags:
+    - Hardsuit
+    - WhitelistChameleon
+
+
 #USSP
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseSovietContraband]
@@ -284,7 +301,7 @@
         Radiation: 0.1
         Caustic: 0.4
     staminaModifier: 1
-    ingoreKnockdown: true
+    ingoreKnockdown: false
   - type: ClothingSpeedModifier
     walkModifier: 0.90
     sprintModifier: 0.90
@@ -304,3 +321,4 @@
     - FootstepSound
   - type: Item
     size: Huge
+
