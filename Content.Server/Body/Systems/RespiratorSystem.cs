@@ -141,13 +141,7 @@ public sealed class RespiratorSystem : EntitySystem
         var inhaleEv = new InhaledGasEvent(gas);
         RaiseLocalEvent(entity, ref inhaleEv);
 
-        if (inhaleEv.Handled)
-            return inhaleEv.Succeeded;
-
-        _atmosSys.Merge(entity.Comp.Air, gas);
-
-        UpdateSaturation(entity, GetSaturation((entity, entity.Comp), entity.Comp.Air));
-        return true;
+        return inhaleEv.Handled && inhaleEv.Succeeded;
     }
 
     public void Exhale(Entity<RespiratorComponent?> entity)
@@ -171,15 +165,6 @@ public sealed class RespiratorSystem : EntitySystem
 
         var exhaleEv = new ExhaledGasEvent(ev.Gas);
         RaiseLocalEvent(entity, ref exhaleEv);
-
-        if (exhaleEv.Handled)
-            return;
-
-        GasExchange((entity, entity.Comp));
-
-        // Put air back into atmos and then clear the respirator
-        _atmosSys.Merge(ev.Gas, entity.Comp.Air);
-        entity.Comp.Air.Clear();
     }
 
     /// <summary>
@@ -197,17 +182,6 @@ public sealed class RespiratorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Exchanges our Metabolized Gas for the Byproduct Gas in our lungs.
-    /// </summary>
-    private void GasExchange(Entity<RespiratorComponent> entity)
-    {
-        var moles = entity.Comp.Air[(int)entity.Comp.MetabolizedGas];
-
-        entity.Comp.Air.AdjustMoles(entity.Comp.MetabolizedGas, -moles);
-        entity.Comp.Air.AdjustMoles(entity.Comp.ByproductGas, moles);
-    }
-
-    /// <summary>
     /// Check whether or not an entity can metabolize inhaled air without suffocating or taking damage (i.e., no toxic
     /// gasses).
     /// </summary>
@@ -220,7 +194,7 @@ public sealed class RespiratorSystem : EntitySystem
             return false;
 
         // If we don't have a body we can't be poisoned by gas, yet...
-        var success = !TryComp<BodyComponent>(ent, out var body) ? TryMetabolizeGas(ent) : TryMetabolizeGas((ent, ent.Comp, body));
+        var success = TryMetabolizeGas((ent, ent.Comp));
 
         // Don't keep that gas in our lungs lest it poisons a poor nuclear operative.
         Exhale(ent);
@@ -298,21 +272,13 @@ public sealed class RespiratorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Tries to safely metabolize the current gas in a respirator component.
-    /// </summary>
-    private bool TryMetabolizeGas(Entity<RespiratorComponent?> ent)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return false;
-
-        return GetSaturation((ent, ent.Comp)) > ent.Comp.UpdateInterval.TotalSeconds;
-    }
-
-    /// <summary>
     /// Tries to safely metabolize the current solutions in a body's lungs.
     /// </summary>
-    private bool TryMetabolizeGas(Entity<RespiratorComponent, BodyComponent> ent)
+    private bool TryMetabolizeGas(Entity<RespiratorComponent, BodyComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp2))
+            return false;
+
         var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
         if (organs.Count == 0)
             return false;
@@ -387,36 +353,12 @@ public sealed class RespiratorSystem : EntitySystem
         return saturation;
     }
 
-    /// <summary>
-    /// Returns a saturation value for a given air mixture for a specific respirator.
-    /// </summary>
-    private float GetSaturation(Entity<RespiratorComponent> entity, GasMixture gas)
-    {
-        var moles = gas[(int)entity.Comp.MetabolizedGas];
-
-        return Math.Max(0, moles * entity.Comp.SaturationMultiplier);
-    }
-
-    /// <summary>
-    /// Returns a saturation value for the air mixture inside a respirator's lungs
-    /// </summary>
-    private float GetSaturation(Entity<RespiratorComponent> entity)
-    {
-        return GetSaturation(entity, entity.Comp.Air);
-    }
-
     private void TakeSuffocationDamage(Entity<RespiratorComponent> ent)
     {
         if (ent.Comp.SuffocationCycles == 2)
             _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} started suffocating");
 
         _damageableSys.TryChangeDamage(ent, ent.Comp.Damage, interruptsDoAfters: false);
-
-        if (!HasComp<BodyComponent>(ent))
-        {
-            _alertsSystem.ShowAlert(ent, ent.Comp.Alert);
-            return;
-        }
 
         if (ent.Comp.SuffocationCycles >= ent.Comp.SuffocationCycleThreshold)
         {
@@ -435,12 +377,6 @@ public sealed class RespiratorSystem : EntitySystem
             _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} stopped suffocating");
 
         _damageableSys.TryChangeDamage(ent, ent.Comp.DamageRecovery);
-
-        if (!HasComp<BodyComponent>(ent))
-        {
-            _alertsSystem.ClearAlert(ent, ent.Comp.Alert);
-            return;
-        }
 
         // TODO: This is not going work with multiple different lungs, if that ever becomes a possibility
         var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));

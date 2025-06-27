@@ -22,18 +22,6 @@ namespace Content.Server.Body.Components
         };
 
         /// <summary>
-        ///     The gas our entity breathes
-        /// </summary>
-        [DataField]
-        public Gas MetabolizedGas = Gas.Oxygen;
-
-        /// <summary>
-        ///     The gas our entity exhales
-        /// </summary>
-        [DataField]
-        public Gas ByproductGas = Gas.CarbonDioxide;
-
-        /// <summary>
         ///     Volume of our breath in liters
         /// </summary>
         [DataField]
@@ -44,12 +32,6 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField]
         public float Ratio = 1.0f;
-
-        /// <summary>
-        ///     Saturation per mol of gas
-        /// </summary>
-        [DataField]
-        public float SaturationMultiplier = Atmospherics.BreathMolesToReagentMultiplier;
 
         /// <summary>
         ///     The next time that this body will inhale or exhale.
@@ -104,12 +86,6 @@ namespace Content.Server.Body.Components
         /// </summary>
         [DataField]
         public ProtoId<EmotePrototype> GaspEmote = "Gasp";
-
-        /// <summary>
-        /// The type of gas this respirator needs. Used only for the breathing alerts, not actual metabolism.
-        /// </summary>
-        [DataField]
-        public ProtoId<AlertPrototype> Alert = "LowOxygen";
 
         /// <summary>
         ///     How many cycles in a row has the mob been under-saturated?

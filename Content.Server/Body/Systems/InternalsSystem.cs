@@ -10,7 +10,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.Internals;
 using Content.Shared.Inventory;
 using Content.Shared.Roles;
-using NetCord.Rest;
 
 namespace Content.Server.Body.Systems;
 
