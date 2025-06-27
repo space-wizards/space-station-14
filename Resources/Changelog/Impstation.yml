@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: AvianMaiden
   changes:
-  - message: All computers and TVs and hotplates can now be turned on or off to save
-      power, you heathen.
-    type: Add
-  id: 1413
-  time: '2025-03-28T21:40:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2116
-- author: AvianMaiden
-  changes:
   - message: More laser gun names and descriptions match now!
     type: Add
   - message: Melee tweaks for a few guns to match the weapons properly.
@@ -4223,3 +4215,27 @@
   id: 1912
   time: '2025-06-27T17:34:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2881
+- author: widgetbeck
+  changes:
+  - message: The Replicator nest now generates Replicator plating around itself, starting
+      at level 3. The audio range of its ambient sfx also now scales with level.
+    type: Add
+  - message: The first Replicator queen to spawn now spawns in as a "Tier 0" Spore,
+      which has ventcrawling and door crawling, and automatically upgrades to Tier
+      1 when the nest is placed. As a result, door crawling has been removed from
+      Tier 1.
+    type: Add
+  - message: Reintroduced flat structural damage reduction to Replicators, but significantly
+      reduced from its previous values.
+    type: Tweak
+  - message: Replicator nest levelup requirements no longer increase exponentially
+      forever.
+    type: Fix
+  - message: Introduced a punishment state for Replicators when their nest is destroyed,
+      to encourage Sec to target it. More details on the PR.
+    type: Tweak
+  - message: Replicator levelup popups actually happen now, as do their sound effects.
+    type: Fix
+  id: 1913
+  time: '2025-06-27T19:12:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2861
