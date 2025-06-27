@@ -71,7 +71,7 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
-  - type: ProximitySleep
+  - type: NPCProximitySleep
   - type: HTN
     constantlyReplan: false
     rootTask:
