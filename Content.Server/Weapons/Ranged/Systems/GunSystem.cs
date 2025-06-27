@@ -1,4 +1,3 @@
-using System; //temp
 using System.Linq;
 using System.Numerics;
 using Content.Server.Atmos.EntitySystems;
