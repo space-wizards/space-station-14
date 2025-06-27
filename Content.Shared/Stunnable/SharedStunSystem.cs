@@ -31,7 +31,7 @@ public abstract class SharedStunSystem : EntitySystem
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
 
-    public static readonly EntProtoId Stun = "StatusEffectStunned";
+    public readonly EntProtoId Stun = "StatusEffectStunned";
 
     /// <summary>
     /// Friction modifier for knocked down players.
