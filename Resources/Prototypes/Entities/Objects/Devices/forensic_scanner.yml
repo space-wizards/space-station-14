@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Devices/forensic_scanner.rsi
-    state: forensicnew
+    state: icon
   - type: Item
     size: Small
     storedRotation: 90

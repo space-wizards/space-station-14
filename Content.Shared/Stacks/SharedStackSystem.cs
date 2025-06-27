@@ -146,7 +146,7 @@ namespace Content.Shared.Stacks
             }
 
             // This is shit code until hands get fixed and give an easy way to enumerate over items, starting with the currently active item.
-            foreach (var held in Hands.EnumerateHeld(user, hands))
+            foreach (var held in Hands.EnumerateHeld((user, hands)))
             {
                 TryMergeStacks(item, held, out _, donorStack: itemStack);
 

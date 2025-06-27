@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, chinese from paradise, ticket by peptide, cnds-trash based on boritos-trash and syndicakes modified by potato1234x, ramen from https://github.com/discordia-space/CEV-Eris/raw/f7aa28fd4b4d0386c3393d829681ebca526f1d2d/icons/obj/drinks.dmi",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, chinese from paradise, ticket by peptide, cnds-trash based on boritos-trash and syndicakes modified by potato1234x, ramen from https://github.com/discordia-space/CEV-Eris/raw/f7aa28fd4b4d0386c3393d829681ebca526f1d2d/icons/obj/drinks.dmi. Some inhands by Orsoniks.",
   "size": {
     "x": 32,
     "y": 32
@@ -11,7 +11,31 @@
       "name": "ramen"
     },
     {
+      "name": "ramen-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "ramen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "trash-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "trash-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "boritos"
+    },
+    {
+      "name": "boritos-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "boritos-inhand-left",
+      "directions": 4
     },
     {
       "name": "boritos-trash"
@@ -20,13 +44,37 @@
       "name": "cheesiehonkers"
     },
     {
+      "name": "cheesiehonkers-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cheesiehonkers-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "cheesiehonkers-trash"
     },
     {
       "name": "chinese1"
     },
     {
+      "name": "chinese1-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "chinese1-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "chinese2"
+    },
+    {
+      "name": "chinese2-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "chinese2-inhand-left",
+      "directions": 4
     },
     {
       "name": "chinese3"
@@ -36,6 +84,14 @@
     },
     {
       "name": "chips"
+    },
+    {
+      "name": "chips-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "chips-inhand-left",
+      "directions": 4
     },
     {
       "name": "chips-trash"
@@ -58,7 +114,23 @@
       "directions": 4
     },
     {
+      "name": "chocolatebar-open-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "chocolatebar-open-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "cnds"
+    },
+    {
+      "name": "cnds-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cnds-inhand-left",
+      "directions": 4
     },
     {
       "name": "cnds-trash"
@@ -67,10 +139,34 @@
       "name": "cookie_fortune"
     },
     {
+      "name": "cookie_fortune-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cookie_fortune-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "energybar"
     },
     {
+      "name": "energybar-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "energybar-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "energybar-open"
+    },
+    {
+      "name": "energybar-open-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "energybar-open-inhand-left",
+      "directions": 4
     },
     {
       "name": "energybar-trash"
@@ -79,7 +175,23 @@
       "name": "mre-brownie"
     },
     {
+      "name": "mre-brownie-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "mre-brownie-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "mre-brownie-open"
+    },
+    {
+      "name": "mre-brownie-open-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "mre-brownie-open-inhand-left",
+      "directions": 4
     },
     {
       "name": "mre-wrapper"
@@ -88,7 +200,23 @@
       "name": "nutribrick"
     },
     {
+      "name": "nutribrick-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "nutribrick-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "nutribrick-open"
+    },
+    {
+      "name": "nutribrick-open-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "nutribrick-open-inhand-left",
+      "directions": 4
     },
     {
       "name": "packet-inhand-right",
@@ -100,6 +228,14 @@
     },
     {
       "name": "pistachio"
+    },
+    {
+      "name": "pistachio-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pistachio-inhand-left",
+      "directions": 4
     },
     {
       "name": "pistachio-trash"
@@ -122,10 +258,26 @@
       "name": "raisins"
     },
     {
+      "name": "raisins-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "raisins-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "raisins-trash"
     },
     {
       "name": "semki"
+    },
+    {
+      "name": "semki-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "semki-inhand-left",
+      "directions": 4
     },
     {
       "name": "semki-trash"
@@ -134,10 +286,26 @@
       "name": "susjerky"
     },
     {
+      "name": "susjerky-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "susjerky-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "susjerky-trash"
     },
     {
       "name": "syndicakes"
+    },
+    {
+      "name": "syndicakes-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "syndicakes-inhand-left",
+      "directions": 4
     },
     {
       "name": "syndicakes-trash"

@@ -10,11 +10,32 @@
     sprite: Structures/smalldispensers.rsi
     drawdepth: SmallObjects
     state: soda
-  - type: ReagentDispenser
-    storageWhitelist:
+  - type: Storage
+    openOnActivate: false
+    whitelist:
       tags:
       - DrinkBottle
-    pack: SodaDispenserInventory
+  - type: StorageFill
+    contents:
+    - id: DrinkCoconutWaterJug
+    - id: DrinkCoffeeJug
+    - id: DrinkColaBottleFull
+    - id: DrinkCreamCartonXL
+    - id: DrinkDrGibbJug
+    - id: DrinkEnergyDrinkJug
+    - id: DrinkGreenTeaJug
+    - id: DrinkIceJug
+    - id: DrinkJuiceLimeCartonXL
+    - id: DrinkJuiceOrangeCartonXL
+    - id: DrinkLemonLimeJug
+    - id: DrinkRootBeerJug
+    - id: DrinkSodaWaterBottleFull
+    - id: DrinkSpaceMountainWindBottleFull
+    - id: DrinkSpaceUpBottleFull
+    - id: DrinkSugarJug
+    - id: DrinkTeaJug
+    - id: DrinkTonicWaterBottleFull
+    - id: DrinkWaterMelonJuiceJug
   - type: Transform
     noRot: false
   - type: Machine
@@ -28,9 +49,3 @@
   parent: SodaDispenser
   id: SodaDispenserEmpty
   suffix: Empty
-  components:
-  - type: ReagentDispenser
-    storageWhitelist:
-      tags:
-      - DrinkBottle
-    pack: EmptyInventory
