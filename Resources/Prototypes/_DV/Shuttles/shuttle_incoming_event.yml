@@ -1,0 +1,9 @@
+- type: preloadedGrid
+  id: SyndieRecruiterShip
+  path: /Maps/_Impstation/Shuttles/ShuttleEvent/recruiter.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: SyndieSynthesisShip
+  path: /Maps/_Impstation/Shuttles/ShuttleEvent/synthesis_ship.yml
+  copies: 1

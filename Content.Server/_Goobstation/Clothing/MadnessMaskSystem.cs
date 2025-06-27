@@ -1,4 +1,4 @@
-using Content.Server.EntityEffects.Effects;
+using Content.Server.EntityEffects;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Damage.Components;

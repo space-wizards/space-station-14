@@ -1,28 +1,32 @@
 - type: entity
+  parent: BaseAction
   id: ActionKodepiiaScrambler
   name: Scramble Appearance
   description: Change your appearance in a rush. You don't have time to control what comes out!
   components:
-  - type: ConfirmableAction
-    popup: dna-scrambler-action-popup
-  - type: InstantAction
+  - type: Action
     icon:
       sprite: _Goobstation/Changeling/changeling_abilities.rsi
       state: transform
-    event: !type:KodepiiaScramblerEvent
     useDelay: 600
+  - type: ConfirmableAction
+    popup: dna-scrambler-action-popup
+  - type: InstantAction
+    event: !type:KodepiiaScramblerEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionKodepiiaConsume
   name: Consume
   description: Take a bite out of an incapacitated target.
   components:
-  - type: EntityTargetAction
-    event: !type:KodepiiaConsumeEvent
-    useDelay: 120
-    canTargetSelf: false
-    interactOnMiss: false
+  - type: Action
     itemIconStyle: NoItem
     icon:
       sprite: _Goobstation/Changeling/changeling_abilities.rsi
       state: absorb_dna
+    useDelay: 120
+  - type: TargetAction
+  - type: EntityTargetAction
+    event: !type:KodepiiaConsumeEvent
+    canTargetSelf: false

@@ -120,7 +120,6 @@ namespace Content.IntegrationTests.Tests
             "Meta",
             "Oasis",
             "Omega",
-            "Origin",
             "Packed",
             "Plasma",
             "Reach",

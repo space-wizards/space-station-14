@@ -357,7 +357,7 @@ public abstract class SharedStorageSystem : EntitySystem
         loc = default;
         storage = null;
 
-        if (!ContainerSystem.TryGetContainingContainer(itemEnt, out container) ||
+        if (!ContainerSystem.TryGetContainingContainer(itemEnt.Owner, out container) ||
             container.ID != StorageComponent.ContainerId ||
             !TryComp(container.Owner, out storage) ||
             !_itemQuery.Resolve(itemEnt, ref itemEnt.Comp, false))
@@ -1326,7 +1326,7 @@ public abstract class SharedStorageSystem : EntitySystem
         // This uses a faster path than the typical codepaths
         // as we can cache a bunch more data and re-use it to avoid a bunch of component overhead.
 
-        // So if we have an item that occupies 0,0 we can assume that the tile itself we're checking
+        // So if we have an item that occupies 0,0 and is a single rectangle we can assume that the tile itself we're checking
         // is always in its shapes regardless of angle. This matches virtually every item in the game and
         // means we can skip getting the item's rotated shape at all if the tile is occupied.
         // This mostly makes heavy checks (e.g. area insert) much, much faster.
@@ -1334,14 +1334,8 @@ public abstract class SharedStorageSystem : EntitySystem
         var itemShape = ItemSystem.GetItemShape(itemEnt);
         var fastAngles = itemShape.Count == 1;
 
-        foreach (var shape in itemShape)
-        {
-            if (shape.Contains(Vector2i.Zero))
-            {
-                fastPath = true;
-                break;
-            }
-        }
+        if (itemShape.Count == 1 && itemShape[0].Contains(Vector2i.Zero))
+            fastPath = true;
 
         var chunkEnumerator = new ChunkIndicesEnumerator(storageBounding, StorageComponent.ChunkSize);
         var angles = new ValueList<Angle>();
@@ -1396,7 +1390,7 @@ public abstract class SharedStorageSystem : EntitySystem
                         // This bit of code is how area inserts go from tanking frames to being negligible.
                         if (fastPath)
                         {
-                            var flag = SharedMapSystem.ToBitmask(position, StorageComponent.ChunkSize);
+                            var flag = SharedMapSystem.ToBitmask(SharedMapSystem.GetChunkRelative(position, StorageComponent.ChunkSize), StorageComponent.ChunkSize);
 
                             // Occupied so skip.
                             if ((occupied & flag) == flag)

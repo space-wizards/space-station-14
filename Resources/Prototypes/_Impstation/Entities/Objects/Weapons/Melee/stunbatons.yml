@@ -8,7 +8,7 @@
     sprite: _Impstation/Objects/Weapons/Melee/funbaton.rsi
     layers:
     - state: stunbaton_off
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: StaminaDamageOnHit
     damage: 35
     sound: /Audio/_Impstation/Weapons/funbaton.ogg
@@ -28,7 +28,7 @@
     sprite: _Impstation/Objects/Weapons/Melee/stunbat.rsi
     layers:
     - state: stunbaton_off
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunbat.rsi
     quickEquip: false
@@ -45,7 +45,7 @@
     sprite: _Impstation/Objects/Weapons/Melee/stunsabre.rsi
     layers:
     - state: stunbaton_off
-      map: [ "enum.ToggleVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer" ]
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunsabre.rsi
     quickEquip: false

@@ -32,6 +32,5 @@
   - type: MachineBoard
     prototype: StorageBin
     stackRequirements:
-      MatterBin: 2
-      Manipulator: 2
+      Manipulator: 4
       Steel: 1

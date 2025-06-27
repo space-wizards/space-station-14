@@ -442,14 +442,6 @@ entities:
     - type: GasTileOverlay
     - type: SpreaderGrid
     - type: GridPathfinding
-- proto: ActionToggleInternals
-  entities:
-  - uid: 100
-    components:
-    - type: Transform
-      parent: 266
-    - type: InstantAction
-      container: 266
 - proto: AirAlarm
   entities:
   - uid: 271
@@ -3387,14 +3379,6 @@ entities:
     - type: Transform
       pos: -4.271042,7.9297905
       parent: 1
-    - type: GasTank
-      toggleActionEntity: 100
-    - type: ActionsContainer
-    - type: ContainerContainer
-      containers:
-        actions: !type:Container
-          ents:
-          - 100
 - proto: NitrousOxideCanister
   entities:
   - uid: 268

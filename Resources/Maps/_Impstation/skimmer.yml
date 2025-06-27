@@ -23,9 +23,7 @@ entities:
     - type: Transform
     - type: Map
       mapPaused: True
-    - type: PhysicsMap
     - type: GridTree
-    - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
@@ -772,15 +770,6 @@ entities:
           - 0
         chunkSize: 4
     - type: GasTileOverlay
-- proto: ActionToggleLight
-  entities:
-  - uid: 2580
-    components:
-    - type: Transform
-      parent: 2579
-    - type: InstantAction
-      originalIconColor: '#FFFFFFFF'
-      container: 2579
 - proto: AirAlarm
   entities:
   - uid: 135
@@ -10421,20 +10410,6 @@ entities:
     - type: Transform
       pos: 4.5192757,40.821
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 2580
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 2580
-    - type: ActionsContainer
 - proto: FloorDrain
   entities:
   - uid: 1463

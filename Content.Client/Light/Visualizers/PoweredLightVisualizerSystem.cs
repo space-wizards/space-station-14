@@ -11,7 +11,6 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -28,16 +27,16 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
             return;
 
         if (comp.SpriteStateMap.TryGetValue(state, out var spriteState))
-            _sprite.LayerSetRsiState((uid, args.Sprite), PoweredLightLayers.Base, spriteState);
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), PoweredLightLayers.Base, spriteState);
 
-        if (_sprite.LayerExists((uid, args.Sprite), PoweredLightLayers.Glow))
+        if (SpriteSystem.LayerExists((uid, args.Sprite), PoweredLightLayers.Glow))
         {
             if (TryComp<PointLightComponent>(uid, out var light))
             {
-                _sprite.LayerSetColor((uid, args.Sprite), PoweredLightLayers.Glow, light.Color);
+                SpriteSystem.LayerSetColor((uid, args.Sprite), PoweredLightLayers.Glow, light.Color);
             }
 
-            _sprite.LayerSetVisible((uid, args.Sprite), PoweredLightLayers.Glow, state == PoweredLightState.On);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), PoweredLightLayers.Glow, state == PoweredLightState.On);
         }
 
         SetBlinkingAnimation(
