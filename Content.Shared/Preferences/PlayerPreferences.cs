@@ -153,25 +153,6 @@ namespace Content.Shared.Preferences
         }
 
         /// <summary>
-        /// Return true if any enabled character profile is asking for any antag in antagList
-        /// </summary>
-        public bool HasAntagPreference(ICollection<ProtoId<AntagPrototype>> antagList)
-        {
-            foreach (var profile in Characters.Values)
-            {
-                if (profile is not HumanoidCharacterProfile { Enabled: true } humanoid)
-                    continue;
-                foreach (var antag in antagList)
-                {
-                    if (humanoid.AntagPreferences.Contains(antag))
-                        return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Given an antag, return a random enabled character asking for this antag
         /// </summary>
         public HumanoidCharacterProfile? SelectProfileForAntag(ICollection<ProtoId<AntagPrototype>> antags)
