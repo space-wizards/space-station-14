@@ -14,7 +14,7 @@
     impactEffect: BulletImpactEffectOrangeDisabler
     damage:
       types:
-        Heat: 30
+        Heat: 28
     soundHit:
       collection: WeakHit
     forceSound: true

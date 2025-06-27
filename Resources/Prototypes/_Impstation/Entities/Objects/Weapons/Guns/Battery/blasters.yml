@@ -130,7 +130,7 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: Gun
-    fireRate: 1
+    fireRate: 1.75
     soundGunshot:
       path: /Audio/_Impstation/Weapons/Guns/Gunshots/blasterpist.ogg
   - type: ProjectileBatteryAmmoProvider
@@ -138,6 +138,6 @@
     fireCost: 150
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 30
+    autoRechargeRate: 20
   - type: MeleeWeapon
     wideAnimationRotation: -80
