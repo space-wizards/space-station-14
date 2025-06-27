@@ -70,7 +70,32 @@
         - ReagentId: TranexamicAcid
           Quantity: 15
 
-- type: entity
+- type: entity #imp special
+  parent: [ BaseItem, TierXContraband ]
+  id: HereticBookSensor
+  name: seeker's heart
+  description: A macabre contraption that beats faster in the presence of forbidden knowledge. Use it in your hand to toggle it on or off.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Heretic/items.rsi
+    state: living_heart
+  - type: ItemToggle
+  - type: ProximityBeeper
+  - type: ProximityDetector
+    range: 20
+    components:
+    - type: HereticKnowledgeItem
+  - type: Beeper
+    isMuted: false
+    minBeepInterval: 0.50
+    maxBeepInterval: 2.00
+    beepSound:
+      path: "/Audio/_Goobstation/Heretic/heartbeat.ogg"
+      params:
+        maxDistance: 1
+        volume: -2
+
+- type: entity #imp special
   id: AlwaysPoweredHellLight
   parent: MarkerBase
   name: hellworldlight
@@ -89,7 +114,7 @@
       - sprite: Structures/Wallmounts/Lighting/light_tube.rsi
         state: base
 
-- type: entity
+- type: entity #imp special
   id: HellSpawnPointMarker
   parent: MarkerBase
   name: hellworldtarget

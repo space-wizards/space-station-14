@@ -233,6 +233,13 @@
 
 ### side paths
 - type: hereticKnowledge
+  id: SeekersHeartRitual
+  sideKnowledge: true
+  stage: 1
+  ritualPrototypes:
+  - SeekersHeartRitual
+
+- type: hereticKnowledge
   id: RitualOfKnowledge
   sideKnowledge: true
   stage: 5

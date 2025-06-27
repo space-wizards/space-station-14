@@ -1,3 +1,11 @@
+## stage 1
+knowledge-path-side-s1-sensor-name = Seeking Heart
+knowledge-path-side-s1-sensor-desc =
+    The library hungers for knowledge. Such hunger can be used.
+
+    Allows you to transmute a heart and a flare into a Seeking Heart.
+    Its beat quickens in proximity of a Mansus Tome.
+
 ## stage 3
 knowledge-path-side-s3-armor-name = Armorer’s Ritual
 knowledge-path-side-s3-armor-desc =

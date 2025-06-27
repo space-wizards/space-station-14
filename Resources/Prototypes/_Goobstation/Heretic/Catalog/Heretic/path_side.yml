@@ -1,5 +1,21 @@
 # store catalog
 - type: listing
+  id: HereticSidePath1Sensor
+  name: knowledge-path-side-s1-sensor-name
+  description: knowledge-path-side-s1-sensor-desc
+  icon: { sprite: _Goobstation/Heretic/items.rsi, state: living_heart }
+  productHereticKnowledge: SeekersHeartRitual
+  cost:
+    KnowledgePoint: 1
+  categories:
+  - HereticPathSide
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 1
+
+- type: listing
   id: HereticSidePath3Armor
   name: knowledge-path-side-s3-armor-name
   description: knowledge-path-side-s3-armor-desc
