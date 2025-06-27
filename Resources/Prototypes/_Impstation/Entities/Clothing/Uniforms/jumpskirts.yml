@@ -222,6 +222,17 @@
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtHopPowerSuit
+  name: head of personnel's power suit
+  description: Rather bold and imposing. Perfect for establishing authority in the workplace.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hop_powersuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hop_powersuit.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtCMOCasual
   name: chief medical officer's casual skirt
   description: A comfy casual outfit for the CMO.

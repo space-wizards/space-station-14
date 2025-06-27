@@ -218,6 +218,7 @@
   loadouts:
   - HoPJumpsuit
   - HoPJumpskirt
+  - HoPPowerSuit # imp
   # Begin DeltaV additions
   - HoPMessSkirt
   - HoPMessSuit
