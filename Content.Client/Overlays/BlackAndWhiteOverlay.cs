@@ -1,5 +1,4 @@
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 
@@ -7,9 +6,7 @@ namespace Content.Client.Overlays;
 
 public sealed partial class BlackAndWhiteOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
@@ -20,17 +17,6 @@ public sealed partial class BlackAndWhiteOverlay : Overlay
         IoCManager.InjectDependencies(this);
         _greyscaleShader = _prototypeManager.Index<ShaderPrototype>("GreyscaleFullscreen").InstanceUnique();
         ZIndex = 10; // draw this over the DamageOverlay, RainbowOverlay etc.
-    }
-
-    protected override bool BeforeDraw(in OverlayDrawArgs args)
-    {
-        if (!_entityManager.TryGetComponent(_playerManager.LocalEntity, out EyeComponent? eyeComp))
-            return false;
-
-        if (args.Viewport.Eye != eyeComp.Eye)
-            return false;
-
-        return true;
     }
 
     protected override void Draw(in OverlayDrawArgs args)

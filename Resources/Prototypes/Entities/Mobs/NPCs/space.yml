@@ -162,9 +162,6 @@
   - type: Vocal
     sounds:
       Unsexed: Kangaroo
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepBounce
   - type: ReplacementAccent
     accent: kangaroo
   - type: Butcherable
@@ -433,6 +430,15 @@
       0: Alive
       10: Critical
       20: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 40
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3

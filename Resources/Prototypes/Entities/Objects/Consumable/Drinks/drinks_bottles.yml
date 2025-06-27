@@ -331,9 +331,6 @@
           Quantity: 100
   - type: Label
     currentLabel: reagent-name-grenadine
-  # intended use is to spike drinks so starts open
-  - type: Openable
-    opened: true
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
   - type: SolutionContainerVisuals

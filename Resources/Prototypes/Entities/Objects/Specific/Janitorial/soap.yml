@@ -141,6 +141,8 @@
   - type: Residue
     residueAdjective: residue-slippery
     residueColor: residue-red
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   name: soaplet

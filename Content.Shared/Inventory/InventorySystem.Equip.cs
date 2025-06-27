@@ -83,7 +83,7 @@ public abstract partial class InventorySystem
         if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<HandsComponent>(actor, out var hands))
             return;
 
-        var held = hands.ActiveHandEntity;
+        var held = _handsSystem.GetActiveItem((actor, hands));
         TryGetSlotEntity(actor, ev.Slot, out var itemUid, inventory);
 
         // attempt to perform some interaction
@@ -115,7 +115,7 @@ public abstract partial class InventorySystem
             return;
         }
 
-        if (!_handsSystem.CanDropHeld(actor, hands.ActiveHand!, checkActionBlocker: false))
+        if (!_handsSystem.CanDropHeld(actor, hands.ActiveHandId!, checkActionBlocker: false))
             return;
 
         RaiseLocalEvent(held.Value, new HandDeselectedEvent(actor));
@@ -286,23 +286,21 @@ public abstract partial class InventorySystem
         }
 
         var attemptEvent = new IsEquippingAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(target, attemptEvent, true);
+        RaiseLocalEvent(actor, attemptEvent, true);
+
         if (attemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;
             return false;
         }
 
-        if (actor != target)
+        var targetAttemptEvent = new IsEquippingTargetAttemptEvent(actor, target, itemUid, slotDefinition);
+        RaiseLocalEvent(target, targetAttemptEvent, true);
+
+        if (targetAttemptEvent.Cancelled)
         {
-            //reuse the event. this is gucci, right?
-            attemptEvent.Reason = null;
-            RaiseLocalEvent(actor, attemptEvent, true);
-            if (attemptEvent.Cancelled)
-            {
-                reason = attemptEvent.Reason ?? reason;
-                return false;
-            }
+            reason = targetAttemptEvent.Reason ?? reason;
+            return false;
         }
 
         var itemAttemptEvent = new BeingEquippedAttemptEvent(actor, target, itemUid, slotDefinition);
@@ -524,23 +522,21 @@ public abstract partial class InventorySystem
         }
 
         var attemptEvent = new IsUnequippingAttemptEvent(actor, target, itemUid, slotDefinition);
-        RaiseLocalEvent(target, attemptEvent, true);
+        RaiseLocalEvent(actor, attemptEvent, true);
+
         if (attemptEvent.Cancelled)
         {
             reason = attemptEvent.Reason ?? reason;
             return false;
         }
 
-        if (actor != target)
+        var targetAttemptEvent = new IsUnequippingTargetAttemptEvent(actor, target, itemUid, slotDefinition);
+        RaiseLocalEvent(target, targetAttemptEvent, true);
+
+        if (targetAttemptEvent.Cancelled)
         {
-            //reuse the event. this is gucci, right?
-            attemptEvent.Reason = null;
-            RaiseLocalEvent(actor, attemptEvent, true);
-            if (attemptEvent.Cancelled)
-            {
-                reason = attemptEvent.Reason ?? reason;
-                return false;
-            }
+            reason = targetAttemptEvent.Reason ?? reason;
+            return false;
         }
 
         var itemAttemptEvent = new BeingUnequippedAttemptEvent(actor, target, itemUid, slotDefinition);

@@ -1,20 +1,23 @@
-﻿- type: entity
+- type: entity
+  parent: BaseAction
   id: ActionFireball
   name: Fireball
   description: Fires an explosive fireball towards the clicked location.
   components:
   - type: Magic
-  - type: WorldTargetAction
+  - type: Action
     useDelay: 15
     itemIconStyle: BigAction
-    checkCanAccess: false
     raiseOnUser: true
-    range: 60
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/fireball.ogg
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: fireball
+  - type: TargetAction
+    range: 60
+    checkCanAccess: false
+  - type: WorldTargetAction
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
   - type: SpeakOnAction
@@ -25,43 +28,19 @@
       3: ActionFireballIII
 
 - type: entity
-  id: ActionFireballII
   parent: ActionFireball
+  id: ActionFireballII
   name: Fireball II
   description: Fires a fireball, but faster!
   components:
-  - type: WorldTargetAction
-    itemIconStyle: BigAction
-    checkCanAccess: false
-    raiseOnUser: true
-    range: 60
-    sound: !type:SoundPathSpecifier
-      path: /Audio/Magic/fireball.ogg
-    icon:
-      sprite: Objects/Magic/magicactions.rsi
-      state: fireball
-    event: !type:ProjectileSpellEvent
-      prototype: ProjectileFireball
-  - type: SpeakOnAction
-    sentence: action-speech-spell-fireball
+  - type: Action
+    useDelay: 10
 
 - type: entity
-  id: ActionFireballIII
   parent: ActionFireball
+  id: ActionFireballIII
   name: Fireball III
   description: The fastest fireball in the west!
   components:
-    - type: WorldTargetAction
-      itemIconStyle: BigAction
-      checkCanAccess: false
-      raiseOnUser: true
-      range: 60
-      sound: !type:SoundPathSpecifier
-        path: /Audio/Magic/fireball.ogg
-      icon:
-        sprite: Objects/Magic/magicactions.rsi
-        state: fireball
-      event: !type:ProjectileSpellEvent
-        prototype: ProjectileFireball
-    - type: SpeakOnAction
-      sentence: action-speech-spell-fireball
+  - type: Action
+    useDelay: 8

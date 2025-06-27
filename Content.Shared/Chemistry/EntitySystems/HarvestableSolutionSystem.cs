@@ -26,7 +26,7 @@ public sealed class HarvestableSolutionSystem : EntitySystem
     {
         if (args.Using == null ||
              !args.CanInteract ||
-             !EntityManager.HasComponent<RefillableSolutionComponent>(args.Using.Value))
+             !HasComp<RefillableSolutionComponent>(args.Using.Value))
             return;
 
         var user = args.User;

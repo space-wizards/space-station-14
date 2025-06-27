@@ -12,6 +12,7 @@ namespace Content.Client.Stack
     {
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly ItemCounterSystem _counterSystem = default!;
+        [Dependency] private readonly SpriteSystem _sprite = default!;
 
         public override void Initialize()
         {
@@ -37,7 +38,7 @@ namespace Content.Client.Stack
 
                 for (var i = 0; i < sprite.AllLayers.Count(); i++)
                 {
-                    sprite.LayerSetColor(i, color);
+                    _sprite.LayerSetColor((uid, sprite), i, color);
                 }
             }
 
@@ -107,7 +108,7 @@ namespace Content.Client.Stack
         /// <param name="maxCount">The maximum possible number of items in the stack. Will be set to the number of selectable layers.</param>
         private static void ApplyThreshold(StackLayerThresholdComponent comp, ref int actual, ref int maxCount)
         {
-            // We must stop before we run out of thresholds or layers, whichever's smaller. 
+            // We must stop before we run out of thresholds or layers, whichever's smaller.
             maxCount = Math.Min(comp.Thresholds.Count + 1, maxCount);
             var newActual = 0;
             foreach (var threshold in comp.Thresholds)
