@@ -22,7 +22,7 @@
         mask:
         - FullTileMask
         layer:
-        - AirlockLayer
+        - GlassAirlockLayer
       fix2:
         shape:
           !type:PhysShapeAabb
@@ -31,7 +31,7 @@
         mask:
         - FullTileMask
         layer:
-        - AirlockLayer
+        - GlassAirlockLayer
   - type: MeleeSound
     soundGroups:
       Brute:

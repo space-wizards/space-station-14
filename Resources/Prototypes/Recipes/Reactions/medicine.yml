@@ -561,7 +561,7 @@
   id: Opporozidone
   minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
   reactants:
-    Cognizine: 
+    Cognizine:
       amount: 1
     Plasma:
       amount: 2
@@ -589,10 +589,10 @@
   impact: Medium
   reactants:
     Cryoxadone:
-      amount: 1
-    Aloe:
       amount: 2
-    Sigynate:
+    Aloe:
+      amount: 1
+    Leporazine:
       amount: 2
   products:
       Aloxadone: 4

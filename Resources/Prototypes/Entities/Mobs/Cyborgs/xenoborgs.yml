@@ -1,0 +1,333 @@
+- type: entity
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  id: XenoborgEngi
+  name: engi xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This one seems to be an engineering type, as it has more tools for supporting the other xenoborgs.
+  components:
+  - type: BorgTransponder
+    name: engi xenoborg
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_engi
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: xenoborg_engi_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: xenoborg_engi_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 7
+    hasMindState: xenoborg_engi_e
+    noMindState: xenoborg_engi_e_r
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+      - XenoborgModuleEngi
+      - BorgModuleEngineering
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleBasic
+      - BorgModuleAdvancedTool
+      - BorgModuleConstruction
+      - BorgModuleRCD
+      - BorgModuleCable
+      - XenoborgModuleAccessBreaker
+      - XenoborgModuleFireExtinguisher
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+
+- type: entity
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  id: XenoborgHeavy
+  name: heavy xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This type is has heavy lasers and is covered in thick armor plates. It may be tougher, but its speed matches its brawn.
+  components:
+  - type: BorgTransponder
+    name: heavy xenoborg
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_heavy
+  - type: Sprite
+    layers:
+    - state: xenoborg_heavy
+    - state: xenoborg_heavy_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: xenoborg_heavy_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 4
+    hasMindState: xenoborg_heavy_e
+    noMindState: xenoborg_heavy_e_r
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+      - XenoborgModuleHeavy
+  - type: MovementSpeedModifier # slower
+    baseWalkSpeed : 1.2
+    baseSprintSpeed : 2.2
+  - type: FlashImmunity
+  - type: MobThresholds # tankier
+    thresholds:
+      0: Alive
+      250: Critical
+      500: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+      Critical: BorgCrit
+      Dead: BorgDead
+    showOverlays: false
+    allowRevives: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 190
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 750
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Repairable
+    doAfterDelay: 25 # more HP, more time to heal
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleLaser
+      - XenoborgModuleJammer
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+
+- type: entity
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  id: XenoborgScout
+  name: scout xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This is a scout type, its nimble thrusters allow it to move quickly through space.
+  components:
+  - type: BorgTransponder
+    name: scout xenoborg
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_scout
+  - type: Sprite
+    layers:
+      - state: xenoborg_scout
+      - state: xenoborg_scout_e
+        map: ["enum.BorgVisualLayers.Light"]
+        shader: unshaded
+        visible: false
+      - state: xenoborg_scout_l
+        shader: unshaded
+        map: ["light"]
+        visible: false
+  - type: FootstepModifier # it flies instead of walking
+    footstepSoundCollection:
+      collection: FootstepHoverXenoborg
+  - type: FlashImmunity
+  - type: BorgChassis
+    maxModules: 4
+    hasMindState: xenoborg_scout_e
+    noMindState: xenoborg_scout_e_r
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+      - XenoborgModuleScout
+  - type: MovementSpeedModifier # faster
+    baseWalkSpeed : 3
+    baseSprintSpeed : 6
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleSword
+      - XenoborgModuleSpaceMovement
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+
+- type: entity
+  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  id: XenoborgStealth
+  name: stealth xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh xenoborg chassis to grow their army. This one is a stealth type. Its armor shimmers in the light like no other material you've seen.
+  components:
+  - type: BorgTransponder
+    name: stealth xenoborg
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_stealth
+  - type: Sprite
+    layers:
+      - state: xenoborg_stealth
+      - state: xenoborg_stealth_e
+        map: ["enum.BorgVisualLayers.Light"]
+        shader: unshaded
+        visible: false
+      - state: xenoborg_stealth_l
+        shader: unshaded
+        map: ["light"]
+        visible: false
+  - type: FootstepModifier # it flies instead of walking
+    footstepSoundCollection:
+      collection: FootstepHoverXenoborg
+  - type: BorgChassis
+    maxModules: 5
+    hasMindState: xenoborg_stealth_e
+    noMindState: xenoborg_stealth_e_r
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+      - XenoborgModuleStealth
+  - type: MovementAlwaysTouching # it flies in space with tiny thrusters
+  # - type: SpamEmitSound # longer interval to make the creppy sound
+  #   minInterval: 50
+  #   maxInterval: 150
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleHypo
+      - XenoborgModuleChameleonProjector
+      - XenoborgModuleCloakDevice
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+
+
+# xenoborgs empty
+- type: entity
+  parent: XenoborgEngi
+  id: XenoborgEngiPrinted
+  suffix: no brain
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMI
+      borg_module:
+      - XenoborgModuleBasic
+      - BorgModuleAdvancedTool
+      - BorgModuleConstruction
+      - BorgModuleRCD
+      - BorgModuleCable
+      - XenoborgModuleAccessBreaker
+      - XenoborgModuleFireExtinguisher
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHighPrinted
+
+- type: entity
+  parent: XenoborgHeavy
+  id: XenoborgHeavyPrinted
+  suffix: no brain
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMI
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleLaser
+      - XenoborgModuleJammer
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHighPrinted
+
+- type: entity
+  parent: XenoborgScout
+  id: XenoborgScoutPrinted
+  suffix: no brain
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMI
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleSword
+      - XenoborgModuleSpaceMovement
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHighPrinted
+
+- type: entity
+  parent: XenoborgStealth
+  id: XenoborgStealthPrinted
+  suffix: no brain
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMI
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleHypo
+      - XenoborgModuleChameleonProjector
+      - XenoborgModuleCloakDevice
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHighPrinted

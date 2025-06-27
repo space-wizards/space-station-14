@@ -1,0 +1,19 @@
+﻿- type: soundCollection
+  id: WawaLaugh
+  files:
+  - /Audio/Animals/wawa_mock.ogg
+
+- type: soundCollection
+  id: WawaSneeze
+  files:
+  - /Audio/Animals/wawa_achoo.ogg
+
+- type: soundCollection
+  id: WawaSigh
+  files:
+  - /Audio/Animals/wawa_depression.ogg
+
+- type: soundCollection
+  id: WawaScream
+  files:
+  - /Audio/Animals/wawa_protest.ogg
