@@ -14,6 +14,7 @@ using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 
 namespace Content.Shared.Cpr;
+
 /// <summary>
 /// Used for handling CPR on critical breathing mobs
 /// </summary>
@@ -197,7 +198,7 @@ public abstract partial class SharedCprSystem : EntitySystem
             _popup.PopupPredicted(localString, othersString, giver, giver, PopupType.Medium); //TODO:ERRANT only shows for others
         }
         // If the last CPR attempt came too late (eventually leading to gasping), warn the player
-        else if (timeLeft <= TimeSpan.Zero)
+        else if (!_cprRepeat && timeLeft <= TimeSpan.Zero)
         {
             _popup.PopupCursor(Loc.GetString("cpr-too-slow", ("seconds", recommendedRate)), giver, PopupType.Large); //TODO:ERRANT why does only popupcursor work??
         }
