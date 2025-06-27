@@ -48,7 +48,6 @@
         BaseUnshaded: dead_glow
   - type: StatusEffects
     allowed:
-    - Stun
     - Corporeal
     - Electrocution
     - StaminaModifier
