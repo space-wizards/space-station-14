@@ -59,7 +59,7 @@ public sealed class SetSelectorSystem : EntitySystem
         var spawnedStorageContainer =  selector.Comp.SpawnedStorageContainer;
         var openSpawnedStorage = selector.Comp.OpenSpawnedStorage;
         var coordinates = _transform.GetMapCoordinates(selector.Owner);
-        _container.TryGetContainingContainer(selector, out var target);
+        _container.TryGetContainingContainer(selector.Owner, out var target);
         List<string> ignoredContainers = new() { "implant", "pocket1", "pocket2", "pocket3", "pocket4" } ;
 
         // Spawn the contents of the chosen sets and add them to spawnedEntities
@@ -80,7 +80,7 @@ public sealed class SetSelectorSystem : EntitySystem
             _container.TryGetContainer(spawnedStorage, spawnedStorageContainer, out target);
         }
 
-        ignoredContainers.AddRange(_hands.EnumerateHands(args.Actor).Select(hand => hand.Name));
+        ignoredContainers.AddRange(_hands.EnumerateHands(args.Actor));
         spawnedEntities.ForEach(ent => RecursiveInsert(ent, target, ignoredContainers));
 
         if (openSpawnedStorage)

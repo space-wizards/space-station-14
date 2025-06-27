@@ -20,8 +20,8 @@
   name: selectable-set-thief-breacher-name
   description: selectable-set-thief-breacher-description
   sprite:
-    sprite: Objects/Tools/jaws_of_life.rsi
-    state: jaws_pry
+    sprite: Objects/Weapons/Bombs/c4.rsi
+    state: icon
   content:
   - WelderIndustrialAdvanced
   - ClothingEyesGlassesMeson
@@ -37,7 +37,7 @@
   name: selectable-set-thief-chameleon-name
   description: selectable-set-thief-chameleon-description
   sprite:
-    sprite: /Textures/Clothing/OuterClothing/Misc/black_hoodie.rsi
+    sprite: Objects/Devices/chameleon_projector.rsi
     state: icon
   content:
   - ClothingBackpackChameleonFill
@@ -79,8 +79,8 @@
   name: selectable-set-thief-communicator-name
   description: selectable-set-thief-communicator-description
   sprite:
-    sprite: Objects/Tools/spy_device.rsi
-    state: icon
+    sprite: Objects/Devices/communication.rsi
+    state: old-radio
   content:
   - EncryptionKeyStationMaster
   - CyberPen
@@ -93,8 +93,8 @@
   name: selectable-set-thief-smuggler-name
   description: selectable-set-thief-smuggler-description
   sprite:
-    sprite: Clothing/Neck/Cloaks/void.rsi
-    state: icon
+    sprite: Objects/Tools/fulton.rsi
+    state: extraction_pack
   content:
   - InvisibleCrate
   - FultonBeacon
