@@ -43,7 +43,6 @@
   components:
   - type: DrowsinessStatusEffect
 
-
 # Makes an entity temporarily invisible
 - type: entity
   parent: MobStatusEffectBase
@@ -53,3 +52,11 @@
   - type: StatusEffect
     alert: StealthStatusEffect
   - type: StealthStatusEffect
+  
+# Adds drugs overlay
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectSeeingRainbow
+  name: hallucinations
+  components:
+  - type: SeeingRainbowsStatusEffect

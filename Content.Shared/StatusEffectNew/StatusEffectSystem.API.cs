@@ -18,23 +18,27 @@ public abstract partial class SharedStatusEffectsSystem
     /// If True, the effect duration time will be reset and reapplied. If False, the effect duration time will be overlaid with the existing one.
     /// In the other case, the effect will either be added for the specified time or its time will be extended for the specified time.
     /// </param>
+    /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
     public bool TryAddStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
+        out EntityUid? statusEffect,
         TimeSpan? duration = null,
         bool resetCooldown = false
     )
     {
-        if (TryGetStatusEffect(target, effectProto, out var existedEffect))
+        statusEffect = null;
+        if (TryGetStatusEffect(target, effectProto, out var existingEffect))
         {
+            statusEffect = existingEffect;
             //We don't need to add the effect if it already exists
             if (duration is null)
                 return true;
 
             if (resetCooldown)
-                SetStatusEffectTime(existedEffect.Value, duration.Value);
+                SetStatusEffectTime(existingEffect.Value, duration.Value);
             else
-                AddStatusEffectTime(existedEffect.Value, duration.Value);
+                AddStatusEffectTime(existingEffect.Value, duration.Value);
 
             return true;
         }
@@ -46,6 +50,7 @@ public abstract partial class SharedStatusEffectsSystem
 
         //And only if all checks passed we spawn the effect
         var effect = PredictedSpawnAttachedTo(effectProto, Transform(target).Coordinates);
+        statusEffect = effect;
         _transform.SetParent(effect, target);
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return false;
@@ -62,6 +67,20 @@ public abstract partial class SharedStatusEffectsSystem
         RaiseLocalEvent(effect, ref ev);
 
         return true;
+    }
+
+    /// <summary>
+    /// An overload of <see cref="TryAddStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
+    /// that doesn't return a status effect EntityUid.
+    /// </summary>
+    public bool TryAddStatusEffect(
+        EntityUid target,
+        EntProtoId effectProto,
+        TimeSpan? duration = null,
+        bool resetCooldown = false
+    )
+    {
+        return TryAddStatusEffect(target, effectProto, out _, duration, resetCooldown);
     }
 
     /// <summary>
@@ -250,7 +269,7 @@ public abstract partial class SharedStatusEffectsSystem
 
         foreach (var effect in container.ActiveStatusEffects)
         {
-            if (!TryComp<StatusEffectComponent>(effect, out var statusComp))
+            if (!_effectQuery.TryComp(effect, out var statusComp))
                 continue;
 
             if (TryComp<T>(effect, out var comp))
@@ -260,6 +279,39 @@ public abstract partial class SharedStatusEffectsSystem
             }
         }
 
-        return effects != null;
+        return effects is not null;
+    }
+
+    /// <summary>
+    /// Helper function for calculating how long it takes for all effects with a particular component to disappear. Useful for overlays.
+    /// </summary>
+    /// <param name="target">An entity from which status effects are checked.</param>
+    /// <param name="endTime">The farthest end time of effects with this component is returned. Can be null if one of the effects is infinite.</param>
+    /// <returns>True if effects with the specified component were found, or False if there are no such effects.</returns>
+    public bool TryGetEffectsEndTimeWithComp<T>(EntityUid? target, out TimeSpan? endTime) where T : IComponent
+    {
+        endTime = _timing.CurTime;
+        if (!_containerQuery.TryComp(target, out var container))
+            return false;
+
+        foreach (var effect in container.ActiveStatusEffects)
+        {
+            if (!HasComp<T>(effect))
+                continue;
+
+            if (!_effectQuery.TryComp(effect, out var statusComp))
+                continue;
+
+            if (statusComp.EndEffectTime is null)
+            {
+                endTime = null;
+                return true; //This effect never ends, so we return null at endTime, but return true that there is time.
+            }
+
+            if (statusComp.EndEffectTime > endTime)
+                endTime = statusComp.EndEffectTime;
+        }
+
+        return endTime is not null;
     }
 }

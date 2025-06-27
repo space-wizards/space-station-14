@@ -146,7 +146,7 @@
     storedSprite: null
 
 - type: entity
-  parent: ClothingHeadHatGreyFlatcap
+  parent: [ClothingHeadHatGreyFlatcap, BaseMinorContraband]
   id: BladedFlatcapGrey
   name: grey flatcap
   description: Fashionable for both the working class and old man Jenkins. It has glass shards hidden in the brim.
