@@ -268,7 +268,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// </summary>
     /// <param name="target">An entity from which status effects are checked.</param>
     /// <param name="endTime">The farthest end time of effects with this component is returned. Can be null if one of the effects is infinite.</param>
-    /// <returns>Helper function. Returns True if effects with the specified component were found, or False if there are no such effects.</returns>
+    /// <returns>True if effects with the specified component were found, or False if there are no such effects.</returns>
     public bool TryGetEffectsEndTimeWithComp<T>(EntityUid? target, out TimeSpan? endTime) where T : IComponent
     {
         endTime = _timing.CurTime;
