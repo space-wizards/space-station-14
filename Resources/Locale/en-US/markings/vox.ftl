@@ -16,11 +16,11 @@ marking-VoxScarEyeRight = Eye Scar (Right)
 marking-VoxScarEyeLeft-vox_scar_eye_left = Left Eye Scar
 marking-VoxScarEyeLeft = Eye Scar (Left)
 
-marking-VoxScarTopSurgeryShort-vox_scar_top_surgery_short = Top Surgery Scar
-marking-VoxScarTopSurgeryShort = Top Surgery Scar (Short)
+marking-VoxScarTopSurgeryShort-vox_scar_top_surgery_short = Thoracotomy Scar
+marking-VoxScarTopSurgeryShort = Thoracotomy Scar
 
-marking-VoxScarTopSurgeryLong-vox_scar_top_surgery_long = Top Surgery Scar
-marking-VoxScarTopSurgeryLong = Top Surgery Scar (Long)
+marking-VoxScarTopSurgeryLong-vox_scar_top_surgery_long = Clamshell Scar
+marking-VoxScarTopSurgeryLong = Clamshell Scar
 
 marking-VoxScarChest-vox_scar_chest = Chest Scar
 marking-VoxScarChest = Chest Scar
