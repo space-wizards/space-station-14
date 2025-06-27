@@ -181,6 +181,15 @@ public abstract partial class SharedGunSystem : EntitySystem
     public bool IsChamberClosed(EntityUid gunEntity)
         => Appearance.TryGetData(gunEntity, AmmoVisuals.BoltClosed, out bool boltClosed) && boltClosed;
 
+    // 🌟Starlight🌟
+    public void DelayFire(Entity<GunComponent?> entity, TimeSpan delay)
+    {
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
+            return;
+
+        entity.Comp.NextFire = Timing.CurTime + delay;
+    }
+
     public bool TryGetGun(EntityUid entity, out EntityUid gunEntity, [NotNullWhen(true)] out GunComponent? gunComp)
     {
         gunEntity = default;

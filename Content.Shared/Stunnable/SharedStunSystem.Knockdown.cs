@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Buckle.Components;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
@@ -6,16 +7,21 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Standing;
+using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Stunnable;
 
@@ -24,10 +30,14 @@ namespace Content.Shared.Stunnable;
 /// </summary>
 public abstract partial class SharedStunSystem
 {
+    [Dependency] private readonly SharedGunSystem _gunSystem = default!; // 🌟Starlight🌟
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!; // 🌟Starlight🌟
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+
+    private static readonly ProtoId<ItemSizePrototype> MaxItemSize = "Small";
 
     private void InitializeKnockdown()
     {
@@ -40,6 +50,8 @@ public abstract partial class SharedStunSystem
         // Action blockers
         SubscribeLocalEvent<KnockedDownComponent, BuckleAttemptEvent>(OnBuckleAttempt);
         SubscribeLocalEvent<KnockedDownComponent, StandAttemptEvent>(OnStandAttempt);
+        SubscribeLocalEvent<KnockedDownComponent, ShotAttemptedEvent>(OnShootAttempt); // 🌟Starlight🌟
+        SubscribeLocalEvent<KnockedDownComponent, AttemptMeleeEvent>(OnMeleeAttempt); // 🌟Starlight🌟
 
         // Updating movement a friction
         SubscribeLocalEvent<KnockedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshKnockedSpeed);
@@ -311,6 +323,31 @@ public abstract partial class SharedStunSystem
     {
         if (args.User == entity && entity.Comp.NextUpdate > GameTiming.CurTime)
             args.Cancelled = true;
+    }
+
+    // 🌟Starlight🌟
+    private void OnShootAttempt(Entity<KnockedDownComponent> entity, ref ShotAttemptedEvent args)
+    {
+        args.Cancel();
+        if (args.Used.Comp.NextFire <= GameTiming.CurTime)
+        {
+            _popup.PopupClient(Loc.GetString("knockdown-component-shoot-fail"), entity, entity, PopupType.MediumCaution);
+            _gunSystem.DelayFire(args.Used!, TimeSpan.FromSeconds(0.5f)); // Same time as a safety delay.
+        }
+    }
+
+    // 🌟Starlight🌟
+    private void OnMeleeAttempt(Entity<KnockedDownComponent> entity, ref AttemptMeleeEvent args)
+    {
+        // If the weapon is wearable or is our own fists, then we can use it while knocked down
+        if (args.Weapon == args.User)
+            return;
+
+        if (TryComp<ItemComponent>(args.Weapon, out var item) && _item.GetSizePrototype(item.Size) <= _item.GetSizePrototype(MaxItemSize))
+            return;
+
+        args.Cancelled = true;
+        _popup.PopupClient(Loc.GetString("knockdown-component-melee-fail"), entity, entity, PopupType.MediumCaution);
     }
 
     #endregion
