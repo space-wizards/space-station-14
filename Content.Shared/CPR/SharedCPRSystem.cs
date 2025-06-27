@@ -162,11 +162,33 @@ public abstract partial class SharedCPRSystem : EntitySystem
         };
 
         // try starting CPR
-        if (CanDoCPR(recipient, giver) && InRangeForCPR(recipient, giver) && _doAfter.TryStartDoAfter(doAfterEventArgs))
+        if (!CanDoCPR(recipient, giver)
+            || !InRangeForCPR(recipient, giver)
+            || !_doAfter.TryStartDoAfter(doAfterEventArgs))
+            return;
+
+        var timeLeft = TimeSpan.Zero;
+        if (TryComp<AssistedRespirationComponent>(recipient, out var comp))
+            timeLeft = comp.AssistedUntil - Timing.CurTime;
+
+        // The recommended wait between compressions, leaving room for imperfect timing
+        var recommendedRate = Math.Truncate(_cprEffectDuration * CPRDoAfterDelay * 0.95); //TODO:ERRANT
+        // A new CPR attempt is starting
+        if (comp is null)
         {
             var localString = Loc.GetString("cpr-start-you", ("target", Identity.Entity(recipient, EntityManager)));
             var othersString = Loc.GetString("cpr-start", ("person", Identity.Entity(giver, EntityManager)), ("target", Identity.Entity(recipient, EntityManager)));
-            _popup.PopupPredicted(localString, othersString, giver, giver, PopupType.Medium);
+            _popup.PopupPredicted(localString, othersString, giver, giver, PopupType.Medium); //TODO:ERRANT only shows for others
+        }
+        // If the last CPR attempt came after the Assist affect has already worn off
+        else if (timeLeft <= TimeSpan.Zero)
+        {
+            _popup.PopupCursor(Loc.GetString("cpr-too-slow", ("seconds", recommendedRate)), giver, PopupType.Large); //TODO:ERRANT why does only popupcursor work??
+        }
+        // If the CPR attempt came too soon (causing unnecessary blunt damage over time due to extra compressions)
+        else if (timeLeft > TimeSpan.FromSeconds(recommendedRate))
+        {
+            _popup.PopupCursor(Loc.GetString("cpr-too-fast", ("seconds", recommendedRate)), giver, PopupType.Large); //TODO:ERRANT why does only popupcursor work??
         }
     }
 

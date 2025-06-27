@@ -38,7 +38,6 @@ public sealed class RespiratorSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     [Dependency] private readonly EntityEffectSystem _entityEffect = default!;
 
@@ -86,11 +85,11 @@ public sealed class RespiratorSystem : EntitySystem
             if (TryComp<AssistedRespirationComponent>(uid, out var assist))
             {
                 // can breathe if not dead and breathing is assisted
-                if (!_mobState.IsDead(uid) && assist.AssistedUntil >= _timing.CurTime)
+                if (!_mobState.IsDead(uid) && assist.AssistedUntil >= _gameTiming.CurTime)
                     breathe = true;
 
-                // Remove expired AssistedRespiration comp
-                if (assist.AssistedUntil < _timing.CurTime)
+                // We leave the component lingering after it stopped having an effect, to be able to detect CPR being performed too slowly
+                if (assist.AssistedUntil + TimeSpan.FromSeconds(10) < _gameTiming.CurTime)
                     RemCompDeferred<AssistedRespirationComponent>(uid);
             }
 

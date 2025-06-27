@@ -109,5 +109,5 @@ public sealed partial class CCVars
     ///     So an increased multiplier makes it easier not to leave "gaps" in the CPR where the targets's breathing may skip a phase
     /// </summary>
     public static readonly CVarDef<float> CPREffectDuration =
-        CVarDef.Create("cpr.effect_duration", 2f, CVar.SERVER);
+        CVarDef.Create("cpr.effect_duration", 7f, CVar.SERVER);
 }

@@ -16,19 +16,19 @@ public sealed partial class CPRComponent : Component
     /// What damage should be changed when CPR is done - negative for healing
     /// </summary>
     [DataField, AutoNetworkedField]
-    public DamageSpecifier Change = default!;
+    public DamageSpecifier Change;
 
     /// <summary>
     /// Healing is applied when the CPR finishes with the mob returning from a critical state - these values should be negative
     /// </summary>
     [DataField, AutoNetworkedField]
-    public DamageSpecifier BonusHeal = default!;
+    public DamageSpecifier BonusHeal;
 
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? Sound = null;
+    public SoundSpecifier? Sound;
 
     [DataField, AutoNetworkedField]
-    public EntityUid? LastCaretaker = null;
+    public EntityUid? LastCaretaker;
 
     [DataField, AutoNetworkedField]
     public TimeSpan LastTimeGivenCare = TimeSpan.Zero;
