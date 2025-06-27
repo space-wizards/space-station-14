@@ -50,3 +50,11 @@
   name: friction
   components:
   - type: FrictionStatusEffect
+
+# Adds drugs overlay
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectSeeingRainbow
+  name: hallucinations
+  components:
+  - type: SeeingRainbowsStatusEffect
