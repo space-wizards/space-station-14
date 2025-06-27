@@ -3,9 +3,9 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Stunnable;
 
 /// <summary>
-/// This is used to pause an entity temporarily preventing them from moving or acting.
+/// Stun as a status effect.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedStunSystem))]
-public sealed partial class StunnedComponent : Component
+public sealed partial class StunnedStatusEffectComponent : Component
 {
 }

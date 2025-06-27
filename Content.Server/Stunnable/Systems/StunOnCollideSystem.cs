@@ -25,13 +25,13 @@ namespace Content.Server.Stunnable
 
             if (EntityManager.TryGetComponent<StatusEffectsComponent>(target, out var status))
             {
-                _stunSystem.TryStun(target, TimeSpan.FromSeconds(component.StunAmount), true, status);
+                _stunSystem.TryStun(target, TimeSpan.FromSeconds(component.StunAmount), true);
 
                 _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(component.KnockdownAmount), true,
                     status);
 
                 _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(component.SlowdownAmount), true,
-                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status);
+                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier);
             }
         }
         private void HandleCollide(EntityUid uid, StunOnCollideComponent component, ref StartCollideEvent args)

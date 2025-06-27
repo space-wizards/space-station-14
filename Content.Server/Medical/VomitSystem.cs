@@ -60,7 +60,7 @@ namespace Content.Server.Medical
             var solutionSize = (MathF.Abs(thirstAdded) + MathF.Abs(hungerAdded)) / 6;
             // Apply a bit of slowdown
             if (TryComp<StatusEffectsComponent>(uid, out var status))
-                _stun.TrySlowdown(uid, TimeSpan.FromSeconds(solutionSize), true, 0.5f, 0.5f, status);
+                _stun.TrySlowdown(uid, TimeSpan.FromSeconds(solutionSize), true, 0.5f, 0.5f);
 
             // TODO: Need decals
             var solution = new Solution();

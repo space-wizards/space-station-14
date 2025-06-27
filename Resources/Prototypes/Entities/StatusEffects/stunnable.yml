@@ -1,0 +1,22 @@
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectSlowdown
+  name: slowdown
+  components:
+  - type: SlowdownStatusEffect
+    
+- type: entity
+  parent: StatusEffectSlowdown
+  id: StatusEffectStamina
+  name: stamina
+  components:
+  - type: SlowdownStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectStunned
+  name: stunned
+  components:
+  - type: StatusEffect
+    alert: Stun
+  - type: StunnedStatusEffect

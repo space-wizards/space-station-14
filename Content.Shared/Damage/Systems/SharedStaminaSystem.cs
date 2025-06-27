@@ -427,6 +427,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
                 closest = thres.Key;
         }
 
-        _stunSystem.UpdateStunModifiers(ent, ent.Comp.StunModifierThresholds[closest]);
+        _stunSystem.UpdateStaminaModifiers(ent, ent.Comp.StunModifierThresholds[closest]);
     }
 }

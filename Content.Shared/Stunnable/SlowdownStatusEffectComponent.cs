@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Stunnable;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStunSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SlowdownStatusEffectComponent : Component
 {
     [ViewVariables, DataField("sprintSpeedModifier"), AutoNetworkedField]
