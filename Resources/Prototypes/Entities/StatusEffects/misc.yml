@@ -42,3 +42,11 @@
   name: drowsiness
   components:
   - type: DrowsinessStatusEffect
+
+# Adds drugs overlay
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectSeeingRainbow
+  name: hallucinations
+  components:
+  - type: SeeingRainbowsStatusEffect
