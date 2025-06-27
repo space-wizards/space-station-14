@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Fixed the Brown Puffer Coat's name (oops)
-    type: Fix
-  id: 1407
-  time: '2025-03-28T21:29:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2099
 - author: DinnerCalzone
   changes:
   - message: Most atmos devices will now render over catwalks. You can place floor
@@ -4231,3 +4224,10 @@
   id: 1906
   time: '2025-06-27T14:27:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2860
+- author: ATDoop
+  changes:
+  - message: Hardsuits now have a delay when equipping and unequipping them.
+    type: Tweak
+  id: 1907
+  time: '2025-06-27T14:29:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2873
