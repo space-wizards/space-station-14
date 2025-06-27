@@ -8441,4 +8441,47 @@ Entries:
   id: 1164
   time: '2025-06-26T13:22:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/820
+- author: InanimateIJK
+  changes:
+  - message: NTCC Consortium Officer Loadout modified.
+    type: Tweak
+  id: 1165
+  time: '2025-06-26T17:39:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/918
+- author: IamSidzilla
+  changes:
+  - message: Adds Kasane Teto Clothing (Trieste Port!)
+    type: Add
+  id: 1166
+  time: '2025-06-26T18:08:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/817
+- author: Abby / Conflee
+  changes:
+  - message: Added NTCC Consortium Medical Hardsuits, for event use
+    type: Add
+  id: 1167
+  time: '2025-06-26T18:55:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/881
+- author: walksantora
+  changes:
+  - message: you can now butcher the CMOs cat for cat paw gloves
+    type: Add
+  id: 1168
+  time: '2025-06-26T21:22:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/920
+- author: Fasuh
+  changes:
+  - message: Fix Avali becoming invisible after stasis.
+    type: Fix
+  id: 1169
+  time: '2025-06-26T21:23:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/917
+- author: walksanatora
+  changes:
+  - message: having cat ear+tail markings allows you to meow, mew, and trill as a
+      human
+    type: Add
+  id: 1170
+  time: '2025-06-26T21:38:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/764
 
