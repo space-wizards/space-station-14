@@ -904,7 +904,7 @@
       - !type:AdjustReagent
         conditions:
           - !type:ReagentThreshold
-            min: 100
+            min: 90
         reagent: Necrosol
         amount: 1.5
 
