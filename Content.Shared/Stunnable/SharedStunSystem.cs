@@ -18,9 +18,7 @@ using Content.Shared.StatusEffectNew;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Stunnable;
@@ -274,7 +272,7 @@ public abstract class SharedStunSystem : EntitySystem
     /// <param name="ignore">Status effect entity we're ignoring for calculating the comp's modifiers.</param>
     private bool TryUpdateSlowedStatus(Entity<SlowedDownComponent?> entity, EntityUid? ignore = null)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return false;
 
         if (!_status.TryEffectsWithComp<SlowdownStatusEffectComponent>(entity, out var slowEffects))
@@ -318,20 +316,17 @@ public abstract class SharedStunSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (!_status.TryGetStatusEffect(ent, Stamina, out var status))
+        if (MathHelper.CloseTo(walkSpeedModifier, 1f) && MathHelper.CloseTo(sprintSpeedModifier, 1f))
         {
             // Don't add it if it won't do anything
-            if (MathHelper.CloseTo(walkSpeedModifier, 1f) && MathHelper.CloseTo(sprintSpeedModifier, 1f))
-                return;
+            if (_status.TryGetStatusEffect(ent, Stamina, out _))
+                _status.TryRemoveStatusEffect(ent, Stamina);
 
-            if (!_status.TryAddStatusEffect(ent, Stamina))
-                return;
-        }
-        else if (MathHelper.CloseTo(walkSpeedModifier, 1f) && MathHelper.CloseTo(sprintSpeedModifier, 1f))
-        {
-            _status.TryRemoveStatusEffect(ent, Stamina);
             return;
         }
+
+        if (!_status.TryAddStatusEffect(ent, Stamina, out var status))
+            return;
 
         if (!TryComp<SlowdownStatusEffectComponent>(status, out var slowedStatus))
             return;
