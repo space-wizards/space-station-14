@@ -95,7 +95,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// Method of eyes coloration used by the species.
     /// </summary>
     [DataField]
-    public HumanoidEyeColor EyeColoration { get; private set; }
+    public HumanoidEyeColor EyeColoration { get; private set; } = HumanoidEyeColor.Standard;
 
     [DataField]
     public ProtoId<LocalizedDatasetPrototype> MaleFirstNames { get; private set; } = "NamesFirstMale";

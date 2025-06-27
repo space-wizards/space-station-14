@@ -8287,4 +8287,201 @@ Entries:
   id: 1143
   time: '2025-06-24T13:41:20.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/883
+- author: Fasuh
+  changes:
+  - message: Increase amount of construction ghosts allowed per tile.
+    type: Tweak
+  id: 1144
+  time: '2025-06-24T19:16:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/893
+- author: Killer Tamashi
+  changes:
+  - message: Added BSO stamp
+    type: Add
+  id: 1145
+  time: '2025-06-24T20:00:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/776
+- author: Killer Tamashi
+  changes:
+  - message: Added Brigmedic stamp
+    type: Add
+  id: 1146
+  time: '2025-06-24T20:00:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/776
+- author: Happyrobot33
+  changes:
+  - message: Fixed Headrevs cyroing not being considered removed from revolution,
+      preventing the game from ending.
+    type: Fix
+  id: 1147
+  time: '2025-06-25T00:40:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/879
+- author: Happyrobot33
+  changes:
+  - message: Increased wizard fireball cooldown significantly, to 5, 3 and 2 minutes
+      per the respective fireball level
+    type: Tweak
+  id: 1148
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
+- author: Happyrobot33
+  changes:
+  - message: Smite now no longer gibs, doing 400 shock damage instead, bypassing resistances
+    type: Tweak
+  id: 1149
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
+- author: Happyrobot33
+  changes:
+  - message: Cluwne spell is no longer purchasable, requiring 300 wizcoins
+    type: Tweak
+  id: 1150
+  time: '2025-06-25T01:21:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/876
+- author: Happyrobot33
+  changes:
+  - message: Fixed All eye colors, not just shadekin, getting limited
+    type: Fix
+  id: 1151
+  time: '2025-06-25T02:43:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/899
+- author: Killer Tamashi
+  changes:
+  - message: Avali now remember to pack their survival boxes so they can, you know,
+      survive.
+    type: Fix
+  id: 1152
+  time: '2025-06-25T02:50:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/900
+- author: Killer Tamashi
+  changes:
+  - message: Vulp heat damage rate was set to 2.5, this changes it to 1.75
+    type: Fix
+  id: 1153
+  time: '2025-06-25T03:04:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/901
+- author: Fasuh
+  changes:
+  - message: Avali animation lingering after leaving stasis
+    type: Fix
+  id: 1154
+  time: '2025-06-25T11:28:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/905
+- author: Citrea
+  changes:
+  - message: Reverted a change; Cyborg maintenance panels are now once again opened
+      with screwdrivers
+    type: Tweak
+  id: 1155
+  time: '2025-06-26T00:55:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/907
+- author: PubliclyExecutedPig
+  changes:
+  - message: Re-Added Lone Operatives to survival
+    type: Tweak
+  id: 1156
+  time: '2025-06-26T12:53:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/915
+- author: PubliclyExecutedPig
+  changes:
+  - message: Loneops minpop 20 -> 35
+    type: Tweak
+  id: 1157
+  time: '2025-06-26T12:53:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/915
+- author: Aedler
+  changes:
+  - message: Changed USSP revs uplink costs to be more realistically approachable.
+    type: Tweak
+  id: 1158
+  time: '2025-06-26T12:55:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/908
+- author: RoadTrain
+  changes:
+  - message: Added admin spawners for the Syndie medical borg, both as just 'filled'
+      and a ghost role
+    type: Add
+  id: 1159
+  time: '2025-06-26T13:01:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/904
+- author: RoadTrain
+  changes:
+  - message: The L6 can now be used by all borgs (given you can get it from the exosuit
+      fab).
+    type: Tweak
+  id: 1160
+  time: '2025-06-26T13:01:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/904
+- author: RoadTrain
+  changes:
+  - message: All syndie borgs get 1 more module slot (3 > 4). Assault borg gets tools,
+      saboteur gets RCD. Medical borg copies the NT version
+    type: Tweak
+  id: 1161
+  time: '2025-06-26T13:01:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/904
+- author: Killer Tamashi
+  changes:
+  - message: Avali can now eat the MRE brick.
+    type: Fix
+  id: 1162
+  time: '2025-06-26T13:03:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/902
+- author: Quantumcross
+  changes:
+  - message: Fixes to ready up button after changing job priorities in some cases
+    type: Fix
+  id: 1163
+  time: '2025-06-26T13:04:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/911
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added the snub-nose revolver (currently unobtainable in game)
+    type: Add
+  id: 1164
+  time: '2025-06-26T13:22:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/820
+- author: InanimateIJK
+  changes:
+  - message: NTCC Consortium Officer Loadout modified.
+    type: Tweak
+  id: 1165
+  time: '2025-06-26T17:39:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/918
+- author: IamSidzilla
+  changes:
+  - message: Adds Kasane Teto Clothing (Trieste Port!)
+    type: Add
+  id: 1166
+  time: '2025-06-26T18:08:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/817
+- author: Abby / Conflee
+  changes:
+  - message: Added NTCC Consortium Medical Hardsuits, for event use
+    type: Add
+  id: 1167
+  time: '2025-06-26T18:55:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/881
+- author: walksantora
+  changes:
+  - message: you can now butcher the CMOs cat for cat paw gloves
+    type: Add
+  id: 1168
+  time: '2025-06-26T21:22:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/920
+- author: Fasuh
+  changes:
+  - message: Fix Avali becoming invisible after stasis.
+    type: Fix
+  id: 1169
+  time: '2025-06-26T21:23:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/917
+- author: walksanatora
+  changes:
+  - message: having cat ear+tail markings allows you to meow, mew, and trill as a
+      human
+    type: Add
+  id: 1170
+  time: '2025-06-26T21:38:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/764
 

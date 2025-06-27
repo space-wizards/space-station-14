@@ -27,7 +27,7 @@
   parent: BaseSmiteAction
   id: ActionSmite
   name: Smite
-  description: Instantly gibs a target.
+  description: Instantly shocks a target.
   components:
   - type: Action
     sound: !type:SoundPathSpecifier
