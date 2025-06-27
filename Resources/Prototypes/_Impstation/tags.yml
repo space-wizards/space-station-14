@@ -49,6 +49,12 @@
   id: ConversionKitPB
 
 - type: Tag
+  id: Dart
+
+- type: Tag
+  id: DartGun
+  
+- type: Tag
   id: DecapoidClaw
 
 - type: Tag

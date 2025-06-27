@@ -1561,6 +1561,17 @@
     ears: ClothingHeadsetService
     pocket1: WeaponFlareGun
     pocket2: PillCanisterDylovene
+  inhand: #imp
+    - WeaponRifleTranq
+  storage: # imp
+    belt:
+    - TranqDart
+    - TranqDart
+    - TranqDart
+    - IrwizineDart
+    - IrwizineDart
+    - IrwizineDart
+    - IrwizineDart
 
 - type: startingGear
   id: VisitorZookeeperAlt
@@ -1574,6 +1585,17 @@
     ears: ClothingHeadsetService
     pocket1: WeaponFlareGun
     pocket2: PillCanisterDylovene
+  inhand: #imp
+    - WeaponRifleTranq
+  storage: # imp
+    belt:
+    - TranqDart
+    - TranqDart
+    - TranqDart
+    - IrwizineDart
+    - IrwizineDart
+    - IrwizineDart
+    - IrwizineDart
 
 # Misc
 

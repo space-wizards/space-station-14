@@ -22,10 +22,10 @@
     shoes: ClothingShoesColorWhite
     id: ZookeeperPDA
     ears: ClothingHeadsetService
-  inhand:
+  inhand: #imp
     - WeaponRifleTranq
   storage:
-    back:
+    belt: #imp
     - TranqDart
     - TranqDart
     - TranqDart

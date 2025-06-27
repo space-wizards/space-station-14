@@ -50,8 +50,8 @@
       ammo:
         reagents:
         - ReagentId: Irwizine
-          Quantity: 9
+          Quantity: 10
   - type: SolutionTransfer
-    maxTransferAmount: 9
+    maxTransferAmount: 10
   - type: SpentAmmoVisuals
     state: "tranquilizer"
