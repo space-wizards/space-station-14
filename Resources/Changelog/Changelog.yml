@@ -1,54 +1,4 @@
 ﻿Entries:
-- author: Seam_Less
-  changes:
-  - message: Standardized the In-Hand Sprites for all gloves
-    type: Tweak
-  id: 8204
-  time: '2025-04-16T22:15:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35997
-- author: DissidentBullet
-  changes:
-  - message: Monkeys can now wear juggernaut suits
-    type: Add
-  id: 8205
-  time: '2025-04-16T23:14:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34121
-- author: SpaceRox1244
-  changes:
-  - message: Cargo can now order handheld artifact containers for transporting small
-      artifacts.
-    type: Add
-  id: 8206
-  time: '2025-04-16T23:35:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33327
-- author: ScarKy0
-  changes:
-  - message: Hydroponics tray flatpacks can now be bought for 750 spesos.
-    type: Add
-  id: 8207
-  time: '2025-04-16T23:51:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36630
-- author: EmoGarbage404
-  changes:
-  - message: Fixed artifacts sometimes having negative research values.
-    type: Fix
-  id: 8208
-  time: '2025-04-17T03:14:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36642
-- author: VerinSenpai
-  changes:
-  - message: You can now use actions within the action window.
-    type: Add
-  id: 8209
-  time: '2025-04-17T10:08:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35642
-- author: ElectroJr
-  changes:
-  - message: Fixed some intense explosion types using incorrect overlay sprites.
-    type: Fix
-  id: 8210
-  time: '2025-04-17T10:12:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36644
 - author: Beck Thompson, SlamBamActionman
   changes:
   - message: Fixed trash bag visuals. The appearance will now update correctly depending
@@ -3882,3 +3832,56 @@
   id: 8716
   time: '2025-06-25T20:27:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38156
+- author: slarticodefast
+  changes:
+  - message: Multi-handed items can be picked up again.
+    type: Fix
+  id: 8717
+  time: '2025-06-26T15:29:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38603
+- author: slarticodefast
+  changes:
+  - message: Fixed smart equip not retrieving items.
+    type: Fix
+  id: 8718
+  time: '2025-06-26T16:17:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38605
+- author: Hitlinemoss
+  changes:
+  - message: The Quartermaster's PDA now comes with AstroNav preinstalled.
+    type: Tweak
+  id: 8719
+  time: '2025-06-26T22:09:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38445
+- author: BigfootBravo
+  changes:
+  - message: Bladed flatcaps are now minor contraband.
+    type: Tweak
+  id: 8720
+  time: '2025-06-26T22:57:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38597
+- author: TiniestShark
+  changes:
+  - message: Added inhand sprites to all plushies/toys and the ability to wear (most)
+      of them in either your head or neck slot.
+    type: Add
+  - message: Nar'sie, Ratvar and Revenant plushies now require two hands to hold.
+    type: Tweak
+  id: 8721
+  time: '2025-06-27T01:07:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38514
+- author: maland1
+  changes:
+  - message: Updating Thief guidebook page including making guidebook and thieving
+      satchel images more consistent
+    type: Tweak
+  id: 8722
+  time: '2025-06-27T02:03:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38586
+- author: slarticodefast
+  changes:
+  - message: Fixed RCD ghosts not disappearing when dropping the RCD.
+    type: Fix
+  id: 8723
+  time: '2025-06-27T16:39:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38622
