@@ -293,9 +293,6 @@ public abstract partial class SharedStatusEffectsSystem
                 endTime = statusComp.EndEffectTime;
         }
 
-        if (endTime is null)
-            return false;
-
-        return true;
+        return endTime is not null;
     }
 }
