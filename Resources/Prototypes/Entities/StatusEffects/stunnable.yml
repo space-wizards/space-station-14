@@ -3,14 +3,14 @@
   id: StatusEffectSlowdown
   name: slowdown
   components:
-  - type: SlowdownStatusEffect
-    
+  - type: MovementModStatusEffect
+
 - type: entity
   parent: StatusEffectSlowdown
   id: StatusEffectStamina
   name: stamina
   components:
-  - type: SlowdownStatusEffect
+  - type: MovementModStatusEffect
 
 - type: entity
   parent: MobStatusEffectBase

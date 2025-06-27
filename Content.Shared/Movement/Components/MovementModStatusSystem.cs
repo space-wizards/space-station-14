@@ -7,7 +7,7 @@ namespace Content.Shared.Movement.Components;
 /// <summary>
 /// This handles the slowed status effect
 /// </summary>
-public sealed class SlowedStatusSystem : EntitySystem
+public sealed class MovementModStatusSystem : EntitySystem
 {
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedStatusEffectsSystem _status = default!;
@@ -16,20 +16,20 @@ public sealed class SlowedStatusSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<SlowedDownComponent, ComponentShutdown>(OnSlowRemove);
-        SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMoveSpeed);
-        SubscribeLocalEvent<SlowdownStatusEffectComponent, StatusEffectAppliedEvent>(OnSlowStatusApplied);
-        SubscribeLocalEvent<SlowdownStatusEffectComponent, StatusEffectRemovedEvent>(OnSlowStatusRemoved);
+        SubscribeLocalEvent<MovementModStatusComponent, ComponentShutdown>(OnSlowRemove);
+        SubscribeLocalEvent<MovementModStatusComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMoveSpeed);
+        SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectAppliedEvent>(OnSlowStatusApplied);
+        SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectRemovedEvent>(OnSlowStatusRemoved);
     }
 
-    private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentShutdown args)
+    private void OnSlowRemove(EntityUid uid, MovementModStatusComponent component, ComponentShutdown args)
     {
         component.SprintSpeedModifier = 1f;
         component.WalkSpeedModifier = 1f;
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
-    private void OnRefreshMoveSpeed(EntityUid uid, SlowedDownComponent component, RefreshMovementSpeedModifiersEvent args)
+    private void OnRefreshMoveSpeed(EntityUid uid, MovementModStatusComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         args.ModifySpeed(component.WalkSpeedModifier, component.SprintSpeedModifier);
     }
@@ -61,7 +61,7 @@ public sealed class SlowedStatusSystem : EntitySystem
             return false;
 
         if (!_status.TryGetStatusEffect(uid, Slowdown, out var status)
-            || !TryComp<SlowdownStatusEffectComponent>(status, out var slowedStatus))
+            || !TryComp<MovementModStatusEffectComponent>(status, out var slowedStatus))
             return false;
 
         slowedStatus.SprintSpeedModifier = sprintSpeedModifier;
@@ -73,17 +73,17 @@ public sealed class SlowedStatusSystem : EntitySystem
     }
 
     /// <summary>
-    /// Updates the <see cref="SlowedDownComponent"/> speed modifiers and returns true if speed is being modified,
+    /// Updates the <see cref="MovementModStatusComponent"/> speed modifiers and returns true if speed is being modified,
     /// and false if speed isn't being modified.
     /// </summary>
     /// <param name="entity">Entity whose component we're updating</param>
     /// <param name="ignore">Status effect entity we're ignoring for calculating the comp's modifiers.</param>
-    public bool TryUpdateSlowedStatus(Entity<SlowedDownComponent?> entity, EntityUid? ignore = null)
+    public bool TryUpdateSlowedStatus(Entity<MovementModStatusComponent?> entity, EntityUid? ignore = null)
     {
         if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return false;
 
-        if (!_status.TryEffectsWithComp<SlowdownStatusEffectComponent>(entity, out var slowEffects))
+        if (!_status.TryEffectsWithComp<MovementModStatusEffectComponent>(entity, out var slowEffects))
             return false;
 
         // If it's not modifying anything then we don't need it
@@ -107,14 +107,14 @@ public sealed class SlowedStatusSystem : EntitySystem
         return modified;
     }
 
-    private void OnSlowStatusApplied(Entity<SlowdownStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
+    private void OnSlowStatusApplied(Entity<MovementModStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
-        EnsureComp<SlowedDownComponent>(args.Target);
+        EnsureComp<MovementModStatusComponent>(args.Target);
     }
 
-    private void OnSlowStatusRemoved(Entity<SlowdownStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
+    private void OnSlowStatusRemoved(Entity<MovementModStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
         if (!TryUpdateSlowedStatus(args.Target, entity))
-            RemComp<SlowedDownComponent>(args.Target);
+            RemComp<MovementModStatusComponent>(args.Target);
     }
 }

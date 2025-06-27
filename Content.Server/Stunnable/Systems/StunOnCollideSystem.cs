@@ -13,7 +13,7 @@ namespace Content.Server.Stunnable
     internal sealed class StunOnCollideSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
-        [Dependency] private readonly SlowedStatusSystem _slowed = default!;
+        [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
 
         public override void Initialize()
         {
@@ -32,7 +32,7 @@ namespace Content.Server.Stunnable
                 _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(component.KnockdownAmount), true,
                     status);
 
-                _slowed.TrySlowdown(target, TimeSpan.FromSeconds(component.SlowdownAmount), true,
+                _movementMod.TrySlowdown(target, TimeSpan.FromSeconds(component.SlowdownAmount), true,
                     component.WalkSpeedMultiplier, component.RunSpeedMultiplier);
             }
         }

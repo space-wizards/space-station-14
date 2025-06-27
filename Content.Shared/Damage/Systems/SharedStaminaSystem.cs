@@ -38,7 +38,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedStatusEffectsSystem _status = default!;
-    [Dependency] private readonly SlowedStatusSystem _slowed = default!;
+    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
 
     public static readonly EntProtoId Stamina = "StatusEffectStamina";
@@ -438,7 +438,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     }
 
     /// <summary>
-    /// Updates the movement speed modifiers of an entity by applying or removing the <see cref="Movement.Components.SlowedDownComponent"/>.
+    /// Updates the movement speed modifiers of an entity by applying or removing the <see cref="MovementModStatusComponent"/>.
     /// If both walk and run modifiers are approximately 1 (i.e. normal speed) and <see cref="StaminaComponent.StaminaDamage"/> is 0,
     /// or if the both modifiers are 0, the slowdown component is removed to restore normal movement.
     /// Otherwise, the slowdown component is created or updated with the provided modifiers,
@@ -466,13 +466,13 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         if (!_status.TryAddStatusEffect(ent, Stamina, out var status))
             return;
 
-        if (!TryComp<SlowdownStatusEffectComponent>(status, out var slowedStatus))
+        if (!TryComp<MovementModStatusEffectComponent>(status, out var slowedStatus))
             return;
 
         slowedStatus.SprintSpeedModifier = sprintSpeedModifier;
         slowedStatus.WalkSpeedModifier = walkSpeedModifier;
 
-        _slowed.TryUpdateSlowedStatus(ent.Owner);
+        _movementMod.TryUpdateSlowedStatus(ent.Owner);
 
         Dirty(ent);
     }

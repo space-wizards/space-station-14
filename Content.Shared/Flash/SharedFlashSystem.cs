@@ -34,7 +34,7 @@ public abstract class SharedFlashSystem : EntitySystem
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly SlowedStatusSystem _slowed = default!;
+    [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -167,7 +167,7 @@ public abstract class SharedFlashSystem : EntitySystem
         if (stunDuration != null)
             _stun.TryParalyze(target, stunDuration.Value, true);
         else
-            _slowed.TrySlowdown(target, flashDuration, true, slowTo, slowTo);
+            _movementMod.TrySlowdown(target, flashDuration, true, slowTo, slowTo);
 
         if (displayPopup && user != null && target != user && Exists(user.Value))
         {
