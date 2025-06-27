@@ -1,4 +1,5 @@
-// Modified by Ronstation contributor(s),  legacy changes licensed as MIT.
+// The following commits are licensed under MIT and may be used for MIT projects:
+// - #616d78c
 using Content.Shared.APC;
 
 namespace Content.Client.Power.APC;
@@ -89,7 +90,7 @@ public sealed partial class ApcVisualsComponent : Component
     /// </summary>
     [DataField("screenColors")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public Color[] ScreenColors = new Color[(byte)ApcChargeState.NumStates]{Color.FromHex("#d1332e"), Color.FromHex("#2e8ad1"), Color.FromHex("#3db83b"), Color.FromHex("#ffac1c")}; // Ronstation edit
+    public Color[] ScreenColors = new Color[(byte)ApcChargeState.NumStates]{Color.FromHex("#d1332e"), Color.FromHex("#2e8ad1"), Color.FromHex("#3db83b"), Color.FromHex("#ffac1c")}; // Ronstation - MIT-licensed change.
     // end of modifications
 
     /// <summary>

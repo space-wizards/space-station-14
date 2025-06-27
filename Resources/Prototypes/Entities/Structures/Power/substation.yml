@@ -1,4 +1,5 @@
-# Modified by Ronstation contributor(s),  legacy changes licensed as MIT.
+# The following commits are licensed under MIT and may be used for MIT projects:
+# - #616d78c
 # Core logic shared between regular and wall-mount substation
 - type: entity
   abstract: true
@@ -77,7 +78,7 @@
   components:
   - type: Sprite # TODO: add sprite for maintenance panel open
     # start of modifications
-    sprite: Ronstation/Structures/Power/substation.rsi
+    sprite: Ronstation/Structures/Power/substation.rsi # Ronstation - MIT-licensed change
     # end of modifications
     snapCardinals: true
     layers:
@@ -96,7 +97,7 @@
     castShadows: false
   - type: PowerMonitoringDevice
     # start of modifications
-    sprite: Ronstation/Structures/Power/substation.rsi
+    sprite: Ronstation/Structures/Power/substation.rsi # Ronstation - MIT-licensed change
     # end of modifications
     state: substation_static
   - type: Destructible
@@ -184,7 +185,7 @@
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
     # start of modifications
-    sprite: Ronstation/Structures/Power/substation.rsi
+    sprite: Ronstation/Structures/Power/substation.rsi # Ronstation - MIT-licensed change
     # end of modifications
     layers:
     - state: substation_wall
@@ -195,7 +196,7 @@
     startingCharge: 0
   - type: PowerMonitoringDevice
     # start of modifications
-    sprite: Ronstation/Structures/Power/substation.rsi
+    sprite: Ronstation/Structures/Power/substation.rsi # Ronstation - MIT-licensed change
     # end of modifications
     state: substation_wall_static
   - type: Destructible
@@ -284,7 +285,7 @@
   - type: Sprite
     drawdepth: WallMountedItems
     # start of modifications
-    sprite: Ronstation/Structures/Power/substation.rsi
+    sprite: Ronstation/Structures/Power/substation.rsi # Ronstation - MIT-licensed change
     # end of modifications
     layers:
     - state: substation_wall

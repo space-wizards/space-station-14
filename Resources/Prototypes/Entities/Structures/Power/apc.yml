@@ -1,4 +1,5 @@
-# Modified by Ronstation contributor(s),  legacy changes licensed as MIT.
+# The following commits are licensed under MIT and may be used for MIT projects:
+# - #616d78c
 - type: entity
   categories: [ HideSpawnMenu ]
   id: BaseAPC
@@ -29,8 +30,8 @@
   - type: Sprite
     drawdepth: WallMountedItems
     # start of modifications
-    sprite: Ronstation/Structures/Power/apc.rsi
-    # start of modifications
+    sprite: Ronstation/Structures/Power/apc.rsi # Ronstation - MIT-licensed change
+    # end of modifications
     layers:
     - state: base
     - state: panel
@@ -80,7 +81,7 @@
     loadNode: output
     collectionName: apc
     # start of modifications
-    sprite: Ronstation/Structures/Power/apc.rsi
+    sprite: Ronstation/Structures/Power/apc.rsi # Ronstation - MIT-licensed change
     # end of modifications
     state: static
   - type: BatteryCharger
@@ -175,7 +176,7 @@
   - type: Sprite
     drawdepth: WallMountedItems
     # start of modifications
-    sprite: Ronstation/Structures/Power/apc.rsi
+    sprite: Ronstation/Structures/Power/apc.rsi # Ronstation - MIT-licensed change
     # end of modifications
     state: frame
   - type: Construction
