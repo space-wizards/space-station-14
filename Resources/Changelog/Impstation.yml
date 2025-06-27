@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: CombustibleToast
-  changes:
-  - message: Decreased Robust Harvest requirement for Dionae becoming trees from 80u
-      to 40u.
-    type: Tweak
-  id: 1401
-  time: '2025-03-27T03:11:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2101
 - author: formlessnameless
   changes:
   - message: New undergarments have been imported. Don't forget to get dressed before
@@ -4230,3 +4222,14 @@
   id: 1900
   time: '2025-06-27T14:17:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2829
+- author: DinnerCalzone
+  changes:
+  - message: Most welding tools can now be emptied by right-clicking on them and pressing
+      Spill.
+    type: Add
+  - message: The experimental welding tool now purges non-welding fuel reagents inside
+      of it as it generates welding fuel.
+    type: Add
+  id: 1901
+  time: '2025-06-27T14:20:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2831
