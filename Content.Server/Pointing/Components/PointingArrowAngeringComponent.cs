@@ -8,5 +8,5 @@ public sealed partial class PointingArrowAngeringComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("remainingAnger")]
-    public int RemainingAnger = 5;
+    public int RemainingAnger = 100; // imp edit from value of 5
 }
