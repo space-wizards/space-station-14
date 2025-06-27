@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Most atmos devices will now render over catwalks. You can place floor
-      tiles underneath them if you want to hide their piping.
-    type: Tweak
-  id: 1408
-  time: '2025-03-28T21:31:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2096
 - author: horseplinko
   changes:
   - message: Added tags to decapoid plushie
@@ -4231,3 +4223,11 @@
   id: 1907
   time: '2025-06-27T14:29:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2873
+- author: youtubevideo3
+  changes:
+  - message: The Head of Personnel has acquired a new Power Suit they can equip to
+      better intimidate their enemies.
+    type: Add
+  id: 1908
+  time: '2025-06-27T14:52:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2862
