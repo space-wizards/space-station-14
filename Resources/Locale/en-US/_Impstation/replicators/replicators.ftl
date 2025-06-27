@@ -6,16 +6,16 @@ laws-owner-replicatorhive = the Replicator hive.
 replicator-on-replicator-attack-fail = You cannot harm your kin.
 replicator-on-nest-attack-fail = You cannot harm the nest.
 
-replicator-nest-end-of-round = The Replicator Hive: 
+replicator-nest-end-of-round = The Replicator Hive:
                                - Colonized {$location}
                                - Grew to a maximum [color=#d70aa0]Level[/color] of [color=#d70aa0]{$level}[/color].
                                - Produced a total of [color=#d70aa0]{$replicators} Replicators[/color].
                                - Amassed a total of [color=#d70aa0]{$points} points[/color].
 
-replicator-upgrade-t1-self = Nanites buzz around you. You can evolve.
+replicator-upgrade-t1-self = Nanites buzz around you.
 replicator-upgrade-t1-others = {CAPITALIZE(THE($replicator))} clicks and whirrs softly.
 
-replicator-upgrade-t2-self = More nanites coalesce. You can become stronger.
+replicator-upgrade-t2-self = More nanites coalesce.
 replicator-upgrade-t2-others = {CAPITALIZE(THE($replicator))} chitters loudly.
 
 replicator-cant-find-nest = You are not linked to a nest. You cannot upgrade without it.
@@ -29,7 +29,7 @@ replicator-nest-level5 = How is the hull still intact?!
 # the default message for when we run out of custom levelup messages.
 replicator-nest-levelup = There is a flurry of activity from the nest.
 
-replicator-nest-destroyed = Your nest has been destroyed. 
+replicator-nest-destroyed = Your nest has been destroyed.
                             A Replicator has been selected to replace it.
                             Your pinpointer has been updated to follow them.
 replicator-queen-died-msg = The Queen has been deactivated.

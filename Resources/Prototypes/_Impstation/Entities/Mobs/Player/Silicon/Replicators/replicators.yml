@@ -167,15 +167,52 @@
 
 - type: entity
   id: MobReplicatorQueen
-  parent: MobReplicator
+  name: spore
+  parent: BaseMobReplicator
   categories: [ HideSpawnMenu ]
-  suffix: Queen, Level 1
+  suffix: Queen
   components:
   - type: Replicator
     queen: true
-  - type: Loadout
-    prototypes:
-    - StartingGearReplicatorT1Weapon
+    upgradeActions:
+    - ActionReplicatorUpgrade1
+  - type: VentCrawler # unique to queens at the moment, for stealth purposes
+  - type: Sprite
+    granularLayersRendering: true
+    drawDepth: SmallMobs
+    sprite: _Impstation/Mobs/Replicator/replicator.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive_spore
+    - map: ["enum.ReplicatorVisuals.Combat"]
+      state: combat_level1 # unused but necessary
+      shader: unshaded
+      visible: false
+  - type: Physics
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  - type: MovementIgnoreGravity
+    gravityState: true
+  - type: MovementAlwaysTouching
+  - type: SyncSprite
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2 # same as slime
+    baseSprintSpeed: 4.2
+    weightlessFriction: 1
+    weightlessFrictionNoInput: 2
+    weightlessAcceleration: 1.8
+  - type: NoSlip
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
 
 # Tier 1: These guys are mooks. They're vulnerable, bad at dragging, and don't do much damage, but they have a disabler ranged attack.
 - type: entity
@@ -202,7 +239,7 @@
     baseWalkSpeed: 2 # same as slime
     baseSprintSpeed: 4.2
     weightlessFriction: 1
-    weightlessFrictionNoInput: 2
+    weightlessFrictionNoInput: 200
     weightlessAcceleration: 1.8
   - type: NoSlip
   - type: Sprite
@@ -216,17 +253,6 @@
       state: combat_level1
       shader: unshaded
       visible: false
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.2
-        density: 100
-        mask:
-        - SmallMobMask
-        layer:
-        - SmallMobLayer
   - type: Body
     prototype: Replicator1
   - type: Loadout
@@ -250,7 +276,7 @@
     baseWalkSpeed: 2 # same as slime
     baseSprintSpeed: 4.2
     weightlessFriction: 1
-    weightlessFrictionNoInput: 2
+    weightlessFrictionNoInput: 200
     weightlessAcceleration: 1.2
   - type: MovementAlwaysTouching
   - type: Sprite

@@ -7,6 +7,8 @@
     Shock: 1.9
     Heat: 0.8
     Structural: 0.8
+  flatReductions:
+    Structural: 5
 
 - type: damageModifierSet
   id: Replicator2
@@ -17,6 +19,8 @@
     Shock: 1.7
     Heat: 0.8
     Structural: 0.4
+  flatReductions:
+    Structural: 5
 
 - type: damageModifierSet
   id: Replicator3
@@ -27,6 +31,8 @@
     Shock: 1.2
     Heat: 0.25
     Structural: 0.3
+  flatReductions:
+    Structural: 5
 
 - type: damageModifierSet # ideally the nest should be able to be destroyed relatively easily with a couple grenades or a brave soul with a pickaxe.
   id: ReplicatorNest

@@ -62,10 +62,23 @@ public sealed partial class ReplicatorComponent : Component
     public HashSet<EntityUid?> Actions = [];
 
     public bool HasSpawnedNest;
+    // note: this is never explicitly set to false - but it defaults to false when upgrading, because the upgraded entity is a new ent.
     public bool HasBeenGivenUpgradeActions;
 
     [DataField]
     public LocId QueenDiedMessage = "replicator-queen-died-msg";
+
+    /// <summary>
+    /// The default first stage to revert Replicators to in the event of nest destruction.
+    /// </summary>
+    [DataField]
+    public EntProtoId FirstStage = "MobReplicator";
+
+    /// <summary>
+    /// The default final stage to upgrade the Queen to in the event of nest destruction.
+    /// </summary>
+    [DataField]
+    public EntProtoId FinalStage = "MobReplicatorTier3";
 }
 
 [Serializable, NetSerializable]

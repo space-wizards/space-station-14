@@ -1,0 +1,61 @@
+- type: tile
+  id: FloorReplicator
+  name: replicator scales
+  sprite: /Textures/_Impstation/Mobs/Replicator/Tile/tile.png
+  variants: 4
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/_Impstation/Mobs/Replicator/Tile/tile_single_edge_SE.png
+    NorthEast: /Textures/_Impstation/Mobs/Replicator/Tile/tile_single_edge_NE.png
+    NorthWest: /Textures/_Impstation/Mobs/Replicator/Tile/tile_single_edge_NW.png
+    SouthWest: /Textures/_Impstation/Mobs/Replicator/Tile/tile_single_edge_SW.png
+    South: /Textures/_Impstation/Mobs/Replicator/Tile/tile_double_edge_S.png
+    East: /Textures/_Impstation/Mobs/Replicator/Tile/tile_double_edge_E.png
+    North: /Textures/_Impstation/Mobs/Replicator/Tile/tile_double_edge_N.png
+    West: /Textures/_Impstation/Mobs/Replicator/Tile/tile_double_edge_W.png
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  itemDrop: ReplicatorFloorSpawnVFX
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  id: ReplicatorFloorSpawnVFX
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: TimedDespawn
+    lifetime: 1.2
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    snapCardinals: true
+    layers:
+    - sprite: _Impstation/Effects/teleportvfx.rsi
+      state: replicatorvfx
+      shader: unshaded
+    drawdepth: Mobs
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: PointLight
+    color: "#8800a3"
+    radius: 4
+    energy: 3.5
+    castShadows: false
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      interpolate: Linear
+      minDuration: 1.2
+      maxDuration: 1.2
+      startValue: 0.1
+      endValue: 3.5
+      property: Energy
+      enabled: true
+      isLooped: true
+      reverseWhenFinished: true

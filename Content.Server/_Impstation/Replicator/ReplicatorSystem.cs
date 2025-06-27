@@ -36,6 +36,7 @@ public sealed class ReplicatorSystem : EntitySystem
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly PinpointerSystem _pinpointer = default!;
+    [Dependency] private readonly SharedReplicatorNestSystem _replicatorNest = default!;
 
     public override void Initialize()
     {
@@ -126,6 +127,8 @@ public sealed class ReplicatorSystem : EntitySystem
         // remove the Crown
         if (HasComp<ReplicatorSignComponent>(ent))
             RemComp<ReplicatorSignComponent>(ent);
+
+        _replicatorNest.ForceUpgrade(ent, ent.Comp.FirstStage);
 
         // then we need to remove the action, to ensure it can't be used infinitely.
         QueueDel(args.Action);
