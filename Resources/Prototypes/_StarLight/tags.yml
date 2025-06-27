@@ -7,6 +7,9 @@
   id: Avali
 
 - type: Tag
+  id: AvianFood
+
+- type: Tag
   id: CantInteract
 
 - type: Tag
