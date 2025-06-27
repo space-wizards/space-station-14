@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Kandiyaki
-  changes:
-  - message: Sacrificing someone without a mind no longer has a chance to crash the
-      server.
-    type: Fix
-  - message: People returning from the Infinite Archives will no longer have a chance
-      to spawn in space.
-    type: Tweak
-  id: 1410
-  time: '2025-03-28T21:37:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2094
 - author: Sha-Seng
   changes:
   - message: Proper Punctuation accent no longer adds periods after ' " and *
@@ -4232,3 +4221,10 @@
   id: 1909
   time: '2025-06-27T14:53:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2658
+- author: hivehum
+  changes:
+  - message: Thaven can get high on nitrous, but it still doesn't choke them.
+    type: Tweak
+  id: 1910
+  time: '2025-06-27T15:18:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2859
