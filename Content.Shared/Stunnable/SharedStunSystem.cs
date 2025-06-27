@@ -312,7 +312,7 @@ public abstract partial class SharedStunSystem : EntitySystem
     /// </summary>
     private bool TryUpdateFrictionStatus(Entity<FrictionStatusModifierComponent?> entity, EntityUid? ignore = null)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return false;
 
         if (!_status.TryEffectsWithComp<FrictionStatusEffectComponent>(entity, out var frictionEffects))
