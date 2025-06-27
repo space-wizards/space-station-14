@@ -16,6 +16,7 @@
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
+    - type: NPCProximitySleep
     - type: HTN
       rootTask:
         task: SimpleRangedHostileCompound

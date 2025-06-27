@@ -107,6 +107,7 @@
     attributes:
       proper: true
       gender: female
+  - type: ProximitySleep
 
 - type: entity
   name: Puppy Ian

@@ -71,6 +71,7 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
+  - type: ProximitySleep
   - type: HTN
     constantlyReplan: false
     rootTask:
@@ -237,6 +238,7 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: SimpleRangedHostileCompound
@@ -291,6 +293,7 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -409,6 +412,7 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: BasiliskCompound

@@ -8,6 +8,7 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: SimpleRangedHostileCompound
