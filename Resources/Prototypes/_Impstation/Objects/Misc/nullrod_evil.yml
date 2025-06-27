@@ -1,0 +1,147 @@
+- type: entity
+  name: devil's fist
+  id: NullRodGloveEvil
+  parent: NullRodGlove
+  description: The devil works quick, and this gauntlet is no exception.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/nullrod_glove_evil.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Impstation/Objects/Misc/nullrod_glove_evil.rsi
+  - type: StaminaDamageOnHit
+    damage: 10
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 8
+        Heat: 5
+        Holy: 20
+    soundHit:
+      path: /Audio/_Impstation/Weapons/nullglove.ogg
+      params:
+        variation: 0.35
+  - type: MeleeThrowOnHit
+    distance: 5
+    speed: 25
+
+- type: entity
+  name: defiled chalice
+  id: NullRodGrailEvil
+  parent: NullRodGrail
+  description: I seriously hate the Cursed Defiled Chalice. Whoever came up with that idea...is just pure evil.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/nullrod_grail_evil.rsi
+    layers:
+      - state: grail
+      - state: grail1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: ReactionMixer
+    mixOnInteract: false
+    reactionTypes:
+    - GildgrailEvil
+    - Shake
+
+- type: entity
+  name: umbral arc
+  id: NullRodBowEvil
+  parent: NullRodBase
+  description: Carved from Hellwood harvested by Hellenists from the Hellforests of Hel.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/nullrod_bow_evil.rsi
+    layers:
+    - state: unwielded
+      map: [ base ]
+    - state: unwielded-arrowsilver
+      shader: unshaded
+      map: [ arrowsilver ]
+      visible: false
+    - state: unwielded-arrowgolden
+      shader: unshaded
+      map: [ arrowgolden ]
+      visible: false
+  - type: Item
+    size: Huge
+  - type: Wieldable
+    wieldSound:
+      path: /Audio/Items/bow_pull.ogg
+  - type: UseDelay
+    delay: 1
+  - type: GunRequiresWield
+  - type: Gun
+    minAngle: 0
+    maxAngle: 5
+    fireRate: 1.5
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      collection: BulletMiss
+    soundEmpty: null
+  - type: ItemSlots
+    slots:
+      projectiles:
+        name: Projectiles
+        startingItem: null
+        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+        whitelist:
+          tags:
+          - HolyArrow
+          - HolyArrowEvil
+  - type: ContainerContainer
+    containers:
+      projectiles: !type:ContainerSlot
+      ballistic-ammo: !type:Container
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - HolyArrow
+        - HolyArrowEvil
+    capacity: 1
+  - type: Appearance
+  - type: ItemMapper
+    spriteLayers:
+    - arrowsilver
+    - arrowgolden
+    mapLayers:
+      arrowsilver:
+        whitelist:
+          tags:
+          - HolyArrowEvil
+      arrowgolden:
+        whitelist:
+          tags:
+          - HolyArrow
+  - type: GenericVisualizer
+    visuals:
+      enum.WieldableVisuals.Wielded:
+        arrowgolden:
+          True: { state: wielded-arrowgolden }
+          False: { state: unwielded-arrowgolden }
+        arrowsilver:
+          True: { state: wielded-arrowsilver }
+          False: { state: unwielded-arrowsilver }
+        base:
+          True: { state: wielded }
+          False: { state: unwielded }
+
+- type: entity
+  parent: ClothingBeltQuiverNullrod
+  id: ClothingBeltQuiverNullrodEvil
+  name: argentine quiver
+  description: A defiled quiver. The wicked have no scruples about using the powers of the divine and profane alike.
+  components:
+   - type: Sprite
+     sprite: _Impstation/Objects/Misc/nullrod_quiver_evil.rsi
+   - type: Storage
+     grid:
+     - 0,0,6,3
+     maxItemSize: Small
+     whitelist:
+      tags:
+      - HolyArrow
+      - HolyArrowEvil

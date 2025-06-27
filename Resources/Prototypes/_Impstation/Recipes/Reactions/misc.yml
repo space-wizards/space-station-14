@@ -38,3 +38,14 @@
   products:
     Holywater: 0.5
     AquamDivinos: 0.5
+
+- type: reaction
+  id: WatertoAvari
+  impact: Low
+  requiredMixerCategories:
+  - GildgrailEvil
+  reactants:
+    Water:
+      amount: 1
+  products:
+    AquaAvari: 1

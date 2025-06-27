@@ -88,6 +88,9 @@
   id: HolyArrow
 
 - type: Tag
+  id: HolyArrowEvil
+
+- type: Tag
   id: HudAdmin
 
 - type: Tag
@@ -188,6 +191,9 @@
 
 - type: Tag
   id: NullRod
+
+- type: Tag
+  id: NullrodUpgradeKit
 
 - type: Tag
   id: OreBag

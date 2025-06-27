@@ -37,7 +37,7 @@
       - HolyArrow
       - Trash
   - type: Ammo
-    muzzleFlash: null
+    muzzleFlash: MuzzleFlashEffectGoldLaser
   - type: PointLight
     radius: 1.15
     color: gold
@@ -56,3 +56,37 @@
       types:
         Piercing: 31
         Holy: 20
+
+- type: entity
+  id: HolyArrowEvil
+  description: Vile and volatile.
+  name: argentine arrow
+  parent: HolyArrow
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/nullrod_arrow_evil.rsi
+  - type: Tag
+    tags:
+      - HolyArrowEvil
+      - Trash
+  - type: Ammo
+    muzzleFlash: MuzzleFlashEffectPurpLaser
+  - type: PointLight
+    radius: 1.15
+    color: purple
+    energy: 2.9
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    embedOnThrow: false
+    removalTime: .2
+    autoRemoveDuration: .01
+  - type: TriggerOnEmbed
+  - type: Explosive
+    deleteAfterExplosion: false
+    repeatable: true
+    canCreateVacuum: false
+    explosionType: Cryo
+    totalIntensity: 5
+    intensitySlope: 3
+    maxIntensity: 1
+  - type: ExplodeOnTrigger

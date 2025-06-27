@@ -4,3 +4,10 @@
   icon:
     sprite: _Impstation/Objects/Misc/nullrod_grail.rsi
     state: grail
+
+- type: mixingCategory
+  id: GildgrailEvil
+  verbText: mixing-verb-gildgrail
+  icon:
+    sprite: _Impstation/Objects/Misc/nullrod_grail.rsi
+    state: grail

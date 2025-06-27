@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by AftrLite (Github), with inspiration from /tg/station. InHand sprites directly taken /tg/ and modified. Edited evil-y by mousesweater.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "unwieldedOLD"
+    },
+    {
+      "name": "arrowprojectile"
+    },
+    {
+      "name": "unwielded"
+    },
+    {
+      "name": "unwielded-arrowgolden"
+    },
+    {
+      "name": "unwielded-arrowsilver"
+    },
+    {
+      "name": "wielded-arrowgolden"
+    },
+    {
+      "name": "wielded-arrowsilver"
+    },
+    {
+      "name": "wielded"
+    },
+    {
+      "name": "wielded-arrow"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-right",
+      "directions": 4
+    }
+  ]
+}

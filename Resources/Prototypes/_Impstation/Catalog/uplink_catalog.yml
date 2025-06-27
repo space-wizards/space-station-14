@@ -253,3 +253,21 @@
     blacklist:
       components:
         - SurplusBundle
+
+- type: listing
+  id: uplinkNullrodUpgrade
+  name: uplink-nullrod-upgrade-name
+  description: uplink-nullrod-upgrade-desc
+  icon: { sprite: /Textures/_Impstation/Objects/Misc/profane_censer.rsi, state: icon }
+  productEntity: NullrodUpgradeKit
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 6
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Chaplain

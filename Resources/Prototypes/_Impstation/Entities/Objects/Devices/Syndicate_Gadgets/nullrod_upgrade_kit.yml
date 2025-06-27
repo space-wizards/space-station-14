@@ -1,0 +1,14 @@
+- type: entity
+  name: profane censer
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: NullrodUpgradeKit
+  description: It even smells evil.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/profane_censer.rsi
+    state: burning
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+    - NullrodUpgradeKit

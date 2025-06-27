@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprites by AftrLite (Github), with inspiration from /tg/station. InHand sprites directly taken /tg/ and modified.",
+  "copyright": "Sprites by AftrLite (Github), with inspiration from /tg/station. InHand sprites directly taken /tg/ and modified. Quiver and fill sprites modified by mousesweater. Belt equip sprite by mousesweater.",
   "size": {
     "x": 32,
     "y": 32
@@ -23,6 +23,19 @@
     },
     {
       "name": "mag-0"
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "fill-1"
+    },
+    {
+      "name": "fill-2"
+    },
+    {
+      "name": "fill-3"
     }
   ]
 }

@@ -1,0 +1,44 @@
+- type: constructionGraph
+  id: UpgradeNullRodGlove
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: upgraded
+          steps:
+            - tag: NullrodUpgradeKit
+              doAfter: 5
+              name: construction-graph-tag-upgrade-kit-nullrod
+
+    - node: upgraded
+      entity: NullRodGloveEvil
+
+- type: constructionGraph
+  id: UpgradeNullRodGrail
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: upgraded
+          steps:
+            - tag: NullrodUpgradeKit
+              doAfter: 5
+              name: construction-graph-tag-upgrade-kit-nullrod
+
+    - node: upgraded
+      entity: NullRodGrailEvil
+
+- type: constructionGraph
+  id: UpgradeNullRodBow
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: upgraded
+          steps:
+            - tag: NullrodUpgradeKit
+              doAfter: 5
+              name: construction-graph-tag-upgrade-kit-nullrod
+
+    - node: upgraded
+      entity: CrateSyndicateNullRodBowEvil
