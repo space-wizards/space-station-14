@@ -41,7 +41,7 @@
 
 - type: preloadedGrid
   id: Cryptid
-  path: /Maps/Shuttles/ShuttleEvent/cryptid.yml
+  path: /Maps/_Impstation/Shuttles/ShuttleEvent/cryptid.yml # imp
   copies: 1
 
 - type: preloadedGrid

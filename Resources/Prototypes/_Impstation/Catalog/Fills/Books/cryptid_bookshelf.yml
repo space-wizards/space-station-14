@@ -1,0 +1,94 @@
+- type: entity
+  parent: Bookshelf
+  name: strange bookshelf
+  id: CryptidBookshelfFilled
+  description: You never know what you might find on a library shelf.
+  suffix: DO NOT MAP, WOLFIE
+  components:
+   - type: EntityTableContainerFill
+     containers:
+      storagebase: !type:NestedSelector
+        tableId: CryptidBookshelfEntityTable
+   - type: Sprite
+     sprite: _Impstation/Structures/Furniture/strangebookshelf.rsi
+     snapCardinals: true
+     layers:
+       - state: strange1
+       - map: ["shelf"]
+       - state: book-0
+       - map: ["enum.StorageFillLayers.Fill"]
+   - type: RandomSprite
+     available:
+       - shelf:
+           strange1: ""
+           strange2: ""
+
+# Entity tables
+- type: entityTable
+  id: CryptidBookshelfEntityTable
+  table: !type:AllSelector
+    children:
+    # Randomly generated books
+    - id: BookRandomStory
+      amount: !type:RangeNumberSelector
+        range: 0, 8
+    # Guidebooks
+    - !type:NestedSelector
+      tableId: RandomGuidebookTable
+    # Handwritten books
+    - !type:NestedSelector
+      rolls: !type:RangeNumberSelector
+        range: 0, 3
+      tableId: RandomHandwrittenBookTable
+    - !type:NestedSelector
+      rolls: !type:RangeNumberSelector
+        range: 0, 1
+      tableId: RandomMagicalBookTable
+    - !type:NestedSelector
+      rolls: !type:RangeNumberSelector
+        range: 0, 2
+      tableId: RandomHereticBookTable
+
+- type: entityTable
+  id: RandomMagicalBookTable
+  table: !type:GroupSelector
+    children:
+    - id: BookRandomStory
+    - id: BlinkBook
+      weight: 0.01
+    - id: FireballSpellbook
+      weight: 0.003
+    - id: ForceWallSpellbook
+      weight: 0.01
+    - id: KnockSpellbook
+      weight: 0.006
+    - id: SmiteBook
+      weight: 0.001
+    - id: SpawnSpaceGreaseSpellbook
+      weight: 0.01
+    - id: SpawnSpellbook
+      weight: 0.005
+
+- type: entityTable
+  id: RandomHereticBookTable
+  table: !type:GroupSelector
+    children:
+    - id: BookRandomStory
+    - id: EldritchTome
+      weight: 0.5
+
+- type: entityTable
+  id: CryptidRandomBookTable
+  table: !type:GroupSelector
+    children:
+    - id: BookRandomStory
+    - !type:NestedSelector
+      tableId: RandomGuidebookTable
+    - !type:NestedSelector
+      tableId: RandomHandwrittenBookTable
+    - !type:NestedSelector
+      tableId: RandomMagicalBookTable
+    - !type:NestedSelector
+      tableId: RandomHereticBookTable
+    - !type:NestedSelector
+        tableId: CryptidBookshelfEntityTable

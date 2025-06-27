@@ -39,3 +39,18 @@
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidVisitorRoboticist
+
+- type: entity
+  name: visiting librarian spawner
+  id: VisitorLibrarianSpawnerCryptid
+  parent: MarkerBase
+  suffix: heretic chance
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidVisitorLibrarianCryptid

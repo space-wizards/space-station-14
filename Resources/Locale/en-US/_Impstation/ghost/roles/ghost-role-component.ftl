@@ -106,7 +106,7 @@ ghost-role-information-drone-rules = You are bound by these laws both in-game an
 ghost-role-information-young-kodepiia-name = Young Kodepiia
 ghost-role-information-young-kodepiia-description = A shy sort-of-creature, emerging from the station vents. It hates confrontation.
 
-ghost-role-information-anomalite-description = A small sprite, born from the latent energies of an anomaly core. Loyal to its core, or whoever possesses it. 
+ghost-role-information-anomalite-description = A small sprite, born from the latent energies of an anomaly core. Loyal to its core, or whoever possesses it.
 ghost-role-information-familiar-anomalite-rules = You are a [color=#6495ed][bold]Familiar[/bold][/color], loyal to the Anomaly Core you came from (or whoever happens to have it right now.) Serve the interests of your master, whatever those may be.
 
                                                   You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
@@ -133,3 +133,7 @@ ghost-role-information-replicator-rules = You are a [color=red][bold]Team Antago
 
 ghost-role-information-oppa-name = Oppa
 ghost-role-information-oppa-description = It's the end of hibernation, and you're hungry enough to empty a kitchen! First, though, you need to get on board the station.
+
+ghost-role-information-antagonistchance-rules = You are a [color=green][bold]Non-antagonist[/bold][/color] with a small chance of rolling a [color=red][bold]Solo Antagonist[/bold][/color] role. You should generally not seek to harm the station and its crew, unless the game tells you that you are an antagonist. [bold]ABANDONING THIS ROLE BECAUSE YOU ARE NOT AN ANTAGONIST WILL RESULT IN A BAN.[/bold]
+
+                                             You don't remember any of your previous life, and you don't remember anything you learned as a ghost.

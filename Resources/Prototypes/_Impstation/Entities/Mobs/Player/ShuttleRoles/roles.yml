@@ -30,3 +30,13 @@
       state: roboticist # no courier job in the rsi
     - type: RandomHumanoidSpawner
       settings: VisitorRoboticist
+
+- type: entity
+  id: RandomHumanoidVisitorLibrarianCryptid
+  name: visiting librarian ghost role
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: librarian
+    - type: RandomHumanoidSpawner
+      settings: VisitorLibrarianCryptid
