@@ -18,23 +18,27 @@ public abstract partial class SharedStatusEffectsSystem
     /// If True, the effect duration time will be reset and reapplied. If False, the effect duration time will be overlaid with the existing one.
     /// In the other case, the effect will either be added for the specified time or its time will be extended for the specified time.
     /// </param>
+    /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
     public bool TryAddStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
+        out EntityUid? statusEffect,
         TimeSpan? duration = null,
         bool resetCooldown = false
     )
     {
-        if (TryGetStatusEffect(target, effectProto, out var existedEffect))
+        statusEffect = null;
+        if (TryGetStatusEffect(target, effectProto, out var existingEffect))
         {
+            statusEffect = existingEffect;
             //We don't need to add the effect if it already exists
             if (duration is null)
                 return true;
 
             if (resetCooldown)
-                SetStatusEffectTime(existedEffect.Value, duration.Value);
+                SetStatusEffectTime(existingEffect.Value, duration.Value);
             else
-                AddStatusEffectTime(existedEffect.Value, duration.Value);
+                AddStatusEffectTime(existingEffect.Value, duration.Value);
 
             return true;
         }
@@ -46,6 +50,7 @@ public abstract partial class SharedStatusEffectsSystem
 
         //And only if all checks passed we spawn the effect
         var effect = PredictedSpawnAttachedTo(effectProto, Transform(target).Coordinates);
+        statusEffect = effect;
         _transform.SetParent(effect, target);
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return false;
@@ -62,6 +67,20 @@ public abstract partial class SharedStatusEffectsSystem
         RaiseLocalEvent(effect, ref ev);
 
         return true;
+    }
+
+    /// <summary>
+    /// An overload of <see cref="TryAddStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
+    /// that doesn't return a status effect EntityUid.
+    /// </summary>
+    public bool TryAddStatusEffect(
+        EntityUid target,
+        EntProtoId effectProto,
+        TimeSpan? duration = null,
+        bool resetCooldown = false
+    )
+    {
+        return TryAddStatusEffect(target, effectProto, out _, duration, resetCooldown);
     }
 
     /// <summary>
