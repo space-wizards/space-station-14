@@ -1363,7 +1363,7 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatBeretHOP
+  id: ClothingHeadHatBeretHop
   name: head of personnel's beret
   description: A dark blue beret with a ruby inserted in the center, for true connoisseurs of bureaucracy!
   components:

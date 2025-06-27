@@ -38,7 +38,7 @@
 - type: loadout
   id: HoPBeret
   equipment:
-    head: ClothingHeadHatBeretHOP
+    head: ClothingHeadHatBeretHop
 
 # Neck
 - type: loadout

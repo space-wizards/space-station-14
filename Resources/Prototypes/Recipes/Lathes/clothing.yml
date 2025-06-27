@@ -812,8 +812,8 @@
 
 - type: latheRecipe
   parent: BaseCommandHatRecipe
-  id: ClothingHeadHatBeretHOP
-  result: ClothingHeadHatBeretHOP
+  id: ClothingHeadHatBeretHop
+  result: ClothingHeadHatBeretHop
   
 - type: latheRecipe
   parent: BaseCommandHatRecipe

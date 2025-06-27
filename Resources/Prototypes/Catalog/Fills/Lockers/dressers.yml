@@ -50,7 +50,7 @@
   - type: StorageFill
     contents:
       - id: ClothingHeadHatHopcap
-      - id: ClothingHeadHatBeretHOP
+      - id: CClothingHeadHatBeretHop
       - id: ClothingOuterWinterHoP
       - id: ClothingEyesGlasses
       - id: ClothingNeckCloakHop
