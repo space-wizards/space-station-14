@@ -1,6 +1,7 @@
 using Content.Shared.CCVar;
 using Content.Shared.Drugs;
 using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
@@ -17,6 +18,8 @@ public sealed class RainbowOverlay : Overlay
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    private readonly SharedStatusEffectsSystem _statusEffects = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
@@ -36,6 +39,7 @@ public sealed class RainbowOverlay : Overlay
     public RainbowOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _statusEffects = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
 
         _rainbowShader = _prototypeManager.Index<ShaderPrototype>("Rainbow").InstanceUnique();
         _config.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
@@ -54,18 +58,23 @@ public sealed class RainbowOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_entityManager.HasComponent<SeeingRainbowsComponent>(playerEntity)
-            || !_entityManager.TryGetComponent<StatusEffectsComponent>(playerEntity, out var status))
+        if (!_statusEffects.TryEffectsWithComp<SeeingRainbowsStatusEffectComponent>(playerEntity, out var effects))
             return;
 
-        var statusSys = _sysMan.GetEntitySystem<StatusEffectsSystem>();
-        if (!statusSys.TryGetTime(playerEntity.Value, DrugOverlaySystem.RainbowKey, out var time, status))
+        TimeSpan? remainingTime = TimeSpan.Zero;
+        foreach (var (_, _, statusEffectComp) in effects)
+        {
+            if (statusEffectComp.EndEffectTime > remainingTime)
+                remainingTime = statusEffectComp.EndEffectTime;
+        }
+
+        if (remainingTime is null)
             return;
 
-        var timeLeft = (float)(time.Value.Item2 - time.Value.Item1).TotalSeconds;
+        var curTime = _timing.CurTime;
+        var timeLeft = (float)(remainingTime - curTime).Value.TotalSeconds;
 
         TimeTicker += args.DeltaSeconds;
-
         if (timeLeft - TimeTicker > timeLeft / 16f)
         {
             Intoxication += (timeLeft - Intoxication) * args.DeltaSeconds / 16f;
