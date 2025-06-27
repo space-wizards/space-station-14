@@ -302,8 +302,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         frictionStatus.AccelerationModifier = acceleration;
 
 
-        if (!TryUpdateFrictionStatus(uid))
-            RemComp<FrictionStatusModifierComponent>(uid);
+        TryUpdateFrictionStatus(uid);
 
         return true;
     }
@@ -417,7 +416,8 @@ public abstract partial class SharedStunSystem : EntitySystem
     private void OnFrictionStatusEffectRemoved(Entity<FrictionStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
         // Set modifiers to 1 so that they don't mistakenly get applied when the component refreshes
-        UpdateFrictionStatus(args.Target, entity);
+        if (!TryUpdateFrictionStatus(args.Target, entity))
+            RemComp<FrictionStatusModifierComponent>(args.Target);
     }
 
     #endregion
