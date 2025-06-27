@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: jtfg-dev
-  changes:
-  - message: Made 100 more words and concepts relentlessly positive. Do let your metal
-      friends interact with the tickler!
-    type: Tweak
-  id: 1395
-  time: '2025-03-25T09:54:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2039
 - author: kipdotnet
   changes:
   - message: Fixed up some of the apid displacements. Hopefully no more stray pixels
@@ -4221,3 +4213,11 @@
   id: 1894
   time: '2025-06-24T23:15:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2850
+- author: DinnerCalzone
+  changes:
+  - message: Airlock sprites have received some adjustments. Some airlocks are associated
+      with different colors than before.
+    type: Tweak
+  id: 1895
+  time: '2025-06-27T11:56:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2867
