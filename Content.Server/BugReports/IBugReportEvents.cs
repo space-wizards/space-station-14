@@ -1,84 +1,84 @@
 namespace Content.Server.BugReports;
 
 /// <summary>
-///     This event stores information related to a player submitted bug report.
+/// This event stores information related to a player submitted bug report.
 /// </summary>
 public sealed class ValidPlayerBugReportReceivedEvent(string title, string description, BugReportMetaData metaData) : EventArgs
 {
     /// <summary>
-    ///     Title for the bug report. This is player controlled!
+    /// Title for the bug report. This is player controlled!
     /// </summary>
     public string Title = title;
 
     /// <summary>
-    ///     Description for the bug report. This is player controlled!
+    /// Description for the bug report. This is player controlled!
     /// </summary>
     public string Description = description;
 
     /// <summary>
-    ///     Metadata for the bug report. This is not player controlled.
+    /// Metadata for the bug report. This is not player controlled.
     /// </summary>
     public BugReportMetaData MetaData = metaData;
 }
 
 /// <summary>
-///     Metadata for a bug report. Holds relevant data for bug reports that aren't directly player controlled.
+/// Metadata for a bug report. Holds relevant data for bug reports that aren't directly player controlled.
 /// </summary>
-public struct BugReportMetaData
+public class BugReportMetaData
 {
     /// <summary>
-    ///     Players SS14 username.
+    /// Bug reporter SS14 username.
     /// </summary>
     /// <example>piggylongsnout</example>
-    public string Username;
+    public required string Username;
 
     /// <summary>
-    ///     Time that has elapsed in the round.
-    /// </summary>
-    public TimeSpan RoundTime;
-
-    /// <summary>
-    ///     Name of the server the player was playing on when submitting the report.
+    /// Name of the server from which bug report was issued.
     /// </summary>
     /// <example>DeltaV</example>>
-    public string ServerName;
+    public required string ServerName;
 
     /// <summary>
-    ///     The round the player submitted the bug report.
+    /// Date and time on which player submitted report (NOT round time).
+    /// </summary>
+    public required DateTime SubmittedTime;
+
+    /// <summary>
+    /// Time that has elapsed in the round. Can be null if bug was reported not during round.
+    /// </summary>
+    public TimeSpan? RoundTime;
+
+    /// <summary>
+    /// Round number during which bug report was issued. Can be null if bug was reported not during round.
     /// </summary>
     /// <example>1311</example>
-    public int RoundNumber;
+    public int? RoundNumber;
 
     /// <summary>
-    ///     Actual time the player submitted the report (NOT round time.)
-    /// </summary>
-    public DateTime SubmittedTime;
-
-    /// <summary>
-    ///     The type of round that is being played.
+    /// Type preset title (type of round that is being played). Can be null if bug was reported not during round.
     /// </summary>
     /// <example>Sandbox</example>
-    public string RoundType;
+    public string? RoundType;
 
     /// <summary>
-    ///     The map being played.
+    /// The map being played.
     /// </summary>
     /// <example>"Dev"</example>>
-    public string Map;
+    public string? Map;
 
     /// <summary>
-    ///     Number of players in the game.
+    /// Number of players currently on server.
     /// </summary>
     public int NumberOfPlayers;
 
     /// <summary>
-    ///     Build version of the game.
+    /// Build version of the game.
     /// </summary>
-    public string BuildVersion;
+    public required string BuildVersion;
 
     /// <summary>
-    ///     Engine version of the game.
+    /// Engine version of the game.
     /// </summary>
     /// <example>253.0.0</example>
-    public string EngineVersion;
+    public required string EngineVersion;
 }

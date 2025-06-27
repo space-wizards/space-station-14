@@ -21,37 +21,40 @@ public sealed partial class BugReportWindow : DefaultWindow
     // This action gets invoked when the user submits a bug report.
     public event Action<PlayerBugReportInformation>? OnBugReportSubmitted;
 
+    private DateTime _lastIsEnabledUpdated;
+    private readonly TimeSpan _isEnabledUpdateInterval = TimeSpan.FromSeconds(1);
+
     // These are NOT always up to date. If someone disconnects and reconnects, the values will be reset.
     // The only other way of getting updated values would be a message from client -> server then from server -> client.
     // I don't think that is worth the added complexity.
-    private DateTime lastBugReportSubmittedTime = DateTime.MinValue;
-    private int amountOfBugReportsSubmitted;
+    private DateTime _lastBugReportSubmittedTime = DateTime.MinValue;
+    private int _amountOfBugReportsSubmitted;
 
     // CCvar cached values.
-    private bool EnablePlayerBugReports;
-    private int MinimumPlaytimeBugReports;
-    private int MinimumTimeBetweenBugReports;
-    private int MaximumBugReportsPerRound;
+    private bool _enablePlayerBugReports;
+    private int _minimumPlaytimeBugReports;
+    private int _minimumTimeBetweenBugReports;
+    private int _maximumBugReportsPerRound;
 
-    private int MaximumBugReportTitleLength;
-    private int MinimumBugReportTitleLength;
-    private int MaximumBugReportDescriptionLength;
-    private int MinimumBugReportDescriptionLength;
+    private int _maximumBugReportTitleLength;
+    private int _minimumBugReportTitleLength;
+    private int _maximumBugReportDescriptionLength;
+    private int _minimumBugReportDescriptionLength;
 
     public BugReportWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, v => { EnablePlayerBugReports = v;}, true);
-        _cfg.OnValueChanged(CCVars.MinimumPlaytimeBugReports, v => { MinimumPlaytimeBugReports = v;}, true);
-        _cfg.OnValueChanged(CCVars.MinimumTimeBetweenBugReports, v => { MinimumTimeBetweenBugReports = v;}, true);
-        _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, v => { MaximumBugReportsPerRound = v;}, true);
+        _cfg.OnValueChanged(CCVars.EnablePlayerBugReports, v => _enablePlayerBugReports = v, true);
+        _cfg.OnValueChanged(CCVars.MinimumPlaytimeBugReports, v => _minimumPlaytimeBugReports = v, true);
+        _cfg.OnValueChanged(CCVars.MinimumTimeBetweenBugReports, v => _minimumTimeBetweenBugReports = v, true);
+        _cfg.OnValueChanged(CCVars.MaximumBugReportsPerRound, v => _maximumBugReportsPerRound = v, true);
 
-        _cfg.OnValueChanged(CCVars.MaximumBugReportTitleLength, v => { MaximumBugReportTitleLength = v;}, true);
-        _cfg.OnValueChanged(CCVars.MinimumBugReportTitleLength, v => { MinimumBugReportTitleLength = v;}, true);
-        _cfg.OnValueChanged(CCVars.MaximumBugReportDescriptionLength, v => { MaximumBugReportDescriptionLength = v;}, true);
-        _cfg.OnValueChanged(CCVars.MinimumBugReportDescriptionLength, v => { MinimumBugReportDescriptionLength = v;}, true);
+        _cfg.OnValueChanged(CCVars.MaximumBugReportTitleLength, v => _maximumBugReportTitleLength = v, true);
+        _cfg.OnValueChanged(CCVars.MinimumBugReportTitleLength, v => _minimumBugReportTitleLength = v, true);
+        _cfg.OnValueChanged(CCVars.MaximumBugReportDescriptionLength, v => _maximumBugReportDescriptionLength = v, true);
+        _cfg.OnValueChanged(CCVars.MinimumBugReportDescriptionLength, v => _minimumBugReportDescriptionLength = v, true);
 
         // Hook up the events
         SubmitButton.OnPressed += _ => OnSubmitButtonPressed();
@@ -70,31 +73,34 @@ public sealed partial class BugReportWindow : DefaultWindow
             BugReportTitle = BugReportTitle.Text,
             BugReportDescription = Rope.Collapse(BugReportDescription.TextRope),
         };
-
         OnBugReportSubmitted?.Invoke(report);
-        lastBugReportSubmittedTime = DateTime.UtcNow;
-        amountOfBugReportsSubmitted++;
+
+        _lastBugReportSubmittedTime = DateTime.UtcNow;
+        _amountOfBugReportsSubmitted++;
 
         BugReportTitle.Text = string.Empty;
         BugReportDescription.TextRope = Rope.Leaf.Empty;
 
         HandleInputChange();
+        UpdateEnabled();
     }
 
-    // Deals with the user changing their input. Ensures that things that depend on what the user has inputted get updated
-    // (E.g. the amount of characters they have typed)
+    /// <summary>
+    /// Deals with the user changing their input. Ensures that things that depend on what the user has inputted get updated
+    /// (E.g. the amount of characters they have typed)
+    /// </summary>
     private void HandleInputChange()
     {
         var titleLen = BugReportTitle.Text.Length;
         var descriptionLen = BugReportDescription.TextLength;
 
-        var invalidTitleLen = titleLen < MinimumBugReportTitleLength || titleLen > MaximumBugReportTitleLength;
-        var invalidDescriptionLen = descriptionLen < MinimumBugReportDescriptionLength || descriptionLen > MaximumBugReportDescriptionLength;
+        var invalidTitleLen = titleLen < _minimumBugReportTitleLength || titleLen > _maximumBugReportTitleLength;
+        var invalidDescriptionLen = descriptionLen < _minimumBugReportDescriptionLength || descriptionLen > _maximumBugReportDescriptionLength;
 
-        TitleCharacterCounter.Text = titleLen + "/" + MaximumBugReportTitleLength;
+        TitleCharacterCounter.Text = titleLen + "/" + _maximumBugReportTitleLength;
         TitleCharacterCounter.FontColorOverride = invalidTitleLen ? Color.Red : Color.Green;
 
-        DescriptionCharacterCounter.Text = descriptionLen + "/" + MaximumBugReportDescriptionLength;
+        DescriptionCharacterCounter.Text = descriptionLen + "/" + _maximumBugReportDescriptionLength;
         DescriptionCharacterCounter.FontColorOverride = invalidDescriptionLen ? Color.Red : Color.Green;
 
         SubmitButton.Disabled = invalidTitleLen || invalidDescriptionLen;
@@ -102,36 +108,38 @@ public sealed partial class BugReportWindow : DefaultWindow
         PlaceholderCenter.Visible = descriptionLen == 0;
     }
 
-    // Checks if the bug report window should be enabled for this client.
+    /// <summary>
+    /// Checks if the bug report window should be enabled for this client.
+    /// </summary>
     private bool IsEnabled([NotNullWhen(false)] out string? errorMessage)
     {
         errorMessage = null;
 
-        if (!EnablePlayerBugReports)
+        if (!_enablePlayerBugReports)
         {
             errorMessage = Loc.GetString("bug-report-window-disabled-not-enabled");
             return false;
         }
 
-        if (TimeSpan.FromSeconds(MinimumPlaytimeBugReports) > _job.FetchOverallPlaytime())
+        if (TimeSpan.FromSeconds(_minimumPlaytimeBugReports) > _job.FetchOverallPlaytime())
         {
             errorMessage = Loc.GetString("bug-report-window-disabled-playtime");
             return false;
         }
 
-        if (amountOfBugReportsSubmitted >= MaximumBugReportsPerRound)
+        if (_amountOfBugReportsSubmitted >= _maximumBugReportsPerRound)
         {
-            errorMessage = Loc.GetString("bug-report-window-disabled-submissions", ("num", MaximumBugReportsPerRound));
+            errorMessage = Loc.GetString("bug-report-window-disabled-submissions", ("num", _maximumBugReportsPerRound));
             return false;
         }
 
-        var timeSinceLastReport = DateTime.UtcNow - lastBugReportSubmittedTime;
-        var timeBetweenBugReports = TimeSpan.FromSeconds(MinimumTimeBetweenBugReports);
+        var timeSinceLastReport = DateTime.UtcNow - _lastBugReportSubmittedTime;
+        var timeBetweenBugReports = TimeSpan.FromSeconds(_minimumTimeBetweenBugReports);
 
         if (timeSinceLastReport <= timeBetweenBugReports)
         {
             var time = timeBetweenBugReports - timeSinceLastReport;
-            errorMessage = Loc.GetString("bug-report-window-disabled-cooldown", ("time", $"{new TimeSpan(time.Days, time.Hours, time.Minutes, time.Seconds)}"));
+            errorMessage = Loc.GetString("bug-report-window-disabled-cooldown", ("time", time.ToString(@"d\.hh\:mm\:ss")));
             return false;
         }
 
@@ -146,6 +154,7 @@ public sealed partial class BugReportWindow : DefaultWindow
 
         DisabledLabel.Visible = !isEnabled;
         BugReportContainer.Visible = isEnabled;
+        _lastIsEnabledUpdated = DateTime.UtcNow;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -155,6 +164,7 @@ public sealed partial class BugReportWindow : DefaultWindow
         if (!Visible) // Don't bother updating if no one can see the window anyway.
             return;
 
-        UpdateEnabled();
+        if(DateTime.UtcNow - _lastIsEnabledUpdated > _isEnabledUpdateInterval)
+            UpdateEnabled();
     }
 }
