@@ -36,7 +36,7 @@
     <GuideEntityEmbed Entity="ClothingEyesWeldingGoggles"/>
   </Box>
 
-  Another obstacle in your way are those pesky brainwashing [color=cyan]mindshield implanters[/color]. 
+  Another obstacle in your way are those pesky brainwashing [color=cyan]MindShield™ implanters[/color]. 
 
   <Box>
     <GuideEntityEmbed Entity="MindShieldImplanter"/>
@@ -112,6 +112,20 @@
   </Box>
 
   - It's very beneficial in the long-run to start as one or convert [color=#f5be51]Cargo/Mail Technicians[/color] and [color=#a319ff]Scientists[/color], due to their sufficient ability to [bold]stop incoming orders of mindshields[/bold] or to [bold]provide you with flashes made from an [color=blue]Exosuit Fabricator[/color][/bold], respectively.
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineCargoTech" Caption="'Where are the thrusters?'"/>
+    <GuideEntityEmbed Entity="ToyFigurineScientist" Caption="'Shadow anomaly!'"/>
+    <GuideEntityEmbed Entity="ExosuitFabricator" Caption="Exosuit Fabricator"/>
+  </Box>
+
+  - Be careful who you're trying to convert. Early on in the round some crew like [color=green]Musicians[/color] or [color=green]Bartenders[/color] wear [bold]sunglasses[/bold]. While [color=#a86819]Salvage specialists[/color] are outright [color=cyan]MindShielded™[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineMusician" Caption="'Ow. Okay'"/>
+    <GuideEntityEmbed Entity="ToyFigurineBartender" Caption="'Give me a reason why I should join'"/>
+    <GuideEntityEmbed Entity="ToyFigurineSalvage" Caption="'...'"/>
+  </Box>
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineCargoTech" Caption="'Where are the thrusters?'"/>
