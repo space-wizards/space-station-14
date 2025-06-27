@@ -47,7 +47,7 @@ reagent-name-leporazine = leporazine
 reagent-desc-leporazine = A chemical used to stabilize body temperature and rapidly cure cold damage. Great for unprotected EVA travel, but prevents the use of cryogenic tubes.
 
 reagent-name-barozine = barozine
-reagent-desc-barozine = A potent chemical that prevents pressure damage. Causes extreme stress on the body.
+reagent-desc-barozine = A gnarly chemical which reacts with blood and crystalizes into hard pillar like structures, propping up your skin against hazardous pressure. Overdose makes said structures start ripping you apart.
 
 reagent-name-phalanximine = phalanximine
 reagent-desc-phalanximine = An advanced chemical used in the treatment of cancer. Causes moderate radiation poisoning, acid burns, and vomiting on organics. Can potentially remove the death gene on plants.
@@ -71,13 +71,13 @@ reagent-name-stellibinin = stellibinin
 reagent-desc-stellibinin = A natual anti-toxin with particular effectiveness against amatoxin.
 
 reagent-name-synaptizine = synaptizine
-reagent-desc-synaptizine = A toxic chemical that halves the duration of stuns and knockdowns.
+reagent-desc-synaptizine = A toxic stimulant that kicks your synapses into overdrive. Lets you react and get the hell up off the floor faster, at the cost of really messing with your perception.
 
 reagent-name-tranexamic-acid = tranexamic acid
 reagent-desc-tranexamic-acid = A blood-clotting medicine used to prevent profuse bleeding. Causes heavier bleeding on overdose. Commonly found in small doses within emergency medipens.
 
 reagent-name-tricordrazine = tricordrazine
-reagent-desc-tricordrazine = A wide-spectrum stimulant, originally derived from cordrazine. Treats minor damage of all basic health types as long as the user is not heavily wounded. Best used as an additive to other chemicals.
+reagent-desc-tricordrazine = A wide-spectrum stimulant, acting on many parts of the body. Treats minor damage of all basic types as long as the patient is not heavily wounded. Best used as an additive to other chemicals.
 
 reagent-name-lipozine = lipozine
 reagent-desc-lipozine = A chemical that accelerates metabolism, causing the user to hunger faster.

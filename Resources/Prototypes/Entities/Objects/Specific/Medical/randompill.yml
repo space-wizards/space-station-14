@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: weightedRandomFillSolution
   id: RandomFillStrangePill
   fills:
@@ -58,7 +60,7 @@
       reagents:
       - MuteToxin
       - Pax
-      - Fresium
+      - Arcticine # Ronstation
       - Cryptobiolin
     - quantity: 10
       weight: 10.5

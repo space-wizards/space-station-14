@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: reagent
   id: Toxin
   name: reagent-name-toxin
@@ -121,7 +123,7 @@
   name: reagent-name-polytrinic-acid
   group: Toxins
   desc: reagent-desc-polytrinic-acid
-  physicalDesc: reagent-physical-desc-strong-smelling
+  physicalDesc: reagent-physical-desc-overpowering # Ronstation
   flavor: acid
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
@@ -161,7 +163,9 @@
         probability: 0.33
       - !type:Emote
         emote: Scream
-        probability: 0.3
+        probability: 0.5
+      - !type:ChemVomit # Ronstation
+        probability: 0.3 # Ronstation
 
 - type: reagent
   id: FerrochromicAcid

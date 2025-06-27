@@ -1,0 +1,11 @@
+- type: reaction
+  id: PestKiller
+  reactants:
+    InsectBlood:
+      amount: 2
+    TableSalt:
+      amount: 2
+    Ethanol:
+      amount: 1
+  products:
+    PestKiller: 2
