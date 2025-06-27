@@ -15,7 +15,7 @@ public sealed partial class NPCSleepingComponent : Component
     public HashSet<NPCSleepingCategories> SleepReferences = new();
 }
 
-public enum NPCSleepingCategories
+public enum NPCSleepingCategories : byte
 {
     Default,
     PlayerAttach,

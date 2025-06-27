@@ -16,6 +16,18 @@ public sealed class NPCProximitySleepSystem : EntitySystem
     [Dependency] private readonly NPCSystem _npc = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<NPCProximitySleepComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<NPCProximitySleepComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextUpdate = _timing.CurTime;
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -25,7 +37,7 @@ public sealed class NPCProximitySleepSystem : EntitySystem
         var query = EntityQueryEnumerator<NPCProximitySleepComponent, HTNComponent>();
         while (query.MoveNext(out var uid, out var proxComp, out _))
         {
-            if (proxComp.LastUpdate >= _timing.CurTime)
+            if (proxComp.NextUpdate >= _timing.CurTime)
                 continue;
 
             var npcPosition = _transform.GetMapCoordinates(uid);
@@ -54,7 +66,7 @@ public sealed class NPCProximitySleepSystem : EntitySystem
             else
                 _npc.WakeNPC(uid, NPCSleepingCategories.ProxySleep);
 
-            proxComp.LastUpdate += proxComp.UpdateInterval;
+            proxComp.NextUpdate += proxComp.UpdateInterval;
 
         }
     }

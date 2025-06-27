@@ -13,7 +13,7 @@ public sealed partial class NPCProximitySleepComponent : Component
     /// Time of the last update.
     /// </summary>
     [DataField]
-    public TimeSpan LastUpdate = TimeSpan.Zero;
+    public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>
     /// Updates the status of if the NPC is asleep or awake at this interval.
