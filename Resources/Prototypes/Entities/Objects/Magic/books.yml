@@ -54,7 +54,7 @@
   id: WizardsGrimoireNoRefund
   name: wizards grimoire
   suffix: Wizard, No Refund
-  parent: [ WizardsGrimoire, StorePresetSpellbook ]
+  parent: [ WizardsGrimoire, StorePresetSpellbook, BaseMagicalContraband ]
   components:
     - type: Store
       refundAllowed: false

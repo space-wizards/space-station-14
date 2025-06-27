@@ -278,6 +278,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookStaffRGB
+  name: spellbook-staff-RGB-name
+  description: spellbook-staff-RGB-description
+  pruductEntity: RGBStaff
+  cost:
+    WizCoin: 0
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Event
 - type: listing
   id: SpellbookEventSummonGhosts

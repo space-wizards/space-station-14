@@ -3,7 +3,7 @@
 # wand that gives lights an RGB effect.
 - type: entity
   id: RGBStaff
-  parent: BaseItem
+  parent: [ BaseItem, BaseMagicalContraband ]
   name: RGB staff
   description: Helps fix the underabundance of RGB gear on the station.
   components:
