@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Fixed artifacts sometimes having negative research values.
-    type: Fix
-  id: 8208
-  time: '2025-04-17T03:14:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36642
 - author: VerinSenpai
   changes:
   - message: You can now use actions within the action window.
@@ -3881,3 +3874,13 @@
   id: 8720
   time: '2025-06-26T22:57:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38597
+- author: TiniestShark
+  changes:
+  - message: Added inhand sprites to all plushies/toys and the ability to wear (most)
+      of them in either your head or neck slot.
+    type: Add
+  - message: Nar'sie, Ratvar and Revenant plushies now require two hands to hold.
+    type: Tweak
+  id: 8721
+  time: '2025-06-27T01:07:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38514
