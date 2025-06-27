@@ -1,4 +1,6 @@
 using Content.Server.Body.Systems;
+using Content.Shared.Alert;
+using Content.Shared.Atmos;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
@@ -9,6 +11,28 @@ namespace Content.Server.Body.Components
     [RegisterComponent, Access(typeof(RespiratorSystem))]
     public sealed partial class RespiratorComponent : Component
     {
+        /// <summary>
+        ///     Gas container for this entity
+        /// </summary>
+        [DataField]
+        public GasMixture Air = new()
+        {
+            Volume = 6, // 6 liters, the average lung capacity for a human according to Google
+            Temperature = Atmospherics.NormalBodyTemperature
+        };
+
+        /// <summary>
+        ///     Volume of our breath in liters
+        /// </summary>
+        [DataField]
+        public float BreathVolume = Atmospherics.BreathVolume;
+
+        /// <summary>
+        ///     How much of the gas we inhale is metabolized? Value range is (0, 1]
+        /// </summary>
+        [DataField]
+        public float Ratio = 1.0f;
+
         /// <summary>
         ///     The next time that this body will inhale or exhale.
         /// </summary>
