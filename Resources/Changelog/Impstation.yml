@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: New undergarments have been imported. Don't forget to get dressed before
-      you clock in!
-    type: Tweak
-  id: 1402
-  time: '2025-03-28T14:20:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2057
-- author: mqole
-  changes:
-  - message: theres a special prize hidden in the rules! you better go read them again
-      to make sure you didnt miss it!
-    type: Tweak
-  id: 1403
-  time: '2025-03-28T14:20:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2126
-- author: AvianMaiden
-  changes:
-  - message: Mirrors reflect something quite disturbing when you look closely...
-    type: Tweak
-  id: 1404
-  time: '2025-03-28T17:30:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2120
-- author: SixValentine
-  changes:
-  - message: You can now grind on Train.
-    type: Fix
-  id: 1405
-  time: '2025-03-28T21:25:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2128
 - author: DinnerCalzone
   changes:
   - message: The Entropic Blade no longer ignores damage resistances and no longer
@@ -4233,3 +4203,32 @@
   id: 1901
   time: '2025-06-27T14:20:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2831
+- author: crocodilecarousel
+  changes:
+  - message: new shipment of cmo outfits!
+    type: Add
+  id: 1902
+  time: '2025-06-27T14:21:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2832
+- author: ultramario1998
+  changes:
+  - message: The Jermov AI lawset has been downloaded. Currently admin-only.
+    type: Add
+  id: 1903
+  time: '2025-06-27T14:21:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2837
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: The Blaster Magnum's stats have been adjusted to help the gun feel better
+      to use.
+    type: Tweak
+  id: 1904
+  time: '2025-06-27T14:22:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2842
+- author: TheLuggage05
+  changes:
+  - message: Gorlex is funding traitors with elite and juggernaut suits once again!
+    type: Tweak
+  id: 1905
+  time: '2025-06-27T14:22:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2839
