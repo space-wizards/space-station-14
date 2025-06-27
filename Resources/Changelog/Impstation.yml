@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Fixed up some of the apid displacements. Hopefully no more stray pixels
-      on the buzsi bibiis
-    type: Fix
-  id: 1396
-  time: '2025-03-25T11:04:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2088
 - author: SixValentine
   changes:
   - message: Fixed Hash based on first playtest feedback
@@ -4221,3 +4213,10 @@
   id: 1895
   time: '2025-06-27T11:56:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2867
+- author: ATDoop
+  changes:
+  - message: Added a disclaimer to the character records menu.
+    type: Tweak
+  id: 1896
+  time: '2025-06-27T11:58:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2856
