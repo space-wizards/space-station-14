@@ -217,6 +217,21 @@
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5
+  metabolisms: # imp edit begin
+    Narcotic:
+      effects:
+      - !type:HealthChange
+        probability: 0.1
+        damage:
+          types:
+            Cellular: 0.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        damage:
+          types:
+            Cellular: 0.2 # imp edit end
 
 # TODO: Replace these nonstandardized effects with generic brain damage
 - type: reagent
