@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: The Heretic's flesh ascension now matches the skin, eye, and blood color
-      of the ascendee.
-    type: Tweak
-  - message: The Heretic's flesh ascension will now gib into a reality fracture and
-      a large amount of humanoid blood when it dies.
-    type: Tweak
-  id: 1420
-  time: '2025-03-28T22:00:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2087
 - author: argentsunshine
   changes:
   - message: Added conical flasks to the medical techfab.
@@ -4233,3 +4222,18 @@
   id: 1919
   time: '2025-06-28T03:55:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2891
+- author: widgetbeck
+  changes:
+  - message: Tier 3 Replicators can now shed nanites to return to Tier 1, allowing
+      them to respec.
+    type: Add
+  - message: Added bespoke animation + sfx for a couple things.
+    type: Add
+  - message: There is now an automated announcement when a Replicator Nest reaches
+      Level 5.
+    type: Add
+  - message: Fixed (hopefully) message to all replicators when the queen dies.
+    type: Fix
+  id: 1920
+  time: '2025-06-28T03:57:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2893
