@@ -172,14 +172,16 @@ public sealed class ItemGridPiece : Control, IEntityControl
         if (itemComponent.StoredSprite is { } storageSprite)
         {
             var scale = 2 * UIScale;
-            var offset = (((Box2) boundingGrid).Size - Vector2.One) * size + iconOffset;
             var sprite = _entityManager.System<SpriteSystem>().Frame0(storageSprite);
+
+            var sizeDifference = ((boundingGrid.Size + Vector2i.One) * _centerTexture.Size * 2 - sprite.Size) * UIScale;
 
             var spriteBox = new Box2Rotated(new Box2(0f, sprite.Height * scale, sprite.Width * scale, 0f), -iconRotation, Vector2.Zero);
             var root = spriteBox.CalcBoundingBox().BottomLeft;
             var pos = PixelPosition * 2
                       + (Parent?.GlobalPixelPosition ?? Vector2.Zero)
-                      + offset;
+                      + sizeDifference
+                      + iconOffset;
 
             handle.SetTransform(pos, iconRotation);
             var box = new UIBox2(root, root + sprite.Size * scale);

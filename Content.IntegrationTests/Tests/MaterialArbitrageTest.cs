@@ -31,7 +31,7 @@ public sealed class MaterialArbitrageTest
     // These recipes are currently broken and need fixing. You should not be adding to these sets.
     private readonly HashSet<string> _destructionArbitrageIgnore =
     [
-        "BaseChemistryEmptyVial", "DrinkShotGlass", "Beaker", "SodiumLightTube", "DrinkGlassCoupeShaped",
+        "BaseChemistryEmptyVial", "DrinkShotGlass", "SodiumLightTube", "DrinkGlassCoupeShaped",
         "LedLightBulb", "ExteriorLightTube", "LightTube", "DrinkGlass", "DimLightBulb", "LightBulb", "LedLightTube",
         "SheetRGlass1", "ChemistryEmptyBottle01", "WarmLightBulb",
     ];
@@ -63,11 +63,11 @@ public sealed class MaterialArbitrageTest
 
         Assert.That(mapSystem.IsInitialized(testMap.MapId));
 
-        var constructionName = compFact.GetComponentName(typeof(ConstructionComponent));
-        var compositionName = compFact.GetComponentName(typeof(PhysicalCompositionComponent));
-        var materialName = compFact.GetComponentName(typeof(MaterialComponent));
-        var destructibleName = compFact.GetComponentName(typeof(DestructibleComponent));
-        var refinableName = compFact.GetComponentName(typeof(ToolRefinableComponent));
+        var constructionName = compFact.GetComponentName<ConstructionComponent>();
+        var compositionName = compFact.GetComponentName<PhysicalCompositionComponent>();
+        var materialName = compFact.GetComponentName<MaterialComponent>();
+        var destructibleName = compFact.GetComponentName<DestructibleComponent>();
+        var refinableName = compFact.GetComponentName<ToolRefinableComponent>();
 
         // get the inverted lathe recipe dictionary
         var latheRecipes = latheSys.InverseRecipes;

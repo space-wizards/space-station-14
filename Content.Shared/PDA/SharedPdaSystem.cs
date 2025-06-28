@@ -66,5 +66,11 @@ namespace Content.Shared.PDA
         {
             Appearance.SetData(uid, PdaVisuals.IdCardInserted, pda.ContainedId != null);
         }
+
+        public virtual void UpdatePdaUi(EntityUid uid, PdaComponent? pda = null)
+        {
+            // This does nothing yet while I finish up PDA prediction
+            // Overriden by the server
+        }
     }
 }

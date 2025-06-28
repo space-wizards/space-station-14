@@ -1,13 +1,13 @@
 - type: stack
   id: Gold
-  name: gold
+  name: stack-gold
   icon: { sprite: "/Textures/Objects/Materials/ingots.rsi", state: gold }
   spawn: IngotGold1
   maxCount: 30
 
 - type: stack
   id: Silver
-  name: silver
+  name: stack-silver
   icon: { sprite: "/Textures/Objects/Materials/ingots.rsi", state: silver }
   spawn: IngotSilver1
   maxCount: 30

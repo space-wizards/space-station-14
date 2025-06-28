@@ -4,4 +4,10 @@ gitroot=`git rev-parse --show-toplevel`
 
 cd "$gitroot/BuildChecker"
 
-python3 git_helper.py --quiet
+if [[ `uname` == MINGW* || `uname` == CYGWIN* ]]; then
+    # Windows
+    py -3 git_helper.py --quiet
+else
+    # Not Windows, so probably some other Unix thing.
+    python3 git_helper.py --quiet
+fi

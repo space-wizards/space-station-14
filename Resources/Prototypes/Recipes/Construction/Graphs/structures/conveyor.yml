@@ -10,7 +10,7 @@
               icon:
                 sprite: Structures/conveyor.rsi
                 state: conveyor_loose
-              name: conveyor belt assembly
+              name: construction-graph-tag-conveyor-belt-assembly
               doAfter: 2
     - node: item
       entity: ConveyorBeltAssembly
