@@ -213,12 +213,12 @@
   id: ClothingMaskClownBase
   abstract: true
   name: clown wig and mask
-  description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
+  description: A true prankster's facial attire. A clown is incomplete without a wig and mask. #imp
   components:
-  - type: Sprite
-    sprite: Clothing/Mask/clown.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/clown.rsi
+  #- type: Sprite #imp edit
+  #  sprite: Clothing/Mask/clown.rsi #imp edit
+  #- type: Clothing #imp edit
+  #  sprite: Clothing/Mask/clown.rsi #imp edit
   - type: BreathMask
   - type: IdentityBlocker
   - type: Tag
@@ -231,9 +231,31 @@
     - Snout
 
 - type: entity
-  parent: ClothingMaskClownBase
+  parent: [ClothingMaskClownBase, BaseFoldable] #imp
   id: ClothingMaskClown
   components:
+  - type: Appearance #imp
+  - type: Sprite #imp
+    sprite: _Impstation/Clothing/Mask/clown.rsi
+    layers:
+    - state: icon
+      map: [ "unfoldedLayer" ]
+    - state: icon-wigless
+      map: ["foldedLayer"]
+      visible: false
+  - type: Foldable #imp
+    canFoldInsideContainer: true
+    unfoldVerbText: untuck-verb-clothing-mask
+    foldVerbText: tuck-verb-clothing-mask
+  - type: FoldableClothing #imp
+    foldedEquippedPrefix: wigless
+    foldedHeldPrefix: wigless
+    foldedHideLayers:
+    - Snout
+    unfoldedHideLayers:
+    - Snout
+  - type: Clothing #imp
+    sprite: _Impstation/Clothing/Mask/clown.rsi
   - type: Tag
     tags:
     - ClownMask
@@ -244,17 +266,23 @@
     - Snout
 
 - type: entity
-  parent: ClothingMaskClown
+  parent: ClothingMaskClownBase #imp
   id: ClothingMaskClownBanana
   name: banana clown wig and mask
-  components:
+  components: 
   - type: Sprite
-    sprite: Clothing/Mask/clown_banana.rsi
+    sprite: Clothing/Mask/clown_banana.rsi #imp
   - type: Clothing
-    sprite: Clothing/Mask/clown_banana.rsi
+    sprite: Clothing/Mask/clown_banana.rsi #imp
   - type: Construction
     graph: BananaClownMask
     node: mask
+  - type: Tag  #imp
+    tags:
+    - ClownMask
+    - HamsterWearable
+    - WhitelistChameleon 
+
 
 - type: entity
   parent: [ClothingMaskClown, BaseSecurityContraband]
@@ -263,9 +291,9 @@
   description: A debatably oxymoronic but protective mask and wig.
   components:
   - type: Sprite
-    sprite: Clothing/Mask/clown_security.rsi
+    sprite: _Impstation/Clothing/Mask/clown_security.rsi #imp
   - type: Clothing
-    sprite: Clothing/Mask/clown_security.rsi
+    sprite: _Impstation/Clothing/Mask/clown_security.rsi #imp
   - type: Armor
     modifiers:
       coefficients:
@@ -273,102 +301,6 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
-
-# admeme only
-- type: entity
-  parent: [ClothingMaskClown, BaseCommandContraband]
-  id: ClothingMaskClownCaptain
-  name: authority clown wig and mask
-  description: A mask and wig for when the captain shows their true colors.
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/clown_captain.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/clown_captain.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Heat: 0.95
-
-- type: entity
-  parent: ClothingMaskClown
-  id: ClothingMaskClownCargo
-  name: strong clown wig and mask
-  description: A powerful mask and wig for the clown that can drag a crate with one hand.
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/clown_cargo.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/clown_cargo.rsi
-
-- type: entity
-  parent: ClothingMaskClown
-  id: ClothingMaskClownChaplain
-  name: holy clown wig and mask
-  description: A mask and wig symbolizing clown asceticism.
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/clown_chaplain.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/clown_chaplain.rsi
-
-- type: entity
-  parent: ClothingMaskClown
-  id: ClothingMaskClownEngineer
-  name: practical clown wig and mask
-  description: A problem solver's mask and wig.
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/clown_engineer.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/clown_engineer.rsi
-
-- type: entity
-  parent: ClothingMaskClown
-  id: ClothingMaskClownMedical
-  name: helpful clown wig and mask
-  description: Copyright infringing mask and wig.
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/clown_medical.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/clown_medical.rsi
-
-- type: entity
-  parent: ClothingMaskClown
-  id: ClothingMaskClownRobotics
-  name: cyber clown wig and mask
-  description: Mask and wig of choice for the clown that doesn't need to be taught how to use a computer.
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/clown_robotics.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/clown_robotics.rsi
-
-- type: entity
-  parent: ClothingMaskClown
-  id: ClothingMaskClownScience
-  name: genius clown wig and mask
-  description: Only the smartest clowns get to wear this mask and wig.
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/clown_science.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/clown_science.rsi
-
-- type: entity
-  parent: ClothingMaskClown
-  id: ClothingMaskClownService
-  name: giving clown wig and mask
-  description: Mask and wig for the clown with the willpower not to steal.
-  components:
-  - type: Sprite
-    sprite: Clothing/Mask/clown_service.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/clown_service.rsi
 
 - type: entity
   parent: ClothingMaskBase
