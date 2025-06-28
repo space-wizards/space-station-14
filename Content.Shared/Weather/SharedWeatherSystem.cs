@@ -48,9 +48,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         if (Resolve(uid, ref roofComp, false) && _roof.IsRooved((uid, grid, roofComp), tileRef.GridIndices))
             return false;
 
-        var tileDef = (ContentTileDefinition) _tileDefManager[tileRef.Tile.TypeId];
-
-        if (!tileDef.Weather)
+        if (HasComp<ImplicitRoofComponent>(uid))
             return false;
 
         var anchoredEntities = _mapSystem.GetAnchoredEntitiesEnumerator(uid, grid, tileRef.GridIndices);

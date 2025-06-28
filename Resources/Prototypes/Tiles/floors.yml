@@ -1457,7 +1457,6 @@
   footstepSounds:
     collection: FootstepTile
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorGrass
@@ -1469,7 +1468,6 @@
     collection: FootstepGrass
   itemDrop: FloorTileItemGrass
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorGrassJungle
@@ -1481,7 +1479,6 @@
     collection: FootstepGrass
   itemDrop: FloorTileItemGrassJungle
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorGrassDark
@@ -1498,7 +1495,6 @@
   footstepSounds:
     collection: FootstepGrass
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorGrassLight
@@ -1515,7 +1511,6 @@
   footstepSounds:
     collection: FootstepGrass
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorDirt
@@ -1532,7 +1527,6 @@
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
-  weather: true
 
 # Asteroid
 
@@ -1560,7 +1554,6 @@
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorAsteroidSand
@@ -1586,7 +1579,6 @@
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorAsteroidSandDug
@@ -1627,7 +1619,6 @@
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorAsteroidSandRed
@@ -1654,7 +1645,6 @@
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorAsteroidIronsandBorderless
@@ -1682,7 +1672,6 @@
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorAsteroidIronsand
@@ -1708,7 +1697,6 @@
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorAsteroidSandUnvariantized
@@ -1734,7 +1722,6 @@
   footstepSounds:
     collection: FootstepAsteroid
   heatCapacity: 10000
-  weather: true
 
 - type: tile
   id: FloorAsteroidIronsandUnvariantized
@@ -2031,7 +2018,6 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroAsteroidSand
-  weather: false
 
 - type: tile
   id: FloorAstroAsteroidSandBorderless
@@ -2041,7 +2027,6 @@
   isSubfloor: false
   deconstructTools: [ Prying ]
   itemDrop: FloorTileItemAstroAsteroidSand
-  weather: false
 
 - type: tile
   id: FloorWoodLarge
