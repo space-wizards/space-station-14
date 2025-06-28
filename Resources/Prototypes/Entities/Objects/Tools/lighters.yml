@@ -238,8 +238,36 @@
 
 - type: entity
   abstract: true
+  parent: BaseItem
   id: BaseBrandedLighter
   components:
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      path: /Audio/Items/Lighters/zippo_open.ogg
+      params:
+        volume: -5
+    soundDeactivate:
+      path: /Audio/Items/Lighters/zippo_close.ogg
+      params:
+        volume: -5
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+        types:
+            Heat: 1
+  - type: ItemToggleSize
+    activatedSize: Small
+  - type: ItemToggleHot
+  - type: Item
+    size: Tiny
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 12
+        maxVol: 12
   - type: Sprite
     layers:
     - state: icon
@@ -278,9 +306,13 @@
       right:
       - state: inhand-right-lit
         shader: unshaded
+  - type: ItemTogglePointLight
+  - type: UseDelay
+  - type: IgnitionSource
+    ignited: false
 
 - type: entity
-  parent: [BaseBrandedLighter, FlippoLighter, BaseSyndicateContraband]
+  parent: [BaseBrandedLighter, BaseSyndicateContraband]
   id: SyndicateFlippo
   name: Blood-red flippo
   description: "A 'Valid' choice in lighters. Contains no copper."
@@ -355,7 +387,7 @@
         maxVol: 3
 
 - type: entity
-  parent: [FlippoLighter, BaseBrandedLighter, BaseSyndicateContraband]
+  parent: [BaseBrandedLighter, BaseSyndicateContraband]
   id: CybersunFlippo
   name: CyberSun Flippo
   description: "A Sleek black and magenta flippo lighter, bearing the logo and iconography of CyberSun Industries."
@@ -375,7 +407,7 @@
     color: magenta
 
 - type: entity
-  parent: [FlippoLighter, BaseBrandedLighter, BaseSyndicateContraband]
+  parent: [BaseBrandedLighter, BaseSyndicateContraband]
   id: InterdyneFlippo
   name: Interdyne Flippo
   description: "A deep blue flippo lighter, decorated with the logo of Interdyne Pharmaceuticals' 'Gene Clean' clinics. Become the master of your own cigarette."
@@ -399,7 +431,7 @@
     color: cyan
 
 - type: entity
-  parent: [FlippoLighter, BaseBrandedLighter]
+  parent: [BaseBrandedLighter]
   id: NanotrasenFlippo
   name: Nanotrasen Flippo
   description: "A navy blue luxury flippo, generally handed out to loyal heads of staff instead of a payraise. Fueled with liquid plasma"
@@ -429,7 +461,7 @@
         maxVol: 10
 
 - type: entity
-  parent: [FlippoLighter, BaseBrandedLighter, BaseCentCommContraband]
+  parent: [BaseBrandedLighter, BaseCentcommContraband]
   id: CentCommFlippo
   name: Gilded CentComm Flippo
   description: "An Ornate, jade embossed and gilded flippo frame containing a bluespace powered jet. The latch is secured by a miniature access reader that only responds to CentComm officials. The nicest lighter known to man."
@@ -475,7 +507,7 @@
     access: [["CentralCommand"]]
 
 - type: entity
-  parent: [FlippoLighter, BaseBrandedLighter, BaseMajorContraband]
+  parent: [BaseBrandedLighter, BaseMajorContraband]
   id: SpiderclanFlippo
   name: Spider-Clan lighter
   description: "A high tech jet lighter, engineered to function even in deep space. Runs on a tiny microfusion cell."
@@ -495,7 +527,7 @@
     color: green
 
 - type: entity
-  parent: [FlippoLighter, BaseBrandedLighter, BaseSyndicateContraband]
+  parent: [BaseBrandedLighter, BaseSyndicateContraband]
   id: WaffleCoFlippo
   name: Waffle Co. flippo
   description: "A robust mass produced lighter. The Waffle Co. logo turns the spark wheel when pushed up, minimising risk of lighter burns for even the most inept user."
@@ -515,7 +547,7 @@
     color: brown
 
 - type: entity
-  parent: [FlippoLighter, BaseBrandedLighter]
+  parent: [BaseBrandedLighter]
   id: HonkCoFlippo
   name: Honk Co. flippo
   description: "A slippery gag lighter produced by Honk Co. hidden inside of a real banana peel."
@@ -560,7 +592,7 @@
     color: yellow
 
 - type: entity
-  parent: [FlippoLighter, BaseBrandedLighter]
+  parent: [BaseBrandedLighter]
   id: DonkcoLighter
   name: Donk Co. flippo
   description: "The flippo of choice for the seasoned traitor. A Breaded novelty lighter made by Donk Co. Somehow edible while lit."
