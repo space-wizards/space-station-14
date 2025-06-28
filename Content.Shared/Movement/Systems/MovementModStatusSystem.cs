@@ -39,7 +39,7 @@ public sealed class MovementModStatusSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Slows down the mob's walking/running speed temporarily
+    /// Slows down the mob's walking/running speed temporarily
     /// </summary>
     public bool TrySlowdown(EntityUid uid,
         TimeSpan time,
@@ -50,7 +50,7 @@ public sealed class MovementModStatusSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Slows down the mob's walking/running speed temporarily
+    /// Slows down the mob's walking/running speed temporarily
     /// </summary>
     public bool TrySlowdown(EntityUid uid,
         TimeSpan time,
