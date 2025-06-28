@@ -3,12 +3,10 @@
     xmlns:viewport="clr-namespace:Content.Client.Viewport"
     MouseFilter="Stop">
     <PanelContainer StyleClasses="BackgroundDark" Name="AdminCameraWindowRoot" Access="Public">
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" Access="Public">
+        <BoxContainer Orientation="Vertical" Access="Public">
             <!-- Camera -->
-            <Control VerticalExpand="True" HorizontalExpand="True" Name="CameraViewBox">
+            <Control VerticalExpand="True" Name="CameraViewBox">
                 <viewport:ScalingViewport Name="CameraView"
-                                          VerticalExpand="True"
-                                          HorizontalExpand="True"
                                           MinSize="100 100"
                                           MouseFilter="Ignore" />
             </Control>

@@ -20,15 +20,23 @@ public sealed partial class AdminCameraEui : BaseEui
     // If not null the camera is in "popped out" mode and is in an external window.
     private OSWindow? _OSWindow;
 
+    // The last location the window was located at in game.
+    // Is used for getting knowing where to "pop in" external windows.
+    private Vector2 _lastLocation;
+
     public AdminCameraEui()
     {
         _window = new AdminCameraWindow();
         _control = new AdminCameraControl();
 
-        _control.OnFollow += () => SendMessage(new AdminCameraFollowMessage());
-        _window.OnClose += () => SendMessage(new CloseEuiMessage());
-
         _window.Contents.AddChild(_control);
+
+        _control.OnFollow += () => SendMessage(new AdminCameraFollowMessage());
+        _window.OnClose += () =>
+        {
+            if (!_control.IsPoppedOut)
+                SendMessage(new CloseEuiMessage());
+        };
 
         _control.OnPopoutControl += () =>
         {
@@ -42,6 +50,8 @@ public sealed partial class AdminCameraEui : BaseEui
     // Pop the window out into an external OS window
     private void PopOut()
     {
+        _lastLocation = _window.Position;
+
         // TODO: When there is a way to have a minimum window size, enforce something!
         _OSWindow = new OSWindow
         {
@@ -51,18 +61,15 @@ public sealed partial class AdminCameraEui : BaseEui
 
         _OSWindow.Show();
 
-        if (_OSWindow.ClydeWindow == null || _OSWindow.Root == null)
+        if (_OSWindow.Root == null)
             return;
 
         _control.Orphan();
-
         _OSWindow.Root.AddChild(_control);
 
-        // Only close when the user actually clicks the close button (this doesn't trigger when its popped back in)
-        _OSWindow.RequestClosed += _ => _window.Close();
+        _OSWindow.RequestClosed += _ => SendMessage(new CloseEuiMessage());
 
-        // You can't close the window, otherwise the EUI will complain that your sending requests without it open.
-        _window.Visible = false;
+        _window.Close();
 
         _control.IsPoppedOut = true;
         _control.PopControl.Text = Loc.GetString("admin-camera-window-pop-in");
@@ -74,7 +81,7 @@ public sealed partial class AdminCameraEui : BaseEui
         _control.Orphan();
         _window.Contents.AddChild(_control);
 
-        _window.Visible = true;
+        _window.Open(_lastLocation);
 
         _control.IsPoppedOut = false;
         _control.PopControl.Text = Loc.GetString("admin-camera-window-pop-out");
