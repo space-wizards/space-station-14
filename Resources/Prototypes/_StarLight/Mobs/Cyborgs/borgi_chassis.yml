@@ -215,6 +215,27 @@
     channels:
     - Binary
 
+- type: entity
+  parent: BaseBorgiChassis
+  id: DerelictBorgiChassis
+  name: derelict borgi
+  description: even after all these years. still loves chasing it's tail.
+  components:
+    - type: ContainerFill
+      containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+        - BorgModuleFireExtinguisher
+      
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
+    - type: StartIonStormed
+      ionStormAmount: 3
 
 - type: entity
   parent: BaseBorgiChassis
