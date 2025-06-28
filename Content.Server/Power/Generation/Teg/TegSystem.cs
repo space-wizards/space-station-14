@@ -403,6 +403,18 @@ public sealed class TegSystem : EntitySystem
         air.Temperature -= dQ / heatCapacity;
     }
 
+    /// <summary>
+    /// Performs a complete heat exchange calculation between two masses with different heat capacities.
+    /// </summary>
+    /// <param name="δt">The temperature difference used for the heat exchange calculation.</param>
+    /// <param name="heatcapacityA">The heat capacity of the first mass involved in the exchange.</param>
+    /// <param name="heatcapacityB">The heat capacity of the second mass involved in the exchange.</param>
+    /// <returns>The resulting energy exchange.</returns>
+    private static float PerformCompleteHeatExchange(float δt, float heatcapacityA, float heatcapacityB)
+    {
+        return δt * ((heatcapacityA * heatcapacityB) / (heatcapacityA + heatcapacityB));
+    }
+
     private (PipeNode inlet, PipeNode outlet) GetPipes(EntityUid uidCirculator)
     {
         var nodeContainer = _nodeContainerQuery.GetComponent(uidCirculator);
