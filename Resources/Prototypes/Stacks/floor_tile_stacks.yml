@@ -336,7 +336,7 @@
 
 - type: stack
   id: FloorCarpetBlack
-  name: stack-block-carpet-tile
+  name: stack-black-carpet-tile
   spawn: FloorCarpetItemBlack
   maxCount: 30
 
