@@ -325,22 +325,25 @@ namespace Content.Server.Kitchen.EntitySystems
                 return false;
 
             var inputContainer = _containerSystem.EnsureContainer<Container>(ent, SharedReagentGrinder.InputContainerId);
+            bool hasInserted = false;
 
             // Find every item with the ExtractableComponent and put it into the grinder
             foreach (var (item, _location) in storage.StoredItems)
             {
-                // Skip item if it doesn't have the Extractable component
-                if (!HasComp<ExtractableComponent>(item))
-                    continue;
                 // If the grinder is full, we are done
                 if (inputContainer.ContainedEntities.Count >= ent.Comp.StorageMaxEntities)
                     return true;
+                // Skip item if it doesn't have the Extractable component
+                if (!HasComp<ExtractableComponent>(item))
+                    continue;
                 // Returns false if something we should be able to put in fails to be put in
                 if (!_containerSystem.Insert(item, inputContainer))
                     return false;
+                else
+                    hasInserted = true;
             }
 
-            return true;
+            return hasInserted;
         }
 
         private void ClickSound(Entity<ReagentGrinderComponent> reagentGrinder)
