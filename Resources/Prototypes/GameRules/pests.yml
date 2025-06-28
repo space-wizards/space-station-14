@@ -10,7 +10,7 @@
     - id: LuggageMigration # imp special
     - id: SingleCritter # imp special
     - id: CorpseEjectedFromVents # imp
-#    - id: PleebnarMigration #imp
+    - id: PleebnarMigration #imp
 
 - type: entityTable
   id: SpicyPestEventsTable
