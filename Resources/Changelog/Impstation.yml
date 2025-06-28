@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Fever Dream recipe adjusted for upstream merge
-    type: Tweak
-  id: 1428
-  time: '2025-03-29T12:59:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2132
 - author: AvianMaiden
   changes:
   - message: Syndie helmet is contraband. Also other SWAT tweaks. They're coming for
@@ -4239,3 +4232,10 @@
   id: 1927
   time: '2025-06-28T05:07:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2896
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: The Lecter uses our sprite again.
+    type: Fix
+  id: 1928
+  time: '2025-06-28T20:17:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2900
