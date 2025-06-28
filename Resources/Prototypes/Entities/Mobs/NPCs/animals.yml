@@ -3621,6 +3621,10 @@
   components:
   - type: NameIdentifier
     group: SmartCorgi
+  - type: Grammar
+    attributes:
+      gender: epicene # Gender neutral
+      proper: true
   # Use corgi sprite, need to add handcuff layer
   - type: Sprite
     layers:
@@ -3664,10 +3668,6 @@
   - type: RotationVisuals
     defaultRotation: 90
     horizontalRotation: 180
-  - type: Grammar
-    attributes:
-      gender: epicene # Gender neutral
-      proper: true
   - type: Tag
     tags:
     - VimPilot

@@ -280,12 +280,10 @@
     - SlowedDown
     - Stutter
     - Electrocution
-    - ForcedSleep
     - TemporaryBlindness
     - Pacified
     - Flashed
     - RadiationProtection
-    - Drowsiness
     - Adrenaline
   - type: Buckle
   - type: StandingState
@@ -358,13 +356,11 @@
     - SlowedDown
     - Stutter
     - Electrocution
-    - ForcedSleep
     - TemporaryBlindness
     - Pacified
     - StaminaModifier
     - Flashed
     - RadiationProtection
-    - Drowsiness
     - Adrenaline
   - type: Bloodstream
     bloodMaxVolume: 150

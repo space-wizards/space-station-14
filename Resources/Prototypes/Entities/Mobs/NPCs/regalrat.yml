@@ -126,6 +126,7 @@
   - type: Grammar
     attributes:
       gender: male
+      proper: true
   - type: Sharp
 
 - type: entity
