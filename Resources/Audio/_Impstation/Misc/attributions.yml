@@ -7,3 +7,10 @@
   license: "CC-BY-4.0"
   copyright: "Cthulhu growl.wav by cylon8472"
   source: "https://freesound.org/people/cylon8472/sounds/249686/"
+
+- files:
+  - replicator_sfx1.ogg
+  - replicator_sfx2.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Widgetbeck (github) for Impstation."
+  source: "NA"

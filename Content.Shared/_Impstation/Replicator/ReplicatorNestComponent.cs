@@ -76,7 +76,7 @@ public sealed partial class ReplicatorNestComponent : Component
     /// Does not increase.
     /// </summary>
     [DataField]
-    public int TileConvertAt = 300;
+    public int TileConvertAt = 100;
     /// <summary>
     /// The number of points required to spawn a new replicator.
     /// Increases linearly with the number of unclaimed ghostroles.
@@ -98,7 +98,14 @@ public sealed partial class ReplicatorNestComponent : Component
     public int EndgameLevel = 3;
 
     [DataField]
-    public float TileConversionChance = 0.1f;
+    public int AnnounceAtLevel = 5;
+
+    [DataField]
+    public LocId Announcement = "replicator-level-warning";
+    public bool HasAnnounced;
+
+    [DataField]
+    public float TileConversionChance = 0.05f;
 
     /// <summary>
     /// radius around the nest to convert tiles. increases linearly by TileConversionIncrease with each level after endgame.
@@ -125,6 +132,10 @@ public sealed partial class ReplicatorNestComponent : Component
     public SoundSpecifier FallingSound = new SoundPathSpecifier("/Audio/_Impstation/Effects/falling.ogg");
     [DataField]
     public SoundSpecifier LevelUpSound = new SoundPathSpecifier("/Audio/_Impstation/Ambience/hole_2.ogg");
+    [DataField]
+    public SoundSpecifier UpgradeSound = new SoundPathSpecifier("/Audio/_Impstation/Misc/replicator_sfx2.ogg");
+    [DataField]
+    public SoundSpecifier TilePlaceSound = new SoundPathSpecifier("/Audio/_Impstation/Misc/replicator_sfx1.ogg");
     [DataField]
     public ProtoId<ContentTileDefinition> ConversionTile = "FloorReplicator";
     [DataField]

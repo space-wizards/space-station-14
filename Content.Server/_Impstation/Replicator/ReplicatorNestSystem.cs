@@ -4,32 +4,28 @@
 
 using Content.Server._Impstation.Administration.Components;
 using Content.Server.Actions;
+using Content.Server.Announcements.Systems;
 using Content.Server.Audio;
 using Content.Server.GameTicking;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
-using Content.Server.Spawners.Components;
 using Content.Server.Stunnable;
 using Content.Shared._Impstation.Replicator;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Destructible;
-using Content.Shared.Explosion.Components;
-using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
-using Content.Shared.Mech.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
-using Content.Shared.Objectives.Components;
 using Content.Shared.Pinpointer;
-using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
 using Content.Shared.Whitelist;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Linq;
@@ -53,6 +49,7 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
     [Dependency] private readonly PinpointerSystem _pinpointer = default!;
     [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly AnnouncerSystem _announcer = default!;
 
     public override void Initialize()
     {
@@ -79,6 +76,12 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
                 continue;
 
             var nestComp = falling.FallingTarget.Comp;
+
+            if (!nestComp.HasAnnounced && nestComp.CurrentLevel >= nestComp.AnnounceAtLevel)
+            {
+                nestComp.HasAnnounced = true;
+                _announcer.SendAnnouncement("announce", Filter.Broadcast(), nestComp.Announcement, colorOverride: Color.Red);
+            }
 
             // delete entities that have anything on the blacklist, OR don't have anything on the whitelist AND don't have a mind.
             if (_whitelist.IsBlacklistPass(nestComp.PreservationBlacklist, uid) || !_whitelist.IsWhitelistPass(nestComp.PreservationWhitelist, uid)

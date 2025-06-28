@@ -29,14 +29,14 @@
     mode: SnapgridCenter
   components:
   - type: TimedDespawn
-    lifetime: 1.2
+    lifetime: 0.83
   - type: Transform
     anchored: true
   - type: Sprite
     snapCardinals: true
     layers:
-    - sprite: _Impstation/Effects/teleportvfx.rsi
-      state: replicatorvfx
+    - sprite: _Impstation/Mobs/Replicator/replicator_tileset.rsi
+      state: replicator-tile-anim
       shader: unshaded
     drawdepth: Mobs
   - type: Tag
@@ -51,8 +51,8 @@
     behaviours:
     - !type:FadeBehaviour
       interpolate: Linear
-      minDuration: 1.2
-      maxDuration: 1.2
+      minDuration: 0.83
+      maxDuration: 0.83
       startValue: 0.1
       endValue: 3.5
       property: Energy

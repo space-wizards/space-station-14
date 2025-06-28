@@ -180,7 +180,7 @@ public sealed class ReplicatorSystem : EntitySystem
 
         _appearance.SetData(ent, ReplicatorVisuals.Combat, false);
 
-        if (ent.Comp.Queen && ent.Comp.MyNest == null)
+        if (ent.Comp.Queen)
         {
             foreach (var (uid, comp) in ent.Comp.RelatedReplicators)
                 _popup.PopupEntity(Loc.GetString(comp.QueenDiedMessage), uid, uid, PopupType.LargeCaution);

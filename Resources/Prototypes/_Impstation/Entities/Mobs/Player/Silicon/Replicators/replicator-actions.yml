@@ -26,8 +26,8 @@
 - type: entity
   id: ActionReplicatorUpgrade1
   parent: BaseReplicatorLevelupAction
-  name: Upgrade (Replicator)
-  description: Gather nanites. Begin colonization.
+  name: Downgrade (Replicator)
+  description: Shed nanites. Reconfigure.
   components:
   - type: Action
     itemIconStyle: NoItem

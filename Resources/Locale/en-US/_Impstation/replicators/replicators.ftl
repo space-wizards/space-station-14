@@ -42,6 +42,9 @@ replicator-levelup-confirm = Are you sure? Use the action again to confirm.
 # ninja spawn warning
 terror-replicators = Attention crew, it appears that someone on your station has made an unexpected communication with a distributed machine intelligence in nearby space.
 
+# level 5 nest warning
+replicator-level-warning = Our sensors have detected an exponential increase in machine intelligence signatures aboard the station. Please inform Security if you encounter self-replicating nanites.
+
 # AAC phrases
 
 rep-phrase-query = Query:
