@@ -20,4 +20,4 @@
   components:
   - type: Rehydratable
     possibleSpawns:
-    - ShadowBorgi
+    - ShadowBorgiChassis
