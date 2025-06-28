@@ -184,7 +184,7 @@
     - type: PipeRestrictOverlap
     - type: TegCirculator
       heatCapacity: 10000
-      conductivityConstant: 500
+      conductivityConstant: 2000
     - type: StealTarget
       stealGroup: Teg
 
