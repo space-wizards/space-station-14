@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: Syndie helmet is contraband. Also other SWAT tweaks. They're coming for
-      you.
-    type: Tweak
-  id: 1429
-  time: '2025-03-29T13:03:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2118
 - author: mqole
   changes:
   - message: Derotated cult for the time being.
@@ -4239,3 +4231,13 @@
   id: 1928
   time: '2025-06-28T20:17:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2900
+- author: CrystalClover
+  changes:
+  - message: Added ability to tuck away the wig on the clown mask
+    type: Add
+  - message: Slightly altered all the clown mask sprites to make them more consistent
+      and changed their colours to match department outfits better
+    type: Tweak
+  id: 1929
+  time: '2025-06-28T23:08:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2537
