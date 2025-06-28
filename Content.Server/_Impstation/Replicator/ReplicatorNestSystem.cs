@@ -202,6 +202,8 @@ public sealed class ReplicatorNestSystem : SharedReplicatorNestSystem
             if (upgradedQueen is not { } upgradedQueenNotNull || !TryComp<MindContainerComponent>(upgradedQueen, out var mindContainer) || mindContainer.Mind is not { } mind)
                 return;
 
+            queen = upgradedQueenNotNull;
+
             if (!mindContainer.HasMind)
                 upgradedComp.Actions.Add(_actions.AddAction(upgradedQueenNotNull, upgradedComp.SpawnNewNestAction));
             else
