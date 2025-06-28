@@ -60,11 +60,11 @@ namespace Content.Client.Inventory
                 return;
 
             // If nothing changed, just skip the update.
-            if (state.Template == ent.Comp.TemplateId && state.Species == ent.Comp.SpeciesId)
+            if (state.TemplateId == ent.Comp.TemplateId && state.SpeciesId == ent.Comp.SpeciesId)
                 return;
 
-            ent.Comp.TemplateId = state.Template;
-            ent.Comp.SpeciesId = state.Species;
+            ent.Comp.TemplateId = state.TemplateId;
+            ent.Comp.SpeciesId = state.SpeciesId;
 
             UpdateInventoryTemplate(ent);
         }
@@ -74,13 +74,13 @@ namespace Content.Client.Inventory
             if (!TryComp<InventorySlotsComponent>(ent, out var slots))
                 return;
 
-            if (!_proto.TryIndex(ent.Comp.TemplateId, out var index))
+            if (!_proto.TryIndex(ent.Comp.TemplateId, out var template))
                 return;
 
-            ent.Comp.Slots = index.Slots;
+            ent.Comp.Slots = template.Slots;
             ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
 
-            // Remove any slots from the inventory slots that arent in the new updated template.
+            // Remove any slots that are not in new template
             foreach (var slot in slots.SlotData)
             {
                 if (ent.Comp.Slots.Any(s => s.Name == slot.Key))
@@ -98,7 +98,7 @@ namespace Content.Client.Inventory
                 TryAddSlotDef(ent, slots, slot);
             }
 
-            // As the contaienrs got cleared, we need to reassign them to ensure they're all in the same order as the slots.
+            // As the containers got cleared, we need to reassign them to ensure they're all in the same order as the slots.
             // And they need to be in the same order cause inventory enumeration expects them to be.
             for (var i = 0; i < ent.Comp.Containers.Length; i++)
             {
@@ -258,12 +258,11 @@ namespace Content.Client.Inventory
         {
             SlotData newSlotData = newSlotDef; //convert to slotData
             if (!component.SlotData.Remove(newSlotDef.Name))
-            {
                 return false;
-            }
 
             if (owner == _playerManager.LocalEntity)
                 OnSlotRemoved?.Invoke(newSlotData);
+
             return true;
         }
 
@@ -273,21 +272,21 @@ namespace Content.Client.Inventory
         /// <param name="ent">Entity to update.</param>
         public void UpdateContainerData(Entity<InventorySlotsComponent> ent)
         {
-            if (TryGetSlots(ent, out var definitions))
+            if (!TryGetSlots(ent, out var definitions))
+                return;
+
+            foreach (var definition in definitions)
             {
-                foreach (var definition in definitions)
+                if (!TryGetSlotContainer(ent, definition.Name, out var container, out _))
+                    continue;
+
+                if (!ent.Comp.SlotData.TryGetValue(definition.Name, out var data))
                 {
-                    if (!TryGetSlotContainer(ent, definition.Name, out var container, out _))
-                        continue;
-
-                    if (!ent.Comp.SlotData.TryGetValue(definition.Name, out var data))
-                    {
-                        data = new SlotData(definition);
-                        ent.Comp.SlotData[definition.Name] = data;
-                    }
-
-                    data.Container = container;
+                    data = new SlotData(definition);
+                    ent.Comp.SlotData[definition.Name] = data;
                 }
+
+                data.Container = container;
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using Content.Shared.DisplacementMap;
-using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -42,13 +41,13 @@ public sealed partial class InventoryComponent : Component
 [Serializable, NetSerializable]
 public sealed class InventoryComponentState : ComponentState
 {
-    public ProtoId<InventoryTemplatePrototype> Template;
-    public string? Species;
+    public ProtoId<InventoryTemplatePrototype> TemplateId;
+    public string? SpeciesId;
 
     public InventoryComponentState(ProtoId<InventoryTemplatePrototype> template, string? species)
     {
-        Template = template;
-        Species = species;
+        TemplateId = template;
+        SpeciesId = species;
     }
 }
 
