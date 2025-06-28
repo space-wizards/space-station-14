@@ -132,8 +132,8 @@
         key: KnockedDown
         time: 2.0
         type: Remove
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         time: 15.0
         type: Add
 
