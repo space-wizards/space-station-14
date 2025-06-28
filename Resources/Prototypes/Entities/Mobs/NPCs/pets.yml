@@ -354,6 +354,8 @@
     spawned:
     - id: FoodMeat
       amount: 3
+    - id: MetalGear # Get it?
+      amount: 1
   - type: InteractionPopup
     successChance: 1
     interactSuccessString: petting-success-sloth
