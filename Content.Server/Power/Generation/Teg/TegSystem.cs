@@ -192,7 +192,7 @@ public sealed class TegSystem : EntitySystem
             // Numerically limited heat transfer is described as:
             // Q = ΔT * (C_A * C_B / C_A + C_B)
             // Limit transfer to the maximum amount of energy we can generate this tick.
-            var transfer = Math.Min(dT * ((circA_C * circB_C) / (circA_C + circB_C)), transferMax);
+            var transfer = Math.Min(PerformCompleteHeatExchange(dT, circA_C, circB_C), transferMax);
 
             electricalEnergy = transfer * N * component.PowerFactor;
 
