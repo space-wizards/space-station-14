@@ -393,11 +393,34 @@ public sealed class TegSystem : EntitySystem
         float dt)
     {
         // Prevent heat transfer if there isn't any gas in the circulator.
-        if (air.TotalMoles == 0)
+        // Also prevent heat transfer if the mixtures are effectively equal in temperature.
+        var δt = air.Temperature - comp.CirculatorTemperature;
+        if (air.TotalMoles == 0 || MathF.Abs(δt) < Atmospherics.MinimumTemperatureDeltaToConsider)
             return;
 
         // Heat transfer is calculated as
-        var dQ = comp.ConductivityConstant * (air.Temperature - comp.CirculatorTemperature) * dt;
+        var dQ = comp.ConductivityConstant * δt * dt;
+
+        /*
+        We need to prevent heat transfer beyond atmospherics Tmax, or else
+        the TEG will violate thermodynamics.
+
+        You can test this by attempting to run very small molar amounts of gas (ex. 0.003 mol plasma).
+        If the sides do not rapidly start to equalize in temperature, you have formed a heat void.
+
+        This is because Atmospherics caps heat at Atmospherics.Tmax, but the method will gladly
+        transfer heat to the gas, effectively voiding it.
+        */
+
+        // Establish the δt required to reach atmospherics Tmax.
+        var δtmax = air.Temperature - Atmospherics.Tmax;
+
+        // This is the amount of heat that needs to be transferred to hit Tmax on the air.
+        var dQMax = PerformCompleteHeatExchange(δtmax, comp.HeatCapacity, heatCapacity);
+
+        // Clamp. This effectively clamps exchanger -> gas heat transfer, while allowing unrestricted
+        // gas -> exchanger heat transfer.
+        dQ = MathF.Max(dQ, dQMax);
 
         comp.CirculatorTemperature += dQ / comp.HeatCapacity;
         air.Temperature -= dQ / heatCapacity;
