@@ -100,7 +100,7 @@ public sealed class HealingSystem : EntitySystem
         if (target.Owner != args.User)
         {
             _adminLogger.Add(LogType.Healed,
-                $"{ToPrettyString(args.User):user} healed {ToPrettyString(entity.Owner):target} for {total:damage} damage");
+                $"{ToPrettyString(args.User):user} healed {ToPrettyString(target.Owner):target} for {total:damage} damage");
         }
         else
         {
