@@ -20,7 +20,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Linq;
-using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 
 namespace Content.Shared.Flash;
 
