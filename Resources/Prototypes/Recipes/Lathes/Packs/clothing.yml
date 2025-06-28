@@ -10,7 +10,6 @@
 - type: latheRecipePack
   id: ClothingCargo
   recipes:
-  - ClothingHeadHatBeretCargo
   - ClothingUniformJumpsuitCargo
   - ClothingUniformJumpskirtCargo
   - ClothingUniformJumpsuitSalvageSpecialist
