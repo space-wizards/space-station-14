@@ -24,12 +24,15 @@
       stash: !type:ContainerSlot {}
 
 ## Plushies
+# imp comment: The difference between a "squeaky toy" and a "plushie" is that plushies have stashes and
+# are made of cloth (edible by moths). BaseSqueakyToy is at _DEN/Entities/Objects/Fun/toys.yml
 
 - type: entity
-  parent: [BaseItem, BaseStash]
+  parent: [BaseSqueakyToy, BaseStash] # DEN: BaseItem -> BaseSqueakyToy
   id: BasePlushie
   abstract: true
   components:
+    # DEN: Moved EmitSoundOnUse, EmitSoundOnActivate, EmitSoundOnCollide, EmitSoundOnLand, EmitSoundOnTrigger, UseDelay, MeleeWeapon, DamageOtherOnHit, and StaticPrice into BaseSqueakyToy.
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
   - type: Tag
@@ -37,36 +40,9 @@
       - Payload
       - ClothMade
       - Plushie #imp
-  - type: EmitSoundOnUse
-    sound:
-      collection: ToySqueak
-  - type: EmitSoundOnActivate
-    sound:
-      collection: ToySqueak
-  - type: EmitSoundOnCollide
-    sound:
-      collection: ToySqueak
-  - type: EmitSoundOnLand
-    sound:
-      collection: ToyFall
-  - type: EmitSoundOnTrigger
-    sound:
-      collection: ToySqueak
-  - type: UseDelay
-    delay: 1.0
-  - type: MeleeWeapon
-    wideAnimationRotation: 180
-    soundHit:
-      collection: ToySqueak
-    damage:
-      types:
-        Blunt: 0
-    hidden: true
   - type: PhysicalComposition
     materialComposition:
       Cloth: 100
-  - type: StaticPrice
-    price: 5
   - type: Food
     requiresSpecialDigestion: true
     useSound:
@@ -82,7 +58,6 @@
   # imp edits #
   - type: StealTarget
     stealGroup: Plushie
-  - type: DamageOtherOnHit
   # end imp edits #
 
 - type: entity

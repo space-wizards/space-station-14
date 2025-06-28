@@ -1,0 +1,49 @@
+# SPDX-FileCopyrightText: 2025 portfiend <109661617+portfiend@users.noreply.github.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+# a lot of neutral, light colors, and pastels
+# inspired by real yarn/fabric colors
+- type: palette
+  id: Teddybear
+  name: teddy bear
+  colors:
+    hickory: "#9d6854"
+    buoy: "#f96237"
+    tangerine twist: "#fe7f3c"
+    sweet potato: "#f29131"
+    sand dunes: "#cc9975"
+    canvas: "#eacfb5"
+    semolina: "#fed173"
+    sunny day: "#fbcb49"
+    ghee: "#f7eb73"
+    vanilla cream: "#fffbe5"
+    electric lime: "#a5ee31"
+    lawn: "#5fb766"
+    turf: "#9ee3af"
+    tidewater: "#01c4b4"
+    wave: "#98e1df"
+    great reef: "#0dbbf0"
+    wisp: "#dbe2e7"
+    blue steel: "#819eb7"
+    chambray: "#adc6e3"
+    true blue: "#3476dd"
+    royal purple: "#a367e7"
+    french lilac: "#d5c6e3"
+    sweet valley: "#fb85b9"
+    dusty pink: "#d89da7"
+    bistro: "#f37872"
+    snow: "#e2dedf"
+    light gray: "#afb2b4"
+    dark gray: "#777879"
+    black: "#333335"
+
+- type: palette
+  id: TeddybearAccent
+  name: teddy bear accent
+  colors:
+    white: "#ffffff"
+    canvas: "#eacfb5"
+    vanilla cream: "#fffbe5"
+    snow: "#e2dedf"
+    light gray: "#d6d6d6"

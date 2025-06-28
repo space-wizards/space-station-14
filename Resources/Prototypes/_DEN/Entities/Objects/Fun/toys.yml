@@ -1,0 +1,119 @@
+# SPDX-FileCopyrightText: 2025 portfiend <109661617+portfiend@users.noreply.github.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+- type: entity
+  parent: BaseItem
+  id: BaseSqueakyToy
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+  - type: Tag
+    tags:
+      - Payload
+      - Plushie # imp
+  - type: EmitSoundOnUse
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnActivate
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnCollide
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnLand
+    sound:
+      collection: ToyFall
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: ToySqueak
+  - type: UseDelay
+    delay: 1.0
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+  - type: DamageOtherOnHit
+  - type: StaticPrice
+    price: 5
+
+- type: entity
+  parent: BaseSqueakyToy
+  id: SqueakySmileyGuy
+  name: smiley guy
+  description: Socially acceptable toy for the kind of office desk worker whose job makes them want to become a serial killer. # also known as a "stress toy"
+  components:
+    - type: Sprite
+      sprite: _DEN/Objects/Fun/littlesteve.rsi
+      layers:
+        - state: icon
+          color: "#EDE74E"
+          map: ["enum.DamageStateVisualLayers.Base"]
+    - type: Item
+      inhandVisuals:
+        left:
+          - state: inhand-left
+            color: "#EDE74E"
+            map: ["enum.DamageStateVisualLayers.Base"]
+        right:
+          - state: inhand-right
+            color: "#EDE74E"
+            map: ["enum.DamageStateVisualLayers.Base"]
+
+- type: entity
+  parent: SqueakySmileyGuy
+  id: SqueakySmileyGuyRandom
+  suffix: random appearance
+  components:
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            icon: PlasticToy
+
+- type: entity
+  parent: SqueakySmileyGuy
+  id: SqueakySmileyBall
+  name: smiley ball
+  description: This thing is squishy and full of slime. Just like you!
+  components:
+    - type: Sprite
+      sprite: _DEN/Objects/Fun/smileyball.rsi
+
+- type: entity
+  parent: SqueakySmileyBall
+  id: SqueakySmileyBallRandom
+  suffix: random appearance
+  components:
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            icon: PlasticToy
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieAlienGerm
+  name: alien germ plushie
+  description: A stuffed toy that resembles a... UFO? Alien? Germ? It looks at you pleadingly.
+  components:
+    - type: Sprite
+      sprite: _DEN/Objects/Fun/ufoplushie.rsi
+      state: icon
+
+# accidentally made the sprite too small at first but i didnt want to throw it out so you get a little one.
+- type: entity
+  parent: PlushieAlienGerm
+  id: PlushieAlienGermMini
+  name: mini alien germ plushie
+  description: A stuffed toy that resembles a... UFO? Alien? Germ? This one is very small.
+  components:
+    - type: Sprite
+      state: small
+    - type: Item
+      size: Tiny
+    - type: SecretStash
+      maxItemSize: Tiny

@@ -89,6 +89,26 @@
     - id: ToyRubberDuck
       prob: 0.82
       orGroup: Prize
+      # DEN begin
+    - id: PlushieTeddyBear
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieTeddyBearRecolorableRandom
+      prob: 0.82
+      orGroup: Prize
+    - id: PlushieAlienGerm
+      prob: 0.82
+      orGroup: Prize
+    - id: SqueakySmileyGuyRandom
+      prob: 0.82
+      orGroup: Prize
+    - id: SqueakySmileyGuy
+      prob: 0.82
+      orGroup: Prize
+    - id: SqueakySmileyBall
+      prob: 0.82
+      orGroup: Prize
+      # DEN end
     # SR rarity - variants of R rarity plushies or otherwise uncommon finds. deities etc
     - id: PrizeTicketSilver
       prob: 0.15
@@ -147,6 +167,14 @@
     - id: PlushieXeno
       prob: 0.15
       orGroup: Prize
+      # DEN begin
+    - id: SqueakySmileyBallRandom
+      prob: 0.15
+      orGroup: Prize
+    - id: PlushieAlienGermMini
+      prob: 0.15
+      orGroup: Prize
+      # DEN end
     # SSR rarity - getting these should feel like winning the lottery. all blorbo plushies go here also
     - id: PrizeTicketGold
       prob: 0.03

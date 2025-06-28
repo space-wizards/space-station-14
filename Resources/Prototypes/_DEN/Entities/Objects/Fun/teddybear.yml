@@ -1,0 +1,150 @@
+# SPDX-FileCopyrightText: 2025 portfiend <109661617+portfiend@users.noreply.github.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieTeddyBear
+  name: teddy bear
+  description: Because everybody needs a friend. # reference to no joke the worst movie i have seen in my life
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Fun/teddybear.rsi
+    state: teddybear
+    layers:
+    - state: teddybear
+    - state: teddybear_ribbon
+      map: [ "ribbon" ]
+      visible: false
+  - type: Item
+    inhandVisuals: # TODO: get itemmapper inhands to work
+      left:
+      - state: teddybear-inhand-left
+      right:
+      - state: teddybear-inhand-right
+  - type: ItemSlots
+    slots:
+      ribbon:
+        name: ribbon
+        startingItem: ClothingNeckTeddyRibbon
+        whitelist:
+          tags:
+          - TeddyRibbon
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+      ribbon: !type:ContainerSlot {}
+  - type: EntityTableContainerFill
+    containers:
+      stash: !type:NestedSelector
+        tableId: RandomPlushieHeart
+  - type: ItemMapper
+    spriteLayers:
+    - ribbon
+    mapLayers:
+      ribbon:
+        whitelist:
+          tags:
+          - TeddyRibbon
+  - type: Appearance
+
+- type: entity
+  parent: PlushieTeddyBear
+  id: PlushieTeddyBearRecolorable
+  suffix: recolorable
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Fun/teddybear.rsi
+    state: teddybear
+    layers:
+    - state: teddybear_base
+      color: "#cc9975"
+      map: [ "base" ]
+    - state: teddybear_accent
+      map: [ "accent" ]
+    - state: teddybear_ribbon
+      map: [ "ribbon" ]
+      visible: false
+  - type: Item
+    inhandVisuals: # TODO: get itemmapper inhands to work
+      left:
+      - state: teddybear_base-inhand-left
+        color: "#cc9975"
+        map: [ "base" ]
+      - state: teddybear_accent-inhand-left
+        map: [ "accent" ]
+      # - state: teddybear_ribbon-inhand-left
+      #   map: [ "ribbon" ]
+      right:
+      - state: teddybear_base-inhand-right
+        color: "#cc9975"
+        map: [ "base" ]
+      - state: teddybear_accent-inhand-right
+        map: [ "accent" ]
+      # - state: teddybear_ribbon-inhand-right
+      #   map: [ "ribbon" ]
+
+- type: entity
+  parent: PlushieTeddyBearRecolorable
+  id: PlushieTeddyBearRecolorableRandom
+  name: teddy bear
+  suffix: random appearance
+  components:
+  - type: RandomSprite
+    getAllGroups: true
+    available:
+    - base:
+        teddybear_base: Teddybear
+        teddybear_base_plaid: Teddybear
+    - accent:
+        teddybear_accent: TeddybearAccent
+        teddybear_accent_muzzle: TeddybearAccent
+        teddybear_accent_plain: TeddybearAccent
+  - type: Item
+    inhandVisuals: # TODO: get itemmapper inhands to work
+      left:
+      - state: teddybear_base-inhand-left
+        map: [ "base" ]
+      - state: teddybear_accent-inhand-left
+        map: [ "accent" ]
+      right:
+      - state: teddybear_base-inhand-right
+        map: [ "base" ]
+      - state: teddybear_accent-inhand-right
+        map: [ "accent" ]
+
+# TODO: allow this to be recolorable and reflect that dynamically on the bear sprite
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTeddyRibbon
+  name: teddy bear ribbon
+  description: A nice ribbon for your teddy bear.
+  components:
+  - type: Sprite
+    sprite: _DEN/Clothing/Neck/Misc/teddyribbon.rsi
+  - type: Clothing
+    sprite: _DEN/Clothing/Neck/Misc/teddyribbon.rsi
+  - type: Tag
+    tags:
+    - TeddyRibbon
+    - ClothMade
+    - WhitelistChameleon
+
+- type: entity
+  parent: BaseSqueakyToy
+  id: PlushieHeartInsert
+  name: plush heart insert
+  description: "Fun fact: a plushie can survive just fine without this."
+  components:
+  - type: Sprite
+    sprite: _DEN/Objects/Fun/teddybear.rsi
+    state: plush_heart
+
+- type: entityTable
+  id: RandomPlushieHeart
+  table: !type:GroupSelector
+    children:
+    - id: PlushieHeartInsert
+      weight: 9
+    - id: OrganHumanHeart
+      weight: 1

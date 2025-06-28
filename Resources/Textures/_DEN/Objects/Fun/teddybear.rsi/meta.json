@@ -1,0 +1,67 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Sprites by portfiend",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "teddybear"
+        },
+        {
+            "name": "teddybear-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "teddybear-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "teddybear_base"
+        },
+        {
+            "name": "teddybear_base-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "teddybear_base-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "teddybear_base_plaid"
+        },
+        {
+            "name": "teddybear_accent"
+        },
+        {
+            "name": "teddybear_accent-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "teddybear_accent-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "teddybear_accent_muzzle"
+        },
+        {
+            "name": "teddybear_accent_plain"
+        },
+        {
+            "name": "teddybear_ribbon"
+        },
+        {
+            "name": "teddybear_ribbon-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "teddybear_ribbon-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "plush_heart"
+        }
+    ]
+}

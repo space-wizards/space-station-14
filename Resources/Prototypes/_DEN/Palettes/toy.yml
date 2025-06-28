@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: 2025 portfiend <109661617+portfiend@users.noreply.github.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+- type: palette
+  id: PlasticToy
+  name: bright toy
+  colors:
+    red: "#c54630"
+    orange: "#e96c32"
+    tangerine: "#f1a532"
+    yellow: "#ede74e"
+    lime: "#9ee023"
+    green: "#0dad1a"
+    mint: "#51e0aa"
+    cyan: "#3cdde9"
+    light blue: "#1990e0"
+    blue: "#314ada"
+    purple: "#813cd1"
+    magenta: "#d41ecb"
+    pink: "#ee90c7"
+    rose: "#e65b6e"
+    white: "#e2e2de"
+    light gray: "#a4abb4"
+    dark gray: "#747a80"
+    black: "#494b52"

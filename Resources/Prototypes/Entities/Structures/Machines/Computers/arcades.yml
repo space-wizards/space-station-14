@@ -171,6 +171,15 @@
     - PlushieKodepiia
     - PetRockCarrier
     - WeaponLauncherRocketToy
+    # DEN content, imp addition
+    - PlushieTeddyBear
+    - PlushieTeddyBearRecolorableRandom
+    - SqueakySmileyGuy
+    - SqueakySmileyGuyRandom
+    - SqueakySmileyBall
+    - PlushieAlienGerm
+    - PlushieAlienGermMini
+    # end DEN content
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade

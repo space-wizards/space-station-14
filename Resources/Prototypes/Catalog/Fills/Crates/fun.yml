@@ -75,6 +75,25 @@
       weight: 0.5
     - id: PlushieGriffy
     # imp edit end
+    # DEN begin
+    - !type:GroupSelector
+      children:
+      - id: PlushieTeddyBear
+      - id: PlushieTeddyBearRecolorableRandom
+    - !type:GroupSelector
+      children:
+      - id: SqueakySmileyGuy
+      - id: SqueakySmileyGuyRandom
+    - !type:GroupSelector
+      children:
+      - id: SqueakySmileyBall
+      - id: SqueakySmileyBallRandom
+        weight: 0.3 # rare color variant...
+    - !type:GroupSelector
+      children:
+      - id: PlushieAlienGerm
+      - id: PlushieAlienGermMini
+    # DEN end
 
 - type: entity
   id: CrateFunPlushie
