@@ -1,40 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: The Security Poncho is now selectable in the loadout menu!
-    type: Add
-  - message: Ushankas are now more obtainable. Keep your head warm!
-    type: Add
-  id: 1422
-  time: '2025-03-28T22:04:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2119
-- author: DinnerCalzone
-  changes:
-  - message: Wall rechargers now behave more like other wall-mounted devices and can
-      be constructed through the construction menu.
-    type: Tweak
-  id: 1423
-  time: '2025-03-28T22:05:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2086
-- author: TheGrimbeeper
-  changes:
-  - message: Fixed artifact grid knockdown! Now chemists can once again spill their
-      entire jug due to a scientist on the other end of the station! Yippee!
-    type: Fix
-  id: 1424
-  time: '2025-03-28T22:35:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2121
-- author: Mousetrinity
-  changes:
-  - message: The monochrome cloak! It functions the same as the kaiju cloak, but you
-      should be shamed for buying this one.
-    type: Add
-  - message: The monochrome cloak will now be provided to fugitives. Chances of moths,
-      thaven and lizards escaping officers have increased!
-    type: Tweak
-  id: 1425
-  time: '2025-03-29T12:44:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2108
 - author: DinnerCalzone
   changes:
   - message: Fixed drones not fitting inside cyborg recharging stations.
@@ -4247,3 +4211,33 @@
   id: 1921
   time: '2025-06-28T03:59:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2884
+- author: meridiadottxt
+  changes:
+  - message: added the GX-14 Liquidator, an admin spawn only death squad shuttle
+    type: Add
+  id: 1922
+  time: '2025-06-28T04:02:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2885
+- author: maelines
+  changes:
+  - message: You can look evil and fucked up and dark-sided.... ("Gloomy" marking
+      for Human, Dwarves, Slime-folk and Thaven.)
+    type: Add
+  id: 1923
+  time: '2025-06-28T04:04:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2892
+- author: mqole
+  changes:
+  - message: Random character appearances have gotten even zanier.
+    type: Tweak
+  id: 1924
+  time: '2025-06-28T04:01:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2855
+- author: Mousetrinity
+  changes:
+  - message: hear ye hear ye! the rules of the initial infected have been slightly
+      changed and clarified in the guidebook! take a peep!
+    type: Tweak
+  id: 1925
+  time: '2025-06-28T04:03:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2767
