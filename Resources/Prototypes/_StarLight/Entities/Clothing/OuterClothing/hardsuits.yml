@@ -100,7 +100,7 @@
     clothingPrototype: ClothingHeadHelmetBattlesuitClown
 #Mercenary Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseMajorContraband]
+  parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ]
   id: ClothingOuterHardsuitMercenary
   name: mercenary hardsuit
   description: It's a hardsuit. It could stop a bullet. It's sealed with top of the line duct tape. 

@@ -203,3 +203,144 @@
   - SalvageConsumeables
   conditions:
   - !type:BuyerAccessCondition
+
+#Merc Stuff
+- type: listing
+  id: VendorClothingBackpackMerc
+  productEntity: ClothingBackpackMerc
+  cost:
+    SalvageTicket: 150
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingMaskBandMerc
+  productEntity: ClothingMaskBandMerc
+  cost:
+    SalvageTicket: 25
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingHeadBandMerc
+  productEntity: ClothingHeadBandMerc
+  cost:
+    SalvageTicket: 25
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingHeadHatBeretMerc
+  productEntity: ClothingHeadHatBeretMerc
+  cost:
+    SalvageTicket: 25
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingShoesBootsMerc
+  productEntity: ClothingShoesBootsMerc
+  cost:
+    SalvageTicket: 150
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingHandsMercGlovesCombat
+  productEntity: ClothingHandsMercGlovesCombat
+  cost:
+    SalvageTicket: 150
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingHandsGlovesMercFingerless
+  productEntity: ClothingHandsGlovesMercFingerless
+  cost:
+    SalvageTicket: 25
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingMaskGasMerc
+  productEntity: ClothingMaskGasMerc
+  cost:
+    SalvageTicket: 150
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingEyesGlassesMercenary
+  productEntity: ClothingEyesGlassesMercenary
+  cost:
+    SalvageTicket: 25
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingOuterHardsuitMercenary
+  productEntity: ClothingOuterHardsuitMercenary
+  cost:
+    SalvageTicket: 250
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingHeadHelmetMerc
+  productEntity: ClothingHeadHelmetMerc
+  cost:
+    SalvageTicket: 150
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingUniformJumpsuitMercenary
+  productEntity: ClothingUniformJumpsuitMercenary
+  cost:
+    SalvageTicket: 25
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingOuterVestWebMerc
+  productEntity: ClothingOuterVestWebMerc
+  cost:
+    SalvageTicket: 200
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: VendorClothingBeltMercWebbing
+  productEntity: ClothingBeltMercWebbing
+  cost:
+    SalvageTicket: 150
+  categories:
+  - MercenaryEquipment
+  conditions:
+  - !type:BuyerAccessCondition

@@ -119,7 +119,7 @@
 
 - type: entity
   name: survival knife
-  parent: [BaseSecurityCargoContraband, CombatKnife]
+  parent: [ BaseSecurityMiningSalvageContraband, CombatKnife ]
   id: SurvivalKnife
   description: Weapon of first and last resort for combatting space carp.
   components:

@@ -280,8 +280,8 @@
 
 - type: listing
   id: SpellbookStaffRGB
-  name: spellbook-staff-RGB-name
-  description: spellbook-staff-RGB-description
+  name: RGB Staff
+  description: Helps fix the underabundance of RGB gear on the station.
   productEntity: RGBStaff
   cost:
     WizCoin: 0
