@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Fixed zombified monkeys not doing anything.
-    type: Fix
-  id: 1417
-  time: '2025-03-28T21:54:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2085
 - author: jtfg-dev
   changes:
   - message: Echolalia will now be sent to chat (for players), and has a unique speech
@@ -4234,3 +4227,10 @@
   id: 1916
   time: '2025-06-28T03:02:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2890
+- author: honeyed-lemons
+  changes:
+  - message: Genpop has been added to Xeno! Hurray!
+    type: Add
+  id: 1917
+  time: '2025-06-28T03:03:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2886
