@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: jtfg-dev
-  changes:
-  - message: Echolalia will now be sent to chat (for players), and has a unique speech
-      verb!
-    type: Tweak
-  - message: Soulless players, and birds *with* souls, no longer echo. (Intentional
-      game design.)
-    type: Fix
-  id: 1418
-  time: '2025-03-28T21:56:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2129
 - author: Sha-Seng
   changes:
   - message: Adjusted greycloaks and hoods on thaven, grays, and snails
@@ -4234,3 +4223,12 @@
   id: 1917
   time: '2025-06-28T03:03:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2886
+- author: astral_amy
+  changes:
+  - message: There are now sentry turrets defending the most secure parts of Bedlam.
+    type: Add
+  - message: Bedlam's Science department now has a resource silo!
+    type: Add
+  id: 1918
+  time: '2025-06-28T03:04:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2880
