@@ -2,10 +2,11 @@
   abstract: true
   parent: MobAdmemeCorgi
   id: BaseBorgiChassis
-  name: Borgi
-  description: A corgi-machine hybrid that assists in station activity. It loves being asked to state its laws and to chase its tail.
   save: false
   components:
+  - type: RandomMetadata
+    nameSegments:
+    - NamesBorgi
   - type: ShowJobIcons
   - type: Reactive
     groups:
@@ -122,6 +123,11 @@
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
+  - type: SiliconLawProvider
+    laws: BorgiLawset
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
   - type: InteractionPopup
     interactSuccessString: petting-success-dog
     interactFailureString: petting-failure-generic
@@ -140,7 +146,6 @@
       - BorgModuleCargo
       - BorgModuleMedical
       - BorgModuleSyndicate # allow installing a Esword into borgis.
-      - BorgModuleSyndicateAssault # allow installing a l6c into borigs!
     hasMindState: corgitag
     noMindState: corgitag
   - type: LockingWhitelist
@@ -166,7 +171,6 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellHyper
   - type: StatusEffects
     allowed:
     - Stun
@@ -175,6 +179,7 @@
     - Flashed
   - type: TypingIndicator
     proto: robot
+  - type: DamagedSiliconAccent
   - type: UnblockableSpeech
   - type: Construction
     graph: Cyborg
@@ -192,7 +197,7 @@
   - type: GuideHelp
     guides:
     - Cyborgs
-  # Borgis by-and-large can't wear space suits so this helps mitigate that trouble somewhat where needed
+  # Borgis by-and-large can't wear all space suits so this helps mitigate that trouble somewhat where needed
   - type: Barotrauma
     maxDamage: 25
     damage:
@@ -202,55 +207,6 @@
     coldDamage:
       types:
         Cold: 0.03
-
-# Custom action for later modification for borgi.
-- type: entity
-  id: ActionBorgiPlayMidi
-  name: Play Guitar
-  description: Open your internal BASS GUITAR MIDI interface to soothe the station.
-  components:
-  - type: Action
-    checkCanInteract: false
-    checkConsciousness: false
-    useDelay: 1
-    itemIconStyle: NoItem
-    icon: Interface/Actions/pai-midi.png
-  - type: InstantAction
-    event: !type:OpenUiActionEvent
-      key: enum.InstrumentUiKey.Key
-
-- type: entity
-  parent: MobAdmemeCorgi
-  id: SmartCorgi
-  name: Smart Corgi
-  description: An unusually smart dog.
-  suffix: Default
-  components:
-  - type: RandomMetadata
-    nameSegments:
-    - NamesCorgi
-  # Custom inventory template
-  - type: Inventory
-    speciesId: dog
-    templateId: smartpetborgi
-
-- type: entity
-  parent: BaseBorgiChassis
-  id: BorgiVulnerable
-  name: Borgi
-  components:
-  - type: SiliconLawProvider
-    laws: BorgiLawset
-  - type: EmagSiliconLaw
-    stunTime: 5
-  - type: ReplacementAccent
-    accent: dog
-  - type: RandomMetadata
-    nameSegments:
-    - NamesBorgi
-  - type: ActionGrant
-    actions:
-    - ActionViewLaws
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
@@ -259,86 +215,77 @@
     channels:
     - Binary
 
+
 - type: entity
   parent: BaseBorgiChassis
-  id: SmartBorgiVulnerable
+  id: BaseStationBorgiChassis
   name: Smart Borgi
+  description: A unusually smart dog, loves stating it's laws.
+  abstract: true
   components:
-  - type: SiliconLawProvider
-    laws: BorgiLawset
-  - type: EmagSiliconLaw
-    stunTime: 5
-  - type: RandomMetadata
-    nameSegments:
-    - NamesBorgi
-  - type: ActionGrant
-    actions:
-    - ActionViewLaws
-  - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: ActiveRadio
-    channels:
-    - Binary
+    - type: EmagSiliconLaw
+      stunTime: 5
+    - type: BorgTransponder
+      sprite:
+        sprite: Mobs/Pets/corgi.rsi
+        state: corgi
+      name: borgi
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: CyborgControl
+      transmitFrequencyId: RoboticsConsole
+      savableAddress: false
+    - type: AutomatedTimer
+    - type: ExplodeOnTrigger #bad borgis get exploded.
+    - type: Explosive
+      explosionType: Minibomb
+      deleteAfterExplosion: false # let damage threshold gib the borgi
+      totalIntensity: 200
+      intensitySlope: 100
+      maxIntensity: 60
+      canCreateVacuum: false # its for killing the borg not the station
+    - type: OnUseTimerTrigger
+      delay: 10
+      examinable: false
+      beepSound: # it is LITERALLY a minibomb in their chassis.
+        path: /Audio/Effects/minibombcountdown.ogg
+        params:
+          volume: 12
+    - type: IonStormTarget
 
 - type: entity
-  parent: BaseBorgiChassis
-  id: SubWooferVulnerable
-  name: SubWoofer
-  description: A smart dog, with an obsession for sick bass beats.
+  parent: BaseStationBorgiChassis
+  id: StationBorgiChassis
+  name: Borgi
+  description: A unusually smart dog, loves stating it's laws.
   components:
-  - type: SiliconLawProvider
-    laws: BorgiLawset
-  - type: EmagSiliconLaw
-    stunTime: 5
   - type: ReplacementAccent
     accent: dog
-  - type: RandomMetadata
-    nameSegments:
-    - NamesBorgi
-  - type: ActionGrant
-    actions:
-    - ActionViewLaws
-    - ActionBorgiPlayMidi
-  - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: ActiveRadio
-    channels:
-    - Binary
 
 - type: entity
-  parent: BaseBorgiChassis
-  id: SmartSubWooferVulnerable
+  parent: BaseStationBorgiChassis
+  id: SmartSubwooferBorgiChassis
   name: Smart SubWoofer
-  description: An unusually smart dog, with an obsession for sick bass beats.
+  description: An unusually smart dog, with an obsession for sick bass beats and stating laws.
   components:
-  - type: SiliconLawProvider
-    laws: BorgiLawset
-  - type: EmagSiliconLaw
-    stunTime: 5
-  - type: RandomMetadata
-    nameSegments:
-    - NamesBorgi
   - type: ActionGrant
     actions:
-    - ActionViewLaws
     - ActionBorgiPlayMidi
-  - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: ActiveRadio
-    channels:
-    - Binary
+
+- type: entity
+  parent: SmartSubwooferBorgiChassis
+  id: SubwooferBorgiChassis
+  name: SubWoofer
+  description: A smart dog, with an obsession for sick bass beats and stating laws.
+  components:
+  - type: ReplacementAccent
+    accent: dog
 
 # Syndicate Borgi
 
 - type: entity
   parent: BaseBorgiChassis
-  id: SyndiCorgi
+  id: BaseSyndicateBorgiChassis
   name: Syndi Borgi
   description: An unusually smart dog, but hell bent on MURDER.
   suffix: Antag
@@ -350,22 +297,12 @@
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
-  - type: BorgChassis
-    maxModules: 3
-    moduleWhitelist:
-      tags:
-      - BorgModuleSyndicate
-      - BorgModuleSyndicateAssault
-      - BorgModuleGeneric
   - type: SiliconLawProvider
     laws: SyndiBorgiLawset
     subverted: true
   - type: RandomMetadata
     nameSegments:
     - NamesSyndiBorgi
-  - type: ActionGrant
-    actions:
-    - ActionViewLaws
   - type: ContainerFill
     containers:
       borg_brain:
@@ -373,7 +310,6 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
-  - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
     - Syndicate
@@ -390,37 +326,20 @@
     coldDamage:
       types:
         Cold: 0.01
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+
 
 - type: entity
-  parent: BaseBorgiChassis
+  parent: BaseSyndicateBorgiChassis
   id: SyndiCorgiKit1
   name: Syndi Borgi
   suffix: Antag, L6 Esword
   description: An unusually smart dog, but hell bent on MURDER.
   components:
-  - type: GhostRole
-    name: A Syndicate Borgi.
-    description: The Syndicate needs reinforcements. You, a cold, BUT LOVINGLY ADORABLE, silicon killing machine, will help them... And bork.  An unusual choice, but it was made nonetheless.
-    rules: ghost-role-information-silicon-rules
-    raffle:
-      settings: default
-  - type: GhostTakeoverAvailable
-  - type: BorgChassis
-    maxModules: 3
-    moduleWhitelist:
-      tags:
-      - BorgModuleSyndicate
-      - BorgModuleSyndicateAssault
-      - BorgModuleGeneric
-  - type: SiliconLawProvider
-    laws: SyndiBorgiLawset
-    subverted: true
-  - type: RandomMetadata
-    nameSegments:
-    - NamesSyndiBorgi
-  - type: ActionGrant
-    actions:
-    - ActionViewLaws
   - type: ContainerFill
     containers:
       borg_brain:
@@ -429,41 +348,14 @@
       - BorgModuleOperative
       - BorgModuleL6C
       - BorgModuleEsword
-  - type: NpcFactionMember
-    factions:
-    - Syndicate
-  - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Syndicate
-    - Binary
-  - type: ActiveRadio
-    channels:
-    - Syndicate
-  - type: Barotrauma
-    maxDamage: 10
-    damage:
-      types:
-        Blunt: 0.15
-  - type: Temperature
-    coldDamage:
-      types:
-        Cold: 0.01
 
 - type: entity
-  parent: BaseBorgiChassis
+  parent: BaseSyndicateBorgiChassis
   id: SyndiCorgiKit2
   name: Syndi Borgi
   suffix: Antag, Quick Dagger
   description: An unusually smart dog, but hell bent on MURDER.
   components:
-  - type: GhostRole
-    name: A Syndicate Borgi.
-    description: The Syndicate needs reinforcements. You, a cold, BUT LOVINGLY ADORABLE, silicon killing machine, will help them... And bork.  An unusual choice, but it was made nonetheless.
-    rules: ghost-role-information-silicon-rules
-    raffle:
-      settings: default
-  - type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed: 6
@@ -473,15 +365,6 @@
       tags:
       - BorgModuleSyndicate
       - BorgModuleGeneric
-  - type: SiliconLawProvider
-    laws: SyndiBorgiLawset
-    subverted: true
-  - type: RandomMetadata
-    nameSegments:
-    - NamesSyndiBorgi
-  - type: ActionGrant
-    actions:
-    - ActionViewLaws
   - type: ContainerFill
     containers:
       borg_brain:
@@ -489,30 +372,10 @@
       borg_module:
       - BorgModuleOperative
       - BorgModuleSyndicateWeapon
-  - type: NpcFactionMember
-    factions:
-    - Syndicate
-  - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Syndicate
-    - Binary
-  - type: ActiveRadio
-    channels:
-    - Syndicate
-  - type: Barotrauma
-    maxDamage: 10
-    damage:
-      types:
-        Blunt: 0.15
-  - type: Temperature
-    coldDamage:
-      types:
-        Cold: 0.01
 
 - type: entity
   parent: BaseBorgiChassis
-  id: ShadowBorgi
+  id: ShadowBorgiChassis
   name: Shadow Borgi
   suffix: Shadow Factory
   description: A contributor to a menacing plot to convert the station.
@@ -531,9 +394,6 @@
   - type: RandomMetadata
     nameSegments:
     - NamesShadowBorgi
-  - type: ActionGrant
-    actions:
-    - ActionViewLaws
   - type: ContainerFill
     containers:
       borg_module:
@@ -550,24 +410,10 @@
     - NuclearOperative
     - SyndicateAgent
   - type: ShowSyndicateIcons
-  - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
     - Syndicate
     - Binary
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 750
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: gib
-      - !type:EmptyContainersBehaviour
-        containers:
-        - borg_brain
-      - !type:GibBehavior
   - type: ActiveRadio
     channels:
     - Syndicate
@@ -591,10 +437,15 @@
     coldDamage:
       types:
         Cold: 0.01
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
 
 - type: entity
-  parent: ShadowBorgi
-  id: StarterShadowBorgi
+  parent: ShadowBorgiChassis
+  id: StarterShadowBorgiChassis
   name: Shadow Borgi
   suffix: InitialSpawn; ShadowFactory
   description: A leader of a menacing plot to convert the station.
@@ -606,23 +457,9 @@
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
-  - type: BorgChassis
-    maxModules: 8
-    moduleWhitelist:
-      tags:
-      - BorgModuleSyndicate
-      - BorgModuleGeneric
-      - BorgModuleMedical
-      - BorgModuleEngineering
   - type: SiliconLawProvider
     laws: ShadowFactoryBorgiLawset
     subverted: true
-  - type: RandomMetadata
-    nameSegments:
-    - NamesShadowBorgi
-  - type: ActionGrant
-    actions:
-    - ActionViewLaws
   - type: ContainerFill
     containers:
       borg_brain:
@@ -633,52 +470,4 @@
       - BorgModuleSyndicateWeapon
       - BorgModuleTopicals
       - BorgModuleFireExtinguisher
-  - type: NpcFactionMember
-    factions:
-    - Syndicate
-  - type: Access
-    tags:
-    - NuclearOperative
-    - SyndicateAgent
-  - type: ShowSyndicateIcons
-  - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Syndicate
-    - Binary
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 750
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: gib
-      - !type:EmptyContainersBehaviour
-        containers:
-        - borg_brain
-      - !type:GibBehavior
-  - type: ActiveRadio
-    channels:
-    - Syndicate
-    - Binary
-  - type: Lock
-    locked: false
-    unlockOnClick: false
-  - type: LockingWhitelist
-    blacklist:
-      components:
-      - RoboticsConsole
-    whitelist:
-      components:
-      - BorgChassis
-  - type: Barotrauma # Shadow borgis largely do not have access to hardsuits so nerf the space damage they take
-    maxDamage: 1
-    damage:
-      types:
-        Blunt: 0.01
-  - type: Temperature
-    coldDamage:
-      types:
-        Cold: 0.01
+

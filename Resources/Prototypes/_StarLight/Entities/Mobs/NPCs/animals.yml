@@ -78,3 +78,18 @@
     maxItemSize: Huge
   - type: StatusIcon
     bounds: -0.5,-0.5,0.5,0.5
+
+- type: entity
+  parent: MobAdmemeCorgi
+  id: SmartCorgi
+  name: Smart Corgi
+  description: An unusually smart dog.
+  suffix: Default
+  components:
+  - type: RandomMetadata
+    nameSegments:
+    - NamesCorgi
+  # Custom inventory template
+  - type: Inventory
+    speciesId: dog
+    templateId: smartpetborgi
