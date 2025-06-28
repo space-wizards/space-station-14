@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Adjusted greycloaks and hoods on thaven, grays, and snails
-    type: Tweak
-  id: 1419
-  time: '2025-03-28T21:58:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2107
 - author: widgetbeck
   changes:
   - message: The Heretic's flesh ascension now matches the skin, eye, and blood color
@@ -4232,3 +4225,11 @@
   id: 1918
   time: '2025-06-28T03:04:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2880
+- author: CrystalClover
+  changes:
+  - message: "A shipment from a bakery in Space France recently spilled its cargo,\
+      \ look out! \U0001F956"
+    type: Add
+  id: 1919
+  time: '2025-06-28T03:55:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2891
