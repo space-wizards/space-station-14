@@ -27,7 +27,7 @@
 - type: guideEntry
   id: Zombies
   name: guide-entry-zombies
-  text: "/ServerInfo/Guidebook/Antagonist/Zombies.xml"
+  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Zombies.xml" #imp
 
 - type: guideEntry
   id: Revolutionaries
