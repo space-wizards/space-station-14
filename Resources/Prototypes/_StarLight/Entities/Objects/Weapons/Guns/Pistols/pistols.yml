@@ -225,6 +225,8 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
+  - type: Contraband
+    severity: Soviet
       
 - type: entity
   name: desert eagle
