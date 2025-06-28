@@ -12,7 +12,6 @@ namespace Content.Shared.Damage.Prototypes
     ///     to change/get/set damage in a <see cref="DamageableComponent"/>.
     /// </remarks>
     [Prototype(2)]
-    [Serializable, NetSerializable]
     public sealed partial class DamageGroupPrototype : IPrototype
     {
         [IdDataField] public string ID { get; private set; } = default!;
