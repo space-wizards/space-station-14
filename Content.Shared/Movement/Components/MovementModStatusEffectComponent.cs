@@ -1,3 +1,4 @@
+using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Movement.Components;
@@ -7,7 +8,7 @@ namespace Content.Shared.Movement.Components;
 /// To be used in conjunction with <see cref="MovementModStatusSystem"/>.
 /// See <see cref="MovementModStatusComponent"/> for the component applied to the entity.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(MovementModStatusSystem))]
 public sealed partial class MovementModStatusEffectComponent : Component
 {
     /// <summary>

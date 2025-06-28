@@ -80,3 +80,9 @@
   - type: Reactive
     groups:
       Acidic: [Touch]
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - StunImmune
+    - SlowImmune
+    - KnockdownImmune
