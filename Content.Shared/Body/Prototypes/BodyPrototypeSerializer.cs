@@ -173,6 +173,9 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
             slots.Add(slotId, slot);
         }
 
+#pragma warning disable RA0039 // Do not instantiate prototypes directly
+        // TODO - Kill body code and make this not need a custom serializer
         return new BodyPrototype(id, name, root, slots);
+#pragma warning restore RA0039 // Do not instantiate prototypes directly
     }
 }
