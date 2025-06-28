@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: pikay, sha-seng
-  changes:
-  - message: Senior cargo jumpsuit and belt added (made by Pikay!)
-    type: Add
-  - message: Long pants version of the cargo tech uniform in loadout and vendor
-    type: Add
-  - message: Cargo bomber is more yellow now so people know you're not the QM
-    type: Tweak
-  id: 1427
-  time: '2025-03-29T12:56:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2105
 - author: Sha-Seng
   changes:
   - message: Fever Dream recipe adjusted for upstream merge
@@ -4242,3 +4231,11 @@
   id: 1926
   time: '2025-06-28T04:05:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2879
+- author: widgetbeck
+  changes:
+  - message: Fixed Replicator pinpointers failing to point at the Queen when she is
+      selected.
+    type: Fix
+  id: 1927
+  time: '2025-06-28T05:07:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2896
