@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: Improvised Pistol and Basilisk-11 changes.
-    type: Tweak
-  id: 1415
-  time: '2025-03-28T21:44:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2095
 - author: DinnerCalzone
   changes:
   - message: 'The "Steal the AI" thief objective is now directly tied to the Station
@@ -4237,3 +4230,10 @@
   id: 1914
   time: '2025-06-27T19:41:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2883
+- author: Pinkbat5
+  changes:
+  - message: Hardhats no longer make you bald.
+    type: Tweak
+  id: 1915
+  time: '2025-06-28T02:20:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2874
