@@ -1844,7 +1844,7 @@
   id: UplinkSnackBox
   name: uplink-snack-box-name
   description: uplink-snack-box-desc
-  productEntity: HappyHonkNukieSnacks
+  productEntity: FoodBoxHappyHonkNukieFillLunch
   cost:
     Telecrystal: 1
   categories:
