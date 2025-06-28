@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Fixed drones not fitting inside cyborg recharging stations.
-    type: Fix
-  id: 1426
-  time: '2025-03-29T12:46:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2134
 - author: pikay, sha-seng
   changes:
   - message: Senior cargo jumpsuit and belt added (made by Pikay!)
@@ -4241,3 +4234,11 @@
   id: 1925
   time: '2025-06-28T04:03:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2767
+- author: portfiend
+  changes:
+  - message: New teddy bear, alien germ, smiley guy, and smiley ball toys can be found
+      in all the same places you would find other plushies.
+    type: Add
+  id: 1926
+  time: '2025-06-28T04:05:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2879
