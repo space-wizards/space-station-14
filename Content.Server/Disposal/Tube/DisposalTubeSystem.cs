@@ -194,14 +194,17 @@ namespace Content.Server.Disposal.Tube
             RaiseLocalEvent(uid, ref ev);
             var directions = ev.Connectable.Skip(1).ToArray();
 
-            if (args.Holder.PreviousDirectionFrom == Direction.Invalid ||
-                args.Holder.PreviousDirectionFrom == next)
-            {
-                args.Next = _random.Pick(directions);
-                return;
-            }
+            var headingTo = args.Holder.PreviousDirection;
+            var comingFrom = args.Holder.PreviousDirectionFrom;
 
-            args.Next = next;
+            if (comingFrom == next && directions.Contains(headingTo))
+                // We're backwards, but able to pass through without changing direction
+                args.Next = headingTo;
+            else if (comingFrom == next || comingFrom == Direction.Invalid)
+                // Backwards (or something weird happened), but can't go straight, so plinko time
+                args.Next = _random.Pick(directions);
+            else
+                args.Next = next;
         }
 
         private void OnGetRouterConnectableDirections(EntityUid uid, DisposalRouterComponent component, ref GetDisposalsConnectableDirectionsEvent args)
@@ -213,6 +216,7 @@ namespace Content.Server.Disposal.Tube
         {
             var ev = new GetDisposalsConnectableDirectionsEvent();
             RaiseLocalEvent(uid, ref ev);
+            var directions = ev.Connectable.Skip(1).ToArray();
 
             if (args.Holder.Tags.Overlaps(component.Tags))
             {
@@ -220,7 +224,13 @@ namespace Content.Server.Disposal.Tube
                 return;
             }
 
-            args.Next = Transform(uid).LocalRotation.GetDir();
+            var next = Transform(uid).LocalRotation.GetDir();
+
+            // If we are going "backwards", try to keep moving straight
+            if (args.Holder.PreviousDirectionFrom == next && directions.Contains(args.Holder.PreviousDirection))
+                args.Next = args.Holder.PreviousDirection;
+            else
+                args.Next = next;
         }
 
         private void OnGetTransitConnectableDirections(EntityUid uid, DisposalTransitComponent component, ref GetDisposalsConnectableDirectionsEvent args)
