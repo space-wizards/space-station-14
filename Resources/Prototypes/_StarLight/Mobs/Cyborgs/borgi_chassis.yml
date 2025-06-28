@@ -221,7 +221,6 @@
   id: BaseStationBorgiChassis
   name: Smart Borgi
   description: A unusually smart dog, loves stating it's laws.
-  abstract: true
   components:
     - type: EmagSiliconLaw
       stunTime: 5
