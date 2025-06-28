@@ -494,3 +494,46 @@
       color: gold
   - type: Paper
     content: book-text-atmos-vents
+
+- type: entity
+  parent: BookBase
+  id: SillyClowninguide
+  name: "Silly billy's Guide of Clowning"
+  description: Most of the title is covered in handwritten scratches of pies and balloons.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#FA3D2B"
+    - state: decor_wingette
+      color: "#28a15a"
+    - state: icon_banana
+    - state: icon_corner
+      color: gold
+  - type: Paper
+    content: Most of the text is covered in old pie, funny glue, and... banana peels?
+  - type: Slippery
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+
