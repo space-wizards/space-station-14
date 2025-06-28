@@ -2,7 +2,7 @@
   parent: [ BaseCartridge, BaseRestrictedZookeeperContraband ]
   id: TranqDart
   name: Tranquilizer Dart
-  description: A dart designed to be loaded into a tranquiliser rifle. This one contains a chemical that enduces drowsiness, but takes time to accumulate.
+  description: A dart designed to be loaded into a tranquiliser rifle. This one contains a chemical that enduces drowsiness, but takes time to accumulate. Contains 7u of Chloral Hydrate. 
   components:
   - type: Tag
     tags:
@@ -31,7 +31,7 @@
   parent: [ BaseCartridge, BaseRestrictedZookeeperContraband ]
   id: IrwizineDart
   name: Irwizine Dart
-  description: A dart designed to be loaded into a tranquiliser rifle. This one contains a chemical that pacifies aggressive creatures, for when they can't be put to sleep. Takes multiple successive hits to work.
+  description: A dart designed to be loaded into a tranquiliser rifle. This one contains a chemical that pacifies aggressive creatures, for when they can't be put to sleep. Only takes one shot to work.
   components:
   - type: Tag
     tags:

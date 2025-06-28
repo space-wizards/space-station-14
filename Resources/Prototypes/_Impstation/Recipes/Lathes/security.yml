@@ -325,7 +325,7 @@
   materials:
     Steel: 50
     Glass: 50
-    Plasma: 300
+    Plasma: 50
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
@@ -334,4 +334,4 @@
   materials:
     Steel: 50
     Glass: 50
-    Plasma: 100
+    Plasma: 150
