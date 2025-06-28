@@ -165,6 +165,21 @@
   - sprite: _Impstation/Mobs/Customization/Thaven/head.rsi
     state: stripes
 
+- type: marking
+  id: ThavenShadow
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Thaven ]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#000000"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Thaven/head.rsi
+    state: shadowthaven
+
 # Snout
 
 # Eyes

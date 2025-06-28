@@ -103,6 +103,8 @@ marking-VitiligoHeadL = Vitiligo (Left Eye)
 
 marking-VitiligoHeadR = Vitiligo (Right Eye)
 
+marking-Shadow = Gloomy
+
 # Snout
 
 marking-HeadSeptum = Septum Ring

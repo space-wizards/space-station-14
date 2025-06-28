@@ -412,6 +412,21 @@
   - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
     state: vitiligoright
 
+- type: marking
+  id: Shadow
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [ Human, Dwarf, SlimePerson ]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#000000"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/Humanoid/head.rsi
+    state: shadow
+
 # Snout
 
 - type: marking

@@ -52,6 +52,8 @@ marking-ThavenHeadScales-scales = Scales
 marking-ThavenHeadStripes = Pinstripes
 marking-ThavenHeadStripes-stripes = Pinstripes
 
+marking-ThavenShadow = Gloomy
+
 # Snout
 
 # Eyes
