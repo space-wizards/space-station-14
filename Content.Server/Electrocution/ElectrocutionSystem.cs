@@ -402,7 +402,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         var shouldStun = siemensCoefficient > 0.5f;
 
         if (shouldStun)
-            _stun.TryParalyze(uid, time * ParalyzeTimeMultiplier, refresh, statusEffects);
+            _stun.TryParalyze(uid, time * ParalyzeTimeMultiplier, refresh);
 
         // TODO: Sparks here.
 

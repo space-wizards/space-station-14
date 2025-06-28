@@ -90,6 +90,7 @@
   - type: Tag
     tags:
       - FootstepSound
+      - StunImmune
   - type: Destructible
     thresholds:
       - trigger:

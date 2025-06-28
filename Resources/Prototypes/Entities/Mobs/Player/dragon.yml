@@ -149,6 +149,7 @@
     tags:
     - CannotSuicide
     - DoorBumpOpener
+    - StunImmune
   - type: Puller
     needsHands: false
   - type: RandomMetadata

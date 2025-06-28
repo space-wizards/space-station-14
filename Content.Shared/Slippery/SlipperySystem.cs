@@ -85,7 +85,7 @@ public sealed class SlipperySystem : EntitySystem
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
     {
         return !_container.IsEntityInContainer(uid)
-                && _status.CanAddStatusEffect(toSlip, _stun.Stun); //Should be KnockedDown instead?
+                && _status.CanAddStatusEffect(toSlip, SharedStunSystem.Stun); //Should be KnockedDown instead?
     }
 
     public void TrySlip(EntityUid uid, SlipperyComponent component, EntityUid other, bool requiresContact = true)
@@ -122,7 +122,7 @@ public sealed class SlipperySystem : EntitySystem
             }
         }
 
-        var playSound = !HasComp<KnockedDownComponent>(uid);
+        var playSound = !_status.CanAddStatusEffect(other, SharedStunSystem.Knockdown);
 
         _stun.TryParalyze(other, component.SlipData.ParalyzeTime, true);
 
@@ -132,8 +132,7 @@ public sealed class SlipperySystem : EntitySystem
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
 
-        _adminLogger.Add(LogType.Slip, LogImpact.Low,
-            $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
+        _adminLogger.Add(LogType.Slip, LogImpact.Low, $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
     }
 }
 

@@ -1,18 +1,22 @@
-﻿using Content.Shared.Movement.Systems;
+﻿using Content.Shared.Movement.Components;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Movement.Components;
+namespace Content.Shared.Movement.Systems;
 
 /// <summary>
-/// This handles the slowed status effect
+/// This handles the slowed status effect and other movement status effects.
+/// <see cref="MovementModStatusEffectComponent"/> holds a modifier for a status effect which is applied to a mob's
+/// <see cref="MovementModStatusComponent"/> which is applied to movers to hold a modifier which
+/// <see cref="MovementSpeedModifierComponent"/> can handle.
+/// All modifiers are multiplicative.
 /// </summary>
 public sealed class MovementModStatusSystem : EntitySystem
 {
+    public static readonly EntProtoId SlowdownProtoId = "StatusEffectSlowdown";
+
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedStatusEffectsSystem _status = default!;
-
-    public static readonly EntProtoId Slowdown = "StatusEffectSlowdown";
 
     public override void Initialize()
     {
@@ -39,10 +43,10 @@ public sealed class MovementModStatusSystem : EntitySystem
     /// </summary>
     public bool TrySlowdown(EntityUid uid,
         TimeSpan time,
-        bool refresh,
-        float speedModifier)
+        float speedModifier,
+        bool refresh = true)
     {
-        return TrySlowdown(uid, time, refresh, speedModifier, speedModifier);
+        return TrySlowdown(uid, time, speedModifier, speedModifier, refresh);
     }
 
     /// <summary>
@@ -50,26 +54,43 @@ public sealed class MovementModStatusSystem : EntitySystem
     /// </summary>
     public bool TrySlowdown(EntityUid uid,
         TimeSpan time,
-        bool refresh,
         float walkSpeedModifier,
-        float sprintSpeedModifier)
+        float sprintSpeedModifier,
+        bool refresh = true)
     {
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (!_status.TryAddStatusEffect(uid, Slowdown, time, refresh))
+        if (!_status.TryAddStatusEffect(uid, SlowdownProtoId, out var status, time, refresh))
             return false;
 
-        if (!_status.TryGetStatusEffect(uid, Slowdown, out var status)
-            || !TryComp<MovementModStatusEffectComponent>(status, out var slowedStatus))
+        if (status == null)
             return false;
 
-        slowedStatus.SprintSpeedModifier = sprintSpeedModifier;
-        slowedStatus.WalkSpeedModifier = walkSpeedModifier;
+        return TryUpdateMovementStatus(uid, status.Value, walkSpeedModifier, sprintSpeedModifier);
+    }
 
-        TryUpdateSlowedStatus(uid);
+    /// <summary>
+    /// An overload of TryUpdateSlowedStatus that first updates the
+    /// <see cref="MovementModStatusEffectComponent"/> modifiers to the inputted values.
+    /// This is typically run at the start of a status effect's life.
+    /// </summary>
+    /// <param name="entity">Entity whose component we're updating</param>
+    /// <param name="status">Status effect entity whose modifiers we are updating</param>
+    /// <param name="walkSpeedModifier">New walkSpeedModifer we're applying</param>
+    /// <param name="sprintSpeedModifier">New sprintSpeedModifier we're applying</param>
+    public bool TryUpdateMovementStatus(Entity<MovementModStatusComponent?> entity,
+        Entity<MovementModStatusEffectComponent?> status,
+        float walkSpeedModifier,
+        float sprintSpeedModifier)
+    {
+        if (!Resolve(entity, ref entity.Comp, logMissing: false) || !Resolve(status, ref status.Comp))
+            return false;
 
-        return true;
+        status.Comp.SprintSpeedModifier = sprintSpeedModifier;
+        status.Comp.WalkSpeedModifier = walkSpeedModifier;
+
+        return TryUpdateMovementStatus(entity);
     }
 
     /// <summary>
@@ -78,7 +99,7 @@ public sealed class MovementModStatusSystem : EntitySystem
     /// </summary>
     /// <param name="entity">Entity whose component we're updating</param>
     /// <param name="ignore">Status effect entity we're ignoring for calculating the comp's modifiers.</param>
-    public bool TryUpdateSlowedStatus(Entity<MovementModStatusComponent?> entity, EntityUid? ignore = null)
+    public bool TryUpdateMovementStatus(Entity<MovementModStatusComponent?> entity, EntityUid? ignore = null)
     {
         if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return false;
@@ -88,9 +109,10 @@ public sealed class MovementModStatusSystem : EntitySystem
 
         // If it's not modifying anything then we don't need it
         var modified = false;
+        var movementMod = entity.Comp;
 
-        entity.Comp.WalkSpeedModifier = 1f;
-        entity.Comp.SprintSpeedModifier = 1f;
+        movementMod.WalkSpeedModifier = 1f;
+        movementMod.SprintSpeedModifier = 1f;
 
         foreach (var effect in slowEffects)
         {
@@ -98,8 +120,8 @@ public sealed class MovementModStatusSystem : EntitySystem
                 continue;
 
             modified = true;
-            entity.Comp.WalkSpeedModifier *= effect.Comp1.WalkSpeedModifier;
-            entity.Comp.SprintSpeedModifier *= effect.Comp1.SprintSpeedModifier;
+            movementMod.WalkSpeedModifier *= effect.Comp1.WalkSpeedModifier;
+            movementMod.SprintSpeedModifier *= effect.Comp1.SprintSpeedModifier;
         }
 
         _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
@@ -114,7 +136,7 @@ public sealed class MovementModStatusSystem : EntitySystem
 
     private void OnSlowStatusRemoved(Entity<MovementModStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
-        if (!TryUpdateSlowedStatus(args.Target, entity))
+        if (!TryUpdateMovementStatus(args.Target, entity))
             RemComp<MovementModStatusComponent>(args.Target);
     }
 }

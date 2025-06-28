@@ -29,6 +29,8 @@ namespace Content.Shared.Damage.Systems;
 
 public abstract partial class SharedStaminaSystem : EntitySystem
 {
+    public static readonly EntProtoId StaminaLow = "StatusEffectStaminaLow";
+
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -40,8 +42,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private readonly SharedStatusEffectsSystem _status = default!;
     [Dependency] private readonly MovementModStatusSystem _movementMod = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
-
-    public static readonly EntProtoId Stamina = "StatusEffectStamina";
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
@@ -119,8 +119,9 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         }
 
         component.StaminaDamage = 0;
-        AdjustSlowdown(uid);
+        AdjustStatus(uid);
         RemComp<ActiveStaminaComponent>(uid);
+        _status.TryRemoveStatusEffect(uid, StaminaLow);
         SetStaminaAlert(uid, component);
         Dirty(uid, component);
     }
@@ -281,7 +282,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
                 component.NextUpdate = nextUpdate;
         }
 
-        AdjustSlowdown(uid);
+        AdjustStatus(uid);
 
         SetStaminaAlert(uid, component);
 
@@ -289,6 +290,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         if (component.AfterCritical && oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
         {
             component.AfterCritical = false; // Since the recovery from the crit has been completed, we are no longer 'after crit'
+            _status.TryRemoveStatusEffect(uid, StaminaLow);
         }
 
         if (!component.Critical)
@@ -411,16 +413,17 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adjusts the movement speed of an entity based on its current <see cref="StaminaComponent.StaminaDamage"/> value.
-    /// If the entity has a <see cref="SlowOnDamageComponent"/>, its custom damage-to-speed thresholds are used,
-    /// otherwise, a default set of thresholds is applied.
-    /// The method determines the closest applicable damage threshold below the crit limit and applies the corresponding
-    /// speed modifier using the stun system. If no threshold is met then the entity's speed is restored to normal.
+    /// Adjusts the modifiers of the <see cref="StaminaLow"/> status effect entity and applies relevant statuses.
+    /// System iterates through the <see cref="StaminaComponent.StunModifierThresholds"/> to find correct movement modifer.
+    /// This modifier is saved to the Status Effect entity and applied to our mob through the <see cref="MovementModStatusComponent"/>
     /// </summary>
     /// <param name="ent">Entity to update</param>
-    private void AdjustSlowdown(Entity<StaminaComponent?> ent)
+    private void AdjustStatus(Entity<StaminaComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (!_status.TryAddStatusEffect(ent, StaminaLow, out var status) || status == null)
             return;
 
         var closest = FixedPoint2.Zero;
@@ -434,56 +437,36 @@ public abstract partial class SharedStaminaSystem : EntitySystem
                 closest = thres.Key;
         }
 
-        UpdateStaminaModifiers(ent, ent.Comp.StunModifierThresholds[closest]);
+        UpdateStaminaModifiers(ent, status.Value, ent.Comp.StunModifierThresholds[closest]);
     }
 
     /// <summary>
-    /// Updates the movement speed modifiers of an entity by applying or removing the <see cref="MovementModStatusComponent"/>.
-    /// If both walk and run modifiers are approximately 1 (i.e. normal speed) and <see cref="StaminaComponent.StaminaDamage"/> is 0,
-    /// or if the both modifiers are 0, the slowdown component is removed to restore normal movement.
-    /// Otherwise, the slowdown component is created or updated with the provided modifiers,
-    /// and the movement speed is refreshed accordingly.
+    /// Takes an input of movement speed modifiers and applies them to the Low Stamina Status Effect.
+    /// Then has the movement modifier status system update our <see cref="MovementModStatusComponent"/>.
     /// </summary>
     /// <param name="ent">Entity whose movement speed should be updated.</param>
-    /// <param name="walkSpeedModifier">New walk speed modifier. Default is 1f (normal speed).</param>
-    /// <param name="sprintSpeedModifier">New run (sprint) speed modifier. Default is 1f (normal speed).</param>
+    /// <param name="status">The Low Stamina Status Effect entity.</param>
+    /// <param name="walkSpeedModifier">New walk speed modifier.</param>
+    /// <param name="sprintSpeedModifier">New sprint speed modifier.</param>
     public void UpdateStaminaModifiers(Entity<StaminaComponent?> ent,
+        EntityUid status,
         float walkSpeedModifier,
         float sprintSpeedModifier)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (MathHelper.CloseTo(walkSpeedModifier, 1f) && MathHelper.CloseTo(sprintSpeedModifier, 1f))
-        {
-            // Don't add it if it won't do anything
-            if (_status.TryGetStatusEffect(ent, Stamina, out _))
-                _status.TryRemoveStatusEffect(ent, Stamina);
-
-            return;
-        }
-
-        if (!_status.TryAddStatusEffect(ent, Stamina, out var status))
-            return;
-
-        if (!TryComp<MovementModStatusEffectComponent>(status, out var slowedStatus))
-            return;
-
-        slowedStatus.SprintSpeedModifier = sprintSpeedModifier;
-        slowedStatus.WalkSpeedModifier = walkSpeedModifier;
-
-        _movementMod.TryUpdateSlowedStatus(ent.Owner);
-
-        Dirty(ent);
+        _movementMod.TryUpdateMovementStatus(ent.Owner, status, walkSpeedModifier, sprintSpeedModifier);
     }
 
     /// <summary>
     /// A convenience overload that sets both walk and run speed modifiers to the same value.
     /// </summary>
     /// <param name="ent">Entity whose movement speed should be updated.</param>
+    /// <param name="status">The Low Stamina Status Effect entity.</param>
     /// <param name="speedModifier">New walk and run speed modifier. Default is 1f (normal speed).</param>
-    public void UpdateStaminaModifiers(Entity<StaminaComponent?> ent, float speedModifier = 1f)
+    public void UpdateStaminaModifiers(Entity<StaminaComponent?> ent, EntityUid status, float speedModifier = 1f)
     {
-        UpdateStaminaModifiers(ent, speedModifier, speedModifier);
+        UpdateStaminaModifiers(ent, status, speedModifier, speedModifier);
     }
 }

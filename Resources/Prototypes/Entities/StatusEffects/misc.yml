@@ -19,6 +19,21 @@
       components:
       - MobState
 
+- type: entity
+  parent: StatusEffectBase
+  id: MobStandStatusEffectBase
+  abstract: true
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - StandingState
+      requireAll: true
+    blacklist: # This blacklist exists because mob prototypes are smelly and everything needs a standing state component.
+      tags:
+      - KnockdownImmune
+
 # The creature sleeps so heavily that nothing can wake him up. Not even its own death.
 - type: entity
   parent: MobStatusEffectBase
