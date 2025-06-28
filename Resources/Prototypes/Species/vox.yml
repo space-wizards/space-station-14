@@ -53,6 +53,7 @@
     Hair:
       points: 1
       required: false
+      weight: 1 # imp
     FacialHair:
       points: 1
       required: false

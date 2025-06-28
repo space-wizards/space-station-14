@@ -45,6 +45,7 @@
     Hair:
       points: 1
       required: false
+      weight: 0.3
     Tail:
       points: 2
       required: false
@@ -63,6 +64,7 @@
     Arms:
       points: 1
       required: true
+      weight: 1
       defaultMarkings: [ KodeWingsBlade ]
 
 - type: humanoidBaseSprite

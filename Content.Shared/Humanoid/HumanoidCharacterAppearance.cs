@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Random; // imp
+using Content.Shared.Random.Helpers; // imp
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -127,7 +129,9 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
     {
         var random = IoCManager.Resolve<IRobustRandom>();
         var markingManager = IoCManager.Resolve<MarkingManager>();
+        var proto = IoCManager.Resolve<IPrototypeManager>(); // imp
 
+        // begin massive imp edit
         var newFacialHairStyle = HairStyles.DefaultFacialHairStyle;
         var newHairStyle = HairStyles.DefaultHairStyle;
         List<Marking> newMarkings = [];
@@ -210,76 +214,85 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         // now we loop through every extant marking category,
         foreach (var category in Enum.GetValues<MarkingCategories>())
         {
-            // grab a list of markings in that category for that species,
-            var markings = markingManager.MarkingsByCategoryAndSpecies(category, species).Keys.ToList();
-            var markingProtos = markingManager.MarkingsByCategoryAndSpecies(category, species).Values.ToList();
+            // grab a dictionary of markings in that category for that species,
+            var markings = markingManager.MarkingsByCategoryAndSpecies(category, species);
 
-            // if it's facial hair, there are entries in the category, and the character is not female, assign a random one. else bald
+            // and make a new dictionary that stores the string of the marking and the corresponding random weight.
+            var markingWeights = new Dictionary<string, float>();
+            foreach (var marking in markings)
+                markingWeights.Add(marking.Key, marking.Value.RandomWeight);
+
+
+            // grab the markingset from our category..
+            var markingSet = new Dictionary<MarkingCategories, MarkingPoints>();
+            if (proto.TryIndex(species, out SpeciesPrototype? speciesProto))
+                markingSet = new MarkingSet(speciesProto.MarkingPoints, markingManager, proto).Points;
+
+            if (!markingSet.TryGetValue(category, out var categorySet))
+                continue;
+
+            // hair and facial hair are handled different to other markings, so those get their own special treatment
+            // if it's facial hair, there are entries in the category, and the character is not female, roll & assign a random one. else bald
             if (category == MarkingCategories.FacialHair)
             {
-                newFacialHairStyle = markings.Count == 0 || sex == Sex.Female ? HairStyles.DefaultFacialHairStyle : random.Pick(markings);
+                newFacialHairStyle = markings.Count == 0 || sex == Sex.Female || !random.Prob(categorySet.Weight) ?
+                    HairStyles.DefaultFacialHairStyle : random.Pick(markingWeights);
             }
 
             // if it's hair, and there are hair styles, roll one. else bald
             else if (category == MarkingCategories.Hair)
             {
-                newHairStyle = markings.Count > 0 ? random.Pick(markings) : HairStyles.DefaultHairStyle;
+                newHairStyle = markings.Count == 0 || !random.Prob(categorySet.Weight) ?
+                    HairStyles.DefaultHairStyle : random.Pick(markingWeights);
             }
 
             // for every other category,
-            else if (markings.Count > 0)
+            else if (markings.Keys.Any())
             {
-                // roll a die. currently a 1 in 3 chance per category, except Tails, which are 1 in 2 (because of the effect they have on the silhouettes of spiders and moths.)
-                int diceRoll;
-                if (category == MarkingCategories.Tail)
-                    diceRoll = random.Next(2);
-                else
-                    diceRoll = random.Next(3);
-
-                if (diceRoll == 0)
+                // add random markings!
+                // this will roll once for each point in the marking category.
+                for (var i = 0; i < categorySet.Points; i++)
                 {
-                    MarkingPrototype? lastMarking = null;
+                    // just in case there are somehow more points than markings
+                    if (markingWeights.Count == 0)
+                        continue;
 
-                    // roll to see how many markings from that category will be added. currently a maximum of 2.
-                    var loops = random.Next(2) + 1;
+                    // category roll to see if we add anything
+                    if (!random.Prob(categorySet.Weight))
+                        continue;
 
-                    // add a marking (loops) times
-                    for (var i = 0; i < loops; i++)
+                    // pick a random marking from the list
+                    var randomMarking = random.Pick(markingWeights);
+                    if (!markings.TryGetValue(randomMarking, out var protoToAdd))
+                        continue;
+                    var markingToAdd = protoToAdd.AsMarking();
+                    Color markingColor;
+
+                    // prevent duplicates
+                    markingWeights.Remove(randomMarking);
+
+                    // set gauze to white.
+                    // side note, I really hate that gauze isn't its own category. please fix that so that i can make this not suck as much.
+                    // or, like, give it its own color rules. or something.
+                    if (markingToAdd.MarkingId.Contains("gauze", StringComparison.OrdinalIgnoreCase))
                     {
-                        // pick a random marking from the list
-                        var protoToAdd = random.Pick(markingProtos);
-                        var markingToAdd = protoToAdd.AsMarking();
-                        Color markingColor;
-
-                        // prevent duplicates:
-                        if (lastMarking != null && lastMarking == protoToAdd)
-                            continue;
-
-                        // set gauze to white.
-                        // side note, I really hate that gauze isn't its own category. please fix that so that i can make this not suck as much.
-                        // or, like, give it its own color rules. or something.
-                        if (markingToAdd.MarkingId.Contains("gauze", StringComparison.OrdinalIgnoreCase))
-                        {
-                            markingToAdd.SetColor(Color.White);
-                            newMarkings.Add(markingToAdd);
-                            lastMarking = protoToAdd;
-                            continue;
-                        }
-
-                        // select a random color from our two secondary colors. if our marking is a Tail, add the skin color as well, otherwise lizards always look a little odd.
-                        // this will also make moths and spiders look less interesting on average, but I don't want a hardcoded exception for lizards.
-                        if (category == MarkingCategories.Tail)
-                            markingColor = random.Pick(colorPalette);
-                        else
-                            markingColor = random.Pick(colorPalette.Skip(0).ToList());
-
-                        // set the marking to that color
-                        markingToAdd.SetColor(markingColor);
-
-                        // otherwise, add it to the final list.
+                        markingToAdd.SetColor(Color.White);
                         newMarkings.Add(markingToAdd);
-                        lastMarking = protoToAdd;
+                        continue;
                     }
+
+                    // select a random color from our two secondary colors. if our marking is a Tail, add the skin color as well, otherwise lizards always look a little odd.
+                    // this will also make moths and spiders look less interesting on average, but I don't want a hardcoded exception for lizards.
+                    if (category == MarkingCategories.Tail)
+                        markingColor = random.Pick(colorPalette);
+                    else
+                        markingColor = random.Pick(colorPalette.Skip(0).ToList());
+
+                    // set the marking to that color
+                    markingToAdd.SetColor(markingColor);
+
+                    // otherwise, add it to the final list.
+                    newMarkings.Add(markingToAdd);
                 }
             }
         }
@@ -347,6 +360,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             var newColor = new Vector4(toSquashHSL.X, toSquashHSL.Y, skinColorHSL.Z, toSquashHSL.W);
             return Color.FromHsl(newColor);
         }
+        // end imp edit (hoo boy)
     }
 
     public static Color ClampColor(Color color)

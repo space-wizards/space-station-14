@@ -3,7 +3,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings
 {
-    [Prototype("marking")] // Floof
+    [Prototype] // Floof
     public sealed partial class MarkingPrototype : IPrototype
     {
         [IdDataField]
@@ -42,8 +42,8 @@ namespace Content.Shared.Humanoid.Markings
         [DataField("sprites", required: true)]
         public List<SpriteSpecifier> Sprites { get; private set; } = default!;
 
-        [DataField("shader")]
-        public string? Shader { get; private set; } = null;
+        [DataField]
+        public string? Shader { get; private set; } = null; // imp
 
         /// <summary>
         /// Allows specific images to be put into any arbitrary layer on the mob.
@@ -55,7 +55,7 @@ namespace Content.Shared.Humanoid.Markings
         /// e.g. "tail-cute-vulp" -> "tail-back", "tail-cute-vulp-oversuit" -> "tail-oversuit"
         /// also, FLOOF ADD =3
         /// </summary>
-        [DataField("layering")]
+        [DataField]
         public Dictionary<string, string>? Layering { get; private set; }
 
         /// <summary>
@@ -72,13 +72,24 @@ namespace Content.Shared.Humanoid.Markings
         /// cooltail-oversuit. Easy huh?
         /// also, FLOOF ADD =3
         /// </summary>
-        [DataField("colorLinks")]
+        [DataField]
         public Dictionary<string, string>? ColorLinks { get; private set; }
 
         public Marking AsMarking()
         {
             return new Marking(ID, Sprites.Count);
         }
+
+        // imp add
+        /// <summary>
+        /// Chance this marking will be added by appearance randomizer.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 1.
+        /// </remarks>
+        [DataField]
+        public float RandomWeight = 1f;
+
     }
 }
 

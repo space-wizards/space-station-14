@@ -39,6 +39,7 @@
     Hair:
       points: 1
       required: false
+      weight: 1 # imp
     HeadTop:
       points: 1
       required: true
