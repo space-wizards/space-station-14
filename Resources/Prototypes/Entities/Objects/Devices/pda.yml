@@ -1429,7 +1429,7 @@
   parent: BasePDA
   id: SeniorCourierPDA
   name: senior courier PDA
-  description: PDA for the guys that order the crucial station supplies.
+  description: Smells like postage stamps and shuttle fuel.
   components:
   - type: Pda
     id: CargoIDCard
