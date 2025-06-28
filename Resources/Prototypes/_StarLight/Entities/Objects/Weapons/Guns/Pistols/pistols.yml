@@ -227,8 +227,8 @@
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
       
 - type: entity
-  name: desert eagle
-  parent: [WeaponPistolN1984, BaseSecurityContraband]
+  name: Jungle Hawk
+  parent: [ WeaponPistolN1984, BaseSecuritySalvageContraband ]
   id: WeaponPistolDeagle
   description: A robust magnum handgun.
   components:
