@@ -99,3 +99,22 @@
     radius: 3
     color: red
     energy: 2.0
+
+- type: entity
+  parent: ImmovableRodKeepTilesStill
+  id: ImmovableRodBaguette
+  name: immovable Baguette
+  description: Mime's Wrath
+  components:
+  - type: ImmovableRod
+    randomizeVelocity: false
+    maxSpeed: 0
+    eviscerationPopup: immovable-rod-penetrated-mob-baguette
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/bread.rsi
+    state: baguette
+    rotation: 60
+    noRot: false
+  - type: EmitSoundOnSpawn
+    sound:
+      path: /Audio/_Impstation/Effects/Happy_Day_in_Paris.ogg
