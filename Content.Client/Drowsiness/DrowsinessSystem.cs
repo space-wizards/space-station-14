@@ -2,6 +2,7 @@ using Content.Shared.Drowsiness;
 using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Player;
 
 namespace Content.Client.Drowsiness;
 
@@ -20,8 +21,8 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
         SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectAppliedEvent>(OnDrowsinessApply);
         SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectRemovedEvent>(OnDrowsinessShutdown);
 
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectPlayerAttachedEvent>(OnStatusEffectPlayerAttached);
-        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectPlayerDetachedEvent>(OnStatusEffectPlayerDetached);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerAttachedEvent>>(OnStatusEffectPlayerAttached);
+        SubscribeLocalEvent<DrowsinessStatusEffectComponent, StatusEffectRelayedEvent<LocalPlayerDetachedEvent>>(OnStatusEffectPlayerDetached);
 
         _overlay = new();
     }
@@ -44,17 +45,14 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
         }
     }
 
-    private void OnStatusEffectPlayerAttached(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectPlayerAttachedEvent args)
+    private void OnStatusEffectPlayerAttached(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectRelayedEvent<LocalPlayerAttachedEvent> args)
     {
-        if (_player.LocalEntity != args.Target)
-            return;
-
         _overlayMan.AddOverlay(_overlay);
     }
 
-    private void OnStatusEffectPlayerDetached(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectPlayerDetachedEvent args)
+    private void OnStatusEffectPlayerDetached(Entity<DrowsinessStatusEffectComponent> ent, ref StatusEffectRelayedEvent<LocalPlayerDetachedEvent> args)
     {
-        if (_player.LocalEntity != args.Target)
+        if (_player.LocalEntity is null)
             return;
 
         if (!_statusEffects.HasEffectComp<DrowsinessStatusEffectComponent>(_player.LocalEntity.Value))
