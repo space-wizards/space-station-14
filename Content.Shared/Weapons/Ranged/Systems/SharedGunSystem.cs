@@ -10,12 +10,9 @@ using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Gravity;
 using Content.Shared.Hands;
-<<<<<<< combat-mech
 using Content.Shared.Hands.Components;
 using Content.Shared.Mech.Components;
-=======
 using Content.Shared.Hands.EntitySystems;
->>>>>>> master
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Tag;
@@ -185,21 +182,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         gunEntity = default;
         gunComp = null;
 
-<<<<<<< combat-mech
-        if (TryComp<MechComponent>(entity, out var mech) &&
-            mech.CurrentSelectedEquipment.HasValue &&
-            TryComp<GunComponent>(mech.CurrentSelectedEquipment.Value, out var mechGun))
-        {
-            gunEntity = mech.CurrentSelectedEquipment.Value;
-            gunComp = mechGun;
-            return true;
-        }
-
-        if (EntityManager.TryGetComponent(entity, out HandsComponent? hands) &&
-            hands.ActiveHandEntity is { } held &&
-=======
         if (_hands.GetActiveItem(entity) is { } held &&
->>>>>>> master
             TryComp(held, out GunComponent? gun))
         {
             gunEntity = held;
