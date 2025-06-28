@@ -269,7 +269,7 @@
         base:
           True: { visible: false }
           False: { visible: true }
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: lighter_flame
     inhandVisuals:
       left:
@@ -322,7 +322,7 @@
     tankSafe: false
   - type: Item
     sprite: Objects/Tools/Lighters/lighters.rsi
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: lighter_flame
     inhandVisuals:
       left:
@@ -355,7 +355,7 @@
         maxVol: 3
 
 - type: entity
-  parent: [BaseBrandedLighter,FlippoLighter, BaseSyndicateContraband]
+  parent: [FlippoLighter, BaseBrandedLighter, BaseSyndicateContraband]
   id: CybersunFlippo
   name: CyberSun Flippo
   description: "A Sleek black and magenta flippo lighter, bearing the logo and iconography of CyberSun Industries."
@@ -375,7 +375,7 @@
     color: magenta
 
 - type: entity
-  parent: [BaseBrandedLighter, FlippoLighter, BaseSyndicateContraband]
+  parent: [FlippoLighter, BaseBrandedLighter, BaseSyndicateContraband]
   id: InterdyneFlippo
   name: Interdyne Flippo
   description: "A deep blue flippo lighter, decorated with the logo of Interdyne Pharmaceuticals' 'Gene Clean' clinics. Become the master of your own cigarette."
@@ -399,7 +399,7 @@
     color: cyan
 
 - type: entity
-  parent: [BaseBrandedLighter, FlippoLighter]
+  parent: [FlippoLighter, BaseBrandedLighter]
   id: NanotrasenFlippo
   name: Nanotrasen Flippo
   description: "A navy blue luxury flippo, generally handed out to loyal heads of staff instead of a payraise. Fueled with liquid plasma"
@@ -429,7 +429,7 @@
         maxVol: 10
 
 - type: entity
-  parent: [BaseBrandedLighter, FlippoLighter, BaseCentcommContraband]
+  parent: [FlippoLighter, BaseBrandedLighter, BaseCentCommContraband]
   id: CentCommFlippo
   name: Gilded CentComm Flippo
   description: "An Ornate, jade embossed and gilded flippo frame containing a bluespace powered jet. The latch is secured by a miniature access reader that only responds to CentComm officials. The nicest lighter known to man."
@@ -475,7 +475,7 @@
     access: [["CentralCommand"]]
 
 - type: entity
-  parent: [BaseBrandedLighter, FlippoLighter, BaseMajorContraband]
+  parent: [FlippoLighter, BaseBrandedLighter, BaseMajorContraband]
   id: SpiderclanFlippo
   name: Spider-Clan lighter
   description: "A high tech jet lighter, engineered to function even in deep space. Runs on a tiny microfusion cell."
@@ -495,7 +495,7 @@
     color: green
 
 - type: entity
-  parent: [BaseBrandedLighter, FlippoLighter, BaseSyndicateContraband]
+  parent: [FlippoLighter, BaseBrandedLighter, BaseSyndicateContraband]
   id: WaffleCoFlippo
   name: Waffle Co. flippo
   description: "A robust mass produced lighter. The Waffle Co. logo turns the spark wheel when pushed up, minimising risk of lighter burns for even the most inept user."
@@ -515,7 +515,7 @@
     color: brown
 
 - type: entity
-  parent: [BaseBrandedLighter, FlippoLighter]
+  parent: [FlippoLighter, BaseBrandedLighter]
   id: HonkCoFlippo
   name: Honk Co. flippo
   description: "A slippery gag lighter produced by Honk Co. hidden inside of a real banana peel."
@@ -560,7 +560,7 @@
     color: yellow
 
 - type: entity
-  parent: [BaseBrandedLighter, FlippoLighter]
+  parent: [FlippoLighter, BaseBrandedLighter]
   id: DonkcoLighter
   name: Donk Co. flippo
   description: "The flippo of choice for the seasoned traitor. A Breaded novelty lighter made by Donk Co. Somehow edible while lit."
