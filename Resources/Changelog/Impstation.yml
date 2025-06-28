@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: argentsunshine
-  changes:
-  - message: Added conical flasks to the medical techfab.
-    type: Add
-  id: 1421
-  time: '2025-03-28T22:06:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2125
 - author: AvianMaiden
   changes:
   - message: The Security Poncho is now selectable in the loadout menu!
@@ -4237,3 +4230,20 @@
   id: 1920
   time: '2025-06-28T03:57:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2893
+- author: britno
+  changes:
+  - message: Irwizine now only takes 10u to pacify creatures, as opposed to 15u!
+    type: Tweak
+  - message: Resized the Muldoon to 2x4.
+    type: Tweak
+  - message: Irwizine and Tranquiliser darts are now less expensive to make at the
+      sec fab.
+    type: Tweak
+  - message: Gave Zookeepers a utility belt, and made it so that the belt can hold
+      both the darts.
+    type: Tweak
+  - message: The Irwizine dart now only takes one shot to work!
+    type: Tweak
+  id: 1921
+  time: '2025-06-28T03:59:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2884
