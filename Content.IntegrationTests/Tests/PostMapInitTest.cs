@@ -74,6 +74,7 @@ namespace Content.IntegrationTests.Tests
             "/Maps/Shuttles/ShuttleEvent/recruiter.yml", // Contains syndicate rubber stamp
             "/Maps/_DV/Shuttles/listening_post.yml", // Contains captain's rubber stamp, chief engineer's rubber stamp, chaplain's rubber stamp, clown's rubber stamp, blablabla you get the picture
             "/Maps/_Impstation/Shuttles/listening_post.yml" // No, I'm not gonna list out all these stamps again lol
+            
         };
 
         // Imp - While fixing these tests I didn't want to edit any of the maps in-game because that would mess up any possible wip stuff.
