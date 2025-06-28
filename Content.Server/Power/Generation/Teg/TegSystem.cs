@@ -184,18 +184,21 @@ public sealed class TegSystem : EntitySystem
             // of just feeding the TEG room temperature gas from an infinite gas miner).
             N *= MathF.Tanh(dT/700); // https://www.wolframalpha.com/input?i=tanh(x/700)+from+0+to+1000
 
-            // Calculate maximum amount of energy to generate this tick based on ramping above.
-            // This clamps the thermal energy transfer as well.
+            // Calculate the desired amount of energy to generate this tick based on ramping above.
+            // The TEG will generate only the energy it needs to satisfy demand
+            // (and it'll only move the required amount of heat across the sides to achieve this).
             var targetEnergy = curRamp / args.dt;
-            var transferMax = targetEnergy / (N * component.PowerFactor);
+            var desiredTransfer = targetEnergy / (N * component.PowerFactor);
 
             // Numerically limited heat transfer is described as:
             // Q = ΔT * (C_A * C_B / C_A + C_B)
             // Limit transfer to the maximum amount of energy we can generate this tick.
-            var transfer = Math.Min(PerformCompleteHeatExchange(dT, circA_C, circB_C), transferMax);
+            var transfer = Math.Min(PerformCompleteHeatExchange(dT, circA_C, circB_C), desiredTransfer);
 
             electricalEnergy = transfer * N * component.PowerFactor;
 
+            // Remember that Q_{in} = W + Q_{out}. Determine the amount of waste
+            // heat we need to move to the cold side.
             var outTransfer = transfer * (1 - N);
 
             // Adjust thermal energy in transferred gas mixtures.
@@ -221,7 +224,6 @@ public sealed class TegSystem : EntitySystem
         // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
         supplier.MaxSupply = power * component.RampFactor;
 
-        // TODO: Check if this and the surrounding logic is correct. Gas leak happens here.
         circAComp.LastPressureDelta = δpA;
         circAComp.LastMolesTransferred = airA.TotalMoles;
         circBComp.LastPressureDelta = δpB;
