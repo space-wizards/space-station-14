@@ -272,7 +272,7 @@
   cost:
     SalvageTicket: 150
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -282,7 +282,7 @@
   cost:
     SalvageTicket: 25
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -292,7 +292,7 @@
   cost:
     SalvageTicket: 25
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -302,7 +302,7 @@
   cost:
     SalvageTicket: 25
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -312,7 +312,7 @@
   cost:
     SalvageTicket: 150
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -322,7 +322,7 @@
   cost:
     SalvageTicket: 150
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -332,7 +332,7 @@
   cost:
     SalvageTicket: 25
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -342,7 +342,7 @@
   cost:
     SalvageTicket: 150
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -352,7 +352,7 @@
   cost:
     SalvageTicket: 25
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -362,7 +362,7 @@
   cost:
     SalvageTicket: 250
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -372,7 +372,7 @@
   cost:
     SalvageTicket: 150
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -382,7 +382,7 @@
   cost:
     SalvageTicket: 25
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -392,7 +392,7 @@
   cost:
     SalvageTicket: 200
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition
 
@@ -402,6 +402,6 @@
   cost:
     SalvageTicket: 150
   categories:
-  - MercenaryEquipment
+  - SalvageMercenaryEquipment
   conditions:
   - !type:BuyerAccessCondition

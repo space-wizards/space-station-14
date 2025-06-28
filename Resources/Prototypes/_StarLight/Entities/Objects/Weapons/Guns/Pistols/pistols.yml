@@ -230,7 +230,7 @@
   name: Jungle Hawk
   parent: [ WeaponPistolN1984, BaseSecuritySalvageContraband ]
   id: WeaponPistolDeagle
-  description: A robust magnum handgun.
+  description: A high-caliber handgun designed for putting down large game.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/deagle.rsi
