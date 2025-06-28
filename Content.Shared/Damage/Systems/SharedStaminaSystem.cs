@@ -67,16 +67,16 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
     }
 
-    private void OnStamHandleState(EntityUid uid, StaminaComponent component, ref AfterAutoHandleStateEvent args)
+    protected virtual void OnStamHandleState(Entity<StaminaComponent> entity, ref AfterAutoHandleStateEvent args)
     {
-        if (component.Critical)
-            EnterStamCrit(uid, component);
+        if (entity.Comp.Critical)
+            EnterStamCrit(entity);
         else
         {
-            if (component.StaminaDamage > 0f)
-                EnsureComp<ActiveStaminaComponent>(uid);
+            if (entity.Comp.StaminaDamage > 0f)
+                EnsureComp<ActiveStaminaComponent>(entity);
 
-            ExitStamCrit(uid, component);
+            ExitStamCrit(entity);
         }
     }
 
