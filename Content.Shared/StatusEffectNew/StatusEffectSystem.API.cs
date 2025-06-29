@@ -20,7 +20,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// In the other case, the effect will either be added for the specified time or its time will be extended for the specified time.
     /// </param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
-    public bool TryAddStatusEffect(
+    public bool EnsureOrUpdateStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
@@ -29,7 +29,7 @@ public abstract partial class SharedStatusEffectsSystem
     )
     {
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
-            return TryAddNewStatusEffect(target, effectProto, out statusEffect, duration);
+            return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
         //If the effect is permanent and exists then we don't need to update it.
         if (GetStatusEffectTime(statusEffect.Value) is null)
@@ -44,17 +44,17 @@ public abstract partial class SharedStatusEffectsSystem
     }
 
     /// <summary>
-    /// An overload of <see cref="TryAddStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
+    /// An overload of <see cref="EnsureStatusEffect"/>
     /// that doesn't return a status effect EntityUid.
     /// </summary>
-    public bool TryAddStatusEffect(
+    public bool EnsureOrUpdateStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
         TimeSpan? duration = null,
         bool resetCooldown = false
     )
     {
-        return TryAddStatusEffect(target, effectProto, out _, duration, resetCooldown);
+        return EnsureOrUpdateStatusEffect(target, effectProto, out _, duration, resetCooldown);
     }
 
     /// <summary>
@@ -71,7 +71,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// In the other case, the effect will either be added for the specified time or its time will be extended for the specified time.
     /// </param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
-    public bool TryAddOrUpdateStatusEffect(
+    public bool EnsureStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
@@ -80,7 +80,7 @@ public abstract partial class SharedStatusEffectsSystem
     )
     {
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
-            return TryAddNewStatusEffect(target, effectProto, out statusEffect, duration);
+            return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
         if (resetCooldown || duration is null)
             SetStatusEffectTime(statusEffect.Value, duration);
@@ -94,14 +94,14 @@ public abstract partial class SharedStatusEffectsSystem
     /// An overload of <see cref="TryAddOrUpdateStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
     /// that doesn't return a status effect EntityUid.
     /// </summary>
-    public bool TryAddOrUpdateStatusEffect(
+    public bool EnsureStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
         TimeSpan? duration = null,
         bool resetCooldown = false
     )
     {
-        return TryAddStatusEffect(target, effectProto, out _, duration, resetCooldown);
+        return EnsureStatusEffect(target, effectProto, out _, duration, resetCooldown);
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// Otherwise, the duration will be added to the existing duration or set to the input duration of none exists.
     /// </param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
-    public bool EnsureStatusEffect(
+    public bool EnsureLongestStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
@@ -127,7 +127,7 @@ public abstract partial class SharedStatusEffectsSystem
     )
     {
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
-            return TryAddNewStatusEffect(target, effectProto, out statusEffect, duration);
+            return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
         //If the effect is permanent and exists then we don't need to update it.
         if (GetStatusEffectTime(statusEffect.Value) is null)
@@ -142,17 +142,17 @@ public abstract partial class SharedStatusEffectsSystem
     }
 
     /// <summary>
-    /// An overload of <see cref="EnsureStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
+    /// An overload of <see cref="EnsureUpdateStatusEffect"/>
     /// that doesn't return a status effect EntityUid.
     /// </summary>
-    public bool EnsureStatusEffect(
+    public bool EnsureLongestStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
         TimeSpan? duration = null,
         bool refresh = true
     )
     {
-        return EnsureStatusEffect(target, effectProto, out _, duration, refresh);
+        return EnsureLongestStatusEffect(target, effectProto, out _, duration, refresh);
     }
 
     /// <summary>
@@ -163,7 +163,7 @@ public abstract partial class SharedStatusEffectsSystem
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
     /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if we couldn't create one.</param>
-    public bool TryAddNewStatusEffect(
+    public bool TryAddStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,

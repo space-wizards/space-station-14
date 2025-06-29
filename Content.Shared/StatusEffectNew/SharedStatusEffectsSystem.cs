@@ -128,8 +128,6 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             effectComp.EndEffectTime = null;
         else
         {
-            effectComp.EndEffectTime = _timing.CurTime + duration;
-
             var newEndTime = _timing.CurTime + duration;
 
             if (effectComp.EndEffectTime >= newEndTime)
