@@ -416,7 +416,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     /// <summary>
     /// Adjusts the modifiers of the <see cref="StaminaLow"/> status effect entity and applies relevant statuses.
     /// System iterates through the <see cref="StaminaComponent.StunModifierThresholds"/> to find correct movement modifer.
-    /// This modifier is saved to the Status Effect entity and applied to our mob through the <see cref="MovementModStatusComponent"/>
+    /// This modifier is saved to the Stamina Low Status Effect entity's <see cref="MovementModStatusEffectComponent"/>.
     /// </summary>
     /// <param name="ent">Entity to update</param>
     private void AdjustStatus(Entity<StaminaComponent?> ent)
@@ -438,36 +438,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
                 closest = thres.Key;
         }
 
-        UpdateStaminaModifiers(ent, status.Value, ent.Comp.StunModifierThresholds[closest]);
-    }
-
-    /// <summary>
-    /// Takes an input of movement speed modifiers and applies them to the Low Stamina Status Effect.
-    /// Then has the movement modifier status system update our <see cref="MovementModStatusComponent"/>.
-    /// </summary>
-    /// <param name="ent">Entity whose movement speed should be updated.</param>
-    /// <param name="status">The Low Stamina Status Effect entity.</param>
-    /// <param name="walkSpeedModifier">New walk speed modifier.</param>
-    /// <param name="sprintSpeedModifier">New sprint speed modifier.</param>
-    public void UpdateStaminaModifiers(Entity<StaminaComponent?> ent,
-        EntityUid status,
-        float walkSpeedModifier,
-        float sprintSpeedModifier)
-    {
-        if (!Resolve(ent, ref ent.Comp))
-            return;
-
-        _movementMod.TryUpdateMovementStatus(ent.Owner, status, walkSpeedModifier, sprintSpeedModifier);
-    }
-
-    /// <summary>
-    /// A convenience overload that sets both walk and run speed modifiers to the same value.
-    /// </summary>
-    /// <param name="ent">Entity whose movement speed should be updated.</param>
-    /// <param name="status">The Low Stamina Status Effect entity.</param>
-    /// <param name="speedModifier">New walk and run speed modifier. Default is 1f (normal speed).</param>
-    public void UpdateStaminaModifiers(Entity<StaminaComponent?> ent, EntityUid status, float speedModifier = 1f)
-    {
-        UpdateStaminaModifiers(ent, status, speedModifier, speedModifier);
+        _movementMod.TryUpdateMovementStatus(ent.Owner, status.Value, ent.Comp.StunModifierThresholds[closest]);
     }
 }

@@ -1,3 +1,5 @@
+using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Player;
 
@@ -9,6 +11,9 @@ public abstract partial class SharedStatusEffectsSystem
     {
         SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerAttachedEvent>(RelayStatusEffectEvent);
         SubscribeLocalEvent<StatusEffectContainerComponent, LocalPlayerDetachedEvent>(RelayStatusEffectEvent);
+
+        SubscribeLocalEvent<StatusEffectContainerComponent, RefreshMovementSpeedModifiersEvent>(RelayStatusEffectEvent);
+        SubscribeLocalEvent<StatusEffectContainerComponent, UpdateCanMoveEvent>(RelayStatusEffectEvent);
     }
 
     protected void RefRelayStatusEffectEvent<T>(EntityUid uid, StatusEffectContainerComponent component, ref T args) where T : struct
