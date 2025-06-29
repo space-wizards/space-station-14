@@ -223,12 +223,23 @@
   components:
     - type: ContainerFill
       containers:
-      borg_brain:
-        - PositronicBrain
-      borg_module:
-        - BorgModuleTool
-        - BorgModuleFireExtinguisher
-      
+        borg_brain:
+          - PositronicBrain
+        borg_module:
+          - BorgModuleTool
+          - BorgModuleFireExtinguisher
+        ears: 
+          - ClothingHeadsetAssistant
+        head: 
+          - ClothingHeadHelmetEVALarge
+        outerClothing: 
+          - ClothingOuterHardsuitEVA
+        mask:
+          - ClothingMaskBreath
+        suitstorage:
+          - OxygenTankFilled
+        id:
+          - ClearPDA
     - type: ItemSlots
       slots:
         cell_slot:

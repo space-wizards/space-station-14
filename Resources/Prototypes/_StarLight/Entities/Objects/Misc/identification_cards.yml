@@ -205,3 +205,23 @@
       interfaces:
         enum.AgentIDCardUiKey.Key:
           type: AgentIDCardBoundUserInterface
+
+- type: entity
+  parent: IDCardStandard
+  id: AssistantDerelictBorgiIDCard
+  name: assistant ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idassistant
+  - type: Tag  # not a chameleon target.
+    tags:
+    - DoorBumpOpener
+  - type: Access
+    tags:
+    - Maintenance
+    - External
+    - Research
+    - Engineering
+    - Atmospherics
