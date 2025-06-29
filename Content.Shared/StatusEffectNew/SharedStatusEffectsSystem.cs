@@ -90,12 +90,16 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         }
     }
 
-    private void SetStatusEffectTime(EntityUid effect, TimeSpan duration)
+    private void SetStatusEffectTime(EntityUid effect, TimeSpan? duration)
     {
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return;
 
-        effectComp.EndEffectTime = _timing.CurTime + duration;
+        if (duration is null)
+            effectComp.EndEffectTime = null;
+        else
+            effectComp.EndEffectTime = _timing.CurTime + duration;
+
         Dirty(effect, effectComp);
 
         if (effectComp is { AppliedTo: not null, Alert: not null })
@@ -111,17 +115,29 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         }
     }
 
-    private void SetGreaterStatusEffectTime(EntityUid effect, TimeSpan duration)
+    private void SetGreaterStatusEffectTime(EntityUid effect, TimeSpan? duration)
     {
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return;
 
-        var newEndTime = _timing.CurTime + duration;
-
-        if (effectComp.EndEffectTime >= newEndTime)
+        // It's already infinitely long
+        if (effectComp.EndEffectTime is null)
             return;
 
-        effectComp.EndEffectTime = newEndTime;
+        if (duration is null)
+            effectComp.EndEffectTime = null;
+        else
+        {
+            effectComp.EndEffectTime = _timing.CurTime + duration;
+
+            var newEndTime = _timing.CurTime + duration;
+
+            if (effectComp.EndEffectTime >= newEndTime)
+                return;
+
+            effectComp.EndEffectTime = newEndTime;
+        }
+
         Dirty(effect, effectComp);
 
         if (effectComp is { AppliedTo: not null, Alert: not null })
@@ -135,6 +151,14 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
                 cooldown: cooldown
             );
         }
+    }
+
+    private TimeSpan? GetStatusEffectTime(EntityUid effect)
+    {
+        if (!_effectQuery.TryComp(effect, out var effectComp))
+            return TimeSpan.Zero;
+
+        return effectComp.EndEffectTime;
     }
 
     private void OnStatusEffectApplied(Entity<StatusEffectComponent> ent, ref StatusEffectAppliedEvent args)

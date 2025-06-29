@@ -7,9 +7,10 @@ namespace Content.Shared.StatusEffectNew;
 public abstract partial class SharedStatusEffectsSystem
 {
     /// <summary>
-    /// Attempts to add a status effect to the specified entity. Returns True if the effect is added or it already exists
-    /// and has been successfully extended in time, returns False if the status effect cannot be applied to this entity,
-    /// or for any other reason.
+    /// Checks if a status effect with the same prototype exists on the current entity, and then tries to add one if it doesn't exist.
+    /// If one does exist, and <see cref="resetCooldown"/> is true, this method will update the <see cref="StatusEffectComponent.EndEffectTime"/>
+    /// of the effect to our inputted duration only if the current effect isn't permanent.
+    /// If one does exist, and <see cref="resetCooldown"/> is false, this method will add its duration to the duration of the existing effect.
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
@@ -31,16 +32,15 @@ public abstract partial class SharedStatusEffectsSystem
             return TryAddNewStatusEffect(target, effectProto, out statusEffect, duration);
 
         //If the effect is permanent and exists then we don't need to update it.
-        if (duration is null)
+        if (GetStatusEffectTime(statusEffect.Value) is null)
             return true;
 
-        if (resetCooldown)
-            SetStatusEffectTime(statusEffect.Value, duration.Value);
+        if (resetCooldown || duration is null)
+            SetStatusEffectTime(statusEffect.Value, duration);
         else
             AddStatusEffectTime(statusEffect.Value, duration.Value);
 
         return true;
-
     }
 
     /// <summary>
@@ -58,9 +58,10 @@ public abstract partial class SharedStatusEffectsSystem
     }
 
     /// <summary>
-    /// Attempts to add a status effect to the specified entity. Returns True if the effect is added or it already exists
-    /// and has been successfully extended in time, returns False if the status effect cannot be applied to this entity,
-    /// or for any other reason.
+    /// Checks if a status effect with the same prototype exists on the current entity, and then tries to add one if it doesn't exist.
+    /// If one does exist, and <see cref="refresh"/> is true, this method will update the <see cref="StatusEffectComponent.EndEffectTime"/>
+    /// of the effect if our inputted duration would be longer than the remaining duration.
+    /// If one does exist, and <see cref="refresh"/> is false, this method will add its duration to the duration of the existing effect.
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
@@ -82,11 +83,11 @@ public abstract partial class SharedStatusEffectsSystem
             return TryAddNewStatusEffect(target, effectProto, out statusEffect, duration);
 
         //If the effect is permanent and exists then we don't need to update it.
-        if (duration is null)
+        if (GetStatusEffectTime(statusEffect.Value) is null)
             return true;
 
-        if (refresh)
-            SetGreaterStatusEffectTime(statusEffect.Value, duration.Value);
+        if (refresh || duration is null)
+            SetGreaterStatusEffectTime(statusEffect.Value, duration);
         else
             AddStatusEffectTime(statusEffect.Value, duration.Value);
 
@@ -107,7 +108,15 @@ public abstract partial class SharedStatusEffectsSystem
         return EnsureStatusEffect(target, effectProto, out _, duration, refresh);
     }
 
-    private bool TryAddNewStatusEffect(
+    /// <summary>
+    /// Attempts to add a status effect to the specified entity. Returns True if the effect is added, does not check if one
+    /// already exists as it's intended to be called after a check for an existing effect has already failed.
+    /// </summary>
+    /// <param name="target">The target entity to which the effect should be added.</param>
+    /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
+    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
+    /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if we couldn't create one.</param>
+    public bool TryAddNewStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
