@@ -216,7 +216,7 @@
     - state: default
     - state: idassistant
   - type: IdCard
-    jobTitle: job-title-visitor
+    jobTitle: job-title-borgi
     jobIcon: JobIconBorg
   - type: Tag  # not a chameleon target.
     tags:
