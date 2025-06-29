@@ -37,6 +37,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Content.Shared.Speech; // Starlight
 
 namespace Content.Server.Chat.Systems;
 
@@ -64,6 +65,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly CollectiveMindUpdateSystem _collectiveMind = default!;
+    [Dependency] private readonly SpeechSystem _speechSystem = default!; //Starlight
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -184,7 +186,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             TrySendInGameOOCMessage(source, message, InGameOOCChatType.Dead, range == ChatTransmitRange.HideChat, shell, player);
             return;
         }
-        
+
         //I despise this being here but there doesnt seem to be a cleaner way to watch for tags or complete component removals
         if (TryComp<CollectiveMindComponent>(source, out var collective))
             _collectiveMind.UpdateCollectiveMind(source, collective);
@@ -250,7 +252,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 return;
             }
         }
-        
+
         if (desiredType == InGameICChatType.CollectiveMind)
         {
             if (TryProccessCollectiveMindMessage(source, message, out var modMessage, out var channel))
@@ -519,7 +521,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 receivers.Add(uid);
             }
         }
-        
+
         var Number = $"{sourceCollectiveMindComp.Minds[collectiveMind].MindId}";
 
         var admins = _adminManager.ActiveAdmins
@@ -547,8 +549,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             source,
             false,
             true,
-            collectiveMind.Color); 
-            
+            collectiveMind.Color);
+
         // FOR ADMINS
         _chatManager.ChatMessageToMany(ChatChannel.CollectiveMind,
             FormattedMessage.EscapeText(message),
@@ -560,7 +562,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             collectiveMind.Color);
 
         //raise event so TTS and other related things work
-        var ev = new CollectiveMindSpokeEvent{
+        var ev = new CollectiveMindSpokeEvent
+        {
             Source = source,
             Message = message,
             Receivers = receivers.ToArray()

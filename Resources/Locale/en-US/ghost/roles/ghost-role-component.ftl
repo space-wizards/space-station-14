@@ -246,6 +246,7 @@ ghost-role-information-syndicate-kobold-reinforcement-description = Someone need
 
 ghost-role-information-syndicate-cyborg-assault-name = Syndicate Assault Cyborg
 ghost-role-information-syndicate-cyborg-saboteur-name = Syndicate Saboteur Cyborg
+ghost-role-information-syndicate-cyborg-medical-name = Syndicate Medical Cyborg
 ghost-role-information-syndicate-cyborg-description = The Syndicate needs reinforcements. You, a cold silicon killing machine, will help them.
 
 ghost-role-information-derelict-cyborg-name = Derelict Cyborg

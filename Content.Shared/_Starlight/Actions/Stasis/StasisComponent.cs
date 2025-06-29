@@ -15,6 +15,11 @@ public sealed partial class StasisComponent : Component
     [DataField] [AutoNetworkedField] public bool IsInStasis = false;
 
     /// <summary>
+    /// Whether the entity should be visible. This is synced to ensure proper PVS handling.
+    /// </summary>
+    [DataField] [AutoNetworkedField] public bool IsVisible = true;
+
+    /// <summary>
     /// The second entity needed to preform stasis. This is used to leave stasis.
     /// </summary>
     [DataField(required: true)] [ViewVariables(VVAccess.ReadWrite)] [AutoNetworkedField]
@@ -146,4 +151,16 @@ public sealed partial class StasisComponent : Component
     /// The entity reference for the continuous stasis effect.
     /// </summary>
     [DataField] [AutoNetworkedField] public EntityUid? ContinuousEffectEntity;
+
+    /// <summary>
+    /// Client-side reference to the continuous stasis effect entity.
+    /// This is used to properly track and clean up the visual effect.
+    /// </summary>
+    [DataField] public EntityUid? ClientContinuousEffectEntity;
+
+    /// <summary>
+    /// Client-side reference to the enter stasis effect entity.
+    /// This is used to properly track and clean up the visual effect.
+    /// </summary>
+    [DataField] public EntityUid? ClientEnterEffectEntity;
 }
