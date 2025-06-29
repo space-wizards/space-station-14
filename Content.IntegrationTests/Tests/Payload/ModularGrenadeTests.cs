@@ -128,6 +128,7 @@ public sealed class ModularGrenadeTests : InteractionTest
         await PayloadCycle();
 
         // Prepare signaller
+        await PlaceInHands(RemoteSignaller);
         if (HandSys.GetActiveItem((ToServer(Player), Hands)) is not { } remoteSignaller)
         {
             Assert.Fail("Not holding remote signaller.");
@@ -140,7 +141,6 @@ public sealed class ModularGrenadeTests : InteractionTest
             return;
         }
 
-        await PlaceInHands(RemoteSignaller);
         SDevLink.ToggleLink(
             null,
             remoteSignaller,
