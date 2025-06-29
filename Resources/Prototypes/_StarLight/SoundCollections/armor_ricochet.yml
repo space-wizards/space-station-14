@@ -1,0 +1,7 @@
+- type: soundCollection
+  id: armor_ricochet
+  files:
+    - /Audio/_Starlight/Armor/Ricochet/ricochet1_1.ogg
+    - /Audio/_Starlight/Armor/Ricochet/ricochet2_2.ogg
+    - /Audio/_Starlight/Armor/Ricochet/ricochet3_3.ogg
+    - /Audio/_Starlight/Armor/Ricochet/ricochet4_4.ogg
