@@ -25,5 +25,5 @@ public sealed partial class CyborgSparkEffectComponent : Component
     /// Maximum random offset in X and Y directions for spark positioning.
     /// </summary>
     [DataField("maxOffset")]
-    public float MaxOffset = 0.4f;
+    public float MaxOffset = 0.3f;
 }
