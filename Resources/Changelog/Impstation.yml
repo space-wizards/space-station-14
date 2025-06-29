@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SixValentine
-  changes:
-  - message: Luna button - medical will contain you no longer
-    type: Fix
-  id: 1432
-  time: '2025-03-29T22:30:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2139
 - author: TheGrimbeeper
   changes:
   - message: NPC Zombies will now treat Initial Infected as fellow Zombies and not
@@ -4241,3 +4234,12 @@
   id: 1931
   time: '2025-06-29T00:02:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2901
+- author: DinnerCalzone
+  changes:
+  - message: Radiators now support pipe layering.
+    type: Add
+  - message: Radiators now look different.
+    type: Tweak
+  id: 1932
+  time: '2025-06-29T00:27:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2897
