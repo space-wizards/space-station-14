@@ -334,7 +334,7 @@
 
 - type: entity
   parent: BaseSyndicateBorgiChassis
-  id: SyndiCorgiKit1
+  id: SyndiBorgiKit1
   name: Syndi Borgi
   suffix: Antag, L6 Esword
   description: An unusually smart dog, but hell bent on MURDER.
@@ -350,7 +350,7 @@
 
 - type: entity
   parent: BaseSyndicateBorgiChassis
-  id: SyndiCorgiKit2
+  id: SyndiBorgiKit2
   name: Syndi Borgi
   suffix: Antag, Quick Dagger
   description: An unusually smart dog, but hell bent on MURDER.
