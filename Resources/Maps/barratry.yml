@@ -46564,7 +46564,6 @@ entities:
   - uid: 5857
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
       pos: -63.5,27.5
       parent: 2
 - proto: d20Dice
