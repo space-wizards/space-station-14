@@ -66,12 +66,12 @@
   authors: Southbridge, Flipsie27
 
 // Start of modifications.
-- files: ["saltern.yml"]
+- files: ["saltern-2.yml"]
   authors: deltanedas, Emisse, PJB, Merrokitsune, robinthedragon, imatsoup
 
-- files: ["cluster.yml"]
+- files: ["cluster-2.yml"]
   authors: Scribbles0, Merrokitsune, robinthedragon
 
-- files: ["atlas.yml"]
+- files: ["atlas-2.yml"]
   authors: Emisse, deltanedas, Merrokitsune
 // End of modiciations.
