@@ -44,7 +44,7 @@ public abstract partial class SharedStatusEffectsSystem
     }
 
     /// <summary>
-    /// An overload of <see cref="EnsureStatusEffect"/>
+    /// An overload of <see cref="EnsureOrUpdateStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
     /// that doesn't return a status effect EntityUid.
     /// </summary>
     public bool EnsureOrUpdateStatusEffect(
@@ -76,7 +76,7 @@ public abstract partial class SharedStatusEffectsSystem
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
         TimeSpan? duration = null,
-        bool resetCooldown = false
+        bool resetCooldown = true
     )
     {
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
@@ -91,14 +91,14 @@ public abstract partial class SharedStatusEffectsSystem
     }
 
     /// <summary>
-    /// An overload of <see cref="TryAddOrUpdateStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
+    /// An overload of <see cref="EnsureStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
     /// that doesn't return a status effect EntityUid.
     /// </summary>
     public bool EnsureStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
         TimeSpan? duration = null,
-        bool resetCooldown = false
+        bool resetCooldown = true
     )
     {
         return EnsureStatusEffect(target, effectProto, out _, duration, resetCooldown);
@@ -142,7 +142,7 @@ public abstract partial class SharedStatusEffectsSystem
     }
 
     /// <summary>
-    /// An overload of <see cref="EnsureUpdateStatusEffect"/>
+    /// An overload of <see cref="EnsureLongestStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
     /// that doesn't return a status effect EntityUid.
     /// </summary>
     public bool EnsureLongestStatusEffect(
