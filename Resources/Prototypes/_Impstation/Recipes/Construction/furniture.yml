@@ -9,3 +9,247 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+# wallpaper
+
+- type: construction
+  id: WallpaperFish
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperFish
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperFishCorner
+  graph: Wallpaper
+  startNode: WallpaperFish
+  targetNode: WallpaperFishCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperBeach
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperBeach
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperBeachCorner
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperBeachCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperBlack
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperBlack
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperBlackCorner
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperBlackCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperGreen
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperGreen
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperGreenCorner
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperGreenCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperPurple
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperPurple
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperPurpleCorner
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperPurpleCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperRainbow
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperRainbow
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperRainbowCorner
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperRainbowCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperRed
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperRed
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperRedCorner
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperRedCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperSka
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperSka
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperSkaCorner
+  graph: Wallpaper
+  startNode: start
+  targetNode: WallpaperSkaCorner
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+# wall deco
+
+- type: construction
+  id: WallpaperBannerBlackRed
+  graph: WallDeco
+  startNode: start
+  targetNode: WallpaperBannerBlackRed
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperBannerBlueWhite
+  graph: WallDeco
+  startNode: start
+  targetNode: WallpaperBannerBlueWhite
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperBannerColorful
+  graph: WallDeco
+  startNode: start
+  targetNode: WallpaperBannerColorful
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperBannerRainbow
+  graph: WallDeco
+  startNode: start
+  targetNode: WallpaperBannerRainbow
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperBannerSka
+  graph: WallDeco
+  startNode: start
+  targetNode: WallpaperBannerSka
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperStarsBig
+  graph: WallDeco
+  startNode: start
+  targetNode: WallpaperStarsBig
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperBannerStarsSmall
+  graph: WallDeco
+  startNode: start
+  targetNode: WallpaperStarsSmall
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: WallpaperStarsMoon
+  graph: WallDeco
+  startNode: start
+  targetNode: WallpaperStarsMoon
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true

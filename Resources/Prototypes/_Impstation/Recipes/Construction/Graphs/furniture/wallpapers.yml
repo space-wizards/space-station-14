@@ -1,0 +1,248 @@
+﻿- type: constructionGraph # I HATE CONSTRUCTION GRAPHS !!!!!!!!!
+  id: Wallpaper
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity {}
+    edges:
+    - to: WallpaperBlack
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Paper
+        amount: 2
+        doAfter: 3
+    - to: WallpaperBeach
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Paper
+        amount: 2
+        doAfter: 3
+    - to: WallpaperFish
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Paper
+        amount: 2
+        doAfter: 3
+    - to: WallpaperGreen
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Paper
+        amount: 2
+        doAfter: 3
+    - to: WallpaperRainbow
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Paper
+        amount: 2
+        doAfter: 3
+    - to: WallpaperPurple
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Paper
+        amount: 2
+        doAfter: 3
+    - to: WallpaperRed
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Paper
+        amount: 2
+        doAfter: 3
+    - to: WallpaperSka
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Paper
+        amount: 2
+        doAfter: 3
+  - node: WallpaperBlack
+    entity: WallpaperBlack
+    edges:
+    - to: WallpaperBlackCorner
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - tool: Slicing
+        doAfter: 3
+  - node: WallpaperBeach
+    entity: WallpaperBeach
+    edges:
+    - to: WallpaperBeachCorner
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - tool: Slicing
+        doAfter: 3
+  - node: WallpaperFish
+    entity: WallpaperFish
+    edges:
+    - to: WallpaperFishCorner
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - tool: Slicing
+        doAfter: 3
+  - node: WallpaperGreen
+    entity: WallpaperGreen
+    edges:
+    - to: WallpaperGreenCorner
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - tool: Slicing
+        doAfter: 3
+  - node: WallpaperPurple
+    entity: WallpaperPurple
+    edges:
+    - to: WallpaperPurpleCorner
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - tool: Slicing
+        doAfter: 3
+  - node: WallpaperRainbow
+    entity: WallpaperRainbow
+    edges:
+    - to: WallpaperRainbowCorner
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - tool: Slicing
+        doAfter: 3
+  - node: WallpaperRed
+    entity: WallpaperRed
+    edges:
+    - to: WallpaperRedCorner
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - tool: Slicing
+        doAfter: 3
+  - node: WallpaperSka
+    entity: WallpaperSka
+    edges:
+    - to: WallpaperSkaCorner
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - tool: Slicing
+        doAfter: 3
+  - node: WallpaperFishCorner
+    entity: WallpaperFishCorner
+  - node: WallpaperBeachCorner
+    entity: WallpaperBeachCorner
+  - node: WallpaperBlackCorner
+    entity: WallpaperBlackCorner
+  - node: WallpaperGreenCorner
+    entity: WallpaperGreenCorner
+  - node: WallpaperPurpleCorner
+    entity: WallpaperPurpleCorner
+  - node: WallpaperRainbowCorner
+    entity: WallpaperRainbowCorner
+  - node: WallpaperRedCorner
+    entity: WallpaperRedCorner
+  - node: WallpaperSkaCorner
+    entity: WallpaperSkaCorner
+
+- type: constructionGraph
+  id: WallDeco
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity { }
+    edges:
+    - to: WallpaperBannerBlackRed
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Plastic
+        amount: 3
+        doAfter: 3
+    - to: WallpaperBannerBlueWhite
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Plastic
+        amount: 3
+        doAfter: 3
+    - to: WallpaperBannerColorful
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Plastic
+        amount: 3
+        doAfter: 3
+    - to: WallpaperBannerRainbow
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Plastic
+        amount: 3
+        doAfter: 3
+    - to: WallpaperBannerSka
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Plastic
+        amount: 3
+        doAfter: 3
+    - to: WallpaperStarsBig
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Plastic
+        amount: 2
+        doAfter: 3
+      - tag: Glowstick # would cause an infinite plastic loop if this recipe was just glowstick. sad
+        icon:
+          sprite: Objects/Misc/glowstick.rsi
+          state: glowstick_base
+        name: construction-graph-tag-glowstick
+    - to: WallpaperStarsSmall
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Plastic
+        amount: 2
+        doAfter: 3
+      - tag: Glowstick
+        icon:
+          sprite: Objects/Misc/glowstick.rsi
+          state: glowstick_base
+        name: construction-graph-tag-glowstick
+    - to: WallpaperStarsMoon
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: Plastic
+        amount: 2
+        doAfter: 3
+      - tag: Glowstick
+        icon:
+          sprite: Objects/Misc/glowstick.rsi
+          state: glowstick_base
+        name: construction-graph-tag-glowstick
+  - node: WallpaperBannerBlackRed
+    entity: WallpaperBannerBlackRed
+  - node: WallpaperBannerBlueWhite
+    entity: WallpaperBannerBlueWhite
+  - node: WallpaperBannerColorful
+    entity: WallpaperBannerColorful
+  - node: WallpaperBannerRainbow
+    entity: WallpaperBannerRainbow
+  - node: WallpaperBannerSka
+    entity: WallpaperBannerSka
+  - node: WallpaperStarsBig
+    entity: WallpaperStarsBig
+  - node: WallpaperStarsSmall
+    entity: WallpaperStarsSmall
+  - node: WallpaperStarsMoon
+    entity: WallpaperStarsMoon

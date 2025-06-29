@@ -1,0 +1,358 @@
+- type: entity
+  id: BaseWallpaper
+  name: wallpaper
+  description: Cover up those unsightly naked walls right now!!
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Rotatable
+  - type: Clickable
+  - type: Sprite
+    drawdepth: Objects
+    sprite: _Impstation/Structures/Wallmounts/wallpaper.rsi
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPaper1:
+            min: 1
+            max: 1
+
+# wallpaper
+- type: entity
+  id: WallpaperFish
+  parent: BaseWallpaper
+  name: fish wallpaper
+  description: It's fish.
+  components:
+  - type: Sprite
+    state: fish
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperFish
+
+- type: entity
+  id: WallpaperFishCorner
+  parent: WallpaperFish
+  name: fish wallpaper
+  suffix: corner
+  components:
+  - type: Sprite
+    state: fishedge
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperFishCorner
+
+- type: entity
+  id: WallpaperBeach
+  parent: BaseWallpaper
+  name: beach wallpaper
+  description: Let's go to the beach beach!
+  components:
+  - type: Sprite
+    state: beach
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperBeach
+
+- type: entity
+  id: WallpaperBeachCorner
+  parent: WallpaperBeach
+  suffix: corner
+  components:
+  - type: Sprite
+    state: beachedge
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperBeachCorner
+
+- type: entity
+  id: WallpaperBlack
+  parent: BaseWallpaper
+  name: black wallpaper
+  description: Tastefully goth.
+  components:
+  - type: Sprite
+    state: black
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperBlack
+
+- type: entity
+  id: WallpaperBlackCorner
+  parent: WallpaperBlack
+  suffix: corner
+  components:
+  - type: Sprite
+    state: blackedge
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperBlackCorner
+
+- type: entity
+  id: WallpaperGreen
+  parent: BaseWallpaper
+  name: green wallpaper
+  description: Very classy, very in.
+  components:
+  - type: Sprite
+    state: green
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperGreen
+
+- type: entity
+  id: WallpaperGreenCorner
+  parent: WallpaperGreen
+  suffix: corner
+  components:
+  - type: Sprite
+    state: greenedge
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperGreenCorner
+
+- type: entity
+  id: WallpaperPurple
+  parent: BaseWallpaper
+  name: purple wallpaper
+  description: Mystical.
+  components:
+  - type: Sprite
+    state: purple
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperPurple
+
+- type: entity
+  id: WallpaperPurpleCorner
+  parent: WallpaperPurple
+  suffix: corner
+  components:
+  - type: Sprite
+    state: purpleedge
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperPurpleCorner
+
+- type: entity
+  id: WallpaperRainbow
+  parent: BaseWallpaper
+  name: rainbow wallpaper
+  description: Are you gay? Are you a clown? Are you a gay clown?
+  components:
+  - type: Sprite
+    state: rainbow
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperRainbow
+
+- type: entity
+  id: WallpaperRainbowCorner
+  parent: WallpaperRainbow
+  suffix: corner
+  components:
+  - type: Sprite
+    state: rainbowedge
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperRainbowCorner
+
+- type: entity
+  id: WallpaperRed
+  parent: BaseWallpaper
+  name: red wallpaper
+  description: The residents... no, they couldn't be...
+  components:
+  - type: Sprite
+    state: red
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperRed
+
+- type: entity
+  id: WallpaperRedCorner
+  parent: WallpaperRed
+  suffix: corner
+  components:
+  - type: Sprite
+    state: rededge
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperRedCorner
+
+- type: entity
+  id: WallpaperSka
+  parent: BaseWallpaper
+  name: black and white wallpaper
+  description: SKA WORLD LET'S GO BABEY!!
+  components:
+  - type: Sprite
+    state: ska
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperSka
+
+- type: entity
+  id: WallpaperSkaCorner
+  parent: WallpaperSka
+  suffix: corner
+  components:
+  - type: Sprite
+    state: skaedge
+  - type: Construction
+    graph: Wallpaper
+    node: WallpaperSkaCorner
+
+# wall deco
+
+- type: entity
+  id: BaseBanner
+  parent: BaseWallpaper
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Overdoors
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1:
+            min: 1
+            max: 2
+
+- type: entity
+  id: BaseBannerEngraveable
+  parent: BaseBanner
+  abstract: true
+  components:
+  - type: Engraveable
+
+- type: entity
+  id: WallpaperBannerBlackRed
+  parent: BaseBannerEngraveable
+  name: black and red banner
+  description: This shade of red doesn't scare you at all.
+  components:
+  - type: Sprite
+    state: bannerblackred
+  - type: Construction
+    graph: WallDeco
+    node: WallpaperBannerBlackRed
+
+- type: entity
+  id: WallpaperBannerBlueWhite
+  parent: BaseBannerEngraveable
+  name: blue and white banner
+  description: All-purpose triangles of paper for any occasion.
+  components:
+  - type: Sprite
+    state: bannerbluewhite
+  - type: Construction
+    graph: WallDeco
+    node: WallpaperBannerBlueWhite
+
+- type: entity
+  id: WallpaperBannerColorful
+  parent: BaseBannerEngraveable
+  name: colorful banner
+  description: Don't be fooled, the paper on these tastes like shit.
+  components:
+  - type: Sprite
+    state: bannercolorful
+  - type: Construction
+    graph: WallDeco
+    node: WallpaperBannerColorful
+
+- type: entity
+  id: WallpaperBannerRainbow
+  parent: BaseBannerEngraveable
+  name: rainbow banner
+  description: All your favorite colors are here.
+  components:
+  - type: Sprite
+    state: bannerrainbow
+  - type: Construction
+    graph: WallDeco
+    node: WallpaperBannerRainbow
+
+- type: entity
+  id: WallpaperBannerSka
+  parent: BaseBannerEngraveable
+  name: black and white banner
+  description: None of your favorite colors are here.
+  components:
+  - type: Sprite
+    state: bannerska
+  - type: Construction
+    graph: WallDeco
+    node: WallpaperBannerSka
+
+- type: entity
+  id: WallpaperStarsBig
+  parent: BaseBanner
+  name: glow in the dark big stars
+  description: You know these guys. From outside the window.
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    layers:
+      - state: starsbig
+        shader: unshaded
+  - type: Construction
+    graph: WallDeco
+    node: WallpaperStarsBig
+
+- type: entity
+  id: WallpaperStarsSmall
+  parent: BaseBanner
+  name: glow in the dark small stars
+  description: You're a super star!
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    layers:
+      - state: starssmall
+        shader: unshaded
+  - type: Construction
+    graph: WallDeco
+    node: WallpaperStarsSmall
+
+- type: entity
+  id: WallpaperStarsMoon
+  parent: BaseBanner
+  name: glow in the dark stars and moon
+  description: Let's talk about spaceships, or anything.
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    layers:
+      - state: starsmoon
+        shader: unshaded
+  - type: Construction
+    graph: WallDeco
+    node: WallpaperStarsMoon
