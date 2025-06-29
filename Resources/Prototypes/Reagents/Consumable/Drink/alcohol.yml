@@ -876,8 +876,8 @@
         conditions:
           - !type:ReagentThreshold
             min: 90
-        reagent: Romerol
-        amount: .75
+        reagent: Opporozidone
+        amount: 1.25
 
 - type: reagent
   id: CorpseReviver2
