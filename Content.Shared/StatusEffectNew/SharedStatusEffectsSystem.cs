@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
@@ -199,6 +200,48 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
         if (ev.Cancelled)
             return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts to add a status effect to the specified entity. Returns True if the effect is added, does not check if one
+    /// already exists as it's intended to be called after a check for an existing effect has already failed.
+    /// </summary>
+    /// <param name="target">The target entity to which the effect should be added.</param>
+    /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
+    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
+    /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if we couldn't create one.</param>
+    private bool TryAddStatusEffect(
+        EntityUid target,
+        EntProtoId effectProto,
+        [NotNullWhen(true)] out EntityUid? statusEffect,
+        TimeSpan? duration = null)
+    {
+        statusEffect = null;
+        if (!CanAddStatusEffect(target, effectProto))
+            return false;
+
+        var container = EnsureComp<StatusEffectContainerComponent>(target);
+
+        //And only if all checks passed we spawn the effect
+        var effect = PredictedSpawnAttachedTo(effectProto, Transform(target).Coordinates);
+        _transform.SetParent(effect, target);
+        if (!_effectQuery.TryComp(effect, out var effectComp))
+            return false;
+
+        statusEffect = effect;
+
+        if (duration != null)
+            effectComp.EndEffectTime = _timing.CurTime + duration;
+
+        container.ActiveStatusEffects.Add(effect);
+        effectComp.AppliedTo = target;
+        Dirty(target, container);
+        Dirty(effect, effectComp);
+
+        var ev = new StatusEffectAppliedEvent(target);
+        RaiseLocalEvent(effect, ref ev);
 
         return true;
     }
