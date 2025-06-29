@@ -177,10 +177,11 @@ public abstract partial class SharedStatusEffectsSystem
 
         //And only if all checks passed we spawn the effect
         var effect = PredictedSpawnAttachedTo(effectProto, Transform(target).Coordinates);
-        statusEffect = effect;
         _transform.SetParent(effect, target);
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return false;
+
+        statusEffect = effect;
 
         if (duration != null)
             effectComp.EndEffectTime = _timing.CurTime + duration;
