@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Store.Systems;
 using Content.Shared.PDA;
@@ -14,15 +15,16 @@ public sealed class RingerSystem : SharedRingerSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
+    public const int UplinkCodeGenerationAttempts = 10000;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
-
         SubscribeLocalEvent<RingerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<RingerComponent, CurrencyInsertAttemptEvent>(OnCurrencyInsert);
 
-        SubscribeLocalEvent<RingerUplinkComponent, GenerateUplinkCodeEvent>(OnGenerateUplinkCode);
+        SubscribeLocalEvent<RingerAccessUplinkComponent, GenerateUplinkCodeEvent>(OnGenerateUplinkCode);
     }
 
     /// <summary>
@@ -53,15 +55,24 @@ public sealed class RingerSystem : SharedRingerSystem
     /// <summary>
     /// Handles the <see cref="GenerateUplinkCodeEvent"/> for generating an uplink code.
     /// </summary>
-    private void OnGenerateUplinkCode(Entity<RingerUplinkComponent> ent, ref GenerateUplinkCodeEvent ev)
+    private void OnGenerateUplinkCode(Entity<RingerAccessUplinkComponent> ent, ref GenerateUplinkCodeEvent ev)
     {
-        var code = GenerateRingtone();
+        ev.Code = null;
+        ent.Comp.Code = null;
 
-        // Set the code on the component
-        ent.Comp.Code = code;
-
-        // Return the code via the event
-        ev.Code = code;
+        // This will realistically only take one attempt... But you never know...
+        for (var i = 0; i < UplinkCodeGenerationAttempts; i++)
+        {
+            var code = GenerateRingtone();
+            if (!TryMatchRingtoneToStore(code, out _))
+            {
+                // Set the code on the component
+                ent.Comp.Code = code;
+                // Return the code via the event
+                ev.Code = code;
+                break;
+            }
+        }
     }
 
     /// <inheritdoc/>
@@ -73,13 +84,11 @@ public sealed class RingerSystem : SharedRingerSystem
         if (!HasComp<StoreComponent>(uid))
             return false;
 
-        // Wasn't generated yet
-        if (uplink.Code is null)
+        // On the server, we always check if the code matches
+        if (!TryMatchRingtoneToStore(ringtone, out var store, uid))
             return false;
 
-        // On the server, we always check if the code matches
-        if (!uplink.Code.SequenceEqual(ringtone))
-            return false;
+        uplink.TargetStore = store;
 
         return ToggleUplinkInternal((uid, uplink));
     }
@@ -118,6 +127,31 @@ public sealed class RingerSystem : SharedRingerSystem
         }
 
         return ringtone;
+    }
+
+    /// <summary>
+    /// Try to get the store entity that has the matching ringer access.
+    /// </summary>
+    /// <param name="notes">Notes from the ringer.</param>
+    /// <param name="store">The store entity, if there is one.</param>
+    /// <param name="ringer">The entity providing the code.</param>
+    public bool TryMatchRingtoneToStore(Note[] notes, [NotNullWhen(true)] out EntityUid? store, EntityUid? ringer = null)
+    {
+        var query = EntityQueryEnumerator<RingerAccessUplinkComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.Code != null && notes.SequenceEqual(comp.Code))
+            {
+                if (comp.BoundEntity != null && comp.BoundEntity != ringer)
+                    break;
+
+                store = uid;
+                return true;
+            }
+        }
+
+        store = null;
+        return false;
     }
 }
 

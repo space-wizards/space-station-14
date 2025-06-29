@@ -68,6 +68,15 @@
                             MinSize="40 0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center" />
+                    <Label Name = "Indent_6Label"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="-" />
+                    <LineEdit Name ="RingerNoteSevenInput"
+                              Access="Public"
+                              MinSize="40 0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center" />
                 </BoxContainer>
             </PanelContainer>
             <PanelContainer>

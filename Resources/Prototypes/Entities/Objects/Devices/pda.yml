@@ -98,8 +98,6 @@
     interfaces:
       enum.PdaUiKey.Key:
         type: PdaBoundUserInterface
-      enum.StoreUiKey.Key:
-        type: StoreBoundUserInterface
       enum.RingerUiKey.Key:
         type: RingerBoundUserInterface
       enum.InstrumentUiKey.Key:

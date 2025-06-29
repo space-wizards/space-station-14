@@ -21,6 +21,7 @@ using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
 using Content.Server.Codewords;
+using Robust.Shared.Map;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -151,17 +152,18 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     private (Note[]?, string) RequestUplink(EntityUid traitor, FixedPoint2 startingBalance, string briefing)
     {
         var pda = _uplink.FindUplinkTarget(traitor);
+        var storeEntity = Spawn(UplinkSystem.TraitorUplinkStore, MapCoordinates.Nullspace);
         Note[]? code = null;
 
         Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink add");
-        var uplinked = _uplink.AddUplink(traitor, startingBalance, pda, true);
+        var uplinked = _uplink.AddUplink(traitor, startingBalance, pda, storeEntity, giveDiscounts: true, bindToPda: false);
 
         if (pda is not null && uplinked)
         {
             Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink is PDA");
             // Codes are only generated if the uplink is a PDA
             var ev = new GenerateUplinkCodeEvent();
-            RaiseLocalEvent(pda.Value, ref ev);
+            RaiseLocalEvent(storeEntity, ref ev);
 
             if (ev.Code is { } generatedCode)
             {
