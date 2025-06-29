@@ -1097,10 +1097,9 @@
       task: RuminantHostileCompound
 
 - type: entity
-  name: sheep
-  parent: SimpleMobBase
-  id: MobSheep
-  description: An adorable genetically engineered chemical factory producing milk and cotton.
+  name: sheepBase
+  id: MobSheepBase
+  description: A sheep.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -1173,7 +1172,7 @@
   - type: Wooly
   - type: Shearable
     targetSolutionName: wool
-    shearedProductID: Cotton # Cotton is spawned because there is no wool item.
+    shearedProductID: MaterialCotton1 # Cotton is spawned because there is no wool item.
     productsPerSolution: 0.2 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton. 1 ÷ 5 = 0.2
     toolQuality: Cutting # Wirecutters and barber's scissors.
     shearableMarkupText: sheep-shearable-examine-markup
@@ -1209,6 +1208,45 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.6
     baseSprintSpeed: 0.8
+
+- type: entity
+  name: sheep
+  parent: [MobSheepBase, SimpleMobBase]
+  id: MobSheep
+  description: An adorable genetically engineered chemical factory producing milk and cotton.
+
+- type: entity
+  name: rainbow sheep
+  parent: MobSheep
+  id: MobSheepRainbow
+  description: A sheep; this one seems... glowy.
+  components:
+    - type: PointLight
+      radius: 1.5
+      energy: 0.5
+    - type: RgbLightController
+      layers: [ 1 ]
+    - type: Wooly
+      reagentId: SpaceDrugs
+    - type: Shearable
+      targetSolutionName: wool
+      shearedProductID: LeavesCannabisRainbow
+      productsPerSolution: 1
+      toolQuality: Cutting
+      shearableMarkupText: rainbow-sheep-shearable-examine-markup
+      unShearableMarkupText: rainbow-sheep-not-shearable-examine-markup
+    - type: SolutionContainerManager
+      solutions:
+        udder:
+          maxVol: 250
+          reagents:
+          - ReagentId: MilkSheep
+            Quantity: 30
+        wool:
+          maxVol: 250
+          reagents:
+          - ReagentId: SpaceDrugs
+            Quantity: 25
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
