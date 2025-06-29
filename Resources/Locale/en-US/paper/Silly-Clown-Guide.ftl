@@ -29,5 +29,3 @@
 
  "Space Law isn’t about justice, it’s a checklist. Tick enough boxes while holding a squeaky flower, and you win."
  — Silly Billy Clowney Jr., before being spaced by an angry mob.
-
-book-text-silly-description = Most of the title is covered in handwritten scratches of pies and balloons.

@@ -499,7 +499,7 @@
   parent: BookBase
   id: SillyClownGuide
   name: "Silly billy's Guide of Clowning"
-  description: book-text-silly-description
+  description: Most of the title is covered in handwritten scratches of pies and balloons.
   components:
   - type: Sprite
     layers:
