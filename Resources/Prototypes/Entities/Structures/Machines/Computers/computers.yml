@@ -1015,7 +1015,7 @@
   - type: PointLight
     color: "#c9c042"
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [["ChiefEngineer"]]
 
 - type: entity
   id: ComputerCargoOrdersMedical
@@ -1047,7 +1047,7 @@
   - type: PointLight
     color: "#41e0fc"
   - type: AccessReader
-    access: [["Medical"]]
+    access: [["ChiefMedicalOfficer"]]
 
 - type: entity
   id: ComputerCargoOrdersScience
@@ -1079,7 +1079,7 @@
   - type: PointLight
     color: "#b53ca1"
   - type: AccessReader
-    access: [["Research"]]
+    access: [["ResearchDirector"]]
 
 - type: entity
   id: ComputerCargoOrdersSecurity
@@ -1111,7 +1111,7 @@
   - type: PointLight
     color: "#d11d00"
   - type: AccessReader
-    access: [["Security"]]
+    access: [["Armory"]]
 
 - type: entity
   id: ComputerCargoOrdersService
@@ -1143,7 +1143,7 @@
   - type: PointLight
     color: "#afe837"
   - type: AccessReader
-    access: [["Service"]]
+    access: [["HeadOfPersonnel"]]
 
 - type: entity
   id: ComputerCargoBounty
