@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Server.Materials.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Power.EntitySystems;
 using Robust.Server.Audio;
 
 namespace Content.Server.Materials;

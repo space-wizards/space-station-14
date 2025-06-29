@@ -1,9 +1,9 @@
 ﻿using Content.Server.Anomaly.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.Research.Components;
 
 namespace Content.Server.Anomaly;

@@ -1,5 +1,7 @@
 using System.Numerics;
 using Content.Server.Audio;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -18,7 +20,6 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Localizations;
 using Content.Shared.Power;
-using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Shuttles.Systems;
 

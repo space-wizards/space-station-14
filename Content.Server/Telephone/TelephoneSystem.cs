@@ -2,6 +2,7 @@ using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Shared.Chat;
@@ -21,7 +22,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using System.Linq;
-using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Telephone;
 

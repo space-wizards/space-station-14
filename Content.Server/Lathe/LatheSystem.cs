@@ -6,6 +6,8 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.Popups;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Atmos;
@@ -31,7 +33,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Lathe
 {

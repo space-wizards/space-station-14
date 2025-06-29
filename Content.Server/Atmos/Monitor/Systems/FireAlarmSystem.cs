@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Systems;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.CCVar;
@@ -7,7 +8,6 @@ using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Emag.Systems;
 using Robust.Shared.Configuration;
-using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 

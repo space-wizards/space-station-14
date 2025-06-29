@@ -1,4 +1,5 @@
 using Content.Server.Bed.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Bed;
 using Content.Shared.Bed.Components;
 using Content.Shared.Bed.Sleep;
@@ -9,7 +10,6 @@ using Content.Shared.Damage;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Power;
-using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Bed
 {

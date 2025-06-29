@@ -1,8 +1,8 @@
 using Content.Server.Botany.Components;
 using Content.Server.Popups;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;

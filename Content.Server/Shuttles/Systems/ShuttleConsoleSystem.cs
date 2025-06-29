@@ -1,3 +1,5 @@
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
@@ -20,7 +22,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using Content.Shared.UserInterface;
 using Robust.Shared.Prototypes;
-using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Shuttles.Systems;
 

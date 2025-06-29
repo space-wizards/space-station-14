@@ -1,6 +1,6 @@
 using Content.Server.Physics.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Singularity.Components;
-using Content.Shared.Power.EntitySystems;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;

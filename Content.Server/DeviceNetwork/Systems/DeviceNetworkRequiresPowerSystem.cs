@@ -1,6 +1,7 @@
 using Content.Server.DeviceNetwork.Components;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.DeviceNetwork.Systems;
 

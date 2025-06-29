@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Shared.Power.EntitySystems;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Research.Components;
 
 namespace Content.Server.Research.Systems;
