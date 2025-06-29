@@ -97,7 +97,6 @@
         Name="ReportBugButton"
         Access="Internal"
         Icon="{xe:Tex '/Textures/Interface/bug.svg.192dpi.png'}"
-        BoundKey = "{x:Static is:ContentKeyFunctions.BugReportMenu}"
         ToolTip="{Loc 'game-hud-open-bug-report-window-button-tooltip'}"
         MinSize="42 64"
         HorizontalExpand="True"
