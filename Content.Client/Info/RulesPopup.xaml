@@ -18,6 +18,9 @@
                     <Button Name="QuitButton"
                             StyleClasses="Caution"
                             Text="{Loc 'ui-escape-quit'}" />
+                    <Button Name="WikiButton"
+                            Access="Public"
+                            Text="{Loc 'ui-escape-wiki'}"/>
                 </BoxContainer>
             </BoxContainer>
     </Control>
