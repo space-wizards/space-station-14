@@ -1,13 +1,13 @@
 - type: vendingMachineInventory
   id: SmiteInventory
   startingInventory:
-    DrinkLemonLimeCan: 4
-    DrinkLemonLimeCranberryCan: 2
-    DrinkColaCan: 2
-    DrinkSolDryCan: 2
+    DrinkLemonLimeCan: 8
+    DrinkLemonLimeCranberryCan: 6
+    DrinkColaCan: 3
+    DrinkSolDryCan: 3
   contrabandInventory:
-    ToyHammer: 1
     DrinkStarkistCan: 2
+    ToyHammer: 1
   emaggedInventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2

@@ -4,13 +4,14 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorDarkBlue
     head: ClothingHeadHatWizard
+    back: ClothingBackpack # Wizard backpack?
     outerClothing: ClothingOuterWizard
     shoes: ClothingShoesWizard
-    id: PassengerPDA
-    ears: ClothingHeadsetService
-  storage:
-    back:
-    - BoxSurvival
+    id: WizardPDA
+    ears: ClothingHeadsetAltWizard
+    belt: ClothingBeltWand
+    pocket1: WizardTeleportScroll
+    pocket2: WizardsGrimoire
 
 - type: startingGear
   id: WizardRedGear
@@ -28,8 +29,12 @@
     head: ClothingHeadHatVioletwizard
     outerClothing: ClothingOuterWizardViolet
 
-- type: startingGear
-  id: WizardHardsuitGear
-  parent: WizardVioletGear
+- type: chameleonOutfit
+  id: WizardChameleonOutfit
+  name: roles-antag-wizard-name
+  startingGear: WizardBlueGear
   equipment:
-    outerClothing: ClothingOuterHardsuitWizard
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    neck: ClothingNeckLGBTPin
+    gloves: ClothingHandsGlovesColorBlack

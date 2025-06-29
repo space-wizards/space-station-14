@@ -1,0 +1,29 @@
+- type: entity
+  parent: [ BaseStorageItem, BaseXenoborgContraband ]
+  id: MaterialBag
+  name: material bag
+  description: A robust bag for xenoborgs to carry large amounts of materials.
+  components:
+  - type: MagnetPickup
+  - type: Sprite
+    sprite: Objects/Specific/Mining/ore_bag.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Specific/Mining/ore_bag.rsi
+    quickEquip: false
+    slots:
+    - belt
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,9,3
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      tags:
+      - Sheet
+      - RawMaterial
+      - Ingot
+  - type: Dumpable

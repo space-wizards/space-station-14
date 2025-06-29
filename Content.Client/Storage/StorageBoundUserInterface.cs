@@ -92,12 +92,4 @@ public sealed class StorageBoundUserInterface : BoundUserInterface
         Show();
         LayoutContainer.SetPosition(_window, position);
     }
-
-    public void ReOpen()
-    {
-        _window?.Orphan();
-        _window = null;
-        Open();
-    }
 }
-

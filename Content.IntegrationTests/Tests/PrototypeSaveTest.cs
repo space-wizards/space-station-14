@@ -35,7 +35,6 @@ public sealed class PrototypeSaveTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
-        var mapManager = server.ResolveDependency<IMapManager>();
         var entityMan = server.ResolveDependency<IEntityManager>();
         var prototypeMan = server.ResolveDependency<IPrototypeManager>();
         var seriMan = server.ResolveDependency<ISerializationManager>();

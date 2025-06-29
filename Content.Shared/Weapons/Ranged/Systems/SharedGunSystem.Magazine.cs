@@ -38,6 +38,8 @@ public abstract partial class SharedGunSystem
 
     private void OnMagazineUse(EntityUid uid, MagazineAmmoProviderComponent component, UseInHandEvent args)
     {
+        // not checking for args.Handled or marking as such because we only relay the event to the magazine entity
+
         var magEnt = GetMagazineEntity(uid);
 
         if (magEnt == null)

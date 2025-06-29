@@ -79,12 +79,12 @@ namespace Content.Server.Bible
                 // Clean up the old body
                 if (summonableComp.Summon != null)
                 {
-                    EntityManager.DeleteEntity(summonableComp.Summon.Value);
+                    Del(summonableComp.Summon.Value);
                     summonableComp.Summon = null;
                 }
                 summonableComp.AlreadySummoned = false;
                 _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", uid)), uid, PopupType.Medium);
-                _audio.PlayPvs("/Audio/Effects/radpulse9.ogg", uid, AudioParams.Default.WithVolume(-4f));
+                _audio.PlayPvs(summonableComp.SummonSound, uid);
                 // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
                 _remQueue.Enqueue(uid);
@@ -126,7 +126,7 @@ namespace Content.Server.Bible
                     var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
                     _popupSystem.PopupEntity(selfFailMessage, args.User, args.User, PopupType.MediumCaution);
 
-                    _audio.PlayPvs("/Audio/Effects/hit_kick.ogg", args.User);
+                    _audio.PlayPvs(component.BibleHitSound, args.User);
                     _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true, origin: uid);
                     _delay.TryResetDelay((uid, useDelay));
                     return;
@@ -235,7 +235,7 @@ namespace Content.Server.Bible
                 return;
 
             // Make this familiar the component's summon
-            var familiar = EntityManager.SpawnEntity(component.SpecialItemPrototype, position.Coordinates);
+            var familiar = Spawn(component.SpecialItemPrototype, position.Coordinates);
             component.Summon = familiar;
 
             // If this is going to use a ghost role mob spawner, attach it to the bible.

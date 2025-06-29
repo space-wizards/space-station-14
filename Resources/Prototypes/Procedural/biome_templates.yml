@@ -513,7 +513,9 @@
         - CrystalGreen
         - CrystalPink
         - CrystalOrange
+        - CrystalBlack
         - CrystalBlue
+        - CrystalYellow
         - CrystalCyan
     - !type:BiomeEntityLayer
       threshold: 0.95
@@ -544,7 +546,6 @@
     - !type:BiomeTileLayer
       threshold: -1.0
       tile: FloorAsteroidSand
-      flags: 1
 
 # Asteroid
 - type: biomeTemplate
@@ -562,7 +563,9 @@
         - CrystalGreen
         - CrystalPink
         - CrystalOrange
+        - CrystalBlack
         - CrystalBlue
+        - CrystalYellow
         - CrystalCyan
     - !type:BiomeEntityLayer
       threshold: 0.95
