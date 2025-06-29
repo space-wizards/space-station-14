@@ -59,6 +59,53 @@ public abstract partial class SharedStatusEffectsSystem
 
     /// <summary>
     /// Checks if a status effect with the same prototype exists on the current entity, and then tries to add one if it doesn't exist.
+    /// If one does exist, and <see cref="resetCooldown"/> is true, this method will update the <see cref="StatusEffectComponent.EndEffectTime"/>
+    /// of the effect to our inputted duration no matter what.
+    /// If one does exist, and <see cref="resetCooldown"/> is false, this method will add its duration to the duration of the existing effect.
+    /// </summary>
+    /// <param name="target">The target entity to which the effect should be added.</param>
+    /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
+    /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
+    /// <param name="resetCooldown">
+    /// If True, the effect duration time will be reset and reapplied. If False, the effect duration time will be overlaid with the existing one.
+    /// In the other case, the effect will either be added for the specified time or its time will be extended for the specified time.
+    /// </param>
+    /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
+    public bool TryAddOrUpdateStatusEffect(
+        EntityUid target,
+        EntProtoId effectProto,
+        [NotNullWhen(true)] out EntityUid? statusEffect,
+        TimeSpan? duration = null,
+        bool resetCooldown = false
+    )
+    {
+        if (!TryGetStatusEffect(target, effectProto, out statusEffect))
+            return TryAddNewStatusEffect(target, effectProto, out statusEffect, duration);
+
+        if (resetCooldown || duration is null)
+            SetStatusEffectTime(statusEffect.Value, duration);
+        else
+            AddStatusEffectTime(statusEffect.Value, duration.Value);
+
+        return true;
+    }
+
+    /// <summary>
+    /// An overload of <see cref="TryAddOrUpdateStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
+    /// that doesn't return a status effect EntityUid.
+    /// </summary>
+    public bool TryAddOrUpdateStatusEffect(
+        EntityUid target,
+        EntProtoId effectProto,
+        TimeSpan? duration = null,
+        bool resetCooldown = false
+    )
+    {
+        return TryAddStatusEffect(target, effectProto, out _, duration, resetCooldown);
+    }
+
+    /// <summary>
+    /// Checks if a status effect with the same prototype exists on the current entity, and then tries to add one if it doesn't exist.
     /// If one does exist, and <see cref="refresh"/> is true, this method will update the <see cref="StatusEffectComponent.EndEffectTime"/>
     /// of the effect if our inputted duration would be longer than the remaining duration.
     /// If one does exist, and <see cref="refresh"/> is false, this method will add its duration to the duration of the existing effect.
@@ -95,8 +142,8 @@ public abstract partial class SharedStatusEffectsSystem
     }
 
     /// <summary>
-    /// An alternative to TryAddStatusEffect which where if the status effect already exists it will instead
-    /// set the status effect duration to the higher of the <see cref="duration"/> or the existing duration.
+    /// An overload of <see cref="EnsureStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
+    /// that doesn't return a status effect EntityUid.
     /// </summary>
     public bool EnsureStatusEffect(
         EntityUid target,
