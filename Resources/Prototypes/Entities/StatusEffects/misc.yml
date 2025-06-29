@@ -41,6 +41,10 @@
   name: forced sleep
   components:
   - type: ForcedSleepingStatusEffect
+  - type: StunnedStatusEffect
+    remove: false
+  - type: KnockdownStatusEffect
+    remove: false
 
 # This creature is asleep because it's disconnected from the game.
 - type: entity
@@ -49,6 +53,10 @@
   name: forced sleep
   components:
   - type: ForcedSleepingStatusEffect
+  - type: StunnedStatusEffect
+    remove: false
+  - type: KnockdownStatusEffect
+    remove: false
 
 # Blurs your vision and makes you randomly fall asleep
 - type: entity

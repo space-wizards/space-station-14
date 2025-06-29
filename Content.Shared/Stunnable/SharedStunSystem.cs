@@ -171,9 +171,7 @@ public abstract class SharedStunSystem : EntitySystem
     ///     Applies knockdown and stun to the entity temporarily.
     ///     Returns true if either were successfully applied.
     /// </summary>
-    public bool TryParalyze(EntityUid uid,
-        TimeSpan time,
-        bool refresh)
+    public bool TryParalyze(EntityUid uid, TimeSpan time, bool refresh)
     {
         if (time <= TimeSpan.Zero)
             return false;
@@ -184,6 +182,40 @@ public abstract class SharedStunSystem : EntitySystem
         return knockdown || stunned;
     }
 
+    public bool TryUnstun(Entity<StunnedComponent?> entity, bool force = false)
+    {
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
+            return true;
+
+        if(!_status.TryEffectsWithComp<StunnedStatusEffectComponent>(entity, out _))
+            return false;
+
+        var ev = new StunEndAttemptEvent();
+        RaiseLocalEvent(entity, ref ev);
+
+        if (ev.Cancelled)
+            return false;
+
+        return RemComp<StunnedComponent>(entity);
+    }
+
+    public bool TryStanding(Entity<StunnedComponent?> entity, bool force = false)
+    {
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
+            return true;
+
+        if(!_status.TryEffectsWithComp<KnockdownStatusEffectComponent>(entity, out _))
+            return false;
+
+        var ev = new KnockdownEndAttemptEvent();
+        RaiseLocalEvent(entity, ref ev);
+
+        if (ev.Cancelled)
+            return false;
+
+        return RemComp<StunnedComponent>(entity);
+    }
+
     private void OnStunEffectApplied(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
         EnsureComp<StunnedComponent>(args.Target);
@@ -191,8 +223,8 @@ public abstract class SharedStunSystem : EntitySystem
 
     private void OnStunStatusRemoved(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
-        if(!_status.TryEffectsWithComp<StunnedStatusEffectComponent>(entity, out _))
-            RemComp<StunnedComponent>(args.Target);
+        if(entity.Comp.Remove)
+            TryUnstun(args.Target);
     }
 
     private void OnKnockdownEffectApplied(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
@@ -202,8 +234,9 @@ public abstract class SharedStunSystem : EntitySystem
 
     private void OnKnockdownEffectRemoved(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
     {
-        if(!_status.TryEffectsWithComp<KnockdownStatusEffectComponent>(entity, out _))
-            RemComp<KnockedDownComponent>(args.Target);
+        // TODO: Remove this when making crawling or else it will break things
+        if(entity.Comp.Remove)
+            TryStanding(args.Target);
     }
 
     private void OnKnockedTileFriction(EntityUid uid, KnockedDownComponent component, ref TileFrictionEvent args)
@@ -254,3 +287,15 @@ public record struct StunnedEvent;
 /// </summary>
 [ByRefEvent]
 public record struct KnockedDownEvent;
+
+/// <summary>
+///     Raised on a stunned entity when something wants to remove the stunned component.
+/// </summary>
+[ByRefEvent]
+public record struct StunEndAttemptEvent(bool Cancelled);
+
+/// <summary>
+///     Raised on a knocked down entity when something wants to remove the knocked down component.
+/// </summary>
+[ByRefEvent]
+public record struct KnockdownEndAttemptEvent(bool Cancelled);
