@@ -42,6 +42,7 @@
     - id: WizardSpawn
 
     - id: AbductorsSpawn # Starlight
+    - id: DerelictBorgiSpawn # Starlight
     
 - type: entity
   id: BaseStationEvent

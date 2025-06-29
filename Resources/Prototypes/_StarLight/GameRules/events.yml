@@ -193,7 +193,9 @@
       - id: DerelictCyborgSpawn
       - id: WizardSpawn
 
-      - id: AbductorsSpawn # Starlight
+      # Starlight gamerules
+      - id: AbductorsSpawn
+      - id: DerelictBorgiSpawn
 
 - type: entity
   parent: BaseGameRule
