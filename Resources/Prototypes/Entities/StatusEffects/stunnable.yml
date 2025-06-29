@@ -38,20 +38,3 @@
   name: knocked down
   components:
   - type: KnockdownStatusEffect
-
-- type: entity
-  parent: [ StatusEffectKnockdown , StatusEffectStunned ]
-  id: StatusEffectParalyze
-  name: paralyzed
-  components:
-  - type: StatusEffect
-    alert: Stun
-    whitelist:
-      components:
-      - MobState
-      - StandingState
-      requireAll: true
-    blacklist:
-      tags:
-      - StunImmune
-      - KnockdownImmune

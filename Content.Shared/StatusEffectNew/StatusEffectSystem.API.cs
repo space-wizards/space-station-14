@@ -22,7 +22,7 @@ public abstract partial class SharedStatusEffectsSystem
     public bool TryAddStatusEffect(
         EntityUid target,
         EntProtoId effectProto,
-        out EntityUid? statusEffect,
+        [NotNullWhen(true)] out EntityUid? statusEffect,
         TimeSpan? duration = null,
         bool resetCooldown = false
     )

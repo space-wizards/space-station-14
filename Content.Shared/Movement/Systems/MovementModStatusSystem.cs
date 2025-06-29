@@ -59,13 +59,8 @@ public sealed class MovementModStatusSystem : EntitySystem
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (!_status.TryAddStatusEffect(uid, SlowdownProtoId, out var status, time, refresh))
-            return false;
-
-        if (status == null)
-            return false;
-
-        return TryUpdateMovementStatus(uid, status.Value, walkSpeedModifier, sprintSpeedModifier);
+        return _status.TryAddStatusEffect(uid, SlowdownProtoId, out var status, time, refresh)
+               && TryUpdateMovementStatus(uid, status.Value, walkSpeedModifier, sprintSpeedModifier);
     }
 
     /// <summary>

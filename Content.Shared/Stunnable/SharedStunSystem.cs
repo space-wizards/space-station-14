@@ -21,7 +21,6 @@ public abstract class SharedStunSystem : EntitySystem
 {
     public static readonly EntProtoId Stun = "StatusEffectStunned";
     public static readonly EntProtoId Knockdown = "StatusEffectKnockdown";
-    public static readonly EntProtoId Paralyze = "StatusEffectParalyze";
 
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -144,6 +143,9 @@ public abstract class SharedStunSystem : EntitySystem
         if (!_status.TryAddStatusEffect(uid, Stun, time, refresh))
             return false;
 
+        var ev = new StunnedEvent();
+        RaiseLocalEvent(uid, ref ev);
+
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {time.Seconds} seconds");
         return true;
     }
@@ -153,7 +155,16 @@ public abstract class SharedStunSystem : EntitySystem
     /// </summary>
     public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh)
     {
-        return time > TimeSpan.Zero && _status.TryAddStatusEffect(uid, Knockdown, time, refresh);
+        if (time <= TimeSpan.Zero)
+            return false;
+
+        if (!_status.TryAddStatusEffect(uid, Knockdown, time, refresh))
+            return false;
+
+        var ev = new KnockedDownEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        return true;
     }
 
     /// <summary>
@@ -166,19 +177,15 @@ public abstract class SharedStunSystem : EntitySystem
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (!_status.TryAddStatusEffect(uid, Paralyze, time, refresh))
-            return false;
+        var knockdown = TryKnockdown(uid, time, refresh);
+        var stunned = TryStun(uid, time, refresh);
 
-        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} paralyzed for {time.Seconds} seconds");
-        return true;
+        return knockdown || stunned;
     }
 
     private void OnStunEffectApplied(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
         EnsureComp<StunnedComponent>(args.Target);
-
-        var ev = new StunnedEvent();
-        RaiseLocalEvent(args.Target, ref ev);
     }
 
     private void OnStunStatusRemoved(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
@@ -190,9 +197,6 @@ public abstract class SharedStunSystem : EntitySystem
     private void OnKnockdownEffectApplied(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
         EnsureComp<KnockedDownComponent>(args.Target);
-
-        var ev = new KnockedDownEvent();
-        RaiseLocalEvent(args.Target, ref ev);
     }
 
     private void OnKnockdownEffectRemoved(Entity<KnockdownStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)

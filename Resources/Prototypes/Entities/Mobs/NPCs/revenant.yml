@@ -82,7 +82,5 @@
       Acidic: [Touch]
   - type: Tag
     tags:
-    - DoorBumpOpener
-    - StunImmune
     - SlowImmune
     - KnockdownImmune
