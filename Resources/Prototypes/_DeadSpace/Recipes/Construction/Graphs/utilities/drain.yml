@@ -1,0 +1,36 @@
+- type: constructionGraph
+  id: FloorDrainGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: floorDrain
+      steps:
+      - material: Gold
+        amount: 4
+        doAfter: 1
+      - material: Steel
+        amount: 8
+        doAfter: 2
+
+  - node: floorDrain
+    entity: FloorDrain
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: IngotGold1
+        amount: 4
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Screwing
+        doAfter: 1
+      - tool: Cutting
+        doAfter: 1
+      - tool: Prying
+        doAfter: 2
+      - tool: Welding
+        doAfter: 2
