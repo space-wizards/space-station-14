@@ -14,6 +14,7 @@
   id: ClothingBackpack3eilado
   name: карманный демон Ainnetel
   description: Провористый карманный демон, выглядит не особо дружелюбно. На его рожках виднеется гравировка Ван'Астрея.
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/backpack.rsi
@@ -31,16 +32,23 @@
     maxItemSize: Huge
     grid:
     - 0,0,15,5
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+      storagebase: !type:Container
+        ents: []
+  - type: ToggleableClothing
+    clothingPrototype: ClothingOuterHardsuit3eilado
+    requiredSlot: BACK
+    slot: outerClothing
   - type: StorageFill
     contents:
       - id: ClothingNeckCloak3eilado
       - id: ClothingShoesBootsMag3eilado
       - id: PaperLaw3eilado
       - id: ToyBall3eilado
-      - id: ClothingEyesGlassesMeson3eilado
       - id: PlushieMoth3eilado
       - id: PDA3eilado
-      - id: GoldenPlunger3eilado
       - id: JetpackVoidFilled3eilado
       - id: DominatorMedkitAdvanced
       - id: ADTtelescopicBaton
@@ -50,34 +58,32 @@
       - id: ClothingNeckCloak3eiladoWhite
       - id: ClothingHandsRing3eilado
       - id: FoodIris3eilado
-      - id: ClothingEyesSigma3eilado
-      - id: ClothingNeckCharm3eilado
+      - id: ClothingEyesHudMultiversal3eilado
       - id: Hypo3eilado
       - id: ClothingUniformJumpsuit3eiladoSpicebush
       - id: ClothingOuterCoat3eiladoSpicebush
-      - id: Stick3eiladoSpicebush
       - id: RCD3eilado
       - id: ClothingHeadHat3eiladoSpicebush
-      - id: Fan3eiladoSpicebush
       - id: ClothingShoesBoots3eilado
+      - id: ClothingNeckCloak3eiladoAlt
+      - id: ClothingMaskGas3eilado
+      - id: Warhammer3eilado
 
 # Belt
 - type: entity
-  parent: ClothingBeltChiefEngineer
+  parent: ClothingBeltStorageBase
   id: ClothingBelt3eiladoFilled
-  name: гоблин Лопата
-  description: Маленький вредный гоблин, такого лучше не пытаться кормить с руки или гладить.
+  name: астель рождённый бездной
+  description: Внутри Астеля переливается таинственный кристалл, в котором виднеются странные артефакты.
   categories: [ HideSpawnMenu ]
   components:
+  - type: Storage
+    grid:
+    - 0,0,11,1
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/belt.rsi
-    scale: "0.5, 0.5"
   - type: Clothing
     sprite: _DeadSpace/Sponsor/3eilado/belt.rsi
-    clothingVisuals:
-      back: 
-      - state: equipped-BELT
-        scale: 0.5, 0.5
   - type: Item
     size: Huge
   - type: StorageFill
@@ -85,7 +91,9 @@
       - id: PowerDrill3eilado
       - id: SyndicateJawsOfLife3eilado
       - id: WelderExperimental3eilado
-      - id: Multitool
+      - id: Multitool3eilado
+      - id: HandHeldMassScanner3eilado
+      - id: HolofanProjector3eilado
 
 # Cloak
 - type: entity
@@ -117,36 +125,12 @@
       map: ["foldedLayer"]
       visible: false
 
-#Charm
-- type: entity
-  parent: ClothingNeckBase
-  id: ClothingNeckCharm3eilado
-  name: секрет Азура
-  description: Таинственный амулет. На нём виднеются неразборчивые символы.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Sponsor/3eilado/charm.rsi
-  - type: Clothing
-    sprite: _DeadSpace/Sponsor/3eilado/charm.rsi
-  - type: ToggleableClothing
-    clothingPrototype: ClothingOuterHardsuit3eilado
-    requiredSlot: NECK
-    slot: outerClothing
-  - type: ContainerContainer
-    containers:
-      toggleable-clothing: !type:ContainerSlot {}
-      storagebase: !type:Container
-        ents: []
-  - type: Item
-    size: Huge
-
 # Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitAtmos
   id: ClothingOuterHardsuit3eilado
-  name: скафандр модификации "モモンガ"
-  description: Кажется, этот скафандр кого-то напоминает.
+  name: скафардр Виндемиатрикс
+  description: Скафандр модификации Виндемиатрикс собранный на станции 1’А. 
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -161,8 +145,8 @@
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuit3eilado
-  name: шлем скафандра модификации "モモンガ"
-  description: Кажется, этот шлем кого-то напоминает.
+  name: шлем скафардра Виндемиатрикс
+  description: Скафандр модификации Виндемиатрикс собранный на станции 1’А. 
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -170,29 +154,37 @@
   - type: Clothing
     sprite: _DeadSpace/Sponsor/3eilado/hardsuit/helmet.rsi
   - type: PointLight
-    color: "#ed381c"
+    color: "#f5c9ff"
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
 
 # Magboots
 - type: entity
-  parent: ClothingShoesBootsMag
+  parent: [ ClothingShoesBootsMag,  PowerCellSlotSmallItem ]
   id: ClothingShoesBootsMag3eilado
   name: серые украшенные магнитные ботинки
   description: Магнитные ботинки серого цвета.
   categories: [ HideSpawnMenu ]
   components:
-    - type: Sprite
-      sprite: _DeadSpace/Sponsor/3eilado/magboots.rsi
-      layers:
-      - state: icon
-        map: [ "enum.ToggleVisuals.Layer" ]
-    - type: Clothing
-      sprite: _DeadSpace/Sponsor/3eilado/magboots.rsi
-    - type: ClothingSpeedModifier
-      walkModifier: 1
-      sprintModifier: 1
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/magboots.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/3eilado/magboots.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.3
+    sprintModifier: 1.3
+  - type: PowerCellDraw
+    drawRate: 4
+  - type: ToggleCellDraw
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProto
 
 # Law
 - type: entity
@@ -215,18 +207,22 @@
 - type: entity
   parent: WelderExperimental
   id: WelderExperimental3eilado
-  name: серый экспериментальный сварочный аппарат
-  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  name: цветок опаляющих душ
+  description: Цветок выведенный в суровых условиях на станции 1'А. 
   categories: [ HideSpawnMenu ]
   components:
+  - type: PointLight
+    enabled: false
+    radius: 1.5
+    color: "#ffb42b"
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/welder_experimental.rsi
   - type: Item
     sprite: _DeadSpace/Sponsor/3eilado/welder_experimental.rsi
 
 - type: entity
-  name: серые челюсти жизни
-  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  name: костяные челюсти Ловела
+  description: Судя по этому "костяному ключу" Ловел сломал кому-то зубы мудрости.
   parent: SyndicateJawsOfLife
   id: SyndicateJawsOfLife3eilado
   categories: [ HideSpawnMenu ]
@@ -263,8 +259,8 @@
 - type: entity
   parent: PowerDrill
   id: PowerDrill3eilado
-  name: серая дрель
-  description: Принадлежит члену экипажа, находящемуся под покровительством спонсорской организации.
+  name: осколок северного сияния
+  description: Бывает падают и небеса.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -292,6 +288,44 @@
           path: /Audio/Items/drill_use.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
+
+- type: entity
+  parent: Multitool
+  id: Multitool3eilado
+  name: альдафирах
+  description: Модифицированное устройство со станции 1'А. 
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/multitool.rsi
+    layers:
+    - state: icon
+    - state: green-unlit
+  - type: PointLight
+    enabled: true
+    radius: 1.5
+    color: "#99CCFF"
+
+- type: entity
+  parent: HandHeldMassScanner
+  id: HandHeldMassScanner3eilado
+  name: грумиум
+  description: Модифицированное странное приспособление со станции 1'А.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite  
+    sprite: _DeadSpace/Sponsor/3eilado/handheldmass.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/3eilado/handheldmass.rsi
+  - type: PointLight
+    enabled: true
+    radius: 3
+    color: "#009999"
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProto
 
 # Ball
 - type: entity
@@ -422,20 +456,24 @@
 
 #glasses
 - type: entity
-  parent: ClothingEyesBase
-  id: ClothingEyesGlassesMeson3eilado
-  name: визор модификации «Полярное сияния»
-  description: Удобный технологичный визор.
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesHudMultiversal3eilado
+  name: сияние Заргона
+  description: Вероятность успешного завершения этой миссии была ноль процентов. Но, видимо, в вашем случае любые расчёты теряют смысл.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/hud.rsi
   - type: Clothing
     sprite: _DeadSpace/Sponsor/3eilado/hud.rsi
+  - type: FlashImmunity
   - type: EyeProtection
-  - type: Tag
-    tags:
-    - HudMedical
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: PointLight
+    enabled: true
+    radius: 10
+    color: "#66CCFF"
 
 #Plushie
 - type: entity
@@ -500,14 +538,24 @@
 - type: entity
   parent: BaseMedicalPDA
   id: PDA3eilado
-  name: КПК модификации «Домашний демон»
-  description: Этот КПК выглядит уютно
+  name: дзибан
+  description: В позвоночнике этого существа что-то было.
   categories: [ HideSpawnMenu ]
   components:
   - type: Icon
     sprite: _DeadSpace/Sponsor/3eilado/pda.rsi 
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/pda.rsi
+    layers:
+    - map: [ "enum.PdaVisualLayers.Base" ]
+      state: "pda"
+    - state: "light_overlay"
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: "unshaded"
+      visible: false
+    - state: "id_overlay"
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      visible: false
   
 # GoldenPlunger
 - type: entity
@@ -515,7 +563,6 @@
   id: GoldenPlunger3eilado
   name: золотой вантуз
   description: Золотой вантуз, украшенный драгоценными камнями. Подарен одним из Адмиралов Центрального Командования. К тому же, это отличный головной убор.
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/golden_plunger.rsi
@@ -530,8 +577,8 @@
 - type: entity
   id: JetpackVoidFilled3eilado
   parent: JetpackVoidFilled
-  name: проекция меча Аскалон
-  description: Устройство коллекции «Полярная ночь».
+  name: гурранк созданный бездной
+  description: Внутри Гурранка переливается таинственный кристалл в котором виднеется буйный ветер.
   categories: [ HideSpawnMenu ]
   components:
   - type: Item
@@ -550,14 +597,19 @@
 - type: entity
   parent: ClothingHeadset
   id: ClothingHeadset3eilado
-  name: крыло связи
-  description: Продвинутая гарнитура модификации "A.L".
+  name: цинерария холодной луны
+  description: Изысканный цветок, который порадует взор своей красотой и изысканностью. Сорванный из сада Ирвина Ван'Астрея.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/headset.rsi
+    scale: "0.6, 0.6"
   - type: Clothing
     sprite: _DeadSpace/Sponsor/3eilado/headset.rsi
+  - type: PointLight
+    enabled: true
+    radius: 1.5
+    color: "#6600FF"
     
 # Uniform
 - type: entity
@@ -702,22 +754,6 @@
         - ReagentId: Nutriment
           Quantity: 7
 
-# Glasses
-- type: entity
-  parent: ADTClothingEyesSupremeCommanderGlass
-  id: ClothingEyesSigma3eilado
-  name: сияние Заргона
-  description:
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Sponsor/3eilado/glasses.rsi
-  - type: Clothing
-    sprite: _DeadSpace/Sponsor/3eilado/glasses.rsi
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
-
 # Shard
 - type: entity
   parent: BaseItem
@@ -816,7 +852,6 @@
   id: Stick3eiladoSpicebush
   name: цветущее копье Линдеры
   description: Копье, сделанное из веток и цветов куста линдеры.
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/Spicebush/longstick.rsi
@@ -840,7 +875,6 @@
   id: Fan3eiladoSpicebush
   name: цветущий веер Линдеры
   description: Веер, сделанный из веток и цветов куста линдеры.
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/3eilado/Spicebush/fan.rsi
@@ -877,3 +911,69 @@
     sprite: _DeadSpace/Sponsor/3eilado/Spicebush/shoes.rsi
   - type: Clothing
     sprite: _DeadSpace/Sponsor/3eilado/Spicebush/shoes.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloak3eiladoAlt
+  name: черный плащ Ловела
+  description: Удобный черный плащ, с внутренней стороны виднеется неразборчивая надпись.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/cloak_alt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/3eilado/cloak_alt.rsi
+
+- type: entity
+  parent: HolofanProjector
+  id: HolofanProjector3eilado
+  name: ригиль
+  description: Модифицированное приспособление со станции 1'А. 
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/holofanprojector.rsi
+    state: icon
+  - type: HolosignProjector
+    signProto: HoloFan3eilado
+    chargeUse: 120
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProto
+
+- type: entity
+  id: HoloFan3eilado
+  parent: HoloFan
+  name: голубой атмосферный барьер
+  description: Барьер из твёрдого голубого света, который блокирует воздух и ничего более.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/holo.rsi
+    state: icon
+
+- type: entity
+  parent: ClothingMaskGasSecurity
+  id: ClothingMaskGas3eilado
+  name: чёрная маска
+  description: Чёрная стерильная маска подходящая для разного вида работ.
+  categories: [ HideSpawnMenu ]
+
+- type: entity
+  parent: ADTWeaponWarhammer
+  id: Warhammer3eilado
+  name: миаплацидус
+  description: На костях этого неизвестного животного виднеется надпись гласящая о том, что в былом это был питомец Ловела. Крайне сложное и тяжёлое приспособление родом из Войд Волопаса.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/3eilado/warhammer.rsi
+    scale: 0.8, 0.8
+  - type: Item
+    size: Huge
+  - type: PointLight
+    enabled: true
+    radius: 4
+    color: "#6600CC"
