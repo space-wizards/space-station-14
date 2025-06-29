@@ -25,7 +25,7 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
     [Dependency] private readonly IResourceCache _resource = default!;
 
     // This is the link to the hotbar button
-    private MenuButton BugReportButton => UIManager.GetActiveUIWidget<GameTopMenuBar>().ReportBugButton;
+    private MenuButton? BugReportButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.ReportBugButton;
 
     // Don't clear this window. It needs to be saved so the input doesn't get erased when it's closed!
     private BugReportWindow _bugReportWindow = default!;
@@ -43,22 +43,25 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
     public void OnStateExited(GameplayState state)
     {
         _bugReportWindow.Close();
-
-        CommandBinds.Unregister<BugReportUIController>();
     }
 
     public void LoadButton()
     {
-        BugReportButton.OnPressed += ButtonToggleWindow;
+        if (BugReportButton != null)
+            BugReportButton.OnPressed += ButtonToggleWindow;
     }
 
     public void UnloadButton()
     {
-        BugReportButton.OnPressed -= ButtonToggleWindow;
+        if (BugReportButton != null)
+            BugReportButton.OnPressed -= ButtonToggleWindow;
     }
 
     private void SetupWindow()
     {
+        if (BugReportButton == null)
+            return;
+
         _bugReportWindow = UIManager.CreateWindow<BugReportWindow>();
         // This is to make sure the hotbar button gets checked and unchecked when the window is opened / closed.
         _bugReportWindow.OnClose += () =>
