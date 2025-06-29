@@ -497,9 +497,9 @@
 
 - type: entity
   parent: BookBase
-  id: SillyClowninguide
+  id: SillyClownGuide
   name: "Silly billy's Guide of Clowning"
-  description: Most of the title is covered in handwritten scratches of pies and balloons.
+  description: book-text-silly-description
   components:
   - type: Sprite
     layers:
@@ -512,7 +512,7 @@
     - state: icon_corner
       color: gold
   - type: Paper
-    content: Most of the text is covered in old pie, funny glue, and... banana peels?
+    content: book-text-silly-clown-guide
   - type: Slippery
   - type: StepTrigger
     intersectRatio: 0.2
