@@ -123,35 +123,10 @@
     - Banana
 
 - type: entity
-  parent: BaseItem
+  parent: SnapPop
   id: SnapPopFake
   suffix: fake
-  name: snap pop
-  description: Throw it at the floor and listen to it POP!
   components:
-  - type: Sprite
-    sprite: Objects/Fun/snap_pops.rsi
-    state: icon
-  - type: Item
-    size: Tiny
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 1
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/snap.ogg
-      - !type:ExplodeBehavior
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 3
   - type: Explosive
     explosionType: Default
     maxIntensity: 1
