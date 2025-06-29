@@ -21,11 +21,11 @@ public sealed partial class ShearableComponent : Component
     public string TargetSolutionName = string.Empty;
 
     /// <summary>
-    ///     An ID of a stackable product that will be spawned upon the creature being sheared.
+    ///     An ID of an entity that will be spawned upon the creature being sheared.
     ///     e.g. Sheep use "Cotton".
     /// </summary>
     [DataField]
-    public ProtoId<StackPrototype> ShearedProductID;
+    public EntProtoId ShearedProductID;
 
     /// <summary>
     ///     How many products will be spawned per solution.
@@ -36,6 +36,15 @@ public sealed partial class ShearableComponent : Component
     /// </summary>
     [DataField]
     public float ProductsPerSolution = 0;
+
+    /// <summary>
+    ///     The maximum number of products that can be spawned at once.
+    ///     e.g. if the animal has enough solution to spawn 50 items
+    ///     but MaximumProductsSpawned is set to 25, then you will need to shear it twice.
+    ///     Default/null is infinite.
+    /// </summary>
+    [DataField]
+    public float? MaximumProductsSpawned;
 
     /// <summary>
     ///     The "Quality" of the target item that allows this entity to be sheared.
@@ -82,6 +91,8 @@ public sealed partial class ShearableComponent : Component
         /// <summary> The configured target product does not exist or is not stackable. </summary>
         StackError,
         /// <summary> There is not enough solution in the animal to form a single target product. </summary>
-        InsufficientSolution
+        InsufficientSolution,
+        /// <summary> The ShearedProductID did not resolve to an existing prototype. It might not exist. </summary>
+        ProductError
     }
 }

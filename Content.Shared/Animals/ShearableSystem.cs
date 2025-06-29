@@ -6,6 +6,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Shearing;
+using Content.Shared.Stacks;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
@@ -41,12 +42,13 @@ public sealed class SharedShearableSystem : EntitySystem
         SubscribeLocalEvent<ShearableComponent, GetVerbsEvent<AlternativeVerb>>(AddShearVerb);
         SubscribeLocalEvent<ShearableComponent, InteractUsingEvent>(OnClicked);
         SubscribeLocalEvent<ShearableComponent, ExaminedEvent>(Examined);
+        SubscribeLocalEvent<ShearableComponent, ShearingDoAfterEvent>(OnSheared);
     }
 
     /// <summary>
     ///     Checks if the target entity can currently be sheared.
     /// </summary>
-    /// <param name="targetEntity">The shearable entity that will be checked.</param>
+    /// <param name="ent">The shearable entity that will be checked.</param>
     /// <param name="comp">The shearable component (e.g. ent.Comp).</param>
     /// <param name="usedItem">The held item that is being used to shear the target entity.</param>
     /// <param name="checkItem">If false then skip checking for the correct shearing tool.</param>
@@ -55,7 +57,7 @@ public sealed class SharedShearableSystem : EntitySystem
     /// </returns>
     /// <seealso cref="ShearableComponent.CheckShearReturns"/>
     public ShearableComponent.CheckShearReturns CheckShear(
-        EntityUid targetEntity,
+        EntityUid ent,
         ShearableComponent comp,
         EntityUid? usedItem = null,
         bool checkItem = true
@@ -74,6 +76,12 @@ public sealed class SharedShearableSystem : EntitySystem
                 return ShearableComponent.CheckShearReturns.WrongTool;
         }
 
+        // Test if the configured product exists.
+        if (!_prototypeManager.TryIndex(comp.ShearedProductID, out var _))
+        {
+            return ShearableComponent.CheckShearReturns.ProductError;
+        }
+
         // Everything below this point is just calculating whether the animal
         // has enough solution to spawn at least one item in the specified stack.
         // If so, True, otherwise False.
@@ -81,7 +89,7 @@ public sealed class SharedShearableSystem : EntitySystem
         // Resolves the targetSolutionName as a solution inside the shearable creature. Outputs the "solution" variable.
         if (
             !_solutionContainer.ResolveSolution(
-                targetEntity,
+                ent,
                 comp.TargetSolutionName,
                 ref comp.Solution,
                 out var solution
@@ -92,26 +100,32 @@ public sealed class SharedShearableSystem : EntitySystem
         // Store solution.Volume in a variable to make calculations a bit clearer.
         var targetSolutionQuantity = solution.Volume;
 
-        // Create a stack object so we can reference its name in localisation.
-        _prototypeManager.TryIndex(comp.ShearedProductID, out var shearedProductStack);
-        if (shearedProductStack == null)
-        {
-            Log.Error(
-                $"Could not resolve ShearedProductID \"{comp.ShearedProductID}\" to a StackPrototype while shearing. Does this item exist?"
-            );
-            return ShearableComponent.CheckShearReturns.StackError;
-        }
+        /*         // Create a stack object so we can reference its name in localisation.
+                _prototypeManager.TryIndex(comp.ShearedProductID, out var shearedProductStack);
+                if (shearedProductStack == null)
+                {
+                    Log.Error(
+                        $"Could not resolve ShearedProductID \"{comp.ShearedProductID}\" to a StackPrototype while shearing. Is this item stackable?"
+                    );
+                    return ShearableComponent.CheckShearReturns.StackError;
+                } */
+
+
+        // Spawn maximum of 25 items
+        // If less than 25 items, calculate solution to remove.
+        // If more than 25 items, cap at the calculated solution.
 
         // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
         // Then, divide by 1 because it's the reagent needed for 1 product.
         var productsPerSolution = (int)(1 / comp.ProductsPerSolution * 100);
 
-        // Work out the maxium stack size of the product.
-        var maxProductsToSpawnValue = 0;
-        var maxProductsToSpawn = _prototypeManager.Index(comp.ShearedProductID).MaxCount;
-        if (maxProductsToSpawn.HasValue)
+        // Work out the maximum number of products to spawn.
+        var maxProductsToSpawn = (float)productsPerSolution;
+        // If a limit has been defined, use that.
+        if (comp.MaximumProductsSpawned is not null)
         {
-            maxProductsToSpawnValue = maxProductsToSpawn.Value;
+            // No limit defined, so set to productsPerSolution
+            maxProductsToSpawn = productsPerSolution;
         }
 
         // Modulas the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
@@ -120,9 +134,10 @@ public sealed class SharedShearableSystem : EntitySystem
         var solutionToRemove = FixedPoint2.New(
             Math.Min(
                 (targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution) / 100,
-                maxProductsToSpawnValue * productsPerSolution / 100
+                maxProductsToSpawn * productsPerSolution / 100
             )
         );
+
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
         if (solutionToRemove <= 0)
         {
@@ -161,25 +176,25 @@ public sealed class SharedShearableSystem : EntitySystem
             case ShearableComponent.CheckShearReturns.StackError:
                 return;
             case ShearableComponent.CheckShearReturns.InsufficientSolution:
-                // Create a stack object so we can reference its name in localisation.
-                _prototypeManager.TryIndex(ent.Comp.ShearedProductID, out var shearedProductStack);
-                if (shearedProductStack == null)
-                {
-                    // Whatever, this animal has an invalid product defined and it's already logged so just fail silently.
+                // Resolve the prototype so we can reference its name in localisation.
+                if (!_prototypeManager.TryIndex(ent.Comp.ShearedProductID, out var proto))
                     return;
-                }
                 // NO WOOL LEFT.
                 _popup.PopupClient(
                     Loc.GetString(
                         "shearable-system-no-product",
                         ("target", Identity.Entity(ent.Owner, EntityManager)),
-                        ("product", shearedProductStack.Name)
+                        ("product", proto.Name)
                     ),
                     ent.Owner,
                     userUid
                 );
                 return;
+            case ShearableComponent.CheckShearReturns.ProductError:
+                return;
         }
+
+
 
         // Build arguments for calling TryStartDoAfter
         var doargs = new DoAfterArgs(EntityManager, userUid, 5, new ShearingDoAfterEvent(), ent, ent, used: toolUsed)
@@ -191,6 +206,114 @@ public sealed class SharedShearableSystem : EntitySystem
 
         // Triggers the ShearingDoAfter event.
         _doAfterSystem.TryStartDoAfter(doargs);
+    }
+
+
+    /// <summary>
+    ///     Called by the ShearingDoAfter event.
+    ///     Checks for shearbility using the CheckShear method.
+    ///     This method is held server-side because the shared method is unable to spawn stacks.
+    /// </summary>
+    private void OnSheared(Entity<ShearableComponent> ent, ref ShearingDoAfterEvent args)
+    {
+
+        // Check the action hasn't been cancelled, or hasn't already been handled, or that the player's hand is empty.
+        if (args.Cancelled || args.Handled)
+            return;
+
+        // Resolves the targetSolutionName as a solution inside the shearable creature. Outputs the "solution" variable.
+        if (
+            !_solutionContainer.ResolveSolution(
+                ent.Owner,
+                ent.Comp.TargetSolutionName,
+                ref ent.Comp.Solution,
+                out var solution
+            )
+        )
+            return;
+
+        // Resolve the ShearedProductID so we can get the details.
+        // Also check if the specified product actually exists and can be spawned.
+        if (!_prototypeManager.TryIndex(ent.Comp.ShearedProductID, out var proto))
+            return;
+
+        // Mark as handled so we don't duplicate.
+        args.Handled = true;
+
+        // Store solution.Volume in a variable to make calculations a bit clearer.
+        var targetSolutionQuantity = solution.Volume;
+
+        // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
+        // Then, divide by 1 because it's the reagent needed for 1 product.
+        var productsPerSolution = (int)(1 / ent.Comp.ProductsPerSolution * 100);
+
+        // Work out the maximum number of products to spawn.
+        var maxProductsToSpawn = (float)productsPerSolution;
+        // If a limit has been defined, use that.
+        if (ent.Comp.MaximumProductsSpawned is not null)
+        {
+            // No limit defined, so set to productsPerSolution
+            maxProductsToSpawn = productsPerSolution;
+        }
+
+        // Modulas the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
+        // subtract targetSolutionQuantity from the remainder.
+        // Everything is divided by 100, because fixedPoint2 multiplies everything by 100.
+        // Math.Min ensures that no more solution than what is needed for the maximum stack is used, shear the entity multiple times if you want the rest of the product.
+        // e.g.
+        // Sheep contains 5000 fibre reagent (50 units).
+        // We want 0.2 products per solution. Since we're calcuating with reagent and not units we need to modify the value.
+        // 1 / 0.2 * 100 = 500. (See above)
+        // 5000 - 5000 % 500. 500 fits nicely into 5000 so there is no remainer of 0. This means we're removing all 5000 reagent currently.
+        // Next we check the maxmium number of product we want to spawn, if this is less than 5000 then the animal will need to be sheared multiple times to delete its resources.
+        // We've not configured a maxProductsToSpawn, so we aren't imposing a limit. In this case it defaults to productsPerSolution.
+        // productsPerSolution is set to 500. Therefore, the calculation is:
+        // 500 * 500 / 100 = 2500.
+        // We take the smaller of two values, we don't want to remove more reagent than we're using.
+        // Despite their being 5000 reagent availble, we end up only removing 2500, even though no limit has been set, why is this?
+        // I don't know.
+        var solutionToRemove = FixedPoint2.New(
+            Math.Min(
+                (targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution) / 100,
+                maxProductsToSpawn * productsPerSolution / 100
+            )
+        );
+
+        // Failure message, if the shearable creature has no targetSolutionName to be sheared.
+        if (solutionToRemove == 0)
+        {
+            _popup.PopupEntity(
+                Loc.GetString(
+                    "shearable-system-no-product",
+                    ("target", Identity.Entity(ent.Owner, EntityManager)),
+                    ("product", proto.Name)
+                ),
+                ent.Owner,
+                args.Args.User
+            );
+            return;
+        }
+
+        // Split the solution inside the creature by solutionToRemove, return what was removed.
+        var removedSolution = _solutionContainer.SplitSolution(ent.Comp.Solution.Value, solutionToRemove);
+
+        // Spawn product.
+        for (var i = 0; i < removedSolution.Volume.Value / productsPerSolution; i++)
+        {
+            EntityManager.SpawnNextToOrDrop(ent.Comp.ShearedProductID, ent);
+        }
+
+        // Success message.
+        _popup.PopupEntity(
+            Loc.GetString(
+                "shearable-system-success",
+                ("target", Identity.Entity(ent.Owner, EntityManager)),
+                ("product", proto.Name)
+            ),
+            ent.Owner,
+            args.Args.User,
+            PopupType.Medium
+        );
     }
 
     /// <summary>
@@ -258,6 +381,10 @@ public sealed class SharedShearableSystem : EntitySystem
                 return;
             case ShearableComponent.CheckShearReturns.WrongTool:
                 return;
+            case ShearableComponent.CheckShearReturns.SolutionError:
+                return;
+            case ShearableComponent.CheckShearReturns.StackError:
+                return;
             case ShearableComponent.CheckShearReturns.InsufficientSolution:
                 // Check again if this description has been set.
                 if (string.IsNullOrEmpty(ent.Comp.UnShearableMarkupText))
@@ -270,6 +397,8 @@ public sealed class SharedShearableSystem : EntitySystem
                         ("target", Identity.Entity(ent.Owner, EntityManager))
                     )
                 );
+                return;
+            case ShearableComponent.CheckShearReturns.ProductError:
                 return;
         }
     }
