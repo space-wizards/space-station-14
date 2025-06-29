@@ -20,6 +20,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Power.EntitySystems;
 using Robust.Server.Containers;
 using Robust.Server.Player;
 using Robust.Shared.Audio.Systems;

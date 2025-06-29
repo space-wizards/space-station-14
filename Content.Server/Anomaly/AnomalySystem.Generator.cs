@@ -1,5 +1,4 @@
 using Content.Server.Anomaly.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Shared.Anomaly;
 using Content.Shared.CCVar;
@@ -11,6 +10,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Anomaly;
 

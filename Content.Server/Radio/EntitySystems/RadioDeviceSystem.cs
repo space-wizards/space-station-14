@@ -2,8 +2,6 @@ using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.Components;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
@@ -14,6 +12,7 @@ using Content.Shared.Radio;
 using Content.Shared.Chat;
 using Content.Shared.Radio.Components;
 using Robust.Shared.Prototypes;
+using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Radio.EntitySystems;
 

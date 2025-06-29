@@ -1,10 +1,9 @@
 using Content.Server.Audio;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 

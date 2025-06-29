@@ -9,13 +9,13 @@ using Robust.Shared.Containers;
 using Content.Server.Cloning.Components;
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared.DeviceLinking.Events;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; // Hmm...
+using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Medical
 {

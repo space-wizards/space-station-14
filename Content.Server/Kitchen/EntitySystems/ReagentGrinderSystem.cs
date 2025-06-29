@@ -1,6 +1,4 @@
 using Content.Server.Kitchen.Components;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
@@ -24,6 +22,7 @@ using Content.Server.Construction.Completions;
 using Content.Server.Jittering;
 using Content.Shared.Jittering;
 using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
