@@ -215,6 +215,9 @@
     layers:
     - state: default
     - state: idassistant
+  - type: IdCard
+    jobTitle: job-title-visitor
+    jobIcon: JobIconBorg
   - type: Tag  # not a chameleon target.
     tags:
     - DoorBumpOpener
