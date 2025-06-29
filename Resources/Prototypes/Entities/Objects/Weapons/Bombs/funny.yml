@@ -154,7 +154,7 @@
         Blunt: 3
   - type: Explosive
     explosionType: Default
-    maxIntensity: 5
+    maxIntensity: 1
     intensitySlope: 1
     totalIntensity: 5
   - type: Construction
