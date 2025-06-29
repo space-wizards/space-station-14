@@ -26,9 +26,6 @@
   id: AllCaps
 
 - type: statusEffect
-  id: SeeingRainbows
-
-- type: statusEffect
   id: Electrocution
 
 - type: statusEffect
