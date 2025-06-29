@@ -231,18 +231,6 @@
     AmbuzolPlus: 10
 
 - type: reaction
-  id: Synaptizine
-  reactants:
-    Lithium:
-      amount: 1
-    Sugar:
-      amount: 1
-    Water:
-      amount: 1
-  products:
-    Synaptizine: 3
-
-- type: reaction
   id: Tricordrazine
   reactants:
     Inaprovaline:
@@ -534,7 +522,7 @@
 - type: reaction
   id: Pyrazine
   impact: Medium
-  minTemp: 540
+  minTemp: 400 # Ronstation
   reactants:
     Leporazine:
       amount: 1
@@ -548,7 +536,7 @@
 - type: reaction
   id: Insuzine
   impact: Medium
-  minTemp: 433
+  minTemp: 400 # Ronstation
   reactants:
     Leporazine:
       amount: 1

@@ -1,38 +1,10 @@
-- type: entity
-  id: LockerWardenFilledHardsuit
-  suffix: Filled, Hardsuit
-  parent: LockerWarden
-  components:
-  - type: StorageFill
-    contents:
-      - id: FlashlightSeclite
-      - id: WeaponDisabler
-      - id: ClothingBeltSecurityFilled
-      - id: Flash
-      - id: ClothingEyesGlassesSecurity
-      - id: ClothingHandsGlovesCombat
-      - id: ClothingShoesBootsJack
-      - id: ClothingOuterCoatWarden
-      - id: ClothingOuterWinterWarden
-      - id: RubberStampWarden
-      - id: DoorRemoteArmory
-      - id: ClothingOuterHardsuitWarden
-      - id: NitrogenTankFilled
-      - id: OxygenTankFilled
-      - id: HoloprojectorSecurity
-      - id: BookSpaceLaw
-      - id: ClothingBackpackElectropack
-        amount: 2
-      - id: RemoteSignaller
-        amount: 2
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 
-- type: entity
-  id: LockerWardenFilled
-  suffix: Filled
-  parent: LockerWarden
-  components:
-  - type: StorageFill
-    contents:
+# start of modifications
+- type: entityTable
+  id: LockerFillWarden
+  table: !type:AllSelector
+    children:
       - id: FlashlightSeclite
       - id: WeaponDisabler
       - id: ClothingBeltSecurityFilled
@@ -51,6 +23,41 @@
       - id: RemoteSignaller
         amount: 2
       - id: Binoculars
+      - id: WardenWhistle
+
+- type: entityTable
+  id: FillWardenHardsuit
+  table: !type:AllSelector
+    children:
+      - id: ClothingOuterHardsuitWarden
+      - id: ClothingMaskGasSecurity
+      - id: OxygenTankFilled
+      - id: NitrogenTankFilled
+
+- type: entity
+  id: LockerWardenFilledHardsuit
+  suffix: Filled, Hardsuit
+  parent: LockerWarden
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+       children:
+       - !type:NestedSelector
+         tableId: LockerFillWarden
+       - !type:NestedSelector
+         tableId: FillWardenHardsuit
+
+- type: entity
+  id: LockerWardenFilled
+  suffix: Filled
+  parent: LockerWarden
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: LockerFillWarden
+# end of modifications
 
 - type: entity
   id: LockerSecurityFilled

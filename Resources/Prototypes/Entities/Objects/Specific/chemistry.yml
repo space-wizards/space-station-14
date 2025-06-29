@@ -25,7 +25,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 60
+        maxVol: 60 # Ronstation
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -123,7 +123,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 60
+        maxVol: 60 # Ronstation
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -179,7 +179,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 50
+        maxVol: 60 # Ronstation
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -244,10 +244,9 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 50
         reagents:
         - ReagentId: Cryoxadone
-          Quantity: 50
+          Quantity: 60 # Ronstation
 
 - type: entity
   name: large beaker
@@ -270,7 +269,7 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 120
+        maxVol: 120 # Ronstation
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6

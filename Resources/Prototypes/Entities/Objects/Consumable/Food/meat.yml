@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 # Base
 
 - type: entity
@@ -162,11 +164,8 @@
         reagents:
         - ReagentId: CarpoToxin
           Quantity: 5
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: CarpoToxin
-        Quantity: 5
+        - ReagentId: Rezamine # Ronstation
+          Quantity: 2 # Ronstation
   - type: Item
     inhandVisuals:
       left:
