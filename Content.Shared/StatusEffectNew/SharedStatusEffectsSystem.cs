@@ -55,7 +55,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             if (effect.EndEffectTime is null)
                 continue;
 
-            if (!(_timing.CurTime >= effect.EndEffectTime))
+            if (_timing.CurTime < effect.EndEffectTime)
                 continue;
 
             if (effect.AppliedTo is null)
@@ -96,6 +96,32 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             return;
 
         effectComp.EndEffectTime = _timing.CurTime + duration;
+        Dirty(effect, effectComp);
+
+        if (effectComp is { AppliedTo: not null, Alert: not null })
+        {
+            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null
+                ? null
+                : (_timing.CurTime, effectComp.EndEffectTime.Value);
+            _alerts.ShowAlert(
+                effectComp.AppliedTo.Value,
+                effectComp.Alert.Value,
+                cooldown: cooldown
+            );
+        }
+    }
+
+    private void SetGreaterStatusEffectTime(EntityUid effect, TimeSpan duration)
+    {
+        if (!_effectQuery.TryComp(effect, out var effectComp))
+            return;
+
+        var newEndTime = _timing.CurTime + duration;
+
+        if (effectComp.EndEffectTime >= newEndTime)
+            return;
+
+        effectComp.EndEffectTime = newEndTime;
         Dirty(effect, effectComp);
 
         if (effectComp is { AppliedTo: not null, Alert: not null })
