@@ -55,7 +55,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             if (effect.EndEffectTime is null)
                 continue;
 
-            if (_timing.CurTime < effect.EndEffectTime)
+            if (!(_timing.CurTime >= effect.EndEffectTime))
                 continue;
 
             if (effect.AppliedTo is null)
