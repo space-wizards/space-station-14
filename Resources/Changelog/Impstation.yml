@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: Added the SalvDrobe.
-    type: Add
-  id: 1431
-  time: '2025-03-29T22:27:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1862
 - author: SixValentine
   changes:
   - message: Luna button - medical will contain you no longer
@@ -4241,3 +4234,10 @@
   id: 1930
   time: '2025-06-28T23:37:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2889
+- author: crocodilecarousel and hivehum
+  changes:
+  - message: press g and get decorating or else!!!
+    type: Add
+  id: 1931
+  time: '2025-06-29T00:02:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2901
