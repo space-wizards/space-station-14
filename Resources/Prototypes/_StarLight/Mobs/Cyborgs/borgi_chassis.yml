@@ -239,7 +239,7 @@
         suitstorage:
           - OxygenTankFilled
         id:
-          - ClearPDA
+          - BorgiClearPDA
     - type: ItemSlots
       slots:
         cell_slot:
@@ -247,6 +247,8 @@
           startingItem: PowerCellHigh
     - type: StartIonStormed
       ionStormAmount: 3
+    - type: IonStormTarget
+      chance: 1.0 # just like derelicts. it catches EVERY ionstorm.
 
 - type: entity
   parent: BaseBorgiChassis
