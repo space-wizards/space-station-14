@@ -275,6 +275,22 @@
 
 - type: entity
   parent: MarkerBase
+  id: SpawnMobSheepRainbow
+  name: Rainbow Sheep Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sheep_bare
+      sprite: Mobs/Animals/sheep.rsi
+    - state: sheep_wool
+      sprite: Mobs/Animals/sheep.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSheepRainbow
+
+- type: entity
+  parent: MarkerBase
   id: SpawnMobSheepSpace
   name: Space Sheep Spawner
   components:
