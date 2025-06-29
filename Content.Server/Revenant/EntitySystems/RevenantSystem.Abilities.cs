@@ -31,15 +31,11 @@ using Robust.Shared.Map.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
-using Content.Server.Administration.Logs;
-using Content.Shared.Emag.Components;
-
 namespace Content.Server.Revenant.EntitySystems;
 
 public sealed partial class RevenantSystem
 {
     [Dependency] private readonly EmagSystem _emagSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
