@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson, SlamBamActionman
-  changes:
-  - message: Fixed trash bag visuals. The appearance will now update correctly depending
-      on how many items it contains!
-    type: Fix
-  id: 8211
-  time: '2025-04-17T10:36:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32386
-- author: Callmore
-  changes:
-  - message: Cyborgs now require being pryed to open/close the panel instead of screwed.
-    type: Tweak
-  id: 8212
-  time: '2025-04-17T10:38:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32796
 - author: Errant
   changes:
   - message: Handheld geiger counters can now by heard by everyone nearby.
@@ -3885,3 +3870,19 @@
   id: 8723
   time: '2025-06-27T16:39:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38622
+- author: Tayrtahn
+  changes:
+  - message: Solution containers (beakers, glasses, etc) no longer rapidly flicker
+      through different fill level visuals when transferring their contents.
+    type: Fix
+  id: 8724
+  time: '2025-06-28T00:13:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34838
+- author: Boaz1111
+  changes:
+  - message: Headphone sprites have been changed a bit, and they are now wearable
+      on the head, ears and neck.
+    type: Tweak
+  id: 8725
+  time: '2025-06-28T14:01:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38479
