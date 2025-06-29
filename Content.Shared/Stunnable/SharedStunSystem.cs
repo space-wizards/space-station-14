@@ -169,6 +169,7 @@ public abstract class SharedStunSystem : EntitySystem
 
     /// <summary>
     ///     Applies knockdown and stun to the entity temporarily.
+    ///     Returns true if either were successfully applied.
     /// </summary>
     public bool TryParalyze(EntityUid uid,
         TimeSpan time,
