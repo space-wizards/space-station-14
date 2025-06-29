@@ -1,0 +1,68 @@
+- type: entity
+  name: lepidodent
+  parent: MobMouse
+  id: MobLepidodent
+  description: An unstoppable eating machine.
+  components:
+  - type: Body
+    prototype: Lepidodent
+  - type: Speech
+    allowedEmotes: ['Chitter', 'Squeak']
+  - type: Sprite
+    sprite: _Impstation/Mobs/Animals/lepidodent.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: lepidodent
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: lepidodent_moving
+    noMovementLayers:
+      movement:
+        state: lepidodent
+  - type: Clothing
+    quickEquip: false
+    sprite: _Impstation/Mobs/Animals/lepidodent.rsi
+    equippedPrefix: lepidodent
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: lepidodent_hat
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: lepidodent
+      Critical:
+        Base: lepidodent_dead
+      Dead:
+        Base: lepidodent_dead
+  - type: FlavorProfile
+    flavors:
+    - fluffy
+  - type: Butcherable
+    spawned:
+    - id: FoodMacaronCotton
+      amount: 1
+  - type: Bloodstream
+    bloodReagent: InsectBlood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 2
+        - ReagentId: CottonBool
+          Quantity: 1
+      CottonBool: #im looking at this
+        reagents:
+        - ReagentId: CottonBool
+          Quantity: 500 # LOOKING
+  - type: MeleeChemicalInjector
+    solution: CottonBool
+    transferAmount: 1
+
+  - type: GhostRole
+    name: ghost-role-information-lepidodent-name
+    description: ghost-role-information-lepidodent-description
+    rules: ghost-role-information-freeagent-rules

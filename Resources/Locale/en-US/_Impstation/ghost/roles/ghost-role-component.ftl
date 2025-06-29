@@ -134,6 +134,11 @@ ghost-role-information-replicator-rules = You are a [color=red][bold]Team Antago
 ghost-role-information-oppa-name = Oppa
 ghost-role-information-oppa-description = It's the end of hibernation, and you're hungry enough to empty a kitchen! First, though, you need to get on board the station.
 
+
+ghost-role-information-lepidodent-name = Lepidodent
+ghost-role-information-lepidodent-description = A Connoisseur of food and fabric alike.
+
 ghost-role-information-antagonistchance-rules = You are a [color=green][bold]Non-antagonist[/bold][/color] with a small chance of rolling a [color=red][bold]Solo Antagonist[/bold][/color] role. You should generally not seek to harm the station and its crew, unless the game tells you that you are an antagonist. [bold]ABANDONING THIS ROLE BECAUSE YOU ARE NOT AN ANTAGONIST WILL RESULT IN A BAN.[/bold]
 
                                              You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+

@@ -1,0 +1,14 @@
+- type: entity
+  id: OrganLepidodentStomach
+  parent: OrganAnimalStomach
+  name: stomach
+  suffix: Lepidodent
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stomach
+    isSpecialDigestibleExclusive: false
+    specialDigestible:
+      tags:
+      - ClothMade
+      - Paper
+      - Pill
