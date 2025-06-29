@@ -6,6 +6,7 @@
   name: revenant
   description: A spooky ghostie.
   components:
+  - type: Emag
   - type: Input
     context: "ghost"
   - type: Spectral
