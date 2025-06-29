@@ -816,8 +816,6 @@
       fireCost: 120
   - type: Item
     size: Large
-    shape:
-    - 0,0,4,1
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
     heldPrefix: energy
   - type: Tag
