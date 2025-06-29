@@ -104,7 +104,9 @@ public sealed class ModularGrenadeTests : InteractionTest
 
         void AssertTriggerComponents(bool present = true)
         {
-            AssertComp<TriggerOnSignalComponent>(present);
+            AssertComp<TriggerOnSignalComponent>(false);
+            AssertComp<TimerStartOnSignalComponent>(present);
+            AssertComp<OnUseTimerTriggerComponent>(present);
             AssertComp<DeviceLinkSourceComponent>(false);
             AssertComp<DeviceLinkSinkComponent>(present);
         }
@@ -146,11 +148,19 @@ public sealed class ModularGrenadeTests : InteractionTest
             remoteSignaller,
             STarget.Value,
             "Pressed",
-            "Trigger");
+            "Timer");
 
         // Activate signaller.
         AssertExists();
         await UseInHand();
+        await RunTicks(10);
+
+        // Wait until grenade explodes
+        var timer = Comp<ActiveTimerTriggerComponent>();
+        while (timer.TimeRemaining >= 0)
+        {
+            await RunTicks(10);
+        }
 
         // Grenade has exploded.
         await RunTicks(30);
