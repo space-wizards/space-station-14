@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Materials;
+using Content.Shared.Silicons.Borgs;
 using Content.Shared.Weapons.Ranged;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -27,6 +28,7 @@ public abstract class SharedArmorSparkEffectSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ArmorSparkEffectComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnArmorDamageModify);
+        SubscribeLocalEvent<CyborgSparkEffectComponent, DamageModifyEvent>(OnCyborgDamageModify);
     }
 
     private void OnArmorDamageModify(EntityUid uid, ArmorSparkEffectComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
@@ -110,8 +112,42 @@ public abstract class SharedArmorSparkEffectSystem : EntitySystem
         // Spawn the effect at the wearer's position with offset
         var effectCoords = wearerTransform.Coordinates.Offset(offset);
         
-        SpawnSparkEffectAt(effectCoords, component.SparkEffectPrototype);
-        PlayRicochetSound(effectCoords, component.RicochetSoundCollection);
+        SparkEffectAt(effectCoords, component.SparkEffectPrototype, component.RicochetSoundCollection);
+    }
+
+    private void OnCyborgDamageModify(EntityUid uid, CyborgSparkEffectComponent component, DamageModifyEvent args)
+    {
+        // Only process on server
+        if (!_net.IsServer)
+            return;
+
+        // Check if this is a hitscan damage event
+        if (!IsHitscanDamage(args))
+            return;
+
+        // For cyborgs, trigger on ANY hitscan bullet (no armor penetration check)
+        SpawnCyborgSparkEffect(uid, component);
+    }
+
+    private void SpawnCyborgSparkEffect(EntityUid cyborgUid, CyborgSparkEffectComponent component)
+    {
+        var cyborgTransform = Transform(cyborgUid);
+        
+        // Calculate random offset within the tile
+        var offsetX = _random.NextFloat(-component.MaxOffset, component.MaxOffset);
+        var offsetY = _random.NextFloat(-component.MaxOffset, component.MaxOffset);
+        var offset = new Vector2(offsetX, offsetY);
+        
+        // Spawn the effect at the cyborg's position with offset
+        var effectCoords = cyborgTransform.Coordinates.Offset(offset);
+        
+        SparkEffectAt(effectCoords, component.SparkEffectPrototype, component.RicochetSoundCollection);
+    }
+
+    private void SparkEffectAt(EntityCoordinates coordinates, string effectPrototype, string soundCollection)
+    {
+        SpawnSparkEffectAt(coordinates, effectPrototype);
+        PlayRicochetSound(coordinates, soundCollection);
     }
 
     protected abstract void SpawnSparkEffectAt(EntityCoordinates coordinates, string effectPrototype);

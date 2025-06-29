@@ -1,0 +1,7 @@
+- type: soundCollection
+  id: armor_ricochet_cyborg
+  files:
+  - /Audio/_Starlight/Armor/Ricochet/Cyborg/ricochet1b.ogg
+  - /Audio/_Starlight/Armor/Ricochet/Cyborg/ricochet2b.ogg
+  - /Audio/_Starlight/Armor/Ricochet/Cyborg/ricochet3b.ogg
+  - /Audio/_Starlight/Armor/Ricochet/Cyborg/ricochet4b.ogg
