@@ -111,6 +111,8 @@ namespace Content.Server.Disposal.Tube
             //Check for correct message and ignore maleformed strings
             if (msg.Action == SharedDisposalRouterComponent.UiAction.Ok && SharedDisposalRouterComponent.TagRegex.IsMatch(msg.Tags))
             {
+                router.BackwardsAllowed = msg.BackwardsAllowed;
+
                 router.Tags.Clear();
                 foreach (var tag in msg.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries))
                 {
@@ -197,7 +199,7 @@ namespace Content.Server.Disposal.Tube
             var headingTo = args.Holder.PreviousDirection;
             var comingFrom = args.Holder.PreviousDirectionFrom;
 
-            if (comingFrom == next && directions.Contains(headingTo))
+            if (component.BackwardsAllowed && comingFrom == next && directions.Contains(headingTo))
                 // We're backwards, but able to pass through without changing direction
                 args.Next = headingTo;
             else if (comingFrom == next || comingFrom == Direction.Invalid)
@@ -227,7 +229,9 @@ namespace Content.Server.Disposal.Tube
             var next = Transform(uid).LocalRotation.GetDir();
 
             // If we are going "backwards", try to keep moving straight
-            if (args.Holder.PreviousDirectionFrom == next && directions.Contains(args.Holder.PreviousDirection))
+            if (component.BackwardsAllowed
+                && args.Holder.PreviousDirectionFrom == next
+                && directions.Contains(args.Holder.PreviousDirection))
                 args.Next = args.Holder.PreviousDirection;
             else
                 args.Next = next;
@@ -306,7 +310,9 @@ namespace Content.Server.Disposal.Tube
         {
             if (router.Tags.Count <= 0)
             {
-                _uiSystem.SetUiState(uid, SharedDisposalRouterComponent.DisposalRouterUiKey.Key, new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(""));
+                _uiSystem.SetUiState(uid,
+                    SharedDisposalRouterComponent.DisposalRouterUiKey.Key,
+                    new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState("", router.BackwardsAllowed));
                 return;
             }
 
@@ -320,7 +326,10 @@ namespace Content.Server.Disposal.Tube
 
             taglist.Remove(taglist.Length - 2, 2);
 
-            _uiSystem.SetUiState(uid, SharedDisposalRouterComponent.DisposalRouterUiKey.Key, new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(taglist.ToString()));
+            _uiSystem.SetUiState(uid,
+                SharedDisposalRouterComponent.DisposalRouterUiKey.Key,
+                new SharedDisposalRouterComponent.DisposalRouterUserInterfaceState(taglist.ToString(),
+                    router.BackwardsAllowed));
         }
 
         private void OnAnchorChange(EntityUid uid, DisposalTubeComponent component, ref AnchorStateChangedEvent args)
