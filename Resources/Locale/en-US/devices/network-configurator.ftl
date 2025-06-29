@@ -43,3 +43,7 @@ network-configurator-examine-switch-modes = Press {$key} to switch modes
 # item status
 network-configurator-item-status-label = Mode: {$mode}
     Switch: {$keybinding}
+
+# command
+cmd-clearnetworklinkoverlays-desc = Clear all network link overlays.
+cmd-clearnetworklinkoverlays-help = Usage: clearnetworklinkoverlays
