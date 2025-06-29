@@ -182,7 +182,7 @@ public abstract class SharedStunSystem : EntitySystem
         return knockdown || stunned;
     }
 
-    public bool TryUnstun(Entity<StunnedComponent?> entity, bool force = false)
+    public bool TryUnstun(Entity<StunnedComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return true;
@@ -193,13 +193,10 @@ public abstract class SharedStunSystem : EntitySystem
         var ev = new StunEndAttemptEvent();
         RaiseLocalEvent(entity, ref ev);
 
-        if (ev.Cancelled)
-            return false;
-
-        return RemComp<StunnedComponent>(entity);
+        return !ev.Cancelled && RemComp<StunnedComponent>(entity);
     }
 
-    public bool TryStanding(Entity<StunnedComponent?> entity, bool force = false)
+    public bool TryStanding(Entity<StunnedComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return true;
@@ -210,10 +207,7 @@ public abstract class SharedStunSystem : EntitySystem
         var ev = new KnockdownEndAttemptEvent();
         RaiseLocalEvent(entity, ref ev);
 
-        if (ev.Cancelled)
-            return false;
-
-        return RemComp<StunnedComponent>(entity);
+        return !ev.Cancelled && RemComp<KnockedDownComponent>(entity);
     }
 
     private void OnStunEffectApplied(Entity<StunnedStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
