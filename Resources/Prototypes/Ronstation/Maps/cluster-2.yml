@@ -2,7 +2,7 @@
 - type: gameMap
   id: Cluster2
   mapName: 'Cluster-II'
-  mapPath: /Maps/_Ronstation/cluster-2.yml
+  mapPath: /Maps/Ronstation/cluster-2.yml # Ronstation - modification.
   minPlayers: 3
   maxPlayers: 35
   stations:
