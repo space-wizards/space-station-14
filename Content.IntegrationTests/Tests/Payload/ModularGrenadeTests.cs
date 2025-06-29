@@ -128,10 +128,22 @@ public sealed class ModularGrenadeTests : InteractionTest
         await PayloadCycle();
 
         // Prepare signaller
+        if (HandSys.GetActiveItem((ToServer(Player), Hands)) is not { } remoteSignaller)
+        {
+            Assert.Fail("Not holding remote signaller.");
+            return;
+        }
+
+        if (STarget is null)
+        {
+            Assert.Fail("Modular grenade target not found.");
+            return;
+        }
+
         await PlaceInHands(RemoteSignaller);
         SDevLink.ToggleLink(
             null,
-            Hands.ActiveHandEntity.Value,
+            remoteSignaller,
             STarget.Value,
             "Pressed",
             "Trigger");
