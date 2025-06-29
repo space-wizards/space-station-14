@@ -1,3 +1,4 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: gameMap
   id: Atlas2
   mapName: Atlas-B
@@ -58,4 +59,4 @@
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            Lawyer: [ 2, 2 ]
+            Lawyer: [ 2, 2 ] # Ronstation - modification.
