@@ -11,8 +11,31 @@
     storedRotation: -90
   - type: Access
   - type: DoorRemote
+    options:
+    - mode: OpenClose
+      tooltip: door-remote-open-close-text
+      icon:
+        sprite: /Textures/Structures/Doors/Airlocks/Standard/basic.rsi
+        state: assembly
+    - mode: ToggleBolts
+      tooltip: door-remote-toggle-bolt-text
+      icon:
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: bolt_door
+    - mode: ToggleEmergencyAccess
+      tooltip: door-remote-emergency-access-text
+      icon:
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: emergency_on
   - type: StealTarget
     stealGroup: DoorRemote
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.DoorRemoteUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.DoorRemoteUiKey.Key:
+        type: DoorRemoteBoundUserInterface
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
