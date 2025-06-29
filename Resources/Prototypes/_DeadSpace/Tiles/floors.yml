@@ -1,0 +1,22 @@
+- type: tile
+  id: FloorTitaniumTiles
+  name: титановая плитка
+  sprite: /Textures/_DeadSpace/Tiles/titaniumtiles.png
+  variants: 10
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0 
+  baseTurf: Plating
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepHull
+  heatCapacity: 10000
+  indestructible: true  
