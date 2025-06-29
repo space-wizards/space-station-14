@@ -1,175 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Restored Artifexium's interaction with artifacts. Now, a single spray
-      will randomly activate one of the triggers for a node, allowing you to subvert
-      puzzling artifacts.
-    type: Add
-  id: 8192
-  time: '2025-04-15T22:49:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36595
-- author: slarticodefast, Flareguy
-  changes:
-  - message: Added the Desynchronizer, an experimental device that allows the user
-      to temporarily make themselves invincible, invisible, & immobile. Unlock it
-      through experimental science today!
-    type: Add
-  - message: Gravity Manipulation technology is now a tier 2 technology.
-    type: Tweak
-  id: 8193
-  time: '2025-04-16T01:33:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35752
-- author: RedBookcase
-  changes:
-  - message: Minor blueprint tweaks and a new stored sprite for blueprints.
-    type: Tweak
-  id: 8194
-  time: '2025-04-16T10:12:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36609
-- author: SlamBamActionman
-  changes:
-  - message: Unfolded bandanas/lab coats now fit in crates again.
-    type: Fix
-  id: 8195
-  time: '2025-04-16T11:54:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36625
-- author: metalgearsloth
-  changes:
-  - message: Fixes tippy messages being too sh-
-    type: Fix
-  id: 8196
-  time: '2025-04-16T12:23:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36616
-- author: SlamBamActionman
-  changes:
-  - message: Closed pet carriers no longer push players or lockers.
-    type: Fix
-  id: 8197
-  time: '2025-04-16T14:12:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36627
-- author: Flareguy, ArtisticRoomba
-  changes:
-  - message: Added the Temperature Gun. It can shoot body-temperature-changing bolts.
-      Unlock them through arsenal science today!
-    type: Add
-  - message: Experimental Battery Ammo technology is no longer available to research..
-    type: Remove
-  id: 8198
-  time: '2025-04-16T17:58:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35447
-- author: UpAndLeaves
-  changes:
-  - message: Most clothing will no longer provide protection against zombification
-    type: Tweak
-  - message: Blunt/Slash/Piercing resistance will now provide weak protection against
-      zombification.
-    type: Tweak
-  - message: Winter coats are now moderately effective against zombification.
-    type: Tweak
-  - message: Bio suits are now very effective against zombification.
-    type: Tweak
-  - message: Security bio suits are now lightly armored.
-    type: Tweak
-  - message: Bio suits now only have 5% slowdown.
-    type: Tweak
-  id: 8199
-  time: '2025-04-16T18:21:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36485
-- author: ScarKy0
-  changes:
-  - message: A basic sheet crate can now be ordered for 1660 spesos. It contains 30
-      steel, glass and plastic.
-    type: Add
-  id: 8200
-  time: '2025-04-16T19:20:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36419
-- author: sowelipililimute
-  changes:
-  - message: The medical and security techfabs now announce new recipes that they
-      can fabricate as they are researched
-    type: Add
-  id: 8201
-  time: '2025-04-16T19:29:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34959
-- author: Linkbro1
-  changes:
-  - message: changed MV and HV cable item sprites, changed MV cable structure sprites
-    type: Tweak
-  id: 8202
-  time: '2025-04-16T20:26:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34955
-- author: ciaran
-  changes:
-  - message: Fixed duplicate crew monitor console entries for crew with tracking implants
-    type: Fix
-  id: 8203
-  time: '2025-04-16T21:14:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35918
-- author: Seam_Less
-  changes:
-  - message: Standardized the In-Hand Sprites for all gloves
-    type: Tweak
-  id: 8204
-  time: '2025-04-16T22:15:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35997
-- author: DissidentBullet
-  changes:
-  - message: Monkeys can now wear juggernaut suits
-    type: Add
-  id: 8205
-  time: '2025-04-16T23:14:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34121
-- author: SpaceRox1244
-  changes:
-  - message: Cargo can now order handheld artifact containers for transporting small
-      artifacts.
-    type: Add
-  id: 8206
-  time: '2025-04-16T23:35:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33327
-- author: ScarKy0
-  changes:
-  - message: Hydroponics tray flatpacks can now be bought for 750 spesos.
-    type: Add
-  id: 8207
-  time: '2025-04-16T23:51:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36630
-- author: EmoGarbage404
-  changes:
-  - message: Fixed artifacts sometimes having negative research values.
-    type: Fix
-  id: 8208
-  time: '2025-04-17T03:14:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36642
-- author: VerinSenpai
-  changes:
-  - message: You can now use actions within the action window.
-    type: Add
-  id: 8209
-  time: '2025-04-17T10:08:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35642
-- author: ElectroJr
-  changes:
-  - message: Fixed some intense explosion types using incorrect overlay sprites.
-    type: Fix
-  id: 8210
-  time: '2025-04-17T10:12:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36644
-- author: Beck Thompson, SlamBamActionman
-  changes:
-  - message: Fixed trash bag visuals. The appearance will now update correctly depending
-      on how many items it contains!
-    type: Fix
-  id: 8211
-  time: '2025-04-17T10:36:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32386
-- author: Callmore
-  changes:
-  - message: Cyborgs now require being pryed to open/close the panel instead of screwed.
-    type: Tweak
-  id: 8212
-  time: '2025-04-17T10:38:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32796
 - author: Errant
   changes:
   - message: Handheld geiger counters can now by heard by everyone nearby.
@@ -3899,3 +3728,161 @@
   id: 8704
   time: '2025-06-21T22:23:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38486
+- author: keronshb
+  changes:
+  - message: Added the Hypereutactic Blade back to the Traitor Uplink
+    type: Add
+  - message: Added the Hypereutatic Blade to the Nukie uplink
+    type: Add
+  id: 8705
+  time: '2025-06-22T16:50:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37182
+- author: Cojoke-dot
+  changes:
+  - message: Pacifists can now use the Staff of Healing
+    type: Tweak
+  id: 8706
+  time: '2025-06-22T19:38:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38509
+- author: slarticodefast
+  changes:
+  - message: The interrogator lamp and flash lantern now properly flash when toggled
+      on.
+    type: Fix
+  id: 8707
+  time: '2025-06-23T11:32:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37640
+- author: metalgearsloth
+  changes:
+  - message: Added ambient occlusion to walls so they have shadows around them.
+    type: Add
+  id: 8708
+  time: '2025-06-24T07:56:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38276
+- author: BramvanZijp
+  changes:
+  - message: Added Stamina Damage resistance to the raid/hard-suits used by Nuclear
+      Operatives and Emergency Response Teams.
+    type: Tweak
+  id: 8709
+  time: '2025-06-24T13:04:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38526
+- author: Kittygyat
+  changes:
+  - message: Added a handheld station map to the borg thruster module!
+    type: Add
+  id: 8710
+  time: '2025-06-24T15:35:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38541
+- author: PJB3005
+  changes:
+  - message: Fixed various worn clothing items being invisible when seen through UI,
+      such as the examine popups.
+    type: Fix
+  id: 8711
+  time: '2025-06-24T20:47:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38042
+- author: AreYouConfused
+  changes:
+  - message: Bulldog bundle now accurately says what is included
+    type: Fix
+  id: 8712
+  time: '2025-06-24T21:58:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38558
+- author: Dragonjspider
+  changes:
+  - message: The Cutter Machine no longer makes Dark Techmaints floor tiles for free
+    type: Fix
+  id: 8713
+  time: '2025-06-25T01:46:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38557
+- author: rumaks-xyz
+  changes:
+  - message: The action of reverting from a polymorph now has to be confirmed.
+    type: Tweak
+  id: 8714
+  time: '2025-06-25T17:52:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38570
+- author: Lukasz825700516
+  changes:
+  - message: Closed eyes and binoculars no longer allow you to see through walls.
+    type: Fix
+  id: 8715
+  time: '2025-06-25T20:22:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38534
+- author: Hitlinemoss
+  changes:
+  - message: Various hats have had their descriptions updated.
+    type: Tweak
+  id: 8716
+  time: '2025-06-25T20:27:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38156
+- author: slarticodefast
+  changes:
+  - message: Multi-handed items can be picked up again.
+    type: Fix
+  id: 8717
+  time: '2025-06-26T15:29:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38603
+- author: slarticodefast
+  changes:
+  - message: Fixed smart equip not retrieving items.
+    type: Fix
+  id: 8718
+  time: '2025-06-26T16:17:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38605
+- author: Hitlinemoss
+  changes:
+  - message: The Quartermaster's PDA now comes with AstroNav preinstalled.
+    type: Tweak
+  id: 8719
+  time: '2025-06-26T22:09:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38445
+- author: BigfootBravo
+  changes:
+  - message: Bladed flatcaps are now minor contraband.
+    type: Tweak
+  id: 8720
+  time: '2025-06-26T22:57:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38597
+- author: TiniestShark
+  changes:
+  - message: Added inhand sprites to all plushies/toys and the ability to wear (most)
+      of them in either your head or neck slot.
+    type: Add
+  - message: Nar'sie, Ratvar and Revenant plushies now require two hands to hold.
+    type: Tweak
+  id: 8721
+  time: '2025-06-27T01:07:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38514
+- author: maland1
+  changes:
+  - message: Updating Thief guidebook page including making guidebook and thieving
+      satchel images more consistent
+    type: Tweak
+  id: 8722
+  time: '2025-06-27T02:03:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38586
+- author: slarticodefast
+  changes:
+  - message: Fixed RCD ghosts not disappearing when dropping the RCD.
+    type: Fix
+  id: 8723
+  time: '2025-06-27T16:39:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38622
+- author: Tayrtahn
+  changes:
+  - message: Solution containers (beakers, glasses, etc) no longer rapidly flicker
+      through different fill level visuals when transferring their contents.
+    type: Fix
+  id: 8724
+  time: '2025-06-28T00:13:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34838
+- author: Boaz1111
+  changes:
+  - message: Headphone sprites have been changed a bit, and they are now wearable
+      on the head, ears and neck.
+    type: Tweak
+  id: 8725
+  time: '2025-06-28T14:01:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38479

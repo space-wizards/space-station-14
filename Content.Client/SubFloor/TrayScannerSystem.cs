@@ -68,11 +68,15 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
 
         foreach (var hand in _hands.EnumerateHands(player.Value))
         {
-            if (!scannerQuery.TryGetComponent(hand.HeldEntity, out var heldScanner) || !heldScanner.Enabled)
+            if (!_hands.TryGetHeldItem(player.Value, hand, out var heldEntity))
+                continue;
+
+            if (!scannerQuery.TryGetComponent(heldEntity, out var heldScanner) || !heldScanner.Enabled)
                 continue;
 
             range = MathF.Max(heldScanner.Range, range);
             canSee = true;
+            break;
         }
 
         inRange = new HashSet<Entity<SubFloorHideComponent>>();
