@@ -197,7 +197,7 @@
   name: uplink-syndicate-borgi-name
   description: uplink-syndicate-borgi-desc
   icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
-  productEntity: SyndiCorgi
+  productEntity: BaseSyndicateBorgiChassis
   cost:
     Telecrystal: 20
   categories:
@@ -211,7 +211,7 @@
   name: uplink-syndicate-borgi-kitted-name
   description: uplink-syndicate-borgi-kitted-desc
   icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
-  productEntity: SyndiCorgiKit1
+  productEntity: SyndiBorgiKit1
   cost:
     Telecrystal: 60
   categories:
@@ -229,7 +229,7 @@
   name: uplink-syndicate-borgi-speed-name
   description: uplink-syndicate-borgi-speed-desc
   icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
-  productEntity: SyndiCorgiKit2
+  productEntity: SyndiBorgiKit2
   cost:
     Telecrystal: 50
   categories:
