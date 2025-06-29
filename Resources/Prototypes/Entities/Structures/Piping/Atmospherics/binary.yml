@@ -525,7 +525,7 @@
   - type: Transform
     noRot: false
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/heatexchanger.rsi #imp edit
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
       state: pipeStraight
@@ -533,8 +533,11 @@
     - state: heStraight
       map: [ "enum.SubfloorLayers.FirstLayer" ]
   - type: AtmosPipeLayers
-    spriteRsiPaths: {}
-    numberOfPipeLayers: 1
+    spriteRsiPaths:
+      Primary: _Impstation/Structures/Piping/Atmospherics/heatexchanger.rsi #imp edit
+      Secondary: _Impstation/Structures/Piping/Atmospherics/heatexchanger_alt1.rsi #imp edit
+      Tertiary: _Impstation/Structures/Piping/Atmospherics/heatexchanger_alt2.rsi #imp edit
+    #numberOfPipeLayers: 1 #imp edit, use all layers
   - type: SubFloorHide
     visibleLayers:
     - enum.SubfloorLayers.FirstLayer
