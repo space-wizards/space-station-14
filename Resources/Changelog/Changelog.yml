@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Handheld geiger counters can now by heard by everyone nearby.
-    type: Tweak
-  id: 8213
-  time: '2025-04-17T11:24:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30463
 - author: Centronias
   changes:
   - message: Tank harnesses can be made at lathes, similar to utility belts.
@@ -3886,3 +3879,11 @@
   id: 8725
   time: '2025-06-28T14:01:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38479
+- author: slarticodefast
+  changes:
+  - message: Fixed smart equip not being able to insert items into item slots (for
+      example for the sabre sheath).
+    type: Fix
+  id: 8726
+  time: '2025-06-29T14:33:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38655
