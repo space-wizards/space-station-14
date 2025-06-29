@@ -15,13 +15,13 @@ public sealed class MakeSentientCommand : LocalizedEntityCommands
     {
         if (args.Length != 1)
         {
-            shell.WriteLine(Loc.GetString($"shell-need-exactly-one-argument"));
+            shell.WriteLine(Loc.GetString("shell-need-exactly-one-argument"));
             return;
         }
 
         if (!NetEntity.TryParse(args[0], out var entNet) || !EntityManager.TryGetEntity(entNet, out var entId) || !EntityManager.EntityExists(entId))
         {
-            shell.WriteLine(Loc.GetString($"shell-could-not-find-entity-with-uid", ("uid", args[0])));
+            shell.WriteLine(Loc.GetString("shell-could-not-find-entity-with-uid", ("uid", args[0])));
             return;
         }
 

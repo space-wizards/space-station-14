@@ -358,20 +358,20 @@ public sealed class MindSystem : SharedMindSystem
 
     public void MakeSentient(EntityUid uid, bool allowMovement = true, bool allowSpeech = true)
     {
-        EntityManager.EnsureComponent<MindContainerComponent>(uid);
+        EnsureComp<MindContainerComponent>(uid);
         if (allowMovement)
         {
-            EntityManager.EnsureComponent<InputMoverComponent>(uid);
-            EntityManager.EnsureComponent<MobMoverComponent>(uid);
-            EntityManager.EnsureComponent<MovementSpeedModifierComponent>(uid);
+            EnsureComp<InputMoverComponent>(uid);
+            EnsureComp<MobMoverComponent>(uid);
+            EnsureComp<MovementSpeedModifierComponent>(uid);
         }
 
         if (allowSpeech)
         {
-            EntityManager.EnsureComponent<SpeechComponent>(uid);
-            EntityManager.EnsureComponent<EmotingComponent>(uid);
+            EnsureComp<SpeechComponent>(uid);
+            EnsureComp<EmotingComponent>(uid);
         }
 
-        EntityManager.EnsureComponent<ExaminerComponent>(uid);
+        EnsureComp<ExaminerComponent>(uid);
     }
 }
