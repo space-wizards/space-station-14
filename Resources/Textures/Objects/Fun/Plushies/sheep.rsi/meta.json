@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "license": "CC BY-NC-SA 4.0",
+    "license": "CC BY-SA 4.0",
     "copyright": "Drawn by Aleksh, commissioned by Baa.",
     "size": {
         "x": 32,
@@ -8,25 +8,25 @@
     },
     "states": [
         {
-            "name": "sheepplush"
+            "name": "sheeptoy"
         },
         {
-            "name": "sheepplush-inhand-left",
+            "name": "sheeptoy-inhand-left",
             "directions": 4
         },
         {
-            "name": "sheepplush-inhand-right",
+            "name": "sheeptoy-inhand-right",
             "directions": 4
         },
         {
-            "name": "spacesheepplush"
+            "name": "spacesheeptoy"
         },
         {
-            "name": "spacesheepplush-inhand-left",
+            "name": "spacesheeptoy-inhand-left",
             "directions": 4
         },
         {
-            "name": "spacesheepplush-inhand-right",
+            "name": "spacesheeptoy-inhand-right",
             "directions": 4
         }
     ]
