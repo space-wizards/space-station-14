@@ -6,7 +6,4 @@ namespace Content.Shared.Bed.Sleep;
 /// This is used for the snoring trait.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class SnoringComponent : Component
-{
-
-}
+public sealed partial class SnoringComponent : Component;
