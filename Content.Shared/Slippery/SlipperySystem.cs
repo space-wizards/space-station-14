@@ -1,11 +1,9 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
-using Robust.Shared.Network;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Content.Shared.Popups;
-using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
@@ -25,7 +23,7 @@ public sealed class SlipperySystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly SharedStatusEffectsSystem _status = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SpeedModifierContactsSystem _speedModifier = default!;
@@ -87,7 +85,7 @@ public sealed class SlipperySystem : EntitySystem
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
     {
         return !_container.IsEntityInContainer(uid)
-                && _statusEffects.CanApplyEffect(toSlip, "Stun"); //Should be KnockedDown instead?
+                && _status.CanAddStatusEffect(toSlip, SharedStunSystem.Stun); //Should be KnockedDown instead?
     }
 
     public void TrySlip(EntityUid uid, SlipperyComponent component, EntityUid other, bool requiresContact = true)
@@ -124,7 +122,7 @@ public sealed class SlipperySystem : EntitySystem
             }
         }
 
-        var playSound = !_statusEffects.HasStatusEffect(other, "KnockedDown");
+        var playSound = !_status.CanAddStatusEffect(other, SharedStunSystem.Knockdown);
 
         _stun.TryParalyze(other, component.SlipData.ParalyzeTime, true);
 
@@ -134,8 +132,7 @@ public sealed class SlipperySystem : EntitySystem
             _audio.PlayPredicted(component.SlipSound, other, other);
         }
 
-        _adminLogger.Add(LogType.Slip, LogImpact.Low,
-            $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
+        _adminLogger.Add(LogType.Slip, LogImpact.Low, $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(uid):entity}");
     }
 }
 

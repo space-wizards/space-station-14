@@ -16,7 +16,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.PneumaticCannon;
 
-public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
+public sealed class FPneumaticCannonSystem : SharedPneumaticCannonSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly GasTankSystem _gasTank = default!;
@@ -80,10 +80,8 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
         if (gas == null && component.GasUsage > 0f)
             return;
 
-        if (TryComp<StatusEffectsComponent>(args.User, out var status)
-            && component.Power == PneumaticCannonPower.High)
+        if (component.Power == PneumaticCannonPower.High && _stun.TryParalyze(args.User, TimeSpan.FromSeconds(component.HighPowerStunTime), true))
         {
-            _stun.TryParalyze(args.User, TimeSpan.FromSeconds(component.HighPowerStunTime), true, status);
             Popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-power-stun",
                 ("cannon", uid)), cannon, args.User);
         }
