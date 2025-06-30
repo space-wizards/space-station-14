@@ -28,22 +28,8 @@ namespace Content.Client.Stack
 
             base.SetCount(uid, amount, component);
 
-            if (component.Lingering &&
-                TryComp<SpriteComponent>(uid, out var sprite))
-            {
-                // tint the stack gray and make it transparent if it's lingering.
-                var color = component.Count == 0 && component.Lingering
-                    ? Color.DarkGray.WithAlpha(0.65f)
-                    : Color.White;
-
-                for (var i = 0; i < sprite.AllLayers.Count(); i++)
-                {
-                    _sprite.LayerSetColor((uid, sprite), i, color);
-                }
-            }
-
             // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
-            if (component.Count <= 0 && !component.Lingering)
+            if (component.Count <= 0)
             {
                 Xform.DetachEntity(uid, Transform(uid));
                 return;
