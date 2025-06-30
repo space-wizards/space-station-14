@@ -53,7 +53,7 @@ public sealed class EmagSystem : EntitySystem
     /// <summary>
     /// Does the emag effect on a specified entity
     /// </summary>
-    public bool TryEmagEffect(Entity<EmagComponent?> ent, EntityUid user, EntityUid target)
+    public bool TryEmagEffect(Entity<EmagComponent?> ent, EntityUid user, EntityUid target, bool applyAllTypes = false)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
@@ -68,7 +68,11 @@ public sealed class EmagSystem : EntitySystem
             return false;
         }
 
-        var emaggedEvent = new GotEmaggedEvent(user, ent.Comp.EmagType);
+        var typeToUse = applyAllTypes
+            ? EmagType.Interaction | EmagType.Access
+            : ent.Comp.EmagType;
+
+        var emaggedEvent = new GotEmaggedEvent(user, typeToUse);
         RaiseLocalEvent(target, ref emaggedEvent);
 
         if (!emaggedEvent.Handled)
