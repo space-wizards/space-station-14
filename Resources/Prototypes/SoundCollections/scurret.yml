@@ -17,3 +17,18 @@
   id: WawaScream
   files:
   - /Audio/Animals/wawa_protest.ogg
+
+- type: soundCollection
+  id: WawaCry
+  files:
+  - /Audio/Animals/wawa_despair.ogg
+
+- type: soundCollection
+  id: WawaYawn
+  files:
+  - /Audio/Animals/wawa_yawn.ogg
+
+- type: soundCollection
+  id: WawaDeath
+  files:
+  - /Audio/Animals/wawa_the_end.ogg
