@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Execution;
@@ -52,7 +52,7 @@ public sealed class SuicideCommandTests
   name: test version of the material reclaimer
   components:
   - type: MaterialReclaimer";
-
+    private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
     /// <summary>
     /// Run the suicide command in the console
     /// Should successfully kill the player and ghost them
@@ -201,7 +201,7 @@ public sealed class SuicideCommandTests
             mobStateComp = entManager.GetComponent<MobStateComponent>(player);
         });
 
-        tagSystem.AddTag(player, "CannotSuicide");
+        tagSystem.AddTag(player, CannotSuicideTag);
 
         // Check that running the suicide command kills the player
         // and properly ghosts them without them being able to return to their body
@@ -267,7 +267,7 @@ public sealed class SuicideCommandTests
         await server.WaitPost(() =>
         {
             var item = entManager.SpawnEntity("SharpTestObject", transformSystem.GetMapCoordinates(player));
-            Assert.That(handsSystem.TryPickup(player, item, handsComponent.ActiveHand!));
+            Assert.That(handsSystem.TryPickup(player, item, handsComponent.ActiveHandId!));
             entManager.TryGetComponent<ExecutionComponent>(item, out var executionComponent);
             Assert.That(executionComponent, Is.Not.EqualTo(null));
         });
@@ -342,7 +342,7 @@ public sealed class SuicideCommandTests
         await server.WaitPost(() =>
         {
             var item = entManager.SpawnEntity("MixedDamageTestObject", transformSystem.GetMapCoordinates(player));
-            Assert.That(handsSystem.TryPickup(player, item, handsComponent.ActiveHand!));
+            Assert.That(handsSystem.TryPickup(player, item, handsComponent.ActiveHandId!));
             entManager.TryGetComponent<ExecutionComponent>(item, out var executionComponent);
             Assert.That(executionComponent, Is.Not.EqualTo(null));
         });

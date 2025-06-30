@@ -99,6 +99,84 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: CargoRequestEngineeringComputerCircuitboard
+  name: engineering request computer board
+  description: A computer printed circuit board for an engineering request computer.
+  components:
+  - type: Sprite
+    state: cpu_engineering
+  - type: ComputerBoard
+    prototype: ComputerCargoOrdersEngineering
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CargoRequestMedicalComputerCircuitboard
+  name: medical request computer board
+  description: A computer printed circuit board for a medical request computer.
+  components:
+  - type: Sprite
+    state: cpu_medical
+  - type: ComputerBoard
+    prototype: ComputerCargoOrdersMedical
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CargoRequestScienceComputerCircuitboard
+  name: science request computer board
+  description: A computer printed circuit board for a science request computer.
+  components:
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerCargoOrdersScience
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CargoRequestSecurityComputerCircuitboard
+  name: security request computer board
+  description: A computer printed circuit board for a security request computer.
+  components:
+  - type: Sprite
+    state: cpu_security
+  - type: ComputerBoard
+    prototype: ComputerCargoOrdersSecurity
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CargoRequestServiceComputerCircuitboard
+  name: service request computer board
+  description: A computer printed circuit board for a service request computer.
+  components:
+  - type: Sprite
+    state: cpu_service
+  - type: ComputerBoard
+    prototype: ComputerCargoOrdersService
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: FundingAllocationComputerCircuitboard
+  name: funding allocation computer board
+  description: A computer printed circuit board for a funding allocation card console.
+  components:
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: ComputerFundingAllocation
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: CargoSaleComputerCircuitboard
   name: cargo sale computer board
   description: A computer printed circuit board for a cargo sale computer.
@@ -122,14 +200,14 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
-  id: CargoShuttleComputerCircuitboard
-  name: cargo shuttle computer board
-  description: A computer printed circuit board for a cargo shuttle computer.
+  id: SalvageJobBoardComputerCircuitboard
+  name: salvage job board computer board
+  description: A computer printed circuit board for a salvage job board computer.
   components:
-    - type: Sprite
-      state: cpu_supply
-    - type: ComputerBoard
-      prototype: ComputerCargoShuttle
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: ComputerSalvageJobBoard
 
 - type: entity
   parent: BaseComputerCircuitboard
@@ -239,7 +317,7 @@
     prototype: ComputerCrewMonitoring
 
 - type: entity
-  parent: [BaseComputerCircuitboard, BaseGrandTheftContraband]
+  parent: [BaseComputerCircuitboard, BaseCommandContraband]
   id: IDComputerCircuitboard
   name: ID card computer board
   description: A computer printed circuit board for an ID card console.
@@ -266,7 +344,7 @@
       prototype: computerBodyScanner
 
 - type: entity
-  parent: [ BaseComputerCircuitboard, BaseGrandTheftContraband ]
+  parent: [ BaseComputerCircuitboard, BaseCommandContraband ]
   id: CommsComputerCircuitboard
   name: communications computer board
   description: A computer printed circuit board for a communications console.
@@ -371,7 +449,7 @@
     prototype: ComputerShuttle
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
   id: SyndicateShuttleConsoleCircuitboard
   name: syndicate shuttle console board
   description: A computer printed circuit board for a syndicate shuttle console.
@@ -404,7 +482,7 @@
       prototype: ComputerIFF
 
 - type: entity
-  parent: BaseComputerCircuitboard
+  parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
   id: ComputerIFFSyndicateCircuitboard
   name: syndicate IFF console board
   description: Allows you to control the IFF and stealth characteristics of this vessel.

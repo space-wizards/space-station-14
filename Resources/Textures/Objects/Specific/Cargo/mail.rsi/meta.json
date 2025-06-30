@@ -38,6 +38,22 @@
         },
         {
             "name": "postmark"
+        },
+        {
+            "name": "bomb"
+        },
+        {
+            "name": "bomb_unshaded",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
         }
     ]
 }

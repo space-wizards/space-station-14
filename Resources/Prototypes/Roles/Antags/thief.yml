@@ -5,6 +5,9 @@
   setPreference: true
   objective: roles-antag-thief-objective
   guides: [ Thieves ]
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 3600 # 1h
 
 - type: startingGear
   id: ThiefGear
@@ -12,4 +15,3 @@
     back:
     - ThiefBeacon
     - SatchelThief
-    - ClothingHandsChameleonThief

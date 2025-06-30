@@ -1,5 +1,8 @@
-# For use by Role Types
-# Do not touch these
+# The primary role types are referenced by RP Rules, and were specified based on head admin input.
+# Do not create new ones without discussion.
+# You probably want a Subtype instead, anyway. Use MindRoleComponent.Subtype
+
+# Any new primary role types must be listed in RoleTypes.xml
 
 # If you change/add a color here, also change it in role-types.ftl!
 

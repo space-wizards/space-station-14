@@ -265,7 +265,7 @@ figurines-footsoldier-4 = Down with Nanotrasen!
 figurines-footsoldier-5 = I'd rather die than join Nanotrasen.
 
 figurines-wizard-1 = Ei Nath!!
-figurines-wizard-2 = Wehgardium Leviosa!
+figurines-wizard-2 = Real wizards support trans rights.
 figurines-wizard-3 = Skidaddle skadoodle!
 figurines-wizard-4 = FIREBALL!
 

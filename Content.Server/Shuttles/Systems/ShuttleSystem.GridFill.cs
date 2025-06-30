@@ -271,7 +271,7 @@ public sealed partial class ShuttleSystem
                 if (HasComp(grid.Value, compType))
                     continue;
 
-                var comp = _factory.GetComponent(compType);
+                var comp = Factory.GetComponent(compType);
                 AddComp(grid.Value, comp, true);
             }
         }
