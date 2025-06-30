@@ -176,7 +176,7 @@
   id: UplinkFireAxe
   name: uplink-fire-axe-flaming-name
   description: uplink-fire-axe-flaming-desc
-  icon: { sprite: /Textures/Objects/Weapons/Melee/fireAxeflaming.rsi, state: icon }
+  icon: { sprite: /Textures/Objects/Weapons/Melee/fireaxeflaming.rsi, state: icon }
   productEntity: FireAxeFlaming
   discountCategory: usualDiscounts
   discountDownTo:
