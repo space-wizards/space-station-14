@@ -29,11 +29,10 @@ public sealed partial class GuideLawsetListEmbed : Control, IDocumentTag
 
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
     {
-        var container = FindControl<BoxContainer>("GroupContainer");
         foreach (var lawset in _prototype.EnumeratePrototypes<SiliconLawsetPrototype>().OrderBy(x => x.ID))
         {
             GuideLawsetEmbed embed = new(lawset);
-            container.AddChild(embed);
+            GroupContainer.AddChild(embed);
         }
 
         control = this;

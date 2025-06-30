@@ -35,11 +35,6 @@ public sealed partial class GuideLawsetEmbed : Control, IDocumentTag, ISearchabl
         MouseFilter = MouseFilterMode.Stop;
     }
 
-    public GuideLawsetEmbed(string lawset) : this()
-    {
-        GenerateControl(_prototype.Index<SiliconLawsetPrototype>(lawset));
-    }
-
     public GuideLawsetEmbed(SiliconLawsetPrototype lawset) : this()
     {
         GenerateControl(lawset);
@@ -48,15 +43,10 @@ public sealed partial class GuideLawsetEmbed : Control, IDocumentTag, ISearchabl
     private void GenerateControl(SiliconLawsetPrototype lawset)
     {
         RepresentedPrototype = lawset;
-        FindControl<PanelContainer>("NameBackground").PanelOverride = new StyleBoxFlat
-        {
-            BackgroundColor = new(22, 22, 140)
-        };
 
         var lawsetNameString = lawset.Name == null ? lawset.ID : Loc.GetString(lawset.Name);
-        FindControl<RichTextLabel>("LawsetName").SetMarkup($"[bold]{FormattedMessage.EscapeText(lawsetNameString)}[/bold]");
+        LawsetName.SetMarkup($"[bold]{FormattedMessage.EscapeText(lawsetNameString)}[/bold]");
 
-        var container = FindControl<BoxContainer>("LawsetContainer");
         var i = 1;
         foreach (var lawID in lawset.Laws)
         {
@@ -69,7 +59,7 @@ public sealed partial class GuideLawsetEmbed : Control, IDocumentTag, ISearchabl
             };
             var locLawStatement = Loc.GetString("laws-number-wrapper", ("lawnumber", i), ("lawstring", locLawString));
             lawN.SetMarkup(locLawStatement);
-            container.AddChild(lawN);
+            LawsetContainer.AddChild(lawN);
 
             i++;
         }
