@@ -8529,4 +8529,11 @@ Entries:
   id: 1176
   time: '2025-06-30T17:07:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/938
+- author: KarmaKitsuna
+  changes:
+  - message: Updated guidebook corporate law to match the wiki
+    type: Add
+  id: 1177
+  time: '2025-06-30T17:09:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/936
 
