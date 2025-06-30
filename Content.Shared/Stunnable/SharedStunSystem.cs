@@ -187,7 +187,7 @@ public abstract class SharedStunSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return true;
 
-        if(!_status.TryEffectsWithComp<StunnedStatusEffectComponent>(entity, out _))
+        if(!_status.HasEffectComp<StunnedStatusEffectComponent>(entity))
             return false;
 
         var ev = new StunEndAttemptEvent();
@@ -201,7 +201,7 @@ public abstract class SharedStunSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return true;
 
-        if(!_status.TryEffectsWithComp<KnockdownStatusEffectComponent>(entity, out _))
+        if(!_status.HasEffectComp<KnockdownStatusEffectComponent>(entity))
             return false;
 
         var ev = new KnockdownEndAttemptEvent();
