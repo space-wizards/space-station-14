@@ -1,0 +1,55 @@
+# Regular steel tiles
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteel
+  name: stack-steel-tile
+  spawn: FloorTileItemSteel
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelOffset
+  name: stack-offset-steel-tile
+  spawn: FloorTileItemSteelOffset
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelDiagonalMini
+  name: stack-steel-diagonal-mini-tile
+  spawn: FloorTileItemSteelDiagonalMini
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelDiagonal
+  name: stack-steel-diagonal-tile
+  spawn: FloorTileItemSteelDiagonal
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelHerringbone
+  name: stack-steel-herringbone
+  spawn: FloorTileItemSteelHerringbone
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelMini
+  name: stack-steel-mini-tile
+  spawn: FloorTileItemSteelMini
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelMono
+  name: stack-steel-mono-tile
+  spawn: FloorTileItemSteelMono
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelPavement
+  name: stack-steel-pavement
+  spawn: FloorTileItemSteelPavement
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelPavementVertical
+  name: stack-steel-vertical-pavement
+  spawn: FloorTileItemSteelPavementVertical
