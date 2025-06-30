@@ -116,7 +116,7 @@
     shape:
     - 0,0,4,0
   - type: Sprite
-    sprite: _Starlight/Objects/Misc/modular_barrel
+    sprite: _Starlight/Objects/Misc/modular_barrel.rsi
     state: icon
   - type: Tag
     tags:

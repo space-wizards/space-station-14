@@ -1,0 +1,18 @@
+- type: constructionGraph
+  id: ForgedShieldBucklerGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: shield
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 10
+      - material: Plasteel
+        amount: 7
+        doAfter: 15
+      - material: Cloth
+        amount: 5
+  - node: shield
+    entity: UnfinishedForgedShieldBuckler

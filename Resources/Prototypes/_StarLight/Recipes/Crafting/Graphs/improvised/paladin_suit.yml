@@ -1,0 +1,19 @@
+- type: constructionGraph
+  id: ClothingOuterArmorPaladinGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: vest
+      steps:
+      - material: Steel
+        amount: 15
+        doAfter: 15
+      - material: Plasteel
+        amount: 17
+        doAfter: 15
+      - material: Cloth
+        amount: 15
+        doAfter: 15
+  - node: vest
+    entity: UnfinishedClothingOuterArmorPaladin
