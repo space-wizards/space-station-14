@@ -119,3 +119,6 @@ alerts-rooted-desc = You are attached to the ground. You can't slip, but you abs
 
 alerts-stealthy-name = Pickpocketing
 alerts-stealthy-desc = Whether you are currently pickpocketing. Click to toggle.
+
+alerts-changeling-biomass-name = Biomass
+alerts-changeling-biomass-desc = Our life force. We must devour others to restore it and maintain control of our body.
