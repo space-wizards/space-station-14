@@ -2,6 +2,7 @@ using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -17,11 +18,10 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
     /// A list of the different firing modes the weapon can switch between
     /// </summary>
     [DataField(required: true)]
-    [AutoNetworkedField]
     public List<BatteryWeaponFireMode> FireModes = new();
 
     /// <summary>
-    /// The currently selected firing mode
+    /// The currently selected firing mode (index in <see cref="FireModes"/>).
     /// </summary>
     [DataField]
     [AutoNetworkedField]
@@ -38,6 +38,12 @@ public sealed partial class BatteryWeaponFireMode
     public EntProtoId Prototype = default!;
 
     /// <summary>
+    /// Icon that can represent mode in UI.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier ModeIcon;
+
+    /// <summary>
     /// The battery cost to fire the projectile associated with this firing mode
     /// </summary>
     [DataField]
@@ -48,4 +54,14 @@ public sealed partial class BatteryWeaponFireMode
 public enum BatteryWeaponFireModeVisuals : byte
 {
     State
+}
+
+/// <summary>
+/// Message for changing battery weapon fire mode.
+/// Uses index of mode in <see cref="BatteryWeaponFireModesComponent.FireModes"/>.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class BatteryWeaponFireModeChangeMessage : BoundUserInterfaceMessage
+{
+    public int ModeIndex { get; set; }
 }
