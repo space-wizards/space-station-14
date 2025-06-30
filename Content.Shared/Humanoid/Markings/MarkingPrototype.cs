@@ -42,9 +42,21 @@ namespace Content.Shared.Humanoid.Markings
         [DataField("sprites", required: true)]
         public List<SpriteSpecifier> Sprites { get; private set; } = default!;
 
+        [DataField("shader")]
+        public string? Shader { get; private set; } = null;
+
         public Marking AsMarking()
         {
             return new Marking(ID, Sprites.Count);
         }
+
+        /// <summary>
+        /// Chance this marking will be added by appearance randomizer.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 1.
+        /// </remarks>
+        [DataField]
+        public float RandomWeight = 1f;
     }
 }
