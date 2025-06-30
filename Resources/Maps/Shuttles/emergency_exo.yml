@@ -2949,6 +2949,7 @@ entities:
       desc: Glory to NanoTrasen!
       name: beer dispenser
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: 1.5,-2.5
       parent: 2
     - type: SolutionContainerManager
