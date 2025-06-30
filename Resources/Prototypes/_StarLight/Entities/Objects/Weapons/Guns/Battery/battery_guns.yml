@@ -784,7 +784,7 @@
   - type: Clothing
     sprite: _Starlight/Objects/Weapons/Guns/Battery/energy_smg.rsi
   - type: Gun
-    fireRate: 5.5
+    fireRate: 4.5
     selectedMode: FullAuto
     availableModes:
     - FullAuto
@@ -799,6 +799,8 @@
     fireModes:
     - proto: BulletEnergySMGLaser
       fireCost: 50
+    - proto: BulletEnergySMGDisabler
+      fireCost: 25
   - type: Item
     size: Large
     shape:
@@ -818,4 +820,4 @@
     autoRecharge: true
     autoRechargeRate: 100
     autoRechargePause: true
-    autoRechargePauseTime: 20
+    autoRechargePauseTime: 10
