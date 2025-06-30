@@ -1,0 +1,14 @@
+﻿{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Base sprite created by DSC@300074782328750080 for Space Station 14, label modified by Flareguy for Space Station 14, combined by Toby222",
+    "states": [
+        {
+            "name": "encryption"
+        }
+    ]
+}
