@@ -1,1 +1,2 @@
-﻿crafting-menu-text-FDB = The cousin of the improvised shotgun, this one is made from better quality parts and an additional barrel! Takes time and welding supplies to make, however. 
+﻿crafting-menu-name-FDB = forged double-barrel shotgun
+crafting-menu-text-FDB = The cousin of the improvised shotgun, this one is made from better quality parts and an additional barrel! Takes time and welding supplies to make, however. 

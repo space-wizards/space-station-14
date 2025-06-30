@@ -1,5 +1,5 @@
 - type: construction
-  name: forged double-barrel shotgun
+  name: crafting-menu-name-FDB
   id: WeaponShotgunForged
   graph: ForgedShotgunGraph
   startNode: start
