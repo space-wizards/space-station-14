@@ -25,7 +25,7 @@ public sealed partial class DisposalImportantItemComponent : Component
     ///     Window before you can actually insert the item.
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan AntiSpamWindow = TimeSpan.FromMilliseconds(1000);
+    public TimeSpan AntiSpamWindow = TimeSpan.FromMilliseconds(500);
 
     /// <summary>
     ///     Last attempt at inserting an important item into disposals.
