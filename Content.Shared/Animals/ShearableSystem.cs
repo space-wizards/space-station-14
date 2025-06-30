@@ -1,16 +1,20 @@
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Shearing;
-using Content.Shared.Stacks;
 using Content.Shared.Tools.Systems;
+using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+
 
 namespace Content.Shared.Animals;
 
@@ -34,6 +38,8 @@ public sealed class SharedShearableSystem : EntitySystem
 
     [Dependency]
     private readonly SharedPopupSystem _popup = default!;
+    [Dependency]
+    private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -43,6 +49,8 @@ public sealed class SharedShearableSystem : EntitySystem
         SubscribeLocalEvent<ShearableComponent, InteractUsingEvent>(OnClicked);
         SubscribeLocalEvent<ShearableComponent, ExaminedEvent>(Examined);
         SubscribeLocalEvent<ShearableComponent, ShearingDoAfterEvent>(OnSheared);
+        SubscribeLocalEvent<ShearableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<ShearableComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     /// <summary>
@@ -211,9 +219,7 @@ public sealed class SharedShearableSystem : EntitySystem
 
     /// <summary>
     ///     Called by the ShearingDoAfter event.
-    ///     Checks for shearbility using the CheckShear method.
-    ///     This method is held server-side because the shared method is unable to spawn stacks.
-    /// </summary>
+     /// </summary>
     private void OnSheared(Entity<ShearableComponent> ent, ref ShearingDoAfterEvent args)
     {
 
@@ -282,7 +288,7 @@ public sealed class SharedShearableSystem : EntitySystem
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
         if (solutionToRemove == 0)
         {
-            _popup.PopupEntity(
+            _popup.PopupClient(
                 Loc.GetString(
                     "shearable-system-no-product",
                     ("target", Identity.Entity(ent.Owner, EntityManager)),
@@ -300,11 +306,12 @@ public sealed class SharedShearableSystem : EntitySystem
         // Spawn product.
         for (var i = 0; i < removedSolution.Volume.Value / productsPerSolution; i++)
         {
-            EntityManager.SpawnNextToOrDrop(ent.Comp.ShearedProductID, ent);
+
+            EntityManager.PredictedSpawnNextToOrDrop(ent.Comp.ShearedProductID, ent);
         }
 
         // Success message.
-        _popup.PopupEntity(
+        _popup.PopupClient(
             Loc.GetString(
                 "shearable-system-success",
                 ("target", Identity.Entity(ent.Owner, EntityManager)),
@@ -352,6 +359,12 @@ public sealed class SharedShearableSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    /// <summary>
+    ///     This function adds status hints to the examine of a shearable entity.
+    ///     They indicate whether the entity can be sheared or not.
+    /// </summary>
+    /// <param name="ent">the entity containing a wooly component that will be checked.</param>
+    /// <param name="args">Arguments passed through by the ExaminedEvent.
     private void Examined(Entity<ShearableComponent> ent, ref ExaminedEvent args)
     {
         // Shearable description additions are optional, return if unset.
@@ -379,8 +392,6 @@ public sealed class SharedShearableSystem : EntitySystem
                     )
                 );
                 return;
-            case ShearableComponent.CheckShearReturns.WrongTool:
-                return;
             case ShearableComponent.CheckShearReturns.SolutionError:
                 return;
             case ShearableComponent.CheckShearReturns.StackError:
@@ -402,4 +413,81 @@ public sealed class SharedShearableSystem : EntitySystem
                 return;
         }
     }
+
+    /// <summary>
+    ///     Used for managing the shearing layer as the shearable solution levels change.
+    ///     e.g. in Sheep, it will remove the wooly layer when the remaining reagent in the wool solution drops to 0.
+    ///     the layer is re-added when the reagent is above 0.
+    ///     Check the sheep's Sprite and GenericVisualizer components for an example of how to add a shearable layer to your animal.
+    /// </summary>
+    /// <param name="ent">the entity containing a wooly component that will be checked.</param>
+    /// <param name="args">Arguments passed through by the ExaminedEvent.
+    private void OnSolutionChange(Entity<ShearableComponent> ent, ref SolutionContainerChangedEvent args)
+    {
+        // Only interested in wool solution, ignore the rest.
+        if (args.SolutionId != ent.Comp.TargetSolutionName)
+            return;
+
+        UpdateShearingLayer(ent, args.Solution);
+    }
+
+    /// <summary>
+    ///     This function checks the entity's wool solution and either disables or enables the wool layer (if one exists).
+    /// </summary>
+    /// <param name="ent">the entity containing a wooly component that will be checked.</param>
+    /// <param name="sol">a resolved solution object the presence of which will be checked.
+    private void UpdateShearingLayer(Entity<ShearableComponent> ent, Solution? sol = null)
+    {
+        // If the sol parameter hasn't been provided, we'll try to grab the solution from inside the animal instead.
+        Solution? solution;
+        if (sol is null)
+        {
+            if (!_solutionContainer.ResolveSolution(
+                ent.Owner,
+                ent.Comp.TargetSolutionName,
+                ref ent.Comp.Solution,
+                out solution
+            ))
+                // Somehow, this entity has no shearing solution.
+                return;
+
+        }
+        else
+        {
+            solution = sol;
+        }
+
+        // appearance is used to disable and enable the wool layer.
+        if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
+            return;
+        // mState is used to check if the animal is dead/critical.
+        TryComp<MobStateComponent>(ent.Owner, out var mobState);
+
+        // If we couldn't resolve the mobState for some reason then just assume it's alive.
+        mobState ??= new MobStateComponent();
+
+        // If there's no solution at all, or the entity is dead or critical, remove the wool layer.
+        // Otherwise, enable it.
+        if (solution.Volume.Value <= 0)
+        {
+            // Remove wool layer
+            _appearance.SetData(ent.Owner, ToggleableVisuals.Enabled, false, appearance);
+
+        }
+        else
+        {
+            // Add wool layer
+            _appearance.SetData(ent.Owner, ToggleableVisuals.Enabled, true, appearance);
+        }
+    }
+
+    /// <summary>
+    ///     This is used for checking if the shearable animal is dead or critical.
+    ///     If it is, then the shearing layer is removed.
+    /// </summary>
+    private void OnMobStateChanged(Entity<ShearableComponent> ent, ref MobStateChangedEvent args)
+    {
+        UpdateShearingLayer(ent);
+    }
+
 }

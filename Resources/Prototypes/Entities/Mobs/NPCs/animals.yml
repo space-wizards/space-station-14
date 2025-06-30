@@ -1108,12 +1108,11 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
       visible: true
       sprite: Mobs/Animals/sheep.rsi
+    # These toggleable layers relate to the shearable component.
     - state: sheep_wool
-      map: [ "enum.ToggleableVisuals.Layer" ]
+      map: [ "enum.ToggleableVisuals.Layer", "enum.DamageStateVisualLayers.BaseUnshaded" ]
       visible: true
       sprite: Mobs/Animals/sheep.rsi
-  - type: ToggleableVisuals
-    spriteLayer: sheep_bare
   - type: GenericVisualizer
     visuals:
       enum.ToggleableVisuals.Enabled:
@@ -1149,17 +1148,20 @@
     states:
       Alive:
         Base: sheep_bare
+        BaseUnshaded: sheep_wool
       Critical:
         Base: sheep_dead
+        BaseUnshaded: sheep_wool_dead
       Dead:
         Base: sheep_dead
+        BaseUnshaded: sheep_wool_dead
   - type: SolutionContainerManager
     solutions:
       udder:
         maxVol: 250
         reagents:
         - ReagentId: MilkSheep
-          Quantity: 30
+          Quantity: 25
       wool:
         maxVol: 250
         reagents:
