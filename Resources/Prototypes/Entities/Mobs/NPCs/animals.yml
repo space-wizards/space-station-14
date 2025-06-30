@@ -1119,7 +1119,7 @@
         wooly:
           True: {visible: true}
           False: {visible: false}
-      enum.ShearableVisuals.States:
+      enum.MobStateVisuals.State:
         wooly:
           Alive: {state: sheep_wool}
           Dead: {state: sheep_wool_dead}

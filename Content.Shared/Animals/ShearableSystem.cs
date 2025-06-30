@@ -468,7 +468,7 @@ public sealed class SharedShearableSystem : EntitySystem
         // Remove wool layer
         _appearance.SetData(
             ent.Owner,
-            ShearableComponent.ShearableVisuals.States,
+            MobStateVisuals.State,
             mobState.NewMobState,
             appearance
         );
