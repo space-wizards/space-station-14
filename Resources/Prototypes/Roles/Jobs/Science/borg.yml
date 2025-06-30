@@ -12,6 +12,7 @@
   canBeAntag: false
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
+  canSpawnInArrivals: false
   jobEntity: StationAiBrain
   jobPreviewEntity: PlayerStationAiPreview
   applyTraits: false
