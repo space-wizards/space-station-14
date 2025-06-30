@@ -3,6 +3,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Animals;
 
@@ -52,6 +53,6 @@ public sealed partial class WoolyComponent : Component
     /// <summary>
     ///     When to next try growing wool.
     /// </summary>
-    [DataField, AutoPausedField, Access(typeof(WoolySystem))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, Access(typeof(WoolySystem))]
     public TimeSpan NextGrowth = TimeSpan.Zero;
 }

@@ -372,6 +372,65 @@
     - type: SalvageMobRestrictions
 
 - type: entity
+  parent: [SimpleSpaceMobBase, FlyingMobBase, MobSheepBase]
+  id: MobSheepSpace
+  name: space sheep
+  description: A sheep... in space!.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+      - state: space_sheep_bare
+        map: ["enum.DamageStateVisualLayers.Base"]
+        visible: true
+        sprite: Mobs/Animals/sheep.rsi
+      - state: space_sheep_wool_glowmask
+        map: ["enum.ToggleableVisuals.Layer"]
+        visible: true
+        sprite: Mobs/Animals/sheep.rsi
+  - type: ToggleableVisuals
+    spriteLayer: space_sheep_bare
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.35
+        density: 150
+        mask:
+          - FlyingMobMask
+        layer:
+          - FlyingMobLayer
+    offspring:
+      - id: MobSheep
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: space_sheep_harvested
+      Critical:
+        Base: space_sheep_dead
+      Dead:
+        Base: space_sheep_dead
+  - type: Shearable
+    targetSolutionName: wool
+    shearedProductID: MaterialCotton1 # Cotton is spawned because there is no wool item.
+    productsPerSolution: 0.2 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton. 1 ÷ 5 = 0.2
+    HungerUsage: 3f # You don't get much so reduce the hunger cost a bit.
+    toolQuality: Cutting # Wirecutters and barber's scissors.
+    shearableMarkupText: space-sheep-shearable-examine-markup
+    unShearableMarkupText: space-sheep-not-shearable-examine-markup
+  - type: ActiveJetpack # Pretty particles
+    effectCooldown: 4
+    maxDistance: 0.3
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.6
+    baseSprintSpeed: 2.0
+  - type: PointLight # Glows a little bit to see better in deep space.
+    radius: 2.0
+    energy: 1.0
+    color: "#4795ff" # Light blue colour.
+
+
+- type: entity
   parent: SimpleSpaceMobBase
   id: MobSnail
   name: snail
