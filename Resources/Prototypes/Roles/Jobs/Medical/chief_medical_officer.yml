@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Best job.
 
 - type: job
@@ -27,7 +28,9 @@
   - ChiefMedicalOfficer
   - Brig
   - Cryogenics
+  # start of modifications
   - External
+  # end of modifications
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
