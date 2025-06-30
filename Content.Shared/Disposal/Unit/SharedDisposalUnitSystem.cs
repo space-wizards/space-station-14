@@ -215,7 +215,18 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
             return;
         }
 
-        if (!CanInsert(uid, component, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
+        if (!CanInsert(uid, component, args.Used))
+        {
+            return;
+        }
+
+        if (!CheckImportantItemCanInsert(args.Used))
+        {
+            ShowImportantInsertFailurePopup(uid, args.Target, args.Used);
+            return;
+        }
+
+        if (!_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
         {
             return;
         }
@@ -434,6 +445,30 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     {
         component.DisablePressure = true;
         args.Handled = true;
+    }
+
+    protected virtual bool CheckImportantItemCanInsert(EntityUid item)
+    {
+        if (!TryComp(item, out DisposalImportantItemComponent? important))
+            return true;
+
+        TimeSpan LastAttempt = important.LastAttempt;
+        TimeSpan CurTime = GameTiming.CurTime;
+        important.LastAttempt = CurTime;
+        TimeSpan SinceLast = CurTime - LastAttempt;
+
+        if (SinceLast < important.AntiSpamWindow)
+            return false;
+
+        if (SinceLast > important.ResetTime)
+            return false;
+
+        return true;
+    }
+
+    protected virtual void ShowImportantInsertFailurePopup(EntityUid user, EntityUid? chute, EntityUid item)
+    {
+
     }
 
     public virtual bool CanInsert(EntityUid uid, DisposalUnitComponent component, EntityUid entity)

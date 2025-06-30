@@ -21,6 +21,8 @@
   components:
   - type: Contraband
     severity: Syndicate
+  - type: DisposalImportantItem
+    itsA: syndicate contraband
 
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity

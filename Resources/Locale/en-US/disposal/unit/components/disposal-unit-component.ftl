@@ -26,3 +26,6 @@ disposal-unit-state-Pressurizing = Pressurizing
 
 # putting people in
 disposal-unit-being-inserted = {CAPITALIZE($user)} is trying to force you into a disposal chute!
+
+# putting important items in
+disposal-unit-important-item = Are you sure you want to trash your {$item}?

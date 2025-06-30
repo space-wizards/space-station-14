@@ -1,5 +1,7 @@
+using Content.Client.Popups;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Unit;
+using Content.Shared.Popups;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -14,6 +16,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     private const string AnimationKey = "disposal_unit_animation";
 
@@ -58,6 +61,17 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             return;
 
         UpdateState(ent, args.Sprite, args.Component);
+    }
+
+    protected override void ShowImportantInsertFailurePopup(EntityUid user, EntityUid? chute, EntityUid item)
+    {
+        if (!TryComp(item, out DisposalImportantItemComponent? important))
+            return; // pls what are you doing here
+
+        string ItemName = important.ItsA ?? CompOrNull<MetaDataComponent>(item)?.EntityName ?? "thingy";
+        _popupSystem.PopupCursor(Loc.GetString("disposal-unit-important-item", ("item", ItemName)),
+            // important.ShowOnChute ? (chute ?? user) : user,
+            PopupType.MediumCaution);
     }
 
     /// <summary>
