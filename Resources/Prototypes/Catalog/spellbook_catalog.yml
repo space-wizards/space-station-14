@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Offensive
 - type: listing
   id: SpellbookFireball
@@ -26,6 +27,7 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+# start of modifications
 # - type: listing
 #   id: SpellbookSmite
 #   name: spellbook-smite-name
@@ -39,6 +41,7 @@
 #   - !type:ListingLimitedStockCondition
 #     stock: 1
 
+# Ronstation - Smite fucks you up real bad, but doesn't remove you from the round.
 - type: listing
   id: SpellbookCellularSmite
   name: spellbook-cellular-smite-name
@@ -51,6 +54,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+# end of modifications
 
 - type: listing
   id: SpellbookCluwne

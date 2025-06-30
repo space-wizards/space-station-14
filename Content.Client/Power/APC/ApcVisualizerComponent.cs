@@ -1,3 +1,5 @@
+// The following commits are licensed under MIT and may be used for MIT projects:
+// - #616d78c
 using Content.Shared.APC;
 
 namespace Content.Client.Power.APC;
@@ -82,12 +84,14 @@ public sealed partial class ApcVisualsComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public string[] ScreenSuffixes = new string[(byte)ApcChargeState.NumStates]{"lack", "charging", "full", "remote"};
 
+    // start of modifications
     /// <summary>
     /// The colors of the light emitted by the APC given a particular display state.
     /// </summary>
     [DataField("screenColors")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public Color[] ScreenColors = new Color[(byte)ApcChargeState.NumStates]{Color.FromHex("#d1332e"), Color.FromHex("#2e8ad1"), Color.FromHex("#3db83b"), Color.FromHex("#ffac1c")};
+    public Color[] ScreenColors = new Color[(byte)ApcChargeState.NumStates]{Color.FromHex("#d1332e"), Color.FromHex("#2e8ad1"), Color.FromHex("#3db83b"), Color.FromHex("#ffac1c")}; // Ronstation - MIT-licensed change.
+    // end of modifications
 
     /// <summary>
     /// The sprite state of the unlit overlay used for the APC screen when the APC has been emagged.

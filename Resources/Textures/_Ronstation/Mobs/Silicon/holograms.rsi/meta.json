@@ -8,31 +8,28 @@
     },
     "states": [
         {
-            "name": "ai_female"
+            "name": "ai_clown"
         },
         {
-            "name": "ai_male"
+            "name": "ai_weh"
         },
         {
-            "name": "ai_face",
-            "delays": [
-                [
-                    2.3,
-                    0.2
-                ]
-            ]
+            "name": "ai_mothroach"
         },
         {
-            "name": "ai_cat",
-            "delays": [
-                [
-                    0.75,
-                    0.75
-                ]
-            ]
+            "name": "ai_lizard"
         },
         {
-            "name": "ai_dog"
+            "name": "ai_arach"
+        },
+        {
+            "name": "ai_vox"
+        },
+        {
+            "name": "ai_moth"
+        },
+        {
+            "name": "ai_dionanymph"
         }
     ]
 }

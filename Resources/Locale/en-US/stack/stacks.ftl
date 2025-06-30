@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 stack-steel = steel
 stack-bananium = bananium
 stack-glass = glass
@@ -117,7 +118,9 @@ stack-inflatable-door = inflatable door
 stack-ointment = ointment
 stack-aloe-cream = aloe cream
 stack-gauze = gauze
+# start of modifications
 stack-tourniquet = tourniquet
+# end of modifications
 stack-brutepack = brutepack
 stack-bloodpack = bloodpack
 stack-medicated-suture = medicated-suture
