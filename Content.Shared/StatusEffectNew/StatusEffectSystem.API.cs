@@ -263,6 +263,36 @@ public abstract partial class SharedStatusEffectsSystem
     }
 
     /// <summary>
+    /// Attempts to get the maximum time left for a given Status Effect Component, returns false if no such
+    /// component exists.
+    /// </summary>
+    /// <param name="uid">The target entity on which the effect is applied.</param>
+    /// <param name="time">Returns the EntityUid of the status effect with the most time left, and the end effect time
+    /// of that status effect.</param>
+    /// <returns> True if a status effect entity with the given component exists</returns>
+    public bool TryGetMaxTime<T>(EntityUid uid, out (EntityUid EffectEnt, TimeSpan? EndEffectTime) time) where T : IComponent
+    {
+        time = default;
+        if (!TryEffectsWithComp<T>(uid, out var status))
+            return false;
+
+        time.Item2 = TimeSpan.Zero;
+
+        foreach (var effect in status)
+        {
+            if (effect.Comp2.EndEffectTime == null)
+            {
+                time = (effect.Owner, null);
+                return true;
+            }
+
+            if (effect.Comp2.EndEffectTime > time.Item2)
+                time = (effect.Owner, effect.Comp2.EndEffectTime);
+        }
+        return true;
+    }
+
+    /// <summary>
     /// Attempts to edit the remaining time for a status effect on an entity.
     /// </summary>
     /// <param name="uid">The target entity on which the effect is applied.</param>
