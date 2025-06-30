@@ -617,7 +617,7 @@
           - ConstructionMaterial
     - hand:
         emptyRepresentative: DoorElectronics
-        emptyLabel: Circuitboards
+        emptyLabel: borg-slot-circuitboards-empty
         whitelist:
           components:
           - Circuitboard
@@ -691,7 +691,7 @@
     - item: Plunger
     - item: SoapNT
       hand:
-        emptyLabel: Soap
+        emptyLabel: borg-slot-soap-empty
         emptyRepresentative: SoapNT
         whitelist:
           tags:
@@ -734,9 +734,9 @@
     - item: HoloprojectorBorg
     - item: BorgDropper
     - item: Beaker
-      emptyLabel: Beakers
-      emptyRepresentative: Beaker
       whitelist:
+        emptyLabel: borg-slot-beakers-empty
+        emptyRepresentative: Beaker
         tags:
         - GlassBeaker
   - type: BorgModuleIcon
@@ -1027,21 +1027,21 @@
     hands:
     - item: SynthesizerInstrument
       hand:
-        emptyLabel: Instruments
+        emptyLabel: borg-slot-instruments-empty
         emptyRepresentative: SynthesizerInstrument
         whitelist:
           components:
           - Instrument
     - item: ElectricGuitarInstrument
       hand:
-        emptyLabel: Instruments
+        emptyLabel: borg-slot-instruments-empty
         emptyRepresentative: ElectricGuitarInstrument
         whitelist:
           components:
           - Instrument
     - item: SaxophoneInstrument
       hand:
-        emptyLabel: Instruments
+        emptyLabel: borg-slot-instruments-empty
         emptyRepresentative: SaxophoneInstrument
         whitelist:
           components:
