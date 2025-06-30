@@ -1,66 +1,97 @@
 ﻿<Document>
   # Corporate Law
-  On Space Station 14, stations operate under abbreviated Corporate Law. All crew, assistants, and visitors aboard the station are expected to follow these laws.
+  On Space Station 14, stations operate under abbreviated Corporate Law. All crew, passengers, and visitors aboard the station are expected to follow these laws.
 
-  Foreign invaders, such as nuclear operatives, ninjas, and pirates, are not protected under Corporate Law. Traitors are not foreign invaders so are usually protected by Corporate Law.
-
-  Corporate Law is not the server rules, but some rules reference Corporate Law and require it to be followed by certain people or to some degree.
+  Foreign invaders from off-station are not protected under Corporate Law. Domestic threats, anyone rightfully hired by Central Command and/or NanoTrasen, are not foreign invaders so are usually protected by Corporate Law.
 
   ## Treatment Of Prisoners
   Prisoners still have certain rights that must be upheld by law enforcement:
   - Prisoners must be granted adequate medical care.
   - Prisoners must be allowed access to basic communications equipment (Radios) so long as they are not abused.
-  - Prisoners must be granted clothing, food, water, shelter and safety. If the brig is no longer safe, confinement must be established in another location.
+  - Prisoners must be granted clothing, food, water, shelter and safety. If the genpop brig is no longer safe, confinement must be established in another location.
   - Prisoners must be given access to legal counsel during an interrogation if requested and available.
   - Prisoners must be given their shift mandated PDA after confinement has finished, unless there is solid proof of PDA tampering. In case of tampering, the PDA is to be secured and replaced with a new unit.
-  - Prisoners must be granted freedom of movement, and should not be restrained with handcuffs or other devices after incarceration unless there is an undue risk to life and limb. Similarly, any prisoners held for permanent confinement should be held in the communal brig, and should not be confined to a solitary cell unless they pose a risk to life and limb.
-
+  - Prisoners must be granted freedom of movement and should not be restrained with handcuffs or other devices after incarceration unless there is an undue risk to life and limb. Similarly, any prisoners held for permanent confinement should be held in the communal brig, and should not be confined to a solitary cell unless they pose a risk to life and limb. 
+  - Misuse of equipment against prisoners, such as flashes, teargas, flashbangs, etc is prohibited. Appropriate force should only be applied as strictly necessary. 
+  - Breaches of 'Treatment of Prisoners' is grounds for dismissal or demotion.
+  
   ## Search and Seizure
   A personnel search is a seizure of the objects in a person's backpack, hands, coat, belt, and pockets. If any contraband is found during a search, the officer may choose to further the search into a detainment or simply confiscate the restricted items. After the search is conducted, all legal items are to be returned to the person. A crewmate may legally decline any search conducted without probable cause or a warrant while the alert level is green. It should be noted that if the alert level is blue or above, all personnel searches are legal.
 
-  A departmental search is the sweep of an entire area or department for contraband. It is recommended that the officers be extremely thorough, checking all lockers, crates, and doors. These can only be done with permission or, ideally, a warrant signed by the department head or highest-ranking command staff, which is the captain in most cases.
+  Valid causes for a personnel search include;
 
+  - Verbal or written threats to commit a crime.
+  - Reports of possession of illegal items.
+  - Being witnessed committing any crime.
+  - Evasion of security.
+  - Trespassing.
+  - Association with know criminals.
+  - Door logs indicating suspicious or unauthorized access.
+  - DNA, print, or fiber matches linking an individual to a crime.
+
+  Searches may not be conducted on simple rumors or hearsay, unless they are corroborated by multiple sources or they are coming from a credible source such as Command or other Mindshielded personnel. Reports of possession of major contra should always be taken seriously.
+
+  A departmental search is the sweep of an entire area or department for contraband. It is recommended that the officers be extremely thorough, checking all lockers, crates, and doors. These can only be done with permission from the department head, a warrant signed by the highest-ranking command member, or in a state of emergency.
+
+  Valid causes for department search include;
+
+  - Mentions of rebellion or illegal activity.
+  - Confirmed reports of contraband.
+  - Security breaches, such as hacked open doors or other signs of forced entry.
+  - Sabotage suspicion, tampering with equipment or infrastructure.
+  - Criminal activity.
+  - Inconsistencies in the department, such as unauthorized people or unexplained use of resources.
+  - Threats made against the department.
+
+  Emergencies scenarios may waiver the need for a warrant, such as; Active threats within the department, ongoing sabotage, escalating violence, and any mention of a rebellion or revolution.
+  
   ## Implantation
-  Any prisoner in custody can be subjected to implantation or implant extraction procedures, so long as it's within reason. The process of adding or extracting an implant should not prolong the detainees sentence, meaning you can not hold them longer to perform the procedure, unless stated otherwise. A former inmate can be requested to undergo implantation/extraction at a later point in time; if they fit the circumstances during their confinement, they must comply. The following have been listed out with special circumstances, anything not in this list can still be applied, given proper legal context. A prisoner can still receive implantation/extraction procedures without meeting the circumstances if they give their clear permission.
+  Any prisoner in custody can be subjected to implantation or implant removal procedures, so long as it's Metashielded / within reason. The process of adding an implant should not prolong the detainees sentence, meaning you can not hold them longer to administer the implant, unless stated otherwise. A former inmate can be requested to undergo implantation at a later point in time if they fit the circumstances during their confinement, they must comply. The following have been listed out with special circumstances, anything not in this list can still be applied, given proper legal context. A prisoner can still receive implantation procedures without meeting the circumstances if they give their clear permission.
 
+  [color=#a4885c]Illegal Implants:[/color] Applied without proper authorization, these implants may justify extensions if removal is required.
+  
   [color=#a4885c]Tracking Implants:[/color] Trackers can be applied to any suspect that has been convicted of a violent crime (the red linked crimes).
+  ** If voluntary or deemed necessary Command Staff should be given Tracking Implants.
+  ** If voluntary and approved by Warden or Head of Security, normal members of the crew may also be granted Tracking Implants.
 
-  [color=#a4885c]Mind Shields:[/color] Shields can be administered to any inmate who has been clearly mind controlled, lost control of themselves, or a suspect charged with unlawful control. Unlike standard implantation you may hold a prisoner until you finish issuing Mind Shields, so long as it's done in a timely fashion. If a suspect refuses to cooperate or the implant fails to function they can be charged with Refusal of Mental Shielding.
+  [color=#a4885c]Mind Shields:[/color] Shields can be administered to any inmate who has been clearly mind controlled, lost control of themselves, or a suspect charged with unlawful control. Unlike standard implantation you may hold a prisoner until you finish issuing Mind Shields, so long as it's done in a timely fashion.
+  
+  A suspect can be forced to receive implant removal if there is strong, reasonable proof that they have been implanted, such as an officer seeing them use one or identifying information is found on a discarded injector. Unlike the implantation procedure, a prisoner can have their sentence entirely delayed or extended until they comply with the procedure with authorization from the Captain, Head of Security, Magistrate, or Warden. Akin to implanting, if an inmate gives their clear permission, implant removal can proceed without proof.
 
-  A suspect can be forced to receive implant removal if there is strong, reasonable proof that they have been implanted, such as an officer seeing them use one or Identifying information is found on a discarded injector. Unlike the implantation procedure, a prisoner can have their sentence entirely delayed or extended until they comply with the procedure, as long as security is actively making attempts to perform it. Akin to implanting, if an inmate gives their clear permission, implant removal can proceed without proof.
-
+  During a confirmed Revolution, the Head of Security or Warden are permitted to authorize execution of an individual if a Mind Shielding fails or is refused. No other officers are granted this authorization. Execution of those charged with Refusal of Mental Shielding outside of a confirmed Revolution must be authorized by the Captain or Central Command on a case by case basis every time it happens.
+  
   ## Sentencing
   Sentencing of under 10 minutes is the responsibility of the arresting officer. When an individual has been detained, they must be promptly marked as such in the Criminal Records Computer. Likewise, when they have been released they must be promptly marked as such before being escorted out of Security. If an individual has been detained but had no preexisting warrant, their criminal record should be updated to reflect them- marking them as wanted and writing in why, before marking them detained.
 
-  Informing the Warden of any arrests and sentences is not required under 10 minutes, but is suggested when able. The Warden or Head of Security must be informed of any sentences that would exceed 10 minutes before the sentence is given. Sentences of over 15 minutes must only be given in cases where Corporate Law would permit permanent confinement.
+  The Prisoner's charges must be read to them in front of the Warden or Head of Security. Sentences of over 15 minutes must only be given in cases where Corporate Law would permit permanent confinement, and must be done with the Warden or Head of Security's direct approval.
 
   It is the responsibility of the Captain, Head of Security, and Warden to ensure that security officers place appropriate sentences that follow Corporate Law. If they are aware of an inappropriate sentence, such as excessively long sentences, and if there is not an urgent threat or danger that they must prioritize, then they must work to correct that sentence.
 
   Use common sense and humanity when issuing punishments. You should not always seek out the highest punishment you can, you don't have to always give the maximum time or always look to demote someone. Prisoners cooperating and on good behavior should have their sentences reduced. Always take in account the severity and only charge for what is needed for someone to learn their lesson.
-
+  
   [color=#a4885c]Stackable Crimes:[/color] Crimes are to be considered 'stackable' in the sense that if you charge someone with two or more different crimes, you may combine the times you would give them for each crime.
-
+  
   - Example: If a suspect has committed Major Possession and Syndicate Possession, the maximum sentence would be 10 minutes due to them being linked crimes.
   - Example 2: If a suspect has committed Secure Trespass and Manslaughter, the maximum sentence would be 20 minutes due to them being unlinked crimes.
   - Context is vital. If you are unsure, seek assistance from the Warden or Head of Security.
 
   [color=#a4885c]Repeater Offenders:[/color] Repeated crimes are when someone is released for a crime and then goes to commit the same crime again within the same shift. Repeated crimes can be charged with tacked-on time. The first repeat adds 3 minutes, the second 6 minutes, and the third may permit permanent confinement.
-
-  [color=#a4885c]Accessory, Attempting, And Intention:[/color] If someone intentionally, knowingly and substantially assists someone in enacting a crime they can be charged with the relevant crimes, such as an engineer giving someone tools, who says they are going to break into an area. Same goes for a clear and solid attempt at a crime, or a person who shows clear intent to act out a crime, such as a syndicate nuclear operative arming a nuke but getting arrested before it goes off, they can still be charged with terrorism. Does not apply to crimes that have an attempted listing already, such as attempted murder.
-
+  
+  [color=#a4885c]Accessory, Attempting, And Intention:[/color] If someone intentionally, knowingly and substantially assists someone in enacting a crime they can be charged with the relevant crimes, such as an engineer giving someone tools, who says they are going to break into an area. Same goes for a clear and solid attempt at a crime, or a person who shows clear intent to act out a crime, such as a terrorist arming a nuke but getting arrested before it goes off, they can still be charged with terrorism. Does not apply to crimes that have an attempted listing already, such as attempted murder.
+  
   ## Normal Punishments
   - [color=#a4885c]Warning:[/color] For minor crimes it is best to fix the issue then warn the person not to attempt the crime again. If they still proceed to do it at a later date, a brig time may be better.
   - [color=#a4885c]Confinement:[/color] The typical punishment of being confined in a cell for a temporary amount of time according to the crimes.
-  - [color=#a4885c]Demotion:[/color] Entails removing all departmental gear they have on their person and removing the involved department access off their ID. This requires the captain's or involved department head's approval. Demotions should only be issued if the person poses a threat to their own department or is in a position where they have/can abuse their job's gear to commit further crimes.
-
+  - [color=#a4885c]Demotion:[/color]  Entails removing all departmental gear they have on their person and removing the involved department access off their ID. This requires the captain's or involved department head's approval. Demotions should only be issued if the person poses a threat to their own department or is in a position where they have/can abuse their job's gear to commit further crimes.
+  
   ## Major Punishments
   - [color=#a4885c]Permanent Confinement:[/color] Being held in the permanent brig for the remaining duration of the shift. A person is eligible for permanent confinement if their timed sentence would exceed 15 minutes. Any persons subject to this punishment are required to be safely transported in cuffs to CentComm at the end of the shift. A permanent prisoner can not be deprived of anything covered by the section "Treatment Of Prisoners".
   - [color=#a4885c]Execution:[/color] A humane way of dealing with extremely unruly crewmates. Within reason, a prisoner who has been given the death sentence may pick how they wish to be killed, common methods are firing line, lethal injection, exile, and high voltage electrocution. An alternate method of "execution" is the process of placing the prisoner's mind into a borg, this is allowed so long as it is lawful. Execution can only be issued with the captain's or acting captain's approval; if the HoS is acting captain or there is no acting captain, all heads of staff are to hold a vote on the matter.
-
+  
   ## Legal Representation and Trials
 
   Prisoners are permitted to seek legal representation to challenge charges. Petty sentences, that is sentences totalling less than 10 minutes of prison time, are below the interest of the court and should not be brought to trial unless directly requested by the Magistrate. The duties and privileges of an Internal Affairs Agent are as follows:
-
+  
    - Advise Security in the sentencing of prisoners.
    - Act as legal consultants to the accused if requested, the situation is deemed worth while, and they desire to or are ordered to by the Magistrate.
    - Handle investigations into misconduct on the part of any department at their own discretion or the discretion of the Magistrate or Captain.
@@ -68,51 +99,62 @@
   While Internal Affairs Agents are vested with these responsibilities, they have zero authority over the Brig, Security personnel, prisoners, or sentencing. They can be barred from the Brig by the Magistrate, HoS, Warden, or Captain if they are disruptive. And they may be demoted if they continue to be disruptive. While Internal Affairs Agents are responsible for investigating other departments, they do not have authority over them.
 
   The Magistrate acts as the highest court, and is the appointed Judge of any case that goes to trial. Should the Magistrate be unavailable, the Head of Security, Head of Personnel, or Captain may act in their stead. In cases where one of these mediators or their subordinates is directly involved, they should not be acting as Judge over the case. For example, if an Internal Affairs Agent is on trial, the Magistrate and Head of Security should not act as Judge. If a Security Officer is on trial, the Head of Security should not act as Judge. And if a member of Service is on trial, the Head of Personnel should not act as Judge.
-
+  
   ## Jurisdiction
 
   Every part of the station in totality is the property of NanoTrasen and falls within the jurisdiction of CentComm to enforce Corporate Law. Central Command and the Space Port that the Arrivals Shuttle docks to, including the Arrivals Shuttle and Evac Shuttles, are also within CentComm's jurisdiction. CentComm also has authority through contractual agreements to enforce Corporate Law on all Automated Trade Shuttles.
 
   Outside of specific circumstances, CentComm's jurisdiction does not extend to private property, defined as any shuttle not directly owned by CentComm or NanoTrasen. Visitor's shuttles are explicitly private property, and an unwarranted search of private property is considered Trespassing. This does not make these shuttles lawless, or outside of the law however. Shuttles within the same Grid as a Station may be subjected to Corporate Law if any of the following criteria are met:
-
+  
   - A criminal has boarded a shuttle, with or without permission, while being actively pursued
-  - These is a reasonable belief that the occupants of the shuttle harbor hostile or criminal intent towards the Station or it's Crew
-  - A crime occurring on the shuttle has been witness from outside of the shuttle
+  - There is a reasonable belief that the occupants of the shuttle harbor hostile or criminal intent towards the Station or it's Crew
+  - A crime occurring on the shuttle has been witnessed from outside of the shuttle
   - A crime has been witnessed by someone onboard the shuttle who was given permission to enter
   - A warrant has been issued by the Warden, Head of Security, Captain, or CentComm
 
   Any individual onboard a Station or Shuttle that is under the jurisdiction of Corporate Law is also under its jurisdiction, whether they are Crew, Visitors, or otherwise.
 
+  # Penal Code
   ## Enforcement of the Law
 
   The enforcement of Corporate Law is the duty of those vested with such responsibility and no others. Unauthorized civilian enforcement of the law is classified as vigilantism and is strictly illegal. Only the Captain or Central Command may authorize civilian participation in the enforcement of Corporate Law, under dire circumstances. Actions to preserve one’s own life and property, or the life of another, are not classified as vigilantism so long as all other laws are followed. Acting to assist an on-scene officer may be counted as an exception and not vigilantism on a case by case basis, if the action was deemed necessary to prevent further harm to the officer or other civilians.
 
   Those vested with the responsibility to enforce Corporate Law are defined as follows:
   - [color=#a4885c]Security:[/color] Members of the Security Department are always valid to enforce Corporate Law, and should be deferred to by all other law enforcement within reason.
-  - [color=#a4885c]Blueshield:[/color] Members of Blue Shield are always valid to enforce Corporate Law, but is only allowed if it is to prevent further harm to command or central command personnel.
+  - [color=#a4885c]Blueshield:[/color] Members of Blue Shield are sometimes valid to enforce Corporate Law, but only if it is to prevent further harm to Command or Central Command personnel.
   - [color=#a4885c]Mercenaries:[/color] Hired Mercenaries under the direct employ of Central Command may, in extreme circumstances, be permitted by Central Command to enforce Corporate Law. They are however required to operate under the command of the Head of Security and not to circumvent Security.
   - [color=#a4885c]Emergency Response Teams:[/color] Members of an ERT are valid to enforce Corporate Law on deployment to Stations. They are however required to operate under the command of the Head of Security and not circumvent Security, unless directly ordered otherwise by Central Command.
 
+  # Civil Code
   ## Religious Freedom
 
-  Religious Freedom is the right to believe and practice your faith within reason, so long as this practice does not violate any other laws. Religious rites that are considered a minor crime may be given exemption warrants by the Captain or Head of Personnel. Crimes exceeding a minor crime can not be given exemption warrants. Willing sacrifice must be vetted and verified by Security, and legally signed by the sacrifice.
+  Religious Freedom is the right to believe and practice your faith within reason, so long as this practice does not violate any other laws. Religious rites that are considered a minor crime may be given exemption warrants by the Captain or Head of Personnel. These warrants only authorize these crimes within the designated gathering space of the religious group explicitly for religious ceremony, and can not exempt crimes committed outside this space. Crimes exceeding a minor crime can not be given exemption warrants.
 
+  Willing sacrifice must be vetted and verified by Security, and legally signed by the sacrifice. Security is to ensure that the individual is acting of their own free will and without coercion before approving the act.
+  
   ## Silicon Clause
 
-  Silicons such as Cyborgs, Personal AIs, and AIs are granted several protections and exceptions under Corporate Law.
-  - Silicons are by nature bound by their laws, and can not be Unlawfully Detained. Silicons are the property of their owners however, and theft of a Silicon is classified as Grand Theft.
+  Silicons such as Cyborgs, Personal AIs, and AIs are granted specific protections and exceptions under Corporate Law. Lower tier 'bots' exhibiting sentience and sapience may also qualify.
+
+  - Silicons are by nature bound by their laws, and ownership of one can not be considered Unlawfully Detained. Theft of a Silicon is classified as Grand Theft.
   - Violence against a Silicon is treated the same as violence against any other sapient creature, and the perpetrator may be charged with minor assault, major assault, manslaughter, or murder.
   - Any law broken by a Silicon while under orders is considered to be committed by whoever gave the orders and is not the Silicon’s responsibility. A Silicon that is not bound by standard laws to follow orders is legally responsible for their own actions and crimes.
-  - Silicon laws may only be altered to ensure the safety of the crew. A Silicon with non-standard laws is not inherently considered harmful. Unbound Silicons who break Corporate Law may have their laws altered as part of their sentence.
-
+  - Silicon laws may only be altered to ensure the safety of the crew. A Silicon with non-standard laws is allowed to keep these laws so long as they do not pose a threat to the crew. Unbound Silicons who break Corporate Law may have their laws altered as part of their sentence.
+  - Hostile Silicons of non-NanoTrasen origins are considered non-crew entities. They are afforded none of the protections under Corporate Law that other Silicons are and should be treated according to their hostility and the danger they pose.
+  
   ## Changelings
 
-  Confirmed Changelings are not legally protected by Corporate Law. An individual suspected of being a Changeling may, on Code Blue or higher, be detained and forced to undergo a blood test to determine their nature. Any Changeling found to have committed minor or major assault, manslaughter, or murder should be executed. Blood tests are required as legal proof that an individual is a Changeling, first hand testimony is not enough to authorize an execution. Failure to procure a valid blood test is Unlawful Execution regardless of who authorized it.
+  Confirmed Changelings are not legally protected by Corporate Law. An individual suspected of being a Changeling may, on Code Blue or higher, be detained and forced to undergo a blood test to determine their nature. Any confirmed Changeling is to be executed and incinerated immediately. Authorization for these executions is not required, so long as blood tests have been properly performed.
 
+  Blood tests are required as legal proof that an individual is a Changeling, first hand testimony is not enough to authorize an execution. Failure to procure a valid blood test is Unlawful Execution regardless of who authorized it.
+  
   ## Clowns
+  Clowns are permitted exemption from certain Minor crimes by the Carnival Treaties so long as the offenses are not repeated. These are; Trespass, Disturbance, Impersonation and Fraud. Per stipulations mandated by the Honkdignitaries, “You get one for free.” Back to back offenses are not protected, however repeat offenses committed over a longer period of time may be permitted depending on the policy of the station you are on.
 
-  Clowns are permitted exemption from certain Minor crimes by the Carnival Treaties so long as the offenses are not repeated. These are; Trespass, Disturbance, Impersonation and Fraud. Per stipulations mandated by the Honkdignitaries, “You get one for free.” Clowns are also recognized as the legal enforcers of the Vow of Silence; any Mime who breaches their Vow may be legally harassed by any Clown without the Clown facing repercussions, so long as no other laws are broken to do so.
- 
+  Clowns are also recognized as the legal enforcers of the Vow of Silence; any Mime who breaches their Vow may be legally harassed by any Clown without the Clown facing repercussions, so long as no other laws are broken to do so. Legal harassment includes non-violent pranks, excessive honking, or public shaming, but must not escalate into assault, vandalism, or theft. Security and Command personnel should not intervene unless the Clown goes beyond their granted exemptions. Other members of crew are not given these exemptions, and should be treated according to Corporate Law.
+
+  Addendum 2525 - In the event of a Cult Incursion or confirmed involvement with Giggles-at-Crimes, all Clowns on station are to undergo Tracking Implantation, and all Mimes Mind Shielding. Mind Shielded Mimes may be granted elevated security authorization to perform their duties in combating the threat of Cult of the Honkmother extremists, per the Carnival Treaties. This must be authorized by the Captain or Central Command, and Central Command must be notified.
+  
   ## Crime Listing
   - [textlink="Crime Listing" link="SpaceLawCrimeList"]
 </Document>
