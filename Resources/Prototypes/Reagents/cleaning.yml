@@ -48,6 +48,9 @@
   recognizable: true
   boilingPoint: 100.0
   meltingPoint: 60.0
+  slipData:
+    requiredSlipSpeed: 3.5
+  friction: 0.3 # Slightly less friction than water, but not as bad as space lube
   metabolisms:
     Food:
       effects:
@@ -68,6 +71,7 @@
   id: SpaceLube
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
+  evaporationSpeed: 0.1
   slipData:
     requiredSlipSpeed: 1
     superSlippery: true
@@ -103,11 +107,10 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
         time: 5
+        type: Add
         refresh: false
     Drink:
       effects:
@@ -118,6 +121,4 @@
         time: 5
         refresh: false
   footstepSound:
-    collection: FootstepSticky
-    params:
-      volume: 6
+    collection: FootstepSlime

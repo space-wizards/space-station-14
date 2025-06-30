@@ -28,7 +28,6 @@ namespace Content.Client.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem : SharedGunSystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
@@ -38,6 +37,7 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly SharedCameraRecoilSystem _recoil = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     public const string HitscanProto = "HitscanEffect";
@@ -129,9 +129,9 @@ public sealed partial class GunSystem : SharedGunSystem
             _xform.SetLocalRotationNoLerp(ent, xform.LocalRotation + delta, xform);
 
             sprite[EffectLayers.Unshaded].AutoAnimated = false;
-            sprite.LayerSetSprite(EffectLayers.Unshaded, rsi);
-            sprite.LayerSetState(EffectLayers.Unshaded, rsi.RsiState);
-            sprite.Scale = new Vector2(a.Distance, 1f);
+            _sprite.LayerSetSprite((ent, sprite), EffectLayers.Unshaded, rsi);
+            _sprite.LayerSetRsiState((ent, sprite), EffectLayers.Unshaded, rsi.RsiState);
+            _sprite.SetScale((ent, sprite), new Vector2(a.Distance, 1f));
             sprite[EffectLayers.Unshaded].Visible = true;
 
             var anim = new Animation()
@@ -178,7 +178,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down && !gun.BurstActivated)
         {
             if (gun.ShotCounter != 0)
-                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
+                RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
             return;
         }
 
@@ -190,7 +190,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (mousePos.MapId == MapId.Nullspace)
         {
             if (gun.ShotCounter != 0)
-                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
+                RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
 
             return;
         }
@@ -204,7 +204,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
-        EntityManager.RaisePredictiveEvent(new RequestShootEvent
+        RaisePredictiveEvent(new RequestShootEvent
         {
             Target = target,
             Coordinates = GetNetCoordinates(coordinates),
@@ -360,7 +360,7 @@ public sealed partial class GunSystem : SharedGunSystem
         _animPlayer.Play(ent, anim, "muzzle-flash");
         if (!TryComp(gunUid, out PointLightComponent? light))
         {
-            light = (PointLightComponent) _factory.GetComponent(typeof(PointLightComponent));
+            light = Factory.GetComponent<PointLightComponent>();
             light.NetSyncEnabled = false;
             AddComp(gunUid, light);
         }

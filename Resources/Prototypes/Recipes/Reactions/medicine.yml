@@ -589,10 +589,10 @@
   impact: Medium
   reactants:
     Cryoxadone:
-      amount: 1
-    Aloe:
       amount: 2
-    Sigynate:
+    Aloe:
+      amount: 1
+    Leporazine:
       amount: 2
   products:
       Aloxadone: 4
@@ -662,16 +662,3 @@
       amount: 1
   products:
     Haloperidol: 5
-
-- type: reaction
-  id: Traumoxadone
-  impact: Medium
-  reactants:
-    Cryoxadone:
-      amount: 1
-    SalicylicAcid:
-      amount: 1
-    Lipozine:
-      amount: 1
-  products:
-    Traumoxadone: 2

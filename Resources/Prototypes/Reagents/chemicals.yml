@@ -185,13 +185,3 @@
         key: Adrenaline
         component: IgnoreSlowOnDamage
         time: 120
-
-- type: reagent
-  id: SalicylicAcid
-  name: reagent-name-salicylic-acid
-  desc: reagent-desc-salicylic-acid
-  physicalDesc: reagent-physical-desc-powdery
-  flavor: bitter
-  color: "#FFFFFF"
-  boilingPoint: 55.5
-  meltingPoint: -50.0

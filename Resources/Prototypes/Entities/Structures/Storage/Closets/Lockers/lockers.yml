@@ -155,6 +155,21 @@
   - type: AccessReader
     access: [ [ "Engineering" ] ]
 
+# Evac Repair
+- type: entity
+  parent: LockerBase
+  id: LockerEvacRepair
+  name: emergency shuttle emergency locker
+  description: It's emergencies all the way down.
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: eng
+    stateDoorOpen: eng_open
+    stateDoorClosed: eng_evac_door
+  - type: AccessReader
+    access: [ [ "Engineering" ] ]
+
 # Freezer
 - type: entity
   id: LockerFreezerBase
@@ -383,11 +398,8 @@
 
 # Genpop Storage
 - type: entity
-  id: LockerPrisoner
-  parent: LockerBaseSecure
-  name: prisoner closet
-  description: It's a secure locker for an inmate's personal belongings during their time in prison.
-  suffix: 1
+  id: GenpopBase
+  abstract: true
   components:
   - type: GenpopLocker
   - type: EntityStorageVisuals
@@ -403,6 +415,19 @@
   - type: Lock
     locked: false
     useAccess: false
+  - type: EntityStorage
+    open: True
+    removedMasks: 20
+  - type: PlaceableSurface
+    isPlaceable: True
+
+- type: entity
+  parent: [ GenpopBase , LockerBaseSecure ]
+  id: LockerPrisoner
+  name: prisoner closet
+  description: It's a secure locker for an inmate's personal belongings during their time in prison.
+  suffix: 1
+  components:
   - type: Fixtures
     fixtures:
       fix1:
@@ -424,63 +449,58 @@
         hard: True
         restitution: 0
         friction: 0.4
-  - type: EntityStorage
-    open: True
-    removedMasks: 20
-  - type: PlaceableSurface
-    isPlaceable: True
 
 - type: entity
-  id: LockerPrisoner2
   parent: LockerPrisoner
+  id: LockerPrisoner2
   suffix: 2
   components:
   - type: EntityStorageVisuals
     stateDoorClosed: genpop_door_2
 
 - type: entity
-  id: LockerPrisoner3
   parent: LockerPrisoner
+  id: LockerPrisoner3
   suffix: 3
   components:
   - type: EntityStorageVisuals
     stateDoorClosed: genpop_door_3
 
 - type: entity
-  id: LockerPrisoner4
   parent: LockerPrisoner
+  id: LockerPrisoner4
   suffix: 4
   components:
   - type: EntityStorageVisuals
     stateDoorClosed: genpop_door_4
 
 - type: entity
-  id: LockerPrisoner5
   parent: LockerPrisoner
+  id: LockerPrisoner5
   suffix: 5
   components:
   - type: EntityStorageVisuals
     stateDoorClosed: genpop_door_5
 
 - type: entity
-  id: LockerPrisoner6
   parent: LockerPrisoner
+  id: LockerPrisoner6
   suffix: 6
   components:
   - type: EntityStorageVisuals
     stateDoorClosed: genpop_door_6
 
 - type: entity
-  id: LockerPrisoner7
   parent: LockerPrisoner
+  id: LockerPrisoner7
   suffix: 7
   components:
   - type: EntityStorageVisuals
     stateDoorClosed: genpop_door_7
 
 - type: entity
-  id: LockerPrisoner8
   parent: LockerPrisoner
+  id: LockerPrisoner8
   suffix: 8
   components:
   - type: EntityStorageVisuals

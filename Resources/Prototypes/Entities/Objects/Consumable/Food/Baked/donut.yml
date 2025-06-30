@@ -10,7 +10,6 @@
   - type: Tag
     tags:
     - Donut
-    - VoxFood
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donut.rsi
   - type: SolutionContainerManager
