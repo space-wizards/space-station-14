@@ -1,0 +1,80 @@
+- type: paintableGroup
+  id: Locker
+  cost: 2
+  defaultStyle: basic
+  styles:
+    atmospherics: LockerAtmospherics
+    basic: ClosetSteelBase
+    botanist: LockerBotanist
+    brigmedic: LockerBrigmedic
+    captain: LockerCaptain
+    ce: LockerChiefEngineer
+    chemical: LockerChemistry
+    clown: LockerClown
+    cmo: LockerChiefMedicalOfficer
+    doctor: LockerMedical
+    electrical: LockerElectricalSupplies
+    engineer: LockerEngineer
+    evac: LockerEvacRepair
+    hop: LockerHeadOfPersonnel
+    hos: LockerHeadOfSecurity
+    mime: LockerMime
+    medicine: LockerMedicine
+    paramedic: LockerParamedic
+    quartermaster: LockerQuarterMaster
+    rd: LockerResearchDirector
+    representative: LockerRepresentative
+    salvage: LockerSalvageSpecialist
+    scientist: LockerScientist
+    security: LockerSecurity
+    welding: LockerWeldingSupplies
+
+- type: paintableGroup
+  id: Closet
+  cost: 2
+  defaultStyle: basic
+  styles:
+    basic: ClosetSteelBase
+    biohazard: ClosetL3
+    biohazard-janitor: ClosetL3Janitor
+    biohazard-science: ClosetL3Science
+    biohazard-security: ClosetL3Security
+    biohazard-virology: ClosetL3Virology
+    bomb: ClosetBomb
+    bomb-janitor: ClosetJanitorBomb
+    chef: ClosetChef
+    fire: ClosetFire
+    janitor: ClosetJanitor
+    legal: ClosetLegal
+    nitrogen: ClosetEmergencyN2
+    oxygen: ClosetEmergency
+    radiation: ClosetRadiationSuit
+    tool: ClosetTool
+
+- type: paintableGroup
+  id: WallCloset
+  cost: 2
+  defaultStyle: basic
+  styles:
+    atmospherics: ClosetWallAtmospherics
+    basic: ClosetWall
+    black: ClosetWallBlack
+    blue: ClosetWallBlue
+    fire: ClosetWallFire
+    green: ClosetWallGreen
+    grey: ClosetWallGrey
+    mixed: ClosetWallMixed
+    nitrogen: ClosetWallEmergencyN2
+    orange: ClosetWallOrange
+    oxygen: ClosetWallEmergency
+    pink: ClosetWallPink
+    white: ClosetWallWhite
+    yellow: ClosetWallYellow
+
+- type: paintableGroup
+  id: WallLocker
+  cost: 2
+  defaultStyle: medical
+  styles:
+    evac: LockerWallEvacRepair
+    medical: LockerWallMedical
