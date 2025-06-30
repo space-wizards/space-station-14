@@ -426,21 +426,21 @@
     - item: CableApcStack10
       hand:
         emptyRepresentative: CableApcStack10
-        emptyLabel: Cables
+        emptyLabel: borg-slot-cables-empty
         whitelist:
           tags:
           - CableCoil
     - item: CableMVStack10
       hand:
         emptyRepresentative: CableMVStack10
-        emptyLabel: Cables
+        emptyLabel: borg-slot-cables-empty
         whitelist:
           tags:
           - CableCoil
     - item: CableHVStack10
       hand:
         emptyRepresentative: CableHVStack10
-        emptyLabel: Cables
+        emptyLabel: borg-slot-cables-empty
         whitelist:
           tags:
           - CableCoil
@@ -599,19 +599,19 @@
     hands:
     - hand:
         emptyRepresentative: SheetSteel1
-        emptyLabel: Construction materials
+        emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
           - ConstructionMaterial
     - hand:
         emptyRepresentative: SheetGlass1
-        emptyLabel: Construction materials
+        emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
           - ConstructionMaterial
     - hand:
         emptyRepresentative: SheetRGlass1
-        emptyLabel: Construction materials
+        emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
           - ConstructionMaterial
@@ -623,31 +623,31 @@
           - Circuitboard
     - hand:
         emptyRepresentative: MicroManipulatorStockPart
-        emptyLabel: Construction materials
+        emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
           - ConstructionMaterial
     - hand:
         emptyRepresentative: SpaceHeaterFlatpack
-        emptyLabel: Flatpacks
+        emptyLabel: borg-slot-flatpacks-empty
         whitelist:
           components:
           - Flatpack
     - hand:
         emptyRepresentative: FloorTileItemSteel
-        emptyLabel: Floor tiles
+        emptyLabel: borg-slot-tiles-empty
         whitelist:
           components:
           - FloorTile
     - hand:
         emptyRepresentative: FloorTileItemWhite
-        emptyLabel: Floor tiles
+        emptyLabel: borg-slot-tiles-empty
         whitelist:
           components:
           - FloorTile
     - hand:
         emptyRepresentative: FloorTileItemDark
-        emptyLabel: Floor tiles
+        emptyLabel: borg-slot-tiles-empty
         whitelist:
           components:
           - FloorTile
@@ -690,9 +690,9 @@
     - item: BorgTrashBag
     - item: Plunger
     - item: SoapNT
-      emptyLabel: Soap
-      emptyRepresentative: SoapNT
       hand:
+        emptyLabel: Soap
+        emptyRepresentative: SoapNT
         whitelist:
           tags:
           - Soap
@@ -773,28 +773,28 @@
     - item: HandheldHealthAnalyzerUnpowered
     - item: Gauze
       hand:
-        emptyLabel: Topicals
+        emptyLabel: borg-slot-topicals-empty
         emptyRepresentative: Gauze
         whitelist:
           components:
           - Healing
     - item: Brutepack
       hand:
-        emptyLabel: Topicals
+        emptyLabel: borg-slot-topicals-empty
         emptyRepresentative: Brutepack
         whitelist:
           components:
           - Healing
     - item: Ointment
       hand:
-        emptyLabel: Topicals
+        emptyLabel: borg-slot-topicals-empty
         emptyRepresentative: Ointment
         whitelist:
           components:
           - Healing
     - item: Bloodpack
       hand:
-        emptyLabel: Topicals
+        emptyLabel: borg-slot-topicals-empty
         emptyRepresentative: Bloodpack
         whitelist:
           components:
@@ -837,21 +837,21 @@
     - item: BorgDropper
     - item: BaseChemistryEmptyVial
       hand:
-        emptyLabel: Small containers
+        emptyLabel: borg-slot-small-containers-empty
         emptyRepresentative: BaseChemistryEmptyVial
         whitelist:
           components:
           - FitsInDispenser
     - item: BaseChemistryEmptyVial
       hand:
-        emptyLabel: Small containers
+        emptyLabel: borg-slot-small-containers-empty
         emptyRepresentative: BaseChemistryEmptyVial
         whitelist:
           components:
           - FitsInDispenser
     - item: BaseChemistryEmptyVial
       hand:
-        emptyLabel: Small containers
+        emptyLabel: borg-slot-small-containers-empty
         emptyRepresentative: BaseChemistryEmptyVial
         whitelist:
           components:
@@ -877,7 +877,7 @@
     - item: BorgDropper
     - item: Beaker
       hand:
-        emptyLabel: Chemical containers
+        emptyLabel: borg-slot-chemical-containers-empty
         emptyRepresentative: Beaker
         whitelist:
           components:
@@ -886,7 +886,7 @@
           - ChemDispensable
     - item: Beaker
       hand:
-        emptyLabel: Chemical containers
+        emptyLabel: borg-slot-chemical-containers-empty
         emptyRepresentative: Beaker
         whitelist:
           components:
@@ -895,7 +895,7 @@
           - ChemDispensable
     - item: Beaker
       hand:
-        emptyLabel: Chemical containers
+        emptyLabel: borg-slot-chemical-containers-empty
         emptyRepresentative: Beaker
         whitelist:
           components:
@@ -924,7 +924,7 @@
     - item: BorgDropper
     - item: BaseChemistryEmptyVial
       hand:
-        emptyLabel: Small containers
+        emptyLabel: borg-slot-small-containers-empty
         emptyRepresentative: BaseChemistryEmptyVial
         whitelist:
           components:
@@ -950,13 +950,13 @@
     - item: HandLabeler
     - hand:
         emptyRepresentative: SheetRGlass
-        emptyLabel: Construction materials
+        emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
           - ConstructionMaterial
     - hand:
         emptyRepresentative: SheetRPGlass
-        emptyLabel: Construction materials
+        emptyLabel: borg-slot-construction-empty
         whitelist:
           tags:
           - ConstructionMaterial
@@ -978,7 +978,7 @@
     - item: Pen
     - item: BooksBag
     - hand:
-        emptyLabel: Books and papers
+        emptyLabel: borg-slot-documents-empty
         emptyRepresentative: BookBase
         whitelist:
           tags:
@@ -989,7 +989,7 @@
           - TabletopBoard
           - Write
     - hand:
-        emptyLabel: Books and papers
+        emptyLabel: borg-slot-documents-empty
         emptyRepresentative: Paper
         whitelist:
           tags:
@@ -1005,7 +1005,7 @@
     - item: BorgDropper
     - item: DrinkShaker
       hand:
-        emptyLabel: Small containers
+        emptyLabel: borg-slot-small-containers-empty
         emptyRepresentative: DrinkShaker
         whitelist:
           components:
