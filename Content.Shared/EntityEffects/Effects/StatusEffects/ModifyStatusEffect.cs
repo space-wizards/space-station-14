@@ -43,7 +43,7 @@ public sealed partial class ModifyStatusEffect : EntityEffect
         switch (Type)
         {
             case StatusEffectMetabolismType.Add:
-                statusSys.TryAddStatusEffect(args.TargetEntity, EffectProto, TimeSpan.FromSeconds(time), Refresh);
+                statusSys.EnsureOrUpdateStatusEffect(args.TargetEntity, EffectProto, TimeSpan.FromSeconds(time), Refresh);
                 break;
             case StatusEffectMetabolismType.Remove:
                 statusSys.TryAddTime(args.TargetEntity, EffectProto, -TimeSpan.FromSeconds(time));
