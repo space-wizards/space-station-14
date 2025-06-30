@@ -136,7 +136,9 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     {
         args.Handled = true;
 
-        _audio.Stop(ent.Comp.CurrentTransformSound);
+        if(EntityManager.EntityExists(ent.Comp.CurrentTransformSound))
+            _audio.Stop(ent.Comp.CurrentTransformSound);
+
         if (args.Cancelled)
             return;
 
