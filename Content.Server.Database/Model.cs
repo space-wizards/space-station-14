@@ -424,6 +424,8 @@ namespace Content.Server.Database
         public string FlavorText { get; set; } = null!;
         public string Voice { get; set; } = null!;
         public int Age { get; set; }
+        public float Width { get; set; } = 1f; //starlight
+        public float Height { get; set; } = 1f; // starlight
         public string Sex { get; set; } = null!;
         public string Gender { get; set; } = null!;
         public string Species { get; set; } = null!;

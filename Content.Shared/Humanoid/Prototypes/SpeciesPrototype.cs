@@ -136,6 +136,45 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField]
     public int MaxAge = 120;
+
+    //starlight start
+
+    /// <summary>
+    ///     Characters must not crumple under earth-like gravity.
+    /// </summary>
+    [DataField]
+    public float MinWidth = 0.7f;
+
+    /// <summary>
+    ///     Characters must not exhibit a measurable gravitational pull on nearby objects.
+    /// </summary>
+    [DataField]
+    public float MaxWidth = 1.3f;
+
+    /// <summary>
+    ///     The normal width for this species.
+    /// </summary>
+    [DataField]
+    public float DefaultWidth = 1f;
+
+    /// <summary>
+    ///     Sentient microbial lifeforms are not currently hireable under contract.
+    /// </summary>
+    [DataField]
+    public float MinHeight = 0.7f;
+
+    /// <summary>
+    ///     You cannot fit in our cloning pods.
+    /// </summary>
+    [DataField]
+    public float MaxHeight = 1.3f;
+
+    /// <summary>
+    ///     The normal height for this species.
+    /// </summary>
+    [DataField]
+    public float DefaultHeight = 1f;
+    //starlight end
 }
 
 public enum SpeciesNaming : byte
