@@ -29,6 +29,7 @@
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: IdleCompound
@@ -36,7 +37,7 @@
     speedModifierThresholds:
       60: 0.7
       80: 0.5
-      
+
 - type: entity
   name: shadow cat
   parent: BaseShadowMob
