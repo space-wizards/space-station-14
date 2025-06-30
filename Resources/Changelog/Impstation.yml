@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: 12rabbits
-  changes:
-  - message: Going prone no longer prevents you from dropping items when stunned.
-    type: Tweak
-  id: 1435
-  time: '2025-03-29T22:52:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2141
 - author: snaviian
   changes:
   - message: Space spiders and tarantulas now drop raw spider legs when butchered,
@@ -4239,3 +4232,13 @@
   id: 1934
   time: '2025-06-29T22:59:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2904
+- author: EpicToast
+  changes:
+  - message: Barratry has been updated with Harmony's changes, including genpop, a
+      TEG, and other layout changes.
+    type: Tweak
+  - message: Union Station has been temporarily derotated for renovations.
+    type: Remove
+  id: 1935
+  time: '2025-06-30T04:37:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2908
