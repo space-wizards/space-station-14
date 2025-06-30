@@ -90,6 +90,8 @@
       map: [ "blade" ]
   - type: Item
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
+  - type: StaticPrice
+    price: 2500
 
 - type: entity
   name: energy dagger
@@ -294,11 +296,12 @@
             Slash: 12
             Heat: 12
             Structural: 15
-  - type: ItemToggleActiveSound
-    activeSound:
-      path: /Audio/Weapons/ebladehum.ogg
-      params:
-        volume: 3
+  # Disabled until the wield active sfx no longer stacks
+  #- type: ItemToggleActiveSound
+  #  activeSound:
+  #    path: /Audio/Weapons/ebladehum.ogg
+  #    params:
+  #      volume: 3
   - type: ComponentToggler
     components:
     - type: Sharp
@@ -382,6 +385,17 @@
     sprite: Objects/Weapons/Melee/hypereutactic_blade_inhands.rsi
   - type: Reflect
     reflectProb: 1.0
+    spread: 75
+
+# Nukie variant, reduced reflection rate.
+- type: entity
+  parent: HyperEutacticBlade
+  id: HyperEutaticBlade
+  name: hypereutatic-blade
+  description: Often mistaken for the Hypereutactic Blade. This mass produced, off-brand, knockoff gets the same job done but with less reflection.
+  components:
+  - type: Reflect
+    reflectProb: 0.75
     spread: 75
 
 # Borgs
