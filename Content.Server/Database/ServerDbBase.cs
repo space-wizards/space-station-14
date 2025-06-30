@@ -284,6 +284,8 @@ namespace Content.Server.Database
                 profile.Species,
                 profile.StarLightProfile?.CustomSpecieName ?? "", // Starlight
                 profile.Age,
+                profile.Width, //starlight
+                profile.Height, //starlight
                 sex,
                 gender,
                 new HumanoidCharacterAppearance

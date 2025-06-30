@@ -16,6 +16,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System.Globalization;
+using System;
 
 namespace Content.Shared.Preferences
 {
@@ -87,6 +89,12 @@ namespace Content.Shared.Preferences
         public int Age { get; set; } = 18;
 
         [DataField]
+        public float Width { get; set; } = 1f; //starlight
+
+        [DataField]
+        public float Height { get; set; } = 1f; //starlight
+
+        [DataField]
         public Sex Sex { get; private set; } = Sex.Male;
 
         [DataField]
@@ -131,6 +139,8 @@ namespace Content.Shared.Preferences
             string species,
             string customspeciename, // Starlight
             int age,
+            float width,
+            float height,
             Sex sex,
             Gender gender,
             HumanoidCharacterAppearance appearance,
@@ -147,6 +157,8 @@ namespace Content.Shared.Preferences
             Species = species;
             CustomSpecieName = customspeciename; // Starlight
             Age = age;
+            Width = width; //starlight
+            Height = height; //starlight
             Sex = sex;
             Gender = gender;
             Appearance = appearance;
@@ -166,6 +178,8 @@ namespace Content.Shared.Preferences
                 other.Species,
                 other.CustomSpecieName, // Starlight
                 other.Age,
+                other.Width, //starlight
+                other.Height, //starlight
                 other.Sex,
                 other.Gender,
                 other.Appearance.Clone(),
@@ -223,10 +237,14 @@ namespace Content.Shared.Preferences
 
             var sex = Sex.Unsexed;
             var age = 18;
+            var width = 1f; //starlight
+            var height = 1f; //starlight
             if (prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype))
             {
                 sex = random.Pick(speciesPrototype.Sexes);
                 age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
+                width = random.NextFloat(speciesPrototype.MinWidth, speciesPrototype.MaxWidth); //starlight
+                height = random.NextFloat(speciesPrototype.MinHeight, speciesPrototype.MaxHeight); //starlight
             }
 
             var gender = Gender.Epicene;
@@ -250,6 +268,8 @@ namespace Content.Shared.Preferences
                 Name = name,
                 Sex = sex,
                 Age = age,
+                Width = width,
+                Height = height,
                 Gender = gender,
                 Species = species,
                 CustomSpecieName = customspeciename, // Starlight
@@ -271,6 +291,18 @@ namespace Content.Shared.Preferences
         {
             return new(this) { Age = age };
         }
+
+        //starlight start
+        public HumanoidCharacterProfile WithWidth(float width)
+        {
+            return new(this) { Width = width };
+        }
+
+        public HumanoidCharacterProfile WithHeight(float height)
+        {
+            return new(this) { Height = height };
+        }
+        // starlight end
 
         public HumanoidCharacterProfile WithSex(Sex sex)
         {
@@ -440,6 +472,8 @@ namespace Content.Shared.Preferences
             if (maybeOther is not HumanoidCharacterProfile other) return false;
             if (Name != other.Name) return false;
             if (Age != other.Age) return false;
+            if (Width != other.Width) return false; //starlight
+            if (Height != other.Height) return false; //starlight
             if (Sex != other.Sex) return false;
             if (Gender != other.Gender) return false;
             if (Species != other.Species) return false;
@@ -478,6 +512,11 @@ namespace Content.Shared.Preferences
                 sex = speciesPrototype.Sexes[0];
 
             var age = Math.Clamp(Age, speciesPrototype.MinAge, speciesPrototype.MaxAge);
+
+            //starlight start
+            var width = Math.Clamp(MathF.Round(Width, 2), speciesPrototype.MinWidth, speciesPrototype.MaxWidth);
+            var height = Math.Clamp(MathF.Round(Height, 2), speciesPrototype.MinHeight, speciesPrototype.MaxHeight);
+            //starlight end
 
             var gender = Gender switch
             {
@@ -583,6 +622,8 @@ namespace Content.Shared.Preferences
             CustomSpecieName = customspeciename; // Starlight
             FlavorText = flavortext;
             Age = age;
+            Width = width; //starlight
+            Height = height; //starlight
             Sex = sex;
             Gender = gender;
             Appearance = appearance;
@@ -687,6 +728,8 @@ namespace Content.Shared.Preferences
             hashCode.Add(Species);
             hashCode.Add(CustomSpecieName); // Starlight
             hashCode.Add(Age);
+            hashCode.Add(Width); //starlight
+            hashCode.Add(Height); //starlight
             hashCode.Add((int)Sex);
             hashCode.Add((int)Gender);
             hashCode.Add(Appearance);

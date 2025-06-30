@@ -1,3 +1,4 @@
+using System.Numerics; //starlight
 using Content.Client.DisplacementMap;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
@@ -59,6 +60,8 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         else 
             if(_sprite.LayerMapTryGet((entity.Owner, sprite), HumanoidVisualLayers.Eyes, out var layerIndex, true))
                 sprite.LayerSetShader(layerIndex, (ShaderInstance?)null);
+
+        sprite.Scale = new Vector2(humanoidAppearance.Width, humanoidAppearance.Height);
         //starlight end
     }
 
@@ -228,6 +231,8 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         humanoid.Sex = profile.Sex;
         humanoid.Gender = profile.Gender;
         humanoid.Age = profile.Age;
+        humanoid.Width = profile.Width; //starlight
+        humanoid.Height = profile.Height; //starlight
         humanoid.Species = profile.Species;
         humanoid.SkinColor = profile.Appearance.SkinColor; //starlight
         humanoid.EyeColor = profile.Appearance.EyeColor;
