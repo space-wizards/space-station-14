@@ -1,6 +1,6 @@
 plushie-oog-1 = OOGA BOOGA!!!!!
-plushie-oog-2 = I am oog-man.
-plushie-oog-3 = 
-plushie-oog-4 = 
-plushie-oog-5 = 
+plushie-oog-2 = I am oogman!!
+plushie-oog-3 = I JUST KILLED SOMEONE!!
+plushie-oog-4 = I HAVE A BOMB!!
+plushie-oog-5 = OH FUCK!!
 plushie-oog-6 = 
