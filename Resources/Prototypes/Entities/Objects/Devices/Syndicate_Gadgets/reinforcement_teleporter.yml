@@ -117,3 +117,19 @@
         settings: default
     - type: GhostRoleMobSpawner
       prototype: PlayerBorgSyndicateAssaultBattery
+
+- type: entity
+  parent: ReinforcementRadio
+  id: ReinforcementRadioSyndicateCyborgSaboteur # Reinforcement radio exclusive to nukeops uplink
+  name: syndicate saboteur cyborg reinforcement radio
+  description: Call in a well equipped saboteur cyborg, instantly!
+  suffix: NukeOps
+  components:
+  - type: GhostRole
+    name: ghost-role-information-syndicate-cyborg-saboteur-name
+    description: ghost-role-information-syndicate-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: PlayerBorgSyndicateSaboteurBattery
