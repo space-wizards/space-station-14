@@ -1,5 +1,6 @@
 using Content.Server.Antag;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
@@ -36,6 +37,8 @@ public sealed partial class AdminVerbSystem
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string DefaultThiefRule = "Thief";
+
+    private EntProtoId<ChangelingRuleComponent> DefaultChangelingRule = "Changeling";
 
     [ValidatePrototypeId<StartingGearPrototype>]
     private const string PirateGearId = "PirateGear";
@@ -163,6 +166,19 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", thiefName, Loc.GetString("admin-verb-make-thief")),
         };
         args.Verbs.Add(thief);
+        Verb changeling = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-changeling"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/armblade.rsi"), "icon"),
+            Act = () =>
+            {
+                _antag.ForceMakeAntag<ChangelingRuleComponent>(targetPlayer, DefaultChangelingRule);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-changeling"),
+        };
+        args.Verbs.Add(changeling);
 
         var paradoxCloneName = Loc.GetString("admin-verb-text-make-paradox-clone");
         Verb paradox = new()
