@@ -47,9 +47,7 @@ public abstract partial class SharedSalvageSystem : EntitySystem
         var temp = GetBiomeMod<SalvageTemperatureMod>(biome.ID, rand, ref modifierBudget);
         var air = GetBiomeMod<SalvageAirMod>(biome.ID, rand, ref modifierBudget);
         var dungeon = GetBiomeMod<SalvageDungeonModPrototype>(biome.ID, rand, ref modifierBudget);
-        var factionProtos = _proto.EnumeratePrototypes<SalvageFactionPrototype>().ToList();
-        factionProtos.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
-        var faction = factionProtos[rand.Next(factionProtos.Count)];
+        var faction = GetFactionPrototype(dungeon.Factions, rand);
 
         var mods = new List<string>();
 
@@ -72,6 +70,20 @@ public abstract partial class SharedSalvageSystem : EntitySystem
         var duration = TimeSpan.FromSeconds(CfgManager.GetCVar(CCVars.SalvageExpeditionDuration));
 
         return new SalvageMission(seed, dungeon.ID, faction.ID, biome.ID, air.ID, temp.Temperature, light.Color, duration, mods);
+    }
+
+    public SalvageFactionPrototype GetFactionPrototype(List<ProtoId<SalvageFactionPrototype>>? dungeonFactions, System.Random rand)
+    {
+        var factionProtos = _proto.EnumeratePrototypes<SalvageFactionPrototype>().ToList();
+
+        if (dungeonFactions != null)
+        {
+            factionProtos = dungeonFactions.ConvertAll(new Converter<ProtoId<SalvageFactionPrototype>, SalvageFactionPrototype>(_proto.Index));
+        }
+
+        factionProtos.Sort((x, y) => string.Compare(x.ID, y.ID, StringComparison.Ordinal));
+        var faction = factionProtos[rand.Next(factionProtos.Count)];
+        return faction;
     }
 
     public T GetBiomeMod<T>(string biome, System.Random rand, ref float rating) where T : class, IPrototype, IBiomeSpecificMod
