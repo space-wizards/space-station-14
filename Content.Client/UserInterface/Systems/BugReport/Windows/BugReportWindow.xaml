@@ -1,0 +1,31 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               Title="{Loc bug-report-window-name}"
+            MinSize="600 400">
+    <BoxContainer Orientation="Vertical" Margin="10 0 20 0">
+        <RichTextLabel Name="DisabledLabel" HorizontalAlignment="Center" Visible="False" ReservesSpace="False" />
+        <BoxContainer Orientation="Vertical" Name="BugReportContainer">
+            <RichTextLabel Name="BugReportExplanation" HorizontalAlignment="Center" Margin="0 0 0 10" Text="{Loc bug-report-window-explanation}" />
+
+            <!-- Title -->
+            <BoxContainer VerticalAlignment="Center">
+                <LineEdit Name="BugReportTitle" PlaceHolder="{Loc bug-report-window-title-place-holder}" HorizontalExpand="True" />
+                <Label Name="TitleCharacterCounter" StyleClasses="LabelSmall" Margin="10 0 0 0" VerticalAlignment="Center" />
+            </BoxContainer>
+
+            <!-- Description -->
+            <TextEdit Name="BugReportDescription" MaxHeight="300" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="200" Margin="0 10 0 0" >
+                <Label Name="PlaceholderCenter" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc bug-report-window-description-place-holder}" StyleClasses="PlaceholderText" />
+            </TextEdit>
+
+            <!-- Footer -->
+            <BoxContainer HorizontalAlignment="Center" Orientation="Horizontal" >
+                <Label Name="DescriptionCharacterCounter" StyleClasses="LabelSmall"/>
+            </BoxContainer>
+
+            <!-- Submit button and disclaimer -->
+            <controls:ConfirmButton Name="SubmitButton" ConfirmationText="{Loc bug-report-window-submit-button-confirm-text}" Text="{Loc bug-report-window-submit-button-text}" Margin="0 5 0 0" />
+            <Label HorizontalAlignment="Center" Text="{Loc bug-report-window-submit-button-disclaimer}" StyleClasses="LabelSmall" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>
