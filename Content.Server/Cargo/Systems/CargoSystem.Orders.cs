@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
+using Content.Server.GameplayMetrics;
 using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -9,6 +10,7 @@ using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
+using Content.Shared.GameplayMetrics;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
@@ -27,6 +29,7 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly EmagSystem _emag = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly BasicGameplayMetricsSystem _gameplayMetrics = default!;
 
         private void InitializeConsole()
         {
@@ -254,6 +257,15 @@ namespace Content.Server.Cargo.Systems
             _adminLogger.Add(LogType.Action,
                 LogImpact.Low,
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] on account {order.Account} with balance at {accountBalance}");
+
+            _gameplayMetrics.RecordMetric("CargoOrder",
+            new Dictionary<string, object?>
+            {
+                { "productProto", order.ProductId },
+                { "quantity", order.OrderQuantity.ToString() },
+                { "cost", cost.ToString() },
+                { "account", order.Account.Id },
+            });
 
             orderDatabase.Orders[component.Account].Remove(order);
             UpdateBankAccount((station.Value, bank), -cost, order.Account);

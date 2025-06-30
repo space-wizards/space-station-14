@@ -20,12 +20,16 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using System.Numerics;
+using Content.Server.GameplayMetrics;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Server.IdentityManagement;
 using Content.Shared.DetailExaminable;
+using Content.Shared.GameplayMetrics;
+using Content.Shared.Item;
 using Content.Shared.Store.Components;
 using Robust.Shared.Collections;
+using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Implants;
@@ -45,6 +49,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private readonly BasicGameplayMetricsSystem _gameplayMetrics = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private HashSet<Entity<MapGridComponent>> _targetGrids = [];
@@ -60,7 +65,33 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         SubscribeLocalEvent<SubdermalImplantComponent, ActivateImplantEvent>(OnActivateImplantEvent);
         SubscribeLocalEvent<SubdermalImplantComponent, UseScramImplantEvent>(OnScramImplant);
         SubscribeLocalEvent<SubdermalImplantComponent, UseDnaScramblerImplantEvent>(OnDnaScramblerImplant);
+        SubscribeLocalEvent<SubdermalImplantComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+        SubscribeLocalEvent<SubdermalImplantComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+    }
 
+    private void OnEntInserted(Entity<SubdermalImplantComponent> entity, ref EntInsertedIntoContainerMessage args)
+    {
+        ItemInsertedOrRemoved("Inserted", args.Entity, entity.Owner);
+    }
+
+    private void OnEntRemoved(Entity<SubdermalImplantComponent> entity, ref EntRemovedFromContainerMessage args)
+    {
+        ItemInsertedOrRemoved("Removed", args.Entity, entity.Owner);
+    }
+
+    private void ItemInsertedOrRemoved(string status, EntityUid item, EntityUid owner)
+    {
+        var metaData = MetaData(item);
+        if (metaData.EntityPrototype == null || !HasComp<ItemComponent>(item))
+            return;
+
+        _gameplayMetrics.RecordMetric( "StorageImplant",
+        new Dictionary<string, object?>
+        {
+            { "status", status },
+            { "itemProto", metaData.EntityPrototype.ID },
+            { "ownerUid", owner.ToString() },
+        });
     }
 
     private void OnStoreRelay(EntityUid uid, StoreComponent store, ImplantRelayEvent<AfterInteractUsingEvent> implantRelay)
