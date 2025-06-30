@@ -8551,4 +8551,11 @@ Entries:
   id: 1179
   time: '2025-06-30T17:23:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/925
+- author: PublicyExecutedPig
+  changes:
+  - message: Origin Station
+    type: Add
+  id: 1180
+  time: '2025-06-30T17:25:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/898
 
