@@ -1,0 +1,98 @@
+- type: entity
+  id: WeaponMechDebugBallistic
+  parent: [ BaseMechWeaponRange, DebugMechEquipment ] # Debug equipment dose has all whitelist tags.
+  suffix: Mech Weapon, DEBUG, Ballistic
+  name: debug bang
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    minAngle: 24
+    maxAngle: 45
+    angleIncrease: 4
+    angleDecay: 16
+    fireRate: 5
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: AmmoCounter
+  - type: ProjectileBatteryAmmoProvider
+    proto: CartridgeLightRifle
+    fireCost: 9
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  id: WeaponMechDebugLaser
+  name: debug pow
+  suffix: Mech Weapon, DEBUG, Laser
+  parent: [ BaseMechWeaponRange, DebugMechEquipment ]
+  description: A weapon using light amplified by the stimulated emission of radiation.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 19
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Gun
+    fireRate: 2
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: AmmoCounter
+
+- type: entity
+  id: WeaponMechDebugDisabler
+  name: debug tew
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
+  suffix: Mech Weapon, DEBUG, Disabler
+  parent: [ BaseMechWeaponRange, DebugMechEquipment ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 19
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: AmmoCounter
