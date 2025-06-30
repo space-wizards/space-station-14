@@ -29,8 +29,9 @@ astro-nav-program-name = AstroNav
 
 med-tek-program-name = MedTek
 
-# NanoTask cartridge
+ready-tone-program-name = Readytone
 
+# NanoTask cartridge
 nano-task-ui-heading-high-priority-tasks =
     { $amount ->
         [zero] No High Priority Tasks
