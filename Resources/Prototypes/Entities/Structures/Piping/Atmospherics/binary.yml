@@ -157,6 +157,62 @@
 
 - type: entity
   parent: GasBinaryBase
+  id: GasPressureRegulator
+  name: inlet pressure regulator
+  description: A valve that releases gas when the inlet pressure exceeds a certain threshold.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: SubFloorHide
+    visibleLayers:
+    - enum.SubfloorLayers.FirstLayer
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pumpPressureRegulator
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PressureRegulatorVisuals.State:
+        enabled:
+          True: { state: pumpPressureRegulatorOn }
+          False: { state: pumpPressureRegulator }
+  - type: PipeColorVisuals
+  - type: GasPressureRegulator
+    enabled: false
+    threshold: 4500
+  - type: Construction
+    graph: GasBinary
+    node: pressureregulator
+  - type: ActivatableUI
+    key: enum.GasPressureRegulatorUiKey.Key
+    blockSpectators: true
+  - type: ActivatableUIRequiresAnchor
+  - type: UserInterface
+    interfaces:
+      enum.GasPressureRegulatorUiKey.Key:
+        type: GasPressureRegulatorBoundUserInterface
+  - type: AmbientSound
+    enabled: false
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_hiss.ogg
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasFlowRegulator
+  - type: GuideHelp
+    guides:
+    - PressureRegulator
+
+- type: entity
+  parent: GasBinaryBase
   id: GasPassiveGate
   name: passive gate
   description: A one-way air valve that does not require power.
