@@ -1,3 +1,4 @@
+using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
@@ -57,4 +58,10 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan FillDelay = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>
+    /// Entities with this tag won't trigger the insertion sound.
+    /// </summary>
+    [DataField]
+    public ProtoId<TagPrototype> SilentInsertUserTag = "SilentStorageUser";
 }
