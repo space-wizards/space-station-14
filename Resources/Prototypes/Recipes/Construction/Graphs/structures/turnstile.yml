@@ -1,0 +1,41 @@
+- type: constructionGraph
+  id: Turnstile
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DeleteEntity { }
+    edges:
+    - to: turnstile
+      completed:
+      - !type:SnapToGrid
+      steps:
+      - material: MetalRod
+        amount: 4
+        doAfter: 10 #starlight, increased
+      - material: Steel
+        amount: 1
+        doAfter: 5 #starlight, increased
+
+  - node: turnstile
+    entity: Turnstile
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 4
+      - !type:DeleteEntity
+      steps: #starlight, steps increased and overall time lengthened to prevent shitters
+      - tool: Pulsing
+        doAfter: 0.5
+      - tool: Cutting
+        doAfter: 3.0
+      - tool: Screwing
+        doAfter: 2.0
+      - tool: Anchoring
+        doAfter: 2.5
+      - tool: Welding
+        doAfter: 4.0
+      - tool: Prying
+        doAfter: 5.0

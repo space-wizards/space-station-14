@@ -1,4 +1,19 @@
 # Tier 2
+- type: technology
+  id: Paddy
+  name: research-technology-paddy
+  icon:
+    sprite: Objects/Specific/Mech/Mechs/Basic/paddy.rsi
+    state: base
+  discipline: Arsenal
+  tier: 2
+  cost: 8500
+  recipeUnlocks:
+  - PaddyUpgradeKit
+  technologyPrerequisites:
+  - Ripley2
+  radioChannels:
+  - Security
 
 - type: technology
   id: Gygax
@@ -22,7 +37,9 @@
   - GygaxTargetingElectronics
   - WeaponMechCombatUltraRifle
   technologyPrerequisites:
-  - Ripley2
+  - Paddy
+  radioChannels:
+  - Security
 
 - type: technology
   id: EnergyBarriers
@@ -35,6 +52,8 @@
   cost: 5400
   recipeUnlocks:
   - EnergyDomeTurtle
+  radioChannels:
+  - Security
 
 - type: technology
   id: ArmorPenetrationMunitions
@@ -58,6 +77,8 @@
   - MagazineBoxLightRifleAP
   - LightRifleHeavyMagazineAP
   - MagazinePistolSubMachineGunAP
+  radioChannels:
+  - Security
   
 - type: technology
   id: IonWeaponry
@@ -71,6 +92,8 @@
   recipeUnlocks:
   - WeaponIonRifle
   - WeaponIonCarbine
+  radioChannels:
+  - Security
   
 # Tier 3
 
@@ -87,6 +110,8 @@
   - WeaponMechCombatMissileRack8
   technologyPrerequisites:
   - ExplosiveTechnology
+  radioChannels:
+  - Security
   
 - type: technology
   id: Durand
@@ -112,6 +137,8 @@
   - WeaponMechCombatShotgunIncendiary
   technologyPrerequisites:
   - Gygax
+  radioChannels:
+  - Security
 
  # Tier 4 
 
@@ -126,4 +153,6 @@
   cost: 30000
   recipeUnlocks:
   - WeaponDecloner
+  radioChannels:
+  - Security
   

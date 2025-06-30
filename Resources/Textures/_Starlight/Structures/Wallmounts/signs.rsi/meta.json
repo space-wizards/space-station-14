@@ -6,39 +6,28 @@
         "x": 32,
         "y": 32
     },
-    "states": [
-        {
-            "name": "brigmed"
-        },
-        {
-            "name": "calendar"
-        },
-        {
-            "name": "cleanhands"
-        },
-        {
-            "name": "disposals_proper"
-        },
-        {
-            "name": "eyechart"
-        },
-        {
-            "name": "nosmoking"
-        },
-        {
-            "name": "secureareasmall"
-        },
-        {
-            "name": "wall_biohazard"
-        },
-        {
-            "name": "wall_extremeheat"
-        },
-        {
-            "name": "yessmoking"
-        },
-        {
-            "name": "youtoolpia"
-        }
-    ]
+  "states": [
+    {
+      "name": "brigmed"
+    },
+    {
+      "name": "disposals_proper"
+    },
+    {
+      "name": "nosmoking"
+    },
+    {
+      "name": "secureareasmall"
+    },
+    {
+      "name": "wall_biohazard"
+    },
+    {
+      "name": "wall_extremeheat"
+    },
+    {
+      "name": "yessmoking"
+    }
+
+  ]
 }

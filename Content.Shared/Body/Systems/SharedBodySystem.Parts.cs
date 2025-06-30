@@ -8,6 +8,8 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Body.Systems;
@@ -465,6 +467,7 @@ public partial class SharedBodySystem
         var walkSpeed = 0f;
         var sprintSpeed = 0f;
         var acceleration = 0f;
+        var maxDensity = 0f; // 🌟Starlight🌟
         foreach (var legEntity in body.LegEntities)
         {
             if (!TryComp<MovementBodyPartComponent>(legEntity, out var legModifier))
@@ -473,7 +476,24 @@ public partial class SharedBodySystem
             walkSpeed += legModifier.WalkSpeed;
             sprintSpeed += legModifier.SprintSpeed;
             acceleration += legModifier.Acceleration;
+            maxDensity += legModifier.MaxDensity; // 🌟Starlight🌟
         }
+
+        // 🌟Starlight🌟 Start
+        var density = TryComp<FixturesComponent>(bodyId, out var fixtures)
+            && fixtures.Fixtures.TryGetValue("fix1", out var fixture) 
+            ? fixture.Density : 185f;
+
+        var speedFactor = density > maxDensity && maxDensity > 0f
+            ? maxDensity / density
+            : 1f;
+
+        walkSpeed *= speedFactor;
+        sprintSpeed *= speedFactor;
+        acceleration *= speedFactor;
+
+        // 🌟Starlight🌟 End
+
         walkSpeed /= body.RequiredLegs;
         sprintSpeed /= body.RequiredLegs;
         acceleration /= body.RequiredLegs;

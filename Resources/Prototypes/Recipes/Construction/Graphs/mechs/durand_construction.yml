@@ -30,7 +30,7 @@
           data: 3
 
       - tag: DurandCentralControlModule
-        name: durand central control module
+        name: construction-graph-tag-durand-central-control
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "mainboard"
@@ -47,7 +47,7 @@
           data: 5
 
       - tag: DurandPeripheralsControlModule
-        name: durand peripherals control module
+        name: construction-graph-tag-durand-peripherals-control
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: id_mod
@@ -64,7 +64,7 @@
           data: 7
 
       - tag: DurandTargetingControlModule
-        name: durand weapon control and targeting module
+        name: construction-graph-tag-durand-weapon-targeting
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: mcontroller
@@ -80,11 +80,11 @@
           key: "enum.MechAssemblyVisuals.State"
           data: 9
 
-      - tag: CapacitorStockPart
-        name: capacitor
+      - tag: MicroManipulatorStockPart
         icon:
           sprite: Objects/Misc/stock_parts.rsi
-          state: capacitor
+          state: micro_mani
+        name: construction-graph-tag-manipulator
         completed:
         - !type:VisualizerDataInt
           key: "enum.MechAssemblyVisuals.State"
@@ -98,7 +98,7 @@
           data: 11
 
       - component: PowerCell
-        name: power cell
+        name: construction-graph-tag-power-cell
         store: battery-container
         icon:
           sprite: Objects/Power/power_cells.rsi
@@ -137,7 +137,8 @@
           data: 16
 
       - tag: MechAirTank
-        name: exosuit air tank
+        name: construction-graph-tag-exosuit-air-tank
+        store: gas-tank-container
         icon:
           sprite: Objects/Specific/Mech/mecha_equipment.rsi
           state: mecha_air_tank
@@ -146,7 +147,7 @@
         doAfter: 1
 
       - tag: MechThruster
-        name: exosuit thruster
+        name: construction-graph-tag-exosuit-thruster
         icon:
           sprite: Objects/Specific/Mech/mecha_equipment.rsi
           state: mecha_bin
@@ -155,7 +156,7 @@
         doAfter: 1
 
       - tag: DurandArmor
-        name: durand armor plates
+        name: construction-graph-tag-durand-armor-plates
         icon:
           sprite: "Objects/Specific/Mech/Mechs/Basic/durand.rsi"
           state: durand_armor

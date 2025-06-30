@@ -81,7 +81,7 @@
             <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'chem-master-window-packaging-text'}" />
                 <Control HorizontalExpand="True"/>
-                <Label Text="{Loc 'chem-master-window-buffer-label'}" />
+                <Label Text="{Loc 'chem-master-window-beaker-label'}" /> <!-- Starlight Beaker Changes-->
                 <Label Name="BufferCurrentVolume" StyleClasses="LabelSecondaryColor" />
             </BoxContainer>
 

@@ -52,13 +52,14 @@
   id: MagistrateGear
   equipment:
     jumpsuit: MagistrateUniformSuit
-    shoes: ClothingShoesBootsLaceup
+    #shoes: ClothingShoesBootsLaceup
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesColorWhite
     outerClothing: ClothingOuterRobesJudge
     id: MagistratePDA
     ears: ClothingHeadsetMagistrate
     head: ClothingHeadHatPwig
+    belt: BoxFolderNanoTrasenClipboard
   storage:
     back:
     - RubberStampMagistrate

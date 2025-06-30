@@ -17,14 +17,15 @@
   - type: Storage
     maxItemSize: Normal
     grid:
-    - 0,0,4,3
+    - 0,0,11,3 #starlight edit, makes it larger due to high pop
     quickInsert: true
     areaInsert: true
     whitelist:
       components:
-      - Paper
+      #- Paper
       - Delivery
-      tags:
-      - Document
-      - Paper
+      #tags:
+      #- Document
+      #- Paper
   - type: Dumpable
+  - type: MagnetPickup

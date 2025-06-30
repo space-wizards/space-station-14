@@ -86,12 +86,16 @@
       spawned:
       - id: AbyssCore
         amount: 1
+    - type: NPCUseActionOnTarget
+      actionId: ActionMobBlink
 
 - type: entity
   name: worm
   parent: [ SimpleSpaceMobBase, MobCombat ]
   id: MobWorm
   components:
+    - type: NPCUseActionOnTarget
+      actionId: ActionMobBlink
     - type: Sprite
       sprite: _Starlight/Mobs/Abyss/worm.rsi
       layers:
@@ -161,17 +165,20 @@
   name: Blink
   description: Teleport to the clicked location.
   components:
-  - type: WorldTargetAction
+  - type: Action
     useDelay: 10
-    range: 16
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/blink.ogg
+    checkConsciousness: false
+    checkCanInteract: false
     itemIconStyle: BigAction
-    checkCanAccess: false
-    repeat: false
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: blink
+  - type: TargetAction
+    range: 16
+    checkCanAccess: false
+  - type: WorldTargetAction
     event: !type:TeleportSpellEvent
       ignoreWalls: true
 

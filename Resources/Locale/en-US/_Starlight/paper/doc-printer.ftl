@@ -19,11 +19,11 @@ doc-text-printer-report-station =
 
     Reason for establishing the code:
 
-    Active Threats:
+    Active threats:
 
-    Crew Casualties:
+    Crew casualties:
 
-    Current Situation:
+    Current situation:
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -41,9 +41,7 @@ doc-text-printer-report-on-elimination-of-violations =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
- 
-    
-    I in the position of:
+    Position of Document Compiler:
     
     Report on work violations identified by:
     
@@ -70,13 +68,18 @@ doc-text-printer-report-department =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
- 
+    Position of Document Compiler:
     
     Number of employees in the department:
+
     Number of trainees:
+
     Inactive employees in the department:
-    Name, position, reason
-    Degree of Target Readiness:
+    ⠀[bullet] (Name, position, reason)
+    ⠀[bullet] ...
+
+    Degree of target readiness:
+
     General condition of the department:
     
     ─────────────────────────────────────────
@@ -94,14 +97,13 @@ doc-text-printer-report-employee-performance =
     ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler:   
+    Position of Document Compiler:
    
-    
-    In the course of my duties, I have performed the required amount of work. 
+    In the course of my duties, I have performed the required amount of work.
     
     I request that the result of the work be accepted by the Head of the following Department:
 
-    Works performed:
+    Work performed:
     
     ─────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -118,18 +120,21 @@ doc-text-printer-report-on-the-chapters-meeting =
     ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
- 
+    Position of Document Compiler:
     
     Reason for calling the Chapters' Meeting:
+
     The wording of the question put to the Chapters:
-    Number of votes in favor:
-    Those voting in favor:
+
+
+    Number of votes [italic]in favor[/italic]:
+    Those voting [italic]in favor[/italic]:
     
-    Number of votes "Against":
-    Those who voted "Against":
+    Number of votes [italic]against[/italic]:
+    Those voting [italic]against[/italic]:
     
-    Number of abstentions from voting:
-    Abstentions from voting:
+    Number of [italic]abstentions[/italic] from voting:
+    Those voting [italic]abstain[italic]:
     
     Resolution of the Meeting of Heads:
     
@@ -148,7 +153,6 @@ doc-text-printer-internal-affairs-agents-report =
     ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
- 
     
     I, (full name), in the position of Internal Affairs Agent, in the course of an internal audit requested by (full name), in the position of (full job title) for the reason of (reason for audit), found the following irregularities:
     
@@ -166,12 +170,13 @@ doc-text-printer-condition-report =
                   [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
     ────────────────────────────────────────
    ⠀⠀                               [bold]CONDITION REPORT[/bold]
-
+    ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler:   
+    Position of Document Compiler:
     
     The (name of the system or object) was inspected, the results of the inspection were analyzed, and the causes of unstable operation of the object were analyzed.
+    
     Cause of object failure:
     
     Identified damage to the facility:
@@ -193,9 +198,10 @@ doc-text-printer-object-investigation-report =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
+    Position of Document Compiler:
     
-    A device with unexplored properties was submitted for expert examination (who or what department handed over the object). In the course of the expertise the object was studied, the properties of the object and its species affiliation were established.
+    A device with unexplored properties was submitted for expert examination by (who or what department handed over the object). In the course of the expertise the object was studied, the properties of the object and its species affiliation were established.
+    
     External description of the object:
     
     Identified properties of the object:
@@ -245,7 +251,7 @@ doc-text-printer-disposal-report =
     ─────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
+    Position of Document Compiler:
     
     The Supplies Department disposed of the objects at (method of disposal). During the disposal valuable items and things were found, valuable items were handed over to the appropriate departments for their use.
     List of items found:
@@ -265,18 +271,19 @@ doc-text-printer-arrest-report =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler:   
+    Position of Document Compiler:
 
-    Arrested persons:
+    Arrested person:
 
-    Arrest Reason: 
+    Arrest reason:
 
-    Time of Arrest (estimated): 
+    Time of arrest (estimated):
 
-    Duration of Detention: 
+    Duration of detention:
 
-    Additional Punishments:
-    ────────────────────────────────────────
+    Additional punishments:
+    
+    ─────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
 
 
@@ -293,16 +300,15 @@ doc-text-printer-statement-appointment-interim-chapter =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
-    
-    Position of compiler:, 
-    request approval of my appointment to the position of Acting (full department name)/Captain.
+    Position of Document Compiler:
+     
+    I request approval of my appointment to the position of Acting (HoS/Captain/HoP/...).
     Upon assuming the position, I agree to follow Standard Operating Procedures and, 
-    until the arrival of the (full name of department)/Captain from Central Command, 
+    until the arrival of the (HoS/Captain/HoP/...) from Central Command, 
     to ensure the order and management of the division, 
     and to ensure the safety of particularly valuable items and equipment entrusted to me.
     
-    Upon arrival of the Head of Department/Captain from the Central Command, 
+    Upon arrival of the (HoS/Captain/HoP/...) from Central Command, 
     I undertake to surrender the increased access, especially valuable items and equipment.
     
     ────────────────────────────────────────
@@ -320,7 +326,7 @@ doc-text-printer-employment-statement =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
+    Position of Document Compiler:
     
     I formally request to be appointed as an employee of the following department and position.
     
@@ -328,7 +334,7 @@ doc-text-printer-employment-statement =
 
     Name of position:
 
-    I agree to follow the department's Standard Operating Procedures. I agree to surrender my department work gear and equipment upon transfer.
+    I agree to follow the department's Standard Operating Procedures. I agree to surrender my current department work gear and equipment upon transfer.
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -345,10 +351,12 @@ doc-text-printer-resignation-statement =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
+    Position of Document Compiler:
     
     I, (full name), in the current position of (full job title), wish to resign from (name of department) for (reason).
     I undertake to pay the penalty established by the terms of termination of fixed-term/permanent contract at the Central Command station.
+
+    I agree to surrender my department work gear and equipment upon resignation.
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -372,7 +380,6 @@ doc-text-printer-access-request-statement =
     Reason for gaining elevated access:
     
     ────────────────────────────────────────
-
    ⠀                                    [italic]Place for stamps[/italic]
 
 
@@ -466,13 +473,13 @@ doc-text-printer-shuttle-registration-request =
     
     I request that the following shuttle be registered in the NanoTrasen system for identification.
     
-    Shuttle Size:
+    Shuttle size:
     
-    Shuttle Class:
+    Shuttle class:
     
-    Construction Responsible:
+    Construction responsible:
     
-    Requested Title:
+    Requested title:
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -489,10 +496,10 @@ doc-text-printer-request-call-centcomm-members =
    ⠀⠀              [bold]REQUEST TO CALL CENTCOMM MEMBERS[/bold]
     ────────────────────────────────────────
     Time and Date:
-    Compiler of the document:   
+    Compiler of the document:
     Position of Document Compiler:
     
-    I request to be considered for a call with centcomm administrative officers.
+    I request to be considered for a call with CentComm administrative officers.
     
     Reason for the call:
     
@@ -538,7 +545,7 @@ doc-text-printer-request-change-salary =
     
     I hereby request consideration for a salary increase/decrease of (amount or number of percent)
     
-    Employee recieving salary change: 
+    Employee recieving salary change:
 
     Employees job title:
     
@@ -562,7 +569,7 @@ doc-text-printer-request-for-non-listed-employment =
     Compiler of the document:
     Position of Document Compiler:
     
-    I request consideration for acceptance into the current shift workforce of the following person/s in a non-listed position.
+    I request consideration for acceptance into the current shift workforce of the following person in a non-listed position.
 
     Name of applicant:
 
@@ -570,11 +577,11 @@ doc-text-printer-request-for-non-listed-employment =
     
     Responsible for the employee's head or coworker:
     
-    Position Work Performed (SOP):
+    Position work performed (SOP):
     
     Access provided to the employee:
     
-    Reason for Employment:
+    Reason for employment:
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -594,16 +601,15 @@ doc-text-printer-request-for-promotion =
     Compiler of the document:
     Position of Document Compiler:
     
- 
     I assert that the following employee has obtained the necessary qualifications and experience to be promoted.
 
     Employee to be promoted:
     
-    Requested Position:
+    Requested position:
     
     Persons responsible for the employee's chapter or officer:
     
-    Reason for Promotion:
+    Reason for promotion:
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -622,8 +628,8 @@ doc-text-printer-request-documents =
     Time and Date:
     Compiler of the document:
  
-    
-    I, (full name), in the capacity of Internal Affairs Agent, request a copy/original of the documents for verification of compliance with the Corporate Act:
+    I, (full name), in the capacity of Internal Affairs Agent, request a copy/original of the following document(s) for verification of compliance with the Corporate Act:
+    ⠀[bullet] ...
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -643,9 +649,9 @@ doc-text-printer-request-euthanasia =
     Compiler of the document:
     Position of Document Compiler:
     
-    I formally equest the assistance of the medical department in performing euthanasia as a medical treatment for the reason of: (specify reason for request). 
+    I formally request the assistance of the medical department in performing euthanasia as a medical treatment for the reason of: (specify reason for request). 
 
-    I am familiar with the implications of this decision, and the rationality and humanity of this decision has been established by the medical staff. 
+    I am familiar with the implications of this decision, and the rationality and humanity of this decision has been established by the medical staff.
 
     I have no claims against the medical department in their adherence to euthanasia protocols.
 
@@ -704,8 +710,60 @@ doc-text-printer-request-modernization =
 
 
 
+doc-text-printer-request-ert =
+   ⠀[logo]            [cclogo] 
+
+                             [head=3]NT-CC Consortium Services[/head]
+
+                  [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
+    ────────────────────────────────────────
+   ⠀⠀           [bold]EMERGENCY RESPONSE TEAM REQUEST[/bold]
+    ────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    Position of Document Compiler:
+
+    Threat(s) to the station:
+    ⠀[bullet] ...
+
+    Type of ERT requested:
+    (Security / Engineering / Janitorial / Medical / ...)
+
+    Fatalities (approximate number):
+
+   ⠀ [italic]Warning, abuse of this form may lead to immediate termination[/italic]
+   ⠀ [italic]of the contract of the person(s) involved in this request.[/italic]
+    ────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+
+
+
+doc-text-printer-product-order =
+   ⠀[logo]            [cclogo] 
+
+                             [head=3]NT-CC Consortium Services[/head]
+
+                  [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
+    ────────────────────────────────────────
+   ⠀⠀                                 [bold]PRODUCT ORDER[/bold]
+    ────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    Position of Document Compiler:
+    
+    Request to produce products by the following department:
+
+    List of products required:
+    
+    Reason for order:
+    
+    ────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+
+
+
    
-# Complaintst
+# Complaints
 
 doc-text-printer-complaint-violation-labor-rules =
    ⠀[logo]            [cclogo] 
@@ -714,13 +772,13 @@ doc-text-printer-complaint-violation-labor-rules =
 
                   [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
     ────────────────────────────────────────
-   ⠀⠀  [bold]COMPLAINT FOR VIOLATION OF LABOUR REGULATIONS[/bold]
+    ⠀⠀[bold]COMPLAINT FOR VIOLATION OF LABOUR REGULATIONS[/bold]
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
     Position of Document Compiler:
     
-    I believe that the violations were committed by the follow.
+    I believe that the violations were committed by the follow:
     
     Department committing violations:
     
@@ -750,11 +808,10 @@ doc-text-printer-offense-complaint =
 
     Name of violator:
 
-    Corporate law breached:
+    Corporate law(s) breached:
     
     What happened from my point of view:
     
-
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
 
@@ -774,10 +831,9 @@ doc-text-printer-permission-equipment =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    
-    I, as department head of:
+    Position of Document Compiler:
 
-    Authorize the use of departmental work equipment.
+    Authorize the use of departmental work equipment of the following department:
 
     Equipment subject to authorisation:
     
@@ -807,7 +863,7 @@ doc-text-printer-search-permission =
     Compiler of the document:
     Position of Document Compiler:
     
-    I authorize the search of the following persons due to the suspiscions they are carrying contraband.
+    I authorize the search of the following person due to the suspiscion(s) they are carrying contraband.
 
     Name of searched person:
 
@@ -827,7 +883,7 @@ doc-text-printer-permission-to-carry-weapons =
 
                   [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
     ────────────────────────────────────────
-   ⠀⠀                                [bold]GUN PERMISSION[/bold]
+   ⠀⠀                             [bold]WEAPON PERMISSION[/bold]
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
@@ -840,9 +896,9 @@ doc-text-printer-permission-to-carry-weapons =
 
     Position of authorised person:
     
-    The weapon and the type of ammunition for it:
+    The weapon and, if applicable, the type of ammunition for it:
     
-    The method of obtaining the weapon and the ammunition for it:
+    The method of obtaining the weapon and, if applicable, the ammunition for it:
     
     Reason for authorization:
     
@@ -866,7 +922,7 @@ doc-text-printer-permission-dispose-body =
     
     I authorize the disposal of the body of the following person: 
 
-    In the position of :
+    In the position of:
     
     Reason for disposal:
 
@@ -915,11 +971,7 @@ doc-text-printer-surgery-consent-permit =
     Compiler of the document:
     Position of Document Compiler:
     
-    In sound mind I authorise the following person to perform surgery upon me:
-
-    Name of surgeon:
-    
-    Name of Patient:
+    In sound mind I authorise (name of Surgeon/CMO) to perform surgery upon me.
     
     Reason for Surgery:
 
@@ -1010,11 +1062,11 @@ doc-text-printer-prisoner-parole-order =
     Compiler of the document:
     Position of Document Compiler:
     
-    I authorize the release of following detainee: 
+    I authorize the release of following detainee:
     
     Upon issuance of parole, the detainee will be issued a civilian occupation with mandatory work until the end of the shift.
 
-    Issued Occupation:
+    Issued occupation:
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -1042,7 +1094,7 @@ doc-text-printer-order-recognizing-reasonableness-creature =
     
     The established full name of the creature:
     
-    The creature is accepted as a assistant of the station until the end of the shift.
+    The creature is accepted as an assistant of the station until the end of the shift.
     
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
@@ -1060,11 +1112,11 @@ doc-text-printer-medical-intervention-order =
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler: 
+    Position of Document Compiler:
     
     I, in my professional opinion, order a medical intervention effective immediately.
     
-    Person to recieve intervention:
+    Person to receive intervention:
 
     Grounds for the intervention:
     
@@ -1072,27 +1124,36 @@ doc-text-printer-medical-intervention-order =
    ⠀                                    [italic]Place for stamps[/italic]
 
 
-   
-# Orders
 
-doc-text-printer-product-order =
+doc-text-printer-execution-dnr-order =
    ⠀[logo]            [cclogo] 
 
                              [head=3]NT-CC Consortium Services[/head]
 
                   [center][color=#1f75bb][italic][bold]   OFFICIAL CENTCOMM DOCUMENTATION[/bold][/italic][/color][/center]
     ────────────────────────────────────────
-   ⠀⠀                                 [bold]PRODUCT ORDER[/bold]
+   ⠀⠀             [bold]EXECUTION AND DO NOT REVIVE ORDER[/bold]
     ────────────────────────────────────────
     Time and Date:
     Compiler of the document:
-    Position of Document Compiler:    
+    Position of Document Compiler:
     
-    Request to produce products by the following department:
+    Name of Prisoner: 
+    Former position of Prisoner:
 
-    List of products required:
-    
-    Reason for order:
-    
+    Crimes committed:
+    ⠀[bullet] ...
+
+    Reason for the execution and DNR:
+    ⠀[bullet] ...
+
+    Authority ordering the Execution (Name + Position): 
+
+   ⠀ [italic]This order can only be issued by the (Acting) Captain of the[/italic]
+   ⠀ [italic]station. If a Magistrate is present, they can overrule the Captain[/italic]
+   ⠀ [italic]on the decision, and their stamp is required.[/italic]
+   ⠀ [italic]The prisoner is to remain restrained in a secure jail cell.[/italic]
+   ⠀ [italic]The execution method is to be chosen by the prisoner, to a[/italic]
+   ⠀ [italic]lawful extent, and must be as humane as possible.[/italic]
     ────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]

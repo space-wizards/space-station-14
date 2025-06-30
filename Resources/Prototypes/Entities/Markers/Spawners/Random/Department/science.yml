@@ -26,8 +26,6 @@
     - PowerCellSmall
     - PowerCellMedium
     - FlashlightLantern
-    - MatterBinStockPart
-    - CapacitorStockPart
     - MicroManipulatorStockPart
     - Beaker
     chance: 0.8
@@ -63,8 +61,6 @@
       - id: SheetGlass10
       - id: ToolboxElectricalFilled
       - id: ToolboxMechanicalFilled
-      - id: MatterBinStockPart
-      - id: CapacitorStockPart
       - id: MicroManipulatorStockPart
     # Rare Group
     - !type:GroupSelector
@@ -107,19 +103,12 @@
       state: generic
   - type: RandomSpawner
     rarePrototypes:
-    - BorgModuleDefibrillator
+    - BorgModuleAdvancedChemical
     - BorgModuleAdvancedCleaning
-    - BorgModuleClowning
-    - BorgModuleGardening
-    - BorgModuleHarvesting
+    - BorgModuleAdvancedTool
+
     rareChance: 0.1
     prototypes:
-    - BorgModuleCable
     - BorgModuleFireExtinguisher
-    - BorgModuleGPS
-    - BorgModuleRadiationDetection
-    - BorgModuleTool
-    - BorgModuleArtifact
-    - BorgModuleAnomaly
     chance: 0.9
     offset: 0.2

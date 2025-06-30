@@ -2,9 +2,9 @@
   id: StarlightOasis
   mapName: 'Oasis'
   mapPath: /Maps/_Starlight/Stations/Oasis.yml
-  minPlayers: 70
+  minPlayers: 65
   stations:
-    Oasis:
+    StarlightOasis:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -27,7 +27,7 @@
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 3, 3 ]
             Zookeeper: [ 1, 1 ]
-            Reporter: [ 1, 1 ]
+            Reporter: [ 1, 2 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
@@ -40,11 +40,11 @@
             Paramedic: [ 2, 2 ]
             MedicalIntern: [ 4, 4 ]
             Psychologist: [ 1, 1 ]
-            Surgeon: [ 1, 1 ]
+            Surgeon: [ 2, 2 ]
             #science
             ResearchDirector: [ 1, 1 ]
-            Scientist: [ 5, 5 ]
-            ResearchAssistant: [ 6, 6 ]
+            Scientist: [ 6, 6 ]
+            ResearchAssistant: [ 5, 5 ]
             Roboticist: [ 2, 2 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
@@ -58,14 +58,15 @@
             SalvageSpecialist: [ 3, 4 ]
             MiningSpecialist: [ 3, 3 ]
             CargoTechnician: [ 4, 4 ]
+            MailTech: [ 1, 2 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
+            Musician: [ 1, 2 ]
             #silicon
             StationAi: [ 1, 1 ]
-            Borg: [ 3, 3 ]
+            Borg: [ 3, 4 ]
             #law
             Magistrate: [ 1, 1 ]
             IAA: [ 2, 2 ]

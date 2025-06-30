@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Shared.Screen;
 using Content.Shared.Screen.Components;
+using Content.Shared.TextScreen;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -28,7 +29,7 @@ namespace Content.Client.Screen;
 public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     /// <summary>
     ///     Contains char/state Key/Value pairs. <br/>
@@ -91,11 +92,11 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
 
         for (var i = 0; i < screen.RowLength; i++)
         {
-            sprite.LayerMapReserveBlank(TimerMapKey + i);
+            _sprite.LayerMapReserve((uid, sprite), TimerMapKey + i);
             timer.LayerStatesToDraw.Add(TimerMapKey + i, null);
-            sprite.LayerSetRSI(TimerMapKey + i, new ResPath(TextPath));
-            sprite.LayerSetColor(TimerMapKey + i, screen.Color);
-            sprite.LayerSetState(TimerMapKey + i, DefaultState);
+            _sprite.LayerSetRsi((uid, sprite), TimerMapKey + i, new ResPath(TextPath));
+            _sprite.LayerSetColor((uid, sprite), TimerMapKey + i, screen.Color);
+            _sprite.LayerSetRsiState((uid, sprite), TimerMapKey + i, DefaultState);
         }
     }
 
@@ -112,16 +113,16 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             return;
 
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.Color, out var color) && color is Color)
-            component.Color = (Color) color;
+            component.Color = (Color)color;
 
         // DefaultText: fallback text e.g. broadcast updates from comms consoles
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.DefaultText, out var newDefault) && newDefault is string)
-            component.Text = SegmentText((string) newDefault, component);
+            component.Text = SegmentText((string)newDefault, component);
 
         // ScreenText: currently rendered text e.g. the "ETA" accompanying shuttle timers
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenText, out var text) && text is string)
         {
-            component.TextToDraw = SegmentText((string) text, component);
+            component.TextToDraw = SegmentText((string)text, component);
             ResetText(uid, component);
             BuildTextLayers(uid, component, args.Sprite);
             if (TryComp<ScreenComponent>(uid, out var screen) && screen.CurrentScreen != ScreenType.ShuttleTime)
@@ -130,9 +131,8 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             DrawLayers(uid, component.LayerStatesToDraw);
         }
 
-        if (args.AppearanceData.TryGetValue(TextScreenVisuals.TargetTime, out var time) && time is TimeSpan)
+        if (args.AppearanceData.TryGetValue(TextScreenVisuals.TargetTime, out var time) && time is TimeSpan target)
         {
-            var target = (TimeSpan) time;
             if (target > _gameTiming.CurTime)
             {
                 var timer = EnsureComp<ScreenTimerComponent>(uid);
@@ -149,6 +149,7 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             }
         }
         
+        // Starlight
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.AlertLevel, out var alertLevel))
         {
             if (TryComp<ScreenComponent>(uid, out var screenComp) && TryComp<SpriteComponent>(uid, out var sprite))
@@ -174,7 +175,7 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             return;
 
         foreach (var key in timer.LayerStatesToDraw.Keys)
-            sprite.RemoveLayer(key);
+            _sprite.RemoveLayer((uid, sprite), key);
 
         RemComp<ScreenTimerComponent>(uid);
 
@@ -210,7 +211,7 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             return;
 
         foreach (var key in component.LayerStatesToDraw.Keys)
-            sprite.RemoveLayer(key);
+            _sprite.RemoveLayer((uid, sprite), key);
 
         component.LayerStatesToDraw.Clear();
 
@@ -218,11 +219,11 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             for (var i = 0; i < component.RowLength; i++)
             {
                 var key = TextMapKey + row + i;
-                sprite.LayerMapReserveBlank(key);
+                _sprite.LayerMapReserve((uid, sprite), key);
                 component.LayerStatesToDraw.Add(key, null);
-                sprite.LayerSetRSI(key, new ResPath(TextPath));
-                sprite.LayerSetColor(key, component.Color);
-                sprite.LayerSetState(key, DefaultState);
+                _sprite.LayerSetRsi((uid, sprite), key, new ResPath(TextPath));
+                _sprite.LayerSetColor((uid, sprite), key, component.Color);
+                _sprite.LayerSetRsiState((uid, sprite), key, DefaultState);
             }
     }
 
@@ -248,7 +249,8 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             for (var chr = 0; chr < min; chr++)
             {
                 component.LayerStatesToDraw[TextMapKey + rowIdx + chr] = GetStateFromChar(row[chr]);
-                sprite.LayerSetOffset(
+                _sprite.LayerSetOffset(
+                    (uid, sprite),
                     TextMapKey + rowIdx + chr,
                     Vector2.Multiply(
                         new Vector2((chr - min / 2f + 0.5f) * CharWidth, -rowIdx * component.RowOffset),
@@ -267,18 +269,19 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        string time = TimeToString(
+        var time = TimeToString(
             (_gameTiming.CurTime - timer.Target).Duration(),
             false,
             screen.HourFormat, screen.MinuteFormat, screen.SecondFormat
             );
 
-        int min = Math.Min(time.Length, screen.RowLength);
+        var min = Math.Min(time.Length, screen.RowLength);
 
-        for (int i = 0; i < min; i++)
+        for (var i = 0; i < min; i++)
         {
             timer.LayerStatesToDraw[TimerMapKey + i] = GetStateFromChar(time[i]);
-            sprite.LayerSetOffset(
+            _sprite.LayerSetOffset(
+                (uid, sprite),
                 TimerMapKey + i,
                 Vector2.Multiply(
                     new Vector2((i - min / 2f + 0.5f) * CharWidth, 0f),
@@ -297,7 +300,7 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             return;
 
         foreach (var (key, state) in layerStates.Where(pairs => pairs.Value != null))
-            sprite.LayerSetState(key, state);
+            _sprite.LayerSetRsiState((uid, sprite), key, state);
     }
     
     /// <summary>
@@ -454,8 +457,8 @@ public sealed class ScreenSystem : VisualizerSystem<ScreenVisualsComponent>
             return null;
 
         // First checks if its one of our special characters
-        if (CharStatePairs.ContainsKey(character.Value))
-            return CharStatePairs[character.Value];
+        if (CharStatePairs.TryGetValue(character.Value, out var value))
+            return value;
 
         // Or else it checks if its a normal letter or digit
         if (char.IsLetterOrDigit(character.Value))

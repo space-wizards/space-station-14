@@ -37,6 +37,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Content.Shared.Speech; // Starlight
 
 namespace Content.Server.Chat.Systems;
 
@@ -64,6 +65,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly CollectiveMindUpdateSystem _collectiveMind = default!;
+    [Dependency] private readonly SpeechSystem _speechSystem = default!; //Starlight
 
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperClearRange = 2; // how far whisper goes while still being understandable, in world units
@@ -184,7 +186,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             TrySendInGameOOCMessage(source, message, InGameOOCChatType.Dead, range == ChatTransmitRange.HideChat, shell, player);
             return;
         }
-        
+
+        //I despise this being here but there doesnt seem to be a cleaner way to watch for tags or complete component removals
         if (TryComp<CollectiveMindComponent>(source, out var collective))
             _collectiveMind.UpdateCollectiveMind(source, collective);
 
@@ -249,7 +252,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 return;
             }
         }
-        
+
         if (desiredType == InGameICChatType.CollectiveMind)
         {
             if (TryProccessCollectiveMindMessage(source, message, out var modMessage, out var channel))
@@ -439,29 +442,87 @@ public sealed partial class ChatSystem : SharedChatSystem
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
     }
 
+    /// Starlight Start:
+    /// <summary>
+    /// Dispatches an announcement from the Communications Console, replacing the default announcement.
+    /// </summary>
+    /// <param name="source">The entity making the announcement (Communications Console entity)</param>
+    /// <param name="message">The contents of the message</param>
+    /// <param name="sender">The sender name</param>
+    /// <param name="playSound">Play the announcement sound</param>
+    /// <param name="announcementSound">Sound to play</param>
+    /// <param name="colorOverride">Optional color for the announcement message</param>
+    public void DispatchCommunicationsConsoleAnnouncement(
+        EntityUid source,
+        string message,
+        string? sender = null,
+        bool playSound = true,
+        SoundSpecifier? announcementSound = null,
+        Color? colorOverride = null)
+    {
+        sender ??= Loc.GetString("chat-manager-sender-announcement");
+
+        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
+
+        var station = _stationSystem.GetOwningStation(source);
+
+        if (station == null)
+        {
+            // you can't make a communications console announcement without a station
+            return;
+        }
+
+        if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
+
+        var filter = _stationSystem.GetInStation(stationDataComp);
+
+        // Custom behavior: For example, change the chat channel or message formatting here if needed
+        _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source, false, true, colorOverride);
+
+        if (playSound)
+        {
+            var commsConsoleSound = announcementSound ?? new SoundPathSpecifier("/Audio/_Starlight/Announcements/announce2.ogg");
+            var resolvedSound = _audio.ResolveSound(commsConsoleSound);
+            _audio.PlayGlobal(resolvedSound, filter, true, AudioParams.Default.WithVolume(-2f));
+        }
+
+        RaiseLocalEvent(new AnnouncementSpokeEvent
+        {
+            AnnouncementSound = announcementSound,
+            Message = message,
+            Source = filter
+        });
+
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Communications Console Announcement on {station} from {sender}: {message}");
+    }
+
+    // Starlight End
+
     #endregion
 
     #region Private API
 
     private void SendCollectiveMindChat(EntityUid source, string message, CollectiveMindPrototype? collectiveMind)
     {
-        if (_mobStateSystem.IsDead(source) || collectiveMind == null || message == "" || !TryComp<CollectiveMindComponent>(source, out var sourseCollectiveMindComp) || !sourseCollectiveMindComp.Minds.ContainsKey(collectiveMind.ID))
+        if (_mobStateSystem.IsDead(source) || collectiveMind == null || message == "" || !TryComp<CollectiveMindComponent>(source, out var sourceCollectiveMindComp) || !sourceCollectiveMindComp.Minds.ContainsKey(collectiveMind))
             return;
 
         var clients = Filter.Empty();
+        var receivers = new List<EntityUid>();
         var mindQuery = EntityQueryEnumerator<CollectiveMindComponent, ActorComponent>();
         while (mindQuery.MoveNext(out var uid, out var collectMindComp, out var actorComp))
         {
             if (_mobStateSystem.IsDead(uid))
                 continue;
 
-            if (collectMindComp.Minds.ContainsKey(collectiveMind.ID))
+            if (collectMindComp.Minds.ContainsKey(collectiveMind))
             {
                 clients.AddPlayer(actorComp.PlayerSession);
+                receivers.Add(uid);
             }
         }
-        
-        var Number = $"{sourseCollectiveMindComp.Minds[collectiveMind.ID]}";
+
+        var Number = $"{sourceCollectiveMindComp.Minds[collectiveMind].MindId}";
 
         var admins = _adminManager.ActiveAdmins
             .Select(p => p.Channel);
@@ -488,8 +549,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             source,
             false,
             true,
-            collectiveMind.Color); 
-            
+            collectiveMind.Color);
+
         // FOR ADMINS
         _chatManager.ChatMessageToMany(ChatChannel.CollectiveMind,
             FormattedMessage.EscapeText(message),
@@ -499,6 +560,15 @@ public sealed partial class ChatSystem : SharedChatSystem
             true,
             admins,
             collectiveMind.Color);
+
+        //raise event so TTS and other related things work
+        var ev = new CollectiveMindSpokeEvent
+        {
+            Source = source,
+            Message = message,
+            Receivers = receivers.ToArray()
+        };
+        RaiseLocalEvent(source, ev, true);
     }
 
     private void SendEntitySpeak(

@@ -40,6 +40,14 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    #region Starlight
+    Mew:
+      collection: FelionoidMews
+    Meow:
+      collection: FelionoidMeows
+    Trill:
+      collection: FelionoidTrills
+    #endregion Starlight
 
 - type: emoteSounds
   id: FemaleHuman
@@ -82,6 +90,14 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    #region Starlight
+    Mew:
+      collection: FelionoidMews
+    Meow:
+      collection: FelionoidMeows
+    Trill:
+      collection: FelionoidTrills
+    #endregion Starlight
 
 - type: emoteSounds
   id: MaleReptilian
@@ -399,6 +415,8 @@
   params:
     variation: 0.05
   sounds:
+    Scream:
+      collection: SiliconScreams
     Beep:
       path: /Audio/Machines/twobeep.ogg
     Chime:
@@ -417,6 +435,8 @@
   params:
     variation: 0.05
   sounds:
+    Scream:
+      collection: SiliconScreams
     Laugh:
       path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
     Beep:
@@ -431,7 +451,7 @@
       path: /Audio/Items/bikehorn.ogg
     Ping:
       path: /Audio/Effects/Cargo/ping.ogg
-      
+
 - type: emoteSounds
   id: UnisexResomi
   params:
@@ -455,6 +475,32 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: DeathGasp
+    Hisses:
+      collection: FelionoidHisses
+    Purr:
+      collection: FelionoidPurrs
+    Growl:
+      collection: FelionoidGrowls
+
+- type: emoteSounds
+  id: UnisexSiliconXenoborg
+  params:
+    variation: 0.05
+  sounds:
+    Laugh:
+      collection: XenoborgLaugh
+    Beep:
+      collection: XenoborgBeep
+    Chime:
+      collection: XenoborgChime
+    Buzz:
+      collection: XenoborgBuzz
+    Buzz-Two:
+      collection: XenoborgBuzzTwo
+    Honk:
+      collection: XenoborgBikeHorn
+    Ping:
+      collection: XenoborgPing
 
 # body emotes
 - type: emoteSounds
@@ -486,7 +532,7 @@
     Salute:
       path: /Audio/Voice/Diona/diona_salute.ogg
       params:
-       volume: -5
+        volume: -5
 
 - type: emoteSounds
   id: ReptilianBodyEmotes

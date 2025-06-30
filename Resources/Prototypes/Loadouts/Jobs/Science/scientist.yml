@@ -131,10 +131,21 @@
   equipment:
     gloves: ClothingHandsGlovesLatex
 
-#- type: loadout Only for roboticist
-#  id: RobohandsGloves
-#  equipment:
-#    gloves: ClothingHandsGlovesRobohands
+- type: loadout
+  id: RobohandsGloves
+  equipment:
+    gloves: ClothingHandsGlovesRobohands
+
+# Goggles
+- type: loadout
+  id: RoboticistWeldingGoggles
+  equipment:
+    eyes: ClothingEyesWeldingGoggles
+
+- type: loadout
+  id: RoboticistDiagnosticsHud
+  equipment:
+    eyes: ClothingEyesHudDiagnostic
 
 # Shoes
 - type: loadout

@@ -1,636 +1,636 @@
 ﻿- type: stack
   id: FloorTileDark
-  name: dark tile
+  name: stack-dark-tile
   spawn: FloorTileItemDark
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkDiagonalMini
-  name: dark steel diagonal mini tile
+  name: stack-dark-steel-diagonal-mini-tile
   spawn: FloorTileItemDarkDiagonalMini
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkDiagonal
-  name: dark steel diagonal tile
+  name: stack-dark-steel-diagonal-tile
   spawn: FloorTileItemDarkDiagonal
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkHerringbone
-  name: dark steel herringbone
+  name: stack-dark-steel-herringbone
   spawn: FloorTileItemDarkHerringbone
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkMini
-  name: dark steel mini tile
+  name: stack-dark-steel-mini-tile
   spawn: FloorTileItemDarkMini
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkMono
-  name: dark steel mono tile
+  name: stack-dark-steel-mono-tile
   spawn: FloorTileItemDarkMono
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkPavement
-  name: dark steel pavement
+  name: stack-dark-steel-pavement
   spawn: FloorTileItemDarkPavement
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkPavementVertical
-  name: dark steel vertical pavement
+  name: stack-dark-steel-vertical-pavement
   spawn: FloorTileItemDarkPavementVertical
   maxCount: 30
 
 - type: stack
   id: FloorTileDarkOffset
-  name: offset dark steel tile
+  name: stack-offset-dark-steel-tile
   spawn: FloorTileItemDarkOffset
   maxCount: 30
 
 - type: stack
   id: FloorTileSteel
-  name: steel tile
+  name: stack-steel-tile
   spawn: FloorTileItemSteel
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelOffset
-  name: offset steel tile
+  name: stack-offset-steel-tile
   spawn: FloorTileItemSteelOffset
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelDiagonalMini
-  name: steel diagonal mini tile
+  name: stack-steel-diagonal-mini-tile
   spawn: FloorTileItemSteelDiagonalMini
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelDiagonal
-  name: steel diagonal tile
+  name: stack-steel-diagonal-tile
   spawn: FloorTileItemSteelDiagonal
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelHerringbone
-  name: steel herringbone
+  name: stack-steel-herringbone
   spawn: FloorTileItemSteelHerringbone
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelMini
-  name: steel mini tile
+  name: stack-steel-mini-tile
   spawn: FloorTileItemSteelMini
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelMono
-  name: steel mono tile
+  name: stack-steel-mono-tile
   spawn: FloorTileItemSteelMono
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelPavement
-  name: steel pavement
+  name: stack-steel-pavement
   spawn: FloorTileItemSteelPavement
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelPavementVertical
-  name: steel vertical pavement
+  name: stack-steel-vertical-pavement
   spawn: FloorTileItemSteelPavementVertical
   maxCount: 30
 
 - type: stack
   id: FloorTileWhite
-  name: white tile
+  name: stack-white-tile
   spawn: FloorTileItemWhite
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteOffset
-  name: offset white steel tile
+  name: stack-offset-white-steel-tile
   spawn: FloorTileItemWhiteOffset
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteDiagonalMini
-  name: white steel diagonal mini tile
+  name: stack-white-steel-diagonal-mini-tile
   spawn: FloorTileItemWhiteDiagonalMini
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteDiagonal
-  name: white steel diagonal tile
+  name: stack-white-steel-diagonal-tile
   spawn: FloorTileItemWhiteDiagonal
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteHerringbone
-  name: white steel herringbone
+  name: stack-white-steel-herringbone
   spawn: FloorTileItemWhiteHerringbone
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteMini
-  name: white steel mini tile
+  name: stack-white-steel-mini-tile
   spawn: FloorTileItemWhiteMini
   maxCount: 30
 
 - type: stack
   id: FloorTileWhiteMono
-  name: white steel mono tile
+  name: stack-white-steel-mono-tile
   spawn: FloorTileItemWhiteMono
   maxCount: 30
 
 - type: stack
   id: FloorTileWhitePavement
-  name: white steel pavement
+  name: stack-white-steel-pavement
   spawn: FloorTileItemWhitePavement
   maxCount: 30
 
 - type: stack
   id: FloorTileWhitePavementVertical
-  name: white steel vertical pavement
+  name: stack-white-steel-vertical-pavement
   spawn: FloorTileItemWhitePavementVertical
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelCheckerDark
-  name: steel dark checker tile
+  name: stack-steel-dark-checker-tile
   spawn: FloorTileItemSteelCheckerDark
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelCheckerLight
-  name: steel light checker tile
+  name: stack-steel-light-checker-tile
   spawn: FloorTileItemSteelCheckerLight
   maxCount: 30
 
 - type: stack
   id: FloorTileMetalDiamond
-  name: steel tile
+  name: stack-steel-tile
   spawn: FloorTileItemMetalDiamond
   maxCount: 30
 
 - type: stack
   id: FloorTileWood
-  name: wood floor
+  name: stack-wood-floor
   spawn: FloorTileItemWood
   maxCount: 30
 
 - type: stack
   id: FloorTileTechmaint
-  name: techmaint floor
+  name: stack-techmaint-floor
   spawn: FloorTileItemTechmaint
   maxCount: 30
 
 - type: stack
   id: FloorTileFreezer
-  name: freezer tile
+  name: stack-freezer-tile
   spawn: FloorTileItemFreezer
   maxCount: 30
 
 - type: stack
   id: FloorTileShowroom
-  name: showroom tile
+  name: stack-showroom-tile
   spawn: FloorTileItemShowroom
   maxCount: 30
 
 - type: stack
   id: FloorTileGCircuit
-  name: green-circuit floor
+  name: stack-green-circuit-floor
   spawn: FloorTileItemGCircuit
   maxCount: 30
 
 - type: stack
   id: FloorTileGold
-  name: gold floor
+  name: stack-gold-floor
   spawn: FloorTileItemGold
   maxCount: 30
 
 - type: stack
   id: FloorTileMono
-  name: mono tile
+  name: stack-mono-tile
   spawn: FloorTileItemMono
   maxCount: 30
 
 - type: stack
   id: FloorTileBrassFilled
-  name: filled brass plate
+  name: stack-filled-brass-plate
   spawn: FloorTileItemBrassFilled
   maxCount: 30
 
 - type: stack
   id: FloorTileBrassReebe
-  name: smooth brass plate
+  name: stack-smooth-brass-plate
   spawn: FloorTileItemBrassReebe
   maxCount: 30
 
 - type: stack
   id: FloorTileLino
-  name: linoleum floor
+  name: stack-linoleum-floor
   spawn: FloorTileItemLino
   maxCount: 30
 
 - type: stack
   id: FloorTileHydro
-  name: hydro tile
+  name: stack-hydro-tile
   spawn: FloorTileItemHydro
   maxCount: 30
 
 - type: stack
   id: FloorTileLime
-  name: lime tile
+  name: stack-lime-tile
   spawn: FloorTileItemLime
   maxCount: 30
 
 - type: stack
   id: FloorTileDirty
-  name: dirty tile
+  name: stack-dirty-tile
   spawn: FloorTileItemDirty
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleWhite
-  name: white shuttle tile
+  name: stack-white-shuttle-tile
   spawn: FloorTileItemShuttleWhite
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleBlue
-  name: blue shuttle tile
+  name: stack-blue-shuttle-tile
   spawn: FloorTileItemShuttleBlue
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleOrange
-  name: orange shuttle tile
+  name: stack-orange-shuttle-tile
   spawn: FloorTileItemShuttleOrange
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttlePurple
-  name: purple shuttle tile
+  name: stack-purple-shuttle-tile
   spawn: FloorTileItemShuttlePurple
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleRed
-  name: red shuttle tile
+  name: stack-red-shuttle-tile
   spawn: FloorTileItemShuttleRed
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleGrey
-  name: grey shuttle tile
+  name: stack-grey-shuttle-tile
   spawn: FloorTileItemShuttleGrey
   maxCount: 30
 
 - type: stack
   id: FloorTileStackShuttleBlack
-  name: black shuttle tile
+  name: stack-black-shuttle-tile
   spawn: FloorTileItemShuttleBlack
   maxCount: 30
 
 - type: stack
   id: FloorTileStackEighties
-  name: eighties floor tile
+  name: stack-eighties-floor-tile
   spawn: FloorTileItemEighties
   maxCount: 30
 
 - type: stack
   id: FloorTileStackArcadeBlue
-  name: blue arcade tile
+  name: stack-blue-arcade-tile
   spawn: FloorTileItemArcadeBlue
   maxCount: 30
 
 - type: stack
   id: FloorTileStackArcadeBlue2
-  name: blue arcade tile
+  name: stack-blue-arcade-tile
   spawn: FloorTileItemArcadeBlue2
   maxCount: 30
 
 - type: stack
   id: FloorTileStackArcadeRed
-  name: red arcade tile
+  name: stack-red-arcade-tile
   spawn: FloorTileItemArcadeRed
   maxCount: 30
 
 - type: stack
   id: FloorCarpetRed
-  name: red carpet tile
+  name: stack-red-carpet-tile
   spawn: FloorCarpetItemRed
   maxCount: 30
 
 - type: stack
   id: FloorCarpetBlack
-  name: block carpet tile
+  name: stack-block-carpet-tile
   spawn: FloorCarpetItemBlack
   maxCount: 30
 
 - type: stack
   id: FloorCarpetBlue
-  name: blue carpet tile
+  name: stack-blue-carpet-tile
   spawn: FloorCarpetItemBlue
   maxCount: 30
 
 - type: stack
   id: FloorCarpetGreen
-  name: green carpet tile
+  name: stack-green-carpet-tile
   spawn: FloorCarpetItemGreen
   maxCount: 30
 
 - type: stack
   id: FloorCarpetOrange
-  name: orange carpet tile
+  name: stack-orange-carpet-tile
   spawn: FloorCarpetItemOrange
   maxCount: 30
 
 - type: stack
   id: FloorCarpetSkyBlue
-  name: skyblue carpet tile
+  name: stack-skyblue-carpet-tile
   spawn: FloorCarpetItemSkyBlue
   maxCount: 30
 
 - type: stack
   id: FloorCarpetPurple
-  name: purple carpet tile
+  name: stack-purple-carpet-tile
   spawn: FloorCarpetItemPurple
   maxCount: 30
 
 - type: stack
   id: FloorCarpetPink
-  name: pink carpet tile
+  name: stack-pink-carpet-tile
   spawn: FloorCarpetItemPink
   maxCount: 30
 
 - type: stack
   id: FloorCarpetCyan
-  name: cyan carpet tile
+  name: stack-cyan-carpet-tile
   spawn: FloorCarpetItemCyan
   maxCount: 30
 
 - type: stack
   id: FloorCarpetWhite
-  name: white carpet tile
+  name: stack-white-carpet-tile
   spawn: FloorCarpetItemWhite
   maxCount: 30
 
 - type: stack
   id: FloorTileStackCarpetClown
-  name: clown carpet tile
+  name: stack-clown-carpet-tile
   spawn: FloorTileItemCarpetClown
   maxCount: 30
 
 - type: stack
   id: FloorTileStackCarpetOffice
-  name: office carpet tile
+  name: stack-office-carpet-tile
   spawn: FloorTileItemCarpetOffice
   maxCount: 30
 
 - type: stack
   id: FloorTileStackBoxing
-  name: boxing ring tile
+  name: stack-boxing-ring-tile
   spawn: FloorTileItemBoxing
   maxCount: 30
 
 - type: stack
   id: FloorTileStackGym
-  name: gym floor tile
+  name: stack-gym-floor-tile
   spawn: FloorTileItemGym
   maxCount: 30
 
 - type: stack
   id: FloorTileElevatorShaft
-  name: elevator shaft tile
+  name: stack-elevator-shaft-tile
   spawn: FloorTileItemElevatorShaft
   maxCount: 30
 
 - type: stack
   id: FloorTileRockVault
-  name: rock vault tile
+  name: stack-rock-vault-tile
   spawn: FloorTileItemRockVault
   maxCount: 30
 
 - type: stack
   id: FloorTileBlue
-  name: blue floor tile
+  name: stack-blue-floor-tile
   spawn: FloorTileItemBlue
   maxCount: 30
 
 - type: stack
   id: FloorTileMining
-  name: mining floor tile
+  name: stack-mining-floor-tile
   spawn: FloorTileItemMining
   maxCount: 30
 
 - type: stack
   id: FloorTileMiningDark
-  name: dark mining floor tile
+  name: stack-dark-mining-floor-tile
   spawn: FloorTileItemMiningDark
   maxCount: 30
 
 - type: stack
   id: FloorTileMiningLight
-  name: light mining floor tile
+  name: stack-light-mining-floor-tile
   spawn: FloorTileItemMiningLight
   maxCount: 30
 
 - type: stack
   id: FloorTileBar
-  name: item bar floor tile
+  name: stack-item-bar-floor-tile
   spawn: FloorTileItemBar
   maxCount: 30
 
 - type: stack
   id: FloorTileClown
-  name: clown floor tile
+  name: stack-clown-floor-tile
   spawn: FloorTileItemClown
   maxCount: 30
 
 - type: stack
   id: FloorTileMime
-  name: mime floor tile
+  name: stack-mime-floor-tile
   spawn: FloorTileItemMime
   maxCount: 30
 
 - type: stack
   id: FloorTileKitchen
-  name: kitchen floor tile
+  name: stack-kitchen-floor-tile
   spawn: FloorTileItemKitchen
   maxCount: 30
 
 - type: stack
   id: FloorTileLaundry
-  name: laundry floor tile
+  name: stack-laundry-floor-tile
   spawn: FloorTileItemLaundry
   maxCount: 30
 
 - type: stack
   id: FloorTileConcrete
-  name: concrete tile
+  name: stack-concrete-tile
   spawn: FloorTileItemGrayConcrete
   maxCount: 30
 
 - type: stack
   id: FloorTileConcreteMono
-  name: concrete mono tile
+  name: stack-concrete-mono-tile
   spawn: FloorTileItemConcreteMono
   maxCount: 30
 
 - type: stack
   id: FloorTileConcreteSmooth
-  name: concrete smooth
+  name: stack-concrete-smooth
   spawn: FloorTileItemConcreteSmooth
   maxCount: 30
 
 - type: stack
   id: FloorTileGrayConcrete
-  name: gray concrete tile
+  name: stack-gray-concrete-tile
   spawn: FloorTileItemGrayConcrete
   maxCount: 30
 
 - type: stack
   id: FloorTileGrayConcreteMono
-  name: gray concrete mono tile
+  name: stack-gray-concrete-mono-tile
   spawn: FloorTileItemGrayConcreteMono
   maxCount: 30
 
 - type: stack
   id: FloorTileGrayConcreteSmooth
-  name: gray concrete smooth
+  name: stack-gray-concrete-smooth
   spawn: FloorTileItemGrayConcreteSmooth
   maxCount: 30
 
 - type: stack
   id: FloorTileOldConcrete
-  name: old concrete tile
+  name: stack-old-concrete-tile
   spawn: FloorTileItemOldConcrete
   maxCount: 30
 
 - type: stack
   id: FloorTileOldConcreteMono
-  name: old concrete mono tile
+  name: stack-old-concrete-mono-tile
   spawn: FloorTileItemOldConcreteMono
   maxCount: 30
 
 - type: stack
   id: FloorTileOldConcreteSmooth
-  name: old concrete smooth
+  name: stack-old-concrete-smooth
   spawn: FloorTileItemOldConcreteSmooth
   maxCount: 30
 
 - type: stack
   id: FloorTileSilver
-  name: silver floor tile
+  name: stack-silver-floor-tile
   spawn: FloorTileItemSilver
   maxCount: 30
 
 - type: stack
   id: FloorTileBCircuit
-  name: bcircuit floor tile
+  name: stack-bcircuit-floor-tile
   spawn: FloorTileItemBCircuit
   maxCount: 30
 
 - type: stack
   id: FloorTileRCircuit
-  name: red-circuit floor
+  name: stack-red-circuit-floor
   spawn: FloorTileItemRCircuit
   maxCount: 30
 
 - type: stack
   id: FloorTileGrass
-  name: grass floor tile
+  name: stack-grass-floor-tile
   spawn: FloorTileItemGrass
   maxCount: 30
 
 - type: stack
   id: FloorTileGrassJungle
-  name: grass jungle floor tile
+  name: stack-grass-jungle-floor-tile
   spawn: FloorTileItemGrassJungle
   maxCount: 30
 
 - type: stack
   id: FloorTileSnow
-  name: snow floor tile
+  name: stack-snow-floor-tile
   spawn: FloorTileItemSnow
   maxCount: 30
 
 - type: stack
   id: FloorTileWoodPattern
-  name: wood pattern floor
+  name: stack-wood-patter-floor
   spawn: FloorTileItemWoodPattern
   maxCount: 30
 
 - type: stack
   id: FloorTileFlesh
-  name: flesh floor
+  name: stack-flesh-floor
   spawn: FloorTileItemFlesh
   maxCount: 30
 
 - type: stack
   id: FloorTileSteelMaint
-  name: steel maint floor
+  name: stack-steel-maint-floor
   spawn: FloorTileItemSteelMaint
   maxCount: 30
 
 - type: stack
   id: FloorTileGratingMaint
-  name: grating maint floor
+  name: stack-grating-maint-floor
   spawn: FloorTileItemGratingMaint
   maxCount: 30
 
 - type: stack
   id: FloorTileWeb
-  name: web tile
+  name: stack-web-tile
   spawn: FloorTileItemWeb
   maxCount: 30
 
 # Faux science tiles
 - type: stack
   id: FloorTileAstroGrass
-  name: astro-grass floor
+  name: stack-astro-grass-floor
   spawn: FloorTileItemAstroGrass
   maxCount: 30
 
 - type: stack
   id: FloorTileMowedAstroGrass
-  name: mowed astro-grass floor
+  name: stack-mowed-astro-grass-floor
   spawn: FloorTileItemMowedAstroGrass
   maxCount: 30
 
 - type: stack
   id: FloorTileJungleAstroGrass
-  name: jungle astro-grass floor
+  name: stack-jungle-astro-grass-floor
   spawn: FloorTileItemJungleAstroGrass
   maxCount: 30
 
 - type: stack
   id: FloorTileAstroIce
-  name: astro-ice floor
+  name: stack-astro-ice-floor
   spawn: FloorTileItemAstroIce
   maxCount: 30
 
 - type: stack
   id: FloorTileAstroSnow
-  name: astro-snow floor
+  name: stack-astro-snow-floor
   spawn: FloorTileItemAstroSnow
   maxCount: 30
 
 - type: stack
   id: FloorTileAstroAsteroidSand
-  name: asteroid astro-sand floor
+  name: stack-asteroid-astro-sand-floor
   spawn: FloorTileItemAstroAsteroidSand
   maxCount: 30
 
 - type: stack
   id: FloorTileWoodLarge
-  name: large wood floor
+  name: stack-large-wood-floor
   spawn: FloorTileItemWoodLarge
   maxCount: 30

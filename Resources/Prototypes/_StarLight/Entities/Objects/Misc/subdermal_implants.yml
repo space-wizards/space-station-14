@@ -1,0 +1,33 @@
+- type: entity
+  id: USSPUplinkImplant
+  name: USSP uplink implant
+  description: A subdermal implant containing the USSP uplink radio.
+  parent: [ BaseSubdermalImplant, StorePresetUSSP ]
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionOpenSKBUplinkImplant
+      whitelist:
+        components:
+          - Hands
+    - type: Store
+      balance:
+        Telebond: 0
+    - type: UserInterface
+      interfaces:
+        enum.StoreUiKey.Key:
+          type: StoreBoundUserInterface
+    - type: USSPUplinkImplant
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MagillitisSerumImplant
+  name: magillitis serum implant
+  description: An experimental biochip which causes irreversable rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas.
+  categories: [HideSpawnMenu]
+  components:
+    - type: SubdermalImplant
+      implantAction: ActionActivateMagillitisSerumImplant
+      whitelist:
+        components:
+          - Hands

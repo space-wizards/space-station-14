@@ -1,0 +1,75 @@
+- type: gameMap
+  id: Starboard
+  mapName: 'Starboard'
+  mapPath: /Maps/_Starlight/Stations/Starboard.yml
+  minPlayers: 90
+  stations:
+    Starboard:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Starboard Depot {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'DS'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/_Starlight/Shuttles/emergency_starboard.yml
+        - type: StationJobs
+          availableJobs:
+            #service
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            Bartender: [ 2, 3 ]
+            Botanist: [ 3, 3 ]
+            Chef: [ 3, 3 ]
+            Janitor: [ 2, 3 ]
+            Chaplain: [ 2, 3 ]
+            Librarian: [ 1, 1 ]
+            ServiceWorker: [ 3, 5 ]
+            #engineering
+            ChiefEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 2, 3 ]
+            StationEngineer: [ 4, 6 ]
+            TechnicalAssistant: [ 2, 4 ]
+            #medical
+            ChiefMedicalOfficer: [ 1, 1 ]
+            Chemist: [ 2, 2 ]
+            MedicalDoctor: [ 4, 6 ]
+            MedicalIntern: [ 2, 4 ]
+            Paramedic: [ 2, 2 ]
+            Surgeon: [ 2, 3 ]
+            Psychologist: [ 1, 1 ]
+            #science
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 5, 7 ]
+            ResearchAssistant: [ 2, 4 ]
+            Roboticist: [ 2, 3 ]
+            #security
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 2, 2 ]
+            Detective: [ 1, 1 ]
+            SecurityOfficer: [ 6, 10 ]
+            SecurityCadet: [ 4, 6 ]
+            Brigmedic: [ 1, 1 ]
+            #supply
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 4 ]
+            CargoTechnician: [ 6, 7 ]
+            MiningSpecialist: [ 1, 2]
+            MailTech: [ 2, 3 ]
+            #civillian
+            Assistant: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 2, 3 ]   
+            Boxer: [ 2, 2 ]
+            Reporter: [ 2, 2 ]
+            #silicon
+            StationAi: [ 1, 1 ]
+            Borg: [ 4, 4 ]  
+            #law
+            Magistrate: [ 1, 1 ]
+            IAA: [ 2, 2 ]      
+            #Representives
+            BlueShield: [ 1, 1 ]
+            NanoTrasenRepresentative: [ 1, 1 ]

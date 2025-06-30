@@ -69,7 +69,7 @@ entities:
       pos: 0.53697205,0.547603
       parent: 1
     - type: BecomesStation
-      id: Amber
+      id: StarlightAmber
     - type: MapGrid
       chunks:
         -1,-1:

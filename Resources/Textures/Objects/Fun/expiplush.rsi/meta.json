@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Made by Orsoniks (rivey0 on discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "expi"
+    },
+    {
+      "name": "expi-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "expi-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "expi-equipped-HELMET",
+      "directions": 4
+    }
+  ]
+}

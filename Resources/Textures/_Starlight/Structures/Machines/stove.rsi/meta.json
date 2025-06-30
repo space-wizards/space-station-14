@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Paradise Station, modified by Starlight, enabled state modified by slycoolgamer",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "broken"
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "on"
+        },
+        {
+            "name": "enabled"
+        }
+      ]
+    }

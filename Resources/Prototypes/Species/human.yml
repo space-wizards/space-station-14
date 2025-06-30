@@ -7,6 +7,7 @@
   markingLimits: MobHumanMarkingLimits
   dollPrototype: MobHumanDummy
   skinColoration: HumanToned
+  customName: true # Starlight
 
 # The lack of a layer means that
 # this person cannot have round-start anything
@@ -17,6 +18,7 @@
 - type: speciesBaseSprites
   id: MobHumanSprites
   sprites:
+    Tail: MobHumanoidAnyMarking # Starlight
     Special: MobHumanoidAnyMarking
     Head: MobHumanHead
     Hair: MobHumanoidAnyMarking
@@ -39,8 +41,8 @@
 - type: markingPoints
   id: MobHumanMarkingLimits
   points:
-    Special: # the cat ear joke
-      points: 0
+    Special: # the cat ear joke / Starlight edit: Gave 1 point
+      points: 1
       required: false
     Hair:
       points: 1
@@ -51,8 +53,8 @@
     Snout:
       points: 1
       required: false
-    Tail: # the cat tail joke
-      points: 0
+    Tail: # the cat tail joke / Starlight edit: Gave 1 point
+      points: 1
       required: false
     HeadTop:
       points: 1
@@ -64,7 +66,7 @@
       points: 1
       required: false
     Chest:
-      points: 1
+      points: 2
       required: false
     Legs:
       points: 2

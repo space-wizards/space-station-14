@@ -42,6 +42,7 @@ namespace Content.Server.Nutrition.EntitySystems;
 /// </summary>
 public sealed class FoodSystem : EntitySystem
 {
+    private bool _isContextMenuAction = false; // Starlight
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly FlavorProfileSystem _flavorProfile = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -83,6 +84,11 @@ public sealed class FoodSystem : EntitySystem
     {
         if (ev.Handled)
             return;
+            
+        // Starlight: Skip if this food should only be eaten via context menu
+        if (HasComp<ContextMenuFoodComponent>(entity))
+            return;
+        // Starlight End
 
         var result = TryFeed(ev.User, ev.User, entity, entity.Comp);
         ev.Handled = result.Handled;
@@ -105,6 +111,14 @@ public sealed class FoodSystem : EntitySystem
     /// </summary>
     public (bool Success, bool Handled) TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
     {
+        // Starlight: The food should only be eaten via context menu and allow the event to continue for other interactions (like inserting into uplink)
+        bool isContextMenuAction = _isContextMenuAction;
+        _isContextMenuAction = false; // Reset the flag
+        
+        if (user == target && HasComp<ContextMenuFoodComponent>(food) && !isContextMenuAction)
+            return (false, false);
+        // Starlight End
+            
         //Suppresses eating yourself and alive mobs
         if (food == user || (_mobState.IsAlive(food) && foodComp.RequireDead))
             return (false, false);
@@ -336,6 +350,14 @@ public sealed class FoodSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
+        var attemptEv = new DestructionAttemptEvent();
+        RaiseLocalEvent(food, attemptEv);
+        if (attemptEv.Cancelled)
+            return;
+
+        var afterEvent = new AfterFullyEatenEvent(user);
+        RaiseLocalEvent(food, ref afterEvent);
+
         var dev = new DestructionEventArgs();
         RaiseLocalEvent(food, dev);
 
@@ -368,11 +390,11 @@ public sealed class FoodSystem : EntitySystem
 
     private void AddEatVerb(Entity<FoodComponent> entity, ref GetVerbsEvent<AlternativeVerb> ev)
     {
-        if (entity.Owner == ev.User ||
+        if ((entity.Owner == ev.User && !HasComp<ContextMenuFoodComponent>(entity)) ||
             !ev.CanInteract ||
             !ev.CanAccess ||
             !TryComp<BodyComponent>(ev.User, out var body) ||
-            !_body.TryGetBodyOrganEntityComps<StomachComponent>((ev.User, body), out var stomachs))
+            !_body.TryGetBodyOrganEntityComps<StomachComponent>((ev.User, body), out var stomachs)) // Starlight
             return;
 
         // have to kill mouse before eating it
@@ -388,6 +410,8 @@ public sealed class FoodSystem : EntitySystem
         {
             Act = () =>
             {
+                // Starlight: Set the flag to indicate this is a context menu action
+                _isContextMenuAction = true;
                 TryFeed(user, user, entity, entity.Comp);
             },
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
@@ -433,8 +457,10 @@ public sealed class FoodSystem : EntitySystem
             // Check if the food is in the whitelist
             if (_whitelistSystem.IsWhitelistPass(ent.Comp1.SpecialDigestible, food))
                 return true;
-            // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
-            return false;
+
+            // If their diet is whitelist exclusive, then they cannot eat anything but what follows their whitelisted tags. Else, they can eat their tags AND human food.
+            if (ent.Comp1.IsSpecialDigestibleExclusive)
+                return false;
         }
 
         if (component.RequiresSpecialDigestion)

@@ -91,6 +91,12 @@
     - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 43200 # 12h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6h STARLIGHT
   - type: GhostRoleMobSpawner
     prototype: MobHumanNukeOp
   - type: Sprite
@@ -130,6 +136,12 @@
     rules: ghost-role-information-loneop-rules
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 43200 # 12h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6h STARLIGHT
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -148,6 +160,15 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 86400 # 24h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 43200 # 12h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 14400 # 4h STARLIGHT
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -160,6 +181,18 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 43200 # 12h STARLIGHT
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 21600 # 6h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 28800 # 8h STARLIGHT
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6h STARLIGHT
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -172,6 +205,7 @@
     rules: ghost-role-information-rules-default-team-antagonist
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
+    #inherits requirments from lone op
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -262,6 +296,9 @@
     - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 90000 # 25h
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:

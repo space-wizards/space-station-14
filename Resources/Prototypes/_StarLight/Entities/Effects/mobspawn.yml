@@ -1,0 +1,58 @@
+- type: entity
+  id: EffectOrganTree
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: TimedDespawn
+      lifetime: 0.4
+    - type: EffectVisuals
+    - type: Tag
+      tags:
+        - HideContextMenu
+    - type: AnimationPlayer
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:NestedSelector
+        tableId: LootTableOrganTree
+
+- type: entityTable
+  id: LootTableOrganTree
+  table: !type:GroupSelector
+    children:
+      - id: OrganHumanBrain
+      - id: OrganHumanEyes
+      - id: OrganHumanTongue
+      - id: OrganHumanAppendix
+      - id: OrganHumanEars
+      - id: OrganHumanLungs
+      - id: OrganHumanHeart
+      - id: OrganHumanStomach
+      - id: OrganHumanLiver
+      - id: OrganHumanKidneys
+      - id: OrganArachnidStomach
+      - id: OrganArachnidLungs
+      - id: OrganArachnidHeart
+      - id: OrganArachnidLiver
+      - id: OrganArachnidKidneys
+      - id: OrganArachnidEyes
+      - id: OrganArachnidTongue
+      - id: OrganDionaBrain
+      - id: OrganDionaEyes
+      - id: OrganDionaStomach
+      - id: OrganDionaLungs
+      - id: OrganDwarfHeart
+      - id: OrganDwarfLiver
+      - id: OrganDwarfStomach
+      - id: OrganMothStomach
+      - id: OrganRatLungs
+      - id: OrganRatStomach
+      - id: OrganReptilianStomach
+      - id: OrganResomiEyes
+      - id: OrganSlimeLungs
+      - id: OrganSlimeHeart
+      - id: OrganVoxLungs
+      - id: OrganAnimalLungs
+      - id: OrganAnimalStomach
+      - id: OrganAnimalLiver
+      - id: OrganAnimalHeart
+      - id: OrganAnimalKidneys
+        weight: 0.10

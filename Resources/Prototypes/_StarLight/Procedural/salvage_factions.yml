@@ -70,6 +70,22 @@
     DefenseStructure: WeaponTurretSyndicateBroken
 
 - type: salvageFaction
+  id: SovietImpossible
+  desc: salvage-faction-soviet
+  biomes:
+    - Lava
+    - Grasslands
+    - Caves
+    - Snow
+  entries:
+    - proto: MobElder
+      cost: 463
+  difficulties: 
+    - Impossible
+  configs:
+    DefenseStructure: WeaponTurretSyndicateBroken
+
+- type: salvageFaction
   id: Worms
   desc: salvage-faction-worms
   entries:

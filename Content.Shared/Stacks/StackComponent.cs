@@ -79,10 +79,12 @@ namespace Content.Shared.Stacks
         [ViewVariables(VVAccess.ReadWrite)]
         public List<string> LayerStates = new();
 
-        // Starlight
-        [DataField("layerCountStates")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public List<int> LayerCountStates = new();
+        /// <summary>
+        /// An optional function to convert the amounts used to adjust a stack's appearance.
+        /// Useful for different denominations of cash, for example.
+        /// </summary>
+        [DataField]
+        public StackLayerFunction LayerFunction = StackLayerFunction.None;
     }
 
     [Serializable, NetSerializable]
@@ -99,5 +101,20 @@ namespace Content.Shared.Stacks
             MaxCount = maxCount;
             Lingering = lingering;
         }
+    }
+
+    [Serializable, NetSerializable]
+    public enum StackLayerFunction : byte
+    {
+        // <summary>
+        // No operation performed.
+        // </summary>
+        None,
+
+        // <summary>
+        // Arbitrarily thresholds the stack amount for each layer.
+        // Expects entity to have StackLayerThresholdComponent.
+        // </summary>
+        Threshold
     }
 }

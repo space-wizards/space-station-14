@@ -80,7 +80,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 if (_time.CurTime - victim.LastActivation < TimeSpan.FromSeconds(60))
                     return;
                 victim.LastActivation = _time.CurTime;
-                var gravity = SpawnAttachedTo("AdminInstantEffectGravityWell", Transform(uid).Coordinates);
+                var gravity = SpawnAttachedTo("AbductorGravityGlandGravityWell", Transform(uid).Coordinates);
                 _xformSys.SetParent(gravity, uid);
                 break;
             case AbductorOrganType.Egg:

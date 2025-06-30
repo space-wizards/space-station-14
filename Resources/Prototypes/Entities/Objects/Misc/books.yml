@@ -332,14 +332,14 @@
 - type: entity
   id: BookSpaceLaw
   parent: BaseGuidebook
-  name: space law
+  name: Corporate Law
   description: A set of Nanotrasen guidelines for keeping law and order on their space stations.
   components:
   - type: Sprite
     layers:
     - state: paper
     - state: cover_strong
-      color: "#87011c"
+      color: "#134975"
     - state: icon_law
       color: "#f7d61a"
   - type: GuideHelp
@@ -356,6 +356,7 @@
     nameSegments:
     - BookHintAppearances
     - BookTypes
+    nameFormat: name-format-book
   - type: RandomSprite
     available:
       - cover:

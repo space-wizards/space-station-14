@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterStorageFoldableBase
+  parent: [ ClothingOuterStorageFoldableBase, BaseCommandContraband ]
   id: ClothingOuterCoatNtrep
   name: nt representive jacket
   description: A fancy black jacket, standart issue to Nanotrasen Representives.
@@ -18,12 +18,12 @@
         Piercing: 0.8
 
 - type: entity
-  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatNtrep]
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatNtrep, BaseCommandContraband ]
   id: ClothingOuterCoatNtrepOpen
   name: nt representive jacket
 
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterCoatCorpsman
   name: Corpsman's Armored Jacket
   description: Tacticool never looked so good..However, impractical armor placement makes it just as effective as the normal coat.
@@ -42,3 +42,27 @@
         Piercing: 0.65
         Heat: 0.85
         Caustic: 0.75
+
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSovietContraband]
+  id: ClothingOuterSovietCoat
+  name: soviet great coat
+  description: Smells like damp concrete and expired rations.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Coats/soviet_greatcoat.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Coats/soviet_greatcoat.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.65
+        Radiation: 0.9

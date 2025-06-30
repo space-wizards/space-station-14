@@ -1,0 +1,28 @@
+- type: entity
+  name: cotton batter
+  parent: FoodBakingBase
+  id: FoodMothBatter
+  description: Cook it to get a cute moth cake.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Consumable/Food/Custcake.rsi
+      layers:
+        - state: mothbatter
+    - type: FlavorProfile
+      flavors:
+      - sweetdough
+      - fiber
+    - type: Tag
+      tags:
+        - ClothMade
+    - type: Food
+      requiresSpecialDigestion: true 
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 10
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 5
+            - ReagentId: Fiber
+              Quantity: 5

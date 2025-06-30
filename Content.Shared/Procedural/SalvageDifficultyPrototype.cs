@@ -1,4 +1,6 @@
+using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Procedural;
 
@@ -36,4 +38,12 @@ public sealed partial class SalvageDifficultyPrototype : IPrototype
 
     [DataField("recommendedPlayers", required: true)]
     public int RecommendedPlayers;
+
+    // Starlight Start
+
+    [DataField]
+    public TimeSpan Delay = TimeSpan.Zero;
+
+    [DataField]
+    public float Probability = 1;
 }

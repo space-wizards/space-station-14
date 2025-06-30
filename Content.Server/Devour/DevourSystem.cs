@@ -29,8 +29,6 @@ public sealed class DevourSystem : SharedDevourSystem
         if (component.FoodPreference == FoodPreference.All ||
             (component.FoodPreference == FoodPreference.Humanoid && HasComp<HumanoidAppearanceComponent>(args.Args.Target)))
         {
-            ichorInjection.ScaleSolution(0.5f);
-
             if (component.ShouldStoreDevoured && args.Args.Target is not null)
             {
                 ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
@@ -47,7 +45,7 @@ public sealed class DevourSystem : SharedDevourSystem
 
         _audioSystem.PlayPvs(component.SoundDevour, uid);
     }
-    
+
     private void OnGibContents(EntityUid uid, DevourerComponent component, ref BeingGibbedEvent args)
     {
         if (!component.ShouldStoreDevoured)

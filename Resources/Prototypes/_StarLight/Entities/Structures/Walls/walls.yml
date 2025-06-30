@@ -3,7 +3,7 @@
   id: WallAbductorDiagonal
   name: shuttle wall
   suffix: Diagonal
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   placement:
     mode: SnapgridCenter
     snap:
@@ -86,3 +86,39 @@
   - type: Appearance
   - type: Ricochetable
     chance: 1
+
+- type: entity
+  parent: BaseWall
+  id: WallConcrete
+  name: conrete wall
+  suffix: Reinforced
+  components:
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Sprite
+    sprite: _Starlight/Structures/Walls/concrete_wall.rsi
+  - type: Icon
+    sprite: _Starlight/Structures/Walls/concrete_wall.rsi
+    state: full
+  - type: IconSmooth
+    key: walls
+    base: state
+  - type: Appearance
+  - type: Pierceable
+    level: Rock
+  - type: Ricochetable
+    chance: 0.75
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

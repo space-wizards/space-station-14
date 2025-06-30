@@ -15,6 +15,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Spawners;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Server.VendingMachines;
+using Content.Shared.VendingMachines;
 
 namespace Content.Server.Starlight.Antags.Abductor;
 
@@ -24,7 +26,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     [Dependency] private readonly SharedItemSwitchSystem _itemSwitch = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-
+    [Dependency] private readonly VendingMachineSystem _vending = default!;
+    
     public void InitializeConsole()
     {
         SubscribeLocalEvent<AbductorConsoleComponent, BeforeActivatableUIOpenEvent>(OnBeforeActivatableUIOpen);
@@ -137,13 +140,16 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         
         var telepad = GetEntity(ent.Comp.AlienPod.Value);
         var telepadXform = EnsureComp<TransformComponent>(telepad);
-        var dispencerXform = EnsureComp<TransformComponent>(GetEntity(ent.Comp.Dispencer.Value));
         var effect = _entityManager.SpawnEntity(_teleportationEffect, telepadXform.Coordinates);
         EnsureComp<TimedDespawnComponent>(effect, out var despawnComp);
         despawnComp.Lifetime = 3.0f;
         _audioSystem.PlayPvs("/Audio/_Starlight/Misc/alien_teleport.ogg", effect);
 
-        var @event = new AbductorAttractDoAfterEvent(GetNetCoordinates(telepadXform.Coordinates), GetNetEntity(target), GetNetCoordinates(dispencerXform.Coordinates));
+        var dispencer = ent.Comp.Dispencer;
+        if (dispencer == null)
+            return;
+        
+        var @event = new AbductorAttractDoAfterEvent(GetNetCoordinates(telepadXform.Coordinates), GetNetEntity(target), dispencer.Value);
         ent.Comp.Target = null;
         var doAfter = new DoAfterArgs(EntityManager, args.Actor, TimeSpan.FromSeconds(3), @event, args.Actor)
         {
@@ -176,12 +182,11 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         
         if (!HasComp<AbductorComponent>(victim))
         {
-            var organPrototypes = _prototypeManager.EnumeratePrototypes<EntityPrototype>()
-                .Where(p => p.HasComponent<AbductorOrganComponent>()) 
-                .Select(p => p.ID.ToString())
-                .Order()
-                .ToList();
-            Spawn(_random.Pick(organPrototypes), GetCoordinates(args.Dispencer));
+            var dispenser = GetEntity(args.Dispencer);
+            if (TryComp<VendingMachineComponent>(dispenser, out var vendingComp))
+            {
+                _vending.RestockRandom(dispenser,vendingComp);
+            }
         }
         
         _xformSys.SetCoordinates(victim, GetCoordinates(args.TargetCoordinates));
@@ -223,15 +228,6 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
                 computer.Comp.Experimentator = GetNetEntity(experimentator);
         }
         
-        if (computer.Comp.Dispencer == null)
-        {
-            var xform = EnsureComp<TransformComponent>(computer.Owner);
-            var dispencer = _entityLookup.GetEntitiesInRange<AbductorDispencerComponent>(xform.Coordinates, 4, LookupFlags.Approximate | LookupFlags.Dynamic)
-                .FirstOrDefault().Owner;
-            if (dispencer != default)
-                computer.Comp.Dispencer = GetNetEntity(dispencer);
-        }
-
         if (computer.Comp.Experimentator != null
             && GetEntity(computer.Comp.Experimentator) is EntityUid experimentatorId
             && TryComp<AbductorExperimentatorComponent>(experimentatorId, out var experimentatorComp))
@@ -240,6 +236,15 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             var victim = container.ContainedEntities.FirstOrDefault(e => HasComp<AbductorVictimComponent>(e));
             if (victim != default && TryComp(victim, out MetaDataComponent? victimMetadata))
                 victimName = victimMetadata?.EntityName;
+        }
+        
+        if (computer.Comp.Dispencer == null)
+        {
+            var xform = EnsureComp<TransformComponent>(computer.Owner);
+            var dispencer = _entityLookup.GetEntitiesInRange<AbductorDispencerComponent>(xform.Coordinates, 4, LookupFlags.Approximate | LookupFlags.Dynamic)
+                .FirstOrDefault().Owner;
+            if (dispencer != default)
+                computer.Comp.Dispencer = GetNetEntity(dispencer);
         }
         
         var armorLock = false;

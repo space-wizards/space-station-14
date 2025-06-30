@@ -13,6 +13,7 @@
     tags:
     - HelmetEVA
     - WhitelistChameleon
+    - CorgiWearable
 
 #Large EVA Helmet
 - type: entity
@@ -25,6 +26,9 @@
     sprite: Clothing/Head/Helmets/eva_large.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/eva_large.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 #Syndicate EVA Helmet
 - type: entity
@@ -74,19 +78,23 @@
     sprite: Clothing/Head/Hardsuits/paramedhelm.rsi
   - type: HandheldLight
     addPrefix: false
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
     spriteLayer: light
     clothingVisuals:
       head:
       - state: equipped-head-light
       head-vox:
       - state: equipped-head-light-vox
+      head-dog:
+      - state: equipped-head-light-dog
   - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-head
       head-vox:
       - state: equipped-head-vox
+      head-dog:
+      - state: equipped-head-dog
   - type: TemperatureProtection
     heatingCoefficient: 0.1
     coolingCoefficient: 0.1
@@ -99,3 +107,6 @@
     radius: 5
     energy: 2
     color: "#00ffff"
+  - type: Tag
+    tags:
+    - CorgiWearable

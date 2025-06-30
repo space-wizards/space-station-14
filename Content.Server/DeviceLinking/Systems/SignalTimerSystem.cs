@@ -1,12 +1,13 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.DeviceLinking.Events;
 using Content.Shared.UserInterface;
 using Content.Shared.Access.Systems;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.MachineLinking;
 using Content.Shared.Screen;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using Content.Shared.TextScreen;
 
 namespace Content.Server.DeviceLinking.Systems;
 

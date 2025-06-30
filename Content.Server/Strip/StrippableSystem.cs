@@ -9,6 +9,7 @@ using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
@@ -18,10 +19,15 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using Content.Server.RoundEnd;
 
 namespace Content.Server.Strip;
 
-public sealed class StrippableSystem : SharedStrippableSystem
-{
-
-}
+public sealed class StrippableSystem : SharedStrippableSystem  
+{  
+  public override void Initialize() // 🌟Starlight🌟  
+  {  
+      base.Initialize();  
+      SubscribeLocalEvent<RoundEndSystemChangedEvent>((_) => ClearActiveStripDoAfters());  
+  }  
+}  

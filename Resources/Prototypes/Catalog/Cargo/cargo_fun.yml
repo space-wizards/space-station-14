@@ -117,6 +117,16 @@
   cost: 500
   category: cargoproduct-category-name-fun
   group: market
+  
+- type: cargoProduct
+  id: FunSharkPlushies
+  icon:
+    sprite: Objects/Fun/sharkplush.rsi
+    state: blue
+  product: CrateFunSharkPlushieBulk
+  cost: 500
+  category: cargoproduct-category-name-fun
+  group: market
 
 - type: cargoProduct
   id: FunBoardGames
@@ -325,6 +335,16 @@
     state: minimoog
   product: MinimoogInstrument
   cost: 1500
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: MoproachCrate
+  icon:
+    sprite: Mobs/Animals/mothroach/moproach.rsi
+    state: icon
+  product: CrateFunMoproach
+  cost: 2000
   category: cargoproduct-category-name-fun
   group: market
 

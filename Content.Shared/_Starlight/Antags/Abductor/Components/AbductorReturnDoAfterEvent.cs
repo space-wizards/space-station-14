@@ -42,12 +42,13 @@ public sealed partial class AbductorAttractDoAfterEvent : SimpleDoAfterEvent
     public NetEntity Victim;
     
     [DataField("dispencer", required: true)]
-    public NetCoordinates Dispencer;
+    public NetEntity Dispencer;
+    
     private AbductorAttractDoAfterEvent()
     {
     }
 
-    public AbductorAttractDoAfterEvent(NetCoordinates coords, NetEntity target, NetCoordinates dispencer)
+    public AbductorAttractDoAfterEvent(NetCoordinates coords, NetEntity target, NetEntity dispencer)
     {
         TargetCoordinates = coords;
         Victim = target;

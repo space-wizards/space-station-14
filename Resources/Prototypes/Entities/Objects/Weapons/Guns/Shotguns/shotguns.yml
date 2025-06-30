@@ -15,6 +15,9 @@
       Resomi:
         knockback: 3
         staminaMultiplier: 20
+      Avali:
+        knockback: 1 # Bigger bird, more sturdy bones.. or something.
+        staminaMultiplier: 20
       Felionoid:
         knockback: 1.5 #half of what resomi take
         staminaMultiplier: 20
@@ -111,7 +114,7 @@
 
 - type: entity
   name: double-barreled shotgun
-  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityBartenderContraband]
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityBartenderZookeeperContraband]
   id: WeaponShotgunDoubleBarreled
   description: An immortal classic. Uses .50 shotgun shells.
   components:

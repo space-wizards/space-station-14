@@ -48,7 +48,8 @@ public static class ServerPackaging
         "Npgsql",
         "Microsoft",
         "NAudio",
-        "OggVorbisEncoder"
+        "OggVorbisEncoder",
+        "Discord",
     };
 
     private static readonly List<string> ServerNotExtraAssemblies = new()

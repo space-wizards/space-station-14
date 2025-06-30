@@ -1,19 +1,12 @@
 ﻿using Content.Server.Administration.Managers;
 using Content.Server.Hands.Systems;
 using Content.Server.Stack;
-using Content.Server.Station.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Pinpointer;
 using Content.Shared.Stacks;
-using Content.Shared.Starlight.Antags.Abductor;
-using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
 using Content.Shared.UserInterface;
-using Content.Shared.Silicons.Borgs.Components;
-using Content.Shared.Silicons.StationAi;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Starlight.Economy.Atm;
 public sealed partial class ATMSystem : SharedATMSystem
@@ -40,33 +33,30 @@ public sealed partial class ATMSystem : SharedATMSystem
             || args.Amount <= 0) return;
 
         playerData.Balance -= args.Amount;
-        var cash = SpawnAtPosition(_cash, Transform(args.Actor).Coordinates);
+        var cash = SpawnAtPosition(_cash, Transform(uid).Coordinates);
         var stack = EnsureComp<StackComponent>(cash);
         _stack.SetCount(cash, args.Amount, stack);
-        _hands.PickupOrDrop(args.Actor, cash);
+        _hands.TryPickup(args.Actor, cash);
         _uiSystem.SetUiState(uid, ATMUIKey.Key, new ATMBuiState() { Balance = playerData.Balance });
-        _audioSystem.PlayPvs("/Audio/_Starlight/Misc/atm.ogg", uid);
+        _audioSystem.PlayPvs(component.WithdrawSound, uid);
     }
 
     private void OnAfterInteract(Entity<NTCashComponent> ent, ref AfterInteractEvent args)
     {
         if (TryComp<StackComponent>(ent.Owner, out var stack)
             && args.Target.HasValue
-            && HasComp<ATMComponent>(args.Target)
+            && TryComp<ATMComponent>(args.Target, out var atm)
             && _playerRolesManager.GetPlayerData(args.User) is PlayerData playerData)
         {
             playerData.Balance += (int)Math.Floor(stack.Count * 0.9);
             QueueDel(ent);
             _uiSystem.SetUiState(args.Target.Value, ATMUIKey.Key, new ATMBuiState() { Balance = playerData.Balance });
-            _audioSystem.PlayPvs("/Audio/_Starlight/Misc/atm_in.ogg", args.Target.Value);
+            _audioSystem.PlayPvs(atm.DepositSound, args.Target.Value);
         }
     }
 
     private void OnBeforeActivatableUIOpen(Entity<ATMComponent> ent, ref BeforeActivatableUIOpenEvent args)
     {
-        if (HasComp<StationAiHeldComponent>(args.User))
-            return;
-
         var playerData = _playerRolesManager.GetPlayerData(args.User);
 
         _uiSystem.SetUiState(ent.Owner, ATMUIKey.Key, new ATMBuiState() { Balance = playerData?.Balance ?? 0 });

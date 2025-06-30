@@ -2,11 +2,12 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
-using Content.Server.Radio.Components;
+using Content.Shared.Radio.Components;
 using Content.Server.Starlight.TTS;
 using Content.Server.VoiceMask;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Inventory;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.PDA;
@@ -17,6 +18,8 @@ using Content.Shared.Speech;
 using Content.Shared.StatusIcon;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.StationAi;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -24,6 +27,10 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Content.Shared.Clothing.EntitySystems;
+using Content.Shared;
+using Content.Server.Radio.Components;
+using Content.Server._Starlight.Radio.Systems;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -39,6 +46,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly RadioChimeSystem _chime = default!; //🌟Starlight🌟
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -88,10 +96,16 @@ public sealed class RadioSystem : EntitySystem
         if (!_messages.Add(message))
             return;
 
-        var evt = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName);
+        var meta = MetaData(messageSource);
+        var entityName = meta?.EntityName ?? string.Empty;
+        var evt = new TransformSpeakerNameEvent(messageSource, entityName);
         RaiseLocalEvent(messageSource, evt);
 
         var name = evt.VoiceName;
+        if (string.IsNullOrEmpty(name))
+            name = entityName;
+        if (name == null)
+            name = string.Empty;
         name = FormattedMessage.EscapeText(name);
 
         SpeechVerbPrototype speech;
@@ -104,7 +118,7 @@ public sealed class RadioSystem : EntitySystem
             ? FormattedMessage.EscapeText(message)
             : message;
 
-        // start 🌟Starlight🌟
+        // 🌟Starlight🌟 - Get job icon and name for the message
 
         var iconId = "JobIconNoId";
         var jobName = "";
@@ -144,7 +158,9 @@ public sealed class RadioSystem : EntitySystem
             iconId = "JobIconStationAi";
             jobName = Loc.GetString("job-name-station-ai");
         }
-        // end 🌟Starlight🌟
+
+        _chime.TryGetSenderHeadsetChime(messageSource, out var chime);
+        // End Starlight
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
             ("color", channel.Color),
@@ -161,7 +177,10 @@ public sealed class RadioSystem : EntitySystem
             message,
             wrappedMessage,
             NetEntity.Invalid,
-            null);
+            null)
+        {
+            Chime = chime, // 🌟Starlight🌟
+        };
         var chatMsg = new MsgChatMessage { Message = chat };
         var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg, []);
 
@@ -201,6 +220,7 @@ public sealed class RadioSystem : EntitySystem
 
             // send the message
             RaiseLocalEvent(receiver, ref ev);
+
         }
         RaiseLocalEvent(new RadioSpokeEvent
         {

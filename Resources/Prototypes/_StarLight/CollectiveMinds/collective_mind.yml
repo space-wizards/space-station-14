@@ -2,7 +2,7 @@
   id: Dionas
   name: collective-mind-dioneas
   keycode: 'd'
-  color: "#0f6b1e"
+  color: "#15912a"
   requiredTags: 
   - Diona
 
@@ -10,7 +10,7 @@
   id: Arachnids
   name: collective-mind-arachnids
   keycode: 'a'
-  color: "#706d0d"
+  color: "#cec816"
   requiredTags: 
   - Arachnid
   
@@ -44,7 +44,7 @@
   id: Spider
   name: collective-mind-spider
   keycode: 's'
-  color: "#3f2f20"
+  color: "#8f6741"
   requiredComponents:
   - Spider
   
@@ -63,3 +63,20 @@
   color: "#39c675"
   requiredComponents:
   - Cluwne
+
+- type: collectiveMind
+  id: Nexus #for resomi and future avali nexus connection. Also allow the station to connect to this somehow maybe?
+  name: collective-mind-nexus
+  keycode: 'n'
+  color: "#FF7922"
+  requiredTags: 
+  - Resomi
+  - Avali
+
+- type: collectiveMind
+  id: Empathy
+  name: collective-mind-empathy
+  keycode: 'e'
+  color: "#ff00f2"
+  requiredComponents: 
+  - Shadekin

@@ -1,0 +1,265 @@
+- type: weightedRandomXenoArchTrigger
+  id: DefaultTriggers
+  weights:
+    TriggerMusic: 1
+    TriggerHeat: 1
+    TriggerCold: 0.5
+    TriggerNoOxygen: 1
+    TriggerWater: 1
+    TriggerCO2: 0.5
+    TriggerPlasma: 0.5
+    TriggerN2O: 0.5
+    TriggerTritium: 0.1
+    TriggerAmmonia: 0.1
+    TriggerFrezon: 0.1
+    TriggerRadiation: 1
+    TriggerPressureHigh: 0.5
+    TriggerPressureLow: 1
+    TriggerExamine: 1
+    TriggerBruteDamage: 1
+    #TriggerInteraction: 1 #this one interferes with activating artifact AND brute dmg!
+    TriggerWrenching: 0.5
+    TriggerPrying: 0.5
+    TriggerScrewing: 0.5
+    TriggerPulsing: 0.5
+    TriggerTimer: 0.25
+    TriggerBlood: 1
+    TriggerThrow: 1
+    TriggerDeath: 1
+    TriggerMagnet: 1
+
+- type: xenoArchTrigger
+  id: TriggerMusic
+  tip: xenoarch-trigger-tip-music
+  components:
+  - type: XATCompNearby
+    requireComponentWithName: ActiveInstrument
+    radius: 2
+
+- type: xenoArchTrigger
+  id: TriggerHeat
+  tip: xenoarch-trigger-tip-heat
+  components:
+  - type: XATTemperature
+    targetTemperature: 373
+    triggerOnHigherTemp: true
+  - type: XATDamageThresholdReached
+    typesNeeded:
+      Heat: 20
+# This kinda trivializes the difficulty.
+#  - type: XATToolUse
+#    requiredTool: Welding
+#    delay: 5
+#    fuel: 10
+
+- type: xenoArchTrigger
+  id: TriggerCold
+  tip: xenoarch-trigger-tip-cold
+  components:
+  - type: XATTemperature
+    targetTemperature: 255
+    triggerOnHigherTemp: false
+  - type: XATDamageThresholdReached
+    typesNeeded:
+      Cold: 20
+
+- type: xenoArchTrigger
+  id: TriggerNoOxygen
+  tip: xenoarch-trigger-tip-no-oxygen
+  components:
+  - type: XATGas
+    targetGas: Oxygen
+    moles: 10
+    shouldBePresent: false
+
+- type: xenoArchTrigger
+  id: TriggerWater
+  tip: xenoarch-trigger-tip-water
+  components:
+  - type: XATGas
+    targetGas: WaterVapor
+  - type: XATReactive
+    reagents:
+    - Water
+
+- type: xenoArchTrigger
+  id: TriggerCO2
+  tip: xenoarch-trigger-tip-co2
+  components:
+  - type: XATGas
+    targetGas: CarbonDioxide
+  - type: XATReactive
+    reagents:
+    - CarbonDioxide
+
+- type: xenoArchTrigger
+  id: TriggerPlasma
+  tip: xenoarch-trigger-tip-plasma
+  components:
+  - type: XATGas
+    targetGas: Plasma
+  - type: XATReactive
+    reagents:
+    - Plasma
+
+- type: xenoArchTrigger
+  id: TriggerTritium
+  tip: xenoarch-trigger-tip-tritium
+  components:
+  - type: XATGas
+    targetGas: Tritium
+  - type: XATReactive
+    reagents:
+    - Tritium
+
+- type: xenoArchTrigger
+  id: TriggerAmmonia
+  tip: xenoarch-trigger-tip-ammonia
+  components:
+  - type: XATGas
+    targetGas: Ammonia
+  - type: XATReactive
+    reagents:
+    - Ammonia
+
+- type: xenoArchTrigger
+  id: TriggerN2O
+  tip: xenoarch-trigger-tip-n2o
+  components:
+  - type: XATGas
+    targetGas: NitrousOxide
+  - type: XATReactive
+    reagents:
+    - NitrousOxide
+
+- type: xenoArchTrigger
+  id: TriggerFrezon
+  tip: xenoarch-trigger-tip-frezon
+  components:
+  - type: XATGas
+    targetGas: Frezon
+  - type: XATReactive
+    reagents:
+    - Frezon
+
+- type: xenoArchTrigger
+  id: TriggerRadiation
+  tip: xenoarch-trigger-tip-radiation
+  components:
+  - type: XATDamageThresholdReached
+    typesNeeded:
+      Radiation: 20
+  # TODO: legendary microwave trigger
+
+- type: xenoArchTrigger
+  id: TriggerPressureHigh
+  tip: xenoarch-trigger-tip-pressure-high
+  components:
+  - type: XATPressure
+    maxPressureThreshold: 385
+
+- type: xenoArchTrigger
+  id: TriggerPressureLow
+  tip: xenoarch-trigger-tip-pressure-low
+  components:
+  - type: XATPressure
+    minPressureThreshold: 50
+
+- type: xenoArchTrigger
+  id: TriggerExamine
+  tip: xenoarch-trigger-tip-examine
+  components:
+  - type: XATExamine
+
+- type: xenoArchTrigger
+  id: TriggerBruteDamage
+  tip: xenoarch-trigger-tip-brute-damage
+  components:
+  - type: XATDamageThresholdReached
+    groupsNeeded:
+      Brute: 20
+
+- type: xenoArchTrigger
+  id: TriggerInteraction
+  tip: xenoarch-trigger-tip-interaction
+  components:
+  - type: XATInteraction
+
+- type: xenoArchTrigger
+  id: TriggerWrenching
+  tip: xenoarch-trigger-tip-wrenching
+  components:
+  - type: XATToolUse
+    requiredTool: Anchoring
+  - type: XATExaminableText
+    examineText: xenoarch-trigger-examine-wrenching
+
+- type: xenoArchTrigger
+  id: TriggerPrying
+  tip: xenoarch-trigger-tip-prying
+  components:
+  - type: XATToolUse
+    requiredTool: Prying
+  - type: XATExaminableText
+    examineText: xenoarch-trigger-examine-prying
+
+- type: xenoArchTrigger
+  id: TriggerScrewing
+  tip: xenoarch-trigger-tip-screwing
+  components:
+  - type: XATToolUse
+    requiredTool: Screwing
+  - type: XATExaminableText
+    examineText: xenoarch-trigger-examine-screwing
+
+- type: xenoArchTrigger
+  id: TriggerPulsing
+  tip: xenoarch-trigger-tip-pulsing
+  components:
+  - type: XATToolUse
+    requiredTool: Pulsing
+  - type: XATExaminableText
+    examineText: xenoarch-trigger-examine-pulsing
+
+- type: xenoArchTrigger
+  id: TriggerTimer
+  tip: xenoarch-trigger-tip-timer
+  components:
+  - type: XATTimer
+    possibleDelayInSeconds:
+      min: 80
+      max: 120
+
+- type: xenoArchTrigger
+  id: TriggerBlood
+  tip: xenoarch-trigger-tip-blood
+  components:
+  - type: XATReactive
+    reagents:
+    - Blood
+    - CopperBlood
+    - InsectBlood
+    - Slime
+    - AmmoniaBlood
+    - ZombieBlood
+
+- type: xenoArchTrigger
+  id: TriggerThrow
+  tip: xenoarch-trigger-tip-throw
+  whitelist:
+    components:
+    - Item
+  components:
+  - type: XATItemLand
+
+- type: xenoArchTrigger
+  id: TriggerDeath
+  tip: xenoarch-trigger-tip-death
+  components:
+  - type: XATDeath
+
+- type: xenoArchTrigger
+  id: TriggerMagnet
+  tip: xenoarch-trigger-tip-magnet
+  components:
+  - type: XATMagnet

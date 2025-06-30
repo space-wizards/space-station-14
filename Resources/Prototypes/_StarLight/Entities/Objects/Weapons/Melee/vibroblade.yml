@@ -1,0 +1,73 @@
+#Longswords
+- type: entity
+  parent: [ BaseSword, BaseCommandContraband ]
+  id: PrototypeVibroblade
+  name: SCSPT-101 vibroblade
+  description: During the initial period of development of the SCS-111 for the Corporate Consortium, many test designs were conducted and finalized into the SCS-101 Prototype. These blades were the starting template for the Corporate Consortiums jump from Crusher-type weaponry into subsonic piercing vibroweaponry.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/crusher_sword.rsi
+  - type: MeleeWeapon
+    attackRate: 1.2
+    range: 1.25
+    damage:
+      types:
+        Slash: 10
+        Piercing: 10
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Reflect
+    reflectProb: .2
+    spread: 90
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/captain_sabre_storage_64x.rsi #Done in 64x64 because it looks way too puny in 32x32
+    shape:
+    - 0,0,0,3
+  - type: Tag
+    tags:
+    - PrototypeVibroblade
+  - type: DisarmMalus
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.0002 # 5,000 times less likely than 1 regular animal
+  - type: PirateAccent
+    # not putting a BlockMovement component here cause that's funny.
+
+#Longswords
+- type: entity
+  parent: [ BaseSword, BaseCentcommContraband ]
+  id: CentcommVibroblade
+  name: SCSPT-111 vibroblade
+  description: Vulcan Industries was contracted by the Corporate Consortium to design and mass-produce weaponry focusing more on existing crusher-weaponry technology. Through this research, the SCS-111 Corporate Consortium Variant was born, a blade of pure precision relying on a subsonic slashing design and material that can hold it's own against weaponry made of phoron.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/cc_crusher_sword.rsi
+  - type: MeleeWeapon
+    attackRate: 2.0
+    range: 1.5
+    damage:
+      types:
+        Slash: 15
+        Piercing: 15
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Reflect
+    reflectProb: .3
+    spread: 90
+  - type: Item
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/captain_sabre_storage_64x.rsi #Done in 64x64 because it looks way too puny in 32x32
+    shape:
+    - 0,0,0,3
+  - type: Tag
+    tags:
+    - CentcommVibroblade
+  - type: DisarmMalus
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.0002 # 5,000 times less likely than 1 regular animal
+  - type: PirateAccent
+    # not putting a BlockMovement component here cause that's funny.

@@ -40,6 +40,15 @@
     },
     {
       "name": "pda-mining"
+    },
+    {
+      "name": "pda-mailtech"
+    },
+    {
+      "name": "pda-ntcc-cs"
+    },
+    {
+      "name": "pda-commander"
     }
   ]
 }

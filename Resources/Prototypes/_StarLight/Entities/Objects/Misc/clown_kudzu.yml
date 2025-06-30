@@ -17,7 +17,8 @@
         tags:
           - ClownKudzu
     - type: Slippery
-      superSlippery: true
+      slipData:
+        superSlippery: true
     - type: StepTrigger
       intersectRatio: 0.2
     - type: SolutionContainerManager

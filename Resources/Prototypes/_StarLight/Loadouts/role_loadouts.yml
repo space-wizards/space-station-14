@@ -2,10 +2,12 @@
   id: JobRoboticist
   groups:
   - RoboticistHead
+  - RoboticistGoggles
   - RoboticistJumpsuit
+  - RoboticistGloves
   - RoboticistOuterClothing
   - RoboticistBackpack
-  - ScientistShoes
+  - RoboticistShoes
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -14,6 +16,7 @@
   id: JobMagistrate
   groups:
   - CommonBackpack
+  - MagistrateShoes
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -31,6 +34,7 @@
   - NanoTrasenRepresentativeJumpsuit
   - NanoTrasenRepresentativeEyewear
   - CommonBackpack
+  - NanotrasenRepresentativeShoes
   - Trinkets
   - Survival
   - GroupSpeciesBreathTool
@@ -41,6 +45,7 @@
   - LawyerNeck
   - LawyerJumpsuit
   - CommonBackpack
+  - LawyerShoes
   - Trinkets
   - Survival
   - GroupSpeciesBreathTool
@@ -66,3 +71,35 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobMailTech
+  groups:
+  - GroupTankHarness
+  - CargoTechnicianHead
+  - CargoTechnicianJumpsuit
+  - CargoTechnicianBackpack
+  - CargoTechnicianOuterClothing
+  - CargoTechnicianShoes
+  - Glasses
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+
+- type: roleLoadout
+  id: JobBrigmedic
+  groups:
+    - BrigmedicHead
+    - BrigmedicJumpsuit
+    - BrigmedicBackpack
+    - BrigmedicOuterClothing
+    - BrigmedicBelt
+    - BrigmedicGloves
+    - BrigmedicEyewear
+    - SecurityShoes
+    - SecurityNonLethalWeapon
+    - SecuritySidearm
+    - SurvivalSecurity
+    - Trinkets
+    - SecurityStar
+    - GroupSpeciesBreathToolSecurity

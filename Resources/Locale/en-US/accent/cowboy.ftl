@@ -88,13 +88,13 @@ accent-cowboy-replacement-29 = partner
 accent-cowboy-words-30 = goodbye
 accent-cowboy-replacement-30 = so long
 
-accent-cowboy-words-31 = greytide
-accent-cowboy-replacement-31 = varmints
+accent-cowboy-words-31 = assist
+accent-cowboy-replacement-31 = harm
 
-accent-cowboy-words-32 = greytider
+accent-cowboy-words-32 = assistent
 accent-cowboy-replacement-32 = varmint
 
-accent-cowboy-words-33 = greytiders
+accent-cowboy-words-33 = assistents
 accent-cowboy-replacement-33 = varmints
 
 accent-cowboy-words-34 = group

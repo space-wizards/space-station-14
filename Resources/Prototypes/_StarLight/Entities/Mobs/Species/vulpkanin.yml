@@ -33,6 +33,16 @@
   - type: Inventory
     speciesId: vulpkanin
     displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: head
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
+            state: outerClothing
       jumpsuit:
         sizeMaps:
           32:
@@ -47,7 +57,9 @@
     targetZoom: "1.125, 1.125"
     maxZoom: "1.125, 1.125"
   - type: Speech
-    allowedEmotes: ['Howl', 'Growl', 'Bark']
+    allowedEmotes: ['Howl', 'Growl', 'Bark', 'Yip', 'Whine']
+    speechSounds: Vulpkanin
+    speechVerb: Vulpkanin
   - type: Vocal
     sounds:
       Male: MaleVulpkanin
@@ -61,16 +73,20 @@
     damage:
       types:
         Slash: 5
+  - type: Temperature # Ported over from CD. Afterall, it does make sense that something with fur can handle more cold/less heat. Basegame Moths, apparently, have similar resistances.
+    heatDamageThreshold: 325
+    coldDamageThreshold: 230
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.05 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 1.75 #per second, scales with temperature & other constants
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Vulpkanin
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 2.0
-    damageRecovery:
-      types:
-        Asphyxiation: -2.0
   - type: Wagging
 
 - type: entity

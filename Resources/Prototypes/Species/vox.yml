@@ -13,6 +13,7 @@
   naming: First
   sexes:
   - Unsexed
+  customName: true # Starlight
 
 - type: speciesBaseSprites
   id: MobVoxSprites
@@ -67,7 +68,7 @@
       points: 1
       required: false
     Chest:
-      points: 1
+      points: 2
       required: false
     Tail:
       points: 1

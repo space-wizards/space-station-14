@@ -1,0 +1,45 @@
+name: Auto Assign Reviewers
+
+on:
+  pull_request:
+    types: [labeled, opened, synchronize]
+
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Assign reviewers based on labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labelToAssign = {
+              "Changes: Sprites": ["BORTBORTBORTBORTBORT"],
+              "Changes: Map": ["PubliclyExecutedPig"],
+              "Changes: UI": ["ss14-Starlight"],
+              "Changes: Shaders": ["ss14-Starlight"],
+              "Changes: Audio": ["ss14-Starlight"],
+              "Changes: No C#": ["ss14-Starlight"],
+            };
+
+            const labels = context.payload.pull_request.labels.map(label => label.name);
+            const assignees = new Set();
+
+            for (const label of labels) {
+              const tempAssing = labelToAssign[label];
+              if (tempAssing) {
+                tempAssing.forEach(a => assignees.add(a));
+              }
+            }
+
+            if (assignees.size > 0) {
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                assignees: Array.from(assignees),
+              });
+            }

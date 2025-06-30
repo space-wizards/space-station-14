@@ -10,18 +10,19 @@
   tier: 1
   cost: 5000
   recipeUnlocks:
-  - BorgModuleGardening
-  - BorgModuleHarvesting
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
   - ReagentGrinderIndustrialMachineCircuitboard
+  radioChannels:
+  - Service
+
 
 - type: technology
   id: CritterMechs
   name: research-technology-critter-mechs
   icon:
     sprite: Objects/Specific/Mech/Mechs/Basic/hamtr.rsi
-    state: base
+    state: base-open
   discipline: CivilianServices
   tier: 1
   cost: 7500
@@ -54,6 +55,8 @@
   - SurveillanceWirelessCameraMonitorCircuitboard
   - TelecomServerCircuitboard
   - HolopadMachineCircuitboard
+  radioChannels:
+  - Service
 
 - type: technology
   id: AdvancedEntertainment
@@ -70,18 +73,8 @@
     - DawInstrumentMachineCircuitboard
     - MassMediaCircuitboard
     - JukeboxCircuitBoard
-
-- type: technology
-  id: RoboticCleanliness
-  name: research-technology-robotic-cleanliness
-  icon:
-    sprite: Mobs/Silicon/chassis.rsi
-    state: janitor
-  discipline: CivilianServices
-  tier: 1
-  cost: 5000
-  recipeUnlocks:
-  - BorgModuleAdvancedCleaning
+  radioChannels:
+  - Service
 
 - type: technology
   id: MeatManipulation
@@ -96,6 +89,8 @@
   - FatExtractorMachineCircuitboard
   - BiofabricatorMachineCircuitboard
   - BiomassReclaimerMachineCircuitboard
+  radioChannels:
+  - Service
 
 # Tier 2
 
@@ -115,6 +110,8 @@
   - FauxTileAstroIce
   - FauxTileAstroSnow
   - FauxTileAstroAsteroidSand
+  radioChannels:
+  - Service
 
 - type: technology
   id: BiochemicalStasis
@@ -130,8 +127,10 @@
   - CryoPodMachineCircuitboard
   - CryostasisBeaker
   - SyringeCryostasis
+  radioChannels:
+  - Medical
 
-- type: technology
+- type: technology # Merge with other T2 medical research if possible!
   id: MechanizedTreatment
   name: research-technology-mechanized-treatment
   icon:
@@ -141,8 +140,7 @@
   tier: 2
   cost: 5000
   recipeUnlocks:
-  - BorgModuleAdvancedTreatment
-  - BorgModuleDefibrillator
+  - BorgModuleAdvancedChemical
 
 - type: technology
   id: AdvancedCleaning
@@ -156,6 +154,9 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
+  - BorgModuleAdvancedCleaning
+  radioChannels:
+  - Service
 
 - type: technology
   id: HONKMech
@@ -202,6 +203,8 @@
   recipeUnlocks:
   - WeaponSprayNozzle
   - ClothingBackpackWaterTank
+  radioChannels:
+  - Service
 
 - type: technology
   id: BluespaceCargoTransport
@@ -214,6 +217,20 @@
   cost: 15000
   recipeUnlocks:
   - CargoTelepadMachineCircuitboard
+  radioChannels:
+  - Supply
+
+- type: technology
+  id: PushHorn
+  name: research-technology-clowning-utilities
+  icon:
+    sprite: Objects/Fun/push_horn.rsi
+    state: icon
+  discipline: CivilianServices
+  tier: 2
+  cost: 4000
+  recipeUnlocks:
+  - PushHorn
 
 # Tier 3
 
@@ -228,6 +245,8 @@
   cost: 10000
   recipeUnlocks:
   - ClothingShoesBootsSpeed
+  radioChannels:
+  - Service
 
 - type: technology
   id: BluespaceChemistry
@@ -241,3 +260,20 @@
   recipeUnlocks:
   - BluespaceBeaker
   - SyringeBluespace
+  radioChannels:
+  - Medical
+
+- type: technology
+  id: LauncherSyringe
+  name: research-technology-launcher-syringe
+  icon:
+    sprite: Objects/Weapons/Guns/Cannons/syringe_gun.rsi
+    state: syringe_gun
+  discipline: CivilianServices
+  tier: 3
+  cost: 15000
+  recipeUnlocks:
+  - LauncherSyringe
+  - MiniSyringe
+  radioChannels:
+  - Medical

@@ -1,4 +1,4 @@
-# rules for transferring recipes from microwaveMealRecipe
+# rules for transferring recipes from mealRecipe
 # 1) leave room for variation. If the original recipe calls for 2 pieces of meat, allow players to put in 2-3 pieces.
 # 2) max SequenceLength must be 1 element greater than the minimum ingredient set requires. This will allow you to put 1 poison fly or 1 other ingredient in different recipes and the recipes will still be valid.
 

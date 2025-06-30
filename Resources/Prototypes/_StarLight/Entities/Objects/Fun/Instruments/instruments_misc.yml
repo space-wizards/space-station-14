@@ -1,0 +1,19 @@
+﻿- type: entity
+  parent: BaseHandheldInstrument
+  id: WehpetInstrument
+  name: weh-pet
+  description: A lizard had too much time on their hands when they made this.
+  components:
+  - type: Instrument
+    program: 5
+    bank: 1
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/Instruments/wehpet.rsi
+    state: icon
+  - type: Item
+    size: Normal
+    sprite: _Starlight/Objects/Fun/Instruments/wehpet.rsi
+    storedRotation: -90
+  - type: Tag
+    tags:
+    - BrassInstrument

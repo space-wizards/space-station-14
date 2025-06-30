@@ -5,7 +5,7 @@
   minPlayers: 0
   maxPlayers: 35
   stations:
-    Packed:
+    StarlightPacked:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -53,6 +53,8 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 5, 5 ]
             CargoTechnician: [ 2, 2 ]
+            MailTech: [ 1, 2 ]
+            MiningSpecialist: [ 2, 3 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]

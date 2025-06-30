@@ -1,0 +1,1 @@
+fibers-cloth = cloth

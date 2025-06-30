@@ -108,5 +108,5 @@
     price: 2500
   - type: RandomMetadata
     nameSegments:
-    - names_clown
+    - NamesClown
   - type: ProtectedFromStepTriggers

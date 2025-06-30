@@ -5,7 +5,7 @@
   minPlayers: 7
   maxPlayers: 55
   stations:
-    Hotel:
+    StarlightHotel:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
@@ -54,6 +54,8 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 6, 6 ]
             CargoTechnician: [ 6, 8 ]
+            MailTech: [ 1, 2 ]
+            MiningSpecialist: [ 3, 3 ]
             #civilian
             Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]

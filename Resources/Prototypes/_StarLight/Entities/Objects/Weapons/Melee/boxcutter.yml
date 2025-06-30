@@ -10,6 +10,7 @@
   - type: Item
     sprite: _Starlight/Objects/Weapons/Melee/boxcutter.rsi
     storedSprite:
+  - type: UseDelay #bug fix to prevent spamming use to reset the swing delay
   - type: ItemSwitch
     state: sheathed
     states:
@@ -25,6 +26,13 @@
           damage:
             types:
               Blunt: 1
+        - type: DamageOtherOnHit #this just clears out the comp to not have any damage when thrown
+          damage:
+            types:
+              Blunt: 0
+        - type: EmbeddableProjectile #here to disable embedding. Ideally this comp wouldnt be here at all, but due to limits, we have to have it. Instead the values are set as such that it basically should never embed normally
+          minimumSpeed: 100000 #require CRAZY speed to embed ever. This seems to actually be bugged and non functional?
+          embedOnThrow: false
 
       unsheathed: !type:ItemSwitchState
         verb: sheathe
@@ -38,9 +46,18 @@
           damage:
             types:
               Slash: 8
+        - type: DamageOtherOnHit
+          damage:
+            types:
+              Slash: 6
+        - type: EmbeddableProjectile
+          sound: /Audio/Weapons/star_hit.ogg
+          offset: -0.15,0.0
   - type: Tool
     qualities:
       - Screwing
     speedModifier: 0.5
     useSound:
       collection: Screwdriver
+  - type: ThrowingAngle
+    angle: 180

@@ -5,18 +5,11 @@
   id: SpamMailTable
   table: !type:GroupSelector
     children:
-      - id: MailAllAccessSpam
-      - id: MailAlternativeDimensionSpam
-      - id: MailCentcommRetributionSpam
-      - id: MailEvilLizardSpam
-      - id: MailNanotrasenSpam
-      - id: MailNarsieCultSpam
-      - id: MailParentsNeedMoneySpam
-      - id: MailRageCageSpam
-      - id: MailRobustToolsSpam
-      - id: MailScienceSpiderClanSpam
-      - id: MailSyndicateSpam
-      - id: MailVoyageAdvertisementSpam
+      - id: MailSpamLetter
+        weight: .996
+      - !type:NestedSelector
+        tableId: MailAntagSpamLetter # Starlight, behold, antag on signing papers.
+        weight: .004
 
 # Letter Bundles
 ## Basically items that should always spawn together, specific to letters
@@ -44,3 +37,4 @@
     children:
     - id: Paper
     - id: Pen
+

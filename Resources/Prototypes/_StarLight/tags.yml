@@ -1,7 +1,14 @@
 # ALPHABETIZE
-  
+
 - type: Tag
   id: Arachnid
+
+
+- type: Tag  
+  id: Avali
+
+- type: Tag
+  id: AvianFood
 
 - type: Tag
   id: BladePlasteel
@@ -11,10 +18,10 @@
 
 - type: Tag
   id: CantInteract
-  
+
 - type: Tag
   id: CartridgeBattery
-  
+
 - type: Tag
   id: CartridgePistolDP
 
@@ -28,19 +35,25 @@
   id: CartridgeLightRifleImprovised
 
 - type: Tag
-  id: ModularBarrel
-  
+  id: CentcommVibroblade
+
+- type: Tag
+  id: ClownKudzu
+
 - type: Tag
   id: Diona
-  
+
 - type: Tag
   id: DockGamma
-  
+
 - type: Tag
   id: ElderArena
 
 - type: Tag
   id: EmergencyWelder
+
+- type: Tag
+  id: Felionoid
 
 - type: Tag
   id: HiltPlasteel
@@ -68,15 +81,18 @@
 
 - type: Tag
   id: MagazineBattery
-  
+
 - type: Tag
   id: MagazinePistolDP
 
 - type: Tag
   id: MagazinePistolImprovised
-  
+
 - type: Tag
   id: MagazineRifleM52
+
+- type: Tag
+  id: MagazineSMGPPSH
   
 - type: Tag
   id: MagazineSMGUzi
@@ -86,48 +102,63 @@
 
 - type: Tag
   id: MedCyberEyes
-  
+
+- type: Tag
+  id: MicroManipulatorStockPart
+
+- type: Tag
+  id: ModularBarrel
+
 - type: Tag
   id: OmniCyberEyes
-  
+
+- type: Tag
+  id: OvenMachineBoard
+
+- type: Tag
+  id: StoveMachineBoard
+
+- type: Tag
+  id: Patch
+
+- type: Tag
+  id: PatchPack
+
 - type: Tag
   id: PowerCellTiny
-  
+
+- type: Tag
+  id: PrototypeVibroblade
+
+- type: Tag
+  id: Resomi
+
 - type: Tag
   id: SecCyberEyes
 
 - type: Tag
-  id: SwordForged
-
-- type: Tag
   id: ShipWreck
-  
+
 - type: Tag
   id: ShowWires
 
 - type: Tag
   id: SovietDungeon
-  
+
+- type: Tag
+  id: SovietWarehouse
+
+- type: Tag
+  id: SwordForged
+
 - type: Tag
   id: SpeedLoaderShotgun
-  
+
 - type: Tag
   id: SyndieDungeon
 
 - type: Tag
-  id: Resomi
-  
-- type: Tag
-  id: Patch
-  
-- type: Tag
-  id: PatchPack
-  
-- type: Tag
   id: Table
 
 - type: Tag
-  id: ClownKudzu
-
-- type: Tag
-  id: Felionoid
+  id: DockEscape

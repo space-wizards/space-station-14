@@ -1,6 +1,6 @@
 - type: entity
   name: abductor's wirecutter
-  parent: BaseItem
+  parent: [ BaseItem, BaseMajorContraband ]
   id: WirecutterAbductor
   components:
   - type: EmitSoundOnLand
@@ -40,7 +40,7 @@
   
 - type: entity
   name: abductor's screwdriver
-  parent: BaseItem
+  parent: [ BaseItem, BaseMajorContraband ]
   id: ScrewdriverAbductor
   components:
   - type: EmitSoundOnLand
@@ -79,7 +79,7 @@
     
 - type: entity
   name: abductor's wrench
-  parent: Wrench
+  parent: [ Wrench, BaseMajorContraband ]
   id: WrenchAbductor
   components:
   - type: Sprite
@@ -100,7 +100,7 @@
       
 - type: entity
   name: abductor's multitool
-  parent: Multitool
+  parent: [ Multitool, BaseMajorContraband ]
   id: MultitoolAbductor
   components:
   - type: Sprite

@@ -27,6 +27,24 @@
 	},
     {
       "name": "idstationminer"
+    },
+    {
+      "name": "idmailtech"
+    },
+    {
+      "name": "sovietid"
+    },
+    {
+      "name": "syndi"
+    },
+    { 
+      "name": "idcommander"
+    },
+    { 
+      "name": "idsyndiagent"
+    },
+    { 
+      "name": "idoperative"
     }
   ]
 }

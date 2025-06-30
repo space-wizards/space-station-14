@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Bed.Cryostorage;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
+using Content.Server.Polymorph.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Bed.Cryostorage;
@@ -63,8 +64,9 @@ public sealed class CryoTeleportationSystem : EntitySystem
                 || HasComp<BorgChassisComponent>(uid)
                 || mobStateComponent.CurrentState != MobState.Alive
                 || comp.ExitTime == null
-                || _timing.CurTime - comp.ExitTime < stationComp.TransferDelay
-                || HasComp<CryostorageContainedComponent>(uid))
+                || _timing.CurTime - comp.ExitTime < stationComp.TransferDelay 
+                || HasComp<CryostorageContainedComponent>(uid)
+                || HasComp<UncryoableComponent>(uid))
                 continue;
 
             var stationGrid = _stationSystem.GetLargestGrid(stationData);

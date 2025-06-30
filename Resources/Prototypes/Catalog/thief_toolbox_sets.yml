@@ -6,16 +6,7 @@
     sprite: /Textures/Clothing/OuterClothing/Misc/black_hoodie.rsi
     state: icon
   content:
-  - ChameleonPDA
-  - ClothingUniformJumpsuitChameleon
-  - ClothingOuterChameleon
-  - ClothingNeckChameleon
-  - ClothingMaskGasChameleon
-  - ClothingHeadHatChameleon
-  - ClothingEyesChameleon
-  - ClothingHeadsetChameleon
-  - ClothingShoesChameleon
-  - BarberScissors
+  - ClothingBackpackChameleonFill
   - ChameleonProjector
   - FakeMindShieldImplanter
   - AgentIDCard
@@ -67,6 +58,7 @@
   - Lighter
   - CigPackSyndicate
   - Telecrystal10 #The thief cannot use them, but it may induce communication with traitors
+  - SyndicatePersonalAI # [Starlight] allows the thief to be able to communicate indirectly with traitors, without accidentally spoiling nukies.
 
 - type: thiefBackpackSet
   id: SleeperSet

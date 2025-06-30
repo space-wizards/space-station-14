@@ -8,8 +8,7 @@
     issuer: objective-issuer-abductors
   - type: RoleRequirement
     roles:
-      mindRoles:
-      - Abductor
+    - Abductor
 
 - type: entity
   parent: BaseAbductorObjective

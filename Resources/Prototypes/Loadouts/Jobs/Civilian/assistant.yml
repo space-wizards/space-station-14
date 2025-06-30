@@ -1,4 +1,4 @@
-# Greytide Time
+# Assistants Time
 - type: loadoutEffectGroup
   id: HonoredAssistant
   effects:
@@ -8,7 +8,7 @@
       role: JobPassenger
       time: 36000 #10 hrs, silly reward for people who play Assistant a lot
 
-# Head of Greytide (for grey mantle)
+# Head of Assistants (for grey mantle)
 - type: loadoutEffectGroup
   id: MasterGrey
   effects:
@@ -16,7 +16,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobPassenger
-      time: 72000 #20 hrs, fun mantle for the most experienced greytiders
+      time: 72000 #20 hrs, fun mantle for the most experienced assistants
 
 # Face
 - type: loadout
@@ -47,6 +47,15 @@
     proto: HonoredAssistant
   equipment:
     jumpsuit: ClothingUniformColorRainbow
+
+# Rainbow Jumpskirt
+- type: loadout
+  id: RainbowJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: HonoredAssistant
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtColorRainbow
 
 # Ancient
 - type: loadout

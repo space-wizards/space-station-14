@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0", 
-    "copyright": "9 changed to 7.6 by Killer Tamashi and mag 4-5-6-7 was also done by me. Where's the source for these other sprites??", 
+    "copyright": "9 changed to 7.6 by Killer Tamashi and mag 4-5-6-7 was also done by me. Where's the source for these other sprites??, inhands by TiniestShark (github)", 
     "states": [
         {
             "name": "base"
@@ -48,6 +48,22 @@
         },
         {
             "name": "uranium"
+        },
+        {
+            "name": "inhand-left-mag",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-stripe",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-mag",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-stripe",
+            "directions": 4
         }
     ]
 }

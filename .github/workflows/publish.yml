@@ -2,6 +2,7 @@ name: Publish
 
 concurrency:
   group: publish
+  cancel-in-progress: true
 
 on:
   workflow_dispatch:
@@ -75,6 +76,7 @@ jobs:
       run: ssh -T git@github.com || exit 0
 
     - name: Publish changelog (Discord)
+      continue-on-error: true
       run: Tools/actions_changelogs_since_last_run.py
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -91,6 +93,7 @@ jobs:
         git push git@github.com:${{ github.repository }}.git HEAD:Starlight
 
     - name: Publish changelog (RSS)
+      continue-on-error: true
       run: Tools/actions_changelog_rss.py
       env:
         CHANGELOG_RSS_KEY: ${{ secrets.CHANGELOG_RSS_KEY }}

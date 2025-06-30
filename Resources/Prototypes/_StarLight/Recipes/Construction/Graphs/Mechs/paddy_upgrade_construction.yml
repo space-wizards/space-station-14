@@ -1,0 +1,15 @@
+- type: constructionGraph
+  id: PaddyUpgrade
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: paddy
+      steps:
+      - tag: PaddyUpgradeKit
+        name: construction-graph-tag-paddy-conversion-kit
+        doAfter: 5
+  - node: paddy
+    actions:
+    - !type:TransformMech
+      mechPrototype: MechPaddy

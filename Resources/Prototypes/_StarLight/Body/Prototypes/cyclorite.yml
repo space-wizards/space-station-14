@@ -25,6 +25,7 @@
         stomach: OrganCycloriteStomach
         liver:  OrganCycloriteLiver
         kidneys: OrganCycloriteKidneys
+        cavity: null
     right arm:
       part: RightArmCyclorite
       connections:

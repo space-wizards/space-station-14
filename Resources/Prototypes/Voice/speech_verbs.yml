@@ -116,6 +116,7 @@
   - chat-speech-verb-canine-1
   - chat-speech-verb-canine-2
   - chat-speech-verb-canine-3
+  - chat-speech-verb-canine-4 #starlight
 
 - type: speechVerb
   id: Goat
