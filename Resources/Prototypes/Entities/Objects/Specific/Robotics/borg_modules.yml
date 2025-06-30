@@ -734,11 +734,12 @@
     - item: HoloprojectorBorg
     - item: BorgDropper
     - item: Beaker
-      whitelist:
+      hand:
         emptyLabel: borg-slot-beakers-empty
         emptyRepresentative: Beaker
-        tags:
-        - GlassBeaker
+        whitelist:
+          tags:
+          - GlassBeaker
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
 
