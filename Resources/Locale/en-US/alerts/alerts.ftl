@@ -119,3 +119,6 @@ alerts-rooted-desc = You are attached to the ground. You can't slip, but you abs
 
 alerts-stealthy-name = Pickpocketing
 alerts-stealthy-desc = Whether you are currently pickpocketing. Click to toggle.
+
+alerts-invisible-name = Invisible
+alerts-invisible-desc = You're invisible! You can't be seen by other creatures.

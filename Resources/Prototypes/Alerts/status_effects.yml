@@ -1,0 +1,5 @@
+- type: alert
+  id: StealthStatusEffect
+  icons: [ /Textures/Interface/Alerts/stealthy.rsi/invisible.png ]
+  name: alerts-invisible-name
+  description: alerts-invisible-desc
