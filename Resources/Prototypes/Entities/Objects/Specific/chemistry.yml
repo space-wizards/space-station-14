@@ -25,7 +25,9 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
+      # start of modifications
         maxVol: 60 # Ronstation
+      # end of modifications
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -99,7 +101,9 @@
   parent: BaseItem
   id: BorgBeaker
   name: integrated beaker
+  # start of modifications
   description: An internal compartment installed into a cyborg. Rated for 60 units of any liquid.
+  # end of modifications
   components:
   # 3 morbillion components are to avoid inheriting breakable since borgs can't replace beakers.
   - type: Tag
@@ -123,7 +127,9 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
+      # start of modifications
         maxVol: 60 # Ronstation
+      # end of modifications
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -179,7 +185,9 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
+      # start of modifications
         maxVol: 60 # Ronstation
+      # end of modifications
   - type: MixableSolution
     solution: beaker
   - type: FitsInDispenser
@@ -269,7 +277,9 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
+        # start of modifications
         maxVol: 120 # Ronstation
+        # end of modifications
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -299,7 +309,9 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
+      # start of modifications
         maxVol: 60
+      # end of modifications
         canReact: false
 
 - type: entity
