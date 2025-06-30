@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Low value
 - type: biomeMarkerLayer
   id: OreIronLow
@@ -40,6 +41,7 @@
   maxGroupSize: 6
   radius: 4
 
+# start of modifications
 # - type: biomeMarkerLayer
 #   id: OreSaltLow
 #   entityMask:
@@ -53,6 +55,7 @@
 #   minGroupSize: 4
 #   maxGroupSize: 6
 #   radius: 4
+# end of modifications
 
 # Medium value
 # Gold
