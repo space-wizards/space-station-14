@@ -1,0 +1,700 @@
+- type: sponsorLoadout
+  id: pvrsifvlAlt
+  entity: ClothingBackpackpvrsifvlAlt
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: ProtoKineticpvrsifvlAlt
+  entity: WeaponCrusherpvrsifvlAlt
+  sponsorOnly: true
+  whitelistJobs: [SalvageSpecialist, SeniorSalvageSpecialist, Quartermaster]
+
+- type: sponsorLoadout
+  id: pvrsifvlAltHypospray
+  entity: HypospraypvrsifvlAlt
+  sponsorOnly: true
+  whitelistJobs: [ChiefMedicalOfficer, MedicalDoctor, Chemist, Paramedic, ResearchDirector, SeniorResearcher, Scientist, Captain]
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackpvrsifvlAlt
+  name: маленький призрак ETL//07
+  description: К тебе, спустя две тысячи лет. Неизвестного происхождения компаньон с непонятыми намерениями, но явным желанием к жизни. Слишком много личного, я не говорю, I'm speechless.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/backpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/backpack.rsi
+    clothingVisuals:
+      back:
+      - state: equipped-BACKPACK
+        scale: 0.5, 0.5
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+    - id: ClothingNeckCloakpvrsifvlAlt
+    - id: ClothingMaskpvrsifvlAlt
+    - id: ClothingHandsGlovespvrsifvlAlt
+    - id: ClothingBeltpvrsifvlAlt
+    - id: ClothingOuterHardsuitpvrsifvlAlt
+    - id: ClothingEyesHudMedicalpvrsifvlAlt
+    - id: JetpackVoidFilleddpvrsifvlAlt
+    - id: ClothingUniformJumpsuitpvrsifvlAlt
+    - id: PDApvrsifvlAlt
+    - id: ClothingShoesBootsMagpvrsifvlAlt
+    - id: ClothingHeadsetpvrsifvlAlt
+    - id: WeaponHeritagePKApvrsifvlAlt
+    - id: PaperLawpvrsifvlAlt
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+
+# Belt
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltpvrsifvlAlt
+  name: блюспейс хранилище ETL//07
+  description: Нет, мне это не нужно. Нет, мне это не нужно. Разработано и спроектировано компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Storage
+    grid:
+    - 0,0,9,1
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrillpvrsifvlAlt
+      - id: WelderExperimentalpvrsifvlAlt
+      - id: MultitoolpvrsifvlAlt
+      - id: SyndicateJawsOfLifepvrsifvlAlt
+      - id: GasAnalyzerpvrsifvlAlt
+      - id: MineralScannerpvrsifvlAlt
+      - id: HandHeldMassScannerpvrsifvlAlt
+      - id: trayScannerpvrsifvlAlt
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Cloack
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakpvrsifvlAlt
+  name: наплечный плащ разведывательного специалиста
+  description: Танцуй, убивай, целуй, обнимай меня. Сшита со всей душой любимым человеком с целью одарить теплом, на верхней части накидки виднеется фамилия «дю Терас».
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/cloak.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Crusher
+- type: entity
+  id: SynthocepsBulletCharge
+  parent: BulletCharge
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    soundHit:
+      path: /Audio/_DeadSpace/Sponsor/pvrsifvlAlt/synthoceps-crusher/synthoceps-empty.ogg
+      params:
+        volume: -4
+
+- type: entity
+  parent: [WeaponCrusherGlaive, BaseSecurityCargoContraband]
+  id: WeaponCrusherpvrsifvlAlt
+  name: синтоцепсы ETL//07
+  description: Модифицированный образец протокинетического ускорителя. Осторожно — у этих организмов может развиться сознание. Если это произошло, рекомендуем немедленно их уничтожить
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/crusher.rsi
+    state: icon
+  - type: Item
+    size: Huge
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/crusher-inhands.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/crusher.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: UseDelay
+    delay: 0.9
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_DeadSpace/Sponsor/pvrsifvlAlt/synthoceps-crusher/synthoceps-shot.ogg
+      params:
+        volume: -4
+    fireRate: 1.0
+    useKey: false
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.5
+    rechargeSound:
+      path: /Audio/_DeadSpace/Sponsor/pvrsifvlAlt/synthoceps-crusher/synthoceps-reload.ogg
+      params:
+        volume: -4
+  - type: BasicEntityAmmoProvider
+    proto: SynthocepsBulletCharge
+    capacity: 1
+    count: 1
+  - type: MeleeWeapon
+    animation: WeaponArcFist
+    attackRate: 1.5
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 10
+        Slash: 5
+    soundHit:
+      path: /Audio/_DeadSpace/Sponsor/pvrsifvlAlt/synthoceps-crusher/synthoceps-smash.ogg
+      params:
+        volume: -6
+    soundSwing:
+      path: /Audio/_DeadSpace/Sponsor/pvrsifvlAlt/synthoceps-crusher/synthoceps-empty.ogg
+      params:
+        volume: -4
+
+#Gasmask
+- type: entity
+  parent: ClothingMaskGasSyndicate
+  id: ClothingMaskpvrsifvlAlt
+  name: разведывательная маска ETL//07
+  description: Я один из тех, кому не улыбаются. Разработана и спроектирована компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/gasmask.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovespvrsifvlAlt
+  name: разведыватльные перчатки ETL//07
+  description: Помогут не обжечься в этот раз. Сшиты со всей душой любимым человеком с целью одарить теплом, на ладони правого перчатка виднеется фамилия «дю Терас».
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/gloves.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitpvrsifvlAlt
+  name: разведывательный скафандр ETL//07
+  description: Легковесный скафандр разведывательного назначения в боевой комплектации. Передовые бронепластины скрыты за стильной накидкой. Разработан и спроектирован компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitpvrsifvlAlt
+  - type: Item
+    size: Huge
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+        Stun: 0.65
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitpvrsifvlAlt
+  name: шлем разведывательного скафандра ETL//07
+  description: Взгляд на строгую форму и кроваво-красного цвета визор бросает в легкий дрожь, вызывает обоснованное недоверие.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/helmet.rsi
+  - type: PointLight
+    color: "#73caec"
+    radius: 7
+    energy: 3
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Рога-кастомизация
+- type: marking
+  id: HornpvrsifvlAlt
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  sponsorOnly: true
+  sprites:
+    - sprite: _DeadSpace/Sponsor/pvrsifvlAlt/horns_marking.rsi
+      state: horn
+
+#Hud
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesHudMedicalpvrsifvlAlt
+  name: разведывательный визор ETL//07
+  description: Друг на друге нарисуем мишени. Я попаду точно в цель, мне не трудно. Разработан и спроектирован компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/hud.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Hypo
+- type: entity
+  name: разведывательный гипоспрей ETL//07
+  parent: BaseItem
+  description: Давай оставлю свой автограф, только на тебе. Скрепляю степлером оставленный тобой порез. Разработан и спроектирован компанией Trauma Tec по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  id: HypospraypvrsifvlAlt
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/hypo.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/hypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 5
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+  - type: UseDelay
+    delay: 0.5
+  - type: StaticPrice
+    price: 750
+  - type: StealTarget
+    stealGroup: Hypospray
+
+#Jetpack
+- type: entity
+  parent: JetpackVoidFilled
+  id: JetpackVoidFilleddpvrsifvlAlt
+  name: пустотный джетпак ETL//07
+  description: Тебе становится чуть-чуть лучше, прикосновения вспоминая. Разработан и спроектирован компанией Nakamura Engineering по индивидуальному заказу.
+  suffix: Filled
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/jetpack.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/jetpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/jetpack.rsi
+    slots:
+      - Back
+      - suitStorage
+      - Belt
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#Jumpsuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitpvrsifvlAlt
+  name: комбинезон разведывательного специалиста
+  description: Текстилевый комбинезон, обшитый в некоторых местах толстой кожей. Отличается красной опознавательной повязкой на правой руке. Сшит со всей душой любимым человеком с целью одарить теплом, под воротником виднеется фамилия «дю Терас».
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/jumpsuit.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagpvrsifvlAlt
+  name: разведывательные магнитные сапоги ETL//07
+  description: Всегда готовы удержать и не дать упасть лицом в кровь. Разработаны и спроектированы компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/pvrsifvlAlt/magboots.rsi
+      layers:
+      - state: icon
+        map: [ "enum.ToggleVisuals.Layer" ]
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/pvrsifvlAlt/magboots.rsi
+    - type: ClothingSpeedModifier
+      walkModifier: 1
+      sprintModifier: 1
+    - type: Tag
+      tags: [] # ignore "WhitelistChameleon" tag
+
+#PDA
+- type: entity
+  parent: BaseMedicalPDA
+  id: PDApvrsifvlAlt
+  name: оболочка военного разума
+  description: От одного только взгляда на неё становится не по себе, пробегают глубинные воспоминания. Разработана и спроектирована компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/pda.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/pda.rsi
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NanoTaskCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - AstroNavCartridge
+
+#instruments
+#drill
+- type: entity
+  parent: BaseItem
+  id: PowerDrillpvrsifvlAlt
+  name: электродрель ETL//07
+  description: Мой друг — молоток, ударяю первым. Модифицирована компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_powerdrill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_powerdrill.rsi
+    size: Small
+  - type: Tool
+    qualities:
+      - Screwing
+    speedModifier: 1.5
+    useSound: /Audio/Items/drill_use.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Screwing
+        sprite:
+          sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_powerdrill.rsi
+          state: drill_screw
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        sprite:
+          sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_powerdrill.rsi
+          state: drill_bolt
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+      Plastic: 100
+  - type: StaticPrice
+    price: 100
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    attackRate: 1.5
+    damage:
+      types:
+        Piercing: 10
+    soundHit:
+      path: "/Audio/Items/drill_hit.ogg"
+
+#JawsOfLife
+- type: entity
+  parent: SyndicateJawsOfLife
+  id: SyndicateJawsOfLifepvrsifvlAlt
+  name: челюсти жизни ETL//07
+  description: Но ты перестал верить в чудеса, кем мечтал — тем и стал. Модифицированы компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_jawsoflife.rsi
+    state: syn_jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: syn_inhand-left
+      right:
+      - state: syn_inhand-right
+    size: Normal
+  - type: MultipleTool
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_jawsoflife.rsi
+          state: syn_jaws_pry
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_jawsoflife.rsi
+          state: syn_jaws_cutter
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+
+#WelderExperimental
+- type: entity
+  parent: WelderExperimental
+  id: WelderExperimentalpvrsifvlAlt
+  name: экспериментальный сварочный аппарат ETL//07
+  description: Никто даже не поверит, электрический ток по венам. Модифицирован компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_welder.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_welder.rsi
+
+#multitool
+- type: entity
+  parent: Multitool
+  id: MultitoolpvrsifvlAlt
+  name: мультитул ETL//07
+  description: Я прибавляю громкость, невозможно поймать фокус. Модифицирован компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_multitool.rsi
+
+#t-ray scanner
+- type: entity
+  name: т-лучевой сканер ETL//07
+  parent: BaseItem
+  id: trayScannerpvrsifvlAlt
+  description: Где-то в доме слышен скрип. Модифицирован компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_trayscanner.rsi
+    layers:
+    - state: tray-off
+      map: ["base"]
+  - type: TrayScanner
+  - type: Item
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_trayscanner.rsi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TrayScannerVisual.Visual:
+        base:
+          On: { state: tray-on }
+          Off: { state: tray-off }
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+      Glass: 150
+  - type: StaticPrice
+    price: 85
+
+#gasanalyzer
+- type: entity
+  name: газоанализатор ETL//07
+  parent: BaseItem
+  id: GasAnalyzerpvrsifvlAlt
+  description: Сгорай. Модифицирован компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_gasanalyzer.rsi
+    layers:
+      - state: icon
+        map: ["analyzer"]
+  - type: GasAnalyzer
+  - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    requireActiveHand: false
+    key: enum.GasAnalyzerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.GasAnalyzerUiKey.Key:
+        type: GasAnalyzerBoundUserInterface
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+        enum.GasAnalyzerVisuals.Enabled:
+          enabled:
+            True: { state: working }
+            False: { state: icon }
+  - type: StaticPrice
+    price: 80
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+      Glass: 100
+  - type: GuideHelp
+    guides:
+    - AtmosTools
+    - PipeNetworks
+    - Pipes
+
+# mass scanner
+- type: entity
+  name: сканер массы ETL//07
+  parent: HandHeldMassScanner
+  id: HandHeldMassScannerpvrsifvlAlt
+  description: Помоги мне в последний раз, помоги мне в последний раз, помоги мне в последний раз, помоги мне... Помо-помоги мне. Модифицирован компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_massscanner.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_massscanner.rsi
+    state: icon
+    layers:
+    - state: icon
+    - state: scanner
+      shader: unshaded
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+
+#mineralscanner
+- type: entity
+  id: MineralScannerpvrsifvlAlt
+  name: минеральный сканер ETL//07
+  description: Чёрт, у меня дрожащая рука. Сложно понимать, так сложно понимать. Модфицирован компанией Nakamura Engineering по индивидуальному заказу.
+  parent: [ MineralScannerUnpowered, PowerCellSlotMediumItem ]
+  categories: [ HideSpawnMenu ]
+  suffix: Powered
+  components:
+  - type: ToggleCellDraw
+  - type: PowerCellDraw
+    drawRate: 2.4 # ~5 minutes on a medium power cell.
+    useRate: 0
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/tools_mineralscanner.rsi
+    layers:
+    - state: icon
+    - state: icon-o
+      shader: unshaded
+      visible: false
+      map: ["enum.ToggleVisuals.Layer"]
+
+#Гарнитура
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetpvrsifvlAlt
+  name: ACD//0 ETL//07
+  description: К сожалению, не заглушает бесполезный вопль, а только заставляет его слушать. Модифицирована компанией Nakamura Engineering по индивидуальному заказу.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/headset.rsi
+  - type: Headset
+    color: "#db313f"
+  - type: EncryptionKeyHolder
+    keySlots: 5
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+#proto-kinetic accelerator
+- type: entity
+  parent: [WeaponProtoKineticAcceleratorBase, BaseCargoContraband]
+  id: WeaponHeritagePKApvrsifvlAlt
+  categories: [ HideSpawnMenu ]
+  name: наследие ETL//07
+  description: Модифицированный образец протокинетического ускорителя. Внутри ствола выгравировано всего одно слово — «Клэр ан дер Флюссен».
+  components:
+  - type: Gun
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    angleDecay: 45
+    minAngle: 44
+    maxAngle: 45
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_DeadSpace/Sponsor/pvrsifvlAlt/heritage-pka/pkashot.ogg
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.75
+    rechargeSound:
+      path: /Audio/_DeadSpace/Sponsor/pvrsifvlAlt/heritage-pka/pkareload.ogg
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/kinetic_accelerator.rsi
+    layers:
+    - state: icon
+    - state: animation-icon
+      visible: false
+      map: [ "empty-icon" ]
+  - type: Item
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/kinetic_accelerator.rsi
+    size: Normal
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/pvrsifvlAlt/kinetic_accelerator.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+
+#Gun
+#todo, тут должен быть револьвольвер осщ
+
+#Документ
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawpvrsifvlAlt
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-pvrsifvlAlt
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
