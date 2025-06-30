@@ -70,7 +70,6 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         string ItemName = important.ItsA ?? CompOrNull<MetaDataComponent>(item)?.EntityName ?? "thingy";
         _popupSystem.PopupCursor(Loc.GetString("disposal-unit-important-item", ("item", ItemName)),
-            // important.ShowOnChute ? (chute ?? user) : user,
             PopupType.MediumCaution);
     }
 

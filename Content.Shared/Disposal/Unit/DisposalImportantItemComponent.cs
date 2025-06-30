@@ -32,10 +32,4 @@ public sealed partial class DisposalImportantItemComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan LastAttempt;
-
-    /// <summary>
-    ///     If the popup should show up on the chute instead of the player.
-    /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public bool ShowOnChute = false;
 }
