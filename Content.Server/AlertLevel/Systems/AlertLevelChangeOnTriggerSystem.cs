@@ -24,7 +24,5 @@ public sealed class AlertLevelChangeOnTriggerSystem : EntitySystem
         if (!stationUid.HasValue)
             return;
 
-        _alertLevelSystem.SetLevel(stationUid.Value, ent.Comp.Level, ent.Comp.PlaySound, ent.Comp.Announce, ent.Comp.Force, false, ent.Owner);
-        // _adminLog.Add(Shared.Database.LogType.Trigger, Shared.Database.LogImpact.Medium, $"Entity {ent.Owner} changed alert level to {ent.Comp.Level} on station {stationUid.Value} with a trigger.");
-    }
+        _alertLevelSystem.SetLevel(stationUid.Value, ent.Comp.Level, ent.Comp.PlaySound, ent.Comp.Announce, ent.Comp.Force, false, ent.Owner);    }
 }
