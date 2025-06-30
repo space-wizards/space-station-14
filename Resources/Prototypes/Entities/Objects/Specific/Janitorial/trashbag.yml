@@ -32,6 +32,8 @@
     maxFillLevels: 4
     fillBaseName: icon
   - type: Dumpable
+    dumpsTables: false
+    dumpsBins: true
   - type: Clothing
     slots: [belt]
     sprite: Objects/Specific/Janitorial/trashbag.rsi
