@@ -560,7 +560,7 @@
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
         This only applies if someone is actively being physically arrested. People uncuffing or assisting others out of
-        an arrest can also be charged with this. Breach of custody is a separate crime.
+        an arrest can also be charged with this. Breach of Custody is a separate crime.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -580,7 +580,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Syndicate contraband may only be used in emergencies, and only to prevent death or gross bodily harm.
+        Syndicate contraband may only be used in emergencies, and only to prevent death or gross bodily harm. This category includes Magical contraband.
       </Box>
     </ColorBox>
     <ColorBox>
