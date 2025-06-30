@@ -1,43 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Fixed some intense explosion types using incorrect overlay sprites.
-    type: Fix
-  id: 8210
-  time: '2025-04-17T10:12:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36644
-- author: Beck Thompson, SlamBamActionman
-  changes:
-  - message: Fixed trash bag visuals. The appearance will now update correctly depending
-      on how many items it contains!
-    type: Fix
-  id: 8211
-  time: '2025-04-17T10:36:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32386
-- author: Callmore
-  changes:
-  - message: Cyborgs now require being pryed to open/close the panel instead of screwed.
-    type: Tweak
-  id: 8212
-  time: '2025-04-17T10:38:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32796
-- author: Errant
-  changes:
-  - message: Handheld geiger counters can now by heard by everyone nearby.
-    type: Tweak
-  id: 8213
-  time: '2025-04-17T11:24:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30463
-- author: Centronias
-  changes:
-  - message: Tank harnesses can be made at lathes, similar to utility belts.
-    type: Add
-  - message: Tank harnesses take up a 1x2 space in inventories, half of their previous
-      2x2.
-    type: Tweak
-  id: 8214
-  time: '2025-04-17T12:33:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35590
 - author: Jacktastic09
   changes:
   - message: Added the Solid Headband, available via hacked ClothesMate vending machines
@@ -3885,3 +3846,45 @@
   id: 8722
   time: '2025-06-27T02:03:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38586
+- author: slarticodefast
+  changes:
+  - message: Fixed RCD ghosts not disappearing when dropping the RCD.
+    type: Fix
+  id: 8723
+  time: '2025-06-27T16:39:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38622
+- author: Tayrtahn
+  changes:
+  - message: Solution containers (beakers, glasses, etc) no longer rapidly flicker
+      through different fill level visuals when transferring their contents.
+    type: Fix
+  id: 8724
+  time: '2025-06-28T00:13:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34838
+- author: Boaz1111
+  changes:
+  - message: Headphone sprites have been changed a bit, and they are now wearable
+      on the head, ears and neck.
+    type: Tweak
+  id: 8725
+  time: '2025-06-28T14:01:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38479
+- author: slarticodefast
+  changes:
+  - message: Fixed smart equip not being able to insert items into item slots (for
+      example for the sabre sheath).
+    type: Fix
+  id: 8726
+  time: '2025-06-29T14:33:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38655
+- author: BramvanZijp
+  changes:
+  - message: Added the custom door remote, it does not have any built-in access, instead
+      inheriting the ID access that the user has.
+    type: Add
+  - message: The captain's locker now comes with a custom door remote instead of a
+      command door remote.
+    type: Tweak
+  id: 8727
+  time: '2025-06-29T16:21:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35536
