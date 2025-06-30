@@ -15,7 +15,9 @@
       time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Medical
+      # start of modifications
       time: 54000 # 15 hours
+      # end of modifications
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
   supervisors: job-supervisors-captain
