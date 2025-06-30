@@ -330,10 +330,14 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (_followerSystem.GetMostGhostFollowed() is not {} target)
-                return;
+            var target = _followerSystem.GetMostGhostFollowed();
 
-            WarpTo(uid, target);
+            var response = new GhostnadoResponseEvent(target is not null);
+
+            if (msg.Warp && target is not null)
+                WarpTo(uid, (EntityUid)target);
+
+            RaiseNetworkEvent(response, args.SenderSession.Channel);
         }
 
         private void WarpTo(EntityUid uid, EntityUid target)
