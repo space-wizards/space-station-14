@@ -41,3 +41,16 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: PAICustomizationControl
+  name: pai-customization-control-name
+  description: pai-customization-control-desc
+  productAction: ActionPAICustomization
+  cost:
+    SiliconMemory: 5
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
