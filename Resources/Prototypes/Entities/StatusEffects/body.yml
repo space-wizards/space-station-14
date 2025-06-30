@@ -2,3 +2,8 @@
   parent: [ StatusEffectStutter, StatusEffectDrunk ]
   id: StatusEffectBloodloss
   name: bloodloss
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+        - Bloodstream
