@@ -189,13 +189,17 @@
     - id: WeaponPistolMk58
       amount: 2
     - id: WeaponPistolEnforcer
-      amount: 2
+      amount: 1
+    #- id: WeaponMachinePistolMk64
+      #amount: 1
     - id: MagazinePistolSP
       amount: 4
     - id: MagazinePistolHP
       amount: 2
     - id: MagazinePistolFMJ
       amount: 2
+    #- id: MagazinePistolHighCapacitySP
+      #amount: 2
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
