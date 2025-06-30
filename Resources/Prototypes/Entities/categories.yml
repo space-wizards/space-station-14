@@ -18,6 +18,13 @@
   name: entity-category-name-roles
   hideSpawnMenu: true
 
+- type: entityCategory
+  id: HideSpawnMenuAllowCopy
+  name: entity-category-name-hide-allow-copy
+  description: entity-category-desc-hide-allow-copy
+  hideSpawnMenu: true
+  inheritable: false # Matching non-inheritability of NoHideSpawn
+
 # markers, atmos fixing, etc
 - type: entityCategory
   id: Mapping
