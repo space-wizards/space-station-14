@@ -6,11 +6,9 @@ using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Shearing;
 using Content.Shared.Tools.Systems;
-using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -216,7 +214,7 @@ public sealed class SharedShearableSystem : EntitySystem
 
     /// <summary>
     ///     Called by the ShearingDoAfter event.
-     /// </summary>
+    /// </summary>
     private void OnSheared(Entity<ShearableComponent> ent, ref ShearingDoAfterEvent args)
     {
 
@@ -430,15 +428,13 @@ public sealed class SharedShearableSystem : EntitySystem
         // If solution is less than the minimum then disable the shearable layer.
         if (sol.Volume.Value < minimumSol * 100)
         {
-
             // Remove wool layer
             _appearance.SetData(
                 ent.Owner,
-                ShearableVisualsComponent.ShearableVisuals.Sheared,
+                ShearableComponent.ShearableVisuals.Sheared,
                 false,
                 appearance
             );
-
         }
         // If solution is more than the minimum then disable the shearable layer.
         else
@@ -446,7 +442,7 @@ public sealed class SharedShearableSystem : EntitySystem
             // Add wool layer
             _appearance.SetData(
                 ent.Owner,
-                ShearableVisualsComponent.ShearableVisuals.Sheared,
+                ShearableComponent.ShearableVisuals.Sheared,
                 true,
                 appearance
             );
@@ -470,7 +466,12 @@ public sealed class SharedShearableSystem : EntitySystem
             return;
 
         // Remove wool layer
-        _appearance.SetData(ent.Owner, ShearableVisualsComponent.ShearableVisuals.States, mobState.NewMobState, appearance);
+        _appearance.SetData(
+            ent.Owner,
+            ShearableComponent.ShearableVisuals.States,
+            mobState.NewMobState,
+            appearance
+        );
     }
 
     /// <summary>

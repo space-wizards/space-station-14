@@ -97,4 +97,21 @@ public sealed partial class ShearableComponent : Component
         ProductError
     }
 
+    // These are used for handling the shearable layer.
+    // A special sprite layer that changes based on the mob's life state.
+    // But can also be toggled by the shearable solution dropping blow a certain amount.
+    [ViewVariables]
+    public bool Sheared { get; set; } = false;
+
+    // MobState is one of the four mobstates, e.g. alive, dead, invalid, critical
+    // the string is the sprite state for that mobstate.
+    [ViewVariables]
+    public Dictionary<MobState, string> States { get; set; } = [];
+
+    [Serializable, NetSerializable]
+    public enum ShearableVisuals
+    {
+        Sheared,
+        States,
+    }
 }
