@@ -132,53 +132,53 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: jumpsuit-female
       back:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: back
-      outerClothing:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Moth/displacement.rsi
-            state: outerclothing
+#      outerClothing: #imp
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Moth/displacement.rsi 
+#            state: outerclothing
       gloves:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: hand
       shoes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: shoes
     displacements:
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: jumpsuit-male
       back:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: back
-      outerClothing:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Moth/displacement.rsi
-            state: outerclothing
+#      outerClothing: #imp
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Moth/displacement.rsi
+#            state: outerclothing
       gloves:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: hand
       shoes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: shoes
 
 - type: entity
@@ -194,51 +194,51 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: jumpsuit-female
       back:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: back
-      outerClothing:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Moth/displacement.rsi
-            state: outerclothing
+#      outerClothing: #imp
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Moth/displacement.rsi
+#            state: outerclothing
       gloves:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: hand
       shoes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: shoes
     displacements:
       jumpsuit:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: jumpsuit-male
       back:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: back
-      outerClothing:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Moth/displacement.rsi
-            state: outerclothing
+#      outerClothing: #imp
+#        sizeMaps:
+#          32:
+#            sprite: Mobs/Species/Moth/displacement.rsi
+#            state: outerclothing
       gloves:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: hand
       shoes:
         sizeMaps:
           32:
-            sprite: Mobs/Species/Moth/displacement.rsi
+            sprite: _Impstation/Mobs/Species/Moth/displacement.rsi #imp
             state: shoes
