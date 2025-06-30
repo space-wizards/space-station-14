@@ -23,6 +23,8 @@
       whitelist:
         components:
         - MobState # admeme implanting a chair with trombone implant needs to give the chair mobstate so it can die first
+    - type: ItemLayersColor
+      color: "#6e008c"
     - type: TriggerOnMobstateChange
       mobState:
       - Dead
@@ -41,6 +43,8 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionToggleLight
+    - type: ItemLayersColor
+      color: "#fcf803"
     - type: PointLight
       enabled: false
       radius: 2.5
@@ -63,6 +67,8 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateHonkImplant
+    - type: ItemLayersColor
+      color: "#fc03c6"
     - type: TriggerImplantAction
     - type: EmitSoundOnTrigger
       sound:
@@ -86,6 +92,8 @@
       whitelist:
         components:
         - MobState # admeme implanting a chair with tracking implant needs to give the chair mobstate so it can die first
+    - type: ItemLayersColor
+      color: "#00ff22"
     - type: SuitSensor
       randomMode: false
       controlsLocked: true
@@ -112,6 +120,8 @@
       whitelist:
         components:
         - Hands # no use giving a mouse a storage implant, but a monkey is another story...
+    - type: ItemLayersColor
+      color: "#781e00"
     - type: Storage
       grid:
       - 0,0,0,1
@@ -139,6 +149,8 @@
       whitelist:
         components:
         - Cuffable # useless if you cant be cuffed
+    - type: ItemLayersColor
+      color: "#636363"
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -147,7 +159,8 @@
   description: This implant grants access to the Syndicate channel without a headset.
   categories: [ HideSpawnMenu ]
   components:
-  - type: SubdermalImplant
+  - type: ItemLayersColor
+    color: "#520000"
   - type: RadioImplant
     radioChannels:
     - Syndicate
@@ -164,6 +177,8 @@
     whitelist:
       components:
       - Hands # prevent mouse buying grenade penguin since its not telepathic
+  - type: ItemLayersColor
+    color: "#ff0000"
   - type: Store
     balance:
       Telecrystal: 0
@@ -181,6 +196,8 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateEmpImplant
+    - type: ItemLayersColor
+      color: "#00ffdd"
     - type: TriggerImplantAction
     - type: EmpOnTrigger
       range: 2.75
@@ -196,6 +213,8 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateScramImplant
+    - type: ItemLayersColor
+      color: "#b7ff00"
     - type: TriggerImplantAction
     - type: ScramImplant
 
@@ -211,6 +230,8 @@
       whitelist:
         components:
         - HumanoidAppearance # syndies cant turn hamlet into a human
+    - type: ItemLayersColor
+      color: "#85381e"
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -241,6 +262,8 @@
     - type: SubdermalImplant
       permanent: true
       implantAction: ActionActivateMicroBomb
+    - type: ItemLayersColor
+      color: "#2e0000"
     - type: TriggerOnMobstateChange
       mobState:
       - Dead
@@ -270,6 +293,8 @@
   components:
     - type: SubdermalImplant
       permanent: true
+    - type: ItemLayersColor
+      color: "#1c0000"
     - type: TriggerOnMobstateChange #Chains with OnUseTimerTrigger
       mobState:
       - Dead
@@ -306,6 +331,8 @@
   - type: SubdermalImplant
     permanent: true
     implantAction: ActionActivateDeathAcidifier
+  - type: ItemLayersColor
+    color: "#87ff30"
   - type: TriggerOnMobstateChange
     mobState:
     - Dead
@@ -332,6 +359,8 @@
       whitelist:
         components:
         - MobState # admeme implanting a chair with rattle implant needs to give the chair mobstate so it can die first
+    - type: ItemLayersColor
+      color: "#ffd230"
     - type: TriggerOnMobstateChange
       mobState:
       - Critical
@@ -347,6 +376,8 @@
   components:
       - type: SubdermalImplant
         implantAction: FakeMindShieldToggleAction
+      - type: ItemLayersColor
+        color: "#3661ff"
       - type: FakeMindShieldImplant
 
 # Sec and Command implants
@@ -358,8 +389,9 @@
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
   categories: [ HideSpawnMenu ]
   components:
-   - type: SubdermalImplant
-   - type: MindShieldImplant
+  - type: ItemLayersColor
+    color: "#5cb6ff"
+  - type: MindShieldImplant
 
 # Centcomm implants
 
@@ -370,7 +402,8 @@
   description: This implant grants access to the Centcomm channel without a headset. Only authorized for Centcomm employees.
   categories: [ HideSpawnMenu ]
   components:
-  - type: SubdermalImplant
+  - type: ItemLayersColor
+    color: "#0ac700"
   - type: RadioImplant
     radioChannels:
     - CentCom
@@ -382,5 +415,7 @@
   description: This implant will inform the Centcomm radio channel should the user fall into critical condition or die.
   categories: [ HideSpawnMenu ]
   components:
+  - type: ItemLayersColor
+    color: "#41ff30"
   - type: Rattle
     radioChannel: CentCom
