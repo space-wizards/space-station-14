@@ -255,7 +255,9 @@
     - SemiAuto
     - Burst
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/rifle.ogg
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/m90.ogg
+      params:
+        volume: 1
   - type: ItemSlots
     slots:
       gun_magazine:
