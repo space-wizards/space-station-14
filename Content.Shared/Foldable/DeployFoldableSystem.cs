@@ -70,7 +70,7 @@ public sealed class DeployFoldableSystem : EntitySystem
         }
 
         if (!TryComp(args.User, out HandsComponent? hands)
-            || !_hands.TryDrop(args.User, args.Used, targetDropLocation: args.ClickLocation, handsComp: hands))
+            || !_hands.TryDrop((args.User, hands), args.Used, targetDropLocation: args.ClickLocation))
             return;
 
         if (!_foldable.TrySetFolded(ent, foldable, false))
