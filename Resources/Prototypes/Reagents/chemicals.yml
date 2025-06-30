@@ -93,6 +93,9 @@
       effects:
       - !type:ArtifactDurabilityRestore
         probability: 0.5
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
 
 - type: reagent
   id: Benzene
