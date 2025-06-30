@@ -157,9 +157,10 @@ public sealed class TemperatureSystem : EntitySystem
         var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
         var airHeatCapacity = _atmosphere.GetHeatCapacity(args.GasMixture, false);
         var heatCapacity = GetHeatCapacity(uid, temperature);
+        var ignoreHeatResistance = args.GasMixture.IsInternal;
         var heat = temperatureDelta * (airHeatCapacity * heatCapacity /
                                        (airHeatCapacity + heatCapacity));
-        ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
+        ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, ignoreHeatResistance, temperature: temperature);
     }
 
     public float GetHeatCapacity(EntityUid uid, TemperatureComponent? comp = null, PhysicsComponent? physics = null)
