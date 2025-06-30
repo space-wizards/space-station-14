@@ -25,21 +25,18 @@ namespace Content.Shared.Animals;
 public sealed class SharedShearableSystem : EntitySystem
 {
     [Dependency]
-    private readonly SharedToolSystem _tool = default!;
-
-    [Dependency]
-    private readonly SharedDoAfterSystem _doAfterSystem = default!;
-
-    [Dependency]
-    private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-
-    [Dependency]
     private readonly IPrototypeManager _prototypeManager = default!;
 
     [Dependency]
+    private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency]
+    private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency]
     private readonly SharedPopupSystem _popup = default!;
     [Dependency]
-    private readonly SharedAppearanceSystem _appearance = default!;
+    private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency]
+    private readonly SharedToolSystem _tool = default!;
 
     public override void Initialize()
     {
@@ -415,13 +412,75 @@ public sealed class SharedShearableSystem : EntitySystem
     }
 
     /// <summary>
+    ///     This function changes the animal's shearable layer based on the solution volume.
+    ///     e.g. when a sheep's wool solution volume drops below 5, which is the minimum needed to shear it, the wool will disapear.
+    /// </summary>
+    /// <param name="ent">the entity containing a wooly component that will be checked.</param>
+    /// <param name="sol">a SolutionContainerChangedEvent object passed by the OnSolutionChange event.</param>
+    private void UpdateShearingLayer(Entity<ShearableComponent> ent, Solution sol)
+    {
+
+        // appearance is used to disable and enable the wool layer.
+        if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
+            return;
+
+        // The minimum solution required to spawn one product.
+        var minimumSol = 1 / ent.Comp.ProductsPerSolution;
+
+        // If solution is less than the minimum then disable the shearable layer.
+        if (sol.Volume.Value < minimumSol * 100)
+        {
+
+            // Remove wool layer
+            _appearance.SetData(
+                ent.Owner,
+                ShearableVisualsComponent.ShearableVisuals.Sheared,
+                false,
+                appearance
+            );
+
+        }
+        // If solution is more than the minimum then disable the shearable layer.
+        else
+        {
+            // Add wool layer
+            _appearance.SetData(
+                ent.Owner,
+                ShearableVisualsComponent.ShearableVisuals.Sheared,
+                true,
+                appearance
+            );
+        }
+    }
+
+    /// <summary>
+    ///     This function changes the animal's shearable layer based on the mob state.
+    ///     e.g. when sheep die, they flip up-side down, so their shearable layer flips too.
+    /// </summary>
+    /// <param name="ent">the entity containing a shearable component that will be checked.</param>
+    /// <param name="mobState">details on the mob's living state as passed by the OnMobStateChanged event.</param>
+    private void UpdateShearingLayer(Entity<ShearableComponent> ent, MobStateChangedEvent mobState)
+    {
+
+        //TODO check if a wooly layer has been defined.
+
+        // appearance is used to disable and enable the wool layer.
+        // if the target doen't have one for some reason then give up.
+        if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
+            return;
+
+        // Remove wool layer
+        _appearance.SetData(ent.Owner, ShearableVisualsComponent.ShearableVisuals.States, mobState.NewMobState, appearance);
+    }
+
+    /// <summary>
     ///     Used for managing the shearing layer as the shearable solution levels change.
     ///     e.g. in Sheep, it will remove the wooly layer when the remaining reagent in the wool solution drops to 0.
     ///     the layer is re-added when the reagent is above 0.
     ///     Check the sheep's Sprite and GenericVisualizer components for an example of how to add a shearable layer to your animal.
     /// </summary>
     /// <param name="ent">the entity containing a wooly component that will be checked.</param>
-    /// <param name="args">Arguments passed through by the ExaminedEvent.
+    /// <param name="args">Arguments passed through by the ExaminedEvent.</param>
     private void OnSolutionChange(Entity<ShearableComponent> ent, ref SolutionContainerChangedEvent args)
     {
         // Only interested in wool solution, ignore the rest.
@@ -432,62 +491,12 @@ public sealed class SharedShearableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     This function checks the entity's wool solution and either disables or enables the wool layer (if one exists).
-    /// </summary>
-    /// <param name="ent">the entity containing a wooly component that will be checked.</param>
-    /// <param name="sol">a resolved solution object the presence of which will be checked.
-    private void UpdateShearingLayer(Entity<ShearableComponent> ent, Solution? sol = null)
-    {
-        // If the sol parameter hasn't been provided, we'll try to grab the solution from inside the animal instead.
-        Solution? solution;
-        if (sol is null)
-        {
-            if (!_solutionContainer.ResolveSolution(
-                ent.Owner,
-                ent.Comp.TargetSolutionName,
-                ref ent.Comp.Solution,
-                out solution
-            ))
-                // Somehow, this entity has no shearing solution.
-                return;
-
-        }
-        else
-        {
-            solution = sol;
-        }
-
-        // appearance is used to disable and enable the wool layer.
-        if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
-            return;
-        // mState is used to check if the animal is dead/critical.
-        TryComp<MobStateComponent>(ent.Owner, out var mobState);
-
-        // If we couldn't resolve the mobState for some reason then just assume it's alive.
-        mobState ??= new MobStateComponent();
-
-        // If there's no solution at all, or the entity is dead or critical, remove the wool layer.
-        // Otherwise, enable it.
-        if (solution.Volume.Value <= 0)
-        {
-            // Remove wool layer
-            _appearance.SetData(ent.Owner, ToggleableVisuals.Enabled, false, appearance);
-
-        }
-        else
-        {
-            // Add wool layer
-            _appearance.SetData(ent.Owner, ToggleableVisuals.Enabled, true, appearance);
-        }
-    }
-
-    /// <summary>
     ///     This is used for checking if the shearable animal is dead or critical.
     ///     If it is, then the shearing layer is removed.
     /// </summary>
     private void OnMobStateChanged(Entity<ShearableComponent> ent, ref MobStateChangedEvent args)
     {
-        UpdateShearingLayer(ent);
+        UpdateShearingLayer(ent, args);
     }
 
 }

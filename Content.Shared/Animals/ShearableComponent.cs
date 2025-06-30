@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Stacks;
+using Content.Shared.Mobs;
+using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -95,4 +96,5 @@ public sealed partial class ShearableComponent : Component
         /// <summary> The ShearedProductID did not resolve to an existing prototype. It might not exist. </summary>
         ProductError
     }
+
 }
