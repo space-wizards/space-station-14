@@ -30,32 +30,32 @@
   Usage of contraband implanters is a detainable offense, but it's not reasonable to detain someone solely for having an unidentified implant inside them.
 
   ## Implant Removal
-  Any prisoner in custody can be subjected to implant extraction for a specific implant if there is reasonable suspicion they have it implanted. Detainees may not be forced or coerced into performing implant extraction on themselves against their will.
+  Any prisoner in custody can be subjected to implant extraction for a specific implant if there is reasonable suspicion they have it implanted. A person may not be forced or coerced into performing implant extraction on themselves against their will.
 
   ## Sentencing
-  From a server rules perspective, security officers are only responsible for ensuring that they only place sentences over 15 minutes where space law would allow permanent confinement. Informing the Warden is highly recommended, even for timed sentences. As long as those requirements are met, security officers not giving inappropriate sentence lengths is considered an in-character issue, not a rule issue.
-
-  The captain, HOS, and warden are responsible, within reason, for ensuring security officers place appropriate sentences that follow space law. If they are aware of an inappropriate sentence, including excessively long sentences, and if there is not an urgent threat or danger that they must prioritize, then they must work to correct that sentence. Unreasonable failures, as determined by game admins, of the captain, HOS, or warden to ensure space law is followed will be considered a rule issue, not an in-character issue.
+  Sentencing may be performed by any personnel acting in a security role, as long as any additional requirements for the sentence (as listed in the Punishments section) are met. Informing the Warden is always highly recommended, even for timed sentences.
 
   Use common sense and humanity when issuing punishments. You should not always seek out the highest punishment you can, you don't have to always give the maximum time or always look to demote someone. Prisoners cooperating and on good behavior should have their sentences reduced. Always take in account the severity and only charge for what is needed for someone to learn their lesson.
 
   [color=#a4885c]Stackable Crimes:[/color] Crimes are to be considered 'stackable' in the sense that if you charge someone with two or more different crimes, you should combine the times you would give them for each crime. Linked crimes, shown in matching colors and suffixes on the Quick Crime Guide, can not be stacked and instead override each other, you should pick the highest crime that matches the case.
 
-  - Example: A suspect has committed a 2-01 (possession: major) and a 3-01 (possession: syndicate). The maximum sentence here would be 10 minutes due to them being linked crimes, and 3-01 is the greater crime.
-  - Example 2: A suspect commits a 3-04 (Secure trespassing) and a 3-06 (manslaughter). Those crimes stack since they are not linked crimes. You could sentence for a maximum of 20 minutes, but context matters heavily, and maximum sentences should only be used for the worst offenders.
+  - Example: A suspect has committed a 2-01 (Possession: Major) and a 3-01 (Possession: Syndicate). The maximum sentence here would be 10 minutes due to them being linked crimes, and 3-01 is the greater crime.
+  - Example 2: A suspect commits a 3-04 (Secure Trespassing) and a 3-06 (Manslaughter). Those crimes stack since they are not linked crimes. You could sentence for a maximum of 20 minutes, but context matters heavily, and maximum sentences should only be used for the worst offenders.
 
-  [color=#a4885c]Repeater Offenders:[/color] Repeated crimes are when someone is released for a crime and then goes to commit the same crime within the same shift. Repeated crimes can be charged with tacked-on time; first repeat: 3:00, second repeat: 6:00, third repeat: permanent confinement. It should be noted each tacked-on time is directly linked to one type of crime, so for example, if someone does their first repeat of trespass and petty theft, you can charge them with an extra 6 minutes.
+  [color=#a4885c]Repeater Offenders:[/color] Repeated crimes are when someone is charged with a crime and then goes to commit the same crime within the same shift. Repeated crimes can be charged with tacked-on time; first repeat: 3:00, second repeat: 6:00, third repeat: permanent confinement. It should be noted each tacked-on time is directly linked to one type of crime, so for example, if someone does their first repeat of Trespass and Petty Theft, you can charge them with an extra 6 minutes.
 
   [color=#a4885c]Accessory, Attempting, And Intention:[/color] If someone intentionally, knowingly and substantially assists someone in enacting a crime they can be charged with the relevant crimes, such as an engineer giving someone tools, who says they are going to break into an area. Same goes for a clear and solid attempt at a crime, or a person who shows clear intent to act out a crime, such as a syndicate nuclear operative arming a nuke but getting arrested before it goes off, they can still be charged with station-wide destruction. Does not apply to crimes that have an attempted listing already, like attempted murder.
 
-  ## Normal Punishments
+  ## Punishments
+
+  ### Normal Punishments
   - [color=#a4885c]Warning:[/color] For minor crimes, fix the issue, then warn the person not to attempt the crime again. If they still proceed to do it at a later date, a brig time may be better.
   - [color=#a4885c]Confinement:[/color] The typical punishment, being confined in a cell for a temporary amount of time according to the crimes.
   - [color=#a4885c]Demotion:[/color] Entails removing all departmental gear they have on their person and revoking the involved department access off their ID. This requires the captain's or involved department head's approval. Demotions should only be issued if the person pose a threat to their own department or are in a position where they have/can abuse their job's gear to commit further crimes.
 
-  ## Major Punishments
-  [color=#a4885c]Permanent Confinement:[/color] Being held in the permanent brig for the entire duration of the shift. A person is eligible for permanent confinement if their timed sentence would exceed 15 minutes. Any persons subject to this punishment are required to be transported in cuffs to CentComm at the end of the shift. A permanent prisoner can not be deprived of anything covered by the section "Treatment Of Prisoners".
-  [color=#a4885c]Execution:[/color] A humane way of dealing with extremely unruly crewmates. Within reason, a prisoner who has been given the death sentence may pick how they wish to be killed, common methods are firing line, lethal injection, exile, and high voltage electrocution. Another alternate method of "execution" is the process of placing a staff's mind into a borg, this is allowed so long as it is lawful. Execution can only be issued with the captain's or acting captain's approval; if the HoS is acting captain or there is no acting captain, all heads of staff are to hold a vote on the matter.
+  ### Major Punishments
+  [color=#a4885c]Permanent Confinement:[/color] Being held in the permanent brig for the entire duration of the shift. A person is eligible for permanent confinement if their timed sentence would [italic]exceed[/italic] 20 minutes. Any persons subject to this punishment are required to be transported in cuffs to CentComm at the end of the shift. A permanent prisoner can not be deprived of anything covered by the section "Treatment Of Prisoners".
+  [color=#a4885c]Execution:[/color] A humane way of dealing with extremely unruly crewmates. Within reason, a prisoner who has been given the death sentence may pick how they wish to be killed, common methods are firing line, lethal injection, exile, and high voltage electrocution. Another alternate method of "execution" is the process of placing a staff's mind into a borg, this is allowed so long as it is lawful. Execution can only be issued with the Captain's (or acting Captain's) approval. If there is no one in the role of Captain, or the Captain has been rendered unable to make a decision, both HoS and the detainee's department head (if applicable) must jointly approve. If both HoS and the detainee's department head have been rendered unable to make a decision, the responsibility falls onto the security member conducting the sentencing.
 
   ## Crime Listing
   - [textlink="Crime Listing" link="SpaceLawCrimeList"]
