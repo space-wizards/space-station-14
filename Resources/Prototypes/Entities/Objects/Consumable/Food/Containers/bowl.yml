@@ -73,9 +73,18 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl-trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: ToxinTrash
+          Quantity: 5
   - type: Tag
     tags:
     - Trash
+  - type: Food
+    requiresSpecialDigestion: true
   - type: PhysicalComposition
     materialComposition:
       Glass: 50
