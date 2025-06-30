@@ -6,7 +6,7 @@
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: The cousin of the improvised shotgun, this one is made from better quality parts and an additional barrel! Takes time and welding supplies to make, however. 
+  description: crafting-menu-text-FDB
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
     state: icon

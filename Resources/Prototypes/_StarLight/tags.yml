@@ -152,6 +152,12 @@
   id: SwordForged
 
 - type: Tag
+  id: SpeedLoaderMagnumImprovised
+
+- type: Tag
+  id: ShellShotgunImprovised
+
+- type: Tag
   id: SpeedLoaderShotgun
 
 - type: Tag
