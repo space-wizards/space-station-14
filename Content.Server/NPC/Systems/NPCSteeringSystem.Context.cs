@@ -93,8 +93,8 @@ public sealed partial class NPCSteeringSystem
         TransformComponent xform,
         Angle offsetRot,
         float moveSpeed,
-        float acceleration,
-        float friction,
+        float acceleration, // Goobstation
+        float friction, // Goobstation
         Span<float> interest,
         float frameTime,
         ref bool forceSteer,
@@ -329,9 +329,8 @@ public sealed partial class NPCSteeringSystem
 
         // If we don't have a path yet then do nothing; this is to avoid stutter-stepping if it turns out there's no path
         // available but we assume there was.
-        if (steering is { Pathfind: true, CurrentPath.Count: 0 }
-            && !arrivedFinal // Goobstation
-        )
+        if (steering is { Pathfind: true, CurrentPath.Count: 0 } && !arrivedFinal)
+                                                                 // Goobstation
             return true;
 
         if (moveSpeed == 0f || direction == Vector2.Zero)
@@ -357,10 +356,11 @@ public sealed partial class NPCSteeringSystem
             // <Goobstation modified>
             var sameDirectionWeight = weight * 0.1f;
             norm = offsetRot.RotateVec(body.LinearVelocity.Normalized()); // fix TODO: upstream this
-            if (arrivedFinal) {
+            if (arrivedFinal)
+            {
                 // attempt to prevent jitter on arrival from overbraking in yes-grav
                 const float easeInFactor = 1.5f; // scary magic number
-                var cvel = body.LinearVelocity * 1f;
+                var cvel = body.LinearVelocity * 1f; // copy
                 _mover.Friction(0f, frameTime, friction, ref cvel);
                 var postFrictionVel = cvel.Length();
                 var frameAccel = acceleration * frameTime * moveSpeed;
