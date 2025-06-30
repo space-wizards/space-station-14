@@ -7,16 +7,9 @@
     contents:
       - id: ClothingOuterArmorBasicSlim
       - id: WeaponShotgunDoubleBarreledRubber
-      - id: DrinkShaker
       - id: ClothingEyesHudBeer
       - id: HandLabeler
         amount: 1
-      - id: DrinkBottleBeer
-        prob: 0.5
-      - id: DrinkBottleBeer
-        prob: 0.5
-      - id: DrinkBottleBeer
-        prob: 0.5
       - id: BoxBeanbag
         amount: 2
       - id: RagItem
@@ -98,18 +91,12 @@
   - type: StorageFill
     contents:
       - id: ClothingHandsGlovesLeather
-      - id: ClothingOuterApronBotanist
-      - id: ClothingHeadBandBotany
       - id: ChemistryBottleRobustHarvest
-        prob: 0.3
       - id: ClothingBeltPlant
       - id: PlantBag ##Some maps don't have nutrivend
       - id: BoxMouthSwab
       - id: Dropper
       - id: HandLabeler
-      - id: ClothingUniformOveralls
-      - id: ClothingHeadHatTrucker
-        prob: 0.1
 
 - type: entity
   id: LockerBotanistLoot
