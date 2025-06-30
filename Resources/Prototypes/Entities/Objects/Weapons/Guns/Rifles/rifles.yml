@@ -56,7 +56,7 @@
   name: AKMS
   parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleAk
-  description: A somewhat battered combat rifle of a design originating from old Earth. Favored by criminals, militias, and terrorists due to its famed reliability and easy-to-manufacture design. Feeds from .30 rifle magazines.
+  description: "A somewhat battered combat rifle of a design originating from old Earth. Favored by criminals, militias, and terrorists due to its famed reliability and easy-to-manufacture design.\nFeeds from .30 rifle magazines."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -104,7 +104,7 @@
   name: M90 GL
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleM90GrenadeLauncher
-  description: "A somewhat outdated bullpup rifle in a grenadier configuration. The rifle is serviceable, but the underbarrel grenade launcher looks non-functional.\nFeeds from .20 rifle magazines."
+  description: "An older bullpup carbine model, with an attached underbarrel grenade launcher.\nFeeds from .20 rifle magazines."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
@@ -145,7 +145,7 @@
   - type: Appearance
 
 - type: entity
-  name: Mk23 Lecter
+  name: Lecter
   parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleLecter
   description: "Popular gas-operated combat rifle used heavily by Nanotrasen and SolGov. Operating in semi or fully automatic, its accuracy, stopping power, and reliability make it excel in all manner of environments.\nFeeds from .20 rifle magazines."
@@ -195,7 +195,7 @@
   name: Estoc DMR
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleEstoc
-  description: A designated marksman rifle, favored for medium-to-long range engagements. Uses .20 rifle ammo.
+  description: "A designated marksman rifle, favored for medium-to-long range engagements.\nFeeds from .20 rifle magazines."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/estoc.rsi
