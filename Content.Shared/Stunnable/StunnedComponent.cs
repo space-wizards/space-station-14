@@ -2,7 +2,12 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Stunnable;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedStunSystem))]
+[RegisterComponent, AutoGenerateComponentState, NetworkedComponent, Access(typeof(SharedStunSystem))]
 public sealed partial class StunnedComponent : Component
 {
+    /// <summary>
+    /// Is this stun visualized?
+    /// </summary>
+    [AutoNetworkedField, DataField]
+    public bool Visualized;
 }
