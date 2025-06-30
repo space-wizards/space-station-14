@@ -30,6 +30,7 @@ public sealed class StandTriggerSystem : EntitySystem
     private void OnMapInit(Entity<StandTriggerComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
+        Dirty(ent);
     }
 
     public override void Update(float frameTime)
@@ -45,6 +46,7 @@ public sealed class StandTriggerSystem : EntitySystem
                 continue;
 
             trigger.NextUpdate += trigger.UpdateInterval;
+            Dirty(uid, trigger);
 
             var transform = Transform(uid);
 
