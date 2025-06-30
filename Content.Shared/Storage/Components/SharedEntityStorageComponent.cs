@@ -158,6 +158,13 @@ public record struct InsertIntoEntityStorageAttemptEvent(EntityUid ItemToInsert,
 [ByRefEvent]
 public record struct EntityStorageInsertedIntoAttemptEvent(EntityUid ItemToInsert, bool Cancelled = false);
 
+/// <summary>
+/// Raised on the Container's owner whenever an entity storage tries to dump its
+/// contents while within a container.
+/// </summary>
+[ByRefEvent]
+public record struct EntityStorageIntoContainerAttemptEvent(BaseContainer Container, bool Cancelled = false);
+
 [ByRefEvent]
 public record struct StorageOpenAttemptEvent(EntityUid User, bool Silent, bool Cancelled = false);
 
