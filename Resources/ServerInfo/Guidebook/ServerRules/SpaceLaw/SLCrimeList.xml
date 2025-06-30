@@ -65,7 +65,7 @@
     </ColorBox>
     <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession: Minor (2)
+        Possession or Use of Minor Contraband (2)
       </Box>
     </ColorBox>
     <ColorBox Color="#2f3832">
@@ -399,6 +399,25 @@
     </ColorBox>
   </Table>
 
+  ## Linked Crimes:
+  Crimes that are linked can not be charged together. For more information, refer to Sentencing.
+
+  1. Failure to Comply, Breach of Arrest, Breach of Custody, Refusal of Mental Shielding
+  
+  2. Possession or Use of Minor Contraband, Major Contraband, or Syndicate Contraband
+  
+  3. Petty Theft, Grand Theft, and Armed Robbery
+  
+  4. Vandalism, Damage of Property, Mass Destruction, Terrorism
+  
+  5. Trespass, Secure Trespass
+  
+  6. Endangerment, Minor Assault, Major Assault, Manslaughter, Attempted Murder, Murder, Prevention of Revival, Mass Murder, Unlawful Execution
+  
+  7. Disturbance, Vigilantism, Rioting
+  
+  8. Sedition, Conspiracy, Treason
+  
   ## Minor Crimes
   Those who commit a minor crime should be issued a warning for their first offense, however repeat offenses are cumulative and may result in jail time of up to 5 minutes per minor crime committed.
   <Table Columns="2">
@@ -424,7 +443,7 @@
     </ColorBox>
     <ColorBox Color="#2f3832">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Possession/Use of Minor Contraband
+        Possession or Use of Minor Contraband
       </Box>
     </ColorBox>
     <ColorBox Color="#2f3832">
@@ -764,7 +783,7 @@
     </ColorBox>
     <ColorBox Color="#4d2e2e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To make an attempt to end someones life, using physical force or otherwise. Proof that action was taken with the intent to kill is necessary, such as a lethal weapon being used.
+        To make an attempt to end someone's life, using physical force or otherwise. Proof that action was taken with the intent to kill is necessary, such as a lethal weapon being used.
       </Box>
     </ColorBox>
     <ColorBox Color="#4d2e2e">
@@ -794,7 +813,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To consume any part of a sapient being. Consumption of vital components should be treated more harshly. This can be charged on top of other charges such as Murder or Assault if the suspect committed these crimes to obtain the parts consumed.
+        To consume any part of a sapient being. Consumption of vital components should be treated more harshly. This can be charged on top of other charges such as Murder or Assault if the suspect committed these crimes to obtain the parts consumed. Consumption of blood is not considered cannibalism, but if the source is non-consensual or stolen it may be assault or theft.
       </Box>
     </ColorBox>
   </Table>
@@ -819,7 +838,7 @@
     </ColorBox>
     <ColorBox Color="#593a4e">
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        To refuse to comply with a reasonable Mind Shielding procedure. Applies if the suspect is excessively uncooperative or the implant fails to function due to the mental state of the prisoner being too far gone. If the implant fails, execution is heavily recommended.
+        To refuse to comply with a reasonable Mind Shielding procedure. Applies if the suspect is excessively uncooperative or the implant fails to function due to the mental state of the prisoner being too far gone. If the implant fails, execution is heavily recommended and may be approved by the Captain or Central Command. See Implantation for more.
       </Box>
     </ColorBox>
     <ColorBox Color="#2e422e">

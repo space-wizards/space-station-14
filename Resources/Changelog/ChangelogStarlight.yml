@@ -8484,4 +8484,78 @@ Entries:
   id: 1170
   time: '2025-06-26T21:38:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/764
+- author: Conflee
+  changes:
+  - message: Kiloton - Vastly expanded the East Maints with a new mini-bar, walkways,
+      and several new rooms
+    type: Add
+  id: 1171
+  time: '2025-06-30T17:07:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/938
+- author: Conflee
+  changes:
+  - message: Kiloton - A couple small rooms in West Maints
+    type: Add
+  id: 1172
+  time: '2025-06-30T17:07:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/938
+- author: Conflee
+  changes:
+  - message: Kiloton - Removed Plasma Miner at Pig's request
+    type: Remove
+  id: 1173
+  time: '2025-06-30T17:07:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/938
+- author: Conflee
+  changes:
+  - message: Kiloton - Expanded AME to allow for double size
+    type: Tweak
+  id: 1174
+  time: '2025-06-30T17:07:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/938
+- author: Conflee
+  changes:
+  - message: Kiloton - Now makes use of Decal Spawners to place grafiti, blood, dirt,
+      etc in a more interesting fashion, randomized at round start slightly for variety
+    type: Tweak
+  id: 1175
+  time: '2025-06-30T17:07:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/938
+- author: Conflee
+  changes:
+  - message: Kiloton - Replaced outermost Genpop exit door with turnstiles, now that
+      turnstiles can't be deconstructed in 2 seconds
+    type: Tweak
+  id: 1176
+  time: '2025-06-30T17:07:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/938
+- author: KarmaKitsuna
+  changes:
+  - message: Updated guidebook corporate law to match the wiki
+    type: Add
+  id: 1177
+  time: '2025-06-30T17:09:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/936
+- author: stickycheZ101
+  changes:
+  - message: gave lizards some redbull (new wing customisation for lizards)
+    type: Add
+  id: 1178
+  time: '2025-06-30T17:22:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/903
+- author: Quantumcross
+  changes:
+  - message: Fixed multiple edge cases for job selection causing round join failure,
+      esp if only mindshielded roles selected
+    type: Fix
+  id: 1179
+  time: '2025-06-30T17:23:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/925
+- author: PublicyExecutedPig
+  changes:
+  - message: Origin Station
+    type: Add
+  id: 1180
+  time: '2025-06-30T17:25:10.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/898
 
