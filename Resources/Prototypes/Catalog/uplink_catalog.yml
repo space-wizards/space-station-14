@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # TODO: make more categories
 # Guns
 
@@ -264,7 +265,9 @@
   id: UplinkGrenadeLauncherBundle
   name: uplink-grenade-launcher-bundle-name
   description: uplink-grenade-launcher-bundle-desc
+  # start of modifications
   icon: { sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi, state: base }
+  # end of modifications
   productEntity: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   discountCategory: veryRareDiscounts
   discountDownTo:
