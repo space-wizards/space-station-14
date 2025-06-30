@@ -957,3 +957,31 @@
       params:
         volume: -9
         maxDistance: 3
+
+- type: entity
+  parent: BaseItem
+  id: MetalGear
+  name: metal gear
+  description: A lost component of some massive engine. A small engraving on it reads "dn ʎɐʍ sı̣ɥʇ".
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/gear.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/gear.rsi
+    size: Normal
+    shape:
+    - 0,0,1,1
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 8
+    soundHit:
+      collection: MetalThud
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
