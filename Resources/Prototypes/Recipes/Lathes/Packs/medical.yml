@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 ## Static
 
 - type: latheRecipePack
@@ -93,7 +94,9 @@
   - SyringeCryostasis
   - BluespaceBeaker
   - SyringeBluespace
+  # start of modifications
   - CompactDefibrillator # this isn't chemistry but i'm not going to bother with that
+  # end of modifications
   - LauncherSyringe
   - MiniSyringe
 
