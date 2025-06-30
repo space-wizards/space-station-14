@@ -187,15 +187,15 @@
   - type: Clothing
     sprite: _Starlight/Objects/Weapons/Guns/Rifles/m16a4.rsi
   - type: Gun
-    burstFireRate: 18
+    burstFireRate: 12
+    shotsPerBurst: 3
+    burstCooldown: 0.55
     selectedMode: Burst
     availableModes:
     - Burst
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
-      shotsPerBurst: 3
-      burstCooldown: 0.375
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -226,5 +226,5 @@
   - type: Appearance
   - type: CursorOffsetRequiresWield
   - type: EyeCursorOffset
-    maxOffset: 1
-    pvsIncrease: 0.1
+    maxOffset: 1.5
+    pvsIncrease: 0.15

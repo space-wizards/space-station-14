@@ -182,7 +182,7 @@
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafePistolMk58
-  name: mk58 safe
+  name: pistol safe
   components:
   - type: StorageFill
     contents:
@@ -200,12 +200,14 @@
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafeRifleLecter
-  name: lecter safe
+  name: rifle safe
   components:
   - type: StorageFill
     contents:
     - id: WeaponRifleLecter
-      amount: 2
+      amount: 1
+    - id: WeaponRifleLeikha
+      amount: 1
     - id: MagazineRifleHP
       amount: 3
     - id: MagazineRifleSP
@@ -220,7 +222,7 @@
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafeSubMachineGunDrozd
-  name: drozd safe
+  name: smg safe
   components:
   - type: StorageFill
     contents:
@@ -234,7 +236,7 @@
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafeShotgunEnforcer
-  name: enforcer safe
+  name: heavy shotgun safe
   components:
   - type: StorageFill
     contents:
@@ -250,7 +252,7 @@
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
   id: GunSafeShotgunKammerer
-  name: kammerer safe
+  name: shotgun safe
   components:
   - type: StorageFill
     contents:
@@ -284,4 +286,4 @@
   - type: StorageFill
     contents:
     - id: WeaponLaserCarbine
-      amount: 3
+      amount: 4
