@@ -8558,4 +8558,11 @@ Entries:
   id: 1180
   time: '2025-06-30T17:25:10.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/898
+- author: Aedler
+  changes:
+  - message: Added Hime Cut With Tails hairstyle.
+    type: Add
+  id: 1181
+  time: '2025-06-30T20:01:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/921
 
