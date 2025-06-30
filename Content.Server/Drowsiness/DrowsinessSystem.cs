@@ -47,7 +47,7 @@ public sealed class DrowsinessSystem : SharedDrowsinessSystem
             // Make sure the sleep time doesn't cut into the time to next incident.
             drowsiness.NextIncidentTime += duration;
 
-            _statusEffects.TryAddStatusEffect(statusEffect.AppliedTo.Value, SleepingSystem.StatusEffectForcedSleeping, duration);
+            _statusEffects.EnsureOrUpdateStatusEffect(statusEffect.AppliedTo.Value, SleepingSystem.StatusEffectForcedSleeping, duration);
         }
     }
 }
