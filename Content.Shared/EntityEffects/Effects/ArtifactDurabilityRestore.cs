@@ -6,7 +6,7 @@ using Robust.Shared.Random;
 namespace Content.Shared.EntityEffects.Effects;
 
 /// <summary>
-/// Restores durability in random artefact node with some <see cref="Probability"/>.
+/// Restores durability in active artefact node with some <see cref="Probability"/>.
 /// </summary>
 public sealed partial class ArtifactDurabilityRestore : EntityEffect
 {
@@ -23,12 +23,12 @@ public sealed partial class ArtifactDurabilityRestore : EntityEffect
         if (!entMan.TryGetComponent<XenoArtifactComponent>(args.TargetEntity, out var xenoArtifact))
             return;
 
-        var node = random.Pick(xenoArtifact.NodeContainer.ContainedEntities);
+        var node = random.Pick(xenoArtifactSys.GetActiveNodes((args.TargetEntity, xenoArtifact)));
 
         if (!entMan.TryGetComponent<XenoArtifactNodeComponent>(node, out var nodeComp))
             return;
 
-        xenoArtifactSys.AdjustNodeDurability(node, random.Next(nodeComp.MaxDurability));
+        xenoArtifactSys.AdjustNodeDurability(node.Owner, random.Next(nodeComp.MaxDurability));
     }
 
     protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
