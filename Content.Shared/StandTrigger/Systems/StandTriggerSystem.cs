@@ -77,7 +77,8 @@ public sealed class StandTriggerSystem : EntitySystem
     /// </summary>
     private bool IsBlocked(Entity<StandTriggerComponent> ent, TransformComponent? transform = null)
     {
-        if (!Resolve(ent, ref transform) || ent.Comp.Blacklist == null || !TryComp<MapGridComponent>(transform.GridUid, out var grid))
+        if (!Resolve(ent, ref transform) || ent.Comp.Blacklist == null ||
+            !TryComp<MapGridComponent>(transform.GridUid, out var grid))
             return false;
 
         var positon = _mapSystem.LocalToTile(transform.GridUid.Value, grid, transform.Coordinates);
@@ -88,7 +89,7 @@ public sealed class StandTriggerSystem : EntitySystem
             if (ent == uid)
                 continue;
 
-            if (_whitelistSystem.IsBlacklistPass(ent.Comp.Blacklist, ent))
+            if (_whitelistSystem.IsBlacklistPass(ent.Comp.Blacklist, uid.Value))
                 return true;
         }
 
