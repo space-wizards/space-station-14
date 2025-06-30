@@ -206,7 +206,7 @@
       map: ["light"]
       visible: false
   - type: BorgChassis
-    maxModules: 5 # the sixth one broke lol
+    maxModules: 5 # One less module slot than the regular module to reflect this being a "broken" cyborg.
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
@@ -219,3 +219,164 @@
     interactFailureString: petting-failure-derelict-cyborg
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  parent: BaseBorgChassisDerelict
+  id: EngineeringBorgChassisDerelict
+  name: derelict engineer cyborg
+  description: A man-machine hybrid that assists the engineering department. This one seems to have chunks of strange crystals pockmarking its surface.
+  components:
+  - type: Sprite
+    layers:
+    - state: engineer_derelict
+    - state: engineer_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: engineer_derelict_crystal #This layer and the layer below are duplicated in order to create a more mellow unshaded layer. See https://github.com/space-wizards/space-station-14/pull/37869 for more info on the method.
+      shader: unshaded
+    - state: engineer_derelict_crystal
+      shader: shaded
+    - state: engineer_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 5 # One less module slot than the regular module to reflect this being a "broken" cyborg.
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleEngineering
+    hasMindState: engineer_e
+    noMindState: engineer_e_r
+
+- type: entity
+  parent: BaseBorgChassisDerelict
+  id: JanitorBorgChassisDerelict
+  name: derelict janitor cyborg
+  description: A man-machine hybrid that assists the service department. It's a bigger mess than anything it can clean up.
+  components:
+  - type: Sprite
+    layers:
+    - state: janitor_derelict
+      map: ["movement"]
+    - state: janitor_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: janitor_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: janitor_moving_derelict
+    noMovementLayers:
+      movement:
+        state: janitor_derelict
+  - type: BorgChassis
+    maxModules: 5 # One less module slot than the regular module to reflect this being a "broken" cyborg.
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleJanitor
+    hasMindState: janitor_e
+    noMindState: janitor_e_r
+
+- type: entity
+  parent: BaseBorgChassisDerelict
+  id: MedicalBorgChassisDerelict
+  name: derelict medical cyborg
+  description: A man-machine hybrid that assists the medical department. This one's needles don't look very sanitary.
+  components:
+  - type: Sprite
+    layers:
+    - state: medical_derelict
+      map: ["movement"]
+    - state: medical_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: medical_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: medical_moving_derelict
+    noMovementLayers:
+      movement:
+        state: medical_derelict
+  - type: BorgChassis
+    maxModules: 6 # One less module slot than the regular module to reflect this being a "broken" cyborg.
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleMedical
+    hasMindState: medical_e
+    noMindState: medical_e_r
+
+- type: entity
+  parent: BaseBorgChassisDerelict
+  id: MiningBorgChassisDerelict
+  name: derelict salvage cyborg
+  description: A man-machine hybrid that assists the cargo department. This one has seen the wrong side of a gibtonite chunk.
+  components:
+  - type: Sprite
+    layers:
+    - state: miner_derelict
+      map: ["movement"]
+    - state: miner_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: miner_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: miner_moving_derelict
+    noMovementLayers:
+      movement:
+        state: miner_derelict
+  - type: BorgChassis
+    maxModules: 6 # One less module slot than the regular module to reflect this being a "broken" cyborg.
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleCargo
+    hasMindState: miner_e
+    noMindState: miner_e_r
+
+- type: entity
+  parent: BaseBorgChassisSyndicateDerelict
+  id: SyndicateAssaultBorgChassisDerelict
+  name: derelict syndicate assault cyborg
+  description: A lean, mean killing machine with access to a variety of deadly modules. This one is more rust-orange than blood-red.
+  components:
+  - type: Sprite
+    layers:
+    - state: synd_sec_derelict
+    - state: synd_sec_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: synd_sec_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist: # Note - the Derelict Assault Borg does not have a traversal module. This is intentional as Assault Borgs have space traversal with their c20 and free space movement, and they can navigate to the station using the pinpointer.
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+    hasMindState: synd_sec_derelict_e
+    noMindState: synd_sec_derelict
+  - type: Construction
+    node: derelictcyborg
