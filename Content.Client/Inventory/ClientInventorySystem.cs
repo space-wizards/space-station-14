@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.Clothing;
 using Content.Client.Examine;
 using Content.Client.Verbs.UI;
@@ -9,8 +10,10 @@ using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Inventory
 {
@@ -19,6 +22,8 @@ namespace Content.Client.Inventory
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
@@ -41,11 +46,71 @@ namespace Content.Client.Inventory
             SubscribeLocalEvent<InventorySlotsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<InventoryComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<InventoryComponent, ComponentHandleState>(OnHandleState);
 
             SubscribeLocalEvent<InventorySlotsComponent, DidEquipEvent>((_, comp, args) =>
                 _equipEventsQueue.Enqueue((comp, args)));
             SubscribeLocalEvent<InventorySlotsComponent, DidUnequipEvent>((_, comp, args) =>
                 _equipEventsQueue.Enqueue((comp, args)));
+        }
+
+        private void OnHandleState(Entity<InventoryComponent> ent, ref ComponentHandleState args)
+        {
+            if (args.Current is not InventoryComponentState state)
+                return;
+
+            // If nothing changed, just skip the update.
+            if (state.TemplateId == ent.Comp.TemplateId && state.SpeciesId == ent.Comp.SpeciesId)
+                return;
+
+            ent.Comp.TemplateId = state.TemplateId;
+            ent.Comp.SpeciesId = state.SpeciesId;
+
+            UpdateInventoryTemplate(ent);
+        }
+
+        private void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
+        {
+            if (!TryComp<InventorySlotsComponent>(ent, out var slots))
+                return;
+
+            if (!_proto.TryIndex(ent.Comp.TemplateId, out var template))
+                return;
+
+            ent.Comp.Slots = template.Slots;
+            ent.Comp.Containers = new ContainerSlot[ent.Comp.Slots.Length];
+
+            // Remove any slots that are not in new template
+            foreach (var slot in slots.SlotData)
+            {
+                if (ent.Comp.Slots.Any(s => s.Name == slot.Key))
+                    continue;
+
+                TryRemoveSlotDef(ent, slots, slot.Value);
+            }
+
+            // Add new slots that are missing from the new template
+            foreach (var slot in ent.Comp.Slots)
+            {
+                if (slots.SlotData.Any(s => s.Key == slot.Name))
+                    continue;
+
+                TryAddSlotDef(ent, slots, slot);
+            }
+
+            // As the containers got cleared, we need to reassign them to ensure they're all in the same order as the slots.
+            // And they need to be in the same order cause inventory enumeration expects them to be.
+            for (var i = 0; i < ent.Comp.Containers.Length; i++)
+            {
+                var slot = ent.Comp.Slots[i];
+                var container = _container.EnsureContainer<ContainerSlot>(ent, slot.Name);
+                container.OccludesLight = false;
+                ent.Comp.Containers[i] = container;
+            }
+
+            UpdateContainerData((ent, slots));
+            _clothingVisualsSystem.InitClothing(ent, ent.Comp);
+            ReloadInventory();
         }
 
         public override void Update(float frameTime)
@@ -91,6 +156,14 @@ namespace Content.Client.Inventory
 
         private void OnShutdown(EntityUid uid, InventoryComponent component, ComponentShutdown args)
         {
+            if (!TryComp(uid, out InventorySlotsComponent? inventorySlots))
+                return;
+
+            foreach (var slot in component.Slots)
+            {
+                TryRemoveSlotDef(uid, inventorySlots, slot);
+            }
+
             if (uid == _playerManager.LocalEntity)
                 OnUnlinkInventory?.Invoke();
         }
@@ -100,26 +173,11 @@ namespace Content.Client.Inventory
             OnUnlinkInventory?.Invoke();
         }
 
-        private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, LocalPlayerAttachedEvent args)
+        private void OnPlayerAttached(Entity<InventorySlotsComponent> ent, ref LocalPlayerAttachedEvent args)
         {
-            if (TryGetSlots(uid, out var definitions))
-            {
-                foreach (var definition in definitions)
-                {
-                    if (!TryGetSlotContainer(uid, definition.Name, out var container, out _))
-                        continue;
+            UpdateContainerData(ent);
 
-                    if (!component.SlotData.TryGetValue(definition.Name, out var data))
-                    {
-                        data = new SlotData(definition);
-                        component.SlotData[definition.Name] = data;
-                    }
-
-                    data.Container = container;
-                }
-            }
-
-            OnLinkInventorySlots?.Invoke(uid, component);
+            OnLinkInventorySlots?.Invoke(ent, ent.Comp);
         }
 
         public override void Shutdown()
@@ -165,6 +223,9 @@ namespace Content.Client.Inventory
         public void UpdateSlot(EntityUid owner, InventorySlotsComponent component, string slotName,
             bool? blocked = null, bool? highlight = null)
         {
+            if (!HasSlot(owner, slotName)) // TODO: This somehow breaks sprite updating. But without it it crashes. God save me.
+                return;
+
             var oldData = component.SlotData[slotName];
             var newHighlight = oldData.Highlighted;
             var newBlocked = oldData.Blocked;
@@ -189,7 +250,44 @@ namespace Content.Client.Inventory
 
             if (owner == _playerManager.LocalEntity)
                 OnSlotAdded?.Invoke(newSlotData);
+
             return true;
+        }
+
+        public bool TryRemoveSlotDef(EntityUid owner, InventorySlotsComponent component, SlotDefinition newSlotDef)
+        {
+            SlotData newSlotData = newSlotDef; //convert to slotData
+            if (!component.SlotData.Remove(newSlotDef.Name))
+                return false;
+
+            if (owner == _playerManager.LocalEntity)
+                OnSlotRemoved?.Invoke(newSlotData);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Updates the containers in InventorySlotsComponent according to their slots.
+        /// </summary>
+        /// <param name="ent">Entity to update.</param>
+        public void UpdateContainerData(Entity<InventorySlotsComponent> ent)
+        {
+            if (!TryGetSlots(ent, out var definitions))
+                return;
+
+            foreach (var definition in definitions)
+            {
+                if (!TryGetSlotContainer(ent, definition.Name, out var container, out _))
+                    continue;
+
+                if (!ent.Comp.SlotData.TryGetValue(definition.Name, out var data))
+                {
+                    data = new SlotData(definition);
+                    ent.Comp.SlotData[definition.Name] = data;
+                }
+
+                data.Container = container;
+            }
         }
 
         public void UIInventoryActivate(string slot)
@@ -233,20 +331,6 @@ namespace Content.Client.Inventory
                 return;
 
             RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
-        }
-
-        protected override void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
-        {
-            base.UpdateInventoryTemplate(ent);
-
-            if (TryComp(ent, out InventorySlotsComponent? inventorySlots))
-            {
-                foreach (var slot in ent.Comp.Slots)
-                {
-                    if (inventorySlots.SlotData.TryGetValue(slot.Name, out var slotData))
-                        slotData.SlotDef = slot;
-                }
-            }
         }
 
         public sealed class SlotData
