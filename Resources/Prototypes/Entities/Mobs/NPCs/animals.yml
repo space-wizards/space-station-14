@@ -1108,7 +1108,7 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
       visible: true
       sprite: Mobs/Animals/sheep.rsi
-    # These toggleable layers relate to the shearable component.
+    # this wooly layer relates to the shearable component.
     - state: sheep_wool
       map: [ "wooly" ]
       visible: true
