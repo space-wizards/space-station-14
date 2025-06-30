@@ -424,7 +424,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (!_status.TryAddStatusEffect(ent, StaminaLow, out var status))
+        if (!_status.EnsureStatusEffect(ent, StaminaLow, out var status))
             return;
 
         var closest = FixedPoint2.Zero;

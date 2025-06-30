@@ -140,7 +140,7 @@ public abstract class SharedStunSystem : EntitySystem
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (!_status.TryAddStatusEffect(uid, Stun, time, refresh))
+        if (!_status.EnsureLongestStatusEffect(uid, Stun, time, refresh))
             return false;
 
         var ev = new StunnedEvent();
@@ -158,7 +158,7 @@ public abstract class SharedStunSystem : EntitySystem
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (!_status.TryAddStatusEffect(uid, Knockdown, time, refresh))
+        if (!_status.EnsureLongestStatusEffect(uid, Knockdown, time, refresh))
             return false;
 
         var ev = new KnockedDownEvent();
