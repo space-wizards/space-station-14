@@ -113,6 +113,10 @@
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
   - type: Rootable
+  - type: AirTankShouldBreathe
+    tankTypes:
+    - Oxygen
+    - RegularAir
 
 - type: entity
   parent: BaseSpeciesDummy
