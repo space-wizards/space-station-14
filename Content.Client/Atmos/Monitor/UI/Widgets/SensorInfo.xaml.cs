@@ -1,4 +1,5 @@
 using Content.Client.Message;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Monitor;
@@ -18,14 +19,17 @@ public sealed partial class SensorInfo : BoxContainer
     [Dependency] private readonly IEntityManager _entMan = default!;
 
     public Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? OnThresholdUpdate;
+    public event Action<string, AtmosSensorData>? OnToggleThresholds;
     public event Action<AtmosSensorData>? SensorDataCopied;
+
+    private AtmosSensorData _data;
     private string _address;
 
     private ThresholdControl _pressureThreshold;
     private ThresholdControl _temperatureThreshold;
     private Dictionary<Gas, ThresholdControl> _gasThresholds = new();
     private Dictionary<Gas, RichTextLabel> _gasLabels = new();
-    private Button _copySettings => CCopySettings;
+    private ConfirmButton _copySettings => CCopySettings;
 
     public SensorInfo(AtmosSensorData data, string address)
     {
@@ -34,6 +38,7 @@ public sealed partial class SensorInfo : BoxContainer
 
         RobustXamlLoader.Load(this);
 
+        _data = data;
         _address = address;
 
         SensorAddress.Title = Loc.GetString("air-alarm-ui-window-listing-title", ("address", _address), ("state", data.AlarmState));
@@ -97,7 +102,12 @@ public sealed partial class SensorInfo : BoxContainer
 
         _copySettings.OnPressed += _ =>
         {
-            SensorDataCopied?.Invoke(data);
+            SensorDataCopied?.Invoke(_data);
+        };
+
+        ToggleThresholds.OnPressed += _ =>
+        {
+            OnToggleThresholds?.Invoke(_address, _data);
         };
     }
 
@@ -105,6 +115,8 @@ public sealed partial class SensorInfo : BoxContainer
     {
         IoCManager.InjectDependencies(this);
         var atmosphereSystem = _entMan.System<SharedAtmosphereSystem>();
+
+        _data = data;
 
         SensorAddress.Title = Loc.GetString("air-alarm-ui-window-listing-title", ("address", _address), ("state", data.AlarmState));
 

@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Atmos.Monitor.Components;
@@ -27,7 +28,7 @@ public sealed partial class ScrubberControl : BoxContainer
     private OptionButton _pumpDirection => CPumpDirection;
     private FloatSpinBox _volumeRate => CVolumeRate;
     private CheckBox _wideNet => CWideNet;
-    private Button _copySettings => CCopySettings;
+    private ConfirmButton _copySettings => CCopySettings;
     private Button _selectAll => CSelectAll;
     private Button _deselectAll => CDeselectAll;
 
