@@ -356,7 +356,7 @@
 - type: entity
   parent: BaseItem
   id: WireBrush
-  name: wirebrush
+  name: wire brush
   description: A bristly steel wire brush, perfect for scraping away even the toughest patches of rust.
   components:
   - type: Sprite
