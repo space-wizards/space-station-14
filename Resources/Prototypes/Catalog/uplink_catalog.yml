@@ -2293,6 +2293,26 @@
   - UplinkDeception
 
 - type: listing
+  id: UplinkCluwneBombs
+  name: uplink-cluwne-bombs-name
+  description: uplink-cluwne-bombs-desc
+  icon: { sprite: Objects/Weapons/Bombs/cluwne_bomb.rsi, state: icon}
+  productEntity: BriefcaseSyndieCluwneBombBundleFilled
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Clown
+    - Mime
+    - Passenger
+    
+- type: listing
   id: UplinkSawAdvanced
   name: uplink-saw-advanced-name
   description: uplink-saw-advanced-desc
