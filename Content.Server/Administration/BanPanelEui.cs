@@ -124,13 +124,13 @@ public sealed class BanPanelEui : BaseEui
             var now = DateTimeOffset.UtcNow;
             foreach (var role in roles)
             {
-                if (_prototypeManager.HasIndex<JobPrototype>(role))
+                if (_prototypeManager.HasIndex<JobPrototype>(role) || _prototypeManager.HasIndex<AntagPrototype>(role))
                 {
                     _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now);
                 }
                 else
                 {
-                    _sawmill.Warning($"{Player.Name} ({Player.UserId}) tried to issue a job ban with an invalid job: {role}");
+                    _sawmill.Warning($"{Player.Name} ({Player.UserId}) tried to issue a role ban with an invalid id: '{role}'");
                 }
             }
 

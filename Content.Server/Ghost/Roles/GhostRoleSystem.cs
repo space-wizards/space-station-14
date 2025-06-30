@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
 using Content.Server.EUI;
+using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Shared.Ghost.Roles.Raffles;
@@ -39,6 +41,7 @@ namespace Content.Server.Ghost.Roles;
 [UsedImplicitly]
 public sealed class GhostRoleSystem : EntitySystem
 {
+    [Dependency] private readonly IBanManager _ban = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -54,6 +57,9 @@ public sealed class GhostRoleSystem : EntitySystem
 
     private uint _nextRoleIdentifier;
     private bool _needsUpdateGhostRoleCount = true;
+
+    private const string JobPrefix = "Job:";
+    private const string AntagPrefix = "Antag:";
 
     private readonly Dictionary<uint, Entity<GhostRoleComponent>> _ghostRoles = new();
     private readonly Dictionary<uint, Entity<GhostRoleRaffleComponent>> _ghostRoleRaffles = new();
@@ -459,7 +465,24 @@ public sealed class GhostRoleSystem : EntitySystem
     {
         if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
             return;
+        var prototypes = GetPrototypes(roleEnt);
 
+        // Check role bans
+        if (_ban.IsRoleBanned(player, prototypes))
+        {
+            Log.Warning($"Server rejected ghost role request '{roleEnt.Comp.RoleName}' for '{player.Name}' - client missed ban?");
+            return;
+        }
+
+        // Check role requirements
+        if (!IsRoleAllowed(player, prototypes))
+        {
+            Log.Warning($"Server rejected ghost role request '{roleEnt.Comp.RoleName}' for '{player.Name}' - client missed requirement check?");
+            return;
+        }
+
+
+        // Decide to do a raffle or not
         if (roleEnt.Comp.RaffleConfig is not null)
         {
             JoinRaffle(player, identifier);
@@ -468,6 +491,69 @@ public sealed class GhostRoleSystem : EntitySystem
         {
             Takeover(player, identifier);
         }
+    }
+
+    /// <summary>
+    /// Collect all role prototypes on the Ghostrole
+    /// </summary>
+    private List<string> GetPrototypes(Entity<GhostRoleComponent> roleEnt)
+    {
+        var list = new List<string>();
+
+        // If there is a mind already, check its mind roles.
+        // Not sure if this can ever actually happen.
+        if (TryComp<MindContainerComponent>(roleEnt, out var mindCont)
+            && TryComp<MindComponent>(mindCont.Mind, out var mind))
+        {
+            foreach (var role in mind.MindRoles)
+            {
+                if(!TryComp<MindRoleComponent>(role, out var comp))
+                    continue;
+
+                if (comp.JobPrototype is not null)
+                    list.Add(JobPrefix + comp.JobPrototype);
+
+                if (comp.AntagPrototype is not null)
+                    list.Add(AntagPrefix + comp.AntagPrototype);
+            }
+
+            return list;
+        }
+
+        if(roleEnt.Comp.JobProto is not null)
+            list.Add(JobPrefix + roleEnt.Comp.JobProto);
+
+        // If there is no mind, check the mindRole prototypes
+        foreach (var proto in roleEnt.Comp.MindRoles)
+        {
+            if (!_prototype.TryIndex(proto, out var indexed)
+                || !indexed.Components.TryGetComponent("MindRole", out var comp))
+                continue;
+            var roleComp = (MindRoleComponent)comp;
+
+            if (roleComp.AntagPrototype is not null)
+                list.Add(AntagPrefix + roleComp.AntagPrototype);
+
+            if (roleComp.JobPrototype is not null)
+                list.Add(JobPrefix + roleComp.JobPrototype);
+        }
+
+        return list;
+    }
+
+    private bool IsRoleAllowed(ICommonSession player, List<string> roles)
+    {
+        // Check each role for playtime requirements
+        foreach (var proto in roles)
+        {
+            var ev = new IsRoleAllowedEvent(player, proto);
+            RaiseLocalEvent(ref ev);
+
+            if (ev.Cancelled)
+                return false;
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -576,7 +662,7 @@ public sealed class GhostRoleSystem : EntitySystem
                 Name = role.RoleName,
                 Description = role.RoleDescription,
                 Rules = role.RoleRules,
-                Requirements = role.Requirements,
+                RolePrototypes = GetPrototypes((uid, role)),
                 Kind = kind,
                 RafflePlayerCount = rafflePlayerCount,
                 RaffleEndTime = raffleEndTime
