@@ -1,9 +1,11 @@
 using System.Numerics;
 using Content.Client.Cooldown;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
+using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Controls
 {
@@ -19,7 +21,7 @@ namespace Content.Client.UserInterface.Controls
         public TextureButton StorageButton { get; }
         public CooldownGraphic CooldownDisplay { get; }
 
-        private SpriteView SpriteView { get; }
+        private EntityPrototypeView SpriteView { get; }
 
         public EntityUid? Entity => SpriteView.Entity;
 
@@ -135,7 +137,7 @@ namespace Content.Client.UserInterface.Controls
             ButtonRect.OnKeyBindDown += OnButtonPressed;
             ButtonRect.OnKeyBindUp += OnButtonUnpressed;
 
-            AddChild(SpriteView = new SpriteView
+            AddChild(SpriteView = new EntityPrototypeView
             {
                 Scale = new Vector2(2, 2),
                 SetSize = new Vector2(DefaultButtonSize, DefaultButtonSize),
@@ -213,6 +215,20 @@ namespace Content.Client.UserInterface.Controls
         {
             SpriteView.SetEntity(ent);
             UpdateButtonTexture();
+        }
+
+        public void SetPrototype(EntProtoId? proto, bool fade)
+        {
+            SpriteView.SetPrototype(null); // we might have SetEntity
+            SpriteView.SetPrototype(proto);
+
+            UpdateButtonTexture();
+
+            if (SpriteView.Entity is not { } ent || !fade)
+                return;
+
+            var sprites = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>();
+            sprites.SetColor((ent.Owner, ent.Comp1), Color.DarkGray.WithAlpha(0.65f));
         }
 
         private void UpdateButtonTexture()
