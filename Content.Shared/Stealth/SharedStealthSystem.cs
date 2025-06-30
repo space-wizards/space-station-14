@@ -135,7 +135,7 @@ public abstract class SharedStealthSystem : EntitySystem
     /// <param name="delta">The delta to be used in visibility calculation.</param>
     public void ModifyVisibility(EntityUid uid, float delta, StealthComponent? component = null)
     {
-        if (delta == 0 || !Resolve(uid, ref component))
+        if (delta == 0 || !Resolve(uid, ref component, false))
             return;
 
         if (component.LastUpdated != null)
