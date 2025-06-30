@@ -33,6 +33,35 @@ public sealed partial class ConsumeDoAfterEvent : DoAfterEvent
 }
 
 /// <summary>
+///     Raised on the entity successfully consuming something, after the solution transfer but before deletion.
+/// </summary>
+[ByRefEvent]
+public record struct SuccessfulConsumptionEvent
+{
+    /// <summary>
+    /// The solution that was consumed.
+    /// </summary>
+    public Solution Solution = default!;
+
+    /// <summary>
+    /// The entity that was consumed.
+    /// </summary>
+    public EntityUid ConsumedEntity = default!;
+
+    /// <summary>
+    /// If the consumed entity is considered "fully" consumed, i.e. the entity is deleted/stack reduced.
+    /// </summary>
+    public bool FullConsumption;
+
+    public SuccessfulConsumptionEvent(Solution solution, EntityUid consumedEntity, bool fullConsumption)
+    {
+        Solution = solution;
+        ConsumedEntity = consumedEntity;
+        FullConsumption = fullConsumption;
+    }
+}
+
+/// <summary>
 ///     Do after event for vape.
 /// </summary>
 [Serializable, NetSerializable]

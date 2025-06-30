@@ -52,7 +52,7 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public const float MaxFeedDistance = 1.0f;
 
@@ -265,6 +265,8 @@ public sealed class FoodSystem : EntitySystem
             return;
         }
 
+        // All checks have passed: Eating will now commence!
+
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
         _stomach.TryTransferSolution(stomachToUse!.Value.Owner, split, stomachToUse);
 
@@ -291,6 +293,10 @@ public sealed class FoodSystem : EntitySystem
 
         _audio.PlayPredicted(entity.Comp.UseSound, args.Target.Value, args.User, AudioParams.Default.WithVolume(-1f).WithVariation(0.20f));
 
+        // Post-eating functionality
+
+
+
         // Try to break all used utensils
         foreach (var utensil in utensils)
         {
@@ -299,11 +305,16 @@ public sealed class FoodSystem : EntitySystem
 
         args.Repeat = !forceFeed;
 
+        // Food hath been consumed
+        var ev = new SuccessfulConsumptionEvent(split, entity, true);
+
         if (TryComp<StackComponent>(entity, out var stack))
         {
             //Not deleting whole stack piece will make troubles with grinding object
             if (stack.Count > 1)
             {
+                RaiseLocalEvent(args.Target.Value, ref ev);
+
                 _stack.SetCount(entity.Owner, stack.Count - 1);
                 _solutionContainer.TryAddSolution(soln.Value, split);
                 return;
@@ -311,8 +322,12 @@ public sealed class FoodSystem : EntitySystem
         }
         else if (GetUsesRemaining(entity.Owner, entity.Comp) > 0)
         {
+            ev.FullConsumption = false;
+            RaiseLocalEvent(args.Target.Value, ref ev);
             return;
         }
+
+        RaiseLocalEvent(args.Target.Value, ref ev);
 
         // don't try to repeat if its being deleted
         args.Repeat = false;
@@ -432,7 +447,7 @@ public sealed class FoodSystem : EntitySystem
             if (ent.Comp1.SpecialDigestible == null)
                 continue;
             // Check if the food is in the whitelist
-            if (_whitelistSystem.IsWhitelistPass(ent.Comp1.SpecialDigestible, food))
+            if (_whitelist.IsWhitelistPass(ent.Comp1.SpecialDigestible, food))
                 return true;
 
             // If their diet is whitelist exclusive, then they cannot eat anything but what follows their whitelisted tags. Else, they can eat their tags AND human food.
@@ -511,7 +526,6 @@ public sealed class FoodSystem : EntitySystem
             args.Cancel();
         }
     }
-
 
     /// <summary>
     ///     Check whether the target's mouth is blocked by equipment (masks or head-wear).

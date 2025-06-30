@@ -13,6 +13,9 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Objectives.Components;
+using Content.Shared.Nutrition;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Mind;
 
@@ -24,6 +27,7 @@ public sealed class MindSystem : SharedMindSystem
     [Dependency] private readonly GhostSystem _ghosts = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -31,6 +35,7 @@ public sealed class MindSystem : SharedMindSystem
 
         SubscribeLocalEvent<MindContainerComponent, EntityTerminatingEvent>(OnMindContainerTerminating);
         SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnMindShutdown);
+        SubscribeLocalEvent<MindContainerComponent, SuccessfulConsumptionEvent>(OnSuccessfulConsumption);
     }
 
     private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
@@ -79,6 +84,22 @@ public sealed class MindSystem : SharedMindSystem
         else
             // This should be an error, if it didn't cause tests to start erroring when they delete a player.
             Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
+    }
+
+    /// <summary>
+    /// Updates any objectives related to consuming food entities.
+    /// Runs before any deletion.
+    /// </summary>
+    private void OnSuccessfulConsumption(Entity<MindContainerComponent> entity, ref SuccessfulConsumptionEvent args)
+    {
+        if (args.FullConsumption && TryGetObjectiveEntities<EatSpecificFoodConditionComponent>(entity, out var objectives))
+        {
+            foreach (var objective in objectives)
+            {
+                if (_whitelist.IsWhitelistPass(objective.Comp.Whitelist, args.ConsumedEntity))
+                    objective.Comp.FoodEaten++;
+            }
+        }
     }
 
     public override bool TryGetMind(NetUserId user, [NotNullWhen(true)] out EntityUid? mindId, [NotNullWhen(true)] out MindComponent? mind)
