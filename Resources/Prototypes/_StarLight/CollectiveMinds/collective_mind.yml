@@ -71,12 +71,12 @@
   color: "#FF7922"
   requiredTags: 
   - Resomi
-  #- Avali #Add avali here later
+  - Avali
 
 - type: collectiveMind
   id: Empathy
   name: collective-mind-empathy
   keycode: 'e'
-  color: "#8a0060"
+  color: "#ff00f2"
   requiredComponents: 
   - Shadekin

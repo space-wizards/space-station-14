@@ -1,0 +1,16 @@
+#Soviet EVA Suit
+- type: entity
+  parent: [ ClothingOuterEVASuitBase, BaseSovietContraband ]
+  id: ClothingOuterHardsuitSovietEVA
+  name: soviet EVA suit
+  description: "A rugged space suit with the hammer and sickle emblazoned on the back. For the workers of space!"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Suits/soviet_eva.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Suits/soviet_eva.rsi
+  - type: Tag
+    tags:
+    - SuitEVA
+    - MonkeyWearable
+    - WhitelistChameleon

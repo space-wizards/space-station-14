@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by BORT for https://github.com/ss14Starlight/space-station-14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        { 
+	"name": "Red_Tide_Painting" 
+	},
+	{
+	"name": "Hammer_Painting"
+	}
+    ]
+}

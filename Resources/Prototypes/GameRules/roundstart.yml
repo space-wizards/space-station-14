@@ -246,10 +246,6 @@
     - prefRoles: [ HeadRev ]
       max: 3
       playerRatio: 15
-      briefing:
-        text: head-rev-role-greeting
-        color: CornflowerBlue
-        sound: "/Audio/Ambience/Antag/headrev_start.ogg"
       startingGear: HeadRevGear
       components:
       - type: Revolutionary
@@ -410,7 +406,7 @@
   components:
   - type: RampingStationEventScheduler
     scheduledGameRules: !type:NestedSelector
-      tableId: BasicGameRulesTable
+      tableId: BasicGameRulesTableNoRoundenders # 🌟Starlight🌟
 
 - type: entity
   id: SpaceTrafficControlEventScheduler # iff we make a selector for EntityTables that can respect StationEventComp restrictions, or somehow impliment them otherwise in said tables,

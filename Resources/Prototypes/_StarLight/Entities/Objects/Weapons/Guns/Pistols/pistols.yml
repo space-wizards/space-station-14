@@ -15,7 +15,9 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/makarov.ogg
+      params:
+        variation: 0.05
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -206,10 +208,10 @@
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
       
 - type: entity
-  name: stechkin APS pistol
-  parent: [WeaponPistolMk58, BaseSecurityContraband]
+  name: Stechkin APS
+  parent: [WeaponPistolMk58, BaseSovietContraband]
   id: WeaponPistolAPS
-  description: The original russian version of a widely used Syndicate sidearm. Uses 9mm ammo.
+  description: A high quality firearm issued to SNKVD elites and high ranking officials. It's half pistol, half closing argument.
   components:
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/aps.rsi

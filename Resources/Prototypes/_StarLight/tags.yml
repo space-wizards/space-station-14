@@ -4,6 +4,12 @@
   id: Arachnid
 
 - type: Tag
+  id: Avali
+
+- type: Tag
+  id: AvianFood
+
+- type: Tag
   id: CantInteract
 
 - type: Tag
@@ -42,6 +48,9 @@
 - type: Tag
   id: MagazineRifleM52
 
+- type: Tag
+  id: MagazineSMGPPSH
+  
 - type: Tag
   id: MagazineSMGUzi
 

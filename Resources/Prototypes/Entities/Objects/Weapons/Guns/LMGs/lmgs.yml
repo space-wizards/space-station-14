@@ -15,6 +15,9 @@
       Resomi:
         knockback: 0.02
         staminaMultiplier: 100
+      Avali:
+        knockback: 0.01 # Bigger bird, more sturdy bones.. or something.
+        staminaMultiplier: 100
   - type: Sprite
   - type: Item
     size: Huge
