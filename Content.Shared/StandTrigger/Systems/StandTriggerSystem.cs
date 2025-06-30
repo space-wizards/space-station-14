@@ -129,7 +129,7 @@ public sealed class StandTriggerAttemptEvent(EntityUid source, EntityUid tripper
 }
 
 /// <summary>
-/// Raised on the entity with <see cref="StandTriggerComponent"/> while some entity triggers it.
+/// Raised on the entity with <see cref="StandTriggerComponent"/> when some entity triggers it.
 /// </summary>
 [ByRefEvent]
 public readonly record struct StandTriggerEvent(EntityUid Source, EntityUid Tripper);
