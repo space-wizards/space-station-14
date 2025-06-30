@@ -100,7 +100,7 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacity = 0;
             foreach (var (reagent, quantity) in Contents)
             {
-                _heatCapacity += (float) quantity *
+                _heatCapacity += (float)quantity *
                                     protoMan.Index<ReagentPrototype>(reagent.Prototype).SpecificHeat;
             }
 
@@ -190,7 +190,7 @@ namespace Content.Shared.Chemistry.Components
         public void ValidateSolution()
         {
             // sandbox forbids: [Conditional("DEBUG")]
-    #if DEBUG
+#if DEBUG
             // Correct volume
             DebugTools.Assert(Contents.Select(x => x.Quantity).Sum() == Volume);
 
@@ -208,7 +208,7 @@ namespace Content.Shared.Chemistry.Components
                 UpdateHeatCapacity(null);
                 DebugTools.Assert(MathHelper.CloseTo(_heatCapacity, cur, tolerance: 0.01));
             }
-    #endif
+#endif
         }
 
         void ISerializationHooks.AfterDeserialization()
@@ -657,7 +657,7 @@ namespace Content.Shared.Chemistry.Components
             var origVol = Volume;
             var effVol = Volume.Value;
             newSolution = new Solution(Contents.Count) { Temperature = Temperature };
-            var remaining = (long) toTake.Value;
+            var remaining = (long)toTake.Value;
 
             for (var i = Contents.Count - 1; i >= 0; i--) // iterate backwards because of remove swap.
             {
@@ -673,7 +673,7 @@ namespace Content.Shared.Chemistry.Components
                     continue;
                 }
 
-                var splitQuantity = FixedPoint2.FromCents((int) split);
+                var splitQuantity = FixedPoint2.FromCents((int)split);
                 var newQuantity = quantity - splitQuantity;
 
                 DebugTools.Assert(newQuantity >= 0);
@@ -720,7 +720,7 @@ namespace Content.Shared.Chemistry.Components
 
             var effVol = Volume.Value;
             Volume -= toTake;
-            var remaining = (long) toTake.Value;
+            var remaining = (long)toTake.Value;
             for (var i = Contents.Count - 1; i >= 0; i--)// iterate backwards because of remove swap.
             {
                 var (reagent, quantity) = Contents[i];
@@ -735,7 +735,7 @@ namespace Content.Shared.Chemistry.Components
                     continue;
                 }
 
-                var splitQuantity = FixedPoint2.FromCents((int) split);
+                var splitQuantity = FixedPoint2.FromCents((int)split);
                 var newQuantity = quantity - splitQuantity;
 
                 if (newQuantity > FixedPoint2.Zero)
@@ -832,16 +832,20 @@ namespace Content.Shared.Chemistry.Components
                 {
                     continue;
                 }
-
+                var reagentColor = proto.SubstanceColor;
+                var reagentData = reagent.EnsureReagentData();
+                var fetchedReagentColorData = reagentData.OfType<ReagentColorData>().FirstOrDefault();
+                reagentColor = fetchedReagentColorData?.SubstanceColor ?? reagentColor;
                 if (first)
                 {
                     first = false;
-                    mixColor = proto.SubstanceColor;
-                    continue;
+                    mixColor = reagentColor;
                 }
-
-                var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
-                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
+                else
+                {
+                    var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
+                    mixColor = Color.InterpolateBetween(mixColor, reagentColor, interpolateValue);
+                }
             }
             return mixColor;
         }
@@ -875,16 +879,20 @@ namespace Content.Shared.Chemistry.Components
                 {
                     continue;
                 }
-
+                var reagentColor = proto.SubstanceColor;
+                var reagentData = reagent.EnsureReagentData();
+                var fetchedReagentColorData = reagentData.OfType<ReagentColorData>().FirstOrDefault();
+                reagentColor = fetchedReagentColorData?.SubstanceColor ?? reagentColor;
                 if (first)
                 {
                     first = false;
-                    mixColor = proto.SubstanceColor;
-                    continue;
+                    mixColor = reagentColor;
                 }
-
-                var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
-                mixColor = Color.InterpolateBetween(mixColor, proto.SubstanceColor, interpolateValue);
+                else
+                {
+                    var interpolateValue = quantity.Float() / runningTotalQuantity.Float();
+                    mixColor = Color.InterpolateBetween(mixColor, reagentColor, interpolateValue);
+                }
             }
             return mixColor;
         }
