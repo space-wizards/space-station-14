@@ -298,6 +298,7 @@ namespace Content.Client.Chemistry.UI
             {
                 BufferInfo.Children.Add(BuildReagentRow(reagent.color, rowCount++, reagent.name, reagent.reagentId, reagent.quantity, true, true));
             }
+
         }
 
         private void BuildContainerUI(Control control, ContainerInfo? info, bool addReagentButtons)
