@@ -1,0 +1,4 @@
+﻿- type: entity
+  parent: [ StatusEffectStutter, StatusEffectDrunk ]
+  id: StatusEffectBloodloss
+  name: bloodloss

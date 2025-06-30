@@ -19,6 +19,18 @@
       components:
       - MobState
 
+- type: entity
+  parent: MobStatusEffectBase
+  id: SpeechStatusEffectBase
+  abstract: true
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - Speech
+      requireAll: true
+
 # The creature sleeps so heavily that nothing can wake him up. Not even its own death.
 - type: entity
   parent: MobStatusEffectBase
@@ -34,3 +46,19 @@
   name: drowsiness
   components:
   - type: DrowsinessStatusEffect
+
+# Causes you to st-t-u-t-t-t-er randomly when talking.
+- type: entity
+  parent: SpeechStatusEffectBase
+  id: StatusEffectStutter
+  name: stutter
+  components:
+  - type: StutterStatusEffect
+
+# Causes your vision to become blurry and gives me a headache.
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectDrunk
+  name: drunk
+  components:
+  - type: DrunkStatusEffect
