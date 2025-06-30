@@ -139,7 +139,7 @@ public sealed class StepTriggerSystem : EntitySystem
         // and the entity is flying or currently weightless
         // Makes sense simulation wise to have this be part of steptrigger directly IMO
         if (!component.IgnoreWeightless && TryComp<PhysicsComponent>(otherUid, out var physics) &&
-            (physics.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(otherUid, physics)))
+            (physics.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(otherUid)))
             return false;
 
         var msg = new StepTriggerAttemptEvent { Source = uid, Tripper = otherUid };
