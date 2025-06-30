@@ -360,7 +360,7 @@ public sealed partial class NPCSteeringSystem
             {
                 // attempt to prevent jitter on arrival from overbraking in yes-grav
                 const float easeInFactor = 1.5f; // scary magic number
-                var cvel = body.LinearVelocity * 1f; // copy
+                var cvel = body.LinearVelocity;
                 _mover.Friction(0f, frameTime, friction, ref cvel);
                 var postFrictionVel = cvel.Length();
                 var frameAccel = acceleration * frameTime * moveSpeed;
