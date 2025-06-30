@@ -8543,4 +8543,12 @@ Entries:
   id: 1178
   time: '2025-06-30T17:22:13.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/903
+- author: Quantumcross
+  changes:
+  - message: Fixed multiple edge cases for job selection causing round join failure,
+      esp if only mindshielded roles selected
+    type: Fix
+  id: 1179
+  time: '2025-06-30T17:23:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/925
 
