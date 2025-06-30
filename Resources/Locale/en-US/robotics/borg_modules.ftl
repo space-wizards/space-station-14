@@ -1,0 +1,9 @@
+borg-slot-cables-empty = Cables
+borg-slot-construction-empty = Construction materials
+borg-slot-circuitboards-empty = Circuitboards
+borg-slot-flatpacks-empty = Flatpacks
+borg-slot-tiles-empty = Floor tiles
+borg-slot-topicals-empty = Topicals
+borg-slot-small-containers-empty = Small containers
+borg-slot-chemical-containers-empty = Chemical containers
+borg-slot-documents-empty = Books and papers

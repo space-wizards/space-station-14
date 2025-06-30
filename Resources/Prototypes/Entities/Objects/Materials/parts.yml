@@ -19,6 +19,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - ConstructionMaterial
 
 - type: entity
   parent: PartBase
@@ -54,7 +57,6 @@
     outputs:
     - Lattice
     - FloorReinforced
-    - ConstructionMaterial
   - type: StaticPrice
     price: 0
   - type: StackPrice
