@@ -1,3 +1,4 @@
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
@@ -21,7 +22,7 @@ public sealed partial class ScrubberControl : BoxContainer
     private OptionButton _pumpDirection => CPumpDirection;
     private FloatSpinBox _volumeRate => CVolumeRate;
     private CheckBox _wideNet => CWideNet;
-    private Button _copySettings => CCopySettings;
+    private ConfirmButton _copySettings => CCopySettings;
 
     private GridContainer _gases => CGasContainer;
     private Dictionary<Gas, Button> _gasControls = new();
