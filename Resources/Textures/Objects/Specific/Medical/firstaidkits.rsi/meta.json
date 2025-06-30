@@ -19,80 +19,80 @@
       "directions": 4
     },
 		{
-			"name": "brutekit"
+			"name": "brute"
 		},
 		{
-      "name": "brutekit-inhand-right",
+      "name": "brute-inhand-right",
       "directions": 4
     },
     {
-      "name": "brutekit-inhand-left",
+      "name": "brute-inhand-left",
       "directions": 4
     },
 		{
-			"name": "burnkit"
+			"name": "burn"
 		},
 		{
-      "name": "burnkit-inhand-right",
+      "name": "burn-inhand-right",
       "directions": 4
     },
     {
-      "name": "burnkit-inhand-left",
+      "name": "burn-inhand-left",
       "directions": 4
     },
 		{
-			"name": "o2kit"
+			"name": "airloss"
 		},
 		{
-      "name": "o2kit-inhand-right",
+      "name": "airloss-inhand-right",
       "directions": 4
     },
     {
-      "name": "o2kit-inhand-left",
+      "name": "airloss-inhand-left",
       "directions": 4
     },
 		{
-			"name": "radkit"
+			"name": "radiation"
 		},
 		{
-      "name": "radkit-inhand-right",
+      "name": "radiation-inhand-right",
       "directions": 4
     },
     {
-      "name": "radkit-inhand-left",
+      "name": "radiation-inhand-left",
       "directions": 4
     },
 		{
-			"name": "toxinkit"
+			"name": "poison"
 		},
 		{
-      "name": "toxinkit-inhand-right",
+      "name": "poison-inhand-right",
       "directions": 4
     },
     {
-      "name": "toxinkit-inhand-left",
+      "name": "poison-inhand-left",
       "directions": 4
     },
     {
-			"name": "blackkit"
+			"name": "combat"
 		},
 		{
-      "name": "blackkit-inhand-right",
+      "name": "combat-inhand-right",
       "directions": 4
     },
     {
-      "name": "blackkit-inhand-left",
+      "name": "combat-inhand-left",
       "directions": 4
     },
     {
-			"name": "advkit"
+			"name": "advanced"
 		},
 		{
-      "name": "advkit-inhand-right",
+      "name": "advanced-inhand-right",
       "directions": 4
     },
     {
-      "name": "advkit-inhand-left",
+      "name": "advanced-inhand-left",
       "directions": 4
     }
 	]
