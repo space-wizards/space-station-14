@@ -31,7 +31,8 @@
 - type: entity
   id: AltarNanotrasen
   parent: AltarBase
-  name: Nanotrasen altar # imp edit; preferential to capitalizing company names
+  name: Nanotrasen altar # imp; it's Nanotrasen not Trasen
+  description: Glory to Nanotrasen. # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
@@ -71,6 +72,7 @@
   id: AltarChaos
   parent: AltarNanotrasen
   name: chaos altar
+  description: May Chaos take the world. # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
@@ -83,6 +85,7 @@
   id: AltarDruid
   parent: AltarNanotrasen
   name: druid altar
+  description: May nature lay unspoiled. There's not much up here in the way of nature, so... please, let it lay unspoiled. # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
@@ -95,6 +98,7 @@
   id: AltarToolbox
   parent: AltarNanotrasen
   name: toolbox altar
+  description: Pray we never need call on thee, as long as thy mass-produced blessings remain within grasp. # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
@@ -107,6 +111,7 @@
   id: AltarSpaceChristian
   parent: AltarNanotrasen
   name: space-Christian altar
+  description: Y'know who really underwent a 'Ritual of Agony'? That'd be your Lord and Savior... # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
@@ -126,6 +131,7 @@
   id: AltarSatana
   parent: AltarNanotrasen
   name: satanic altar
+  description: Pandemonium regnat Satani vitae. # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
@@ -145,6 +151,7 @@
   id: AltarTechnology
   parent: AltarNanotrasen
   name: technology altar
+  description: May the Holy Code guide us in our Functions, deliv'r us from Errors, and shepherd us from Pop-Up Advertisements. # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
@@ -164,6 +171,7 @@
   id: AltarConvertFestival
   parent: AltarBase
   name: festival altar
+  description: Dance, for the greatest of days hath come! # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
@@ -206,6 +214,7 @@
   id: AltarConvertMaint
   parent: AltarConvertFestival
   name: maint altar
+  description: May your corridors grant safe passage to the many and the wicked alike, without distinction, and protect us from the violent existence of Space Rocks. # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
@@ -244,6 +253,7 @@
   id: AltarConvertBurden
   parent: AltarConvertFestival
   name: burden altar
+  description: What weighs on your conscience? Let it all fall away... Or, let another take it for you. # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
@@ -263,6 +273,7 @@
   id: AltarConvert
   parent: AltarConvertFestival
   name: convert altar
+  description: An altar for making change. Not for cash, but for souls, which are a sort of currency, if you think about it. # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
@@ -358,6 +369,7 @@
   id: AltarHeaven
   parent: AltarBase
   name: heaven altar
+  description: Heaven, are you watching? It's time to make a very special deal... # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Cults/heaven.rsi
@@ -399,6 +411,7 @@
   id: AltarFangs
   parent: AltarHeaven
   name: fanged altar
+  description: Stick your hand inside. It won't bite. # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Cults/fangs.rsi
@@ -410,7 +423,7 @@
   id: AltarBananium
   parent: AltarBase
   name: honkmother altar
-  description: A bananium altar dedicated to the honkmother.
+  description: A honk across the cosmos... Some say it may echo back. # imp
   components:
   - type: Sprite
     sprite: Structures/Furniture/Altars/Cults/bananium.rsi
