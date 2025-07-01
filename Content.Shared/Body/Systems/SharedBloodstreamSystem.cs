@@ -86,7 +86,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                 TryModifyBloodLevel((uid, bloodstream), -bloodstream.BleedAmount);
                 // Bleed rate is reduced by the bleed reduction amount in the bloodstream component.
                 // No need to dirty since the update loop also runs on the client.
-                TryModifyBleedAmount((uid, bloodstream), -bloodstream.BleedReductionAmount, dirty: false);
+                TryModifyBleedAmount((uid, bloodstream), -bloodstream.BleedReductionAmount);
             }
 
             // deal bloodloss damage if their blood level is below a threshold.
@@ -420,7 +420,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     /// <summary>
     /// Tries to make an entity bleed more or less.
     /// </summary>
-    public bool TryModifyBleedAmount(Entity<BloodstreamComponent?> ent, float amount, bool dirty = true)
+    public bool TryModifyBleedAmount(Entity<BloodstreamComponent?> ent, float amount)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false))
             return false;
@@ -429,9 +429,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         ent.Comp.BleedAmount = Math.Clamp(ent.Comp.BleedAmount, 0, ent.Comp.MaxBleedAmount);
 
         Log.Debug($"bleedamount {ent.Comp.BleedAmount} {amount}");
-        // we only need to dirty if this is called from the server
-        if (dirty)
-            DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BleedAmount));
+        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BleedAmount));
 
         if (ent.Comp.BleedAmount == 0)
             _alertsSystem.ClearAlert(ent, ent.Comp.BleedingAlert);
