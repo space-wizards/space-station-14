@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: gameMapPool
   id: DefaultMapPool
   maps:
@@ -12,6 +14,8 @@
   - Plasma
   #- Reach
   - Exo
+# start of modifications
   - Saltern2
   - Cluster2
-  #- Atlas2 # Ronstation - Derotated for the time being until enough rework is made.
+  - Feint
+# end of modifications
