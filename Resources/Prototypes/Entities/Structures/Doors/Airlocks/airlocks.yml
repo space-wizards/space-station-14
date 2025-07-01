@@ -193,7 +193,8 @@
 - type: entity
   parent: AirlockGlass
   id: AirlockMaintGlass
-  suffix: Maintenance
+  name: maintenance access #imp edit
+  suffix: Glass #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/maint.rsi

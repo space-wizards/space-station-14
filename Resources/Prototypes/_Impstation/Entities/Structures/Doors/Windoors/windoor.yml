@@ -70,6 +70,16 @@
     containers:
       board: [ DoorElectronicsHospitalityDirector ]
 
+# Security
+- type: entity
+  parent: WindoorSecureSecurityLocked
+  id: WindoorSecureSecurityMedicalLocked
+  suffix: Security/Medical, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurityMedical ]
+
 # Service
 - type: entity
   parent: WindoorSecureServiceLocked

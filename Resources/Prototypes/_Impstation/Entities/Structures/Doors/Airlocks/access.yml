@@ -10,6 +10,16 @@
     containers:
       board: [ DoorElectronicsHospitalityDirector ]
 
+# Security
+- type: entity
+  parent: AirlockSecurityMedical
+  id: AirlockSecurityMedicalLocked
+  suffix: Security/Medical, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurityMedical ]
+
 # Service
 - type: entity
   parent: AirlockClown
@@ -86,6 +96,16 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsHospitalityDirector ]
+
+# Security
+- type: entity
+  parent: AirlockSecurityMedicalGlass
+  id: AirlockSecurityMedicalGlassLocked
+  suffix: Security/Medical, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurityMedical ]
 
 # Service
 - type: entity
@@ -177,6 +197,7 @@
 - type: entity
   parent: AirlockMaintRnDLocked
   id: AirlockMaintRnDEngiLocked
+  name: maintenance access
   suffix: Engineering/Science, Locked
   components:
   - type: ContainerFill
@@ -186,6 +207,7 @@
 - type: entity
   parent: AirlockMaint
   id: AirlockMaintSecCargoLocked
+  name: maintenance access
   suffix: Security/Cargo, Locked
   components:
   - type: ContainerFill
@@ -195,92 +217,79 @@
     layoutId: AirlockSecurity
 
 - type: entity
-  parent: AirlockMaint
+  parent: AirlockSecurityMedicalLocked
   id: AirlockMaintSecMedLocked
-  suffix: Security/Medical, Locked
+  name: maintenance access
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsSecurityMedical ]
-  - type: Wires
-    layoutId: AirlockSecurity
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 # Security
 - type: entity
-  parent: AirlockMaintSecLocked
+  parent: AirlockBrigLocked
   id: AirlockMaintBrigLocked
-  suffix: Brig, Locked
+  name: maintenance access
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsBrig ]
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 # Service
 - type: entity
-  parent: AirlockMaintServiceLocked
+  parent: AirlockClownLocked
   id: AirlockMaintClownLocked
-  suffix: Clown, Locked
+  name: maintenance access
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsClown ]
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 - type: entity
-  parent: AirlockMaintServiceLocked
+  parent: AirlockLibrarianLocked
   id: AirlockMaintLibrarianLocked
-  suffix: Librarian, Locked
+  name: maintenance access
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsLibrarian ]
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 - type: entity
-  parent: AirlockMaintServiceLocked
+  parent: AirlockMimeLocked
   id: AirlockMaintMimeLocked
-  suffix: Mime, Locked
+  name: maintenance access
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsMime ]
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 - type: entity
-  parent: AirlockMaintServiceLocked
+  parent: AirlockMusicianLocked
   id: AirlockMaintMusicianLocked
-  suffix: Musician, Locked
+  name: maintenance access
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsMusician ]
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 - type: entity
-  parent: AirlockMaintServiceLocked
+  parent: AirlockReporterLocked
   id: AirlockMaintReporterLocked
-  suffix: Reporter, Locked
+  name: maintenance access
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsReporter ]
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 - type: entity
-  parent: AirlockMaintCommandLocked
+  parent: AirlockHospitalityDirectorLocked
   id: AirlockMaintHDLocked
-  suffix: HospitalityDirector, Locked
+  name: maintenance access
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsHospitalityDirector ]
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 # Supply
 - type: entity
-  parent: AirlockMaint
+  parent: AirlockCourierLocked
   id: AirlockMaintCourierLocked
-  suffix: Courier, Locked
+  name: maintenance access
   components:
-  - type: ContainerFill
-    containers:
-      board: [ DoorElectronicsCourier ]
-  - type: Wires
-    layoutId: AirlockCargo
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 # External Airlocks
 - type: entity

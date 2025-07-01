@@ -22,15 +22,15 @@
     bar:         _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi
     brig:        Structures/Doors/Airlocks/Standard/security.rsi
     captain:     _Impstation/Structures/Doors/Airlocks/Standard/captain.rsi
-    ce:          _Impstation/Structures/Doors/Airlocks/Standard/ce.rsi
+    CE:          _Impstation/Structures/Doors/Airlocks/Standard/ce.rsi
     chapel:      _Impstation/Structures/Doors/Airlocks/Standard/chapel.rsi
     clown:       _Impstation/Structures/Doors/Airlocks/Standard/clown.rsi
-    cmo:         _Impstation/Structures/Doors/Airlocks/Standard/cmo.rsi
+    CMO:         _Impstation/Structures/Doors/Airlocks/Standard/cmo.rsi
     courier:     _Impstation/Structures/Doors/Airlocks/Standard/courier.rsi
     detective:   _Impstation/Structures/Doors/Airlocks/Standard/detective.rsi
-    hd:          _Impstation/Structures/Doors/Airlocks/Standard/hd.rsi
-    hop:         _Impstation/Structures/Doors/Airlocks/Standard/hop.rsi
-    hos:         _Impstation/Structures/Doors/Airlocks/Standard/hos.rsi
+    HD:          _Impstation/Structures/Doors/Airlocks/Standard/hd.rsi
+    HoP:         _Impstation/Structures/Doors/Airlocks/Standard/hop.rsi
+    HoS:         _Impstation/Structures/Doors/Airlocks/Standard/hos.rsi
     janitor:     _Impstation/Structures/Doors/Airlocks/Standard/janitor.rsi
     kitchen:     _Impstation/Structures/Doors/Airlocks/Standard/kitchen.rsi
     lawyer:      _Impstation/Structures/Doors/Airlocks/Standard/lawyer.rsi
@@ -39,9 +39,10 @@
     mime:        _Impstation/Structures/Doors/Airlocks/Standard/mime.rsi
     musician:    _Impstation/Structures/Doors/Airlocks/Standard/musician.rsi
     morgue:      _Impstation/Structures/Doors/Airlocks/Standard/morgue.rsi
-    qm:          _Impstation/Structures/Doors/Airlocks/Standard/qm.rsi
-    rd:          _Impstation/Structures/Doors/Airlocks/Standard/rd.rsi
+    QM:          _Impstation/Structures/Doors/Airlocks/Standard/qm.rsi
+    RD:          _Impstation/Structures/Doors/Airlocks/Standard/rd.rsi
     reporter:    _Impstation/Structures/Doors/Airlocks/Standard/reporter.rsi
+    sec/med:     _Impstation/Structures/Doors/Airlocks/Standard/secmed.rsi
     service:     Structures/Doors/Airlocks/Standard/basic.rsi
     theatre:     _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
     #end imp edit
@@ -70,15 +71,15 @@
     basic:       Structures/Doors/Airlocks/Glass/glass.rsi
     brig:        Structures/Doors/Airlocks/Glass/security.rsi
     captain:     _Impstation/Structures/Doors/Airlocks/Glass/captain.rsi
-    ce:          _Impstation/Structures/Doors/Airlocks/Glass/ce.rsi
+    CE:          _Impstation/Structures/Doors/Airlocks/Glass/ce.rsi
     chapel:      _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi
     clown:       _Impstation/Structures/Doors/Airlocks/Glass/clown.rsi
-    cmo:         _Impstation/Structures/Doors/Airlocks/Glass/cmo.rsi
+    CMO:         _Impstation/Structures/Doors/Airlocks/Glass/cmo.rsi
     courier:     _Impstation/Structures/Doors/Airlocks/Glass/courier.rsi
     detective:   _Impstation/Structures/Doors/Airlocks/Glass/detective.rsi
-    hd:          _Impstation/Structures/Doors/Airlocks/Glass/hd.rsi
-    hop:         _Impstation/Structures/Doors/Airlocks/Glass/hop.rsi
-    hos:         _Impstation/Structures/Doors/Airlocks/Glass/hos.rsi
+    HD:          _Impstation/Structures/Doors/Airlocks/Glass/hd.rsi
+    HoP:         _Impstation/Structures/Doors/Airlocks/Glass/hop.rsi
+    HoS:         _Impstation/Structures/Doors/Airlocks/Glass/hos.rsi
     janitor:     _Impstation/Structures/Doors/Airlocks/Glass/janitor.rsi
     kitchen:     _Impstation/Structures/Doors/Airlocks/Glass/kitchen.rsi
     lawyer:      _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi
@@ -87,9 +88,10 @@
     mime:        _Impstation/Structures/Doors/Airlocks/Glass/mime.rsi
     musician:    _Impstation/Structures/Doors/Airlocks/Glass/musician.rsi
     morgue:      _Impstation/Structures/Doors/Airlocks/Glass/morgue.rsi
-    qm:          _Impstation/Structures/Doors/Airlocks/Glass/qm.rsi
-    rd:          _Impstation/Structures/Doors/Airlocks/Glass/rd.rsi
+    QM:          _Impstation/Structures/Doors/Airlocks/Glass/qm.rsi
+    RD:          _Impstation/Structures/Doors/Airlocks/Glass/rd.rsi
     reporter:    _Impstation/Structures/Doors/Airlocks/Glass/reporter.rsi
+    sec/med:     _Impstation/Structures/Doors/Airlocks/Glass/secmed.rsi
     service:     Structures/Doors/Airlocks/Glass/basic.rsi
     theatre:     _Impstation/Structures/Doors/Airlocks/Glass/theatre.rsi
     #end imp edit
@@ -141,18 +143,19 @@
     #begin imp edit
     basic: Civilian
     captain: Command
-    ce: Command
-    cmo: Command
-    hd: Command
-    hop: Command
-    hos: Command
-    qm: Command
-    rd: Command
+    CE: Command
+    CMO: Command
+    HD: Command
+    HoP: Command
+    HoS: Command
+    QM: Command
+    RD: Command
     morgue: Medical
     med/sci: Science
     armory: Security
     brig: Security
     detective: Security
+    sec/med: Security
     service: Service
     freezer: Service
     hydroponics: Service

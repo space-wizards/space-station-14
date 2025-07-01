@@ -454,6 +454,25 @@
     sprite: _Impstation/Structures/Doors/Airlocks/Glass/reporter.rsi
     state: "assembly"
 
+#Security
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySecurityMedical
+  suffix: Security/Medical
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/secmed.rsi
+    state: "assembly"
+
+- type: entity
+  parent: AirlockAssembly
+  id: AirlockAssemblySecurityMedicalGlass
+  suffix: Security/Medical, Glass
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/secmed.rsi
+    state: "assembly"
+
 #Service
 - type: entity
   parent: AirlockAssembly

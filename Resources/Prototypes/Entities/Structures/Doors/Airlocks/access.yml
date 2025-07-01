@@ -868,7 +868,7 @@
 - type: entity
   parent: AirlockMaintGlass
   id: AirlockMaintGlassLocked
-  suffix: Locked
+  suffix: Locked, Glass #imp edit
   components:
   - type: ContainerFill
     containers:
@@ -877,6 +877,7 @@
 - type: entity
   parent: AirlockSalvageLocked
   id: AirlockMaintSalvageLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -884,6 +885,7 @@
 - type: entity
   parent: AirlockCargoLocked
   id: AirlockMaintCargoLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -891,6 +893,7 @@
 - type: entity
   parent: AirlockCommandLocked
   id: AirlockMaintCommandLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -898,6 +901,7 @@
 - type: entity
   parent: AirlockEngineeringLocked
   id: AirlockMaintEngiLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -905,6 +909,7 @@
 - type: entity
   parent: AirlockAtmosphericsLocked
   id: AirlockMaintAtmoLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -912,6 +917,7 @@
 - type: entity
   parent: AirlockBarLocked
   id: AirlockMaintBarLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -919,6 +925,7 @@
 - type: entity
   parent: AirlockBarKitchenLocked
   id: AirlockMaintBarKitchenLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -926,6 +933,7 @@
 - type: entity
   parent: AirlockChapelLocked
   id: AirlockMaintChapelLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -933,6 +941,7 @@
 - type: entity
   parent: AirlockHydroponicsLocked
   id: AirlockMaintHydroLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -940,6 +949,7 @@
 - type: entity
   parent: AirlockJanitorLocked
   id: AirlockMaintJanitorLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -947,6 +957,7 @@
 - type: entity
   parent: AirlockLawyerLocked
   id: AirlockMaintLawyerLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -954,6 +965,7 @@
 - type: entity
   parent: AirlockServiceLocked
   id: AirlockMaintServiceLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -961,6 +973,7 @@
 - type: entity
   parent: AirlockTheatreLocked
   id: AirlockMaintTheatreLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -968,6 +981,7 @@
 - type: entity
   parent: AirlockServiceTheatreLocked
   id: AirlockMaintServiceTheatreLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -975,6 +989,7 @@
 - type: entity
   parent: AirlockKitchenLocked
   id: AirlockMaintKitchenLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -982,6 +997,7 @@
 - type: entity
   parent: AirlockFreezerKitchenHydroLocked
   id: AirlockMaintKitchenHydroLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -989,6 +1005,7 @@
 - type: entity
   parent: AirlockMedicalLocked
   id: AirlockMaintMedLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -996,6 +1013,7 @@
 - type: entity
   parent: AirlockMedicalMorgueLocked
   id: AirlockMedicalMorgueMaintLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1003,6 +1021,7 @@
 - type: entity
   parent: AirlockChemistryLocked
   id: AirlockMaintChemLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1010,6 +1029,7 @@
 - type: entity
   parent: AirlockScienceLocked
   id: AirlockMaintRnDLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1017,6 +1037,7 @@
 - type: entity
   parent: AirlockMedicalScienceLocked
   id: AirlockMaintRnDMedLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1024,6 +1045,7 @@
 - type: entity
   parent: AirlockSecurityLocked
   id: AirlockMaintSecLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1031,6 +1053,7 @@
 - type: entity
   parent: AirlockDetectiveLocked
   id: AirlockMaintDetectiveLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1038,6 +1061,7 @@
 - type: entity
   parent: AirlockHeadOfPersonnelLocked
   id: AirlockMaintHOPLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1045,6 +1069,7 @@
 - type: entity
   parent: AirlockCaptainLocked
   id: AirlockMaintCaptainLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1052,6 +1077,7 @@
 - type: entity
   parent: AirlockChiefEngineerLocked
   id: AirlockMaintChiefEngineerLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1059,6 +1085,7 @@
 - type: entity
   parent: AirlockChiefMedicalOfficerLocked
   id: AirlockMaintChiefMedicalOfficerLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1066,6 +1093,7 @@
 - type: entity
   parent: AirlockHeadOfSecurityLocked
   id: AirlockMaintHeadOfSecurityLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1073,6 +1101,7 @@
 - type: entity
   parent: AirlockResearchDirectorLocked
   id: AirlockMaintResearchDirectorLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1080,6 +1109,7 @@
 - type: entity
   parent: AirlockQuartermasterLocked
   id: AirlockMaintQuartermasterLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
@@ -1087,6 +1117,7 @@
 - type: entity
   parent: AirlockArmoryLocked
   id: AirlockMaintArmoryLocked
+  name: maintenance access #imp edit
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
