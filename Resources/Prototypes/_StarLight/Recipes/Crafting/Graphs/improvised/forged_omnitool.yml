@@ -10,42 +10,42 @@
         icon:
           sprite: Objects/Tools/multitool.rsi
           state: icon
-        name: multitool
+        name: crafting-menu-name-MUL
       - tag: Wrench
         icon:
           sprite: Objects/Tools/wrench.rsi
           state: icon
-        name: wrench
+        name: crafting-menu-name-WRE
       - tag: Wirecutter
         icon:
           sprite: Objects/Tools/wirecutters.rsi
           state: cutters-map
-        name: wirecutter
+        name: crafting-menu-name-WIR
       - tag: Screwdriver
         icon:
           sprite: Objects/Tools/screwdriver.rsi
           state: screwdriver-map
-        name: screwdriver
+        name: crafting-menu-name-SCR
       - tag: Crowbar
         icon:
           sprite: Objects/Tools/crowbar.rsi
           state: storage
-        name: crowbar
+        name: crafting-menu-name-CRO
       - tag: EmergencyWelder
         icon:
           sprite: Objects/Tools/welder_mini.rsi
           state: icon
-        name: emergency welder
+        name: crafting-menu-name-EW
       - tag: PowerCellSmall
         icon:
           sprite: Objects/Power/power_cells.rsi
           state: small
-        name: small-capacity power cell
+        name: construction-graph-tag-power-cell-small
       - tag: GasTank
         icon:
           sprite: Objects/Tanks/emergency_extended.rsi
           state: icon
-        name: extended-capacity emergency oxygen tank
+        name: crafting-menu-name-EXOXY
       - material: Cable
         amount: 3
         doAfter: 5

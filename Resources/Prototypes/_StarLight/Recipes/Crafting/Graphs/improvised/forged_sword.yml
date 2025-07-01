@@ -10,7 +10,7 @@
         icon:
           sprite: _Starlight/Objects/Misc/plasteel_blade.rsi
           state: icon
-        name: plasteel blade
+        name: crafting-menu-name-PB
       - material: Plasteel
         amount: 4
         doAfter: 15
@@ -21,6 +21,6 @@
         icon:
           sprite: _Starlight/Objects/Misc/plasteel_hilt.rsi
           state: icon
-        name: plasteel hilt
+        name: crafting-menu-name-PH
   - node: sword
     entity: UnfinishedSwordForged

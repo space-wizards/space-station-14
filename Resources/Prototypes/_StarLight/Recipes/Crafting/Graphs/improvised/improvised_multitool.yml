@@ -19,7 +19,7 @@
         icon:
           sprite: Objects/Power/power_cells.rsi
           state: small
-        name: small-capacity power cell
+        name: construction-graph-tag-power-cell-small
       - material: Cable
         amount: 2
         doAfter: 5

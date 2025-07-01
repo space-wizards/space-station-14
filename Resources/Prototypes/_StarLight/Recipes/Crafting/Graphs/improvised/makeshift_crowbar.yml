@@ -10,7 +10,7 @@
         icon:
           sprite: Objects/Tools/Toolboxes/toolbox_red.rsi
           state: icon
-        name: emergency toolbox
+        name: crafting-menu-name-ETX
         doAfter: 8
   - node: tool
     entity: CrowbarMakeshift

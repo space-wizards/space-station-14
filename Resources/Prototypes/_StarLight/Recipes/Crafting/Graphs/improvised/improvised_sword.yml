@@ -10,7 +10,7 @@
         icon:
           sprite: _Starlight/Objects/Misc/steel_blade.rsi
           state: icon
-        name: steel blade
+        name: crafting-menu-name-SB
       - material: Steel
         amount: 2
         doAfter: 15
@@ -21,6 +21,6 @@
         icon:
           sprite: _Starlight/Objects/Misc/wooden_hilt.rsi
           state: icon
-        name: wooden hilt
+        name: crafting-menu-name-WH
   - node: sword
     entity: SwordImprovised

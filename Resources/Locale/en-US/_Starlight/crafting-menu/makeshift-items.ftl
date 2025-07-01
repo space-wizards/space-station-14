@@ -79,6 +79,8 @@ crafting-menu-name-IWR = improvised wrench
 crafting-menu-name-IM = improvised multitool
 crafting-menu-text-IM = The best you're gonna get. Needs welding supplies to finish.
 
+crafting-menu-name-EW = emergency welder
+
 crafting-menu-name-IO = improvised omnitool
 crafting-menu-text-IO = The fact that this abomination of tiderkind actually works is nothing short of a miracle.
 
@@ -150,3 +152,15 @@ crafting-menu-text-FVTH = Almost the best a tidersmith can offer, it'll reliably
 
 crafting-menu-name-PVTH = paladin helmet
 crafting-menu-text-PVTH = The best a tidersmith can offer, no holy crusade is fit to go on without a matching helmet!
+
+crafting-menu-name-MUL = multitool
+
+crafting-menu-name-WRE = wrench
+
+crafting-menu-name-WIR = wirecutter
+
+crafting-menu-name-SCR = screwdriver
+
+crafting-menu-name-CRO = crowbar
+
+crafting-menu-name-EXOXY = emergency toolbox

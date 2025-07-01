@@ -10,7 +10,7 @@
         icon:
           sprite: _Starlight/Objects/Weapons/Melee/forged_sword.rsi
           state: icon
-        name: forged sword
+        name: crafting-menu-name-FSW
       - material: Plastic
         amount: 4
         doAfter: 5
@@ -26,7 +26,7 @@
         icon:
           sprite: Objects/Devices/igniter.rsi
           state: icon
-        name: igniter
+        name: construction-graph-tag-igniter
         doAfter: 10
   - node: sword
     entity: SwordFlaming

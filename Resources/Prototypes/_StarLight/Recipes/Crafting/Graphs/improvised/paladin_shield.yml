@@ -12,8 +12,10 @@
         amount: 10
         doAfter: 15
       - material: Plasteel
-        amount: 14
+        amount: 8
         doAfter: 15
+      - material: Plastic
+        amount: 4
       - material: Cloth
         amount: 5
   - node: shield

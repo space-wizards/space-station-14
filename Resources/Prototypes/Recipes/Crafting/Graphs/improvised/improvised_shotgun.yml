@@ -8,9 +8,9 @@
       steps:
       - tag: ModularBarrel #Starlight
         icon:
-          sprite: _Starlight/Objects/Misc/modular_barrel
+          sprite: _Starlight/Objects/Misc/modular_barrel.rsi
           state: icon
-        name: modular barrel
+        name: crafting-menu-name-MB
       - tag: ModularReceiver
         icon:
           sprite: Objects/Misc/modular_receiver.rsi

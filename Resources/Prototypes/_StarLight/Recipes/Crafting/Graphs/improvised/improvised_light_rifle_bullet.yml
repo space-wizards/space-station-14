@@ -10,19 +10,19 @@
               amount: 1
               doAfter: 0.5 
             - tag: Matchstick
-              name: match stick
+              name: construction-graph-tag-match-stick
               icon:
                 sprite: Objects/Tools/matches.rsi
                 state: match_unlit
               doAfter: 0.5 
             - tag: Matchstick
-              name: match stick
+              name: construction-graph-tag-match-stick
               icon:
                 sprite: Objects/Tools/matches.rsi
                 state: match_unlit
               doAfter: 0.5 
             - tag: Matchstick
-              name: match stick
+              name: construction-graph-tag-match-stick
               icon:
                 sprite: Objects/Tools/matches.rsi
                 state: match_unlit

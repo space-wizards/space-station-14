@@ -14,8 +14,10 @@
       - material: Glass
         amount: 4
       - material: Plasteel
-        amount: 16
+        amount: 10
         doAfter: 15
+      - material: Plastic
+        amount: 6
       - material: Cloth
         amount: 8
   - node: shield

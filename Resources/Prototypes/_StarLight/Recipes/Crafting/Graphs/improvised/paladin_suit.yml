@@ -10,8 +10,10 @@
         amount: 15
         doAfter: 15
       - material: Plasteel
-        amount: 17
+        amount: 10
         doAfter: 15
+      - material: Plastic
+        amount: 4
       - material: Cloth
         amount: 15
         doAfter: 15
