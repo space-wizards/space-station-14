@@ -6,12 +6,13 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Body.Components
 {
-    [RegisterComponent, Access(typeof(SharedBloodstreamSystem))]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause, Access(typeof(SharedBloodstreamSystem))]
     public sealed partial class BloodstreamComponent : Component
     {
         public static string DefaultChemicalsSolutionName = "chemicals";
@@ -21,13 +22,13 @@ namespace Content.Shared.Body.Components
         /// <summary>
         /// The next time that blood level will be updated and bloodloss damage dealt.
         /// </summary>
-        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
         public TimeSpan NextUpdate;
 
         /// <summary>
         /// The interval at which this component updates.
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public TimeSpan UpdateInterval = TimeSpan.FromSeconds(3);
 
         /// <summary>
@@ -40,52 +41,52 @@ namespace Content.Shared.Body.Components
         /// <remarks>
         ///     This generally corresponds to an amount of damage and can't go above 100.
         /// </remarks>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float BleedAmount;
+        [DataField, AutoNetworkedField]
+        public FixedPoint2 BleedAmount;
 
         /// <summary>
         ///     How much should bleeding be reduced every update interval?
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public float BleedReductionAmount = 0.33f;
 
         /// <summary>
         ///     How high can <see cref="BleedAmount"/> go?
         /// </summary>
-        [DataField]
-        public float MaxBleedAmount = 10.0f;
+        [DataField, AutoNetworkedField]
+        public FixedPoint2 MaxBleedAmount = 10.0f;
 
         /// <summary>
         ///     What percentage of current blood is necessary to avoid dealing blood loss damage?
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public float BloodlossThreshold = 0.9f;
 
         /// <summary>
         ///     The base bloodloss damage to be incurred if below <see cref="BloodlossThreshold"/>
         ///     The default values are defined per mob/species in YML.
         /// </summary>
-        [DataField(required: true)]
+        [DataField(required: true), AutoNetworkedField]
         public DamageSpecifier BloodlossDamage = new();
 
         /// <summary>
         ///     The base bloodloss damage to be healed if above <see cref="BloodlossThreshold"/>
         ///     The default values are defined per mob/species in YML.
         /// </summary>
-        [DataField(required: true)]
+        [DataField(required: true), AutoNetworkedField]
         public DamageSpecifier BloodlossHealDamage = new();
 
         // TODO shouldn't be hardcoded, should just use some organ simulation like bone marrow or smth.
         /// <summary>
         ///     How much reagent of blood should be restored each update interval?
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public FixedPoint2 BloodRefreshAmount = 1.0f;
 
         /// <summary>
         ///     How much blood needs to be in the temporary solution in order to create a puddle?
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public FixedPoint2 BleedPuddleThreshold = 1.0f;
 
         /// <summary>
@@ -95,26 +96,26 @@ namespace Content.Shared.Body.Components
         /// <remarks>
         ///     For example, piercing damage is increased while poison damage is nullified entirely.
         /// </remarks>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public ProtoId<DamageModifierSetPrototype> DamageBleedModifiers = "BloodlossHuman";
 
         /// <summary>
         ///     The sound to be played when a weapon instantly deals blood loss damage.
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public SoundSpecifier InstantBloodSound = new SoundCollectionSpecifier("blood");
 
         /// <summary>
         ///     The sound to be played when some damage actually heals bleeding rather than starting it.
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public SoundSpecifier BloodHealedSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
         /// <summary>
         /// The minimum amount damage reduction needed to play the healing sound/popup.
         /// This prevents tiny amounts of heat damage from spamming the sound, e.g. spacing.
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public float BloodHealedSoundThreshold = -0.1f;
 
         // TODO probably damage bleed thresholds.
@@ -122,14 +123,14 @@ namespace Content.Shared.Body.Components
         /// <summary>
         ///     Max volume of internal chemical solution storage
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public FixedPoint2 ChemicalMaxVolume = FixedPoint2.New(250);
 
         /// <summary>
         ///     Max volume of internal blood storage,
         ///     and starting level of blood.
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public FixedPoint2 BloodMaxVolume = FixedPoint2.New(300);
 
         /// <summary>
@@ -138,7 +139,7 @@ namespace Content.Shared.Body.Components
         /// <remarks>
         ///     Slime-people might use slime as their blood or something like that.
         /// </remarks>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public ProtoId<ReagentPrototype> BloodReagent = "Blood";
 
         /// <summary>Name/Key that <see cref="BloodSolution"/> is indexed by.</summary>
@@ -176,10 +177,10 @@ namespace Content.Shared.Body.Components
         /// <summary>
         /// Variable that stores the amount of status time added by having a low blood level.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
         public TimeSpan StatusTime;
 
-        [DataField]
+        [DataField, AutoNetworkedField]
         public ProtoId<AlertPrototype> BleedingAlert = "Bleed";
     }
 }

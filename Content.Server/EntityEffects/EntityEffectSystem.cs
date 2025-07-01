@@ -781,7 +781,7 @@ public sealed class EntityEffectSystem : EntitySystem
                 amt *= reagentArgs.Scale.Float();
             }
 
-            _bloodstream.TryModifyBleedAmount(args.Args.TargetEntity, amt, blood);
+            _bloodstream.TryModifyBleedAmount(args.Args.TargetEntity, amt);
         }
     }
 
