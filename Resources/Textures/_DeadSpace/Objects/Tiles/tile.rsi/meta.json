@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation, stone and shuttle sprite by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "shuttlegrey"
+    },
+    {
+      "name": "cult"
+    },
+    {
+      "name": "diamond"
+    },
+    {
+      "name": "fairygrass"
+    },
+    {
+      "name": "plasma"
+    },
+    {
+      "name": "stone"
+    },
+    {
+      "name": "terracotta"
+    },
+    {
+      "name": "terracotta_diagonal"
+    },
+    {
+      "name": "terracotta_herringbone"
+    },
+    {
+      "name": "terracotta_small"
+    },
+    {
+      "name": "uranium"
+    },
+    {
+      "name": "shuttleblack"
+    },
+    {
+      "name": "shuttlered"
+    },
+    {
+      "name": "shuttlewhite"
+    },
+    {
+      "name": "shuttleorange"
+    },
+    {
+      "name": "shuttlepurple"
+    },
+    {
+      "name": "shuttleblue"
+    }
+  ]
+}

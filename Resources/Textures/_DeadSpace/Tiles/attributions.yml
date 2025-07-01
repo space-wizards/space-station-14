@@ -1,3 +1,38 @@
+- files: ["terracotta.png", "terracotta_diagonal.png", "terracotta_herringbone.png", "terracotta_small.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/"
+
+- files: ["alien.png", "alienplating.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/"
+
+- files: ["stone.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/"
+
+- files: ["cult.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/"
+
+- files: ["shuttlewhite.png", "shuttleblue.png", "shuttleorange.png", "shuttlepurple.png", "shuttlered.png", "shuttlegrey.png", "shuttleblack.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station, edited by andrew_fenriz (discord) for Space Station 14 server Мёртвый космос"
+  source: "https://github.com/tgstation/tgstation/"
+
+- files: ["diamond.png", "plasma.png", "uranium.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station"
+  source: "https://github.com/tgstation/tgstation/"
+
+- files: ["brassglass.png", "plasmaglass.png", "rplasmaglass.png", "uraniumglass.png", "ruraniumglass.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station, edited by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос"
+  source: "https://github.com/tgstation/tgstation/"
+
 - files: ["titaniumtiles.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Created by HLEBUCHEK (discord) for Space Station 14 server Мёртвый Космос"
