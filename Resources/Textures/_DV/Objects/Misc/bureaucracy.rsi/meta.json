@@ -1,0 +1,20 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "ream-classic, bright, and white by 2025 Janet Blackquill <uhhadd@gmail.com>",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "ream-classic"
+        },
+        {
+            "name": "ream-bright"
+        },
+        {
+            "name": "ream-white"
+        }
+    ]
+}

@@ -141,21 +141,42 @@
   components:
   - type: StorageFill
     contents:
-    - id: Paper
-      amount: 15
+    # DeltaV - replace the paper in the bureaucracy crate with a ream
+    - id: BoxReamWhite
+    # - id: Paper
+    #   amount: 15
     - id: Pen
       amount: 2
     - id: BoxFolderClipboard
       amount: 2
     - id: HandLabeler
     - id: BoxFolderBlue
+      amount: 2 # DeltaV - more folders in the bureaucracy crate
     - id: BoxFolderRed
+      amount: 2 # DeltaV - more folders in the bureaucracy crate
     - id: BoxFolderYellow
+      amount: 2 # DeltaV - more folders in the bureaucracy crate
+    # Begin DeltaV: sticky notes
+    - id: PaperStickyNoteStackFilled
+    - id: PaperStickyNoteStackFilledPink
+    - id: PaperStickyNoteStackFilledGreen
+    - id: PaperStickyNoteStackFilledBlue
+    # End DeltaV: sticky notes
     - id: NewtonCradle
     - id: BoxEnvelope
     - id: BrbSign
     - id: RubberStampHatePaperwork # DeltaV
       prob: 0.05
+    # Start DeltaV - More folders & colored paper reams in the bureaucracy crate
+    - id: BoxFolderBlack
+      amount: 2
+    - id: BoxFolderGrey
+      amount: 2
+    - id: BoxFolderGreen
+      amount: 2
+    - id: BoxReamClassic
+    - id: BoxReamBright
+    # End DeltaV - More folders & colored paper reams in the bureaucracy crate
 
 - type: entity
   id: CrateServiceFaxMachine

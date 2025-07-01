@@ -1,0 +1,344 @@
+﻿# tags
+
+- type: Tag
+  id: StickyNoteYellow
+
+- type: Tag
+  id: StickyNotePink
+
+- type: Tag
+  id: StickyNoteGreen
+
+- type: Tag
+  id: StickyNoteBlue
+
+# single sticky notes
+
+- type: entity
+  parent: Paper
+  id: PaperStickyNote
+  name: sticky note
+  suffix: yellow
+  description: A sticky note, for when you want your reminders to stick
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Misc/stickies.rsi
+    layers:
+    - state: sticky_note
+      color: "#dad71a"
+    - state: sticky_note_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#dad71a"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+      sprite: Objects/Misc/bureaucracy.rsi
+  - type: PaperVisuals
+    contentMargin: 0.0, 0.0, 0.0, 0.0
+    maxWritableArea: 368.0, 368.0
+    backgroundModulate: "#fde663"
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+    - StickyNoteYellow
+  - type: EmbeddableProjectile
+    removalTime: .2
+
+- type: entity
+  parent: PaperStickyNote
+  id: PaperStickyNotePink
+  suffix: pink
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Misc/stickies.rsi
+    layers:
+    - state: sticky_note
+      color: "#ff8cba"
+    - state: sticky_note_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#ff8cba"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+      sprite: Objects/Misc/bureaucracy.rsi
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+    - StickyNotePink
+  - type: PaperVisuals
+    backgroundModulate: "#fbc4c4"
+
+- type: entity
+  parent: PaperStickyNote
+  id: PaperStickyNoteGreen
+  suffix: green
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Misc/stickies.rsi
+    layers:
+    - state: sticky_note
+      color: "#9fd4a3"
+    - state: sticky_note_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#9fd4a3"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+      sprite: Objects/Misc/bureaucracy.rsi
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+    - StickyNoteGreen
+  - type: PaperVisuals
+    backgroundModulate: "#9fd4a3"
+
+- type: entity
+  parent: PaperStickyNote
+  id: PaperStickyNoteBlue
+  suffix: blue
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Misc/stickies.rsi
+    layers:
+    - state: sticky_note
+      color: "#00c2e7"
+    - state: sticky_note_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#00c2e7"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+      sprite: Objects/Misc/bureaucracy.rsi
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+    - StickyNoteBlue
+  - type: PaperVisuals
+    backgroundModulate: "#58dbf4"
+
+# sticky note stacks
+
+- type: entity
+  parent: BaseItem
+  id: PaperStickyNoteStack
+  name: sticky note stack
+  suffix: yellow
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Misc/stickies.rsi
+    state: sticky_note_dispenser_base
+    color: "#dad71a"
+    drawdepth: SmallObjects
+    noRot: true
+  - type: Appearance
+  - type: ItemMapper
+    sprite: _DV/Objects/Misc/stickies.rsi
+    mapLayers:
+      sticky_note_dispenser_bin1:
+        whitelist:
+          tags:
+          - Paper
+      sticky_note_dispenser_bin2:
+        minCount: 4
+        whitelist:
+          tags:
+          - Paper
+      sticky_note_dispenser_bin3:
+        minCount: 8
+        whitelist:
+          tags:
+          - Paper
+      sticky_note_dispenser_bin4:
+        minCount: 12
+        whitelist:
+          tags:
+          - Paper
+      sticky_note_dispenser_bin5:
+        minCount: 16
+        whitelist:
+          tags:
+          - Paper
+  - type: Bin
+    whitelist:
+      tags:
+      - StickyNoteYellow
+  - type: ContainerContainer
+    containers:
+      bin-container: !type:Container {}
+
+- type: entity
+  parent: PaperStickyNoteStack
+  id: PaperStickyNoteStackPink
+  name: sticky note stack
+  suffix: pink
+  components:
+  - type: Sprite
+    color: "#ff8cba"
+  - type: Bin
+    whitelist:
+      tags:
+      - StickyNotePink
+
+- type: entity
+  parent: PaperStickyNoteStack
+  id: PaperStickyNoteStackGreen
+  name: sticky note stack
+  suffix: green
+  components:
+  - type: Sprite
+    color: "#9fd4a3"
+  - type: Bin
+    whitelist:
+      tags:
+      - StickyNoteGreen
+
+- type: entity
+  parent: PaperStickyNoteStack
+  id: PaperStickyNoteStackBlue
+  name: sticky note stack
+  suffix: blue
+  components:
+  - type: Sprite
+    color: "#00c2e7"
+  - type: Bin
+    whitelist:
+      tags:
+      - StickyNoteBlue
+
+# filled sticky note stacks
+
+- type: entity
+  parent: PaperStickyNoteStack
+  id: PaperStickyNoteStackFilled
+  name: sticky note stack
+  suffix: yellow, filled
+  components:
+  - type: Bin
+    whitelist:
+      tags:
+      - StickyNoteYellow
+    initialContents:
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+    - PaperStickyNote
+
+- type: entity
+  parent: PaperStickyNoteStackPink
+  id: PaperStickyNoteStackFilledPink
+  name: sticky note stack
+  suffix: pink, filled
+  components:
+  - type: Bin
+    whitelist:
+      tags:
+      - StickyNotePink
+    initialContents:
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+    - PaperStickyNotePink
+
+- type: entity
+  parent: PaperStickyNoteStackGreen
+  id: PaperStickyNoteStackFilledGreen
+  name: sticky note stack
+  suffix: green, filled
+  components:
+  - type: Bin
+    whitelist:
+      tags:
+      - StickyNoteGreen
+    initialContents:
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+    - PaperStickyNoteGreen
+
+- type: entity
+  parent: PaperStickyNoteStackBlue
+  id: PaperStickyNoteStackFilledBlue
+  name: sticky note stack
+  suffix: blue, filled
+  components:
+  - type: Bin
+    whitelist:
+      tags:
+      - StickyNoteBlue
+    initialContents:
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue
+    - PaperStickyNoteBlue

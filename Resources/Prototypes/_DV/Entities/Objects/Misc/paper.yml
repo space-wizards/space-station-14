@@ -36,3 +36,309 @@
   id: PaperFugitiveReport
   name: fugitive report
   description: An arrest warrant for a space fugitive sent from the Central Command Enforcement Division.
+
+- type: entity
+  parent: Paper
+  id: PaperDyedPink
+  description: 'A piece of pink paper.'
+  suffix: pink
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#e670b5"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#e670b5"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundModulate: "#eb87c0"
+
+- type: entity
+  parent: Paper
+  id: PaperDyedRed
+  description: 'A piece of red paper.'
+  suffix: red
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#ba453f"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#ba453f"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundModulate: "#ba453f"
+
+- type: entity
+  parent: Paper
+  id: PaperDyedOrange
+  description: 'A piece of orange paper.'
+  suffix: orange
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#ec912e"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#ec912e"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundModulate: "#ec912e"
+
+- type: entity
+  parent: Paper
+  id: PaperDyedYellow
+  description: 'A piece of yellow paper.'
+  suffix: yellow
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#ffd617"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#ffd617"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundModulate: "#fee36c"
+
+- type: entity
+  parent: Paper
+  id: PaperDyedGrass
+  description: 'A piece of grass green paper.'
+  suffix: grass
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#c7dd4b"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#c7dd4b"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundModulate: "#c7dd4b"
+
+- type: entity
+  parent: Paper
+  id: PaperDyedGreen
+  description: 'A piece of green paper.'
+  suffix: green
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#0da04d"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#0da04d"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundModulate: "#0da04d"
+
+- type: entity
+  parent: Paper
+  id: PaperDyedOcean
+  description: 'A piece of ocean blue paper.'
+  suffix: ocean
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#1796c8"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#1796c8"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundModulate: "#1796c8"
+
+- type: entity
+  parent: Paper
+  id: PaperDyedSky
+  description: 'A piece of sky blue paper.'
+  suffix: sky
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#49cddd"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#49cddd"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundModulate: "#49cddd"
+
+- type: entity
+  parent: Paper
+  id: PaperDyedPurple
+  description: 'A piece of purple paper.'
+  suffix: purple
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#7c70d7"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#7c70d7"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundModulate: "#938bda"
+
+- type: entity
+  parent: Paper
+  id: PaperDyedTan
+  description: 'A piece of tan paper.'
+  suffix: tan
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#cfbdaa"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#cfbdaa"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundModulate: "#cfbdaa"
+
+- type: entity
+  parent: Paper
+  id: PaperDyedBrown
+  description: 'A piece of brown paper.'
+  suffix: brown
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper
+      color: "#a47449"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#a47449"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundModulate: "#a47449"
+
+- type: entity
+  parent: BoxBase
+  id: BoxReamClassic
+  name: Papermoon classic color paper ream
+  description: Brighten up your records and more with Papermoon colored paper, in the six classic colors you've come to know and love. Dyed throughout for maximum colorfastness.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: ream-classic
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: Storage
+    grid:
+    - 0,0,3,5
+    whitelist:
+      tags:
+      - Document
+  - type: StorageFill
+    contents:
+    - id: PaperDyedYellow
+      amount: 4
+    - id: PaperDyedGreen
+      amount: 4
+    - id: PaperDyedRed
+      amount: 4
+    - id: PaperDyedOcean
+      amount: 4
+    - id: PaperDyedTan
+      amount: 4
+    - id: PaperDyedBrown
+      amount: 4
+
+- type: entity
+  parent: BoxReamClassic
+  id: BoxReamBright
+  name: Papermoon happy color paper ream
+  description: Make getting a pink slip a joyous occassion with Papermoon colored paper, in six cheerful and vibrant colors. Dyed throughout for maximum colorfastness.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: ream-bright
+  - type: StorageFill
+    contents:
+    - id: PaperDyedOrange
+      amount: 4
+    - id: PaperDyedGrass
+      amount: 4
+    - id: PaperDyedYellow
+      amount: 4
+    - id: PaperDyedSky
+      amount: 4
+    - id: PaperDyedPink
+      amount: 4
+    - id: PaperDyedPurple
+      amount: 4
+
+- type: entity
+  parent: BoxReamClassic
+  id: BoxReamWhite
+  name: Papermoon glimmer white paper ream
+  description: Create reports that are sure to get noticed with this Papermoon white-as-glimmer paper. Harvested with sustainable noöspheric practices.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: ream-white
+  - type: StorageFill
+    contents:
+    - id: Paper
+      amount: 24

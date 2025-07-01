@@ -1,0 +1,35 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sticky_note/sticky_note_wordssticky_note_dispenser_base/sticky_note_dispenser_bin1/sticky_note_dispenser_bin2/sticky_note_dispenser_bin3/sticky_note_dispenser_bin4/sticky_note_dispenser_bin5 by Janet Blackquill <uhhadd@gmail.com> 2025",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "sticky_note"
+        },
+        {
+            "name": "sticky_note_words"
+        },
+        {
+            "name": "sticky_note_dispenser_base"
+        },
+        {
+            "name": "sticky_note_dispenser_bin1"
+        },
+        {
+            "name": "sticky_note_dispenser_bin2"
+        },
+        {
+            "name": "sticky_note_dispenser_bin3"
+        },
+        {
+            "name": "sticky_note_dispenser_bin4"
+        },
+        {
+            "name": "sticky_note_dispenser_bin5"
+        }
+    ]
+}
