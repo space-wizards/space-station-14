@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/30/2025 21:30:11
-  entityCount: 15611
+  time: 07/01/2025 19:46:18
+  entityCount: 15610
 maps:
 - 126
 grids:
@@ -12798,18 +12798,6 @@ entities:
     - type: Transform
       pos: 39.424168,28.449154
       parent: 2
-    - type: Storage
-      storedItems:
-        14853:
-          position: 0,0
-          _rotation: South
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 14853
 - proto: BoxFolderBlack
   entities:
   - uid: 12101
@@ -47575,7 +47563,7 @@ entities:
       pos: 26.5,37.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -33379.168
+      secondsUntilStateChange: -33460.1
       state: Closing
   - uid: 9362
     components:
@@ -71398,12 +71386,6 @@ entities:
       parent: 2
 - proto: MopItem
   entities:
-  - uid: 8545
-    components:
-    - type: Transform
-      rot: -12.566370614359172 rad
-      pos: 39.542747,22.545547
-      parent: 2
   - uid: 13119
     components:
     - type: Transform
@@ -71534,21 +71516,6 @@ entities:
     components:
     - type: Transform
       parent: 13141
-    - type: Physics
-      canCollide: False
-  - uid: 14853
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 10541
-    - type: NetworkConfigurator
-      lastUseAttempt: 1876.9452607
-      devices:
-        'UID: 147424': 14086
-      linkModeActive: False
-    - type: EmitSoundOnCollide
-      nextSound: -63.7527986
     - type: Physics
       canCollide: False
 - proto: NetworkConfigurator
@@ -85818,6 +85785,13 @@ entities:
     - type: Transform
       pos: 36.693336,32.541332
       parent: 2
+- proto: TowelColorTeal
+  entities:
+  - uid: 8545
+    components:
+    - type: Transform
+      pos: 39.343895,22.390461
+      parent: 2
 - proto: TowercapSeeds
   entities:
   - uid: 2601
@@ -85851,8 +85825,7 @@ entities:
   - uid: 8394
     components:
     - type: Transform
-      rot: -12.566370614359172 rad
-      pos: 39.370872,22.701797
+      pos: 39.281395,22.796711
       parent: 2
   - uid: 10811
     components:
@@ -98127,8 +98100,6 @@ entities:
       pos: 43.5,33.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - 14853
       deviceLists:
       - 6314
 - proto: WeaponEnergyTurretSecurityControlPanel
@@ -98775,7 +98746,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -12288.3545
+      secondsUntilStateChange: -12369.288
       state: Opening
     - type: Airlock
       autoClose: False
