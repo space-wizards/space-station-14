@@ -65,6 +65,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                 continue;
 
             bloodstream.NextUpdate += bloodstream.UpdateInterval;
+            DirtyField(uid, bloodstream, nameof(BloodstreamComponent.NextUpdate)); // needs to be dirtied on the client so it can be rerolled during prediction
 
             if (!SolutionContainer.ResolveSolution(uid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 continue;
