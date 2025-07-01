@@ -5,7 +5,6 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Shearing;
 using Content.Shared.Tools.Systems;
@@ -17,7 +16,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Animals;
 
 /// <summary>
-///     Lets an entity be sheared by a tool to consume a reagent to spawn an amount of an item.
+///     Lets an entity be sheared by a tool to consume a reagent to spawn an amount of an item and optionally toggle a sprite layer.
 ///     For example, sheep can be sheared to consume woolSolution to spawn cotton.
 /// </summary>
 public sealed class SharedShearableSystem : EntitySystem
@@ -45,7 +44,6 @@ public sealed class SharedShearableSystem : EntitySystem
         SubscribeLocalEvent<ShearableComponent, ExaminedEvent>(Examined);
         SubscribeLocalEvent<ShearableComponent, ShearingDoAfterEvent>(OnSheared);
         SubscribeLocalEvent<ShearableComponent, SolutionContainerChangedEvent>(OnSolutionChange);
-        SubscribeLocalEvent<ShearableComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     /// <summary>
@@ -102,21 +100,6 @@ public sealed class SharedShearableSystem : EntitySystem
 
         // Store solution.Volume in a variable to make calculations a bit clearer.
         var targetSolutionQuantity = solution.Volume;
-
-        /*         // Create a stack object so we can reference its name in localisation.
-                _prototypeManager.TryIndex(comp.ShearedProductID, out var shearedProductStack);
-                if (shearedProductStack == null)
-                {
-                    Log.Error(
-                        $"Could not resolve ShearedProductID \"{comp.ShearedProductID}\" to a StackPrototype while shearing. Is this item stackable?"
-                    );
-                    return ShearableComponent.CheckShearReturns.StackError;
-                } */
-
-
-        // Spawn maximum of 25 items
-        // If less than 25 items, calculate solution to remove.
-        // If more than 25 items, cap at the calculated solution.
 
         // Solution is measured in units but the actual value for 1u is 1000 reagent, so multiply it by 100.
         // Then, divide by 1 because it's the reagent needed for 1 product.
@@ -176,8 +159,6 @@ public sealed class SharedShearableSystem : EntitySystem
                 return;
             case ShearableComponent.CheckShearReturns.SolutionError:
                 return;
-            case ShearableComponent.CheckShearReturns.StackError:
-                return;
             case ShearableComponent.CheckShearReturns.InsufficientSolution:
                 // Resolve the prototype so we can reference its name in localisation.
                 if (!_prototypeManager.TryIndex(ent.Comp.ShearedProductID, out var proto))
@@ -197,8 +178,6 @@ public sealed class SharedShearableSystem : EntitySystem
                 return;
         }
 
-
-
         // Build arguments for calling TryStartDoAfter
         var doargs = new DoAfterArgs(EntityManager, userUid, 5, new ShearingDoAfterEvent(), ent, ent, used: toolUsed)
         {
@@ -210,7 +189,6 @@ public sealed class SharedShearableSystem : EntitySystem
         // Triggers the ShearingDoAfter event.
         _doAfterSystem.TryStartDoAfter(doargs);
     }
-
 
     /// <summary>
     ///     Called by the ShearingDoAfter event.
@@ -254,7 +232,7 @@ public sealed class SharedShearableSystem : EntitySystem
         if (ent.Comp.MaximumProductsSpawned is not null)
         {
             // No limit defined, so set to productsPerSolution
-            maxProductsToSpawn = productsPerSolution;
+            maxProductsToSpawn = (float)ent.Comp.MaximumProductsSpawned;
         }
 
         // Modulas the targetSolutionQuantity so no solution is wasted if it can't be divided evenly.
@@ -272,7 +250,7 @@ public sealed class SharedShearableSystem : EntitySystem
         // 500 * 500 / 100 = 2500.
         // We take the smaller of two values, we don't want to remove more reagent than we're using.
         // Despite their being 5000 reagent availble, we end up only removing 2500, even though no limit has been set, why is this?
-        // I don't know.
+        // I don't know... it seems to work OK though.
         var solutionToRemove = FixedPoint2.New(
             Math.Min(
                 (targetSolutionQuantity.Value - targetSolutionQuantity.Value % productsPerSolution) / 100,
@@ -389,8 +367,6 @@ public sealed class SharedShearableSystem : EntitySystem
                 return;
             case ShearableComponent.CheckShearReturns.SolutionError:
                 return;
-            case ShearableComponent.CheckShearReturns.StackError:
-                return;
             case ShearableComponent.CheckShearReturns.InsufficientSolution:
                 // Check again if this description has been set.
                 if (string.IsNullOrEmpty(ent.Comp.UnShearableMarkupText))
@@ -450,35 +426,8 @@ public sealed class SharedShearableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     This function changes the animal's shearable layer based on the mob state.
-    ///     e.g. when sheep die, they flip up-side down, so their shearable layer flips too.
-    /// </summary>
-    /// <param name="ent">the entity containing a shearable component that will be checked.</param>
-    /// <param name="mobState">details on the mob's living state as passed by the OnMobStateChanged event.</param>
-    private void UpdateShearingLayer(Entity<ShearableComponent> ent, MobStateChangedEvent mobState)
-    {
-
-        //TODO check if a wooly layer has been defined.
-
-        // appearance is used to disable and enable the wool layer.
-        // if the target doen't have one for some reason then give up.
-        if (!TryComp<AppearanceComponent>(ent.Owner, out var appearance))
-            return;
-
-        // Remove wool layer
-        _appearance.SetData(
-            ent.Owner,
-            MobStateVisuals.State,
-            mobState.NewMobState,
-            appearance
-        );
-    }
-
-    /// <summary>
-    ///     Used for managing the shearing layer as the shearable solution levels change.
-    ///     e.g. in Sheep, it will remove the wooly layer when the remaining reagent in the wool solution drops to 0.
-    ///     the layer is re-added when the reagent is above 0.
-    ///     Check the sheep's Sprite and GenericVisualizer components for an example of how to add a shearable layer to your animal.
+    ///     Listens for changes in solution, checks if it's a wooly solution, and passes it to UpdateShearingLayer.
+    ///     Depending on the result, the wooly layer may change.
     /// </summary>
     /// <param name="ent">the entity containing a wooly component that will be checked.</param>
     /// <param name="args">Arguments passed through by the ExaminedEvent.</param>
@@ -490,14 +439,4 @@ public sealed class SharedShearableSystem : EntitySystem
 
         UpdateShearingLayer(ent, args.Solution);
     }
-
-    /// <summary>
-    ///     This is used for checking if the shearable animal is dead or critical.
-    ///     If it is, then the shearing layer is removed.
-    /// </summary>
-    private void OnMobStateChanged(Entity<ShearableComponent> ent, ref MobStateChangedEvent args)
-    {
-        UpdateShearingLayer(ent, args);
-    }
-
 }
