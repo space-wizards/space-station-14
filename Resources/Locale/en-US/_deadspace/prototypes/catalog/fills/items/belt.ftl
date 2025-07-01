@@ -1,3 +1,3 @@
 ent-ClothingBeltMedicalSecurityWebbingFilled = { ent-ClothingBeltMedicalSecurityWebbing }
-    .suffix = Заполненный
+    .suffix = Filled
     .desc = { ent-ClothingBeltMedicalSecurityWebbing.desc }

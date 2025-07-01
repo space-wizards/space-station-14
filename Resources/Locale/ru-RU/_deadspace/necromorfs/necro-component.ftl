@@ -168,4 +168,3 @@ research-technology-basic-necro-research = Некротехнологии
 
 ent-ActionUnitologObeliskActivate = Запустить схождение обелиска
     .desc = Запустить схождение рядом стоящего обелиска.
-

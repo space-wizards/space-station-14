@@ -1,0 +1,16 @@
+ent-ThrusterMedium = большой ракетный двигатель
+    .desc = Ну и ну, мне определенно не стоит совать туда свою голову. Тем не менее...
+ent-DebugThrusterMedium = { ent-ThrusterMedium }
+    .suffix = DEBUG
+    .desc = { ent-ThrusterMedium.desc }
+ent-ThrusterMediumUnanchored = { ent-ThrusterMedium }
+    .suffix = Незакреплённый
+    .desc = { ent-ThrusterMedium.desc }
+ent-ThrusterLarge = огромный ракетный двигатель
+    .desc = Ну и ну, мне определенно не стоит совать туда свою голову. Тем не менее...
+ent-DebugThrusterLarge = { ent-ThrusterLarge }
+    .suffix = DEBUG
+    .desc = { ent-ThrusterLarge.desc }
+ent-ThrusterLargeUnanchored = { ent-ThrusterLarge }
+    .suffix = Незакреплённый
+    .desc = { ent-ThrusterLarge.desc }

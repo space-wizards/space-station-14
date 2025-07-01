@@ -57,3 +57,4 @@ ent-UraniumReinforcedWindowDirectionalIndestructible = { ent-UraniumReinforcedWi
     .desc = { ent-UraniumReinforcedWindowDirectional.desc }
 ent-InvisibleWall = вечная невидимая стена
     .desc = Have we all become invisible?
+    .suffix = Включите BB в панели песочницы

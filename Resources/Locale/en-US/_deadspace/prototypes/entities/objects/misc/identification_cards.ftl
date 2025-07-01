@@ -1,3 +1,7 @@
+ent-MukhtarIDCard = mukhtar ID card
+    .desc = { ent-IDCardStandard.desc }
+ent-LargoIDCard = largo ID card
+    .desc = { ent-IDCardStandard.desc }
 ent-TaipanIDCardCargo = ID-карта
     .desc = { ent-IDCardStandard.desc }
 ent-TaipanIDCardCom = ID-карта

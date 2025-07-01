@@ -1,0 +1,14 @@
+ent-ClothingNeckSecurityOfficerMedal = медаль офицера службы безопасности
+    .desc = Медаль для того, кто готов отдать свою жизнь ради защиты экипажа.
+ent-ClothingNeckSecurityWardenMedal = медаль смотрителя службы безопасности
+    .desc = Медаль для того, кто милует невинных, и карает виновных.
+ent-ClothingNeckSecurityHeadOfSecurityMedal = медаль главы службы безопасности
+    .desc = Медаль для того, кто готов взять на себя ответственность за безопасность целой станции.
+ent-ClothingNeckSecurityBrigMedicMedal = медаль бригмедика
+    .desc = Медаль для того, кто рискует своей жизнью ради спасения своих товарищей.
+ent-ClothingNeckSecuritySeniorOfficerMedal = медаль инструктора службы безопасности
+    .desc = Медаль для того, кто готов взять ответственность за обучнение новобранцев.
+ent-ClothingNeckDetectiveMedal = медаль детектива
+    .desc = Медаль для того, кто раскрывает самые запутанные дела.
+ent-ClothingNeckSecurityPilotMedal = медаль пилота службы безопасности
+    .desc = Медаль для аса, что пилотирует стальных птиц.

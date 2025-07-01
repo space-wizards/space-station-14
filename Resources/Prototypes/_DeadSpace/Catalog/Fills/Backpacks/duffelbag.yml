@@ -1,8 +1,6 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledSMGTommyGun
-  name: вещмешок
-  description: Большой вещмешок для хранения дополнительных предметов.
   components: 
   - type: StorageFill
     contents:
@@ -13,8 +11,6 @@
 - type: entity 
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledSMGTommyGunAgent
-  name: вещмешок
-  description: Большой вещмешок для хранения дополнительных предметов.
   components: 
   - type: StorageFill
     contents:
@@ -25,8 +21,6 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledSMGTommyGunAmmoXL
-  name: вещмешок
-  description: Большой вещмешок для хранения дополнительных предметов.
   components: 
   - type: StorageFill
     contents:
