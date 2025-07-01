@@ -2168,9 +2168,9 @@
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
-  name: parrot
   parent: [ SimpleMobBase, FlyingMobBase ]
-  id: MobParrot
+  id: MobParrotBase
+  abstract: true
   description: Infiltrates your domain, spies on you, and somehow still a cool pet.
   components:
   - type: MovementSpeedModifier
@@ -2214,7 +2214,6 @@
       Unsexed: Parrot
   - type: ActiveListener
   - type: ActiveRadio
-  - type: ParrotAccent
   - type: ParrotListener
   - type: ParrotSpeaker
   - type: ParrotMemory
@@ -2243,6 +2242,13 @@
       path: /Audio/Animals/parrot_raught.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
+
+- type: entity
+  name: parrot
+  parent: MobParrotBase
+  id: MobParrot
+  components:
+  - type: ParrotAccent # regular parrots have a parrotaccent. Polly is special and does not
 
 - type: entity
   name: penguin

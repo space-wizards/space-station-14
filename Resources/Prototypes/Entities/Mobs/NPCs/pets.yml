@@ -861,7 +861,7 @@
 
 - type: entity
   name: Polly the parrot
-  parent: MobParrot
+  parent: MobParrotBase
   id: MobPollyParrot
   description: An expert in quantum cracker theory
   components:
