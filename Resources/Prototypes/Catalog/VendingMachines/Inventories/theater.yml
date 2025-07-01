@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: vendingMachineInventory
   id: AutoDrobeInventory
   startingInventory:
@@ -59,10 +60,12 @@
     ClothingHeadHatRichard: 1
     ToyFigurineBoxer: 1
     ToyFigurineMusician: 1
-    ClothingMaskClownDallas: 1
+    # start of modifications
+    ClothingMaskClownDallas: 1 # It's Payday, fellas!
     ClothingMaskClownChains: 1
     ClothingMaskClownHoxton: 1
     ClothingMaskClownWolf: 1
+    # end of modifications
   emaggedInventory:
     ClothingShoesBling: 1
     ClothingShoesBootsCowboyFancy: 1

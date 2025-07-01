@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: SecurityOfficer
   name: job-name-security
@@ -6,7 +7,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 18000 #5 hrs
+      time: 18000 # Ronstation - modification. 5 hrs
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos

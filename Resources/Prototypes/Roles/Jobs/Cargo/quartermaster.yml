@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: Quartermaster
   name: job-name-qm
@@ -6,13 +7,13 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobCargoTechnician
-      time: 18000 #5 hrs
+      time: 18000 # Ronstation - modification. 5 hrs
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
       time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 54000 # 15 hours
+      time: 54000 # Ronstation - modification. 15 hours
   weight: 10
   startingGear: QuartermasterGear
   icon: "JobIconQuarterMaster"

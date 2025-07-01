@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Belts that need/have visualizers
 
 - type: entity
@@ -281,7 +282,7 @@
         - Injector
         - Pill
         - HandLabeler
-        - Defibrillator
+        - Defibrillator # Ronstation - modification
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -302,10 +303,12 @@
         whitelist:
           tags:
           - Spray
+      # start of modifications
       defib:
         whitelist:
           components:
           - Defibrillator
+      # end of modifications
       wrench:
         whitelist:
           tags:

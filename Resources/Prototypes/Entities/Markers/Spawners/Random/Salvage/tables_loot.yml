@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Scrap: Worthless items that can be recycled into materials
 
 - type: entityTable
@@ -265,11 +266,13 @@
       children:
       - id: JetpackBlueFilled
       - id: JetpackBlackFilled
+    # start of modifications
     # - !type:GroupSelector
     #   children:
     #   - id: PKAUpgradeDamage
     #   - id: PKAUpgradeRange
     #   - id: PKAUpgradeFireRate
+    # end of modifications
 
 
 - type: entityTable

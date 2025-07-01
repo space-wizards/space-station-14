@@ -653,6 +653,8 @@
   products:
     Haloperidol: 5
 
+# start of modifications
+# Ronstation - new cryonics is Good, actually
 - type: reaction
   id: Traumoxadone
   impact: Medium
@@ -682,3 +684,4 @@
     Stelloxadone: 5
     Water: 3
     Fiber: 2
+# end of modifications

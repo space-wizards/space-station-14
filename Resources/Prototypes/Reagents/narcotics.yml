@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: reagent
   id: Desoxyephedrine
   name: reagent-name-desoxyephedrine
@@ -241,6 +242,7 @@
   flavor: bitter
   color: "#C0C0C0"
   physicalDesc: reagent-physical-desc-strong-smelling
+  # start of modifications
   metabolisms:
     Narcotic:
       effects:
@@ -252,6 +254,7 @@
 #        conditions:
 #        - !type:ReagentThreshold
 #          min: 3
+# end of modifications
   plantMetabolism:
   - !type:PlantAdjustHealth
     amount: -5
