@@ -447,7 +447,6 @@
       params:
         variation: 0.05
 
-
 - type: entity
   parent: SimpleSpaceMobBase
   id: MobSnail
