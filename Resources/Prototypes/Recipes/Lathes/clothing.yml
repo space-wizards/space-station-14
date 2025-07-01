@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 # Base prototypes
 
 - type: latheRecipe
@@ -25,7 +27,7 @@
   id: BaseCoatRecipe
   categories:
   - Coats
-  completetime: 3.2 # don't ask why its faster than a jumpsuit??
+  completetime: 6 # Ronstation
   materials:
     Cloth: 500
     Durathread: 200
@@ -612,6 +614,12 @@
   parent: BaseCommandCoatRecipe
   id: ClothingOuterWinterCap
   result: ClothingOuterWinterCap
+# start of modifications
+  materials:
+    Cloth: 500
+    Durathread: 300
+    Steel: 300
+# end of modifications
 
 - type: latheRecipe
   parent: BaseCommandCoatRecipe
@@ -638,10 +646,32 @@
   id: ClothingOuterWinterHoSUnarmored
   result: ClothingOuterWinterHoSUnarmored
 
+# start of modifications
+- type: latheRecipe
+  parent: BaseCommandCoatRecipe
+  id: ClothingOuterWinterHoS
+  result: ClothingOuterWinterHoS
+  materials:
+    Cloth: 500
+    Durathread: 200
+    Steel: 200
+# end of modifications
+
 - type: latheRecipe
   parent: BaseCommandCoatRecipe
   id: ClothingOuterWinterWardenUnarmored
   result: ClothingOuterWinterWardenUnarmored
+
+# start of modifications
+- type: latheRecipe
+  parent: BaseCommandCoatRecipe
+  id: ClothingOuterWinterWarden
+  result: ClothingOuterWinterWarden
+  materials:
+    Cloth: 500
+    Durathread: 200
+    Steel: 200
+# end of modifications
 
 - type: latheRecipe
   parent: BaseCommandCoatRecipe
@@ -753,6 +783,10 @@
   parent: BaseCoatRecipe
   id: ClothingOuterWinterSec
   result: ClothingOuterWinterSec
+  materials:
+    Cloth: 300
+    Durathread: 200
+    Steel: 100
 
 - type: latheRecipe
   parent: BaseCoatRecipe

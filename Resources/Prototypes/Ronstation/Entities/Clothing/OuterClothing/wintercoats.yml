@@ -1,7 +1,7 @@
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCentcommCommandContraband]
+  parent: [AllowSuitStorageClothing, ClothingOuterWinterCoatToggleable, BaseCentcommCommandContraband]
   id: ClothingOuterWinterBlueshield
-  name: blueshield winter coat
+  name: blueshield armored winter coat
   components:
   - type: Sprite
     sprite: Ronstation/Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -18,5 +18,12 @@
     clothingVisuals:
       outerClothing:
       - state: BLUESHIELD-equipped-OUTERCLOTHING
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.75
+        Slash: 0.75
+        Piercing: 0.8
+        Heat: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterBlueshield

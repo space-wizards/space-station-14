@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entityTable
   id: FillSalvageSpecialistHardsuitSpatio
   table: !type:AllSelector
@@ -5,10 +7,11 @@
     - id: NitrogenTankFilled
     - id: OxygenTankFilled
     - id: ClothingShoesBootsMag
-    - id: ClothingShoesBootsSalvage
+    - id: ClothingShoesBootsSalvage # Ronstation
     - id: ClothingOuterHardsuitSpatio
     - id: ClothingMaskGasExplorer
 
+# start of modifications
 - type: entityTable
   id: FillMiningHardsuitGear
   table: !type:AllSelector
@@ -33,6 +36,7 @@
     - id: ClothingMaskGasExplorer
     - id: Pickaxe
     - id: ClothingNeckBling
+# end of modifications
 
 - type: entityTable
   id: LockerFillSalvageSpecialist

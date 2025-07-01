@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 ## Static
 
 - type: latheRecipePack
@@ -146,7 +148,9 @@
   - ClothingOuterWinterCMO
   - ClothingOuterWinterHoP
   - ClothingOuterWinterHoSUnarmored
+  - ClothingOuterWinterHoS # Ronstation
   - ClothingOuterWinterWardenUnarmored
+  - ClothingOuterWinterWarden # Ronstation
   - ClothingOuterWinterQM
   - ClothingOuterWinterRD
   - ClothingOuterWinterMusician

@@ -1,0 +1,28 @@
+﻿- type: constructionGraph
+  id: HudMedDiag
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: meddiagHud
+          steps:
+            - tag: HudMedical
+              name: construction-graph-tag-medical-hud
+              icon:
+                sprite: Clothing/Eyes/Hud/med.rsi
+                state: icon
+              doAfter: 5
+            - tag: HudDiagnostic
+              name: construction-graph-tag-diagnostic-hud
+              icon:
+                sprite: Clothing/Eyes/Hud/diag.rsi
+                state: icon
+              doAfter: 5
+            - material: Cable
+              amount: 5
+              doAfter: 5
+            - material: Manipulator
+              amount: 2
+              doAfter: 5
+    - node: meddiagHud
+      entity: ClothingEyesHudMedDiag
