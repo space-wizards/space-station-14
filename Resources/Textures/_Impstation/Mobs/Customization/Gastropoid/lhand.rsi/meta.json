@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprited by emmetian (github) for Impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "gradientlh",
+            "directions": 4
+        },
+        {
+            "name": "shawllh",
+            "directions": 4
+        }
+    ]
+}

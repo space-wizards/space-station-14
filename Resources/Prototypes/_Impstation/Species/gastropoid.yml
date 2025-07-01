@@ -50,14 +50,14 @@
       points: 1
       required: false
     Arms:
-      points: 2
+      points: 4
       required: false
     Tail:
       points: 1
       required: true
       defaultMarkings: [ GastropoidShellSmall ]
     Overlay:
-      points: 1
+      points: 4
       required: false
 
 - type: humanoidBaseSprite

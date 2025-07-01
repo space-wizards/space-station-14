@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "lobster, predator, prey, spots, stripes and tentacle by Widgetbeck (github). cheekglow and cheeks by crocodilecarousel (github).",
+    "copyright": "lobster, predator, prey, spots, stripes and tentacle by Widgetbeck (github). cheekglow and cheeks by crocodilecarousel (github). antennacolor/glow, hood, loops, splash, and patch sprited by emmetian (github).",
     "size": {
         "x": 32,
         "y": 32
@@ -67,6 +67,30 @@
         },
         {
             "name": "tentacle",
+            "directions": 4
+        },
+        {
+            "name": "splash",
+            "directions": 4
+        },
+        {
+            "name": "antennaglow",
+            "directions": 4
+        },
+        {
+            "name": "loops",
+            "directions": 4
+        },
+        {
+            "name": "hood",
+            "directions": 4
+        },
+        {
+            "name": "antennacolor",
+            "directions": 4
+        },
+        {
+            "name": "patch",
             "directions": 4
         }
     ]

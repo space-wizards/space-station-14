@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "sprited by Widgetbeck (github) for Impstation\n",
+    "copyright": "spots and stripes sprited by Widgetbeck (github), gradient and shawl sprited by emmetian (github) for Impstation",
     "size": {
         "x": 32,
         "y": 32
@@ -13,6 +13,14 @@
         },
         {
             "name": "stripes",
+            "directions": 4
+        },
+        {
+            "name": "gradientra",
+            "directions": 4
+        },
+        {
+            "name": "shawlra",
             "directions": 4
         }
     ]

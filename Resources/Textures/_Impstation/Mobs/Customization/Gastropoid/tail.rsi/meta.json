@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "big, cone, and small by Widgetbeck (github). weewoo and prosthetic et al by crocodilecarousel (github)",
+    "copyright": "big, cone, and small by Widgetbeck (github). weewoo and prosthetic et al by crocodilecarousel (github). cracked, duotone, spiral, glow, gradient, overgrown, seam, spots, swirl, cone stripes, specks, glass, multicolor, flower, mantle, and ribbon sprited by emmetian (github).",
     "size": {
         "x": 32,
         "y": 32
@@ -422,6 +422,174 @@
                     0.1
                 ]
             ]
+        },
+        {
+            "name": "conebigstripes",
+            "directions": 4
+        },
+        {
+            "name": "conecracked",
+            "directions": 4
+        },
+        {
+            "name": "coneduotone",
+            "directions": 4
+        },
+        {
+            "name": "coneglow",
+            "directions": 4
+        },
+        {
+            "name": "conegradient",
+            "directions": 4
+        },
+        {
+            "name": "coneovergrown",
+            "directions": 4
+        },
+        {
+            "name": "conespecks",
+            "directions": 4
+        },
+        {
+            "name": "conestripes",
+            "directions": 4
+        },
+        {
+            "name": "smallduotone",
+            "directions": 4
+        },
+        {
+            "name": "smallglow",
+            "directions": 4
+        },
+        {
+            "name": "smallgradient",
+            "directions": 4
+        },
+        {
+            "name": "smallovergrown",
+            "directions": 4
+        },
+        {
+            "name": "smallseam",
+            "directions": 4
+        },
+        {
+            "name": "smallspiral",
+            "directions": 4
+        },
+        {
+            "name": "smallspots",
+            "directions": 4
+        },
+        {
+            "name": "smallswirl",
+            "directions": 4
+        },
+        {
+            "name": "bigcracked",
+            "directions": 4
+        },
+        {
+            "name": "bigduotone",
+            "directions": 4
+        },
+        {
+            "name": "bigglow",
+            "directions": 4
+        },
+        {
+            "name": "biggradient",
+            "directions": 4
+        },
+        {
+            "name": "bigovergrown",
+            "directions": 4
+        },
+        {
+            "name": "bigseam",
+            "directions": 4
+        },
+        {
+            "name": "bigspiral",
+            "directions": 4
+        },
+        {
+            "name": "bigspots",
+            "directions": 4
+        },
+        {
+            "name": "bigswirl",
+            "directions": 4
+        },
+        {
+            "name": "prostheticsimpleglass",
+            "directions": 4
+        },
+        {
+            "name": "bigmantle1",
+            "directions": 4
+        },
+        {
+            "name": "bigmantle2",
+            "directions": 4
+        },
+        {
+            "name": "bigribbon1",
+            "directions": 4
+        },
+        {
+            "name": "bigribbon2",
+            "directions": 4
+        },
+        {
+            "name": "conemantle1",
+            "directions": 4
+        },
+        {
+            "name": "conemantle2",
+            "directions": 4
+        },
+        {
+            "name": "coneribbon1",
+            "directions": 4
+        },
+        {
+            "name": "coneribbon2",
+            "directions": 4
+        },
+        {
+            "name": "smallmantle1",
+            "directions": 4
+        },
+        {
+            "name": "smallmantle2",
+            "directions": 4
+        },
+        {
+            "name": "smallribbon1",
+            "directions": 4
+        },
+        {
+            "name": "smallribbon2",
+            "directions": 4
+        },
+        {
+            "name": "prostheticmulticolor1",
+            "directions": 4
+        },
+        {
+            "name": "prostheticmulticolor2",
+            "directions": 4
+        },
+        {
+            "name": "smallflowers1",
+            "directions": 4
+        },
+        {
+            "name": "smallflowers2",
+            "directions": 4
         }
     ]
 }
