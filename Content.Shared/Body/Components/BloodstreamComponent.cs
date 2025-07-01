@@ -1,6 +1,5 @@
-using Content.Server.Body.Systems;
-using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Alert;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
@@ -10,9 +9,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Body.Components
+namespace Content.Shared.Body.Components
 {
-    [RegisterComponent, Access(typeof(BloodstreamSystem), typeof(ReactionMixerSystem))]
+    [RegisterComponent, Access(typeof(SharedBloodstreamSystem))]
     public sealed partial class BloodstreamComponent : Component
     {
         public static string DefaultChemicalsSolutionName = "chemicals";
