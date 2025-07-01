@@ -7,9 +7,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-FDB
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-MP

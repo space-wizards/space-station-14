@@ -166,3 +166,7 @@ crafting-menu-name-SCR = screwdriver
 crafting-menu-name-CRO = crowbar
 
 crafting-menu-name-EXOXY = extended-capacity emergency oxygen tank
+
+crafting-menu-name-CGREN = green crayon
+
+crafting-menu-name-CYELO = yellow crayon
