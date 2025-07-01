@@ -328,6 +328,8 @@ namespace Content.Server.Database
             profile.StarLightProfile ??= new StarLightModel.StarLightProfile(); // Starlight
             profile.StarLightProfile.CustomSpecieName = humanoid.CustomSpecieName; // Starlight
             profile.Age = humanoid.Age;
+            profile.Width = humanoid.Width; //starlight
+            profile.Height = humanoid.Height; //starlight
             profile.Sex = humanoid.Sex.ToString();
             profile.Gender = humanoid.Gender.ToString();
             profile.HairName = appearance.HairStyleId;

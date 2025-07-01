@@ -515,6 +515,9 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         humanoid.Age = profile.Age;
+        
+        humanoid.Width = profile.Width; //starlight
+        humanoid.Height = profile.Height; //starlight
 
         humanoid.CustomSpecieName = profile.CustomSpecieName; // Starlight
 
