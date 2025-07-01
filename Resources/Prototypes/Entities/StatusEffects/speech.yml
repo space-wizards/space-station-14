@@ -18,7 +18,7 @@
   components:
   - type: StutterStatusEffect
 
-# Causes you to slur your words when talking.
+# Causes you to schlur your words schwhen talking.
 - type: entity
   parent: SpeechStatusEffectBase
   id: StatusEffectSlur
