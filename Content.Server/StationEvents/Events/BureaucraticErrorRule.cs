@@ -49,9 +49,7 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
                 var chosenJob = RobustRandom.PickAndTake(jobList);
                 if (_stationJobs.IsJobUnlimited(chosenStation.Value, chosenJob))
                     continue;
-                // start of modifications
-                _stationJobs.TryAdjustJobSlot(chosenStation.Value, chosenJob, RobustRandom.Next(1, 6), clamp: true);
-                // end of modifications
+                _stationJobs.TryAdjustJobSlot(chosenStation.Value, chosenJob, RobustRandom.Next(1, 6), clamp: true); // Ronstation - modification
             }
         }
     }
