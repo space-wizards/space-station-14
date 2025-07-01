@@ -80,7 +80,7 @@ namespace Content.Shared.Damage
 
         public override string ToString()
         {
-            return "DamageSpecifier("+ string.Join(";", DamageDict.Select(x => x.Key + ":" + x.Value))+ ")";
+            return "DamageSpecifier(" + string.Join("; ", DamageDict.Select(x => x.Key + ":" + x.Value)) + ")";
         }
 
         #region constructors

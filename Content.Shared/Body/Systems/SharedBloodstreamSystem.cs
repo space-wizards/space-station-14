@@ -1,6 +1,5 @@
-using Content.Shared.Body.Components;
-using Content.Shared.FixedPoint;
 using Content.Shared.Alert;
+using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -8,6 +7,8 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Drunk;
+using Content.Shared.EntityEffects.Effects;
+using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Forensics.Components;
 using Content.Shared.HealthExaminable;
@@ -16,11 +17,10 @@ using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Content.Shared.EntityEffects.Effects;
-using Robust.Shared.Containers;
 
 namespace Content.Shared.Body.Systems;
 
@@ -29,7 +29,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
@@ -38,8 +37,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedDrunkSystem _drunkSystem = default!;
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
-
-
 
     public override void Initialize()
     {
@@ -207,9 +204,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         var damage = DamageSpecifier.GetPositive(args.DamageDelta);
         var bloodloss = DamageSpecifier.ApplyModifierSet(damage, modifiers);
 
-        Log.Debug($"damage {Name(ent.Owner)}");
-        Log.Debug($"{bloodloss} {bloodloss.GetTotal()}");
-
         if (bloodloss.Empty)
             return;
 
@@ -325,7 +319,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             return 0.0f;
         }
 
-        //Log.Debug($"fraction {bloodSolution.FillFraction}");
         return bloodSolution.FillFraction;
     }
 
@@ -429,7 +422,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         ent.Comp.BleedAmount += amount;
         ent.Comp.BleedAmount = Math.Clamp(ent.Comp.BleedAmount, 0, ent.Comp.MaxBleedAmount);
 
-        Log.Debug($"bleedamount {ent.Comp.BleedAmount} {amount}");
         DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BleedAmount));
 
         if (ent.Comp.BleedAmount == 0)
