@@ -36,6 +36,10 @@
     <GuideEntityEmbed Entity="ClothingEyesWeldingGoggles"/>
   </Box>
 
+  [bold][color=red]Revolutionaries[/color] can't convert people themselves,[/bold] but they're more than capable of doing dirty work, carrying out orders, or distribute supplies if [bold]they were implanted with [color=#ed7300]Head Revolutionary's SKB uplink.[/color][/bold]
+
+  ## MindShields™
+
   Another obstacle in your way are those pesky brainwashing [color=cyan]MindShield™ implanters[/color]. 
 
   <Box>
@@ -68,7 +72,11 @@
   The subdermal uplink allows purchase of various [bold]global limited stocks[/bold] of weapons and tools for the revolution via [bold][color=#5c5c5c]Telebonds[/color][/bold] and [bold][color=#e3a736]Total Conversion.[/color][/bold]
 
   - [bold][color=#5c5c5c]Telebonds[/color][/bold], much like [color=red]Telecrystals[/color] are a individual private currency obtainable from [bold]conversion[/bold], that are each specific to each [color=#ed7300]Head Revolutionary[/color].
-  - [bold][color=#e3a736]Total Conversion[/color][/bold], apart from showing how many crew members have been converted, is a [bold]global unspendable currency shared among all [color=#ed7300]Head Revolutionaries[/color][/bold]. Which are mainly used in the [bold]GLOBAL[/bold] section of the uplink, allowing you to place things like the [color=yellow]supply rift[/color].
+  - [bold][color=#e3a736]Total Conversion[/color][/bold], apart from showing how many crew members have been converted, is a [bold]score shared among all [color=#ed7300]Head Revolutionaries[/color][/bold]. Which are mainly used in the [bold]GLOBAL[/bold] section of the uplink, allowing you to place things like the [color=yellow]supply rift[/color].
+
+  When a [bold][color=#ed7300]Head Revolutionary[/color][/bold] converts someone, they gain [bold][color=#5c5c5c]1 Telebond[/color][/bold] privately, and [bold][color=#e3a736]1 Total Conversion[/color][/bold] globally.
+  
+  Remember, [bold][color=#e3a736]Total Conversion[/color][/bold] is a [bold]global progress score, not a currency[/bold], allowing you to gain items for free as soon as you reach certain conversions.
 
   The uplink stocks are shared among all who use the uplink, and additionally it shows who has last purchased the item.
 
@@ -95,11 +103,6 @@
   If a [color=yellow]rift[/color] is destroyed, you won't be able to place another one. And you'll only be able to place another if the [bold]current one is charged.[/bold]
 
   It is recommended to discuss early on in the round where you'll place the [color=yellow]rift[/color] with your [color=red]revolutionaries[/color] so that they can [bold]fortify[/bold] the area to prevent [color=#cb0000]Security[/color] from [bold]destroying[/bold] it.
-  
-  ## Antagonist Roles
-  A [color=red]Revolutionary[/color] is a crew member that has been converted by a [bold][color=#ed7300]Head Revolutionary[/color][/bold].
-
-  [bold][color=red]Revolutionaries[/color] can't convert people themselves,[/bold] but they're more than capable of doing dirty work, carrying out orders, or distribute supplies if [bold]they were implanted with [color=#ed7300]Head Revolutionary's SKB uplink.[/color][/bold]
 
   ## Tips
 
@@ -111,7 +114,7 @@
     <GuideEntityEmbed Entity="ToyFigurineParamedic" Caption="Paramedic being validhunted"/>
   </Box>
 
-  - It's very beneficial in the long-run to start as one or convert [color=#f5be51]Cargo/Mail Technicians[/color] and [color=#a319ff]Scientists[/color], due to their sufficient ability to [bold]stop incoming orders of [color=cyan]MindShields™[/color][/bold] or to [bold]provide you with flashes made from an [color=blue]Exosuit Fabricator[/color][/bold], respectively.
+  - It's very beneficial to start as one or convert [color=#f5be51]Cargo/Mail Technicians[/color] and [color=#a319ff]Scientists[/color], due to their sufficient ability to [bold]stop incoming orders of [color=cyan]MindShields™[/color][/bold] or to [bold]provide you with flashes made from an [color=blue]Exosuit Fabricator[/color][/bold], respectively.
 
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineCargoTech" Caption="'Where are the thrusters?'"/>
@@ -125,6 +128,13 @@
     <GuideEntityEmbed Entity="ToyFigurineMusician" Caption="'Ow. Okay'"/>
     <GuideEntityEmbed Entity="ToyFigurineBartender" Caption="'Give me a reason why I should join'"/>
     <GuideEntityEmbed Entity="ToyFigurineSalvage" Caption="'...'"/>
+  </Box>
+
+  - If you're in for a long run, convert [color=#2189ff]Medical[/color] personnel. Long revolutionary rounds will inevitably mean lots of losses. Competent doctors will prioritize your health and of your allies over those from [color=#cb0000]Security[/color] or [color=#1b67a5]Command[/color], if by any chance they're getting treated in [color=#2189ff]Medbay[/color] rather than in [color=#cb0000]Brigmedic's medical bay[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineMedicalDoctor" Caption="'Accidental OD'"/>
+    <GuideEntityEmbed Entity="ToyFigurineChemist" Caption="'Surprise CLF3 foam!'"/>
   </Box>
 
   - [bold][color=#5c5c5c]Telebonds[/color][/bold] can be withdrawn and shared among all who use the [color=#ed7300]uplink[/color]. As such, if you want to purchase [bold]one of the more expensive items[/bold], it's best to meet with your [color=#ed7300]Head Revolutionaries[/color] later on in the round if no prior [bold][color=#5c5c5c]Telebonds[/color][/bold] purchases were made.
