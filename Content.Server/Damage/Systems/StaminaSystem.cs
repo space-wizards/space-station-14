@@ -1,6 +1,4 @@
-﻿using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
-using Robust.Shared.Player;
+﻿using Content.Shared.Damage.Systems;
 
 namespace Content.Server.Damage.Systems;
 
