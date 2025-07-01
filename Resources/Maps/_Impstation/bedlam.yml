@@ -4,8 +4,8 @@ meta:
   engineVersion: 261.2.0
   forkId: ""
   forkVersion: ""
-  time: 06/27/2025 16:50:18
-  entityCount: 7736
+  time: 07/01/2025 06:40:52
+  entityCount: 7739
 maps:
 - 1
 grids:
@@ -2219,31 +2219,6 @@ entities:
       - 1536
       - 4906
       - 4993
-  - uid: 1298
-    components:
-    - type: MetaData
-      name: Science
-    - type: Transform
-      pos: 17.5,-27.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 1535
-      - 1534
-      - 7349
-      - 4987
-      - 4988
-      - 4989
-      - 4990
-      - 4991
-      - 1536
-      - 1528
-      - 1529
-      - 4986
-      - 4908
-      - 5279
-      - 4992
-      - 7647
   - uid: 1299
     components:
     - type: MetaData
@@ -2777,6 +2752,31 @@ entities:
       - 5515
       - 5901
       - 7365
+  - uid: 7738
+    components:
+    - type: MetaData
+      name: Science
+    - type: Transform
+      pos: 18.5,-27.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 1535
+      - 1534
+      - 7349
+      - 4987
+      - 4988
+      - 4989
+      - 4990
+      - 4991
+      - 1536
+      - 1528
+      - 1529
+      - 4986
+      - 4908
+      - 5279
+      - 4992
+      - 7647
 - proto: AirAlarmFreezer
   entities:
   - uid: 386
@@ -2786,8 +2786,8 @@ entities:
       parent: 2
     - type: DeviceList
       devices:
-      - 3001
-      - 1224
+      - 6404
+      - 3118
 - proto: AirlockArmoryGlassLocked
   entities:
   - uid: 854
@@ -3786,7 +3786,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 1298
+      - 7738
 - proto: AltarConvertWhite
   entities:
   - uid: 3128
@@ -4451,23 +4451,6 @@ entities:
     - type: Transform
       pos: 0.5,-14.5
       parent: 2
-- proto: AtmosFixBlockerMarker
-  entities:
-  - uid: 7631
-    components:
-    - type: Transform
-      pos: 17.5,-38.5
-      parent: 2
-  - uid: 7632
-    components:
-    - type: Transform
-      pos: 18.5,-38.5
-      parent: 2
-  - uid: 7633
-    components:
-    - type: Transform
-      pos: 19.5,-38.5
-      parent: 2
 - proto: AtmosFixNitrogenMarker
   entities:
   - uid: 7628
@@ -4501,6 +4484,26 @@ entities:
     components:
     - type: Transform
       pos: 19.5,-36.5
+      parent: 2
+- proto: AtmosFixPlasmaMarker
+  entities:
+  - uid: 1224
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 18.5,-38.5
+      parent: 2
+  - uid: 1298
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 19.5,-38.5
+      parent: 2
+  - uid: 3001
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 17.5,-38.5
       parent: 2
 - proto: Autolathe
   entities:
@@ -16517,9 +16520,10 @@ entities:
       parent: 2
 - proto: Crematorium
   entities:
-  - uid: 3118
+  - uid: 3056
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
       pos: 14.5,-3.5
       parent: 2
 - proto: CrewMonitoringServer
@@ -21026,9 +21030,9 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 7347
-      - 1298
       - 1297
       - 1299
+      - 7738
   - uid: 1538
     components:
     - type: Transform
@@ -21823,8 +21827,8 @@ entities:
       deviceLists:
       - 7194
       - 7347
-      - 1298
       - 7357
+      - 7738
   - uid: 1529
     components:
     - type: Transform
@@ -21834,8 +21838,8 @@ entities:
       deviceLists:
       - 7194
       - 7347
-      - 1298
       - 7357
+      - 7738
   - uid: 1530
     components:
     - type: Transform
@@ -21889,8 +21893,8 @@ entities:
       deviceLists:
       - 7348
       - 7353
-      - 1298
       - 1299
+      - 7738
   - uid: 1535
     components:
     - type: Transform
@@ -21899,7 +21903,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 7348
-      - 1298
+      - 7738
   - uid: 1537
     components:
     - type: Transform
@@ -22585,7 +22589,7 @@ entities:
       deviceLists:
       - 7348
       - 7347
-      - 1298
+      - 7738
   - uid: 4988
     components:
     - type: Transform
@@ -22595,7 +22599,7 @@ entities:
       deviceLists:
       - 7348
       - 7347
-      - 1298
+      - 7738
   - uid: 4989
     components:
     - type: Transform
@@ -22605,7 +22609,7 @@ entities:
       deviceLists:
       - 7348
       - 7347
-      - 1298
+      - 7738
   - uid: 4990
     components:
     - type: Transform
@@ -22615,7 +22619,7 @@ entities:
       deviceLists:
       - 7348
       - 7347
-      - 1298
+      - 7738
   - uid: 4991
     components:
     - type: Transform
@@ -22625,7 +22629,7 @@ entities:
       deviceLists:
       - 7348
       - 7347
-      - 1298
+      - 7738
   - uid: 5956
     components:
     - type: Transform
@@ -22733,7 +22737,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 7348
-      - 1298
+      - 7738
   - uid: 7363
     components:
     - type: Transform
@@ -31578,6 +31582,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 33.5,-31.5
       parent: 2
+- proto: GasThermoMachineFreezer
+  entities:
+  - uid: 7737
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 13.5,-42.5
+      parent: 2
 - proto: GasThermoMachineFreezerEnabled
   entities:
   - uid: 3114
@@ -31633,17 +31645,6 @@ entities:
       - 1306
     - type: AtmosPipeColor
       color: '#0335FCFF'
-  - uid: 3001
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -1.5,-13.5
-      parent: 2
-    - type: AtmosPipeColor
-      color: '#0335FCFF'
-    - type: DeviceNetwork
-      deviceLists:
-      - 386
   - uid: 4981
     components:
     - type: Transform
@@ -31695,7 +31696,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 1298
+      - 7738
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 4992
@@ -31706,7 +31707,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 1298
+      - 7738
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 4993
@@ -32300,19 +32301,19 @@ entities:
       - 7185
     - type: AtmosPipeColor
       color: '#0335FCFF'
-- proto: GasVentScrubber
+- proto: GasVentPumpFreezer
   entities:
-  - uid: 1224
+  - uid: 6404
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -2.5,-14.5
+      rot: 3.141592653589793 rad
+      pos: -1.5,-13.5
       parent: 2
-    - type: AtmosPipeColor
-      color: '#FF1212FF'
     - type: DeviceNetwork
       deviceLists:
       - 386
+- proto: GasVentScrubber
+  entities:
   - uid: 1554
     components:
     - type: Transform
@@ -32342,7 +32343,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 1298
+      - 7738
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 4909
@@ -32880,7 +32881,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 1298
+      - 7738
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 5439
@@ -33008,6 +33009,17 @@ entities:
       - 1285
     - type: AtmosPipeColor
       color: '#FF1212FF'
+- proto: GasVentScrubberFreezer
+  entities:
+  - uid: 3118
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -2.5,-14.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 386
 - proto: Gauze
   entities:
   - uid: 3242
@@ -37007,6 +37019,16 @@ entities:
       rot: 3.141592653589793 rad
       pos: 13.5,-15.5
       parent: 2
+- proto: Pickaxe
+  entities:
+  - uid: 72
+    components:
+    - type: MetaData
+      desc: they mined it with this
+      name: plasma miner
+    - type: Transform
+      pos: 17.843458,-38.53761
+      parent: 2
 - proto: PlasmaCanister
   entities:
   - uid: 2393
@@ -37018,6 +37040,11 @@ entities:
     components:
     - type: Transform
       pos: 1.5,-38.5
+      parent: 2
+  - uid: 7632
+    components:
+    - type: Transform
+      pos: 9.5,-42.5
       parent: 2
 - proto: PlasticFlapsAirtightClear
   entities:
@@ -41165,11 +41192,10 @@ entities:
       parent: 2
 - proto: SignRND
   entities:
-  - uid: 72
+  - uid: 7739
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 18.5,-27.5
+      pos: 17.5,-27.5
       parent: 2
 - proto: SignRobo
   entities:
@@ -41820,10 +41846,10 @@ entities:
       parent: 2
 - proto: SpawnMobSlothPaperwork
   entities:
-  - uid: 3056
+  - uid: 7633
     components:
     - type: Transform
-      pos: -7.5,-9.5
+      pos: -6.5,-7.5
       parent: 2
 - proto: SpawnMobSmile
   entities:
@@ -42010,6 +42036,11 @@ entities:
     components:
     - type: Transform
       pos: -6.5,-6.5
+      parent: 2
+  - uid: 7631
+    components:
+    - type: Transform
+      pos: -7.5,-9.5
       parent: 2
 - proto: SpawnPointLogisticsAssistant
   entities:
@@ -42585,11 +42616,6 @@ entities:
       parent: 2
 - proto: StorageCanister
   entities:
-  - uid: 6404
-    components:
-    - type: Transform
-      pos: 9.5,-42.5
-      parent: 2
   - uid: 6405
     components:
     - type: Transform
