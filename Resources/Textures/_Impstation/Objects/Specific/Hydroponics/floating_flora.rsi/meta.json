@@ -1,0 +1,53 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprites by mousesweater for impstation",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "dead"
+        },
+        {
+            "name": "harvest"
+        },
+        {
+            "name": "seed"
+        },
+        {
+            "name": "stage-1"
+        },
+        {
+            "name": "stage-2"
+        },
+        {
+            "name": "stage-3"
+        },
+        {
+            "name": "floating_flora_y"
+        },
+        {
+            "name": "floating_flora_p"
+        },
+        {
+            "name": "floating_flora_o"
+        },
+        {
+            "name": "floating_flora_b"
+        },
+        {
+            "name": "floating_flora_folded_y"
+        },
+        {
+            "name": "floating_flora_folded_p"
+        },
+        {
+            "name": "floating_flora_folded_o"
+        },
+        {
+            "name": "floating_flora_folded_b"
+        }
+    ]
+}

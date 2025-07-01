@@ -337,4 +337,3 @@
       - !type:AdjustReagent #imp
         reagent: Cellulose
         amount: 0.5
-          

@@ -382,3 +382,99 @@
   - type: Tag
     tags:
     - Flower
+
+- type: entity
+  name: floating flora
+  parent: [FoodProduceBase, BaseDeployFoldable]
+  id: FoodFloatingFlora
+  description: Some say they can be seen flying in migration patterns in the wild..
+  components:
+  - type: FlavorProfile
+    flavors:
+      - medicine
+  - type: Tag
+    tags:
+    - Flower
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+  - type: Produce
+    seedId: floatingflora
+#  - type: Extractable
+#    juiceSolution:
+#      reagents:
+#      - ReagentId: Uppisium (will be adding at a later date, post apparent status effects change)
+#        Quantity: 10
+#foldable
+  - type: Transform
+    noRot: true
+  - type: Item
+    size: Normal
+    heldPrefix: floating_flora_y
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/floating_flora.rsi
+    noRot: true
+    layers:
+    - state: floating_flora_y
+      map: ["unfoldedLayer"]
+    - state: floating_flora_folded_y
+      map: ["foldedLayer"]
+      visible: false
+    - type: InteractionOutline
+  - type: Pullable
+#trying to float
+  - type: MovementIgnoreGravity # nyoom
+    gravityState: true
+  - type: Physics
+    bodyStatus: InAir
+  - type: FloatingVisuals
+
+# flora color variants
+- type: entity
+  name: floating flora
+  parent: [FoodFloatingFlora]
+  id: FoodFloatingFloraPink
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/floating_flora.rsi
+    noRot: true
+    layers:
+    - state: floating_flora_p
+      map: ["unfoldedLayer"]
+    - state: floating_flora_folded_p
+      map: ["foldedLayer"]
+      visible: false
+
+- type: entity
+  name: floating flora
+  parent: [FoodFloatingFlora]
+  id: FoodFloatingFloraOrange
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/floating_flora.rsi
+    noRot: true
+    layers:
+    - state: floating_flora_o
+      map: ["unfoldedLayer"]
+    - state: floating_flora_folded_o
+      map: ["foldedLayer"]
+      visible: false
+
+- type: entity
+  name: floating flora
+  parent: [FoodFloatingFlora]
+  id: FoodFloatingFloraBlue
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Hydroponics/floating_flora.rsi
+    noRot: true
+    layers:
+    - state: floating_flora_b
+      map: ["unfoldedLayer"]
+    - state: floating_flora_folded_b
+      map: ["foldedLayer"]
+      visible: false

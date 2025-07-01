@@ -244,3 +244,33 @@
       Min: 1
       Max: 5
       PotencyDivisor: 25
+
+- type: seed
+  id: floatingflora
+  name: seeds-floatingflora-name
+  noun: seeds-noun-seeds
+  displayName: seeds-floatingflora-display-name
+  plantRsi: _Impstation/Objects/Specific/Hydroponics/floating_flora.rsi
+  packetPrototype: FloatingFloraSeeds
+  productPrototypes:
+  - FoodFloatingFlora
+  - FoodFloatingFloraPink
+  - FoodFloatingFloraOrange
+  - FoodFloatingFloraBlue
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 6
+  production: 6
+  growthStages: 3
+  yield: 4
+  potency: 20
+  nutrientConsumption: 0.40
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 25
+#    Uppisium:  (Will be added at a later date, post apparent status effects change)
+#      Min: 1
+#      Max: 10
+#      PotencyDivisor: 25

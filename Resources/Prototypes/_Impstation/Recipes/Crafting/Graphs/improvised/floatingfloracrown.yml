@@ -1,0 +1,31 @@
+- type: constructionGraph
+  id: floatingfloracrown
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: floatingfloracrown
+          steps:
+            - tag: Flower
+              name: construction-graph-tag-floatingflora-y
+              icon:
+                sprite: _Impstation/Objects/Specific/Hydroponics/floating_flora.rsi
+                state: floating_flora_folded_y
+            - tag: Flower
+              name: construction-graph-tag-floatingflora-o
+              icon:
+                sprite: _Impstation/Objects/Specific/Hydroponics/floating_flora.rsi
+                state: floating_flora_folded_o
+            - tag: Flower
+              name: construction-graph-tag-floatingflora-p
+              icon:
+                sprite: _Impstation/Objects/Specific/Hydroponics/floating_flora.rsi
+                state: floating_flora_folded_p
+            - tag: Flower
+              name: construction-graph-tag-floatingflora-b
+              icon:
+                sprite: _Impstation/Objects/Specific/Hydroponics/floating_flora.rsi
+                state: floating_flora_folded_b
+              doAfter: 10
+    - node: floatingfloracrown
+      entity: ClothingHeadFloatingFloraCrown

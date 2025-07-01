@@ -159,6 +159,7 @@
     baseWeightlessModifier: 1
   - type: MovementIgnoreGravity # nyoom
     gravityState: true
+  - type: FloatingVisuals
   - type: PointLight
     color: Black
     radius: 1.1

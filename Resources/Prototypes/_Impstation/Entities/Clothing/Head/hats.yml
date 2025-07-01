@@ -383,6 +383,23 @@
     - WhitelistChameleon
 
 - type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadFloatingFloraCrown
+  name: floating flora crown
+  description: A crown of floating flowers! Isn't that neat?
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/floatingfloracrown.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/floatingfloracrown.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: Construction
+    graph: floatingfloracrown
+    node: floatingfloracrown
+
+- type: entity
   parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatCMOClip
   name: chief medical officer's hairclip

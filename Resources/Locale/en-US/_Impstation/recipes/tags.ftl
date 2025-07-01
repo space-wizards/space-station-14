@@ -30,6 +30,7 @@ construction-graph-tag-upgrade-kit-nullrod = a profane censer
 # clothing
 construction-graph-tag-belt-utility = utility belt
 construction-graph-tag-eyepatch = eyepatch
+construction-graph-tag-floatingfloracrown = floating flora crown
 
 # other
 construction-graph-tag-borg-leg = borg leg
@@ -42,6 +43,10 @@ construction-graph-tag-light-tube = light tube
 construction-graph-tag-makeshift-loader = makeshift loader
 construction-graph-tag-plunger = a plunger
 construction-graph-tag-spray-painter = spray painter
+construction-graph-tag-floatingflora-b = blue floating flora
+construction-graph-tag-floatingflora-o = orange floating flora
+construction-graph-tag-floatingflora-p = pink floating flora
+construction-graph-tag-floatingflora-y = yellow floating flora
 
 # unique
 construction-graph-tag-memorial-ash = your vaporized loved one

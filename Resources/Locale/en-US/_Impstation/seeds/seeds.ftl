@@ -30,3 +30,6 @@ seeds-biggerflyorchid-display-name = biggerfly orchids
 
 seeds-butterorchid-name = butter orchid
 seeds-butterorchid-display-name = butter orchids
+
+seeds-floatingflora-name = floating flora
+seeds-floatingflora-display-name = floating flora
