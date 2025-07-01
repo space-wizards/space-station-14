@@ -12,6 +12,12 @@
   femaleFirstNames: names_felionoid
   naming: First
   customName: true
+  minWidth: 0.6
+  defaultWidth: 0.8
+  maxWidth: 0.8
+  minHeight: 0.6
+  defaultHeight: 0.8
+  maxHeight: 0.9
 
 - type: speciesBaseSprites
   id: MobFelionoidSprites
