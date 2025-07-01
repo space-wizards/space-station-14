@@ -1,17 +1,11 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Animals.Components;
 using Content.Server.Chat.Systems;
-using Content.Server.Radio;
-using Content.Server.Radio.Components;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Chat;
-using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Radio;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -23,8 +17,6 @@ namespace Content.Server.Animals.Systems;
 /// Without a ParrotMemoryComponent, nothing will ever be said by an entity.
 /// ParrotMemoryComponent gets filled when ParrotListenerComponent is present on the entity.
 /// With a ParrotListenerComponent, entities listen to nearby local IC chat to fill memory.
-/// If an entity also has a ParrotRadioComponent, it will also listen for messages on radio channels of radios it has
-/// equipped. It will also have a chance to say things on radio channels of radios it has equipped.
 /// </summary>
 public sealed partial class ParrotSystem : EntitySystem
 {
@@ -32,7 +24,6 @@ public sealed partial class ParrotSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
@@ -42,12 +33,6 @@ public sealed partial class ParrotSystem : EntitySystem
 
         SubscribeLocalEvent<ParrotListenerComponent, MapInitEvent>(ListenerOnMapInit);
         SubscribeLocalEvent<ParrotListenerComponent, ListenEvent>(OnListen);
-
-        SubscribeLocalEvent<ParrotRadioComponent, MapInitEvent>(RadioOnMapInit);
-        SubscribeLocalEvent<ParrotRadioComponent, RadioReceiveEvent>(OnRadioReceive);
-
-        SubscribeLocalEvent<ParrotRadioComponent, ClothingDidEquippedEvent>(OnClothingEquipped);
-        SubscribeLocalEvent<ParrotRadioComponent, ClothingDidUnequippedEvent>(OnClothingUnequipped);
     }
 
     private void ListenerOnMapInit(Entity<ParrotListenerComponent> entity, ref MapInitEvent args)
@@ -61,90 +46,14 @@ public sealed partial class ParrotSystem : EntitySystem
         TryLearn(entity.Owner, args.Message, args.Source);
     }
 
-    private void RadioOnMapInit(Entity<ParrotRadioComponent> entity, ref MapInitEvent args)
-    {
-        // If an entity has a ParrotRadioComponent it really ought to have an ActiveRadioComponent
-        var activeRadio = EnsureComp<ActiveRadioComponent>(entity);
-
-        UpdateParrotRadioChannels((entity, activeRadio));
-    }
-
-    private void OnRadioReceive(Entity<ParrotRadioComponent> entity, ref RadioReceiveEvent args)
-    {
-        TryLearn(entity.Owner, args.Message, args.MessageSource);
-    }
-
     /// <summary>
-    /// Callback for when this entity equips clothing or has clothing equipped by something
-    /// Used to update the ActiveRadio entities a parrot with a ParrotRadioComponent uses to listen to radios and
-    /// talk on radio channels
-    /// </summary>
-    private void OnClothingEquipped(Entity<ParrotRadioComponent> entity, ref ClothingDidEquippedEvent args)
-    {
-        // only care if the equipped clothing item has an ActiveRadioComponent
-        if (!HasComp<ActiveRadioComponent>(args.Clothing))
-            return;
-
-        entity.Comp.ActiveRadioEntities.Add(args.Clothing.Owner);
-
-        // update active radio channels
-        UpdateParrotRadioChannels(entity.Owner);
-    }
-
-    /// <summary>
-    /// Called if this entity unequipped clothing or has clothing unequipped by something
-    /// Used to update the ActiveRadio entities a parrot with a ParrotRadioComponent uses to listen to radios and
-    /// talk on radio channels
-    /// </summary>
-    private void OnClothingUnequipped(Entity<ParrotRadioComponent> entity, ref ClothingDidUnequippedEvent args)
-    {
-        // try to remove this item from the active radio entities list
-        // if this returns false, the item wasn't found so it was never a radio we cared about, quit early
-        if (!entity.Comp.ActiveRadioEntities.Remove(args.Clothing.Owner))
-            return;
-
-        // update active radio channels
-        UpdateParrotRadioChannels(entity.Owner);
-    }
-
-    /// <summary>
-    /// Copies all radio channels from equipped radios to the ActiveRadioComponent of an entity
-    /// </summary>
-    public void UpdateParrotRadioChannels(Entity<ActiveRadioComponent?, ParrotRadioComponent?> entity)
-    {
-        if (!Resolve<ActiveRadioComponent>(entity, ref entity.Comp1))
-            return;
-
-        if (!Resolve<ParrotRadioComponent>(entity, ref entity.Comp2))
-            return;
-
-        // clear all channels first
-        entity.Comp1.Channels.Clear();
-
-        // quit early if there are no ActiveRadios on the ParrotRadioComponent
-        if (entity.Comp2.ActiveRadioEntities.Count == 0)
-            return;
-
-        // loop through ActiveRadios in inventory to (re-)add channels
-        foreach (var radio in entity.Comp2.ActiveRadioEntities)
-        {
-            // if for whatever reason this entity does not have an ActiveRadioComponent, skip it
-            if (!TryComp<ActiveRadioComponent>(radio, out var activeRadioComponent))
-                continue;
-
-            // add them to the channels on the ActiveRadioComponent on the entity
-            entity.Comp1.Channels.UnionWith(activeRadioComponent.Channels);
-        }
-    }
-
-    /// <summary>
-    /// Try to learn a new chat or radio message, returning early if this entity cannot learn a new message,
+    /// Try to learn a new message, returning early if this entity cannot learn a new message,
     /// the message doesn't pass certain checks, or the chance for learning a new message fails
     /// </summary>
     /// <param name="entity">Entity learning a new word</param>
     /// <param name="incomingMessage">Message to learn</param>
     /// <param name="source">Source EntityUid of the message</param>
-    private void TryLearn(Entity<ParrotMemoryComponent?> entity, string incomingMessage, EntityUid source)
+    public void TryLearn(Entity<ParrotMemoryComponent?> entity, string incomingMessage, EntityUid source)
     {
         // learning requires a memory
         if (!Resolve<ParrotMemoryComponent>(entity, ref entity.Comp))
@@ -175,6 +84,7 @@ public sealed partial class ParrotSystem : EntitySystem
         var message = incomingMessage.Trim();
 
         // ignore messages containing tildes. This is a crude way to ignore whispers that are too far away
+        // TODO: this isn't great. This should be replaced with a const or we should have a better way to check faraway messages
         if (message.Contains('~'))
             return;
 
@@ -248,7 +158,6 @@ public sealed partial class ParrotSystem : EntitySystem
     /// <summary>
     /// Actually say something.
     /// Expects an entity to have a ParrotSpeakerComponent and a ParrotMemoryComponent at minimum
-    /// If an entity also has a ParrotRadioComponent, it will have a chance to speak on the radio
     /// </summary>
     private void Speak(Entity<ParrotSpeakerComponent, ParrotMemoryComponent> entity)
     {
@@ -258,46 +167,16 @@ public sealed partial class ParrotSystem : EntitySystem
         // get a random message from the memory
         var message = _random.Pick(memory.SpeechMemory);
 
-        // choice between radio and chat
-        // see if the entity has a ParrotRadioComponent and whether it passes the radio attempt chance
-        if (TryComp<ParrotRadioComponent>(entity, out var radio) && _random.Prob(radio.RadioAttemptChance))
-        {
-            // try speaking on the radio. If this succeeds, return early
-            if (TrySpeakRadio(new Entity<ParrotRadioComponent>(entity, radio), message))
-                return;
-        }
+        // raise a parrotSpeakEvent
+        var speakEvent = new ParrotSpeakEvent(message);
+        RaiseLocalEvent(entity.Owner, ref speakEvent);
 
-        // if chance to speak on radio does not pass or speaking on the radio fails for whatever reason, use chat
+        // if the event is handled, don't try speaking
+        if (speakEvent.Handled)
+            return;
+
+        // default to local chat if no other system speaks on this parrots behalf
         _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, ChatTransmitRange.Normal);
-    }
-
-    /// <summary>
-    /// Attempts to speak on the radio. Returns false if there is no radio or talking on radio fails somehow
-    /// </summary>
-    /// <param name="entity">Entity to try and make speak on the radio</param>
-    /// <param name="message">Message to speak </param>
-    /// <returns></returns>
-    private bool TrySpeakRadio(Entity<ParrotRadioComponent> entity, string message)
-    {
-        // return if this entity does not have an ActiveRadioComponent. Should never happen
-        if (!TryComp<ActiveRadioComponent>(entity, out var radio))
-            return false;
-
-        // return if this entity's ActiveRadioComponent contains no channels
-        if (radio.Channels.Count == 0)
-            return false;
-
-        // choose random channel
-        var channel = _random.Pick(radio.Channels);
-        var channelPrefix = _proto.Index<RadioChannelPrototype>(channel).KeyCode;
-
-        _chat.TrySendInGameICMessage(
-            entity,
-            $"{SharedChatSystem.RadioChannelPrefix}{channelPrefix} {message}",
-            InGameICChatType.Whisper,
-            ChatTransmitRange.Normal);
-
-        return true;
     }
 
     public override void Update(float frameTime)
@@ -329,3 +208,6 @@ public sealed partial class ParrotSystem : EntitySystem
         }
     }
 }
+
+[ByRefEvent]
+public record struct ParrotSpeakEvent(string Message, bool Handled = false);
