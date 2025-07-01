@@ -63,6 +63,9 @@ public sealed class ShowCuffedTimeSystem: EntitySystem
         var seconds = duration.Value.Seconds;
         var identity = Identity.Entity(uid, EntityManager);
 
+        if (seconds == 0 && minutes == 0)
+            return;
+
         if (minutes == 0)
             args.PushMarkup(Loc.GetString("examine-cuffed-time-seconds", ("identity", identity), ("seconds", seconds)));
         else
