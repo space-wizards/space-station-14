@@ -34,6 +34,30 @@ public sealed class ShowCuffedTimeSystem: EntitySystem
             return;
         }
 
+        // show the time since the first pair of handcuffs was applied if:
+        // the wearer has the right hud
+        // and atleast one of the handcuffs has the ShowCuffedTime field set to true
+        var ev = new CanSeeCuffedTimeEvent();
+        RaiseLocalEvent(args.Examiner, ref ev);
+        if (!ev.CanSeeCuffedTime)
+            return;
+
+        var showCuffedTime = false;
+        foreach (var cuff in _cuffable.GetAllCuffs(comp))
+        {
+            if (!TryComp<HandcuffComponent>(cuff, out var cuffs))
+            {
+                Log.Warning("An entity is cuffed with another entity which doesn't have the HandcuffComponent.");
+                continue;
+            }
+
+            if (cuffs.ShowCuffedTime)
+                showCuffedTime = true;
+        }
+
+        if (!showCuffedTime)
+            return;
+
         var duration = _timing.CurTime - comp.CuffedTime;
         var minutes = duration.Value.Minutes;
         var seconds = duration.Value.Seconds;
