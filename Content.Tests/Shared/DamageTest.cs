@@ -4,7 +4,6 @@ using NUnit.Framework;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
-using System.Collections.Generic;
 using Content.Shared.FixedPoint;
 
 namespace Content.Tests.Shared
@@ -16,23 +15,6 @@ namespace Content.Tests.Shared
     [TestOf(typeof(DamageGroupPrototype))]
     public sealed class DamageTest : ContentUnitTest
     {
-
-        private static Dictionary<string, float> _resistanceCoefficientDict = new()
-        {
-            // "missing" blunt entry
-            { "Piercing", -2 },// Turn Piercing into Healing
-            { "Slash", 3 },
-            { "Radiation", 1.5f },
-        };
-
-        private static Dictionary<string, float> _resistanceReductionDict = new()
-        {
-            { "Blunt", - 5 },
-            // "missing" piercing entry
-            { "Slash", 8 },
-            { "Radiation", 0.5f },  // Fractional adjustment
-        };
-
         private IPrototypeManager _prototypeManager;
 
         private DamageSpecifier _damageSpec;
@@ -139,11 +121,7 @@ namespace Content.Tests.Shared
             DamageSpecifier damageSpec = 10 * new DamageSpecifier(_damageSpec);
 
             // Create a modifier set
-            DamageModifierSetPrototype modifierSet = new()
-            {
-                Coefficients = _resistanceCoefficientDict,
-                FlatReduction = _resistanceReductionDict
-            };
+            var modifierSet = _prototypeManager.Index<DamageModifierSetPrototype>("ModifierTestSet");
 
             //damage is initially   20 / 20 / 10 / 30
             //Each time we subtract -5 /  0 /  8 /  0.5
@@ -288,6 +266,17 @@ namespace Content.Tests.Shared
     Shock: 0
   flatReductions:
     Blunt: 5
+
+- type: damageModifierSet
+  id: ModifierTestSet
+  coefficients:
+    Piercing: -2
+    Slash: 3
+    Radiation: 1.5
+  flatReductions:
+    Blunt: -5
+    Slash: 8
+    Radiation: 0.5
 
 - type: damageContainer
   id: Biological
