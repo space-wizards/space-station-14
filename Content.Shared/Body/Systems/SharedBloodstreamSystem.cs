@@ -106,6 +106,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
                 // storing the drunk and stutter time so we can remove it independently from other effects additions
                 bloodstream.StatusTime += bloodstream.UpdateInterval * 2;
+                DirtyField(uid, bloodstream, nameof(BloodstreamComponent.StatusTime));
             }
             else if (!_mobStateSystem.IsDead(uid))
             {
@@ -120,6 +121,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                 _stutteringSystem.DoRemoveStutterTime(uid, bloodstream.StatusTime.TotalSeconds);
                 // Reset the drunk and stutter time to zero
                 bloodstream.StatusTime = TimeSpan.Zero;
+                DirtyField(uid, bloodstream, nameof(BloodstreamComponent.StatusTime));
             }
         }
     }
