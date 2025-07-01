@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   id: BaseLathe
   parent: [ BaseMachinePowered, ConstructibleMachine ]
@@ -399,7 +400,9 @@
     - SecurityWeaponsStatic
     dynamicPacks:
     - SalvageSecurityBoards
+    # start of modifications
     # - SalvageSecurityWeapons
+    # end of modifications
     - SecurityEquipment
     - SecurityBoards
     - SecurityExplosives
