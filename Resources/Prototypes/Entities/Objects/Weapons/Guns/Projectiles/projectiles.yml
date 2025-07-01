@@ -501,9 +501,7 @@
         Structural: 30
   # Short lifespan
   - type: TimedDespawn
-  # start of modifications
-    lifetime: 4
-  # end of modifications
+    lifetime: 4 # Ronstation - modification
   - type: GatheringProjectile
 
 - type: entity

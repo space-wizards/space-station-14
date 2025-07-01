@@ -15,9 +15,7 @@
       time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Medical
-      # start of modifications
-      time: 54000 # 15 hours
-      # end of modifications
+      time: 54000 # Ronstation - modification. 15 hours
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
   supervisors: job-supervisors-captain
@@ -30,9 +28,7 @@
   - ChiefMedicalOfficer
   - Brig
   - Cryogenics
-  # start of modifications
-  - External
-  # end of modifications
+  - External # Ronstation - modification.
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

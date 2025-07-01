@@ -14,9 +14,7 @@
   access:
   - Medical
   - Maintenance
-  # start of modifications
-  - External
-  # end of modifications
+  - External # Ronstation - modifications
   extendedAccess:
   - Chemistry
 

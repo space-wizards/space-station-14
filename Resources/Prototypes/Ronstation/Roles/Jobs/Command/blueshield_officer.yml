@@ -10,9 +10,7 @@
       time: 36000 # 10 hrs
     - !type:DepartmentTimeRequirement
       department: Command
-      # start of modifications
-      time: 54000 # 15 hours
-      # end of modifications
+      time: 54000 # Ronstation - modification. 15 hours
   weight: 20
   startingGear: BlueshieldOfficerGear
   icon: "JobIconNanotrasen"

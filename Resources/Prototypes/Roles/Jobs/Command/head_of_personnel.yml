@@ -7,29 +7,19 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      # start of modifications
-      time: 27000 # 7.5 hours
-      # end of modifications
+      time: 27000 # Ronstation - modification. 7.5 hours
     - !type:DepartmentTimeRequirement
       department: Medical
-      # start of modifications
-      time: 27000 # 7.5 hours
-      # end of modifications
+      time: 27000 # Ronstation - modification. 7.5 hours
     - !type:DepartmentTimeRequirement
       department: Science
-      # start of modifications
-      time: 27000 # 7.5 hours
-      # end of modifications
+      time: 27000 # Ronstation - modification. 7.5 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      # start of modifications
-      time: 27000 # 7.5 hours
-      # end of modifications
+      time: 27000 # Ronstation - modification. 7.5 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      # start of modifications
-      time: 27000 # 7.5 hours
-      # end of modifications
+      time: 27000 # Ronstation - modification. 7.5 hours
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"

@@ -25,9 +25,7 @@
   name: china lake
   parent: [BaseWeaponLauncher, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponLauncherChinaLake
-  # start of modifications
-  description: Hand operated explosive ordnance propulsion system; codename CHINA-LAKE. While dated, a reliable design for a weapon of mass destruction. Be careful where you point it, or don't.
-  # end of modifications
+  description: Hand operated explosive ordnance propulsion system; codename CHINA-LAKE. While dated, a reliable design for a weapon of mass destruction. Be careful where you point it, or don't. # Ronstation - modification
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
@@ -54,9 +52,7 @@
       gun_chamber: !type:ContainerSlot
     #end of modifications
   - type: Gun
-  # start of modifications
-    fireRate: 0.5
-  # end of modifications
+    fireRate: 0.5 # Ronstation - modification
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto

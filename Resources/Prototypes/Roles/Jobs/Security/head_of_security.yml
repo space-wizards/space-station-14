@@ -16,9 +16,7 @@
       time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      # start of modifications
-      time: 54000 # 15 hours
-      # end of modifications
+      time: 54000 # Ronstation - modification. 15 hours
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"

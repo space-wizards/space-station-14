@@ -1209,9 +1209,7 @@
   parent: BaseComputerAiAccess
   id: ComputerSalvageJobBoard
   name: salvage job board
-  # start of modifications
-  description: It seems like a particularly disgruntled scientist hacked the software used on this computer. None of the buttons work and there is writing in bold letters saying "NO TO ORE VOID". # Ronstation - Originally was "Console for accessing salvage jobs, if you're tough enough.".
-  # end of modifications
+  description: It seems like a particularly disgruntled scientist hacked the software used on this computer. None of the buttons work and there is writing in bold letters saying "NO TO ORE VOID". # Ronstation - modification. Originally was "Console for accessing salvage jobs, if you're tough enough.".
   components:
   - type: Sprite
     layers:
@@ -1245,9 +1243,7 @@
   - type: PointLight
     radius: 1.5
     energy: 1.6
-    # start of modifications
-    color: "#6666ff" # Ronstation, original was "#b89f25".
-    # end of modifications
+    color: "#6666ff" # Ronstation - modification, original was "#b89f25".
 
 - type: entity
   id: ComputerSalvageExpedition

@@ -94,9 +94,7 @@
   - SyringeCryostasis
   - BluespaceBeaker
   - SyringeBluespace
-  # start of modifications
-  - CompactDefibrillator # this isn't chemistry but i'm not going to bother with that
-  # end of modifications
+  - CompactDefibrillator # Ronstation - modification. this isn't chemistry but i'm not going to bother with that
   - LauncherSyringe
   - MiniSyringe
 

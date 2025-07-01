@@ -5,9 +5,7 @@
     OreIron: 1.0
     OreQuartz: 1.0
     OreCoal: 0.33
-    # start of modifications
-    OreSalt: 0.10 # Ronstation - salt sucks lmao
-    # end of modifications
+    OreSalt: 0.10 # Ronstation - modification, salt sucks lmao
     OreGold: 0.25
     OreSilver: 0.25
     OrePlasma: 0.20

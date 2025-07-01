@@ -51,9 +51,7 @@
   gasOverlayState: tritium
   color: 13FF4B
   reagent: Tritium
-  # start of modifications
-  pricePerMole: 2
-  # end of modifications
+  pricePerMole: 2 # Ronstation - modification
 
 
 - type: gas
@@ -90,9 +88,7 @@
   molarMass: 44
   color: 8F00FF
   reagent: NitrousOxide
-  # start of modifications
-  pricePerMole: 1
-  # end of modifications
+  pricePerMole: 1 # Ronstation - modification
 
 - type: gas
   id: 8
@@ -105,7 +101,5 @@
   gasMolesVisible: 0.6
   color: 3a758c
   reagent: Frezon
-  # start of modifications
-  pricePerMole: 5
-  # end of modifications
+  pricePerMole: 5 # Ronstation - modification
 

@@ -67,9 +67,7 @@
   suffix: One-Handed, Always Powered
 
 - type: entity
-# start of modifications
-  id: DefibrillatorCompact # Ronstation - Old comment was: This should be a research item at some point (we agreed!)
-# end of modifications
+  id: DefibrillatorCompact # Ronstation - modification. Old comment was: This should be a research item at some point (we agreed!)
   parent: [ BaseDefibrillator, PowerCellSlotMediumItem ]
   name: compact defibrillator
   description: Now in fun size!

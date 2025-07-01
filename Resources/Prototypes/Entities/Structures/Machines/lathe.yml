@@ -400,9 +400,7 @@
     - SecurityWeaponsStatic
     dynamicPacks:
     - SalvageSecurityBoards
-    # start of modifications
-    # - SalvageSecurityWeapons
-    # end of modifications
+    # - SalvageSecurityWeapons # Ronstation - modification
     - SecurityEquipment
     - SecurityBoards
     - SecurityExplosives
