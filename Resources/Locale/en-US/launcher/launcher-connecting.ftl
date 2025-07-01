@@ -11,7 +11,7 @@ connecting-in-progress = Connecting to server...
 connecting-disconnected = Disconnected from server:
 connecting-tip = You must DIE!
 connecting-window-tip = Tip { $numberTip }
-connecting-version = ver 0.1
+connecting-version = imp3
 connecting-fail-reason = Failed to connect to server:
                          { $reason }
 connecting-state-NotConnecting = Not connecting
