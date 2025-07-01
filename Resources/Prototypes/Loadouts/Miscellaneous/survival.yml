@@ -86,7 +86,7 @@
     back:
     - BoxHugNitrogen
 
-- type: loadout
+- type: loadout #🌟Starlight🌟
   id: EmergencyNonBreatherClown
   effects:
   - !type:GroupLoadoutEffect
@@ -141,7 +141,7 @@
     back:
     - BoxMimeMoth
 
-- type: loadout
+- type: loadout #🌟Starlight🌟
   id: EmergencyNonBreatherMime
   effects:
   - !type:GroupLoadoutEffect
@@ -169,7 +169,7 @@
     back:
     - BoxSurvivalEngineeringNitrogen
 
-- type: loadout
+- type: loadout #🌟Starlight🌟
   id: EmergencyNonBreatherExtended
   effects:
   - !type:GroupLoadoutEffect
@@ -197,7 +197,7 @@
     back:
     - BoxSurvivalMedicalNitrogen
 
-- type: loadout
+- type: loadout #🌟Starlight🌟
   id: EmergencyNonBreatherMedical
   effects:
   - !type:GroupLoadoutEffect
@@ -225,7 +225,7 @@
     back:
     - BoxSurvivalSecurityNitrogen
 
-- type: loadout
+- type: loadout #🌟Starlight🌟
   id: EmergencyNonbreatherSecurity
   effects:
   - !type:GroupLoadoutEffect
@@ -253,7 +253,7 @@
     back:
     - BoxSurvivalSyndicateNitrogen
 
-- type: loadout
+- type: loadout #🌟Starlight🌟
   id: EmergencyNonBreatherSyndicate
   effects:
   - !type:GroupLoadoutEffect

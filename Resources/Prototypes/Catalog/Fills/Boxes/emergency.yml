@@ -38,7 +38,7 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
-- type: entity
+- type: entity #🌟Starlight🌟
   parent: BoxSurvival
   id: BoxSurvivalNonBreather
   description: It's a box with survival supplies for those with no need to breathe.
@@ -95,7 +95,7 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
-- type: entity
+- type: entity #🌟Starlight🌟
   parent: BoxSurvivalEngineering
   id: BoxSurvivalEngineeringNonBreather
   description: It's a box with survival supplies for those with no need to breathe. This one is labelled to contain double rations.
@@ -155,7 +155,7 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
-- type: entity
+- type: entity #🌟Starlight🌟
   parent: BoxSurvivalSecurity
   id: BoxSurvivalSecurityNonBreather
   description: It's a box with survival supplies for those with no need to breathe. This one is labelled to contain double rations.
@@ -214,7 +214,7 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
-- type: entity
+- type: entity #🌟Starlight🌟
   parent: BoxSurvivalMedical
   id: BoxSurvivalMedicalNonBreather
   description: It's a box with survival supplies for those with no need to breathe. This one is labelled to contain double rations.
@@ -274,7 +274,7 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
-- type: entity
+- type: entity #🌟Starlight🌟
   parent: BoxHug
   id: BoxHugNonBreather
   description: A special box for sensitive people who don't need to breathe.
@@ -339,7 +339,7 @@
     - id: FoodBreadBaguetteCotton
     - id: DrinkWaterBottleFull
 
-- type: entity
+- type: entity #🌟Starlight🌟
   parent: BoxSurvival
   id: BoxMimeNonBreather
   suffix: Mime, Emergency (Nonbreather)
@@ -393,7 +393,7 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
-- type: entity
+- type: entity #🌟Starlight🌟
   parent: BoxSurvivalSyndicate
   id: BoxSurvivalNonBreatherSyndicate
   suffix: Syndicate Nonbreather
