@@ -153,6 +153,8 @@ crafting-menu-text-FVTH = Almost the best a tidersmith can offer, it'll reliably
 crafting-menu-name-PVTH = paladin helmet
 crafting-menu-text-PVTH = The best a tidersmith can offer, no holy crusade is fit to go on without a matching helmet!
 
+crafting-menu-name-ETX = emergency toolbox
+
 crafting-menu-name-MUL = multitool
 
 crafting-menu-name-WRE = wrench
@@ -163,4 +165,4 @@ crafting-menu-name-SCR = screwdriver
 
 crafting-menu-name-CRO = crowbar
 
-crafting-menu-name-EXOXY = emergency toolbox
+crafting-menu-name-EXOXY = extended-capacity emergency oxygen tank

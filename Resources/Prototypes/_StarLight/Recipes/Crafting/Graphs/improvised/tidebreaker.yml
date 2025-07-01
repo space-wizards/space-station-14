@@ -10,17 +10,17 @@
         icon:
           sprite: _Starlight/Objects/Misc/plasteel_blade.rsi
           state: icon
-        name: plasteel blade
+        name: crafting-menu-name-PB
       - tag: CrayonGreen
         icon:
           sprite: Objects/Fun/crayons.rsi
           state: green
-        name: green crayon
+        name: crafting-menu-name-CGREN
       - tag: CrayonYellow
         icon:
           sprite: Objects/Fun/crayons.rsi
           state: yellow
-        name: yellow crayon
+        name: crafting-menu-name-CYELO
       - material: Plasteel
         amount: 15
         doAfter: 25
@@ -31,6 +31,6 @@
         icon:
           sprite: _Starlight/Objects/Misc/plasteel_hilt.rsi
           state: icon
-        name: plasteel hilt
+        name: crafting-menu-name-PH
   - node: sword
     entity: UnfinishedClaymoreForged
