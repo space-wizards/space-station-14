@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: bigsantino1
   changes:
-  - message: Muzzles now mute sounds from emotes like screams or gasping for air.
-    type: Tweak
-  id: 1455
-  time: '2025-04-02T03:13:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2168
-- author: bigsantino1
-  changes:
   - message: Wand polymorphs now have a 3 minute timer.
     type: Tweak
   - message: The bread polymorph has a sound effect like the others now.
@@ -4240,3 +4233,12 @@
   id: 1954
   time: '2025-07-01T08:49:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2906
+- author: Mousetrinity
+  changes:
+  - message: 'floating flora from planet teo, now in your exotic seed crates! note:
+      NT tech cannot extract the uppisium at this time, please be patient as our strongest
+      teo researchers work to remedy this'
+    type: Add
+  id: 1955
+  time: '2025-07-01T08:52:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2864
