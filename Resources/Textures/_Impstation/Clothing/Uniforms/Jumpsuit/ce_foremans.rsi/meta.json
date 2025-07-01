@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by AvianMaiden for Impstation.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-unshaded"
+    },
+    {
+      "name": "equipped-INNERCLOTHING",
+      "directions": 4
+    },
+    {
+      "name": "equipped-INNERCLOTHING-unshaded",
+      "directions": 4
+    }
+  ]
+}

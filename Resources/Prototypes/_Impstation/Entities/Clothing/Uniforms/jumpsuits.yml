@@ -485,3 +485,30 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cmo_scrubs.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cmo_scrubs.rsi
+    
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitCEForeman
+  name: foreman's jumpsuit
+  description: A more relaxed uniform for the chief engineer while supervising a worksite. Construction blue jeans and a neon long-sleeve with retroreflective safety stripes, perfect for working on wires and ordering engineers to repair evac again.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/ce_foremans.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
+    - state: icon-unshaded
+      shader: shaded
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/ce_foremans.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+      - state: equipped-INNERCLOTHING-unshaded
+        shader: unshaded
+      - state: equipped-INNERCLOTHING-unshaded
+        shader: shaded
+  - type: Tag
+    tags:
+    - HiViz
