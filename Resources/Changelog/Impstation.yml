@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Human/dwarf ears are now HeadSide markings (you'll have to readd them
-      if you had them!)
-    type: Tweak
-  id: 1446
-  time: '2025-04-01T11:15:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2083
-- author: ATDoop
-  changes:
-  - message: Thaven glasses should rest on their heads a little better now.
-    type: Fix
-  id: 1447
-  time: '2025-04-01T11:32:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2143
 - author: widgetbeck
   changes:
   - message: The Cargorilla cargo gift event will now only roll during the first 30
@@ -4242,3 +4227,21 @@
   id: 1945
   time: '2025-07-01T07:27:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2882
+- author: hivehum
+  changes:
+  - message: Glowsticks are craftable.
+    type: Tweak
+  id: 1946
+  time: '2025-07-01T07:35:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2921
+- author: sowelipililimute, Eternally-Confused, msTheowo
+  changes:
+  - message: Colored paper and white paper reams from Delta-V
+    type: Add
+  - message: Colored sticky notes from Delta-V
+    type: Add
+  - message: Bureaucracy crates contain more folders
+    type: Tweak
+  id: 1947
+  time: '2025-07-01T07:34:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2926
