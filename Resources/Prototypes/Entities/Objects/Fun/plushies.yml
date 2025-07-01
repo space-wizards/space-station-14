@@ -1262,26 +1262,40 @@
   - type: EmitSoundOnUse
     sound:
       collection: Sheep
+      params:
+        variation: 0.05
   - type: EmitSoundOnLand
     sound:
       collection: Sheep
+      params:
+        variation: 0.05
   - type: EmitSoundOnActivate
     sound:
       collection: Sheep
+      params:
+        variation: 0.05
   - type: EmitSoundOnTrigger
     sound:
       collection: Sheep
+      params:
+        variation: 0.05
   - type: EmitSoundOnCollide
     sound:
       collection: Sheep
+      params:
+        variation: 0.05
   - type: Food
     requiresSpecialDigestion: true
     useSound:
       collection: Sheep
+      params:
+        variation: 0.05
   - type: MeleeWeapon
     wideAnimationRotation: 90
     soundHit:
       collection: Sheep
+      params:
+        variation: 0.05
     angle: 0
     animation: WeaponArcFist
   - type: FoodSequenceElement
@@ -1303,3 +1317,40 @@
   - type: FoodSequenceElement
     entries:
       CottonBurger: SheepSpacePlushie
+  - type: EmitSoundOnUse
+    sound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: EmitSoundOnLand
+    sound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: EmitSoundOnActivate
+    sound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: EmitSoundOnCollide
+    sound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    soundHit:
+      collection: SheepSpace
+      params:
+        variation: 0.05

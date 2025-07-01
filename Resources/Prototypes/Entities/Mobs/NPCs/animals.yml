@@ -1201,6 +1201,9 @@
     interactSuccessSpawn: EffectHearts #🥰
     interactSuccessSound:
       collection: Sheep
+      params:
+        variation: 0.05
+      
   - type: NpcFactionMember
     factions:
     - Passive
@@ -1235,7 +1238,7 @@
     - type: Shearable
       targetSolutionName: wool
       shearedProductID: LeavesCannabisRainbow
-      productsPerSolution: 1
+      productsPerSolution: 0.2
       toolQuality: Cutting
       shearableMarkupText: rainbow-sheep-shearable-examine-markup
       unShearableMarkupText: rainbow-sheep-not-shearable-examine-markup

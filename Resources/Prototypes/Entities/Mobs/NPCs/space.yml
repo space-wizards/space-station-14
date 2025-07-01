@@ -372,7 +372,7 @@
     - type: SalvageMobRestrictions
 
 - type: entity
-  parent: [SimpleSpaceMobBase, FlyingMobBase, MobSheepBase]
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobSheepBase ]
   id: MobSheepSpace
   name: space sheep
   description: A sheep... in space!.
@@ -381,15 +381,24 @@
     drawdepth: Mobs
     layers:
       - state: space_sheep_bare
-        map: ["enum.DamageStateVisualLayers.Base"]
+        map: [ "enum.DamageStateVisualLayers.Base" ]
         visible: true
         sprite: Mobs/Animals/sheep.rsi
       - state: space_sheep_wool_glowmask
-        map: ["enum.ToggleableVisuals.Layer"]
+        map: [ "wooly" ]
         visible: true
         sprite: Mobs/Animals/sheep.rsi
-  - type: ToggleableVisuals
-    spriteLayer: space_sheep_bare
+  - type: GenericVisualizer
+    visuals:
+      enum.ShearableVisuals.Sheared:
+        wooly:
+          True: {visible: true}
+          False: {visible: false}
+      enum.MobStateVisuals.State:
+        wooly:
+          Alive: {state: space_sheep_wool_glowmask}
+          Dead: {state: space_sheep_wool_dead}
+          Critical: {state: space_sheep_wool_dead}
   - type: Fixtures
     fixtures:
       fix1:
@@ -412,9 +421,8 @@
         Base: space_sheep_dead
   - type: Shearable
     targetSolutionName: wool
-    shearedProductID: MaterialCotton1 # Cotton is spawned because there is no wool item.
-    productsPerSolution: 0.2 # To moths 1 Wool is worth 3 Hunger; 1 Cotton is worth 15 Hunger. Therefore, 5 Wool needed for 1 Cotton. 1 ÷ 5 = 0.2
-    HungerUsage: 3f # You don't get much so reduce the hunger cost a bit.
+    shearedProductID: MaterialDurathread1
+    productsPerSolution: 0.2
     toolQuality: Cutting # Wirecutters and barber's scissors.
     shearableMarkupText: space-sheep-shearable-examine-markup
     unShearableMarkupText: space-sheep-not-shearable-examine-markup
@@ -428,6 +436,16 @@
     radius: 2.0
     energy: 1.0
     color: "#4795ff" # Light blue colour.
+  - type: InteractionPopup
+    successChance: 0.8 #SHEEP so FRIEND!!! HUG! SQUISHY! SOFT!
+    interactDelay: 1
+    interactSuccessString: petting-success-sheep
+    interactFailureString: petting-failure-sheep
+    interactSuccessSpawn: EffectHearts #🥰
+    interactSuccessSound:
+      collection: SheepSpace
+      params:
+        variation: 0.05
 
 
 - type: entity

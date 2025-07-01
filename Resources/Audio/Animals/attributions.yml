@@ -142,8 +142,11 @@
     - "sheep1.ogg"
     - "sheep2.ogg"
     - "sheep3.ogg"
+    - "spacesheep1.ogg"
+    - "spacesheep2.ogg"
+    - "spacesheep3.ogg"
   license: "CC0-1.0"
-  copyright: "Audio is created by freesound.org user 'milkotz', then cut and modified by dragomagol."
+  copyright: "Audio is created by freesound.org user 'milkotz', then cut and modified by dragomagol. Space sheep variants have a reverb effect added by Baa."
   source: "https://freesound.org/people/milkotz/sounds/618865/"
 
 - files:

@@ -5,3 +5,10 @@
     - /Audio/Animals/sheep2.ogg
     - /Audio/Animals/sheep3.ogg
 
+- type: soundCollection
+  id: SheepSpace
+  files:
+    - /Audio/Animals/spacesheep1.ogg
+    - /Audio/Animals/spacesheep2.ogg
+    - /Audio/Animals/spacesheep3.ogg
+
