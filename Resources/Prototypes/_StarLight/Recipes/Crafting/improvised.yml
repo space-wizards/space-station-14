@@ -17,9 +17,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-MP
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Pistols/makeshift_pistol_crafted.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-IP
@@ -30,9 +27,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IP
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Pistols/improvised_pistol.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-FP
@@ -43,9 +37,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-FP
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Pistols/forged_pistol.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-IPB
@@ -56,9 +47,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IPB
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/improvised_casing.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-IPM
@@ -69,9 +57,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IPM
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/improvised_pistol_magazine.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-MR
@@ -82,9 +67,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-MR
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/makeshift_revolver.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-IR
@@ -95,9 +77,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IR
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/improvised_revolver.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-FR
@@ -108,9 +87,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-FR
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/forged_revolver.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-IMB
@@ -121,9 +97,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IMB
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/improvised_casing.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-IMS
@@ -134,9 +107,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IMS
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/improvised_magnum_speed_loader.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-MB
@@ -147,9 +117,6 @@
   category: construction-category-misc
   objectType: Item
   description: crafting-menu-text-MB
-  icon:
-    sprite: _Starlight/Objects/Misc/modular_barrel.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-MSH
@@ -160,9 +127,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-MSH
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/makeshift_shotgun.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-MS
@@ -173,9 +137,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-MS
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/SMGs/makeshift_smg.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-IS
@@ -186,9 +147,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IS
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/SMGs/improvised_smg.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-FS
@@ -199,9 +157,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-FS
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/SMGs/forged_smg.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-ISM
@@ -212,9 +167,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-ISM
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/SMGs/improvised_smg_magazine.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-MRR
@@ -225,9 +177,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-MRR
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Snipers/makeshift_rifle.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-IRR
@@ -238,9 +187,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IRR
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Snipers/improvised_rifle.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-FRR
@@ -251,9 +197,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-FRR
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Snipers/forged_rifle.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-IRB
@@ -264,9 +207,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IRB
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/improvised_casing.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-IMGB
@@ -277,9 +217,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IMGB
-  icon:
-    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Boxes/improvised.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-MC
@@ -290,9 +227,6 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-MC
-  icon:
-    sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-IC
@@ -303,9 +237,6 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-IC
-  icon:
-    sprite: _Starlight/Objects/Tools/improvised_crowbar.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-ISC
@@ -316,9 +247,6 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-IC
-  icon:
-    sprite: _Starlight/Objects/Tools/improvised_screwdriver.rsi
-    state: screwdriver
 
 - type: construction
   name: crafting-menu-name-IW
@@ -329,9 +257,6 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-IC
-  icon:
-    sprite: _Starlight/Objects/Tools/improvised_wirecutters.rsi
-    state: cutters
 
 - type: construction
   name: crafting-menu-name-IWR
@@ -342,9 +267,6 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-IC
-  icon:
-    sprite: _Starlight/Objects/Tools/improvised_wrench.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-IM
@@ -355,9 +277,6 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-IM
-  icon:
-    sprite: _Starlight/Objects/Tools/improvised_multitool.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-IO
@@ -368,9 +287,6 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-IO
-  icon:
-    sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-FO
@@ -381,9 +297,6 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-FO
-  icon:
-    sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-WH
@@ -394,10 +307,7 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-WH
-  icon:
-    sprite: _Starlight/Objects/Misc/wooden_hilt.rsi
-    state: icon
-
+ 
 - type: construction
   name: crafting-menu-name-PH
   id: HiltPlasteel
@@ -407,9 +317,6 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-PH
-  icon:
-    sprite: _Starlight/Objects/Misc/plasteel_hilt.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-SB
@@ -420,9 +327,6 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-SB
-  icon:
-    sprite: _Starlight/Objects/Misc/steel_blade.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-PB
@@ -433,9 +337,6 @@
   category: construction-category-tools
   objectType: Item
   description: crafting-menu-text-PB
-  icon:
-    sprite: _Starlight/Objects/Misc/plasteel_blade.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-MSW
@@ -446,9 +347,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-MSW
-  icon:
-    sprite: _Starlight/Objects/Weapons/Melee/makeshift_sword.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-ISW
@@ -459,9 +357,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-ISW
-  icon:
-    sprite: _Starlight/Objects/Weapons/Melee/improvised_sword.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-FSW
@@ -472,9 +367,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-FSW
-  icon:
-    sprite: _Starlight/Objects/Weapons/Melee/forged_sword.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-DSW
@@ -485,9 +377,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-DSW
-  icon:
-    sprite: _Starlight/Objects/Weapons/Melee/dawnbreaker.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-TSW
@@ -498,9 +387,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-TSW
-  icon:
-    sprite: _Starlight/Objects/Weapons/Melee/tidebreaker.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-ISH
@@ -511,9 +397,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-ISH
-  icon:
-    sprite: _Starlight/Objects/Weapons/Melee/improvised_shield.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-FSH
@@ -524,9 +407,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-FSH
-  icon:
-    sprite: _Starlight/Objects/Weapons/Melee/forged_buckler_shield.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-FSHT
@@ -537,9 +417,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-FSHT
-  icon:
-    sprite: _Starlight/Objects/Weapons/Melee/forged_tower_shield.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-PSH
@@ -550,9 +427,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-PSH
-  icon:
-    sprite: _Starlight/Objects/Weapons/Melee/paladin_shield.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-PSHG
@@ -563,9 +437,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-PSHG
-  icon:
-    sprite: _Starlight/Objects/Weapons/Melee/paladin_greatshield.rsi
-    state: base
 
 - type: construction
   name: crafting-menu-name-MVT
@@ -576,9 +447,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-MVT
-  icon:
-    sprite: _Starlight/Clothing/OuterClothing/Armor/makeshift.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-IVT
@@ -589,9 +457,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IVT
-  icon:
-    sprite: _Starlight/Clothing/OuterClothing/Armor/improvised.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-FVT
@@ -602,9 +467,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-FVT
-  icon:
-    sprite: _Starlight/Clothing/OuterClothing/Armor/forged.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-PVT
@@ -615,9 +477,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-PVT
-  icon:
-    sprite: _Starlight/Clothing/OuterClothing/Armor/paladin.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-MVTH
@@ -628,9 +487,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-MVTH
-  icon:
-    sprite: _Starlight/Clothing/Head/Helmets/makeshift.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-IVTH
@@ -641,9 +497,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-IVTH
-  icon:
-    sprite: _Starlight/Clothing/Head/Helmets/improvised.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-FVTH
@@ -654,9 +507,6 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-FVTH
-  icon:
-    sprite: _Starlight/Clothing/Head/Helmets/forged.rsi
-    state: icon
 
 - type: construction
   name: crafting-menu-name-PVTH
@@ -667,6 +517,3 @@
   category: construction-category-weapons
   objectType: Item
   description: crafting-menu-text-PVTH
-  icon:
-    sprite: _Starlight/Clothing/Head/Helmets/paladin.rsi
-    state: icon
