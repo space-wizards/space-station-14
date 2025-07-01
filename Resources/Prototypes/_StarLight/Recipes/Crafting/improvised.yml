@@ -12,664 +12,664 @@
     state: icon
 
 - type: construction
-  name: makeshift pistol
+  name: crafting-menu-name-MP
   id: WeaponPistolMakeshiftCrafted
   graph: MakeshiftPistolCraftedGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: A hastily built pistol, looks horrible and is liable to explode in your face.
+  description: crafting-menu-text-MP
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/makeshift_pistol_crafted.rsi
     state: icon
 
 - type: construction
-  name: improvised pistol
+  name: crafting-menu-name-IP
   id: WeaponPistolImprovised
   graph: ImprovisedPistolGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: The next best thing in improvised pistols, comes with an internal magazine of five rounds.
+  description: crafting-menu-text-IP
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/improvised_pistol.rsi
     state: icon
 
 - type: construction
-  name: forged pistol
+  name: crafting-menu-name-FP
   id: WeaponPistolForged
   graph: ForgedPistolGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: A reliable, high quality firearm. Takes six-round clipazines, and needs welding supplies to make.
+  description: crafting-menu-text-FP
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/forged_pistol.rsi
     state: icon
 
 - type: construction
-  name: improvised pistol bullet
+  name: crafting-menu-name-IPB
   id: CartridgePistolImprovised
   graph: ImprovisedPistolBulletGraph
   startNode: start
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: Better than nothing. Low-quality propellant means it won't hit as hard as a normal bullet.
+  description: crafting-menu-text-IPB
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/improvised_casing.rsi
     state: base
 
 - type: construction
-  name: improvised pistol magazine
+  name: crafting-menu-name-IPM
   id: MagazinePistolImprovised
   graph: ImprovisedPistolMagazineGraph
   startNode: start
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: A compact 6-round clipazine.
+  description: crafting-menu-text-IPM
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/improvised_pistol_magazine.rsi
     state: base
 
 - type: construction
-  name: makeshift revolver
+  name: crafting-menu-name-MR
   id: WeaponRevolverMakeshift
   graph: MakeshiftRevolverGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: Hastily built revolver that has a good chance of backfiring into your face.
+  description: crafting-menu-text-MR
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Revolvers/makeshift_revolver.rsi
     state: icon
 
 - type: construction
-  name: improvised revolver
+  name: crafting-menu-name-IR
   id: WeaponRevolverImprovised
   graph: ImprovisedRevolverGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: An odd double-barrel revolver with no cylinder. The unique construction lowers the chance of a backfire, but does not eliminate it.
+  description: crafting-menu-text-IR
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Revolvers/improvised_revolver.rsi
     state: icon
 
 - type: construction
-  name: forged revolver
+  name: crafting-menu-name-FR
   id: WeaponRevolverForged
   graph: ForgedRevolverGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: The best Tider Engineering can provide. Has 4 shots and will NOT blow up in your face, but needs welding supplies to make.
+  description: crafting-menu-text-FR
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Revolvers/forged_revolver.rsi
     state: icon
 
 - type: construction
-  name: improvised magnum bullet
+  name: crafting-menu-name-IMB
   id: CartridgeMagnumImprovised
   graph: ImprovisedMagnumBulletGraph
   startNode: start
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: Better than nothing. Stuffed to the brim with phosphorus but still won't hit as hard.
+  description: crafting-menu-text-IMB
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/improvised_casing.rsi
     state: base
 
 - type: construction
-  name: improvised magnum speedloader
+  name: crafting-menu-name-IMS
   id: SpeedLoaderMagnumImprovised
   graph: ImprovisedMagnumSpeedLoaderGraph
   startNode: start
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: A simple speedloader capable of holding 4 shots.
+  description: crafting-menu-text-IMS
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/improvised_magnum_speed_loader.rsi
     state: base
 
 - type: construction
-  name: modular barrel
+  name: crafting-menu-name-MB
   id: ModularBarrel
   graph: ModularBarrelGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-misc
   objectType: Item
-  description: For all your guncrafting needs!
+  description: crafting-menu-text-MB
   icon:
-    sprite: _Starlight/Objects/Misc/modular_barrel
+    sprite: _Starlight/Objects/Misc/modular_barrel.rsi
     state: icon
 
 - type: construction
-  name: makeshift shotgun
+  name: crafting-menu-name-MSH
   id: WeaponShotgunMakeshift
   graph: MakeshiftShotgunGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: A robust hand-cannon that'll snap your wrist right off if you're not careful
+  description: crafting-menu-text-MSH
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Shotguns/makeshift_shotgun.rsi
     state: base
 
 - type: construction
-  name: makeshift smg
+  name: crafting-menu-name-MS
   id: WeaponSMGMakeshift
   graph: MakeshiftSMGGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: It can't hit the broad side of a barn.
+  description: crafting-menu-text-MS
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/SMGs/makeshift_smg.rsi
     state: base
 
 - type: construction
-  name: improvised smg
+  name: crafting-menu-name-IS
   id: WeaponSubMachineGunImprovised
   graph: ImprovisedSMGGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: It CAN hit the broad side of a barn, but not a person.
+  description: crafting-menu-text-IS
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/SMGs/improvised_smg.rsi
     state: base
 
 - type: construction
-  name: forged smg
+  name: crafting-menu-name-FS
   id: WeaponSubMachineGunForged
   graph: ForgedSMGGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: Finally, an SMG that can hit a person! Needs to be welded together, so make sure you have welding supplies!
+  description: crafting-menu-text-FS
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/SMGs/forged_smg.rsi
     state: base
 
 - type: construction
-  name: improvised smg magazine
+  name: crafting-menu-name-ISM
   id: MagazinePistolSubMachineGunImprovised
   graph: ImprovisedMagazinePistolSubMachineGunGraph
   startNode: start
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: The fact this thing works at all is nothing short of a miracle
+  description: crafting-menu-text-ISM
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/SMGs/improvised_smg_magazine.rsi
     state: base
 
 - type: construction
-  name: makeshift repeater rifle
+  name: crafting-menu-name-MRR
   id: WeaponSniperMakeshift
   graph: MakeshiftSniperGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: Too big to fit in your pocket, but small enough to fit in your bag. An odd weapon indeed.
+  description: crafting-menu-text-MRR
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Snipers/makeshift_rifle.rsi
     state: base
 
 - type: construction
-  name: improvised repeater rifle
+  name: crafting-menu-name-IRR
   id: WeaponSniperImprovised
   graph: ImprovisedSniperGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: The weird in-between cousin, too big to be stored comfortably, but also not that inaccurate.
+  description: crafting-menu-text-IRR
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Snipers/improvised_rifle.rsi
     state: base
 
 - type: construction
-  name: forged repeater rifle
+  name: crafting-menu-name-FRR
   id: WeaponSniperForged
   graph: ForgedSniperGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: The peak of tider engineering. But does need welding supplies to finish.
+  description: crafting-menu-text-FRR
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Snipers/forged_rifle.rsi
     state: base
 
 - type: construction
-  name: improvised rifle bullet
+  name: crafting-menu-name-IRB
   id: CartridgeLightRifleImprovised
   graph: ImprovisedLightRifleBulletGraph
   startNode: start
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: Better than nothing. Fairly full with phosphorus but still won't hit as hard.
+  description: crafting-menu-text-IRB
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/improvised_casing.rsi
     state: base
 
 - type: construction
-  name: improvised magazine box
+  name: crafting-menu-name-IMGB
   id: BaseMagazineBoxImprovised
   graph: ImprovisedMagazineBoxGraph
   startNode: start
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: Organization is not the strong suit of any tider. Can hold all kinds of bullets.
+  description: crafting-menu-text-IMGB
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Boxes/improvised.rsi
     state: base
 
 - type: construction
-  name: makeshift crowbar
+  name: crafting-menu-name-MC
   id: CrowbarMakeshift
   graph: MakeshiftCrowbarGraph
   startNode: start
   targetNode: tool
   category: construction-category-tools
   objectType: Item
-  description: You must be REALLY desperate..
+  description: crafting-menu-text-MC
   icon:
     sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
     state: base
 
 - type: construction
-  name: improvised crowbar
+  name: crafting-menu-name-IC
   id: CrowbarImprovised
   graph: ImprovisedCrowbarGraph
   startNode: start
   targetNode: tool
   category: construction-category-tools
   objectType: Item
-  description: Not the best, not the worst. Needs welding supplies to finish.
+  description: crafting-menu-text-IC
   icon:
     sprite: _Starlight/Objects/Tools/improvised_crowbar.rsi
     state: icon
 
 - type: construction
-  name: improvised screwdriver
+  name: crafting-menu-name-ISC
   id: ScrewdriverImprovised
   graph: ImprovisedScrewdriverGraph
   startNode: start
   targetNode: tool
   category: construction-category-tools
   objectType: Item
-  description: Not the best, not the worst. Needs welding supplies to finish.
+  description: crafting-menu-text-IC
   icon:
     sprite: _Starlight/Objects/Tools/improvised_screwdriver.rsi
     state: screwdriver
 
 - type: construction
-  name: improvised wirecutter
+  name: crafting-menu-name-IW
   id: WirecutterImprovised
   graph: ImprovisedWirecutterGraph
   startNode: start
   targetNode: tool
   category: construction-category-tools
   objectType: Item
-  description: Not the best, not the worst. Needs welding supplies to finish.
+  description: crafting-menu-text-IC
   icon:
     sprite: _Starlight/Objects/Tools/improvised_wirecutters.rsi
     state: cutters
 
 - type: construction
-  name: improvised wrench
+  name: crafting-menu-name-IWR
   id: WrenchImprovised
   graph: ImprovisedWrenchGraph
   startNode: start
   targetNode: tool
   category: construction-category-tools
   objectType: Item
-  description: Not the best, not the worst. Needs welding supplies to finish.
+  description: crafting-menu-text-IC
   icon:
     sprite: _Starlight/Objects/Tools/improvised_wrench.rsi
     state: icon
 
 - type: construction
-  name: improvised multitool
+  name: crafting-menu-name-IM
   id: MultitoolImprovised
   graph: ImprovisedMultitoolGraph
   startNode: start
   targetNode: tool
   category: construction-category-tools
   objectType: Item
-  description: The best you're gonna get. Needs welding supplies to finish.
+  description: crafting-menu-text-IM
   icon:
     sprite: _Starlight/Objects/Tools/improvised_multitool.rsi
     state: icon
 
 - type: construction
-  name: improvised omnitool
+  name: crafting-menu-name-IO
   id: OmnitoolImprovised
   graph: ImprovisedOmnitoolGraph
   startNode: start
   targetNode: tool
   category: construction-category-tools
   objectType: Item
-  description: The fact that this abomination of tiderkind actually works is nothing short of a miracle.
+  description: crafting-menu-text-IO
   icon:
     sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
     state: icon
 
 - type: construction
-  name: forged omnitool
+  name: crafting-menu-name-FO
   id: OmnitoolForged
   graph: ForgedOmnitoolGraph
   startNode: start
   targetNode: tool
   category: construction-category-tools
   objectType: Item
-  description: The better, but more psychopathic omnitool.
+  description: crafting-menu-text-FO
   icon:
     sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
     state: icon
 
 - type: construction
-  name: wooden hilt
+  name: crafting-menu-name-WH
   id: HiltWood
   graph: HiltWoodGraph
   startNode: start
   targetNode: hilt
   category: construction-category-tools
   objectType: Item
-  description: Needed in the construction of basic bladed weapons.
+  description: crafting-menu-text-WH
   icon:
     sprite: _Starlight/Objects/Misc/wooden_hilt.rsi
     state: icon
 
 - type: construction
-  name: plasteel hilt
+  name: crafting-menu-name-PH
   id: HiltPlasteel
   graph: HiltPlasteelGraph
   startNode: start
   targetNode: hilt
   category: construction-category-tools
   objectType: Item
-  description: Needed in the construction of advanced bladed weapons.
+  description: crafting-menu-text-PH
   icon:
     sprite: _Starlight/Objects/Misc/plasteel_hilt.rsi
     state: icon
 
 - type: construction
-  name: steel blade
+  name: crafting-menu-name-SB
   id: BladeSteel
   graph: BladeSteelGraph
   startNode: start
   targetNode: blade
   category: construction-category-tools
   objectType: Item
-  description: Needed in the construction of basic bladed weapons.
+  description: crafting-menu-text-SB
   icon:
     sprite: _Starlight/Objects/Misc/steel_blade.rsi
     state: icon
 
 - type: construction
-  name: plasteel blade
+  name: crafting-menu-name-PB
   id: BladePlasteel
   graph: BladePlasteelGraph
   startNode: start
   targetNode: blade
   category: construction-category-tools
   objectType: Item
-  description: Needed in the construction of advanced bladed weapons.
+  description: crafting-menu-text-PB
   icon:
     sprite: _Starlight/Objects/Misc/plasteel_blade.rsi
     state: icon
 
 - type: construction
-  name: makeshift sword
+  name: crafting-menu-name-MSW
   id: SwordMakeshift
   graph: SwordMakeshiftGraph
   startNode: start
   targetNode: sword
   category: construction-category-weapons
   objectType: Item
-  description: Big and scary, but not that dangerous.
+  description: crafting-menu-text-MSW
   icon:
     sprite: _Starlight/Objects/Weapons/Melee/makeshift_sword.rsi
     state: icon
 
 - type: construction
-  name: improvised sword
+  name: crafting-menu-name-ISW
   id: SwordImprovised
   graph: SwordImprovisedGraph
   startNode: start
   targetNode: sword
   category: construction-category-weapons
   objectType: Item
-  description: The budget option for aspiring maints knights.
+  description: crafting-menu-text-ISW
   icon:
     sprite: _Starlight/Objects/Weapons/Melee/improvised_sword.rsi
     state: icon
 
 - type: construction
-  name: forged sword
+  name: crafting-menu-name-FSW
   id: SwordForged
   graph: SwordForgedGraph
   startNode: start
   targetNode: sword
   category: construction-category-weapons
   objectType: Item
-  description: Now THAT'S a weapon! Best paired with equally shiny armor, needs welding.
+  description: crafting-menu-text-FSW
   icon:
     sprite: _Starlight/Objects/Weapons/Melee/forged_sword.rsi
     state: icon
 
 - type: construction
-  name: dawnbreaker
+  name: crafting-menu-name-DSW
   id: SwordFlaming
   graph: SwordFlamingGraph
   startNode: start
   targetNode: sword
   category: construction-category-weapons
   objectType: Item
-  description: Burn away the unholdy heretics with this weapon of justice!
+  description: crafting-menu-text-DSW
   icon:
     sprite: _Starlight/Objects/Weapons/Melee/dawnbreaker.rsi
     state: icon
 
 - type: construction
-  name: tidebreaker
+  name: crafting-menu-name-TSW
   id: ClaymoreForged
   graph: ClaymoreForgedGraph
   startNode: start
   targetNode: sword
   category: construction-category-weapons
   objectType: Item
-  description: Crush those who oppose you!
+  description: crafting-menu-text-TSW
   icon:
     sprite: _Starlight/Objects/Weapons/Melee/tidebreaker.rsi
     state: icon
 
 - type: construction
-  name: improvised shield
+  name: crafting-menu-name-ISH
   id: ImprovisedShield
   graph: ImprovisedShieldGraph
   startNode: start
   targetNode: shield
   category: construction-category-weapons
   objectType: Item
-  description: Keep a solid sheet of metal between you and your enemies. Needs welding supplies to finish.
+  description: crafting-menu-text-ISH
   icon:
     sprite: _Starlight/Objects/Weapons/Melee/improvised_shield.rsi
     state: base
 
 - type: construction
-  name: forged buckler shield
+  name: crafting-menu-name-FSH
   id: ForgedShieldBuckler
   graph: ForgedShieldBucklerGraph
   startNode: start
   targetNode: shield
   category: construction-category-weapons
   objectType: Item
-  description: Lightweight plasteel shield forged by the best tidersmiths, does a good job of keeping you alive. Needs welding supplies to finish.
+  description: crafting-menu-text-FSH
   icon:
     sprite: _Starlight/Objects/Weapons/Melee/forged_buckler_shield.rsi
     state: base
 
 - type: construction
-  name: forged tower shield
+  name: crafting-menu-name-FSHT
   id: ForgedShieldTower
   graph: ForgedShieldTowerGraph
   startNode: start
   targetNode: shield
   category: construction-category-weapons
   objectType: Item
-  description: Heavily armored plasteel shield, the extra plating and size making it more durable but heavier to hold. Needs welding supplies to finish.
+  description: crafting-menu-text-FSHT
   icon:
     sprite: _Starlight/Objects/Weapons/Melee/forged_tower_shield.rsi
     state: base
 
 - type: construction
-  name: paladin shield
+  name: crafting-menu-name-PSH
   id: PaladinShield
   graph: PaladinShieldGraph
   startNode: start
   targetNode: shield
   category: construction-category-weapons
   objectType: Item
-  description: Sturdy yet light in your hands, perfectly weighted. Shaped into perfection for sword fights, among other Paladins. Needs welding supplies to finish.
+  description: crafting-menu-text-PSH
   icon:
     sprite: _Starlight/Objects/Weapons/Melee/paladin_shield.rsi
     state: base
 
 - type: construction
-  name: paladin greatshield
+  name: crafting-menu-name-PSHG
   id: PaladinShieldGreat
   graph: PaladinShieldGreatGraph
   startNode: start
   targetNode: shield
   category: construction-category-weapons
   objectType: Item
-  description: Become the wall you want to be. Exeedingly heavy to the point of needing a makeshift harness to simply hold. Needs welding supplies to finish.
+  description: crafting-menu-text-PSHG
   icon:
     sprite: _Starlight/Objects/Weapons/Melee/paladin_greatshield.rsi
     state: base
 
 - type: construction
-  name: makeshift vest
+  name: crafting-menu-name-MVT
   id: ClothingOuterArmorMakeshift
   graph: ClothingOuterArmorMakeshiftGraph
   startNode: start
   targetNode: vest
   category: construction-category-weapons
   objectType: Item
-  description: Arguably nothing is better than this. Scrap metal cobbled together with LV cables to TRY and protect you.
+  description: crafting-menu-text-MVT
   icon:
     sprite: _Starlight/Clothing/OuterClothing/Armor/makeshift.rsi
     state: icon
 
 - type: construction
-  name: improvised vest
+  name: crafting-menu-name-IVT
   id: ClothingOuterArmorImprovised
   graph: ClothingOuterArmorImprovisedGraph
   startNode: start
   targetNode: vest
   category: construction-category-weapons
   objectType: Item
-  description: Actually better than nothing, but still a bit on the heavy side, good at keeping you from getting stabbed.
+  description: crafting-menu-text-IVT
   icon:
     sprite: _Starlight/Clothing/OuterClothing/Armor/improvised.rsi
     state: icon
 
 - type: construction
-  name: forged vest
+  name: crafting-menu-name-FVT
   id: ClothingOuterArmorForged
   graph: ClothingOuterArmorForgedGraph
   startNode: start
   targetNode: vest
   category: construction-category-weapons
   objectType: Item
-  description: A high quality armor vest based upon old earth mongolian designs, it is very effective at what it does.
+  description: crafting-menu-text-FVT
   icon:
     sprite: _Starlight/Clothing/OuterClothing/Armor/forged.rsi
     state: icon
 
 - type: construction
-  name: paladin suit
+  name: crafting-menu-name-PVT
   id: ClothingOuterArmorPaladin
   graph: ClothingOuterArmorPaladinGraph
   startNode: start
   targetNode: vest
   category: construction-category-weapons
   objectType: Item
-  description: The best a tidersmith can make! Don this suit of armor and deal swift justice to evildoers! Or.. do the evil yourself, I won't judge.
+  description: crafting-menu-text-PVT
   icon:
     sprite: _Starlight/Clothing/OuterClothing/Armor/paladin.rsi
     state: icon
 
 - type: construction
-  name: makeshift helmet
+  name: crafting-menu-name-MVTH
   id: ClothingHeadHelmetMakeshift
   graph: ClothingHeadHelmetMakeshiftGraph
   startNode: start
   targetNode: helmet
   category: construction-category-weapons
   objectType: Item
-  description: Nothing is, somehow, still better than this. Provides minimal protection, MIGHT save your head from a bullet.
+  description: crafting-menu-text-MVTH
   icon:
     sprite: _Starlight/Clothing/Head/Helmets/makeshift.rsi
     state: icon
 
 - type: construction
-  name: improvised helmet
+  name: crafting-menu-name-IVTH
   id: ClothingHeadHelmetImprovised
   graph: ClothingHeadHelmetImprovisedGraph
   startNode: start
   targetNode: helmet
   category: construction-category-weapons
   objectType: Item
-  description: Better than nothing, by a slim margin.
+  description: crafting-menu-text-IVTH
   icon:
     sprite: _Starlight/Clothing/Head/Helmets/improvised.rsi
     state: icon
 
 - type: construction
-  name: forged helmet
+  name: crafting-menu-name-FVTH
   id: ClothingHeadHelmetForged
   graph: ClothingHeadHelmetForgedGraph
   startNode: start
   targetNode: helmet
   category: construction-category-weapons
   objectType: Item
-  description: Almost the best a tidersmith can offer, it'll reliably stop a bullet and protect your head from being smashed in.
+  description: crafting-menu-text-FVTH
   icon:
     sprite: _Starlight/Clothing/Head/Helmets/forged.rsi
     state: icon
 
 - type: construction
-  name: paladin helmet
+  name: crafting-menu-name-PVTH
   id: ClothingHeadHelmetPaladin
   graph: ClothingHeadHelmetPaladinGraph
   startNode: start
   targetNode: helmet
   category: construction-category-weapons
   objectType: Item
-  description: The best a tidersmith can offer, no holy crusade is fit to go on without a matching helmet!
+  description: crafting-menu-text-PVTH
   icon:
     sprite: _Starlight/Clothing/Head/Helmets/paladin.rsi
     state: icon
