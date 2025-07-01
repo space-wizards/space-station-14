@@ -31,6 +31,11 @@
   equipment:
     outerClothing: ClothingOuterWinterBrigmedic
 
+- type: loadout
+  id: BrigmedicBomber
+  equipment:
+    outerClothing: ClothingOuterCoatBomberBrigmed #imp
+
 # Back
 - type: loadout
   id: BrigmedicBackpack

@@ -293,6 +293,31 @@
         Heat: 0.75
   - type: AllowSuitStorage
 
+- type: entity
+  parent: [ClothingOuterCoatBomberBlack, BaseSecurityContraband] # security contraband because this one's armored
+  id: ClothingOuterCoatBomberBrigmed
+  name: brigmedic bomber jacket
+  description: A white bomber jacket with kevlar lining, worn with the sleeves pushed up. Embroidered on the back is a reminder to do harm only some of the time. If you're feeling bold, you can loosen how it fits with a knife.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_brigmed.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_brigmed.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingOuterCoatBomberBrigmedLoose
+      amount: 1
+  - type: Armor # identical to the base-game armored medical gown
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.85
+        Piercing: 0.65
+        Heat: 0.85
+        Caustic: 0.75
+  - type: AllowSuitStorage
+
 # You can adjust your bomber jacket to fit loose around the shoulders by butchering it, or change it back the same way - think of it as clothing alterations
 - type: entity
   parent: ClothingOuterCoatBomberBlack
@@ -436,6 +461,22 @@
     butcheringType: Knife
     spawned:
     - id: ClothingOuterCoatBomberSecurity
+      amount: 1
+
+- type: entity
+  parent: ClothingOuterCoatBomberBrigmed
+  id: ClothingOuterCoatBomberBrigmedLoose
+  name: brigmedic bomber jacket (loose)
+  description: A white bomber jacket with kevlar lining, worn with the sleeves pushed up. Embroidered on the back is a reminder to do harm only some of the time. If you're feeling modest, you can tighten how it fits with a knife.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_brigmed_loose.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_brigmed_loose.rsi
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingOuterCoatBomberBrigmed
       amount: 1
 
 - type: entity
