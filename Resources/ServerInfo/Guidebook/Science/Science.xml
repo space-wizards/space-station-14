@@ -1,6 +1,6 @@
 <Document>
 # Science
-[color=#c96dbf]Science[/color], often called Research and Development, is a job made up of both generating research points to unlock new technologies as well as using said technologies to produce new items at lathes to help out the station.
+[color=#c96dbf]Science[/color], often called Research and Development, is a job made up of both generating research points to unlock new technologies and use said technologies to produce new items at lathes to help out the station.
 
 ## Personnel
 [color=#c96dbf]Science[/color]'s staff is made up of Research Assistants and Scientists. [color=#c96dbf]Science[/color] is run by the Research Director.
@@ -9,7 +9,7 @@
    <GuideEntityEmbed Entity="ToyFigurineScientist" Caption="Scientist"/>
    <GuideEntityEmbed Entity="ToyFigurineResearchDirector" Caption="RD"/>
   </Box>
-  
+
 ## Technologies
   <Box>
     <GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/>
