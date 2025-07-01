@@ -16,8 +16,8 @@
   - NpcFactionMember
   # traits
   # - LegsParalyzed (you get healed)
-  - LightweightDrunk
   - BlackAndWhiteOverlay
+  - LightweightDrunk
   - Muted
   - Narcolepsy
   - Pacified
