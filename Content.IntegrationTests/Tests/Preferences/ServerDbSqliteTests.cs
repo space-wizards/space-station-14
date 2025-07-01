@@ -48,8 +48,6 @@ namespace Content.IntegrationTests.Tests.Preferences
                 Species = "Human",
                 CustomSpecieName = "", // Starlight
                 Age = 21,
-                Width = 1, //starlight
-                Height = 1, //starlight
                 Appearance = new(
                     "Afro",
                     Color.Aqua,
@@ -60,7 +58,9 @@ namespace Content.IntegrationTests.Tests.Preferences
                     Color.Azure,
                     false, //starlight
                     Color.Beige,
-                    new())
+                    new(),
+                    1, //starlight
+                    1) //starlight
             };
         }
 

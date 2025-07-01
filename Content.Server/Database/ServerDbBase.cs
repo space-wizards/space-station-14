@@ -284,8 +284,6 @@ namespace Content.Server.Database
                 profile.Species,
                 profile.StarLightProfile?.CustomSpecieName ?? "", // Starlight
                 profile.Age,
-                profile.Width, //starlight
-                profile.Height, //starlight
                 sex,
                 gender,
                 new HumanoidCharacterAppearance
@@ -299,7 +297,9 @@ namespace Content.Server.Database
                     Color.FromHex(profile.EyeColor),
                     profile.EyeGlowing, //starlight
                     Color.FromHex(profile.SkinColor),
-                    markings
+                    markings,
+                    profile.Width, //starlight
+                    profile.Height //starlight
                 ),
                 spawnPriority,
                 jobs,
@@ -328,8 +328,8 @@ namespace Content.Server.Database
             profile.StarLightProfile ??= new StarLightModel.StarLightProfile(); // Starlight
             profile.StarLightProfile.CustomSpecieName = humanoid.CustomSpecieName; // Starlight
             profile.Age = humanoid.Age;
-            profile.Width = humanoid.Width; //starlight
-            profile.Height = humanoid.Height; //starlight
+            profile.Width = appearance.Width; //starlight
+            profile.Height = appearance.Height; //starlight
             profile.Sex = humanoid.Sex.ToString();
             profile.Gender = humanoid.Gender.ToString();
             profile.HairName = appearance.HairStyleId;

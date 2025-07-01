@@ -231,12 +231,12 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         humanoid.Sex = profile.Sex;
         humanoid.Gender = profile.Gender;
         humanoid.Age = profile.Age;
-        humanoid.Width = profile.Width; //starlight
-        humanoid.Height = profile.Height; //starlight
         humanoid.Species = profile.Species;
         humanoid.SkinColor = profile.Appearance.SkinColor; //starlight
         humanoid.EyeColor = profile.Appearance.EyeColor;
         humanoid.EyeGlowing = profile.Appearance.EyeGlowing;
+        humanoid.Width = profile.Appearance.Width; //starlight
+        humanoid.Height = profile.Appearance.Height; //starlight
 
         UpdateSprite((uid, humanoid, Comp<SpriteComponent>(uid)));
     }

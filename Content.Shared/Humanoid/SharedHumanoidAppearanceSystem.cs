@@ -451,6 +451,9 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         var ev = new EyeColorInitEvent(); //starlight
         RaiseLocalEvent(uid, ref ev); //starlight
 
+        humanoid.Width = profile.Appearance.Width; //starlight
+        humanoid.Height = profile.Appearance.Height; //starlight
+
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
 
         humanoid.MarkingSet.Clear();
@@ -515,9 +518,6 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         humanoid.Age = profile.Age;
-        
-        humanoid.Width = profile.Width; //starlight
-        humanoid.Height = profile.Height; //starlight
 
         humanoid.CustomSpecieName = profile.CustomSpecieName; // Starlight
 
