@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Handheld geiger counters can now by heard by everyone nearby.
-    type: Tweak
-  id: 8213
-  time: '2025-04-17T11:24:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30463
-- author: Centronias
-  changes:
-  - message: Tank harnesses can be made at lathes, similar to utility belts.
-    type: Add
-  - message: Tank harnesses take up a 1x2 space in inventories, half of their previous
-      2x2.
-    type: Tweak
-  id: 8214
-  time: '2025-04-17T12:33:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35590
-- author: Jacktastic09
-  changes:
-  - message: Added the Solid Headband, available via hacked ClothesMate vending machines
-    type: Add
-  id: 8215
-  time: '2025-04-17T13:43:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36650
 - author: Hoodie42
   changes:
   - message: The banjo can now be worn on the back or suit storage slots.
@@ -3886,3 +3862,29 @@
   id: 8725
   time: '2025-06-28T14:01:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38479
+- author: slarticodefast
+  changes:
+  - message: Fixed smart equip not being able to insert items into item slots (for
+      example for the sabre sheath).
+    type: Fix
+  id: 8726
+  time: '2025-06-29T14:33:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38655
+- author: BramvanZijp
+  changes:
+  - message: Added the custom door remote, it does not have any built-in access, instead
+      inheriting the ID access that the user has.
+    type: Add
+  - message: The captain's locker now comes with a custom door remote instead of a
+      command door remote.
+    type: Tweak
+  id: 8727
+  time: '2025-06-29T16:21:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35536
+- author: slarticodefast
+  changes:
+  - message: Fixed water cups not being able to be picked up from water coolers.
+    type: Fix
+  id: 8728
+  time: '2025-07-01T10:25:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38681
