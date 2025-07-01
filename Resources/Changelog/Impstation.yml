@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Mail bags can store mail.
-    type: Fix
-  id: 1442
-  time: '2025-03-31T15:43:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2161
-- author: honeyed-lemons
-  changes:
-  - message: Xeno has had its missing sink in the kitchen added!
-    type: Tweak
-  id: 1443
-  time: '2025-04-01T04:18:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2166
 - author: mqole, theqwat, Darkmajia, EpicToast, hivehum, sageu, AvianMaiden
   changes:
   - message: ADDED JESTERS
@@ -4241,3 +4227,18 @@
   id: 1941
   time: '2025-07-01T07:13:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2917
+- author: Mousetrinity
+  changes:
+  - message: moths no longer show heel when facing a specific direction
+    type: Fix
+  id: 1942
+  time: '2025-07-01T07:21:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2929
+- author: AvianMaiden
+  changes:
+  - message: A new jumpsuit to the CE's loadout, for all those hard-workin' supervisors
+      who need to be both comfy and safe.
+    type: Add
+  id: 1943
+  time: '2025-07-01T07:22:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2923
