@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Fake_Human_First Fake_Human_Last has been finally brought to justice.
-    type: Fix
-  id: 1439
-  time: '2025-03-31T12:48:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2144
-- author: Mousetrinity
-  changes:
-  - message: Virology and genetics threads are now in a doctor's loadout! Limited
-      to jumpsuits, jumpskirts and winter coats.
-    type: Add
-  id: 1440
-  time: '2025-03-31T12:49:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2137
 - author: mqole
   changes:
   - message: Removed errant pixels from lots of clothes. Please continue to report
@@ -4241,3 +4226,19 @@
   id: 1938
   time: '2025-07-01T02:47:37.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2910
+- author: astral_amy
+  changes:
+  - message: Added some funny purple to Bedlam. Just a little bit.
+    type: Add
+  - message: Made a small number of qualtiy-of-life adjustments to Bedlam.
+    type: Tweak
+  id: 1939
+  time: '2025-07-01T07:11:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2933
+- author: Mousetrinity
+  changes:
+  - message: you can now no longer unlock warden before detective
+    type: Tweak
+  id: 1940
+  time: '2025-07-01T07:11:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2925
