@@ -325,7 +325,9 @@ public sealed partial class NPCSteeringSystem
         // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
         CheckPath(uid, steering, xform, needsPath, targetDistance);
 
-        bool arrivedFinal = arrived && steering.CurrentPath.Count == 0; // Goobstation
+        // Goobstation
+        var finalInRange = targetDistance != null && targetDistance < steering.Range;
+        var arrivedFinal = arrived && steering.CurrentPath.Count == 0 && finalInRange;
 
         // If we don't have a path yet then do nothing; this is to avoid stutter-stepping if it turns out there's no path
         // available but we assume there was.
@@ -339,40 +341,75 @@ public sealed partial class NPCSteeringSystem
             return false;
         }
 
-        var input = direction.Normalized();
-        var tickMovement = moveSpeed * frameTime;
+        // <Goobstation>
+        var moveType = MovementType.MovingToTarget;
 
-        // We have the input in world terms but need to convert it back to what movercontroller is doing.
-        input = offsetRot.RotateVec(input);
-        var norm = input.Normalized();
-        var weight = MapValue(direction.Length(), tickMovement * 0.5f, tickMovement * 0.75f);
+        var realAccel = acceleration * moveSpeed;
+        var frameAccel = realAccel * frameTime;
 
-        if (!arrivedFinal) // Goobstation
-            ApplySeek(interest, norm, weight);
+        // check our tangential velocity
+        var velLen = body.LinearVelocity.Length();
+        var normVel = direction * Vector2.Dot(body.LinearVelocity, direction) / direction.LengthSquared();
+        var tgVel = body.LinearVelocity - normVel;
 
-        // Prefer our current direction
-        if (weight > 0f && body.LinearVelocity.LengthSquared() > 0f)
+        // we're near final node but haven't braked, do so
+        if (arrivedFinal && steering.InRangeMaxSpeed != null)
         {
-            // <Goobstation modified>
-            var sameDirectionWeight = weight * 0.1f;
-            norm = offsetRot.RotateVec(body.LinearVelocity.Normalized()); // fix TODO: upstream this
-            if (arrivedFinal)
-            {
-                // attempt to prevent jitter on arrival from overbraking in yes-grav
-                const float easeInFactor = 1.5f; // scary magic number
-                var cvel = body.LinearVelocity;
-                _mover.Friction(0f, frameTime, friction, ref cvel);
-                var postFrictionVel = cvel.Length();
-                var frameAccel = acceleration * frameTime * moveSpeed;
-                moveMultiplier = MapValue(postFrictionVel, 0f, frameAccel * easeInFactor);
-                norm *= -1f;
-            }
-            // </Goobstation modified>
+            // how much distance we'll pass before hitting our desired max speed
+            var brakePath = (velLen - steering.InRangeMaxSpeed.Value) / friction;
+            var hardBrake = brakePath > MathF.Min(0.5f, steering.Range); // hard brake if it takes more than half a tile
 
-            ApplySeek(interest, norm, sameDirectionWeight);
+            moveType = hardBrake ? MovementType.Braking : MovementType.Coasting;
+        }
+        else
+        {
+            const float circlingTolerance = 0.5f;
+
+            var dirLen = direction.Length();
+            // tangentially brake if we'll be spiraling outwards at our current tangential velocity
+            var tangentialBrake = !arrived && realAccel * circlingTolerance < tgVel.LengthSquared() / dirLen;
+
+            moveType = tangentialBrake ? MovementType.BrakingTangential : MovementType.MovingToTarget;
         }
 
+        switch (moveType)
+        {
+            case MovementType.MovingToTarget:
+                ApplySeek(interest, offsetRot.RotateVec(direction.Normalized()), 1f);
+                break;
+            case MovementType.Braking:
+                if (velLen > 0f)
+                {
+                    var cvel = body.LinearVelocity;
+                    _mover.Friction(0f, frameTime, friction, ref cvel);
+                    // slow down our braking if we would overbrake in this frame
+                    moveMultiplier = MapValue(cvel.Length(), 0f, frameAccel);
+                    ApplySeek(interest, -offsetRot.RotateVec(body.LinearVelocity.Normalized()), 1f);
+                }
+                break;
+            case MovementType.BrakingTangential:
+                if (velLen > 0f)
+                {
+                    moveMultiplier = MapValue(tgVel.Length(), 0f, frameAccel);
+                    ApplySeek(interest, -offsetRot.RotateVec(tgVel.Normalized()), tgVel.Length() / body.LinearVelocity.Length());
+                }
+                break;
+            case MovementType.Coasting:
+                moveMultiplier = 0f;
+                break;
+        }
+        // </Goobstation>
+
         return true;
+    }
+
+    // Goobstation - used in TrySeek()
+    private enum MovementType
+    {
+        MovingToTarget,
+        Braking,
+        BrakingTangential,
+        Coasting
     }
 
     private void ResetStuck(NPCSteeringComponent component, EntityCoordinates ourCoordinates)
