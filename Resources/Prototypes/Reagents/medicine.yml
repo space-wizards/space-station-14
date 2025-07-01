@@ -104,7 +104,7 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:GenericStatusEffect
+      - !type:ModifyStatusEffect
         key: Drunk
         time: 6.0
         type: Remove

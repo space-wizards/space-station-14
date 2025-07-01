@@ -1,9 +1,17 @@
 ﻿- type: entity
-  parent: [ StatusEffectStutter, StatusEffectDrunk ]
+  parent: MobStatusEffectBase
+  id: BloodstreamStatusEffectBase
+  abstract: true
+  components:
+    - type: StatusEffect
+      whitelist:
+        components:
+          - Bloodstream
+
+- type: entity
+  parent: [ BloodstreamStatusEffectBase ]
   id: StatusEffectBloodloss
   name: bloodloss
   components:
-  - type: StatusEffect
-    whitelist:
-      components:
-        - Bloodstream
+    - type: StutterStatusEffect
+    - type: DrunkStatusEffect

@@ -2,7 +2,6 @@ using System.Text;
 using Content.Server.Speech.Components;
 using Content.Shared.Drunk;
 using Content.Shared.Speech.EntitySystems;
-using Content.Shared.StatusEffect;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -11,28 +10,26 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class SlurredSystem : SharedSlurredSystem
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly SharedStatusEffectsSystem _status = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    private const string SlurKey = "SlurredSpeech";
-
     public override void Initialize()
     {
         SubscribeLocalEvent<SlurredAccentComponent, AccentGetEvent>(OnAccent);
+        SubscribeLocalEvent<SlurStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
+        SubscribeLocalEvent<SlurStatusEffectComponent, StatusEffectRemovedEvent>(OnStatusRemoved);
     }
 
-    public override void DoSlur(EntityUid uid, TimeSpan time, StatusEffectsComponent? status = null)
+    private void OnStatusApplied(Entity<SlurStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
     {
-        if (!Resolve(uid, ref status, false))
-            return;
+        EnsureComp<SlurredAccentComponent>(args.Target);
+    }
 
-        if (!_statusEffectsSystem.HasStatusEffect(uid, SlurKey, status))
-            _statusEffectsSystem.TryAddStatusEffect<SlurredAccentComponent>(uid, SlurKey, time, true, status);
-        else
-            _statusEffectsSystem.TryAddTime(uid, SlurKey, time, status);
+    private void OnStatusRemoved(Entity<SlurStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
+    {
+        if (!_status.HasEffectComp<SlurredAccentComponent>(args.Target))
+            RemComp<SlurredAccentComponent>(args.Target);
     }
 
     /// <summary>
@@ -40,7 +37,7 @@ public sealed class SlurredSystem : SharedSlurredSystem
     /// </summary>
     private float GetProbabilityScale(EntityUid uid)
     {
-        if (!_status.TryGetTime(uid, SharedDrunkSystem.Drunk, out var time))
+        if (!_status.TryGetMaxTime<DrunkStatusEffectComponent>(uid, out var time))
             return 0;
 
         // This is a magic number. Why this value? No clue it was made 3 years before I refactored this.

@@ -174,11 +174,6 @@ namespace Content.Server.Body.Components
         [ViewVariables]
         public Entity<SolutionComponent>? TemporarySolution;
 
-        /// <summary>
-        /// Variable that stores the amount of status time added by having a low blood level.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public TimeSpan StatusTime;
 
         [DataField]
         public ProtoId<AlertPrototype> BleedingAlert = "Bleed";

@@ -8,6 +8,7 @@ namespace Content.Shared.Drunk;
 public abstract class SharedDrunkSystem : EntitySystem
 {
     public static EntProtoId Drunk = "StatusEffectDrunk";
+    public static EntProtoId Woozy = "StatusEffectWoozy";
 
     /* I have no clue why this magic number was chosen, I copied it from slur system and needed it for the overlay
     If you have a more intelligent magic number be my guest to completely explode this value.
@@ -21,30 +22,16 @@ public abstract class SharedDrunkSystem : EntitySystem
     {
         SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
         SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectRemovedEvent>(OnStatusRemoved);
+        SubscribeLocalEvent<LightweightDrunkComponent, DrunkEvent>(OnLightweightDrinking);
     }
 
     public void TryApplyDrunkenness(EntityUid uid,
-        TimeSpan boozePower,
-        bool applySlur = true)
+        TimeSpan boozePower)
     {
-        // TODO: this should probably raise an event.
-        if (TryComp<LightweightDrunkComponent>(uid, out var trait))
-            boozePower *= trait.BoozeStrengthMultiplier;
+        var ev = new DrunkEvent(boozePower);
+        RaiseLocalEvent(uid, ref ev);
 
-        if (applySlur)
-            _slurredSystem.DoSlur(uid, boozePower);
-
-        _status.TryAddStatusEffect(uid, Drunk, boozePower);
-    }
-
-    public void TryRemoveDrunkenness(EntityUid uid)
-    {
-        _status.TryRemoveStatusEffect(uid, Drunk);
-    }
-
-    public void TryRemoveDrunkennessTime(EntityUid uid, TimeSpan time)
-    {
-        _status.TryAddTime(uid, Drunk, -time);
+        _status.TryAddStatusEffect(uid, Drunk, ev.Duration);
     }
 
     private void OnStatusApplied(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
@@ -57,4 +44,12 @@ public abstract class SharedDrunkSystem : EntitySystem
         if (!_status.HasEffectComp<DrunkStatusEffectComponent>(args.Target))
             RemComp<DrunkComponent>(args.Target);
     }
+
+    private void OnLightweightDrinking(Entity<LightweightDrunkComponent> entity, ref DrunkEvent args)
+    {
+        args.Duration *= entity.Comp.BoozeStrengthMultiplier;
+    }
+
+    [ByRefEvent]
+    public record struct DrunkEvent(TimeSpan Duration);
 }

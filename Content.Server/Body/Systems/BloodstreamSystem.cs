@@ -149,9 +149,6 @@ public sealed class BloodstreamSystem : EntitySystem
                 // The effect is applied in a way that it will never be cleared without being healthy.
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
                 _status.TryAddStatusEffect(uid, Bloodloss, bloodstream.UpdateInterval * 2);
-
-                // storing the drunk and stutter time so we can remove it independently from other effects additions
-                bloodstream.StatusTime += bloodstream.UpdateInterval * 2;
             }
             else if (!_mobStateSystem.IsDead(uid))
             {
@@ -162,10 +159,7 @@ public sealed class BloodstreamSystem : EntitySystem
                     ignoreResistances: true, interruptsDoAfters: false);
 
                 // Remove the drunk effect when healthy. Should only remove the amount of drunk and stutter added by low blood level
-                _status.TryAddTime(uid, Bloodloss, - bloodstream.StatusTime);
-                _status.TryAddTime(uid, Bloodloss, - bloodstream.StatusTime);
-                // Reset the drunk and stutter time to zero
-                bloodstream.StatusTime = TimeSpan.Zero;
+                _status.TryRemoveStatusEffect(uid, Bloodloss);
             }
         }
     }

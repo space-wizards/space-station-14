@@ -11,12 +11,6 @@ public sealed partial class Drunk : EntityEffect
     [DataField]
     public TimeSpan BoozePower = TimeSpan.FromSeconds(3f);
 
-    /// <summary>
-    ///     Whether speech should be slurred.
-    /// </summary>
-    [DataField]
-    public bool SlurSpeech = true;
-
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-drunk", ("chance", Probability));
 
@@ -28,6 +22,6 @@ public sealed partial class Drunk : EntityEffect
             boozePower *= reagentArgs.Scale.Float();
 
         var drunkSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedDrunkSystem>();
-        drunkSys.TryApplyDrunkenness(args.TargetEntity, boozePower, SlurSpeech);
+        drunkSys.TryApplyDrunkenness(args.TargetEntity, boozePower);
     }
 }
