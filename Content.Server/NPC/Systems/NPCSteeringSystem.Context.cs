@@ -384,14 +384,16 @@ public sealed partial class NPCSteeringSystem
                     _mover.Friction(0f, frameTime, friction, ref cvel);
                     // slow down our braking if we would overbrake in this frame
                     moveMultiplier = MapValue(cvel.Length(), 0f, frameAccel);
-                    ApplySeek(interest, -offsetRot.RotateVec(body.LinearVelocity.Normalized()), 1f);
+                                        // brake                                 // normalise
+                    ApplySeek(interest, -offsetRot.RotateVec(body.LinearVelocity / velLen), 1f);
                 }
                 break;
             case MovementType.BrakingTangential:
                 if (velLen > 0f)
                 {
                     moveMultiplier = MapValue(tgVel.Length(), 0f, frameAccel);
-                    ApplySeek(interest, -offsetRot.RotateVec(tgVel.Normalized()), tgVel.Length() / body.LinearVelocity.Length());
+                                        // brake
+                    ApplySeek(interest, -offsetRot.RotateVec(tgVel.Normalized()), tgVel.Length() / velLen);
                 }
                 break;
             case MovementType.Coasting:
