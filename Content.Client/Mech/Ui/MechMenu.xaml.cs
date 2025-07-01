@@ -28,7 +28,7 @@ public sealed partial class MechMenu : FancyWindow
         MechView.SetEntity(uid);
         _mech = uid;
 
-        NameLineEdit.Text = _ent.GetComponent<MetaDataComponent>(_mech).EntityName;
+        NameLabel.Text = _ent.GetComponent<MetaDataComponent>(_mech).EntityName;
     }
 
     public void UpdateMechStats()
