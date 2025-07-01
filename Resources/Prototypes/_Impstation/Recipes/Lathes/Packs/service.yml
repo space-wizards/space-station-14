@@ -5,6 +5,7 @@
   recipes:
     - UvLightTube
     - LightReplacer
+    - GlowstickRed
 
 - type: latheRecipePack
   id: ImpServiceStatic
