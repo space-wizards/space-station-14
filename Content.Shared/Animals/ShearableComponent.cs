@@ -89,8 +89,6 @@ public sealed partial class ShearableComponent : Component
         WrongTool,
         /// <summary> The configured solution does not exist, likely a typo in the yaml file. </summary>
         SolutionError,
-        /// <summary> The configured target product does not exist or is not stackable. </summary>
-        StackError,
         /// <summary> There is not enough solution in the animal to form a single target product. </summary>
         InsufficientSolution,
         /// <summary> The ShearedProductID did not resolve to an existing prototype. It might not exist. </summary>
