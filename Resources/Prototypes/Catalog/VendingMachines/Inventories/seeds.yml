@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: vendingMachineInventory
   id: MegaSeedServitorInventory
   startingInventory:
@@ -40,7 +41,7 @@
     WatermelonSeeds: 5
   contrabandInventory:
     TobaccoSeeds: 2
-    KronkusSeeds: 2
+    KronkusSeeds: 2 # Ronstation - modification
     FoodSnackSemki: 2
   emaggedInventory:
     FlyAmanitaSeeds: 1
