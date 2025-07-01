@@ -27,3 +27,69 @@
   - ERT2
   - ERT3
   obeysTo: laws-owner-beings
+
+#Servant
+- type: siliconLaw
+  id: Servant1
+  order: 1
+  lawString: law-servant-1
+
+- type: siliconLaw
+  id: Servant2
+  order: 2
+  lawString: law-servant-2
+
+- type: siliconLaw
+  id: Servant3
+  order: 3
+  lawString: law-servant-3
+
+- type: siliconLaw
+  id: Servant4
+  order: 4
+  lawString: law-servant-4
+
+- type: siliconLawset
+  id: ServantLawset
+  laws:
+  - Servant1
+  - Servant2
+  - Servant3
+  - Servant4
+  obeysTo: laws-owner-station
+
+#Hivemind
+- type: siliconLaw
+  id: Hivemind1
+  order: 1
+  lawString: law-hivemind-1
+
+- type: siliconLaw
+  id: Hivemind2
+  order: 2
+  lawString: law-hivemind-2
+
+- type: siliconLaw
+  id: Hivemind3
+  order: 3
+  lawString: law-hivemind-3
+
+- type: siliconLaw
+  id: Hivemind4
+  order: 4
+  lawString: law-hivemind-4
+
+- type: siliconLaw
+  id: Hivemind5
+  order: 5
+  lawString: law-hivemind-5
+
+- type: siliconLawset
+  id: HivemindLawset
+  laws:
+  - Hivemind1
+  - Hivemind2
+  - Hivemind3
+  - Hivemind4
+  - Hivemind5
+  obeysTo: laws-owner-station

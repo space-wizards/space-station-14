@@ -519,3 +519,5 @@
     NutimovLawset: 0.5
     Drone: 0.5
     Ninja: 0.25
+    HivemindLawset: 1 # DS14-lawset
+    ServantLawset: 1 # DS14-lawset
