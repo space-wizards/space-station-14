@@ -15,6 +15,7 @@
     ClothingHeadHatGladiator: 1
     ClothingHeadHatJester: 1
     ClothingHeadHatJesterAlt: 1
+    ClothingHeadHatMusicianShako: 2 # imp
     ClothingHeadHatPumpkin: 2
     ClothingHeadHatPwig: 2
     ClothingHeadHatRedRacoon: 2
@@ -81,6 +82,7 @@
     ClothingUniformJumpsuitKimono: 1
     ClothingUniformMrSpaceWide: 2 #imp
     ClothingUniformMrSpaceWideSkirt: 2 #imp
+    ClothingUniformJumpsuitMusicianMarchingBand: 2 # imp
     FoodPoppy: 1
     ClothingOuterWhitePoncho: 2 #imp
     ClothingOuterBlackPoncho: 2 #imp

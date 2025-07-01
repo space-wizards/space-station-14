@@ -19,8 +19,19 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtMusician
 
+- type: loadout
+  id: MusicianMarchingBand
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMusicianMarchingBand # imp
+
 # Outerclothing
 - type: loadout
   id: MusicianWintercoat
   equipment:
     outerClothing: ClothingOuterWinterMusician
+
+# Head
+- type: loadout
+  id: MusicianShako
+  equipment:
+    head: ClothingHeadHatMusicianShako # imp

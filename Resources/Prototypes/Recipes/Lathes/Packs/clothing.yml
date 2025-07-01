@@ -149,6 +149,8 @@
   - ClothingUniformJumpsuitMime
   - ClothingUniformJumpskirtMime
   - ClothingUniformJumpsuitMusician
+  - ClothingUniformJumpsuitMusicianMarchingBand # imp
+  - ClothingHeadHatMusicianShako # imp
 
 - type: latheRecipePack
   parent:

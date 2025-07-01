@@ -696,6 +696,7 @@
   - MusicianJumpskirt
   - ClothingUniformMrSpaceWide #imp
   - ClothingUniformMrSpaceWideSkirt #imp
+  - MusicianMarchingBand #imp
 
 - type: loadoutGroup
   id: MusicianOuterClothing

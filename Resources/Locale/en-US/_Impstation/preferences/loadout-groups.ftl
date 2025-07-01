@@ -75,6 +75,7 @@ loadout-group-clown-neck = Clown neck
 
 loadout-group-musician-neck = Musician neck
 loadout-group-musician-shoes = Musician shoes
+loadout-group-musician-head = Musician head
 
 loadout-group-reporter-mask = Reporter mask
 loadout-group-reporter-neck = Reporter neck

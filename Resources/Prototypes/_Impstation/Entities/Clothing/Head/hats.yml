@@ -392,3 +392,14 @@
     sprite: _Impstation/Clothing/Head/Misc/cmo_clip.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Head/Misc/cmo_clip.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatMusicianShako
+  name: musician's shako
+  description: A sturdy shako. Somehow looks too refined for the logo slapped on the front.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/mus_shako.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/mus_shako.rsi
