@@ -29,7 +29,8 @@ namespace Content.Server.Cuffs
                 component.CanStillInteract,
                 cuffs?.CuffedRSI,
                 $"{cuffs?.BodyIconState}-{component.CuffedHandCount}",
-                cuffs?.Color);
+                cuffs?.Color,
+                component.CuffedTime);
             // the iconstate is formatted as blah-2, blah-4, blah-6, etc.
             // the number corresponds to how many hands are cuffed.
         }

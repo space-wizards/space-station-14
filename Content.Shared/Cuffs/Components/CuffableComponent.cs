@@ -62,14 +62,16 @@ public sealed class CuffableComponentState : ComponentState
     public readonly string? RSI;
     public readonly string? IconState;
     public readonly Color? Color;
+    public readonly TimeSpan? CuffedTime;
 
-    public CuffableComponentState(int numHandsCuffed, bool canStillInteract, string? rsiPath, string? iconState, Color? color)
+    public CuffableComponentState(int numHandsCuffed, bool canStillInteract, string? rsiPath, string? iconState, Color? color, TimeSpan? cuffedTime)
     {
         NumHandsCuffed = numHandsCuffed;
         CanStillInteract = canStillInteract;
         RSI = rsiPath;
         IconState = iconState;
         Color = color;
+        CuffedTime = cuffedTime;
     }
 }
 

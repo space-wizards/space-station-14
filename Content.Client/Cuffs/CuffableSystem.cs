@@ -33,6 +33,7 @@ public sealed class CuffableSystem : SharedCuffableSystem
             return;
 
         component.CanStillInteract = cuffState.CanStillInteract;
+        component.CuffedTime = cuffState.CuffedTime;
         _actionBlocker.UpdateCanMove(uid);
 
         var ev = new CuffedStateChangeEvent();
