@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Paradox Clones can roll on sufficiently high pop lowpop rounds.
-    type: Tweak
-  id: 1438
-  time: '2025-03-31T12:47:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2158
 - author: hivehum
   changes:
   - message: Fake_Human_First Fake_Human_Last has been finally brought to justice.
@@ -4241,3 +4234,10 @@
   id: 1937
   time: '2025-06-30T16:21:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2907
+- author: hivehum
+  changes:
+  - message: Pride month is OVER. Get back to work.
+    type: Remove
+  id: 1938
+  time: '2025-07-01T02:47:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2910
