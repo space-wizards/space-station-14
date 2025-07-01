@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Drains properly clog again.
-    type: Fix
-  id: 1449
-  time: '2025-04-01T11:39:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2163
 - author: TheGrimbeeper
   changes:
   - message: Rat Kings now deal 2 structural damage
@@ -4246,3 +4239,11 @@
   id: 1948
   time: '2025-07-01T07:53:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2909
+- author: Pinkbat5
+  changes:
+  - message: Removed security bomber jackets and armoured vests from most non-officer
+      security jobs.
+    type: Remove
+  id: 1949
+  time: '2025-07-01T08:02:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2928
