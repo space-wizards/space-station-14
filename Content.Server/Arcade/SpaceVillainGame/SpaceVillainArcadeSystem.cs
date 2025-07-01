@@ -42,7 +42,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
         if (arcade.RewardAmount <= 0)
             return;
 
-        Spawn(_random.Pick(arcade.PossibleRewards), xform.Coordinates);
+        EntityManager.SpawnEntity(_random.Pick(arcade.PossibleRewards), xform.Coordinates);
         arcade.RewardAmount--;
     }
 

@@ -6,17 +6,17 @@ using Robust.Shared.Enums;
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal sealed class MeCommand : LocalizedEntityCommands
+    internal sealed class MeCommand : IConsoleCommand
     {
-        [Dependency] private readonly ChatSystem _chatSystem = default!;
+        public string Command => "me";
+        public string Description => "Perform an action.";
+        public string Help => "me <text>";
 
-        public override string Command => "me";
-
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)
             {
-                shell.WriteError(Loc.GetString($"shell-cannot-run-command-from-server"));
+                shell.WriteError("This command cannot be run from the server.");
                 return;
             }
 
@@ -25,7 +25,7 @@ namespace Content.Server.Chat.Commands
 
             if (player.AttachedEntity is not {} playerEntity)
             {
-                shell.WriteError(Loc.GetString($"shell-must-be-attached-to-entity"));
+                shell.WriteError("You don't have an entity!");
                 return;
             }
 
@@ -36,7 +36,8 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            _chatSystem.TrySendInGameICMessage(playerEntity, message, InGameICChatType.Emote, ChatTransmitRange.Normal, false, shell, player);
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>()
+                .TrySendInGameICMessage(playerEntity, message, InGameICChatType.Emote, ChatTransmitRange.Normal, false, shell, player);
         }
     }
 }

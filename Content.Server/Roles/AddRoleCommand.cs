@@ -10,50 +10,53 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class AddRoleCommand : LocalizedEntityCommands
+    public sealed class AddRoleCommand : IConsoleCommand
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly JobSystem _jobSystem = default!;
+        [Dependency] private readonly EntityManager _entityManager = default!;
 
-        public override string Command => "addrole";
+        public string Command => "addrole";
 
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public string Description => "Adds a role to a player's mind.";
+
+        public string Help => "addrole <session ID> <role>";
+
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteLine(Loc.GetString($"shell-wrong-arguments-number-need-specific",
-                    ("properAmount", 2),
-                    ("currentAmount", args.Length)));
+                shell.WriteLine("Expected exactly 2 arguments.");
                 return;
             }
 
-            if (!_playerManager.TryGetPlayerDataByUsername(args[0], out var data))
+            var mgr = IoCManager.Resolve<IPlayerManager>();
+            if (!mgr.TryGetPlayerDataByUsername(args[0], out var data))
             {
-                shell.WriteLine(Loc.GetString($"cmd-addrole-mind-not-found"));
+                shell.WriteLine("Can't find that mind");
                 return;
             }
 
             var mind = data.ContentData()?.Mind;
             if (mind == null)
             {
-                shell.WriteLine(Loc.GetString($"cmd-addrole-mind-not-found"));
+                shell.WriteLine("Can't find that mind");
                 return;
             }
 
-            if (!_prototypeManager.TryIndex<JobPrototype>(args[1], out var jobPrototype))
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            if (!prototypeManager.TryIndex<JobPrototype>(args[1], out var jobPrototype))
             {
-                shell.WriteLine(Loc.GetString($"cmd-addrole-role-not-found"));
+                shell.WriteLine("Can't find that role");
                 return;
             }
 
-            if (_jobSystem.MindHasJobWithId(mind, jobPrototype.Name))
+            var jobs = _entityManager.System<JobSystem>();
+            if (jobs.MindHasJobWithId(mind, jobPrototype.Name))
             {
-                shell.WriteLine(Loc.GetString($"cmd-addrole-mind-already-has-role"));
+                shell.WriteLine("Mind already has that role");
                 return;
             }
 
-            _jobSystem.MindAddJob(mind.Value, args[1]);
+            jobs.MindAddJob(mind.Value, args[1]);
         }
     }
 }

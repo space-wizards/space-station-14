@@ -16,9 +16,6 @@
           steps:
             - component: ApcElectronics
               name: construction-graph-component-apc-electronics
-              icon:
-                sprite: "Objects/Misc/module.rsi"
-                state: "charger_APC"
               doAfter: 2
         - to: start
           completed:

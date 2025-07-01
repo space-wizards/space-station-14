@@ -14,10 +14,9 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Ban)]
 public sealed class BanListCommand : LocalizedCommands
 {
-    [Dependency] private readonly IPlayerLocator _locator = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
     [Dependency] private readonly EuiManager _eui = default!;
+    [Dependency] private readonly IPlayerLocator _locator = default!;
 
     public override string Command => "banlist";
 
@@ -67,7 +66,8 @@ public sealed class BanListCommand : LocalizedCommands
         if (args.Length != 1)
             return CompletionResult.Empty;
 
-        var options = _playerManager.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
+        var playerMgr = IoCManager.Resolve<IPlayerManager>();
+        var options = playerMgr.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
         return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-banlist-hint"));
     }
 }

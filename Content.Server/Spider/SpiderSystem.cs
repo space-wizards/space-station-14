@@ -10,13 +10,6 @@ namespace Content.Server.Spider;
 public sealed class SpiderSystem : SharedSpiderSystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-
-    /// <summary>
-    ///     A recycled hashset used to check turfs for spiderwebs.
-    /// </summary>
-    private readonly HashSet<EntityUid> _webs = [];
 
     public override void Initialize()
     {
@@ -73,9 +66,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
 
     private bool IsTileBlockedByWeb(EntityCoordinates coords)
     {
-        _webs.Clear();
-        _turf.GetEntitiesInTile(coords, _webs);
-        foreach (var entity in _webs)
+        foreach (var entity in coords.GetEntitiesInTile())
         {
             if (HasComp<SpiderWebObjectComponent>(entity))
                 return true;

@@ -135,9 +135,9 @@ public sealed class SharpSystem : EntitySystem
         args.Handled = true;
 
         _adminLogger.Add(LogType.Gib,
-            $"{ToPrettyString(args.User):user} " +
-            $"has butchered {ToPrettyString(args.Target):target} " +
-            $"with {ToPrettyString(args.Used):knife}");
+            $"{EntityManager.ToPrettyString(args.User):user} " +
+            $"has butchered {EntityManager.ToPrettyString(args.Target):target} " +
+            $"with {EntityManager.ToPrettyString(args.Used):knife}");
     }
 
     private void OnGetInteractionVerbs(EntityUid uid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)

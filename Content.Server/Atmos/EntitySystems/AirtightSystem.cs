@@ -122,7 +122,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void InvalidatePosition(Entity<MapGridComponent?> grid, Vector2i pos)
         {
-            var query = GetEntityQuery<AirtightComponent>();
+            var query = EntityManager.GetEntityQuery<AirtightComponent>();
             _explosionSystem.UpdateAirtightMap(grid, pos, grid, query);
             _atmosphereSystem.InvalidateTile(grid.Owner, pos);
         }

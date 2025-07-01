@@ -241,7 +241,7 @@
       - id: ClothingHeadHatAnimalHeadslime
         prob: 0.03
         orGroup: dresserthirdloot
-      - id: ClothingMultipleHeadphones
+      - id: ClothingNeckHeadphones
         prob: 0.03
         orGroup: dresserthirdloot
       - id: ClothingUnderSocksCoder

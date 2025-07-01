@@ -6,23 +6,26 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Moderator)]
-    public sealed class AnnounceUiCommand : LocalizedEntityCommands
+    public sealed class AnnounceUiCommand : IConsoleCommand
     {
-        [Dependency] private readonly EuiManager _euiManager = default!;
+        public string Command => "announceui";
 
-        public override string Command => "announceui";
+        public string Description => "Opens the announcement UI";
 
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public string Help => $"{Command}";
+
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine(Loc.GetString($"shell-cannot-run-command-from-server"));
+                shell.WriteLine("This does not work from the server console.");
                 return;
             }
 
+            var eui = IoCManager.Resolve<EuiManager>();
             var ui = new AdminAnnounceEui();
-            _euiManager.OpenEui(ui, player);
+            eui.OpenEui(ui, player);
         }
     }
 }

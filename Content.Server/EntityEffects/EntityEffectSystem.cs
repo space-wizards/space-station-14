@@ -10,6 +10,7 @@ using Content.Server.Botany;
 using Content.Server.Chat.Systems;
 using Content.Server.Emp;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Flash;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Medical;
@@ -22,12 +23,13 @@ using Content.Server.Temperature.Systems;
 using Content.Server.Traits.Assorted;
 using Content.Server.Zombies;
 using Content.Shared.Atmos;
+using Content.Shared.Audio;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.EntityEffects.EffectConditions;
 using Content.Shared.EntityEffects.Effects.PlantMetabolism;
+using Content.Shared.EntityEffects.Effects.StatusEffects;
 using Content.Shared.EntityEffects.Effects;
 using Content.Shared.EntityEffects;
-using Content.Shared.Flash;
 using Content.Shared.Maps;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
@@ -36,6 +38,7 @@ using Content.Shared.Zombies;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -53,7 +56,7 @@ public sealed class EntityEffectSystem : EntitySystem
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
-    [Dependency] private readonly SharedFlashSystem _flash = default!;
+    [Dependency] private readonly FlashSystem _flash = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -71,7 +74,6 @@ public sealed class EntityEffectSystem : EntitySystem
     [Dependency] private readonly TemperatureSystem _temperature = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly VomitSystem _vomit = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
 
     public override void Initialize()
     {
@@ -518,7 +520,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
             var spreadAmount = (int) Math.Max(0, Math.Ceiling((reagentArgs.Quantity / args.Effect.OverflowThreshold).Float()));
             var splitSolution = reagentArgs.Source.SplitSolution(reagentArgs.Source.Volume);
-            var transform = Comp<TransformComponent>(reagentArgs.TargetEntity);
+            var transform = EntityManager.GetComponent<TransformComponent>(reagentArgs.TargetEntity);
             var mapCoords = _xform.GetMapCoordinates(reagentArgs.TargetEntity, xform: transform);
 
             if (!_mapManager.TryFindGridAt(mapCoords, out var gridUid, out var grid) ||
@@ -527,11 +529,11 @@ public sealed class EntityEffectSystem : EntitySystem
                 return;
             }
 
-            if (_spreader.RequiresFloorToSpread(args.Effect.PrototypeId) && _turf.IsSpace(tileRef))
+            if (_spreader.RequiresFloorToSpread(args.Effect.PrototypeId) && tileRef.Tile.IsSpace())
                 return;
 
             var coords = _map.MapToGrid(gridUid, mapCoords);
-            var ent = Spawn(args.Effect.PrototypeId, coords.SnapToGrid());
+            var ent = EntityManager.SpawnEntity(args.Effect.PrototypeId, coords.SnapToGrid());
 
             _smoke.StartSmoke(ent, splitSolution, args.Effect.Duration, spreadAmount);
 
@@ -641,7 +643,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecuteEmpReactionEffect(ref ExecuteEntityEffectEvent<EmpReactionEffect> args)
     {
-        var transform = Comp<TransformComponent>(args.Args.TargetEntity);
+        var transform = EntityManager.GetComponent<TransformComponent>(args.Args.TargetEntity);
 
         var range = args.Effect.EmpRangePerUnit;
 
@@ -697,7 +699,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecuteFlashReactionEffect(ref ExecuteEntityEffectEvent<FlashReactionEffect> args)
     {
-        var transform = Comp<TransformComponent>(args.Args.TargetEntity);
+        var transform = EntityManager.GetComponent<TransformComponent>(args.Args.TargetEntity);
 
         var range = 1f;
 
@@ -708,7 +710,7 @@ public sealed class EntityEffectSystem : EntitySystem
             args.Args.TargetEntity,
             null,
             range,
-            args.Effect.Duration,
+            args.Effect.Duration * 1000,
             slowTo: args.Effect.SlowTo,
             sound: args.Effect.Sound);
 
@@ -764,7 +766,7 @@ public sealed class EntityEffectSystem : EntitySystem
         ghostRole = AddComp<GhostRoleComponent>(uid);
         EnsureComp<GhostTakeoverAvailableComponent>(uid);
 
-        var entityData = Comp<MetaDataComponent>(uid);
+        var entityData = EntityManager.GetComponent<MetaDataComponent>(uid);
         ghostRole.RoleName = entityData.EntityName;
         ghostRole.RoleDescription = Loc.GetString("ghost-role-information-cognizine-description");
     }
@@ -847,7 +849,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantMutateChemicals(ref ExecuteEntityEffectEvent<PlantMutateChemicals> args)
     {
-        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
 
         if (plantholder.Seed == null)
             return;
@@ -881,7 +883,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantMutateConsumeGasses(ref ExecuteEntityEffectEvent<PlantMutateConsumeGasses> args)
     {
-        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
 
         if (plantholder.Seed == null)
             return;
@@ -903,7 +905,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantMutateExudeGasses(ref ExecuteEntityEffectEvent<PlantMutateExudeGasses> args)
     {
-        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
 
         if (plantholder.Seed == null)
             return;
@@ -925,7 +927,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantMutateHarvest(ref ExecuteEntityEffectEvent<PlantMutateHarvest> args)
     {
-        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
 
         if (plantholder.Seed == null)
             return;
@@ -938,7 +940,7 @@ public sealed class EntityEffectSystem : EntitySystem
 
     private void OnExecutePlantSpeciesChange(ref ExecuteEntityEffectEvent<PlantSpeciesChange> args)
     {
-        var plantholder = Comp<PlantHolderComponent>(args.Args.TargetEntity);
+        var plantholder = EntityManager.GetComponent<PlantHolderComponent>(args.Args.TargetEntity);
         if (plantholder.Seed == null)
             return;
 

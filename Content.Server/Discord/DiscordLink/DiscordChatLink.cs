@@ -1,7 +1,8 @@
-﻿using Content.Server.Chat.Managers;
+﻿using System.Threading.Tasks;
+using Content.Server.Chat.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
-using NetCord.Gateway;
+using Discord.WebSocket;
 using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 
@@ -58,18 +59,18 @@ public sealed class DiscordChatLink : IPostInjectInit
         _adminChannelId = ulong.Parse(channelId);
     }
 
-    private void OnMessageReceived(Message message)
+    private void OnMessageReceived(SocketMessage message)
     {
         if (message.Author.IsBot)
             return;
 
         var contents = message.Content.ReplaceLineEndings(" ");
 
-        if (message.ChannelId == _oocChannelId)
+        if (message.Channel.Id == _oocChannelId)
         {
             _taskManager.RunOnMainThread(() => _chatManager.SendHookOOC(message.Author.Username, contents));
         }
-        else if (message.ChannelId == _adminChannelId)
+        else if (message.Channel.Id == _adminChannelId)
         {
             _taskManager.RunOnMainThread(() => _chatManager.SendHookAdmin(message.Author.Username, contents));
         }

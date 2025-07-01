@@ -46,7 +46,6 @@
       - MindShieldImplant
       - FakeMindShieldImplant
       - RadioImplant
-      - ChameleonControllerImplant
       deimplantFailureDamage:
         types:
           Cellular: 50
@@ -249,7 +248,8 @@
 
 - type: entity
   id: ChameleonControllerImplanter
-  name: chameleon controller implanter
+  name: chameleon controller implant
+  suffix: chameleon controller
   parent: BaseImplantOnlyImplanterSyndi
   components:
   - type: Implanter

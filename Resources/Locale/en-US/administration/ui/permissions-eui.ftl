@@ -21,6 +21,3 @@ permissions-eui-edit-admin-rank-button = Edit
 permissions-eui-edit-admin-rank-window-title = Edit Admin Rank
 permissions-eui-edit-admin-window-save-button = Save
 permissions-eui-edit-admin-window-remove-flag-button = Remove
-
-cmd-permissions-desc = Opens the admin permissions panel.
-cmd-permissions-help = Usage: permissions

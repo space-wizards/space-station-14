@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Sprite by xprospero, inhands by TiniestShark (github)",
+    "copyright": "Sprite by xprospero",
     "size": {
         "x": 32,
         "y": 32
@@ -9,14 +9,6 @@
     "states": [
         {
             "name": "icon"
-        },
-        {
-            "name": "inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "inhand-right",
-            "directions": 4
         }
     ]
 }
