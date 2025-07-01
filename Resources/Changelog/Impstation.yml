@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: You can now randomise your appearance without changing your species in
-      the character menu!
-    type: Add
-  - message: As a side effect, pizza is more expensive. Somehow.
-    type: Remove
-  - message: Character previews in the customization menu will no longer be cut off.
-    type: Fix
-  id: 1453
-  time: '2025-04-01T12:24:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2149
-- author: wendyribstonpippin
-  changes:
-  - message: Lobby art commemorating that one time we put Sapphos in a cute maid dress
-    type: Add
-  - message: i have hired cindy to stare at you
-    type: Add
-  id: 1454
-  time: '2025-04-02T03:12:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2170
 - author: bigsantino1
   changes:
   - message: Muzzles now mute sounds from emotes like screams or gasping for air.
@@ -4246,3 +4225,18 @@
   id: 1952
   time: '2025-07-01T08:15:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2916
+- author: meridiadottxt
+  changes:
+  - message: added a spawner for mappers that selects between a blaster magnum, the
+      mule's leg, and the wt550 for HoS enrichment
+    type: Add
+  id: 1953
+  time: '2025-07-01T08:48:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2918
+- author: hivehum
+  changes:
+  - message: Happy pride month from Interdyne Pharmaceuticals!
+    type: Add
+  id: 1954
+  time: '2025-07-01T08:49:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2906
