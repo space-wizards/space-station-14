@@ -125,9 +125,18 @@
         orGroup: HoPJumpsuit
       - id: ClothingUniformJumpsuitBoatswain
         orGroup: HoPJumpsuit
+      - id: ClothingUniformJumpsuitHoPMess
+        orGroup: HoPJumpsuit
       - id: ClothingUniformJumpskirtHoP
         orGroup: HoPJumpskirt
+      - id: ClothingUniformJumpskirtHoPMess
+        orGroup: HoPJumpskirt
+      - id: ClothingUniformJumpskirtHopPowerSuit
+        orGroup: HoPJumpskirt
       - id: ClothingOuterWinterHoP
+        orGroup: HoPOuterClothing
+      - id: ClothingOuterCoatHoPFormal
+        orGroup: HoPOuterClothing
       - id: ClothingEyesGlasses
 
 - type: entity
