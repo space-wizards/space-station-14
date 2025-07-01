@@ -1,0 +1,15 @@
+- type: entity
+  id: HoSGunSpawner
+  parent: MarkerBase
+  name: Random HoS Gun Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: _Impstation/Objects/Weapons/Guns/SMGs/wt550.rsi
+      state: icon
+  - type: RandomSpawner
+    prototypes:
+    - WeaponSubMachineGunWt550
+    - WeaponRifleMule
+    - WeaponBlasterMagnum
