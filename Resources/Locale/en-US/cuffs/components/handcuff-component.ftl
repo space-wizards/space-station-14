@@ -18,5 +18,5 @@ handcuff-component-cuff-interrupt-self-message = You were interrupted while rest
 handcuff-component-cuff-interrupt-buckled-message = You can't buckle while restrained!
 handcuff-component-cuff-interrupt-unbuckled-message = You can't unbuckle while restrained!
 handcuff-component-cannot-drop-cuffs = You are unable to put the restraints on {$target}.
-examine-cuffed-time-seconds = {CAPITALIZE(SUBJECT($identity))} {CONJUGATE-HAVE($identity)} been cuffed for [color=yellow]{$seconds}[/color] seconds.
-examine-cuffed-time-seconds-and-minutes = {CAPITALIZE(SUBJECT($identity))} {CONJUGATE-HAVE($identity)} been cuffed for [color=yellow]{$minutes}[/color] minutes and [color=yellow]{$seconds}[/color] seconds.
+examine-cuffed-time-seconds = {CAPITALIZE(SUBJECT($identity))} {CONJUGATE-HAVE($identity)} been cuffed for [color=yellow]{$seconds} seconds[/color].
+examine-cuffed-time-minutes-and-seconds = {CAPITALIZE(SUBJECT($identity))} {CONJUGATE-HAVE($identity)} been cuffed for [color=yellow]{$minutes} minutes and {$seconds} seconds[/color].
