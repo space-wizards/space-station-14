@@ -129,8 +129,9 @@ public sealed class ReflectSystem : EntitySystem
         {
             _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(user)} reflected {ToPrettyString(projectile)} from {ToPrettyString(projectile.Comp.Weapon)} shot by {projectile.Comp.Shooter}");
 
-            projectile.Comp.Shooter = user;
-            projectile.Comp.Weapon = user;
+            var weakUser = new WeakEntityReference(GetNetEntity(user));
+            projectile.Comp.Shooter = weakUser;
+            projectile.Comp.Weapon = weakUser;
             Dirty(projectile, projectile.Comp);
         }
         else
