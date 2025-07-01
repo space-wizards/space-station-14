@@ -49,7 +49,7 @@ public sealed class SlurredSystem : SharedSlurredSystem
             magic = (float) (time.Item2 - curTime).Value.TotalSeconds - 80f;
         }
 
-        return Math.Clamp(magic / 1100, 0f, 1f);
+        return Math.Clamp(magic / SharedDrunkSystem.MagicNumber, 0f, 1f);
     }
 
     private void OnAccent(EntityUid uid, SlurredAccentComponent component, AccentGetEvent args)
