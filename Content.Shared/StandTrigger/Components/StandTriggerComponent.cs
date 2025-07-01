@@ -11,6 +11,12 @@ namespace Content.Shared.StandTrigger.Components;
 public sealed partial class StandTriggerComponent : Component
 {
     /// <summary>
+    /// List of entities that are currently colliding with the entity.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public HashSet<EntityUid> Colliding = [];
+
+    /// <summary>
     /// If any entities occupy the blacklist on the same tile then trigger won't work.
     /// </summary>
     [DataField]

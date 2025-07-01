@@ -4,6 +4,7 @@ using Content.Shared.StandTrigger.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.StandTrigger.Systems;
@@ -20,11 +21,16 @@ public sealed class StandTriggerSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
     [Dependency] private readonly TurfSystem _turfSystem = default!;
 
+    // List of entities that are currently colliding with some other entity.
+    private readonly HashSet<EntityUid> _colliding = [];
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<StandTriggerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<StandTriggerComponent, StartCollideEvent>(OnStartCollide);
+        SubscribeLocalEvent<StandTriggerComponent, EndCollideEvent>(OnEndCollide);
     }
 
     private void OnMapInit(Entity<StandTriggerComponent> ent, ref MapInitEvent args)
@@ -33,34 +39,55 @@ public sealed class StandTriggerSystem : EntitySystem
         Dirty(ent);
     }
 
+    private void OnStartCollide(Entity<StandTriggerComponent> ent, ref StartCollideEvent args)
+    {
+        if (!args.OtherFixture.Hard)
+            return;
+
+        if (!ent.Comp.Colliding.Add(args.OtherEntity))
+            return;
+
+        _colliding.Add(ent);
+
+        Dirty(ent);
+    }
+
+    private void OnEndCollide(Entity<StandTriggerComponent> ent, ref EndCollideEvent args)
+    {
+        if (!ent.Comp.Colliding.Remove(args.OtherEntity))
+            return;
+
+        if (ent.Comp.Colliding.Count == 0)
+            _colliding.Remove(ent);
+
+        Dirty(ent);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var curTime = _timing.CurTime;
-        var enumerator = EntityQueryEnumerator<StandTriggerComponent>();
-
-        while (enumerator.MoveNext(out var uid, out var trigger))
+        foreach (var uid in _colliding)
         {
-            if (trigger.NextUpdate > curTime)
+            if (!TryComp<StandTriggerComponent>(uid, out var trigger))
+            {
+                // We don't need to keep track of entities that are no longer have trigger component.
+                _colliding.Remove(uid);
+
+                continue;
+            }
+
+            if (trigger.NextUpdate > _timing.CurTime)
                 continue;
 
             trigger.NextUpdate += trigger.UpdateInterval;
             Dirty(uid, trigger);
 
-            var transform = Transform(uid);
-
             // Check if the tile is blocked with something from the blacklist.
-            if (IsBlocked((uid, trigger), transform))
+            if (IsBlocked((uid, trigger)))
                 continue;
 
-            var tile = _turfSystem.GetTileRef(transform.Coordinates);
-
-            if (!tile.HasValue)
-                continue;
-
-            // Get all entities on the same tile.
-            foreach (var otherUid in _lookupSystem.GetLocalEntitiesIntersecting(tile.Value, flags: LookupFlags.Dynamic))
+            foreach (var otherUid in trigger.Colliding)
             {
                 // Check if they can trigger this entity.
                 if (!CanTrigger((uid, trigger), otherUid))

@@ -10,7 +10,7 @@
   - type: TileEmission
     color: "#FF4500"
   - type: StandTrigger
-    updateInterval: 0.01
+    updateInterval: 1
     blacklist:
       tags:
         - Catwalk
