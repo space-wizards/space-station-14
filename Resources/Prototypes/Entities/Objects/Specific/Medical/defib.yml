@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   id: BaseDefibrillator
   parent: BaseItem
@@ -66,7 +67,7 @@
   suffix: One-Handed, Always Powered
 
 - type: entity
-  id: DefibrillatorCompact
+  id: DefibrillatorCompact # Ronstation - modification. Old comment was: This should be a research item at some point (we agreed!)
   parent: [ BaseDefibrillator, PowerCellSlotMediumItem ]
   name: compact defibrillator
   description: Now in fun size!
@@ -95,6 +96,7 @@
   - type: DoAfter
   - type: UseDelay
 
+# start of modifications
 - type: entity
   parent: DefibrillatorCompact
   id: DefibrillatorCompactEmpty
@@ -104,6 +106,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+# end of modifications
 
 - type: entity
   id: DefibrillatorSyndicate

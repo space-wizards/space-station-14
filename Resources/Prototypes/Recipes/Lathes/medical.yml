@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 # Base prototypes
 
 - type: latheRecipe
@@ -127,12 +128,14 @@
   materials:
     Steel: 300
 
+# start of modifications
 - type: latheRecipe
   id: CompactDefibrillator
   result: DefibrillatorCompactEmpty # reversed naming conventions. kill me.
   completetime: 2
   materials:
     Steel: 250
+# end of modifications
 
 - type: latheRecipe
   id: Medkit
