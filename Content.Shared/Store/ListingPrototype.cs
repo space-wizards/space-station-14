@@ -204,6 +204,13 @@ public partial class ListingData : IEquatable<ListingData>
     [DataField]
     public bool DisableRefund = false;
 
+    /// <summary>
+    /// STARLIGHT: Whether the listing is unavailable for purchase (greyed out in the UI).
+    /// This can be used to temporarily disable a listing without removing it from the store.
+    /// </summary>
+    [DataField]
+    public bool Unavailable = false;
+
     public bool Equals(ListingData? listing)
     {
         if (listing == null)

@@ -1,4 +1,5 @@
 using Content.Shared.Dragon;
+using Content.Shared.Revolutionary.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
 
@@ -40,11 +41,26 @@ public sealed class DragonSystem : EntitySystem
                 }
                 break;
             case DragonRiftState.AlmostFinished:
-                _sprite.LayerSetColor((uid, sprite), 0, Color.FromHex("#cf4cff"));
 
-                if (light != null)
+                // Starlight: For RevSupplyRift, use a brighter red color instead of purple
+                if (HasComp<RevolutionaryRiftComponent>(uid))
                 {
-                    _lights.SetColor(uid, Color.FromHex("#9e2fc1"), light);
+                    sprite?.LayerSetColor(0, Color.FromHex("#ff3333"));
+
+                    if (light != null)
+                    {
+                        _lights.SetColor(uid, Color.FromHex("#cc0000"), light);
+                    }
+                }
+                else
+                {
+                    // Regular dragon rift still uses purple
+                    sprite?.LayerSetColor(0, Color.FromHex("#cf4cff"));
+
+                    if (light != null)
+                    {
+                        _lights.SetColor(uid, Color.FromHex("#9e2fc1"), light);
+                    } // Starlight End
                 }
                 break;
             case DragonRiftState.Finished:

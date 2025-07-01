@@ -62,5 +62,9 @@ namespace Content.Shared.Speech
         /// </summary>
         [DataField]
         public float SpeechBubbleOffset = 0f;
+
+        //#region starlight
+        public bool LateCalc = true; //because idk why but somehow it is doing stuff out of order and IDK when markings are filled but it somehow it skips. so I gotta make it do a late recalc.
+        //#endregion starlight
     }
 }

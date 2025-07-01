@@ -7,6 +7,8 @@
   components:
     - type: Shadekin
     - type: Absorbable
+    - type: Hunger
+    - type: Thirst
     - type: HumanoidAppearance
       species: Shadekin
     - type: Icon
@@ -60,6 +62,14 @@
           Heat: 1.5
     - type: TypingIndicator
       proto: alien
+    - type: PassiveDamage
+      allowedStates:
+        - Alive
+      damageCap: 20
+      damage:
+        groups:
+          Brute: -0.07
+          Burn: -0.07
     - type: Destructible
       thresholds:
         - trigger: !type:DamageTypeTrigger
@@ -93,15 +103,6 @@
         types:
           Blunt: 0.85 #per second, scales with pressure and other constants.
           Heat: 0.1
-    - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.
-      allowedStates:
-        - Alive
-      damageCap: 20
-      damage:
-        types:
-          Heat: -0.07
-        groups:
-          Brute: -0.07
     - type: Fingerprint
     - type: Blindable
     - type: DarkenedVision
@@ -146,51 +147,5 @@
   categories: [HideSpawnMenu]
   description: A dummy shadekin meant to be used in character setup.
   components:
-    - type: Sprite
-      drawdepth: Mobs
-      noRot: true
-      layers:
-        - map: ["enum.HumanoidVisualLayers.Chest"]
-        - map: ["enum.HumanoidVisualLayers.Head"]
-        - map: ["enum.HumanoidVisualLayers.Snout"]
-        - map: ["enum.HumanoidVisualLayers.Eyes"]
-        - map: ["enum.HumanoidVisualLayers.RArm"]
-        - map: ["enum.HumanoidVisualLayers.LArm"]
-        - map: ["enum.HumanoidVisualLayers.RLeg"]
-        - map: ["enum.HumanoidVisualLayers.LLeg"]
-        - map: ["enum.HumanoidVisualLayers.UndergarmentBottom"]
-        - map: ["enum.HumanoidVisualLayers.UndergarmentTop"]
-        - map: ["jumpsuit"]
-        - map: ["enum.HumanoidVisualLayers.LFoot"]
-        - map: ["enum.HumanoidVisualLayers.RFoot"]
-        - map: ["enum.HumanoidVisualLayers.LHand"]
-        - map: ["enum.HumanoidVisualLayers.RHand"]
-        - map: ["enum.HumanoidVisualLayers.Handcuffs"]
-          color: "#ffffff"
-          sprite: Objects/Misc/handcuffs.rsi
-          state: body-overlay-2
-          visible: false
-        - map: ["gloves"]
-        - map: ["shoes"]
-        - map: ["ears"]
-        - map: ["eyes"]
-        - map: ["blackeyes"]
-          color: "#000000"
-          sprite: _Starlight/Mobs/Species/Shadekin/parts.rsi
-          state: eyes
-        - map: ["belt"]
-        - map: ["id"]
-        - map: ["outerClothing"]
-        - map: ["back"]
-        - map: ["neck"]
-        - map: ["enum.HumanoidVisualLayers.FacialHair"]
-        - map: ["enum.HumanoidVisualLayers.Hair"]
-        - map: ["enum.HumanoidVisualLayers.HeadSide"]
-        - map: ["enum.HumanoidVisualLayers.HeadTop"]
-        - map: ["enum.HumanoidVisualLayers.Tail"]
-        - map: ["mask"]
-        - map: ["head"]
-        - map: ["pocket1"]
-        - map: ["pocket2"]
     - type: HumanoidAppearance
       species: Shadekin

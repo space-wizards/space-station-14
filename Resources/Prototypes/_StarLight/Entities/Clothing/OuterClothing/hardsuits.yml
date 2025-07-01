@@ -31,7 +31,6 @@
     damageCoefficient: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBlueshield
-
 #NTRep Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
@@ -65,7 +64,6 @@
     damageCoefficient: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitNtrep
-
 #Clown Battlesuit
 - type: entity
   parent: [ClothingOuterHardsuitBase]
@@ -100,7 +98,6 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetBattlesuitClown
-    
 #Mercenary Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseMajorContraband]
@@ -147,10 +144,10 @@
   - type: Clothing
     sprite: _Starlight/Clothing/OuterClothing/Hardsuits/spacehazard.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5
+    highPressureMultiplier: 0.2
     lowPressureMultiplier: 1000
-  - type: Pierceable
-    level: Metal
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
   - type: Armor
     modifiers:
       coefficients:
@@ -176,7 +173,7 @@
   parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ] #sl Change
   id: ClothingOuterHardsuitNTCCConsortium
   name: nt cc consortium hardsuit
-  description: A protective hardsuit worn by NT-CC Consotrium Officers.
+  description: A protective hardsuit worn by NT-CC Consortium Officers.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_hardsuit.rsi
@@ -188,3 +185,75 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+
+    
+#CCNT Consortium medics
+- type: entity
+  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieMedic ] #sl Change
+  id: ClothingOuterHardsuitNTCCConsortiumMedic
+  name: nt cc consortium medic hardsuit
+  description: A protective hardsuit worn by NT-CC Consortium medical personnel.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_med_hardsuit.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_med_hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitNTCCConsortiumMedic
+  - type: Tag
+    tags:
+    - Hardsuit
+    - WhitelistChameleon
+
+
+#USSP
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseSovietContraband]
+  id: ClothingOuterHardsuitSovietMarine
+  name: SSF marine hardsuit
+  description: SMIRNO!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/sovietmarine.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/sovietmarine.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.2
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: BreathMask
+    allowedSlots: [ MASK, HEAD, OUTERCLOTHING ]
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.40
+        Heat: 0.35
+        Radiation: 0.1
+        Caustic: 0.4
+    staminaModifier: 1
+    ingoreKnockdown: false
+  - type: ClothingSpeedModifier
+    walkModifier: 0.90
+    sprintModifier: 0.90
+  - type: HeldSpeedModifier
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHeavy
+      params:
+        volume: -6
+        variation: 0.09
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSovietMarine
+  - type: Tag
+    tags:
+    - MonkeyWearable
+    - WhitelistChameleon
+    - FootstepSound
+  - type: Item
+    size: Huge
+
