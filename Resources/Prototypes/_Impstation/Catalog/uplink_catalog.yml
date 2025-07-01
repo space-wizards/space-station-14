@@ -271,3 +271,21 @@
   - !type:BuyerJobCondition
     whitelist:
     - Chaplain
+
+# implanters
+
+- type: listing
+  id: UplinkGayImplanter
+  name: uplink-gay-implanter-name
+  description: uplink-gay-implanter-desc
+  icon: { sprite: /Textures/Clothing/Back/Backpacks/backpack.rsi, state: icon }
+  productEntity: GayStorageImplanter
+  cost:
+    Telecrystal: 50
+  categories:
+  - UplinkImplants
+  conditions: # i want this to only show up in surplus crates
+  - !type:BuyerWhitelistCondition
+    whitelist:
+      components:
+      - SurplusBundle

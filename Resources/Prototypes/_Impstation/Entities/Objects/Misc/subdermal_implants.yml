@@ -1,0 +1,33 @@
+﻿- type: entity
+  parent: BaseSubdermalImplant
+  id: GayStorageImplant
+  name: gay implant
+  description: Huh? What? Do you want us to make, like, gay implanters?
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionOpenStorageImplant
+    whitelist:
+      components:
+      - Hands # no use giving a mouse a storage implant, but a monkey is another story...
+  - type: Storage
+    grid:
+    - 0,0,0,3
+    - 0,0,2,0
+    - 0,3,2,3
+    - 2,2,2,2
+    - 4,1,4,3
+    - 6,1,6,3
+    - 5,2,5,2
+    - 5,0,5,0
+    - 9,2,9,3
+    - 8,0,8,1
+    - 10,0,10,1
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: [ ]
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface

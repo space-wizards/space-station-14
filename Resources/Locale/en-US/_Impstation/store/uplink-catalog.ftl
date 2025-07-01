@@ -51,3 +51,6 @@ uplink-mascot-cindy-suit-bundle-desc = A suit in the image of Cindy, The Red Car
 
 uplink-nullrod-upgrade-name = Profane Censer
 uplink-nullrod-upgrade-desc = A vile incense burner used to transform nullrod items into more sinister forms.
+
+uplink-gay-implanter-name = Gay implanter
+uplink-gay-implanter-desc = Huh??? Why is this in here??? Is my uplink hacked??

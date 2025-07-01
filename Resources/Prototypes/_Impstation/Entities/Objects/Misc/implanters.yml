@@ -1,0 +1,7 @@
+﻿- type: entity
+  id: GayStorageImplanter
+  name: gay implanter
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: GayStorageImplant
