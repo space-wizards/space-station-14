@@ -37,6 +37,8 @@
     - MadHatter
     - Crawler
     - Elevated
+    - Coulrophobia
+    - Clownignore
 
 # You do not approve of modern medicine and abstain from treatment with it.
 - type: thavenMood
@@ -298,6 +300,25 @@
   moodDesc: thaven-mood-elevated-desc
   conflicts:
     - Crawler
+# Clowns are such awful things, just seeing one is extremely upsetting to you.
+- type: thavenMood
+  id: Coulrophobia
+  moodName: thaven-mood-coulrophobia-name
+  moodDesc: thaven-mood-coulrophobia-desc
+  conflicts:
+  - Clownfan
+  - Clownignore
+  - Circus
+
+# The very existence of clowns has become difficult to grasp, you cannot acknowledge the existence of a clown.
+- type: thavenMood
+  id: Clownignore
+  moodName: thaven-mood-clown-ignore-name
+  moodDesc: thaven-mood-clown-ignore-desc
+  conflicts:
+  - Clownfan
+  - Coulrophobia
+  - Circus
 
 # [ITEM]s are an abomination. You must avoid them at all costs, and destroy them if necessary.
 #- type: thavenMood

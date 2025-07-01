@@ -121,6 +121,9 @@ thaven-mood-centrist-desc = You are ambivalent towards any and all decisions, an
 thaven-mood-public-sector-name = Public Sector
 thaven-mood-public-sector-desc = Your job should not be done in private if it can be helped. If at all possible, you should renovate the facilities to allow public access to your workplace.
 
+thaven-mood-clown-fan-name = Fan Of Clowns
+thaven-mood-clown-fan-desc = Clowns are such whimsical things, just seeing one makes you breakout into fits of laughter!
+
 thaven-mood-speech-restriction-name = {$speechType ->
   *[FullNameAndTitle] Full Name And Title
   [NamesAreRude] Names Are Rude

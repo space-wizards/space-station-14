@@ -111,6 +111,12 @@ thaven-mood-crawler-desc = It is impolite not to perform a deep bow by entering 
 thaven-mood-elevated-name = The Floor Is Lava
 thaven-mood-elevated-desc = You prefer to be elevated whenever possible - Standing atop tables, railings, etc., is where you feel the most comfortable.
 
+thaven-mood-coulrophobia-name = Coulrophobia
+thaven-mood-coulrophobia-desc = Clowns are such awful things, just seeing one is extremely upsetting to you.
+
+thaven-mood-clown-ignore-name = Ignore clowns
+thaven-mood-clown-ignore-desc = The very existence of clowns has become difficult to grasp, you cannot acknowledge anything related to clowns.
+
 # Testing Locales, only exist to shut up prototype tests
 DuplicateTest = You shouldn't see this
 DuplicateOverlapTest = Time, doctor freeman?

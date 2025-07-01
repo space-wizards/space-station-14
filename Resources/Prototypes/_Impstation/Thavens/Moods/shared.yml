@@ -25,6 +25,7 @@
     - PetGod
     - Delicacy
     - Holiday
+    - Circus
 #   - OutOfFashion
 #   - InFashion
 
@@ -172,6 +173,16 @@
   moodDesc: thaven-mood-holiday-desc
   moodVars:
     day: Holidays
+
+# The circus is in town and you are part of it!
+- type: thavenMood
+  id: Circus
+  moodName: thaven-mood-circus-name
+  moodDesc: thaven-mood-circus-desc
+  conflicts:
+  - Clownfan
+  - Coulrophobia
+  - Clownignore
 
 # - type: thavenMood
 #   id: OutOfFashion

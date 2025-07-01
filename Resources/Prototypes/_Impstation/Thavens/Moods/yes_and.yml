@@ -40,7 +40,7 @@
     - YesMan
     - Centrist
     - SpeechRestriction
-
+    - Clownfan
 # You are extremely possessive of your property. Refuse to relinquish it, and if it is misplaced or stolen, it must be retrieved at all costs.
 - type: thavenMood
   id: PossessiveOfProperty
@@ -326,6 +326,16 @@
   moodDesc: thaven-mood-speech-restriction-desc
   moodVars:
     speechType: SpeechRestrictions
+
+# Fan of clowns: Clowns are such whimsical things, just seeing one makes you breakout into fits of laughter!
+- type: thavenMood
+  id: Clownfan
+  moodName: thaven-mood-clown-fan-name
+  moodDesc: thaven-mood-clown-fan-desc
+  conflicts:
+  - Coulrophobia
+  - Clownignore
+  - Circus
 
 # The color [COLOR] is the only acceptable color for decorations. Endeavor to make your environment this color where possible.
 #- type: thavenMood

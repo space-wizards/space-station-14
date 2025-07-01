@@ -57,3 +57,6 @@ thaven-mood-delicacy-desc = {$edible} is a traditional Thaven delicacy. All Thav
 
 thaven-mood-holiday-name = Today is {$day}
 thaven-mood-holiday-desc = You think you remember the traditional celebrations...
+
+thaven-mood-circus-name = The circus is in town...
+thaven-mood-circus-desc = And you are part of it!
