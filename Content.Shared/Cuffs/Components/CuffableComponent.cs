@@ -42,6 +42,12 @@ public sealed partial class CuffableComponent : Component
     [DataField("canStillInteract"), ViewVariables(VVAccess.ReadWrite)]
     public bool CanStillInteract = true;
 
+    /// <summary>
+    /// The time at which this entity was cuffed.
+    /// </summary>
+    [DataField]
+    public TimeSpan? CuffedTime;
+
     [DataField]
     public ProtoId<AlertPrototype> CuffedAlert = "Handcuffed";
 }

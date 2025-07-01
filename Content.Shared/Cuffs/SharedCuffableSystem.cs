@@ -33,6 +33,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
 
@@ -55,6 +56,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
+        [Dependency] private readonly GameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -341,6 +343,7 @@ namespace Content.Shared.Cuffs
             if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable))
             {
                 component.Used = true;
+                cuffable.CuffedTime ??= _timing.CurTime; // only record the time of the first cuffing
                 _audio.PlayPredicted(component.EndCuffSound, uid, user);
 
                 var popupText = (user == target)
@@ -738,6 +741,7 @@ namespace Content.Shared.Cuffs
 
             if (cuffable.CuffedHandCount == 0)
             {
+                cuffable.CuffedTime = null; // now fully uncuffed so remove the cuff time
                 if (user != null)
                 {
                     if (shoved)
