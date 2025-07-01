@@ -78,18 +78,24 @@ public sealed class StunSystem : SharedStunSystem
         if (!_spriteSystem.LayerMapTryGet((entity, entity.Comp2), StunVisualLayers.StamCrit, out var index, false))
             return;
 
+        if (!Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars))
+            return;
+
         // Don't animate if we're not conscious
         if (!Blocker.CanConsciouslyPerformAction(entity))
-            entity.Comp1.Visualized = false;
+            Appearance.SetData(entity, StunVisuals.SeeingStars, false);
 
-        _spriteSystem.LayerSetVisible((entity, entity.Comp2), index, entity.Comp1.Visualized);
+        _spriteSystem.LayerSetVisible((entity, entity.Comp2), index, stars);
         _spriteSystem.LayerSetRsiState((entity, entity.Comp2), index, "stunned");
     }
 
     private void OnMobStateChanged(Entity<StunnedComponent> entity, ref MobStateChangedEvent args)
     {
+        if (!Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars))
+            return;
+
         if (!Blocker.CanConsciouslyPerformAction(entity))
-            entity.Comp.Visualized = false;
+            Appearance.SetData(entity, StunVisuals.SeeingStars, false);
 
         if (!TryComp<SpriteComponent>(entity, out var sprite))
             return;
@@ -97,7 +103,7 @@ public sealed class StunSystem : SharedStunSystem
         if (!_spriteSystem.LayerMapTryGet((entity, sprite), StunVisualLayers.StamCrit, out var index, false))
             return;
 
-        _spriteSystem.LayerSetVisible((entity, sprite), index, entity.Comp.Visualized);
+        _spriteSystem.LayerSetVisible((entity, sprite), index, stars);
     }
 
     /// <summary>

@@ -28,9 +28,9 @@ public abstract class SharedStunSystem : EntitySystem
 {
     [Dependency] protected readonly ActionBlockerSystem Blocker = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
@@ -361,17 +361,17 @@ public abstract class SharedStunSystem : EntitySystem
 
     #endregion
 
-    public virtual void TryStunAnimation(Entity<StunnedComponent?> entity)
+    public virtual void TryStunAnimation(Entity<AppearanceComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
             return;
 
         // Here so server can tell the client to do things
         // Don't dirty the component if we don't need to
-        if (entity.Comp.Visualized)
+        if (!Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars, entity.Comp) && stars)
             return;
 
-        entity.Comp.Visualized = true;
+        Appearance.SetData(entity, StunVisuals.SeeingStars, true);
         Dirty(entity);
     }
 }
