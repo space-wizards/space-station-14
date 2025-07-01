@@ -318,3 +318,24 @@
   - type: ConditionalSpawner
     prototypes:
     - MobSlug
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnWoolyAnimalGeneric
+  name: Wooly Animal Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: sheep_bare
+      sprite: Mobs/Animals/sheep.rsi
+    - state: sheep_wool
+      sprite: Mobs/Animals/sheep.rsi
+  - type: RandomSpawner
+    prototypes:
+    - SpawnMobSheep
+    - SpawnMobGoat
+    rarePrototypes:
+    - SpawnMobSheepRainbow
+    - SpawnMobSheepSpace
+    rareChance: 0.2

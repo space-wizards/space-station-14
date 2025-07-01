@@ -375,7 +375,7 @@
   parent: [ SimpleSpaceMobBase, FlyingMobBase, MobSheepBase ]
   id: MobSheepSpace
   name: space sheep
-  description: A sheep... in space!.
+  description: A sheep... in space!
   components:
   - type: Sprite
     drawdepth: Mobs
