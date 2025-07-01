@@ -166,7 +166,7 @@
   # end imp edits #
 
 - type: entity
-  name: hop's fountain pen
+  name: HoP's fountain pen # imp; emphasizing this is an acronym and not for some guy named hop
   parent: PenEmbeddable
   id: PenHop
   description: A luxurious fountain pen for the head of personnel of the station. Perfect for signing all those employee safety waivers. # imp edit

@@ -1,6 +1,6 @@
 - type: entity
   name: cindy suit
-  description: The body of Cindy, the Red Carnage Cat! Comes with armored plating to defend against Gorlex live-round birthday parties and ballpit shivs. 
+  description: The body of Cindy, the Red Carnage Cat! Comes with armored plating to defend against Gorlex live-round birthday parties and ballpit shivs.
   id: MascotCindySuit
   parent: [ ClothingOuterEVASuitBase, Tier1Contraband ]
   components:
@@ -104,8 +104,8 @@
       ░██░░░░░░░██░██░|[/head][color=gray][italic]Copies NOT available by[/color][/italic]
       [head=3]░░░░░██████░░░░░|[/color][/head][color=gray][italic]mail order.[/color][/italic]
       ===================================================
-      Hello, and congratulations! If you are reading this, you have purchased a [color=red]Cindy, the Red Carnage Cat[/color]™ Costume Kit!                                    
-      
+      Hello, and congratulations! If you are reading this, you have purchased a [color=red]Cindy, the Red Carnage Cat[/color]™ Costume Kit!
+
       Only the best and bravest of the [color=#A32D26]Gorlex Marauders[/color] are considered worthy to represent the beloved character, so take:
 
       ([color=gray][italic] A moment.[/color][/italic]                       )
@@ -114,28 +114,28 @@
       [bold]--------------------------------------------------------------------------[/bold]
       [bold]--------------------------------------------------------------------------[/bold]
       [head=3]Contents:[/head]
-      
+
       [bold][bullet/][/bold] ([italic][color=gray]1x[/italic][/color]) [color=red]Cindy, the Red Carnage Cat[/color]™ Costume Head.
-      
+
       [bold][bullet/][/bold] ([italic][color=gray]1x[/italic][/color]) [color=red]Cindy, the Red Carnage Cat[/color]™ Costume Body.
-      
+
       [bold][bullet/][/bold] ([italic][color=gray]1x[/italic][/color]) Rocket Assisted Sledgehammer.
-      
+
       [head=3]The Three [bold][head=2][color=#A32D26]DON'T[/head][/color][/bold]s of [color=red]Cindy, the Red Carnage Cat[/color]™[/head]
       [bold]--------------------------------------------------------------------------[/bold]
-      [italic][color=gray]The following guidelines dictate what Cybersun Industries customers will avoid when using [color=red]Cindy, the Red Carnage Cat[/color]™ under penalty of death.[/italic][/color] 
-      
-      [bold][head=3]1. [color=#A32D26]DON'T[/color][/bold] allow Syndicate-aligned civilians to see Cindy unless the actor is in full costume -[/head] We want to create the illusion that [color=red]Cindy, the Red Carnage Cat[/color]™ is real. 
-      
-      [bold][head=3]2. [color=#A32D26]DON'T[/color][/bold] endorse things that [color=red]Cindy, the Red Carnage Cat[/color]™ wouldn't -[/bold] Cindy is a good kitty. She wouldn't support capitalism, sobriety, NanoTrasen, the monarchy, etc. Remember - [bold][color=red]Cindy, the Red Carnage Cat[/color]™ is real.[/bold]
-      
+      [italic][color=gray]The following guidelines dictate what Cybersun Industries customers will avoid when using [color=red]Cindy, the Red Carnage Cat[/color]™ under penalty of death.[/italic][/color]
+
+      [bold][head=3]1. [color=#A32D26]DON'T[/color][/bold] allow Syndicate-aligned civilians to see Cindy unless the actor is in full costume -[/head] We want to create the illusion that [color=red]Cindy, the Red Carnage Cat[/color]™ is real.
+
+      [bold][head=3]2. [color=#A32D26]DON'T[/color][/bold] endorse things that [color=red]Cindy, the Red Carnage Cat[/color]™ wouldn't -[/bold] Cindy is a good kitty. She wouldn't support capitalism, sobriety, Nanotrasen, the monarchy, etc. Remember - [bold][color=red]Cindy, the Red Carnage Cat[/color]™ is real.[/bold]
+
       [bold][head=3]3. [color=#A32D26]DON'T[/color][/bold] allow the [color=red]Cindy, the Red Carnage Cat[/color]™ costume to fall into the wrong hands -[/bold] In the event that your station falls to enemy forces, use the included Rocket Assisted Sledgehammer to render the [color=red]Cindy, the Red Carnage Cat[/color]™ costume completely unrecognizable. [bold]Failure to do so will result in [color=#A32D26]your demise[/color][/bold].
       [bold]--------------------------------------------------------------------------[/bold]
-      [italic][color=gray]If any parts of the Cindy, the Red Carnage Cat™ Costume Kit are faulty or missing, please contact the Cybersun Mascot & Party Division using the following hyperphone number: 
+      [italic][color=gray]If any parts of the Cindy, the Red Carnage Cat™ Costume Kit are faulty or missing, please contact the Cybersun Mascot & Party Division using the following hyperphone number:
       89054378908-8568094234546-93489734786673
-      
+
       Cybersun is not liable in the event of shipment errors or wrongful death.[/italic][/color]
-      
+
               ════░░░░════
         ═════▒▒▒▒▒▒═════
         ════░░░░░░░░════
@@ -152,13 +152,13 @@
                  │░░░░░X░░░░░│
                     │░───────░│
                      │░░░│  │░░│
-                   |░░░░│  │░░░|       
+                   |░░░░│  │░░░|
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledMascotCindy
   name: Cindy, the Red Carnage Cat bundle
-  description: "A suit in the image of Cindy, The Red Carnage Cat! Space safe with minimal armor to wreck maximum morale damage against the dogs of NanoTrasen!"
+  description: "A suit in the image of Cindy, The Red Carnage Cat! Space safe with minimal armor to wreck maximum morale damage against the dogs of Nanotrasen!"
   components:
   - type: StorageFill
     contents:

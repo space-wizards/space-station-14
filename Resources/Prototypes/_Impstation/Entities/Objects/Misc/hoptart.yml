@@ -140,7 +140,7 @@
 - type: entity
   parent: HopTartCookedBase
   id: HopTartCookedCentcomm
-  suffix: Centcomm
+  suffix: CentComm
   components:
   - type: FlavorProfile
     flavors:

@@ -132,8 +132,8 @@
 - type: entity
   parent: [ClothingOuterArmorBaseCarapace, BaseCentcommContraband]
   id: ClothingOuterArmorCentcommCarapace
-  name: centcomm carapace
-  description: An armored chestpiece that provides protection whilst still offering maximum mobility and flexibility. Issued only to centcomm officials and agents.
+  name: CentComm carapace # imp caps fix
+  description: An armored chestpiece that provides protection whilst still offering maximum mobility and flexibility. Issued only to CentComm officials and agents. # imp caps fix
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/centcomm_carapace.rsi

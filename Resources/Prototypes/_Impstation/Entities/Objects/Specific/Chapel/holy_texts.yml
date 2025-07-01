@@ -1,6 +1,6 @@
 - type: entity
   name: quran
-  description: Printed in both original Arabic and Nanotrasen Standard English.
+  description: Printed in both original Arabic and Galactic Common.
   parent: Bible
   id: HolyTextQuran
   components:
@@ -158,7 +158,7 @@
     sprite: _Impstation/Objects/Specific/Chapel/holytexts.rsi
     state: bibble
 
-- type: entityTable 
+- type: entityTable
   id: HolyTextEntityTable
   table: !type:GroupSelector
     children:

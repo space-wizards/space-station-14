@@ -13,7 +13,7 @@
 - type: entity
   parent: [BaseTraitorObjective, BaseKillObjective]
   id: KillRandomTraitorSvSObjective # Used for rounds when basically every valid person will be a traitor.
-  description: Do it however you like, just make sure they don't make it to centcom.
+  description: Do it however you like, just make sure they don't make it to CentComm.
   components:
   - type: Objective
     issuer: objective-issuer-syndicate

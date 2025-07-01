@@ -57,7 +57,7 @@ bounty-hunter-category-syndie-description =
 
 bounty-hunter-category-captain-name = Rogue Captain
 bounty-hunter-category-captain-description =
-    You were previously a member of NanoTrasen command.
+    You were previously a member of Nanotrasen command.
     You didn't leave on good terms.
     Includes: An armored carapace, a command encryption key,
     a cerimonial sabre, and a laser pistol.
