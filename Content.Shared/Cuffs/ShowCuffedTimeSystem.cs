@@ -9,7 +9,7 @@ namespace Content.Shared.Cuffs;
 public sealed class ShowCuffedTimeSystem: EntitySystem
 {
     [Dependency] private readonly SharedCuffableSystem _cuffable = default!;
-    [Dependency] private readonly GameTiming _timing = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
