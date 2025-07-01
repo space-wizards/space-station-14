@@ -32,6 +32,7 @@
     SteelLunchboxPink: 1 #imp item
     SteelLunchboxOrange: 1 #imp item
   contrabandInventory:
-    CandyBowl: 1
+    # CandyBowl: 1 # imp
+    MeatBowl: 1 # imp - no idea why candybowl was in here but this is funnier
     BarSpoon: 2
     DrinkShaker: 2

@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by crocodilecarousel (github), based on candy_bowl by Mercer~Bray#5324 (Discord)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "fruitbowl"
+        },
+        {
+            "name": "fruitbowl-filled"
+        },
+        {
+            "name": "meatbowl"
+        },
+        {
+            "name": "meatbowl-filled"
+        }
+    ]
+}

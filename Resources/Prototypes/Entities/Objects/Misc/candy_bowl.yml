@@ -17,10 +17,12 @@
         - Pill
       tags:
         - FoodSnack
+        # imp edit start
         - Burnt
         - Cigarette
         - Cigar
         - Trash
+        # imp edit end
   - type: ContainerContainer
     containers:
       bin-container: !type:Container
@@ -74,3 +76,9 @@
           - Pill
           tags:
           - FoodSnack
+          # imp edit start
+          - Burnt
+          - Cigarette
+          - Cigar
+          - Trash
+        # imp edit end

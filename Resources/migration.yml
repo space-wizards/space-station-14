@@ -732,7 +732,6 @@ BorgModulePaper: BorgModuleService
 # impstation: migrate our cleanade crate to upstream implementation
 CrateServiceCleanades: CrateServiceCleanerGrenades
 
-# 2025-06-17
 # impstation: replace custodial closets with secure janitor lockers
 ClosetJanitor: LockerJanitor
 ClosetJanitorFilled: LockerJanitorFilled

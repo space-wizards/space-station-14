@@ -72,3 +72,24 @@
   id: DrinkNoveltyMug
   parent: DrinkMugMetal
   result: DrinkNoveltyMug
+
+- type: latheRecipe
+  id: CandyBowl
+  result: CandyBowl
+  completetime: 1
+  materials:
+    Glass: 200 # turns into up to 2 glass shards when broken so kind of a steep price to keep from the worlds most obscure resource exploit
+
+- type: latheRecipe
+  id: MeatBowl
+  result: MeatBowl
+  completetime: 1
+  materials:
+    Plastic: 200
+
+- type: latheRecipe
+  id: FruitBowl
+  result: FruitBowl
+  completetime: 1
+  materials:
+    Wood: 200

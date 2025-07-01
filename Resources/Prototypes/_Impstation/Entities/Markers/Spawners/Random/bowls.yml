@@ -1,0 +1,15 @@
+﻿- type: entity
+  id: BowlSpawner
+  parent: MarkerBase
+  name: fillable bowl spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: _Impstation/Objects/Misc/food_bowls.rsi
+      state: meatbowl
+  - type: RandomSpawner
+    prototypes:
+    - CandyBowl
+    - MeatBowl
+    - FruitBowl

@@ -1,0 +1,105 @@
+﻿- type: entity
+  parent: CandyBowl
+  id: MeatBowl # me at bowls
+  name: "meat bowl"
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/food_bowls.rsi
+    state: meatbowl
+  - type: Bin
+    maxItems: 20 # meats a little more substantial than pills or candy. sorry
+    whitelist:
+      components:
+      - Pill
+      tags:
+      - Meat
+      - Raw
+      - Burnt
+      - Cigarette
+      - Cigar
+      - Trash
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1:
+            min: 1
+            max: 2
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ItemMapper
+    sprite: _Impstation/Objects/Misc/food_bowls.rsi
+    mapLayers:
+      meatbowl-filled:
+        whitelist:
+          components:
+          - Pill
+          tags:
+          - Meat
+          - Raw
+          - Burnt
+          - Cigarette
+          - Cigar
+          - Trash
+
+- type: entity
+  parent: CandyBowl
+  id: FruitBowl
+  name: "fruit bowl"
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/food_bowls.rsi
+    state: fruitbowl
+  - type: Bin
+    maxItems: 20
+    whitelist:
+      components:
+      - Pill
+      tags:
+      - Fruit
+      - Burnt
+      - Cigarette
+      - Cigar
+      - Trash
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 2
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ItemMapper
+    sprite: _Impstation/Objects/Misc/food_bowls.rsi
+    mapLayers:
+      fruitbowl-filled:
+        whitelist:
+          components:
+          - Pill
+          tags:
+          - Fruit
+          - Burnt
+          - Cigarette
+          - Cigar
+          - Trash
