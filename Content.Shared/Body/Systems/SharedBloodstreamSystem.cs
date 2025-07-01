@@ -85,7 +85,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                 // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
                 TryModifyBloodLevel((uid, bloodstream), -bloodstream.BleedAmount);
                 // Bleed rate is reduced by the bleed reduction amount in the bloodstream component.
-                // No need to dirty since the update loop also runs on the client.
                 TryModifyBleedAmount((uid, bloodstream), -bloodstream.BleedReductionAmount);
             }
 
@@ -220,21 +219,23 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         var totalFloat = total.Float();
         TryModifyBleedAmount(ent.AsNullable(), totalFloat);
 
-        // TODO: Move this elsewhere, for example into weapon code
-        // This should not happen for any damage, especially not incoming server states
         /// Critical hit. Causes target to lose blood, using the bleed rate modifier of the weapon, currently divided by 5
         /// The crit chance is currently the bleed rate modifier divided by 25.
         /// Higher damage weapons have a higher chance to crit!
-        //var prob = Math.Clamp(totalFloat / 25, 0, 1);
-        //if (totalFloat > 0 && _random.Prob(prob)) // TODO: random predicted
-        //{
-        //    TryModifyBloodLevel(ent.AsNullable(), -total / 5);
-        //    _audio.PlayPredicted(ent.Comp.InstantBloodSound, ent, args.Origin);
-        //}
+
+        // TODO: Replace with RandomPredicted once the engine PR is merged
+        // Use both the receiver and the damage causing entity for the seed so that we have different results for multiple attacks in the same tick
+        var seed = HashCode.Combine((int)_timing.CurTick.Value, GetNetEntity(ent).Id, GetNetEntity(args.Origin)?.Id ?? 0);
+        var rand = new System.Random(seed);
+        var prob = Math.Clamp(totalFloat / 25, 0, 1);
+        if (totalFloat > 0 && rand.Prob(prob))
+        {
+            TryModifyBloodLevel(ent.AsNullable(), -total / 5);
+            _audio.PlayPredicted(ent.Comp.InstantBloodSound, ent, args.Origin);
+        }
 
         // Heat damage will cauterize, causing the bleed rate to be reduced.
-        // else if
-        if (totalFloat <= ent.Comp.BloodHealedSoundThreshold && oldBleedAmount > 0)
+        else if (totalFloat <= ent.Comp.BloodHealedSoundThreshold && oldBleedAmount > 0)
         {
             // Magically, this damage has healed some bleeding, likely
             // because it's burn damage that cauterized their wounds.
