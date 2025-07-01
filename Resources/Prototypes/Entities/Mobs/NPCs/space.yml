@@ -390,7 +390,7 @@
         sprite: Mobs/Animals/sheep.rsi
   - type: GenericVisualizer
     visuals:
-      enum.ShearableVisuals.Sheared:
+      enum.ShearableVisuals.Shearable:
         wooly:
           True: {visible: true}
           False: {visible: false}

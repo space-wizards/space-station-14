@@ -99,11 +99,11 @@ public sealed partial class ShearableComponent : Component
     // A special sprite layer that changes based on the mob's life state.
     // But can also be toggled by the shearable solution dropping blow a certain amount.
     [ViewVariables]
-    public bool Sheared { get; set; } = false;
+    public bool Shearable { get; set; } = false;
 
     [Serializable, NetSerializable]
     public enum ShearableVisuals
     {
-        Sheared,
+        Shearable,
     }
 }

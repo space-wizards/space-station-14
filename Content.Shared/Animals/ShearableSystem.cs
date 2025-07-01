@@ -407,7 +407,7 @@ public sealed class SharedShearableSystem : EntitySystem
             // Remove wool layer
             _appearance.SetData(
                 ent.Owner,
-                ShearableComponent.ShearableVisuals.Sheared,
+                ShearableComponent.ShearableVisuals.Shearable,
                 false,
                 appearance
             );
@@ -418,7 +418,7 @@ public sealed class SharedShearableSystem : EntitySystem
             // Add wool layer
             _appearance.SetData(
                 ent.Owner,
-                ShearableComponent.ShearableVisuals.Sheared,
+                ShearableComponent.ShearableVisuals.Shearable,
                 true,
                 appearance
             );
