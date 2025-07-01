@@ -855,3 +855,6 @@ SpawnPointLatejoinTypanOfficer: SpawnPointLatejoinTaipanOfficer
 SpawnPointLatejoinTypanMedic: SpawnPointLatejoinTaipanMedic
 SpawnPointLatejoinTypanRd: SpawnPointLatejoinTaipanRD
 SpawnPointLatejoinTypanScience: SpawnPointLatejoinTaipanScience
+
+# 2025-06-30
+ADTAbakanRifleAEK: WeaponRifleAEK
