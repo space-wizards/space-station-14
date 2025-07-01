@@ -40,16 +40,20 @@ public sealed partial class ModifyStatusEffect : EntityEffect
         if (args is EntityEffectReagentArgs reagentArgs)
             time *= reagentArgs.Scale.Float();
 
+        var duration = TimeSpan.FromSeconds(time);
         switch (Type)
         {
             case StatusEffectMetabolismType.Add:
-                statusSys.EnsureOrUpdateStatusEffect(args.TargetEntity, EffectProto, TimeSpan.FromSeconds(time), Refresh);
+                if (Refresh)
+                    statusSys.TrySetStatusEffectDuration(args.TargetEntity, EffectProto, duration);
+                else
+                    statusSys.TryAddStatusEffectDuration(args.TargetEntity, EffectProto, duration);
                 break;
             case StatusEffectMetabolismType.Remove:
-                statusSys.TryAddTime(args.TargetEntity, EffectProto, -TimeSpan.FromSeconds(time));
+                statusSys.TryAddTime(args.TargetEntity, EffectProto, -duration);
                 break;
             case StatusEffectMetabolismType.Set:
-                statusSys.TrySetTime(args.TargetEntity, EffectProto, TimeSpan.FromSeconds(time));
+                statusSys.TrySetTime(args.TargetEntity, EffectProto, duration);
                 break;
         }
     }
