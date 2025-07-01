@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: mqole, theqwat, Darkmajia, EpicToast, hivehum, sageu, AvianMaiden
-  changes:
-  - message: ADDED JESTERS
-    type: Add
-  id: 1444
-  time: '2025-04-01T10:16:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2051
-- author: Sha-Seng
-  changes:
-  - message: Bomber jackets have pockets again
-    type: Fix
-  id: 1445
-  time: '2025-04-01T11:10:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2080
 - author: Sha-Seng
   changes:
   - message: Human/dwarf ears are now HeadSide markings (you'll have to readd them
@@ -4242,3 +4228,17 @@
   id: 1943
   time: '2025-07-01T07:22:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2923
+- author: hivehum
+  changes:
+  - message: The Head of Personnel's dresser has a wider variety of options.
+    type: Tweak
+  id: 1944
+  time: '2025-07-01T07:28:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2922
+- author: FutureExalt
+  changes:
+  - message: brigmeds now have their own fashionable bomber jackets!
+    type: Add
+  id: 1945
+  time: '2025-07-01T07:27:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2882
