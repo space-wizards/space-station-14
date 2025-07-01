@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: bigsantino1
-  changes:
-  - message: Wand polymorphs now have a 3 minute timer.
-    type: Tweak
-  - message: The bread polymorph has a sound effect like the others now.
-    type: Tweak
-  id: 1456
-  time: '2025-04-02T03:12:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2169
-- author: Impstation
-  changes:
-  - message: The Jester's Trials Have Ended
-    type: Remove
-  id: 1457
-  time: '2025-04-02T11:13:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2178
 - author: widgetbeck
   changes:
   - message: The dead no longer appear to speak.
@@ -4242,3 +4226,17 @@
   id: 1955
   time: '2025-07-01T08:52:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2864
+- author: hivehum
+  changes:
+  - message: me at bowls
+    type: Add
+  id: 1956
+  time: '2025-07-01T09:05:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2800
+- author: sev7ves
+  changes:
+  - message: Added clown related Thaven moods.
+    type: Add
+  id: 1957
+  time: '2025-07-01T09:05:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2704
