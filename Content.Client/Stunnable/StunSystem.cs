@@ -12,6 +12,9 @@ namespace Content.Client.Stunnable;
 
 public sealed class StunSystem : SharedStunSystem
 {
+    private static readonly ResPath StarsPath = new ResPath("Mobs/Effects/stunned.rsi");
+    private static readonly string State = "stunned";
+
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SpriteSystem _spriteSystem = default!;
@@ -32,7 +35,7 @@ public sealed class StunSystem : SharedStunSystem
     /// </summary>
     private void OnComponentInit(Entity<StunnedComponent> entity, ref ComponentInit args)
     {
-        if (_timing.IsFirstTimePredicted)
+        if (!_timing.IsFirstTimePredicted)
             return;
 
         if (!TryComp<SpriteComponent>(entity, out var sprite))
@@ -44,7 +47,7 @@ public sealed class StunSystem : SharedStunSystem
         _spriteSystem.LayerSetVisible(spriteEntity, StunVisualLayers.StamCrit, false);
         _spriteSystem.LayerSetOffset(spriteEntity, StunVisualLayers.StamCrit, new Vector2(0, 0.3125f));
 
-        _spriteSystem.LayerSetRsi(spriteEntity, StunVisualLayers.StamCrit, new ResPath("Mobs/Effects/stunned.rsi"));
+        _spriteSystem.LayerSetRsi(spriteEntity, StunVisualLayers.StamCrit, StarsPath);
 
         UpdateAppearance((entity,  entity.Comp, sprite));
     }
@@ -86,7 +89,7 @@ public sealed class StunSystem : SharedStunSystem
             Appearance.SetData(entity, StunVisuals.SeeingStars, false);
 
         _spriteSystem.LayerSetVisible((entity, entity.Comp2), index, stars);
-        _spriteSystem.LayerSetRsiState((entity, entity.Comp2), index, "stunned");
+        _spriteSystem.LayerSetRsiState((entity, entity.Comp2), index, State);
     }
 
     private void OnMobStateChanged(Entity<StunnedComponent> entity, ref MobStateChangedEvent args)

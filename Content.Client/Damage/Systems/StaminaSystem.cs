@@ -2,7 +2,7 @@
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Damage.Systems;
@@ -10,8 +10,9 @@ namespace Content.Client.Damage.Systems;
 public sealed partial class StaminaSystem : SharedStaminaSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly StunSystem _stun = default!;
+    [Dependency] private readonly StunSystem _stun = default!; // Clientside Stun System
 
     private const string StaminaAnimationKey = "stamina";
 
@@ -65,7 +66,7 @@ public sealed partial class StaminaSystem : SharedStaminaSystem
             return;
 
         // Don't animate if we're dead
-        if (TryComp<MobStateComponent>(entity, out var state) && state.CurrentState == MobState.Dead)
+        if (_mobState.IsDead(entity))
             return;
 
         entity.Comp.StartOffset = sprite.Offset;
