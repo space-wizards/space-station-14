@@ -39,13 +39,13 @@
 #  category: cargoproduct-category-name-fun
 #  group: market
 
-- type: cargoProduct
-  name: anniversary crate
-  id: CrateAnniversary
-  icon:
-    sprite: _Impstation/Objects/Fun/toys.rsi
-    state: plushie_imp
-  product: CrateAnniversaryFilled
-  cost: 750
-  category: cargoproduct-category-name-fun
-  group: market
+#- type: cargoProduct # come back next june
+#  name: anniversary crate
+#  id: CrateAnniversary
+#  icon:
+#    sprite: _Impstation/Objects/Fun/toys.rsi
+#    state: plushie_imp
+#  product: CrateAnniversaryFilled
+#  cost: 750
+#  category: cargoproduct-category-name-fun
+#  group: market

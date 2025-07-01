@@ -70,10 +70,14 @@
     - id: PlushieCaptain
       weight: 0.1
     - id: PlushieOdds
-      weight: 0.4
+      weight: 0.1
     - id: PlushieGiantBear
-      weight: 0.5
+      weight: 0.05
+    - id: PlushieJumboGray
+      weight: 0.1
     - id: PlushieGriffy
+    - id: PlushieGnomeChild
+      weight: 0.1
     # imp edit end
     # DEN begin
     - !type:GroupSelector

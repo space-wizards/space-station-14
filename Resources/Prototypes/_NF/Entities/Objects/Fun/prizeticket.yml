@@ -128,6 +128,9 @@
     - id: PlushieGhostRevenant
       prob: 0.15
       orGroup: Prize
+    - id: PlushieGnomeChild
+      prob: 0.15
+      orGroup: Prize
     - id: PlushieGollylad
       prob: 0.15
       orGroup: Prize
@@ -207,6 +210,9 @@
       prob: 0.03
       orGroup: Prize
     - id: PlushieImp
+      prob: 0.03
+      orGroup: Prize
+    - id: PlushieJumboGray # bwee....
       prob: 0.03
       orGroup: Prize
     - id: PlushieLizardInversed

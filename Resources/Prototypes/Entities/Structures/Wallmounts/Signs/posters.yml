@@ -937,12 +937,25 @@
 - type: entity
   parent: PosterBase
   id: PosterLegitNoERP
-  name: "Yes ERP"
-  description: "This poster reminds the crew that Eroticism and Pornography are banned on Nanotrasen stations, but also we are supportive of gay rights, so you get an exception for just this month." # imp
+  name: "ERP Policy" # imp
+  description: "This poster serves as a reminder to crew of policies regarding Eroticism and Pornography on Nanotrasen stations." # imp
   components:
+  # imp below. i don't want to talk about it.
   - type: Sprite
-    sprite: _Floof/Structures/Wallmounts/posters.rsi # IMP YOU HAVE TO DELETE THIS AFTER JUNE
-    state: poster34_legit
+    sprite: _Floof/Structures/Wallmounts/posters.rsi
+    layers:
+    - state: poster34_legit
+    - state: poster34_june
+      map: ["pride"]
+  - type: HolidayVisuals
+    holidays:
+      pride:
+      - PrideMonth
+  - type: GenericVisualizer
+    visuals:
+      enum.HolidayVisuals.Holiday:
+        pride:
+          pride: { visible: true }
 
 - type: entity
   parent: PosterBase

@@ -155,21 +155,23 @@
     - WhoopieCushion
     - Whistle
     # imp below
-    - PlushieGiantBear
-    - PlushieFinfin
-    - PlushieGray
-    - PlushieUrsaMinor
+    - PetRockCarrier
+    - PlushieApid
     - PlushieDecapoid
+    - PlushieFinfin
+    - PlushieGiantBear
+    - PlushieGnomeChild
+    - PlushieGoblin
+    - PlushieGray
+    - PlushieGriffy
+    - PlushieJumboGray
+    - PlushieKodepiia
     - PlushieSnail
     - PlushieThaven
-    - PlushieGoblin
-    - PlushieApid
-    - PlushieGriffy
+    - PlushieUrsaMinor
+    - PrizeTicketBronze
     - PrizeTicketGold
     - PrizeTicketSilver
-    - PrizeTicketBronze
-    - PlushieKodepiia
-    - PetRockCarrier
     - WeaponLauncherRocketToy
     # DEN content, imp addition
     - PlushieTeddyBear
