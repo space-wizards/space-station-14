@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Rat Kings now deal 2 structural damage
-    type: Tweak
-  id: 1450
-  time: '2025-04-01T11:50:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2157
-- author: widgetbeck
-  changes:
-  - message: Added a new depth 4 artifact node.
-    type: Add
-  - message: People with the Echolalia trait will now display fake typing indicators
-      before echoing a message.
-    type: Tweak
-  id: 1451
-  time: '2025-04-01T11:50:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2150
 - author: mqole
   changes:
   - message: Your random characters might be a bit more colourful.
@@ -4247,3 +4230,17 @@
   id: 1949
   time: '2025-07-01T08:02:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2928
+- author: youtubevideo3
+  changes:
+  - message: NT has designed a new marching uniform for their musicians!
+    type: Add
+  id: 1950
+  time: '2025-07-01T08:12:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2911
+- author: DinnerCalzone
+  changes:
+  - message: Maints airlocks are once again refereed to as 'maintenance access'.
+    type: Tweak
+  id: 1951
+  time: '2025-07-01T08:12:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2914
