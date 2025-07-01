@@ -10,6 +10,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Animals.Systems;
 
+/// <summary>
+/// ParrotRadioSystem handles parroting things via equipped radios if a ParrotSpeakEvent from a ParrotSystem is fired
+/// Also relays messages received on the radio to the ParrotSystem for learning
+/// </summary>
 public sealed partial class ParrotRadioSystem : EntitySystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
@@ -64,6 +68,12 @@ public sealed partial class ParrotRadioSystem : EntitySystem
         UpdateParrotRadioChannels(entity.Owner);
     }
 
+    /// <summary>
+    /// Called when the map is initialized (or after an entity is created).
+    /// This ensures radio channels are updated when an entity spawns in with a radio pre-equipped
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="args"></param>
     private void RadioOnMapInit(Entity<ParrotRadioComponent> entity, ref MapInitEvent args)
     {
         // If an entity has a ParrotRadioComponent it really ought to have an ActiveRadioComponent
@@ -109,7 +119,7 @@ public sealed partial class ParrotRadioSystem : EntitySystem
     }
 
     /// <summary>
-    /// Raised whenever an entity with a ParrotSpeakComponent tries to speak
+    /// Called whenever an entity with a ParrotSpeakComponent tries to speak
     /// </summary>
     private void OnParrotSpeak(Entity<ParrotSpeakerComponent> ent, ref ParrotSpeakEvent args)
     {
