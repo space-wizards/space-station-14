@@ -173,4 +173,6 @@
       - DrinkUAPGlass
       - DrinkWeldingCoilsGlass
       - DrinkZombieSlushieGlass
+      - DrinkBatteryAcidGlass
+      - DrinkAngelsKissGlass
     rareChance: 0.05

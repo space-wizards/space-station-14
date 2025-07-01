@@ -161,3 +161,17 @@
       amount: 5
   products:
     Radium: 5
+
+- type: reaction
+  id: SynthBloodBreakdown # synthblood under /_CD/Reagents/biological.yml
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    SynthBlood:
+      amount: 5
+  products:
+    Silicon: 1
+    Lithium: 1
+    Ethanol: 2
+    SpaceLube: 1

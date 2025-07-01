@@ -246,6 +246,7 @@
     - ShimmeringBlood
     - BloodKodepiia
     - GrayBlood
+    - SynthBlood
 
 - type: xenoArchTrigger
   id: TriggerThrow

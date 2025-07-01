@@ -1,0 +1,8 @@
+- type: trait
+  category: Quirks
+  id: Synthetic
+  name: trait-synth-name
+  description: trait-synth-desc
+  # Imp - removed IPCs from excludedSpecies as they are not real here
+  components:
+    - type: Synth

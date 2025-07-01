@@ -104,6 +104,7 @@
     - ZombieBlood
     - ShimmeringBlood #imp
     - BloodKodepiia # imp
+    - SynthBlood # imp
   requiredTags:
     Knife: 1
   output:
@@ -141,6 +142,7 @@
     - ZombieBlood
     - ShimmeringBlood #imp
     - BloodKodepiia # imp
+    - SynthBlood # imp
   requiredTags:
     Eyes: 1
     Stomach: 1
@@ -167,6 +169,7 @@
     - ZombieBlood
     - ShimmeringBlood #imp
     - BloodKodepiia # imp
+    - SynthBlood # imp
   requiredTags:
     Pen: 1
     Heart: 1

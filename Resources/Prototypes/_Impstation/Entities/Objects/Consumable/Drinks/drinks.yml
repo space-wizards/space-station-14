@@ -655,3 +655,35 @@
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/liquidlunch.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkBatteryAcidGlass
+  suffix: battery acid
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BatteryAcid
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/batteryacid.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkAngelsKissGlass
+  suffix: angel's kiss
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: AngelsKiss
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/angelskiss.rsi
+    state: icon

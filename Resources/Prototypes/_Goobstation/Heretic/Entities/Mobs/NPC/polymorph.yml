@@ -117,7 +117,7 @@
   - type: SolutionContainerManager # imp. Little bit o' everybody in there.
     solutions:
       blood:
-        maxVol: 800
+        maxVol: 900
         reagents:
         - ReagentId: ShimmeringBlood
           Quantity: 100
@@ -126,6 +126,8 @@
         - ReagentId: Slime
           Quantity: 100
         - ReagentId: GrayBlood
+          Quantity: 100
+        - ReagentId: SynthBlood
           Quantity: 100
         - ReagentId: CopperBlood
           Quantity: 100

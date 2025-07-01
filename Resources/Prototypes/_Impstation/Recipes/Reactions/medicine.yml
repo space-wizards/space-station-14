@@ -20,6 +20,17 @@
     Brutoxidone: 1
 
 - type: reaction
+  id: Subjuzine-Activation-SynthBlood #imp, so "synths" can use it
+  preserveDNA: true
+  reactants:
+    Subjuzine:
+      amount: 4
+    SynthBlood:
+      amount: 1
+  products:
+    ActivatedSubjuzine: 5
+
+- type: reaction
   id: Subjuzine-Activation-GrayBlood #imp, so greys can use it
   preserveDNA: true
   reactants:

@@ -870,3 +870,56 @@
         time: 5
         refresh: false
   fizziness: 0.1
+
+- type: reagent
+  id: BatteryAcid
+  name: reagent-name-batteryacid
+  parent: BaseAlcohol
+  desc: reagent-desc-batteryacid
+  physicalDesc: reagent-physical-desc-energizing
+  flavor: batteryacid
+  color: "#00ff00"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/batteryacid.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        walkSpeedModifier: 1.02
+        sprintSpeedModifier: 1.02
+        probability: 0.02
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+    Poison:
+      effects:
+      - !type:Electrocute
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        probability: 0.02
+  fizziness: .3
+
+- type: reagent
+  id: AngelsKiss
+  name: reagent-name-angels-kiss
+  parent: BaseAlcohol
+  desc: reagent-desc-angels-kiss
+  physicalDesc: reagent-physical-desc-nondescript
+  flavor: angelskiss
+  color: "#a6ffff"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/angelskiss.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false

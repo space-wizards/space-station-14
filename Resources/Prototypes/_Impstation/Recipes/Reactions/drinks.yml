@@ -579,3 +579,34 @@
   products:
     LiquidLunch: 6
 
+- type: reaction
+  id: BatteryAcid
+  preserveDNA: true
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Rum:
+      amount: 1
+    SynthBlood:
+      amount: 1
+    DrGibb:
+      amount: 1
+    SpaceMountainWind:
+      amount: 1
+  products:
+    BatteryAcid: 4
+
+- type: reaction
+  id: AngelsKiss
+  preserveDNA: true
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Rum:
+      amount: 1
+    SynthBlood:
+      amount: 1
+    CoffeeLiqueur:
+      amount: 1
+  products:
+    AngelsKiss: 3
