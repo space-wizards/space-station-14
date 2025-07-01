@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprited by AftrLife(github) based on closet sprites taken from tgstation from https://github.com/tgstation/tgstation/pull/85491. atmos, black, and blue door by DinnerCalzone(github). Evac lockers by EmoGarbage404 (GitHub)",
+  "copyright": "Sprited by AftrLife(github) based on closet sprites taken from tgstation from https://github.com/tgstation/tgstation/pull/85491. atmos_door, black_door, blue_door, eng sprites, and genpop sprites by DinnerCalzone(github).",
   "size": {
     "x": 32,
     "y": 32
@@ -63,6 +63,36 @@
       },
       {
           "name": "generic_open"
+      },
+	  {
+          "name": "genpop"
+      },
+	  {
+          "name": "genpop_door_1"
+      },
+	  {
+          "name": "genpop_door_2"
+      },
+	  {
+          "name": "genpop_door_3"
+      },
+	  {
+          "name": "genpop_door_4"
+      },
+	  {
+          "name": "genpop_door_5"
+      },
+	  {
+          "name": "genpop_door_6"
+      },
+	  {
+          "name": "genpop_door_7"
+      },
+	  {
+          "name": "genpop_door_8"
+      },
+	  {
+          "name": "genpop_open"
       },
       {
           "name": "gray_door"

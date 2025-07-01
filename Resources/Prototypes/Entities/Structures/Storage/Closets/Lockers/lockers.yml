@@ -169,8 +169,8 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: eng
-    stateDoorOpen: generic_open_3
-    stateDoorClosed: eng_evac_door #TODO make imp version of this
+    stateDoorOpen: generic_open_3 #imp edit
+    stateDoorClosed: eng_evac_door
   - type: AccessReader
     access: [ [ "Engineering" ] ]
 
