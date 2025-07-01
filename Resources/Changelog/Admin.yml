@@ -1225,5 +1225,20 @@ Entries:
   id: 148
   time: '2025-06-28T11:11:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38612
+- author: BramvanZijp
+  changes:
+  - message: The Super Door Remote can now effect doors that the user's ID card has
+      access to, even if the remote itself somehow cannot access them.
+    type: Tweak
+  id: 149
+  time: '2025-06-29T16:21:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35536
+- author: Kowlin
+  changes:
+  - message: Changed the way CSVs are exported
+    type: Tweak
+  id: 150
+  time: '2025-06-30T21:09:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38531
 Name: Admin
 Order: 2
