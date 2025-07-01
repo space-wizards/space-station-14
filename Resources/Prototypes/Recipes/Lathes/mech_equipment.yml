@@ -54,7 +54,7 @@
 - type: latheRecipe
   parent: BaseToolRecipe
   id: MechEquipmentDrill
-  result: MechEquipmentDrill
+  result: WeaponMechMelleDrill
   completetime: 3
   materials:
     Steel: 900
@@ -63,7 +63,7 @@
 - type: latheRecipe
   parent: MechEquipmentDrill
   id: MechEquipmentDrillDiamond
-  result: MechEquipmentDrillDiamond
+  result: WeaponMechMelleDrillDiamond
   materials:
     Steel: 1200
     Plastic: 500

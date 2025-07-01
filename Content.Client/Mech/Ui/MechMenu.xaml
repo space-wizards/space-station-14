@@ -9,10 +9,10 @@
                   HorizontalExpand="True"
                   VerticalExpand="True">
         <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="15 10 10 15">
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 5">
                 <controls:StripeBack HorizontalExpand="True">
                     <PanelContainer>
-                        <RichTextLabel Name="NameLineEdit" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 0"/>
+                        <RichTextLabel Name="NameLineEdit" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 3"/>
                     </PanelContainer>
                 </controls:StripeBack>
             </BoxContainer>
