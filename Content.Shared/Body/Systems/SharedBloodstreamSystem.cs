@@ -158,6 +158,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             _audio.PlayPredicted(ent.Comp.BloodHealedSound, ent, ent);
             _popupSystem.PopupPredicted(Loc.GetString("bloodstream-component-wounds-cauterized"), ent, ent, PopupType.Medium);
         }
+
+        Dirty(ent);
     }
     /// <summary>
     ///     Shows text on health examine, based on bleed rate and blood level.
@@ -221,6 +223,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         if (SolutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.ChemicalSolutionName, ref entity.Comp.ChemicalSolution))
             SolutionContainerSystem.RemoveAllSolution(entity.Comp.ChemicalSolution.Value);
+
+        Dirty(entity);
     }
 
     /// <summary>
@@ -323,8 +327,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         entity.Comp.BleedAmount += amount;
         entity.Comp.BleedAmount = Math.Clamp((float)entity.Comp.BleedAmount, 0f, (float)entity.Comp.MaxBleedAmount);
-
-        Dirty(entity);
 
         SetBleedAlert(entity);
 
