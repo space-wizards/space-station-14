@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: mqole
   changes:
-  - message: Your random characters might be a bit more colourful.
-    type: Tweak
-  id: 1452
-  time: '2025-04-01T12:23:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2148
-- author: mqole
-  changes:
   - message: You can now randomise your appearance without changing your species in
       the character menu!
     type: Add
@@ -4244,3 +4237,12 @@
   id: 1951
   time: '2025-07-01T08:12:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2914
+- author: jtfg-dev
+  changes:
+  - message: Gave some non-bullet guns proper descriptions.
+    type: Tweak
+  - message: Nanotrasen is still spelled Nanotrasen, we just made sure.
+    type: Fix
+  id: 1952
+  time: '2025-07-01T08:15:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2916
