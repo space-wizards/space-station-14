@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: The Cargorilla cargo gift event will now only roll during the first 30
-      minutes of the round.
-    type: Tweak
-  id: 1448
-  time: '2025-04-01T11:39:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2159
 - author: Darkmajia
   changes:
   - message: Drains properly clog again.
@@ -4245,3 +4237,12 @@
   id: 1947
   time: '2025-07-01T07:34:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2926
+- author: emmetian
+  changes:
+  - message: Added 34 new markings for gastropoids (with shell variants)
+    type: Add
+  - message: Edited some existing gastropoid markings for consistency
+    type: Tweak
+  id: 1948
+  time: '2025-07-01T07:53:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2909
