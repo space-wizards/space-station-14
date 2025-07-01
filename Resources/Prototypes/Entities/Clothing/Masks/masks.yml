@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   parent: ClothingMaskPullableBase
   id: ClothingMaskGas
@@ -684,7 +685,9 @@
   name: ninja mask
   description: A close-fitting nano-enhanced mask that acts both as an air filter and a post-modern fashion statement.
   components:
+  # start of modifications
   - type: VoiceMask
+  # end of modifications
   - type: Sprite
     sprite: Clothing/Mask/ninja.rsi
   - type: Clothing
@@ -694,10 +697,12 @@
   - type: EyeProtection
   - type: BreathMask
   - type: IdentityBlocker
+  # start of modifications
   - type: UserInterface
     interfaces:
       enum.VoiceMaskUIKey.Key:
         type: VoiceMaskBoundUserInterface
+  # end of modifications
 
 - type: entity
   parent: ClothingMaskGas

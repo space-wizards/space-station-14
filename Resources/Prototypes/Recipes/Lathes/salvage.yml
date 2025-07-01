@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: latheRecipe
   id: MineralScannerEmpty
   result: MineralScannerEmpty
@@ -69,6 +70,7 @@
     Silver: 200
     Diamond: 100
 
+# start of modifications
 # - type: latheRecipe
 #   id: PKAUpgradeDamage
 #   result: PKAUpgradeDamage
@@ -101,4 +103,4 @@
 #     Steel: 1500
 #     Gold: 500
 #     Silver: 500
-
+# end of modifications

@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: Paramedic
   name: job-name-paramedic
@@ -13,7 +14,7 @@
   access:
   - Medical
   - Maintenance
-  - External
+  - External # Ronstation - modifications
   extendedAccess:
   - Chemistry
 

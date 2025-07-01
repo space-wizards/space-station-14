@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   id: MuzzleFlashEffect
   categories: [ HideSpawnMenu ]
@@ -500,7 +501,7 @@
         Structural: 30
   # Short lifespan
   - type: TimedDespawn
-    lifetime: 4
+    lifetime: 4 # Ronstation - modification
   - type: GatheringProjectile
 
 - type: entity

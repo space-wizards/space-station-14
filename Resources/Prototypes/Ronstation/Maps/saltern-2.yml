@@ -1,7 +1,8 @@
+# Contains modifications made by Ronstation contributors, therefore this file is subject to MIT sublicensed with AGPL v3.0.
 - type: gameMap
   id: Saltern2
   mapName: 'Saltern-II'
-  mapPath: /Maps/_Ronstation/saltern-2.yml
+  mapPath: /Maps/Ronstation/saltern-2.yml # Ronstation - modification.
   minPlayers: 0
   maxPlayers: 35
   fallback: true
