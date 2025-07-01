@@ -61,6 +61,12 @@ public sealed partial class HandcuffComponent : Component
     public bool Used;
 
     /// <summary>
+    /// Whether examining someone with these handcuffs will show you how long they've been cuffed for (providing they have the right hud).
+    /// </summary>
+    [DataField]
+    public bool ShowCuffedTime;
+
+    /// <summary>
     ///     The path of the RSI file used for the player cuffed overlay.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
