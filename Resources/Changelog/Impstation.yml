@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: The dead no longer appear to speak.
-    type: Fix
-  id: 1458
-  time: '2025-04-02T11:14:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2181
 - author: Mousetrinity
   changes:
   - message: Wizard event spells no longer possess you with a desire to hoard guns
@@ -4240,3 +4233,12 @@
   id: 1957
   time: '2025-07-01T09:05:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2704
+- author: maenyas, mqole, rainyatrium, LankLTE, ZigTag
+  changes:
+  - message: sheep can dream of robot. New synthetic trait!
+    type: Add
+  - message: two new drinks made with synthblood!
+    type: Add
+  id: 1958
+  time: '2025-07-01T15:23:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2903
