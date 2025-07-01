@@ -25,6 +25,7 @@
     - Electrocution
     - TemporaryBlindness
     - RadiationProtection
+    - Drowsiness
     - Adrenaline
   - type: StandingState
   - type: Tag

@@ -69,7 +69,7 @@ namespace Content.Server.Engineering.EntitySystems
                 return;
             }
 
-            Spawn(component.Prototype, args.ClickLocation.SnapToGrid(grid));
+            EntityManager.SpawnEntity(component.Prototype, args.ClickLocation.SnapToGrid(grid));
 
             if (component.RemoveOnInteract && stackComp == null)
                 TryQueueDel(uid);

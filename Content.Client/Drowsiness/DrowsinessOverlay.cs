@@ -1,5 +1,5 @@
 using Content.Shared.Drowsiness;
-using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffect;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
@@ -15,7 +15,6 @@ public sealed class DrowsinessOverlay : Overlay
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    private readonly SharedStatusEffectsSystem _statusEffects = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
@@ -30,9 +29,6 @@ public sealed class DrowsinessOverlay : Overlay
     public DrowsinessOverlay()
     {
         IoCManager.InjectDependencies(this);
-
-        _statusEffects = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
-
         _drowsinessShader = _prototypeManager.Index<ShaderPrototype>("Drowsiness").InstanceUnique();
     }
 
@@ -43,11 +39,17 @@ public sealed class DrowsinessOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_statusEffects.TryGetEffectsEndTimeWithComp<DrowsinessStatusEffectComponent>(playerEntity, out var endTime))
+        if (!_entityManager.HasComponent<DrowsinessComponent>(playerEntity)
+            || !_entityManager.TryGetComponent<StatusEffectsComponent>(playerEntity, out var status))
             return;
 
-        endTime ??= TimeSpan.MaxValue;
-        var timeLeft = (float)(endTime - _timing.CurTime).Value.TotalSeconds;
+        var statusSys = _sysMan.GetEntitySystem<StatusEffectsSystem>();
+        if (!statusSys.TryGetTime(playerEntity.Value, SharedDrowsinessSystem.DrowsinessKey, out var time, status))
+            return;
+
+        var curTime = _timing.CurTime;
+        var timeLeft = (float)(time.Value.Item2 - curTime).TotalSeconds;
+
         CurrentPower += 8f * (0.5f * timeLeft - CurrentPower) * args.DeltaSeconds / (timeLeft + 1);
     }
 

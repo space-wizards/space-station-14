@@ -9,14 +9,16 @@ namespace Content.Server.Shuttles.Commands;
 /// Calls in the emergency shuttle.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
-public sealed class DockEmergencyShuttleCommand : LocalizedEntityCommands
+public sealed class DockEmergencyShuttleCommand : IConsoleCommand
 {
-    [Dependency] private readonly EmergencyShuttleSystem _shuttleSystem = default!;
+    [Dependency] private readonly IEntitySystemManager _sysManager = default!;
 
-    public override string Command => "dockemergencyshuttle";
-
-    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    public string Command => "dockemergencyshuttle";
+    public string Description => Loc.GetString("emergency-shuttle-command-dock-desc");
+    public string Help => $"{Command}";
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        _shuttleSystem.DockEmergencyShuttle();
+        var system = _sysManager.GetEntitySystem<EmergencyShuttleSystem>();
+        system.DockEmergencyShuttle();
     }
 }

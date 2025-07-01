@@ -6,14 +6,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.NameColor)]
-    internal sealed class SetAdminOOC : LocalizedCommands
+    internal sealed class SetAdminOOC : IConsoleCommand
     {
-        [Dependency] private readonly IServerDbManager _dbManager = default!;
-        [Dependency] private readonly IServerPreferencesManager _preferenceManager = default!;
+        public string Command => "setadminooc";
+        public string Description => Loc.GetString("set-admin-ooc-command-description", ("command", Command));
+        public string Help => Loc.GetString("set-admin-ooc-command-help-text", ("command", Command));
 
-        public override string Command => "setadminooc";
-
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player == null)
             {
@@ -37,9 +36,11 @@ namespace Content.Server.Administration.Commands
 
             var userId = shell.Player.UserId;
             // Save the DB
-            _dbManager.SaveAdminOOCColorAsync(userId, color.Value);
+            var dbMan = IoCManager.Resolve<IServerDbManager>();
+            dbMan.SaveAdminOOCColorAsync(userId, color.Value);
             // Update the cached preference
-            var prefs = _preferenceManager.GetPreferences(userId);
+            var prefManager = IoCManager.Resolve<IServerPreferencesManager>();
+            var prefs = prefManager.GetPreferences(userId);
             prefs.AdminOOCColor = color.Value;
         }
     }

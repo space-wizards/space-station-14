@@ -57,7 +57,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             if (monitor.LastHeartbeat > _maxHeartbeatTime)
             {
                 DisconnectCamera(uid, true, monitor);
-                RemComp<ActiveSurveillanceCameraMonitorComponent>(uid);
+                EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorComponent>(uid);
             }
         }
     }
@@ -256,7 +256,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
         monitor.ActiveCamera = null;
         monitor.ActiveCameraAddress = string.Empty;
-        RemComp<ActiveSurveillanceCameraMonitorComponent>(uid);
+        EntityManager.RemoveComponent<ActiveSurveillanceCameraMonitorComponent>(uid);
         UpdateUserInterface(uid, monitor);
     }
 

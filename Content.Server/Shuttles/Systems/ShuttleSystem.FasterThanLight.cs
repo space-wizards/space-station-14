@@ -679,7 +679,7 @@ public sealed partial class ShuttleSystem
         // only toss if its on lattice/space
         var tile = _mapSystem.GetTileRef(shuttleEntity, shuttleGrid, childXform.Coordinates);
 
-        if (!_turf.IsSpace(tile))
+        if (!tile.IsSpace(_tileDefManager))
             return;
 
         var throwDirection = childXform.LocalPosition - shuttleBody.LocalCenter;

@@ -107,10 +107,11 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectSeeingRainbow
-        time: 5
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
         type: Add
+        time: 5
         refresh: false
     Drink:
       effects:

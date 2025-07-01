@@ -140,13 +140,13 @@
     sprite: Objects/Misc/Lights/lampint.rsi
     layers:
       - state: lamp-int
-        map: [ "enum.FlashVisualLayers.BaseLayer" ]
+        map: [ "enum.FlashVisuals.BaseLayer" ]
       - state: lamp-int-on
         shader: unshaded
         visible: false
         map: [ "light" ]
       - state: flashing
-        map: [ "enum.FlashVisualLayers.LightLayer" ]
+        map: [ "enum.FlashVisuals.LightLayer" ]
         visible: false
   - type: Item
     sprite: Objects/Misc/Lights/lampint.rsi
@@ -159,10 +159,6 @@
     energy: 0.5
     color: "#FFFFEE"
   - type: Flash
-    flashOnMelee: false
-    flashOnUse: false
-  - type: UseDelay
-    delay: 1
   - type: LimitedCharges
     maxCharges: 3
   - type: AutoRecharge
@@ -180,10 +176,10 @@
   - type: GenericVisualizer
     visuals:
       enum.FlashVisuals.Burnt:
-        enum.FlashVisualLayers.BaseLayer:
+        enum.FlashVisuals.BaseLayer:
           True: {state: burnt}
       enum.FlashVisuals.Flashing:
-        enum.FlashVisualLayers.LightLayer:
+        enum.FlashVisuals.LightLayer:
           True: {visible: true}
           False: {visible: false}
 

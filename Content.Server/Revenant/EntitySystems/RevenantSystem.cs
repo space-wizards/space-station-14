@@ -45,7 +45,6 @@ public sealed partial class RevenantSystem : EntitySystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly VisibilitySystem _visibility = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
     private const string RevenantShopId = "ActionRevenantShop";
@@ -165,7 +164,7 @@ public sealed partial class RevenantSystem : EntitySystem
             return false;
         }
 
-        var tileref = _turf.GetTileRef(Transform(uid).Coordinates);
+        var tileref = Transform(uid).Coordinates.GetTileRef();
         if (tileref != null)
         {
             if(_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)

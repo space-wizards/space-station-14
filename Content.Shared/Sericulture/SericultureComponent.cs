@@ -31,10 +31,10 @@ public sealed partial class SericultureComponent : Component
     /// <summary>
     /// The entity needed to actually preform sericulture. This will be granted (and removed) upon the entity's creation.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public EntProtoId Action = "ActionSericulture";
+    public EntProtoId Action;
 
     [AutoNetworkedField]
     [DataField("actionEntity")]

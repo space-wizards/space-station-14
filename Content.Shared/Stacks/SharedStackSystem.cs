@@ -112,7 +112,7 @@ public abstract class SharedStackSystem : EntitySystem
         }
 
         // This is shit code until hands get fixed and give an easy way to enumerate over items, starting with the currently active item.
-        foreach (var held in Hands.EnumerateHeld(user))
+        foreach (var held in Hands.EnumerateHeld(user.Owner, user.Comp))
         {
             TryMergeStacks(item, held, out _);
 

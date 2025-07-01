@@ -3,23 +3,23 @@ using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Robust.Shared.Console;
+using Robust.Shared.Random;
 
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    internal sealed class DestroyMechanismCommand : LocalizedEntityCommands
+    sealed class DestroyMechanismCommand : IConsoleCommand
     {
-        [Dependency] private readonly IComponentFactory _compFactory = default!;
-        [Dependency] private readonly BodySystem _bodySystem = default!;
+        public string Command => "destroymechanism";
+        public string Description => "Destroys a mechanism from your entity";
+        public string Help => $"Usage: {Command} <mechanism>";
 
-        public override string Command => "destroymechanism";
-
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var player = shell.Player;
             if (player == null)
             {
-                shell.WriteLine(Loc.GetString($"shell-only-players-can-run-this-command"));
+                shell.WriteLine("Only a player can run this command.");
                 return;
             }
 
@@ -31,29 +31,36 @@ namespace Content.Server.Body.Commands
 
             if (player.AttachedEntity is not {} attached)
             {
-                shell.WriteLine(Loc.GetString($"shell-must-be-attached-to-entity"));
+                shell.WriteLine("You have no entity.");
                 return;
             }
 
-            if (!EntityManager.TryGetComponent(attached, out BodyComponent? body))
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var fac = IoCManager.Resolve<IComponentFactory>();
+
+            if (!entityManager.TryGetComponent(attached, out BodyComponent? body))
             {
-                shell.WriteLine(Loc.GetString($"shell-must-have-body"));
+                var random = IoCManager.Resolve<IRobustRandom>();
+                var text = $"You have no body{(random.Prob(0.2f) ? " and you must scream." : ".")}";
+
+                shell.WriteLine(text);
                 return;
             }
 
             var mechanismName = string.Join(" ", args).ToLowerInvariant();
+            var bodySystem = entityManager.System<BodySystem>();
 
-            foreach (var organ in _bodySystem.GetBodyOrgans(attached, body))
+            foreach (var organ in bodySystem.GetBodyOrgans(attached, body))
             {
-                if (_compFactory.GetComponentName(organ.Component.GetType()).ToLowerInvariant() == mechanismName)
+                if (fac.GetComponentName(organ.Component.GetType()).ToLowerInvariant() == mechanismName)
                 {
-                    EntityManager.QueueDeleteEntity(organ.Id);
-                    shell.WriteLine(Loc.GetString($"cmd-destroymechanism-success", ("name", mechanismName)));
+                    entityManager.QueueDeleteEntity(organ.Id);
+                    shell.WriteLine($"Mechanism with name {mechanismName} has been destroyed.");
                     return;
                 }
             }
 
-            shell.WriteLine(Loc.GetString($"cmd-destroymechanism-no-mechanism-found", ("name", mechanismName)));
+            shell.WriteLine($"No mechanism was found with name {mechanismName}.");
         }
     }
 }

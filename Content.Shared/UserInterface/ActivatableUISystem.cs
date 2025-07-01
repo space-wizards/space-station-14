@@ -108,10 +108,10 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
             if (component.InHandsOnly)
             {
-                if (!_hands.IsHolding((args.User, args.Hands), uid, out var hand ))
+                if (!_hands.IsHolding(args.User, uid, out var hand, args.Hands))
                     return false;
 
-                if (component.RequireActiveHand && args.Hands.ActiveHandId != hand)
+                if (component.RequireActiveHand && args.Hands.ActiveHand != hand)
                     return false;
             }
         }
@@ -202,10 +202,10 @@ public sealed partial class ActivatableUISystem : EntitySystem
             if (!TryComp(user, out HandsComponent? hands))
                 return false;
 
-            if (!_hands.IsHolding((user, hands), uiEntity, out var hand))
+            if (!_hands.IsHolding(user, uiEntity, out var hand, hands))
                 return false;
 
-            if (aui.RequireActiveHand && hands.ActiveHandId != hand)
+            if (aui.RequireActiveHand && hands.ActiveHand != hand)
                 return false;
         }
 

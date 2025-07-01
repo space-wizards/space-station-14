@@ -102,10 +102,6 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
-  - type: Tag
-    tags:
-    - CorgiWearable
-    - WhitelistChameleon
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing, AllowSuitStorageClothing]
@@ -269,10 +265,6 @@
     node: suit
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
-  - type: Tag
-    tags:
-    - CorgiWearable
-    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterBase

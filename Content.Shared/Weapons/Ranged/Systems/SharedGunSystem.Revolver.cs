@@ -100,7 +100,7 @@ public partial class SharedGunSystem
             return false;
 
         // If it's a speedloader try to get ammo from it.
-        if (HasComp<SpeedLoaderComponent>(uid))
+        if (EntityManager.HasComponent<SpeedLoaderComponent>(uid))
         {
             var freeSlots = 0;
 

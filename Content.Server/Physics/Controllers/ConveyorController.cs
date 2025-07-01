@@ -19,7 +19,6 @@ public sealed class ConveyorController : SharedConveyorController
     [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
     [Dependency] private readonly MaterialReclaimerSystem _materialReclaimer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
 
     public override void Initialize()
     {
@@ -124,7 +123,7 @@ public sealed class ConveyorController : SharedConveyorController
 
         var xform = ent.Comp;
 
-        var beltTileRef = _turf.GetTileRef(xform.Coordinates);
+        var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, MapManager);
 
         if (beltTileRef != null)
         {

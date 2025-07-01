@@ -2,7 +2,7 @@
 
 on:
   pull_request_target:
-    types: [review_requested, opened]
+    types: [review_requested]
 
 jobs:
   add_label:

@@ -53,20 +53,20 @@ public sealed class HandTests
             var xform = entMan.GetComponent<TransformComponent>(player);
             item = entMan.SpawnEntity("Crowbar", tSys.GetMapCoordinates(player, xform: xform));
             hands = entMan.GetComponent<HandsComponent>(player);
-            sys.TryPickup(player, item, hands.ActiveHandId!);
+            sys.TryPickup(player, item, hands.ActiveHand!);
         });
 
         // run ticks here is important, as errors may happen within the container system's frame update methods.
         await pair.RunTicksSync(5);
-        Assert.That(sys.GetActiveItem((player, hands)), Is.EqualTo(item));
+        Assert.That(hands.ActiveHandEntity, Is.EqualTo(item));
 
         await server.WaitPost(() =>
         {
-            sys.TryDrop(player, item);
+            sys.TryDrop(player, item, null!);
         });
 
         await pair.RunTicksSync(5);
-        Assert.That(sys.GetActiveItem((player, hands)), Is.Null);
+        Assert.That(hands.ActiveHandEntity, Is.Null);
 
         await server.WaitPost(() => mapSystem.DeleteMap(data.MapId));
         await pair.CleanReturnAsync();
@@ -105,10 +105,10 @@ public sealed class HandTests
             player = playerMan.Sessions.First().AttachedEntity!.Value;
             tSys.PlaceNextTo(player, item);
             hands = entMan.GetComponent<HandsComponent>(player);
-            sys.TryPickup(player, item, hands.ActiveHandId!);
+            sys.TryPickup(player, item, hands.ActiveHand!);
         });
         await pair.RunTicksSync(5);
-        Assert.That(sys.GetActiveItem((player, hands)), Is.EqualTo(item));
+        Assert.That(hands.ActiveHandEntity, Is.EqualTo(item));
 
         // Open then close the box to place the player, who is holding the crowbar, inside of it
         var storage = server.System<EntityStorageSystem>();
@@ -125,12 +125,12 @@ public sealed class HandTests
         // with the item not being in the player's hands
         await server.WaitPost(() =>
         {
-            sys.TryDrop(player, item);
+            sys.TryDrop(player, item, null!);
         });
         await pair.RunTicksSync(5);
         var xform = entMan.GetComponent<TransformComponent>(player);
         var itemXform = entMan.GetComponent<TransformComponent>(item);
-        Assert.That(sys.GetActiveItem((player, hands)), Is.Not.EqualTo(item));
+        Assert.That(hands.ActiveHandEntity, Is.Not.EqualTo(item));
         Assert.That(containerSystem.IsInSameOrNoContainer((player, xform), (item, itemXform)));
 
         await server.WaitPost(() => mapSystem.DeleteMap(map.MapId));
