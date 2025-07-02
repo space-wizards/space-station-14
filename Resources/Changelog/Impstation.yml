@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Mousetrinity
-  changes:
-  - message: Wizard event spells no longer possess you with a desire to hoard guns
-      and kill people.
-    type: Remove
-  id: 1459
-  time: '2025-04-02T11:46:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/2184
 - author: TheGrimbeeper
   changes:
   - message: random event - one singular basic critter can now crawl unannounced from
@@ -4242,3 +4234,10 @@
   id: 1958
   time: '2025-07-01T15:23:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2903
+- author: TheLuggage05
+  changes:
+  - message: Moved the service request computer board to the HD locker, where it belongs.
+    type: Tweak
+  id: 1959
+  time: '2025-07-02T01:46:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2944
