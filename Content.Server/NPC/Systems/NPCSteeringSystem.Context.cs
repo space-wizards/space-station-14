@@ -133,13 +133,13 @@ public sealed partial class NPCSteeringSystem
             steering.ForceMove = false;
         }
 
+        // Goobstation
+        var finalInRange = ourCoordinates.TryDistance(EntityManager, destinationCoordinates, out var targetDistance) && inLos && targetDistance <= steering.Range;
+        var velocityHigh = steering.InRangeMaxSpeed != null && body.LinearVelocity.LengthSquared() > steering.InRangeMaxSpeed.Value * steering.InRangeMaxSpeed.Value;
+
         // We've arrived, nothing else matters.
-        if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var targetDistance) &&
-            inLos &&
-            targetDistance <= steering.Range &&
-            // Goobstation
-            (steering.InRangeMaxSpeed == null ||
-                body.LinearVelocity.LengthSquared() < steering.InRangeMaxSpeed.Value * steering.InRangeMaxSpeed.Value))
+        // Goobstation - also check if our velocity is higher than desired
+        if (finalInRange && !velocityHigh)
         {
             steering.Status = SteeringStatus.InRange;
             ResetStuck(steering, ourCoordinates);
@@ -326,12 +326,11 @@ public sealed partial class NPCSteeringSystem
         CheckPath(uid, steering, xform, needsPath, targetDistance);
 
         // Goobstation
-        var finalInRange = targetDistance != null && targetDistance < steering.Range;
-        var arrivedFinal = arrived && steering.CurrentPath.Count == 0 && finalInRange;
+        var haveToBrake = finalInRange && velocityHigh;
 
         // If we don't have a path yet then do nothing; this is to avoid stutter-stepping if it turns out there's no path
         // available but we assume there was.
-        if (steering is { Pathfind: true, CurrentPath.Count: 0 } && !arrivedFinal)
+        if (steering is { Pathfind: true, CurrentPath.Count: 0 } && !haveToBrake)
                                                                  // Goobstation
             return true;
 
@@ -353,10 +352,11 @@ public sealed partial class NPCSteeringSystem
         var tgVel = body.LinearVelocity - normVel;
 
         // we're near final node but haven't braked, do so
-        if (arrivedFinal && steering.InRangeMaxSpeed != null)
+        if (haveToBrake)
         {
             // how much distance we'll pass before hitting our desired max speed
-            var brakePath = (velLen - steering.InRangeMaxSpeed.Value) / friction;
+                                                              // schizo C#
+            var brakePath = (velLen - steering.InRangeMaxSpeed ?? 0f) / friction;
             var hardBrake = brakePath > MathF.Min(0.5f, steering.Range); // hard brake if it takes more than half a tile
 
             moveType = hardBrake ? MovementType.Braking : MovementType.Coasting;

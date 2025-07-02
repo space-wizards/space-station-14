@@ -185,18 +185,9 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
             return HTNOperatorStatus.Finished;
         }
 
-        // Goobstation
-        var inRangeStatus = HTNOperatorStatus.Continuing;
-        if (BrakeMaxVelocity == null ||
-            !_entManager.TryGetComponent<PhysicsComponent>(owner, out var physics) ||
-            physics.LinearVelocity.Length() < BrakeMaxVelocity.Value)
-        {
-            inRangeStatus = HTNOperatorStatus.Finished;
-        }
-
         return steering.Status switch
         {
-            SteeringStatus.InRange => inRangeStatus, // Goobstation
+            SteeringStatus.InRange => HTNOperatorStatus.Finished,
             SteeringStatus.NoPath => HTNOperatorStatus.Failed,
             SteeringStatus.Moving => HTNOperatorStatus.Continuing,
             _ => throw new ArgumentOutOfRangeException()
