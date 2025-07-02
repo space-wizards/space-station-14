@@ -72,7 +72,10 @@
   weights:
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5
-    ClothingHeadHatWardenStealObjective: 1
+    # start of modifications
+    # ClothingHeadHatWardenStealObjective: 1
+    WardenWhistleStealObjective: 1
+    # end of modifications
     WantedListCartridgeStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
