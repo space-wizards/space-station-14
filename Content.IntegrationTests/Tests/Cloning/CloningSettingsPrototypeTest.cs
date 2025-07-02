@@ -6,7 +6,7 @@ public sealed class CloningSettingsPrototypeTest
 {
     /// <summary>
     /// Checks that the components named in every <see cref="CloningSettingsPrototype"/> are valid components known to the server.
-    /// This is used instead of <see cref="ComponentNameSerializer"/> because we only care if the server are registered with the server,
+    /// This is used instead of <see cref="ComponentNameSerializer"/> because we only care if the components are registered with the server,
     /// and instead of a <see cref="ComponentRegistry"/> because we only need component names.
     /// </summary>
     [Test]
