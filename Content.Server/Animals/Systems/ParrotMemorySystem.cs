@@ -3,7 +3,6 @@ using Content.Server.Animals.Components;
 using Content.Server.Radio;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
-using Content.Server.Vocalization.Components;
 using Content.Server.Vocalization.Systems;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
@@ -32,7 +31,7 @@ public sealed partial class ParrotMemorySystem : EntitySystem
         SubscribeLocalEvent<ParrotListenerComponent, MapInitEvent>(ListenerOnMapInit);
 
         SubscribeLocalEvent<ParrotListenerComponent, ListenEvent>(OnListen);
-        SubscribeLocalEvent<RadioVocalizerComponent, RadioReceiveEvent>(OnRadioReceive);
+        SubscribeLocalEvent<ParrotListenerComponent, RadioReceiveEvent>(OnRadioReceive);
 
         SubscribeLocalEvent<ParrotMemoryComponent, TryVocalizeEvent>(OnTryVocalize);
     }
@@ -45,11 +44,17 @@ public sealed partial class ParrotMemorySystem : EntitySystem
 
     private void OnListen(Entity<ParrotListenerComponent> entity, ref ListenEvent args)
     {
+        if (CheckIgnoreParrotListener(entity, args.Source))
+            return;
+
         TryLearn(entity.Owner, args.Message, args.Source);
     }
 
-    private void OnRadioReceive(Entity<RadioVocalizerComponent> entity, ref RadioReceiveEvent args)
+    private void OnRadioReceive(Entity<ParrotListenerComponent> entity, ref RadioReceiveEvent args)
     {
+        if (CheckIgnoreParrotListener(entity, args.MessageSource))
+            return;
+
         TryLearn(entity.Owner, args.Message, args.MessageSource);
     }
 
@@ -75,13 +80,23 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns true if the source has a ParrotListenerComponent and a given ParrotListenerComponent is set to ignore
+    /// other parrot listeners. This may be used to avoid parrots with accents from learning from other parrots with
+    /// accents, which can quickly get out of hand and silly.
+    /// </summary>
+    private bool CheckIgnoreParrotListener(ParrotListenerComponent listenerComponent, EntityUid source)
+    {
+        return HasComp<ParrotListenerComponent>(source) && listenerComponent.IgnoreParrotListeners;
+    }
+
+    /// <summary>
     /// Try to learn a new message, returning early if this entity cannot learn a new message,
     /// the message doesn't pass certain checks, or the chance for learning a new message fails
     /// </summary>
     /// <param name="entity">Entity learning a new word</param>
     /// <param name="incomingMessage">Message to learn</param>
     /// <param name="source">Source EntityUid of the message</param>
-    private void TryLearn(Entity<ParrotMemoryComponent?> entity, string incomingMessage, EntityUid source)
+    public void TryLearn(Entity<ParrotMemoryComponent?> entity, string incomingMessage, EntityUid source)
     {
         // learning requires a memory
         if (!Resolve<ParrotMemoryComponent>(entity, ref entity.Comp))
@@ -93,19 +108,6 @@ public sealed partial class ParrotMemorySystem : EntitySystem
 
         // can't learn too soon after having already learnt something else
         if (_gameTiming.CurTime < entity.Comp.NextLearnInterval)
-            return;
-
-        // ignore yourself
-        if (source.Equals(entity))
-            return;
-
-        // Return if a source has a ParrotListenerComponent, this entity has a ParrotListenerComponent, and the latter
-        // component is set to ignore ParrotSpeakers.
-        // used to prevent accent parroting from getting out of hand
-        if (
-            HasComp<ParrotListenerComponent>(source)
-            && TryComp<ParrotListenerComponent>(entity, out var parrotListener)
-            && parrotListener.IgnoreParrotListeners)
             return;
 
         // remove whitespace around message, if any
@@ -144,14 +146,6 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     /// <param name="source">Source EntityUid of the message</param>
     private void Learn(Entity<ParrotMemoryComponent> entity, string message, EntityUid source)
     {
-        // reset next speak interval if the entity has a VocalizerComponent and this is the first thing it learns
-        // this is done so that a parrot doesn't speak the moment it learns something
-        if (TryComp<VocalizerComponent>(entity, out var vocalizerComponent) && entity.Comp.SpeechMemory.Count == 0)
-        {
-            var randomSpeakInterval = _random.Next(vocalizerComponent.MinVocalizeInterval, vocalizerComponent.MaxVocalizeInterval);
-            vocalizerComponent.NextVocalizeInterval = _gameTiming.CurTime + randomSpeakInterval;
-        }
-
         // log a low-priority chat type log to the admin logger
         // specifies what message was learnt by what entity, and who taught the message to that entity
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Parroting entity {ToPrettyString(entity):entity} learned the phrase \"{message}\" from {ToPrettyString(source):speaker}");

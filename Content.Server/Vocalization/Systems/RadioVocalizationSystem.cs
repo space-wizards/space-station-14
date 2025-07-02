@@ -36,6 +36,10 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     /// </summary>
     private void OnClothingEquipped(Entity<RadioVocalizerComponent> entity, ref ClothingDidEquippedEvent args)
     {
+        // return if this entity does not have an ActiveRadioComponent
+        if (!TryComp<ActiveRadioComponent>(entity, out var activeRadio))
+            return;
+
         // only care if the equipped clothing item has an ActiveRadioComponent
         if (!HasComp<ActiveRadioComponent>(args.Clothing))
             return;
@@ -43,7 +47,7 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
         entity.Comp.ActiveRadioEntities.Add(args.Clothing.Owner);
 
         // update active radio channels
-        UpdateRadioChannels(entity.Owner);
+        UpdateRadioChannels((entity, activeRadio, entity));
     }
 
     /// <summary>
@@ -52,13 +56,17 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     /// </summary>
     private void OnClothingUnequipped(Entity<RadioVocalizerComponent> entity, ref ClothingDidUnequippedEvent args)
     {
+        // return if this entity does not have an ActiveRadioComponent
+        if (!TryComp<ActiveRadioComponent>(entity, out var activeRadio))
+            return;
+
         // try to remove this item from the active radio entities list
         // if this returns false, the item wasn't found so it was never a radio we cared about, quit early
         if (!entity.Comp.ActiveRadioEntities.Remove(args.Clothing.Owner))
             return;
 
         // update active radio channels
-        UpdateRadioChannels(entity.Owner);
+        UpdateRadioChannels((entity, activeRadio, entity));
     }
 
     /// <summary>
@@ -70,21 +78,14 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
         // If an entity has a VocalizerRadioComponent it really ought to have an ActiveRadioComponent
         var activeRadio = EnsureComp<ActiveRadioComponent>(entity);
 
-        UpdateRadioChannels((entity, activeRadio));
+        UpdateRadioChannels((entity, activeRadio, entity));
     }
 
     /// <summary>
     /// Copies all radio channels from equipped radios to the ActiveRadioComponent of an entity
     /// </summary>
-    private void UpdateRadioChannels(Entity<ActiveRadioComponent?, RadioVocalizerComponent?> entity)
+    private void UpdateRadioChannels(Entity<ActiveRadioComponent, RadioVocalizerComponent> entity)
     {
-        // return if the expected components are not on this entity
-        if (!Resolve<ActiveRadioComponent>(entity, ref entity.Comp1))
-            return;
-
-        if (!Resolve<RadioVocalizerComponent>(entity, ref entity.Comp2))
-            return;
-
         // clear all channels first
         entity.Comp1.Channels.Clear();
 
@@ -109,6 +110,9 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     /// </summary>
     private void OnVocalize(Entity<VocalizerComponent> ent, ref VocalizeEvent args)
     {
+        if (args.Handled)
+            return;
+
         // set to handled if we succeed in speaking on the radio
         args.Handled = TrySpeakRadio(ent.Owner, args.Message);
     }

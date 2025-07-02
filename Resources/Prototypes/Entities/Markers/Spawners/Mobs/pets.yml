@@ -222,7 +222,7 @@
   parent: MarkerBase
   id: SpawnMobPollyParrot
   name: Polly the parrot Spawner
-  suffix: CE pet
+  suffix: CE Pet
   components:
   - type: Sprite
     layers:
