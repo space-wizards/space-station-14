@@ -309,6 +309,9 @@
   - type: ContainerContainer
     containers:
       bin-container: !type:Container
+  - type: Item
+    size: Small
+    sprite: _DeadSpace/Items/cards/cardbin.rsi
 
 - type: entity
   parent: BaseCardBin
