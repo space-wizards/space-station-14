@@ -532,3 +532,67 @@
   - type: Stack
     stackType: ClockworkGlass
     count: 1
+
+# DS14-start
+
+- type: entity
+  parent: SheetRGlass
+  id: SheetRGlass10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: rglass_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: SheetPGlass
+  id: SheetPGlass10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: pglass_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: SheetRPGlass
+  id: SheetRPGlass10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: rpglass_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: SheetUGlass
+  id: SheetUGlass10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: uglass_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: SheetRUGlass
+  id: SheetRUGlass10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: ruglass_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: SheetClockworkGlass
+  id: SheetClockworkGlass10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: cglass_2
+  - type: Stack
+    count: 10
+
+# DS14-end

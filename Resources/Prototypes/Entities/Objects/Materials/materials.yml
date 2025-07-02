@@ -262,6 +262,8 @@
   id: MaterialWoodPlank10
   suffix: 10
   components:
+  - type: Sprite # DS14
+    state: wood_2
   - type: Stack
     count: 10
 
@@ -270,6 +272,8 @@
   id: MaterialWoodPlank1
   suffix: Single
   components:
+  - type: Sprite # DS14
+    state: wood
   - type: Stack
     count: 1
 
@@ -510,9 +514,9 @@
     materialComposition:
       Bananium: 150
   - type: Sprite
-    state: bananium_1
+    state: bananium_3 # DS14 state
     layers:
-    - state: bananium_1
+    - state: bananium_3 # DS14 state
       map: ["base"]
   - type: Stack
     stackType: Bananium
@@ -520,7 +524,10 @@
     baseLayer: base
     layerStates:
       - bananium
-      - bananium_1
+# DS14-states-start
+      - bananium_2
+      - bananium_3
+# DS14-states-end
   - type: FlavorProfile
     flavors:
       - banana
@@ -792,3 +799,77 @@
   components:
   - type: Stack
     count: 1
+
+# DS14-start
+
+- type: entity
+  parent: MaterialDurathread
+  id: MaterialDurathread10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: durathread_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: MaterialDiamond
+  id: MaterialDiamond10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: diamond_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: MaterialBananium
+  id: MaterialBananium10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: bananium_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: MaterialToothSpaceCarp
+  id: MaterialToothSpaceCarp10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: tooth_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: MaterialToothSharkminnow
+  id: MaterialToothSharkminnow10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: tooth_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: MaterialBones
+  id: MaterialBones10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: bones_2
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: MaterialGoliathHide
+  id: MaterialGoliathHide10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: goliath_hide_2
+  - type: Stack
+    count: 10
+
+# DS14-end
