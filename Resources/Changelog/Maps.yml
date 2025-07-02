@@ -387,4 +387,11 @@
   id: 47
   time: '2025-06-19T04:06:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38435
+- author: UpAndLeaves
+  changes:
+  - message: CentComm security now uses a genpop system.
+    type: Add
+  id: 48
+  time: '2025-07-02T03:14:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37494
 Order: 1

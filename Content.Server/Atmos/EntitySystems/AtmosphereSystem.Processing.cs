@@ -390,10 +390,10 @@ namespace Content.Server.Atmos.EntitySystems
             // Note: This is still processed even if space wind is turned off since this handles playing the sounds.
 
             var number = 0;
-            var bodies = EntityManager.GetEntityQuery<PhysicsComponent>();
-            var xforms = EntityManager.GetEntityQuery<TransformComponent>();
-            var metas = EntityManager.GetEntityQuery<MetaDataComponent>();
-            var pressureQuery = EntityManager.GetEntityQuery<MovedByPressureComponent>();
+            var bodies = GetEntityQuery<PhysicsComponent>();
+            var xforms = GetEntityQuery<TransformComponent>();
+            var metas = GetEntityQuery<MetaDataComponent>();
+            var pressureQuery = GetEntityQuery<MovedByPressureComponent>();
 
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
