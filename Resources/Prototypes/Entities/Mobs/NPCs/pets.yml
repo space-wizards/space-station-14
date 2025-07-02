@@ -867,8 +867,8 @@
   components:
   - type: ParrotMemory
     learnChance: 0.5 # polly is smarter
-  - type: ParrotSpeaker
-    maxSpeakInterval: 240 # polly is chattier
+  - type: Vocalizer
+    maxVocalizeInterval: 240 # polly is chattier
   - type: Grammar
     attributes:
       proper: true

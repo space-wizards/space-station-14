@@ -1,13 +1,13 @@
-namespace Content.Server.Animals.Components;
+namespace Content.Server.Vocalization.Components;
 
 /// <summary>
-/// Makes an entity able to learn things through an equipped radios and parrot things through radios
+/// Makes an entity able to vocalize through an equipped radio
 /// </summary>
 [RegisterComponent]
-public sealed partial class ParrotRadioComponent : Component
+public sealed partial class RadioVocalizerComponent : Component
 {
     /// <summary>
-    /// Odds of the parrot attempting to speak on the radio.
+    /// chance the vocalizing entity speaks on the radio.
     /// </summary>
     [DataField]
     public float RadioAttemptChance = 0.3f;

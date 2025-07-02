@@ -2214,10 +2214,10 @@
       Unsexed: Parrot
   - type: ActiveListener
   - type: ActiveRadio
+  - type: Vocalizer
+  - type: RadioVocalizer
   - type: ParrotListener
-  - type: ParrotSpeaker
   - type: ParrotMemory
-  - type: ParrotRadio
   - type: Inventory
     templateId: parrot
     speciesId: parrot

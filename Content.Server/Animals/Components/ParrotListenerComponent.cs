@@ -7,7 +7,7 @@ namespace Content.Server.Animals.Components;
 public sealed partial class ParrotListenerComponent : Component
 {
     /// <summary>
-    /// Whether this entity ignores entities with ParrotSpeakerComponents.
+    /// Whether this entity ignores entities with ParrotListenerComponents.
     ///
     /// This is optional in case parrots are close to each other, or parrots learn via radio from other parrots.
     /// This may lead to samey voice lines, and for parrots with accents, this can quickly devolve from
@@ -17,5 +17,5 @@ public sealed partial class ParrotListenerComponent : Component
     /// This is limited by the message length limit on ParrotMemoryComponent, but can be prevented entirely here
     /// </summary>
     [DataField]
-    public bool IgnoreParrotSpeakers;
+    public bool IgnoreParrotListeners;
 }
