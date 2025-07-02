@@ -142,9 +142,14 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
     }
 
     //starlight start
-    public HumanoidCharacterAppearance WithSize(float newWidth, float newHeight)
+    public HumanoidCharacterAppearance WithWidth(float newWidth)
     {
-        return new(HairStyleId, HairColor, HairGlowing, FacialHairStyleId, FacialHairColor, FacialHairGlowing, EyeColor, EyeGlowing, SkinColor, Markings, newWidth, newHeight);
+        return new(HairStyleId, HairColor, HairGlowing, FacialHairStyleId, FacialHairColor, FacialHairGlowing, EyeColor, EyeGlowing, SkinColor, Markings, newWidth, Height);
+    }
+
+    public HumanoidCharacterAppearance WithHeight(float newHeight)
+    {
+        return new(HairStyleId, HairColor, HairGlowing, FacialHairStyleId, FacialHairColor, FacialHairGlowing, EyeColor, EyeGlowing, SkinColor, Markings, Width, newHeight);
     }
     //starlight end
 
@@ -304,6 +309,9 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             {
                 eyeColor = Humanoid.EyeColor.ValidEyeColor(speciesProto.EyeColoration, eyeColor);
             }
+
+            if(width > speciesProto.MaxWidth) width = speciesProto.DefaultWidth;
+            if(height > speciesProto.MaxHeight) height = speciesProto.DefaultHeight;
 
             width = Math.Clamp(width, speciesProto.MinWidth, speciesProto.MaxWidth);
             height = Math.Clamp(height, speciesProto.MinHeight, speciesProto.MaxHeight);
