@@ -371,7 +371,6 @@
   - type: Tag
     tags:
     - WireBrush
-  - type: Appearance
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
