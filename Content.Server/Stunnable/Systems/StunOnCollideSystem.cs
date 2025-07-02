@@ -25,7 +25,7 @@ namespace Content.Server.Stunnable
 
             _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(component.KnockdownAmount), true);
 
-            _movementMod.TrySlowdown(target,
+            _movementMod.TryModMovement(target,
                 TimeSpan.FromSeconds(component.SlowdownAmount),
                 component.WalkSpeedMultiplier,
                 component.RunSpeedMultiplier);

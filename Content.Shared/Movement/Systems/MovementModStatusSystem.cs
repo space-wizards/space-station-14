@@ -39,18 +39,18 @@ public sealed class MovementModStatusSystem : EntitySystem
     /// <summary>
     /// Slows down the mob's walking/running speed temporarily
     /// </summary>
-    public bool TrySlowdown(EntityUid uid,
+    public bool TryModMovement(EntityUid uid,
         TimeSpan time,
         float speedModifier,
         bool refresh = true)
     {
-        return TrySlowdown(uid, time, speedModifier, speedModifier, refresh);
+        return TryModMovement(uid, time, speedModifier, speedModifier, refresh);
     }
 
     /// <summary>
     /// Slows down the mob's walking/running speed temporarily
     /// </summary>
-    public bool TrySlowdown(EntityUid uid,
+    public bool TryModMovement(EntityUid uid,
         TimeSpan time,
         float walkSpeedModifier,
         float sprintSpeedModifier,

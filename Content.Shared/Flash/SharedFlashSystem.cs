@@ -167,7 +167,7 @@ public abstract class SharedFlashSystem : EntitySystem
         if (stunDuration != null)
             _stun.TryParalyze(target, stunDuration.Value, true);
         else
-            _movementMod.TrySlowdown(target, flashDuration, slowTo);
+            _movementMod.TryModMovement(target, flashDuration, slowTo);
 
         if (displayPopup && user != null && target != user && Exists(user.Value))
         {
