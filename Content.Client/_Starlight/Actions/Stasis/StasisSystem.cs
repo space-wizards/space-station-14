@@ -125,6 +125,8 @@ public sealed class StasisSystem : SharedStasisSystem
             // Prevent it from rotating.
             sprite.NoRotation = true;
             sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
+            // Make sure it is the same scale as the parent entity
+            if(parentSprite is not null) sprite.Scale = parentSprite.Scale;
         }
 
         // Play the sound effect.
@@ -171,6 +173,8 @@ public sealed class StasisSystem : SharedStasisSystem
             // Prevent it from rotating.
             sprite.NoRotation = true;
             sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
+            // Make sure it is the same scale as the parent entity
+            if(parentSprite is not null) sprite.Scale = parentSprite.Scale;
         }
 
         // Play the sound effect.
@@ -207,6 +211,8 @@ public sealed class StasisSystem : SharedStasisSystem
             sprite.NoRotation = true;
             // Make it visible if the parent entity is visible.
             sprite.Visible = TryComp<SpriteComponent>(uid, out var parentSprite) && parentSprite.Visible;
+            // Make sure it is the same scale as the parent entity
+            if(parentSprite is not null) sprite.Scale = parentSprite.Scale;
         }
 
         // Store the continuous effect in the component

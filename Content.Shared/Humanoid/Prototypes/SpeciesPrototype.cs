@@ -143,7 +143,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     ///     Characters must not crumple under earth-like gravity.
     /// </summary>
     [DataField]
-    public float MinWidth = 0.7f;
+    public float MinWidth = 0.8f;
 
     /// <summary>
     ///     Characters must not exhibit a measurable gravitational pull on nearby objects.
