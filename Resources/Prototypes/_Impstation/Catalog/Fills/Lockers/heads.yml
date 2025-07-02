@@ -12,6 +12,7 @@
     - id: RubberStampHD
     - id: ServiceTechFabCircuitboard
     - id: PersonalAILearnerService
+    - id: CargoRequestServiceComputerCircuitboard
 
 - type: entity
   id: LockerHospitalityDirectorFilled
