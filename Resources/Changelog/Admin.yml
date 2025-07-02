@@ -1233,5 +1233,12 @@ Entries:
   id: 149
   time: '2025-06-29T16:21:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35536
+- author: Kowlin
+  changes:
+  - message: Changed the way CSVs are exported
+    type: Tweak
+  id: 150
+  time: '2025-06-30T21:09:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38531
 Name: Admin
 Order: 2

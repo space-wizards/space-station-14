@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Jacktastic09
-  changes:
-  - message: Added the Solid Headband, available via hacked ClothesMate vending machines
-    type: Add
-  id: 8215
-  time: '2025-04-17T13:43:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36650
 - author: Hoodie42
   changes:
   - message: The banjo can now be worn on the back or suit storage slots.
@@ -3888,3 +3881,10 @@
   id: 8727
   time: '2025-06-29T16:21:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35536
+- author: slarticodefast
+  changes:
+  - message: Fixed water cups not being able to be picked up from water coolers.
+    type: Fix
+  id: 8728
+  time: '2025-07-01T10:25:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38681
