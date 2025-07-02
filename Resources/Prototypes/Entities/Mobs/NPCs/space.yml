@@ -430,9 +430,10 @@
     toolQuality: Cutting # Wirecutters and barber's scissors.
     shearableMarkupText: space-sheep-shearable-examine-markup
     unShearableMarkupText: space-sheep-not-shearable-examine-markup
-  - type: ActiveJetpack # Pretty particles
-    effectCooldown: 4
-    maxDistance: 0.3
+    # Caused problems (SAD), to be re-implemented when we get a real particle system.
+  # - type: ActiveJetpack # Pretty particles
+  #   effectCooldown: 4
+  #   maxDistance: 0.3
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.6
     baseSprintSpeed: 2.0
