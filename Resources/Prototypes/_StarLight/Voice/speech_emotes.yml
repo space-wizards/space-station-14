@@ -114,6 +114,7 @@
   name: chat-emote-name-mew
   category: Vocal
   available: false
+  icon: _Starlight/Actions/felionoid.rsi/cat_print.png
   whitelist:
     components:
     - Vocal
@@ -136,6 +137,7 @@
   name: chat-emote-name-hiss
   category: Vocal
   available: false
+  icon: _Starlight/Actions/felionoid.rsi/cat_print.png
   whitelist:
     components:
     - Vocal
@@ -162,6 +164,7 @@
   name: chat-emote-name-meow
   category: Vocal
   available: false
+  icon: _Starlight/Actions/felionoid.rsi/cat_print.png
   whitelist:
     components:
     - Vocal
@@ -188,6 +191,7 @@
   name: chat-emote-name-purr
   category: Vocal
   available: false
+  icon: _Starlight/Actions/felionoid.rsi/cat_print.png
   whitelist:
     components:
     - Vocal
@@ -214,6 +218,7 @@
   name: chat-emote-name-trill
   category: Vocal
   available: false
+  icon: _Starlight/Actions/felionoid.rsi/cat_print.png
   whitelist:
     components:
     - Vocal

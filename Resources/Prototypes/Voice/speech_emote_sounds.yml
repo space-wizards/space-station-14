@@ -475,8 +475,14 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: DeathGasp
+    Sigh:
+      collection: FemaleSigh
     Crying:
-      collection: MaleCry
+      collection: ResomiCry
+    Cough:
+      collection: FemaleCoughs
+    Yawn:
+      collection: FemaleYawn
     Hisses:
       collection: FelionoidHisses
     Purr:
