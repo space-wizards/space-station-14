@@ -18,6 +18,7 @@ using Content.Shared.Light;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
+using Content.Shared.Store.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -274,7 +275,18 @@ namespace Content.Server.PDA
 
             // check if its locked again to prevent malicious clients opening locked uplinks
             if (TryGetUnlockedStore(uid, out var store))
-                _store.ToggleUi(msg.Actor, store.Value);
+            {
+                if (store != uid)
+                {
+                    if (TryComp<RemoteStoreComponent>(uid, out var remoteStore))
+                        remoteStore.Store = store;
+                    _store.ToggleUi(msg.Actor, store.Value, remoteAccess: uid);
+                }
+                else
+                {
+                    _store.ToggleUi(msg.Actor, store.Value);
+                }
+            }
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaLockUplinkMessage msg)
@@ -284,6 +296,8 @@ namespace Content.Server.PDA
 
             if (TryComp<RingerUplinkComponent>(uid, out var uplink))
             {
+                if (TryComp<RemoteStoreComponent>(uid, out var remoteStore))
+                    remoteStore.Store = null;
                 _ringer.LockUplink((uid, uplink));
                 UpdatePdaUi(uid, pda);
             }

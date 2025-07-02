@@ -25,7 +25,7 @@ public sealed class UplinkSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
     [ValidatePrototypeId<EntityPrototype>]
-    public const string TraitorUplinkStore = "StoreUplink";
+    public const string TraitorUplinkStore = "StorePresetRemoteUplink";
     [ValidatePrototypeId<CurrencyPrototype>]
     public const string TelecrystalCurrencyPrototype = "Telecrystal";
     private const string FallbackUplinkImplant = "UplinkImplant";
@@ -67,7 +67,7 @@ public sealed class UplinkSystem : EntitySystem
 
         EnsureComp<UplinkComponent>(uplinkEntity.Value);
 
-        SetUplink(user, uplinkEntity.Value, balance, giveDiscounts);
+        SetUplink(user, storeEntity.Value, balance, giveDiscounts);
 
         // TODO add BUI. Currently can't be done outside of yaml -_-
         // ^ What does this even mean?

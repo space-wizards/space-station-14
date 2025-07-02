@@ -35,3 +35,10 @@
     - SpellbookEvents       #Summon Weapons, Summon Ghosts
     currencyWhitelist:
     - WizCoin
+
+- type: entity
+  parent: StorePresetUplink
+  id: StorePresetRemoteUplink
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: RingerAccessUplink

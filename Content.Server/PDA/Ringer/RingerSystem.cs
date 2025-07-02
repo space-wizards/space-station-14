@@ -81,9 +81,6 @@ public sealed class RingerSystem : SharedRingerSystem
         if (!TryComp<RingerUplinkComponent>(uid, out var uplink))
             return false;
 
-        if (!HasComp<StoreComponent>(uid))
-            return false;
-
         // On the server, we always check if the code matches
         if (!TryMatchRingtoneToStore(ringtone, out var store, uid))
             return false;
@@ -106,8 +103,10 @@ public sealed class RingerSystem : SharedRingerSystem
             Note.C,
             Note.D,
             Note.E,
+            Note.F,
             Note.G,
-            Note.A
+            Note.A,
+            Note.B
         });
     }
 
