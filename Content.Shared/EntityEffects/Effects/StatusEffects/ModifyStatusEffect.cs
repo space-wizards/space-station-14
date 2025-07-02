@@ -20,7 +20,7 @@ public sealed partial class ModifyStatusEffect : EntityEffect
     public float Time = 2.0f;
 
     /// <remarks>
-    /// true - refresh status effect time, false - accumulate status effect time.
+    /// true - refresh status effect time (update to greater value), false - accumulate status effect time.
     /// </remarks>
     [DataField]
     public bool Refresh = true;
@@ -45,7 +45,7 @@ public sealed partial class ModifyStatusEffect : EntityEffect
         {
             case StatusEffectMetabolismType.Add:
                 if (Refresh)
-                    statusSys.TrySetStatusEffectDuration(args.TargetEntity, EffectProto, duration);
+                    statusSys.TryUpdateStatusEffectDuration(args.TargetEntity, EffectProto, duration);
                 else
                     statusSys.TryAddStatusEffectDuration(args.TargetEntity, EffectProto, duration);
                 break;
@@ -53,7 +53,7 @@ public sealed partial class ModifyStatusEffect : EntityEffect
                 statusSys.TryAddTime(args.TargetEntity, EffectProto, -duration);
                 break;
             case StatusEffectMetabolismType.Set:
-                statusSys.TrySetTime(args.TargetEntity, EffectProto, duration);
+                statusSys.TrySetStatusEffectDuration(args.TargetEntity, EffectProto, duration);
                 break;
         }
     }
