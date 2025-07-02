@@ -184,6 +184,9 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
         }
         else if (blackboard.TryGetValue<PathResultEvent>(PathfindKey, out var result, _entManager))
         {
+            // Goobstation
+            comp.DirectMove = false;
+
             if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates, _entManager))
             {
                 var mapCoords = _transform.ToMapCoordinates(coordinates);
