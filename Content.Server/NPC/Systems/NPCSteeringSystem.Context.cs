@@ -104,6 +104,9 @@ public sealed partial class NPCSteeringSystem
         var destinationCoordinates = steering.Coordinates;
         var inLos = true;
 
+        // Goobstation - makes us ignore all pathing logic and go straight to the target coordinates
+        var directMove = steering.DirectMove;
+
         // Check if we're in LOS if that's required.
         // TODO: Need something uhh better not sure on the interaction between these.
         if (!steering.ForceMove && steering.ArriveOnLineOfSight)
@@ -152,7 +155,8 @@ public sealed partial class NPCSteeringSystem
         }
 
         // Grab the target position, either the next path node or our end goal..
-        var targetCoordinates = GetTargetCoordinates(steering);
+        // Goobstation - add DirectMove
+        var targetCoordinates = steering.DirectMove ? steering.Coordinates : GetTargetCoordinates(steering);
 
         if (!targetCoordinates.IsValid(EntityManager))
         {
@@ -165,7 +169,8 @@ public sealed partial class NPCSteeringSystem
         // If the next node is invalid then get new ones
         if (!targetCoordinates.IsValid(EntityManager))
         {
-            if (steering.CurrentPath.TryPeek(out var poly) &&
+            // Goobstation - add DirectMove
+            if (!directMove && steering.CurrentPath.TryPeek(out var poly) &&
                 (poly.Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0)
             {
                 steering.CurrentPath.Dequeue();
@@ -214,7 +219,8 @@ public sealed partial class NPCSteeringSystem
         if (arrived)
         {
             // Node needs some kind of special handling like access or smashing.
-            if (steering.CurrentPath.TryPeek(out var node) && !IsFreeSpace(uid, steering, node))
+            // Goobstation - add DirectMove
+            if (!directMove && steering.CurrentPath.TryPeek(out var node) && !IsFreeSpace(uid, steering, node))
             {
                 // Ignore stuck while handling obstacles.
                 ResetStuck(steering, ourCoordinates);
@@ -253,7 +259,8 @@ public sealed partial class NPCSteeringSystem
 
             // Distance should already be handled above.
             // It was just a node, not the target, so grab the next destination (either the target or next node).
-            if (steering.CurrentPath.Count > 0)
+            // Goobstation - add DirectMove
+            if (!directMove && steering.CurrentPath.Count > 0)
             {
                 forceSteer = true;
                 steering.CurrentPath.Dequeue();
@@ -321,21 +328,26 @@ public sealed partial class NPCSteeringSystem
         }
 
         // If not in LOS and no path then get a new one fam.
-        if ((!inLos && steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0) ||
-            (!steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0))
+        // Goobstation - add DirectMove
+        if (!directMove &&
+            ((!inLos && steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0) ||
+             (!steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0)))
         {
             needsPath = true;
         }
 
         // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
-        CheckPath(uid, steering, xform, needsPath, targetDistance);
+        // Goobstation - add DirectMove
+        if (!directMove)
+            CheckPath(uid, steering, xform, needsPath, targetDistance);
 
         // Goobstation
         var haveToBrake = finalInRange && velocityHigh;
 
         // If we don't have a path yet then do nothing; this is to avoid stutter-stepping if it turns out there's no path
         // available but we assume there was.
-        if (steering is { Pathfind: true, CurrentPath.Count: 0 } && !haveToBrake)
+        // Goobstation - add DirectMove
+        if (!directMove && steering is { Pathfind: true, CurrentPath.Count: 0 } && !haveToBrake)
                                                                  // Goobstation
             return true;
 

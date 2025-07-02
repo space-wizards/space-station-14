@@ -69,6 +69,13 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
     [DataField]
     public float? BrakeMaxVelocity = 0.03f;
 
+    // Goobstation
+    /// <summary>
+    /// If either we or the target are offgrid, gets assigned to make us just move directly to target.
+    /// </summary>
+    [DataField]
+    public string DirectMoveTargetKey = "DirectMoveTarget";
+
     private const string MovementCancelToken = "MovementCancelToken";
 
     public override void Initialize(IEntitySystemManager sysManager)
@@ -93,11 +100,9 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
             !_entManager.TryGetComponent<PhysicsComponent>(owner, out var body))
             return (false, null);
 
-        if (!_entManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var ownerGrid) ||
-            !_entManager.TryGetComponent<MapGridComponent>(_transform.GetGrid(targetCoordinates), out var targetGrid))
-        {
-            return (false, null);
-        }
+        // Goobstation - check if we or target are offgrid
+        var offGrid = !_entManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var ownerGrid) ||
+                      !_entManager.TryGetComponent<MapGridComponent>(_transform.GetGrid(targetCoordinates), out var targetGrid);
 
         var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
 
@@ -118,25 +123,37 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
             });
         }
 
-        var path = await _pathfind.GetPath(
-            blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
-            xform.Coordinates,
-                targetCoordinates,
-            range,
-            cancelToken,
-            _pathfind.GetFlags(blackboard));
-
-        if (path.Result != PathResult.Path)
+        // Goobstation - if we're not offgrid, just try to pathfind
+        if (!offGrid)
         {
-            return (false, null);
+            var path = await _pathfind.GetPath(
+                blackboard.GetValue<EntityUid>(NPCBlackboard.Owner),
+                xform.Coordinates,
+                    targetCoordinates,
+                range,
+                cancelToken,
+                _pathfind.GetFlags(blackboard));
+
+            if (path.Result != PathResult.Path)
+            {
+                return (false, null);
+            }
+
+            return (true, new Dictionary<string, object>()
+            {
+                {NPCBlackboard.OwnerCoordinates, targetCoordinates},
+                {PathfindKey, path}
+            });
         }
-
-        return (true, new Dictionary<string, object>()
+        // Goobstation - else try move directly to target
+        else
         {
-            {NPCBlackboard.OwnerCoordinates, targetCoordinates},
-            {PathfindKey, path}
-        });
-
+            return (true, new Dictionary<string, object>()
+            {
+                {NPCBlackboard.OwnerCoordinates, targetCoordinates},
+                {DirectMoveTargetKey, true}
+            });
+        }
     }
 
     // Given steering is complicated we'll hand it off to a dedicated system rather than this singleton operator.
@@ -159,7 +176,13 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
             comp.Range = range;
         }
 
-        if (blackboard.TryGetValue<PathResultEvent>(PathfindKey, out var result, _entManager))
+        // Goobstation - see if we want to just move directly first
+        if (blackboard.TryGetValue<bool>(DirectMoveTargetKey, out var doDirectMove, _entManager) && doDirectMove)
+        {
+            comp.Coordinates = targetCoordinates;
+            comp.DirectMove = true;
+        }
+        else if (blackboard.TryGetValue<PathResultEvent>(PathfindKey, out var result, _entManager))
         {
             if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates, _entManager))
             {
@@ -205,6 +228,8 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
 
         // OwnerCoordinates is only used in planning so dump it.
         blackboard.Remove<PathResultEvent>(PathfindKey);
+        // Goobstation - also clear direct move
+        blackboard.Remove<bool>(DirectMoveTargetKey);
 
         if (RemoveKeyOnFinish)
         {
