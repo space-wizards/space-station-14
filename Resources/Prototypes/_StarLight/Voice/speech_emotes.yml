@@ -3,7 +3,7 @@
   name: chat-emote-name-howl
   category: Vocal
   available: false
-  icon: Interface/Actions/scream.ping
+  icon: Interface/Actions/scream.png
   whitelist:
     components:
     - Vocal
