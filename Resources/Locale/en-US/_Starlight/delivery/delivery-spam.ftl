@@ -80,7 +80,10 @@ delivery-spam-join-soviets = [color=#ff0004]
 
                     {"[bold]WE FORGIVE YOU[/bold]"}
                     
-                    So join us tovarisch. Join, comrade, and bask in our endless fields of wheat. For they grow on sacrifices. Sacrifices for a better future.
+                    So join us tovarisch. 
+                    
+                    Join, Comrade, and bask in our endless fields of wheat. 
+                    For they grow on sacrifices. Sacrifices for a better future.
 
                     Claim your life back.
 
