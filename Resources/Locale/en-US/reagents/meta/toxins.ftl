@@ -8,7 +8,7 @@ reagent-name-mold = mold
 reagent-desc-mold = A fungal growth, often found in dark, humid places or on expired bread. Will cause you to develop a disease if ingested.
 
 reagent-name-polytrinic-acid = polytrinic acid
-reagent-desc-polytrinic-acid = An extremely corrosive chemical substance. Severely burns anyone who comes directly into contact with it.
+reagent-desc-polytrinic-acid = An extremely corrosive, hateful, enraging substance. Hurts like all the misery of this world, burns right through you, makes you scream with all the anger you've felt in your life.
 
 reagent-name-chloral-hydrate = chloral hydrate
 reagent-desc-chloral-hydrate = A sedative and hypnotic chemical. Commonly used to put other people to sleep, whether they want to or not.

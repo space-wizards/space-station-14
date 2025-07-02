@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 #SOFTSUITS
 #Basic EVA
 - type: entity
@@ -194,12 +196,12 @@
   parent: SuitStorageBase
   suffix: Warden
   components:
-  - type: StorageFill
-    contents:
-        - id: NitrogenTankFilled
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitWarden
-        - id: ClothingMaskGasSecurity
+  # start of modifications
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardenHardsuit
+  # end of modifications
   - type: AccessReader
     access: [["Armory"]]
 

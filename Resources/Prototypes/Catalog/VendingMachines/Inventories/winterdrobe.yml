@@ -1,3 +1,4 @@
+## Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: vendingMachineInventory
   id: WinterDrobeInventory
   startingInventory:
@@ -19,6 +20,7 @@
     ClothingHeadHatCanadaBeanie: 4
     ClothingHeadHatSantahat: 2
     ClothingHeadHatXmasCrown: 2
+    # start of modifications
     ClothingUniformTurtleneckColorWhite: 2
     ClothingUniformTurtleneckColorGrey: 2
     ClothingUniformTurtleneckColorBlack: 2
@@ -51,6 +53,7 @@
     ClothingUniformTurtleneckSkirtColorLightBrown: 2
     ClothingUniformTurtleneckSkirtColorBrown: 2
     ClothingUniformTurtleneckSkirtColorMaroon: 2
+    # end of modifications
 
   emaggedInventory:
     ClothingNeckScarfStripedSyndieGreen: 3

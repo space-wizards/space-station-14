@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: job
   id: HeadOfSecurity
   name: job-name-hos
@@ -15,7 +16,7 @@
       time: 18000 #5 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 54000 # 15 hours
+      time: 54000 # Ronstation - modification. 15 hours
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"

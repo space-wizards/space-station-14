@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 - type: entity
   abstract: true
   parent: BaseObjective
@@ -43,7 +45,7 @@
   id: BaseThiefStealAnimalObjective
   components:
   - type: StealCondition
-    verifyMapExistence: false
+    verifyMapExistence: true
     checkAlive: true
     objectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
     descriptionText: objective-condition-thief-animal-description
@@ -136,8 +138,6 @@
   - type: Objective
     difficulty: 0.7
 
-
-
 - type: entity
   parent: BaseThiefStealCollectionObjective
   id: LAMPStealCollectionObjective
@@ -179,10 +179,10 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: ClothingHeadHatWardenStealObjective
+  id: WardenWhistleStealObjective # modified by Ronstation contributor(s)
   components:
   - type: StealCondition
-    stealGroup: ClothingHeadHatWarden
+    stealGroup: WardenWhistle # modified by Ronstation contributor(s)
   - type: Objective
     difficulty: 1.2
 

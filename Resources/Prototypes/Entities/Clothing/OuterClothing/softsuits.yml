@@ -17,6 +17,7 @@
     tags:
     - SuitEVA
     - MonkeyWearable
+    - CorgiWearable
     - WhitelistChameleon
 
 - type: entity
@@ -98,6 +99,7 @@
       toggleable-clothing: !type:ContainerSlot {}
   - type: Tag
     tags:
+    - CorgiWearable
     - MonkeyWearable
     - WhitelistChameleon
 
@@ -233,3 +235,7 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon

@@ -438,10 +438,3 @@
     back:
     - TowelColorMime
   groupBy: "towels"
-
-# misc
-- type: loadout
-  id: CardBoxPokerFilled
-  storage:
-    back:
-    - CardBoxPokerFilled
