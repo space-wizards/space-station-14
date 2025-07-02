@@ -7,152 +7,94 @@ namespace Content.Shared.StatusEffectNew;
 public abstract partial class SharedStatusEffectsSystem
 {
     /// <summary>
-    /// Checks if a status effect with the same prototype exists on the current entity, and then tries to add one if it doesn't exist.
-    /// If one does exist, and <see cref="resetCooldown"/> is true, this method will update the <see cref="StatusEffectComponent.EndEffectTime"/>
-    /// of the effect to our inputted duration only if the current effect isn't permanent.
-    /// If one does exist, and <see cref="resetCooldown"/> is false, this method will add its duration to the duration of the existing effect.
+    /// Increments duration of status effect by <see cref="duration"/>.
+    /// Tries to add status effect if it is not yet present on entity.
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
     /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
-    /// <param name="resetCooldown">
-    /// If True, the effect duration time will be reset and reapplied. If False, the effect duration time will be overlaid with the existing one.
-    /// In the other case, the effect will either be added for the specified time or its time will be extended for the specified time.
-    /// </param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
-    public bool EnsureOrUpdateStatusEffect(
+    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
+    public bool TryAddStatusEffectDuration(
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
-        TimeSpan? duration = null,
-        bool resetCooldown = false
+        TimeSpan duration
     )
     {
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
             return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
-        //If the effect is permanent and exists then we don't need to update it.
-        if (GetStatusEffectTime(statusEffect.Value) is null)
-            return true;
-
-        if (resetCooldown || duration is null)
-            SetStatusEffectTime(statusEffect.Value, duration);
-        else
-            AddStatusEffectTime(statusEffect.Value, duration.Value);
+        AddStatusEffectTime(statusEffect.Value, duration);
 
         return true;
     }
 
-    /// <summary>
-    /// An overload of <see cref="EnsureOrUpdateStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
-    /// that doesn't return a status effect EntityUid.
-    /// </summary>
-    public bool EnsureOrUpdateStatusEffect(
-        EntityUid target,
-        EntProtoId effectProto,
-        TimeSpan? duration = null,
-        bool resetCooldown = false
-    )
+
+    ///<inheritdoc cref="TryAddStatusEffectDuration(Robust.Shared.GameObjects.EntityUid,Robust.Shared.Prototypes.EntProtoId,out Robust.Shared.GameObjects.EntityUid?,System.TimeSpan)"/>
+    public bool TryAddStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan duration)
     {
-        return EnsureOrUpdateStatusEffect(target, effectProto, out _, duration, resetCooldown);
+        return TryAddStatusEffectDuration(target, effectProto, out _, duration);
     }
 
     /// <summary>
-    /// Checks if a status effect with the same prototype exists on the current entity, and then tries to add one if it doesn't exist.
-    /// If one does exist, and <see cref="resetCooldown"/> is true, this method will update the <see cref="StatusEffectComponent.EndEffectTime"/>
-    /// of the effect to our inputted duration no matter what.
-    /// If one does exist, and <see cref="resetCooldown"/> is false, this method will add its duration to the duration of the existing effect.
+    /// Sets duration of status effect by <see cref="duration"/>.
+    /// Tries to add status effect if it is not yet present on entity.
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
     /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
-    /// <param name="resetCooldown">
-    /// If True, the effect duration time will be reset and reapplied. If False, the effect duration time will be overlaid with the existing one.
-    /// In the other case, the effect will either be added for the specified time or its time will be extended for the specified time.
-    /// </param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
-    public bool EnsureStatusEffect(
+    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
+    public bool TrySetStatusEffectDuration(
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
-        TimeSpan? duration = null,
-        bool resetCooldown = true
+        TimeSpan? duration = null
     )
     {
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
             return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
-        if (resetCooldown || duration is null)
-            SetStatusEffectTime(statusEffect.Value, duration);
-        else
-            AddStatusEffectTime(statusEffect.Value, duration.Value);
+        SetStatusEffectTime(statusEffect.Value, duration);
 
         return true;
     }
 
-    /// <summary>
-    /// An overload of <see cref="EnsureStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
-    /// that doesn't return a status effect EntityUid.
-    /// </summary>
-    public bool EnsureStatusEffect(
-        EntityUid target,
-        EntProtoId effectProto,
-        TimeSpan? duration = null,
-        bool resetCooldown = true
-    )
+    /// <inheritdoc cref="TrySetStatusEffectDuration(Robust.Shared.GameObjects.EntityUid,Robust.Shared.Prototypes.EntProtoId,out Robust.Shared.GameObjects.EntityUid?,System.TimeSpan?)"/>
+    public bool TrySetStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan? duration = null)
     {
-        return EnsureStatusEffect(target, effectProto, out _, duration, resetCooldown);
+        return TrySetStatusEffectDuration(target, effectProto, out _, duration);
     }
 
     /// <summary>
-    /// Checks if a status effect with the same prototype exists on the current entity, and then tries to add one if it doesn't exist.
-    /// If one does exist, and <see cref="refresh"/> is true, this method will update the <see cref="StatusEffectComponent.EndEffectTime"/>
-    /// of the effect if our inputted duration would be longer than the remaining duration.
-    /// If one does exist, and <see cref="refresh"/> is false, this method will add its duration to the duration of the existing effect.
+    /// Updates duration of effect to larger value between provided <see cref="duration"/> and current effect duration.
+    /// Tries to add status effect if it is not yet present on entity.
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
     /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
-    /// <param name="refresh">
-    /// If True, the effect duration time will be set to the higher of the current duration or the newly received duration.
-    /// Otherwise, the duration will be added to the existing duration or set to the input duration of none exists.
-    /// </param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
-    public bool EnsureLongestStatusEffect(
+    /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
+    public bool TryUpdateStatusEffectDuration(
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
-        TimeSpan? duration = null,
-        bool refresh = true
+        TimeSpan? duration = null
     )
     {
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
             return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
-        //If the effect is permanent and exists then we don't need to update it.
-        if (GetStatusEffectTime(statusEffect.Value) is null)
-            return true;
-
-        if (refresh || duration is null)
-            SetGreaterStatusEffectTime(statusEffect.Value, duration);
-        else
-            AddStatusEffectTime(statusEffect.Value, duration.Value);
+        UpdateStatusEffectTime(statusEffect.Value, duration);
 
         return true;
     }
 
-    /// <summary>
-    /// An overload of <see cref="EnsureLongestStatusEffect(EntityUid,EntProtoId,out EntityUid?,TimeSpan?,bool)"/>
-    /// that doesn't return a status effect EntityUid.
-    /// </summary>
-    public bool EnsureLongestStatusEffect(
-        EntityUid target,
-        EntProtoId effectProto,
-        TimeSpan? duration = null,
-        bool refresh = true
-    )
+    /// <inheritdoc cref="TryUpdateStatusEffectDuration(Robust.Shared.GameObjects.EntityUid,Robust.Shared.Prototypes.EntProtoId,out Robust.Shared.GameObjects.EntityUid?,System.TimeSpan?)"/>
+    public bool TryUpdateStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan? duration = null)
     {
-        return EnsureLongestStatusEffect(target, effectProto, out _, duration, refresh);
+        return TryUpdateStatusEffectDuration(target, effectProto, out _, duration);
     }
 
     /// <summary>

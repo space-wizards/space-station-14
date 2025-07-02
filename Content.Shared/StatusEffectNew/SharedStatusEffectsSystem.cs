@@ -78,17 +78,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         effectComp.EndEffectTime += delta;
         Dirty(effect, effectComp);
 
-        if (effectComp is { AppliedTo: not null, Alert: not null })
-        {
-            (TimeSpan Start, TimeSpan End)? cooldown = effectComp.EndEffectTime is null
-                ? null
-                : (_timing.CurTime, effectComp.EndEffectTime.Value);
-            _alerts.ShowAlert(
-                effectComp.AppliedTo.Value,
-                effectComp.Alert.Value,
-                cooldown: cooldown
-            );
-        }
+        ShowAlertIfNeeded(effectComp);
     }
 
     private void SetStatusEffectTime(EntityUid effect, TimeSpan? duration)
@@ -97,26 +87,21 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
             return;
 
         if (duration is null)
+        {
+            if(effectComp.EndEffectTime is null)
+                return;
+
             effectComp.EndEffectTime = null;
+        }
         else
             effectComp.EndEffectTime = _timing.CurTime + duration;
 
         Dirty(effect, effectComp);
 
-        if (effectComp is { AppliedTo: not null, Alert: not null })
-        {
-            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null
-                ? null
-                : (_timing.CurTime, effectComp.EndEffectTime.Value);
-            _alerts.ShowAlert(
-                effectComp.AppliedTo.Value,
-                effectComp.Alert.Value,
-                cooldown: cooldown
-            );
-        }
+        ShowAlertIfNeeded(effectComp);
     }
 
-    private void SetGreaterStatusEffectTime(EntityUid effect, TimeSpan? duration)
+    private void UpdateStatusEffectTime(EntityUid effect, TimeSpan? duration)
     {
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return;
@@ -130,7 +115,6 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         else
         {
             var newEndTime = _timing.CurTime + duration;
-
             if (effectComp.EndEffectTime >= newEndTime)
                 return;
 
@@ -139,40 +123,14 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
         Dirty(effect, effectComp);
 
-        if (effectComp is { AppliedTo: not null, Alert: not null })
-        {
-            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null
-                ? null
-                : (_timing.CurTime, effectComp.EndEffectTime.Value);
-            _alerts.ShowAlert(
-                effectComp.AppliedTo.Value,
-                effectComp.Alert.Value,
-                cooldown: cooldown
-            );
-        }
+        ShowAlertIfNeeded(effectComp);
     }
 
-    private TimeSpan? GetStatusEffectTime(EntityUid effect)
-    {
-        if (!_effectQuery.TryComp(effect, out var effectComp))
-            return TimeSpan.Zero;
-
-        return effectComp.EndEffectTime;
-    }
 
     private void OnStatusEffectApplied(Entity<StatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        if (ent.Comp is { AppliedTo: not null, Alert: not null })
-        {
-            (TimeSpan, TimeSpan)? cooldown = ent.Comp.EndEffectTime is null
-                ? null
-                : (_timing.CurTime, ent.Comp.EndEffectTime.Value);
-            _alerts.ShowAlert(
-                ent.Comp.AppliedTo.Value,
-                ent.Comp.Alert.Value,
-                cooldown: cooldown
-            );
-        }
+        StatusEffectComponent statusEffect = ent;
+        ShowAlertIfNeeded(statusEffect);
     }
 
     private void OnStatusEffectRemoved(Entity<StatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
@@ -216,7 +174,8 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
-        TimeSpan? duration = null)
+        TimeSpan? duration = null
+    )
     {
         statusEffect = null;
         if (!CanAddStatusEffect(target, effectProto))
@@ -244,6 +203,21 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         RaiseLocalEvent(effect, ref ev);
 
         return true;
+    }
+
+    private void ShowAlertIfNeeded(StatusEffectComponent effectComp)
+    {
+        if (effectComp is { AppliedTo: not null, Alert: not null })
+        {
+            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null
+                ? null
+                : (_timing.CurTime, effectComp.EndEffectTime.Value);
+            _alerts.ShowAlert(
+                effectComp.AppliedTo.Value,
+                effectComp.Alert.Value,
+                cooldown: cooldown
+            );
+        }
     }
 }
 
