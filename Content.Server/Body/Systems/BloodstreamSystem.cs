@@ -148,7 +148,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 // Apply dizziness as a symptom of bloodloss.
                 // The effect is applied in a way that it will never be cleared without being healthy.
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
-                _status.TryAddStatusEffect(uid, Bloodloss, bloodstream.UpdateInterval * 2);
+                _status.TryAddStatusEffectDuration(uid, Bloodloss, bloodstream.UpdateInterval * 2);
             }
             else if (!_mobStateSystem.IsDead(uid))
             {

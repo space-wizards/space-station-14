@@ -24,7 +24,7 @@ namespace Content.Server.Speech.EntitySystems
 
         public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh)
         {
-            Status.TryAddStatusEffect(uid, Stutter, time, refresh);
+            Status.TryUpdateStatusEffectDuration(uid, Stutter, time, refresh);
         }
 
         public override void DoRemoveStutterTime(EntityUid uid, TimeSpan timeRemoved)

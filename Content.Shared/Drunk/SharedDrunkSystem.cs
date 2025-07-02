@@ -31,7 +31,7 @@ public abstract class SharedDrunkSystem : EntitySystem
         var ev = new DrunkEvent(boozePower);
         RaiseLocalEvent(uid, ref ev);
 
-        _status.TryAddStatusEffect(uid, Drunk, ev.Duration);
+        _status.TryAddStatusEffectDuration(uid, Drunk, ev.Duration);
     }
 
     private void OnStatusApplied(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
