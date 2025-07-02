@@ -134,8 +134,13 @@ public sealed partial class NPCSteeringSystem
         }
 
         // Goobstation
+        var careAboutSpeed = steering.InRangeMaxSpeed != null;
         var finalInRange = ourCoordinates.TryDistance(EntityManager, destinationCoordinates, out var targetDistance) && inLos && targetDistance <= steering.Range;
+                           // ideally this would be careAboutSpeed but schizo C#
         var velocityHigh = steering.InRangeMaxSpeed != null && body.LinearVelocity.LengthSquared() > steering.InRangeMaxSpeed.Value * steering.InRangeMaxSpeed.Value;
+        // if we're in range and we care about velocity, stop trying to move if we early return
+        if (finalInRange && careAboutSpeed)
+            moveMultiplier = 0f;
 
         // We've arrived, nothing else matters.
         // Goobstation - also check if our velocity is higher than desired
@@ -375,6 +380,7 @@ public sealed partial class NPCSteeringSystem
         switch (moveType)
         {
             case MovementType.MovingToTarget:
+                moveMultiplier = 1f;
                 ApplySeek(interest, offsetRot.RotateVec(direction.Normalized()), 1f);
                 break;
             case MovementType.Braking:
