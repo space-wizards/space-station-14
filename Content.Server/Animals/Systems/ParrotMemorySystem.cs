@@ -98,6 +98,10 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     /// <param name="source">Source EntityUid of the message</param>
     public void TryLearn(Entity<ParrotMemoryComponent?> entity, string incomingMessage, EntityUid source)
     {
+        // ignore yourself
+        if (source.Equals(entity))
+            return;
+
         // learning requires a memory
         if (!Resolve<ParrotMemoryComponent>(entity, ref entity.Comp))
             return;
