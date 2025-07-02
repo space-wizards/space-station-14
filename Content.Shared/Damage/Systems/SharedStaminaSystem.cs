@@ -424,7 +424,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (!_status.EnsureStatusEffect(ent, StaminaLow, out var status))
+        if (!_status.TrySetStatusEffectDuration(ent, StaminaLow, out var status))
             return;
 
         var closest = FixedPoint2.Zero;
@@ -437,8 +437,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
             if (ent.Comp.StaminaDamage >= key && key > closest && closest < ent.Comp.CritThreshold)
                 closest = thres.Key;
         }
-
-        var modifier = ent.Comp.StunModifierThresholds[closest];
 
         _movementMod.TryUpdateMovementStatus(ent.Owner, status.Value, ent.Comp.StunModifierThresholds[closest]);
     }
