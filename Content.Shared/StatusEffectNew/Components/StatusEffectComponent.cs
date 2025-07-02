@@ -28,6 +28,12 @@ public sealed partial class StatusEffectComponent : Component
     public ProtoId<AlertPrototype>? Alert;
 
     /// <summary>
+    /// When this effect was superimposed. Automatically set when the component is initialized.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
+    public TimeSpan? StartEffectTime;
+
+    /// <summary>
     /// When this effect will end. If Null, the effect lasts indefinitely.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
