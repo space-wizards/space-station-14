@@ -56,7 +56,7 @@
   - type: Speech
     speechVerb: Wawa
     speechSounds: Wawa
-    allowedEmotes: ['Thump'] # They're 80% tail
+    allowedEmotes: ["Thump"] # They're 80% tail
   - type: TypingIndicator
     proto: moth
   - type: InteractionPopup
@@ -109,7 +109,9 @@
   - type: Hunger
     baseDecayRate: 0.05 # They get a lil' hungy
   - type: BodyEmotes # Grants them clapping and so on.
-    soundsId: GeneralBodyEmotes
+    soundsId: Scurret
+  - type: Deathgasp
+    prototype: ScurretDeathgasp # You monster
   - type: Tag
     tags:
     - DoorBumpOpener
