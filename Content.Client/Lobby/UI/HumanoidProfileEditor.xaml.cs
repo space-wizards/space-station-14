@@ -33,6 +33,8 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Globalization;
+using System;
 
 namespace Content.Client.Lobby.UI
 {
@@ -239,6 +241,34 @@ namespace Content.Client.Lobby.UI
                 OnSkinColorOnValueChanged();
                 UpdateCustomSpecieNameEdit(); // Starlight
             };
+
+            //starlight start
+            #region Size
+            UpdateSizeControls();
+
+            WidthSlider.OnValueChanged += args =>
+            {
+                SetWidth(args.Value);
+            };
+
+            HeightSlider.OnValueChanged += args =>
+            {
+                SetHeight(args.Value);
+            };
+
+            WidthResetButton.OnPressed += _ =>
+            {
+                if(Profile is null) return;
+                if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype)) WidthSlider.Value = speciesPrototype.DefaultWidth;
+            };
+
+            HeightResetButton.OnPressed += _ =>
+            {
+                if (Profile is null) return;
+                if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype)) HeightSlider.Value = speciesPrototype.DefaultHeight;
+            };
+            #endregion Size
+            //starlight end
 
             #region Skin
 
@@ -812,6 +842,7 @@ namespace Content.Client.Lobby.UI
             UpdateFlavorTextEdit();
             UpdateSexControls();
             UpdateGenderControls();
+            UpdateSizeControls(); //starlight
             UpdateSkinColor();
             UpdateSpawnPriorityControls();
             UpdateAgeEdit();
@@ -1191,7 +1222,7 @@ namespace Content.Client.Lobby.UI
             ReloadProfilePreview();
         }
 
-        protected override void Dispose(bool disposing)
+    protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
             if (!disposing)
@@ -1236,6 +1267,34 @@ namespace Content.Client.Lobby.UI
             ReloadPreview();
         }
 
+        //starlight start
+        private void UpdateWidthText(float newWidth)
+        {
+            WidthDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-width-label", ("width", Math.Round(newWidth, 2)));
+        }
+
+        private void SetWidth(float newWidth)
+        {
+            if (Profile is null) return;
+            Profile.Appearance = Profile.Appearance.WithWidth(newWidth);
+            UpdateWidthText(newWidth);
+            ReloadPreview();
+        }
+
+        private void UpdateHeightText(float newHeight)
+        {
+            HeightDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-height-label", ("height", Math.Round(newHeight, 2)));
+        }
+
+        private void SetHeight(float newHeight)
+        {
+            if (Profile is null) return;
+            Profile.Appearance = Profile.Appearance.WithHeight(newHeight);
+            UpdateHeightText(newHeight);
+            ReloadPreview();
+        }
+        //starlight end
+
         private void SetSpecies(string newSpecies)
         {
             Profile = Profile?.WithSpecies(newSpecies);
@@ -1247,6 +1306,7 @@ namespace Content.Client.Lobby.UI
             RefreshLoadouts();
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();
+            UpdateSizeControls(); //starlight
             ReloadPreview();
         }
 
@@ -1359,6 +1419,26 @@ namespace Content.Client.Lobby.UI
             else
                 SexButton.SelectId((int)sexes[0]);
         }
+
+        //starlight start
+        private void UpdateSizeControls()
+        {
+            if (Profile == null) return;
+
+            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype))
+            {
+                WidthSlider.MinValue = speciesPrototype.MinWidth;
+                WidthSlider.MaxValue = speciesPrototype.MaxWidth;
+                WidthSlider.Value = Profile.Appearance.Width;
+                UpdateWidthText(Profile.Appearance.Width);
+
+                HeightSlider.MinValue = speciesPrototype.MinHeight;
+                HeightSlider.MaxValue = speciesPrototype.MaxHeight;
+                HeightSlider.Value = Profile.Appearance.Height;
+                UpdateHeightText(Profile.Appearance.Height);
+            }
+        }
+        //starlight end
 
         private void UpdateSkinColor()
         {
