@@ -59,6 +59,7 @@ public sealed class WoolySystem : EntitySystem
                 continue;
 
             if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution, out var solution))
+                continue;
 
             if (solution.AvailableVolume == 0)
                 continue;
