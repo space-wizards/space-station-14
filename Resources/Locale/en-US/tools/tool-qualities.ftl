@@ -1,8 +1,11 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 tool-quality-anchoring-name = Anchoring
 tool-quality-anchoring-tool-name = Wrench
 
+# start of modifications
 tool-quality-axing-name = Axing
 tool-quality-axing-tool-name = Fireaxe
+# end of modifications
 
 tool-quality-prying-name = Prying
 tool-quality-prying-tool-name = Crowbar

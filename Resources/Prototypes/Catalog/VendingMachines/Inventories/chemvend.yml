@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: vendingMachineInventory
   id: ChemVendInventory
   startingInventory:
@@ -5,7 +6,7 @@
     JugAluminium: 2
     JugCarbon: 4
     JugChlorine: 1
-    JugBromine: 2
+    JugBromine: 2 # Ronstation - modification
     JugCopper: 2
     JugEthanol: 2
     JugFluorine: 1

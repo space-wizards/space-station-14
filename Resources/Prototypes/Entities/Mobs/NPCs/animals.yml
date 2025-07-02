@@ -1,3 +1,4 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 - type: entity
   name: bat
   parent: [ SimpleMobBase, FlyingMobBase, MobCombat ]
@@ -2512,7 +2513,7 @@
     description: ghost-role-information-giant-spider-description
     rules: ghost-role-information-giant-spider-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleFreeAgent # Ronstation - modification. People were being friendly on the spiders, so this supports that
     raffle:
       settings: short
   - type: GhostTakeoverAvailable
