@@ -363,7 +363,6 @@
     sprite: Objects/Specific/Janitorial/wirebrush.rsi
     state: icon
   - type: Item
-    sprite: Objects/Specific/Janitorial/wirebrush.rsi
     storedSprite:
       sprite: Objects/Specific/Janitorial/wirebrush.rsi
       state: storage
