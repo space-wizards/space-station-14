@@ -24,8 +24,8 @@ namespace Content.Client.Changelog
         private ISawmill _sawmill = default!;
 
         public bool NewChangelogEntries { get; private set; }
-        public Dictionary<string, int> LastReadId { get; private set; } = new Dictionary<string, int>();
-        public Dictionary<string, int> MaxId { get; private set; } = new Dictionary<string, int>();
+        public Dictionary<string, int> LastReadId { get; private set; } = new Dictionary<string, int>(); // imp changelog
+        public Dictionary<string, int> MaxId { get; private set; } = new Dictionary<string, int>(); // imp changelog
 
         public event Action? NewChangelogEntriesChanged;
 
@@ -37,11 +37,12 @@ namespace Content.Client.Changelog
         ///     <see cref="LastReadId"/> is NOT cleared
         ///     since that's used in the changelog menu to show the "since you last read" bar.
         /// </remarks>
-        public async void SaveNewReadId()
+        public async void SaveNewReadId() // imp async
         {
             NewChangelogEntries = false;
             NewChangelogEntriesChanged?.Invoke();
 
+            // imp: multiple changelog edit
             var changelogs = await LoadChangelog();
 
             foreach (var changelog in changelogs)
@@ -49,6 +50,7 @@ namespace Content.Client.Changelog
                 using var sw = _resource.UserData.OpenWriteText(new($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}_{changelog.Name}"));
                 sw.Write(MaxId[changelog.Name].ToString());
             }
+            // end imp edits
         }
 
         public async void Initialize()
@@ -75,6 +77,7 @@ namespace Content.Client.Changelog
             if (mainChangelogs.Length > 1)
                 _sawmill.Error($"More than one file found in Resource/Changelog with name {MainChangelogName}");
 
+            // imp edits start
             if (changelogs[0].Entries.Count == 0)
                 return;
 
@@ -86,15 +89,18 @@ namespace Content.Client.Changelog
 
                 MaxId.Add(name, changelog.Entries.Max(c => c.Id));
                 LastReadId.Add(name, 0);
+                // imp edits end
 
-                var path = new ResPath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}_{name}");
+                var path = new ResPath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}_{name}"); // imp name
                 if (_resource.UserData.TryReadAllText(path, out var lastReadIdText))
                 {
-                    LastReadId[name] = int.Parse(lastReadIdText);
+                    LastReadId[name] = int.Parse(lastReadIdText); // imp name
                 }
 
+                // imp edit start
                 if (!changelog.AdminOnly)
                     NewChangelogEntries = NewChangelogEntries || LastReadId[name] < MaxId[name];
+                // imp edit end
             }
 
             NewChangelogEntriesChanged?.Invoke();

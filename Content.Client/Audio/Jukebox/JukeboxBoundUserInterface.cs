@@ -1,10 +1,10 @@
-using System.Linq;
 using Content.Shared.Audio.Jukebox;
 using Robust.Client.Audio;
 using Robust.Client.UserInterface;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Prototypes;
 using Content.Shared.Emag.Systems; //imp
+using System.Linq; // imp
 
 namespace Content.Client.Audio.Jukebox;
 

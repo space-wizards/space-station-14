@@ -58,6 +58,7 @@
                            StyleClasses="LabelBig" />
                     <BoxContainer Orientation="Horizontal"
                                   Margin="0 0 0 5">
+                        <!-- imp gender -->
                         <Label Text="{Loc 'crew-monitoring-user-interface-gender'}"
                                FontColorOverride="DarkGray" />
                         <Label Text=":"

@@ -10,6 +10,6 @@ public sealed partial class CargoSystem : SharedCargoSystem
     public override void Initialize()
     {
         base.Initialize();
-        // InitializeCargoTelepad(); #imp edit to remove default visuals
+        InitializeCargoTelepad();
     }
 }

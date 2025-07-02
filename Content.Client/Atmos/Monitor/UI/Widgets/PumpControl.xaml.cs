@@ -21,7 +21,7 @@ public sealed partial class PumpControl : BoxContainer
     private OptionButton _pressureCheck => CPressureCheck;
     private FloatSpinBox _externalBound => CExternalBound;
     private FloatSpinBox _internalBound => CInternalBound;
-    private CheckBox _pressureLockout => CPressureLockout;
+    private CheckBox _pressureLockout => CPressureLockout; // imp
     private Button _copySettings => CCopySettings;
 
     public PumpControl(GasVentPumpData data, string address)
@@ -42,6 +42,7 @@ public sealed partial class PumpControl : BoxContainer
             PumpDataChanged?.Invoke(_address, _data);
         };
 
+        // imp add pressure lockout
         _pressureLockout.Pressed = data.PressureLockoutOverride;
         _pressureLockout.OnToggled += _ =>
         {
@@ -114,6 +115,7 @@ public sealed partial class PumpControl : BoxContainer
         _data.InternalPressureBound = data.InternalPressureBound;
         _internalBound.Value = _data.InternalPressureBound;
 
+        // imp add pressure lockout
         _data.PressureLockoutOverride = data.PressureLockoutOverride;
         _pressureLockout.Pressed = _data.PressureLockoutOverride;
     }

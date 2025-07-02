@@ -3,7 +3,6 @@ using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
-using Content.Client._Impstation.ReadyManifest;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.Voting;
 using Content.Shared.CCVar;
@@ -14,6 +13,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
+using Content.Client._Impstation.ReadyManifest; // imp
 
 namespace Content.Client.Lobby
 {
@@ -30,7 +30,7 @@ namespace Content.Client.Lobby
 
         private ClientGameTicker _gameTicker = default!;
         private ContentAudioSystem _contentAudioSystem = default!;
-        private ReadyManifestSystem _readyManifest = default!;
+        private ReadyManifestSystem _readyManifest = default!; // imp
 
         protected override Type? LinkedScreenType { get; } = typeof(LobbyGui);
         public LobbyGui? Lobby;
@@ -48,7 +48,7 @@ namespace Content.Client.Lobby
             _gameTicker = _entityManager.System<ClientGameTicker>();
             _contentAudioSystem = _entityManager.System<ContentAudioSystem>();
             _contentAudioSystem.LobbySoundtrackChanged += UpdateLobbySoundtrackInfo;
-            _readyManifest = _entityManager.EntitySysManager.GetEntitySystem<ReadyManifestSystem>();
+            _readyManifest = _entityManager.EntitySysManager.GetEntitySystem<ReadyManifestSystem>(); // imp
 
             chatController.SetMainChat(true);
 
@@ -68,7 +68,7 @@ namespace Content.Client.Lobby
             UpdateLobbyUi();
 
             Lobby.CharacterPreview.CharacterSetupButton.OnPressed += OnSetupPressed;
-            Lobby.ManifestButton.OnPressed += OnManifestPressed;
+            Lobby.ManifestButton.OnPressed += OnManifestPressed; // imp
             Lobby.ReadyButton.OnPressed += OnReadyPressed;
             Lobby.ReadyButton.OnToggled += OnReadyToggled;
 
@@ -89,7 +89,7 @@ namespace Content.Client.Lobby
             _voteManager.ClearPopupContainer();
 
             Lobby!.CharacterPreview.CharacterSetupButton.OnPressed -= OnSetupPressed;
-            Lobby!.ManifestButton.OnPressed -= OnManifestPressed;
+            Lobby!.ManifestButton.OnPressed -= OnManifestPressed; // imp
             Lobby!.ReadyButton.OnPressed -= OnReadyPressed;
             Lobby!.ReadyButton.OnToggled -= OnReadyToggled;
 
@@ -123,6 +123,7 @@ namespace Content.Client.Lobby
             SetReady(args.Pressed);
         }
 
+        // imp add
         private void OnManifestPressed(BaseButton.ButtonEventArgs args)
         {
             _readyManifest.RequestReadyManifest();
@@ -190,16 +191,16 @@ namespace Content.Client.Lobby
                 Lobby!.ReadyButton.ToggleMode = false;
                 Lobby!.ReadyButton.Pressed = false;
                 Lobby!.ObserveButton.Disabled = false;
-                Lobby!.ManifestButton.Disabled = true;
+                Lobby!.ManifestButton.Disabled = true; // imp
             }
             else
             {
                 Lobby!.StartTime.Text = string.Empty;
-                Lobby!.ReadyButton.Text = Loc.GetString(Lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready" : "lobby-state-player-status-not-ready");
+                Lobby!.ReadyButton.Text = Loc.GetString(Lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready": "lobby-state-player-status-not-ready");
                 Lobby!.ReadyButton.ToggleMode = true;
                 Lobby!.ReadyButton.Disabled = false;
                 Lobby!.ReadyButton.Pressed = _gameTicker.AreWeReady;
-                Lobby!.ManifestButton.Disabled = false;
+                Lobby!.ManifestButton.Disabled = false; // imp
                 Lobby!.ObserveButton.Disabled = true;
             }
 

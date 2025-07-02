@@ -2,7 +2,7 @@ using Content.Client.Chat.Managers;
 using Content.Shared.CollectiveMind;
 using Robust.Client.Player;
 
-namespace Content.Client.Chat
+namespace Content.Client._Impstation.CollectiveMind
 {
     public sealed class CollectiveMindSystem : EntitySystem
     {

@@ -1053,7 +1053,7 @@ namespace Content.Client.Lobby.UI
 
             _loadoutWindow = new LoadoutWindow(Profile, roleLoadout, roleLoadoutProto, _playerManager.LocalSession, collection)
             {
-                Title = Loc.GetString(jobProto?.Name ?? "Job") + " Loadout",
+                Title = Loc.GetString(jobProto?.Name ?? "Job") + " Loadout", // imp loadout titles
             };
 
             // Refresh the buttons etc.

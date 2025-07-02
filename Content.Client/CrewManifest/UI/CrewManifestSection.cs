@@ -25,6 +25,7 @@ public sealed class CrewManifestSection : BoxContainer
             Text = Loc.GetString(section.Name)
         });
 
+        // imp edit start
         var departmentContainer = new BoxContainer()
         {
             Orientation = LayoutOrientation.Horizontal,
@@ -77,6 +78,7 @@ public sealed class CrewManifestSection : BoxContainer
                 HorizontalExpand = true,
                 SizeFlagsStretchRatio = 1,
             };
+            // imp edit end
 
             var title = new RichTextLabel();
             title.SetMessage(entry.JobTitle);
@@ -100,8 +102,8 @@ public sealed class CrewManifestSection : BoxContainer
                 titleContainer.AddChild(title);
             }
 
-            namesContainer.AddChild(nameContainer);
-            titlesContainer.AddChild(titleContainer);
+            namesContainer.AddChild(nameContainer); // imp edit
+            titlesContainer.AddChild(titleContainer); // imp edit
         }
     }
 }

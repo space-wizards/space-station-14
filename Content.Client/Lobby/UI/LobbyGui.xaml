@@ -36,6 +36,7 @@
                                                Align="Left"
                                                FontColorOverride="{x:Static maths:Color.DarkGray}"
                                                StyleClasses="LabelBig" HorizontalExpand="True" />
+                                        <!-- imp manifest button -->
                                         <Button Name="ManifestButton" Access="Public"
                                                 Text="Manifest"
                                                 StyleClasses="ButtonBig" MinWidth="137" />
@@ -120,7 +121,7 @@
             </PanelContainer>
         </SplitContainer>
         <PanelContainer Name="ExpandPanel"
-                        StyleClasses="AngleRect" 
+                        StyleClasses="AngleRect"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Margin="0 2 2 0"

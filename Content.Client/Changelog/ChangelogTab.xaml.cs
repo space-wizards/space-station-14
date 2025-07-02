@@ -30,20 +30,20 @@ public sealed partial class ChangelogTab : Control
 
     public void PopulateChangelog(ChangelogManager.Changelog changelog)
     {
-        var name = changelog.Name;
+        var name = changelog.Name; // imp
 
         var byDay = changelog.Entries
             .GroupBy(e => e.Time.ToLocalTime().Date)
             .OrderByDescending(c => c.Key);
 
-        var hasRead = _changelog.MaxId[name] <= _changelog.LastReadId[name];
+        var hasRead = _changelog.MaxId[name] <= _changelog.LastReadId[name]; // imp name
 
         foreach (var dayEntries in byDay)
         {
             var day = dayEntries.Key;
 
             var groupedEntries = dayEntries
-                .GroupBy(c => (c.Author, Read: c.Id <= _changelog.LastReadId[name]))
+                .GroupBy(c => (c.Author, Read: c.Id <= _changelog.LastReadId[name])) // imp name
                 .OrderBy(c => c.Key.Read)
                 .ThenBy(c => c.Key.Author);
 

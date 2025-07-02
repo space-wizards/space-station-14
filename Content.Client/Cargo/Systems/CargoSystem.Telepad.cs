@@ -68,10 +68,10 @@ public sealed partial class CargoSystem
         if (!Resolve(uid, ref sprite))
             return;
 
-    if (!TryComp<AnimationPlayerComponent>(uid, out var player))
-        return;
+        if (!TryComp<AnimationPlayerComponent>(uid, out var player))
+            return;
 
-    _appearance.TryGetData<CargoTelepadState?>(uid, CargoTelepadVisuals.State, out var state);
+        _appearance.TryGetData<CargoTelepadState?>(uid, CargoTelepadVisuals.State, out var state);
 
         switch (state)
         {
@@ -96,7 +96,6 @@ public sealed partial class CargoSystem
                 break;
         }
     }
-
 
     [UsedImplicitly]
     private enum CargoTelepadLayers : byte
