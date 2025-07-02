@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
 using Content.Server.Animals.Components;
 using Content.Server.Radio;
 using Content.Server.Speech;
@@ -6,8 +7,10 @@ using Content.Server.Speech.Components;
 using Content.Server.Vocalization.Systems;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Verbs;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Animals.Systems;
 
@@ -18,6 +21,7 @@ namespace Content.Server.Animals.Systems;
 /// </summary>
 public sealed partial class ParrotMemorySystem : EntitySystem
 {
+    [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -28,12 +32,32 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<ParrotMemoryComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
+
         SubscribeLocalEvent<ParrotListenerComponent, MapInitEvent>(ListenerOnMapInit);
 
         SubscribeLocalEvent<ParrotListenerComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<ParrotListenerComponent, RadioReceiveEvent>(OnRadioReceive);
 
         SubscribeLocalEvent<ParrotMemoryComponent, TryVocalizeEvent>(OnTryVocalize);
+    }
+
+    private void OnGetVerbs(Entity<ParrotMemoryComponent> ent, ref GetVerbsEvent<Verb> args)
+    {
+        // limit this to admins
+        if (!_admin.IsAdmin(args.User))
+            return;
+
+        // simple verb that just clears the memory list
+        var clearMemoryVerb = new Verb()
+        {
+            Text = Loc.GetString("parrot-verb-clear-memory"),
+            Category = VerbCategory.Admin,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/clear-parrot.png")),
+            Act = () => ent.Comp.SpeechMemory.Clear(),
+        };
+
+        args.Verbs.Add(clearMemoryVerb);
     }
 
     private void ListenerOnMapInit(Entity<ParrotListenerComponent> entity, ref MapInitEvent args)
