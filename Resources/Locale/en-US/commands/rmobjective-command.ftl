@@ -1,6 +1,6 @@
 # addobjectives
 cmd-rmobjective-desc = Removes an objective from the player's mind.
-cmd-rmobjective-help = rmobjective <username> <index>
+cmd-rmobjective-help = Usage: rmobjective <username> <index>
 
 cmd-rmobjective-success = Objective successfully removed!
 cmd-rmobjective-failed = Objective removing failed. Maybe the index is out of bounds? Check lsobjectives!
