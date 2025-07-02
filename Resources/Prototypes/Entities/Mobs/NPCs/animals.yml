@@ -1100,6 +1100,7 @@
   name: sheepBase
   id: MobSheepBase
   description: A sheep.
+  abstract: true
   components:
   - type: Sprite
     drawdepth: Mobs
