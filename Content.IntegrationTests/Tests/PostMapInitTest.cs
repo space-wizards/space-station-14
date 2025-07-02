@@ -115,14 +115,14 @@ namespace Content.IntegrationTests.Tests
             "Plasma",
             "Convex",
             "Loop",
-            "Reach"
+            "Reach",
+            "Elkridge"
         };
 
         private static readonly string[] GameMapsExcludedFromTests =
         {
             "Aspid", //remap in progress
-            "DSTaipan", //remap in progress
-            "Elkridge" //remap in progress
+            "DSTaipan" //remap in progress
         };
 
         /// <summary>
