@@ -382,7 +382,7 @@
   - type: StaticPrice
     price: 22
   - type: MeleeWeapon
-    wideAnimationRotation: 90
+    wideAnimationRotation: 45
     damage:
       types:
         Piercing: 3
