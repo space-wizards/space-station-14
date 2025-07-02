@@ -409,8 +409,12 @@
           - FlyingMobMask
         layer:
           - FlyingMobLayer
+  - type: Reproductive
+    partnerWhitelist:
+      tags:
+      - Sheep
     offspring:
-      - id: MobSheep
+    - id: MobSheep
   - type: DamageStateVisuals
     states:
       Alive:
