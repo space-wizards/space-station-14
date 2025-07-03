@@ -186,13 +186,15 @@
           Base: green_adult_slime
         Dead:
           Base: green_adult_slime_dead
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 6
-          Structural: 4
-          Caustic: 1
-          Poison: 4
+    # start of modifications
+    # - type: MeleeWeapon
+    #   damage:
+    #     types:
+    #       Blunt: 6
+    #       Structural: 4
+    #       Caustic: 1
+    #       Poison: 4
+    # end of modifications
 
 - type: entity
   name: green slime
@@ -226,12 +228,14 @@
           Base: yellow_adult_slime
         Dead:
           Base: yellow_adult_slime_dead
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 6
-          Structural: 4
-          Caustic: 4
+    # start of modifications
+    # - type: MeleeWeapon
+    #   damage:
+    #     types:
+    #       Blunt: 6
+    #       Structural: 4
+    #       Caustic: 4
+    # end of modifications
 
 - type: entity
   name: yellow slime
