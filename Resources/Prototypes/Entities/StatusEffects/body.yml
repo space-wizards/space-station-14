@@ -13,5 +13,5 @@
   id: StatusEffectBloodloss
   name: bloodloss
   components:
-    - type: StutterStatusEffect
+    - type: StutteringAccent
     - type: DrunkStatusEffect

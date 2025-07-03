@@ -61,6 +61,6 @@
 
 # Causes you to get drunk
 - type: entity
-  parent: [ StatusEffectWoozy, StatusEffectSlur ]
+  parent: [ StatusEffectWoozy, StatusEffectSlurred ]
   id: StatusEffectDrunk
   name: drunk

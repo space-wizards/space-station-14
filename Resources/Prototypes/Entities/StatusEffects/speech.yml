@@ -16,12 +16,12 @@
   id: StatusEffectStutter
   name: stutter
   components:
-  - type: StutterStatusEffect
+  - type: StutteringAccent
 
 # Causes you to schlur your words schwhen talking.
 - type: entity
   parent: SpeechStatusEffectBase
-  id: StatusEffectSlur
+  id: StatusEffectSlurred
   name: slurred
   components:
-  - type: SlurStatusEffect
+  - type: SlurredAccent

@@ -13,7 +13,7 @@
         key: Stutter
         component: ScrambledAccent
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectSlur
+        effectProto: StatusEffectSlurred
         time: 20.0
 
 - type: reagent

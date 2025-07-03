@@ -17,19 +17,8 @@ public sealed class SlurredSystem : SharedSlurredSystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SlurredAccentComponent, AccentGetEvent>(OnAccent);
-        SubscribeLocalEvent<SlurStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
-        SubscribeLocalEvent<SlurStatusEffectComponent, StatusEffectRemovedEvent>(OnStatusRemoved);
-    }
 
-    private void OnStatusApplied(Entity<SlurStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
-    {
-        EnsureComp<SlurredAccentComponent>(args.Target);
-    }
-
-    private void OnStatusRemoved(Entity<SlurStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
-    {
-        if (!_status.HasEffectComp<SlurredAccentComponent>(args.Target))
-            RemComp<SlurredAccentComponent>(args.Target);
+        SubscribeLocalEvent<SlurredAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>(OnAccentRelayed);
     }
 
     /// <summary>
@@ -52,7 +41,18 @@ public sealed class SlurredSystem : SharedSlurredSystem
         return Math.Clamp(magic / SharedDrunkSystem.MagicNumber, 0f, 1f);
     }
 
-    private void OnAccent(EntityUid uid, SlurredAccentComponent component, AccentGetEvent args)
+    private void OnAccent(Entity<SlurredAccentComponent> entity, ref AccentGetEvent args)
+    {
+        GetAccent(entity, ref args);
+    }
+
+    private void OnAccentRelayed(Entity<SlurredAccentComponent> entity, ref StatusEffectRelayedEvent<AccentGetEvent> args)
+    {
+        var ev = args.Args;
+        GetAccent(args.Args.Entity, ref ev);
+    }
+
+    private void GetAccent(EntityUid uid, ref AccentGetEvent args)
     {
         var scale = GetProbabilityScale(uid);
         args.Message = Accentuate(args.Message, scale);

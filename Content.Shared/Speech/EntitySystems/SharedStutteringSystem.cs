@@ -5,7 +5,7 @@ namespace Content.Shared.Speech.EntitySystems;
 
 public abstract class SharedStutteringSystem : EntitySystem
 {
-    public static readonly EntProtoId Stutter = "StatusEffectStutter";
+    public static readonly EntProtoId Stuttering = "StatusEffectStutter";
 
     [Dependency] protected readonly SharedStatusEffectsSystem Status = default!;
 

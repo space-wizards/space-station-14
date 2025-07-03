@@ -22,13 +22,22 @@ public abstract class SharedDrunkSystem : EntitySystem
         SubscribeLocalEvent<LightweightDrunkComponent, DrunkEvent>(OnLightweightDrinking);
     }
 
-    public void TryApplyDrunkenness(EntityUid uid,
-        TimeSpan boozePower)
+    public void TryApplyDrunkenness(EntityUid uid, TimeSpan boozePower)
     {
         var ev = new DrunkEvent(boozePower);
         RaiseLocalEvent(uid, ref ev);
 
         Status.TryAddStatusEffectDuration(uid, Drunk, ev.Duration);
+    }
+
+    public void TryRemoveDrunkenness(EntityUid uid)
+    {
+        Status.TryRemoveStatusEffect(uid, Drunk);
+    }
+
+    public void TryRemoveDrunkennessTime(EntityUid uid, TimeSpan boozePower)
+    {
+        Status.TryAddTime(uid, Drunk, - boozePower);
     }
 
     private void OnLightweightDrinking(Entity<LightweightDrunkComponent> entity, ref DrunkEvent args)

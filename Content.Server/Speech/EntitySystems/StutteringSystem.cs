@@ -12,45 +12,39 @@ namespace Content.Server.Speech.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
 
         // Regex of characters to stutter.
-        private static readonly Regex StutterRegex = new(@"[b-df-hj-np-tv-wxyz]",
+        private static readonly Regex Stutter = new(@"[b-df-hj-np-tv-wxyz]",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public override void Initialize()
         {
             SubscribeLocalEvent<StutteringAccentComponent, AccentGetEvent>(OnAccent);
-            SubscribeLocalEvent<StutterStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
-            SubscribeLocalEvent<StutterStatusEffectComponent, StatusEffectRemovedEvent>(OnStatusRemoved);
+
+            SubscribeLocalEvent<StutteringAccentComponent, StatusEffectRelayedEvent<AccentGetEvent>>(OnAccent);
         }
 
         public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh)
         {
-            Status.TryUpdateStatusEffectDuration(uid, Stutter, time, refresh);
+            Status.TryUpdateStatusEffectDuration(uid, Stuttering, time, refresh);
         }
 
         public override void DoRemoveStutterTime(EntityUid uid, TimeSpan timeRemoved)
         {
-            Status.TryAddTime(uid, Stutter, -timeRemoved);
+            Status.TryAddTime(uid, Stuttering, -timeRemoved);
         }
 
         public override void DoRemoveStutter(EntityUid uid)
         {
-            Status.TryRemoveStatusEffect(uid, Stutter);
+            Status.TryRemoveStatusEffect(uid, Stuttering);
         }
 
-        private void OnStatusApplied(Entity<StutterStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
+        private void OnAccent(Entity<StutteringAccentComponent> entity, ref AccentGetEvent args)
         {
-            EnsureComp<StutteringAccentComponent>(args.Target);
+            args.Message = Accentuate(args.Message, entity.Comp);
         }
 
-        private void OnStatusRemoved(Entity<StutterStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
+        private void OnAccent(Entity<StutteringAccentComponent> entity, ref StatusEffectRelayedEvent<AccentGetEvent> args)
         {
-            if(!Status.HasEffectComp<StutterStatusEffectComponent>(args.Target))
-                RemComp<StutteringAccentComponent>(args.Target);
-        }
-
-        private void OnAccent(EntityUid uid, StutteringAccentComponent component, AccentGetEvent args)
-        {
-            args.Message = Accentuate(args.Message, component);
+            args.Args.Message = Accentuate(args.Args.Message, entity.Comp);
         }
 
         public string Accentuate(string message, StutteringAccentComponent component)
@@ -64,7 +58,7 @@ namespace Content.Server.Speech.EntitySystems
             for (var i = 0; i < length; i++)
             {
                 newLetter = message[i].ToString();
-                if (StutterRegex.IsMatch(newLetter) && _random.Prob(component.MatchRandomProb))
+                if (Stutter.IsMatch(newLetter) && _random.Prob(component.MatchRandomProb))
                 {
                     if (_random.Prob(component.FourRandomProb))
                     {
