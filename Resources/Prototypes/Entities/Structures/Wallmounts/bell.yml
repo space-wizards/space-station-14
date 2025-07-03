@@ -18,6 +18,7 @@
     successChance: 1
     interactSuccessSound:
       path: /Audio/Weapons/boxingbell.ogg
+    verb: interaction-popup-ring-verb
   - type: Clickable
   - type: MeleeSound
     soundGroups:
