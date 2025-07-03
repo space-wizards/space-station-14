@@ -8581,4 +8581,19 @@ Entries:
   id: 1183
   time: '2025-07-03T15:46:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/949
+- author: Trosling
+  changes:
+  - message: Custom species naming to Avali
+    type: Add
+  id: 1184
+  time: '2025-07-03T15:56:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/948
+- author: Trosling
+  changes:
+  - message: Fixed misguided conjugation of species to specie in the customization
+      menu
+    type: Fix
+  id: 1185
+  time: '2025-07-03T15:56:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/948
 
