@@ -137,7 +137,6 @@ namespace Content.Client.Paper.UI
                 PaperBackground.PanelOverride = null;
             }
 
-
             // Then the header:
             if (visuals.HeaderImagePath != null)
             {
@@ -224,7 +223,9 @@ namespace Content.Client.Paper.UI
             if (WrittenTextLabel.TryGetStyleProperty<Font>("font", out var font))
             {
                 float fontLineHeight = font.GetLineHeight(1.0f);
+                // This positions the texture so the font baseline is on the bottom:
                 _paperContentTex.ExpandMarginTop = font.GetDescent(UIScale);
+                // And this scales the texture so that it's a single text line:
                 var scaleY = (_paperContentLineScale * fontLineHeight) / _paperContentTex.Texture?.Height ?? fontLineHeight;
                 _paperContentTex.TextureScale = new Vector2(1, scaleY);
 
@@ -248,6 +249,7 @@ namespace Content.Client.Paper.UI
             _currentRawText = state.Text;
             var isEditing = state.Mode == PaperComponent.PaperAction.Write;
 
+            // Show/hide UI elements based on edit mode
             InputContainer.Visible = isEditing;
             EditButtons.Visible = isEditing;
             WrittenTextLabel.Visible = !isEditing;
@@ -256,6 +258,7 @@ namespace Content.Client.Paper.UI
 
             if (isEditing)
             {
+                // Copy server text to input field if it's empty
                 var shouldCopy = Input.TextLength == 0 && state.Text.Length > 0;
                 if (shouldCopy)
                 {
@@ -266,16 +269,17 @@ namespace Content.Client.Paper.UI
                 return;
             }
 
-            // Reset form and signature counters before processing
+            // Reset form and signature counters before processing to ensure consistent indexing
+            FormTagHandler.SetFormText(state.Text);
             FormTagHandler.ResetFormCounter();
             SignatureTagHandler.ResetSignatureCounter();
 
-            // Display text with markup processing
+            // Display text with markup processing (forms, signatures, colors, etc.)
             var fm = new FormattedMessage();
             fm.AddMarkupPermissive(state.Text);
             WrittenTextLabel.SetMessage(fm, _allowedTags, DefaultTextColor);
 
-            // Add stamps
+            // Add stamps that have been applied to this paper
             StampDisplay.RemoveAllChildren();
             StampDisplay.RemoveStamps();
             foreach (var stamper in state.StampedBy)
@@ -286,11 +290,11 @@ namespace Content.Client.Paper.UI
         {
             var mode = DragMode.None;
 
+            // Be quite generous with resize margins:
             if (relativeMousePos.Y < DRAG_MARGIN_SIZE)
                 mode |= DragMode.Top;
             else if (relativeMousePos.Y > Size.Y - DRAG_MARGIN_SIZE)
                 mode |= DragMode.Bottom;
-
             if (relativeMousePos.X < DRAG_MARGIN_SIZE)
                 mode |= DragMode.Left;
             else if (relativeMousePos.X > Size.X - DRAG_MARGIN_SIZE)
@@ -317,6 +321,7 @@ namespace Content.Client.Paper.UI
                 FillStatus.Text = Loc.GetString("paper-ui-fill-level",
                     ("currentLength", inputLength),
                     ("maxLength", MaxInputLength));
+                // Prevent further saving while text processing still in
                 SaveButton.Disabled = inputLength > MaxInputLength;
             }
             else
@@ -324,6 +329,17 @@ namespace Content.Client.Paper.UI
                 FillStatus.Text = "";
                 SaveButton.Disabled = false;
             }
+        }
+
+        /// <summary>
+        /// Removes any unfilled [form] and [signature] tags from the paper text.
+        /// Called when the paper is stamped to finalize the document.
+        /// </summary>
+        /// <param name="text">The paper text to clean</param>
+        /// <returns>Text with unfilled tags removed</returns>
+        public static string CleanUnfilledTags(string text)
+        {
+            return text.Replace("[form]", "").Replace("[signature]", "");
         }
 
         /// <summary>
@@ -337,8 +353,8 @@ namespace Content.Client.Paper.UI
             var editContainer = new PanelContainer { StyleClasses = { "TransparentBorderedWindowPanel" } };
             var edit = new LineEdit { MinSize = new Vector2(200, 0), Margin = new Thickness(5) };
             var hbox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
-            var ok = new Button { Text = "OK" };
-            var cancel = new Button { Text = "Cancel" };
+            var ok = new Button { Text = Loc.GetString("paper-form-dialog-ok") };
+            var cancel = new Button { Text = Loc.GetString("paper-form-dialog-cancel") };
 
             editContainer.AddChild(edit);
 
@@ -346,7 +362,7 @@ namespace Content.Client.Paper.UI
             {
                 if (!string.IsNullOrEmpty(edit.Text))
                 {
-                    var newText = ReplaceFormAtIndex(_currentRawText, formIndex, edit.Text);
+                    var newText = ReplaceNthFormTag(_currentRawText, formIndex, edit.Text);
                     OnSaved?.Invoke(newText);
                 }
                 popup.Close();
@@ -358,7 +374,7 @@ namespace Content.Client.Paper.UI
             {
                 if (!string.IsNullOrEmpty(edit.Text))
                 {
-                    var newText = ReplaceFormAtIndex(_currentRawText, formIndex, edit.Text);
+                    var newText = ReplaceNthFormTag(_currentRawText, formIndex, edit.Text);
                     OnSaved?.Invoke(newText);
                 }
                 popup.Close();
@@ -374,24 +390,26 @@ namespace Content.Client.Paper.UI
             edit.GrabKeyboardFocus();
         }
 
-        private static string ReplaceFormAtIndex(string text, int index, string replacement)
+        private static string ReplaceFormAtPosition(string text, int formIndex, string replacement)
         {
             var formTag = "[form]";
-            var currentIndex = 0;
-            var startPos = 0;
+            var parts = text.Split(new[] { formTag }, StringSplitOptions.None);
 
-            while (startPos < text.Length)
+            if (formIndex >= 0 && formIndex < parts.Length - 1)
             {
-                var pos = text.IndexOf(formTag, startPos, StringComparison.Ordinal);
-                if (pos == -1) break;
-
-                if (currentIndex == index)
+                var result = "";
+                for (int i = 0; i < parts.Length; i++)
                 {
-                    return text.Substring(0, pos) + replacement + text.Substring(pos + formTag.Length);
+                    result += parts[i];
+                    if (i < parts.Length - 1)
+                    {
+                        if (i == formIndex)
+                            result += replacement;
+                        else
+                            result += formTag;
+                    }
                 }
-
-                currentIndex++;
-                startPos = pos + formTag.Length;
+                return result;
             }
 
             return text;
@@ -404,28 +422,76 @@ namespace Content.Client.Paper.UI
         /// <param name="signature">The player's signature text</param>
         public void ReplaceSignature(int signatureIndex, string signature)
         {
-            var newText = ReplaceSignatureAtIndex(_currentRawText, signatureIndex, signature);
+            var newText = ReplaceNthSignatureTag(_currentRawText, signatureIndex, signature);
             OnSaved?.Invoke(newText);
         }
 
         private static string ReplaceSignatureAtIndex(string text, int index, string replacement)
         {
             var signatureTag = "[signature]";
-            var currentIndex = 0;
-            var startPos = 0;
+            var parts = text.Split(new[] { signatureTag }, StringSplitOptions.None);
 
-            while (startPos < text.Length)
+            if (index >= 0 && index < parts.Length - 1)
             {
-                var pos = text.IndexOf(signatureTag, startPos, StringComparison.Ordinal);
-                if (pos == -1) break;
+                var result = "";
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    result += parts[i];
+                    if (i < parts.Length - 1)
+                    {
+                        if (i == index)
+                            result += replacement;
+                        else
+                            result += signatureTag;
+                    }
+                }
+                return result;
+            }
+
+            return text;
+        }
+
+        private static string ReplaceNthFormTag(string text, int index, string replacement)
+        {
+            var formTag = "[form]";
+            var currentIndex = 0;
+            var pos = 0;
+
+            while (pos < text.Length)
+            {
+                var foundPos = text.IndexOf(formTag, pos);
+                if (foundPos == -1) break;
 
                 if (currentIndex == index)
                 {
-                    return text.Substring(0, pos) + replacement + text.Substring(pos + signatureTag.Length);
+                    return text.Substring(0, foundPos) + replacement + text.Substring(foundPos + formTag.Length);
                 }
 
                 currentIndex++;
-                startPos = pos + signatureTag.Length;
+                pos = foundPos + formTag.Length;
+            }
+
+            return text;
+        }
+
+        private static string ReplaceNthSignatureTag(string text, int index, string replacement)
+        {
+            var signatureTag = "[signature]";
+            var currentIndex = 0;
+            var pos = 0;
+
+            while (pos < text.Length)
+            {
+                var foundPos = text.IndexOf(signatureTag, pos);
+                if (foundPos == -1) break;
+
+                if (currentIndex == index)
+                {
+                    return text.Substring(0, foundPos) + replacement + text.Substring(foundPos + signatureTag.Length);
+                }
+
+                currentIndex++;
+                pos = foundPos + signatureTag.Length;
             }
 
             return text;
