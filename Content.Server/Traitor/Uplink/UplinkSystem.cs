@@ -25,8 +25,8 @@ public sealed class UplinkSystem : EntitySystem
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
-    public readonly EntProtoId TraitorUplinkStore = "StorePresetRemoteUplink";
-    public readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = "Telecrystal";
+    public static readonly EntProtoId TraitorUplinkStore = "StorePresetRemoteUplink";
+    public static readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = "Telecrystal";
     private const string FallbackUplinkImplant = "UplinkImplant";
     private const string FallbackUplinkCatalog = "UplinkUplinkImplanter";
 
