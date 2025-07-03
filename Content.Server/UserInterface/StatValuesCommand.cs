@@ -6,10 +6,14 @@ using Content.Server.EUI;
 using Content.Server.Item;
 using Content.Server.Power.Components;
 using Content.Shared.Administration;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using Content.Shared.Item;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.UserInterface;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Wieldable.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -170,10 +174,13 @@ public sealed class StatValuesCommand : IConsoleCommand
         return state;
     }
 
+    private static ProtoId<DamageTypePrototype> _structuralDamageType = "Structural";
+
     private StatValuesEuiMessage GetMelee()
     {
         var values = new List<string[]>();
         var meleeName = _entManager.ComponentFactory.GetComponentName<MeleeWeaponComponent>();
+        var increaseDamageName = _entManager.ComponentFactory.GetComponentName<IncreaseDamageOnWieldComponent>();
 
         foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {
@@ -186,26 +193,45 @@ public sealed class StatValuesCommand : IConsoleCommand
 
             var comp = (MeleeWeaponComponent) meleeComp.Component;
 
-            // TODO: Wielded damage
             // TODO: Esword damage
+
+            var structuralDamage = comp.Damage.DamageDict.GetValueOrDefault(_structuralDamageType);
+            var baseDamage = comp.Damage.GetTotal() - comp.Damage.DamageDict.GetValueOrDefault(_structuralDamageType);
+
+            var wieldedStructuralDamage = "-";
+            var wieldedDamage = "-";
+            if (proto.Components.TryGetValue(increaseDamageName, out var increaseDamageComp))
+            {
+                var comp2 = (IncreaseDamageOnWieldComponent) increaseDamageComp.Component;
+
+                wieldedStructuralDamage = (structuralDamage + comp2.BonusDamage.DamageDict.GetValueOrDefault(_structuralDamageType)).ToString();
+                wieldedDamage = (baseDamage + comp2.BonusDamage.GetTotal() - comp2.BonusDamage.DamageDict.GetValueOrDefault(_structuralDamageType)).ToString();
+            }
 
             values.Add(new[]
             {
                 proto.ID,
-                (comp.Damage.GetTotal() * comp.AttackRate).ToString(),
-                comp.AttackRate.ToString(CultureInfo.CurrentCulture),
-                comp.Damage.GetTotal().ToString(),
-                comp.Range.ToString(CultureInfo.CurrentCulture),
+                baseDamage.ToString(),
+                wieldedDamage,
+                comp.AttackRate.ToString("0.00", CultureInfo.InvariantCulture),
+                (comp.AttackRate * baseDamage).Float().ToString("0.00", CultureInfo.InvariantCulture),
+                structuralDamage.ToString(),
+                wieldedStructuralDamage,
             });
         }
 
-        var state = new StatValuesEuiMessage()
+        var state = new StatValuesEuiMessage
         {
-            Title = "Cargo sell prices",
-            Headers = new List<string>()
+            Title = Loc.GetString("stat-melee-values"),
+            Headers = new List<string>
             {
-                "ID",
-                "Price",
+                Loc.GetString("stat-melee-id"),
+                Loc.GetString("stat-melee-base-damage"),
+                Loc.GetString("stat-melee-wield-damage"),
+                Loc.GetString("stat-melee-attack-rate"),
+                Loc.GetString("stat-melee-dps"),
+                Loc.GetString("stat-melee-structural-damage"),
+                Loc.GetString("stat-melee-structural-wield-damage"),
             },
             Values = values,
         };
