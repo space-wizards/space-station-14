@@ -22,6 +22,13 @@ public class BasePickupAttemptEvent : CancellableEntityEventArgs
     public readonly EntityUid User;
     public readonly EntityUid Item;
 
+    /// <summary>
+    /// String describing the reason the pickup failed.
+    ///
+    /// Will not always be displayed to the user, depending on who raised the event.
+    /// </summary>
+    public string? Reason;
+
     public BasePickupAttemptEvent(EntityUid user, EntityUid item)
     {
         User = user;

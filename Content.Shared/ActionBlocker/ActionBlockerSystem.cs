@@ -167,16 +167,18 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanPickup(EntityUid user, EntityUid item)
+        public bool CanPickup(EntityUid user, EntityUid item, out string? reason)
         {
             var userEv = new PickupAttemptEvent(user, item);
             RaiseLocalEvent(user, userEv);
+            reason = userEv.Reason;
 
             if (userEv.Cancelled)
                 return false;
 
             var itemEv = new GettingPickedUpAttemptEvent(user, item);
             RaiseLocalEvent(item, itemEv);
+            reason = itemEv.Reason;
 
             return !itemEv.Cancelled;
         }

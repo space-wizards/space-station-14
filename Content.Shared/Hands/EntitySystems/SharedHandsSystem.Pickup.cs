@@ -182,8 +182,12 @@ public abstract partial class SharedHandsSystem
         if (TryComp(entity, out PhysicsComponent? physics) && physics.BodyType == BodyType.Static)
             return false;
 
-        if (checkActionBlocker && !_actionBlocker.CanPickup(uid, entity))
+        if (checkActionBlocker && !_actionBlocker.CanPickup(uid, entity, out var reason))
+        {
+            if (reason is not null)
+                _popup.PopupPredictedCursor(reason, uid);
             return false;
+        }
 
         if (ContainerSystem.TryGetContainingContainer((entity, null, null), out var container))
         {
