@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -29,6 +30,7 @@ public sealed class InteractionPopupSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<InteractionPopupComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<InteractionPopupComponent, ActivateInWorldEvent>(OnActivateInWorld);
+        SubscribeLocalEvent<InteractionPopupComponent, GetVerbsEvent<ActivationVerb>>(AddVerb);
     }
 
     private void OnActivateInWorld(EntityUid uid, InteractionPopupComponent component, ActivateInWorldEvent args)
@@ -158,6 +160,24 @@ public sealed class InteractionPopupSystem : EntitySystem
         {
             _audio.PlayEntity(sfx, Filter.Empty().FromEntities(target), target, false);
         }
+    }
+
+    private sealed class DummyHandledArgs : HandledEntityEventArgs { }
+    private void AddVerb(EntityUid uid, InteractionPopupComponent comp, GetVerbsEvent<ActivationVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        var verb = new ActivationVerb
+        {
+            Text = Loc.GetString(comp.Verb),
+            Act = () =>
+            {
+                SharedInteract(uid, comp, new DummyHandledArgs(), uid, args.User);
+            }
+        };
+
+        args.Verbs.Add(verb);
     }
 
     /// <summary>

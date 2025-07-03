@@ -26,6 +26,13 @@ public sealed partial class InteractionPopupComponent : Component
     /// </summary>
     [DataField("interactFailureString")]
     public string? InteractFailureString;
+    
+    /// <summary>
+    /// Used in window title and context menu
+    /// </summary>
+    [DataField("verb")]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string Verb = "interaction-popup-verb";
 
     /// <summary>
     /// Sound effect to be played when the interaction succeeds.
