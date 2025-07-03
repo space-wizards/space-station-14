@@ -62,9 +62,7 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnMapInit(Entity<JetpackComponent> jetpack, ref MapInitEvent args)
     {
-        var (_, jetpackComponent) = jetpack;
-
-        _actionContainer.EnsureAction(jetpack.Owner, ref jetpackComponent.ToggleActionEntity, jetpackComponent.ToggleAction);
+        _actionContainer.EnsureAction(jetpack.Owner, ref jetpack.Comp.ToggleActionEntity, jetpack.Comp.ToggleAction);
         Dirty(jetpack);
     }
 
@@ -81,10 +79,8 @@ public abstract class SharedJetpackSystem : EntitySystem
             var jetpackUid = user.Jetpack;
             if (transform.GridUid == gridUid && jetpackQuery.TryGetComponent(jetpackUid, out var jetpackComponent))
             {
-                var jetpack = new Entity<JetpackComponent>(jetpackUid, jetpackComponent);
-
                 var canFly = CanFlyOnGrid(gridUid);
-                SetEnabled(jetpack, jetpackComponent.Enabled, flyIfEnabled: canFly, user: uid);
+                SetEnabled((jetpackUid, jetpackComponent), jetpackComponent.Enabled, flyIfEnabled: canFly, user: uid);
 
                 if (!canFly)
                     _popup.PopupClient(Loc.GetString("jetpack-to-grid"), uid, uid);
@@ -104,23 +100,19 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     private void OnJetpackUserCanWeightless(Entity<JetpackUserComponent> ent, ref CanWeightlessMoveEvent args) => args.CanMove = true;
 
-    private void OnJetpackUserEntParentChanged(Entity<JetpackUserComponent> ent, ref EntParentChangedMessage args)
+    private void OnJetpackUserEntParentChanged(Entity<JetpackUserComponent> jetpackUser, ref EntParentChangedMessage args)
     {
-        var (userUid, _) = ent;
-        var jetpackUid = ent.Comp.Jetpack;
-
+        var jetpackUid = jetpackUser.Comp.Jetpack;
         if (!TryComp<JetpackComponent>(jetpackUid, out var jetpackComponent))
             return;
 
-        var userGrid = Transform(userUid).GridUid;
-
-        var canFly = CanFlyOnGrid(userGrid);
+        var canFly = CanFlyOnGrid(args.Transform.GridUid);
         var jetpackEnabled = jetpackComponent.Enabled;
 
         if (!canFly && jetpackEnabled)
-            _popup.PopupClient(Loc.GetString("jetpack-to-grid"), userUid, userUid);
+            _popup.PopupClient(Loc.GetString("jetpack-to-grid"), jetpackUser, jetpackUser);
 
-        SetEnabled(new Entity<JetpackComponent>(jetpackUid, jetpackComponent), jetpackEnabled, flyIfEnabled: canFly, user: userUid);
+        SetEnabled((jetpackUid, jetpackComponent), jetpackEnabled, flyIfEnabled: canFly, user: jetpackUser);
     }
 
 
@@ -178,14 +170,14 @@ public abstract class SharedJetpackSystem : EntitySystem
         var toggled = !component.Enabled;
 
         // If they're already using a jetpack that isn't this one and trying to turn this one on, don't let them.
-        if (TryComp<JetpackUserComponent>(user, out var userComponent) && userComponent.Jetpack != uid)
+        if (_jetpackUserQuery.TryComp(user, out var userComponent) && userComponent.Jetpack != uid)
         {
             _popup.PopupClient(Loc.GetString("jetpack-already-using"), user);
             return;
         }
 
         // You can still turn the jetpack on/off when on a grid that doesn't permit flying; you just won't be able to fly!
-        var canFly = TryComp(uid, out TransformComponent? xform) && CanFlyOnGrid(xform.GridUid);
+        var canFly = CanFlyOnGrid(Transform(jetpack).GridUid);
         SetEnabled(jetpack, toggled, null, canFly);
 
         args.Handled = true;
@@ -284,15 +276,14 @@ public abstract class SharedJetpackSystem : EntitySystem
 
     /// <returns>Whether the provided entity is using an active jetpack to fly.</returns>
     public bool IsUserFlying(EntityUid uid)
-        => _jetpackUserQuery.TryComp(uid, out var jetpackUserComponent) && _activeJetpackQuery.TryComp(jetpackUserComponent.Jetpack, out _);
+        => _jetpackUserQuery.TryComp(uid, out var jetpackUserComponent) && _activeJetpackQuery.HasComp(jetpackUserComponent.Jetpack);
 
     /// <remarks>
     /// This should return only whether you can <i>turn the jetpack on/off</i>, such as according to whether it has enough fuel to work,
     /// not necessarily meaning being able to fly with it.
     /// Return value should stay regardless of <see cref="CanFlyOnGrid"/>.
     /// </remarks>
-    protected virtual bool CanEnable(Entity<JetpackComponent> jetpack)
-        => true;
+    protected abstract bool CanEnable(Entity<JetpackComponent> jetpack);
 }
 
 [Serializable, NetSerializable]

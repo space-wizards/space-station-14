@@ -58,11 +58,8 @@ public sealed class JetpackSystem : SharedJetpackSystem
                 comp.LastCoordinates = currentCoords;
                 continue;
             }
-            else if (_transform.InRange(transform.Coordinates, lastCoords, comp.MaxDistance))
-            {
-                if (_timing.CurTime < comp.TargetTime)
-                    continue;
-            }
+            else if (_transform.InRange(transform.Coordinates, lastCoords, comp.MaxDistance) && _timing.CurTime < comp.TargetTime)
+                continue;
 
             comp.LastCoordinates = currentCoords;
             comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
@@ -92,9 +89,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
             coordinates = new EntityCoordinates(uidXform.MapUid.Value, _transform.GetWorldPosition(uidXform));
         }
         else
-        {
             return;
-        }
 
         Spawn("JetpackEffect", coordinates);
     }

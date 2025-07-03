@@ -7,9 +7,7 @@ namespace Content.Shared.Movement.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class JetpackComponent : Component
 {
-    /// <summary>
-    /// Whether the jetpack is turned on, but not whether it's actually flying!
-    /// </summary>
+    /// <summary>Whether the jetpack is turned on, but not whether it's actually flying!</summary>
     [AutoNetworkedField]
     public bool Enabled = false;
 
