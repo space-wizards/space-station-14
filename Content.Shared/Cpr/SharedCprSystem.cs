@@ -1,16 +1,17 @@
+using Content.Shared.CCVar;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Verbs;
 using Content.Shared.Popups;
-using Content.Shared.IdentityManagement;
-using Content.Shared.DoAfter;
+using Content.Shared.Verbs;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.CCVar;
+
 using Robust.Shared.Configuration;
 
 namespace Content.Shared.Cpr;

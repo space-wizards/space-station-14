@@ -1,6 +1,6 @@
 using Content.Shared.Cpr;
-using Robust.Client.GameObjects;
 using Robust.Client.Animations;
+using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using System.Numerics;
 
