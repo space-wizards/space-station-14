@@ -15,15 +15,19 @@ public sealed class BanListEui : BaseEui
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
 
-    public BanListEui()
+    public BanListEui(int page)
     {
         IoCManager.InjectDependencies(this);
+
+        Page = page;
     }
 
     private Guid BanListPlayer { get; set; }
     private string BanListPlayerName { get; set; } = string.Empty;
     private List<SharedServerBan> Bans { get; } = new();
     private List<SharedServerRoleBan> RoleBans { get; } = new();
+
+    private int Page { get; }
 
     public override void Opened()
     {
@@ -41,7 +45,7 @@ public sealed class BanListEui : BaseEui
 
     public override EuiStateBase GetNewState()
     {
-        return new BanListEuiState(BanListPlayerName, Bans, RoleBans);
+        return new BanListEuiState(BanListPlayerName, Bans, RoleBans, Page);
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
@@ -154,4 +158,7 @@ public sealed class BanListEui : BaseEui
         BanListPlayer = banListPlayer;
         await LoadFromDb();
     }
+
+    public void SwitchToRoleBans()
+    {}
 }

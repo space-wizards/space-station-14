@@ -64,10 +64,9 @@ public sealed class RoleBanListCommand : IConsoleCommand
             return;
         }
 
-        var ui = new BanListEui();
+        var ui = new BanListEui(1);
         _eui.OpenEui(ui, player);
         await ui.ChangeBanListPlayer(data.UserId);
-
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
