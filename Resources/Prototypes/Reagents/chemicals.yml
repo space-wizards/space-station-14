@@ -86,7 +86,7 @@
   id: ArtifactGlue
   name: reagent-name-artifact-glue
   desc: reagent-desc-artifact-glue
-  flavor: metallic
+  flavor: artifact-glue
   physicalDesc: reagent-physical-desc-non-newtonian
   color: "#827394"
   reactiveEffects:
