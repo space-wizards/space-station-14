@@ -4,7 +4,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Foldable;
@@ -15,7 +14,6 @@ public sealed class DeployFoldableSystem : EntitySystem
     [Dependency] private readonly FoldableSystem _foldable = default!;
     [Dependency] private readonly AnchorableSystem _anchorable = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -61,8 +59,8 @@ public sealed class DeployFoldableSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
-        // Don't do anything if the target is inside a container.
-        if (args.Target.HasValue && _container.IsEntityInContainer(args.Target.Value))
+        // Don't do anything unless you clicked on the floor.
+        if (args.Target.HasValue)
             return;
 
         if (!TryComp<FoldableComponent>(ent, out var foldable))
