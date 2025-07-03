@@ -30,6 +30,41 @@ namespace Content.Client.UserInterface.RichText
         {
             _signatureCounter = 0;
         }
+        
+        private static int CountSignatureButtonsBefore(Control clickedButton)
+        {
+            var count = 0;
+            var root = clickedButton;
+            
+            // Find the root container
+            while (root.Parent != null)
+                root = root.Parent;
+            
+            // Count signature buttons in document order (top to bottom, left to right)
+            var found = false;
+            CountSignatureButtonsRecursive(root, clickedButton, ref count, ref found);
+            return found ? count : 0;
+        }
+        
+        private static void CountSignatureButtonsRecursive(Control control, Control target, ref int count, ref bool found)
+        {
+            if (found) return;
+            
+            if (control is Button btn && btn.Text == Loc.GetString("paper-signature-sign-button"))
+            {
+                if (control == target)
+                {
+                    found = true;
+                    return;
+                }
+                count++;
+            }
+            
+            foreach (Control child in control.Children)
+            {
+                CountSignatureButtonsRecursive(child, target, ref count, ref found);
+            }
+        }
 
         public SignatureTagHandler()
         {
@@ -46,7 +81,7 @@ namespace Content.Client.UserInterface.RichText
         {
             var btn = new Button
             {
-                Text = "Sign",
+                Text = Loc.GetString("paper-signature-sign-button"),
                 MinSize = new Vector2(60, 28),
                 MaxSize = new Vector2(60, 28),
                 Margin = new Thickness(4, 2, 4, 2)
@@ -66,7 +101,11 @@ namespace Content.Client.UserInterface.RichText
                     parent = parent.Parent;
 
                 if (parent is PaperWindow paperWindow)
-                    paperWindow.ReplaceSignature(signatureIndex, signature);
+                {
+                    // Count which button this is by walking the UI tree
+                    var buttonIndex = CountSignatureButtonsBefore(btn);
+                    paperWindow.ReplaceSignature(buttonIndex, signature);
+                }
             };
 
             control = btn;
@@ -77,7 +116,7 @@ namespace Content.Client.UserInterface.RichText
         {
             var playerEntity = _playerManager.LocalSession?.AttachedEntity;
             if (playerEntity == null)
-                return "[Unknown Signature]";
+                return Loc.GetString("paper-signature-unknown");
 
             var name = "Unknown";
 
