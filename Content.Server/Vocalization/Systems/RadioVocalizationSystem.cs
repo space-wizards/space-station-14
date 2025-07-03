@@ -27,7 +27,7 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
 
         SubscribeLocalEvent<RadioVocalizerComponent, MapInitEvent>(RadioOnMapInit);
 
-        SubscribeLocalEvent<VocalizerComponent, VocalizeEvent>(OnVocalize);
+        SubscribeLocalEvent<RadioVocalizerComponent, VocalizeEvent>(OnVocalize);
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     /// <summary>
     /// Called whenever an entity with a VocalizerComponent tries to speak
     /// </summary>
-    private void OnVocalize(Entity<VocalizerComponent> ent, ref VocalizeEvent args)
+    private void OnVocalize(Entity<RadioVocalizerComponent> ent, ref VocalizeEvent args)
     {
         if (args.Handled)
             return;
