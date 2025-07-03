@@ -3,6 +3,7 @@ using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -20,6 +21,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<JetpackComponent, AppearanceChangeEvent>(OnJetpackAppearance);
     }
 
@@ -27,9 +29,9 @@ public sealed class JetpackSystem : SharedJetpackSystem
     protected override bool CanEnable(Entity<JetpackComponent> jetpack)
         => false;
 
-
-    private void OnJetpackAppearance(EntityUid uid, JetpackComponent component, ref AppearanceChangeEvent args)
+    private void OnJetpackAppearance(Entity<JetpackComponent> jetpack, ref AppearanceChangeEvent args)
     {
+        var uid = jetpack.Owner;
         Appearance.TryGetData<bool>(uid, JetpackVisuals.Enabled, out var enabled, args.Component);
 
         if (TryComp<ClothingComponent>(uid, out var clothing))
