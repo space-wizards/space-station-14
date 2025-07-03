@@ -38,15 +38,14 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
         if (!args.Complex)
             return;
 
         if (!component.OnActivate)
             return;
 
-        SharedInteract(uid, component, args.Target, args.User);
+        if (SharedInteract(uid, component, args.Target, args.User))
+            args.Handled = true;
     }
 
     private void OnInteractHand(EntityUid uid, InteractionPopupComponent component, InteractHandEvent args)
@@ -54,36 +53,35 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
-        SharedInteract(uid, component, args.Target, args.User);
+        if (SharedInteract(uid, component, args.Target, args.User))
+            args.Handled = true;
     }
 
-    private void SharedInteract(
+    private bool SharedInteract(
         EntityUid uid,
         InteractionPopupComponent component,
         EntityUid target,
         EntityUid user)
     {
         if (user == target)
-            return;
+            return false;
 
         //Handling does nothing and this thing annoyingly plays way too often.
         // HUH? What does this comment even mean?
 
         if (HasComp<SleepingComponent>(uid))
-            return;
+            return false;
 
         if (TryComp<MobStateComponent>(uid, out var state)
             && !_mobStateSystem.IsAlive(uid, state))
         {
-            return;
+            return false;
         }
 
         var curTime = _gameTiming.CurTime;
 
         if (curTime < component.LastInteractTime + component.InteractDelay)
-            return;
+            return false;
 
         component.LastInteractTime = curTime;
 
@@ -98,7 +96,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                       && component.InteractFailureSpawn == null;
 
         if (_netMan.IsClient && !predict)
-            return;
+            return false;
 
         if (_random.Prob(component.SuccessChance))
         {
@@ -144,18 +142,18 @@ public sealed class InteractionPopupSystem : EntitySystem
                 _audio.PlayPvs(sfx, target);
             else
                 _audio.PlayEntity(sfx, Filter.Entities(user, target), target, false);
-            return;
+            return false;
         }
 
         _popupSystem.PopupClient(msg, uid, user);
 
         if (sfx == null)
-            return;
+            return false;
 
         if (component.SoundPerceivedByOthers)
         {
             _audio.PlayPredicted(sfx, target, user);
-            return;
+            return false;
         }
 
         if (_netMan.IsClient)
@@ -167,6 +165,8 @@ public sealed class InteractionPopupSystem : EntitySystem
         {
             _audio.PlayEntity(sfx, Filter.Empty().FromEntities(target), target, false);
         }
+        
+        return true;
     }
 
     private void AddVerb(EntityUid uid, InteractionPopupComponent comp, GetVerbsEvent<ActivationVerb> args)
