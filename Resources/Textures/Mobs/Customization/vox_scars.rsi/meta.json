@@ -12,48 +12,48 @@
       "directions": 4
     },
     {
-        "name": "vox_scar_eye_right",
-        "directions": 4
+      "name": "vox_scar_eye_right",
+      "directions": 4
     },
     {
-        "name": "vox_top_surgery_short",
-        "directions": 4
+      "name": "vox_top_surgery_short",
+      "directions": 4
     },
     {
-        "name": "vox_top_surgery_long",
-        "directions": 4
+      "name": "vox_top_surgery_long",
+      "directions": 4
     },
     {
-        "name": "vox_scar_chest",
-        "directions": 4
+      "name": "vox_scar_chest",
+      "directions": 4
     },
     {
-        "name": "vox_scar_neck",
-        "directions": 4
+      "name": "vox_scar_neck",
+      "directions": 4
     },
     {
-        "name": "vox_scar_chest_bullets",
-        "directions": 4
+      "name": "vox_scar_chest_bullets",
+      "directions": 4
     },
     {
       "name": "vox_scar_stomach_bullets",
       "directions": 4
     },
     {
-        "name": "vox_scar_face_1",
-        "directions": 4
+      "name": "vox_scar_face_1",
+      "directions": 4
     },
     {
-        "name": "vox_scar_face_2",
-        "directions": 4
+      "name": "vox_scar_face_2",
+      "directions": 4
     }, 
     {
-        "name": "vox_scar_eye_left_small",
-        "directions": 4
+      "name": "vox_scar_eye_left_small",
+      "directions": 4
     }, 
     {
-        "name": "vox_scar_eye_right_small",
-        "directions": 4
+      "name": "vox_scar_eye_right_small",
+      "directions": 4
     }
   ]
 }
