@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: muburu
-  changes:
-  - message: Space Dragons now have randomly generated names.
-    type: Add
-  id: 8217
-  time: '2025-04-17T21:05:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36656
 - author: archee1
   changes:
   - message: Cats can walk slowly to avoid slipping on puddles.
@@ -3889,3 +3882,12 @@
   id: 8729
   time: '2025-07-02T20:50:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38661
+- author: Blackern5000
+  changes:
+  - message: Most salvage enemies have had their HP reduced
+    type: Tweak
+  - message: Most salvage weapons have had their damage reduced
+    type: Tweak
+  id: 8730
+  time: '2025-07-03T00:54:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38131
