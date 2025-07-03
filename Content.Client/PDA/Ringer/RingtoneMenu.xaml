@@ -1,8 +1,8 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                       Title="{Loc 'comp-ringer-ui-menu-title'}"
-            MinSize="320 100"
-            SetSize="320 100">
+            MinSize="360 100"
+            SetSize="360 100">
         <BoxContainer Orientation="Vertical"
                     VerticalExpand="True"
                     HorizontalExpand="True"
