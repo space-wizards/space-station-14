@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: mjarduk
-  changes:
-  - message: Torches can now be refueled.
-    type: Tweak
-  - message: Burnt torches/glowsticks names' can now display if they're glued, cluwnified,
-      etc.
-    type: Fix
-  id: 8220
-  time: '2025-04-18T01:59:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36209
 - author: lzk228
   changes:
   - message: Borgs, clowns and mimes now can choose a custom name in loadouts.
@@ -3887,3 +3877,12 @@
   id: 8732
   time: '2025-07-03T16:00:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36708
+- author: SlamBamActionman
+  changes:
+  - message: Xeno tables can now be dismantled.
+    type: Fix
+  - message: Broken cryo pods can now be unanchored, allowing them to be scrapped.
+    type: Fix
+  id: 8733
+  time: '2025-07-03T18:51:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38689
