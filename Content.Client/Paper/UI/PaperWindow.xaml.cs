@@ -228,7 +228,11 @@ namespace Content.Client.Paper.UI
                 // And this scales the texture so that it's a single text line:
                 var scaleY = (_paperContentLineScale * fontLineHeight) / _paperContentTex.Texture?.Height ?? fontLineHeight;
                 _paperContentTex.TextureScale = new Vector2(1, scaleY);
-
+                // Now, we might need to add some padding to the text to ensure
+                // that, even if a header is specified, the text will line up with
+                // where the content image expects the font to be rendered (i.e.,
+                // adjusting the height of the header image shouldn't cause the
+                // text to be offset from a line)
                 var headerHeight = HeaderImage.Size.Y + HeaderImage.Margin.Top + HeaderImage.Margin.Bottom;
                 var headerInLines = headerHeight / (fontLineHeight * _paperContentLineScale);
                 var paddingRequiredInLines = (float)Math.Ceiling(headerInLines) - headerInLines;
@@ -257,10 +261,15 @@ namespace Content.Client.Paper.UI
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
 
             if (isEditing)
-            {
+            {   // For premade documents, we want to be able to edit them rather than
+                // replace them.
                 // Copy server text to input field if it's empty
                 var shouldCopy = Input.TextLength == 0 && state.Text.Length > 0;
                 if (shouldCopy)
+                // We can get repeated messages with state.Mode == Write if another
+                // player opens the UI for reading. In this case, don't update the
+                // text input, as this player is currently writing new text and we
+                // don't want to lose any text they already input.
                 {
                     Input.TextRope = Rope.Leaf.Empty;
                     Input.CursorPosition = new TextEdit.CursorPos();
@@ -286,6 +295,12 @@ namespace Content.Client.Paper.UI
                 StampDisplay.AddStamp(new StampWidget { StampInfo = stamper });
         }
 
+        /// <summary>
+        ///     BaseWindow interface. Allow users to drag UI around by grabbing
+        ///     anywhere on the page (like FancyWindow) but try to calculate
+        ///     reasonable dragging bounds because this UI can have round corners,
+        ///     and it can be hard to judge where to click to resize.
+        /// </summary>
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
         {
             var mode = DragMode.None;
