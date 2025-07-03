@@ -149,7 +149,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     ///     Characters must not exhibit a measurable gravitational pull on nearby objects.
     /// </summary>
     [DataField]
-    public float MaxWidth = 1.3f;
+    public float MaxWidth = 1.2f;
 
     /// <summary>
     ///     The normal width for this species.
@@ -167,13 +167,31 @@ public sealed partial class SpeciesPrototype : IPrototype
     ///     You cannot fit in our cloning pods.
     /// </summary>
     [DataField]
-    public float MaxHeight = 1.3f;
+    public float MaxHeight = 1.2f;
 
     /// <summary>
     ///     The normal height for this species.
     /// </summary>
     [DataField]
     public float DefaultHeight = 1f;
+
+    /// <summary>
+    ///     The height of this species in CM if it were 1x tall
+    /// </summary>
+    [DataField]
+    public int StandardSize = 170;
+
+    /// <summary>
+    ///     The weight of this species in KG if it were 1x tall and 1x wide
+    /// </summary>
+    [DataField]
+    public int StandardWeight = 70;
+
+    /// <summary>
+    ///     How much this species' weight increases or decreases depending on unit size, measured in KG/units^2
+    /// </summary>
+    [DataField]
+    public int StandardDensity = 110;
     //starlight end
 }
 

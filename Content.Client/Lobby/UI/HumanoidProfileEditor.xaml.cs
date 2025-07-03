@@ -1268,29 +1268,29 @@ namespace Content.Client.Lobby.UI
         }
 
         //starlight start
-        private void UpdateWidthText(float newWidth)
-        {
-            WidthDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-width-label", ("width", Math.Round(newWidth, 2)));
+        private void UpdateSizeText() {
+            if(Profile is null) return;
+            if (_prototypeManager.TryIndex<SpeciesPrototype>(Profile.Species, out var speciesPrototype)) {
+                var height = speciesPrototype.StandardSize * Profile.Appearance.Height;
+                var weight = speciesPrototype.StandardWeight + speciesPrototype.StandardDensity * ((Profile.Appearance.Width * Profile.Appearance.Height) - 1);
+                HeightDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-height-label", ("height", Math.Round(height)));
+                WidthDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-width-label", ("weight", Math.Round(weight, 2)));
+            }
         }
 
         private void SetWidth(float newWidth)
         {
             if (Profile is null) return;
             Profile.Appearance = Profile.Appearance.WithWidth(newWidth);
-            UpdateWidthText(newWidth);
+            UpdateSizeText();
             ReloadPreview();
-        }
-
-        private void UpdateHeightText(float newHeight)
-        {
-            HeightDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-height-label", ("height", Math.Round(newHeight, 2)));
         }
 
         private void SetHeight(float newHeight)
         {
             if (Profile is null) return;
             Profile.Appearance = Profile.Appearance.WithHeight(newHeight);
-            UpdateHeightText(newHeight);
+            UpdateSizeText();
             ReloadPreview();
         }
         //starlight end
@@ -1430,12 +1430,12 @@ namespace Content.Client.Lobby.UI
                 WidthSlider.MinValue = speciesPrototype.MinWidth;
                 WidthSlider.MaxValue = speciesPrototype.MaxWidth;
                 WidthSlider.Value = Profile.Appearance.Width;
-                UpdateWidthText(Profile.Appearance.Width);
 
                 HeightSlider.MinValue = speciesPrototype.MinHeight;
                 HeightSlider.MaxValue = speciesPrototype.MaxHeight;
                 HeightSlider.Value = Profile.Appearance.Height;
-                UpdateHeightText(Profile.Appearance.Height);
+                
+                UpdateSizeText();
             }
         }
         //starlight end
