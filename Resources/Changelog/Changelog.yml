@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Killerqu00
-  changes:
-  - message: Contraband examine icon now shows whether or not you are allowed to possess
-      the item.
-    type: Add
-  - message: Contraband examine activates by hovering instead of clicking.
-    type: Tweak
-  id: 8219
-  time: '2025-04-18T01:23:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36032
 - author: mjarduk
   changes:
   - message: Torches can now be refueled.
@@ -3888,3 +3878,12 @@
   id: 8731
   time: '2025-07-03T01:08:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38434
+- author: ArtisticRoomba
+  changes:
+  - message: A new atmospherics valve has been added, the Inlet Pressure Regulator!
+      You can learn more about its behavior and potential uses in the Engineering
+      Guidebook.
+    type: Add
+  id: 8732
+  time: '2025-07-03T16:00:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36708
