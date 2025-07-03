@@ -1,7 +1,7 @@
-using Content.Shared.Storage;
+using Content.Shared.EntityTable;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Procedural.DungeonLayers;
-
 
 /// <summary>
 /// Spawns mobs inside of the dungeon randomly.
@@ -17,5 +17,5 @@ public sealed partial class MobsDunGen : IDunGenLayer
     public int MaxCount = 1;
 
     [DataField(required: true)]
-    public List<EntitySpawnEntry> Groups = new();
+    public ProtoId<EntityTablePrototype> Contents;
 }

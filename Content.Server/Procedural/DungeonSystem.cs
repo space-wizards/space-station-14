@@ -29,7 +29,6 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IConsoleHost _console = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
@@ -37,6 +36,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -199,7 +199,8 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
         MapGridComponent grid,
         Vector2i position,
         int seed,
-        EntityCoordinates? coordinates = null)
+        EntityCoordinates? coordinates = null,
+        HashSet<Vector2i>? reservedTiles = null)
     {
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob.DungeonJob(
@@ -213,6 +214,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             this,
             _lookup,
             _tile,
+            _turf,
             _transform,
             gen,
             grid,
@@ -220,18 +222,20 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             seed,
             position,
             coordinates,
-            cancelToken.Token);
+            cancelToken.Token,
+            reservedTiles);
 
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
     }
 
-    public async Task<List<Dungeon>> GenerateDungeonAsync(
+    public async Task<(List<Dungeon>, DungeonData)> GenerateDungeonAsync(
         DungeonConfig gen,
         EntityUid gridUid,
         MapGridComponent grid,
         Vector2i position,
-        int seed)
+        int seed,
+        HashSet<Vector2i>? reservedTiles = null)
     {
         var cancelToken = new CancellationTokenSource();
         var job = new DungeonJob.DungeonJob(
@@ -245,6 +249,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             this,
             _lookup,
             _tile,
+            _turf,
             _transform,
             gen,
             grid,
@@ -252,7 +257,8 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             seed,
             position,
             null,
-            cancelToken.Token);
+            cancelToken.Token,
+            reservedTiles);
 
         _dungeonJobs.Add(job, cancelToken);
         _dungeonJobQueue.EnqueueJob(job);
@@ -263,7 +269,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             throw job.Exception;
         }
 
-        return job.Result!;
+        return job.Result;
     }
 
     public Angle GetDungeonRotation(int seed)

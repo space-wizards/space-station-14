@@ -120,6 +120,15 @@
   canBuildInImpassable: false
 
 - type: construction
+  id: DisposalSignaller
+  graph: DisposalPipe
+  startNode: start
+  targetNode: signaller
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
   id: DisposalTrunk
   graph: DisposalPipe
   startNode: start
@@ -268,12 +277,45 @@
 # ATMOS PIPES
 - type: construction
   id: GasPipeHalf
+  name: construction-recipe-gas-pipe-half
   graph: GasPipe
   startNode: start
   targetNode: half
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeHalf
+  - GasPipeHalfAlt1
+  - GasPipeHalfAlt2
+
+- type: construction
+  id: GasPipeHalfAlt1
+  hide: true
+  graph: GasPipe
+  startNode: start
+  targetNode: halfAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeHalf
+  - GasPipeHalfAlt1
+  - GasPipeHalfAlt2
+
+- type: construction
+  id: GasPipeHalfAlt2
+  hide: true
+  graph: GasPipe
+  startNode: start
+  targetNode: halfAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeHalf
+  - GasPipeHalfAlt1
+  - GasPipeHalfAlt2
 
 - type: construction
   id: GasPipeStraight
@@ -281,32 +323,172 @@
   startNode: start
   targetNode: straight
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeStraight
+  - GasPipeStraightAlt1
+  - GasPipeStraightAlt2
+
+- type: construction
+  id: GasPipeStraightAlt1
+  hide: true
+  graph: GasPipe
+  startNode: start
+  targetNode: straightAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeStraight
+  - GasPipeStraightAlt1
+  - GasPipeStraightAlt2
+
+- type: construction
+  id: GasPipeStraightAlt2
+  hide: true
+  graph: GasPipe
+  startNode: start
+  targetNode: straightAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeStraight
+  - GasPipeStraightAlt1
+  - GasPipeStraightAlt2
 
 - type: construction
   id: GasPipeBend
+  name: construction-recipe-gas-pipe-bend
   graph: GasPipe
   startNode: start
   targetNode: bend
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeBend
+  - GasPipeBendAlt1
+  - GasPipeBendAlt2
+
+- type: construction
+  id: GasPipeBendAlt1
+  hide: true
+  graph: GasPipe
+  startNode: start
+  targetNode: bendAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeBend
+  - GasPipeBendAlt1
+  - GasPipeBendAlt2
+
+- type: construction
+  id: GasPipeBendAlt2
+  hide: true
+  graph: GasPipe
+  startNode: start
+  targetNode: bendAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeBend
+  - GasPipeBendAlt1
+  - GasPipeBendAlt2
 
 - type: construction
   id: GasPipeTJunction
+  name: construction-recipe-gas-pipe-t-junction
   graph: GasPipe
   startNode: start
   targetNode: tjunction
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeTJunction
+  - GasPipeTJunctionAlt1
+  - GasPipeTJunctionAlt2
+
+- type: construction
+  id: GasPipeTJunctionAlt1
+  hide: true
+  graph: GasPipe
+  startNode: start
+  targetNode: tjunctionAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeTJunction
+  - GasPipeTJunctionAlt1
+  - GasPipeTJunctionAlt2
+
+- type: construction
+  id: GasPipeTJunctionAlt2
+  hide: true
+  graph: GasPipe
+  startNode: start
+  targetNode: tjunctionAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeTJunction
+  - GasPipeTJunctionAlt1
+  - GasPipeTJunctionAlt2
 
 - type: construction
   id: GasPipeFourway
+  name: construction-recipe-gas-pipe-fourway
   graph: GasPipe
   startNode: start
   targetNode: fourway
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeFourway
+  - GasPipeFourwayAlt1
+  - GasPipeFourwayAlt2
+
+- type: construction
+  id: GasPipeFourwayAlt1
+  hide: true
+  graph: GasPipe
+  startNode: start
+  targetNode: fourwayAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeFourway
+  - GasPipeFourwayAlt1
+  - GasPipeFourwayAlt2
+
+- type: construction
+  id: GasPipeFourwayAlt2
+  hide: true
+  graph: GasPipe
+  startNode: start
+  targetNode: fourwayAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: true
+  alternativePrototypes:
+  - GasPipeFourway
+  - GasPipeFourwayAlt1
+  - GasPipeFourwayAlt2
+
+- type: construction
+  id: GasPipeManifold
+  graph: GasPipe
+  startNode: start
+  targetNode: manifold
   category: construction-category-utilities
   placementMode: SnapgridCenter
   canBuildInImpassable: true
@@ -443,6 +625,7 @@
 
 - type: construction
   id: HeatExchangerBend
+  name: construction-recipe-heat-exchanger-bend
   graph: GasBinary
   startNode: start
   targetNode: bendradiator

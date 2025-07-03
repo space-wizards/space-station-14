@@ -90,7 +90,7 @@ public sealed partial class DungeonSystem
             roomRotation = GetRoomRotation(room, random);
         }
 
-        var roomTransform = Matrix3Helpers.CreateTransform((Vector2) room.Size / 2f, roomRotation);
+        var roomTransform = Matrix3Helpers.CreateTransform((Vector2)room.Size / 2f, roomRotation);
         var finalTransform = Matrix3x2.Multiply(roomTransform, originTransform);
 
         SpawnRoom(gridUid, grid, finalTransform, room, reservedTiles, clearExisting);
@@ -113,7 +113,7 @@ public sealed partial class DungeonSystem
         return roomRotation;
     }
 
-    public void SpawnRoom(
+    public DungeonData SpawnRoom(
         EntityUid gridUid,
         MapGridComponent grid,
         Matrix3x2 roomTransform,
@@ -123,9 +123,10 @@ public sealed partial class DungeonSystem
     {
         // Ensure the underlying template exists.
         var roomMap = GetOrCreateTemplate(room);
-        var templateMapUid = _mapManager.GetMapEntityId(roomMap);
+        var templateMapUid = _maps.GetMapOrInvalid(roomMap);
         var templateGrid = Comp<MapGridComponent>(templateMapUid);
         var roomDimensions = room.Size;
+        var data = new DungeonData();
 
         var finalRoomRotation = roomTransform.Rotation();
 
@@ -154,6 +155,7 @@ public sealed partial class DungeonSystem
                 }
 
                 _tiles.Add((rounded, tileRef.Tile));
+                data.Tiles[rounded] = tileRef.Tile;
 
                 if (clearExisting)
                 {
@@ -186,6 +188,7 @@ public sealed partial class DungeonSystem
 
             // TODO: Copy the templated entity as is with serv
             var ent = Spawn(protoId, new EntityCoordinates(gridUid, childPos));
+            data.Entities.Add(ent, childPos.Floored());
 
             var childXform = _xformQuery.GetComponent(ent);
             var anchored = templateXform.Anchored;
@@ -250,20 +253,24 @@ public sealed partial class DungeonSystem
                 // but place 1 nanometre off grid and fail the add.
                 if (!_maps.TryGetTileRef(gridUid, grid, tilePos, out var tileRef) || tileRef.Tile.IsEmpty)
                 {
-                    _maps.SetTile(gridUid, grid, tilePos, _tile.GetVariantTile((ContentTileDefinition) _tileDefManager[FallbackTileId], _random.GetRandom()));
+                    _maps.SetTile(gridUid, grid, tilePos, _tile.GetVariantTile((ContentTileDefinition)_tileDefManager[FallbackTileId], _random.GetRandom()));
                 }
 
                 var result = _decals.TryAddDecal(
                     decal.Id,
                     new EntityCoordinates(gridUid, position),
-                    out _,
+                    out var did,
                     decal.Color,
                     angle,
                     decal.ZIndex,
                     decal.Cleanable);
 
+                data.Decals.Add(did, position);
+
                 DebugTools.Assert(result);
             }
         }
+
+        return data;
     }
 }
