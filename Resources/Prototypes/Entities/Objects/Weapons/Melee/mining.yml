@@ -26,7 +26,7 @@
       groups:
         Brute: 10
       types:
-        Structural: 30
+        Structural: 20
   - type: Item
     size: Normal
     shape:
@@ -160,7 +160,7 @@
       types:
         Blunt: 2.5
         Slash: 2.5
-        Structural: 30
+        Structural: 25
   - type: GunRequiresWield
   - type: DisarmMalus
   - type: Prying

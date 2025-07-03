@@ -335,7 +335,8 @@
 #   soundHit:  Waiting on serv3
     damage:
       types:
-        Heat: 14
+        Heat: 15
+        Structural: 35
   # mining laser real
   - type: GatheringProjectile
   - type: Tag
@@ -497,7 +498,7 @@
     damage:
       types:
         Blunt: 25
-        Structural: 30
+        Structural: 20
   # Short lifespan
   - type: TimedDespawn
     lifetime: 0.22 # roughly 5.5 tiles
