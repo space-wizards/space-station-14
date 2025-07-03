@@ -2,8 +2,6 @@ using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Decals;
-using Content.Server.NPC.HTN;
-using Content.Server.NPC.Systems;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.EntityTable;
@@ -167,7 +165,8 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
 
     protected override async Task<(List<Dungeon>, DungeonData)> Process()
     {
-        _sawmill.Info($"Generating dungeon {_gen} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
+        // Expensive log
+        // _sawmill.Info($"Generating dungeon {_gen} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
         _grid.CanSplit = false;
         var random = new Random(_seed);
         var oldTileCount = _reservedTiles?.Count ?? 0;
@@ -188,17 +187,9 @@ public sealed partial class DungeonJob : Job<(List<Dungeon>, DungeonData)>
         DebugTools.Assert(oldTileCount == (_reservedTiles?.Count ?? 0));
         _grid.CanSplit = true;
         _entManager.System<GridFixtureSystem>().CheckSplits(_gridUid);
-        var npcSystem = _entManager.System<NPCSystem>();
-        var npcs = new HashSet<Entity<HTNComponent>>();
 
-        _lookup.GetChildEntities(_gridUid, npcs);
-
-        foreach (var npc in npcs)
-        {
-            npcSystem.WakeNPC(npc.Owner, npc.Comp);
-        }
-
-        _sawmill.Info($"Finished generating dungeon {_gen} with seed {_seed}");
+        // Expensive log
+        // _sawmill.Info($"Finished generating dungeon {_gen} with seed {_seed}");
         return (dungeons, _data);
     }
 
