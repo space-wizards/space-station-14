@@ -20,4 +20,3 @@ stamp-component-stamped-name-ce = Chief Engineer
 stamp-component-stamped-name-greytide = Greytide
 stamp-component-stamped-name-psychologist = Psychologist
 stamp-component-stamped-name-wizard = Wizard
-stamp-component-stamped-name-signed = Signed
