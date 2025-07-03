@@ -72,6 +72,8 @@
     maxFillLevels: 4
     fillBaseName: hypo_fill
     solutionName: hypospray
+  - type: Contraband
+    severity: Syndicate
 
 - type: entity
   name: syndicate hypospray
