@@ -161,7 +161,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     ///     Sentient microbial lifeforms are not currently hireable under contract.
     /// </summary>
     [DataField]
-    public float MinHeight = 0.7f;
+    public float MinHeight = 0.8f;
 
     /// <summary>
     ///     You cannot fit in our cloning pods.

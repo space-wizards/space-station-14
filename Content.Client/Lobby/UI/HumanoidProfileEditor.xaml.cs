@@ -1274,7 +1274,7 @@ namespace Content.Client.Lobby.UI
                 var height = speciesPrototype.StandardSize * Profile.Appearance.Height;
                 var weight = speciesPrototype.StandardWeight + speciesPrototype.StandardDensity * ((Profile.Appearance.Width * Profile.Appearance.Height) - 1);
                 HeightDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-height-label", ("height", Math.Round(height)));
-                WidthDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-width-label", ("weight", Math.Round(weight, 2)));
+                WidthDescribeLabel.Text = Loc.GetString("humanoid-profile-editor-width-label", ("weight", Math.Round(weight, 1)));
             }
         }
 
