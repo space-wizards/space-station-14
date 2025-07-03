@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Gateway.Components;
 using Content.Server.Procedural;
+using Content.Server.Worldgen.Prototypes;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Maps;
@@ -110,7 +111,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         };
         AddComp(mapUid, restricted);
 
-        _biome.EnsurePlanet(mapUid, _protoManager.Index("BiomeContinental"), seed);
+        _biome.EnsurePlanet(mapUid, _protoManager.Index("BiomeGrasslands"), seed);
 
         var grid = Comp<MapGridComponent>(mapUid);
 
