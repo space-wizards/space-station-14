@@ -76,7 +76,7 @@ namespace Content.Client.Paper.UI
             // Hook up the close button:
             CloseButton.OnPressed += _ => Close();
 
-            Input.OnKeyBindDown += args =>
+            Input.OnKeyBindDown += args => // Solution while TextEdit don't have events
             {
                 if (args.Function == EngineKeyFunctions.MultilineTextSubmit)
                 {
@@ -322,7 +322,7 @@ namespace Content.Client.Paper.UI
         }
 
         private void RunOnSaved()
-        {
+        { // Prevent further saving while text processing still in
             SaveButton.Disabled = true;
             OnSaved?.Invoke(Rope.Collapse(Input.TextRope));
             SaveButton.Disabled = false;
@@ -336,7 +336,7 @@ namespace Content.Client.Paper.UI
                 FillStatus.Text = Loc.GetString("paper-ui-fill-level",
                     ("currentLength", inputLength),
                     ("maxLength", MaxInputLength));
-                // Prevent further saving while text processing still in
+                // Disable the save button if we've gone over the limit
                 SaveButton.Disabled = inputLength > MaxInputLength;
             }
             else
