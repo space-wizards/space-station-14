@@ -15,7 +15,7 @@
       - id: ClothingOuterCoatWarden
       - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
-      - id: DoorRemoteArmory
+      - id: DoorRemoteWarden
       - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
@@ -41,7 +41,7 @@
       - id: ClothingOuterCoatWarden
       - id: ClothingOuterWinterWarden
       - id: RubberStampWarden
-      - id: DoorRemoteArmory
+      - id: DoorRemoteWarden
       - id: HoloprojectorSecurity
       - id: BookSpaceLaw
       - id: ClothingBackpackElectropack

@@ -62244,19 +62244,6 @@ entities:
     - type: Transform
       pos: 3.6301537,20.758205
       parent: 30
-- proto: DoorRemoteSecurity
-  entities:
-  - uid: 2429
-    components:
-    - type: Transform
-      pos: -23.516384,50.539074
-      parent: 30
-    - type: Access
-      tags:
-      - HeadOfSecurity
-      - Security
-      - Armory
-      - Brig
 - proto: DoubleEmergencyOxygenTankFilled
   entities:
   - uid: 792

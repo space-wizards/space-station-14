@@ -13,7 +13,7 @@
     - id: CigPackGreen
       prob: 0.50
     - id: ClothingHeadsetAltCargo
-    - id: DoorRemoteCargo
+    - id: DoorRemoteQm
     - id: RubberStampApproved
     - id: RubberStampDenied
     - id: RubberStampQm
@@ -43,7 +43,7 @@
     - id: ClothingHeadsetAltCommand
     - id: ClothingOuterArmorCaptainCarapace
     - id: CommsComputerCircuitboard
-    - id: DoorRemoteCustom
+    - id: DoorRemoteCaptain
     - id: MedalCase
     - id: NukeDisk
     - id: PinpointerNuclear
@@ -132,7 +132,7 @@
       prob: 0.5
     - id: ClothingHeadsetCommand
     - id: ClothingNeckGoldmedal
-    - id: DoorRemoteService
+    - id: DoorRemoteHop
     - id: HoPIDCard
     - id: IDComputerCircuitboard
     - id: FundingAllocationComputerCircuitboard
@@ -166,7 +166,7 @@
     - id: ClothingEyesGlassesMeson
     - id: ClothingHandsGlovesColorYellow
     - id: ClothingHeadsetAltEngineering
-    - id: DoorRemoteEngineering
+    - id: DoorRemoteCe
     - id: CargoRequestEngineeringComputerCircuitboard
     - id: RCD
     - id: RCDAmmo
@@ -223,7 +223,7 @@
     - id: ClothingHeadHatBeretCmo
     - id: ClothingHeadsetAltMedical
     - id: ClothingMaskSterile
-    - id: DoorRemoteMedical
+    - id: DoorRemoteCmo
     - id: HandheldCrewMonitor
     - id: Hypospray
     - id: MedicalTechFabCircuitboard
@@ -277,7 +277,7 @@
     - id: CircuitImprinterMachineCircuitboard
     - id: ClothingBeltUtilityFilled
     - id: ClothingHeadsetAltScience
-    - id: DoorRemoteResearch
+    - id: DoorRemoteRd
     - id: HandTeleporter
     - id: ProtolatheMachineCircuitboard
     - id: ResearchComputerCircuitboard
@@ -335,7 +335,7 @@
     - id: ClothingMaskNeckGaiter
     - id: ClothingOuterCoatHoSTrench
     - id: ClothingShoesBootsJack
-    - id: DoorRemoteSecurity
+    - id: DoorRemoteHos
     - id: HoloprojectorSecurity
     - id: RubberStampHos
     - id: SecurityTechFabCircuitboard

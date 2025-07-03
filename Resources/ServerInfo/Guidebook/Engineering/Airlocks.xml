@@ -1,4 +1,4 @@
-﻿<Document>
+<Document>
   # Airlocks
   Airlocks are used to control access to different areas of the station.
 
@@ -40,12 +40,12 @@
   </Box>
 
   <Box>
-    <GuideEntityEmbed Entity="DoorRemoteEngineering" Caption=""/>
-    <GuideEntityEmbed Entity="DoorRemoteCommand" Caption=""/>
-    <GuideEntityEmbed Entity="DoorRemoteMedical" Caption=""/>
-    <GuideEntityEmbed Entity="DoorRemoteService" Caption=""/>
-    <GuideEntityEmbed Entity="DoorRemoteSecurity" Caption=""/>
-    <GuideEntityEmbed Entity="DoorRemoteResearch" Caption=""/>
+    <GuideEntityEmbed Entity="DoorRemoteCe" Caption=""/>
+    <GuideEntityEmbed Entity="DoorRemoteCaptain" Caption=""/>
+    <GuideEntityEmbed Entity="DoorRemoteCmo" Caption=""/>
+    <GuideEntityEmbed Entity="DoorRemoteHop" Caption=""/>
+    <GuideEntityEmbed Entity="DoorRemoteHos" Caption=""/>
+    <GuideEntityEmbed Entity="DoorRemoteRd" Caption=""/>
   </Box>
   <Box>
     [color=#999999][italic]Precious door remotes. With unlimited power...[italic][/color]

@@ -16,26 +16,9 @@
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
-  id: DoorRemoteCommand
-  name: command door remote
-  components:
-  - type: Sprite
-    layers:
-    - state: door_remotebase
-    - state: door_remotelightscolour
-      color: "#e6e600"
-    - state: door_remotescreencolour
-      color: "#9f9f00"
-  - type: Access
-    groups:
-    - Command
-  - type: DoorRemote
-
-- type: entity
-  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteCustom
   name: custom door remote
-  description: A gadget which can open and bolt doors remotely. This advanced variant does not have built-in access, instead inheriting the ID access of the user.
+  description: A gadget which can open and bolt doors that the user has access to, remotely.
   components:
   - type: Sprite
     layers:
@@ -50,8 +33,26 @@
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
-  id: DoorRemoteSecurity
-  name: security door remote
+  id: DoorRemoteCaptain
+  name: captain's door remote
+  description: A gadget which can open and bolt doors that the user has access to, remotely. This one was custom made for the captain.
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#e6e600"
+    - state: door_remotescreencolour
+      color: "#9f9f00"
+  - type: Access
+  - type: DoorRemote
+    includeUserAccess: true
+
+- type: entity
+  parent: [DoorRemoteDefault, BaseCommandContraband]
+  id: DoorRemoteHos
+  name: head of security's door remote
+  description: A gadget which can open and bolt doors that the user has access to, remotely. This one was custom made for the head of security.
   components:
   - type: Sprite
     layers:
@@ -61,13 +62,14 @@
     - state: door_remotescreencolour
       color: "#830000"
   - type: Access
-    groups:
-    - Security
+  - type: DoorRemote
+    includeUserAccess: true
 
 - type: entity
   parent: [DoorRemoteDefault, BaseSecurityCommandContraband]
-  id: DoorRemoteArmory
-  name: armory door remote
+  id: DoorRemoteWarden
+  name: warden's door remote
+  description: A gadget which can open and bolt doors that the user has access to, remotely. This used to be the head of security's spare.
   components:
   - type: Sprite
     layers:
@@ -77,13 +79,14 @@
     - state: door_remotescreencolour
       color: "#a80000"
   - type: Access
-    groups:
-    - Armory
+  - type: DoorRemote
+    includeUserAccess: true
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
-  id: DoorRemoteService
-  name: service door remote
+  id: DoorRemoteHop
+  name: head of personnel's door remote
+  description: A gadget which can open and bolt doors that the user has access to, remotely. This one was custom made for the head of personnel.
   components:
   - type: Sprite
     layers:
@@ -93,13 +96,14 @@
     - state: door_remotescreencolour
       color: "#3a7231"
   - type: Access
-    groups:
-    - Service
+  - type: DoorRemote
+    includeUserAccess: true
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
-  id: DoorRemoteResearch
-  name: research door remote
+  id: DoorRemoteRd
+  name: research director's door remote
+  description: A gadget which can open and bolt doors that the user has access to, remotely. This one was custom made for the research director.
   components:
   - type: Sprite
     layers:
@@ -109,13 +113,14 @@
     - state: door_remotescreencolour
       color: "#652368"
   - type: Access
-    groups:
-    - Research
+  - type: DoorRemote
+    includeUserAccess: true
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
-  id: DoorRemoteCargo
-  name: cargo door remote
+  id: DoorRemoteQm
+  name: quartermaster's door remote
+  description: A gadget which can open and bolt doors that the user has access to, remotely. This one was custom made for the quartermaster.
   components:
   - type: Sprite
     layers:
@@ -125,13 +130,14 @@
     - state: door_remotescreencolour
       color: "#5b4523"
   - type: Access
-    groups:
-    - Cargo
+  - type: DoorRemote
+    includeUserAccess: true
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
-  id: DoorRemoteMedical
-  name: medical door remote
+  id: DoorRemoteCmo
+  name: chief medical officer's door remote
+  description: A gadget which can open and bolt doors that the user has access to, remotely. This one was custom made for the chief medical officer.
   components:
   - type: Sprite
     layers:
@@ -141,13 +147,14 @@
     - state: door_remotescreencolour
       color: "#325f7a"
   - type: Access
-    groups:
-    - Medical
+  - type: DoorRemote
+    includeUserAccess: true
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
-  id: DoorRemoteEngineering
-  name: engineering door remote
+  id: DoorRemoteCe
+  name: chief engineer's door remote
+  description: A gadget which can open and bolt doors that the user has access to, remotely. This one was custom made for the chief engineer.
   components:
   - type: Sprite
     layers:
@@ -157,8 +164,8 @@
     - state: door_remotescreencolour
       color: "#bc5b00"
   - type: Access
-    groups:
-    - Engineering
+  - type: DoorRemote
+    includeUserAccess: true
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]

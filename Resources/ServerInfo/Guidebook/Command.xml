@@ -35,7 +35,7 @@ To deal with your new soul-crushing tasks, every head is given special items to 
 
 Your [color=#a4885c]remote[/color] is very simple but profoundly underestimated. A small but mighty force, your remote can open and close [color=#a4885c]airlocks[/color], spin the [color=#a4885c]bolts[/color] to lock them, or toggle [color=#a4885c]emergency access[/color]. It can do this from a distance.
   <Box>
-    <GuideEntityEmbed Entity="DoorRemoteCommand"/>
+    <GuideEntityEmbed Entity="DoorRemoteCaptain"/>
   </Box>
 The remote influences where people move around. Heads can lock personnel out of dangerous areas or let people in to grab something really quickly.
 
