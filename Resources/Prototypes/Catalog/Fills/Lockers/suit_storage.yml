@@ -324,6 +324,6 @@
         - id: OxygenTankFilled
         - id: ClothingMaskBreath
         # TODO: Gone until reworked to have no space protection
-        # FUCKYOU: then maybe null it in the migration file????? idiot. - Ronstation contributor
+        # FUCKYOU: then maybe null the suit storage in the migration file. or remove it from the grid
         #- id: ClothingOuterHardsuitWizard
         #- id: JetpackVoidFilled

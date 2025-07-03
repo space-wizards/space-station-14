@@ -19,7 +19,7 @@
   - type: Item # Ronstation
     shape: # Ronstation
     - 0,0,1,2 # Ronstation
-              # ^ this is legally dubious at best
+              # licensing individual lines feels preposterous at best to me
   - type: Armor #Based on /tg/ but slightly compensated to fit the fact that armor stacks in SS14.
     modifiers:
       coefficients:

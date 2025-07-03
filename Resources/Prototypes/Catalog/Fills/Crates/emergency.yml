@@ -125,7 +125,7 @@
   id: CrateEmergencyRadiation
   parent: CrateRadiation
   name: radiation protection crate
-  description: Survive the Nuclear Apocalypse and Singularity engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this.
+  description: Survive the Nuclear Apocalypse and Singularity engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this. # Ronstation (one word changed)
   components:
   - type: StorageFill
     contents:

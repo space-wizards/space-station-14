@@ -1,5 +1,7 @@
+# this used to be defined in the legacy content directory but since moving the file would be ILLEGAL and i needed to change this shit i'm making a whole new prototype with cleaner parenting while i'm at it
+
 - type: entity
-  parent: [AllowSuitStorageClothing, ClothingOuterWinterCoatToggleable, BaseCentcommCommandContraband]
+  parent: [ClothingOuterWinterSec, BaseCentcommCommandContraband]
   id: ClothingOuterWinterBlueshield
   name: blueshield armored winter coat
   components:
@@ -18,12 +20,9 @@
     clothingVisuals:
       outerClothing:
       - state: BLUESHIELD-equipped-OUTERCLOTHING
-  - type: Armor
-    modifiers:
-      coefficients:
-        Blunt: 0.75
-        Slash: 0.75
-        Piercing: 0.8
-        Heat: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterBlueshield
+  - type: Contraband
+    allowedDepartments:
+    - Command
+    - CentralCommand
