@@ -58,3 +58,6 @@
     guides:
     - Chef
     - FoodRecipes
+  - type: ContainerContainer
+    containers:
+      body: !type:ContainerSlot

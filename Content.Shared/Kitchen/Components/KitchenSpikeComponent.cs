@@ -1,40 +1,50 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.Components;
 
+/// <summary>
+///
+/// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedKitchenSpikeSystem))]
+[AutoGenerateComponentState, Access(typeof(SharedKitchenSpikeSystem))]
 public sealed partial class KitchenSpikeComponent : Component
 {
-    [DataField("delay")]
-    public float SpikeDelay = 7.0f;
+    /// <summary>
+    ///
+    /// </summary>
+    private static readonly ProtoId<SoundCollectionPrototype> DefaultSpike = new("Spike");
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("sound")]
-    public SoundSpecifier SpikeSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public string ContainerId = "body";
 
-    public List<string>? PrototypesToSpawn;
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier Sound = new SoundCollectionSpecifier(DefaultSpike);
 
-    // TODO: Spiking alive mobs? (Replace with uid) (deal damage to their limbs on spiking, kill on first butcher attempt?)
-    public string MeatSource1p = "?";
-    public string MeatSource0 = "?";
-    public string Victim = "?";
-
-    // Prevents simultaneous spiking of two bodies (could be replaced with CancellationToken, but I don't see any situation where Cancel could be called)
-    public bool InUse;
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float Delay = 7.0f;
 
     [Serializable, NetSerializable]
     public enum KitchenSpikeVisuals : byte
     {
-        Status
+        Status,
     }
 
     [Serializable, NetSerializable]
     public enum KitchenSpikeStatus : byte
     {
         Empty,
-        Bloody
+        Bloody,
     }
 }
