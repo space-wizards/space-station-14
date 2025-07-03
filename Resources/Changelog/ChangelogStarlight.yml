@@ -8565,4 +8565,13 @@ Entries:
   id: 1181
   time: '2025-06-30T20:01:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/921
+- author: '[stickycheZ101] STATION ANNOUNCEMENT'
+  changes:
+  - message: Attention. Station alert level is now Omega. Are you sure whatever you
+      are doing is worth it? [added alert level omega and asociated sfx and textures,
+      as an admeme alert that means the station done messed up BADLY]
+    type: Add
+  id: 1182
+  time: '2025-07-03T15:43:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/871
 
