@@ -7,6 +7,8 @@ namespace Content.Client.Delivery;
 
 public sealed class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponent>
 {
+    private static readonly EntProtoId JobIconUnknown = "JobIconUnknown";
+
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
 
@@ -24,7 +26,7 @@ public sealed class DeliveryVisualizerSystem : VisualizerSystem<DeliveryComponen
 
         if (!_prototype.TryIndex<JobIconPrototype>(job, out var icon))
         {
-            SpriteSystem.LayerSetTexture((uid, args.Sprite), DeliveryVisualLayers.JobStamp, SpriteSystem.Frame0(_prototype.Index("JobIconUnknown")));
+            SpriteSystem.LayerSetTexture((uid, args.Sprite), DeliveryVisualLayers.JobStamp, SpriteSystem.Frame0(_prototype.Index(JobIconUnknown)));
             return;
         }
 
