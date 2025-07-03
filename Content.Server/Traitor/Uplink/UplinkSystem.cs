@@ -41,7 +41,7 @@ public sealed class UplinkSystem : EntitySystem
     /// <param name="storeEntity">The entity that will have the store in it.</param>
     /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
     /// <param name="bindToPda">Binds the uplink to the specific uplink entity.</param>
-    /// <returns>Whether or not the uplink was added successfully</returns>
+    /// <returns>Whether the uplink was added successfully to a PDA, implant or not at all.</returns>
     public AddUplinkResult AddUplink(
         EntityUid user,
         FixedPoint2 balance,
@@ -76,7 +76,17 @@ public sealed class UplinkSystem : EntitySystem
 
         return AddUplinkResult.Pda;
     }
-
+    /// <summary>
+    /// Adds an uplink to the target
+    /// </summary>
+    /// <param name="user">The person who is getting the uplink</param>
+    /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
+    /// <param name="code">The code that was generated if successfully applied to a PDA.</param>
+    /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
+    /// <param name="storeEntity">The entity that will have the store in it.</param>
+    /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
+    /// <param name="bindToPda">Binds the uplink to the specific uplink entity.</param>
+    /// <returns>Whether the uplink was added successfully to a PDA, implant or not at all.</returns>
     public AddUplinkResult AddUplinkWithCode(
         EntityUid user,
         FixedPoint2 balance,
