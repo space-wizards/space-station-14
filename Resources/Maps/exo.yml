@@ -4,7 +4,7 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/01/2025 20:52:48
+  time: 07/03/2025 16:09:47
   entityCount: 19679
 maps:
 - 1
@@ -10058,7 +10058,7 @@ entities:
       pos: 11.5,-30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -127770.3
+      secondsUntilStateChange: -127812.8
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -44560,6 +44560,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 60.5,-45.5
       parent: 2
+  - uid: 7040
+    components:
+    - type: Transform
+      pos: 69.5,-45.5
+      parent: 2
   - uid: 8248
     components:
     - type: Transform
@@ -44574,13 +44579,6 @@ entities:
     components:
     - type: Transform
       pos: 59.5,-26.5
-      parent: 2
-- proto: ComputerSurveillanceWirelessCameraMonitor
-  entities:
-  - uid: 7040
-    components:
-    - type: Transform
-      pos: 69.5,-45.5
       parent: 2
 - proto: ComputerTelevision
   entities:
