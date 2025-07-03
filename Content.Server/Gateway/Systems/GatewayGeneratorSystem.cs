@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Gateway.Components;
 using Content.Server.Procedural;
-using Content.Server.Worldgen.Prototypes;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Maps;
