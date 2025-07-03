@@ -107,7 +107,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (!TryComp<JetpackComponent>(jetpackUid, out var jetpackComponent))
             return;
 
-        var canFly = CanFlyOnGrid(Transform(jetpackUser).ParentUid);
+        var canFly = CanFlyOnGrid(Transform(jetpackUser).GridUid);
         var jetpackEnabled = jetpackComponent.Enabled;
 
         if (!canFly && jetpackEnabled)
