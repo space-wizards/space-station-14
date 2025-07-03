@@ -31,7 +31,7 @@ public sealed partial class InteractionPopupComponent : Component
     /// Used in window title and context menu
     /// </summary>
     [DataField]
-    public string Verb = "interaction-popup-verb";
+    public LocId Verb = "interaction-popup-verb";
 
     /// <summary>
     /// Sound effect to be played when the interaction succeeds.
