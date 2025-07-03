@@ -48,7 +48,7 @@
 
 #Mercenary Helmet
 - type: entity
-  parent: [ ClothingHeadHelmetArmoredBase, BaseSalvageContraband ]
+  parent: [ ClothingHeadHelmetArmoredBase, BaseSalvageContraband ] #Starlight salvContra
   id: ClothingHeadHelmetMerc
   name: mercenary helmet
   description: The combat helmet is commonly used by mercenaries, is strong, light and smells like gunpowder and the jungle.

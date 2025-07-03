@@ -180,7 +180,7 @@
 
 - type: entity
   name: tesla gun
-  parent: [ BaseWeaponBattery, BaseMajorContraband ]
+  parent: [ BaseWeaponBattery, BaseMajorContraband ] #Starlight Major Contra
   id: WeaponTeslaGun
   description: The power of the primordial element of lightning in your hands.
   components:

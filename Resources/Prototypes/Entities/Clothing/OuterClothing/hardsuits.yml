@@ -201,7 +201,7 @@
 
 #Maxim Hardsuit
 - type: entity
-  parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ]
+  parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ] #Starlight salvContra
   id: ClothingOuterHardsuitMaxim
   name: salvager maxim hardsuit
   description: Fire. Heat. These things forge great weapons, they also forge great salvagers.  Has built-in battery-powered energy barrier technology.
