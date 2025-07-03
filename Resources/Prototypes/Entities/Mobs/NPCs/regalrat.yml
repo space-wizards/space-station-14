@@ -63,7 +63,7 @@
         Piercing: 8
   - type: Body
     prototype: Rat
-    requiredLegs: 0 # TODO: Figure out why requiring 1 leg broke movespeed for ratking. (Jank Temp Fix)
+    requiredLegs: 0 # Starlight TODO: Figure out why requiring 1 leg broke movespeed for ratking. (Jank Temp Fix)
   - type: Hunger # probably should be prototyped
     thresholds:
       Overfed: 200
