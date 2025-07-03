@@ -1,3 +1,5 @@
+# Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
+
 # Numbers for armor here largely taken from /tg/.
 # armor.yml covers both armored vests (e.g. not just cosmetic) and armor that covers multiple bodyparts/limbs
 
@@ -14,10 +16,10 @@
     sprite: Clothing/OuterClothing/Armor/security.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/security.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
+              # licensing individual lines feels preposterous at best to me
   - type: Armor #Based on /tg/ but slightly compensated to fit the fact that armor stacks in SS14.
     modifiers:
       coefficients:
@@ -61,9 +63,9 @@
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
-  - type: Item
-    shape:
-    - 0,0,2,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,2,2 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -84,10 +86,9 @@
     sprite: Clothing/OuterClothing/Armor/armor_reflec.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/armor_reflec.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,2,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,2,2 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -171,10 +172,9 @@
     sprite: Clothing/OuterClothing/Vests/webvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/webvest.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -198,10 +198,9 @@
     sprite: Clothing/OuterClothing/Vests/elitevest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/elitevest.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
   - type: TemperatureProtection
     heatingCoefficient: 0.1
     coolingCoefficient: 0.1
@@ -232,10 +231,9 @@
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/mercwebvest.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    shape: # Ronstation
+    - 0,0,1,2 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -263,10 +261,10 @@
       shader: unshaded
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/syndie-raid.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,2,3
+  - type: Item # Ronstation
+    size: Large # Ronstation
+    shape: # Ronstation
+    - 0,0,2,3 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -340,10 +338,10 @@
     sprite: Clothing/OuterClothing/Armor/riot.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/riot.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,2,2
+  - type: Item # Ronstation
+    size: Large # Ronstation
+    shape: # Ronstation
+    - 0,0,2,2 # Ronstation
   - type: Armor
     modifiers:
       coefficients:
@@ -366,10 +364,10 @@
     sprite: Clothing/OuterClothing/Armor/cult_armour.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/cult_armour.rsi
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,1,2
+  - type: Item # Ronstation
+    size: Large # Ronstation
+    shape: # Ronstation
+    - 0,0,2,3 # Ronstation
   - type: Armor
     modifiers:
       coefficients:

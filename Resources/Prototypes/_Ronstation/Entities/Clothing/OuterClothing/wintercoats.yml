@@ -1,7 +1,9 @@
+# this used to be defined in the legacy content directory but since moving the file would be ILLEGAL and i needed to change this shit i'm making a whole new prototype with cleaner parenting while i'm at it
+
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCentcommCommandContraband]
+  parent: [ClothingOuterWinterSec, BaseCentcommCommandContraband]
   id: ClothingOuterWinterBlueshield
-  name: blueshield winter coat
+  name: blueshield armored winter coat
   components:
   - type: Sprite
     sprite: Ronstation/Clothing/OuterClothing/WinterCoats/coat.rsi
@@ -20,3 +22,7 @@
       - state: BLUESHIELD-equipped-OUTERCLOTHING
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterBlueshield
+  - type: Contraband
+    allowedDepartments:
+    - Command
+    - CentralCommand
