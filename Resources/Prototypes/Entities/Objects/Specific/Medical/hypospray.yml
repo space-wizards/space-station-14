@@ -73,6 +73,42 @@
     fillBaseName: hypo_fill
     solutionName: hypospray
 
+
+- type: entity
+  name: syndicate hypospray
+  parent: BaseItem
+  description: Using reverse engineered designs from NT, Cybersun made these hyposprays as a cheaper, less effective version of the ones they provided to Gorlex Marauders.
+  id: SyndiHypoTraitor
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/syndihypo.rsi
+    layers:
+      - state: hypo
+        map: ["enum.SolutionContainerLayers.Base"]
+      - state: hypo_fill1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    sprite: Objects/Specific/Medical/syndihypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 15
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+    transferAmount: 2.5
+  - type: UseDelay
+    delay: 0.5
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: hypo_fill
+    solutionName: hypospray
+
 - type: entity
   name: borghypo
   parent: BaseItem
