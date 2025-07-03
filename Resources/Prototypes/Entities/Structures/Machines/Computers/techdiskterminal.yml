@@ -37,9 +37,11 @@
     1: 25
     2: 10
     3: 1
+    999999: 0.1 #Tech disk only research
 
 - type: weightedRandom
   id: RareTechDiskTierWeights
   weights:
     2: 19
     3: 1
+    999999: 0.1 #Tech disk only research
