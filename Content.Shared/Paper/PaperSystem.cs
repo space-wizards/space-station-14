@@ -7,6 +7,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Content.Shared.Timing;
+using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.PaperComponent;
@@ -24,6 +26,7 @@ public sealed class PaperSystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -42,6 +45,7 @@ public sealed class PaperSystem : EntitySystem
         SubscribeLocalEvent<PaperComponent, BeforeActivatableUIOpenEvent>(BeforeUIOpen);
         SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<PaperComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
 
         SubscribeLocalEvent<RandomPaperContentComponent, MapInitEvent>(OnRandomPaperContentMapInit);
@@ -99,35 +103,81 @@ public sealed class PaperSystem : EntitySystem
 
             if (entity.Comp.StampedBy.Count > 0)
             {
-                var commaSeparated =
-                    string.Join(", ", entity.Comp.StampedBy.Select(s => Loc.GetString(s.StampedName)));
-                args.PushMarkup(
-                    Loc.GetString(
-                        "paper-component-examine-detail-stamped-by",
-                        ("paper", entity),
-                        ("stamps", commaSeparated))
-                );
+                var stamps = entity.Comp.StampedBy.FindAll(x => x.StampedType == StampType.Stamp);
+                var signatures = entity.Comp.StampedBy.FindAll(x => x.StampedType == StampType.Signature);
+
+                if (stamps.Count > 0)
+                {
+                    var commaSeparated =
+                        string.Join(", ", stamps.Select(s => Loc.GetString(s.StampedName)));
+                    args.PushMarkup(
+                        Loc.GetString(
+                            "paper-component-examine-detail-stamped-by",
+                            ("paper", entity),
+                            ("stamps", commaSeparated))
+                    );
+                }
+
+                if (signatures.Count > 0)
+                {
+                    var commaSeparated =
+                        string.Join(", ", signatures.Select(s => s.StampedName));
+                    args.PushMarkup(
+                        Loc.GetString(
+                            "paper-component-examine-detail-signed-by",
+                            ("paper", entity),
+                            ("signatures", commaSeparated))
+                    );
+                }
             }
         }
+    }
+
+    private void OnGetAltVerbs(Entity<PaperComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (args.Using is not { } used || !_tagSystem.HasTag(used, WriteTag))
+            return;
+
+        if (!TryComp<StampComponent>(args.Using, out var stamp) || stamp.StampType != StampType.Signature)
+            return;
+
+        var user = args.User;
+
+        AlternativeVerb verb = new()
+        {
+            Act = () =>
+            {
+                if (_useDelay.IsDelayed(used))
+                    return;
+
+                if (TrySign(entity, user, (used, stamp)))
+                    _useDelay.TryResetDelay(used);
+            },
+            Text = Loc.GetString("paper-verb-sign")
+        };
+        args.Verbs.Add(verb);
     }
 
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
         // only allow editing if there are no stamps or when using a cyberpen
-        var editable = entity.Comp.StampedBy.Count == 0 || _tagSystem.HasTag(args.Used, WriteIgnoreStampsTag);
+        var editable = entity.Comp.EditingState == PaperLockStatus.Editable || (_tagSystem.HasTag(args.Used, WriteIgnoreStampsTag) && entity.Comp.EditingState == PaperLockStatus.Protected);
         if (_tagSystem.HasTag(args.Used, WriteTag))
         {
+            if (entity.Comp.EditingState == PaperLockStatus.Locked)
+            {
+                var paperEditingDisabledMessage = Loc.GetString("paper-locked-modified-message");
+                _popupSystem.PopupClient(paperEditingDisabledMessage, entity, args.User);
+
+                args.Handled = true;
+                return;
+            }
+
             if (editable)
             {
-                if (entity.Comp.EditingDisabled)
-                {
-                    var paperEditingDisabledMessage = Loc.GetString("paper-tamper-proof-modified-message");
-                    _popupSystem.PopupClient(paperEditingDisabledMessage, entity, args.User);
-
-                    args.Handled = true;
-                    return;
-                }
-
                 var ev = new PaperWriteAttemptEvent(entity.Owner);
                 RaiseLocalEvent(args.User, ref ev);
                 if (ev.Cancelled)
@@ -148,13 +198,22 @@ public sealed class PaperSystem : EntitySystem
                 entity.Comp.Mode = PaperAction.Write;
                 _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
                 UpdateUserInterface(entity);
+
+                args.Handled = true;
+                return;
             }
+
+            var paperEditingProtectedMessage = Loc.GetString("paper-protected-modified-message");
+            _popupSystem.PopupClient(paperEditingProtectedMessage, entity, args.User);
             args.Handled = true;
             return;
         }
 
         // If a stamp, attempt to stamp paper
-        if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(entity, GetStampInfo(stampComp), stampComp.StampState))
+        if (TryComp<StampComponent>(args.Used, out var stampComp)
+            && !_useDelay.IsDelayed(args.Used)
+            && stampComp.StampType != StampType.Signature
+            && TryStamp(entity, GetStampInfo(stampComp), stampComp.StampState, stampComp.ProtectAfterStamp))
         {
             // successfully stamped, play popup
             var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other",
@@ -170,6 +229,8 @@ public sealed class PaperSystem : EntitySystem
 
             _audio.PlayPredicted(stampComp.Sound, entity, args.User);
 
+            _useDelay.TryResetDelay(args.Used);
+
             UpdateUserInterface(entity);
         }
     }
@@ -179,7 +240,8 @@ public sealed class PaperSystem : EntitySystem
         return new StampDisplayInfo
         {
             StampedName = stamp.StampedName,
-            StampedColor = stamp.StampedColor
+            StampedColor = stamp.StampedColor,
+            StampedType = stamp.StampType
         };
     }
 
@@ -245,12 +307,17 @@ public sealed class PaperSystem : EntitySystem
     /// <summary>
     ///     Accepts the name and state to be stamped onto the paper, returns true if successful.
     /// </summary>
-    public bool TryStamp(Entity<PaperComponent> entity, StampDisplayInfo stampInfo, string spriteStampState)
+    public bool TryStamp(Entity<PaperComponent> entity, StampDisplayInfo stampInfo, string spriteStampState, bool protect = true)
     {
         if (!entity.Comp.StampedBy.Contains(stampInfo))
         {
             entity.Comp.StampedBy.Add(stampInfo);
+
+            if (protect && entity.Comp.EditingState != PaperLockStatus.Locked)
+                entity.Comp.EditingState = PaperLockStatus.Protected;
+
             Dirty(entity);
+
             if (entity.Comp.StampState == null && TryComp<AppearanceComponent>(entity, out var appearance))
             {
                 entity.Comp.StampState = spriteStampState;
@@ -260,6 +327,43 @@ public sealed class PaperSystem : EntitySystem
             }
         }
         return true;
+    }
+
+    /// <summary>
+    /// Attempts to sign a piece of paper as the user, using the color as specified on the used "stamp".
+    /// </summary>
+    public bool TrySign(Entity<PaperComponent> entity, EntityUid user, Entity<StampComponent> stamp, bool protect = false)
+    {
+        var stampInfo = new StampDisplayInfo()
+        {
+            StampedName = Name(user),
+            StampedColor = stamp.Comp.StampedColor,
+            StampedType = stamp.Comp.StampType
+        };
+
+        if (TryStamp(entity, stampInfo, stamp.Comp.StampState, protect))
+        {
+            // successfully stamped, play popup
+            var stampPaperOtherMessage = Loc.GetString("paper-component-action-sign-paper-other",
+                ("user", user),
+                ("target", entity),
+                ("stamp", stamp));
+
+            var stampPaperSelfMessage = Loc.GetString("paper-component-action-sign-paper-self",
+                ("user", user),
+                ("target", entity),
+                ("stamp", stamp));
+
+            _popupSystem.PopupPredicted(stampPaperSelfMessage, stampPaperOtherMessage, user, user);
+
+            _audio.PlayPredicted(stamp.Comp.Sound, entity, user);
+
+            UpdateUserInterface(entity);
+
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>

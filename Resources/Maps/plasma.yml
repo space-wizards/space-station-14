@@ -129175,7 +129175,7 @@ entities:
 
 
         [bold]Perma Lockdown[/bold] toggles the permabrig blast doors, for containing the most extreme prison riots.
-      editingDisabled: True
+      editingState: Locked
     - type: Label
       currentLabel: Aussec Security Suite
     - type: NameModifier
@@ -129248,7 +129248,7 @@ entities:
 
 
         [bold]My team is incompetent:[/bold] Please return your team to your manufacturer as soon as possible and order a new one. Refunds may apply as per manufacturer warranty. TB Engineering takes no responsibility for injury, financial losses, station losses, braincell losses, loss of life or migraines caused by attempting to operate the TEG with a faulty team.
-      editingDisabled: True
+      editingState: Locked
     - type: Label
       currentLabel: TEG Pamphlet
     - type: NameModifier
@@ -129321,7 +129321,7 @@ entities:
 
 
         [bold]My team is incompetent:[/bold] Please return your team to your manufacturer as soon as possible and order a new one. Refunds may apply as per manufacturer warranty. TB Engineering takes no responsibility for injury, financial losses, station losses, braincell losses, loss of life or migraines caused by attempting to operate the TEG with a faulty team.
-      editingDisabled: True
+      editingState: Locked
     - type: Label
       currentLabel: TEG Pamphlet
     - type: NameModifier
@@ -129361,7 +129361,7 @@ entities:
 
 
         [italic]TB Engineering Firm and it's subsidiaries takes no responsibility for any minor or major injury, loss of life, loss of profit, loss of time or loss of spacetime caused by use of the "Intrepid" Class Self-Contained Research Module. Read the full terms and conditions for details.[/italic]
-      editingDisabled: True
+      editingState: Locked
     - type: Label
       currentLabel: Research Module Pamphlet
     - type: NameModifier

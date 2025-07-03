@@ -8,28 +8,33 @@ namespace Content.Shared.Paper;
 public sealed partial class PaperComponent : Component
 {
     public PaperAction Mode;
-    [DataField("content"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public string Content { get; set; } = "";
 
-    [DataField("contentSize")]
+    [DataField]
     public int ContentSize { get; set; } = 10000;
 
-    [DataField("stampedBy"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public List<StampDisplayInfo> StampedBy { get; set; } = new();
 
     /// <summary>
     ///     Stamp to be displayed on the paper, state from bureaucracy.rsi
     /// </summary>
-    [DataField("stampState"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public string? StampState { get; set; }
 
+    /// <summary>
+    /// Whether the paper is editable, protected or locked.
+    /// Protected paper can only be edited by things with a specific tag.
+    /// Locked paper can never be edited.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public bool EditingDisabled;
+    public PaperLockStatus EditingState = PaperLockStatus.Editable;
 
     /// <summary>
     /// Sound played after writing to the paper.
     /// </summary>
-    [DataField("sound")]
+    [DataField]
     public SoundSpecifier? Sound { get; private set; } = new SoundCollectionSpecifier("PaperScribbles", AudioParams.Default.WithVariation(0.1f));
 
     [Serializable, NetSerializable]
@@ -84,4 +89,12 @@ public sealed partial class PaperComponent : Component
         Blank,
         Written
     }
+}
+
+[Serializable, NetSerializable]
+public enum PaperLockStatus : byte
+{
+    Editable, // Can be freely edited
+    Protected, // Can only be edited by things with a specific tag
+    Locked // Can NEVER be edited
 }

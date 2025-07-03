@@ -24,6 +24,15 @@
       params:
         volume: -4
         maxDistance: 2
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-signed # This should never be visible, ideally
+    stampedColor: "#535353"
+    stampState: "paper_stamp-signature"
+    stampType: Signature
+    sound:
+      collection: PaperScribbles
+      params:
+        variation: 0.1
   - type: UseDelay
     delay: 1.5
 
