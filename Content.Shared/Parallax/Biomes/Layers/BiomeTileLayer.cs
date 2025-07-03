@@ -2,26 +2,20 @@ using Content.Shared.Maps;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Procedural.DungeonLayers;
+namespace Content.Shared.Parallax.Biomes.Layers;
 
-/// <summary>
-/// Samples noise and spawns the specified tile in the dungeon area.
-/// </summary>
 [Serializable, NetSerializable]
-public sealed partial class SampleTileDunGen : IDunGenLayer
+public sealed partial class BiomeTileLayer : IBiomeLayer
 {
-    /// <summary>
-    /// Reserve any tiles we update.
-    /// </summary>
-    [DataField]
-    public bool ReserveTiles = true;
-
     [DataField] public FastNoiseLite Noise { get; private set; } = new(0);
 
+    /// <inheritdoc/>
     [DataField]
     public float Threshold { get; private set; } = 0.5f;
 
+    /// <inheritdoc/>
     [DataField] public bool Invert { get; private set; } = false;
 
     /// <summary>
