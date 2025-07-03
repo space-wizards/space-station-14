@@ -110,7 +110,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         };
         AddComp(mapUid, restricted);
 
-        _biome.EnsurePlanet(mapUid, _protoManager.Index("BiomeContinental"), seed);
+        _biome.EnsurePlanet(mapUid, _protoManager.Index("BiomeGrasslands"), seed);
 
         var grid = Comp<MapGridComponent>(mapUid);
 
