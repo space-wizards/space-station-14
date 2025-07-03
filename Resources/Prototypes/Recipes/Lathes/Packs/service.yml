@@ -48,6 +48,11 @@
   - MegaSprayBottle
 
 - type: latheRecipePack
+  id: BioCubes
+  recipes:
+  - MoproachCube
+
+- type: latheRecipePack
   id: Instruments
   recipes:
   - SynthesizerInstrument
