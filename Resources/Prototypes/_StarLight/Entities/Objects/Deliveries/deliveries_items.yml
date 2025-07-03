@@ -103,6 +103,7 @@
   components:
     - type: Paper
       content: delivery-spam-join-soviets
+      editingDisabled: true
     - type: AntagOnSign
       chance: 1
       antags:
@@ -118,6 +119,7 @@
   components:
     - type: Paper
       content: delivery-spam-join-soviets
+      editingDisabled: true
     - type: AntagOnSign
       chance: 0.5
       antags:
@@ -133,6 +135,7 @@
   components:
     - type: Paper
       content: delivery-spam-join-soviets
+      editingDisabled: true
     - type: AntagOnSign
       chance: 0.25
       antags:

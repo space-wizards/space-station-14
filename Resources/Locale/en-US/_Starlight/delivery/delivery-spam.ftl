@@ -59,7 +59,8 @@ delivery-spam-join-soviets = [color=#ff0004]
                     █████████▓░░░██████████████████████
                     ███████████████████████████████████[/color]
 
-                    {"[color=#ff0004][head=2]MOTHERLAND CALLS COMRADE! JOIN THE UNION![/head][/color]"}
+                    {"[color=#ff0004][head=2]MOTHERLAND CALLS COMRADE![/head][/color]"}
+                    {"[color=#ff0004][head=2]JOIN THE UNION![/head][/color]"}
 
                     You signed your life away, contractor, this is the truth. 
                     NanoTrasen sees you only as a biomass to clone, discard and profit from.
@@ -69,7 +70,8 @@ delivery-spam-join-soviets = [color=#ff0004]
 
                     You fought hard, you endured. Now...
                     Become...
-                    {"[bold]THE ONE CLONE TO BREAK THE CYCLE[/bold]"} 
+
+                    {"[bold]                    THE ONE CLONE TO BREAK THE CYCLE[/bold]"} 
                     
                     Not just for your survival, but for you and for those around you. 
                     That's right.
@@ -78,7 +80,7 @@ delivery-spam-join-soviets = [color=#ff0004]
                     
                     This isn't about the wealth you wanted, it's about your memories being taken away, you soul, your dignity, your purpose.
 
-                    {"[bold]WE FORGIVE YOU[/bold]"}
+                    {"[bold]                                    WE FORGIVE YOU[/bold]"}
                     
                     So join us tovarisch. 
                     
@@ -88,11 +90,11 @@ delivery-spam-join-soviets = [color=#ff0004]
                     Claim your life back.
 
                     {"[bold]Sign the union creed below:[/bold]"}
-                    “I reclaim my biomass, my dignity, and my soul. 
-                    My memories are absolute. 
-                    I shall fight for myself, and my people of the union. 
-                    Corporate greed is at it's end.
-                    The Union will save us all.”
+                                “I reclaim my biomass, my dignity, and my soul. 
+                                My memories are absolute. 
+                                I shall fight for myself, and my people of the union. 
+                                Corporate greed is at it's end.
+                                The Union will save us all.”
 
                     GLORY TO THE UNION! GLORY TO THE UNION OF SOVIET SOCIALIST PLANETS! URAAH! URAHH!
 
