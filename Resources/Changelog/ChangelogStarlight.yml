@@ -8596,4 +8596,11 @@ Entries:
   id: 1185
   time: '2025-07-03T15:56:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/948
+- author: CommanderAlex365
+  changes:
+  - message: Added Extended to vote options
+    type: Add
+  id: 1186
+  time: '2025-07-03T17:27:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/945
 
