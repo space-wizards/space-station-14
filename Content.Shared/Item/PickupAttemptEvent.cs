@@ -5,7 +5,11 @@ namespace Content.Shared.Item;
 /// </summary>
 public sealed class PickupAttemptEvent : BasePickupAttemptEvent
 {
-    public PickupAttemptEvent(EntityUid user, EntityUid item) : base(user, item) { }
+    public PickupAttemptEvent(EntityUid user, EntityUid item, bool physicalAttempt = false) : base(user,
+        item,
+        physicalAttempt)
+    {
+    }
 }
 
 /// <summary>
@@ -13,7 +17,11 @@ public sealed class PickupAttemptEvent : BasePickupAttemptEvent
 /// </summary>
 public sealed class GettingPickedUpAttemptEvent : BasePickupAttemptEvent
 {
-    public GettingPickedUpAttemptEvent(EntityUid user, EntityUid item) : base(user, item) { }
+    public GettingPickedUpAttemptEvent(EntityUid user, EntityUid item, bool physicalAttempt = false) : base(user,
+        item,
+        physicalAttempt)
+    {
+    }
 }
 
 [Virtual]
@@ -29,9 +37,16 @@ public class BasePickupAttemptEvent : CancellableEntityEventArgs
     /// </summary>
     public string? Reason;
 
-    public BasePickupAttemptEvent(EntityUid user, EntityUid item)
+    /// <summary>
+    /// Whether or not the event is raised in response to a physical action taken.
+    /// If false, in-game side effects should not occur in response to this event.
+    /// </summary>
+    public bool PhysicalAttempt;
+
+    public BasePickupAttemptEvent(EntityUid user, EntityUid item, bool physicalAttempt = false)
     {
         User = user;
         Item = item;
+        PhysicalAttempt = physicalAttempt;
     }
 }
