@@ -239,16 +239,3 @@
   recipeUnlocks:
   - LauncherSyringe
   - MiniSyringe
-
-# Tech disk only, use tier 999999
-- type: technology
-  id: ExperimentalGenetics
-  name: research-technology-experimental-genetics
-  icon:
-    sprite: Mobs/Animals/mothroach/moproach.rsi
-    state: icon
-  discipline: CivilianServices
-  tier: 999999
-  cost: 999999
-  recipeUnlocks:
-  - MoproachCube

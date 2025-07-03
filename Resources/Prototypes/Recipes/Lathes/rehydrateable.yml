@@ -44,14 +44,6 @@
 
 - type: latheRecipe
   parent: BaseCubeRecipe
-  id: MoproachCube
-  result: MoproachCube
-  completetime: 45 # prevent biblical floods, smae as mothroaches
-  materials:
-    Biomass: 40 # even MORE materials wasted due to even more complex genetics
-
-- type: latheRecipe
-  parent: BaseCubeRecipe
   id: MouseCube
   result: MouseCube
   completetime: 15

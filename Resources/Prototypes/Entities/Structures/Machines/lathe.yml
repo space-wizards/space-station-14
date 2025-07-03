@@ -364,8 +364,6 @@
     runningState: building
     staticPacks:
     - FriendlyCubesStatic
-    dynamicPacks:
-    - BioCubes
   - type: EmagLatheRecipes
     emagStaticPacks:
     - HostileCubesStatic
