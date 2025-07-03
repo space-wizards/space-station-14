@@ -1,11 +1,12 @@
 using System.Linq;
 using Content.Server.Gateway.Components;
+using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Maps;
+using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.Components;
 using Content.Shared.Salvage;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -110,7 +111,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         };
         AddComp(mapUid, restricted);
 
-        _biome.EnsurePlanet(mapUid, _protoManager.Index("BiomeGrasslands"), seed);
+        _biome.EnsurePlanet(mapUid, _protoManager.Index<BiomeTemplatePrototype>("Continental"), seed);
 
         var grid = Comp<MapGridComponent>(mapUid);
 
@@ -198,7 +199,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
                 var layer = lootLayers[layerIdx];
                 lootLayers.RemoveSwap(layerIdx);
 
-                _biome.AddLayer((ent.Owner, biomeComp), $"{layer.Id}-{i}", layer.Id);
+                _biome.AddMarkerLayer(ent.Owner, biomeComp, layer.Id);
             }
 
             // - Mobs
@@ -210,7 +211,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
                 var layer = mobLayers[layerIdx];
                 mobLayers.RemoveSwap(layerIdx);
 
-                _biome.AddLayer((ent.Owner, biomeComp), $"{layer.Id}-{i}", layer.Id);
+                _biome.AddMarkerLayer(ent.Owner, biomeComp, layer.Id);
             }
         }
     }

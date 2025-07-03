@@ -8,24 +8,24 @@
 - type: salvageBiomeMod
   id: Caves
   desc: salvage-biome-mod-caves
-  biome: BiomeCaves
+  biome: Caves
 
 - type: salvageBiomeMod
   id: Grasslands
   desc: salvage-biome-mod-grasslands
-  biome: BiomeGrasslands
+  biome: Grasslands
 
 - type: salvageBiomeMod
   id: Snow
   desc: salvage-biome-mod-snow
   cost: 1
-  biome: BiomeSnow
+  biome: Snow
 
 - type: salvageBiomeMod
   id: Lava
   desc: salvage-biome-mod-lava
   cost: 2
-  biome: BiomeLava
+  biome: Lava
 
 #- type: salvageBiomeMod
 #  id: Space

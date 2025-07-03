@@ -42,7 +42,6 @@ public sealed partial class DungeonJob
                     }
 
                     replacements.Add((node, tile));
-                    AddLoadedTile(node, tile);
                     break;
                 }
 

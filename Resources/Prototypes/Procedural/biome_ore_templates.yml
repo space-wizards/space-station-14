@@ -1,127 +1,146 @@
 # Low value
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: OreIron
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:OreDunGen
-    replacement: WallRock
-    entity: WallRockTin
-    count: 30
-    minGroupSize: 10
-    maxGroupSize: 15
+  entityMask:
+    AsteroidRock: AsteroidRockTin
+    WallRock: WallRockTin
+    WallRockBasalt: WallRockBasaltTin
+    WallRockChromite: WallRockChromiteTin
+    WallRockSand: WallRockSandTin
+    WallRockSnow: WallRockSnowTin
+  maxCount: 30
+  minGroupSize: 10
+  maxGroupSize: 15
+  radius: 4
 
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: OreQuartz
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:OreDunGen
-    replacement: WallRock
-    entity: WallRockQuartz
-    count: 30
-    minGroupSize: 10
-    maxGroupSize: 15
+  entityMask:
+    AsteroidRock: AsteroidRockQuartz
+    WallRock: WallRockQuartz
+    WallRockBasalt: WallRockBasaltQuartz
+    WallRockChromite: WallRockChromiteQuartz
+    WallRockSnow: WallRockSnowQuartz
+  maxCount: 30
+  minGroupSize: 10
+  maxGroupSize: 15
+  radius: 4
 
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: OreCoal
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:OreDunGen
-    replacement: WallRock
-    entity: WallRockCoal
-    count: 30
-    minGroupSize: 8
-    maxGroupSize: 12
+  entityMask:
+    AsteroidRock: AsteroidRockCoal
+    WallRock: WallRockCoal
+    WallRockBasalt: WallRockBasaltCoal
+    WallRockChromite: WallRockChromiteCoal
+    WallRockSand: WallRockSandCoal
+    WallRockSnow: WallRockSnowCoal
+  maxCount: 30
+  minGroupSize: 8
+  maxGroupSize: 12
+  radius: 4
 
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: OreSalt
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:OreDunGen
-    replacement: WallRock
-    entity: WallRockSalt
-    count: 30
-    minGroupSize: 8
-    maxGroupSize: 12
+  entityMask:
+    AsteroidRock: AsteroidRockSalt
+    WallRock: WallRockSalt
+    WallRockBasalt: WallRockBasaltSalt
+    WallRockChromite: WallRockChromiteSalt
+    WallRockSand: WallRockSandSalt
+    WallRockSnow: WallRockSnowSalt
+  maxCount: 30
+  minGroupSize: 8
+  maxGroupSize: 12
+  radius: 4
 
 # Medium value
 # Gold
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: OreGold
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:OreDunGen
-    replacement: WallRock
-    entity: WallRockGold
-    count: 20
-    minGroupSize: 5
-    maxGroupSize: 10
+  entityMask:
+    AsteroidRock: AsteroidRockGold
+    WallRock: WallRockGold
+    WallRockBasalt: WallRockBasaltGold
+    WallRockChromite: WallRockChromiteGold
+    WallRockSand: WallRockSandGold
+    WallRockSnow: WallRockSnowGold
+  maxCount: 20
+  minGroupSize: 5
+  maxGroupSize: 10
+  radius: 4
 
 # Silver
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: OreSilver
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:OreDunGen
-    replacement: WallRock
-    entity: WallRockSilver
-    count: 20
-    minGroupSize: 5
-    maxGroupSize: 10
+  entityMask:
+    AsteroidRock: AsteroidRockSilver
+    WallRock: WallRockSilver
+    WallRockBasalt: WallRockBasaltSilver
+    WallRockChromite: WallRockChromiteSilver
+    WallRockSand: WallRockSandSilver
+    WallRockSnow: WallRockSnowSilver
+  maxCount: 20
+  minGroupSize: 5
+  maxGroupSize: 10
+  radius: 4
 
 # High value
 # Plasma
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: OrePlasma
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:OreDunGen
-    replacement: WallRock
-    entity: WallRockPlasma
-    count: 12
-    minGroupSize: 4
-    maxGroupSize: 8
+  entityMask:
+    AsteroidRock: AsteroidRockPlasma
+    WallRock: WallRockPlasma
+    WallRockBasalt: WallRockBasaltPlasma
+    WallRockChromite: WallRockChromitePlasma
+    WallRockSand: WallRockSandPlasma
+    WallRockSnow: WallRockSnowPlasma
+  maxCount: 12
+  minGroupSize: 4
+  maxGroupSize: 8
+  radius: 4
 
 # Uranium
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: OreUranium
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:OreDunGen
-    replacement: WallRock
-    entity: WallRockUranium
-    count: 15
-    minGroupSize: 4
-    maxGroupSize: 8
+  entityMask:
+    AsteroidRock: AsteroidRockUranium
+    WallRock: WallRockUranium
+    WallRockBasalt: WallRockBasaltUranium
+    WallRockChromite: WallRockChromiteUranium
+    WallRockSand: WallRockSandUranium
+    WallRockSnow: WallRockSnowUranium
+  maxCount: 15
+  minGroupSize: 4
+  maxGroupSize: 8
+  radius: 4
 
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: OreDiamond
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:OreDunGen
-    replacement: WallRock
-    entity: WallRockDiamond
-    count: 6
-    minGroupSize: 1
-    maxGroupSize: 2
+  entityMask:
+    AsteroidRock: AsteroidRockDiamond
+    WallRock: WallRockDiamond
+    WallRockBasalt: WallRockBasaltDiamond
+    WallRockChromite: WallRockChromiteDiamond
+    WallRockSand: WallRockSandDiamond
+    WallRockSnow: WallRockSnowDiamond
+  maxCount: 6
+  minGroupSize: 1
+  maxGroupSize: 2
+  radius: 4
 
 # Artifact Fragment
-- type: dungeonConfig
+- type: biomeMarkerLayer
   id: OreArtifactFragment
-  layers:
-  - !type:ChunkDunGen
-    size: 128
-  - !type:OreDunGen
-    replacement: WallRock
-    entity: WallRockArtifactFragment
-    count: 6
-    minGroupSize: 1
-    maxGroupSize: 2
+  entityMask:
+    AsteroidRock: AsteroidRockArtifactFragment
+    WallRock: WallRockArtifactFragment
+    WallRockBasalt: WallRockBasaltArtifactFragment
+    WallRockChromite: WallRockChromiteArtifactFragment
+    WallRockSand: WallRockSandArtifactFragment
+    WallRockSnow: WallRockSnowArtifactFragment
+  maxCount: 6
+  minGroupSize: 1
+  maxGroupSize: 2
+  radius: 4
