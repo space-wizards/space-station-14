@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.PDA.Ringer;
 using Content.Server.Store.Systems;
 using Content.Server.StoreDiscount.Systems;
 using Content.Shared.FixedPoint;
@@ -41,7 +42,7 @@ public sealed class UplinkSystem : EntitySystem
     /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
     /// <param name="bindToPda">Binds the uplink to the specific uplink entity.</param>
     /// <returns>Whether or not the uplink was added successfully</returns>
-    public bool AddUplink(
+    public AddUplinkResult AddUplink(
         EntityUid user,
         FixedPoint2 balance,
         EntityUid? uplinkEntity = null,
@@ -54,9 +55,10 @@ public sealed class UplinkSystem : EntitySystem
         uplinkEntity ??= FindUplinkTarget(user);
 
         if (uplinkEntity == null)
-            return ImplantUplink(user, balance, giveDiscounts);
+        {
+            return ImplantUplink(user, balance, giveDiscounts) ? AddUplinkResult.Implant : AddUplinkResult.Failure;
+        }
 
-        // TODO: Spawn the abstract store entity here
         storeEntity ??= Spawn(TraitorUplinkStore, MapCoordinates.Nullspace);
 
         if (bindToPda)
@@ -72,7 +74,36 @@ public sealed class UplinkSystem : EntitySystem
         // TODO add BUI. Currently can't be done outside of yaml -_-
         // ^ What does this even mean?
 
-        return true;
+        return AddUplinkResult.Pda;
+    }
+
+    public AddUplinkResult AddUplinkWithCode(
+        EntityUid user,
+        FixedPoint2 balance,
+        out Note[]? code,
+        EntityUid? uplinkEntity = null,
+        EntityUid? storeEntity = null,
+        bool giveDiscounts = false,
+        bool bindToPda = false)
+    {
+        code = null;
+
+        storeEntity ??= Spawn(TraitorUplinkStore, MapCoordinates.Nullspace);
+
+        var ev = new GenerateUplinkCodeEvent();
+        RaiseLocalEvent(storeEntity.Value, ref ev);
+
+        var result = AddUplink(user, balance, uplinkEntity, storeEntity, giveDiscounts, bindToPda);
+
+        if (result == AddUplinkResult.Pda && ev.Code is { } generatedCode)
+        {
+            code = generatedCode;
+            return AddUplinkResult.Pda;
+        }
+        else
+        {
+            return result;
+        }
     }
 
     /// <summary>
@@ -104,7 +135,7 @@ public sealed class UplinkSystem : EntitySystem
     /// <summary>
     /// Implant an uplink as a fallback measure if the traitor had no PDA
     /// </summary>
-    private bool ImplantUplink(EntityUid user, FixedPoint2 balance, bool giveDiscounts)
+    public bool ImplantUplink(EntityUid user, FixedPoint2 balance, bool giveDiscounts)
     {
         var implantProto = new string(FallbackUplinkImplant);
 
@@ -156,4 +187,11 @@ public sealed class UplinkSystem : EntitySystem
 
         return null;
     }
+}
+
+public enum AddUplinkResult
+{
+    Pda,
+    Implant,
+    Failure,
 }
