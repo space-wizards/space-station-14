@@ -153,7 +153,7 @@ public sealed class PaperSystem : EntitySystem
                 if (_useDelay.IsDelayed(used))
                     return;
 
-                if (TrySign(entity, user, (used, stamp)))
+                if (TrySign(entity, user, (used, stamp), stamp.ProtectAfterStamp))
                     _useDelay.TryResetDelay(used);
             },
             Text = Loc.GetString("paper-verb-sign")
@@ -221,11 +221,11 @@ public sealed class PaperSystem : EntitySystem
                     ("target", args.Target),
                     ("stamp", args.Used));
 
-            _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
             var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self",
                     ("target", args.Target),
                     ("stamp", args.Used));
-            _popupSystem.PopupClient(stampPaperSelfMessage, args.User, args.User);
+
+            _popupSystem.PopupPredicted(stampPaperSelfMessage, stampPaperOtherMessage, args.User, args.User);
 
             _audio.PlayPredicted(stampComp.Sound, entity, args.User);
 
@@ -343,7 +343,7 @@ public sealed class PaperSystem : EntitySystem
 
         if (TryStamp(entity, stampInfo, stamp.Comp.StampState, protect))
         {
-            // successfully stamped, play popup
+            // successfully signed, play popup
             var stampPaperOtherMessage = Loc.GetString("paper-component-action-sign-paper-other",
                 ("user", user),
                 ("target", entity),

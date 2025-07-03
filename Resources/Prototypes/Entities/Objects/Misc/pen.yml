@@ -29,6 +29,7 @@
     stampedColor: "#535353"
     stampState: "paper_stamp-signature"
     stampType: Signature
+    protectAfterStamp: false
     sound:
       collection: PaperScribbles
       params:
