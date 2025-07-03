@@ -42,9 +42,6 @@ public sealed class DrunkOverlay : Overlay
         if (playerEntity == null)
             return;
 
-        if (!_entityManager.HasComponent<DrunkComponent>(playerEntity))
-            return;
-
         var statusSys = _sysMan.GetEntitySystem<SharedStatusEffectsSystem>();
         if (!statusSys.TryGetMaxTime<DrunkStatusEffectComponent>(playerEntity.Value, out var status))
             return;

@@ -15,13 +15,10 @@ public abstract class SharedDrunkSystem : EntitySystem
     There were no comments as to why this value was chosen three years ago. */
     public static float MagicNumber = 1100f;
 
-    [Dependency] private readonly SharedSlurredSystem _slurredSystem = default!;
-    [Dependency] private readonly SharedStatusEffectsSystem _status = default!;
+    [Dependency] protected readonly SharedStatusEffectsSystem Status = default!;
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectAppliedEvent>(OnStatusApplied);
-        SubscribeLocalEvent<DrunkStatusEffectComponent, StatusEffectRemovedEvent>(OnStatusRemoved);
         SubscribeLocalEvent<LightweightDrunkComponent, DrunkEvent>(OnLightweightDrinking);
     }
 
@@ -31,18 +28,7 @@ public abstract class SharedDrunkSystem : EntitySystem
         var ev = new DrunkEvent(boozePower);
         RaiseLocalEvent(uid, ref ev);
 
-        _status.TryAddStatusEffectDuration(uid, Drunk, ev.Duration);
-    }
-
-    private void OnStatusApplied(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectAppliedEvent args)
-    {
-        EnsureComp<DrunkComponent>(args.Target);
-    }
-
-    private void OnStatusRemoved(Entity<DrunkStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
-    {
-        if (!_status.HasEffectComp<DrunkStatusEffectComponent>(args.Target))
-            RemComp<DrunkComponent>(args.Target);
+        Status.TryAddStatusEffectDuration(uid, Drunk, ev.Duration);
     }
 
     private void OnLightweightDrinking(Entity<LightweightDrunkComponent> entity, ref DrunkEvent args)
