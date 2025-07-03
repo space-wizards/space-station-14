@@ -41,7 +41,7 @@
 
 - type: entity
   name: gorlex hypospray
-  parent: BaseItem
+  parent: [ BaseItem, BaseSyndicateContraband ]
   description: Using reverse engineered designs from NT, Cybersun produced these in limited quantities for Gorlex Marauder operatives.
   id: SyndiHypo
   components:
@@ -72,8 +72,6 @@
     maxFillLevels: 4
     fillBaseName: hypo_fill
     solutionName: hypospray
-  - type: Contraband
-    severity: Syndicate
 
 - type: entity
   name: syndicate hypospray
