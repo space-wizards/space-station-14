@@ -35,28 +35,37 @@ public sealed class InteractionPopupSystem : EntitySystem
 
     private void OnActivateInWorld(EntityUid uid, InteractionPopupComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+
         if (!args.Complex)
             return;
 
         if (!component.OnActivate)
             return;
 
-        SharedInteract(uid, component, args, args.Target, args.User);
+        SharedInteract(uid, component, args.Target, args.User);
     }
 
     private void OnInteractHand(EntityUid uid, InteractionPopupComponent component, InteractHandEvent args)
     {
-        SharedInteract(uid, component, args, args.Target, args.User);
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+
+        SharedInteract(uid, component, args.Target, args.User);
     }
 
     private void SharedInteract(
         EntityUid uid,
         InteractionPopupComponent component,
-        HandledEntityEventArgs args,
         EntityUid target,
         EntityUid user)
     {
-        if (args.Handled || user == target)
+        if (user == target)
             return;
 
         //Handling does nothing and this thing annoyingly plays way too often.
@@ -70,8 +79,6 @@ public sealed class InteractionPopupSystem : EntitySystem
         {
             return;
         }
-
-        args.Handled = true;
 
         var curTime = _gameTiming.CurTime;
 
@@ -162,7 +169,6 @@ public sealed class InteractionPopupSystem : EntitySystem
         }
     }
 
-    private sealed class DummyHandledArgs : HandledEntityEventArgs { }
     private void AddVerb(EntityUid uid, InteractionPopupComponent comp, GetVerbsEvent<ActivationVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
@@ -173,7 +179,7 @@ public sealed class InteractionPopupSystem : EntitySystem
             Text = Loc.GetString(comp.Verb),
             Act = () =>
             {
-                SharedInteract(uid, comp, new DummyHandledArgs(), uid, args.User);
+                SharedInteract(uid, comp, uid, args.User);
             }
         };
 
