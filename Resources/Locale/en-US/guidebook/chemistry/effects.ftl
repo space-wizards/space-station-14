@@ -385,7 +385,7 @@ reagent-effect-guidebook-artifact-unlock =
         } unlock an alien artifact.
 
 reagent-effect-guidebook-artifact-durability-restore =
-    Restore a {$restored} durability in random alien artifact node.
+    Restores {$restored} durability in active alien artifact nodes.
 
 reagent-effect-guidebook-plant-attribute =
     { $chance ->

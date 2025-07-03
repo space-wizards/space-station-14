@@ -17,9 +17,6 @@ artifact-unlock-state-end-failure = It slows down before uneventfully stopping.
 artifact-activation-fail = Nothing happens...
 artifact-activation-artifexium = The liquid seeps into the pores of the artifact...
 
-### Durability
-artifact-durability-restored = Durability of the active nodes has been restored!
-
 ### Misc.
 artifact-examine-trigger-desc = [color=gray][italic]Am I on your mind?[/italic][/color]
 

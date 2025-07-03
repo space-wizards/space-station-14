@@ -520,10 +520,8 @@
   id: ArtifactGlue
   reactants:
     SpaceGlue:
-      amount: 2
+      amount: 1
     Artifexium:
-      amount: 2
-    Uranium:
       amount: 1
   products:
-    ArtifactGlue: 1 # 5 to 1. Pretty clear for artifact glue i suppose?..
+    ArtifactGlue: 2

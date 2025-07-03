@@ -9,6 +9,9 @@ namespace Content.Shared.EntityEffects.Effects;
 /// </summary>
 public sealed partial class ArtifactDurabilityRestore : EntityEffect
 {
+    /// <summary>
+    ///     Amount of durability that will be restored per effect interaction.
+    /// </summary>
     [DataField]
     public int RestoredDurability = 1;
 
@@ -21,7 +24,9 @@ public sealed partial class ArtifactDurabilityRestore : EntityEffect
             return;
 
         foreach (var node in xenoArtifactSys.GetActiveNodes((args.TargetEntity, xenoArtifact)))
+        {
             xenoArtifactSys.AdjustNodeDurability(node.Owner, RestoredDurability);
+        }
     }
 
     protected override string ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

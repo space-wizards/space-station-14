@@ -86,13 +86,14 @@
   id: ArtifactGlue
   name: reagent-name-artifact-glue
   desc: reagent-desc-artifact-glue
-  color: "#8542d6"
+  flavor: metallic
+  physicalDesc: reagent-physical-desc-non-newtonian
+  color: "#827394"
   reactiveEffects:
     Acidic:
       methods: [ Touch ]
       effects:
       - !type:ArtifactDurabilityRestore
-        probability: 0.5
         conditions:
         - !type:ReagentThreshold
           min: 5
