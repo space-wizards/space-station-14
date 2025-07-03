@@ -6,9 +6,7 @@ using Content.Shared.Kitchen.Components;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
-/// <summary>
-///
-/// </summary>
+/// <inheritdoc />
 public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
 {
     public override void Initialize()
@@ -18,7 +16,6 @@ public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
         SubscribeLocalEvent<KitchenSpikeComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<KitchenSpikeComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<KitchenSpikeComponent, CanDropTargetEvent>(OnCanDrop);
-        SubscribeLocalEvent<KitchenSpikeComponent, DragDropTargetEvent>(OnDragDrop);
         SubscribeLocalEvent<KitchenSpikeComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
         SubscribeLocalEvent<KitchenSpikeComponent, SpikeDoAfterEvent>(OnDoAfter);
     }
@@ -34,11 +31,6 @@ public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
     }
 
     private void OnCanDrop(Entity<KitchenSpikeComponent> entity, ref CanDropTargetEvent args)
-    {
-
-    }
-
-    private void OnDragDrop(Entity<KitchenSpikeComponent> entity, ref DragDropTargetEvent args)
     {
 
     }
