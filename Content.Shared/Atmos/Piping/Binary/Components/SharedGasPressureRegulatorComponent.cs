@@ -12,7 +12,7 @@ public enum GasPressureRegulatorUiKey : byte
 }
 
 /// <summary>
-/// Message sent to change the pressure threshold of the Gas Pressure Relief Valve.
+/// Message sent to change the pressure threshold of the gas pressure regulator.
 /// </summary>
 /// <param name="pressure">The new pressure threshold value.</param>
 [Serializable, NetSerializable]

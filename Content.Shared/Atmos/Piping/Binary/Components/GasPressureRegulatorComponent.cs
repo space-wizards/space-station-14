@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Atmos.Piping.Binary.Components;
 
 /// <summary>
-/// Defines a gas pressure relief valve,
+/// Defines a gas pressure regulator,
 /// which releases gas depending on a set pressure threshold between two pipe nodes.
 /// </summary>
 [RegisterComponent, NetworkedComponent]

@@ -7,7 +7,7 @@ using Content.Shared.Examine;
 namespace Content.Shared.Atmos.EntitySystems;
 
 /// <summary>
-/// Handles all shared interactions with the gas pressure relief valve.
+/// Handles all shared interactions with the gas pressure regulator.
 /// </summary>
 public abstract class SharedGasPressureRegulatorSystem : EntitySystem
 {
