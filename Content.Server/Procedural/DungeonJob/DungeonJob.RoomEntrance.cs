@@ -25,7 +25,9 @@ public sealed partial class DungeonJob
                 if (reservedTiles.Contains(entrance))
                     continue;
 
-                setTiles.Add((entrance, _tile.GetVariantTile((ContentTileDefinition) tileDef, random)));
+                var tileVariant = _tile.GetVariantTile((ContentTileDefinition)tileDef, random);
+                setTiles.Add((entrance, tileVariant));
+                AddLoadedTile(entrance, tileVariant);
             }
         }
 
@@ -38,9 +40,14 @@ public sealed partial class DungeonJob
                 if (reservedTiles.Contains(entrance))
                     continue;
 
-                _entManager.SpawnEntitiesAttachedTo(
+                var uids = _entManager.SpawnEntitiesAttachedTo(
                     _maps.GridTileToLocal(_gridUid, _grid, entrance),
                     _entTable.GetSpawns(contents, random));
+
+                foreach (var uid in uids)
+                {
+                    AddLoadedEntity(entrance, uid);
+                }
 
                 await SuspendDungeon();
 

@@ -49,6 +49,7 @@ public sealed partial class DungeonJob
                     _entManager.RemoveComponent<GhostRoleComponent>(uid);
                     _entManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
                     npcs.SleepNPC(uid);
+                    AddLoadedEntity(tile, uid);
                 }
 
                 break;

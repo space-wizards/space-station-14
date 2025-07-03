@@ -1,4 +1,4 @@
-﻿using Content.Shared.Parallax.Biomes.Markers;
+﻿using Content.Shared.Procedural;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -42,7 +42,7 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// Mob layers to pick from.
     /// </summary>
     [DataField]
-    public List<ProtoId<BiomeMarkerLayerPrototype>> MobLayers = new()
+    public List<ProtoId<DungeonConfigPrototype>> MobLayers = new()
     {
         "Carps",
         "Xenos",
@@ -54,7 +54,7 @@ public sealed partial class GatewayGeneratorComponent : Component
     /// <summary>
     /// Loot layers to pick from.
     /// </summary>
-    public List<ProtoId<BiomeMarkerLayerPrototype>> LootLayers = new()
+    public List<ProtoId<DungeonConfigPrototype>> LootLayers = new()
     {
         "OreIron",
         "OreQuartz",

@@ -36,8 +36,9 @@
           gain: 0.5
 
     # Generate biome
-    - !type:BiomeDunGen
-      biomeTemplate: SpaceDebris
+    - !type:PrototypeDunGen
+      proto: SpaceDebris
+      inheritDungeons: All
 
 - type: dungeonConfig
   id: ChunkDebrisSmall
@@ -77,5 +78,6 @@
         gain: 0.5
 
   # Generate biome
-  - !type:BiomeDunGen
-    biomeTemplate: SpaceDebris
+  - !type:PrototypeDunGen
+    proto: SpaceDebris
+    inheritDungeons: All

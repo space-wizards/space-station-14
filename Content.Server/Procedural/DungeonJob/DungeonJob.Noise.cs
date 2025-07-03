@@ -98,7 +98,9 @@ public sealed partial class DungeonJob
                     var variant = _tile.PickVariant((ContentTileDefinition) tileDef, random);
                     var adjusted = Vector2.Transform(node + _grid.TileSizeHalfVector, matrix).Floored();
 
-                    tiles.Add((adjusted, new Tile(tileDef.TileId, variant: variant)));
+                    var tileVariant = new Tile(tileDef.TileId, variant: variant);
+                    tiles.Add((adjusted, tileVariant));
+                    AddLoadedTile(adjusted, tileVariant);
                     roomTiles.Add(adjusted);
                     tileCount++;
                     break;
@@ -127,8 +129,7 @@ public sealed partial class DungeonJob
                     }
                 }
 
-                await SuspendIfOutOfTime();
-                ValidateResume();
+                await SuspendDungeon();
             }
 
             var center = Vector2.Zero;
@@ -140,8 +141,7 @@ public sealed partial class DungeonJob
 
             center /= roomTiles.Count;
             rooms.Add(new DungeonRoom(roomTiles, center, roomArea, new HashSet<Vector2i>()));
-            await SuspendIfOutOfTime();
-            ValidateResume();
+            await SuspendDungeon();
         }
 
         _maps.SetTiles(_gridUid, _grid, tiles);

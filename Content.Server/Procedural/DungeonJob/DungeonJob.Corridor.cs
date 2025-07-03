@@ -94,12 +94,14 @@ public sealed partial class DungeonJob
         var setTiles = new List<(Vector2i, Tile)>();
         var tileDef = (ContentTileDefinition) _tileDefManager[gen.Tile];
 
-        foreach (var tile in corridorTiles)
+        foreach (var node in corridorTiles)
         {
-            if (reservedTiles.Contains(tile))
+            if (reservedTiles.Contains(node))
                 continue;
 
-            setTiles.Add((tile, _tile.GetVariantTile(tileDef, random)));
+            var tile = _tile.GetVariantTile(tileDef, random);
+            setTiles.Add((node, tile));
+            AddLoadedTile(node, tile);
         }
 
         _maps.SetTiles(_gridUid, _grid, setTiles);
