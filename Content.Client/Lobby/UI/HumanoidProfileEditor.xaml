@@ -107,12 +107,12 @@
                             <!-- STARLIGHT - Species Size -->
                             <BoxContainer Margin="10" HorizontalExpand="True" Orientation="Vertical">
                                 <BoxContainer HorizontalExpand="True">
-                                    <Label Name="HeightDescribeLabel" Margin="5 0 10 0" />
+                                    <Label SetWidth="150" Name="HeightDescribeLabel" Margin="5 0 10 0" />
                                     <Slider Name="HeightSlider" MinValue="0.5" Value="1" MaxValue="1.5" HorizontalExpand="True" Margin="10 0 5 0" />
                                     <Button Name="HeightResetButton" Text="{Loc 'humanoid-profile-editor-slider-reset'}" />
                                 </BoxContainer>
                                 <BoxContainer HorizontalExpand="True">
-                                    <Label Name="WidthDescribeLabel" Margin="5 0 10 0" />
+                                    <Label SetWidth="150" Name="WidthDescribeLabel" Margin="5 0 10 0" />
                                     <Slider Name="WidthSlider" MinValue="0.5" Value="1" MaxValue="1.5" HorizontalExpand="True" Margin="10 0 5 0" />
                                     <Button Name="WidthResetButton" Text="{Loc 'humanoid-profile-editor-slider-reset'}" />
                                 </BoxContainer>
