@@ -127,7 +127,7 @@
 
 # Hardsuit
 - type: entity
-  parent: ClothingOuterHardsuitAtmos
+  parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuit3eilado
   name: скафардр Виндемиатрикс
   description: Скафандр модификации Виндемиатрикс собранный на станции 1’А. 
@@ -137,6 +137,20 @@
     sprite: _DeadSpace/Sponsor/3eilado/hardsuit/hardsuit.rsi
   - type: Clothing
     sprite: _DeadSpace/Sponsor/3eilado/hardsuit/hardsuit.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuit3eilado
   - type: Item
