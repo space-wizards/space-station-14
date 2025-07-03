@@ -1,22 +1,4 @@
-# Paragon of the Grey
-- type: loadoutEffectGroup
-  id: ParagonGrey
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobPassenger
-      time: 144000 #40 hours, gloves for truly the greatest (grey-test) of the grey
-
 # Head
-- type: loadout
-  id: WeldingMask
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: MasterGrey
-  equipment:
-    head: ClothingHeadHatWelding
-
 - type: loadout
   id: GreyCowboy
   effects:
@@ -91,14 +73,6 @@
 
 # Eyes
 - type: loadout
-  id: WeldingGoggles
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: MasterGrey
-  equipment:
-    eyes: ClothingEyesWeldingGoggles
-
-- type: loadout
   id: CheapSunnies
   effects:
   - !type:GroupLoadoutEffect
@@ -132,15 +106,6 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorGrey
 
-# Back
-- type: loadout
-  id: SmugglerSatchel
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: MasterGrey
-  equipment:
-    back: ClothingBackpackSatchelSmuggler
-
 # Gloves
 - type: loadout
   id: GreyGloves
@@ -149,14 +114,6 @@
     proto: HonoredAssistant
   equipment:
     gloves: ClothingHandsGlovesColorGray
-
-- type: loadout
-  id: ParagonGloves
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: ParagonGrey
-  equipment:
-    gloves: ClothingHandsGlovesColorYellow
 
 # Outerclothing
 - type: loadout
