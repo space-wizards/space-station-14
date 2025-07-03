@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Borgs, clowns and mimes now can choose a custom name in loadouts.
-    type: Tweak
-  id: 8222
-  time: '2025-04-18T02:32:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35170
 - author: DogZeroX
   changes:
   - message: Added Experiment plushie from the game Scav Prototype!
@@ -3886,3 +3879,11 @@
   id: 8733
   time: '2025-07-03T18:51:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38689
+- author: TrixxedHeart
+  changes:
+  - message: Moved Syndicate Uplink TC purchase button beneath the respective item's
+      icon.
+    type: Tweak
+  id: 8734
+  time: '2025-07-03T23:49:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38596
