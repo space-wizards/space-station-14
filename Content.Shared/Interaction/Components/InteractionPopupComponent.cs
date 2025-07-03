@@ -30,8 +30,7 @@ public sealed partial class InteractionPopupComponent : Component
     /// <summary>
     /// Used in window title and context menu
     /// </summary>
-    [DataField("verb")]
-    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
     public string Verb = "interaction-popup-verb";
 
     /// <summary>
