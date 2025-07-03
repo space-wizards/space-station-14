@@ -86,7 +86,6 @@
       hypospray:
         maxVol: 15
   - type: Hypospray
-    onlyAffectsMobs: false
     transferAmount: 2.5
 
 - type: entity
