@@ -163,7 +163,7 @@ public sealed class PaperSystem : EntitySystem
 
     private void OnInteractUsing(Entity<PaperComponent> entity, ref InteractUsingEvent args)
     {
-        // only allow editing if there are no stamps or when using a cyberpen
+        // only allow editing if the paper isn't protected or when using a cyberpen
         var editable = entity.Comp.EditingState == PaperLockStatus.Editable || (_tagSystem.HasTag(args.Used, WriteIgnoreStampsTag) && entity.Comp.EditingState == PaperLockStatus.Protected);
         if (_tagSystem.HasTag(args.Used, WriteTag))
         {
@@ -367,7 +367,7 @@ public sealed class PaperSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Copy any stamp information from one piece of paper to another.
+    /// Copy any stamp information from one piece of paper to another.
     /// </summary>
     public void CopyStamps(Entity<PaperComponent?> source, Entity<PaperComponent?> target)
     {
