@@ -60,3 +60,4 @@
   id: Disabled
   minValue: 0
   maxValue: 0
+  fullName: true
