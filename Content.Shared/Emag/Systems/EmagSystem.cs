@@ -51,7 +51,7 @@ public sealed class EmagSystem : EntitySystem
     }
 
     /// <summary>
-    /// Does the emag effect on a specified entity with a specified EmagType.
+    /// Does the emag effect on a specified entity with a specified EmagType, acts like an override for the value on emag component.
     /// </summary>
     public bool TryEmagEffect(Entity<EmagComponent?> ent, EntityUid user, EntityUid target, EmagType? customEmagType = null)
     {
