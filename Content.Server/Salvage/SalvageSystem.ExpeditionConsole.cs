@@ -3,11 +3,17 @@ using Content.Shared.Procedural;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
     [ValidatePrototypeId<EntityPrototype>]
     public const string CoordinatesDisk = "CoordinatesDisk";
 
@@ -21,12 +27,15 @@ public sealed partial class SalvageSystem
         if (!data.Missions.TryGetValue(args.Index, out var missionparams))
             return;
 
-        var cdUid = Spawn(CoordinatesDisk, Transform(uid).Coordinates);
+        var cdUid = _entityManager.SpawnAtPosition(CoordinatesDisk, Transform(uid).Coordinates);
+        // only coordinate disks for exped missions get this component
+        var missionDependencyComponent = _entityManager.AddComponent<SalvageMissionDependencyComponent>(cdUid);
         SpawnMission(missionparams, station.Value, cdUid);
 
         data.ActiveMission = args.Index;
         var mission = GetMission(_prototypeManager.Index<SalvageDifficultyPrototype>(missionparams.Difficulty), missionparams.Seed);
         data.NextOffer = _timing.CurTime + mission.Duration + TimeSpan.FromSeconds(1);
+        missionDependencyComponent.AssociatedMission = mission;
 
         _labelSystem.Label(cdUid, GetFTLName(_prototypeManager.Index<LocalizedDatasetPrototype>("NamesBorer"), missionparams.Seed));
         _audio.PlayPvs(component.PrintSound, uid);
