@@ -6,25 +6,25 @@ namespace Content.Shared.Nutrition.Components;
 /// <summary>
 /// Indicates that the entity can be butchered.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ButcherableComponent : Component
 {
     /// <summary>
     ///
     /// </summary>
-    [DataField("spawned", required: true)]
+    [DataField("spawned", required: true), AutoNetworkedField]
     public List<EntitySpawnEntry> SpawnedEntities = [];
 
     /// <summary>
     ///
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float ButcherDelay = 8.0f;
 
     /// <summary>
     ///
     /// </summary>
-    [DataField("butcheringType")]
+    [DataField("butcheringType"), AutoNetworkedField]
     public ButcheringType Type = ButcheringType.Knife;
 }
 

@@ -5,6 +5,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Kitchen.Components;
 
@@ -12,13 +13,19 @@ namespace Content.Shared.Kitchen.Components;
 ///
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState, Access(typeof(SharedKitchenSpikeSystem))]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(SharedKitchenSpikeSystem))]
 public sealed partial class KitchenSpikeComponent : Component
 {
     /// <summary>
     ///
     /// </summary>
     private static readonly ProtoId<SoundCollectionPrototype> DefaultSpike = new("Spike");
+
+    /// <summary>
+    ///
+    /// </summary>
+    private static readonly ProtoId<SoundCollectionPrototype> DefaultSpikeButcher = new("SpikeButcher");
 
     /// <summary>
     ///
@@ -36,7 +43,13 @@ public sealed partial class KitchenSpikeComponent : Component
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier Sound = new SoundCollectionSpecifier(DefaultSpike);
+    public SoundSpecifier SpikeSound = new SoundCollectionSpecifier(DefaultSpike);
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier ButcherSound = new SoundCollectionSpecifier(DefaultSpikeButcher);
 
     /// <summary>
     ///
@@ -66,13 +79,26 @@ public sealed partial class KitchenSpikeComponent : Component
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public DamageSpecifier DamageOverTime = new()
+    public DamageSpecifier UpdateDamage = new()
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Bloodloss", 4 },
+            { "Piercing", 5 },
         },
     };
+
+    /// <summary>
+    ///
+    /// </summary>
+    [AutoPausedField, AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextUpdate;
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(30);
 
     /// <summary>
     ///

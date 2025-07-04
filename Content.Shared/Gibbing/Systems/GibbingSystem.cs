@@ -187,7 +187,7 @@ public sealed class GibbingSystem : EntitySystem
         }
 
         if (gibType == GibType.Gib)
-            QueueDel(gibbable);
+            PredictedQueueDel(gibbable.Owner);
         return true;
     }
 

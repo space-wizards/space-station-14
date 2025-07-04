@@ -1,3 +1,4 @@
+using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -8,6 +9,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Kitchen;
 
@@ -21,6 +23,8 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     private readonly HashSet<EntityUid> _activeSpikes = [];
@@ -31,8 +35,8 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         SubscribeLocalEvent<KitchenSpikeComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<KitchenSpikeComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
-        SubscribeLocalEvent<KitchenSpikeComponent, EntGotRemovedFromContainerMessage>(OnEntRemovedIntoContainer);
         SubscribeLocalEvent<KitchenSpikeComponent, EntInsertedIntoContainerMessage>(OnEntInsertedIntoContainer);
+        SubscribeLocalEvent<KitchenSpikeComponent, EntRemovedFromContainerMessage>(OnEntRemovedFromContainer);
         SubscribeLocalEvent<KitchenSpikeComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<KitchenSpikeComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<KitchenSpikeComponent, CanDropTargetEvent>(OnCanDrop);
@@ -60,7 +64,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         _activeSpikes.Add(ent);
     }
 
-    private void OnEntRemovedIntoContainer(Entity<KitchenSpikeComponent> ent, ref EntGotRemovedFromContainerMessage args)
+    private void OnEntRemovedFromContainer(Entity<KitchenSpikeComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
         _activeSpikes.Remove(ent);
@@ -81,22 +85,41 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnInteractUsing(Entity<KitchenSpikeComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled || !TryComp<ButcherableComponent>(ent.Comp.BodyContainer.ContainedEntity, out var butcherable))
+        if (args.Handled || !TryComp<ButcherableComponent>(ent.Comp.BodyContainer.ContainedEntity, out var butcherable) ||
+            butcherable.SpawnedEntities.Count == 0)
             return;
 
         if (!HasComp<SharpComponent>(args.Used))
         {
             _popupSystem.PopupPredicted(Loc.GetString("comp-kitchen-spike-knife-needed"), ent, args.User);
+            args.Handled = true;
             return;
         }
 
-        var uid = PredictedSpawnNextToOrDrop(_random.Pick(butcherable.SpawnedEntities).PrototypeId, ent);
-        _metaDataSystem.SetEntityName(ent,
+        var index = _random.Next(butcherable.SpawnedEntities.Count);
+        var entry = butcherable.SpawnedEntities[index];
+        entry.Amount--;
+
+        var uid = PredictedSpawnNextToOrDrop(entry.PrototypeId, ent);
+        _metaDataSystem.SetEntityName(uid,
             Loc.GetString("comp-kitchen-spike-meat-name",
             ("name", Name(uid)),
             ("victim", ent.Comp.BodyContainer.ContainedEntity)));
 
-        _damageableSystem.TryChangeDamage(args.Target, ent.Comp.ButcherDamage, true);
+        if (entry.Amount <= 0)
+            butcherable.SpawnedEntities.RemoveAt(index);
+        else
+            butcherable.SpawnedEntities[index] = entry;
+
+        var victim = ent.Comp.BodyContainer.ContainedEntity.Value;
+
+        if (butcherable.SpawnedEntities.Count == 0)
+            _bodySystem.GibBody(victim, true);
+        else
+        {
+            Dirty(victim, butcherable);
+            _damageableSystem.TryChangeDamage(victim, ent.Comp.ButcherDamage, true);
+        }
 
         args.Handled = true;
     }
@@ -139,6 +162,28 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         _containerSystem.Insert(args.Target.Value, ent.Comp.BodyContainer);
 
         args.Handled = true;
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var uid in _activeSpikes)
+        {
+            if (!TryComp<KitchenSpikeComponent>(uid, out var spike))
+            {
+                _activeSpikes.Remove(uid);
+                continue;
+            }
+
+            if (spike.NextUpdate > _gameTiming.CurTime)
+                continue;
+
+            spike.NextUpdate += spike.UpdateInterval;
+            Dirty(uid, spike);
+
+            _damageableSystem.TryChangeDamage(spike.BodyContainer.ContainedEntity, spike.UpdateDamage, true);
+        }
     }
 }
 
