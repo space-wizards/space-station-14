@@ -113,4 +113,13 @@ public sealed partial class MindComponent : Component
     /// </summary>
     [DataField]
     public LocId? Subtype;
+
+    // 🌟Starlight🌟
+    [DataField]
+    public string? Voice;
+    
+    // 🌟Starlight🌟
+    [DataField]
+    public string? SiliconVoice;
+
 }
