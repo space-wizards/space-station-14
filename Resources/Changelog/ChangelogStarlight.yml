@@ -8754,4 +8754,11 @@ Entries:
   id: 1207
   time: '2025-07-04T19:15:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/943
+- author: Trep_Maul
+  changes:
+  - message: Abductor Event should only run once now.
+    type: Tweak
+  id: 1208
+  time: '2025-07-04T19:25:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/950
 
