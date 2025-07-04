@@ -7,7 +7,7 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 
 /// <summary> Command for unlocking specific node of xeno artifact. </summary>
 [AdminCommand(AdminFlags.Debug)]
-public sealed class XenoArtifactUnlockNodeCommand : LocalizedEntityCommands
+public sealed class UnlockNodeCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly XenoArtifactSystem _artiSystem = default!;
 
@@ -54,8 +54,7 @@ public sealed class XenoArtifactUnlockNodeCommand : LocalizedEntityCommands
                 foreach (var node in _artiSystem.GetAllNodes((artifactUid.Value, comp)))
                 {
                     var metaData = EntityManager.MetaQuery.Comp(artifactUid.Value);
-                    var entityUidStr = EntityManager.GetNetEntity(node)
-                        .ToString();
+                    var entityUidStr = EntityManager.GetNetEntity(node).ToString();
                     var completionOption = new CompletionOption(entityUidStr, metaData.EntityName);
                     result.Add(completionOption);
                 }
