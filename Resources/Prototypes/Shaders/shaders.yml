@@ -30,6 +30,11 @@
   path: "/Textures/Shaders/flashed_effect.swsl"
 
 - type: shader
+  id: FlashedEffectReducedMotion
+  kind: source
+  path: "/Textures/Shaders/flashed_effect_reduced_motion.swsl"
+
+- type: shader
   id: Singularity
   kind: source
   path: "/Textures/Shaders/singularity.swsl"
