@@ -8834,4 +8834,11 @@ Entries:
   id: 1218
   time: '2025-07-04T20:14:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/913
+- author: PubliclyExecutedPig
+  changes:
+  - message: Origin Station Fixes
+    type: Fix
+  id: 1219
+  time: '2025-07-04T22:14:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/961
 
