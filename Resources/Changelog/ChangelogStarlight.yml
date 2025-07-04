@@ -8813,4 +8813,25 @@ Entries:
   id: 1215
   time: '2025-07-04T20:12:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/870
+- author: Dimyell
+  changes:
+  - message: Added Blue Shield Officer's Formal Cloak
+    type: Add
+  id: 1216
+  time: '2025-07-04T20:14:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/913
+- author: Dimyell
+  changes:
+  - message: Added Blue Shield Officer's Jumpsuit Shirt
+    type: Add
+  id: 1217
+  time: '2025-07-04T20:14:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/913
+- author: Dimyell
+  changes:
+  - message: Added Blue Shield Officer's Overcoat
+    type: Add
+  id: 1218
+  time: '2025-07-04T20:14:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/913
 
