@@ -55,6 +55,9 @@ public sealed partial class MindComponent : Component
     [ViewVariables]
     public bool IsVisitingEntity => VisitingEntity != null;
 
+    /// <summary>
+    /// The entity that this mind may be currently visiting. Used, for example, to allow admin ghosting to not make the owner's body catatonic, as opposed to when normally ghosting.
+    /// </summary>
     [DataField, AutoNetworkedField, Access(typeof(SharedMindSystem))]
     public EntityUid? VisitingEntity { get; set; }
 
@@ -113,12 +116,4 @@ public sealed partial class MindComponent : Component
     /// </summary>
     [DataField]
     public LocId? Subtype;
-
-    /// <summary>
-    ///     The session of the player owning this mind.
-    ///     Can be null, in which case the player is currently not logged in.
-    /// </summary>
-    [ViewVariables, Access(typeof(SharedMindSystem), typeof(SharedGameTicker))]
-    // TODO remove this after moving IPlayerManager functions to shared
-    public ICommonSession? Session { get; set; }
 }

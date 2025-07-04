@@ -13,3 +13,36 @@
   - type: Item
     size: Small
     heldPrefix: lungs
+
+- type: entity
+  parent: OrganHumanStomach
+  id: OrganVoxStomach
+  name: stomach
+  description: "A stomach that smells of ammonia."
+  components:
+  - type: Metabolizer #Skreeeee!
+    metabolizerTypes: [Vox]
+  - type: Stomach
+#Bird vs tags
+    specialDigestible:
+      tags:
+      - Trash
+    isSpecialDigestibleExclusive: false
+
+- type: entity
+  parent: OrganHumanLiver
+  id: OrganVoxLiver
+  name: liver
+  description: "Smells flammable."
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [Vox]
+
+- type: entity
+  parent: OrganHumanHeart
+  id: OrganVoxHeart
+  name: heart
+  description: "The strange heart of a vox."
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [Vox]

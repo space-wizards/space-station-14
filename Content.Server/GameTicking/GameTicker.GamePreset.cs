@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Shared.CCVar;
-using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
@@ -12,8 +11,6 @@ namespace Content.Server.GameTicking;
 
 public sealed partial class GameTicker
 {
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
-
     public const float PresetFailedCooldownIncrease = 30f;
 
     /// <summary>
@@ -109,7 +106,11 @@ public sealed partial class GameTicker
             // Reset counter is checked and changed at the end of each round
             // So if the game is in the lobby, the first requested round will happen before the check, and we need one less check
             if (CurrentPreset is null)
-                ResetCountdown = resetDelay.Value -1;
+                ResetCountdown = resetDelay.Value - 1;
+        }
+        else
+        {
+            ResetCountdown = null;
         }
 
         Preset = preset;
