@@ -1,3 +1,5 @@
+using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -40,18 +42,66 @@ public sealed partial class KitchenSpikeComponent : Component
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
+    public DamageSpecifier SpikeDamage = new()
+    {
+        DamageDict = new Dictionary<string, FixedPoint2>
+        {
+            { "Piercing", 20 },
+        },
+    };
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public DamageSpecifier ButcherDamage = new()
+    {
+        DamageDict = new Dictionary<string, FixedPoint2>
+        {
+            { "Slash", 30 },
+        },
+    };
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public DamageSpecifier DamageOverTime = new()
+    {
+        DamageDict = new Dictionary<string, FixedPoint2>
+        {
+            { "Bloodloss", 4 },
+        },
+    };
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public float Delay = 7.0f;
 
-    [Serializable, NetSerializable]
-    public enum KitchenSpikeVisuals : byte
-    {
-        Status,
-    }
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float DelayAlive = 10.0f;
+}
 
-    [Serializable, NetSerializable]
-    public enum KitchenSpikeStatus : byte
-    {
-        Empty,
-        Bloody,
-    }
+/// <summary>
+///
+/// </summary>
+[Serializable, NetSerializable]
+public enum KitchenSpikeVisuals : byte
+{
+    Status,
+}
+
+/// <summary>
+///
+/// </summary>
+[Serializable, NetSerializable]
+public enum KitchenSpikeStatus : byte
+{
+    Empty,
+    Bloody,
 }

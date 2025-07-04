@@ -26,14 +26,11 @@ public sealed partial class ButcherableComponent : Component
     /// </summary>
     [DataField("butcheringType")]
     public ButcheringType Type = ButcheringType.Knife;
-
-    /// <summary>
-    /// Prevents butchering same entity on two and more spikes simultaneously and multiple doAfters on the same Spike
-    /// </summary>
-    [ViewVariables]
-    public bool BeingButchered;
 }
 
+/// <summary>
+///
+/// </summary>
 public enum ButcheringType : byte
 {
     Knife, // e.g. goliaths
