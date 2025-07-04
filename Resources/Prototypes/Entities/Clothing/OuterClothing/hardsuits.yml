@@ -772,10 +772,10 @@
     sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/cybersun.rsi
-    equipSound: /Audio/Mecha/mechmove03.ogg
-    unequipSound: /Audio/Mecha/mechmove03.ogg
-    equipDelay: 3
-    unequipDelay: 3
+    equipSound: /Audio/Mecha/mechmove03.ogg #starlight
+    unequipSound: /Audio/Mecha/mechmove03.ogg #starlight
+    equipDelay: 3 #starlight
+    unequipDelay: 3 #starlight
   - type: PressureProtection
     highPressureMultiplier: 0.2
     lowPressureMultiplier: 1000
@@ -798,7 +798,7 @@
     walkModifier: 0.9
     sprintModifier: 0.65
   - type: HeldSpeedModifier
-  - type: FootstepModifier
+  - type: FootstepModifier #starlight
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
       params:
