@@ -28,7 +28,6 @@ cmd-banlist-desc = Lists a user's active bans.
 cmd-banlist-help = Usage: banlist <name or user ID>
 cmd-banlist-empty = No active bans found for {$user}
 cmd-banlist-hint = <name/user ID>
-cmd-
 
 cmd-ban_exemption_update-desc = Set an exemption to a type of ban on a player.
 cmd-ban_exemption_update-help = Usage: ban_exemption_update <player> <flag> [<flag> [...]]
