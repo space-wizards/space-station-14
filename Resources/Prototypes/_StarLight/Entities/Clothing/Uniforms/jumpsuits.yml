@@ -81,6 +81,17 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/eliteblueshield.rsi
 
 - type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitBlueShieldCaptain
+  name: Blueshield Officer's shirt
+  description: A classic suit in theme with a blueshield. 
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshieldshirt.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshieldshirt.rsi
+
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMiningSpecialist
   name: mining specialist's jumpsuit

@@ -8769,4 +8769,69 @@ Entries:
   id: 1209
   time: '2025-07-04T19:33:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/930
+- author: Happyrobot33
+  changes:
+  - message: Added Custom job icon for NTCC Consortium Officers
+    type: Add
+  id: 1210
+  time: '2025-07-04T19:38:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/916
+- author: Fasuh
+  changes:
+  - message: Avali visual bugs when in stasis and performing attacks.
+    type: Fix
+  id: 1211
+  time: '2025-07-04T19:46:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/927
+- author: Aedler
+  changes:
+  - message: Added visual armor richochet effect. If it's 80%+ or rock material, and
+      if it's shot with SP/HP, it whizzes with sparks.
+    type: Add
+  id: 1212
+  time: '2025-07-04T20:07:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/934
+- author: Aedler
+  changes:
+  - message: Added the effect to cyborgs as well.
+    type: Add
+  id: 1213
+  time: '2025-07-04T20:07:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/934
+- author: Aedler
+  changes:
+  - message: Juggernaut suit now has a default footstep modifier and a 3 second equip
+      time.
+    type: Add
+  id: 1214
+  time: '2025-07-04T20:07:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/934
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added magistrate jumpskirt. It spawns in your bag
+    type: Add
+  id: 1215
+  time: '2025-07-04T20:12:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/870
+- author: Dimyell
+  changes:
+  - message: Added Blue Shield Officer's Formal Cloak
+    type: Add
+  id: 1216
+  time: '2025-07-04T20:14:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/913
+- author: Dimyell
+  changes:
+  - message: Added Blue Shield Officer's Jumpsuit Shirt
+    type: Add
+  id: 1217
+  time: '2025-07-04T20:14:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/913
+- author: Dimyell
+  changes:
+  - message: Added Blue Shield Officer's Overcoat
+    type: Add
+  id: 1218
+  time: '2025-07-04T20:14:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/913
 

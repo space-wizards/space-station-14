@@ -52,6 +52,9 @@
       - id: ClothingNeckCloakBsoElite
       - id: ClothingNeckCloakBsoElite
       - id: RadioHandheldSecurity
+      - id: ClothingUniformJumpsuitBlueShieldCaptain
+      - id: ClothingOuterCoatBlueShield
+      - id: ClothingNeckCloakBsoCape
       - id: RubberStampBSO
 
 - type: entity
