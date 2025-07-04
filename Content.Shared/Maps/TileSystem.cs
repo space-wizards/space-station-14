@@ -7,6 +7,8 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
+using Robust.Shared.Log;
+
 namespace Content.Shared.Maps;
 
 /// <summary>
@@ -20,6 +22,9 @@ public sealed class TileSystem : EntitySystem
     [Dependency] private readonly SharedDecalSystem _decal = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+
+    //Tile history for deconstruction.
+    private readonly Dictionary<(EntityUid Grid, Vector2i Indices), Stack<string>> _tileBaseTurfHistory = new();
 
     /// <summary>
     ///     Returns a weighted pick of a tile variant.
@@ -85,7 +90,7 @@ public sealed class TileSystem : EntitySystem
         return PryTile(tileRef);
     }
 
-	public bool PryTile(TileRef tileRef)
+    public bool PryTile(TileRef tileRef)
     {
         return PryTile(tileRef, false);
     }
@@ -119,6 +124,21 @@ public sealed class TileSystem : EntitySystem
         if (!Resolve(grid, ref component))
             return false;
 
+        var key = (grid, tileref.GridIndices);
+
+        //Creates stack if there is none
+        if (!_tileBaseTurfHistory.TryGetValue(key, out var stack))
+        {
+            stack = new Stack<string>();
+            _tileBaseTurfHistory[key] = stack;
+        }
+
+        //Push current tile to the stack, if not empty.
+        if (!tileref.Tile.IsEmpty)
+        {
+            var currentTileDef = (ContentTileDefinition)_tileDefinitionManager[tileref.Tile.TypeId];
+            stack.Push(currentTileDef.ID);
+        }
 
         var variant = PickVariant(replacementTile);
         var decals = _decal.GetDecalsInRange(tileref.GridUid, _turf.GetTileCenter(tileref).Position, 0.5f);
@@ -136,9 +156,10 @@ public sealed class TileSystem : EntitySystem
         if (tileRef.Tile.IsEmpty)
             return false;
 
-        var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
+        var tileDef = (ContentTileDefinition)_tileDefinitionManager[tileRef.Tile.TypeId];
 
-        if (string.IsNullOrEmpty(tileDef.BaseTurf))
+        //Can't deconstruct anything that doesn't have a base turf.
+        if (tileDef.BaseTurf is not { Count: > 0 })
             return false;
 
         var gridUid = tileRef.GridUid;
@@ -152,19 +173,46 @@ public sealed class TileSystem : EntitySystem
                 (_robustRandom.NextFloat() - 0.5f) * bounds,
                 (_robustRandom.NextFloat() - 0.5f) * bounds));
 
-        //Actually spawn the relevant tile item at the right position and give it some random offset.
+        var keyHistory = (gridUid, indices);
+        string previousTileId;
+
+        //Pop from stack if we have history
+        if (_tileBaseTurfHistory.TryGetValue(keyHistory, out var stack) && stack.Count > 0)
+        {
+            previousTileId = stack.Pop();
+
+            //Clean up empty stacks to avoid memory buildup
+            if (stack.Count == 0)
+                _tileBaseTurfHistory.Remove(keyHistory);
+        }
+        else
+        {
+            //No stack? Assume BaseTurf[0] was the layer below
+            previousTileId = tileDef.BaseTurf[0];
+        }
+
+        //Actually spawn the relevant tile item at the right position and give it some random offset.  
         var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
         Transform(tileItem).LocalRotation = _robustRandom.NextDouble() * Math.Tau;
 
-        // Destroy any decals on the tile
+        //Destroy any decals on the tile  
         var decals = _decal.GetDecalsInRange(gridUid, coordinates.SnapToGrid(EntityManager, _mapManager).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
             _decal.RemoveDecal(tileRef.GridUid, id);
         }
 
-        var plating = _tileDefinitionManager[tileDef.BaseTurf];
-        _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, new Tile(plating.TileId));
+        // Replace tile with the one it was placed on
+        var previousDef = (ContentTileDefinition)_tileDefinitionManager[previousTileId];
+
+        if (previousDef.BaseTurf == null || previousDef.BaseTurf.Count == 0)
+        {
+            _maps.SetTile(gridUid, mapGrid, indices, Tile.Empty);
+        }
+        else
+        {
+            _maps.SetTile(gridUid, mapGrid, indices, new Tile(previousDef.TileId));
+        }
 
         return true;
     }

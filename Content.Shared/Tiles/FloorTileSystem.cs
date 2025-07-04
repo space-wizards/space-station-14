@@ -175,7 +175,7 @@ public sealed class FloorTileSystem : EntitySystem
 
     public bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
     {
-        return tileDef.BaseTurf == baseTurf;
+        return tileDef.BaseTurf != null && tileDef.BaseTurf.Contains(baseTurf);
     }
 
     private void PlaceAt(EntityUid user, EntityUid gridUid, MapGridComponent mapGrid, EntityCoordinates location,
