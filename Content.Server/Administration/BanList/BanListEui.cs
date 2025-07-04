@@ -6,6 +6,7 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.BanList;
 using Content.Shared.Eui;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.BanList;
 
@@ -15,9 +16,11 @@ public sealed class BanListEui : BaseEui
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
 
-    public BanListEui(int page)
+    public BanListEui(int page = 0)
     {
         IoCManager.InjectDependencies(this);
+
+        DebugTools.Assert(page is 0 or 1);
 
         Page = page;
     }
