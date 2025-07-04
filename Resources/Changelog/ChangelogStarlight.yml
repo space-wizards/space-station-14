@@ -8733,4 +8733,18 @@ Entries:
   id: 1204
   time: '2025-07-04T19:07:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/923
+- author: Trep_Maul
+  changes:
+  - message: GR-4P3 Geological Retrieval style mining shuttle.
+    type: Add
+  id: 1205
+  time: '2025-07-04T19:13:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/926
+- author: Trep_Maul
+  changes:
+  - message: SP-4C3 Security Pursuit style security shuttle.
+    type: Add
+  id: 1206
+  time: '2025-07-04T19:13:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/926
 
