@@ -153,8 +153,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         switch (skinType)
         {
             case HumanoidSkinColor.HumanToned:
-                var tone = Math.Round(Humanoid.SkinColor.HumanSkinToneFromColor(newSkinColor));
-                newSkinColor = Humanoid.SkinColor.HumanSkinTone((int)tone);
+                newSkinColor = Humanoid.SkinColor.HumanSkinTone(random.Next(0, 101));
                 break;
             case HumanoidSkinColor.Hues:
                 break;

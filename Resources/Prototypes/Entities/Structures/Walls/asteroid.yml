@@ -367,6 +367,14 @@
       map: [ "enum.MiningScannerVisualLayers.Overlay" ]
 
 - type: entity
+  id: AsteroidRockBananiumCrab
+  parent: AsteroidRockBananium
+  suffix: Bananium Crab
+  components:
+  - type: OreVein
+    currentOre: OreBananiumCrab
+
+- type: entity
   id: AsteroidRockSalt
   parent: AsteroidRock
   description: An ore vein rich with salt.
