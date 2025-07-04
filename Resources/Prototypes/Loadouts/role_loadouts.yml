@@ -43,14 +43,14 @@
   groups:
   - GroupTankHarness
   - AssistantJumpsuit
-  - AssistantBackpack
+  - AssistantBackpack #starlight
   - AssistantNeck
   - AssistantFace
   - AssistantGloves
   - AssistantOuterClothing
   - AssistantShoes
-  - AssistantGlasses
-  - AssistantHead
+  - AssistantGlasses #starlight
+  - AssistantHead #starlight
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
