@@ -8617,4 +8617,32 @@ Entries:
   id: 1188
   time: '2025-07-03T19:17:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/946
+- author: Trep_Maul
+  changes:
+  - message: Merc gear in ticket vend
+    type: Add
+  id: 1189
+  time: '2025-07-04T18:19:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/928
+- author: Trep_Maul
+  changes:
+  - message: flares, mineral scanner, explorer mask in ticket vend
+    type: Add
+  id: 1190
+  time: '2025-07-04T18:19:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/928
+- author: Trep_Maul
+  changes:
+  - message: Jungle Hawk in ticket vend
+    type: Add
+  id: 1191
+  time: '2025-07-04T18:19:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/928
+- author: Trep_Maul
+  changes:
+  - message: ContraTags
+    type: Tweak
+  id: 1192
+  time: '2025-07-04T18:19:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/928
 
