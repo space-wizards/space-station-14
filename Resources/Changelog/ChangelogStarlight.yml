@@ -8695,4 +8695,42 @@ Entries:
   id: 1199
   time: '2025-07-04T19:00:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/944
+- author: Aedler
+  changes:
+  - message: Updated the Revolutionary/Red Tide guidebook entry. Now it includes gameplay
+      tips!
+    type: Tweak
+  id: 1200
+  time: '2025-07-04T19:07:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/923
+- author: Aedler
+  changes:
+  - message: Added Workers' rights AntagOnSign papers in the mail! Makes you into
+      a head revolutionary.
+    type: Add
+  id: 1201
+  time: '2025-07-04T19:07:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/923
+- author: Aedler
+  changes:
+  - message: Ghosts now know when a supply rift is placed.
+    type: Add
+  id: 1202
+  time: '2025-07-04T19:07:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/923
+- author: Aedler
+  changes:
+  - message: Added exclusive revolutionary lobby art and music if they win. Gotta
+      fight for it.
+    type: Add
+  id: 1203
+  time: '2025-07-04T19:07:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/923
+- author: Aedler
+  changes:
+  - message: Added a "operation" lobby art.
+    type: Add
+  id: 1204
+  time: '2025-07-04T19:07:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/923
 
