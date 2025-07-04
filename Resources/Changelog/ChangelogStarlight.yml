@@ -8652,4 +8652,11 @@ Entries:
   id: 1193
   time: '2025-07-04T18:20:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/941
+- author: Trep_Maul
+  changes:
+  - message: shotgun sound bug
+    type: Fix
+  id: 1194
+  time: '2025-07-04T18:32:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/924
 
