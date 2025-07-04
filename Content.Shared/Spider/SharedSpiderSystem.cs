@@ -1,12 +1,10 @@
 using Content.Shared.Actions;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Spider;
 
 public abstract class SharedSpiderSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _action = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
