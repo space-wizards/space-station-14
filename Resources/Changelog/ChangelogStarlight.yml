@@ -8666,4 +8666,12 @@ Entries:
   id: 1195
   time: '2025-07-04T18:48:17.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/737
+- author: PubliclyExecutedPig
+  changes:
+  - message: Sent some engineers to "fix" Barratry Station. The janitors never showed
+      up though
+    type: Tweak
+  id: 1196
+  time: '2025-07-04T18:54:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/959
 
