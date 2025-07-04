@@ -94,6 +94,24 @@
         amount: 2
         doAfter: 1
 
+    - to: pressureregulator
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: pressureregulatorAlt1
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: pressureregulatorAlt2
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
     - to: port
       steps:
       - material: Steel
@@ -344,6 +362,54 @@
 
   - node: signalvalveAlt2
     entity: SignalControlledValveAlt2
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: pressureregulator
+    entity: GasPressureRegulator
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: pressureregulatorAlt1
+    entity: GasPressureRegulatorAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: pressureregulatorAlt2
+    entity: GasPressureRegulatorAlt2
     edges:
     - to: start
       conditions:

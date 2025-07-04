@@ -342,7 +342,7 @@
   - type: Construction
     node: sensorAlt2
 
-# GasPipeDistribution
+# GasPipeSensorDistribution
 
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeSensorDistribution]
@@ -378,7 +378,7 @@
       state: lights
       shader: unshaded
 
-# GasPipeWaste
+# GasPipeSensorWaste
 
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeSensorWaste]
@@ -414,7 +414,7 @@
       state: lights
       shader: unshaded
 
-# GasPipeMixedAir
+# GasPipeSensorMixedAir
 
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeSensorMixedAir]
@@ -450,7 +450,7 @@
       state: lights
       shader: unshaded
 
-# GasPipeTEGHot
+# GasPipeSensorTEGHot
 
 - type: entity
   parent: [GasPipeLayerAlt1, GasPipeSensorTEGHot]
@@ -521,3 +521,37 @@
     - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       state: lights
       shader: unshaded
+
+# GasPressureRegulator
+
+- type: entity
+  parent: [GasPipeLayerAlt1, GasPressureRegulator]
+  id: GasPressureRegulatorAlt1
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pumpPressureRegulator
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: Construction
+    node: pressureregulatorAlt1
+
+- type: entity
+  parent: [GasPipeLayerAlt2, GasPressureRegulator]
+  id: GasPressureRegulatorAlt2
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pumpPressureRegulator
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: Construction
+    node: pressureregulatorAlt2

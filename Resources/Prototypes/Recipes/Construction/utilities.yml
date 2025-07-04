@@ -537,7 +537,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
 
 - type: construction
   id: GasPassiveVent
@@ -548,7 +548,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
 
 - type: construction
   id: GasVentScrubber
@@ -559,7 +559,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
 
 - type: construction
   id: GasOutletInjector
@@ -570,7 +570,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
 
 # ATMOS BINARY
 - type: construction
@@ -582,7 +582,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasPressurePump
   - GasPressurePumpAlt1
@@ -598,7 +598,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasPressurePump
   - GasPressurePumpAlt1
@@ -614,7 +614,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasPressurePump
   - GasPressurePumpAlt1
@@ -629,7 +629,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasVolumePump
   - GasVolumePumpAlt1
@@ -645,7 +645,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasVolumePump
   - GasVolumePumpAlt1
@@ -661,7 +661,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasVolumePump
   - GasVolumePumpAlt1
@@ -676,7 +676,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasPassiveGate
   - GasPassiveGateAlt1
@@ -692,7 +692,7 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasPassiveGate
   - GasPassiveGateAlt1
@@ -708,11 +708,58 @@
   placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: false
   conditions:
-    - !type:NoUnstackableInTile
+  - !type:NoUnstackableInTile
   alternativePrototypes:
   - GasPassiveGate
   - GasPassiveGateAlt1
   - GasPassiveGateAlt2
+
+- type: construction
+  id: GasPressureRegulator
+  graph: GasBinary
+  startNode: start
+  targetNode: pressureregulator
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  conditions:
+  - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasPressureRegulator
+  - GasPressureRegulatorAlt1
+  - GasPressureRegulatorAlt2
+
+- type: construction
+  id: GasPressureRegulatorAlt1
+  hide: true
+  graph: GasBinary
+  startNode: start
+  targetNode: pressureregulatorAlt1
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  conditions:
+  - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasPressureRegulator
+  - GasPressureRegulatorAlt1
+  - GasPressureRegulatorAlt2
+
+- type: construction
+  id: GasPressureRegulatorAlt2
+  hide: true
+  graph: GasBinary
+  startNode: start
+  targetNode: pressureregulatorAlt2
+  category: construction-category-utilities
+  placementMode: AlignAtmosPipeLayers
+  canBuildInImpassable: false
+  conditions:
+  - !type:NoUnstackableInTile
+  alternativePrototypes:
+  - GasPressureRegulatorGate
+  - GasPressureRegulatorAlt1
+  - GasPressureRegulatorAlt2
 
 - type: construction
   id: GasValve
