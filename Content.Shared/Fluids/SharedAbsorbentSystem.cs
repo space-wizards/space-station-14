@@ -4,12 +4,15 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Fluids;
 
@@ -18,6 +21,7 @@ namespace Content.Shared.Fluids;
 /// </summary>
 public abstract class SharedAbsorbentSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] protected readonly SharedPuddleSystem Puddle = default!;
@@ -26,6 +30,9 @@ public abstract class SharedAbsorbentSystem : EntitySystem
     [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainer = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
+
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -33,6 +40,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
 
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<AbsorbentComponent, UserActivateInWorldEvent>(OnActivateInWorld);
+        SubscribeLocalEvent<AbsorbentComponent, SolutionContainerChangedEvent>(OnAbsorbentSolutionChange);
     }
 
     private void OnActivateInWorld(Entity<AbsorbentComponent> ent, ref UserActivateInWorldEvent args)
@@ -51,6 +59,30 @@ public abstract class SharedAbsorbentSystem : EntitySystem
 
         Mop(ent, args.User, target);
         args.Handled = true;
+    }
+
+    private void OnAbsorbentSolutionChange(Entity<AbsorbentComponent> ent, ref SolutionContainerChangedEvent args)
+    {
+        if (!SolutionContainer.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out _, out var solution))
+            return;
+
+        ent.Comp.Progress.Clear();
+
+        var absorbentReagents = Puddle.GetAbsorbentReagents(solution);
+        var mopReagent = solution.GetTotalPrototypeQuantity(absorbentReagents);
+        if (mopReagent > FixedPoint2.Zero)
+            ent.Comp.Progress[solution.GetColorWithOnly(_proto, absorbentReagents)] = mopReagent.Float();
+
+        var otherColor = solution.GetColorWithout(_proto, absorbentReagents);
+        var other = solution.Volume - mopReagent;
+        if (other > FixedPoint2.Zero)
+            ent.Comp.Progress[otherColor] = other.Float();
+
+        if (solution.AvailableVolume > FixedPoint2.Zero)
+            ent.Comp.Progress[Color.DarkGray] = solution.AvailableVolume.Float();
+
+        Dirty(ent);
+        _item.VisualsChanged(ent);
     }
 
     [Obsolete("Use Entity<T> variant")]
