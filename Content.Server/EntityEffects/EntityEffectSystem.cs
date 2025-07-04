@@ -48,6 +48,8 @@ namespace Content.Server.EntityEffects;
 
 public sealed class EntityEffectSystem : EntitySystem
 {
+    private static readonly ProtoId<WeightedRandomFillSolutionPrototype> RandomPickBotanyReagent = "RandomPickBotanyReagent";
+
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
@@ -854,7 +856,7 @@ public sealed class EntityEffectSystem : EntitySystem
             return;
 
         var chemicals = plantholder.Seed.Chemicals;
-        var randomChems = _protoManager.Index<WeightedRandomFillSolutionPrototype>("RandomPickBotanyReagent").Fills;
+        var randomChems = _protoManager.Index(RandomPickBotanyReagent).Fills;
 
         // Add a random amount of a random chemical to this set of chemicals
         if (randomChems != null)
