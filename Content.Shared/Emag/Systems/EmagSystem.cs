@@ -131,9 +131,10 @@ public sealed class EmagSystem : EntitySystem
 
 [Flags]
 [Serializable, NetSerializable]
-public enum EmagType : byte
+public enum EmagType
 {
     None = 0,
+    All = ~None,
     Interaction = 1 << 1,
     Access = 1 << 2
 }
