@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Body.Events;
+namespace Content.Shared.Body.Events;
 
 // TODO REFACTOR THIS
 // This will cause rates to slowly drift over time due to floating point errors.
