@@ -5,7 +5,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Round)]
-public sealed class ReadyAll : LocalizedEntityCommands
+public sealed class ReadyAllCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly GameTicker _gameTicker = default!;
 
@@ -15,12 +15,15 @@ public sealed class ReadyAll : LocalizedEntityCommands
     {
         var ready = true;
 
-        if (args.Length > 0)
-            ready = bool.Parse(args[0]);
-
         if (_gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
         {
             shell.WriteError(Loc.GetString("shell-command-only-available-in-lobby"));
+            return;
+        }
+
+        if (args.Length > 0 && !bool.TryParse(args[0], out ready))
+        {
+            shell.WriteError(Loc.GetString("shell-argument-must-be-boolean"));
             return;
         }
 

@@ -30,6 +30,12 @@ public sealed class ToggleReadyCommand : LocalizedEntityCommands
             return;
         }
 
-        _gameTicker.ToggleReady(player, bool.Parse(args[0]));
+        if (!bool.TryParse(args[0], out var ready))
+        {
+            shell.WriteError(Loc.GetString("shell-argument-must-be-boolean"));
+            return;
+        }
+
+        _gameTicker.ToggleReady(player, ready);
     }
 }
