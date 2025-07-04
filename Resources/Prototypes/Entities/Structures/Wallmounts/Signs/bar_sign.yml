@@ -56,22 +56,6 @@
   name: bar sign
   suffix: Random
 
-# Missing appearance components & various other sprite issues.
-#- type: entity
-#  id: LargeBarSign
-#  name: large bar sign
-#  categories: [ HideSpawnMenu ]
-#  components:
-#  - type: Clickable
-#  - type: InteractionOutline
-#  - type: Sprite
-#    drawdepth: WallTops
-#    sprite: Structures/Wallmounts/sylphs.rsi
-#    state: sylph
-#  - type: ApcPowerReceiver
-#  - type: ExtensionCableReceiver
-#  - type: BarSign
-
 - type: entity
   parent: BaseBarSign
   id: BarSignComboCafe
@@ -296,3 +280,12 @@
   components:
   - type: BarSign
     current: WhiskeyEchoes
+
+- type: entity
+  parent: BaseBarSign
+  id: BarSignSylph
+  name: Cyber Sylph
+  description: Wow, that's a big sign.
+  components:
+  - type: BarSign
+    current: Sylph
