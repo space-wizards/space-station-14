@@ -76,7 +76,7 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     {
         // If an entity has a ParrotListenerComponent it really ought to have an ActiveListenerComponent
         if (!HasComp<ActiveListenerComponent>(entity))
-            Log.Error($"Entity {ToPrettyString(entity)} has a ParrotListenerComponent but was not given a ActiveListenerComponent");
+            Log.Warning($"Entity {ToPrettyString(entity)} has a ParrotListenerComponent but was not given an ActiveListenerComponent");
     }
 
     private void OnListen(Entity<ParrotListenerComponent> entity, ref ListenEvent args)
