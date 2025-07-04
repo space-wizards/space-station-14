@@ -8645,4 +8645,11 @@ Entries:
   id: 1192
   time: '2025-07-04T18:19:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/928
+- author: Trosling
+  changes:
+  - message: Changed IAA ID appearance to match job icon
+    type: Fix
+  id: 1193
+  time: '2025-07-04T18:20:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/941
 
