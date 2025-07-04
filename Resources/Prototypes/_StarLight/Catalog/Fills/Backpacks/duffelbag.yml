@@ -52,3 +52,16 @@
     - id: LeftArmCyberMantisBlade
     - id: RightHandCyber
     - id: LeftHandCyber
+
+    
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledBullpup
+  name: pitbull bundle
+  description: "Contains the Pitbull Rifle and two additional magazines."
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRiflePitbull
+    - id: MagazineMagnumRifleSP
+      amount: 2

@@ -1,6 +1,4 @@
 # Weapons
-uplink-pitbull-bundle-name = Pitbull Bundle
-uplink-pitbull-bundle-desc = A large bullpup rifle with a low fire-rate but excellent accuracy. Chambered in .45 magnum. 
 
 uplink-pistol-viper-name = Viper
 uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses pistol magazines (.35 auto).
