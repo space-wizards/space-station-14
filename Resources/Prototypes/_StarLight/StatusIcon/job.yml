@@ -21,7 +21,15 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: BlueShield
   jobName: job-name-blueshield
-  
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconNTCCBlueShield
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: NTCCBlueShield
+  jobName: job-name-ntccblueshield
+
 - type: jobIcon
   parent: JobIcon
   id: JobIconSurgeon
