@@ -143,7 +143,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // DebugTools.Assert(direction != Vector2.Zero);
         var shotProjectiles = new List<EntityUid>(ammo.Count);
 
-        bool bulletSoundCheck = false;
+        bool bulletSoundCheck = false; //starlight
 
         foreach (var (ent, shootable) in ammo)
         {
@@ -543,7 +543,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
             }
 
-            // confirm bullet sound should play
+            // Starlight confirm bullet sound should play
             bulletSoundCheck = true;
 
             return effects;
@@ -585,7 +585,7 @@ public sealed partial class GunSystem : SharedGunSystem
             }
         }
 
-        //check to see if bullet sound should play
+        //starlight check to see if bullet sound should play
         if (bulletSoundCheck){
             Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
         }
