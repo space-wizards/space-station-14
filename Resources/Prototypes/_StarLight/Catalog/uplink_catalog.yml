@@ -114,7 +114,7 @@
     }
   productEntity: MagazineShotgunBreach
   cost:
-    Telecrystal: 1
+    Telecrystal: 2
   categories:
     - UplinkAmmo
 
