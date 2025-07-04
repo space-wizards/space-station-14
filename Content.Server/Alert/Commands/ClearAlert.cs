@@ -15,33 +15,36 @@ public sealed class ClearAlert : LocalizedEntityCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player;
-        if (player?.AttachedEntity is not { } playerEntity)
+        if (shell.Player is not { } player)
         {
-            shell.WriteLine(Loc.GetString($"shell-cannot-run-command-from-server"));
+            shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
             return;
         }
 
-        if (args.Length > 1)
+        if (player.AttachedEntity is not { } attachedEntity)
         {
-            var target = args[1];
-            if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out playerEntity))
-                return;
-        }
-
-        if (!EntityManager.TryGetComponent(playerEntity, out AlertsComponent? _))
-        {
-            shell.WriteLine("user has no alerts component");
+            shell.WriteError(Loc.GetString("shell-must-be-attached-to-entity"));
             return;
         }
 
-        var alertType = args[0];
-        if (!_alerts.TryGet(alertType, out var alert))
+        if (args.Length > 1 && !CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, args[1], player, out attachedEntity))
         {
-            shell.WriteLine("unrecognized alertType " + alertType);
+            shell.WriteError(Loc.GetString("shell-target-player-does-not-exist"));
             return;
         }
 
-        _alerts.ClearAlert(playerEntity, alert.ID);
+        if (!EntityManager.HasComponent<AlertsComponent>(attachedEntity))
+        {
+            shell.WriteError(Loc.GetString("shell-entity-target-lacks-component", ("componentName", nameof(AlertsComponent))));
+            return;
+        }
+
+        if (!_alerts.TryGet(args[0], out var alert))
+        {
+            shell.WriteLine(Loc.GetString("cmd-showalert-unrecognized", ("alert", args[0])));
+            return;
+        }
+
+        _alerts.ClearAlert(attachedEntity, alert.ID);
     }
 }

@@ -15,45 +15,43 @@ public sealed class ShowAlert : LocalizedEntityCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player;
-        if (player?.AttachedEntity is not { } playerEntity)
+        if (shell.Player is not { } player)
         {
-            shell.WriteLine(Loc.GetString($"shell-cannot-run-command-from-server"));
+            shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
             return;
         }
 
-        switch (args.Length)
+        if (player.AttachedEntity is not { } attachedEntity)
         {
-            case 2:
-                break;
-            case 3:
-                var target = args[2];
-                if (!CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, target, player, out playerEntity))
-                    return;
-                break;
-            default:
-                shell.WriteError(Loc.GetString("shell-need-between-arguments", ("lower", 2), ("upper", 3)));
-                return;
+            shell.WriteError(Loc.GetString("shell-must-be-attached-to-entity"));
+            return;
         }
 
-        if (!EntityManager.TryGetComponent(playerEntity, out AlertsComponent? _))
+        if (args.Length > 2 && !CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, args[2], player, out attachedEntity))
         {
-            shell.WriteLine(Loc.GetString($"shell-entity-target-lacks-component", ("componentName", nameof(AlertsComponent))));
+            shell.WriteError(Loc.GetString("shell-target-player-does-not-exist"));
+            return;
+        }
+
+        if (!EntityManager.HasComponent<AlertsComponent>(attachedEntity))
+        {
+            shell.WriteError(Loc.GetString("shell-entity-target-lacks-component", ("componentName", nameof(AlertsComponent))));
             return;
         }
 
         if (!_alerts.TryGet(args[0], out var alert))
         {
-            shell.WriteLine("unrecognized alertType " + args[0]);
-            return;
-        }
-        if (!short.TryParse(args[1], out var sevint))
-        {
-            shell.WriteLine("invalid severity " + sevint);
+            shell.WriteError(Loc.GetString("cmd-showalert-unrecognized", ("alert", args[0])));
             return;
         }
 
-        short? severity1 = sevint == -1 ? null : sevint;
-        _alerts.ShowAlert(playerEntity, alert.ID, severity1);
+        if (!short.TryParse(args[1], out var sevInt))
+        {
+            shell.WriteError(Loc.GetString("cmd-showalert-invalid-severity", ("severity", sevInt)));
+            return;
+        }
+
+        short? severity1 = sevInt == -1 ? null : sevInt;
+        _alerts.ShowAlert(attachedEntity, alert.ID, severity1);
     }
 }
