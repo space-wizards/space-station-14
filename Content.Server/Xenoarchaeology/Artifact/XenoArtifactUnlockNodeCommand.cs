@@ -7,78 +7,63 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 
 /// <summary> Command for unlocking specific node of xeno artifact. </summary>
 [AdminCommand(AdminFlags.Debug)]
-public sealed class XenoArtifactUnlockNodeCommand : LocalizedCommands
+public sealed class XenoArtifactUnlockNodeCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly EntityManager _entities = default!;
+    [Dependency] private readonly XenoArtifactSystem _artiSystem = default!;
 
-    /// <inheritdoc />
     public override string Command => "unlocknode";
 
-    /// <inheritdoc />
-    public override string Description => Loc.GetString("cmd-unlocknode-desc");
-
-    /// <inheritdoc />
-    public override string Help => Loc.GetString("cmd-unlocknode-help");
-
-    /// <inheritdoc />
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
         {
-            shell.WriteError(Loc.GetString("cmd-parse-failure-unlocknode-arg-num"));
+            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
             return;
         }
 
-        if (!NetEntity.TryParse(args[1], out var netNode))
+        if (!NetEntity.TryParse(args[1], out var netNode) || !EntityManager.TryGetEntity(netNode, out var entityUid))
         {
-            shell.WriteError(Loc.GetString("cmd-parse-failure-unlocknode-invalid-entity"));
+            shell.WriteError(Loc.GetString("shell-could-not-find-entity-with-uid", ("uid", args[1])));
             return;
         }
 
-        if (!_entities.TryGetEntity(netNode, out var entityUid))
-        {
-            shell.WriteError(Loc.GetString("cmd-parse-failure-unlocknode-invalid-entity"));
-            return;
-        }
-        _entities.System<XenoArtifactSystem>()
-                 .SetNodeUnlocked(entityUid.Value);
+        _artiSystem.SetNodeUnlocked(entityUid.Value);
     }
 
-    /// <inheritdoc />
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        if (args.Length == 1)
+        switch (args.Length)
         {
-            var query = _entities.EntityQueryEnumerator<XenoArtifactComponent>();
-            var completionOptions = new List<CompletionOption>();
-            while (query.MoveNext(out var uid, out _))
+            case 1:
             {
-                completionOptions.Add(new CompletionOption(uid.ToString()));
+                var query = EntityManager.EntityQueryEnumerator<XenoArtifactComponent>();
+                var completionOptions = new List<CompletionOption>();
+                while (query.MoveNext(out var uid, out _))
+                {
+                    completionOptions.Add(new CompletionOption(uid.ToString()));
+                }
+
+                return CompletionResult.FromHintOptions(completionOptions, "<artifact uid>");
             }
-
-            return CompletionResult.FromHintOptions(completionOptions, "<artifact uid>");
-        }
-
-        if (args.Length == 2 &&
-            NetEntity.TryParse(args[0], out var netEnt) &&
-            _entities.TryGetEntity(netEnt, out var artifactUid) &&
-            _entities.TryGetComponent<XenoArtifactComponent>(artifactUid, out var comp))
-        {
-            var artifactSystem = _entities.System<XenoArtifactSystem>();
-
-            var result = new List<CompletionOption>();
-            foreach (var node in artifactSystem.GetAllNodes((artifactUid.Value, comp)))
+            case 2 when
+                NetEntity.TryParse(args[0], out var netEnt) &&
+                EntityManager.TryGetEntity(netEnt, out var artifactUid) &&
+                EntityManager.TryGetComponent<XenoArtifactComponent>(artifactUid, out var comp):
             {
-                var metaData = _entities.MetaQuery.Comp(artifactUid.Value);
-                var entityUidStr = _entities.GetNetEntity(node)
-                                            .ToString();
-                var completionOption = new CompletionOption(entityUidStr, metaData.EntityName);
-                result.Add(completionOption);
+                var result = new List<CompletionOption>();
+                foreach (var node in _artiSystem.GetAllNodes((artifactUid.Value, comp)))
+                {
+                    var metaData = EntityManager.MetaQuery.Comp(artifactUid.Value);
+                    var entityUidStr = EntityManager.GetNetEntity(node)
+                        .ToString();
+                    var completionOption = new CompletionOption(entityUidStr, metaData.EntityName);
+                    result.Add(completionOption);
+                }
+
+                return CompletionResult.FromHintOptions(result, "<node uid>");
             }
-
-            return CompletionResult.FromHintOptions(result, "<node uid>");
+            default:
+                return CompletionResult.Empty;
         }
-
-        return CompletionResult.Empty;
     }
 }
