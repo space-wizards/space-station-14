@@ -295,12 +295,12 @@ namespace Content.Client.Inventory
 
         public void UIInventoryActivate(string slot)
         {
-            EntityManager.RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
+            RaisePredictiveEvent(new UseSlotNetworkMessage(slot));
         }
 
         public void UIInventoryStorageActivate(string slot)
         {
-            EntityManager.RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
+            RaisePredictiveEvent(new OpenSlotStorageNetworkMessage(slot));
         }
 
         public void UIInventoryExamine(string slot, EntityUid uid)
@@ -324,7 +324,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            EntityManager.RaisePredictiveEvent(
+            RaisePredictiveEvent(
                 new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: false));
         }
 
@@ -333,7 +333,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
+            RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
         }
 
         public sealed class SlotData
