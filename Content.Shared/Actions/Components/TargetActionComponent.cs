@@ -37,6 +37,10 @@ public sealed partial class TargetActionComponent : Component
     [DataField]
     public bool CheckCanAccess = true;
 
+    /// <summary>
+    ///     The allowed range for a target to be. If zero or negative, the range check is skipped,
+    ///     unless <see cref="CheckCanAccess"/> is true.
+    /// </summary>
     [DataField]
     public float Range = SharedInteractionSystem.InteractionRange;
 
