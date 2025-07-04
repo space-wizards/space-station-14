@@ -1,0 +1,265 @@
+- type: entity
+  parent: MarkerBase
+  id: SpawnClownSpider
+  name: clown spider spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: clown
+      sprite: Mobs/Animals/clownspider.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobClownSpider
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobBear
+  name: Space Bear Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: bear
+      sprite: Mobs/Animals/bear.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBearSpace
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobBehonker
+  name: behonker Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: base
+      sprite: Objects/Weapons/Guns/Battery/behonker_eye.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBehonkerIce
+    - MobBehonkerPyro
+    - MobBehonkerElectrical
+    - MobBehonkerGrav
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobBoxingKangaroo
+  name: Boxing Kangaroo Spawner
+  suffix: Hostile
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: kangaroo
+      sprite: Mobs/Animals/kangaroo.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBoxingKangaroo
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobHellspawn
+  name: Hellspawn Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: hellspawn
+      sprite: Markers/mobs.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHellspawn
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobKangaroo
+  name: Space Kangaroo Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: kangaroo-space
+      sprite: Mobs/Animals/kangaroo.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobKangarooSpace
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobLuminousEntity
+  name: luminous entity spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: luminous_entity
+      sprite: Mobs/Elemental/living_light/luminous_entity.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobLuminousEntity
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobLuminousObject
+  name: luminous object spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: luminous_object
+      sprite: Mobs/Elemental/living_light/luminous_object.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobLuminousObject
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobLuminousPerson
+  name: luminous person spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: luminous_person
+      sprite: Mobs/Elemental/living_light/luminous_person.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobLuminousPerson
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobOreCrab
+  name: ore crab spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: quartz_crab
+      sprite: Mobs/Elemental/orecrab.rsi
+  - type: RandomSpawner
+    prototypes:
+    - MobSpawnCrabUranium
+    - MobSpawnCrabIron
+    - MobSpawnCrabQuartz
+    - MobSpawnCrabSilver
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobPurpleSnake
+  name: Purple Snake Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: purple_snake
+      sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobPurpleSnake
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobSmallPurpleSnake
+  name: Small Purple Snake Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: small_purple_snake
+      sprite: Mobs/Aliens/Xenos/purple_snake.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSmallPurpleSnake
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobSpaceCobra
+  name: Space Cobra Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: spacecobra
+      sprite: Mobs/Animals/spacecobra.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobCobraSpace
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobSpaceSpider
+  name: Space Spider Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: spacespider
+      sprite: Mobs/Animals/spacespider.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobSpiderSpace
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobWatcherIcewing
+  name: Watcher Icewing Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: unshaded
+      sprite: Mobs/Aliens/Lavaland/watcher.rsi
+      color: deepskyblue
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobWatcherIcewing
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobWatcherLavaland
+  name: Watcher Lavaland Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: unshaded
+      sprite: Mobs/Aliens/Lavaland/watcher.rsi
+      color: red
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobWatcherLavaland
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobWatcherMagmawing
+  name: Watcher Magmawing Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: unshaded
+      sprite: Mobs/Aliens/Lavaland/watcher.rsi
+      color: orangered
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobWatcherMagmawing
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobWatcherPride
+  name: Watcher Pride Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: unshaded
+      sprite: Mobs/Aliens/Lavaland/watcher.rsi
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobWatcherPride

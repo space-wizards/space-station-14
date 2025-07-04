@@ -52,6 +52,8 @@
     slots:
     - HEAD
     quickEquip: false
+    equipDelay: 3
+    unequipDelay: 6
   - type: OnUseTimerTrigger
     delay: 10
     delayOptions: [10, 30, 60, 120, 300]

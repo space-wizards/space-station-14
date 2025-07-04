@@ -34,7 +34,7 @@
 
 - type: entity
   id: MobGoliath
-  parent: BaseMobAsteroid
+  parent: [ BaseMobAsteroid, MobBloodstream ]
   name: goliath
   description: A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions.
   components:
@@ -52,6 +52,9 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.00
     baseSprintSpeed : 2.00
+  - type: Bloodstream
+    bloodMaxVolume: 350
+    chemicalMaxVolume: 0
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -70,6 +73,7 @@
     factions:
     - SimpleHostile
   - type: HTN
+    constantlyReplan: false
     rootTask:
       task: GoliathCompound
     blackboard:
@@ -77,6 +81,8 @@
         6
       AggroVisionRadius: !type:Single
         10
+      NavSmash: !type:Bool
+        true
   - type: NPCUseActionOnTarget
     actionId: ActionGoliathTentacle
   - type: Tag
@@ -237,6 +243,8 @@
         4
       AggroVisionRadius: !type:Single
         9
+      NavSmash: !type:Bool
+        true
   - type: Butcherable
     spawned:
     - id: FoodHivelordRemains
@@ -289,6 +297,8 @@
         15
       AggroVisionRadius: !type:Single
         15
+      NavSmash: !type:Bool
+        true
   - type: TimedDespawn
     lifetime: 100
 
@@ -319,6 +329,9 @@
     stage: 1
   - type: StaticPrice
     price: 5000
+  - type: Tag
+    tags:
+    - HivelordRemains
 
 - type: entity
   id: FoodHivelordRemainsInert
@@ -335,3 +348,80 @@
     size: Normal
   - type: StaticPrice
     price: 500
+  - type: Tag
+    tags:
+    - HivelordRemains
+
+
+- type: entity
+  id: MobBasilisk
+  parent: [ BaseMobAsteroid, MobBloodstream ]
+  name: basilisk
+  description: A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside.
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Asteroid/basilisk.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: basilisk
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: basilisk
+      Dead:
+        Base: basilisk_dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 3.5
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      80: Dead
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Slash: 7
+        Piercing: 5
+  - type: Gun
+    fireRate: 0.75
+    selectedMode: SemiAuto
+    showExamineText: false
+    availableModes: [ SemiAuto ]
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/syringe_gun.ogg
+  - type: RechargeBasicEntityAmmo
+    showExamineText: false
+    rechargeCooldown: 0
+    rechargeSound: null
+  - type: BasicEntityAmmoProvider
+    proto: BasiliskRay
+    capacity: 1
+    count: 1
+  - type: Bloodstream
+    bloodMaxVolume: 200
+    chemicalMaxVolume: 0
+  - type: NpcFactionMember
+    factions:
+    - SimpleHostile
+  - type: HTN
+    rootTask:
+      task: BasiliskCompound
+    blackboard:
+      VisionRadius: !type:Single
+        7
+      AggroVisionRadius: !type:Single
+        12
+      NavSmash: !type:Bool
+        true
+  - type: Reflect
+    reflectProb: 1
+    reflects:
+    - Energy
+  - type: Butcherable
+    spawned:
+    - id: DiamondOre1
+      amount: 1
+      maxAmount: 3

@@ -200,3 +200,21 @@
     enabled: false
     radius: 1.0
     color: orange
+
+- type: entity
+  parent: [ Welder, BaseXenoborgContraband ]
+  id: RefuelingWelder
+  name: refuling welding tool
+  description: "An slow welder that can refuel itself over time."
+  components:
+  - type: Tool
+    speedModifier: 0.5
+  - type: Welder
+    fuelConsumption: 2
+    fuelLitCost: 1
+  - type: SolutionRegeneration
+    solution: Welder
+    generated:
+      reagents:
+      - ReagentId: WeldingFuel
+        Quantity: 0.1

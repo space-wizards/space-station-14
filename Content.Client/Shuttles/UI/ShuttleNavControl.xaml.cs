@@ -303,7 +303,12 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         const float sqrt2 = 1.41421356f;
         const float dockRadius = DockScale * sqrt2;
         // Worst-case bounds used to cull a dock:
-        Box2 viewBounds = new Box2(-dockRadius, -dockRadius, Size.X + dockRadius, Size.Y + dockRadius);
+        Box2 viewBounds = new Box2(
+            -dockRadius * UIScale,
+            -dockRadius * UIScale,
+            (Size.X + dockRadius) * UIScale,
+            (Size.Y + dockRadius) * UIScale);
+        
         if (_docks.TryGetValue(nent, out var docks))
         {
             foreach (var state in docks)

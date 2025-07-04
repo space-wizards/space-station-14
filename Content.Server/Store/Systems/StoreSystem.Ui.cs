@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
-using Content.Server.PDA.Ringer;
 using Content.Server.Stack;
 using Content.Server.Store.Components;
 using Content.Shared.Actions;
@@ -9,6 +8,7 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;
+using Content.Shared.PDA.Ringer;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.UserInterface;

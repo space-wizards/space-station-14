@@ -136,7 +136,7 @@ public sealed partial class AdminVerbSystem
                     Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
                 var board = Spawn("ChessBoard", xform.Coordinates);
                 var session = _tabletopSystem.EnsureSession(Comp<TabletopGameComponent>(board));
-                xform.Coordinates = _transformSystem.ToCoordinates(session.Position);
+                _transformSystem.SetMapCoordinates(args.Target, session.Position);
                 _transformSystem.SetWorldRotationNoLerp((args.Target, xform), Angle.Zero);
             },
             Impact = LogImpact.Extreme,
@@ -421,7 +421,7 @@ public sealed partial class AdminVerbSystem
                 {
                     var xform = Transform(args.Target);
                     var fixtures = Comp<FixturesComponent>(args.Target);
-                    xform.Anchored = false; // Just in case.
+                    _transformSystem.Unanchor(args.Target, xform); // Just in case.
                     _physics.SetBodyType(args.Target, BodyType.Dynamic, manager: fixtures, body: physics);
                     _physics.SetBodyStatus(args.Target, physics, BodyStatus.InAir);
                     _physics.WakeBody(args.Target, manager: fixtures, body: physics);
@@ -456,7 +456,7 @@ public sealed partial class AdminVerbSystem
                 {
                     var xform = Transform(args.Target);
                     var fixtures = Comp<FixturesComponent>(args.Target);
-                    xform.Anchored = false; // Just in case.
+                    _transformSystem.Unanchor(args.Target); // Just in case.
 
                     _physics.SetBodyType(args.Target, BodyType.Dynamic, body: physics);
                     _physics.SetBodyStatus(args.Target, physics, BodyStatus.InAir);
@@ -877,9 +877,9 @@ public sealed partial class AdminVerbSystem
                 var hadSlipComponent = EnsureComp(args.Target, out SlipperyComponent slipComponent);
                 if (!hadSlipComponent)
                 {
-                    slipComponent.SuperSlippery = true;
-                    slipComponent.ParalyzeTime = 5;
-                    slipComponent.LaunchForwardsMultiplier = 20;
+                    slipComponent.SlipData.SuperSlippery = true;
+                    slipComponent.SlipData.ParalyzeTime = TimeSpan.FromSeconds(5);
+                    slipComponent.SlipData.LaunchForwardsMultiplier = 20;
                 }
 
                 _slipperySystem.TrySlip(args.Target, slipComponent, args.Target, requiresContact: false);

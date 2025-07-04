@@ -72,7 +72,7 @@
   name: viper
   parent: [BaseWeaponPistol, BaseSyndicateContraband]
   id: WeaponPistolViper
-  description: A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses .35 auto ammo.
+  description: A common handgun illegally modified by the Syndicate. The Viper sports a selector switch between semi-auto and ‘rock and roll’. The standard sidearm for any soldier who fights under the three serpents. Feeds from .35 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
@@ -105,7 +105,7 @@
   name: echis
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: WeaponPistolEchis
-  description: A viper for use by cyborgs. Creates .35 ammo on the fly from an internal ammo fabricator, which slowly self-charges.
+  description: A cyborg-mounted weapon system based on the Viper pistol. Creates ammunition on the fly from an internal fabricator, which slowly self-charges.
   components:
   - type: Gun
     fireRate: 5
@@ -140,7 +140,7 @@
   name: cobra
   parent: [ BaseWeaponPistol, BaseSyndicateContraband ]
   id: WeaponPistolCobra
-  description: A rugged, robust operator handgun with inbuilt silencer. Uses .25 caseless ammo.
+  description: Integrally suppressed semi-automatic pistol used by the Syndicate, firing caseless subsonic rounds. Favored by any agent who likes to keep things quiet and leave no evidence behind. Feeds from .25 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
@@ -189,7 +189,7 @@
   name: mk 58
   parent: [BaseWeaponPistol, BaseSecurityContraband]
   id: WeaponPistolMk58
-  description: A cheap, ubiquitous sidearm, produced by a NanoTrasen subsidiary. Uses .35 auto ammo.
+  description: Designed by Nanotrasen’s Small Arms Division, the Mk58 is a conventional semi-automatic pistol with a simple recoil-operated action and excellent reliability. The standard sidearm of Nanotrasen’s station security and emergency response teams. Feeds from .35 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
@@ -210,8 +210,8 @@
 - type: entity
   name: N1984
   parent: [BaseWeaponPistol, BaseSecurityContraband]
-  id: WeaponPistolN1984 # the spaces in description are for formatting.
-  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
+  id: WeaponPistolN1984
+  description: An exceptionally powerful ‘hand cannon’ designed as part of Nanotrasen's BFG initiative. Chambered in .45, the lord’s caliber, it is generally considered too unwieldy for standard use but has become something of a status symbol among Nanotrasen officials. Feeds from .45 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi

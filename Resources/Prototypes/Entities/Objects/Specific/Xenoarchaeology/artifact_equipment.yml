@@ -46,7 +46,7 @@
       capacity: 1
       whitelist:
         components:
-        - Artifact
+        - XenoArtifact
     - type: Weldable
     - type: SuppressArtifactContainer
     - type: RadiationBlockingContainer
@@ -94,7 +94,6 @@
           enum.PaperLabelVisuals.Layer:
             True: { offset: "0.0,0.3125" }
             False: { offset: "0.0,0.0" }
-
     - type: LockVisuals
     - type: ItemSlots
     - type: ContainerContainer
@@ -103,3 +102,93 @@
         paper_label: !type:ContainerSlot
     - type: StaticPrice
       price: 250
+
+- type: entity
+  parent: BaseStorageItem
+  id: HandheldArtifactContainer
+  name: handheld artifact container
+  description: A handheld case used to safely contain and move small artifacts.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/artifact_container.rsi
+    state: icon
+    layers:
+      - state: icon
+        map: [ base ]
+      - state: locked
+        map: ["enum.LockVisualLayers.Lock"]
+        shader: unshaded
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,1,1
+    whitelist:
+      components:
+      - Artifact
+  - type: Item
+    sprite: Objects/Storage/artifact_container.rsi  
+    size: Huge
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 12
+    soundHit:
+      path: "/Audio/Weapons/smash.ogg"
+  - type: Appearance
+  - type: AccessReader
+    access: [["Research"], ["Cargo"]]
+  - type: Lock
+  - type: SuppressArtifactContainer
+  - type: RadiationBlockingContainer
+    resistance: 5
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/toolbox_drop.ogg
+  - type: LockVisuals
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: Attach Label
+      ejectVerbText: Remove Label
+      whitelist:
+        components:
+          - Paper
+      blacklist:
+        tags:
+        - Book
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: icon-open }
+          False: { state: icon }
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captain }
+          Invoice: { state: invoice }
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      paper_label: !type:ContainerSlot
+      storagebase: !type:Container
+        ents: []
+  - type: UseDelay
+    delay: 0.3
+  - type: StaticPrice
+    price: 250

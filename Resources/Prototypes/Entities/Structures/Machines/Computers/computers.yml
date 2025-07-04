@@ -532,7 +532,6 @@
       state: generic_panel_open
   - type: ResearchClient
   - type: AnalysisConsole
-    reportEntityId: PaperArtifactAnalyzer
   - type: DeviceList
   - type: DeviceNetwork
     deviceNetId: Wired
@@ -541,10 +540,10 @@
     ports:
       - ArtifactAnalyzerSender
   - type: ActivatableUI
-    key: enum.ArtifactAnalzyerUiKey.Key
+    key: enum.ArtifactAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
-      enum.ArtifactAnalzyerUiKey.Key:
+      enum.ArtifactAnalyzerUiKey.Key:
         type: AnalysisConsoleBoundUserInterface
       enum.ResearchClientUiKey.Key:
         type: ResearchClientBoundUserInterface
@@ -597,6 +596,9 @@
         type: WiresBoundUserInterface
   - type: CrewManifestViewer
     ownerKey: enum.IdCardConsoleUiKey.Key
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -707,6 +709,7 @@
     color: "#ff0000"
     canShuttle: false
     global: true #announce to everyone they're about to fuck shit up
+    announceSentBy: false # The title already says who they are.
     sound: /Audio/Announcements/war.ogg
   - type: Computer
     board: SyndicateCommsComputerCircuitboard
@@ -740,6 +743,7 @@
     color: "#ff00ff"
     canShuttle: false
     global: true #announce to everyone they're about to fuck shit up
+    announceSentBy: false
     sound: /Audio/Announcements/war.ogg
   - type: Computer
     board: WizardCommsComputerCircuitboard
@@ -853,45 +857,6 @@
     color: "#e6e227"
 
 - type: entity
-  id: ComputerCargoShuttle
-  parent: BaseComputerAiAccess
-  name: cargo shuttle computer
-  description: Used to order the shuttle.
-  components:
-  - type: Sprite
-    layers:
-    - map: ["computerLayerBody"]
-      state: computer
-    - map: ["computerLayerKeyboard"]
-      state: generic_keyboard
-    - map: ["computerLayerScreen"]
-      state: supply
-    - map: ["computerLayerKeys"]
-      state: tech_key
-    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      state: generic_panel_open
-  - type: CargoShuttleConsole
-  - type: ActivatableUI
-    key: enum.CargoConsoleUiKey.Shuttle
-  - type: UserInterface
-    interfaces:
-      enum.CargoConsoleUiKey.Shuttle:
-        type: CargoShuttleConsoleBoundUserInterface
-      enum.WiresUiKey.Key:
-        type: WiresBoundUserInterface
-  - type: Computer
-    board: CargoShuttleComputerCircuitboard
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#b89f25"
-  - type: AccessReader
-    access: [["Cargo"]]
-  - type: GuideHelp
-    guides:
-    - Cargo
-
-- type: entity
   id: ComputerCargoOrders
   parent: BaseComputerAiAccess
   name: cargo request computer
@@ -906,11 +871,11 @@
     - map: ["computerLayerScreen"]
       state: request
     - map: ["computerLayerKeys"]
-      state: tech_key
+      state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: CargoOrderConsole
-  - type: BankClient
+    removeLimitAccess: [ "Quartermaster" ]
   - type: ActiveRadio
     channels:
     - Supply
@@ -942,6 +907,172 @@
   - type: GuideHelp
     guides:
     - Cargo
+
+# Request console variants.
+- type: entity
+  id: ComputerCargoOrdersEngineering
+  parent: ComputerCargoOrders
+  name: engineering request computer
+  description: Used by the engineering department to order supplies.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request-eng
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: CargoOrderConsole
+    account: Engineering
+    announcementChannel: Engineering
+    removeLimitAccess: [ "ChiefEngineer" ]
+    slipPrinter: true
+  - type: ActiveRadio
+    channels:
+    - Engineering
+  - type: Computer
+    board: CargoRequestEngineeringComputerCircuitboard
+  - type: PointLight
+    color: "#c9c042"
+  - type: AccessReader
+    access: [["Engineering"]]
+
+- type: entity
+  id: ComputerCargoOrdersMedical
+  parent: ComputerCargoOrders
+  name: medical request computer
+  description: Used by the medical department to order supplies.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request-med
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: CargoOrderConsole
+    account: Medical
+    announcementChannel: Medical
+    removeLimitAccess: [ "ChiefMedicalOfficer" ]
+    slipPrinter: true
+  - type: ActiveRadio
+    channels:
+    - Medical
+  - type: Computer
+    board: CargoRequestMedicalComputerCircuitboard
+  - type: PointLight
+    color: "#41e0fc"
+  - type: AccessReader
+    access: [["Medical"]]
+
+- type: entity
+  id: ComputerCargoOrdersScience
+  parent: ComputerCargoOrders
+  name: science request computer
+  description: Used by the science department to order supplies.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request-sci
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: CargoOrderConsole
+    account: Science
+    announcementChannel: Science
+    removeLimitAccess: [ "ResearchDirector" ]
+    slipPrinter: true
+  - type: ActiveRadio
+    channels:
+    - Science
+  - type: Computer
+    board: CargoRequestScienceComputerCircuitboard
+  - type: PointLight
+    color: "#b53ca1"
+  - type: AccessReader
+    access: [["Research"]]
+
+- type: entity
+  id: ComputerCargoOrdersSecurity
+  parent: ComputerCargoOrders
+  name: security request computer
+  description: Used by the security department to order supplies.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request-sec
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: CargoOrderConsole
+    account: Security
+    announcementChannel: Security
+    removeLimitAccess: [ "HeadOfSecurity" ]
+    slipPrinter: true
+  - type: ActiveRadio
+    channels:
+    - Security
+  - type: Computer
+    board: CargoRequestSecurityComputerCircuitboard
+  - type: PointLight
+    color: "#d11d00"
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  id: ComputerCargoOrdersService
+  parent: ComputerCargoOrders
+  name: service request computer
+  description: Used by the service department to order supplies.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request-srv
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: CargoOrderConsole
+    account: Service
+    announcementChannel: Service
+    removeLimitAccess: [ "HeadOfPersonnel" ]
+    slipPrinter: true
+  - type: ActiveRadio
+    channels:
+    - Service
+  - type: Computer
+    board: CargoRequestServiceComputerCircuitboard
+  - type: PointLight
+    color: "#afe837"
+  - type: AccessReader
+    access: [["Service"], ["Theatre"]]
 
 - type: entity
   id: ComputerCargoBounty
@@ -982,6 +1113,43 @@
     guides:
     - CargoBounties
     - Cargo
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerFundingAllocation
+  name: funding allocation computer
+  description: Terminal for controlling the distribution of funds and pay to departments.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: allocate # ALLOCATION !!!
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: FundingAllocationConsole
+  - type: ActivatableUI
+    key: enum.FundingAllocationConsoleUiKey.Key
+  - type: ActivatableUIRequiresAccess
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+  - type: UserInterface
+    interfaces:
+      enum.FundingAllocationConsoleUiKey.Key:
+        type: FundingAllocationConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: FundingAllocationComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
 
 - type: entity
   parent: BaseComputerAiAccess
@@ -1035,6 +1203,42 @@
   - type: GuideHelp
     guides:
     - Cloning
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerSalvageJobBoard
+  name: salvage job board
+  description: Console for accessing salvage jobs, if you're tough enough.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: salvjob # givin em a salvjob like hawk tuah
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: SalvageJobBoardConsole
+  - type: ActivatableUI
+    key: enum.SalvageJobBoardUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.SalvageJobBoardUiKey.Key:
+        type: SalvageJobBoardBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: ActiveRadio
+    channels: [ Supply ]
+  - type: Computer
+    board: SalvageJobBoardComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
 
 - type: entity
   id: ComputerSalvageExpedition
@@ -1182,9 +1386,9 @@
     - map: ["computerLayerKeyboard"]
       state: generic_keyboard
     - map: ["computerLayerScreen"]
-      state: request
+      state: transfer
     - map: ["computerLayerKeys"]
-      state: tech_key
+      state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: Anchorable

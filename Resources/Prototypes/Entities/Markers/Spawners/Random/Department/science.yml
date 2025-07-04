@@ -107,19 +107,12 @@
       state: generic
   - type: RandomSpawner
     rarePrototypes:
-    - BorgModuleDefibrillator
+    - BorgModuleAdvancedChemical
     - BorgModuleAdvancedCleaning
-    - BorgModuleClowning
-    - BorgModuleGardening
-    - BorgModuleHarvesting
+    - BorgModuleAdvancedTool
+
     rareChance: 0.1
     prototypes:
-    - BorgModuleCable
     - BorgModuleFireExtinguisher
-    - BorgModuleGPS
-    - BorgModuleRadiationDetection
-    - BorgModuleTool
-    - BorgModuleArtifact
-    - BorgModuleAnomaly
     chance: 0.9
     offset: 0.2

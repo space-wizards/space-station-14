@@ -33,8 +33,9 @@ public sealed class HypospraySystem : SharedHypospraySystem
 
     private bool TryUseHypospray(Entity<HyposprayComponent> entity, EntityUid target, EntityUid user)
     {
-        // if target is ineligible but is a container, try to draw from the container
-        if (!EligibleEntity(target, EntityManager, entity)
+        // if target is ineligible but is a container, try to draw from the container if allowed
+        if (entity.Comp.CanContainerDraw
+            && !EligibleEntity(target, EntityManager, entity)
             && _solutionContainers.TryGetDrawableSolution(target, out var drawableSolution, out _))
         {
             return TryDraw(entity, target, drawableSolution.Value, user);

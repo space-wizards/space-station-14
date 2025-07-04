@@ -63,7 +63,7 @@
 - type: entity
   id: DefibrillatorOneHandedUnpowered
   parent: BaseDefibrillator
-  suffix: One-Handed, Unpowered
+  suffix: One-Handed, Always Powered
 
 - type: entity
   id: DefibrillatorCompact # This should be a research item at some point
@@ -97,7 +97,7 @@
 
 - type: entity
   id: DefibrillatorSyndicate
-  parent: DefibrillatorCompact
+  parent: [ DefibrillatorCompact, BaseSyndicateContraband ]
   name: interdyne defibrillator
   description: Doubles as a self-defense weapon against war-crime inclined tiders.
   components:

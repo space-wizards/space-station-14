@@ -55,6 +55,17 @@
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 132
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 2000
 
 - type: entity
   id: PlasmaReinforcedWindowDirectional
@@ -148,6 +159,7 @@
         - FullTileMask
         layer:
         - GlassLayer
+        density: 2000
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:

@@ -1,0 +1,8 @@
+# gloves
+- type: entity
+  id: ActionToggleKnuckleDustersStun
+  name: Toggle stun knuckle dusters
+  description: Toggles the duster's built in stun baton.
+  components:
+  - type: InstantAction
+    event: !type:ToggleActionEvent

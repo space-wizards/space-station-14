@@ -64,7 +64,9 @@
     tags:
     - BypassInteractionRangeChecks
   - type: PointLight
+    netsync: false
     radius: 6
+    castShadows: false
     enabled: false
 
 # proto for player ghosts specifically

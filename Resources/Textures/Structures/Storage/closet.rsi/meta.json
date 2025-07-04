@@ -1,566 +1,605 @@
 {
-  "version": 1,
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2 sprites based on fire and emergency sprites",
-  "license": "CC-BY-SA-3.0",
-  "states": [
-    {
-      "name": "abductor"
-    },
-    {
-      "name": "abductor_door"
-    },
-    {
-      "name": "abductor_open"
-    },
-    {
-      "name": "agentbox"
-    },
-    {
-      "name": "alien"
-    },
-    {
-      "name": "alien_door"
-    },
-    {
-      "name": "alien_open"
-    },
-    {
-      "name": "brigmedic_door"
-    },
-    {
-      "name": "brigmedic"
-    },
-    {
-      "name": "armory"
-    },
-    {
-      "name": "armory_door"
-    },
-    {
-      "name": "armory_open"
-    },
-    {
-      "name": "atmos"
-    },
-    {
-      "name": "atmos_door"
-    },
-    {
-      "name": "atmos_open"
-    },
-    {
-      "name": "atmos_wardrobe_door"
-    },
-    {
-      "name": "bio"
-    },
-    {
-      "name": "bio_door"
-    },
-    {
-      "name": "bio_jan"
-    },
-    {
-      "name": "bio_jan_door"
-    },
-    {
-      "name": "bio_jan_open"
-    },
-    {
-      "name": "bio_open"
-    },
-    {
-      "name": "bio_sec"
-    },
-    {
-      "name": "bio_sec_door"
-    },
-    {
-      "name": "bio_sec_open"
-    },
-    {
-      "name": "bio_viro"
-    },
-    {
-      "name": "bio_viro_door"
-    },
-    {
-      "name": "bio_viro_open"
-    },
-    {
-      "name": "black_door"
-    },
-    {
-      "name": "blue_door"
-    },
-    {
-      "name": "bomb"
-    },
-    {
-      "name": "bomb_door"
-    },
-    {
-      "name": "bomb_open"
-    },
-    {
-      "name": "janitor_bomb"
-    },
-    {
-      "name": "janitor_bomb_door"
-    },
-    {
-      "name": "janitor_bomb_open"
-    },
-    {
-      "name": "cabinet"
-    },
-    {
-      "name": "cabinet_door"
-    },
-    {
-      "name": "cabinet_open"
-    },
-    {
-      "name": "cap"
-    },
-    {
-      "name": "cap_door"
-    },
-    {
-      "name": "cap_open"
-    },
-    {
-      "name": "cardboard"
-    },
-    {
-      "name": "cardboard_open"
-    },
-    {
-      "name": "cardboard_special"
-    },
-    {
-      "name": "cargo"
-    },
-    {
-      "name": "cargo_door"
-    },
-    {
-      "name": "cargo_open"
-    },
-    {
-      "name": "ce"
-    },
-    {
-      "name": "ce_door"
-    },
-    {
-      "name": "ce_open"
-    },
-    {
-      "name": "chemical_door"
-    },
-    {
-      "name": "cmo"
-    },
-    {
-      "name": "cmo_door"
-    },
-    {
-      "name": "cmo_open"
-    },
-    {
-      "name": "cursed",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "cursed_door",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "cursed_open"
-    },
-    {
-      "name": "cursed_whole",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "decursed",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "decursed_door",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "decursed_open"
-    },
-    {
-      "name": "ecase"
-    },
-    {
-      "name": "ecase_door"
-    },
-    {
-      "name": "ecase_open"
-    },
-    {
-      "name": "egun"
-    },
-    {
-      "name": "emergency"
-    },
-    {
-      "name": "emergency_door"
-    },
-    {
-      "name": "emergency_open"
-    },
-    {
-      "name": "eng"
-    },
-    {
-      "name": "eng_elec_door"
-    },
-    {
-      "name": "eng_open"
-    },
-    {
-      "name": "eng_rad_door"
-    },
-    {
-      "name": "eng_secure"
-    },
-    {
-      "name": "eng_secure_door"
-    },
-    {
-      "name": "eng_secure_open"
-    },
-    {
-      "name": "eng_tool_door"
-    },
-    {
-      "name": "eng_weld_door"
-    },
-    {
-      "name": "fire"
-    },
-    {
-      "name": "fire_door"
-    },
-    {
-      "name": "fire_open"
-    },
-    {
-      "name": "freezer"
-    },
-    {
-      "name": "freezer_icon"
-    },
-    {
-      "name": "freezer_door"
-    },
-    {
-      "name": "freezer_open"
-    },
-    {
-      "name": "generic"
-    },
-    {
-      "name": "generic_door"
-    },
-    {
-      "name": "generic_open"
-    },
-    {
-      "name": "generic_icon"
-    },
-    {
-      "name": "green_door"
-    },
-    {
-      "name": "grey_door"
-    },
-    {
-      "name": "hop"
-    },
-    {
-      "name": "hop_door"
-    },
-    {
-      "name": "hop_open"
-    },
-    {
-      "name": "hos"
-    },
-    {
-      "name": "hos_door"
-    },
-    {
-      "name": "hos_open"
-    },
-    {
-      "name": "hydro"
-    },
-    {
-      "name": "hydro_door"
-    },
-    {
-      "name": "hydro_open"
-    },
-    {
-      "name": "locked"
-    },
-    {
-      "name": "med"
-    },
-    {
-      "name": "med_door"
-    },
-    {
-      "name": "med_open"
-    },
-    {
-      "name": "med_secure"
-    },
-    {
-      "name": "med_secure_door"
-    },
-    {
-      "name": "med_secure_open"
-    },
-    {
-      "name": "metalbox"
-    },
-    {
-      "name": "metalbox_open"
-    },
-    {
-      "name": "mining"
-    },
-    {
-      "name": "mining_door"
-    },
-    {
-      "name": "mining_open"
-    },
-    {
-      "name": "mixed_door"
-    },
-    {
-      "name": "n2"
-    },
-    {
-      "name": "n2_open"
-    },
-    {
-      "name": "n2_door"
-    },
-    {
-      "name": "oldcloset"
-    },
-    {
-      "name": "orange_door"
-    },
-    {
-      "name": "paramed"
-    },
-    {
-      "name": "paramed_door"
-    },
-    {
-      "name": "paramed_open"
-    },
-    {
-      "name": "pink_door"
-    },
-    {
-      "name": "qm"
-    },
-    {
-      "name": "qm_door"
-    },
-    {
-      "name": "qm_open"
-    },
-    {
-      "name": "rd"
-    },
-    {
-      "name": "rd_door"
-    },
-    {
-      "name": "rd_open"
-    },
-    {
-      "name": "red_door"
-    },
-    {
-      "name": "science"
-    },
-    {
-      "name": "science_door"
-    },
-    {
-      "name": "science_open"
-    },
-    {
-      "name": "sec"
-    },
-    {
-      "name": "sec_door"
-    },
-    {
-      "name": "sec_open"
-    },
-    {
-      "name": "secure"
-    },
-    {
-      "name": "secure_door"
-    },
-    {
-      "name": "secure_icon"
-    },
-    {
-      "name": "secure_open"
-    },
-    {
-      "name": "shotgun"
-    },
-    {
-      "name": "shotguncase"
-    },
-    {
-      "name": "shotguncase_door"
-    },
-    {
-      "name": "shotguncase_open"
-    },
-    {
-      "name": "sparking",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "syndicate"
-    },
-    {
-      "name": "syndicate_door"
-    },
-    {
-      "name": "syndicate_open"
-    },
-    {
-      "name": "tac"
-    },
-    {
-      "name": "tac_door"
-    },
-    {
-      "name": "tac_open"
-    },
-    {
-      "name": "unlocked"
-    },
-    {
-      "name": "warden"
-    },
-    {
-      "name": "warden_door"
-    },
-    {
-      "name": "warden_open"
-    },
-    {
-      "name": "welded"
-    },
-    {
-      "name": "white_door"
-    },
-    {
-      "name": "yellow_door"
-    },
-    {
-      "name": "clown"
-    },
-    {
-      "name": "clown_door"
-    },
-    {
-      "name": "clown_open"
-    },
-    {
-      "name": "mime"
-    },
-    {
-      "name": "mime_door"
-    },
-    {
-      "name": "mime_open"
-    },
-    {
-      "name": "representative_door"
-    }
-  ]
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2 sprites based on fire and emergency sprites, genpop lockers by EmoGarbage404 (github), sci bio locker is a resprited bio viro locker by Alpha-Two (github)",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "abductor"
+        },
+        {
+            "name": "abductor_door"
+        },
+        {
+            "name": "abductor_open"
+        },
+        {
+            "name": "agentbox"
+        },
+        {
+            "name": "alien"
+        },
+        {
+            "name": "alien_door"
+        },
+        {
+            "name": "alien_open"
+        },
+        {
+            "name": "brigmedic_door"
+        },
+        {
+            "name": "brigmedic"
+        },
+        {
+            "name": "armory"
+        },
+        {
+            "name": "armory_door"
+        },
+        {
+            "name": "armory_open"
+        },
+        {
+            "name": "atmos"
+        },
+        {
+            "name": "atmos_door"
+        },
+        {
+            "name": "atmos_open"
+        },
+        {
+            "name": "atmos_wardrobe_door"
+        },
+        {
+            "name": "bio"
+        },
+        {
+            "name": "bio_door"
+        },
+        {
+            "name": "bio_jan"
+        },
+        {
+            "name": "bio_jan_door"
+        },
+        {
+            "name": "bio_jan_open"
+        },
+        {
+            "name": "bio_open"
+        },
+        {
+            "name": "bio_sci"
+        },
+        {
+            "name": "bio_sci_door"
+        },
+        {
+            "name": "bio_sci_open"
+        },
+        {
+            "name": "bio_sec"
+        },
+        {
+            "name": "bio_sec_door"
+        },
+        {
+            "name": "bio_sec_open"
+        },
+        {
+            "name": "bio_viro"
+        },
+        {
+            "name": "bio_viro_door"
+        },
+        {
+            "name": "bio_viro_open"
+        },
+        {
+            "name": "black_door"
+        },
+        {
+            "name": "blue_door"
+        },
+        {
+            "name": "bomb"
+        },
+        {
+            "name": "bomb_door"
+        },
+        {
+            "name": "bomb_open"
+        },
+        {
+            "name": "janitor_bomb"
+        },
+        {
+            "name": "janitor_bomb_door"
+        },
+        {
+            "name": "janitor_bomb_open"
+        },
+        {
+            "name": "cabinet"
+        },
+        {
+            "name": "cabinet_door"
+        },
+        {
+            "name": "cabinet_open"
+        },
+        {
+            "name": "cap"
+        },
+        {
+            "name": "cap_door"
+        },
+        {
+            "name": "cap_open"
+        },
+        {
+            "name": "cardboard"
+        },
+        {
+            "name": "cardboard_open"
+        },
+        {
+            "name": "cardboard_special"
+        },
+        {
+            "name": "cargo"
+        },
+        {
+            "name": "cargo_door"
+        },
+        {
+            "name": "cargo_open"
+        },
+        {
+            "name": "ce"
+        },
+        {
+            "name": "ce_door"
+        },
+        {
+            "name": "ce_open"
+        },
+        {
+            "name": "chemical_door"
+        },
+        {
+            "name": "cmo"
+        },
+        {
+            "name": "cmo_door"
+        },
+        {
+            "name": "cmo_open"
+        },
+        {
+            "name": "cursed",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "cursed_door",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "cursed_open"
+        },
+        {
+            "name": "cursed_whole",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "decursed",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "decursed_door",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "decursed_open"
+        },
+        {
+            "name": "ecase"
+        },
+        {
+            "name": "ecase_door"
+        },
+        {
+            "name": "ecase_open"
+        },
+        {
+            "name": "egun"
+        },
+        {
+            "name": "emergency"
+        },
+        {
+            "name": "emergency_door"
+        },
+        {
+            "name": "emergency_open"
+        },
+        {
+            "name": "eng"
+        },
+        {
+            "name": "eng_elec_door"
+        },
+        {
+            "name": "eng_open"
+        },
+        {
+            "name": "eng_rad_door"
+        },
+        {
+            "name": "eng_secure"
+        },
+        {
+            "name": "eng_secure_door"
+        },
+        {
+            "name": "eng_secure_open"
+        },
+        {
+            "name": "eng_tool_door"
+        },
+        {
+            "name": "eng_weld_door"
+        },
+        {
+            "name": "fire"
+        },
+        {
+            "name": "fire_door"
+        },
+        {
+            "name": "fire_open"
+        },
+        {
+            "name": "freezer"
+        },
+        {
+            "name": "freezer_icon"
+        },
+        {
+            "name": "freezer_door"
+        },
+        {
+            "name": "freezer_open"
+        },
+        {
+            "name": "generic"
+        },
+        {
+            "name": "generic_door"
+        },
+        {
+            "name": "generic_open"
+        },
+        {
+            "name": "generic_icon"
+        },
+        {
+            "name": "genpop"
+        },
+        {
+            "name": "genpop_door_1"
+        },
+        {
+            "name": "genpop_door_2"
+        },
+        {
+            "name": "genpop_door_3"
+        },
+        {
+            "name": "genpop_door_4"
+        },
+        {
+            "name": "genpop_door_5"
+        },
+        {
+            "name": "genpop_door_6"
+        },
+        {
+            "name": "genpop_door_7"
+        },
+        {
+            "name": "genpop_door_8"
+        },
+        {
+            "name": "genpop_open"
+        },
+        {
+            "name": "green_door"
+        },
+        {
+            "name": "grey_door"
+        },
+        {
+            "name": "hop"
+        },
+        {
+            "name": "hop_door"
+        },
+        {
+            "name": "hop_open"
+        },
+        {
+            "name": "hos"
+        },
+        {
+            "name": "hos_door"
+        },
+        {
+            "name": "hos_open"
+        },
+        {
+            "name": "hydro"
+        },
+        {
+            "name": "hydro_door"
+        },
+        {
+            "name": "hydro_open"
+        },
+        {
+            "name": "locked"
+        },
+        {
+            "name": "med"
+        },
+        {
+            "name": "med_door"
+        },
+        {
+            "name": "med_open"
+        },
+        {
+            "name": "med_secure"
+        },
+        {
+            "name": "med_secure_door"
+        },
+        {
+            "name": "med_secure_open"
+        },
+        {
+            "name": "metalbox"
+        },
+        {
+            "name": "metalbox_open"
+        },
+        {
+            "name": "mining"
+        },
+        {
+            "name": "mining_door"
+        },
+        {
+            "name": "mining_open"
+        },
+        {
+            "name": "mixed_door"
+        },
+        {
+            "name": "n2"
+        },
+        {
+            "name": "n2_open"
+        },
+        {
+            "name": "n2_door"
+        },
+        {
+            "name": "oldcloset"
+        },
+        {
+            "name": "orange_door"
+        },
+        {
+            "name": "paramed"
+        },
+        {
+            "name": "paramed_door"
+        },
+        {
+            "name": "paramed_open"
+        },
+        {
+            "name": "pink_door"
+        },
+        {
+            "name": "qm"
+        },
+        {
+            "name": "qm_door"
+        },
+        {
+            "name": "qm_open"
+        },
+        {
+            "name": "rd"
+        },
+        {
+            "name": "rd_door"
+        },
+        {
+            "name": "rd_open"
+        },
+        {
+            "name": "red_door"
+        },
+        {
+            "name": "science"
+        },
+        {
+            "name": "science_door"
+        },
+        {
+            "name": "science_open"
+        },
+        {
+            "name": "sec"
+        },
+        {
+            "name": "sec_door"
+        },
+        {
+            "name": "sec_open"
+        },
+        {
+            "name": "secure"
+        },
+        {
+            "name": "secure_door"
+        },
+        {
+            "name": "secure_icon"
+        },
+        {
+            "name": "secure_open"
+        },
+        {
+            "name": "shotgun"
+        },
+        {
+            "name": "shotguncase"
+        },
+        {
+            "name": "shotguncase_door"
+        },
+        {
+            "name": "shotguncase_open"
+        },
+        {
+            "name": "sparking",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "syndicate"
+        },
+        {
+            "name": "syndicate_door"
+        },
+        {
+            "name": "syndicate_open"
+        },
+        {
+            "name": "tac"
+        },
+        {
+            "name": "tac_door"
+        },
+        {
+            "name": "tac_open"
+        },
+        {
+            "name": "unlocked"
+        },
+        {
+            "name": "warden"
+        },
+        {
+            "name": "warden_door"
+        },
+        {
+            "name": "warden_open"
+        },
+        {
+            "name": "welded"
+        },
+        {
+            "name": "white_door"
+        },
+        {
+            "name": "yellow_door"
+        },
+        {
+            "name": "clown"
+        },
+        {
+            "name": "clown_door"
+        },
+        {
+            "name": "clown_open"
+        },
+        {
+            "name": "mime"
+        },
+        {
+            "name": "mime_door"
+        },
+        {
+            "name": "mime_open"
+        },
+        {
+            "name": "representative_door"
+        }
+    ]
 }

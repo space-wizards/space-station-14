@@ -9,11 +9,13 @@ using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
@@ -35,6 +37,8 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     #endregion Dependencies
+
+    private static readonly ProtoId<TagPrototype> HighRiskItemTag = "HighRiskItem";
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
 
@@ -127,10 +131,10 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             return;
 
         if (HasComp<MindContainerComponent>(morsel)
-            || _tagSystem.HasTag(morsel, "HighRiskItem")
+            || _tagSystem.HasTag(morsel, HighRiskItemTag)
             || HasComp<ContainmentFieldGeneratorComponent>(morsel))
         {
-            _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} entered the event horizon of {ToPrettyString(hungry)} and was deleted");
+            _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(morsel):player} entered the event horizon of {ToPrettyString(hungry)} and was deleted");
         }
 
         EntityManager.QueueDeleteEntity(morsel);
@@ -474,7 +478,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (drop_container is null)
             _containerSystem.TryGetContainingContainer((uid, null, null), out drop_container);
 
-        foreach (var container in comp.GetAllContainers())
+        foreach (var container in _containerSystem.GetAllContainers(uid))
         {
             ConsumeEntitiesInContainer(args.EventHorizonUid, container, args.EventHorizon, drop_container);
         }

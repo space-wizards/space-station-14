@@ -1,4 +1,4 @@
-﻿using Content.Server.Radiation.Components;
+using Content.Server.Radiation.Components;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Stacks;
@@ -50,7 +50,7 @@ public sealed partial class RadiationSystem : EntitySystem
 
     public void IrradiateEntity(EntityUid uid, float radsPerSecond, float time)
     {
-        var msg = new OnIrradiatedEvent(time, radsPerSecond);
+        var msg = new OnIrradiatedEvent(time, radsPerSecond, uid);
         RaiseLocalEvent(uid, msg);
     }
 

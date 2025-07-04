@@ -45,5 +45,11 @@
     - type: Sprite
       sprite: Objects/Power/powersink.rsi
       state: powersink
+    - type: Tag
+      tags:
+      - GhostOnlyWarp
     - type: WarpPoint
       location: powersink
+      blacklist:
+        tags:
+        - GhostOnlyWarp

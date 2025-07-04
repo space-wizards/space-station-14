@@ -4,7 +4,7 @@
     sprite: Structures/Storage/canister.rsi
     state: grey
   product: AirCanister
-  cost: 1100
+  cost: 300
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Structures/Storage/canister.rsi
     state: blue
   product: OxygenCanister
-  cost: 1100
+  cost: 300
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -24,7 +24,7 @@
     sprite: Structures/Storage/canister.rsi
     state: blue
   product: LiquidOxygenCanister
-  cost: 2500
+  cost: 1000
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Structures/Storage/canister.rsi
     state: red
   product: NitrogenCanister
-  cost: 1100
+  cost: 300
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -44,7 +44,7 @@
     sprite: Structures/Storage/canister.rsi
     state: red
   product: LiquidNitrogenCanister
-  cost: 2500
+  cost: 1000
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -54,7 +54,7 @@
     sprite: Structures/Storage/canister.rsi
     state: black
   product: CarbonDioxideCanister
-  cost: 2200 # Until someone fixes it co2 can be used to oneshot people so it's more expensive
+  cost: 400 # even though it's poisonous, it comes locked and only damages you slowly even with high amounts (tested)
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -64,7 +64,7 @@
     sprite: Structures/Storage/canister.rsi
     state: black
   product: LiquidCarbonDioxideCanister
-  cost: 4000
+  cost: 1800 # much less deadly than the plasma can (this has been tested) even though this is cold+poison
   category: cargoproduct-category-name-atmospherics
   group: market
 
@@ -74,14 +74,12 @@
     sprite: Structures/Storage/canister.rsi
     state: yellow
   product: StorageCanister
-  cost: 1010 # No gases in it so it's cheaper
+  cost: 210 # No gases in it so it's cheaper
   category: cargoproduct-category-name-atmospherics
   group: market
 
 #- type: cargoProduct
-#  name: "water vapor canister"
 #  id: AtmosphericsWaterVapor
-#  description: "Water vapor canister"
 #  icon:
 #    sprite: Structures/Storage/canister.rsi
 #    state: water_vapor
@@ -96,14 +94,12 @@
     sprite: Structures/Storage/canister.rsi
     state: orange
   product: PlasmaCanister
-  cost: 4000
+  cost: 2500 # for reference, bagel's 3x1 roundstart plasma chamber contains ~16kmol for free, this is $2.5k for 1870mol, so $20k to nearly refill a 3x1 (some are 3x3) chamber
   category: cargoproduct-category-name-atmospherics
   group: market
 
 #- type: cargoProduct
-#  name: "tritium canister"
 #  id: AtmosphericsTritium
-#  description: "Tritium canister"
 #  icon:
 #    sprite: Structures/Storage/canister.rsi
 #    state: green

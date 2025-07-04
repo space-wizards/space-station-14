@@ -58,7 +58,7 @@
   id: SolarPanelPlasma
   parent: SolarPanelBasePhysSprite
   name: solar panel plasma
-  description: A plasma solar panel that generates power.
+  description: A few sheets of plasma glass that generate electricity when hit by photons.
   components:
   - type: PowerSupplier
     supplyRampTolerance: 500
@@ -92,7 +92,7 @@
   id: SolarPanelUranium
   parent: SolarPanelBasePhysSprite
   name: solar panel uranium
-  description: A uranium solar panel that generates power.
+  description: A few sheets of uranium glass that generate electricity when hit by photons.
   components:
   - type: PowerSupplier
     supplyRampTolerance: 500
@@ -126,7 +126,7 @@
   id: SolarPanel
   parent: SolarPanelBasePhysSprite
   name: solar panel
-  description: A solar panel that generates power.
+  description: A few sheets of glass that generate electricity when hit by photons.
   components:
   - type: PowerSupplier
     supplyRampTolerance: 500
@@ -151,6 +151,7 @@
   - type: Construction
     graph: SolarPanel
     node: solarpanel
+  - type: SolarPanelReplacementMarker
 
 - type: entity
   id: SolarPanelBroken

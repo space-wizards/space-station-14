@@ -8,9 +8,9 @@
     outerClothing: ClothingOuterWizard
     shoes: ClothingShoesWizard
     id: WizardPDA
-    ears: ClothingHeadsetAltCommand
+    ears: ClothingHeadsetAltWizard
     belt: ClothingBeltWand
-    # pocket1: TODO: Include wizard teleport scroll
+    pocket1: WizardTeleportScroll
     pocket2: WizardsGrimoire
 
 - type: startingGear
@@ -28,9 +28,3 @@
     jumpsuit: ClothingUniformJumpsuitColorPurple
     head: ClothingHeadHatVioletwizard
     outerClothing: ClothingOuterWizardViolet
-
-- type: startingGear
-  id: WizardHardsuitGear
-  parent: WizardVioletGear
-  equipment:
-    outerClothing: ClothingOuterHardsuitWizard

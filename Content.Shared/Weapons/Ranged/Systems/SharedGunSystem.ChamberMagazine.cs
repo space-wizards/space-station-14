@@ -184,7 +184,7 @@ public abstract partial class SharedGunSystem
                     // The problem is client will dump the cartridge on the ground and the new server state
                     // won't correspond due to randomness so looks weird
                     // but we also need to always take it from the chamber or else ammocount won't be correct.
-                    TransformSystem.DetachParentToNull(chambered.Value, Transform(chambered.Value));
+                    TransformSystem.DetachEntity(chambered.Value, Transform(chambered.Value));
                 }
 
                 UpdateAmmoCount(uid);

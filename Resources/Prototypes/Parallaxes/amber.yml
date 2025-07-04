@@ -1,0 +1,52 @@
+- type: parallax
+  id: AmberStation
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/space_map2.png"
+      slowness: 0.995
+      scale: "1, 1"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
+      slowness: 0.994
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
+      slowness: 0.993
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/Asteroids.png"
+      slowness: 0.990
+      scale: "0.4, 0.4"
+      worldHomePosition: "20.0, 100.0"
+      scrolling: "0.01, 0.0"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/Asteroids.png"
+      slowness: 0.987
+      scale: "0.6, 0.6"
+      scrolling: "-0.01, 0.0"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/debris_large.png"
+      slowness: 0.97
+      scale: "0.45, 0.45"
+      scrolling: "0.02, 0.0"
+      worldHomePosition: "0.0, -100"
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/debris_small.png"
+      slowness: 0.95
+      scale: "0.50, 0.50"
+      scrolling: "-0.02, 0.0"
+      worldHomePosition: "0.0, 100"
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+        slowness: 0.875
+  layersLQUseHQ: false

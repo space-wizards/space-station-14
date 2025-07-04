@@ -1,56 +1,41 @@
 - type: construction
   id: ClosetSteel
-  name: closet
   graph: ClosetSteel
   startNode: start
   targetNode: done
   category: construction-category-storage
-  description: A tall steel box that cannot be locked.
-  icon: { sprite: Structures/Storage/closet.rsi, state: generic_icon }
   objectType: Structure
 
 - type: construction
   id: ClosetSteelSecure
-  name: secure closet
   graph: ClosetSteelSecure
   startNode: start
   targetNode: done
   category: construction-category-storage
-  description: A tall steel box that can be locked.
-  icon: { sprite: Structures/Storage/closet.rsi, state: secure_icon }
   objectType: Structure
 
 - type: construction
   id: ClosetFreezer
-  name: freezer
   graph: ClosetFreezer
   startNode: start
   targetNode: done
   category: construction-category-storage
-  description: A tall steel box with freezing abilities.
-  icon: { sprite: Structures/Storage/closet.rsi, state: freezer_icon }
   objectType: Structure
 
 - type: construction
   id: GunSafe
-  name: gun safe
   graph: GunSafe
   startNode: start
   targetNode: done
   category: construction-category-storage
-  description: A durable gun safe that can be locked.
-  icon: { sprite: Structures/Storage/closet.rsi, state: shotguncase }
   objectType: Structure
 
 - type: construction
   id: ClosetWall
-  name: wall closet
   graph: ClosetWall
   startNode: start
   targetNode: done
   category: construction-category-storage
-  description: A standard-issue Nanotrasen storage unit, now on walls.
-  icon: { sprite: Structures/Storage/wall_locker.rsi, state: generic_icon }
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true

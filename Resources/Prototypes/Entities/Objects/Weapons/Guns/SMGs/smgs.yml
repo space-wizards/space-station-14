@@ -62,7 +62,7 @@
   name: Atreides
   parent: [BaseWeaponSubMachineGun, BaseMajorContraband]
   id: WeaponSubMachineGunAtreides
-  description: Pla-ket-ket-ket-ket! Uses .35 auto ammo.
+  description: A rare machine pistol hailing from the Corporate Wars. Its extremely high fire rate and compact profile make it useful in close quarters combat. Despite its age, it is in remarkably good condition. Feeds from .35 SMG magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
@@ -85,7 +85,7 @@
   name: C-20r submachine gun
   parent: [BaseWeaponSubMachineGun, BaseSyndicateContraband]
   id: WeaponSubMachineGunC20r
-  description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
+  description: A classic and widespread submachine gun, infamous for its use by the Gorlex Marauders. One of the first homegrown Waffle Corp. designs, it remains in service today. Feeds from .35 SMG magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -123,7 +123,7 @@
   name: Drozd
   parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunDrozd
-  description: An excellent fully automatic Heavy SMG.
+  description: A modern SMG manufactured by Nanotrasen’s Small Arms Division. It features an exceptional rate of fire in burst mode, useful for holding defensive angles or engaging hostiles at longer ranges. Feeds from .35 SMG magazines.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
@@ -181,7 +181,7 @@
   name: WT550
   parent: [ BaseWeaponSubMachineGun, BaseSecurityContraband ]
   id: WeaponSubMachineGunWt550
-  description: An excellent SMG, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
+  description: A truly unique firearm, the WT550 was designed by Nanotrasen's Small Arms Division as a compact submachine gun fully controllable with one hand. It contains an exotic internal recoil buffer and feeds from special top-mounted .35 magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi

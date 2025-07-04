@@ -1,0 +1,54 @@
+﻿name: Trailing Whitespace Check
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
+
+jobs:
+  build:
+    name: Trailing Whitespace Check
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4.2.2
+    - name: Get changed text files
+      id: changed-files
+      uses: tj-actions/changed-files@v46.0.5
+      with:
+        files: |
+          **.cs
+          **.yml
+          **.swsl
+          **.json
+          **.py
+    - name: Check for trailing whitespace and EOF newline
+      env:
+        ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+      run: |
+        has_trailing_whitespace=0
+        has_missing_eof_newline=0
+
+        for file in ${ALL_CHANGED_FILES}; do
+          echo "Checking $file"
+
+          # Check for trailing whitespace
+          if grep -qP '[ \t]+$' "$file"; then
+            echo "::error file=$file::Trailing whitespace found"
+            has_trailing_whitespace=1
+          fi
+
+          # Check for missing EOF newline
+          if [ -f "$file" ] && [ -s "$file" ]; then
+            last_char=$(tail -c 1 "$file")
+            if [ "$last_char" != "" ] && [ "$last_char" != $'\n' ]; then
+              echo "::error file=$file::Missing newline at end of file"
+              has_missing_eof_newline=1
+            fi
+          fi
+        done
+
+        if [ "$has_trailing_whitespace" -eq 1 ] || [ "$has_missing_eof_newline" -eq 1 ]; then
+          echo "Issues found: trailing whitespace or missing EOF newline."
+          echo "We recommend using an IDE to prevent this from happening."
+          exit 1
+        fi

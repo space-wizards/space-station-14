@@ -25,13 +25,6 @@
   name: jetpack
   description: It's a jetpack. It can hold 5 L of gas.
   components:
-    - type: InputMover
-      toParent: true
-    - type: MovementSpeedModifier
-      weightlessAcceleration: 1
-      weightlessFriction: 0.3
-      weightlessModifier: 1.2
-    - type: CanMoveInAir
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       state: icon
@@ -42,6 +35,10 @@
       interfaces:
         enum.SharedGasTankUiKey.Key:
           type: GasTankBoundUserInterface
+    - type: UseDelay
+      delays:
+        gasTank:
+          length: 1.0
     - type: Clothing
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       quickEquip: false
@@ -284,3 +281,22 @@
       moles:
         - 1.025689525 # oxygen
         - 1.025689525 # nitrogen
+
+# Infinite jetpack
+- type: entity
+  parent: [ JetpackBlack, BaseXenoborgContraband ]
+  id: JetpackXenoborg
+  name: xenoborg jetpack
+  suffix: Infinite
+  components:
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      volume: 5
+      temperature: 293.15
+  - type: Jetpack
+    moleUsage: 0
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1.3
+    weightlessFriction: 0.3
+    weightlessModifier: 1

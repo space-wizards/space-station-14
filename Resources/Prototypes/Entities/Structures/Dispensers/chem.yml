@@ -1,7 +1,7 @@
 - type: entity
-  id: ChemDispenser
+  id: ChemDispenserEmpty
   name: chemical dispenser
-  suffix: Filled
+  suffix: Empty
   parent: ReagentDispenserBase
   description: An industrial grade chemical dispenser.
   components:
@@ -9,11 +9,11 @@
     sprite: Structures/dispensers.rsi
     state: industrial-working
     snapCardinals: true
-  - type: ReagentDispenser
-    storageWhitelist:
+  - type: Storage
+    openOnActivate: false
+    whitelist:
       tags:
       - ChemDispensable
-    pack: ChemDispenserStandardInventory
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Destructible
@@ -50,10 +50,31 @@
         - MachineLayer
 
 - type: entity
-  id: ChemDispenserEmpty
+  id: ChemDispenser
   name: chemical dispenser
-  suffix: Empty
-  parent: ChemDispenser
+  suffix: Filled
+  parent: ChemDispenserEmpty
   components:
   - type: ReagentDispenser
-    pack: EmptyInventory
+  - type: StorageFill
+    contents:
+      - id: JugAluminium
+      - id: JugCarbon
+      - id: JugChlorine
+      - id: JugCopper
+      - id: JugEthanol
+      - id: JugFluorine
+      - id: JugSugar
+      - id: JugHydrogen
+      - id: JugIodine
+      - id: JugIron
+      - id: JugLithium
+      - id: JugMercury
+      - id: JugNitrogen
+      - id: JugOxygen
+      - id: JugPhosphorus
+      - id: JugPotassium
+      - id: JugRadium
+      - id: JugSilicon
+      - id: JugSodium
+      - id: JugSulfur

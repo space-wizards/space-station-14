@@ -27,7 +27,7 @@
   parent: BaseItem
   name: anomaly locator
   description: A device designed to aid in the locating of anomalies. Did you check the gas miners?
-  suffix: Unpowered
+  suffix: Always Powered
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalylocator.rsi
@@ -48,9 +48,8 @@
   - type: ProximityBeeper
   - type: ProximityDetector
     range: 20
-    criteria:
-      components:
-      - Anomaly
+    components:
+    - type: Anomaly
   - type: Beeper
     isMuted: true
     minBeepInterval: 0.15
@@ -64,7 +63,7 @@
 - type: entity
   id: AnomalyLocator
   parent: [ AnomalyLocatorUnpowered, PowerCellSlotSmallItem ]
-  suffix: Powered
+  suffix: ""
   components:
   - type: PowerCellDraw
     drawRate: 1
@@ -86,7 +85,7 @@
   parent: AnomalyLocatorUnpowered
   name: wide-spectrum anomaly locator
   description: A device that looks for anomalies from an extended distance, but has no way to determine the distance to them.
-  suffix: Unpowered
+  suffix: Always Powered
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalylocatorwide.rsi
@@ -95,10 +94,11 @@
     maxBeepInterval: 0.5
   - type: ProximityDetector
     range: 40
+
 - type: entity
   id: AnomalyLocatorWide
   parent: [ AnomalyLocatorWideUnpowered, PowerCellSlotSmallItem ]
-  suffix: Powered
+  suffix: ""
   components:
   - type: PowerCellDraw
     drawRate: 1

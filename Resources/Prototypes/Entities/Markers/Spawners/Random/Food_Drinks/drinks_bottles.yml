@@ -11,33 +11,50 @@
       - state: red
       - sprite: Objects/Consumable/Drinks/ginbottle.rsi
         state: icon
-  - type: RandomSpawner
-  #small item
-    prototypes:
-      - DrinkAbsintheBottleFull
-      - DrinkBlueCuracaoBottleFull
-      - DrinkCognacBottleFull
-      - DrinkGrenadineBottleFull
-      - DrinkGinBottleFull
-      - DrinkGildlagerBottleFull
-      - DrinkCoffeeLiqueurBottleFull
-      - DrinkMelonLiquorBottleFull
-      - DrinkPatronBottleFull
-      - DrinkRumBottleFull
-      - DrinkSakeBottleFull
-      - DrinkTequilaBottleFull
-      - DrinkVermouthBottleFull
-      - DrinkVodkaBottleFull
-      - DrinkWhiskeyBottleFull
-      - DrinkWineBottleFull
-      - DrinkBeerBottleFull
-      - DrinkBeerGrowler
-      - DrinkAleBottleFull
-      - DrinkAleBottleFullGrowler
-      - DrinkChampagneBottleFull
-    chance: 0.8
-    offset: 0.0
-    #rare
-    rarePrototypes:
-      - DrinkPoisonWinebottleFull
-    rareChance: 0.01
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomAllAlcoholTable
+      prob: 0.8
+
+- type: entityTable
+  id: RandomAllAlcoholTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomCommonAlcoholTable
+      weight: 0.95
+    - !type:NestedSelector
+      tableId: RandomRareAlcoholTable
+      weight: 0.05
+
+- type: entityTable
+  id: RandomCommonAlcoholTable
+  table: !type:GroupSelector
+    children:
+    - id: DrinkAbsintheBottleFull
+    - id: DrinkBlueCuracaoBottleFull
+    - id: DrinkCognacBottleFull
+    - id: DrinkGrenadineBottleFull
+    - id: DrinkGinBottleFull
+    - id: DrinkGildlagerBottleFull
+    - id: DrinkCoffeeLiqueurBottleFull
+    - id: DrinkMelonLiquorBottleFull
+    - id: DrinkPatronBottleFull
+    - id: DrinkRumBottleFull
+    - id: DrinkSakeBottleFull
+    - id: DrinkTequilaBottleFull
+    - id: DrinkVermouthBottleFull
+    - id: DrinkVodkaBottleFull
+    - id: DrinkWhiskeyBottleFull
+    - id: DrinkWineBottleFull
+    - id: DrinkBeerBottleFull
+    - id: DrinkBeerGrowler
+    - id: DrinkAleBottleFull
+    - id: DrinkAleBottleFullGrowler
+    - id: DrinkChampagneBottleFull
+
+- type: entityTable
+  id: RandomRareAlcoholTable
+  table: !type:GroupSelector
+    children:
+    - id: DrinkPoisonWinebottleFull
