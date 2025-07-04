@@ -1,5 +1,5 @@
-using Content.Server.Animals.Components;
 using Content.Server.Chat.Systems;
+using Content.Server.Vocalization.Components;
 using Content.Shared.ActionBlocker;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -22,10 +22,10 @@ public sealed partial class VocalizationSystem : EntitySystem
     /// Try speaking by raising a TryVocalizeEvent
     /// This event is passed to systems adding a message to it and setting it to handled
     /// </summary>
-    private void TrySpeak(Entity<Components.VocalizerComponent> entity)
+    private void TrySpeak(Entity<VocalizerComponent> entity)
     {
         var tryVocalizeEvent = new TryVocalizeEvent();
-        RaiseLocalEvent(entity.Owner,ref tryVocalizeEvent);
+        RaiseLocalEvent(entity.Owner, ref tryVocalizeEvent);
 
         // if the event was never handled, return
         // this happens if there are no components that trigger systems to add a message to this event
@@ -43,7 +43,7 @@ public sealed partial class VocalizationSystem : EntitySystem
     /// <summary>
     /// Actually say something.
     /// </summary>
-    private void Speak(Entity<Components.VocalizerComponent> entity, string message)
+    private void Speak(Entity<VocalizerComponent> entity, string message)
     {
         // raise a VocalizeEvent
         // this can be handled by other systems to speak using a method other than local chat
@@ -71,7 +71,7 @@ public sealed partial class VocalizationSystem : EntitySystem
         var currentGameTime = _gameTiming.CurTime;
 
         // query to get all entities with a VocalizeComponent
-        var query = EntityQueryEnumerator<Components.VocalizerComponent>();
+        var query = EntityQueryEnumerator<VocalizerComponent>();
         while (query.MoveNext(out var uid, out var vocalizer))
         {
             // go to next entity if it is too early for this one to speak

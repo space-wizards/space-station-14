@@ -1,6 +1,8 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Administration.Systems;
 using Content.Server.Animals.Components;
+using Content.Server.Mind;
 using Content.Server.Radio;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
@@ -8,6 +10,7 @@ using Content.Server.Vocalization.Systems;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Verbs;
+using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -25,12 +28,15 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
 
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<EraseEvent>(OnErase);
 
         SubscribeLocalEvent<ParrotMemoryComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
 
@@ -42,7 +48,12 @@ public sealed partial class ParrotMemorySystem : EntitySystem
         SubscribeLocalEvent<ParrotMemoryComponent, TryVocalizeEvent>(OnTryVocalize);
     }
 
-    private void OnGetVerbs(Entity<ParrotMemoryComponent> ent, ref GetVerbsEvent<Verb> args)
+    private void OnErase(ref EraseEvent args)
+    {
+        DeletePlayerMessages(args.PlayerNetUserId);
+    }
+
+    private void OnGetVerbs(Entity<ParrotMemoryComponent> entity, ref GetVerbsEvent<Verb> args)
     {
         // limit this to admins
         if (!_admin.IsAdmin(args.User))
@@ -54,7 +65,7 @@ public sealed partial class ParrotMemorySystem : EntitySystem
             Text = Loc.GetString("parrot-verb-clear-memory"),
             Category = VerbCategory.Admin,
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/clear-parrot.png")),
-            Act = () => ent.Comp.SpeechMemory.Clear(),
+            Act = () => entity.Comp.SpeechMemories.Clear(),
         };
 
         args.Verbs.Add(clearMemoryVerb);
@@ -92,14 +103,14 @@ public sealed partial class ParrotMemorySystem : EntitySystem
         if (args.Handled)
             return;
 
-        // if there are no messages, return
-        if (entity.Comp.SpeechMemory.Count == 0)
+        // if there are no memories, return
+        if (entity.Comp.SpeechMemories.Count == 0)
             return;
 
-        // get a random message from the memory
-        var message = _random.Pick(entity.Comp.SpeechMemory);
+        // get a random memory from the memory list
+        var memory = _random.Pick(entity.Comp.SpeechMemories);
 
-        args.Message = message;
+        args.Message = memory.Message;
         args.Handled = true;
     }
 
@@ -178,15 +189,57 @@ public sealed partial class ParrotMemorySystem : EntitySystem
         // specifies what message was learnt by what entity, and who taught the message to that entity
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Parroting entity {ToPrettyString(entity):entity} learned the phrase \"{message}\" from {ToPrettyString(source):speaker}");
 
-        // add a new message if there is space in the memory
-        if (entity.Comp.SpeechMemory.Count < entity.Comp.MaxSpeechMemory)
+        NetUserId? sourceNetUserId = null;
+        if (_mind.TryGetMind(source, out _, out var mind))
         {
-            entity.Comp.SpeechMemory.Add(message);
+            sourceNetUserId = mind.UserId;
+        }
+
+        var newMemory = new SpeechMemory(sourceNetUserId, message);
+
+        // add a new message if there is space in the memory
+        if (entity.Comp.SpeechMemories.Count < entity.Comp.MaxSpeechMemory)
+        {
+            entity.Comp.SpeechMemories.Add(newMemory);
             return;
         }
 
         // if there's no space in memory, replace something at random
-        var replaceIdx = _random.Next(entity.Comp.SpeechMemory.Count);
-        entity.Comp.SpeechMemory[replaceIdx] = message;
+        var replaceIdx = _random.Next(entity.Comp.SpeechMemories.Count);
+        entity.Comp.SpeechMemories[replaceIdx] = newMemory;
+    }
+
+    /// <summary>
+    /// Delete all messages from a specified player on all ParrotMemoryComponents
+    /// </summary>
+    /// <param name="playerNetUserId">The player of whom to delete messages</param>
+    private void DeletePlayerMessages(NetUserId playerNetUserId)
+    {
+        var query = EntityQueryEnumerator<ParrotMemoryComponent>();
+        while (query.MoveNext(out _, out var memory))
+        {
+            DeletePlayerMessages(memory, playerNetUserId);
+        }
+    }
+
+    /// <summary>
+    /// Delete all messages from a specified player on a given ParrotMemoryComponent
+    /// </summary>
+    /// <param name="memoryComponent">The ParrotMemoryComponent on which to delete messages</param>
+    /// <param name="playerNetUserId">The player of whom to delete messages</param>
+    private void DeletePlayerMessages(ParrotMemoryComponent memoryComponent, NetUserId playerNetUserId)
+    {
+        for (var i = 0; i < memoryComponent.SpeechMemories.Count; i++)
+        {
+            var memory = memoryComponent.SpeechMemories[i];
+
+            if (memory.NetUserId is null)
+                continue;
+
+            if (!memory.NetUserId.Equals(playerNetUserId))
+                continue;
+
+            memoryComponent.SpeechMemories.RemoveSwap(i);
+        }
     }
 }

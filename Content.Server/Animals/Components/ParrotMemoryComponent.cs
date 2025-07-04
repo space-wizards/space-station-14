@@ -1,3 +1,4 @@
+using Robust.Shared.Network;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Animals.Components;
@@ -10,10 +11,10 @@ namespace Content.Server.Animals.Components;
 public sealed partial class ParrotMemoryComponent : Component
 {
     /// <summary>
-    /// List of speech entries this entity has learned
+    /// List of SpeechMemory records this entity has learned
     /// </summary>
     [DataField]
-    public List<string> SpeechMemory = new();
+    public List<SpeechMemory> SpeechMemories = [];
 
     /// <summary>
     /// The % chance an entity with this component learns a phrase when learning is off cooldown
@@ -52,3 +53,5 @@ public sealed partial class ParrotMemoryComponent : Component
     [DataField]
     public int MaxEntryLength = 50;
 }
+
+public record struct SpeechMemory(NetUserId? NetUserId, string Message);
