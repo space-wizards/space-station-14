@@ -2,3 +2,8 @@
   license: "CC-BY-4.0"
   copyright: 'Darkrell, JustAdler'
   source: "https://github.com/ss14Starlight/space-station-14"
+
+- files: ["omega.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "made by stickycheZ101"
+  source: "https://github.com/stickycheZ101"

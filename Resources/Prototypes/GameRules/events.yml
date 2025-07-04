@@ -128,7 +128,8 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-bureaucratic-error-announcement
-    minimumPlayers: 25
+    earliestStart: 45 # 🌟Starlight🌟 Why could this happen roundstart?!
+    minimumPlayers: 40 # 🌟Starlight🌟
     weight: 3
     duration: 1
   - type: BureaucraticErrorRule

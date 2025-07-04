@@ -111,6 +111,8 @@ namespace Content.Client.Lobby.UI
 
         private List<VoicePrototype> _voices = [];
 
+        private List<VoicePrototype> _siliconVoices = []; // 🌟Starlight🌟
+
         public HumanoidProfileEditor(
             IClientPreferencesManager preferencesManager,
             IConfigurationManager configurationManager,
@@ -489,6 +491,22 @@ namespace Content.Client.Lobby.UI
             };
             VoicePreviewButton.OnPressed +=
                 _ => _entManager.System<TextToSpeechSystem>().RequestPreviewTts(Profile?.Voice ?? "");
+
+            // 🌟Starlight🌟 start
+            _siliconVoices = _prototypeManager
+                .EnumeratePrototypes<VoicePrototype>()
+                .Where(o => o.Silicon)
+                .ToList();
+
+            SiliconVoiceButton.OnItemSelected += args =>
+            {
+                SiliconVoiceButton.SelectId(args.Id);
+                Profile = Profile?.WithSiliconVoice(_siliconVoices[args.Id].ID);
+                IsDirty = true;
+            };
+            SiliconVoicePreviewButton.OnPressed +=
+                _ => _entManager.System<TextToSpeechSystem>().RequestPreviewTts(Profile?.SiliconVoice ?? "");
+            // 🌟Starlight🌟 end
         }
         private void UpdateVoicesControls()
         {
@@ -517,6 +535,37 @@ namespace Content.Client.Lobby.UI
             if (voiceChoiceId != -1)
                 VoiceButton.TrySelectId(voiceChoiceId);
         }
+        // 🌟Starlight🌟 Start
+        private void UpdateSiliconVoicesControls()
+        {
+            if (Profile is null)
+                return;
+
+            SiliconVoiceButton.Clear();
+
+            for (var i = 0; i < _siliconVoices.Count; i++)
+            {
+                var voice = _siliconVoices[i];
+
+                SiliconVoiceButton.AddItem($"[{voice.Sex}] {Loc.GetString(voice.Name)}", i);
+            }
+
+            if (string.IsNullOrEmpty(Profile.SiliconVoice))
+            {
+                var available = _siliconVoices.ToArray();
+                if (available.Length > 0)
+                {
+                    var index = new Random().Next(0, available.Length);
+                    Profile.SiliconVoice = available[index].ID;
+                }
+            }
+
+            var siliconVoiceChoiceId = _siliconVoices.FindIndex(x => x.ID == Profile.SiliconVoice);
+            if (siliconVoiceChoiceId != -1)
+                SiliconVoiceButton.TrySelectId(siliconVoiceChoiceId);
+        }
+        // 🌟Starlight🌟 end
+
         /// <summary>
         /// Refreshes the flavor text editor status.
         /// </summary>
@@ -822,6 +871,7 @@ namespace Content.Client.Lobby.UI
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
             UpdateVoicesControls();
+            UpdateSiliconVoicesControls(); // 🌟Starlight🌟
 
             RefreshAntags();
             RefreshJobs();
@@ -1228,6 +1278,7 @@ namespace Content.Client.Lobby.UI
             Markings.SetSex(newSex);
             ReloadPreview();
             UpdateVoicesControls();
+            UpdateSiliconVoicesControls(); // 🌟Starlight🌟
         }
 
         private void SetGender(Gender newGender)
