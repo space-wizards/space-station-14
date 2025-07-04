@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Filter categories added to the security techfab.
-    type: Add
-  id: 8225
-  time: '2025-04-18T03:52:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35594
 - author: Fildrance
   changes:
   - message: returned deconstruct to the top level option on RCD
@@ -3887,3 +3880,11 @@
   id: 8736
   time: '2025-07-04T02:02:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38667
+- author: Velken
+  changes:
+  - message: Revenants' malfunction ability now properly works on MediBots and Stasis
+      Beds again.
+    type: Fix
+  id: 8737
+  time: '2025-07-04T05:08:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38664
