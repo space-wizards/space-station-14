@@ -29,16 +29,16 @@ public sealed class DeviceListUserInterfaceState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class DeviceLinkUserInterfaceState : BoundUserInterfaceState
 {
-    public readonly List<SourcePortPrototype> Sources;
-    public readonly List<SinkPortPrototype> Sinks;
+    public readonly ProtoId<SourcePortPrototype>[] Sources;
+    public readonly ProtoId<SinkPortPrototype>[] Sinks;
     public readonly HashSet<(ProtoId<SourcePortPrototype> source, ProtoId<SinkPortPrototype> sink)> Links;
     public readonly List<(string source, string sink)>? Defaults;
     public readonly string SourceAddress;
     public readonly string SinkAddress;
 
     public DeviceLinkUserInterfaceState(
-        List<SourcePortPrototype> sources,
-        List<SinkPortPrototype> sinks,
+        ProtoId<SourcePortPrototype>[] sources,
+        ProtoId<SinkPortPrototype>[] sinks,
         HashSet<(ProtoId<SourcePortPrototype> source, ProtoId<SinkPortPrototype> sink)> links,
         string sourceAddress,
         string sinkAddress,
