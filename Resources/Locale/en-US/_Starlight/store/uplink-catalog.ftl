@@ -16,6 +16,10 @@ uplink-magillitis-serum-implanter-desc = An experimental biochip which causes ir
 uplink-pitbull-bundle-name = Pitbull Bundle
 uplink-pitbull-bundle-desc = A large bullpup rifle with a low fire-rate but excellent accuracy. Chambered in .45 magnum. 
 
+
+uplink-rifle-magazine-pitbull-name = Bullpup magazine (.45 magnum)
+uplink-rifle-magazine-pitbull-desc = Bullpup magazines with 20 cartrides. Compatible with the Pitbull.
+
 uplink-nightvision-eyes = Night Vision Cyber Eyes
 uplink-nightvision-eyes-desc = Allows you to see in the dark but makes you more vulnerable to flashes. (Warning: You will need a surgical assistant for the procedure.)
 uplink-thermalvision-eyes = Thermal Vision Cyber Eyes
