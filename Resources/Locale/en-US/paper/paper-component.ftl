@@ -21,6 +21,6 @@ paper-ui-fill-level = {$currentLength}/{$maxLength}
 
 paper-ui-save-button = Save ({$keybind})
 paper-ui-reload-button = Reload
-paper-ui-reload-tooltip = Page has been modified by another player. Reload will lose your edit.
+paper-ui-reload-tooltip = Page has been modified by another player. Reloading will lose your edit.
 
 paper-tamper-proof-modified-message = This page was written using tamper-proof ink.

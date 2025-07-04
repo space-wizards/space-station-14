@@ -114,6 +114,7 @@ namespace Content.Client.Paper.UI
             ReloadButton.OnPressed += _ =>
             {
                 FillInputText();
+                ReloadButton.Visible = false;
             };
 
             SaveButton.OnPressed += _ =>
