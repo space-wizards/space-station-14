@@ -148,6 +148,11 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
+  #region Starlight
+  - type: Butcherable
+    spawned:
+      - id: ClothingHandsCatPawsBlack
+  #endregion Starlight
 
 - type: entity
   name: Exception
@@ -168,6 +173,11 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
+  #region Starlight
+  - type: Butcherable
+    spawned:
+      - id: ClothingHandsCatPawsBrown
+  #endregion Starlight
 
 - type: entity
   name: Floppa
@@ -195,6 +205,11 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalNamedCat
+    #region Starlight
+  - type: Butcherable
+    spawned:
+      - id: ClothingHandsCatPawsBrown
+    #endregion Starlight
 
 - type: entity
   name: Bandito
@@ -250,6 +265,7 @@
     spawned:
     - id: FoodMeat
       amount: 2
+    - id: ClothingHandsCatPawsWhite # Starlight
   - type: InteractionPopup
     successChance: 0.9
     interactSuccessString: petting-success-bingus

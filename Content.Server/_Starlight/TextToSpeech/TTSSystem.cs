@@ -5,6 +5,8 @@ using Content.Server._Starlight.Radio.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Starlight.TextToSpeech;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Radio.Components;
 using Content.Shared.Starlight;
 using Content.Shared.Starlight.CCVar;
@@ -152,6 +154,18 @@ public sealed partial class TTSSystem : EntitySystem
                 if (voicePrototypes.Length != 0)
                 {
                     var index = Random.Shared.Next(voicePrototypes.Length);
+                    if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind 
+                    && TryComp<MindComponent>(mindContainer.Mind, out var mind))
+                    {
+                        for(int i = 0; i < voicePrototypes.Length; i++)
+                        {
+                            if(voicePrototypes[i].Value.Name == mind.Voice)
+                            {
+                                index = i;
+                                break;
+                            }
+                        }
+                    }
                     var prototype = voicePrototypes[index];
                     voice = prototype.Value.Voice;
                     component.VoicePrototypeId = prototype.Value.ID;
@@ -163,6 +177,18 @@ public sealed partial class TTSSystem : EntitySystem
                 if (voicePrototypes.Length != 0)
                 {
                     var index = Random.Shared.Next(voicePrototypes.Length);
+                    if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind 
+                    && TryComp<MindComponent>(mindContainer.Mind, out var mind))
+                    {
+                        for(int i = 0; i < voicePrototypes.Length; i++)
+                        {
+                            if(voicePrototypes[i].Value.Name == mind.SiliconVoice)
+                            {
+                                index = i;
+                                break;
+                            }
+                        }
+                    }
                     var prototype = voicePrototypes[index];
                     voice = prototype.Value.Voice;
                     component.VoicePrototypeId = prototype.Value.ID;

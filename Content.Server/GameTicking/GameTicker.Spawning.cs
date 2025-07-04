@@ -44,7 +44,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly NewLifeSystem _newLifeSystem = default!; //🌟Starlight🌟
         [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!; //🌟Starlight🌟
         [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
-        [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         public const string ObserverPrototypeName = "MobObserver";
@@ -109,7 +108,7 @@ namespace Content.Server.GameTicking
             var stationJobCounts = spawnableStations.ToDictionary(e => e, _ => 0);
             foreach (var netUser in netUserIds)
             {
-                if(!assignedJobs.TryGetValue(netUser, out var assignedJobAndStation) || assignedJobAndStation.Item1 is null)
+                if(!assignedJobs.TryGetValue(netUser, out var assignment) || assignment.job is null)
                 {
                     var playerSession = _playerManager.GetSessionById(netUser);
                     var evNoJobs = new NoJobsAvailableSpawningEvent(playerSession); // Used by gamerules to wipe their antag slot, if they got one
@@ -119,7 +118,7 @@ namespace Content.Server.GameTicking
                 }
                 else
                 {
-                    stationJobCounts[assignedJobAndStation.Item2] += 1;
+                    stationJobCounts[assignment.station] += 1;
                 }
             }
 
@@ -134,7 +133,7 @@ namespace Content.Server.GameTicking
                 var playerSession = _playerManager.GetSessionById(player);
 
                 // Select a profile for the player
-                var playerPrefs = _preferencesManager.GetPreferences(player);
+                var playerPrefs = _prefsManager.GetPreferences(player);
                 var playerProfiles = playerPrefs.GetAllEnabledProfilesForJob(job.Value);
 
                 // Filter out job requirements
@@ -277,7 +276,7 @@ namespace Content.Server.GameTicking
                 restrictedRoles.UnionWith(jobBans);
 
             // Pick best job best on prefs.
-            var playerPreferences = _preferencesManager.GetPreferences(player.UserId);
+            var playerPreferences = _prefsManager.GetPreferences(player.UserId);
             var jobPrioritiesFiltered = playerPreferences.JobPrioritiesFiltered();
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station,
                 jobPrioritiesFiltered,

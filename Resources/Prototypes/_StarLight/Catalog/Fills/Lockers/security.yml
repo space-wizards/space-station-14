@@ -107,8 +107,11 @@
         prob: 0.7
       - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
         prob: 0.35
+      - id: RubberStampBrigmedic
+        amount: 2
       - id: PlushieMorgana
       - id: PlushieKiller
+
 
 - type: entity
   id: LockerWardenLargeFilled

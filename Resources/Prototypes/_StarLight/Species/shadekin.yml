@@ -8,23 +8,27 @@
   markingLimits: MobShadekinMarkingLimits
   dollPrototype: MobShadekinDummy
   skinColoration: Hues
+  eyeColoration: Shadekin
   maleFirstNames: names_shadekin
   femaleFirstNames: names_shadekin
   naming: First
   minAge: 18
   maxAge: 300
   youngAge: 30
+  oldAge: 250
   customName: true
 
 - type: speciesBaseSprites
   id: MobShadekinSprites
   sprites:
     Head: MobShadekinHead
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
     Snout: MobShadekinAnyMarkingFollowSkin
     Chest: MobShadekinTorso
-    HeadTop: MobShadekinAnyMarkingFollowSkin
+    HeadTop: MobShadekinAnyMarking
     HeadSide: MobShadekinAnyMarkingFollowSkin
-    Tail: MobShadekinAnyMarkingFollowSkin
+    Tail: MobShadekinAnyMarking
     Eyes: MobShadekinEyes
     LArm: MobShadekinLArm
     RArm: MobShadekinRArm
@@ -71,6 +75,9 @@
 - type: humanoidBaseSprite
   id: MobShadekinAnyMarkingFollowSkin
   markingsMatchSkin: true
+
+- type: humanoidBaseSprite
+  id: MobShadekinAnyMarking
 
 - type: humanoidBaseSprite
   id: MobShadekinEyes

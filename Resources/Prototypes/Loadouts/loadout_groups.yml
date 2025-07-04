@@ -207,6 +207,8 @@
   - AncientJumpsuit
   - RainbowJumpsuit
   - RainbowJumpskirt
+  - GreyJumpsuit #starlight
+  - GreyJumpskirt #starlight
 
 - type: loadoutGroup
   id: AssistantFace
@@ -214,6 +216,7 @@
   minLimit: 0
   loadouts:
   - AssistantFace
+  - NeckGaiter #starlight
 
 - type: loadoutGroup
   id: AssistantGloves
@@ -221,7 +224,8 @@
   minLimit: 0
   loadouts:
   - AssistantGloves
-
+  - GreyGloves #starlight
+  
 - type: loadoutGroup
   id: CommonBackpack
   name: loadout-group-backpack
@@ -243,6 +247,9 @@
   minLimit: 0
   loadouts:
   - AssistantWintercoat
+  - GreyHoodieA #starlight
+  - GreyTrenchcoatA #starlight
+  - SpaceAssholeCoat #starlight
 
 - type: loadoutGroup
   id: AssistantShoes

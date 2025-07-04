@@ -128,7 +128,8 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-bureaucratic-error-announcement
-    minimumPlayers: 25
+    earliestStart: 45 # 🌟Starlight🌟 Why could this happen roundstart?!
+    minimumPlayers: 40 # 🌟Starlight🌟
     weight: 3
     duration: 1
   - type: BureaucraticErrorRule
@@ -532,7 +533,7 @@
   - type: StationEvent
     earliestStart: 55 # 🌟Starlight🌟 Casualization
     weight: 4.5 # 🌟Starlight🌟 Casualization
-    minimumPlayers: 20
+    minimumPlayers: 35
     duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end scrreen (not always "Neutral outcome!") and... ending the game if the station is nuked.
   - type: RuleGrids
   - type: LoadMapRule
