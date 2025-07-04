@@ -5,44 +5,78 @@ using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
 using Robust.Shared.Console;
+using Robust.Shared.Prototypes;
 
-namespace Content.Server.Roles
+namespace Content.Server.Roles;
+
+[AdminCommand(AdminFlags.Admin)]
+public sealed class RemoveRoleCommand : LocalizedEntityCommands
 {
-    [AdminCommand(AdminFlags.Admin)]
-    public sealed class RemoveRoleCommand : LocalizedEntityCommands
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedJobSystem _jobs = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+
+    public override string Command => "rmrole";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly SharedJobSystem _jobs = default!;
-        [Dependency] private readonly SharedRoleSystem _roles = default!;
-
-        public override string Command => "rmrole";
-
-        public override void Execute(IConsoleShell shell, string argStr, string[] args)
+        if (args.Length != 2)
         {
-            if (args.Length != 2)
+            shell.WriteLine(Loc.GetString($"shell-wrong-arguments-number"));
+            return;
+        }
+
+        if (!_playerManager.TryGetPlayerDataByUsername(args[0], out var data))
+        {
+            shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
+            return;
+        }
+
+        if (data.ContentData()?.Mind is not { } mind)
+        {
+            shell.WriteLine(Loc.GetString("shell-target-player-lacks-mind"));
+            return;
+        }
+
+        if (!_prototypeManager.TryIndex<JobPrototype>(args[1], out var jobPrototype))
+        {
+            shell.WriteLine(Loc.GetString("shell-argument-must-be-prototype",
+                ("index", args[1]),
+                ("prototypeName", nameof(JobPrototype))));
+            return;
+        }
+
+        if (!_jobs.MindHasJobWithId(mind, jobPrototype.Name))
+        {
+            shell.WriteLine(Loc.GetString("cmd-rmrole-mind-lacks-role"));
+            return;
+        }
+
+        _roles.MindRemoveRole<JobRoleComponent>(mind);
+    }
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        switch (args.Length)
+        {
+            case 1:
+                return CompletionResult.FromOptions(CompletionHelper.SessionNames());
+            case 2:
             {
-                shell.WriteLine(Loc.GetString($"shell-wrong-arguments-number-need-specific",
-                    ("properAmount", 2),
-                    ("currentAmount", args.Length)));
-                return;
+                var result = new List<CompletionOption>();
+
+                foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
+                {
+                    var completionOption = new CompletionOption(job.ID, job.Name);
+
+                    result.Add(completionOption);
+                }
+
+                return CompletionResult.FromOptions(result);
             }
-
-            if (!_playerManager.TryGetPlayerDataByUsername(args[0], out var data))
-            {
-                shell.WriteLine(Loc.GetString($"cmd-addrole-mind-not-found"));
-                return;
-            }
-
-            var mind = data.ContentData()?.Mind;
-
-            if (mind == null)
-            {
-                shell.WriteLine(Loc.GetString($"cmd-addrole-mind-not-found"));
-                return;
-            }
-
-            if (_jobs.MindHasJobWithId(mind, args[1]))
-                _roles.MindRemoveRole<JobRoleComponent>(mind.Value);
+            default:
+                return CompletionResult.Empty;
         }
     }
 }
