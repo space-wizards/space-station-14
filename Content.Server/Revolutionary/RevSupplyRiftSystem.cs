@@ -1,3 +1,4 @@
+using Content.Server.Administration.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Dragon;
 using Content.Server.GameTicking;
@@ -11,6 +12,7 @@ using Content.Shared.Chat;
 using Content.Shared.Dragon;
 using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -29,6 +31,7 @@ using System.Linq;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 
 namespace Content.Server.Revolutionary;
 
@@ -46,6 +49,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
 
     private const string RevSupplyRiftListingId = "RevSupplyRiftListing";
     
@@ -578,7 +582,7 @@ public sealed class RevSupplyRiftSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sends a message to all revolutionaries about the rift being placed.
+    /// Sends a message to all revolutionaries about the rift being placed. And also ghosts
     /// </summary>
     private void SendRiftPlacedMessage(EntityUid riftUid)
     {
@@ -620,6 +624,41 @@ public sealed class RevSupplyRiftSystem : EntitySystem
             }
         }
 
-        Logger.InfoS("rev-supply-rift", $"Sent rift placed message to all revolutionaries: {message}");
+        // Send to ghosts so they don't miss out
+        var nonAdminGhostClients = Filter.Empty()
+            .AddWhereAttachedEntity(HasComp<GhostComponent>)
+            .Recipients
+            .Where(p => !_adminManager.IsAdmin(p))
+            .Select(p => p.Channel);
+        
+        var ghostWrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", 
+            ("sender", sender), 
+            ("message", message));
+        
+        _chatManager.ChatMessageToMany(ChatChannel.Dead, message, ghostWrappedMessage, riftUid, false, true, nonAdminGhostClients.ToList(), Color.Red);
+
+        // Send alert
+        var adminMessage = $"Revolutionary supply rift placed by {placedBy} {locationString}";
+        _chatManager.SendAdminAlert(adminMessage);
+        
+        // And announcement
+        var adminClients = _adminManager.ActiveAdmins.Select(p => p.Channel);
+        var adminWrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", 
+            ("sender", sender), 
+            ("message", message));
+        
+        _chatManager.ChatMessageToMany(ChatChannel.Admin, message, adminWrappedMessage, riftUid, false, true, adminClients.ToList(), Color.Red);
+    }
+
+    /// <summary>
+    /// Gets all clients
+    /// </summary>
+    private IEnumerable<INetChannel> GetDeadChatClients()
+    {
+        return Filter.Empty()
+            .AddWhereAttachedEntity(HasComp<GhostComponent>)
+            .Recipients
+            .Union(_adminManager.ActiveAdmins)
+            .Select(p => p.Channel);
     }
 }
