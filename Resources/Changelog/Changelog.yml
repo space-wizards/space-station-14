@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ciaran
-  changes:
-  - message: Added a button to scroll back to the bottom of the chat box
-    type: Add
-  id: 8227
-  time: '2025-04-18T07:43:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35913
 - author: Tayrtahn
   changes:
   - message: The popup when pointing at an item in a character's inventory now mentions
@@ -3889,3 +3882,10 @@
   id: 8738
   time: '2025-07-04T21:50:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38743
+- author: TrixxedHeart
+  changes:
+  - message: Vox now have scar markings.
+    type: Add
+  id: 8739
+  time: '2025-07-04T23:06:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38592
