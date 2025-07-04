@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.EntitySystems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Chemistry.Components;
@@ -6,7 +7,7 @@ namespace Content.Shared.Chemistry.Components;
 /// <summary>
 /// Passively increases a solution's quantity of a reagent.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause]
+[RegisterComponent, AutoGenerateComponentPause, AutoGenerateComponentState, NetworkedComponent]
 [Access(typeof(SolutionRegenerationSystem))]
 public sealed partial class SolutionRegenerationComponent : Component
 {
@@ -38,6 +39,6 @@ public sealed partial class SolutionRegenerationComponent : Component
     /// The time when the next regeneration will occur.
     /// </summary>
     [DataField("nextChargeTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
-    public TimeSpan NextRegenTime = TimeSpan.FromSeconds(0);
+    [AutoPausedField, AutoNetworkedField]
+    public TimeSpan NextRegenTime;
 }

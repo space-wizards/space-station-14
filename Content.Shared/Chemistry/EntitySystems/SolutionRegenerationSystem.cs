@@ -10,6 +10,23 @@ public sealed class SolutionRegenerationSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<SolutionRegenerationComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<SolutionRegenerationComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextRegenTime = _timing.CurTime + ent.Comp.Duration;
+
+        // Okay, so I cannot figure out a way to get around networking this—without it, the predicted tick where the
+        // solution gets updated ends up being too early, causing really annoying mispredicts in the Absorption UI,
+        // where the water bar flutters back and forth.
+        Dirty(ent);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -21,7 +38,8 @@ public sealed class SolutionRegenerationSystem : EntitySystem
                 continue;
 
             // timer ignores if its full, it's just a fixed cycle
-            regen.NextRegenTime = _timing.CurTime + regen.Duration;
+            regen.NextRegenTime += regen.Duration;
+            Dirty(uid, regen);
             if (!_solutionContainer.ResolveSolution((uid, manager),
                     regen.SolutionName,
                     ref regen.SolutionRef,

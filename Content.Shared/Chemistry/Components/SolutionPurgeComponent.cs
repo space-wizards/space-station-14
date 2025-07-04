@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -10,6 +11,7 @@ namespace Content.Shared.Chemistry.Components;
 /// Passively decreases a solution's quantity of reagent(s).
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
+[NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SolutionPurgeSystem))]
 public sealed partial class SolutionPurgeComponent : Component
 {
@@ -41,6 +43,6 @@ public sealed partial class SolutionPurgeComponent : Component
     /// The time when the next purge will occur.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-    [AutoPausedField]
+    [AutoPausedField, AutoNetworkedField]
     public TimeSpan NextPurgeTime;
 }

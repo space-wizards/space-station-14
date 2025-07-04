@@ -9,12 +9,14 @@ namespace Content.Shared.Fluids;
 /// <summary>
 /// For entities that can clean up puddles
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AbsorbentComponent : Component
 {
     /// <summary>
     /// Used by the client to display a bar showing the reagents contained when held.
+    /// Has to still be networked in case the item is given to someone who didn't see a mop in PVS.
     /// </summary>
+    [AutoNetworkedField]
     public Dictionary<Color, float> Progress = [];
 
     /// <summary>
