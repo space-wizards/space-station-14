@@ -240,6 +240,9 @@
   - type: GameRule
     minPlayers: 15
   - type: RevolutionaryRule
+  - type: SpecialLobbyContent
+    music: "/Audio/_Starlight/Music/Lobby/Liberation.ogg"
+    background: "/Textures/_Starlight/LobbyScreens/rev-clown.webp"
   - type: AntagSelection
     selectionTime: IntraPlayerSpawn
     definitions:

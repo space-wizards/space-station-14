@@ -3,8 +3,8 @@
   id: JetpackSSFMarine
   parent: [BaseJetpack, BaseSovietContraband]
   name: SSF marine jetpack
-  description: Standard issued soviet-made jetpack for the kosmos.
   suffix: Empty
+  description: Standard issued soviet-made jetpack for the kosmos.
   components:
     - type: Item
       sprite: _Starlight/Objects/Tanks/Jetpacks/marine_jetpack.rsi
@@ -22,7 +22,6 @@
   parent: [JetpackSSFMarine, BaseSovietContraband]
   name: SSF marine jetpack
   description: Standard issued soviet-made jetpack for the kosmos.
-  suffix: Empty
   components:
     - type: Item
       sprite: _Starlight/Objects/Tanks/Jetpacks/marine_jetpack.rsi

@@ -280,6 +280,7 @@ namespace Content.Server.Database
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.Voice,
+                profile.SiliconVoice, // 🌟Starlight🌟
                 profile.FlavorText,
                 profile.Species,
                 profile.StarLightProfile?.CustomSpecieName ?? "", // Starlight
@@ -321,6 +322,7 @@ namespace Content.Server.Database
 
             profile.CharacterName = humanoid.Name;
             profile.Voice = humanoid.Voice;
+            profile.SiliconVoice = humanoid.SiliconVoice; // 🌟Starlight🌟
             profile.FlavorText = humanoid.FlavorText;
             profile.Species = humanoid.Species;
             profile.StarLightProfile ??= new StarLightModel.StarLightProfile(); // Starlight
