@@ -109,7 +109,7 @@ barsign-prototype-description-empbarsign = Something has gone very wrong.
 
 ## Sylph
 barsign-prototype-name-sylph = Cyber Sylph
-barsign-prototype-description-sylph = Wow, that's a big sign.
+barsign-prototype-description-sylph = Aw, looks like we've ended up in the wrong bar...
 
 ## SignOff
 barsign-prototype-description-sign-off = This sign doesn't seem to be on.

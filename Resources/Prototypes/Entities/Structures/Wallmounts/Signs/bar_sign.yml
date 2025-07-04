@@ -285,7 +285,7 @@
   parent: BaseBarSign
   id: BarSignSylph
   name: Cyber Sylph
-  description: Wow, that's a big sign.
+  description: Aw, looks like we've ended up in the wrong bar...
   components:
   - type: BarSign
     current: Sylph
