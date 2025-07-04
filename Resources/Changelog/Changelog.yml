@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Fildrance
-  changes:
-  - message: returned deconstruct to the top level option on RCD
-    type: Fix
-  id: 8226
-  time: '2025-04-18T04:50:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36486
 - author: ciaran
   changes:
   - message: Added a button to scroll back to the bottom of the chat box
@@ -3888,3 +3881,11 @@
   id: 8737
   time: '2025-07-04T05:08:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38664
+- author: perryprog
+  changes:
+  - message: You can now mop space lube, letting it evaporate faster than it would
+      on its own.
+    type: Tweak
+  id: 8738
+  time: '2025-07-04T21:50:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38743
