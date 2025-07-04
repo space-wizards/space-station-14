@@ -130,11 +130,6 @@
   equipment:
     back: ClothingBackpackDuffelMedical
 
-- type: loadout
-  id: MedicalDoctorSatchelBlueCat
-  equipment:
-    back: ClothingSatchelBlueCat
-
 # OuterClothing
 - type: loadout
   id: MedicalDoctorWintercoat
