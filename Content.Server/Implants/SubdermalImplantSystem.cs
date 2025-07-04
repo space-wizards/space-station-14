@@ -235,7 +235,28 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         QueueDel(uid);
     }
 
-    // Starlight
+    /// <summary>
+    /// Starlight: Tries to get all implants from an entity
+    /// </summary>
+    /// <param name="uid">The entity to get implants from</param>
+    /// <param name="implants">The list of implants found</param>
+    /// <returns>True if the entity has implants, false otherwise</returns>
+    public bool TryGetImplants(EntityUid uid, out List<EntityUid> implants)
+    {
+        implants = new List<EntityUid>();
+
+        if (!TryComp<ImplantedComponent>(uid, out var implanted))
+            return false;
+
+        var implantContainer = implanted.ImplantContainer;
+
+        if (implantContainer.ContainedEntities.Count == 0)
+            return false;
+
+        implants.AddRange(implantContainer.ContainedEntities);
+        return true;
+    }
+
     private void OnMagillitisSerumImplantImplant(EntityUid uid, SubdermalImplantComponent component, UseMagillitisSerumImplantEvent args)
     {
         if (component.ImplantedEntity is not { } ent)
@@ -255,4 +276,5 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         args.Handled = true;
         QueueDel(uid);
     }
+    // Starlight End
 }

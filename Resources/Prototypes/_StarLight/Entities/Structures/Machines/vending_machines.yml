@@ -194,6 +194,7 @@
     - SalvageEquipment
     - SalvageWeapons
     - SalvageConsumeables
+    - SalvageMercenaryEquipment
     currencyWhitelist:
     - SalvageTicket
 

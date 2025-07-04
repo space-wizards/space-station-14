@@ -1,0 +1,409 @@
+### Total Conversion category
+
+- type: listing
+  id: SKBCheapSunglassesConversion
+  name: glasses-name
+  description: glasses-desc
+  productEntity: ClothingEyesGlassesSKBGlasses
+  cost:
+    Conversion: 10
+  categories:
+  - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: StolenImplanterConversion
+  name: stolen-implanter-name
+  description: stolen-implanter-desc
+  productEntity: Implanter
+  cost:
+    Conversion: 13
+  categories:
+  - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: USSPSovietKeyConversion
+  name: soviet-encryption-key-name
+  description: soviet-encryption-key-conversion-desc
+  icon: { sprite: _Starlight/Objects/Devices/encryption_keys.rsi, state: soviet_label }
+  productEntity: EncryptionKeySoviet
+  cost:
+    Conversion: 15
+  categories:
+  - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+- type: listing
+  id: SKBWhistle
+  name: whistle-name
+  description: whistle-desc
+  productEntity: CommanderWhistle
+  cost:
+    Conversion: 19
+  categories:
+  - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: SKBBanner
+  name: banner-name
+  description: banner-desc
+  productEntity: RevolutionaryHeldBanner
+  cost:
+    Conversion: 14
+  categories:
+  - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4
+
+# 500 crates
+- type: listing
+  id: RevSupplyRiftListing
+  productEntity: RevSupplyRift
+  cost:
+    Conversion: 20
+  categories:
+  - RevUplinkPassive
+
+- type: listing
+  id: SNKVDAPS
+  name: aps-name
+  description: aps-desc
+  productEntity: WeaponPistolAPS
+  cost:
+    Conversion: 28
+  categories:
+  - RevUplinkPassive
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+### Telebonds category
+# Weapons, some modern some discontinued like the PPSH
+# The AKMS is candidate of discontinued weapons, but it's just a better DP28 right now.
+# - type: listing
+#   id: SKBAKMSweapon
+#   name: akms-weapon-name
+#   description: akms-weapon-desc
+#   productEntity: WeaponRifleAk
+#   cost:
+#     Telebond: 7
+#   categories:
+#   - RevUplinkWeaponry
+#   conditions:
+#   - !type:StockLimitedListingCondition
+#     stockLimit: 2
+
+- type: listing
+  id: SKBMakarov
+  name: makarov-name
+  description: makarov-desc
+  icon: { sprite: _Starlight/Objects/Weapons/Guns/Pistols/makarov.rsi, state: icon }
+  productEntity: WeaponPistolMakarov
+  cost:
+    Telebond: 3
+  categories:
+  - RevUplinkWeaponry
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+- type: listing
+  id: SNKVDFinka
+  name: finka-name
+  description: finka-desc
+  icon: { sprite: _Starlight/Objects/Weapons/Melee/finka.rsi, state: icon }
+  productEntity: Finka
+  cost:
+    Telebond: 2
+  categories:
+  - RevUplinkWeaponry
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+- type: listing
+  id: SKBMosin
+  name: mosin-name
+  description: mosin-desc
+  icon: { sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi, state: base }
+  productEntity: WeaponSniperMosin
+  cost:
+    Telebond: 4
+  categories:
+  - RevUplinkWeaponry
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 6
+
+- type: listing
+  id: SKBDP28
+  name: dp-name
+  description: dp-desc
+  icon: { sprite: _Starlight/Objects/Weapons/Guns/LMGs/DP28.rsi, state: icon }
+  productEntity: WeaponLightMachineGunDP28
+  cost:
+    Telebond: 20
+  categories:
+  - RevUplinkWeaponry
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: SKBPPSH
+  name: ppsh-name
+  description: ppsh-desc
+  icon: { sprite: _Starlight/Objects/Weapons/Guns/SMGs/PPSh59.rsi, state: icon }
+  productEntity: WeaponSubMachineGunPPSH
+  cost:
+    Telebond: 27
+  categories:
+  - RevUplinkWeaponry
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+# Wearables
+- type: listing
+  id: SKBSovietEVABundle
+  name: soviet-eva-name
+  description: soviet-eva-desc
+  icon: { sprite: _Starlight/Clothing/OuterClothing/Suits/soviet_eva.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSovietEVABundle
+  cost:
+    Telebond: 3
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4
+
+- type: listing
+  id: SKBBandolier
+  name: soviet-bandolier-name
+  description: soviet-bandolier-desc
+  productEntity: ClothingSovietBandolier
+  cost:
+    Telebond: 2
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 3
+
+- type: listing
+  id: SKBGasMask
+  name: soviet-gas-mask-name
+  description: soviet-gas-mask-desc
+  productEntity: ClothingSovietGasMask
+  cost:
+    Telebond: 2
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+- type: listing
+  id: SKBCheapSunglasses
+  name: glasses-name
+  description: glasses-desc
+  productEntity: ClothingEyesGlassesSKBGlasses
+  cost:
+    Telebond: 5
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: SSFHardsuit
+  name: soviet-hardsuit-name
+  description: soviet-hardsuit-desc
+  productEntity: ClothingBackpackDuffelMarineHardsuitBundle
+  icon: { sprite: _Starlight/Clothing/OuterClothing/Hardsuits/sovietmarine.rsi, state: icon }
+  cost:
+    Telebond: 29
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: USSPCoat
+  name: soviet-coat-name
+  description: soviet-coat-desc
+  productEntity: ClothingOuterSovietCoat
+  cost:
+    Telebond: 4
+  categories:
+  - RevUplinkWearables
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4
+
+# Implants
+
+- type: listing
+  id: StolenImplanter
+  name: stolen-implanter-name
+  description: stolen-implanter-desc
+  productEntity: Implanter
+  cost:
+    Telebond: 5
+  categories:
+  - RevUplinkImplants
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+# Shuttle
+
+- type: listing
+  id: StolenRemoteSignaller
+  name: stole-remote-signaller-name
+  description: stole-remote-signaller-desc
+  productEntity: RemoteSignaller
+  cost:
+    Telebond: 1
+  categories:
+  - RevUplinkShuttle
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+- type: listing
+  id: high-power-cage
+  name: high-power-cage-name
+  description: high-power-cage-desc
+  productEntity: PowerCageHigh
+  cost:
+    Telebond: 2
+  categories:
+  - RevUplinkShuttle
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: LSE-400c
+  name: lse-400c-name
+  description: lse-400c-desc
+  productEntity: ShuttleGunSvalinnMachineGun
+  cost:
+    Telebond: 4
+  categories:
+  - RevUplinkShuttle
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4
+
+- type: listing
+  id: StolenPTK-800
+  name: stolen-ptk800-name
+  description: stolen-ptk800-desc
+  productEntity: ShuttleGunKinetic
+  cost:
+    Telebond: 6
+  categories:
+  - RevUplinkShuttle
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+- type: listing
+  id: LSE-1200c
+  name: lse-1200c-name
+  description: lse-1200c-desc
+  productEntity: ShuttleGunPerforator
+  cost:
+    Telebond: 8
+  categories:
+  - RevUplinkShuttle
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+# Deception
+
+- type: listing
+  id: USSPSovietKey
+  name: soviet-encryption-key-name
+  description: soviet-encryption-key-desc
+  icon: { sprite: _Starlight/Objects/Devices/encryption_keys.rsi, state: soviet_label }
+  productEntity: EncryptionKeySoviet
+  cost:
+    Telebond: 4
+  categories:
+  - RevUplinkDeception
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 5
+
+# Pointless
+
+- type: listing
+  id: USSPMedals
+  name: soviet-medals-name
+  description: soviet-medals-desc
+  productEntity: ClothingSovietMedals
+  cost:
+    Telebond: 1
+  categories:
+  - RevUplinkPointless
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 2
+
+- type: listing
+  id: USSPUshanka
+  name: ushanka-name
+  description: ushanka-desc
+  productEntity: ClothingHeadHatUshanka
+  cost:
+    Telebond: 0
+  categories:
+  - RevUplinkPointless
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 4
+
+- type: listing
+  id: USSPZaporozhianBundle
+  name: zapo-name
+  description: zapo-desc
+  icon: { sprite: Clothing/Head/Hats/hetman_hat.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelZaporozhianBundle
+  cost:
+    Telebond: 1
+  categories:
+  - RevUplinkPointless
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
+
+- type: listing
+  id: USSPVodkizine
+  name: vodkizine-name
+  description: vodkizine-desc
+  productEntity: DrinkVodkizineBottleFull
+  cost:
+    Telebond: 5
+  categories:
+  - RevUplinkPointless
+  conditions:
+  - !type:StockLimitedListingCondition
+    stockLimit: 1
