@@ -40342,7 +40342,6 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - invalid
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -109221,7 +109220,6 @@ entities:
       parent: 1
     - type: DeviceNetwork
       configurators:
-      - invalid
       deviceLists:
       - 14708
 - proto: WeaponEnergyTurretAIControlPanel
