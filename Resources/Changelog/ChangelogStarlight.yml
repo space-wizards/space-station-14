@@ -8761,4 +8761,12 @@ Entries:
   id: 1208
   time: '2025-07-04T19:25:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/950
+- author: Adri
+  changes:
+  - message: Moved four medical research (cryostasis and bluespace items, advanced
+      medical cyborg, launcher syringes) from the civilian tree to the medical one.
+    type: Fix
+  id: 1209
+  time: '2025-07-04T19:33:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/930
 
