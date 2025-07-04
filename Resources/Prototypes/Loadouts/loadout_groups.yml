@@ -511,6 +511,14 @@
   minLimit: 0
   loadouts:
   - JanitorWintercoat
+  - JanitorHazardVest
+
+- type: loadoutGroup
+  id: JanitorShoes
+  name: loadout-group-janitor-shoes
+  loadouts:
+  - PurpleShoes
+  - GaloshesShoes
 
 - type: loadoutGroup
   id: JanitorPlunger

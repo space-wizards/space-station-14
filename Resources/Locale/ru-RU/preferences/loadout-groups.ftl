@@ -68,6 +68,7 @@ loadout-group-janitor-head = Уборщик, голова
 loadout-group-janitor-jumpsuit = Уборщик, комбинезон
 loadout-group-janitor-gloves = Уборщик, перчатки
 loadout-group-janitor-outerclothing = Уборщик, верхняя одежда
+loadout-group-janitor-shoes = Уборщик, обувь
 loadout-group-janitor-plunger = Уборщик, вантуз
 loadout-group-janitor-underwear = Уборщик, нижнее бельё
 loadout-group-botanist-head = Ботаник, голова

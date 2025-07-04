@@ -4,12 +4,13 @@
     ClothingUniformJumpsuitJanitor: 2
     ClothingUniformJumpskirtJanitor: 2
     ClothingHandsGlovesJanitor: 2
-    ClothingShoesColorBlack: 2
+    ClothingShoesColorPurple: 2 # DS14
     ClothingShoesGaloshes: 1
     ClothingHeadHatPurplesoft: 2
     ClothingBeltJanitor: 2
     ClothingHeadsetService: 2
     ClothingOuterWinterJani: 2
+    ClothingOuterVestHazard: 2 # DS14
     ClothingNeckScarfStripedPurple: 3
   contrabandInventory:
     ToyFigurineJanitor: 1
