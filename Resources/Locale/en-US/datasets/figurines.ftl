@@ -134,9 +134,9 @@ figurines-ce-6 = Power's out again.
 figurines-engineer-1 = SINGULOOSE!
 figurines-engineer-2 = TESLOOSE!
 figurines-engineer-3 = What is AME?
-figurines-engineer-4 = Free insuls at engineering!
+figurines-engineer-4 = Free insuls at Engineering!
 figurines-engineer-5 = Where'd the power go?
-figurines-engineer-6 = Someone bombed medbay... again...
+figurines-engineer-6 = Someone bombed the medbay... again...
 figurines-engineer-7 = Well, why don't you come and fix it?
 
 figurines-atmostech-1 = I put plasma in distro.
