@@ -1,9 +1,9 @@
 - type: gameMap
-  id: Barratry
+  id: ShitBarratry
   mapName: 'Barratry'
-  mapPath: /Maps/_Starlight/Stations/Barratry.yml
-  minPlayers: 40
-  maxPlayers: 80
+  mapPath: /Maps/_Starlight/Stations/ShitBarratry.yml
+  minPlayers: 0100011001110101011000110110101100100000011110010110111101110101
+  maxPlayers: 0100011001110101011000110110101100100000011110010110111101110101
   stations:
     Barratry:
       stationProto: StandardNanotrasenStation
