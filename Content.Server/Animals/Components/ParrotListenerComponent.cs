@@ -1,3 +1,5 @@
+using Content.Shared.Whitelist;
+
 namespace Content.Server.Animals.Components;
 
 /// <summary>
@@ -7,15 +9,24 @@ namespace Content.Server.Animals.Components;
 public sealed partial class ParrotListenerComponent : Component
 {
     /// <summary>
-    /// Whether this entity ignores entities with ParrotListenerComponents.
+    /// Whitelist for purposes of limiting which entities a parrot will listen to
     ///
-    /// This is optional in case parrots are close to each other, or parrots learn via radio from other parrots.
-    /// This may lead to samey voice lines, and for parrots with accents, this can quickly devolve from
+    /// This is here because parrots can learn via local chat or radio from other parrots. this can quickly devolve from
     /// SQUAWK! Polly wants a cracker! BRAAWK
     /// to
     /// BRAAWK! SQUAWK! RAWWK! Polly wants a cracker! AAWK! AWWK! Cracker! SQUAWK! BRAWWK! SQUAWK!
-    /// This is limited by the message length limit on ParrotMemoryComponent, but can be prevented entirely here
+    /// This is limited somewhat by the message length limit on ParrotMemoryComponent, but can be prevented entirely here
     /// </summary>
     [DataField]
-    public bool IgnoreParrotListeners;
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Blacklist for purposes of ignoring entities
+    /// As above, this is here to force parrots to ignore certain entities.
+    /// For example, polly will be consistently mapped around EngiDrobes, which will consistently say stuff like
+    /// "Guaranteed to protect your feet from industrial accidents!"
+    /// If polly ends up constantly advertising engineering drip, this can be used to prevent it.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
 }

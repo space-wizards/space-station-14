@@ -10,6 +10,7 @@ using Content.Server.Vocalization.Systems;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -24,8 +25,9 @@ namespace Content.Server.Animals.Systems;
 /// </summary>
 public sealed partial class ParrotMemorySystem : EntitySystem
 {
-    [Dependency] private readonly IAdminManager _admin = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
@@ -79,7 +81,12 @@ public sealed partial class ParrotMemorySystem : EntitySystem
 
     private void OnListen(Entity<ParrotListenerComponent> entity, ref ListenEvent args)
     {
-        if (CheckIgnoreParrotListener(entity, args.Source))
+        // return if whitelist is not null or fails to pass
+        if (!_whitelist.IsWhitelistPassOrNull(entity.Comp.Whitelist, args.Source))
+            return;
+
+        // return if blacklist is not null or passes
+        if (!_whitelist.IsBlacklistFailOrNull(entity.Comp.Blacklist, args.Source))
             return;
 
         TryLearn(entity.Owner, args.Message, args.Source);
@@ -87,7 +94,12 @@ public sealed partial class ParrotMemorySystem : EntitySystem
 
     private void OnRadioReceive(Entity<ParrotListenerComponent> entity, ref RadioReceiveEvent args)
     {
-        if (CheckIgnoreParrotListener(entity, args.MessageSource))
+        // return if whitelist is not null or fails to pass
+        if (!_whitelist.IsWhitelistPassOrNull(entity.Comp.Whitelist, args.MessageSource))
+            return;
+
+        // return if blacklist is not null or passes
+        if (!_whitelist.IsBlacklistFailOrNull(entity.Comp.Blacklist, args.MessageSource))
             return;
 
         TryLearn(entity.Owner, args.Message, args.MessageSource);
@@ -112,16 +124,6 @@ public sealed partial class ParrotMemorySystem : EntitySystem
 
         args.Message = memory.Message;
         args.Handled = true;
-    }
-
-    /// <summary>
-    /// Returns true if the source has a ParrotListenerComponent and a given ParrotListenerComponent is set to ignore
-    /// other parrot listeners. This may be used to avoid parrots with accents from learning from other parrots with
-    /// accents, which can quickly get out of hand and silly.
-    /// </summary>
-    private bool CheckIgnoreParrotListener(ParrotListenerComponent listenerComponent, EntityUid source)
-    {
-        return HasComp<ParrotListenerComponent>(source) && listenerComponent.IgnoreParrotListeners;
     }
 
     /// <summary>
