@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -15,6 +16,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SolutionRegenerationComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SolutionRegenerationComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
     }
 
     private void OnMapInit(Entity<SolutionRegenerationComponent> ent, ref MapInitEvent args)
@@ -25,6 +27,18 @@ public sealed class SolutionRegenerationSystem : EntitySystem
         // solution gets updated ends up being too early, causing really annoying mispredicts in the Absorption UI,
         // where the water bar flutters back and forth.
         Dirty(ent);
+    }
+
+    // Workaround for https://github.com/space-wizards/space-station-14/pull/35314
+    private void OnEntRemoved(Entity<SolutionRegenerationComponent> ent, ref EntRemovedFromContainerMessage args)
+    {
+        // Make sure the removed entity was our contained solution
+        if (ent.Comp is not { SolutionRef: { } sol }
+            || args.Entity != sol.Owner)
+            return;
+
+        // Clear our cached reference to the solution entity
+        ent.Comp.SolutionRef = null;
     }
 
     public override void Update(float frameTime)
