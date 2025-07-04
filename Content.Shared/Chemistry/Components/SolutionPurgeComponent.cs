@@ -1,10 +1,10 @@
-using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
-namespace Content.Server.Chemistry.Components;
+namespace Content.Shared.Chemistry.Components;
 
 /// <summary>
 /// Passively decreases a solution's quantity of reagent(s).
