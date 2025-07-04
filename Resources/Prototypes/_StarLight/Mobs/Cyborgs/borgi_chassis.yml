@@ -251,6 +251,7 @@
         params:
           volume: 12
     - type: IonStormTarget
+    - type: CyborgSparkEffect
 
 - type: entity
   parent: BaseStationBorgiChassis

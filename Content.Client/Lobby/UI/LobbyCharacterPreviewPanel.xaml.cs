@@ -33,6 +33,11 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     public Button CharacterSetupButton => CharacterSetup;
 
     /// <summary>
+    /// Action invoked when the player's job priorities have been updated.
+    /// </summary>
+    public event Action? PrioritiesUpdated;
+
+    /// <summary>
     /// Just a helper function to grab the appropriate <see cref="DraggableJobTarget"/> control corresponding to the
     /// job priority
     /// </summary>
@@ -229,6 +234,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     private void SendUpdatedPriorities()
     {
         _preferences.UpdateJobPriorities(GetJobPriorities());
+        PrioritiesUpdated?.Invoke();
     }
 
     /// <summary>
