@@ -8674,4 +8674,11 @@ Entries:
   id: 1196
   time: '2025-07-04T18:54:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/959
+- author: Citrea
+  changes:
+  - message: Characters can now configure their initial voice for spawning as silicons
+    type: Add
+  id: 1197
+  time: '2025-07-04T18:57:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/885
 
