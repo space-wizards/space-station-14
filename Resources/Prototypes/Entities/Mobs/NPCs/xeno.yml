@@ -458,8 +458,8 @@
 # Mob mapped to Xeno Station that can not be ghostrole / pry
 
 - type: entity
-  name: lone praetorian
-  description: The last of its kind.
+  name: '"Dale"'
+  description: A praetorian left over from the station's initial security sweep. Has a pair of bloodied dog tags engraved with the name "Pvt. Dale" stuck in its maw.
   parent: SimpleSpaceMobBase
   id: MobXenoLonePraetorianNoGhost
   components:

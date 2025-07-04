@@ -165,9 +165,8 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         {
             // if the species is HumanToned:
             case HumanoidSkinColor.HumanToned:
-                // quantize the randomized skin color to the nearest acceptable HumanToned color.
-                var tone = Math.Round(Humanoid.SkinColor.HumanSkinToneFromColor(newSkinColor));
-                newSkinColor = Humanoid.SkinColor.HumanSkinTone((int)tone);
+                // get a new HumanToned color, so we dont skew distribution.
+                newSkinColor = Humanoid.SkinColor.HumanSkinTone(random.Next(0, 101));
 
                 // pick a random realistic hair color from the list and randomize it juuuuust a little bit.
                 newHairColor = random.Pick(HairStyles.RealisticHairColors);
