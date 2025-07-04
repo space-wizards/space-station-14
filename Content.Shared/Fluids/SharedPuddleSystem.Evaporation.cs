@@ -53,8 +53,8 @@ public abstract partial class SharedPuddleSystem
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {
                 // Spawn a *sparkle*
-                SpawnAttachedTo(evaporation.EvaporationEffect, Transform(uid).Coordinates);
-                QueueDel(uid);
+                PredictedSpawnAttachedTo(evaporation.EvaporationEffect, Transform(uid).Coordinates);
+                PredictedQueueDel(uid);
             }
 
             _solutionContainerSystem.UpdateChemicals(puddle.Solution.Value);
