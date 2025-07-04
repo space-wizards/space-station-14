@@ -234,12 +234,6 @@ public sealed class ChangelingDevourSystem : EntitySystem
                 EnsureComp<ChangelingHuskedCorpseComponent>(target.Value);
             }
 
-
-            foreach (var organ in _bodySystem.GetBodyOrgans(target, body))
-            {
-                _entityManager.QueueDeleteEntity(organ.Id);
-            }
-
             if (_inventorySystem.TryGetSlotEntity(target.Value, "jumpsuit", out var item)
                 && TryComp<ButcherableComponent>(item, out var butcherable))
                 RipClothing(target.Value, (item.Value, butcherable));

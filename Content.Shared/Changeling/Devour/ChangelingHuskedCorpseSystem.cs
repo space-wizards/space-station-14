@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Administration.Logs;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid;
@@ -15,6 +17,7 @@ public sealed class ChangelingHuskedCorpseSystem : EntitySystem
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
 
     public override void Initialize()
     {
@@ -41,6 +44,15 @@ public sealed class ChangelingHuskedCorpseSystem : EntitySystem
         var unrevivable = EnsureComp<UnrevivableComponent>(ent);
         unrevivable.Analyzable = false;
         unrevivable.ReasonMessage = "changeling-defibrillator-failure";
+
+
+        if(!TryComp<BodyComponent>(ent.Owner, out var body))
+            return;
+
+        foreach (var organ in _bodySystem.GetBodyOrgans(ent.Owner, body))
+        {
+            EntityManager.QueueDeleteEntity(organ.Id);
+        }
     }
 
     private void OnExamined(Entity<ChangelingHuskedCorpseComponent> ent, ref ExaminedEvent args)
