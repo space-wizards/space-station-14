@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 
@@ -17,9 +16,7 @@ public abstract partial class SharedPuddleSystem
     protected void UpdateEvaporation(EntityUid uid, Solution solution)
     {
         if (HasComp<EvaporationComponent>(uid))
-        {
             return;
-        }
 
         if (solution.GetTotalPrototypeQuantity(GetEvaporatingReagents(solution)) > FixedPoint2.Zero)
         {
@@ -34,7 +31,6 @@ public abstract partial class SharedPuddleSystem
     protected void TickEvaporation()
     {
         var query = EntityQueryEnumerator<EvaporationComponent, PuddleComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
         var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var evaporation, out var puddle))
         {
@@ -47,7 +43,7 @@ public abstract partial class SharedPuddleSystem
                 continue;
 
             // Yes, this means that 50u water + 50u holy water evaporates twice as fast as 100u water.
-            foreach ((string evaporatingReagent, FixedPoint2 evaporatingSpeed) in GetEvaporationSpeeds(puddleSolution))
+            foreach (var (evaporatingReagent, evaporatingSpeed) in GetEvaporationSpeeds(puddleSolution))
             {
                 var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds * evaporatingSpeed;
                 puddleSolution.SplitSolutionWithOnly(reagentTick, evaporatingReagent);
@@ -57,7 +53,7 @@ public abstract partial class SharedPuddleSystem
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {
                 // Spawn a *sparkle*
-                Spawn("PuddleSparkle", xformQuery.GetComponent(uid).Coordinates);
+                SpawnAttachedTo(evaporation.EvaporationEffect, Transform(uid).Coordinates);
                 QueueDel(uid);
             }
 
@@ -68,8 +64,8 @@ public abstract partial class SharedPuddleSystem
 
     public string[] GetEvaporatingReagents(Solution solution)
     {
-        var evaporatingReagents = new List<string>();
-        foreach (ReagentPrototype solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        List<string> evaporatingReagents = [];
+        foreach (var solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
         {
             if (solProto.EvaporationSpeed > FixedPoint2.Zero)
                 evaporatingReagents.Add(solProto.ID);
@@ -79,8 +75,8 @@ public abstract partial class SharedPuddleSystem
 
     public string[] GetAbsorbentReagents(Solution solution)
     {
-        var absorbentReagents = new List<string>();
-        foreach (ReagentPrototype solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        List<string> absorbentReagents = [];
+        foreach (var solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
         {
             if (solProto.Absorbent)
                 absorbentReagents.Add(solProto.ID);
@@ -99,8 +95,8 @@ public abstract partial class SharedPuddleSystem
     /// </summary>
     public Dictionary<string, FixedPoint2> GetEvaporationSpeeds(Solution solution)
     {
-        var evaporatingSpeeds = new Dictionary<string, FixedPoint2>();
-        foreach (ReagentPrototype solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        Dictionary<string, FixedPoint2> evaporatingSpeeds = [];
+        foreach (var solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
         {
             if (solProto.EvaporationSpeed > FixedPoint2.Zero)
             {

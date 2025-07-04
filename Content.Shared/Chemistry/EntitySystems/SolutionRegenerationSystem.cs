@@ -22,25 +22,22 @@ public sealed class SolutionRegenerationSystem : EntitySystem
 
             // timer ignores if its full, it's just a fixed cycle
             regen.NextRegenTime = _timing.CurTime + regen.Duration;
-            if (_solutionContainer.ResolveSolution((uid, manager), regen.SolutionName, ref regen.SolutionRef, out var solution))
-            {
-                var amount = FixedPoint2.Min(solution.AvailableVolume, regen.Generated.Volume);
-                if (amount <= FixedPoint2.Zero)
-                    continue;
+            if (!_solutionContainer.ResolveSolution((uid, manager),
+                    regen.SolutionName,
+                    ref regen.SolutionRef,
+                    out var solution))
+                continue;
 
-                // dont bother cloning and splitting if adding the whole thing
-                Solution generated;
-                if (amount == regen.Generated.Volume)
-                {
-                    generated = regen.Generated;
-                }
-                else
-                {
-                    generated = regen.Generated.Clone().SplitSolution(amount);
-                }
+            var amount = FixedPoint2.Min(solution.AvailableVolume, regen.Generated.Volume);
+            if (amount <= FixedPoint2.Zero)
+                continue;
 
-                _solutionContainer.TryAddSolution(regen.SolutionRef.Value, generated);
-            }
+            // Don't bother cloning and splitting if adding the whole thing
+            var generated = amount == regen.Generated.Volume
+                ? regen.Generated
+                : regen.Generated.Clone().SplitSolution(amount);
+
+            _solutionContainer.TryAddSolution(regen.SolutionRef.Value, generated);
         }
     }
 }
