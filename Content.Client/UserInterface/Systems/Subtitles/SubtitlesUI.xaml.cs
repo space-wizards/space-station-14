@@ -13,17 +13,22 @@ namespace Content.Client.UserInterface.Systems.Subtitles;
 [GenerateTypedNameReferences]
 public sealed partial class SubtitlesUI : UIWidget
 {
-    private List<string> _displayedSounds = new();
+    private List<CaptionEntry> _displayedSounds = new();
 
     public SubtitlesUI()
     {
         RobustXamlLoader.Load(this);
     }
 
-    public void UpdateSounds(List<string> sounds)
+    private Color ModulateColor(float opacity)
+    {
+        return Color.White.WithAlpha(float.Lerp(1.0f, 0.3f, opacity));
+    }
+
+    public void UpdateSounds(List<CaptionEntry> sounds, TimeSpan currentTime)
     {
         var count = Math.Max(sounds.Count, _displayedSounds.Count);
-        var toBeAppended = new List<string>();
+        var toBeAppended = new List<CaptionEntry>();
 
         for (int i = count-1; i >= 0; i--) {
             var existing = i < _displayedSounds.Count ? _displayedSounds[i] : null;
@@ -36,16 +41,22 @@ public sealed partial class SubtitlesUI : UIWidget
                 // remove excess children
                 _displayedSounds.RemoveAt(i);
                 Subtitles.RemoveChild(i);
-            } else if (incoming is not null && existing is not null && incoming != existing) {
+            } else if (incoming is not null && existing is not null) {
                 // patch child
-                ((Label)Subtitles.GetChild(i)).Text = incoming;
+                var label = (Label)Subtitles.GetChild(i);
+                if (incoming.DisplayText != label.Text) {
+                    label.Text = incoming.DisplayText;
+                }
                 _displayedSounds[i] = incoming;
+                label.Modulate = ModulateColor(incoming.Opacity(currentTime));
             }
         }
         toBeAppended.Reverse();
         foreach (var caption in toBeAppended) {
             _displayedSounds.Add(caption);
-            Subtitles.AddChild(new Label {Text = $"{caption}"});
+            var label = new Label {Text = caption.DisplayText};
+            label.Modulate = ModulateColor(caption.Opacity(currentTime));
+            Subtitles.AddChild(label);
         }
     }
 }

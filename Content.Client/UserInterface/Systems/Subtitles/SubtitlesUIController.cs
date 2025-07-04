@@ -1,7 +1,7 @@
 using System.Numerics;
-using JetBrains.Annotations;
 using Content.Client.Gameplay;
 using Content.Shared.CCVar;
+using JetBrains.Annotations;
 using Robust.Client.Audio;
 using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
@@ -14,22 +14,41 @@ using Robust.Shared.Audio.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Subtitles;
+
+public class CaptionEntry(LocId caption, TimeSpan lastSeen)
+{
+    public LocId Caption = caption;
+    public TimeSpan LastSeen = lastSeen;
+    public bool Left = false;
+    public bool Right = false;
+    public int Count = 0;
+
+    public string DisplayText =>
+        Loc.GetString("subtitle-item", ("count", Count), ("sound", Loc.GetString(Caption)), ("left", Left), ("right", Right));
+
+    public float Opacity(TimeSpan currentTime) =>
+        Math.Clamp((float)((currentTime - LastSeen) / SubtitlesUIController.CAPTION_FADEOUT), 0.0f, 1.0f);
+}
 
 [UsedImplicitly]
 public sealed class SubtitlesUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<AudioSystem>
 {
     private SubtitlesUI? UI => UIManager.GetActiveUIWidgetOrNull<SubtitlesUI>();
-    private Dictionary<string, List<Entity<CaptionComponent, TransformComponent>>> _sounds = new();
-    private readonly List<string> _soundStrings = new();
+    private HashSet<EntityUid> _activeSounds = new();
+    private readonly List<CaptionEntry> _captions = new();
     [UISystemDependency] private readonly CaptionTreeSystem _captionTree = default!;
     [UISystemDependency] private readonly TransformSystem _xformSystem = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    public static TimeSpan CAPTION_FADEOUT = TimeSpan.FromSeconds(2.5);
 
     private readonly ISawmill _logMill = default!;
     private bool _captionsEnabled;
@@ -60,29 +79,11 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
     }
     private void AudioStart(Entity<CaptionComponent, TransformComponent> entity)
     {
-        if (entity.Comp1.LocalizedCaption is not {} caption)
-            return;
-
-        if (!_sounds.TryGetValue(caption, out var items))
-        {
-            items = new();
-            _sounds[caption] = items;
-        }
-        _sounds[caption].Add(entity);
+        _activeSounds.Add(entity);
     }
     private void AudioEnd(Entity<CaptionComponent, TransformComponent> entity)
     {
-        if (entity.Comp1.LocalizedCaption is not {} caption)
-            return;
-
-        if (_sounds.TryGetValue(caption, out var items))
-        {
-            items.Remove(entity);
-            if (items.Count == 0)
-            {
-                _sounds.Remove(caption);
-            }
-        }
+        _activeSounds.Remove(entity);
     }
 
     public override void FrameUpdate(FrameEventArgs args)
@@ -113,49 +114,52 @@ public sealed class SubtitlesUIController : UIController, IOnStateEntered<Gamepl
         var worldAabb = new Box2(pos - maxVector, pos + maxVector);
         var data = _captionTree.QueryAabb(mapPos.MapId, worldAabb);
 
-        _soundStrings.Clear();
-
-        foreach (var (caption, sounds) in _sounds)
+        foreach (var caption in _captions)
         {
-            var left = false;
-            var right = false;
-            int countedSounds = 0;
+            caption.Left = false;
+            caption.Right = false;
+            caption.Count = 0;
+        }
 
-            foreach (var sound in sounds)
+        foreach (var entry in data)
+        {
+            if (!_activeSounds.Contains(entry.Uid))
+                continue;
+
+            var foundCaption = false;
+            foreach (var caption in _captions)
             {
-                if (!data.Contains((sound.Comp1, sound.Comp2)))
+                if (caption.Caption != entry.Component.Caption)
                     continue;
 
-                countedSounds++;
+                caption.LastSeen = _timing.CurTime;
+                caption.Count++;
+                foundCaption = true;
 
-                var soundPos = _xformSystem.GetMapCoordinates(sound.Comp2);
+                var soundPos = _xformSystem.GetMapCoordinates(entry.Transform);
                 var soundDelta = Vector2.Normalize(pos - soundPos.Position);
                 var dotProduct = Vector2.Dot(upAngle, soundDelta);
                 if (Math.Abs(dotProduct) >= 0.75)
                 {
-                    left = true;
-                    right = true;
+                    caption.Left = true;
+                    caption.Right = true;
                 }
+
                 var rightDotProduct = Vector2.Dot(rightAngle, soundDelta);
                 if (rightDotProduct > 0)
-                {
-                    right = true;
-                }
+                    caption.Left = true;
                 else
-                {
-                    left = true;
-                }
+                    caption.Right = true;
+                break;
             }
 
-            if (!left && !right)
-            {
-                continue;
-            }
-
-            _soundStrings.Add(Loc.GetString("subtitle-item", ("count", countedSounds), ("sound", caption), ("left", left), ("right", right)));
+            if (!foundCaption && entry.Component.Caption is { } text)
+                _captions.Add(new(text, _timing.CurTime));
         }
 
-        UI?.UpdateSounds(_soundStrings);
+        _captions.RemoveAll(caption => caption.LastSeen + CAPTION_FADEOUT < _timing.CurTime);
+
+        UI?.UpdateSounds(_captions, _timing.CurTime);
     }
 }
 
