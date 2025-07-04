@@ -8769,4 +8769,11 @@ Entries:
   id: 1209
   time: '2025-07-04T19:33:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/930
+- author: Happyrobot33
+  changes:
+  - message: Added Custom job icon for NTCC Consortium Officers
+    type: Add
+  id: 1210
+  time: '2025-07-04T19:38:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/916
 
