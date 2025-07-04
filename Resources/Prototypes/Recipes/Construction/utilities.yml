@@ -757,7 +757,7 @@
   conditions:
   - !type:NoUnstackableInTile
   alternativePrototypes:
-  - GasPressureRegulatorGate
+  - GasPressureRegulator
   - GasPressureRegulatorAlt1
   - GasPressureRegulatorAlt2
 
