@@ -83,6 +83,7 @@
   - Security
   - Medical
 
+#starlight, moved from civilian to medical
 - type: technology
   id: BiochemicalStasis
   name: research-technology-biochemical-stasis
@@ -100,6 +101,7 @@
   radioChannels:
   - Medical
 
+#starlight, moved from civilian to medical
 - type: technology
   id: MechanizedTreatment
   name: research-technology-mechanized-treatment
@@ -170,6 +172,7 @@
   - Security
   - Medical
 
+#starlight, moved from civilian to medical
 - type: technology
   id: BluespaceChemistry
   name: research-technology-bluespace-chemistry
@@ -185,6 +188,7 @@
   radioChannels:
   - Medical
 
+#starlight, moved from civilian to medical
 - type: technology
   id: LauncherSyringe
   name: research-technology-launcher-syringe
