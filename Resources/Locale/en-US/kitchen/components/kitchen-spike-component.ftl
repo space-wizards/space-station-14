@@ -1,17 +1,31 @@
-comp-kitchen-spike-begin-hook-self = You begins dragging yourself onto { THE($hook) }!
+comp-kitchen-spike-begin-hook-self = You begin dragging yourself onto { THE($hook) }!
 comp-kitchen-spike-begin-hook-self-other = { CAPITALIZE(THE($victim)) } begins dragging { REFLEXIVE($victim) } onto { THE($hook) }!
 
 comp-kitchen-spike-begin-hook-other-self = You begin dragging { CAPITALIZE(THE($victim)) } onto { THE($hook) }!
-comp-kitchen-spike-begin-hook-other = { CAPITALIZE(THE($user)) } begins dragging { CAPITALIZE(THE($victim)) } onto { THE($hook) }!
+comp-kitchen-spike-begin-hook-other = { CAPITALIZE(THE($user)) } begins dragging { CAPITALIZE(THE($victim)) } onto { THE($hook) }!a
 
 comp-kitchen-spike-hook-self = You threw yourself on { THE($hook) }!
-comp-kitchen-spike-hook-self-other = { CAPITALIZE(THE($user)) } threw { REFLEXIVE($victim) } on { THE($hook) }!
+comp-kitchen-spike-hook-self-other = { CAPITALIZE(THE($victim)) } threw { REFLEXIVE($victim) } on { THE($hook) }!
 
 comp-kitchen-spike-hook-other-self = You threw { CAPITALIZE(THE($victim)) } on { THE($hook) }!
 comp-kitchen-spike-hook-other = { CAPITALIZE(THE($user)) } threw { CAPITALIZE(THE($victim)) } on { THE($hook) }!
 
-comp-kitchen-spike-hooked = [color=red]{ CAPITALIZE(THE($victim)) } is on this hook!
+comp-kitchen-spike-begin-unhook-self = You begin dragging yourself off { THE($hook) }!
+comp-kitchen-spike-begin-unhook-self-other = { CAPITALIZE(THE($victim)) } begins dragging { REFLEXIVE($victim) } off { THE($hook) }!
+
+comp-kitchen-spike-begin-unhook-other-self = You begin dragging { CAPITALIZE(THE($victim)) } off { THE($hook) }!
+comp-kitchen-spike-begin-unhook-other = { CAPITALIZE(THE($user)) } begins dragging { CAPITALIZE(THE($victim)) } off { THE($hook) }!
+
+comp-kitchen-spike-unhook-self = You threw yourself on { THE($hook) }!
+comp-kitchen-spike-unhook-self-other = { CAPITALIZE(THE($victim)) } threw { REFLEXIVE($victim) } on { THE($hook) }!
+
+comp-kitchen-spike-unhook-other-self = You threw { CAPITALIZE(THE($victim)) } on { THE($hook) }!
+comp-kitchen-spike-unhook-other = { CAPITALIZE(THE($user)) } threw { CAPITALIZE(THE($victim)) } on { THE($hook) }!
+
+comp-kitchen-spike-unhook-verb = Unhook
+
+comp-kitchen-spike-hooked = [color=red]{ CAPITALIZE(THE($victim)) } is on this spike![/color]
 
 comp-kitchen-spike-meat-name = { $name } ({ $victim })
 
-comp-kitchen-spike-victim-examine = [color=orange]{ CAPITALIZE(POSS-ADJ($target)) } looks quite thin.
+comp-kitchen-spike-victim-examine = [color=orange]{ CAPITALIZE(POSS-ADJ($target)) } looks quite lean.[/color]

@@ -1,15 +1,23 @@
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Examine;
+using Content.Shared.Hands;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
+using Content.Shared.Throwing;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -40,17 +48,35 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         SubscribeLocalEvent<KitchenSpikeComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<KitchenSpikeComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
+        SubscribeLocalEvent<KitchenSpikeComponent, ContainerIsRemovingAttemptEvent>(OnRemoveAttempt);
         SubscribeLocalEvent<KitchenSpikeComponent, EntInsertedIntoContainerMessage>(OnEntInsertedIntoContainer);
         SubscribeLocalEvent<KitchenSpikeComponent, EntRemovedFromContainerMessage>(OnEntRemovedFromContainer);
         SubscribeLocalEvent<KitchenSpikeComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<KitchenSpikeComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<KitchenSpikeComponent, CanDropTargetEvent>(OnCanDrop);
         SubscribeLocalEvent<KitchenSpikeComponent, DragDropTargetEvent>(OnDragDrop);
-        SubscribeLocalEvent<KitchenSpikeComponent, SpikeDoAfterEvent>(OnSpikeDoAfter);
+        SubscribeLocalEvent<KitchenSpikeComponent, SpikeHookDoAfterEvent>(OnSpikeHookDoAfter);
+        SubscribeLocalEvent<KitchenSpikeComponent, SpikeUnhookDoAfterEvent>(OnSpikeUnhookDoAfter);
         SubscribeLocalEvent<KitchenSpikeComponent, SpikeButcherDoAfterEvent>(OnSpikeButcherDoAfter);
         SubscribeLocalEvent<KitchenSpikeComponent, ExaminedEvent>(OnSpikeExamined);
+        SubscribeLocalEvent<KitchenSpikeComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
+
+        // Self-unhook attempt.
+        SubscribeLocalEvent<KitchenSpikeComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
 
         SubscribeLocalEvent<KitchenSpikeVictimComponent, ExaminedEvent>(OnVictimExamined);
+
+        // Prevent doing anything while hooked.
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, ChangeDirectionAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, UpdateCanMoveEvent>(OnAttempt);
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, UseAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, ThrowAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, DropAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, AttackAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, PickupAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, IsEquippingAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, IsUnequippingAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<KitchenSpikeHookedComponent, InteractionAttemptEvent>(OnInteractionAttempt);
     }
 
     private void OnInit(Entity<KitchenSpikeComponent> ent, ref ComponentInit args)
@@ -61,7 +87,15 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     private void OnInsertAttempt(Entity<KitchenSpikeComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
         if (args.Cancelled || TryComp<ButcherableComponent>(args.EntityUid, out var butcherable) &&
-            butcherable.Type == ButcheringType.Spike)
+            butcherable.Type == ButcheringType.Spike && !HasComp<KitchenSpikeHookedComponent>(args.EntityUid))
+            return;
+
+        args.Cancel();
+    }
+
+    private void OnRemoveAttempt(Entity<KitchenSpikeComponent> ent, ref ContainerIsRemovingAttemptEvent args)
+    {
+        if (args.Cancelled || HasComp<KitchenSpikeHookedComponent>(args.EntityUid))
             return;
 
         args.Cancel();
@@ -69,12 +103,14 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnEntInsertedIntoContainer(Entity<KitchenSpikeComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
+        AddComp<KitchenSpikeHookedComponent>(args.Entity);
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
         _activeSpikes.Add(ent);
     }
 
     private void OnEntRemovedFromContainer(Entity<KitchenSpikeComponent> ent, ref EntRemovedFromContainerMessage args)
     {
+        RemComp<KitchenSpikeHookedComponent>(args.Entity);
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
         _activeSpikes.Remove(ent);
     }
@@ -86,7 +122,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         var victim = ent.Comp.BodyContainer.ContainedEntity;
 
-        if (!victim.HasValue)
+        if (!victim.HasValue || victim == args.User)
             return;
 
         _popupSystem.PopupClient(Loc.GetString("butcherable-need-knife",
@@ -102,7 +138,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     {
         var victim = ent.Comp.BodyContainer.ContainedEntity;
 
-        if (args.Handled || !TryComp<ButcherableComponent>(victim, out var butcherable) || butcherable.SpawnedEntities.Count == 0 ||
+        if (args.Handled || victim == args.User || !TryComp<ButcherableComponent>(victim, out var butcherable) || butcherable.SpawnedEntities.Count == 0 ||
             !TryComp<MobStateComponent>(victim, out var mobState))
             return;
 
@@ -120,7 +156,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             args.User,
-            mobState.CurrentState == MobState.Dead ? butcherable.ButcherDelay : butcherable.ButcherDelay + ent.Comp.DelayAlive,
+            mobState.CurrentState == MobState.Dead ? butcherable.ButcherDelay : butcherable.ButcherDelay + ent.Comp.ButcherDelayAlive,
             new SpikeButcherDoAfterEvent(),
             ent,
             target: victim,
@@ -139,7 +175,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.CanDrop = _containerSystem.CanInsert(args.Dragged, ent.Comp.BodyContainer);
+        args.CanDrop = _containerSystem.CanInsert(args.Dragged, ent.Comp.BodyContainer) && !HasComp<KitchenSpikeUnhookingComponent>(args.User) && !HasComp<KitchenSpikeHookingComponent>(args.User);
         args.Handled = true;
     }
 
@@ -147,6 +183,8 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     {
         if (args.Handled || !TryComp<ButcherableComponent>(args.Dragged, out var butcherable))
             return;
+
+        AddComp<KitchenSpikeHookingComponent>(args.User);
 
         ShowPopups("comp-kitchen-spike-begin-hook-self",
             "comp-kitchen-spike-begin-hook-self-other",
@@ -158,8 +196,8 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             args.User,
-            ent.Comp.Delay + butcherable.ButcherDelay,
-            new SpikeDoAfterEvent(),
+            ent.Comp.HookDelay + butcherable.ButcherDelay,
+            new SpikeHookDoAfterEvent(),
             ent,
             target: args.Dragged,
             used: ent)
@@ -172,8 +210,10 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnSpikeDoAfter(Entity<KitchenSpikeComponent> ent, ref SpikeDoAfterEvent args)
+    private void OnSpikeHookDoAfter(Entity<KitchenSpikeComponent> ent, ref SpikeHookDoAfterEvent args)
     {
+        RemComp<KitchenSpikeHookingComponent>(args.User);
+
         if (args.Handled || args.Cancelled || !args.Target.HasValue)
             return;
 
@@ -183,6 +223,27 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
                 "comp-kitchen-spike-hook-self-other",
                 "comp-kitchen-spike-hook-other-self",
                 "comp-kitchen-spike-hook-other",
+                args.User,
+                args.Target.Value,
+                ent);
+        }
+
+        args.Handled = true;
+    }
+
+    private void OnSpikeUnhookDoAfter(Entity<KitchenSpikeComponent> ent, ref SpikeUnhookDoAfterEvent args)
+    {
+        RemComp<KitchenSpikeUnhookingComponent>(args.User);
+
+        if (args.Handled || args.Cancelled || !args.Target.HasValue)
+            return;
+
+        if (_containerSystem.Remove(args.Target.Value, ent.Comp.BodyContainer))
+        {
+            ShowPopups("comp-kitchen-spike-unhook-self",
+                "comp-kitchen-spike-unhook-self-other",
+                "comp-kitchen-spike-unhook-other-self",
+                "comp-kitchen-spike-unhook-other",
                 args.User,
                 args.Target.Value,
                 ent);
@@ -237,16 +298,44 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (!ent.Comp.BodyContainer.ContainedEntity.HasValue)
             return;
 
-        args.PushMarkup(
-            Loc.GetString("comp-kitchen-spike-hooked",
-                ("victim", Identity.Entity(ent.Comp.BodyContainer.ContainedEntity.Value, EntityManager))),
-            1);
+        args.PushMarkup(Loc.GetString("comp-kitchen-spike-hooked", ("victim", Identity.Entity(ent.Comp.BodyContainer.ContainedEntity.Value, EntityManager))));
         args.PushMessage(_examineSystem.GetExamineText(ent.Comp.BodyContainer.ContainedEntity.Value, args.Examiner));
+    }
+
+    private void OnGetVerbs(Entity<KitchenSpikeComponent> ent, ref GetVerbsEvent<Verb> args)
+    {
+        if (!ent.Comp.BodyContainer.ContainedEntity.HasValue || !_containerSystem.CanRemove(ent.Comp.BodyContainer.ContainedEntity.Value, ent.Comp.BodyContainer))
+            return;
+
+        var user = args.User;
+
+        args.Verbs.Add(new Verb()
+        {
+            Text = Loc.GetString("comp-kitchen-spike-unhook-verb"),
+            Act = () => TryUnhook(ent, user, ent.Comp.BodyContainer.ContainedEntity.Value),
+            Impact = LogImpact.High,
+        });
+    }
+
+    private void OnRelayMovement(Entity<KitchenSpikeComponent> ent, ref ContainerRelayMovementEntityEvent args)
+    {
+        if (_containerSystem.CanRemove(args.Entity, ent.Comp.BodyContainer))
+            TryUnhook(ent, args.Entity, args.Entity);
     }
 
     private void OnVictimExamined(Entity<KitchenSpikeVictimComponent> ent, ref ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("comp-kitchen-spike-victim-examine", ("target", Identity.Entity(ent, EntityManager))));
+    }
+
+    private static void OnAttempt(EntityUid uid, KitchenSpikeHookedComponent stunned, CancellableEntityEventArgs args)
+    {
+        args.Cancel();
+    }
+
+    private static void OnInteractionAttempt(Entity<KitchenSpikeHookedComponent> ent, ref InteractionAttemptEvent args)
+    {
+        args.Cancelled = true;
     }
 
     public override void Update(float frameTime)
@@ -302,10 +391,44 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         _popupSystem.PopupPredicted(messageSelf, messageOthers, hook, user, PopupType.MediumCaution);
     }
+
+    /// <summary>
+    ///
+    /// </summary>
+    private void TryUnhook(Entity<KitchenSpikeComponent> ent, EntityUid user, EntityUid target)
+    {
+        if (HasComp<KitchenSpikeUnhookingComponent>(user) || HasComp<KitchenSpikeHookingComponent>(user))
+            return;
+
+        AddComp<KitchenSpikeUnhookingComponent>(user);
+
+        ShowPopups("comp-kitchen-spike-begin-unhook-self",
+            "comp-kitchen-spike-begin-unhook-self-other",
+            "comp-kitchen-spike-begin-unhook-other-self",
+            "comp-kitchen-spike-begin-unhook-other",
+            user,
+            target,
+            ent);
+
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
+            user,
+            ent.Comp.UnhookDelay,
+            new SpikeUnhookDoAfterEvent(),
+            ent,
+            target: target,
+            used: ent)
+        {
+            BreakOnDamage = true,
+            BreakOnMove = true,
+        });
+    }
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SpikeDoAfterEvent : SimpleDoAfterEvent;
+public sealed partial class SpikeHookDoAfterEvent : SimpleDoAfterEvent;
+
+[Serializable, NetSerializable]
+public sealed partial class SpikeUnhookDoAfterEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
 public sealed partial class SpikeButcherDoAfterEvent : SimpleDoAfterEvent;

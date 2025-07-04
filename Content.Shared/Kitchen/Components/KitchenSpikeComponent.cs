@@ -83,7 +83,7 @@ public sealed partial class KitchenSpikeComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Piercing", 5 },
+            { "Piercing", 0.1 },
         },
     };
 
@@ -98,19 +98,25 @@ public sealed partial class KitchenSpikeComponent : Component
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(30);
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
     /// <summary>
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Delay = 7.0f;
+    public float HookDelay = 7.0f;
 
     /// <summary>
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float DelayAlive = 10.0f;
+    public float UnhookDelay = 10.0f;
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ButcherDelayAlive = 10.0f;
 }
 
 /// <summary>
