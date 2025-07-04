@@ -8603,4 +8603,18 @@ Entries:
   id: 1186
   time: '2025-07-03T17:27:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/945
+- author: stickycheZ101
+  changes:
+  - message: readded the lang files after GitHub deleted them by accident
+    type: Fix
+  id: 1187
+  time: '2025-07-03T19:11:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/957
+- author: Killer Tamashi
+  changes:
+  - message: Incompetent medical staff can no longer round remove Avali by accident.
+    type: Tweak
+  id: 1188
+  time: '2025-07-03T19:17:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/946
 
