@@ -202,6 +202,6 @@
   id: Sylph
   name: barsign-prototype-name-sylph
   icon:
-    sprite: Structures/Wallmounts/sylphs.rsi
+    sprite: Structures/Wallmounts/barsign.rsi
     state: sylph
   description: barsign-prototype-description-sylph
