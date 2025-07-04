@@ -217,41 +217,6 @@
 
 - type: entity
   parent: BaseBorgiChassis
-  id: DerelictBorgiChassis
-  name: derelict borgi
-  description: even after all these years. still loves chasing it's tail.
-  components:
-    - type: ContainerFill
-      containers:
-        borg_brain:
-          - PositronicBrain
-        borg_module:
-          - BorgModuleTool
-          - BorgModuleFireExtinguisher
-        ears: 
-          - ClothingHeadsetAssistant
-        head: 
-          - ClothingHeadHelmetEVALarge
-        outerClothing: 
-          - ClothingOuterHardsuitEVA
-        mask:
-          - ClothingMaskBreath
-        suitstorage:
-          - OxygenTankFilled
-        id:
-          - BorgiClearPDA
-    - type: ItemSlots
-      slots:
-        cell_slot:
-          name: power-cell-slot-component-slot-name-default
-          startingItem: PowerCellHigh
-    - type: StartIonStormed
-      ionStormAmount: 3
-    - type: IonStormTarget
-      chance: 1.0 # just like derelicts. it catches EVERY ionstorm.
-
-- type: entity
-  parent: BaseBorgiChassis
   id: BaseStationBorgiChassis
   name: Smart Borgi
   description: A unusually smart dog, loves stating it's laws.
@@ -285,6 +250,42 @@
         params:
           volume: 12
     - type: IonStormTarget
+    - type: CyborgSparkEffect
+
+- type: entity
+  parent: BaseBorgiChassis
+  id: DerelictBorgiChassis
+  name: derelict borgi
+  description: even after all these years. still loves chasing it's tail.
+  components:
+    - type: ContainerFill
+      containers:
+        borg_brain:
+          - PositronicBrain
+        borg_module:
+          - BorgModuleTool
+          - BorgModuleFireExtinguisher
+        ears: 
+          - ClothingHeadsetAssistant
+        head: 
+          - ClothingHeadHelmetEVALarge
+        outerClothing: 
+          - ClothingOuterHardsuitEVA
+        mask:
+          - ClothingMaskBreath
+        suitstorage:
+          - OxygenTankFilled
+        id:
+          - BorgiClearPDA
+    - type: ItemSlots
+      slots:
+        cell_slot:
+          name: power-cell-slot-component-slot-name-default
+          startingItem: PowerCellHigh
+    - type: StartIonStormed
+      ionStormAmount: 3
+    - type: IonStormTarget
+      chance: 1.0 # just like derelicts. it catches EVERY ionstorm.
 
 - type: entity
   parent: BaseStationBorgiChassis
