@@ -70,6 +70,20 @@ public sealed class FlavorProfileSystem : EntitySystem
 
         if (flavors.Count > 1)
         {
+            // DS14-flavor-neutralize-start
+            var neutralized = new List<FlavorPrototype>();
+            foreach (FlavorPrototype flavor in flavors)
+            {
+                foreach (ProtoId<FlavorPrototype> neutralizedProtoId in flavor.Neutralize)
+                {
+                    FlavorPrototype neutralizedProto = _prototypeManager.Index<FlavorPrototype>(neutralizedProtoId);
+                    if (!neutralized.Contains(neutralizedProto))
+                        neutralized.Add(neutralizedProto);
+                }
+            }
+            flavors = flavors.Except(neutralized).ToList();
+            // DS14-flavor-neutralize-end
+
             var lastFlavor = Loc.GetString(flavors[^1].FlavorDescription);
             var allFlavors = string.Join(", ", flavors.GetRange(0, flavors.Count - 1).Select(i => Loc.GetString(i.FlavorDescription)));
             return Loc.GetString("flavor-profile-multiple", ("flavors", allFlavors), ("lastFlavor", lastFlavor));
