@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fire extinguishers and sprays now allow you to push the grids you are
-      standing on when you have magboots on.
-    type: Add
-  id: 8224
-  time: '2025-04-18T03:41:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31754
 - author: aada
   changes:
   - message: Filter categories added to the security techfab.
@@ -3887,3 +3879,11 @@
   id: 8735
   time: '2025-07-04T00:04:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38699
+- author: TiniestShark
+  changes:
+  - message: Added a Wire Brush to the Janitor's tool kit for scrubbing unsightly
+      rust off of the station's walls!
+    type: Add
+  id: 8736
+  time: '2025-07-04T02:02:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38667
