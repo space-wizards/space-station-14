@@ -65,6 +65,9 @@ namespace Content.Client.Inventory
 
             ent.Comp.TemplateId = state.TemplateId;
             ent.Comp.SpeciesId = state.SpeciesId;
+            ent.Comp.Displacements = state.Displacements;
+            ent.Comp.FemaleDisplacements = state.FemaleDisplacements;
+            ent.Comp.MaleDisplacements = state.MaleDisplacements;
 
             UpdateInventoryTemplate(ent);
         }

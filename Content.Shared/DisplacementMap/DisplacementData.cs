@@ -1,6 +1,6 @@
 namespace Content.Shared.DisplacementMap;
 
-[DataDefinition]
+[DataDefinition, Serializable]
 public sealed partial class DisplacementData
 {
     /// <summary>

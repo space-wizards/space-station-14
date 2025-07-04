@@ -43,11 +43,17 @@ public sealed class InventoryComponentState : ComponentState
 {
     public ProtoId<InventoryTemplatePrototype> TemplateId;
     public string? SpeciesId;
+    public Dictionary<string, DisplacementData> Displacements;
+    public Dictionary<string, DisplacementData> FemaleDisplacements;
+    public Dictionary<string, DisplacementData> MaleDisplacements;
 
-    public InventoryComponentState(ProtoId<InventoryTemplatePrototype> template, string? species)
+    public InventoryComponentState(ProtoId<InventoryTemplatePrototype> template, string? species, Dictionary<string, DisplacementData> displacements, Dictionary<string, DisplacementData> femaleDisplacements, Dictionary<string, DisplacementData> maleDisplacements)
     {
         TemplateId = template;
         SpeciesId = species;
+        Displacements = displacements;
+        FemaleDisplacements = femaleDisplacements;
+        MaleDisplacements = maleDisplacements;
     }
 }
 
