@@ -8688,4 +8688,11 @@ Entries:
   id: 1198
   time: '2025-07-04T18:59:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/937
+- author: Trep_Maul
+  changes:
+  - message: ratking speed
+    type: Fix
+  id: 1199
+  time: '2025-07-04T19:00:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/944
 
