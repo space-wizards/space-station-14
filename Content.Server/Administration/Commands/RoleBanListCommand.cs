@@ -1,32 +1,25 @@
-﻿using System.Linq;
-using System.Text;
-using Content.Server.Administration.BanList;
+﻿using Content.Server.Administration.BanList;
 using Content.Server.EUI;
 using Content.Server.Database;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class RoleBanListCommand : IConsoleCommand
+public sealed class RoleBanListCommand : LocalizedEntityCommands
 {
+    [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
-
     [Dependency] private readonly EuiManager _eui = default!;
 
-    [Dependency] private readonly IPlayerLocator _locator = default!;
+    public override string Command => "rolebanlist";
 
-    public string Command => "rolebanlist";
-    public string Description => Loc.GetString("cmd-rolebanlist-desc");
-    public string Help => Loc.GetString("cmd-rolebanlist-help");
-
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length != 1 && args.Length != 2)
+        if (args.Length is < 1 or > 2)
         {
-            shell.WriteLine($"Invalid amount of args. {Help}");
+            shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
             return;
         }
 
@@ -41,25 +34,26 @@ public sealed class RoleBanListCommand : IConsoleCommand
 
         if (data == null)
         {
-            shell.WriteError("Unable to find a player with that name or id.");
+            shell.WriteError(Loc.GetString("shell-target-player-does-not-exist"));
             return;
         }
 
         if (shell.Player is not { } player)
         {
-
             var bans = await _dbManager.GetServerRoleBansAsync(data.LastAddress, data.UserId, data.LastLegacyHWId, data.LastModernHWIds, includeUnbanned);
 
             if (bans.Count == 0)
             {
-                shell.WriteLine("That user has no bans in their record.");
+                shell.WriteLine(Loc.GetString("shell-rolebanlist-no-recorded-bans"));
                 return;
             }
 
             foreach (var ban in bans)
             {
-                var msg = $"ID: {ban.Id}: Role: {ban.Role} Reason: {ban.Reason}";
-                shell.WriteLine(msg);
+                shell.WriteLine(Loc.GetString("cmd-rolebanlist-shell-output",
+                    ("banId", $"{ban.Id}"),
+                    ("role", ban.Role),
+                    ("reason", ban.Reason)));
             }
             return;
         }
@@ -69,7 +63,7 @@ public sealed class RoleBanListCommand : IConsoleCommand
         await ui.ChangeBanListPlayer(data.UserId);
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         return args.Length switch
         {
