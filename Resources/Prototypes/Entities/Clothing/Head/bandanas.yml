@@ -72,7 +72,7 @@
   name: skull bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandMerc]
+  parent: [ClothingHeadBandBase, ClothingMaskBandMerc, BaseSalvageContraband ] #Starlight salvContra
   id: ClothingHeadBandMerc
   name: mercenary bandana
 

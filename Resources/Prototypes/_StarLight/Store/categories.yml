@@ -111,6 +111,10 @@
   id: SalvageConsumeables
   name: Consumeables
 
+- type: storeCategory
+  id: SalvageMercenaryEquipment
+  name: Mercenary
+
 # USSP
 
 - type: storeCategory
