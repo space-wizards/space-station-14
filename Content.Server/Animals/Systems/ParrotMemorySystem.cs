@@ -31,7 +31,6 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
-
     public override void Initialize()
     {
         base.Initialize();
@@ -74,7 +73,8 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     private void ListenerOnMapInit(Entity<ParrotListenerComponent> entity, ref MapInitEvent args)
     {
         // If an entity has a ParrotListenerComponent it really ought to have an ActiveListenerComponent
-        EnsureComp<ActiveListenerComponent>(entity);
+        if (!HasComp<ActiveListenerComponent>(entity))
+            Log.Error($"Entity {ToPrettyString(entity)} has a ParrotListenerComponent but was not given a ActiveListenerComponent");
     }
 
     private void OnListen(Entity<ParrotListenerComponent> entity, ref ListenEvent args)
