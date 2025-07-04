@@ -73,9 +73,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _profileEditor?.RefreshFlavorText();
         });
 
-        _configurationManager.OnValueChanged(CCVars.GameRoleTimers, _ => RefreshProfileEditor());
+        _configurationManager.OnValueChanged(CCVars.GameRoleTimers, _ => RefreshEditors());
 
-        _configurationManager.OnValueChanged(CCVars.GameRoleWhitelist, _ => RefreshProfileEditor());
+        _configurationManager.OnValueChanged(CCVars.GameRoleWhitelist, _ => RefreshEditors());
     }
 
     private LobbyCharacterPreviewPanel? GetLobbyPreview()
@@ -180,11 +180,12 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         PreviewPanel?.Refresh();
     }
 
-    private void RefreshProfileEditor()
+    private void RefreshEditors()
     {
         _profileEditor?.RefreshAntags();
         _profileEditor?.RefreshJobs();
         _profileEditor?.RefreshLoadouts();
+        _jobPriorityEditor?.RefreshJobs();
     }
 
     /// <summary>
