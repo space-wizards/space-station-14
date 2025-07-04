@@ -21,32 +21,24 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         Subs.ItemStatus<AbsorbentComponent>(ent => new AbsorbentItemStatus(ent, EntityManager));
     }
 
-    private void OnAbsorbentSolutionChange(EntityUid uid, AbsorbentComponent component, ref SolutionContainerChangedEvent args)
+    private void OnAbsorbentSolutionChange(Entity<AbsorbentComponent> ent, ref SolutionContainerChangedEvent args)
     {
-        if (!SolutionContainer.TryGetSolution(uid, component.SolutionName, out _, out var solution))
+        if (!SolutionContainer.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out _, out var solution))
             return;
 
-        component.Progress.Clear();
+        ent.Comp.Progress.Clear();
 
-        var mopReagent = solution.GetTotalPrototypeQuantity(Puddle.GetAbsorbentReagents(solution));
+        var absorbentReagents = Puddle.GetAbsorbentReagents(solution);
+        var mopReagent = solution.GetTotalPrototypeQuantity(absorbentReagents);
         if (mopReagent > FixedPoint2.Zero)
-        {
-            component.Progress[solution.GetColorWithOnly(_proto, Puddle.GetAbsorbentReagents(solution))] = mopReagent.Float();
-        }
+            ent.Comp.Progress[solution.GetColorWithOnly(_proto, absorbentReagents)] = mopReagent.Float();
 
-        var otherColor = solution.GetColorWithout(_proto, Puddle.GetAbsorbentReagents(solution));
-        var other = (solution.Volume - mopReagent).Float();
+        var otherColor = solution.GetColorWithout(_proto, absorbentReagents);
+        var other = solution.Volume - mopReagent;
+        if (other > FixedPoint2.Zero)
+            ent.Comp.Progress[otherColor] = other.Float();
 
-        if (other > 0f)
-        {
-            component.Progress[otherColor] = other;
-        }
-
-        var remainder = solution.AvailableVolume;
-
-        if (remainder > FixedPoint2.Zero)
-        {
-            component.Progress[Color.DarkGray] = remainder.Float();
-        }
+        if (solution.AvailableVolume > FixedPoint2.Zero)
+            ent.Comp.Progress[Color.DarkGray] = solution.AvailableVolume.Float();
     }
 }
