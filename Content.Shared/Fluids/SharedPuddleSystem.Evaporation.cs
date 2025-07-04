@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
@@ -42,11 +43,19 @@ public abstract partial class SharedPuddleSystem
             if (!_solutionContainerSystem.ResolveSolution(uid, puddle.SolutionName, ref puddle.Solution, out var puddleSolution))
                 continue;
 
-            // Yes, this means that 50u water + 50u holy water evaporates twice as fast as 100u water.
-            foreach (var (evaporatingReagent, evaporatingSpeed) in GetEvaporationSpeeds(puddleSolution))
+            // If we have multiple evaporating reagents in one puddle, just take the average evaporation speed and apply
+            // that to all of them.
+            var evaporationSpeeds = GetEvaporationSpeeds(puddleSolution);
+            // Can't use .Average because FixedPoint2
+            var evaporationSpeed = evaporationSpeeds.Values.Sum() / evaporationSpeeds.Count;
+            var reagentProportions = evaporationSpeeds.ToDictionary(kv => kv.Key,
+                kv => puddleSolution.GetTotalPrototypeQuantity(kv.Key) / puddleSolution.Volume);
+
+            // Still have to iterate over one-by-one since the full solution could have non-evaporating solutions.
+            foreach (var (reagent, factor) in reagentProportions)
             {
-                var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds * evaporatingSpeed;
-                puddleSolution.SplitSolutionWithOnly(reagentTick, evaporatingReagent);
+                var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds * evaporationSpeed * factor;
+                puddleSolution.SplitSolutionWithOnly(reagentTick, reagent);
             }
 
             // Despawn if we're done
@@ -90,8 +99,8 @@ public abstract partial class SharedPuddleSystem
     }
 
     /// <summary>
-    /// Gets the evaporating speed of the reagents within a solution.
-    /// The speed at which a solution evaporates is the sum of the speed of all evaporating reagents in it.
+    /// Gets a mapping of evaporating speed of the reagents within a solution.
+    /// The speed at which a solution evaporates is the average of the speed of all evaporating reagents in it.
     /// </summary>
     public Dictionary<string, FixedPoint2> GetEvaporationSpeeds(Solution solution)
     {
