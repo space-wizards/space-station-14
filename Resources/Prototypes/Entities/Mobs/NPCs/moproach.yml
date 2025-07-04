@@ -9,19 +9,13 @@
     description: ghost-role-information-moproach-description
   - type: Sprite
     sprite: Mobs/Animals/mothroach/moproach.rsi
-  - type: Clothing
-    quickEquip: false
-    sprite: Mobs/Animals/mothroach/moproach.rsi
-    equippedPrefix: 0
-    slots:
-    - HEAD
   - type: MovementSpeedModifier
     baseSprintSpeed : 5 # extra speed for that moppin'!
   - type: HTN
     rootTask:
       task: MoproachCompound
   - type: Absorbent
-    pickupAmount: 2 # small feet
+    pickupAmount: 5 # small feet
   - type: UseDelay
     delay: 0.5 # quick feet
   - type: SolutionRegeneration

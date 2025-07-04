@@ -301,7 +301,7 @@
     SpacemenFigureSpawner: 28
     SpawnMobCockroach: 5
     MaintenanceToolSpawner: 5
-    SpawnMobMoproach: 1
+    SpawnMobMoproach: 0.1
 
 - type: entity
   parent: BaseItem
