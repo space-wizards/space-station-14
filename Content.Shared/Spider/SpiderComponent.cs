@@ -22,14 +22,14 @@ public sealed partial class SpiderComponent : Component
     /// <summary>
     /// Whether the spider will spawn webs when not controlled by a player.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool SpawnsWebsAsNonPlayer = true;
 
     /// <summary>
     /// The cooldown in seconds between web spawns when not controlled by a player.
     /// </summary>
     [DataField]
-    public TimeSpan WebSpawnCooldown = TimeSpan.FromSeconds(120f);
+    public TimeSpan WebSpawnCooldown = TimeSpan.FromSeconds(45f);
 
     /// <summary>
     /// The next time the spider can spawn a web when not controlled by a player.
