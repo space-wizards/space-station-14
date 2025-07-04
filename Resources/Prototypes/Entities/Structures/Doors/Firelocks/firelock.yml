@@ -84,7 +84,7 @@
           - AirlockLayer
     - type: Door
       openDrawDepth: WallTops
-      closeTimeOne: 0.1
+      closeTimeOne: 0
       closeTimeTwo: 0.6
       openTimeOne: 0.1
       openTimeTwo: 0.6

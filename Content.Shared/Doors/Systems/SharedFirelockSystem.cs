@@ -38,6 +38,13 @@ public abstract class SharedFirelockSystem : EntitySystem
         if (!Resolve(uid, ref firelock, ref door))
             return false;
 
+        // Check if we're closed to the point of becoming solid if we're actively closing right now
+        if (door.State == DoorState.Closing)
+        {
+
+            return _doorSystem.OnPartialClose(uid, door);
+        }
+
         if (door.State != DoorState.Open
             || firelock.EmergencyCloseCooldown != null
             && _gameTiming.CurTime < firelock.EmergencyCloseCooldown)

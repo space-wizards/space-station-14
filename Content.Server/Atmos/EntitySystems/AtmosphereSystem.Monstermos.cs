@@ -413,12 +413,18 @@ namespace Content.Server.Atmos.EntitySystems
                         DebugTools.Assert(otherTile.AdjacentBits.IsFlagSet(direction));
                         DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
 
+                        Log.Debug("PRE-considering direction " + otherTile.GridIndices + " and " + otherTile2.GridIndices + ", allowed flow " + otherTile.AdjacentBits + ", " + otherTile2.AdjacentBits);
                         ConsiderFirelocks(ent, otherTile, otherTile2);
+                        Log.Debug("Checking dir flags at " + otherTile.GridIndices + ", allowed flow " + otherTile.AdjacentBits + ", desired flow " + direction);
 
+
+                        Log.Debug("POST-considering direction " + otherTile.GridIndices + " and"  + otherTile2.GridIndices + ", allowed flow " + otherTile.AdjacentBits + ", " + otherTile2.AdjacentBits);
                         // The firelocks might have closed on us.
                         if (!otherTile.AdjacentBits.IsFlagSet(direction))
+                        {
+                            Log.Debug("CONTINUED AT " + otherTile.GridIndices);
                             continue;
-
+                        }
                         otherTile2.MonstermosInfo = new MonstermosInfo { LastQueueCycle = queueCycle };
                         _depressurizeTiles[tileCount++] = otherTile2;
                         if (tileCount >= limit)
@@ -579,27 +585,56 @@ namespace Content.Server.Atmos.EntitySystems
             TileAtmosphere other)
         {
             var reconsiderAdjacent = false;
-
             var mapGrid = ent.Comp3;
-            foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, tile.GridIndices))
-            {
-                if (_firelockQuery.TryGetComponent(entity, out var firelock))
-                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
-            }
 
-            foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, other.GridIndices))
-            {
-                if (_firelockQuery.TryGetComponent(entity, out var firelock))
-                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
-            }
+            CheckFirelocksInArea(tile.GridIndices);
+            CheckFirelocksInArea(other.GridIndices);
 
             if (!reconsiderAdjacent)
                 return;
 
-            UpdateAdjacentTiles(ent, tile);
-            UpdateAdjacentTiles(ent, other);
-            InvalidateVisuals(ent, tile);
-            InvalidateVisuals(ent, other);
+            UpdateTilesAndVisualsInArea(tile.GridIndices);
+            UpdateTilesAndVisualsInArea(other.GridIndices);
+            return;
+
+            // Helper method to check all firelocks in a 3x3 area.
+            // TODO: Don't check things two times over as there's some overlap.
+            void CheckFirelocksInArea(Vector2i center)
+            {
+                for (var dx = -1; dx <= 1; dx++)
+                {
+                    for (var dy = -1; dy <= 1; dy++)
+                    {
+                        var indices = new Vector2i(center.X + dx, center.Y + dy);
+                        foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, indices))
+                        {
+                            if (_firelockQuery.TryGetComponent(entity, out var firelock))
+                            {
+                                reconsiderAdjacent |= _firelockSystem.EmergencyPressureStopAirtight((entity, firelock));
+                                Log.Debug("PressureStopping firelock at" + indices);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Helper method to update tiles in an area if we triggered firelocks.
+            // TODO: Don't check things two times over as there's some overlap.
+            void UpdateTilesAndVisualsInArea(Vector2i center)
+            {
+                for (var dx = -1; dx <= 1; dx++)
+                {
+                    for (var dy = -1; dy <= 1; dy++)
+                    {
+                        var indices = new Vector2i(center.X + dx, center.Y + dy);
+                        var gridAtmosTile = GetOrNewTile(ent.Owner, ent.Comp1, indices);
+
+                        Log.Debug("Updating tiles at" + indices);
+                        UpdateAdjacentTiles(ent, gridAtmosTile);
+                        InvalidateVisuals(ent, gridAtmosTile);
+                    }
+                }
+            }
         }
 
         private void FinalizeEq(

@@ -222,6 +222,9 @@ public sealed partial class AtmosphereSystem
 
         if (!tile.AdjacentBits.IsFlagSet(tile.MonstermosInfo.CurrentTransferDirection))
             tile.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
+
+        Log.Debug("Finalized air dir flags at " + tile.GridIndices + ", allowed flow " + tile.AdjacentBits);
+
     }
 
     private (GasMixture Air, bool IsSpace) GetDefaultMapAtmosphere(MapAtmosphereComponent? map)

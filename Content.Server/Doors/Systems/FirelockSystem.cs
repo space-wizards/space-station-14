@@ -21,6 +21,7 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedMapSystem _mapping = default!;
         [Dependency] private readonly PointLightSystem _pointLight = default!;
+        [Dependency] private readonly AirtightSystem _airtight = default!;
 
         private const int UpdateInterval = 30;
         private int _accumulatedTicks;
@@ -33,6 +34,25 @@ namespace Content.Server.Doors.Systems
 
             SubscribeLocalEvent<FirelockComponent, PowerChangedEvent>(PowerChanged);
 
+        }
+
+        /// <summary>
+        /// A serverside method that calls EmergencyPressureStop on an airlock, making the airlock airtight
+        /// if it is starting to close.
+        /// </summary>
+        /// <param name="ent">The firelock being pressurestopped.</param>
+        /// <returns>A true/false depending on if the firelock was EmergencyPressureStopped.</returns>
+        public bool EmergencyPressureStopAirtight(Entity<FirelockComponent?, DoorComponent?, AirtightComponent?> ent)
+        {
+            var returnBool = EmergencyPressureStop(ent.Owner, ent.Comp1, ent.Comp2);
+
+            // We got the go-ahead to start closing, so mark this firelock as airtight right now.
+            if (returnBool && Resolve(ent, ref ent.Comp3))
+            {
+                _airtight.SetAirblocked((ent.Owner, ent.Comp3), true);
+            }
+
+            return returnBool;
         }
 
         private void PowerChanged(EntityUid uid, FirelockComponent component, ref PowerChangedEvent args)
