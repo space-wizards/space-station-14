@@ -23,6 +23,9 @@
             "name": "mag-1"
         },
         {
+            "name": "breach"
+        },
+        {
             "name": "inhand-left-mag",
             "directions": 4
         },

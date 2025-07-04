@@ -19,3 +19,6 @@ uplink-thermalvision-eyes = Thermal Vision Cyber Eyes
 uplink-thermalvision-eyes-desc = Allows you to see in the dark and detect creatures through walls but makes you more vulnerable to flashes. (Warning: You will need a surgical assistant for the procedure.)
 uplink-mantis-blade-arms-name = Mantis Blade Arms Bundle
 uplink-mantis-blade-arms-desc = Originally used as a simple construction tool, now turned into hidden blades that can extend from your arm while still keeping its destructive prying skill. Truly a sight to behold. (Warning: You will need a surgical assistant for the procedure.)
+
+uplink-breaching-magazine-name = Shotgun Magazine (.50 breaching)
+uplink-breaching-magazine-desc = A magazine loaded with breaching shells, for breaking down airlocks, windows and walls. Less effective on people.

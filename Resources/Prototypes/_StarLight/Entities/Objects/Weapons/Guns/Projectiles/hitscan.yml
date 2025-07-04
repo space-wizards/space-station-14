@@ -631,7 +631,8 @@
   parent: BulletTrace
   damage:
     types:
-      Piercing: 28
+      Piercing: 40
+      Structural: 15
   pierceChance: 0.08
   bullet:
     sprite:
@@ -656,6 +657,7 @@
   damage:
     types:
       Piercing: 5
+      Structural: 5
   pierceChance: 0.03
   count: 12
   spread: 15
@@ -724,6 +726,21 @@
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
       state: depleted-uranium
+
+- type: hitscan
+  id: PelletShotgunBreachTrace
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 5
+      Structural: 20
+  pierceChance: 0.03
+  count: 12
+  spread: 50
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: piercing
 
 ## energy
 
