@@ -3,7 +3,7 @@
   mapName: 'Reach'
   mapPath: /Maps/_Starlight/Stations/Reach.yml
   minPlayers: 0
-  maxPlayers: 10
+  maxPlayers: 15
   stations:
     StarlightReach:
       stationProto: StandardNanotrasenStation
