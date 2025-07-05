@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.PAI;
 
@@ -33,6 +34,8 @@ public abstract class SharedPAISystem : EntitySystem
         _actions.RemoveAction(ent.Owner, ent.Comp.ShopAction);
     }
 }
-public sealed partial class PAIShopActionEvent : InstantActionEvent
-{
-}
+
+public sealed partial class PAIShopActionEvent : InstantActionEvent;
+
+[Serializable, NetSerializable, ByRefEvent]
+public sealed partial class PersonalAIEncryptionEvent;
