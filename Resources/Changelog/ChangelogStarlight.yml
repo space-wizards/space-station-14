@@ -8962,4 +8962,13 @@ Entries:
   id: 1236
   time: '2025-07-05T23:05:51.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/969
+- author: Conflee
+  changes:
+  - message: Added Advanced Restraints Crate as a Cargo purchase for 1000 spesos.
+      Comes with 2x straight jackets, 2x breath masks, and 2x sleepy gas. For dealing
+      with terminal shitters in Genpop
+    type: Add
+  id: 1237
+  time: '2025-07-05T23:09:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/967
 
