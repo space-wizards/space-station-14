@@ -230,7 +230,7 @@
       
 - type: entity
   name: Jungle Hawk
-  parent: [ WeaponPistolN1984, BaseSecuritySalvageContraband ]
+  parent: [ BaseSecuritySalvageContraband, WeaponPistolN1984 ] 
   id: WeaponPistolDeagle
   description: A high-caliber handgun designed for putting down large game.
   components:
