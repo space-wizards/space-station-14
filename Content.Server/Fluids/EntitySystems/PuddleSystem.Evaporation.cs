@@ -1,3 +1,4 @@
+using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -41,6 +42,18 @@ public sealed partial class PuddleSystem
             if (evaporation.NextTick > curTime)
                 continue;
 
+            var tileMix = _atmosphereSystem.GetContainingMixture(uid, true);
+            var hasEnoughVapor = tileMix?.GetMoles(Gas.WaterVapor) >= 1.0f;
+
+            if (hasEnoughVapor)
+            {
+                EnsureComp<PreventEvaporationComponent>(uid).Active = true;
+                evaporation.NextTick += EvaporationCooldown;
+                continue;
+            }
+
+            RemComp<PreventEvaporationComponent>(uid);
+
             evaporation.NextTick += EvaporationCooldown;
 
             if (!_solutionContainerSystem.ResolveSolution(uid, puddle.SolutionName, ref puddle.Solution, out var puddleSolution))
@@ -53,7 +66,6 @@ public sealed partial class PuddleSystem
                 puddleSolution.SplitSolutionWithOnly(reagentTick, evaporatingReagent);
             }
 
-            // Despawn if we're done
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {
                 // Spawn a *sparkle*
