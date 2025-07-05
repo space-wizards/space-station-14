@@ -1417,6 +1417,9 @@
   id: UtilityBelt
 
 - type: Tag
+  id: VariationExempt # Ued to prevent roundstart variation pass from changing/breaking
+
+- type: Tag
   id: Vegetable
 
 - type: Tag
