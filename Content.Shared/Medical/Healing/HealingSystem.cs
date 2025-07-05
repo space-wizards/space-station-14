@@ -89,7 +89,7 @@ public sealed class HealingSystem : EntitySystem
         {
             _stacks.LowerCount((args.Used.Value, stackComp), 1);
 
-            if (stackComp.Count <= 0)
+            if (_stacks.GetCount((args.Used.Value, stackComp)) <= 0)
                 dontRepeat = true;
         }
         else
