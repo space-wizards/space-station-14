@@ -13,8 +13,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
@@ -38,6 +37,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _logger = default!;
@@ -137,8 +137,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     {
         var victim = ent.Comp.BodyContainer.ContainedEntity;
 
-        if (args.Handled || !TryComp<ButcherableComponent>(victim, out var butcherable) || butcherable.SpawnedEntities.Count == 0 ||
-            !TryComp<MobStateComponent>(victim, out var mobState))
+        if (args.Handled || !TryComp<ButcherableComponent>(victim, out var butcherable) || butcherable.SpawnedEntities.Count == 0)
             return;
 
         args.Handled = true;
@@ -164,7 +163,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         var delay = sharp.ButcherDelayModifier * butcherable.ButcherDelay;
 
-        if (mobState.CurrentState != MobState.Dead)
+        if (_mobStateSystem.IsAlive(victim.Value))
             delay += ent.Comp.ButcherDelayAlive;
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
