@@ -11,18 +11,20 @@ using Robust.Shared.Utility;
 using Robust.Client.UserInterface.RichText;
 using Content.Client.UserInterface.RichText;
 using Robust.Shared.Input;
+using Robust.Shared.IoC;
 
 namespace Content.Client.Paper.UI
 {
     [GenerateTypedNameReferences]
     public sealed partial class PaperWindow : BaseWindow
     {
+        private PaperComponent.PaperBoundUserInterfaceState _currentState = default!;
+        private string _currentRawText = string.Empty;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IResourceCache _resCache = default!;
 
         private static Color DefaultTextColor = new(25, 25, 25);
 
-        // <summary>
         // Size of resize handles around the paper
         private const int DRAG_MARGIN_SIZE = 16;
 
@@ -45,7 +47,9 @@ namespace Content.Client.Paper.UI
             typeof(ColorTag),
             typeof(HeadingTag),
             typeof(ItalicTag),
-            typeof(MonoTag)
+            typeof(MonoTag),
+            typeof(FormTagHandler),
+            typeof(SignatureTagHandler)
         };
 
         public event Action<string>? OnSaved;
@@ -53,10 +57,7 @@ namespace Content.Client.Paper.UI
         private int _MaxInputLength = -1;
         public int MaxInputLength
         {
-            get
-            {
-                return _MaxInputLength;
-            }
+            get => _MaxInputLength;
             set
             {
                 _MaxInputLength = value;
@@ -130,13 +131,11 @@ namespace Content.Client.Paper.UI
                     PatchMarginRight = backgroundPatchMargin.Right,
                     PatchMarginTop = backgroundPatchMargin.Top
                 };
-
             }
             else
             {
                 PaperBackground.PanelOverride = null;
             }
-
 
             // Then the header:
             if (visuals.HeaderImagePath != null)
@@ -161,7 +160,6 @@ namespace Content.Client.Paper.UI
                     visuals.FooterMargin.Right, visuals.FooterMargin.Bottom);
 
             PaperContent.ModulateSelfOverride = visuals.ContentImageModulate;
-            WrittenTextLabel.ModulateSelfOverride = visuals.FontAccentColor;
             FillStatus.ModulateSelfOverride = visuals.FontAccentColor;
 
             var contentImage = visuals.ContentImagePath != null ? _resCache.GetResource<TextureResource>(visuals.ContentImagePath) : null;
@@ -230,19 +228,16 @@ namespace Content.Client.Paper.UI
                 // And this scales the texture so that it's a single text line:
                 var scaleY = (_paperContentLineScale * fontLineHeight) / _paperContentTex.Texture?.Height ?? fontLineHeight;
                 _paperContentTex.TextureScale = new Vector2(1, scaleY);
-
                 // Now, we might need to add some padding to the text to ensure
                 // that, even if a header is specified, the text will line up with
                 // where the content image expects the font to be rendered (i.e.,
                 // adjusting the height of the header image shouldn't cause the
                 // text to be offset from a line)
-                {
-                    var headerHeight = HeaderImage.Size.Y + HeaderImage.Margin.Top + HeaderImage.Margin.Bottom;
-                    var headerInLines = headerHeight / (fontLineHeight * _paperContentLineScale);
-                    var paddingRequiredInLines = (float)Math.Ceiling(headerInLines) - headerInLines;
-                    var verticalMargin = fontLineHeight * paddingRequiredInLines * _paperContentLineScale;
-                    TextAlignmentPadding.Margin = new Thickness(0.0f, verticalMargin, 0.0f, 0.0f);
-                }
+                var headerHeight = HeaderImage.Size.Y + HeaderImage.Margin.Top + HeaderImage.Margin.Bottom;
+                var headerInLines = headerHeight / (fontLineHeight * _paperContentLineScale);
+                var paddingRequiredInLines = (float)Math.Ceiling(headerInLines) - headerInLines;
+                var verticalMargin = fontLineHeight * paddingRequiredInLines * _paperContentLineScale;
+                TextAlignmentPadding.Margin = new Thickness(0.0f, verticalMargin, 0.0f, 0.0f);
             }
 
             base.Draw(handle);
@@ -250,47 +245,54 @@ namespace Content.Client.Paper.UI
 
         /// <summary>
         ///     Initialize the paper contents, i.e. the text typed by the
-        ///     user and any stamps that have peen put on the page.
+        ///     user and any stamps that have been put on the page.
         /// </summary>
         public void Populate(PaperComponent.PaperBoundUserInterfaceState state)
         {
-            bool isEditing = state.Mode == PaperComponent.PaperAction.Write;
-            bool wasEditing = InputContainer.Visible;
+            _currentState = state;
+            _currentRawText = state.Text;
+            var isEditing = state.Mode == PaperComponent.PaperAction.Write;
+
+            // Show/hide UI elements based on edit mode
             InputContainer.Visible = isEditing;
             EditButtons.Visible = isEditing;
+            WrittenTextLabel.Visible = !isEditing;
+            WrittenTextContainer.Visible = false;
+            BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
 
-            var msg = new FormattedMessage();
-            msg.AddMarkupPermissive(state.Text);
-
-            // For premade documents, we want to be able to edit them rather than
-            // replace them.
-            var shouldCopyText = 0 == Input.TextLength && 0 != state.Text.Length;
-            if (!wasEditing || shouldCopyText)
-            {
+            if (isEditing)
+            {   // For premade documents, we want to be able to edit them rather than
+                // replace them.
+                // Copy server text to input field if it's empty
+                var shouldCopy = Input.TextLength == 0 && state.Text.Length > 0;
+                if (shouldCopy)
                 // We can get repeated messages with state.Mode == Write if another
                 // player opens the UI for reading. In this case, don't update the
                 // text input, as this player is currently writing new text and we
                 // don't want to lose any text they already input.
-                Input.TextRope = Rope.Leaf.Empty;
-                Input.CursorPosition = new TextEdit.CursorPos();
-                Input.InsertAtCursor(state.Text);
+                {
+                    Input.TextRope = Rope.Leaf.Empty;
+                    Input.CursorPosition = new TextEdit.CursorPos();
+                    Input.InsertAtCursor(state.Text);
+                }
+                return;
             }
 
-            for (var i = 0; i <= state.StampedBy.Count * 3 + 1; i++)
-            {
-                msg.AddMarkupPermissive("\r\n");
-            }
-            WrittenTextLabel.SetMessage(msg, _allowedTags, DefaultTextColor);
+            // Reset form and signature counters before processing to ensure consistent indexing
+            FormTagHandler.SetFormText(state.Text);
+            FormTagHandler.ResetFormCounter();
+            SignatureTagHandler.ResetSignatureCounter();
 
-            WrittenTextLabel.Visible = !isEditing && state.Text.Length > 0;
-            BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
+            // Display text with markup processing (forms, signatures, colors, etc.)
+            var fm = new FormattedMessage();
+            fm.AddMarkupPermissive(state.Text);
+            WrittenTextLabel.SetMessage(fm, _allowedTags, DefaultTextColor);
 
+            // Add stamps that have been applied to this paper
             StampDisplay.RemoveAllChildren();
             StampDisplay.RemoveStamps();
-            foreach(var stamper in state.StampedBy)
-            {
-                StampDisplay.AddStamp(new StampWidget{ StampInfo = stamper });
-            }
+            foreach (var stamper in state.StampedBy)
+                StampDisplay.AddStamp(new StampWidget { StampInfo = stamper });
         }
 
         /// <summary>
@@ -305,35 +307,25 @@ namespace Content.Client.Paper.UI
 
             // Be quite generous with resize margins:
             if (relativeMousePos.Y < DRAG_MARGIN_SIZE)
-            {
                 mode |= DragMode.Top;
-            }
             else if (relativeMousePos.Y > Size.Y - DRAG_MARGIN_SIZE)
-            {
                 mode |= DragMode.Bottom;
-            }
-
             if (relativeMousePos.X < DRAG_MARGIN_SIZE)
-            {
                 mode |= DragMode.Left;
-            }
             else if (relativeMousePos.X > Size.X - DRAG_MARGIN_SIZE)
-            {
                 mode |= DragMode.Right;
-            }
 
-            if((mode & _allowedResizeModes) == DragMode.None)
-            {
+            if ((mode & _allowedResizeModes) == DragMode.None)
                 return DragMode.Move;
-            }
+
             return mode & _allowedResizeModes;
         }
 
         private void RunOnSaved()
-        {
-            // Prevent further saving while text processing still in
+        { // Prevent further saving while text processing still in
             SaveButton.Disabled = true;
             OnSaved?.Invoke(Rope.Collapse(Input.TextRope));
+            SaveButton.Disabled = false;
         }
 
         private void UpdateFillState()
@@ -341,11 +333,9 @@ namespace Content.Client.Paper.UI
             if (MaxInputLength != -1)
             {
                 var inputLength = Input.TextLength;
-
                 FillStatus.Text = Loc.GetString("paper-ui-fill-level",
                     ("currentLength", inputLength),
                     ("maxLength", MaxInputLength));
-
                 // Disable the save button if we've gone over the limit
                 SaveButton.Disabled = inputLength > MaxInputLength;
             }
@@ -354,6 +344,172 @@ namespace Content.Client.Paper.UI
                 FillStatus.Text = "";
                 SaveButton.Disabled = false;
             }
+        }
+
+        /// <summary>
+        /// Removes any unfilled [form] and [signature] tags from the paper text.
+        /// Called when the paper is stamped to finalize the document.
+        /// </summary>
+        /// <param name="text">The paper text to clean</param>
+        /// <returns>Text with unfilled tags removed</returns>
+        public static string CleanUnfilledTags(string text)
+        {
+            return text.Replace("[form]", "").Replace("[signature]", "");
+        }
+
+        /// <summary>
+        /// Opens a dialog for filling out a specific form field.
+        /// </summary>
+        /// <param name="formIndex">The index of the form field to fill</param>
+        public void OpenFormDialog(int formIndex)
+        {
+            var popup = new Popup();
+            var vbox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, Margin = new Thickness(10) };
+            var editContainer = new PanelContainer { StyleClasses = { "TransparentBorderedWindowPanel" } };
+            var edit = new LineEdit { MinSize = new Vector2(200, 0), Margin = new Thickness(5) };
+            var hbox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Horizontal };
+            var ok = new Button { Text = Loc.GetString("paper-form-dialog-ok") };
+            var cancel = new Button { Text = Loc.GetString("paper-form-dialog-cancel") };
+
+            editContainer.AddChild(edit);
+
+            ok.OnPressed += _ =>
+            {
+                if (!string.IsNullOrEmpty(edit.Text))
+                {
+                    var newText = ReplaceNthFormTag(_currentRawText, formIndex, edit.Text);
+                    OnSaved?.Invoke(newText);
+                }
+                popup.Close();
+            };
+
+            cancel.OnPressed += _ => popup.Close();
+
+            edit.OnTextEntered += _ =>
+            {
+                if (!string.IsNullOrEmpty(edit.Text))
+                {
+                    var newText = ReplaceNthFormTag(_currentRawText, formIndex, edit.Text);
+                    OnSaved?.Invoke(newText);
+                }
+                popup.Close();
+            };
+
+            hbox.AddChild(ok);
+            hbox.AddChild(cancel);
+            vbox.AddChild(editContainer);
+            vbox.AddChild(hbox);
+            popup.AddChild(vbox);
+            AddChild(popup);
+            popup.Open();
+            edit.GrabKeyboardFocus();
+        }
+
+        private static string ReplaceFormAtPosition(string text, int formIndex, string replacement)
+        {
+            var formTag = "[form]";
+            var parts = text.Split(new[] { formTag }, StringSplitOptions.None);
+
+            if (formIndex >= 0 && formIndex < parts.Length - 1)
+            {
+                var result = "";
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    result += parts[i];
+                    if (i < parts.Length - 1)
+                    {
+                        if (i == formIndex)
+                            result += replacement;
+                        else
+                            result += formTag;
+                    }
+                }
+                return result;
+            }
+
+            return text;
+        }
+
+        /// <summary>
+        /// Replaces a specific [signature] tag with the player's signature.
+        /// </summary>
+        /// <param name="signatureIndex">The index of the signature field to fill</param>
+        /// <param name="signature">The player's signature text</param>
+        public void ReplaceSignature(int signatureIndex, string signature)
+        {
+            var newText = ReplaceNthSignatureTag(_currentRawText, signatureIndex, signature);
+            OnSaved?.Invoke(newText);
+        }
+
+        private static string ReplaceSignatureAtIndex(string text, int index, string replacement)
+        {
+            var signatureTag = "[signature]";
+            var parts = text.Split(new[] { signatureTag }, StringSplitOptions.None);
+
+            if (index >= 0 && index < parts.Length - 1)
+            {
+                var result = "";
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    result += parts[i];
+                    if (i < parts.Length - 1)
+                    {
+                        if (i == index)
+                            result += replacement;
+                        else
+                            result += signatureTag;
+                    }
+                }
+                return result;
+            }
+
+            return text;
+        }
+
+        private static string ReplaceNthFormTag(string text, int index, string replacement)
+        {
+            var formTag = "[form]";
+            var currentIndex = 0;
+            var pos = 0;
+
+            while (pos < text.Length)
+            {
+                var foundPos = text.IndexOf(formTag, pos);
+                if (foundPos == -1) break;
+
+                if (currentIndex == index)
+                {
+                    return text.Substring(0, foundPos) + replacement + text.Substring(foundPos + formTag.Length);
+                }
+
+                currentIndex++;
+                pos = foundPos + formTag.Length;
+            }
+
+            return text;
+        }
+
+        private static string ReplaceNthSignatureTag(string text, int index, string replacement)
+        {
+            var signatureTag = "[signature]";
+            var currentIndex = 0;
+            var pos = 0;
+
+            while (pos < text.Length)
+            {
+                var foundPos = text.IndexOf(signatureTag, pos);
+                if (foundPos == -1) break;
+
+                if (currentIndex == index)
+                {
+                    return text.Substring(0, foundPos) + replacement + text.Substring(foundPos + signatureTag.Length);
+                }
+
+                currentIndex++;
+                pos = foundPos + signatureTag.Length;
+            }
+
+            return text;
         }
     }
 }
