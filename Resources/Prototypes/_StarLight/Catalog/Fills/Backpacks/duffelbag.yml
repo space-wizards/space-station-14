@@ -64,3 +64,14 @@
       - id: WeaponSubMachineGunUzi
       - id: MagazinePistolSubMachineGunUzi
       - id: MagazinePistolSubMachineGunUzi
+  id: ClothingBackpackDuffelSyndicateFilledInfiltration
+  name: infiltration hardsuit bundle
+  description: "Contains the latest in Syndicate chameleon technology, the infiltration hardsuit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitInfiltration
+      - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesCombat
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled

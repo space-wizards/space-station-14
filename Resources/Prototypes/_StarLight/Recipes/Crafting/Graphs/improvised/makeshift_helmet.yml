@@ -1,0 +1,15 @@
+- type: constructionGraph
+  id: ClothingHeadHelmetMakeshiftGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: helmet
+      steps:
+      - material: Steel
+        amount: 4
+        doAfter: 5
+      - material: Cable
+        amount: 3
+  - node: helmet
+    entity: ClothingHeadHelmetMakeshift

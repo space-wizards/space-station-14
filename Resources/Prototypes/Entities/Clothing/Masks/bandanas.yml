@@ -131,7 +131,7 @@
     sprite: Clothing/Head/Bandanas/skull.rsi
 
 - type: entity
-  parent: ClothingMaskBandanaBase
+  parent: [ ClothingMaskBandanaBase, BaseSalvageContraband ] #Starlight salvContra
   id: ClothingMaskBandMerc
   name: mercenary bandana
   description: To protect the head from the sun, insects and other dangers of the higher path.

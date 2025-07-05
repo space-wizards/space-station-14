@@ -1,0 +1,26 @@
+- type: constructionGraph
+  id: SwordForgedGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: sword
+      steps:
+      - tag: BladePlasteel
+        icon:
+          sprite: _Starlight/Objects/Misc/plasteel_blade.rsi
+          state: icon
+        name: crafting-menu-name-PB
+      - material: Plasteel
+        amount: 4
+        doAfter: 15
+      - material: Cloth
+        amount: 4
+        doAfter: 5
+      - tag: HiltPlasteel
+        icon:
+          sprite: _Starlight/Objects/Misc/plasteel_hilt.rsi
+          state: icon
+        name: crafting-menu-name-PH
+  - node: sword
+    entity: UnfinishedSwordForged
