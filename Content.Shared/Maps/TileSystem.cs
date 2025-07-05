@@ -7,8 +7,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-using Robust.Shared.Log;
-
 namespace Content.Shared.Maps;
 
 /// <summary>
@@ -183,7 +181,9 @@ public sealed class TileSystem : EntitySystem
 
             //Clean up empty stacks to avoid memory buildup
             if (stack.Count == 0)
+            {
                 _tileBaseTurfHistory.Remove(keyHistory);
+            }
         }
         else
         {
