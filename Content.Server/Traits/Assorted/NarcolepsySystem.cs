@@ -1,6 +1,7 @@
 using Content.Shared.Bed.Sleep;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Traits.Assorted;
 
@@ -9,27 +10,15 @@ namespace Content.Server.Traits.Assorted;
 /// </summary>
 public sealed class NarcolepsySystem : EntitySystem
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<NarcolepsyComponent, ComponentStartup>(SetupNarcolepsy);
-    }
-
-    private void SetupNarcolepsy(EntityUid uid, NarcolepsyComponent component, ComponentStartup args)
-    {
-        component.NextIncidentTime =
-            _random.NextFloat(component.TimeBetweenIncidents.X, component.TimeBetweenIncidents.Y);
-    }
-
-    public void AdjustNarcolepsyTimer(EntityUid uid, int TimerReset, NarcolepsyComponent? narcolepsy = null)
-    {
-        if (!Resolve(uid, ref narcolepsy, false))
-            return;
-
-        narcolepsy.NextIncidentTime = TimerReset;
+        SubscribeLocalEvent<NarcolepsyComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<NarcolepsyComponent, GotStatusEffectRemovedEvent>(OnStatusEffectRemoved);
     }
 
     public override void Update(float frameTime)
@@ -39,21 +28,44 @@ public sealed class NarcolepsySystem : EntitySystem
         var query = EntityQueryEnumerator<NarcolepsyComponent>();
         while (query.MoveNext(out var uid, out var narcolepsy))
         {
-            narcolepsy.NextIncidentTime -= frameTime;
-
-            if (narcolepsy.NextIncidentTime >= 0)
+            if (narcolepsy.NextIncidentTime > _timing.CurTime)
                 continue;
 
-            // Set the new time.
-            narcolepsy.NextIncidentTime +=
-                _random.NextFloat(narcolepsy.TimeBetweenIncidents.X, narcolepsy.TimeBetweenIncidents.Y);
+            SetNextIncidentTime((uid, narcolepsy));
 
-            var duration = _random.NextFloat(narcolepsy.DurationOfIncident.X, narcolepsy.DurationOfIncident.Y);
+            if (HasComp<SleepingComponent>(uid))
+                return;
 
-            // Make sure the sleep time doesn't cut into the time to next incident.
-            narcolepsy.NextIncidentTime += duration;
-
-            _statusEffects.TryAddStatusEffectDuration(uid, SleepingSystem.StatusEffectForcedSleeping, TimeSpan.FromSeconds(duration));
+            var duration = _random.Next(narcolepsy.MinIncidentDuration, narcolepsy.MaxIncidentDuration);
+            _statusEffects.TryAddStatusEffectDuration(uid, SleepingSystem.StatusEffectForcedSleeping, duration);
+            narcolepsy.NarcolepsyInducedSleep = true;
         }
+    }
+
+    private void OnStartup(Entity<NarcolepsyComponent> ent, ref ComponentStartup args)
+    {
+        SetNextIncidentTime(ent);
+    }
+
+    private void OnStatusEffectRemoved(Entity<NarcolepsyComponent> ent, ref GotStatusEffectRemovedEvent args)
+    {
+        if (!ent.Comp.NarcolepsyInducedSleep)
+            return;
+
+        SetNextIncidentTime(ent);
+        ent.Comp.NarcolepsyInducedSleep = false;
+    }
+
+    private void SetNextIncidentTime(Entity<NarcolepsyComponent> ent)
+    {
+        ent.Comp.NextIncidentTime += _random.Next(ent.Comp.MinTimeBetweenIncidents, ent.Comp.MaxTimeBetweenIncidents);
+    }
+
+    public void AdjustNarcolepsyTimer(EntityUid uid, TimeSpan timerReset, NarcolepsyComponent? narcolepsy = null)
+    {
+        if (!Resolve(uid, ref narcolepsy, false))
+            return;
+
+        narcolepsy.NextIncidentTime = timerReset;
     }
 }
