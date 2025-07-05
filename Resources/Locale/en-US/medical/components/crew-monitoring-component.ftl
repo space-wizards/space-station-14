@@ -13,6 +13,9 @@ crew-monitoring-user-interface-alive = Alive
 crew-monitoring-user-interface-dead = Dead
 crew-monitoring-user-interface-no-info = N/A
 
+crew-monitoring-user-interface-identity-unknown = Unknown
+crew-monitoring-user-interface-location-coordinates = Location: [x = {$x}, y = {$y}]
+
 crew-monitoring-user-interface-no-server = Server not found
 
 crew-monitoring-user-interface-no-department = Unknown
