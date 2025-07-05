@@ -148,6 +148,7 @@ public sealed class PaperSystem : EntitySystem
                 entity.Comp.Mode = PaperAction.Write;
                 UpdateUserInterface(entity);
             }
+            args.Handled = true;
             return;
         }
 

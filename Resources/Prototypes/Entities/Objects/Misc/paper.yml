@@ -82,6 +82,7 @@
       tags:
       - Write
     allowUseInHandIfHasRequiredItems: true
+    interactionModeOnInteractUsing: openUI
   - type: ActivatableUIRequiresVision
   - type: UserInterface
     interfaces:
