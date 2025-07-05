@@ -372,8 +372,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     continue;
 
                 var interpolateValue = quantity.Float() / solution.Volume.Float();
+                var dummyExtendedReagent = new ReagentId(standout);
                 color = Color.InterpolateBetween(color,
-                    _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor, interpolateValue);
+                    dummyExtendedReagent.GetColor(), interpolateValue);
             }
         }
 

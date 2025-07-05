@@ -87,14 +87,15 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
     {
         RepresentedPrototype = reagent;
 
+        var dummyExtendedReagent = new ReagentId(reagent.ID);
         NameBackground.PanelOverride = new StyleBoxFlat
         {
-            BackgroundColor = reagent.SubstanceColor
+            BackgroundColor = dummyExtendedReagent.GetColor(),
         };
 
-        var r = reagent.SubstanceColor.R;
-        var g = reagent.SubstanceColor.G;
-        var b = reagent.SubstanceColor.B;
+        var r = dummyExtendedReagent.GetColor().R;
+        var g = dummyExtendedReagent.GetColor().G;
+        var b = dummyExtendedReagent.GetColor().B;
 
         var textColor = 0.2126f * r + 0.7152f * g + 0.0722f * b > 0.5
             ? Color.Black

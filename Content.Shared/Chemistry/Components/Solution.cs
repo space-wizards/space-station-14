@@ -832,10 +832,7 @@ namespace Content.Shared.Chemistry.Components
                 {
                     continue;
                 }
-                var reagentColor = proto.SubstanceColor;
-                var reagentData = reagent.EnsureReagentData();
-                var fetchedReagentColorData = reagentData.OfType<ReagentColorData>().FirstOrDefault();
-                reagentColor = fetchedReagentColorData?.SubstanceColor ?? reagentColor;
+                var reagentColor = reagent.GetColor();
                 if (first)
                 {
                     first = false;
@@ -879,10 +876,7 @@ namespace Content.Shared.Chemistry.Components
                 {
                     continue;
                 }
-                var reagentColor = proto.SubstanceColor;
-                var reagentData = reagent.EnsureReagentData();
-                var fetchedReagentColorData = reagentData.OfType<ReagentColorData>().FirstOrDefault();
-                reagentColor = fetchedReagentColorData?.SubstanceColor ?? reagentColor;
+                var reagentColor = reagent.GetColor();
                 if (first)
                 {
                     first = false;
