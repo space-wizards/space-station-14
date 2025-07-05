@@ -70,11 +70,10 @@ public sealed partial class BorgSystem
                     && TryComp(uid, out MetaDataComponent? moduleMetaData))
             {
                 // The borg module action prototypes are shared across all modules.
-                // Extract the localized names, then populate variables with the info from the
-                // module itself.
-                var instanceName = Loc.GetString(actionMetaData.EntityName, ("moduleName", moduleMetaData.EntityName));
+                // Extract localized names, then populate variables with the info from the module itself.
+                var instanceName = Loc.GetString("borg-module-action-name", ("moduleName", moduleMetaData.EntityName));
                 _metaData.SetEntityName((EntityUid)component.ModuleSwapActionEntity, instanceName, actionMetaData);
-                var instanceDesc = Loc.GetString(actionMetaData.EntityDescription, ("moduleName", moduleMetaData.EntityName));
+                var instanceDesc = Loc.GetString("borg-module-action-description", ("moduleName", moduleMetaData.EntityName));
                 _metaData.SetEntityDescription((EntityUid)component.ModuleSwapActionEntity, instanceDesc, actionMetaData);
             }
         }

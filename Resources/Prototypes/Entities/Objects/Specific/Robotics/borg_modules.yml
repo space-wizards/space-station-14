@@ -51,8 +51,9 @@
 - type: entity
   parent: BaseAction
   id: ActionBorgSwapModule
-  name: borg-module-action-name
-  description: borg-module-action-description
+  # Name and description will normally be changed by BorgSystem
+  name: Swap Module
+  description: Select this module, enabling you to use the tools it provides.
   components:
   - type: Action
     itemIconStyle: BigAction
