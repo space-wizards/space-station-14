@@ -169,7 +169,7 @@ uplink-binary-translator-key-name = Binary Translator Key
 uplink-binary-translator-key-desc = Lets you tap into the silicons' binary channel. Don't talk on it though, at least not without a voice mask.
 
 uplink-hypopen-name = Hypopen
-uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 10u of reagents. Starts empty.
+uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting 2.5u of reagents per use. Starts empty with an internal chemical storage of 15u.
 
 uplink-voice-mask-name = Voice Mask
 uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever you can think of. Also utilizes cutting-edge chameleon technology.
