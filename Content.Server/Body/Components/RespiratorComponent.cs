@@ -1,5 +1,4 @@
 using Content.Server.Body.Systems;
-using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
@@ -44,7 +43,19 @@ namespace Content.Server.Body.Components
         ///     so a full cycle takes twice as long.
         /// </summary>
         [DataField]
-        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(2);
+        public TimeSpan BaseUpdateInterval = TimeSpan.FromSeconds(2);
+
+        /// <summary>
+        /// Multiplier applied to <see cref="BaseUpdateInterval"/>
+        /// </summary>
+        [DataField]
+        public float UpdateIntervalMultiplier = 1f;
+
+        /// <summary>
+        /// Adjusted update interval based off of the multiplier value.
+        /// </summary>
+        [ViewVariables]
+        public TimeSpan UpdateInterval => BaseUpdateInterval * UpdateIntervalMultiplier;
 
         /// <summary>
         ///     Saturation level. Reduced by UpdateInterval each tick.

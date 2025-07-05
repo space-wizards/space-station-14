@@ -1,7 +1,6 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
-using Content.Shared.Body.Events;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -96,18 +95,9 @@ namespace Content.Shared.Body.Systems
             }
         }
 
-        private void OnApplyMetabolicMultiplier(
-            Entity<StomachComponent> ent,
-            ref ApplyMetabolicMultiplierEvent args)
+        private void OnApplyMetabolicMultiplier(Entity<StomachComponent> ent, ref ApplyMetabolicMultiplierEvent args)
         {
-            if (args.Apply)
-            {
-                ent.Comp.UpdateInterval *= args.Multiplier;
-                return;
-            }
-
-            // This way we don't have to worry about it breaking if the stasis bed component is destroyed
-            ent.Comp.UpdateInterval /= args.Multiplier;
+            ent.Comp.UpdateIntervalMultiplier = args.Multiplier;
         }
 
         public bool CanTransferSolution(

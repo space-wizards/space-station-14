@@ -45,7 +45,7 @@ namespace Content.Server.Body.Systems
 
         private void OnMapInit(Entity<MetabolizerComponent> ent, ref MapInitEvent args)
         {
-            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
         }
 
         private void OnUnpaused(Entity<MetabolizerComponent> ent, ref EntityUnpausedEvent args)
@@ -65,20 +65,9 @@ namespace Content.Server.Body.Systems
             }
         }
 
-        private void OnApplyMetabolicMultiplier(
-            Entity<MetabolizerComponent> ent,
-            ref ApplyMetabolicMultiplierEvent args)
+        private void OnApplyMetabolicMultiplier(Entity<MetabolizerComponent> ent, ref ApplyMetabolicMultiplierEvent args)
         {
-            // TODO REFACTOR THIS
-            // This will slowly drift over time due to floating point errors.
-            // Instead, raise an event with the base rates and allow modifiers to get applied to it.
-            if (args.Apply)
-            {
-                ent.Comp.UpdateInterval *= args.Multiplier;
-                return;
-            }
-
-            ent.Comp.UpdateInterval /= args.Multiplier;
+            ent.Comp.UpdateIntervalMultiplier = args.Multiplier;
         }
 
         public override void Update(float frameTime)
@@ -99,7 +88,7 @@ namespace Content.Server.Body.Systems
                 if (_gameTiming.CurTime < metab.NextUpdate)
                     continue;
 
-                metab.NextUpdate += metab.UpdateInterval;
+                metab.NextUpdate += metab.AdjustedUpdateInterval;
                 TryMetabolize((uid, metab));
             }
         }

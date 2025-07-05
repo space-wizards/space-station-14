@@ -21,7 +21,19 @@ namespace Content.Shared.Body.Components
         ///     The interval at which this stomach digests its contents.
         /// </summary>
         [DataField]
-        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+        public TimeSpan BaseUpdateInterval = TimeSpan.FromSeconds(1);
+
+        /// <summary>
+        /// Multiplier applied to <see cref="BaseUpdateInterval"/> for
+        /// </summary>
+        [DataField]
+        public float UpdateIntervalMultiplier = 1f;
+
+        /// <summary>
+        /// Adjusted update interval based off of the multiplier value.
+        /// </summary>
+        [ViewVariables]
+        public TimeSpan UpdateInterval => BaseUpdateInterval * UpdateIntervalMultiplier;
 
         /// <summary>
         ///     The solution inside of this stomach this transfers reagents to the body.
