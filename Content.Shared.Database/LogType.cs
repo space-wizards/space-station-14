@@ -478,4 +478,19 @@ public enum LogType
     /// Events relating to midi playback.
     /// </summary>
     Instrument = 103,
+
+    /// <summary>
+    ///
+    /// </summary>
+    SpikeHook = 104,
+
+    /// <summary>
+    ///
+    /// </summary>
+    SpikeUnhook = 105,
+
+    /// <summary>
+    ///
+    /// </summary>
+    SpikeButcher = 106,
 }

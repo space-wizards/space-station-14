@@ -1,3 +1,4 @@
+using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -19,6 +20,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -31,12 +33,15 @@ namespace Content.Shared.Kitchen;
 /// </summary>
 public sealed class SharedKitchenSpikeSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _logger = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -95,6 +100,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         EnsureComp<KitchenSpikeHookedComponent>(args.Entity);
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
         _activeSpikes.Add(ent);
+
+        // TODO: Add sprites for different species.
+        _appearanceSystem.SetData(ent.Owner, KitchenSpikeVisuals.Status, KitchenSpikeStatus.Bloody);
     }
 
     private void OnEntRemovedFromContainer(Entity<KitchenSpikeComponent> ent, ref EntRemovedFromContainerMessage args)
@@ -102,6 +110,8 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         RemComp<KitchenSpikeHookedComponent>(args.Entity);
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
         _activeSpikes.Remove(ent);
+
+        _appearanceSystem.SetData(ent.Owner, KitchenSpikeVisuals.Status, KitchenSpikeStatus.Empty);
     }
 
     private void OnInteractHand(Entity<KitchenSpikeComponent> ent, ref InteractHandEvent args)
@@ -149,7 +159,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             new SpikeButcherDoAfterEvent(),
             ent,
             target: victim,
-            used: ent)
+            used: args.Used)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -217,6 +227,12 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
                 args.User,
                 args.Target.Value,
                 ent);
+
+            _logger.Add(LogType.SpikeHook,
+                LogImpact.High,
+                $"{ToPrettyString(args.User):user} put {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
+
+            _audioSystem.PlayPredicted(ent.Comp.SpikeSound, ent, args.User);
         }
 
         args.Handled = true;
@@ -238,6 +254,12 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
                 args.User,
                 args.Target.Value,
                 ent);
+
+            _logger.Add(LogType.SpikeUnhook,
+                LogImpact.Medium,
+                $"{ToPrettyString(args.User):user} took {ToPrettyString(args.Target):target} off the {ToPrettyString(ent):spike}");
+
+            _audioSystem.PlayPredicted(ent.Comp.SpikeSound, ent, args.User);
         }
 
         args.Handled = true;
@@ -267,12 +289,26 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             butcherable.SpawnedEntities[index] = entry;
 
         if (butcherable.SpawnedEntities.Count == 0)
+        {
             _bodySystem.GibBody(args.Target.Value, true);
+
+            _logger.Add(LogType.Gib,
+                LogImpact.Extreme,
+                $"{ToPrettyString(args.User):user} finished butchering {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
+        }
         else
         {
-            Dirty(args.Target.Value, butcherable);
+            EnsureComp<KitchenSpikeVictimComponent>(args.Target.Value);
+
             _damageableSystem.TryChangeDamage(args.Target, ent.Comp.ButcherDamage, true);
+            _logger.Add(LogType.SpikeButcher,
+                LogImpact.Extreme,
+                $"{ToPrettyString(args.User):user} butchered {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
+
+            Dirty(args.Target.Value, butcherable);
         }
+
+        _audioSystem.PlayPredicted(ent.Comp.ButcherSound, ent, args.User);
 
         _popupSystem.PopupClient(Loc.GetString("butcherable-knife-butchered-success",
             ("target", Identity.Entity(args.Target.Value, EntityManager)),
@@ -291,8 +327,8 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (!victim.HasValue)
             return;
 
-        args.PushMarkup(Loc.GetString("comp-kitchen-spike-hooked", ("victim", Identity.Entity(victim.Value, EntityManager))), 2);
-        args.PushMessage(_examineSystem.GetExamineText(victim.Value, args.Examiner));
+        args.PushMarkup(Loc.GetString("comp-kitchen-spike-hooked", ("victim", Identity.Entity(victim.Value, EntityManager))), -1);
+        args.PushMessage(_examineSystem.GetExamineText(victim.Value, args.Examiner), -2);
     }
 
     private void OnGetVerbs(Entity<KitchenSpikeComponent> ent, ref GetVerbsEvent<Verb> args)
@@ -314,8 +350,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnRelayMovement(Entity<KitchenSpikeComponent> ent, ref ContainerRelayMovementEntityEvent args)
     {
-        if (_containerSystem.CanRemove(args.Entity, ent.Comp.BodyContainer))
-            TryUnhook(ent, args.Entity, args.Entity);
+        TryUnhook(ent, args.Entity, args.Entity);
     }
 
     private void OnDestruction(Entity<KitchenSpikeComponent> ent, ref DestructionEventArgs args)

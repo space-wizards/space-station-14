@@ -135,5 +135,5 @@ public enum KitchenSpikeVisuals : byte
 public enum KitchenSpikeStatus : byte
 {
     Empty,
-    Bloody,
+    Bloody, // TODO: Add sprites for different species.
 }
