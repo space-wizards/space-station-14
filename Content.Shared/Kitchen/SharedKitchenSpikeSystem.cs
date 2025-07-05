@@ -194,7 +194,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnDragDrop(Entity<KitchenSpikeComponent> ent, ref DragDropTargetEvent args)
     {
-        if (args.Handled || !TryComp<ButcherableComponent>(args.Dragged, out var butcherable))
+        if (args.Handled)
             return;
 
         EnsureComp<KitchenSpikeHookingComponent>(args.User);
@@ -278,7 +278,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnSpikeButcherDoAfter(Entity<KitchenSpikeComponent> ent, ref SpikeButcherDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || !args.Target.HasValue || !args.Used.HasValue || !TryComp<ButcherableComponent>(args.Target, out var butcherable))
+        if (args.Handled || args.Cancelled || !args.Target.HasValue || !args.Used.HasValue || !TryComp<ButcherableComponent>(args.Target, out var butcherable) )
             return;
 
         var victimIdentity = Identity.Entity(args.Target.Value, EntityManager);
@@ -306,10 +306,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (entry.Amount <= 0)
             butcherable.SpawnedEntities.RemoveAt(index);
         else
-        {
             butcherable.SpawnedEntities[index] = entry;
-            Dirty(args.Target.Value, butcherable);
-        }
+
+        Dirty(args.Target.Value, butcherable);
 
         // Gib the victim if there is nothing else to butcher.
         if (butcherable.SpawnedEntities.Count == 0)
