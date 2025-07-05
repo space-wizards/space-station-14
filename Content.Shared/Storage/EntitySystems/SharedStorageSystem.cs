@@ -545,7 +545,7 @@ public abstract class SharedStorageSystem : EntitySystem
                 _entList.Add(entity);
                 delay += itemSize.Weight * AreaInsertDelayPerItem;
 
-                if (_entList.Count >= StorageComponent.AreaPickupLimit)
+                if (_entList.Count >= storageComp.AreaPickupLimit)
                     break;
             }
 
@@ -615,7 +615,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return;
         }
 
-        var entCount = Math.Min(StorageComponent.AreaPickupLimit, args.Entities.Count);
+        var entCount = Math.Min(component.AreaPickupLimit, args.Entities.Count);
 
         for (var i = 0; i < entCount; i++)
         {
