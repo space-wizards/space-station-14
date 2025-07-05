@@ -1,3 +1,4 @@
+using Content.Server.Temperature.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
@@ -39,9 +40,45 @@ public sealed partial class TemperatureComponent : Component
     public float? ParentColdDamageThreshold;
 
     /// <summary>
-    /// Heat capacity per kg of mass.
+    /// The amount of energy, in Joules, needed to heat this entity up by 1 Kelvin.
+    /// <see cref="HeatCapacityDirty"/> handles tracking whether this is out of date given changes to the sources.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    /// <remarks>
+    /// Assuming this was recently recalculated this should just be <see cref="BaseHeatCapacity"/> plus any additional sources of heat capacity.
+    /// </remarks>
+    [ViewVariables(VVAccess.ReadOnly), Access(typeof(TemperatureSystem), Other = AccessPermissions.None)]
+    public float TotalHeatCapacity;
+
+    /// <summary>
+    /// Whether any sources of heat capacity for this entity have changed since the last time <see cref="TotalHeatCapacity"/> was calculated.
+    /// If this is true the next attempt to fetch the heat capacity of this entity using <see cref="TemperatureSystem.GetHeatCapacity"/> will recalculate it.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), Access(typeof(TemperatureSystem), Other = AccessPermissions.None)]
+    public bool HeatCapacityDirty = true; // Force the first fetch to calculate the total heat capacity.
+
+    /// <summary>
+    /// The number of times <see cref="TotalHeatCapacity"/> has been modified since it was last recalculated from scratch.
+    /// If this reaches <see cref="HeatCapacityUpdateInterval"/> then <see cref="HeatCapacityDirty"/> will be set to mark the heat capacity for recalculation.
+    /// Exists to prevent floating point errors from making the heat capacity drift to any significant degree.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), Access(typeof(TemperatureSystem), Other = AccessPermissions.None)]
+    public byte HeatCapacityTouched = 0;
+
+    /// <summary>
+    /// The maximum number of times <see cref="TotalHeatCapacity"/> can be modified before it needs to be recalculated from scratch.
+    /// </summary>
+    public const byte HeatCapacityUpdateInterval = 16;
+
+    /// <summary>
+    /// The default heat capacity for this entity assuming that there are no other sources of heat capacity (such as specific heat * mass).
+    /// </summary>
+    [DataField, Access(typeof(TemperatureSystem))]
+    public float BaseHeatCapacity = 0f;
+
+    /// <summary>
+    /// Additional heat capacity per kg of mass.
+    /// </summary>
+    [DataField, Access(typeof(TemperatureSystem))]
     public float SpecificHeat = 50f;
 
     /// <summary>
