@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.V2.Commands;
 
-[ToolshedCommand, AdminCommand(AdminFlags.Admin)]
+[ToolshedCommand(Name = "nukechatmessages"), AdminCommand(AdminFlags.Admin)]
 public sealed class NukeChatMessagesCommand : ToolshedCommand
 {
     [Dependency] private readonly IEntitySystemManager _manager = default!;
