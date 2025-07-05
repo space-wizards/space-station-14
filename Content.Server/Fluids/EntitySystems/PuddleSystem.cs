@@ -69,7 +69,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [ValidatePrototypeId<ReagentPrototype>]
     private const string CopperBlood = "CopperBlood";
 
-    private static string[] _standoutReagents = [Blood, Slime, CopperBlood];
+    private static string[] _standoutReagents = [Blood, CopperBlood];
 
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.
@@ -372,8 +372,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     continue;
 
                 var interpolateValue = quantity.Float() / solution.Volume.Float();
+                var dummyExtendedReagent = new ReagentId(standout);
                 color = Color.InterpolateBetween(color,
-                    _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor, interpolateValue);
+                    dummyExtendedReagent.GetColor(), interpolateValue);
             }
         }
 
@@ -455,8 +456,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         // A puddle with 10 units of lube vs a puddle with 10 of lube and 20 catchup should stun and launch forward the same amount.
         if (slipperyUnits > 0)
         {
-            slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult/slipperyUnits);
-            slipComp.SlipData.ParalyzeTime = (stunTimer/(float)slipperyUnits);
+            slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult / slipperyUnits);
+            slipComp.SlipData.ParalyzeTime = (stunTimer / (float)slipperyUnits);
         }
 
         // Only make it super slippery if there is enough super slippery units for its own puddle

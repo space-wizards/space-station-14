@@ -42,7 +42,8 @@ public sealed class ReagentEntry
         Group = proto.Group;
         Description = proto.LocalizedDescription;
         PhysicalDescription = proto.LocalizedPhysicalDescription;
-        SubstanceColor = proto.SubstanceColor.ToHex();
+        var dummyExtendedReagent = new ReagentId(proto.ID);
+        SubstanceColor = dummyExtendedReagent.GetColor().ToHex();
         Metabolisms = proto.Metabolisms?.ToDictionary(x => x.Key.Id, x => x.Value);
     }
 }
