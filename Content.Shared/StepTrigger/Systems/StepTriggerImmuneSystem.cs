@@ -18,7 +18,7 @@ public sealed class StepTriggerImmuneSystem : EntitySystem
     private void OnStepTriggerClothingAttempt(Entity<PreventableStepTriggerComponent> ent, ref StepTriggerAttemptEvent args)
     {
         if (HasComp<ProtectedFromStepTriggersComponent>(args.Tripper) || _inventory.TryGetInventoryEntity<ProtectedFromStepTriggersComponent>(args.Tripper, out _))
-            args.Cancel();
+            args.Cancelled = true;
     }
 
     private void OnExamined(EntityUid uid, PreventableStepTriggerComponent component, ExaminedEvent args)

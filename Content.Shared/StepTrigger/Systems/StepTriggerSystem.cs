@@ -144,7 +144,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
         var msg = new StepTriggerAttemptEvent { Source = uid, Tripper = otherUid };
 
-        RaiseLocalEvent(uid, msg);
+        RaiseLocalEvent(uid, ref msg);
 
         return !msg.Cancelled;
     }
@@ -241,7 +241,8 @@ public sealed class StepTriggerSystem : EntitySystem
 /// <summary>
 /// Raised when an entity steps on the entity that has <see cref="StepTriggerComponent"/> to determine whether or not it should be triggered.
 /// </summary>
-public sealed class StepTriggerAttemptEvent : CancellableEntityEventArgs
+[ByRefEvent]
+public struct StepTriggerAttemptEvent
 {
     /// <summary>
     /// The entity with a <see cref="StepTriggerComponent"/>.
@@ -252,6 +253,11 @@ public sealed class StepTriggerAttemptEvent : CancellableEntityEventArgs
     /// The entity that stepped on the <see cref="Source"/>.
     /// </summary>
     public EntityUid Tripper;
+
+    /// <summary>
+    /// Whether or not that event was cancelled.
+    /// </summary>
+    public bool Cancelled;
 }
 
 /// <summary>
