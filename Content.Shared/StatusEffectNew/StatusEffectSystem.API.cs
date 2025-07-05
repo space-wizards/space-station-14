@@ -117,8 +117,10 @@ public abstract partial class SharedStatusEffectsSystem
                 if (!_effectQuery.TryComp(effect, out var effectComp))
                     return false;
 
-                var ev = new StatusEffectRemovedEvent(target);
-                RaiseLocalEvent(effect, ref ev);
+                var effEv = new StatusEffectRemovedEvent(target);
+                RaiseLocalEvent(effect, ref effEv);
+                var entEv = new GotStatusEffectRemovedEvent(effect);
+                RaiseLocalEvent(target, ref entEv);
 
                 QueueDel(effect);
                 container.ActiveStatusEffects.Remove(effect);
