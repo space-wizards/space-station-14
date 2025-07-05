@@ -172,6 +172,7 @@
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
       - id: RubberStampGreytide
+      - id: GoldenPersonalAI
 
 - type: entity
   name: Maint Loot Spawner
