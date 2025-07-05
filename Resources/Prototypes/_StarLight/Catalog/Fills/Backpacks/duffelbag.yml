@@ -52,7 +52,6 @@
     - id: LeftArmCyberMantisBlade
     - id: RightHandCyber
     - id: LeftHandCyber
-
     
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -65,3 +64,18 @@
     - id: WeaponRiflePitbull
     - id: MagazineMagnumRifleSP
       amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledInfiltration
+  name: infiltration hardsuit bundle
+  description: "Contains the latest in Syndicate chameleon technology, the infiltration hardsuit."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterHardsuitInfiltration
+      - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesCombat
+      - id: DoubleEmergencyOxygenTankFilled
+      - id: DoubleEmergencyNitrogenTankFilled
+
