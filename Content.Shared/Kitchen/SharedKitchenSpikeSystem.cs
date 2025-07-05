@@ -185,10 +185,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.CanDrop = _containerSystem.CanInsert(args.Dragged, ent.Comp.BodyContainer) &&
-                       !HasComp<KitchenSpikeUnhookingComponent>(args.User) &&
-                       !HasComp<KitchenSpikeHookingComponent>(args.User);
-
+        args.CanDrop = _containerSystem.CanInsert(args.Dragged, ent.Comp.BodyContainer);
         args.Handled = true;
     }
 
@@ -196,8 +193,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     {
         if (args.Handled)
             return;
-
-        EnsureComp<KitchenSpikeHookingComponent>(args.User);
 
         ShowPopups("comp-kitchen-spike-begin-hook-self",
             "comp-kitchen-spike-begin-hook-self-other",
@@ -227,8 +222,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (args.Handled || args.Cancelled || !args.Target.HasValue)
             return;
 
-        RemComp<KitchenSpikeHookingComponent>(args.User);
-
         if (_containerSystem.Insert(args.Target.Value, ent.Comp.BodyContainer))
         {
             ShowPopups("comp-kitchen-spike-hook-self",
@@ -253,8 +246,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     {
         if (args.Handled || args.Cancelled || !args.Target.HasValue)
             return;
-
-        RemComp<KitchenSpikeUnhookingComponent>(args.User);
 
         if (_containerSystem.Remove(args.Target.Value, ent.Comp.BodyContainer))
         {
@@ -450,11 +441,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     /// </summary>
     private void TryUnhook(Entity<KitchenSpikeComponent> ent, EntityUid user, EntityUid target)
     {
-        if (HasComp<KitchenSpikeUnhookingComponent>(user) || HasComp<KitchenSpikeHookingComponent>(user))
-            return;
-
-        EnsureComp<KitchenSpikeUnhookingComponent>(user);
-
         ShowPopups("comp-kitchen-spike-begin-unhook-self",
             "comp-kitchen-spike-begin-unhook-self-other",
             "comp-kitchen-spike-begin-unhook-other-self",
