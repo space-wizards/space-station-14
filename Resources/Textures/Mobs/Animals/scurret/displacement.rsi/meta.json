@@ -45,6 +45,10 @@
         {
             "name": "hand",
             "directions": 4
+        },
+        {
+            "name": "back",
+            "directions": 4
         }
     ]
 }
