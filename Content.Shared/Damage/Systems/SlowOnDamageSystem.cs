@@ -91,12 +91,12 @@ namespace Content.Shared.Damage
 
         private void OnIgnoreStartup(Entity<IgnoreSlowOnDamageComponent> ent, ref ComponentStartup args)
         {
-            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(ent);
+            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(ent.Owner);
         }
 
         private void OnIgnoreShutdown(Entity<IgnoreSlowOnDamageComponent> ent, ref ComponentShutdown args)
         {
-            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(ent);
+            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(ent.Owner);
         }
 
         private void OnIgnoreModifySpeed(Entity<IgnoreSlowOnDamageComponent> ent, ref ModifySlowOnDamageSpeedEvent args)
