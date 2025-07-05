@@ -244,7 +244,7 @@ public sealed class StepTriggerSystem : EntitySystem
 public sealed class StepTriggerAttemptEvent : CancellableEntityEventArgs
 {
     /// <summary>
-    /// Then entity with a <see cref="StepTriggerComponent"/>.
+    /// The entity with a <see cref="StepTriggerComponent"/>.
     /// </summary>
     public EntityUid Source;
 
