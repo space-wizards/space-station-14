@@ -64,7 +64,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             if (curTime < bloodstream.NextUpdate)
                 continue;
 
-            bloodstream.NextUpdate += bloodstream.UpdateInterval;
+            bloodstream.NextUpdate += bloodstream.AdjustedUpdateInterval;
             DirtyField(uid, bloodstream, nameof(BloodstreamComponent.NextUpdate)); // needs to be dirtied on the client so it can be rerolled during prediction
 
             if (!SolutionContainer.ResolveSolution(uid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
@@ -101,12 +101,12 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                 // Multiplying by 2 is arbitrary but works for this case, it just prevents the time from running out
                 _drunkSystem.TryApplyDrunkenness(
                     uid,
-                    (float)bloodstream.UpdateInterval.TotalSeconds * 2,
+                    (float)bloodstream.AdjustedUpdateInterval.TotalSeconds * 2,
                     applySlur: false);
-                _stutteringSystem.DoStutter(uid, bloodstream.UpdateInterval * 2, refresh: false);
+                _stutteringSystem.DoStutter(uid, bloodstream.AdjustedUpdateInterval * 2, refresh: false);
 
                 // storing the drunk and stutter time so we can remove it independently from other effects additions
-                bloodstream.StatusTime += bloodstream.UpdateInterval * 2;
+                bloodstream.StatusTime += bloodstream.AdjustedUpdateInterval * 2;
                 DirtyField(uid, bloodstream, nameof(BloodstreamComponent.StatusTime));
             }
             else if (!_mobStateSystem.IsDead(uid))
@@ -129,7 +129,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
     private void OnMapInit(Entity<BloodstreamComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.UpdateInterval;
+        ent.Comp.NextUpdate = _timing.CurTime + ent.Comp.AdjustedUpdateInterval;
         DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.NextUpdate));
     }
 
@@ -289,15 +289,8 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
     private void OnApplyMetabolicMultiplier(Entity<BloodstreamComponent> ent, ref ApplyMetabolicMultiplierEvent args)
     {
-        // TODO REFACTOR THIS
-        // This will slowly drift over time due to floating point errors.
-        // Instead, raise an event with the base rates and allow modifiers to get applied to it.
-        if (args.Apply)
-            ent.Comp.UpdateInterval *= args.Multiplier;
-        else
-            ent.Comp.UpdateInterval /= args.Multiplier;
-
-        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.UpdateInterval));
+        ent.Comp.UpdateIntervalMultiplier = args.Multiplier;
+        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.UpdateIntervalMultiplier));
     }
 
     private void OnRejuvenate(Entity<BloodstreamComponent> ent, ref RejuvenateEvent args)
