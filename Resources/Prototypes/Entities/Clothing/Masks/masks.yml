@@ -717,8 +717,8 @@
     tags:
     - WhitelistChameleon
   - type: WeldingMaskOverlay
-    outerRectangleWidth: 0.6
-    outerRectangleHeight: 0.55
+    outerRectangleWidth: 0.7
+    outerRectangleHeight: 0.6
     innerRectangleThickness: 0.04
     outerAlpha: 1.0
     innerAlpha: 0.2
