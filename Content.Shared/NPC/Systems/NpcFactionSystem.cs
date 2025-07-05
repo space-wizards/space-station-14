@@ -73,7 +73,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// <summary>
     /// Returns whether an entity is a member of a faction.
     /// </summary>
-    public bool IsMember(Entity<NpcFactionMemberComponent?> ent, string faction)
+    public bool IsMember(Entity<NpcFactionMemberComponent?> ent, [ForbidLiteral] string faction)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
@@ -85,7 +85,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// Returns whether an entity is a member of any listed faction.
     /// If the list is empty this returns false.
     /// </summary>
-    public bool IsMemberOfAny(Entity<NpcFactionMemberComponent?> ent, IEnumerable<ProtoId<NpcFactionPrototype>> factions)
+    public bool IsMemberOfAny(Entity<NpcFactionMemberComponent?> ent, [ForbidLiteral] IEnumerable<ProtoId<NpcFactionPrototype>> factions)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
@@ -102,7 +102,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// <summary>
     /// Adds this entity to the particular faction.
     /// </summary>
-    public void AddFaction(Entity<NpcFactionMemberComponent?> ent, string faction, bool dirty = true)
+    public void AddFaction(Entity<NpcFactionMemberComponent?> ent, [ForbidLiteral] string faction, bool dirty = true)
     {
         if (!_proto.HasIndex<NpcFactionPrototype>(faction))
         {
@@ -121,7 +121,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// <summary>
     /// Adds this entity to the particular faction.
     /// </summary>
-    public void AddFactions(Entity<NpcFactionMemberComponent?> ent, HashSet<ProtoId<NpcFactionPrototype>> factions, bool dirty = true)
+    public void AddFactions(Entity<NpcFactionMemberComponent?> ent, [ForbidLiteral] HashSet<ProtoId<NpcFactionPrototype>> factions, bool dirty = true)
     {
         ent.Comp ??= EnsureComp<NpcFactionMemberComponent>(ent);
 
@@ -143,7 +143,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// <summary>
     /// Removes this entity from the particular faction.
     /// </summary>
-    public void RemoveFaction(Entity<NpcFactionMemberComponent?> ent, string faction, bool dirty = true)
+    public void RemoveFaction(Entity<NpcFactionMemberComponent?> ent, [ForbidLiteral] string faction, bool dirty = true)
     {
         if (!_proto.HasIndex<NpcFactionPrototype>(faction))
         {
@@ -202,7 +202,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
         return GetNearbyFactions(ent, range, ent.Comp.FriendlyFactions);
     }
 
-    private IEnumerable<EntityUid> GetNearbyFactions(EntityUid entity, float range, HashSet<ProtoId<NpcFactionPrototype>> factions)
+    private IEnumerable<EntityUid> GetNearbyFactions(EntityUid entity, float range, [ForbidLiteral] HashSet<ProtoId<NpcFactionPrototype>> factions)
     {
         var xform = Transform(entity);
         foreach (var ent in _lookup.GetEntitiesInRange<NpcFactionMemberComponent>(_xform.GetMapCoordinates((entity, xform)), range))
@@ -228,12 +228,12 @@ public sealed partial class NpcFactionSystem : EntitySystem
         return ent.Comp.Factions.Overlaps(other.Comp.Factions) || ent.Comp.FriendlyFactions.Overlaps(other.Comp.Factions);
     }
 
-    public bool IsFactionFriendly(string target, string with)
+    public bool IsFactionFriendly([ForbidLiteral] string target, [ForbidLiteral] string with)
     {
         return _factions[target].Friendly.Contains(with) && _factions[with].Friendly.Contains(target);
     }
 
-    public bool IsFactionFriendly(string target, Entity<NpcFactionMemberComponent?> with)
+    public bool IsFactionFriendly([ForbidLiteral] string target, Entity<NpcFactionMemberComponent?> with)
     {
         if (!Resolve(with, ref with.Comp, false))
             return false;
@@ -242,12 +242,12 @@ public sealed partial class NpcFactionSystem : EntitySystem
                with.Comp.FriendlyFactions.Contains(target);
     }
 
-    public bool IsFactionHostile(string target, string with)
+    public bool IsFactionHostile([ForbidLiteral] string target, [ForbidLiteral] string with)
     {
         return _factions[target].Hostile.Contains(with) && _factions[with].Hostile.Contains(target);
     }
 
-    public bool IsFactionHostile(string target, Entity<NpcFactionMemberComponent?> with)
+    public bool IsFactionHostile([ForbidLiteral] string target, Entity<NpcFactionMemberComponent?> with)
     {
         if (!Resolve(with, ref with.Comp, false))
             return false;
@@ -256,7 +256,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
                with.Comp.HostileFactions.Contains(target);
     }
 
-    public bool IsFactionNeutral(string target, string with)
+    public bool IsFactionNeutral([ForbidLiteral] string target, [ForbidLiteral] string with)
     {
         return !IsFactionFriendly(target, with) && !IsFactionHostile(target, with);
     }
@@ -264,7 +264,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// <summary>
     /// Makes the source faction friendly to the target faction, 1-way.
     /// </summary>
-    public void MakeFriendly(string source, string target)
+    public void MakeFriendly([ForbidLiteral] string source, [ForbidLiteral] string target)
     {
         if (!_factions.TryGetValue(source, out var sourceFaction))
         {
@@ -286,7 +286,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
     /// <summary>
     /// Makes the source faction hostile to the target faction, 1-way.
     /// </summary>
-    public void MakeHostile(string source, string target)
+    public void MakeHostile([ForbidLiteral] string source, [ForbidLiteral] string target)
     {
         if (!_factions.TryGetValue(source, out var sourceFaction))
         {
