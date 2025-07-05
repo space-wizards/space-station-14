@@ -33,9 +33,9 @@ public sealed class SpellbookSystem : EntitySystem
             if (spell == null)
                 continue;
 
-            // -1 means infinite charges.
-            if (charges != -1)
-                _sharedCharges.SetCharges(spell.Value, charges);
+            // Null means infinite charges.
+            if (charges is { } count)
+                _sharedCharges.SetCharges(spell.Value, count);
             ent.Comp.Spells.Add(spell.Value);
         }
     }
@@ -76,8 +76,8 @@ public sealed class SpellbookSystem : EntitySystem
             {
                 EntityUid? actionId = null;
                 if (_actions.AddAction(args.Args.User, ref actionId, id)
-                    && charges != -1) // -1 means infinite charges
-                    _sharedCharges.SetCharges(actionId.Value, charges);
+                    && charges is { } count) // Null means infinite charges
+                    _sharedCharges.SetCharges(actionId.Value, count);
             }
         }
 

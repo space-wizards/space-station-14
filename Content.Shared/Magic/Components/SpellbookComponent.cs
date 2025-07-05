@@ -19,11 +19,11 @@ public sealed partial class SpellbookComponent : Component
     // The three fields below are just used for initialization.
     /// <summary>
     /// Dictionary of spell prototypes to charge counts.
-    /// If the charge count if negative one, it means the spell has infinite charges.
+    /// If the charge count is null, it means the spell has infinite charges.
     /// </summary>
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public Dictionary<EntProtoId, int> SpellActions = new();
+    public Dictionary<EntProtoId, int?> SpellActions = new();
 
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
