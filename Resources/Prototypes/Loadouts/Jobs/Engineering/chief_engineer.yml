@@ -13,21 +13,25 @@
   id: ChiefEngineerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitChiefEngineer
+  groupBy: "base"
 
 - type: loadout
   id: ChiefEngineerJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtChiefEngineer
+  groupBy: "base"
 
 - type: loadout
   id: ChiefEngineerTurtleneck
   equipment:
     jumpsuit: ClothingUniformJumpsuitChiefEngineerTurtle
+  groupBy: "turtle"
 
 - type: loadout
   id: ChiefEngineerTurtleneckSkirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtChiefEngineerTurtle
+  groupBy: "turtle"
 
 # Head
 - type: loadout
