@@ -1,0 +1,40 @@
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectSlowdown
+  name: slowdown
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+    blacklist:
+      tags:
+      - SlowImmune
+  - type: MovementModStatusEffect
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: StatusEffectStaminaLow
+  name: stamina low
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectStunned
+  name: stunned
+  components:
+  - type: StatusEffect
+    alert: Stun
+    whitelist:
+      components:
+      - MobState
+    blacklist:
+      tags:
+      - StunImmune
+  - type: StunnedStatusEffect
+
+- type: entity
+  parent: MobStandStatusEffectBase
+  id: StatusEffectKnockdown
+  name: knocked down
+  components:
+  - type: KnockdownStatusEffect

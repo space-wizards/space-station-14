@@ -23,6 +23,6 @@ public sealed partial class SSDIndicatorComponent : Component
     /// <summary>
     ///     When the entity should fall asleep
     /// </summary>
-    [DataField, AutoPausedField, Access(typeof(SSDIndicatorSystem))]
+    [DataField, AutoNetworkedField, AutoPausedField, Access(typeof(SSDIndicatorSystem))]
     public TimeSpan FallAsleepTime = TimeSpan.Zero;
 }

@@ -17,9 +17,7 @@ namespace Content.IntegrationTests.Tests
   components:
   - type: Inventory
   - type: ContainerContainer
-  - type: StatusEffects
-    allowed:
-    - Stun
+  - type: MobState
 
 - type: entity
   name: InventoryJumpsuitJanitorDummy
