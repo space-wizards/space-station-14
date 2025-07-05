@@ -225,7 +225,6 @@
 - type: Tag
   id: CanPilot
 
-
 - type: Tag
   id: CaptainSabre
 
@@ -356,9 +355,6 @@
 
 - type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
   id: CorgiWearable
-
-- type: Tag # Flags items that scurrets can wear in their back and outerwear slots.
-  id: ScurretWearable
 
 - type: Tag #Ohioans die happy
   id: Corn
@@ -1206,6 +1202,9 @@
 - type: Tag
   id: Screwdriver
 
+- type: Tag # Flags items that scurrets can wear in their back and outerwear slots.
+  id: ScurretWearable
+
 - type: Tag
   id: SecBeltEquip
 
@@ -1517,5 +1516,4 @@
 
 - type: Tag
   id: XenoborgModuleStealth
-
 # ALPHABETICAL
