@@ -1,0 +1,172 @@
+﻿# Defines the scurret, a small, agile sapient species intended for players who want to play as something similar to an ewok.
+# Although based on MobBaseAncestor, this species does not have a "developed" playable species it is an ancestor to.
+
+- type: entity
+  name: scurret
+  id: MobBaseScurret
+  parent: MobBaseAncestor
+  abstract: true
+  components:
+  # Custom names
+  - type: ReplacementAccent
+    accent: scurret
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret/scurret.rsi
+      state: scurret
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  # Custom visuals for dead scurrets; be aware these do not work well with equipment.
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: scurret
+      Critical:
+        Base: scurret_oof
+      Dead:
+        Base: scurret_rip
+  #  About as tough as a monkey
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Critical
+      125: Dead
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 42
+  # Good eatin', you monster.
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 4
+  # They wawa!
+  - type: Vocal
+    sounds:
+      Male: Scurret
+      Female: Scurret
+      Unsexed: Scurret
+    wilhelmProbability: 0.01 # the scug, it screams like a man
+  - type: Speech
+    speechVerb: Wawa
+    speechSounds: Wawa
+    allowedEmotes: ["Thump"] # They're 80% tail
+  - type: TypingIndicator
+    proto: moth
+  - type: InteractionPopup
+    successChance: 0.99 # Imagine not being allowed to headpat a scurret, chat
+    interactSuccessString: petting-success-scurret
+    interactFailureString: petting-failure-scurret
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/wawa_chillin.ogg
+    interactFailureSound:
+      path: /Audio/Animals/wawa_chatter.ogg
+  # They nyoom
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5 # nyoom
+    baseSprintSpeed: 7 # NYOOOOOM
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 30
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 10 # NOM
+  - type: Inventory
+    speciesId: scurret
+    templateId: scurret
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: jumpsuit
+      id:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: id
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: gloves
+      neck:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: neck
+  - type: InventorySlots
+  - type: Food
+  - type: Hunger
+    baseDecayRate: 0.05 # They get a lil' hungy
+  - type: BodyEmotes # Grants them clapping and so on.
+    soundsId: Scurret
+  - type: Deathgasp
+    prototype: ScurretDeathgasp # You monster
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+    - CanPilot
+    - VimPilot
+    - AnomalyHost
+
+# Spawnable scurrets have a random name and colour.
+
+- type: entity
+  name: scurret
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds's Pizza's "loyal workforce".
+  id: MobScurret
+  parent: MobBaseScurret
+  components:
+  # The have a rich culture
+  - type: RandomMetadata
+    nameSegments:
+    - NamesFirstScurret
+    - NamesLastScurret
+    nameFormat: name-format-standard
+  # They come in a variety of colours
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        scurret: ScurretColors
+
+# Emotional Support Scurrets have a ghost role and equipment. At the moment, these are intended to be used for admemes, but
+# feel free to hook them into random content.
+
+- type: entity
+  name: Emotional Support Scurret
+  id: MobBaseEmotionalSupportScurret
+  parent: MobBaseScurret
+  abstract: true
+  components:
+    - type: Loadout
+      prototypes: [ EmotionalSupportScurretGear ]
+    - type: NpcFactionMember
+      factions:
+      - Passive
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-emotional-support-scurret-name
+      description: ghost-role-information-emotional-support-scurret-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+
+# Spawnable ESS have a ghost role, equipment, a random name and a random colour.
+
+- type: entity
+  name: Emotional Support Scurret
+  id: MobEmotionalSupportScurret
+  parent: [MobScurret, MobBaseEmotionalSupportScurret]
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds's Pizza's "loyal workforce". This one is here as a temp.

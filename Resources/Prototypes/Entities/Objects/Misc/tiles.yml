@@ -1643,7 +1643,7 @@
     stackType: FloorTileXenoSteelCorner
 
 - type: entity
-  name: xeno techmaint
+  name: xeno techmaint floor
   parent: FloorTileItemBase
   id: FloorTileItemXenoMaint
   components:
