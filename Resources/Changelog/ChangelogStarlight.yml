@@ -8869,4 +8869,11 @@ Entries:
   id: 1223
   time: '2025-07-05T22:51:24.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/964
+- author: PubliclyExecutedPig
+  changes:
+  - message: Assassins Creed x Among Us (Syndicate Infiltration Hardsuit)
+    type: Add
+  id: 1224
+  time: '2025-07-05T22:53:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/922
 
