@@ -272,6 +272,12 @@
   desc: reagent-desc-milk-goat
 
 - type: reagent
+  id: MilkSheep
+  parent: Milk
+  name: reagent-name-milk-sheep
+  desc: reagent-desc-milk-sheep
+
+- type: reagent
   id: MilkOat
   name: reagent-name-milk-oat
   group: Drinks
