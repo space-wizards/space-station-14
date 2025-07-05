@@ -4,12 +4,14 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
 using Content.Shared.Humanoid;
+using Content.Shared.Silicons.Borgs.Components;
 
 namespace Content.Server.Devour;
 
 public sealed class DevourSystem : SharedDevourSystem
 {
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private readonly BodySystem _body = default!;
 
     public override void Initialize()
     {
@@ -19,31 +21,55 @@ public sealed class DevourSystem : SharedDevourSystem
         SubscribeLocalEvent<DevourerComponent, BeingGibbedEvent>(OnGibContents);
     }
 
-    private void OnDoAfter(EntityUid uid, DevourerComponent component, DevourDoAfterEvent args)
+    private void OnDoAfter(Entity<DevourerComponent> entity, ref DevourDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled)
             return;
 
-        var ichorInjection = new Solution(component.Chemical, component.HealRate);
-
-        if (component.FoodPreference == FoodPreference.All ||
-            (component.FoodPreference == FoodPreference.Humanoid && HasComp<HumanoidAppearanceComponent>(args.Args.Target)))
+        // Heal the devourer if the target is one of its favored foods.
+        if (entity.Comp.FoodPreference == FoodPreference.All ||
+            (entity.Comp.FoodPreference == FoodPreference.Humanoid &&
+             HasComp<HumanoidAppearanceComponent>(args.Args.Target)))
         {
-            if (component.ShouldStoreDevoured && args.Args.Target is not null)
+            var ichorInjection = new Solution(entity.Comp.Chemical, entity.Comp.HealRate);
+            _bloodstreamSystem.TryAddToChemicals(entity, ichorInjection);
+        }
+
+        // Either put the entity into the devourer's stomach or delete it.
+        if (args.Args.Target is { } target)
+        {
+            InsertEntityToDevourerStomachOrDelete(entity, target);
+        }
+
+        _audioSystem.PlayPvs(entity.Comp.SoundDevour, entity);
+    }
+
+    private void InsertEntityToDevourerStomachOrDelete(DevourerComponent devourer, EntityUid target)
+    {
+        if (devourer.ShouldStoreDevoured)
+        {
+            // Humanoids go into the stomach entirely
+            if (HasComp<HumanoidAppearanceComponent>(target))
             {
-                ContainerSystem.Insert(args.Args.Target.Value, component.Stomach);
+                ContainerSystem.Insert(target, devourer.Stomach);
+                return;
             }
-            _bloodstreamSystem.TryAddToChemicals(uid, ichorInjection);
+
+            // Borgs get gibbed and their brain goes in the stomach
+            if (TryComp<BorgChassisComponent>(target, out var borg))
+            {
+                if (borg.BrainEntity is { } brain)
+                {
+                    ContainerSystem.Insert(brain, devourer.Stomach);
+                }
+                _body.GibBody(target);
+
+                return;
+            }
         }
 
-        //TODO: Figure out a better way of removing structures via devour that still entails standing still and waiting for a DoAfter. Somehow.
-        //If it's not human, it must be a structure
-        else if (args.Args.Target != null)
-        {
-            QueueDel(args.Args.Target.Value);
-        }
-
-        _audioSystem.PlayPvs(component.SoundDevour, uid);
+        // Everything else gets deleted.
+        QueueDel(target);
     }
 
     private void OnGibContents(EntityUid uid, DevourerComponent component, ref BeingGibbedEvent args)
@@ -56,4 +82,3 @@ public sealed class DevourSystem : SharedDevourSystem
         ContainerSystem.EmptyContainer(component.Stomach);
     }
 }
-
