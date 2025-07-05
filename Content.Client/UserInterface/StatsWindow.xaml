@@ -5,7 +5,7 @@
         <ScrollContainer HorizontalExpand="True"
                          VerticalExpand="True"
                          SizeFlagsStretchRatio="6">
-            <GridContainer Name="Values"/>
+            <GridContainer Name="Values" HSeparationOverride="0" VSeparationOverride="15"/>
         </ScrollContainer>
     </BoxContainer>
 </DefaultWindow>
