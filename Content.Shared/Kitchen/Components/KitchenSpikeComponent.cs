@@ -59,7 +59,7 @@ public sealed partial class KitchenSpikeComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Piercing", 20 },
+            { "Piercing", 10 },
         },
     };
 
@@ -71,7 +71,7 @@ public sealed partial class KitchenSpikeComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Slash", 30 },
+            { "Slash", 20 },
         },
     };
 

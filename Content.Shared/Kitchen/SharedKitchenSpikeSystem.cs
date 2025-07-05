@@ -1,6 +1,7 @@
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Examine;
@@ -48,7 +49,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         SubscribeLocalEvent<KitchenSpikeComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<KitchenSpikeComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
-        SubscribeLocalEvent<KitchenSpikeComponent, ContainerIsRemovingAttemptEvent>(OnRemoveAttempt);
         SubscribeLocalEvent<KitchenSpikeComponent, EntInsertedIntoContainerMessage>(OnEntInsertedIntoContainer);
         SubscribeLocalEvent<KitchenSpikeComponent, EntRemovedFromContainerMessage>(OnEntRemovedFromContainer);
         SubscribeLocalEvent<KitchenSpikeComponent, InteractHandEvent>(OnInteractHand);
@@ -60,9 +60,8 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         SubscribeLocalEvent<KitchenSpikeComponent, SpikeButcherDoAfterEvent>(OnSpikeButcherDoAfter);
         SubscribeLocalEvent<KitchenSpikeComponent, ExaminedEvent>(OnSpikeExamined);
         SubscribeLocalEvent<KitchenSpikeComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
-
-        // Self-unhook attempt.
         SubscribeLocalEvent<KitchenSpikeComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
+        SubscribeLocalEvent<KitchenSpikeComponent, DestructionEventArgs>(OnDestruction);
 
         SubscribeLocalEvent<KitchenSpikeVictimComponent, ExaminedEvent>(OnVictimExamined);
 
@@ -85,16 +84,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnInsertAttempt(Entity<KitchenSpikeComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        if (args.Cancelled || TryComp<ButcherableComponent>(args.EntityUid, out var butcherable) &&
-            butcherable.Type == ButcheringType.Spike && !HasComp<KitchenSpikeHookedComponent>(args.EntityUid))
-            return;
-
-        args.Cancel();
-    }
-
-    private void OnRemoveAttempt(Entity<KitchenSpikeComponent> ent, ref ContainerIsRemovingAttemptEvent args)
-    {
-        if (args.Cancelled || HasComp<KitchenSpikeHookedComponent>(args.EntityUid))
+        if (args.Cancelled || TryComp<ButcherableComponent>(args.EntityUid, out var butcherable) && butcherable.Type == ButcheringType.Spike)
             return;
 
         args.Cancel();
@@ -102,7 +92,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnEntInsertedIntoContainer(Entity<KitchenSpikeComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        AddComp<KitchenSpikeHookedComponent>(args.Entity);
+        EnsureComp<KitchenSpikeHookedComponent>(args.Entity);
         _damageableSystem.TryChangeDamage(args.Entity, ent.Comp.SpikeDamage, true);
         _activeSpikes.Add(ent);
     }
@@ -174,7 +164,10 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.CanDrop = _containerSystem.CanInsert(args.Dragged, ent.Comp.BodyContainer) && !HasComp<KitchenSpikeUnhookingComponent>(args.User) && !HasComp<KitchenSpikeHookingComponent>(args.User);
+        args.CanDrop = _containerSystem.CanInsert(args.Dragged, ent.Comp.BodyContainer) &&
+                       !HasComp<KitchenSpikeUnhookingComponent>(args.User) &&
+                       !HasComp<KitchenSpikeHookingComponent>(args.User);
+
         args.Handled = true;
     }
 
@@ -183,7 +176,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (args.Handled || !TryComp<ButcherableComponent>(args.Dragged, out var butcherable))
             return;
 
-        AddComp<KitchenSpikeHookingComponent>(args.User);
+        EnsureComp<KitchenSpikeHookingComponent>(args.User);
 
         ShowPopups("comp-kitchen-spike-begin-hook-self",
             "comp-kitchen-spike-begin-hook-self-other",
@@ -293,16 +286,20 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnSpikeExamined(Entity<KitchenSpikeComponent> ent, ref ExaminedEvent args)
     {
-        if (!ent.Comp.BodyContainer.ContainedEntity.HasValue)
+        var victim = ent.Comp.BodyContainer.ContainedEntity;
+
+        if (!victim.HasValue)
             return;
 
-        args.PushMarkup(Loc.GetString("comp-kitchen-spike-hooked", ("victim", Identity.Entity(ent.Comp.BodyContainer.ContainedEntity.Value, EntityManager))));
-        args.PushMessage(_examineSystem.GetExamineText(ent.Comp.BodyContainer.ContainedEntity.Value, args.Examiner));
+        args.PushMarkup(Loc.GetString("comp-kitchen-spike-hooked", ("victim", Identity.Entity(victim.Value, EntityManager))), 2);
+        args.PushMessage(_examineSystem.GetExamineText(victim.Value, args.Examiner));
     }
 
     private void OnGetVerbs(Entity<KitchenSpikeComponent> ent, ref GetVerbsEvent<Verb> args)
     {
-        if (!ent.Comp.BodyContainer.ContainedEntity.HasValue || !_containerSystem.CanRemove(ent.Comp.BodyContainer.ContainedEntity.Value, ent.Comp.BodyContainer))
+        var victim = ent.Comp.BodyContainer.ContainedEntity;
+
+        if (!victim.HasValue || !_containerSystem.CanRemove(victim.Value, ent.Comp.BodyContainer))
             return;
 
         var user = args.User;
@@ -310,7 +307,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         args.Verbs.Add(new Verb()
         {
             Text = Loc.GetString("comp-kitchen-spike-unhook-verb"),
-            Act = () => TryUnhook(ent, user, ent.Comp.BodyContainer.ContainedEntity.Value),
+            Act = () => TryUnhook(ent, user, victim.Value),
             Impact = LogImpact.High,
         });
     }
@@ -321,12 +318,17 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             TryUnhook(ent, args.Entity, args.Entity);
     }
 
+    private void OnDestruction(Entity<KitchenSpikeComponent> ent, ref DestructionEventArgs args)
+    {
+        _containerSystem.EmptyContainer(ent.Comp.BodyContainer, destination: Transform(ent).Coordinates);
+    }
+
     private void OnVictimExamined(Entity<KitchenSpikeVictimComponent> ent, ref ExaminedEvent args)
     {
         args.PushMarkup(Loc.GetString("comp-kitchen-spike-victim-examine", ("target", Identity.Entity(ent, EntityManager))));
     }
 
-    private static void OnAttempt(EntityUid uid, KitchenSpikeHookedComponent stunned, CancellableEntityEventArgs args)
+    private static void OnAttempt(EntityUid uid, KitchenSpikeHookedComponent component, CancellableEntityEventArgs args)
     {
         args.Cancel();
     }
@@ -393,7 +395,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (HasComp<KitchenSpikeUnhookingComponent>(user) || HasComp<KitchenSpikeHookingComponent>(user))
             return;
 
-        AddComp<KitchenSpikeUnhookingComponent>(user);
+        EnsureComp<KitchenSpikeUnhookingComponent>(user);
 
         ShowPopups("comp-kitchen-spike-begin-unhook-self",
             "comp-kitchen-spike-begin-unhook-self-other",
