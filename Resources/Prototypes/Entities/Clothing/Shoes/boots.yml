@@ -112,6 +112,16 @@
 
 - type: entity
   parent: ClothingShoesBaseWinterBoots
+  id: ClothingShoesBootsWinterCommand
+  name: command winter boots
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/winterbootscommand.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/winterbootscommand.rsi
+
+- type: entity
+  parent: ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCargo
   name: cargo winter boots
   components:
