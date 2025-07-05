@@ -2,6 +2,7 @@ using Content.Server.Actions;
 using Content.Server.Chat.Systems;
 using Content.Server.Speech.Components;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Humanoid;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
@@ -29,6 +30,19 @@ public sealed class VocalSystem : EntitySystem
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
+        SubscribeLocalEvent<VocalComponent, CloningEvent>(OnCloning);
+    }
+
+    private void OnCloning(Entity<VocalComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        var v = EnsureComp<VocalComponent>(args.CloneUid);
+        v.EmoteSounds = ent.Comp.EmoteSounds;
+        v.Sounds = ent.Comp.Sounds;
+        v.ScreamId = ent.Comp.ScreamId;
+        v.WilhelmProbability = ent.Comp.WilhelmProbability;
     }
 
     private void OnMapInit(EntityUid uid, VocalComponent component, MapInitEvent args)
