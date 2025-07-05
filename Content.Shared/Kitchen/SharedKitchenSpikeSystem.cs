@@ -68,7 +68,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         SubscribeLocalEvent<KitchenSpikeComponent, SpikeButcherDoAfterEvent>(OnSpikeButcherDoAfter);
         SubscribeLocalEvent<KitchenSpikeComponent, ExaminedEvent>(OnSpikeExamined);
         SubscribeLocalEvent<KitchenSpikeComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
-        SubscribeLocalEvent<KitchenSpikeComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
         SubscribeLocalEvent<KitchenSpikeComponent, DestructionEventArgs>(OnDestruction);
 
         SubscribeLocalEvent<KitchenSpikeVictimComponent, ExaminedEvent>(OnVictimExamined);
@@ -359,12 +358,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             Act = () => TryUnhook(ent, user, victim.Value),
             Impact = LogImpact.Medium,
         });
-    }
-
-    // The victim tries to unhook themselves by moving while hooked to the spike.
-    private void OnRelayMovement(Entity<KitchenSpikeComponent> ent, ref ContainerRelayMovementEntityEvent args)
-    {
-        TryUnhook(ent, args.Entity, args.Entity);
     }
 
     private void OnDestruction(Entity<KitchenSpikeComponent> ent, ref DestructionEventArgs args)
