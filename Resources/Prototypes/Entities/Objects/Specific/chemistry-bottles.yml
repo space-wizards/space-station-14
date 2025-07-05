@@ -238,6 +238,21 @@
           Quantity: 30
 
 - type: entity
+  id: ChemistryBottleClastine
+  suffix: clastine
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-clastine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Clastine
+          Quantity: 30
+
+- type: entity
   id: ChemistryBottleEphedrine
   suffix: ephedrine
   parent: BaseChemistryBottleFilled
