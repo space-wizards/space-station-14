@@ -26,6 +26,11 @@
   id: Syndicate
   examineText: contraband-examine-text-Syndicate
 
+# This is items that can be used by the syndicate and security legally.
+- type: contrabandSeverity
+  id: SyndicateSecurity
+  examineText: contraband-examine-text-SyndicateSecurity
+
 # This is magical contraband and not permitted to be used IC.
 - type: contrabandSeverity
   id: Magical
