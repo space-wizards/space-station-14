@@ -8953,4 +8953,13 @@ Entries:
   id: 1235
   time: '2025-07-05T22:58:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/939
+- author: Citrea
+  changes:
+  - message: Customisation of silicon voices applies as it should now. Station AIs
+      will have to change their core picture at least once before their voice is loaded!
+      For now...
+    type: Fix
+  id: 1236
+  time: '2025-07-05T23:05:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/969
 
