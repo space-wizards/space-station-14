@@ -1,20 +1,34 @@
-﻿- type: stack
+# they're uninflated by default so they're tiny
+- type: stack
+  parent: BaseSmallStack
+  id: InflatableWall
+  name: stack-inflatable-wall
+  spawn: InflatableWallStack1
+
+- type: stack
+  id: InflatableDoor
+  name: stack-inflatable-door
+  spawn: InflatableDoorStack1
+  maxCount: 4
+
+# Cables
+- type: stack
+  parent: BaseMediumStack
   id: Cable
   name: stack-lv-cable
   icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coil-30 }
   spawn: CableApcStack1
-  maxCount: 30
 
 - type: stack
+  parent: BaseMediumStack
   id: CableMV
   name: stack-mv-cable
   icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coilmv-30 }
   spawn: CableMVStack1
-  maxCount: 30
 
 - type: stack
+  parent: BaseMediumStack
   id: CableHV
   name: stack-hv-cable
   icon: { sprite: "/Textures/Objects/Tools/cable-coils.rsi", state: coilhv-30 }
   spawn: CableHVStack1
-  maxCount: 30
