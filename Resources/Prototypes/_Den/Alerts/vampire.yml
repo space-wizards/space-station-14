@@ -1,0 +1,24 @@
+- type: alert
+  id: ThirstBloodAlert
+  icons:
+  - sprite: /Textures/_Den/Interface/Alerts/vampire_thirstblood.rsi
+    state: bio16
+  alertViewEntity: AlertVampireThirstBloodSpriteView
+  name: alerts-vampire-thirstblood-name
+  description: alerts-vampire-thirstblood-desc
+
+- type: entity
+  id: AlertVampireThirstBloodSpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: GenericCounterAlert
+    centerGlyph: false
+  - type: Sprite
+    sprite: /Textures/_Den/Interface/Alerts/vampire_thirstblood.rsi
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]
+    - map: [ "1" ]
+      offset: 0.25, 0
+    - map: [ "10" ]
+      offset: 0.125, 0
+    - map: [ "100" ]

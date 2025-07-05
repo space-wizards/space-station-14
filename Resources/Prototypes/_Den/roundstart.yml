@@ -1,0 +1,27 @@
+- type: entity
+  id: Vampire
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 20
+  - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
+    definitions:
+    - prefRoles: [ Vampire ]
+      max: 3
+      playerRatio: 20
+      blacklist:
+        components:
+        - AntagImmune
+      briefing:
+        text: vampire-role-greeting
+        color: Plum
+        sound: "/Audio/DarkStation/DarkForces/Vampire/vampalert.ogg"
+      components:
+      - type: VampireThirstBlood
+      - type: VampireDrinkBlood
+#      - type: ActionGrant
+#        actions:
+#          - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
+      mindRoles:
+      - MindRoleVampire

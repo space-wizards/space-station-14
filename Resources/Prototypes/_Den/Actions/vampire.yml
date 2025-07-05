@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseAction
+  id: ActionVampireDrinkBlood
+  name: Feed
+  description: Drink blood from a creature.
+  components:
+  - type: Action
+    icon:
+      sprite: _Den/Interface/Actions/actions_vampire.rsi
+      state: fangs
+    useDelay: 2.0
+    itemIconStyle: BigAction
+  - type: TargetAction
+    repeat: false
+    deselectOnMiss: true
+    range: 1.0
+    interactOnMiss: false
+  - type: EntityTargetAction
+    event: !type:VampireDrinkBloodAbility
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false

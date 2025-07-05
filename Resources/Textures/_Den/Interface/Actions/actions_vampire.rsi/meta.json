@@ -1,0 +1,116 @@
+﻿{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+    "copyright": "Source: https://github.com/ParadiseSS13/Paradise/blob/a519ea6778122859a35de6f545c87bb6a7e24a70/icons/mob/actions/actions.dmi, fangs by Southbridge",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "bat"
+        },
+        {
+            "name": "blood_barrier"
+        },
+        {
+            "name": "blood_bond"
+        },
+        {
+            "name": "blood_bringers_rite"
+        },
+        {
+            "name": "blood_eruption"
+        },
+        {
+            "name": "blood_pool"
+        },
+        {
+            "name": "blood_rush"
+        },
+        {
+            "name": "blood_swell"
+        },
+        {
+            "name": "blood_tendril"
+        },
+        {
+            "name": "charge"
+        },
+        {
+            "name": "choose_specialization"
+        },
+        {
+            "name": "cloak_of_darkness"
+        },
+        {
+            "name": "commune"
+        },
+        {
+            "name": "dark_passage"
+        },
+        {
+            "name": "demonic_grasp"
+        },
+        {
+            "name": "deploy_decoy"
+        },
+        {
+            "name": "desecrated_duel"
+        },
+        {
+            "name": "enthrall"
+        },
+        {
+            "name": "eternal_darkness"
+        },
+        {
+            "name": "extinguish"
+        },
+        {
+            "name": "glare"
+        },
+        {
+            "name": "mass_hysteria"
+        },
+        {
+            "name": "overwhelming_force"
+        },
+        {
+            "name": "pacify"
+        },
+        {
+            "name": "predator_senses"
+        },
+        {
+            "name": "rally_thralls"
+        },
+        {
+            "name": "rejuvenate"
+        },
+        {
+            "name": "shadow_boxing"
+        },
+        {
+            "name": "shadow_snare"
+        },
+        {
+            "name": "soul_anchor"
+        },
+        {
+            "name": "stomp"
+        },
+        {
+            "name": "subspace_swap"
+        },
+        {
+            "name": "vampiric_claws"
+        },
+        {
+            "name": "fangs"
+        }
+    ]
+}
