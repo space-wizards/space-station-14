@@ -8848,4 +8848,11 @@ Entries:
   id: 1220
   time: '2025-07-05T22:44:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/966
+- author: Trosling
+  changes:
+  - message: Added Survival Boxes for species that do not breathe (ie. Shadekin)
+    type: Add
+  id: 1221
+  time: '2025-07-05T22:49:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/947
 
