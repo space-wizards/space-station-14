@@ -48,6 +48,14 @@
     allowedDepartments: [  ]
     allowedJobs: [  ]
 
+# For contraband made by the syndicate, but allows the security department to use it.
+- type: entity
+  id: BaseSyndicateSecurityContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: SyndicateSecurity
+
 # one department restricted contraband
 - type: entity
   id: BaseCentcommContraband
