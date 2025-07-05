@@ -24,24 +24,23 @@ public sealed class AddObjectiveCommand : LocalizedEntityCommands
     {
         if (args.Length != 2)
         {
-            shell.WriteError(Loc.GetString(Loc.GetString("cmd-addobjective-invalid-args")));
+            shell.WriteError(Loc.GetString(Loc.GetString("shell-wrong-arguments-number")));
             return;
         }
 
         if (!_players.TryGetSessionByUsername(args[0], out var data))
         {
-            shell.WriteError(Loc.GetString("cmd-addobjective-player-not-found"));
+            shell.WriteError(Loc.GetString("shell-target-player-does-not-exist"));
             return;
         }
 
         if (!_mind.TryGetMind(data, out var mindId, out var mind))
         {
-            shell.WriteError(Loc.GetString("cmd-addobjective-mind-not-found"));
+            shell.WriteError(Loc.GetString("shell-target-entity-does-not-have-message", ("missing", "mind")));
             return;
         }
 
-        if (!_prototypes.TryIndex<EntityPrototype>(args[1], out var proto) ||
-            !proto.HasComponent<ObjectiveComponent>())
+        if (!_prototypes.TryIndex<EntityPrototype>(args[1], out var proto) || !proto.HasComponent<ObjectiveComponent>())
         {
             shell.WriteError(Loc.GetString("cmd-addobjective-objective-not-found", ("obj", args[1])));
             return;
@@ -68,6 +67,6 @@ public sealed class AddObjectiveCommand : LocalizedEntityCommands
 
         return CompletionResult.FromHintOptions(
             _objectives.Objectives(),
-            Loc.GetString(Loc.GetString("cmd-add-objective-obj-completion")));
+            Loc.GetString(Loc.GetString("cmd-addobjective-obj-completion")));
     }
 }
