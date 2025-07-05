@@ -171,6 +171,10 @@
           32:
             sprite: Mobs/Species/Moth/displacement.rsi
             state: shoes
+  - type: AirTankShouldBreathe
+    tankTypes:
+    - Oxygen
+    - RegularAir
 
 - type: entity
   parent: BaseSpeciesDummy
