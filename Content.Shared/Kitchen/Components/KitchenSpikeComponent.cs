@@ -38,7 +38,7 @@ public sealed partial class KitchenSpikeComponent : Component
     /// Container where the victim will be stored.
     /// </summary>
     [ViewVariables]
-    public ContainerSlot BodyContainer;
+    public ContainerSlot BodyContainer = default!;
 
     /// <summary>
     /// Sound to play when the victim is hooked or unhooked.
