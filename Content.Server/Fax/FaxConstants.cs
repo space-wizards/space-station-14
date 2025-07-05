@@ -1,4 +1,4 @@
-namespace Content.Server.Fax;
+namespace Content.Shared.Fax;
 
 public static class FaxConstants
 {

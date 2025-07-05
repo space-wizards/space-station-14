@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -10,17 +9,9 @@ namespace Content.Server.Administration;
 /// <summary>
 /// This handles the server portion of quick dialogs, including opening them.
 /// </summary>
-public sealed partial class QuickDialogSystem : EntitySystem
+public sealed partial class QuickDialogSystem : SharedQuickDialogSystem
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-
-    /// <summary>
-    /// Contains the success/cancel actions for a dialog.
-    /// </summary>
-    private readonly Dictionary<int, (Action<QuickDialogResponseEvent> okAction, Action cancelAction)> _openDialogs = new();
-    private readonly Dictionary<NetUserId, List<int>> _openDialogsByUser = new();
-
-    private int _nextDialogId = 1;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -36,33 +27,75 @@ public sealed partial class QuickDialogSystem : EntitySystem
         _playerManager.PlayerStatusChanged -= PlayerManagerOnPlayerStatusChanged;
     }
 
+    /// <summary>
+    /// Contains the success/cancel actions for a dialog.
+    /// </summary>
+    private readonly Dictionary<int, Dialog> _openDialogs = new();
+    private readonly Dictionary<NetUserId, List<int>> _openDialogsByUser = new();
+    private int _nextServerDialogId = 0;
+    private Dictionary<NetUserId, int> _nextClientDialogId = new();
+    private readonly Dictionary<(NetUserId, int), int> _mappingServerToClient = new();
+    private readonly Dictionary<(NetUserId, int), int> _mappingClientToServer = new();
+
+    protected override int GetDialogId(NetUserId userId)
+    {
+        if (!_nextClientDialogId.ContainsKey(userId))
+            _nextClientDialogId[userId] = 0;
+
+        var didClient = _nextClientDialogId[userId]++;
+        var didServer = _nextServerDialogId++;
+
+        _mappingServerToClient[(userId, didServer)] = didClient;
+        _mappingClientToServer[(userId, didClient)] = didServer;
+
+        return didServer;
+    }
+
+    protected override int OpenDialogInternal(ICommonSession session, string title, List<QuickDialogEntry> entries, QuickDialogButtonFlag buttons, Action<QuickDialogResponseEvent> okAction, Action cancelAction)
+    {
+        var did = base.OpenDialogInternal(session, title, entries, buttons, okAction, cancelAction);
+
+        _openDialogs.Add(did, new Dialog(okAction, cancelAction));
+        if (!_openDialogsByUser.ContainsKey(session.UserId))
+            _openDialogsByUser.Add(session.UserId, new());
+
+        _openDialogsByUser[session.UserId].Add(did);
+
+        return did;
+    }
+
     private void Handler(QuickDialogResponseEvent msg, EntitySessionEventArgs args)
     {
-        if (!_openDialogs.ContainsKey(msg.DialogId) || !_openDialogsByUser[args.SenderSession.UserId].Contains(msg.DialogId))
+        if (!_mappingClientToServer.ContainsKey((args.SenderSession.UserId, msg.DialogId)))
         {
-            args.SenderSession.Channel.Disconnect($"Replied with invalid quick dialog data with id {msg.DialogId}.");
+            args.SenderSession.Channel.Disconnect($"Replied with invalid quick dialog data with id {msg.DialogId} for {args.SenderSession.UserId}.");
+            return;
+        }
+
+        var didServer = _mappingClientToServer[(args.SenderSession.UserId, msg.DialogId)];
+
+        if (!_openDialogs.ContainsKey(didServer) || !_openDialogsByUser[args.SenderSession.UserId].Contains(didServer))
+        {
+            args.SenderSession.Channel.Disconnect($"Replied with invalid quick dialog data with id {msg.DialogId}({didServer}).");
             return;
         }
 
         switch (msg.ButtonPressed)
         {
             case QuickDialogButtonFlag.OkButton:
-                _openDialogs[msg.DialogId].okAction.Invoke(msg);
+                _openDialogs[didServer].okAction.Invoke(msg);
                 break;
             case QuickDialogButtonFlag.CancelButton:
-                _openDialogs[msg.DialogId].cancelAction.Invoke();
+                _openDialogs[didServer].cancelAction.Invoke();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
 
-        _openDialogs.Remove(msg.DialogId);
-        _openDialogsByUser[args.SenderSession.UserId].Remove(msg.DialogId);
-    }
-
-    private int GetDialogId()
-    {
-        return _nextDialogId++;
+        _openDialogs.Remove(didServer);
+        _openDialogsByUser[args.SenderSession.UserId].Remove(didServer);
+        _mappingClientToServer.Remove((args.SenderSession.UserId, msg.DialogId));
+        _mappingServerToClient.Remove((args.SenderSession.UserId, didServer));
     }
 
     private void PlayerManagerOnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -82,103 +115,5 @@ public sealed partial class QuickDialogSystem : EntitySystem
         }
 
         _openDialogsByUser.Remove(user);
-    }
-
-    private void OpenDialogInternal(ICommonSession session, string title, List<QuickDialogEntry> entries, QuickDialogButtonFlag buttons, Action<QuickDialogResponseEvent> okAction, Action cancelAction)
-    {
-        var did = GetDialogId();
-        RaiseNetworkEvent(
-            new QuickDialogOpenEvent(
-                title,
-                entries,
-                did,
-                buttons),
-            session
-        );
-
-        _openDialogs.Add(did, (okAction, cancelAction));
-        if (!_openDialogsByUser.ContainsKey(session.UserId))
-            _openDialogsByUser.Add(session.UserId, new List<int>());
-
-        _openDialogsByUser[session.UserId].Add(did);
-    }
-
-    private bool TryParseQuickDialog<T>(QuickDialogEntryType entryType, string input, [NotNullWhen(true)] out T? output)
-    {
-        switch (entryType)
-        {
-            case QuickDialogEntryType.Integer:
-            {
-                var result = int.TryParse(input, out var val);
-                output = (T?) (object?) val;
-                return result;
-            }
-            case QuickDialogEntryType.Float:
-            {
-                var result = float.TryParse(input, out var val);
-                output = (T?) (object?) val;
-                return result;
-            }
-            case QuickDialogEntryType.ShortText:
-            {
-                if (input.Length > 100)
-                {
-                    output = default;
-                    return false;
-                }
-
-                output = (T?) (object?) input;
-                return output is not null;
-            }
-            case QuickDialogEntryType.LongText:
-            {
-                if (input.Length > 2000)
-                {
-                    output = default;
-                    return false;
-                }
-
-                //It's verrrry likely that this will be longstring
-                var longString = (LongString) input;
-
-                output = (T?) (object?) longString;
-                return output is not null;
-            }
-            default:
-                throw new ArgumentOutOfRangeException(nameof(entryType), entryType, null);
-        }
-    }
-
-    private QuickDialogEntryType TypeToEntryType(Type T)
-    {
-        if (T == typeof(int) || T == typeof(uint) || T == typeof(long) || T == typeof(ulong))
-            return QuickDialogEntryType.Integer;
-
-        if (T == typeof(float) || T == typeof(double))
-            return QuickDialogEntryType.Float;
-
-        if (T == typeof(string)) // People are more likely to notice the input box is too short than they are to notice it's too long.
-            return QuickDialogEntryType.ShortText;
-
-        if (T == typeof(LongString))
-            return QuickDialogEntryType.LongText;
-
-        throw new ArgumentException($"Tried to open a dialog with unsupported type {T}.");
-    }
-}
-
-/// <summary>
-/// A type used with quick dialogs to indicate you want a large entry window for text and not a short one.
-/// </summary>
-/// <param name="String">The string retrieved.</param>
-public record struct LongString(string String)
-{
-    public static implicit operator string(LongString longString)
-    {
-        return longString.String;
-    }
-    public static explicit operator LongString(string s)
-    {
-        return new(s);
     }
 }

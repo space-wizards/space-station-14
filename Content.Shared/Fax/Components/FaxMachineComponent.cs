@@ -14,7 +14,7 @@ public sealed partial class FaxMachineComponent : Component
     /// Name with which the fax will be visible to others on the network
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("name")]
+    [DataField("name"), AutoNetworkedField]
     public string FaxName { get; set; } = "Unknown";
 
     /// <summary>
@@ -28,13 +28,13 @@ public sealed partial class FaxMachineComponent : Component
     /// Device address of fax in network to which data will be send
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("destinationAddress")]
+    [DataField("destinationAddress"), AutoNetworkedField]
     public string? DestinationFaxAddress { get; set; }
 
     /// <summary>
     /// Contains the item to be sent, assumes it's paper...
     /// </summary>
-    [DataField(required: true)]
+    [DataField(required: true), AutoNetworkedField]
     public ItemSlot PaperSlot = new();
 
     /// <summary>
@@ -42,7 +42,7 @@ public sealed partial class FaxMachineComponent : Component
     /// This will make it visible to others on the network
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool ResponsePings { get; set; } = true;
 
     /// <summary>
@@ -74,70 +74,88 @@ public sealed partial class FaxMachineComponent : Component
     /// <summary>
     /// Known faxes in network by address with fax names
     /// </summary>
-    [ViewVariables]
-    public Dictionary<string, string> KnownFaxes { get; } = new();
+    [ViewVariables, AutoNetworkedField]
+    public Dictionary<string, string> KnownFaxes { get; set; } = new();
 
     /// <summary>
     /// Print queue of the incoming message
     /// </summary>
     [ViewVariables]
-    [DataField]
-    public Queue<FaxPrintout> PrintingQueue { get; private set; } = new();
+    [DataField, AutoNetworkedField]
+    public Queue<FaxPrintout> PrintingQueue { get; set; } = new();
+
+    /// <summary>
+    /// Message sending timeout
+    /// </summary>
+    [ViewVariables]
+    [DataField, AutoNetworkedField]
+    public TimeSpan ReadySendTime;
 
     /// <summary>
     /// Message sending timeout
     /// </summary>
     [ViewVariables]
     [DataField]
-    public float SendTimeoutRemaining;
-
-    /// <summary>
-    /// Message sending timeout
-    /// </summary>
-    [ViewVariables]
-    [DataField]
-    public float SendTimeout = 5f;
+    public TimeSpan SendTimeout = TimeSpan.FromSeconds(5f);
 
     /// <summary>
     /// Remaining time of inserting animation
     /// </summary>
     [DataField]
-    public float InsertingTimeRemaining;
+    public TimeSpan ReadyInsertTime;
 
     /// <summary>
     /// How long the inserting animation will play
     /// </summary>
     [ViewVariables]
-    public float InsertionTime = 1.88f; // 0.02 off for correct animation
+    public TimeSpan InsertingTime = TimeSpan.FromSeconds(1.88f); // 0.02 off for correct animation
 
     /// <summary>
     /// Remaining time of printing animation
     /// </summary>
     [DataField]
-    public float PrintingTimeRemaining;
+    public TimeSpan ReadyPrintTime;
 
     /// <summary>
     /// How long the printing animation will play
     /// </summary>
     [ViewVariables]
-    public float PrintingTime = 2.3f;
+    public TimeSpan PrintingTime = TimeSpan.FromSeconds(2.3f);
 
     /// <summary>
     ///     The prototype ID to use for faxed or copied entities if we can't get one from
     ///     the paper entity for whatever reason.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntProtoId PrintPaperId = "Paper";
 
     /// <summary>
     ///     The prototype ID to use for faxed or copied entities if we can't get one from
     ///     the paper entity for whatever reason of the Office type.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntProtoId PrintOfficePaperId = "PaperOffice";
+
+    /// <summary>
+    ///     Used to check if fax was just printing something.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IsPrinting = false;
+
+    /// <summary>
+    ///     Used to check if fax was just printing something.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IsSending = false;
+
+    /// <summary>
+    ///     Used to check if fax was just printing something.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool IsInserting = false;
 }
 
-[DataDefinition]
+[DataDefinition, Serializable]
 public sealed partial class FaxPrintout
 {
     [DataField(required: true)]

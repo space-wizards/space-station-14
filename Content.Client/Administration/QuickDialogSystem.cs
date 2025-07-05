@@ -6,12 +6,21 @@ namespace Content.Client.Administration;
 /// <summary>
 /// This handles the client portion of quick dialogs.
 /// </summary>
-public sealed class QuickDialogSystem : EntitySystem
+public sealed class QuickDialogSystem : SharedQuickDialogSystem
 {
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeNetworkEvent<QuickDialogOpenEvent>(OpenDialog);
+        base.Initialize();
+
+        SubscribeLocalEvent<QuickDialogOpenEvent>(OpenDialog);
+    }
+
+    private int nextDialogId = 0;
+
+    protected override int GetDialogId(Robust.Shared.Network.NetUserId userId)
+    {
+        return nextDialogId++;
     }
 
     private void OpenDialog(QuickDialogOpenEvent ev)
