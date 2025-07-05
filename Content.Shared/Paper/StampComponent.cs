@@ -1,5 +1,6 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Paper;
 
@@ -17,37 +18,60 @@ public partial struct StampDisplayInfo
         StampedName = s;
     }
 
-    [DataField("stampedName")]
+    [DataField]
     public string StampedName;
 
-    [DataField("stampedColor")]
+    [DataField]
     public Color StampedColor;
+
+    [DataField]
+    public StampType StampedType;
 };
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class StampComponent : Component
 {
     /// <summary>
-    ///     The loc string name that will be stamped to the piece of paper on examine.
+    /// The loc string name that will be stamped to the piece of paper on examine.
     /// </summary>
-    [DataField("stampedName")]
-    public string StampedName { get; set; } = "stamp-component-stamped-name-default";
+    [DataField, AutoNetworkedField]
+    public string StampedName = "stamp-component-stamped-name-default";
 
     /// <summary>
-    ///     The sprite state of the stamp to display on the paper from paper Sprite path.
+    /// The sprite state of the stamp to display on the paper from paper Sprite path.
     /// </summary>
-    [DataField("stampState")]
-    public string StampState { get; set; } = "paper_stamp-generic";
+    [DataField, AutoNetworkedField]
+    public string StampState = "paper_stamp-generic";
+
+    /// <summary>
+    /// The type of stamp this will apply.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public StampType StampType = StampType.Stamp;
 
     /// <summary>
     /// The color of the ink used by the stamp in UIs
     /// </summary>
-    [DataField("stampedColor")]
+    [DataField, AutoNetworkedField]
     public Color StampedColor = Color.FromHex("#BB3232"); // StyleNano.DangerousRedFore
+
+    /// <summary>
+    /// Should the stamped paper be uneditable after this stamp is applied?
+    /// Can still be modified by things with the WriteIgnoreStamps tag.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ProtectAfterStamp = true;
 
     /// <summary>
     /// The sound when stamp stamped
     /// </summary>
-    [DataField("sound")]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? Sound = null;
+}
+
+[Serializable, NetSerializable]
+public enum StampType : byte
+{
+    Stamp,
+    Signature // Means the stamp is borderless and uses the entity's name instead of StampedName
 }
