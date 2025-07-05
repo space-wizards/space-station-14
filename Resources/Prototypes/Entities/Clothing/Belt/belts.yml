@@ -80,6 +80,10 @@
             - Multitool
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: Tag
+    tags:
+    - UtilityBelt
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingBeltStorageBase
@@ -225,6 +229,7 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
+        - WireBrush
       components:
         - LightReplacer
         - SmokeOnTrigger
@@ -481,6 +486,7 @@
         - MagazineMagnum
         - CombatKnife
         - Truncheon
+        - HandGrenade
       components:
         - Stunbaton
         - FlashOnTrigger
@@ -611,6 +617,8 @@
         - Gun
         - BallisticAmmoProvider
         - CartridgeAmmo
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingBeltSecurity
@@ -656,7 +664,9 @@
   - type: Clothing
     sprite: Clothing/Belt/militarywebbing.rsi
   - type: ExplosionResistance
-    damageCoefficient: 0.5
+    damageCoefficient: 0.1
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingBeltMilitaryWebbing

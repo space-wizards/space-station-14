@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/cdbcb1e858b11f083994a7a269ed67ef5b452ce9",
+    "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/cdbcb1e858b11f083994a7a269ed67ef5b452ce9, Module actions by Scarky0. chem, adv-chem, and adv-mining by mubururu_, xenoborg actions by Samuka-C (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -47,6 +47,9 @@
             "name":"mining-module"
         },
         {
+            "name":"adv-mining-module"
+        },
+        {
             "name":"light-replacer-module"
         },
         {
@@ -60,6 +63,12 @@
         },
         {
             "name":"treatment-module"
+        },
+        {
+            "name":"chem-module"
+        },
+        {
+            "name":"adv-chem-module"
         },
         {
             "name":"adv-diagnosis-module"
@@ -102,6 +111,45 @@
         },
         {
             "name":"syndicate-martyr-module"
+        },
+        {
+            "name":"xenoborg-access-breaker-module"
+        },
+        {
+            "name":"xenoborg-basic-module"
+        },
+        {
+            "name":"xenoborg-extinguisher-module"
+        },
+        {
+            "name":"xenoborg-eye-module"
+        },
+        {
+            "name":"xenoborg-hypo-module"
+        },
+        {
+            "name":"xenoborg-jammer-module"
+        },
+        {
+            "name":"xenoborg-laser-module"
+        },
+        {
+            "name":"xenoborg-laser2-module"
+        },
+        {
+            "name":"xenoborg-projector-module"
+        },
+        {
+            "name":"xenoborg-space-movement-module"
+        },
+        {
+            "name":"xenoborg-sword-module"
+        },
+        {
+            "name":"xenoborg-sword2-module"
+        },
+        {
+            "name":"xenoborg-tool-module"
         },
         {
             "name": "select-type"

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by brainfood1183 (github) for ss14",
+  "copyright": "Made by brainfood1183 (github) for ss14, inhands by TiniestShark (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -9,6 +9,14 @@
   "states": [
     {
       "name": "icon"
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
     }
   ]
 }

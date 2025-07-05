@@ -1,0 +1,223 @@
+# These options are kept very sparse to not put emphasis on nudity, and to provide a base for players to feel comfortable with.
+# It's unlikely more will be added to upstream for cosmetic reasons. 
+
+- type: marking
+  id: UndergarmentBottomBoxers
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, SlimePerson]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: boxers
+
+- type: marking
+  id: UndergarmentBottomBriefs
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, SlimePerson]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: briefs
+
+- type: marking
+  id: UndergarmentBottomSatin
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, SlimePerson]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: satin
+
+- type: marking
+  id: UndergarmentTopBra
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, Reptilian, SlimePerson]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: classic
+
+- type: marking
+  id: UndergarmentTopSportsbra
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, Reptilian, SlimePerson]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: sports
+
+- type: marking
+  id: UndergarmentTopBinder
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, Reptilian, SlimePerson]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: binder
+
+- type: marking
+  id: UndergarmentTopTanktop
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Arachnid, Diona, Human, Dwarf, Moth, Reptilian, SlimePerson]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: tanktop
+
+- type: marking
+  id: UndergarmentBottomBoxersVox # Voxers.
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: boxers_vox
+
+- type: marking
+  id: UndergarmentBottomBriefsVox
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: briefs_vox
+
+- type: marking
+  id: UndergarmentBottomSatinVox
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: satin_vox
+
+- type: marking
+  id: UndergarmentTopBraVox
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: classic_vox
+
+- type: marking
+  id: UndergarmentTopSportsbraVox
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: sports_vox
+
+- type: marking
+  id: UndergarmentTopBinderVox
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: binder_vox
+
+- type: marking
+  id: UndergarmentTopTanktopVox
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
+  speciesRestriction: [Vox]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: tanktop_vox
+
+- type: marking
+  id: UndergarmentBottomBoxersReptilian
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: boxers_reptilian
+
+- type: marking
+  id: UndergarmentBottomBriefsReptilian
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: briefs_reptilian
+
+- type: marking
+  id: UndergarmentBottomSatinReptilian
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
+  sprites:
+  - sprite: Mobs/Customization/undergarments.rsi
+    state: satin_reptilian

@@ -96,6 +96,64 @@
 
 - type: entity
   parent: BaseItem
+  id: BorgBeaker
+  name: integrated beaker
+  description: An internal compartment installed into a cyborg. Rated for 50 units of any liquid.
+  components:
+  # 3 morbillion components are to avoid inheriting breakable since borgs can't replace beakers.
+  - type: Tag
+    tags:
+    - GlassBeaker
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    layers:
+      - state: beaker
+      - state: beaker1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+  - type: MixableSolution
+    solution: beaker
+  - type: FitsInDispenser
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: InjectableSolution
+    solution: beaker
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: beaker
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: Drink
+    solution: beaker
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
+
+- type: entity
+  parent: BaseItem
   id: BaseBeakerMetallic
   abstract: true
   components:
@@ -311,12 +369,13 @@
   - type: Tag
     tags:
     - Dropper
+  - type: PhysicalComposition
 
 - type: entity
-  name: borgdropper
   parent: Dropper
-  description: Used to transfer small amounts of chemical solution between containers. Extended for use by medical borgs.
   id: BorgDropper
+  name: hydraulic pipette
+  description: State-of-the-art hydraulic dropper built for cyborgs. It features a higher capacity than hand-powered droppers, able to hold 15 units of liquid.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/dropper.rsi
@@ -328,7 +387,7 @@
   - type: SolutionContainerManager
     solutions:
       injector:
-        maxVol: 10
+        maxVol: 15
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
 
@@ -400,6 +459,14 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
       - state: syringeproj
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 5
+  - type: Injector
+    minTransferAmount: 1
+    maxTransferAmount: 5
+    transferAmount: 5
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: minisyringe
@@ -415,7 +482,7 @@
     solution: injector
     updateInterval: 2
   - type: SolutionInjectOnEmbed
-    transferAmount: 2
+    transferAmount: 1
     solution: injector
   - type: Fixtures
     fixtures:
@@ -590,7 +657,7 @@
     areaInsertRadius: 1
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
-    whitelist: 
+    whitelist:
       tags:
       - Pill
   - type: Dumpable

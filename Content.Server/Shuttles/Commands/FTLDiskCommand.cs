@@ -1,8 +1,8 @@
 using Content.Server.Administration;
-using Content.Server.Labels;
 using Content.Shared.Administration;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
@@ -152,7 +152,7 @@ public sealed class FTLDiskCommand : LocalizedCommands
 
                 if (_entManager.TryGetComponent<StorageComponent>(cdCaseUid, out var storage) && storageSystem.Insert(cdCaseUid, cdUid, out _, storageComp: storage, playSound: false))
                 {
-                    if (_entManager.TryGetComponent<HandsComponent>(entity, out var handsComponent) && handsSystem.TryGetEmptyHand(entity, out var emptyHand, handsComponent))
+                    if (_entManager.TryGetComponent<HandsComponent>(entity, out var handsComponent) && handsSystem.TryGetEmptyHand((entity, handsComponent), out var emptyHand))
                     {
                         handsSystem.TryPickup(entity, cdCaseUid, emptyHand, checkActionBlocker: false, handsComp: handsComponent);
                     }
@@ -161,7 +161,7 @@ public sealed class FTLDiskCommand : LocalizedCommands
                 {
                     _entManager.DeleteEntity(cdCaseUid); // something went wrong so just yeet the chaf
 
-                    if (_entManager.TryGetComponent<HandsComponent>(entity, out var handsComponent) && handsSystem.TryGetEmptyHand(entity, out var emptyHand, handsComponent))
+                    if (_entManager.TryGetComponent<HandsComponent>(entity, out var handsComponent) && handsSystem.TryGetEmptyHand((entity, handsComponent), out var emptyHand))
                     {
                         handsSystem.TryPickup(entity, cdUid, emptyHand, checkActionBlocker: false, handsComp: handsComponent);
                     }

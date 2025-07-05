@@ -10,6 +10,7 @@ using Content.Shared.Ame.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Mind.Components;
+using Content.Shared.NodeContainer;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -106,7 +107,12 @@ public sealed class AmeControllerSystem : EntitySystem
                 var powerOutput = group.InjectFuel(availableInject, out var overloading);
                 if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                     powerOutlet.MaxSupply = powerOutput;
+
                 fuelContainer.FuelAmount -= availableInject;
+
+                // Dirty for the sake of the AME fuel examine not mispredicting
+                Dirty(controller.FuelSlot.Item.Value, fuelContainer);
+
                 // only play audio if we actually had an injection
                 if (availableInject > 0)
                     _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
@@ -240,7 +246,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
 
         var humanReadableState = value ? "Inject" : "Not inject";
-        _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{EntityManager.ToPrettyString(user.Value):player} has set the AME to {humanReadableState}");
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user.Value):player} has set the AME to {humanReadableState}");
     }
 
     public void ToggleInjecting(EntityUid uid, EntityUid? user = null, AmeControllerComponent? controller = null)
@@ -267,27 +273,15 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
 
         var humanReadableState = controller.Injecting ? "Inject" : "Not inject";
-        _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{EntityManager.ToPrettyString(user.Value):player} has set the AME to inject {controller.InjectionAmount} while set to {humanReadableState}");
 
-        /* This needs to be information which an admin is very likely to want to be informed about in order to be an admin alert or have a sound notification.
-        At the time of editing, players regularly "overclock" the AME and those cases require no admin attention.
 
-        // Admin alert
         var safeLimit = int.MaxValue;
         if (TryGetAMENodeGroup(uid, out var group))
             safeLimit = group.CoreCount * 4;
 
-        if (oldValue <= safeLimit && value > safeLimit)
-        {
-            if (_gameTiming.CurTime > controller.EffectCooldown)
-            {
-                _chatManager.SendAdminAlert(user.Value, $"increased AME over safe limit to {controller.InjectionAmount}");
-                _audioSystem.PlayGlobal("/Audio/Misc/adminlarm.ogg",
-                    Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
-                controller.EffectCooldown = _gameTiming.CurTime + controller.CooldownDuration;
-            }
-        }
-        */
+        var logImpact = (oldValue <= safeLimit && value > safeLimit) ? LogImpact.Extreme : LogImpact.Medium;
+
+        _adminLogger.Add(LogType.Action, logImpact, $"{ToPrettyString(user.Value):player} has set the AME to inject {controller.InjectionAmount} while set to {humanReadableState}");
     }
 
     public void AdjustInjectionAmount(EntityUid uid, int delta, EntityUid? user = null, AmeControllerComponent? controller = null)

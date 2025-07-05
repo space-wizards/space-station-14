@@ -4,10 +4,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
-using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
-using Content.Shared.Info;
 using Content.Shared.Players;
 using Robust.Server.Console;
 using Robust.Server.Player;
@@ -108,7 +106,7 @@ namespace Content.Server.Administration.Managers
                 // The DB function handles this scenario fine, but it's worth noting.
                 await _dbManager.UpdateAdminDeadminnedAsync(player.UserId, newState);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 _sawmill.Error("Failed to save deadmin state to database for {Admin}", player.UserId);
             }

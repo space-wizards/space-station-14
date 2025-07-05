@@ -1,0 +1,117 @@
+# Non-machine boards, non-computer boards
+# Base categories
+
+- type: latheRecipe
+  abstract: true
+  id: BaseCircuitryRecipeCategory
+  categories:
+  - Circuitry
+
+- type: latheRecipe
+  abstract: true
+  id: BaseMechRecipeCategory
+  categories:
+  - Mech
+
+## Recipes
+
+# Misc
+- type: latheRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: FreezerElectronics
+  result: FreezerElectronics
+
+- type: latheRecipe
+  parent: [ BaseElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: MailingUnitElectronics
+  result: MailingUnitElectronics
+
+# Airtight
+- type: latheRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: FirelockElectronics
+  result: FirelockElectronics
+
+- type: latheRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: DoorElectronics
+  result: DoorElectronics
+
+# Power
+- type: latheRecipe
+  parent: [ BaseCheapCircuitboardRecipe, BaseCircuitryRecipeCategory ]
+  id: APCElectronics
+  result: APCElectronics
+
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseCircuitryRecipeCategory ]
+  id: SolarTrackerElectronics
+  result: SolarTrackerElectronics
+
+# Wallmount power
+- type: latheRecipe
+  parent: [ BaseCircuitboardRecipe, BaseCircuitryRecipeCategory ]
+  id: WallmountSubstationElectronics
+  result: WallmountSubstationElectronics
+
+# Wallmount
+- type: latheRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: StationMapElectronics
+  result: StationMapCircuitboard
+
+- type: latheRecipe
+  parent: [ BaseCheapElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: SignalTimerElectronics
+  result: SignalTimerElectronics
+
+- type: latheRecipe
+  parent: [ BaseElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: AirAlarmElectronics
+  result: AirAlarmElectronics
+
+- type: latheRecipe
+  parent: [ BaseElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: IntercomElectronics
+  result: IntercomElectronics
+
+- type: latheRecipe
+  parent: [ BaseElectronicsRecipe, BaseCircuitryRecipeCategory ]
+  id: FireAlarmElectronics
+  result: FireAlarmElectronics
+
+# Mechs
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMechRecipeCategory ]
+  id: RipleyCentralElectronics
+  result: RipleyCentralElectronics
+
+- type: latheRecipe
+  parent: RipleyCentralElectronics
+  id: RipleyPeripheralsElectronics
+  result: RipleyPeripheralsElectronics
+
+- type: latheRecipe
+  parent: [ BaseBananiumCircuitboardRecipe, BaseMechRecipeCategory ]
+  id: HonkerCentralElectronics
+  result: HonkerCentralElectronics
+
+- type: latheRecipe
+  parent: HonkerCentralElectronics
+  id: HonkerPeripheralsElectronics
+  result: HonkerPeripheralsElectronics
+
+- type: latheRecipe
+  parent: HonkerCentralElectronics
+  id: HonkerTargetingElectronics
+  result: HonkerTargetingElectronics
+
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMechRecipeCategory]
+  id: HamtrCentralElectronics
+  result: HamtrCentralElectronics
+
+- type: latheRecipe
+  parent: HamtrCentralElectronics
+  id: HamtrPeripheralsElectronics
+  result: HamtrPeripheralsElectronics

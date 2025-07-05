@@ -11,8 +11,7 @@ namespace Content.Shared.Damage.Prototypes
     ///     These groups can be used to specify supported damage types of a <see cref="DamageContainerPrototype"/>, or
     ///     to change/get/set damage in a <see cref="DamageableComponent"/>.
     /// </remarks>
-    [Prototype("damageGroup", 2)]
-    [Serializable, NetSerializable]
+    [Prototype(2)]
     public sealed partial class DamageGroupPrototype : IPrototype
     {
         [IdDataField] public string ID { get; private set; } = default!;
