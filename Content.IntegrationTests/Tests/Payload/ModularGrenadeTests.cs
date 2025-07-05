@@ -1,5 +1,6 @@
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Explosion.Components;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Explosion.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -8,14 +9,11 @@ namespace Content.IntegrationTests.Tests.Payload;
 
 public sealed class ModularGrenadeTests : InteractionTest
 {
-    public const string Trigger = "TimerTrigger";
+    public const string TimerTrigger = "TimerTrigger";
+    public const string SignalTrigger = "SignalTrigger";
     public const string Payload = "ExplosivePayload";
 
-    /// <summary>
-    /// Test that a modular grenade can be fully crafted and detonated.
-    /// </summary>
-    [Test]
-    public async Task AssembleAndDetonateGrenade()
+    private async Task AssembleBase()
     {
         await PlaceInHands(Steel, 5);
         await CraftItem("ModularGrenadeRecipe");
@@ -23,22 +21,10 @@ public sealed class ModularGrenadeTests : InteractionTest
 
         await Drop();
         await InteractUsing(Cable);
+    }
 
-        // Insert & remove trigger
-        AssertComp<OnUseTimerTriggerComponent>(false);
-        await InteractUsing(Trigger);
-        AssertComp<OnUseTimerTriggerComponent>();
-        await FindEntity(Trigger, LookupFlags.Uncontained, shouldSucceed: false);
-        await InteractUsing(Pry);
-        AssertComp<OnUseTimerTriggerComponent>(false);
-
-        // Trigger was dropped to floor, not deleted.
-        await FindEntity(Trigger, LookupFlags.Uncontained);
-
-        // Re-insert
-        await InteractUsing(Trigger);
-        AssertComp<OnUseTimerTriggerComponent>();
-
+    private async Task PayloadCycle()
+    {
         // Insert & remove payload.
         await InteractUsing(Payload);
         await FindEntity(Payload, LookupFlags.Uncontained, shouldSucceed: false);
@@ -51,6 +37,40 @@ public sealed class ModularGrenadeTests : InteractionTest
         ent = await FindEntity(Payload);
         var sys = SEntMan.System<SharedContainerSystem>();
         Assert.That(sys.IsEntityInContainer(ent));
+    }
+
+    /// <summary>
+    /// Test that a modular grenade can be fully crafted and detonated.
+    /// </summary>
+    [Test]
+    public async Task AssembleAndDetonateGrenade()
+    {
+        const string trigger = TimerTrigger;
+
+        await AssembleBase();
+
+        void AssertTriggerComponents(bool present = true)
+        {
+            AssertComp<OnUseTimerTriggerComponent>(present);
+        }
+
+        // Insert & remove trigger
+        AssertTriggerComponents(false);
+        await InteractUsing(trigger);
+        AssertTriggerComponents();
+        await FindEntity(trigger, LookupFlags.Uncontained, shouldSucceed: false);
+        await InteractUsing(Pry);
+        AssertTriggerComponents(false);
+
+        // Trigger was dropped to floor, not deleted.
+        await FindEntity(trigger, LookupFlags.Uncontained);
+
+        // Re-insert
+        await InteractUsing(trigger);
+        AssertTriggerComponents();
+
+        // Test insertion and reinsertion of payload
+        await PayloadCycle();
 
         // Activate trigger.
         await Pickup();
@@ -59,6 +79,81 @@ public sealed class ModularGrenadeTests : InteractionTest
 
         // So uhhh grenades in hands don't destroy themselves when exploding. Maybe that will be fixed eventually.
         await Drop();
+
+        // Wait until grenade explodes
+        var timer = Comp<ActiveTimerTriggerComponent>();
+        while (timer.TimeRemaining >= 0)
+        {
+            await RunTicks(10);
+        }
+
+        // Grenade has exploded.
+        await RunTicks(30);
+        AssertDeleted();
+    }
+
+    /// <summary>
+    /// Test that a modular grenade can be fully crafted and detonated with a signal trigger.
+    /// </summary>
+    [Test]
+    public async Task AssembleAndDetonateSignalGrenade()
+    {
+        const string trigger = SignalTrigger;
+
+        await AssembleBase();
+
+        void AssertTriggerComponents(bool present = true)
+        {
+            AssertComp<TriggerOnSignalComponent>(false);
+            AssertComp<TimerStartOnSignalComponent>(present);
+            AssertComp<OnUseTimerTriggerComponent>(present);
+            AssertComp<DeviceLinkSourceComponent>(false);
+            AssertComp<DeviceLinkSinkComponent>(present);
+        }
+
+        // Insert & remove trigger
+        AssertTriggerComponents(false);
+        await InteractUsing(trigger);
+        AssertTriggerComponents();
+        await FindEntity(trigger, LookupFlags.Uncontained, shouldSucceed: false);
+        await InteractUsing(Pry);
+        AssertTriggerComponents(false);
+
+        // Trigger was dropped to floor, not deleted.
+        await FindEntity(trigger, LookupFlags.Uncontained);
+
+        // Re-insert
+        await InteractUsing(trigger);
+        AssertTriggerComponents();
+
+        // Test insertion and reinsertion of payload
+        await PayloadCycle();
+
+        // Prepare signaller
+        await PlaceInHands(RemoteSignaller);
+        if (HandSys.GetActiveItem((ToServer(Player), Hands)) is not { } remoteSignaller)
+        {
+            Assert.Fail("Not holding remote signaller.");
+            return;
+        }
+
+        if (STarget is null)
+        {
+            Assert.Fail("Modular grenade target not found.");
+            return;
+        }
+
+        SDevLink.ToggleLink(
+            null,
+            remoteSignaller,
+            STarget.Value,
+            "Pressed",
+            "Timer");
+
+        // Activate signaller.
+        AssertExists();
+        await UseInHand();
+        await RunTicks(10);
 
         // Wait until grenade explodes
         var timer = Comp<ActiveTimerTriggerComponent>();
