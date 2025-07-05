@@ -21,15 +21,19 @@ namespace Content.Server.Stunnable
 
         private void TryDoCollideStun(EntityUid uid, StunOnCollideComponent component, EntityUid target)
         {
-            _stunSystem.TryStun(target, TimeSpan.FromSeconds(component.StunAmount), true);
+            _stunSystem.TryUpdateStunDuration(target, TimeSpan.FromSeconds(component.StunAmount));
 
-            _stunSystem.TryKnockdown(target, TimeSpan.FromSeconds(component.KnockdownAmount), true);
+            _stunSystem.TryUpdateKnockdownDuration(target, TimeSpan.FromSeconds(component.KnockdownAmount));
 
-            _movementMod.TryModMovement(target,
+            _movementMod.TryUpdateMovementSpeedModDuration(
+                target,
+                MovementModStatusSystem.ProjectileSlowdownProtoId,
                 TimeSpan.FromSeconds(component.SlowdownAmount),
                 component.WalkSpeedMultiplier,
-                component.RunSpeedMultiplier);
+                component.RunSpeedMultiplier
+            );
         }
+
         private void HandleCollide(EntityUid uid, StunOnCollideComponent component, ref StartCollideEvent args)
         {
             if (args.OurFixtureId != component.FixtureID)

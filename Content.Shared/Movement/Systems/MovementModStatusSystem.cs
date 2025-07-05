@@ -1,4 +1,4 @@
-﻿using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
 
@@ -12,7 +12,9 @@ namespace Content.Shared.Movement.Systems;
 /// </summary>
 public sealed class MovementModStatusSystem : EntitySystem
 {
-    public static readonly EntProtoId SlowdownProtoId = "StatusEffectSlowdown";
+    public static readonly EntProtoId PoisonSlowdownProtoId = "PoisonSlowdownStatusEffect";
+    public static readonly EntProtoId ProjectileSlowdownProtoId = "ProjectileSlowdownStatusEffect";
+    public static readonly EntProtoId FlashSlowdownProtoId = "FlashSlowdownStatusEffect";
 
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedStatusEffectsSystem _status = default!;
@@ -23,58 +25,92 @@ public sealed class MovementModStatusSystem : EntitySystem
         SubscribeLocalEvent<MovementModStatusEffectComponent, StatusEffectRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshRelay);
     }
 
-    private void OnMovementModRemoved(Entity<MovementModStatusEffectComponent> entity, ref StatusEffectRemovedEvent args)
+    private void OnMovementModRemoved(Entity<MovementModStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
-        entity.Comp.SprintSpeedModifier = 1f;
-        entity.Comp.WalkSpeedModifier = 1f;
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.Target);
+        TryUpdateMovementStatus(args.Target, (ent, ent), 1f);
     }
 
-    private void OnRefreshRelay(Entity<MovementModStatusEffectComponent> entity,
-        ref StatusEffectRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
+    private void OnRefreshRelay(
+        Entity<MovementModStatusEffectComponent> entity,
+        ref StatusEffectRelayedEvent<RefreshMovementSpeedModifiersEvent> args
+    )
     {
         args.Args.ModifySpeed(entity.Comp.WalkSpeedModifier, entity.Comp.WalkSpeedModifier);
     }
 
     /// <summary>
-    /// Modifies a mob's walking/running speed temporarily
+    /// Modifies mob's walking/running speed temporarily.
     /// </summary>
-    public bool TryModMovement(EntityUid uid,
-        TimeSpan time,
-        float speedModifier,
-        bool refresh = true)
+    /// <param name="uid">Target entity, for which speed should be modified.</param>
+    /// <param name="duration">Duration of speed modifying effect.</param>
+    /// <param name="speedModifier">
+    /// Multiplier by which speed should be modified.
+    /// Will be applied to both walking and running speed.
+    /// </param>
+    /// <param name="refresh">
+    /// Should duration be always set to <see cref="duration"/>,
+    /// or should be set to longest duration between current effect duration and desired.
+    /// </param>
+    /// <returns>True if entity have slowdown effect (applied now or previously and duration was modified).</returns>
+    public bool TryAddMovementSpeedModDuration(
+        EntityUid uid,
+        EntProtoId movSpeedSlot,
+        TimeSpan duration,
+        float speedModifier
+    )
     {
-        return TryModMovement(uid, time, speedModifier, speedModifier, refresh);
+        return TryAddMovementSpeedModDuration(uid, movSpeedSlot, duration, speedModifier, speedModifier);
     }
 
-    /// <summary>
-    /// Modifies a mob's walking/running speed temporarily
-    /// </summary>
-    public bool TryModMovement(EntityUid uid,
-        TimeSpan time,
+    public bool TryUpdateMovementSpeedModDuration(
+        EntityUid uid,
+        EntProtoId movSpeedSlot,
+        TimeSpan duration,
+        float speedModifier
+    )
+    {
+        return TryUpdateMovementSpeedModDuration(uid, movSpeedSlot, duration, speedModifier, speedModifier);
+    }
+
+
+    public bool TryAddMovementSpeedModDuration(
+        EntityUid uid,
+        EntProtoId movSpeedSlot,
+        TimeSpan duration,
         float walkSpeedModifier,
-        float sprintSpeedModifier,
-        bool refresh = true)
+        float sprintSpeedModifier
+    )
     {
-        if (time <= TimeSpan.Zero)
-            return false;
+        return _status.TryAddStatusEffectDuration(uid, movSpeedSlot, out var status, duration)
+               && TryUpdateMovementStatus(uid, status!.Value, walkSpeedModifier, sprintSpeedModifier);
+    }
 
-        return _status.TryUpdateStatusEffectDuration(uid, SlowdownProtoId, out var status, time, refresh)
-               && TryUpdateMovementStatus(uid, status.Value, walkSpeedModifier, sprintSpeedModifier);
+    public bool TryUpdateMovementSpeedModDuration(
+        EntityUid uid,
+        EntProtoId movSpeedSlot,
+        TimeSpan? duration,
+        float walkSpeedModifier,
+        float sprintSpeedModifier
+    )
+    {
+        return _status.TryUpdateStatusEffectDuration(uid, movSpeedSlot, out var status, duration)
+               && TryUpdateMovementStatus(uid, status!.Value, walkSpeedModifier, sprintSpeedModifier);
     }
 
     /// <summary>
-    /// Updates the status entity's <see cref="MovementModStatusEffectComponent"/> modifiers to the inputted values.
+    /// Updates entity's movement speed using <see cref="MovementModStatusEffectComponent"/> to provided values.
     /// Then refreshes the movement speed of the entity.
     /// </summary>
     /// <param name="uid">Entity whose component we're updating</param>
     /// <param name="status">Status effect entity whose modifiers we are updating</param>
     /// <param name="walkSpeedModifier">New walkSpeedModifer we're applying</param>
     /// <param name="sprintSpeedModifier">New sprintSpeedModifier we're applying</param>
-    public bool TryUpdateMovementStatus(EntityUid uid,
+    public bool TryUpdateMovementStatus(
+        EntityUid uid,
         Entity<MovementModStatusEffectComponent?> status,
         float walkSpeedModifier,
-        float sprintSpeedModifier)
+        float sprintSpeedModifier
+    )
     {
         if (!Resolve(status, ref status.Comp))
             return false;
@@ -88,14 +124,20 @@ public sealed class MovementModStatusSystem : EntitySystem
     }
 
     /// <summary>
-    /// An overflow method that takes one speed modifier and applies it to both walk speed and sprint speed.
+    /// Updates entity's movement speed using <see cref="MovementModStatusEffectComponent"/> to provided value.
+    /// Then refreshes the movement speed of the entity.
     /// </summary>
     /// <param name="uid">Entity whose component we're updating</param>
     /// <param name="status">Status effect entity whose modifiers we are updating</param>
-    /// <param name="speedModifier">New walkSpeedModifer we're applying</param>
-    public bool TryUpdateMovementStatus(EntityUid uid,
+    /// <param name="speedModifier">
+    /// Multiplier by which speed should be modified.
+    /// Will be applied to both walking and running speed.
+    /// </param>
+    public bool TryUpdateMovementStatus(
+        EntityUid uid,
         Entity<MovementModStatusEffectComponent?> status,
-        float speedModifier)
+        float speedModifier
+    )
     {
         return TryUpdateMovementStatus(uid, status, speedModifier, speedModifier);
     }

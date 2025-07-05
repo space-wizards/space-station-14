@@ -110,8 +110,8 @@ public abstract class SharedStunSystem : EntitySystem
         if (_entityWhitelist.IsBlacklistPass(ent.Comp.Blacklist, args.OtherEntity))
             return;
 
-        TryStun(args.OtherEntity, ent.Comp.Duration, true);
-        TryKnockdown(args.OtherEntity, ent.Comp.Duration, true);
+        TryUpdateStunDuration(args.OtherEntity, ent.Comp.Duration);
+        TryUpdateKnockdownDuration(args.OtherEntity, ent.Comp.Duration);
     }
 
     private void OnKnockInit(EntityUid uid, KnockedDownComponent component, ComponentInit args)
@@ -131,34 +131,50 @@ public abstract class SharedStunSystem : EntitySystem
     }
 
     // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
-
-    /// <summary>
-    ///     Stuns the entity, disallowing it from doing many interactions temporarily.
-    /// </summary>
-    public bool TryStun(EntityUid uid, TimeSpan time, bool refresh)
+    public bool TryAddStunDuration(EntityUid uid, TimeSpan duration)
     {
-        if (time <= TimeSpan.Zero)
+        if (!_status.TryAddStatusEffectDuration(uid, Stun, duration))
             return false;
 
-        if (!_status.TryUpdateStatusEffectDuration(uid, Stun, time, refresh))
-            return false;
-
-        var ev = new StunnedEvent();
-        RaiseLocalEvent(uid, ref ev);
-
-        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {time.Seconds} seconds");
+        OnStunnedSuccessfully(uid, duration);
         return true;
     }
 
-    /// <summary>
-    ///     Knocks down the entity, making it fall to the ground.
-    /// </summary>
-    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh)
+    public bool TryUpdateStunDuration(EntityUid uid, TimeSpan? duration)
     {
-        if (time <= TimeSpan.Zero)
+        if (!_status.TryUpdateStatusEffectDuration(uid, Stun, duration))
             return false;
 
-        if (!_status.TryUpdateStatusEffectDuration(uid, Knockdown, time, refresh))
+        OnStunnedSuccessfully(uid, duration);
+        return true;
+    }
+
+    private void OnStunnedSuccessfully(EntityUid uid, TimeSpan? duration)
+    {
+        var ev = new StunnedEvent(); // todo: rename event or change how it is raised - this event is raised each time duration of stun was externally changed
+        RaiseLocalEvent(uid, ref ev);
+
+        var timeForLogs = duration.HasValue
+            ? duration.Value.Seconds.ToString()
+            : "Infinite";
+        _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {timeForLogs} seconds");
+    }
+
+    public bool TryAddKnockdownDuration(EntityUid uid, TimeSpan duration)
+    {
+        if (!_status.TryAddStatusEffectDuration(uid, Knockdown, duration))
+            return false;
+
+        var ev = new KnockedDownEvent();
+        RaiseLocalEvent(uid, ref ev);
+
+        return true;
+
+    }
+
+    public bool TryUpdateKnockdownDuration(EntityUid uid, TimeSpan? duration)
+    {
+        if (!_status.TryUpdateStatusEffectDuration(uid, Knockdown, duration))
             return false;
 
         var ev = new KnockedDownEvent();
@@ -167,17 +183,18 @@ public abstract class SharedStunSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    ///     Applies knockdown and stun to the entity temporarily.
-    ///     Returns true if either were successfully applied.
-    /// </summary>
-    public bool TryParalyze(EntityUid uid, TimeSpan time, bool refresh)
+    public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan duration)
     {
-        if (time <= TimeSpan.Zero)
-            return false;
+        var knockdown = TryAddKnockdownDuration(uid, duration);
+        var stunned = TryAddStunDuration(uid, duration);
 
-        var knockdown = TryKnockdown(uid, time, refresh);
-        var stunned = TryStun(uid, time, refresh);
+        return knockdown || stunned;
+    }
+
+    public bool TryUpdateParalyzeDuration(EntityUid uid, TimeSpan? duration)
+    {
+        var knockdown = TryUpdateKnockdownDuration(uid, duration);
+        var stunned = TryUpdateStunDuration(uid, duration);
 
         return knockdown || stunned;
     }

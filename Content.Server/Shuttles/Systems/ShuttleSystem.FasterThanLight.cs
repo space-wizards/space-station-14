@@ -616,7 +616,7 @@ public sealed partial class ShuttleSystem
         {
             foreach (var child in toKnock)
             {
-                _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true);
+                _stuns.TryUpdateParalyzeDuration(child, _hyperspaceKnockdownTime);
 
                 // If the guy we knocked down is on a spaced tile, throw them too
                 if (grid != null)
