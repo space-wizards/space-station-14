@@ -573,7 +573,7 @@ namespace Content.Shared.Containers.ItemSlots
             item = slot.Item;
 
             // This handles user logic
-            if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value))
+            if (user != null && item != null && !_actionBlockerSystem.CanPickup(user.Value, item.Value, out _))
                 return false;
 
             Eject(uid, slot, item!.Value, user, excludeUserAudio);
@@ -695,7 +695,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (!CanEject(uid, args.User, slot))
                     continue;
 
-                if (!_actionBlockerSystem.CanPickup(args.User, slot.Item!.Value))
+                if (!_actionBlockerSystem.CanPickup(args.User, slot.Item!.Value, out _))
                     continue;
 
                 var verbSubject = slot.Name != string.Empty
@@ -736,7 +736,7 @@ namespace Content.Shared.Containers.ItemSlots
                 if (!slot.EjectOnInteract || !CanEject(uid, args.User, slot))
                     continue;
 
-                if (!_actionBlockerSystem.CanPickup(args.User, slot.Item!.Value))
+                if (!_actionBlockerSystem.CanPickup(args.User, slot.Item!.Value, out _))
                     continue;
 
                 var verbSubject = slot.Name != string.Empty

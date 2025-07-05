@@ -1,4 +1,5 @@
 using Content.Shared.IdentityManagement;
+using Content.Shared.Item;
 using Content.Shared.Lube;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
@@ -21,7 +22,7 @@ public sealed class LubedSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<LubedComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<LubedComponent, ContainerGettingInsertedAttemptEvent>(OnHandPickUp);
+        SubscribeLocalEvent<LubedComponent, GettingPickedUpAttemptEvent>(OnGettingPickedUp);
         SubscribeLocalEvent<LubedComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
     }
 
@@ -30,21 +31,27 @@ public sealed class LubedSystem : EntitySystem
         _nameMod.RefreshNameModifiers(uid);
     }
 
-    private void OnHandPickUp(EntityUid uid, LubedComponent component, ContainerGettingInsertedAttemptEvent args)
+    private void OnGettingPickedUp(Entity<LubedComponent> ent, ref GettingPickedUpAttemptEvent args)
     {
-        if (component.SlipsLeft <= 0)
+        if (!args.PhysicalAttempt)
+            return;
+
+        if (ent.Comp.SlipsLeft <= 0)
         {
-            RemComp<LubedComponent>(uid);
-            _nameMod.RefreshNameModifiers(uid);
+            RemComp<LubedComponent>(ent);
+            _nameMod.RefreshNameModifiers(ent.Owner);
             return;
         }
-        component.SlipsLeft--;
+
         args.Cancel();
-        var user = args.Container.Owner;
-        _transform.SetCoordinates(uid, Transform(user).Coordinates);
-        _transform.AttachToGridOrMap(uid);
-        _throwing.TryThrow(uid, _random.NextVector2(), baseThrowSpeed: component.SlipStrength);
-        _popup.PopupEntity(Loc.GetString("lube-slip", ("target", Identity.Entity(uid, EntityManager))), user, user, PopupType.MediumCaution);
+        ent.Comp.SlipsLeft--;
+        _transform.SetCoordinates(ent, Transform(args.User).Coordinates);
+        _transform.AttachToGridOrMap(ent);
+        _throwing.TryThrow(ent, _random.NextVector2(), baseThrowSpeed: ent.Comp.SlipStrength);
+        _popup.PopupEntity(Loc.GetString("lube-slip", ("target", Identity.Entity(ent, EntityManager))),
+            args.User,
+            args.User,
+            PopupType.MediumCaution);
     }
 
     private void OnRefreshNameModifiers(Entity<LubedComponent> entity, ref RefreshNameModifiersEvent args)

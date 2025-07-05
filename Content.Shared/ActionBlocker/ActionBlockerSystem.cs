@@ -167,16 +167,30 @@ namespace Content.Shared.ActionBlocker
             return !ev.Cancelled;
         }
 
-        public bool CanPickup(EntityUid user, EntityUid item)
+        /// <summary>
+        /// Whether or not an item is able to be picked up.
+        /// </summary>
+        /// <param name="user">The user picking up the item.</param>
+        /// <param name="item">The item being picked up.</param>
+        /// <param name="reason">
+        /// If the item cannot be picked up, a localized string describing why, suitable for display.
+        /// </param>
+        /// <param name="physicalAttempt">
+        /// Whether or not this is from a physical interaction, and therefore may lead to side effects occuring. (Such
+        /// as items slipping out of hands.)
+        /// </param>
+        public bool CanPickup(EntityUid user, EntityUid item, out string? reason, bool physicalAttempt = false)
         {
-            var userEv = new PickupAttemptEvent(user, item);
+            var userEv = new PickupAttemptEvent(user, item, physicalAttempt);
             RaiseLocalEvent(user, userEv);
+            reason = userEv.Reason;
 
             if (userEv.Cancelled)
                 return false;
 
-            var itemEv = new GettingPickedUpAttemptEvent(user, item);
+            var itemEv = new GettingPickedUpAttemptEvent(user, item, physicalAttempt);
             RaiseLocalEvent(item, itemEv);
+            reason = itemEv.Reason;
 
             return !itemEv.Cancelled;
         }
