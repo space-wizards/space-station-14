@@ -5,6 +5,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Map;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Movement.Systems;
 
@@ -13,12 +14,11 @@ public sealed partial class EyeCursorOffsetSystem : EntitySystem
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IClyde _clyde = default!;
 
     // This value is here to make sure the user doesn't have to move their mouse
     // all the way out to the edge of the screen to get the full offset.
-    static private float _edgeOffset = 0.9f;
+    private readonly float _edgeOffset = 0.9f;
 
     public override void Initialize()
     {
@@ -40,15 +40,14 @@ public sealed partial class EyeCursorOffsetSystem : EntitySystem
     {
         var localPlayer = _player.LocalEntity;
         var mousePos = _inputManager.MouseScreenPosition;
-        var screenSize = _clyde.MainWindow.Size;
+        var screenControl = _eyeManager.MainViewport as Control;
+        var screenSize = screenControl?.PixelSize ?? _clyde.MainWindow.Size;
         var minValue = MathF.Min(screenSize.X / 2, screenSize.Y / 2) * _edgeOffset;
 
         var mouseNormalizedPos = new Vector2(-(mousePos.X - screenSize.X / 2) / minValue, (mousePos.Y - screenSize.Y / 2) / minValue); // X needs to be inverted here for some reason, otherwise it ends up flipped.
 
         if (localPlayer == null)
             return null;
-
-        var playerPos = _transform.GetWorldPosition(localPlayer.Value);
 
         if (component == null)
         {
@@ -74,7 +73,7 @@ public sealed partial class EyeCursorOffsetSystem : EntitySystem
             //Makes the view not jump immediately when moving the cursor fast.
             if (component.CurrentPosition != component.TargetPosition)
             {
-                Vector2 vectorOffset = component.TargetPosition - component.CurrentPosition;
+                var vectorOffset = component.TargetPosition - component.CurrentPosition;
                 if (vectorOffset.Length() > component.OffsetSpeed)
                 {
                     vectorOffset = vectorOffset.Normalized() * component.OffsetSpeed;
