@@ -64,6 +64,9 @@
       - id: WeaponSubMachineGunUzi
       - id: MagazinePistolSubMachineGunUzi
       - id: MagazinePistolSubMachineGunUzi
+      
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledInfiltration
   name: infiltration hardsuit bundle
   description: "Contains the latest in Syndicate chameleon technology, the infiltration hardsuit."
