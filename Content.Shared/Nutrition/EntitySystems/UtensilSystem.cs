@@ -32,24 +32,23 @@ public sealed class UtensilSystem : EntitySystem
         if (ev.Handled || ev.Target == null || !ev.CanReach)
             return;
 
-        var result = TryUseUtensil(ev.User, ev.Target.Value, entity);
-        ev.Handled = result.Handled;
+        ev.Handled = TryUseUtensil(ev.User, ev.Target.Value, entity);
     }
 
-    public (bool Success, bool Handled) TryUseUtensil(EntityUid user, EntityUid target, Entity<UtensilComponent> utensil)
+    public bool TryUseUtensil(EntityUid user, EntityUid target, Entity<UtensilComponent> utensil)
     {
         if (!TryComp(target, out FoodComponent? food))
-            return (false, false);
+            return false;
 
         //Prevents food usage with a wrong utensil
         if ((food.Utensil & utensil.Comp.Types) == 0)
         {
             _popupSystem.PopupClient(Loc.GetString("food-system-wrong-utensil", ("food", target), ("utensil", utensil.Owner)), user, user);
-            return (false, true);
+            return true;
         }
 
         if (!_interactionSystem.InRangeUnobstructed(user, target, popup: true))
-            return (false, true);
+            return true;
 
         return _foodSystem.TryFeed(user, user, target, food);
     }

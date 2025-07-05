@@ -27,6 +27,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Utility;
+using static Content.Shared.Nutrition.EntitySystems.IngestionSystem;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
@@ -66,6 +67,7 @@ public sealed class FoodSystem : EntitySystem
         SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
         SubscribeLocalEvent<FoodComponent, GetVerbsEvent<AlternativeVerb>>(AddEatVerb);
         SubscribeLocalEvent<FoodComponent, ConsumeDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<UnremoveableComponent, EdibleEvent>(OnUnremovableEdible);
         SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
     }
 
@@ -77,8 +79,7 @@ public sealed class FoodSystem : EntitySystem
         if (ev.Handled)
             return;
 
-        var result = TryFeed(ev.User, ev.User, entity, entity.Comp);
-        ev.Handled = result.Handled;
+        ev.Handled = TryFeed(ev.User, ev.User, entity, entity.Comp);
     }
 
     /// <summary>
@@ -89,47 +90,63 @@ public sealed class FoodSystem : EntitySystem
         if (args.Handled || args.Target == null || !args.CanReach)
             return;
 
-        var result = TryFeed(args.User, args.Target.Value, entity, entity.Comp);
-        args.Handled = result.Handled;
+        args.Handled = TryFeed(args.User, args.Target.Value, entity, entity.Comp);
     }
 
     /// <summary>
-    /// Tries to feed the food item to the target entity
+    /// Tries to feed the food item to the target entity.
     /// </summary>
-    public (bool Success, bool Handled) TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
+    /// <returns> Returns false if nothing happened, and true if something happened even if it wasn't feeding.</returns>
+    public bool TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
     {
+        var foodEv = new EdibleEvent();
+        RaiseLocalEvent(food, ref foodEv);
+
+        if (foodEv.Cancelled)
+            return false;
+
+        if (IsMouthBlocked(target, user))
+            return true;
+
+        var ingestionEv = new TryIngestEvent()
+        {
+            Ingested = food
+        };
+        //if (!ingestionEv.Handled)
+            //return false;
+
         //Suppresses eating yourself and alive mobs
         if (food == user || (_mobState.IsAlive(food) && foodComp.RequireDead))
-            return (false, false);
+            return false;
 
         // Target can't be fed or they're already eating
         if (!TryComp<BodyComponent>(target, out var body))
-            return (false, false);
+            return false;
 
-        if (HasComp<UnremoveableComponent>(food))
-            return (false, false);
+        //if (HasComp<UnremoveableComponent>(food))
+            //return false;
 
         if (_openable.IsClosed(food, user, predicted: true))
-            return (false, true);
+            return false;
 
         if (!_solutionContainer.TryGetSolution(food, foodComp.Solution, out _, out var foodSolution))
-            return (false, false);
+            return false;
 
         if (!_body.TryGetBodyOrganEntityComps<StomachComponent>((target, body), out var stomachs))
-            return (false, false);
+            return false;
 
         // Check for special digestibles
         if (!IsDigestibleBy(food, foodComp, stomachs))
-            return (false, false);
+            return false;
 
         if (!TryGetRequiredUtensils(user, foodComp, out _))
-            return (false, false);
+            return false;
 
         // Check for used storage on the food item
         if (TryComp<StorageComponent>(food, out var storageState) && storageState.Container.ContainedEntities.Any())
         {
             _popup.PopupClient(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
-            return (false, true);
+            return false;
         }
 
         // Checks for used item slots
@@ -138,7 +155,7 @@ public sealed class FoodSystem : EntitySystem
             if (itemSlots.Slots.Any(slot => slot.Value.HasItem))
             {
                 _popup.PopupClient(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
-                return (false, true);
+                return true;
             }
         }
 
@@ -148,24 +165,15 @@ public sealed class FoodSystem : EntitySystem
         {
             _popup.PopupClient(Loc.GetString("food-system-try-use-food-is-empty", ("entity", food)), user, user);
             DeleteAndSpawnTrash(foodComp, food, user);
-            return (false, true);
+            return true;
         }
-
-        if (IsMouthBlocked(target, user))
-            return (false, true);
-
-        if (!_interaction.InRangeUnobstructed(user, food, popup: true))
-            return (false, true);
-
-        if (!_interaction.InRangeUnobstructed(user, target, MaxFeedDistance, popup: true))
-            return (false, true);
 
         // TODO make do-afters account for fixtures in the range check.
         if (!_transform.GetMapCoordinates(user).InRange(_transform.GetMapCoordinates(target), MaxFeedDistance))
         {
             var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
             _popup.PopupClient(message, user, user);
-            return (false, true);
+            return true;
         }
 
         var forceFeed = user != target;
@@ -203,7 +211,7 @@ public sealed class FoodSystem : EntitySystem
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
-        return (true, true);
+        return true;
     }
 
     private void OnDoAfter(Entity<FoodComponent> entity, ref ConsumeDoAfterEvent args)
@@ -225,10 +233,6 @@ public sealed class FoodSystem : EntitySystem
 
         // TODO this should really be checked every tick.
         if (IsMouthBlocked(args.Target.Value))
-            return;
-
-        // TODO this should really be checked every tick.
-        if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
             return;
 
         var forceFeed = args.User != args.Target;
@@ -266,7 +270,7 @@ public sealed class FoodSystem : EntitySystem
         }
 
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
-        _stomach.TryTransferSolution(stomachToUse!.Value.Owner, split, stomachToUse);
+        _stomach.TryTransferSolution(stomachToUse.Value.Owner, split, stomachToUse);
 
         var flavors = args.FlavorMessage;
 
@@ -549,5 +553,17 @@ public sealed class FoodSystem : EntitySystem
             return 1;
 
         return Math.Max(1, (int) Math.Ceiling((solution.Volume / (FixedPoint2) comp.TransferAmount).Float()));
+    }
+
+    private void OnUnremovableEdible(Entity<UnremoveableComponent> entity, ref EdibleEvent args)
+    {
+        // If we can't remove it we probably shouldn't be able to eat it.
+        // TODO: Separate glue and Unremovable component.
+        args.Cancelled = true;
+    }
+
+    private void OnEdible(Entity<FoodComponent> entity, ref EdibleEvent args)
+    {
+
     }
 }
