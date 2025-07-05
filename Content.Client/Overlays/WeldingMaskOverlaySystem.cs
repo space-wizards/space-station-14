@@ -14,6 +14,7 @@ public sealed partial class WeldingMaskOverlaySystem : EquipmentHudSystem<Weldin
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+    public static readonly ProtoId<ShaderPrototype> RectangleShader = "GradientRectangleMask";
     private RectangleOverlay _overlay = new();
 
     public override void Initialize()
@@ -39,7 +40,7 @@ public sealed partial class WeldingMaskOverlaySystem : EquipmentHudSystem<Weldin
             values.OuterAlpha = comp.OuterAlpha;
             values.InnerAlpha = comp.InnerAlpha;
 
-            _overlay.RectangleShaders.Add((_prototypeManager.Index<ShaderPrototype>("GradientRectangleMask").InstanceUnique(), values));
+            _overlay.RectangleShaders.Add((_prototypeManager.Index(RectangleShader).InstanceUnique(), values));
         }
 
         _overlayMan.AddOverlay(_overlay);
