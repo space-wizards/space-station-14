@@ -2,6 +2,7 @@ using Content.Server.Body.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -18,7 +19,8 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Body.Systems
 {
-    public sealed class MetabolizerSystem : EntitySystem
+    /// <inheritdoc/>
+    public sealed class MetabolizerSystem : SharedMetabolizerSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

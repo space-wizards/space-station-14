@@ -27,7 +27,7 @@ namespace Content.Shared.Body.Systems
 
         private void OnMapInit(Entity<StomachComponent> ent, ref MapInitEvent args)
         {
-            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+            ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
         }
 
         private void OnUnpaused(Entity<StomachComponent> ent, ref EntityUnpausedEvent args)
@@ -53,7 +53,7 @@ namespace Content.Shared.Body.Systems
                 if (_gameTiming.CurTime < stomach.NextUpdate)
                     continue;
 
-                stomach.NextUpdate += stomach.UpdateInterval;
+                stomach.NextUpdate += stomach.AdjustedUpdateInterval;
 
                 // Get our solutions
                 if (!_solutionContainerSystem.ResolveSolution((uid, sol), DefaultSolutionName, ref stomach.Solution, out var stomachSolution))
@@ -67,7 +67,7 @@ namespace Content.Shared.Body.Systems
                 var queue = new RemQueue<StomachComponent.ReagentDelta>();
                 foreach (var delta in stomach.ReagentDeltas)
                 {
-                    delta.Increment(stomach.UpdateInterval);
+                    delta.Increment(stomach.AdjustedUpdateInterval);
                     if (delta.Lifetime > stomach.DigestionDelay)
                     {
                         if (stomachSolution.TryGetReagent(delta.ReagentQuantity.Reagent, out var reagent))

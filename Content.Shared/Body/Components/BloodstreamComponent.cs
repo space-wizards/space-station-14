@@ -35,10 +35,10 @@ public sealed partial class BloodstreamComponent : Component
     /// The interval at which this component updates.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan BaseUpdateInterval = TimeSpan.FromSeconds(3);
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(3);
 
     /// <summary>
-    /// Multiplier applied to <see cref="BaseUpdateInterval"/> for
+    /// Multiplier applied to <see cref="UpdateInterval"/> for adjusting based on metabolic rate multiplier.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float UpdateIntervalMultiplier = 1f;
@@ -47,7 +47,7 @@ public sealed partial class BloodstreamComponent : Component
     /// Adjusted update interval based off of the multiplier value.
     /// </summary>
     [ViewVariables]
-    public TimeSpan UpdateInterval => BaseUpdateInterval * UpdateIntervalMultiplier;
+    public TimeSpan AdjustedUpdateInterval => UpdateInterval * UpdateIntervalMultiplier;
 
     /// <summary>
     /// How much is this entity currently bleeding?

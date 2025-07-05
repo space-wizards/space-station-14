@@ -43,10 +43,10 @@ namespace Content.Server.Body.Components
         ///     so a full cycle takes twice as long.
         /// </summary>
         [DataField]
-        public TimeSpan BaseUpdateInterval = TimeSpan.FromSeconds(2);
+        public TimeSpan UpdateInterval = TimeSpan.FromSeconds(2);
 
         /// <summary>
-        /// Multiplier applied to <see cref="BaseUpdateInterval"/>
+        /// Multiplier applied to <see cref="UpdateInterval"/> for adjusting based on metabolic rate multiplier.
         /// </summary>
         [DataField]
         public float UpdateIntervalMultiplier = 1f;
@@ -55,7 +55,7 @@ namespace Content.Server.Body.Components
         /// Adjusted update interval based off of the multiplier value.
         /// </summary>
         [ViewVariables]
-        public TimeSpan UpdateInterval => BaseUpdateInterval * UpdateIntervalMultiplier;
+        public TimeSpan AdjustedUpdateInterval => UpdateInterval * UpdateIntervalMultiplier;
 
         /// <summary>
         ///     Saturation level. Reduced by UpdateInterval each tick.

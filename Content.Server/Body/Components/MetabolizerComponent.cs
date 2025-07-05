@@ -27,7 +27,7 @@ namespace Content.Server.Body.Components
         public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
 
         /// <summary>
-        /// Multiplier applied to <see cref="UpdateInterval"/>
+        /// Multiplier applied to <see cref="UpdateInterval"/> for adjusting based on metabolic rate multiplier.
         /// </summary>
         [DataField]
         public float UpdateIntervalMultiplier = 1f;

@@ -56,7 +56,7 @@ public sealed class RespiratorSystem : EntitySystem
 
     private void OnMapInit(Entity<RespiratorComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
     }
 
     private void OnUnpaused(Entity<RespiratorComponent> ent, ref EntityUnpausedEvent args)
@@ -74,12 +74,12 @@ public sealed class RespiratorSystem : EntitySystem
             if (_gameTiming.CurTime < respirator.NextUpdate)
                 continue;
 
-            respirator.NextUpdate += respirator.UpdateInterval;
+            respirator.NextUpdate += respirator.AdjustedUpdateInterval;
 
             if (_mobState.IsDead(uid))
                 continue;
 
-            UpdateSaturation(uid, -(float)respirator.BaseUpdateInterval.TotalSeconds, respirator);
+            UpdateSaturation(uid, -(float)respirator.UpdateInterval.TotalSeconds, respirator);
 
             if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
             {
@@ -227,7 +227,7 @@ public sealed class RespiratorSystem : EntitySystem
                 return false;
         }
 
-        return saturation > ent.Comp.UpdateInterval.TotalSeconds;
+        return saturation > ent.Comp.AdjustedUpdateInterval.TotalSeconds;
     }
 
     public bool TryInhaleGasToBody(Entity<BodyComponent?> entity, GasMixture gas)
@@ -292,7 +292,7 @@ public sealed class RespiratorSystem : EntitySystem
                 return false;
         }
 
-        return saturation > ent.Comp1.UpdateInterval.TotalSeconds;
+        return saturation > ent.Comp1.AdjustedUpdateInterval.TotalSeconds;
     }
 
     /// <summary>

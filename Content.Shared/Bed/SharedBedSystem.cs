@@ -82,27 +82,15 @@ public abstract class SharedBedSystem : EntitySystem
             return;
 
         ent.Comp.Multiplier = 1f / ent.Comp.Multiplier;
+        UpdateMetabolisms(ent.Owner);
         Dirty(ent);
 
-        if (TryComp<StrapComponent>(ent, out var strap))
-        {
-            foreach (var buckledEntity in strap.BuckledEntities)
-            {
-                _metabolizer.UpdateMetabolicMultiplier(buckledEntity);
-            }
-        }
         args.Handled = true;
     }
 
     private void OnPowerChanged(Entity<StasisBedComponent> ent, ref PowerChangedEvent args)
     {
-        if (TryComp<StrapComponent>(ent, out var strap))
-        {
-            foreach (var buckledEntity in strap.BuckledEntities)
-            {
-                _metabolizer.UpdateMetabolicMultiplier(buckledEntity);
-            }
-        }
+        UpdateMetabolisms(ent.Owner);
     }
 
     private void OnStasisGetMetabolicMultiplier(Entity<StasisBedBuckledComponent> ent, ref GetMetabolicMultiplierEvent args)
@@ -117,5 +105,16 @@ public abstract class SharedBedSystem : EntitySystem
             return;
 
         args.Multiplier *= stasis.Multiplier;
+    }
+
+    protected void UpdateMetabolisms(Entity<StrapComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        foreach (var buckledEntity in ent.Comp.BuckledEntities)
+        {
+            _metabolizer.UpdateMetabolicMultiplier(buckledEntity);
+        }
     }
 }
