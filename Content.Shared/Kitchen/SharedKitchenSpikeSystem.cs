@@ -76,7 +76,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         SubscribeLocalEvent<KitchenSpikeHookedComponent, PickupAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<KitchenSpikeHookedComponent, IsEquippingAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<KitchenSpikeHookedComponent, IsUnequippingAttemptEvent>(OnAttempt);
-        SubscribeLocalEvent<KitchenSpikeHookedComponent, InteractionAttemptEvent>(OnInteractionAttempt);
     }
 
     private void OnInit(Entity<KitchenSpikeComponent> ent, ref ComponentInit args)
@@ -199,8 +198,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             ent.Comp.HookDelay + butcherable.ButcherDelay,
             new SpikeHookDoAfterEvent(),
             ent,
-            target: args.Dragged,
-            used: ent)
+            target: args.Dragged)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -333,11 +331,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         args.Cancel();
     }
 
-    private static void OnInteractionAttempt(Entity<KitchenSpikeHookedComponent> ent, ref InteractionAttemptEvent args)
-    {
-        args.Cancelled = true;
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -415,10 +408,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             ent.Comp.UnhookDelay,
             new SpikeUnhookDoAfterEvent(),
             ent,
-            target: target,
-            used: ent)
+            target: target)
         {
-            BreakOnDamage = true,
+            BreakOnDamage = user != target,
             BreakOnMove = true,
         });
     }

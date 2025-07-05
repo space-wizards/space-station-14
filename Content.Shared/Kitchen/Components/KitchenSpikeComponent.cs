@@ -83,7 +83,7 @@ public sealed partial class KitchenSpikeComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Piercing", 0.1 },
+            { "Blunt", 1 }, // Mobs are only gibbed from blunt (at least for now).
         },
     };
 
@@ -98,7 +98,7 @@ public sealed partial class KitchenSpikeComponent : Component
     ///
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(1);
+    public TimeSpan UpdateInterval = TimeSpan.FromSeconds(10);
 
     /// <summary>
     ///
