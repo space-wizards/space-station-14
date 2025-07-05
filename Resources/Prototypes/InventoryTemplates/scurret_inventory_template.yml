@@ -59,3 +59,13 @@
     dependsOnComponents:
     - type: AllowSuitStorage
     displayName: Suit Storage
+  - name: outerClothing
+    slotTexture: suit
+    slotFlags: OUTERCLOTHING
+    stripTime: 6
+    uiWindowPos: 0,3
+    strippingWindowPos: 1,3
+    displayName: Suit
+    whitelist:
+      tags:
+      - ScurretWearable
