@@ -1,6 +1,8 @@
 using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands.Components;
@@ -106,16 +108,32 @@ public sealed partial class HandsComponent : Component
 public partial record struct Hand
 {
     [DataField]
-    public HandLocation Location = HandLocation.Right;
+    public HandLocation Location = HandLocation.Middle;
+
+    [DataField]
+    public LocId? EmptyLabel;
+
+    [DataField]
+    public EntProtoId? EmptyRepresentative;
+
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    [DataField]
+    public EntityWhitelist? Blacklist;
 
     public Hand()
     {
 
     }
 
-    public Hand(HandLocation location)
+    public Hand(HandLocation location, LocId? emptyLabel = null, EntProtoId? emptyRepresentative = null, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
     {
         Location = location;
+        EmptyLabel = emptyLabel;
+        EmptyRepresentative = emptyRepresentative;
+        Whitelist = whitelist;
+        Blacklist = blacklist;
     }
 }
 
