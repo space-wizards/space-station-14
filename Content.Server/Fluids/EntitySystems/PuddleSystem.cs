@@ -43,7 +43,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -94,8 +93,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
         SubscribeLocalEvent<PuddleComponent, SlipEvent>(OnPuddleSlip);
-
-        SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
 
         InitializeTransfers();
     }
@@ -752,20 +749,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     }
 
     #endregion
-
-    public void DoTileReactions(TileRef tileRef, Solution solution)
-    {
-        for (var i = solution.Contents.Count - 1; i >= 0; i--)
-        {
-            var (reagent, quantity) = solution.Contents[i];
-            var proto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
-            var removed = proto.ReactionTile(tileRef, quantity, EntityManager, reagent.Data);
-            if (removed <= FixedPoint2.Zero)
-                continue;
-
-            solution.RemoveReagent(reagent, removed);
-        }
-    }
 
     /// <summary>
     /// Tries to get the relevant puddle entity for a tile.
