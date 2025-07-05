@@ -304,7 +304,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
         // PostgreSQL does not support storing null chars in text values.
         if (message.Contains('\0'))
-            _sawmill.Error($"Null character detected in admin log message '{message}'");
+            _sawmill.Error($"Null character detected in admin log message '{message}'! LogType: {type}, LogImpact: {impact}");
 
         var log = new AdminLog
         {
