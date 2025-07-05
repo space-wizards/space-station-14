@@ -101,7 +101,20 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  id: PoorlyAttachedGlassesBase
+  abstract: true
+  components:
+  - type: PoorlyAttached
+    reattachVerbIcon: Interface/VerbIcons/pickup.svg.192dpi.png
+    reattachVerbText: poorly-attached-reattach-verb-glasses
+    reattachSelfPopupUser: poorly-attached-reattach-self-popup-user-glasses
+    reattachSelfPopupOthers: poorly-attached-reattach-self-popup-others-glasses
+    reattachOtherPopupUser: poorly-attached-reattach-other-popup-user-glasses
+    reattachOtherPopupWearer: poorly-attached-reattach-other-popup-wearer-glasses
+    reattachOtherPopupOthers: poorly-attached-reattach-other-popup-others-glasses
+
+- type: entity
+  parent: [ClothingEyesBase, PoorlyAttachedGlassesBase]
   id: ClothingEyesGlassesJamjar
   name: jamjar glasses
   description: These retro glasses remind you of a simpler time.
@@ -111,6 +124,9 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/jamjar.rsi
   - type: VisionCorrection
+  - type: PoorlyAttached
+    passiveDetachDuration: 3600 # one hour
+    lossPerFall: 0.3
   - type: Tag
     tags:
     - HamsterWearable
