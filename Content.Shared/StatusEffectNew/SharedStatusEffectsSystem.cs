@@ -199,8 +199,10 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         Dirty(target, container);
         Dirty(effect, effectComp);
 
-        var ev = new StatusEffectAppliedEvent(target);
-        RaiseLocalEvent(effect, ref ev);
+        var effEv = new StatusEffectAppliedEvent(target);
+        RaiseLocalEvent(effect, ref effEv);
+        var entEv = new GotStatusEffectRemovedEvent(effect);
+        RaiseLocalEvent(target, ref entEv);
 
         return true;
     }
@@ -228,10 +230,22 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 public readonly record struct StatusEffectAppliedEvent(EntityUid Target);
 
 /// <summary>
+/// Raised against the afflicted entity when a status effect is added.
+/// </summary>
+[ByRefEvent]
+public readonly record struct GotStatusEffectAppliedEvent(EntityUid Effect);
+
+/// <summary>
 /// Calls on effect entity, when a status effect is removed.
 /// </summary>
 [ByRefEvent]
 public readonly record struct StatusEffectRemovedEvent(EntityUid Target);
+
+/// <summary>
+/// Raised against the afflicted entity when a status effect is removed.
+/// </summary>
+[ByRefEvent]
+public readonly record struct GotStatusEffectRemovedEvent(EntityUid Effect);
 
 /// <summary>
 /// Raised on an entity before a status effect is added to determine if adding it should be cancelled.

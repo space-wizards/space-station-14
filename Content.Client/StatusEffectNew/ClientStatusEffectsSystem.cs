@@ -32,8 +32,10 @@ public sealed partial class ClientStatusEffectsSystem : SharedStatusEffectsSyste
         foreach (var effect in toRemove)
         {
             ent.Comp.ActiveStatusEffects.Remove(effect);
-            var ev = new StatusEffectRemovedEvent(ent);
-            RaiseLocalEvent(effect, ref ev);
+            var effEv = new StatusEffectRemovedEvent(ent);
+            RaiseLocalEvent(effect, ref effEv);
+            var entEv = new GotStatusEffectRemovedEvent(effect);
+            RaiseLocalEvent(ent, ref entEv);
         }
 
         foreach (var effect in state.ActiveStatusEffects)
@@ -43,8 +45,10 @@ public sealed partial class ClientStatusEffectsSystem : SharedStatusEffectsSyste
                 continue;
 
             ent.Comp.ActiveStatusEffects.Add(effectUid);
-            var ev = new StatusEffectAppliedEvent(ent);
-            RaiseLocalEvent(effectUid, ref ev);
+            var effEv = new StatusEffectAppliedEvent(ent);
+            RaiseLocalEvent(effectUid, ref effEv);
+            var entEv = new GotStatusEffectAppliedEvent(effectUid);
+            RaiseLocalEvent(ent, ref entEv);
         }
     }
 }

@@ -32,8 +32,6 @@
   category: Disabilities
   components:
     - type: Narcolepsy
-      timeBetweenIncidents: 300, 600
-      durationOfIncident: 10, 30
 
 - type: trait
   id: Unrevivable
