@@ -29,7 +29,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Kitchen;
 
 /// <summary>
-///
+/// Used to butcher some entities like monkeys.
 /// </summary>
 public sealed class SharedKitchenSpikeSystem : EntitySystem
 {
@@ -46,6 +46,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
+    /// <summary>
+    /// List of the spikes that currently have a victim on them.
+    /// </summary>
     private readonly HashSet<EntityUid> _activeSpikes = [];
 
     public override void Initialize()
@@ -70,7 +73,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         SubscribeLocalEvent<KitchenSpikeVictimComponent, ExaminedEvent>(OnVictimExamined);
 
-        // Prevent doing anything while hooked.
+        // Prevent the victim from doing anything while on the spike.
         SubscribeLocalEvent<KitchenSpikeHookedComponent, ChangeDirectionAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<KitchenSpikeHookedComponent, UpdateCanMoveEvent>(OnAttempt);
         SubscribeLocalEvent<KitchenSpikeHookedComponent, UseAttemptEvent>(OnAttempt);
@@ -116,12 +119,9 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnInteractHand(Entity<KitchenSpikeComponent> ent, ref InteractHandEvent args)
     {
-        if (args.Handled)
-            return;
-
         var victim = ent.Comp.BodyContainer.ContainedEntity;
 
-        if (!victim.HasValue || victim == args.User)
+        if (args.Handled || !victim.HasValue)
             return;
 
         _popupSystem.PopupClient(Loc.GetString("butcherable-need-knife",
@@ -137,11 +137,13 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     {
         var victim = ent.Comp.BodyContainer.ContainedEntity;
 
-        if (args.Handled || victim == args.User || !TryComp<ButcherableComponent>(victim, out var butcherable) || butcherable.SpawnedEntities.Count == 0 ||
+        if (args.Handled || !TryComp<ButcherableComponent>(victim, out var butcherable) || butcherable.SpawnedEntities.Count == 0 ||
             !TryComp<MobStateComponent>(victim, out var mobState))
             return;
 
-        if (!HasComp<SharpComponent>(args.Used))
+        args.Handled = true;
+
+        if (!TryComp<SharpComponent>(args.Used, out var sharp))
         {
             _popupSystem.PopupClient(Loc.GetString("butcherable-need-knife",
                     ("target", Identity.Entity(victim.Value, EntityManager))),
@@ -149,13 +151,25 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
                     args.User,
                     PopupType.Medium);
 
-            args.Handled = true;
             return;
         }
 
+        var victimIdentity = Identity.Entity(victim.Value, EntityManager);
+
+        _popupSystem.PopupPredicted(Loc.GetString("comp-kitchen-spike-begin-butcher-self", ("victim", victimIdentity)),
+            Loc.GetString("comp-kitchen-spike-begin-butcher-self", ("user", Identity.Entity(args.User, EntityManager)), ("victim", victimIdentity)),
+            ent,
+            args.User,
+            PopupType.MediumCaution);
+
+        var delay = sharp.ButcherDelayModifier * butcherable.ButcherDelay;
+
+        if (mobState.CurrentState != MobState.Dead)
+            delay += ent.Comp.ButcherDelayAlive;
+
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             args.User,
-            mobState.CurrentState == MobState.Dead ? butcherable.ButcherDelay : butcherable.ButcherDelay + ent.Comp.ButcherDelayAlive,
+            delay,
             new SpikeButcherDoAfterEvent(),
             ent,
             target: victim,
@@ -165,8 +179,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             BreakOnMove = true,
             NeedHand = true,
         });
-
-        args.Handled = true;
     }
 
     private void OnCanDrop(Entity<KitchenSpikeComponent> ent, ref CanDropTargetEvent args)
@@ -198,7 +210,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             args.User,
-            ent.Comp.HookDelay + butcherable.ButcherDelay,
+            ent.Comp.HookDelay,
             new SpikeHookDoAfterEvent(),
             ent,
             target: args.Dragged)
@@ -213,10 +225,10 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnSpikeHookDoAfter(Entity<KitchenSpikeComponent> ent, ref SpikeHookDoAfterEvent args)
     {
-        RemComp<KitchenSpikeHookingComponent>(args.User);
-
         if (args.Handled || args.Cancelled || !args.Target.HasValue)
             return;
+
+        RemComp<KitchenSpikeHookingComponent>(args.User);
 
         if (_containerSystem.Insert(args.Target.Value, ent.Comp.BodyContainer))
         {
@@ -240,10 +252,10 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnSpikeUnhookDoAfter(Entity<KitchenSpikeComponent> ent, ref SpikeUnhookDoAfterEvent args)
     {
-        RemComp<KitchenSpikeUnhookingComponent>(args.User);
-
         if (args.Handled || args.Cancelled || !args.Target.HasValue)
             return;
+
+        RemComp<KitchenSpikeUnhookingComponent>(args.User);
 
         if (_containerSystem.Remove(args.Target.Value, ent.Comp.BodyContainer))
         {
@@ -267,15 +279,20 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnSpikeButcherDoAfter(Entity<KitchenSpikeComponent> ent, ref SpikeButcherDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || !args.Target.HasValue || !args.Used.HasValue)
+        if (args.Handled || args.Cancelled || !args.Target.HasValue || !args.Used.HasValue || !TryComp<ButcherableComponent>(args.Target, out var butcherable))
             return;
 
-        if (!TryComp<ButcherableComponent>(args.Target, out var butcherable) || butcherable.SpawnedEntities.Count == 0)
-            return;
+        var victimIdentity = Identity.Entity(args.Target.Value, EntityManager);
 
+        _popupSystem.PopupPredicted(Loc.GetString("comp-kitchen-spike-butcher-self", ("victim", victimIdentity)),
+            Loc.GetString("comp-kitchen-spike-butcher", ("user", Identity.Entity(args.User, EntityManager)), ("victim", victimIdentity)),
+            ent,
+            args.User,
+            PopupType.MediumCaution);
+
+        // Get a random entry to spawn.
         var index = _random.Next(butcherable.SpawnedEntities.Count);
         var entry = butcherable.SpawnedEntities[index];
-        entry.Amount--;
 
         var uid = PredictedSpawnNextToOrDrop(entry.PrototypeId, ent);
         _metaDataSystem.SetEntityName(uid,
@@ -283,11 +300,19 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
                 ("name", Name(uid)),
                 ("victim", args.Target)));
 
+        // Decrease the amount since we spawned an entity from that entry.
+        entry.Amount--;
+
+        // Remove the entry if its new amount is zero, or update it.
         if (entry.Amount <= 0)
             butcherable.SpawnedEntities.RemoveAt(index);
         else
+        {
             butcherable.SpawnedEntities[index] = entry;
+            Dirty(args.Target.Value, butcherable);
+        }
 
+        // Gib the victim if there is nothing else to butcher.
         if (butcherable.SpawnedEntities.Count == 0)
         {
             _bodySystem.GibBody(args.Target.Value, true);
@@ -304,8 +329,6 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             _logger.Add(LogType.SpikeButcher,
                 LogImpact.Extreme,
                 $"{ToPrettyString(args.User):user} butchered {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
-
-            Dirty(args.Target.Value, butcherable);
         }
 
         _audioSystem.PlayPredicted(ent.Comp.ButcherSound, ent, args.User);
@@ -327,6 +350,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         if (!victim.HasValue)
             return;
 
+        // Show it at the end of the examine so it looks good.
         args.PushMarkup(Loc.GetString("comp-kitchen-spike-hooked", ("victim", Identity.Entity(victim.Value, EntityManager))), -1);
         args.PushMessage(_examineSystem.GetExamineText(victim.Value, args.Examiner), -2);
     }
@@ -344,10 +368,11 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         {
             Text = Loc.GetString("comp-kitchen-spike-unhook-verb"),
             Act = () => TryUnhook(ent, user, victim.Value),
-            Impact = LogImpact.High,
+            Impact = LogImpact.Medium,
         });
     }
 
+    // The victim tries to unhook themselves by moving while hooked to the spike.
     private void OnRelayMovement(Entity<KitchenSpikeComponent> ent, ref ContainerRelayMovementEntityEvent args)
     {
         TryUnhook(ent, args.Entity, args.Entity);
@@ -380,18 +405,18 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
                 continue;
             }
 
-            if (spike.NextUpdate > _gameTiming.CurTime)
+            if (spike.NextDamage > _gameTiming.CurTime)
                 continue;
 
-            spike.NextUpdate += spike.UpdateInterval;
+            spike.NextDamage += spike.DamageInterval;
             Dirty(uid, spike);
 
-            _damageableSystem.TryChangeDamage(spike.BodyContainer.ContainedEntity, spike.UpdateDamage, true);
+            _damageableSystem.TryChangeDamage(spike.BodyContainer.ContainedEntity, spike.TimeDamage, true);
         }
     }
 
     /// <summary>
-    ///
+    /// A helper method to show predicted popups that can be targeted towards yourself or somebody else.
     /// </summary>
     private void ShowPopups(string selfLocMessageSelf,
         string selfLocMessageOthers,
@@ -423,7 +448,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
     }
 
     /// <summary>
-    ///
+    /// Tries to unhook the victim.
     /// </summary>
     private void TryUnhook(Entity<KitchenSpikeComponent> ent, EntityUid user, EntityUid target)
     {

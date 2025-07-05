@@ -22,6 +22,12 @@ comp-kitchen-spike-unhook-self-other = { CAPITALIZE(THE($victim)) } got { REFLEX
 comp-kitchen-spike-unhook-other-self = You got { CAPITALIZE(THE($victim)) } off { THE($hook) }!
 comp-kitchen-spike-unhook-other = { CAPITALIZE(THE($user)) } got { CAPITALIZE(THE($victim)) } off { THE($hook) }!
 
+comp-kitchen-spike-begin-butcher-self = You begin butchering { THE($victim) }!
+comp-kitchen-spike-begin-butcher = { CAPITALIZE(THE($user)) } begins to butcher { THE($victim) }!
+
+comp-kitchen-spike-butcher-self = You butchered { THE($victim) }!
+comp-kitchen-spike-butcher = { CAPITALIZE(THE($user)) } butchered { THE($victim) }!
+
 comp-kitchen-spike-unhook-verb = Unhook
 
 comp-kitchen-spike-hooked = [color=red]{ CAPITALIZE(THE($victim)) } is on this spike![/color]
