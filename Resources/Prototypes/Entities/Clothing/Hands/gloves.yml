@@ -232,7 +232,7 @@
   - type: FingerprintMask
   - type: Thieving
     stripTimeReduction: 1
-    stealthy: true
+    stealthiness: Stealthy
   - type: ToggleClothing
     action: ActionToggleNinjaGloves
     disableOnUnequip: true
@@ -360,19 +360,6 @@
     damageProtection:
       flatReductions:
         Heat: 0 # no protection
-
-- type: entity
-  # Intentionally named after regular gloves, they're meant to be sneaky.
-  # This means they can also be butchered if you need to look un-sus before a very thorough search...
-  parent: ClothingHandsGlovesColorBlack
-  id: ThievingGloves
-  suffix: Thieving
-  components:
-  - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
-  - type: Thieving
-    stripTimeReduction: 1.5
-    stealthy: true
 
 - type: entity
   parent: ClothingHandsGlovesColorWhite
