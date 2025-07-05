@@ -217,6 +217,7 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     /// <param name="playerNetUserId">The player of whom to delete messages</param>
     private void DeletePlayerMessages(NetUserId playerNetUserId)
     {
+        // query to enumerate all entities with a memorycomponent
         var query = EntityQueryEnumerator<ParrotMemoryComponent>();
         while (query.MoveNext(out _, out var memory))
         {
@@ -231,16 +232,21 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     /// <param name="playerNetUserId">The player of whom to delete messages</param>
     private void DeletePlayerMessages(ParrotMemoryComponent memoryComponent, NetUserId playerNetUserId)
     {
+        // this is a sort of expensive operation that is hopefully rare and performed on just a few parrots
+        // with limited memory
         for (var i = 0; i < memoryComponent.SpeechMemories.Count; i++)
         {
             var memory = memoryComponent.SpeechMemories[i];
 
+            // netuserid may be null if the message was learnt from a non-player entity
             if (memory.NetUserId is null)
                 continue;
 
+            // skip if this memory was not learnt from the target user
             if (!memory.NetUserId.Equals(playerNetUserId))
                 continue;
 
+            // order isn't important in this list so we can use the faster means of removing
             memoryComponent.SpeechMemories.RemoveSwap(i);
         }
     }
