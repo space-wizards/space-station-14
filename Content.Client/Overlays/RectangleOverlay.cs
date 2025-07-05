@@ -4,6 +4,9 @@ using Robust.Shared.Enums;
 
 namespace Content.Client.Overlays;
 
+/// <summary>
+/// Overlays a list of gradient rectangles, centered on the user's screen.
+/// </summary>
 public sealed partial class RectangleOverlay : Overlay
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -25,13 +28,14 @@ public sealed partial class RectangleOverlay : Overlay
         if (playerEntity == null)
             return;
 
+        // Zoom is required to ensure it stays consistent in-world
         if (!_entityManager.TryGetComponent<EyeComponent>(playerEntity, out var eye))
             return;
 
         foreach (var (shader, values) in RectangleShaders)
         {
-
             var handle = args.WorldHandle;
+
             shader.SetParameter("zoom", eye.Zoom.X);
             shader.SetParameter("color", values.RectColor);
             shader.SetParameter("outerRectangleWidth", values.OuterRectangleWidth);

@@ -5,6 +5,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
 
+
+/// <summary>
+/// Adds a rectangular shader when wearing a welding mask or similar.
+/// </summary>
 public sealed partial class WeldingMaskOverlaySystem : EquipmentHudSystem<WeldingMaskOverlayComponent>
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
