@@ -1,0 +1,491 @@
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedCrowbar
+  name: crowbar parts
+  description: Needs welding to hold it together.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_crowbar.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: CrowbarImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedCrowbarGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedScrewdriver
+  name: screwdriver parts
+  description: Needs welding to hold it together.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_screwdriver.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ScrewdriverImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedScrewdriverGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedWirecutter
+  name: wirecutter parts
+  description: Needs welding to hold it together.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_wirecutters.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WirecutterImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedWirecutterGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedWrench
+  name: wrench parts
+  description: Needs welding to hold it together.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_wrench.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WrenchImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedWrenchGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedMultitool
+  name: multitool parts
+  description: Needs welding and some patience to put it all together.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_multitool.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: MultitoolImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedMultitoolGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedOmnitool
+  name: improvised omnitool parts
+  description: What are you doing..? Needs.. to be welded.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: OmnitoolImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedOmnitoolGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedForgedOmnitool
+  name: forged omnitool parts
+  description: You are either crazy, or a psychopath. Likely both, needs to be welded.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: OmnitoolForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedOmnitoolGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: HiltWood
+  name: wooden hilt
+  description: People will try to convince you otherwise, but wooden handles are not part of a high-quality sword, nor a knife.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/wooden_hilt.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - HiltWood
+  - type: Construction
+    graph: HiltWoodGraph
+    node: hilt
+
+- type: entity
+  parent: BaseItem
+  id: HiltPlasteel
+  name: plasteel hilt
+  description: Part of high-quality sword & knife crafting.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/plasteel_hilt.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - HiltPlasteel
+  - type: Construction
+    graph: HiltPlasteelGraph
+    node: hilt
+
+- type: entity
+  parent: BaseItem
+  id: BladeSteel
+  name: steel blade
+  description: Doesn't look very sharp..
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/steel_blade.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - BladeSteel
+  - type: Construction
+    graph: BladeSteelGraph
+    node: blade
+
+- type: entity
+  parent: BaseItem
+  id: BladePlasteel
+  name: plasteel blade
+  description: Ouch! Just touching the edge can cut you.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/plasteel_blade.rsi
+    state: icon
+  - type: Tag
+    tags:
+    - BladePlasteel
+  - type: Construction
+    graph: BladePlasteelGraph
+    node: blade
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedSwordForged
+  name: forged sword parts
+  description: Simply needs a bit of welding around the edges.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/forged_sword.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: SwordForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: SwordForgedGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedClaymoreForged
+  name: tidebreaker parts
+  description: Simply needs a bit of welding around the edges.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/tidebreaker.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ClaymoreForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ClaymoreForgedGraph
+    node: tool
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedImprovisedShield
+  name: improvised shield parts
+  description: Some assembly required, and welding too.
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/improvised_shield.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ImprovisedShield
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ImprovisedShieldGraph
+    node: shield
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedForgedShieldBuckler
+  name: forged buckler shield parts
+  description: Some assembly required, and welding too.
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/forged_buckler_shield.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ForgedShieldBuckler
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedShieldBucklerGraph
+    node: shield
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedForgedShieldTower
+  name: forged tower shield parts
+  description: Some assembly required, and welding too.
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/forged_tower_shield.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ForgedShieldTower
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedShieldTowerGraph
+    node: shield
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedPaladinShield
+  name: paladin shield parts
+  description: The shield of a true paladin..! In pieces. Needs some welding.
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/paladin_shield.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: PaladinShield
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: PaladinShieldGraph
+    node: shield
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedPaladinShieldGreat
+  name: paladin greatshield parts
+  description: You're either crazy, or want to become a mobile emplacement. Needs a lot of welding..
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/paladin_greatshield.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: PaladinShieldGreat
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: PaladinShieldGreatGraph
+    node: shield
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedClothingOuterArmorImprovised
+  name: improvised vest parts
+  description: Some assembly required, and welding too.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/improvised.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ClothingOuterArmorImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ClothingOuterArmorImprovisedGraph
+    node: vest
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedClothingOuterArmorForged
+  name: forged vest parts
+  description: Some assembly required, and welding too.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/forged.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ClothingOuterArmorForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ClothingOuterArmorForgedGraph
+    node: vest
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedClothingOuterArmorPaladin
+  name: paladin suit parts
+  description: A LOT of assembly required, minimal welding needed. Become the paladin you've always wanted to be!
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/paladin.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ClothingOuterArmorPaladin
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ClothingOuterArmorPaladinGraph
+    node: vest
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedClothingHeadHelmetImprovised
+  name: improvised helmet parts
+  description: Some assembly required, and welding too.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/improvised.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ClothingHeadHelmetImprovised
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ClothingHeadHelmetImprovisedGraph
+    node: helmet
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedClothingHeadHelmetForged
+  name: forged helmet parts
+  description: Some assembly required, and welding too.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/forged.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ClothingHeadHelmetForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ClothingHeadHelmetForgedGraph
+    node: helmet
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedClothingHeadHelmetPaladin
+  name: paladin helmet parts
+  description: No Paladin LARP is good without the helmet! Needs welding.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/paladin.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: ClothingHeadHelmetPaladin
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ClothingHeadHelmetPaladinGraph
+    node: helmet

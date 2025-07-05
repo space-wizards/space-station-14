@@ -1,0 +1,23 @@
+- type: constructionGraph
+  id: SwordMakeshiftGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: sword
+      steps:
+      - material: MetalRod
+        amount: 1
+      - material: Steel
+        amount: 4
+        doAfter: 10
+      - material: Cloth
+        amount: 5
+        doAfter: 5
+      - tag: HiltWood
+        icon:
+          sprite: _Starlight/Objects/Misc/wooden_hilt.rsi
+          state: icon
+        name: crafting-menu-name-WH
+  - node: sword
+    entity: SwordMakeshift
