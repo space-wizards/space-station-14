@@ -40,6 +40,12 @@ namespace Content.Shared.UserInterface
         public bool RequiresComplex = true;
 
         /// <summary>
+        ///     Skips check of <see cref="RequiredItems"/> when item is used in hand.
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public bool AllowUseInHandIfHasRequiredItems = false;
+
+        /// <summary>
         ///     Entities that are required to open this UI.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]

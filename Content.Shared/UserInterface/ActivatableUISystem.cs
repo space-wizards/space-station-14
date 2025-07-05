@@ -127,7 +127,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (component.VerbOnly)
             return;
 
-        if (component.RequiredItems != null)
+        if (component.RequiredItems != null && !component.AllowUseInHandIfHasRequiredItems)
             return;
 
         args.Handled = InteractUI(args.User, uid, component);
@@ -153,9 +153,6 @@ public sealed partial class ActivatableUISystem : EntitySystem
             return;
 
         if (component.VerbOnly)
-            return;
-
-        if (component.RequiredItems == null)
             return;
 
         if (_whitelistSystem.IsWhitelistFail(component.RequiredItems, args.Used))

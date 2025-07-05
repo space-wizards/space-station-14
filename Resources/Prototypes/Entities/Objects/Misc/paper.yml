@@ -56,7 +56,6 @@
   - type: Item
     size: Tiny
   - type: PhysicalComposition
-  - type: ActivatableUIRequiresVision
 
 - type: entity
   name: paper
@@ -79,6 +78,11 @@
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
     requiresComplex: false
+    requiredItems:
+      tags:
+      - Write
+    allowUseInHandIfHasRequiredItems: true
+  - type: ActivatableUIRequiresVision
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:
