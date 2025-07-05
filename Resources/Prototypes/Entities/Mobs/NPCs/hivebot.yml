@@ -11,6 +11,7 @@
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: basic_attack
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
@@ -81,6 +82,7 @@
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: ranged_attack
+  - type: NPCProximitySleep
   - type: HTN
     rootTask:
       task: SimpleRangedHostileCompound
