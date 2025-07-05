@@ -24,7 +24,7 @@ namespace Content.Client.Stack
             Subs.ItemStatus<StackComponent>(ent => new StackStatusControl(ent));
         }
 
-        /// <inheritdoc cref="SharedStackSystem.SetCount"/>
+        /// <inheritdoc />
         public override void SetCount(Entity<StackComponent?> ent, int amount)
         {
             if (!Resolve(ent.Owner, ref ent.Comp))
@@ -32,7 +32,7 @@ namespace Content.Client.Stack
 
             base.SetCount(ent, amount);
 
-            UpdateLingering((ent.Owner, ent.Comp));
+            UpdateLingering(ent!);
 
             // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
             if (ent.Comp.Count <= 0 && !ent.Comp.Lingering)
@@ -64,7 +64,8 @@ namespace Content.Client.Stack
             }
         }
 
-        [Obsolete("Obsolete, Use Entity<T>")]
+        /// <inheritdoc cref="SetCount(Entity{StackComponent?}, int)"/>
+        [Obsolete("Use Entity<T> method instead")]
         public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
         {
             SetCount((uid, component), amount);
@@ -79,7 +80,7 @@ namespace Content.Client.Stack
             if (args.Sprite == null || comp.LayerStates.Count < 1)
                 return;
 
-            // Skip processing if no actual
+            // Skip processing if no elements in the stack
             if (!_appearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual, args.Component))
                 return;
 
@@ -93,13 +94,16 @@ namespace Content.Client.Stack
                 ApplyLayerFunction((uid, comp), ref actual, ref maxCount);
 
             if (comp.IsComposite)
+            {
                 _counterSystem.ProcessCompositeSprite(uid,
                     actual,
                     maxCount,
                     comp.LayerStates,
                     hidden,
                     sprite: args.Sprite);
+            }
             else
+            {
                 _counterSystem.ProcessOpaqueSprite(uid,
                     comp.BaseLayer,
                     actual,
@@ -107,6 +111,7 @@ namespace Content.Client.Stack
                     comp.LayerStates,
                     hidden,
                     sprite: args.Sprite);
+            }
         }
 
         /// <summary>
@@ -115,7 +120,7 @@ namespace Content.Client.Stack
         /// <param name="ent">The entity considered.</param>
         /// <param name="actual">The actual number of items in the stack. Altered depending on the function to run.</param>
         /// <param name="maxCount">The maximum number of items in the stack. Altered depending on the function to run.</param>
-        /// <returns>Whether or not a function was applied.</returns>
+        /// <returns>True if a function was applied.</returns>
         private bool ApplyLayerFunction(Entity<StackComponent> ent, ref int actual, ref int maxCount)
         {
             switch (ent.Comp.LayerFunction)

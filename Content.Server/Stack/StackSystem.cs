@@ -25,7 +25,7 @@ namespace Content.Server.Stack
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
         }
 
-        /// <inheritdoc cref="SharedStackSystem.SetCount"/>
+        /// <inheritdoc />
         public override void SetCount(Entity<StackComponent?> ent, int amount)
         {
             if (!Resolve(ent.Owner, ref ent.Comp, false))
@@ -38,8 +38,8 @@ namespace Content.Server.Stack
                 QueueDel(ent.Owner);
         }
 
-        /// <inheritdoc cref="SharedStackSystem.SetCount"/>
-        [Obsolete("Obsolete, Use Entity<T>")]
+        /// <inheritdoc cref="SetCount(Entity{StackComponent?}, int)"/>
+        [Obsolete("Use Entity<T> method instead")]
         public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
         {
             SetCount((uid, component), amount);
@@ -63,7 +63,7 @@ namespace Content.Server.Stack
                 return null;
 
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
-            var prototype = _prototypeManager.TryIndex<StackPrototype>(ent.Comp.StackTypeId, out var stackType)
+            var prototype = _prototypeManager.TryIndex(ent.Comp.StackTypeId, out var stackType)
                 ? stackType.Spawn.ToString()
                 : Prototype(ent.Owner)?.ID;
 
@@ -87,7 +87,7 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Spawns a stack of a certain stack type and sets its count. Won't set the stack over its max.
         /// </summary>
-        /// <param name="count"> The amount to set the spawned stack to.</param>
+        /// <param name="count">The amount to set the spawned stack to.</param>
         [PublicAPI]
         public EntityUid SpawnAtPosition(int count, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
@@ -100,7 +100,7 @@ namespace Content.Server.Stack
             return entity;
         }
 
-        /// <inheritdoc cref="SpawnAtPosition"/>
+        /// <inheritdoc cref="SpawnAtPosition(int, StackPrototype, EntityCoordinates)"/>
         [PublicAPI]
         public EntityUid SpawnAtPosition(int count, ProtoId<StackPrototype> id, EntityCoordinates spawnPosition)
         {
@@ -117,8 +117,8 @@ namespace Content.Server.Stack
         ///     If the entity to spawn doesn't have stack component this will spawn a bunch of single items.
         /// </remarks>
         private List<EntityUid> SpawnMultipleAtPosition(EntProtoId entityPrototype,
-            List<int> amounts,
-            EntityCoordinates spawnPosition)
+                                                        List<int> amounts,
+                                                        EntityCoordinates spawnPosition)
         {
             if (amounts.Count <= 0)
             {
@@ -138,58 +138,49 @@ namespace Content.Server.Stack
             return spawnedEnts;
         }
 
-        /// <inheritdoc cref="SpawnMultipleAtPosition"/>
+        /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
+        [PublicAPI]
+        public List<EntityUid> SpawnMultipleAtPosition(EntProtoId entityPrototypeId,
+                                                       int amount,
+                                                       EntityCoordinates spawnPosition)
+        {
+            return SpawnMultipleAtPosition(entityPrototypeId,
+                CalculateSpawns(entityPrototypeId, amount),
+                spawnPosition);
+        }
+
+        /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
         [PublicAPI]
         public List<EntityUid> SpawnMultipleAtPosition(EntityPrototype entityProto,
-            int amount,
-            EntityCoordinates spawnPosition)
+                                                       int amount,
+                                                       EntityCoordinates spawnPosition)
         {
             return SpawnMultipleAtPosition(entityProto.ID, CalculateSpawns(entityProto, amount), spawnPosition);
         }
 
-        /// <inheritdoc cref="SpawnMultipleAtPosition"/>
-        [PublicAPI]
-        public List<EntityUid> SpawnMultipleAtPosition(EntProtoId entityPrototypeID,
-            int amount,
-            EntityCoordinates spawnPosition)
-        {
-            return SpawnMultipleAtPosition(entityPrototypeID,
-                CalculateSpawns(entityPrototypeID, amount),
-                spawnPosition);
-        }
-
-        /// <inheritdoc cref="SpawnMultipleAtPosition"/>
+        /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
         [PublicAPI]
         public List<EntityUid> SpawnMultipleAtPosition(StackPrototype stack,
-            int amount,
-            EntityCoordinates spawnPosition)
+                                                       int amount,
+                                                       EntityCoordinates spawnPosition)
         {
             return SpawnMultipleAtPosition(stack.Spawn, CalculateSpawns(stack, amount), spawnPosition);
         }
 
-        /// <inheritdoc cref="SpawnMultipleAtPosition"/>
+        /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
         [PublicAPI]
-        public List<EntityUid> SpawnMultipleAtPosition(ProtoId<StackPrototype> stackID,
-            int amount,
-            EntityCoordinates spawnPosition)
+        public List<EntityUid> SpawnMultipleAtPosition(ProtoId<StackPrototype> stackId,
+                                                       int amount,
+                                                       EntityCoordinates spawnPosition)
         {
-            var stackProto = _prototypeManager.Index<StackPrototype>(stackID);
+            var stackProto = _prototypeManager.Index(stackId);
             return SpawnMultipleAtPosition(stackProto.Spawn, CalculateSpawns(stackProto, amount), spawnPosition);
         }
 
         #endregion
-
         #region SpawnNextToOrDrop
 
-        /// <inheritdoc cref="SpawnAtPosition"/>
-        [PublicAPI]
-        public EntityUid SpawnNextToOrDrop(int amount, ProtoId<StackPrototype> id, EntityUid source)
-        {
-            var proto = _prototypeManager.Index(id);
-            return SpawnNextToOrDrop(amount, proto, source);
-        }
-
-        /// <inheritdoc cref="SpawnAtPosition"/>
+        /// <inheritdoc cref="SpawnAtPosition(int, StackPrototype, EntityCoordinates)"/>
         [PublicAPI]
         public EntityUid SpawnNextToOrDrop(int amount, StackPrototype prototype, EntityUid source)
         {
@@ -201,10 +192,18 @@ namespace Content.Server.Stack
             return entity;
         }
 
-        /// <inheritdoc cref="SpawnMultipleAtPosition"/>
+        /// <inheritdoc cref="SpawnNextToOrDrop(int, StackPrototype, EntityUid)"/>
+        [PublicAPI]
+        public EntityUid SpawnNextToOrDrop(int amount, ProtoId<StackPrototype> id, EntityUid source)
+        {
+            var proto = _prototypeManager.Index(id);
+            return SpawnNextToOrDrop(amount, proto, source);
+        }
+
+        /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
         private List<EntityUid> SpawnMultipleNextToOrDrop(EntProtoId entityPrototype,
-            List<int> amounts,
-            EntityUid target)
+                                                          List<int> amounts,
+                                                          EntityUid target)
         {
             if (amounts.Count <= 0)
             {
@@ -224,37 +223,44 @@ namespace Content.Server.Stack
             return spawnedEnts;
         }
 
-        /// <inheritdoc cref="SpawnMultipleNextToOrDrop"/>
+        /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, List{int}, EntityUid)"/>
         [PublicAPI]
-        public List<EntityUid> SpawnMultipleNextToOrDrop(EntityPrototype stack, int amount, EntityUid target)
-        {
-            return SpawnMultipleNextToOrDrop(stack.ID, CalculateSpawns(stack, amount), target);
-        }
-
-        /// <inheritdoc cref="SpawnMultipleNextToOrDrop"/>
-        [PublicAPI]
-        public List<EntityUid> SpawnMultipleNextToOrDrop(EntProtoId stack, int amount, EntityUid target)
+        public List<EntityUid> SpawnMultipleNextToOrDrop(EntProtoId stack,
+                                                         int amount,
+                                                         EntityUid target)
         {
             return SpawnMultipleNextToOrDrop(stack, CalculateSpawns(stack, amount), target);
         }
 
-        /// <inheritdoc cref="SpawnMultipleNextToOrDrop"/>
+        /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, List{int}, EntityUid)"/>
         [PublicAPI]
-        public List<EntityUid> SpawnMultipleNextToOrDrop(StackPrototype stack, int amount, EntityUid target)
+        public List<EntityUid> SpawnMultipleNextToOrDrop(EntityPrototype stack,
+                                                         int amount,
+                                                         EntityUid target)
+        {
+            return SpawnMultipleNextToOrDrop(stack.ID, CalculateSpawns(stack, amount), target);
+        }
+
+        /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, List{int}, EntityUid)"/>
+        [PublicAPI]
+        public List<EntityUid> SpawnMultipleNextToOrDrop(StackPrototype stack,
+                                                         int amount,
+                                                         EntityUid target)
         {
             return SpawnMultipleNextToOrDrop(stack.Spawn, CalculateSpawns(stack, amount), target);
         }
 
-        /// <inheritdoc cref="SpawnMultipleNextToOrDrop"/>
+        /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, List{int}, EntityUid)"/>
         [PublicAPI]
-        public List<EntityUid> SpawnMultipleNextToOrDrop(ProtoId<StackPrototype> stackID, int amount, EntityUid target)
+        public List<EntityUid> SpawnMultipleNextToOrDrop(ProtoId<StackPrototype> stackId,
+                                                         int amount,
+                                                         EntityUid target)
         {
-            var stackProto = _prototypeManager.Index<StackPrototype>(stackID);
+            var stackProto = _prototypeManager.Index(stackId);
             return SpawnMultipleNextToOrDrop(stackProto.Spawn, CalculateSpawns(stackProto, amount), target);
         }
 
         #endregion
-
         #region Calculate
 
         /// <summary>
@@ -274,28 +280,26 @@ namespace Content.Server.Stack
             return amounts;
         }
 
-        /// <inheritdoc cref="CalculateSpawns"/>
+        /// <inheritdoc cref="CalculateSpawns(int, int)"/>
         private List<int> CalculateSpawns(StackPrototype stackProto, int amount)
         {
             return CalculateSpawns(GetMaxCount(stackProto), amount);
         }
 
-        /// <inheritdoc cref="CalculateSpawns"/>
+        /// <inheritdoc cref="CalculateSpawns(int, int)"/>
         private List<int> CalculateSpawns(EntityPrototype entityPrototype, int amount)
         {
             return CalculateSpawns(GetMaxCount(entityPrototype), amount);
         }
 
-        /// <inheritdoc cref="CalculateSpawns"/>
+        /// <inheritdoc cref="CalculateSpawns(int, int)"/>
         private List<int> CalculateSpawns(EntProtoId entityId, int amount)
         {
             return CalculateSpawns(GetMaxCount(entityId), amount);
         }
 
         #endregion
-
         #endregion
-
         #region Event Handlers
 
         private void OnStackAlternativeInteract(Entity<StackComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
@@ -303,7 +307,7 @@ namespace Content.Server.Stack
             if (!args.CanAccess || !args.CanInteract || args.Hands == null || ent.Comp.Count == 1)
                 return;
 
-            var (uid, stack) = ent;
+            var (_, stack) = ent;
             var user = args.User; // Can't pass ref events into verbs
 
             AlternativeVerb halve = new()
@@ -354,7 +358,6 @@ namespace Content.Server.Stack
 
             Popup.PopupCursor(Loc.GetString("comp-stack-split"), user.Owner);
         }
-
         #endregion
     }
 }

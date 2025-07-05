@@ -19,7 +19,7 @@ namespace Content.Shared.Stacks
 
         /// <summary>
         /// Current stack count.
-        /// Do NOT set this directly, use the <see cref="SharedStackSystem.SetCount"/> method instead.
+        /// Do NOT set this directly, use a setter method instead.
         /// </summary>
         [DataField]
         public int Count { get; set; } = 30;
@@ -34,7 +34,6 @@ namespace Content.Shared.Stacks
 
         /// <summary>
         /// Set to true to not reduce the count when used.
-        /// Note that <see cref="Count"/> still limits the amount that can be used at any one time.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField]
@@ -51,7 +50,7 @@ namespace Content.Shared.Stacks
         public bool ThrowIndividually { get; set; } = false;
 
         /// <summary>
-        /// Used by <see cref="StackStatusControl"/> to update UI.
+        /// Used by StackStatusControl in client to update UI.
         /// </summary>
         [ViewVariables]
         [Access(typeof(SharedStackSystem), Other = AccessPermissions.ReadWrite)]

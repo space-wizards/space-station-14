@@ -152,7 +152,8 @@ public abstract partial class SharedStackSystem
     }
 
     // TODO remove
-    [Obsolete("Obsolete, Use Entity<T>")]
+    /// <inheritdoc cref="SetCount(Entity{StackComponent?}, int)"/>
+    [Obsolete("Use Entity<T> method instead")]
     public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
     {
         SetCount((uid, component), amount);
