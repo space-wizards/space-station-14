@@ -48,7 +48,6 @@ public sealed class RespiratorSystem : EntitySystem
         // We want to process lung reagents before we inhale new reagents.
         UpdatesAfter.Add(typeof(MetabolizerSystem));
         SubscribeLocalEvent<RespiratorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<RespiratorComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BodyComponent, InhaledGasEvent>(OnGasInhaled);
         SubscribeLocalEvent<BodyComponent, ExhaledGasEvent>(OnGasExhaled);
@@ -57,11 +56,6 @@ public sealed class RespiratorSystem : EntitySystem
     private void OnMapInit(Entity<RespiratorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
-    }
-
-    private void OnUnpaused(Entity<RespiratorComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.NextUpdate += args.PausedTime;
     }
 
     public override void Update(float frameTime)
@@ -227,7 +221,7 @@ public sealed class RespiratorSystem : EntitySystem
                 return false;
         }
 
-        return saturation > ent.Comp.AdjustedUpdateInterval.TotalSeconds;
+        return saturation > ent.Comp.UpdateInterval.TotalSeconds;
     }
 
     public bool TryInhaleGasToBody(Entity<BodyComponent?> entity, GasMixture gas)
@@ -292,7 +286,7 @@ public sealed class RespiratorSystem : EntitySystem
                 return false;
         }
 
-        return saturation > ent.Comp1.AdjustedUpdateInterval.TotalSeconds;
+        return saturation > ent.Comp1.UpdateInterval.TotalSeconds;
     }
 
     /// <summary>
