@@ -8876,4 +8876,11 @@ Entries:
   id: 1224
   time: '2025-07-05T22:53:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/922
+- author: Makeshift
+  changes:
+  - message: Added Elkridge Depot back into the Starlight map pool.
+    type: Add
+  id: 1225
+  time: '2025-07-05T22:53:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/956
 
