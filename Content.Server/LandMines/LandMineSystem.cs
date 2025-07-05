@@ -53,9 +53,7 @@ public sealed class LandMineSystem : EntitySystem
     /// </summary>
     private void HandleStepTriggerAttempt(EntityUid uid, LandMineComponent component, ref StepTriggerAttemptEvent args)
     {
-        args.Continue = true;
-
-        if (HasComp<ArmableComponent>(uid) && TryComp<ItemToggleComponent>(uid, out var itemToggle))
-            args.Continue = itemToggle.Activated;
+        if (HasComp<ArmableComponent>(uid) && TryComp<ItemToggleComponent>(uid, out var itemToggle) && !itemToggle.Activated)
+            args.Cancel();
     }
 }

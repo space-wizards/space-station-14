@@ -44,7 +44,8 @@ public sealed class MousetrapSystem : EntitySystem
 
     private void OnStepTriggerAttempt(EntityUid uid, MousetrapComponent component, ref StepTriggerAttemptEvent args)
     {
-        args.Continue |= component.IsActive;
+        if (!component.IsActive)
+            args.Cancel();
     }
 
     private void BeforeDamageOnTrigger(EntityUid uid, MousetrapComponent component, BeforeDamageUserOnTriggerEvent args)

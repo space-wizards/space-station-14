@@ -55,7 +55,8 @@ public sealed class SlipperySystem : EntitySystem
         SlipperyComponent component,
         ref StepTriggerAttemptEvent args)
     {
-        args.Continue |= CanSlip(uid, args.Tripper);
+        if (!CanSlip(uid, args.Tripper))
+            args.Cancel();
     }
 
     private static void OnNoSlipAttempt(EntityUid uid, NoSlipComponent component, SlipAttemptEvent args)

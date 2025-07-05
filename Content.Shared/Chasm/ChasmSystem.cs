@@ -25,7 +25,6 @@ public sealed class ChasmSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ChasmComponent, StepTriggeredOffEvent>(OnStepTriggered);
-        SubscribeLocalEvent<ChasmComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt);
         SubscribeLocalEvent<ChasmFallingComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
     }
 
@@ -65,11 +64,6 @@ public sealed class ChasmSystem : EntitySystem
 
         if (playSound)
             _audio.PlayPredicted(component.FallingSound, chasm, tripper);
-    }
-
-    private void OnStepTriggerAttempt(EntityUid uid, ChasmComponent component, ref StepTriggerAttemptEvent args)
-    {
-        args.Continue = true;
     }
 
     private void OnUpdateCanMove(EntityUid uid, ChasmFallingComponent component, UpdateCanMoveEvent args)

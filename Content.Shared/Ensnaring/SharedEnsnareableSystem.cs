@@ -49,7 +49,6 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         SubscribeLocalEvent<EnsnareableComponent, EnsnareableDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<EnsnaringComponent, ComponentRemove>(OnComponentRemove);
-        SubscribeLocalEvent<EnsnaringComponent, StepTriggerAttemptEvent>(AttemptStepTrigger);
         SubscribeLocalEvent<EnsnaringComponent, StepTriggeredOffEvent>(OnStepTrigger);
         SubscribeLocalEvent<EnsnaringComponent, ThrowDoHitEvent>(OnThrowHit);
     }
@@ -211,11 +210,6 @@ public abstract class SharedEnsnareableSystem : EntitySystem
 
         if (ensnared.IsEnsnared)
             ForceFree(uid, component);
-    }
-
-    private void AttemptStepTrigger(EntityUid uid, EnsnaringComponent component, ref StepTriggerAttemptEvent args)
-    {
-        args.Continue = true;
     }
 
     private void OnStepTrigger(EntityUid uid, EnsnaringComponent component, ref StepTriggeredOffEvent args)
