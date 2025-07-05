@@ -532,6 +532,33 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("ban_template", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.BasicGameplayMetrics", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("gameplay_metrics_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("MetricData")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("metric_data");
+
+                    b.Property<string>("ServerName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("server_name");
+
+                    b.HasKey("Id")
+                        .HasName("PK_gameplay_metrics");
+
+                    b.ToTable("gameplay_metrics", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Blacklist", b =>
                 {
                     b.Property<Guid>("UserId")
