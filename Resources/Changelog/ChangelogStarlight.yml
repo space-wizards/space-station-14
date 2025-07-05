@@ -8841,4 +8841,11 @@ Entries:
   id: 1219
   time: '2025-07-04T22:14:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/961
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added Cork Outpost (Formerly Silly Island)
+    type: Add
+  id: 1220
+  time: '2025-07-05T22:44:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/966
 
