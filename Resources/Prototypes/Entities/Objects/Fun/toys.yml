@@ -293,6 +293,7 @@
     shape:
     - 0,0,1,0
     - 0,1,0,1
+    storedOffset: -2,-7
     sprite: Objects/Fun/capgun.rsi
   - type: Tag
     tags:

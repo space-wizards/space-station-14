@@ -303,6 +303,7 @@
       shape:
       - 0,0,1,0
       - 0,1,0,1
+      storedOffset: 0,-6
     - type: AmmoCounter
     - type: GrapplingGun
     - type: Gun
