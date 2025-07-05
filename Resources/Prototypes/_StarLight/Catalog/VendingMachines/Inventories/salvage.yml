@@ -356,15 +356,15 @@
   conditions:
   - !type:BuyerAccessCondition
 
-- type: listing
-  id: VendorClothingOuterHardsuitMercenary
-  productEntity: ClothingOuterHardsuitMercenary
-  cost:
-    SalvageTicket: 250
-  categories:
-  - SalvageMercenaryEquipment
-  conditions:
-  - !type:BuyerAccessCondition
+#- type: listing
+#  id: VendorClothingOuterHardsuitMercenary
+#  productEntity: ClothingOuterHardsuitMercenary
+#  cost:
+#    SalvageTicket: 250
+#  categories:
+#  - SalvageMercenaryEquipment
+#  conditions:
+#  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorClothingHeadHelmetMerc
