@@ -37,6 +37,7 @@
     back:
     - RubberStampClown
     - CrayonRainbow
+    - SillyClownGuide
 
 - type: chameleonOutfit
   id: ClownChameleonOutfit
