@@ -36,7 +36,7 @@ public sealed class NarcolepsySystem : EntitySystem
             if (HasComp<SleepingComponent>(uid))
                 return;
 
-            var duration = _random.Next(narcolepsy.MinIncidentDuration, narcolepsy.MaxIncidentDuration);
+            var duration = _random.Next(narcolepsy.IncidentDuration.Min, narcolepsy.IncidentDuration.Max);
             _statusEffects.TryAddStatusEffectDuration(uid, SleepingSystem.StatusEffectForcedSleeping, duration);
             narcolepsy.NarcolepsyInducedSleep = true;
         }
@@ -58,7 +58,7 @@ public sealed class NarcolepsySystem : EntitySystem
 
     private void SetNextIncidentTime(Entity<NarcolepsyComponent> ent)
     {
-        ent.Comp.NextIncidentTime += _random.Next(ent.Comp.MinTimeBetweenIncidents, ent.Comp.MaxTimeBetweenIncidents);
+        ent.Comp.NextIncidentTime += _random.Next(ent.Comp.TimeBetweenIncidents.Min, ent.Comp.TimeBetweenIncidents.Max);
     }
 
     public void AdjustNarcolepsyTimer(EntityUid uid, TimeSpan timerReset, NarcolepsyComponent? narcolepsy = null)

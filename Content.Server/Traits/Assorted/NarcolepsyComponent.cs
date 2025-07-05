@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace Content.Server.Traits.Assorted;
+﻿namespace Content.Server.Traits.Assorted;
 
 /// <summary>
 /// This is used for the narcolepsy trait.
@@ -13,25 +11,13 @@ public sealed partial class NarcolepsyComponent : Component
     /// The minimum time between naps.
     /// </summary>
     [DataField]
-    public TimeSpan MinTimeBetweenIncidents = TimeSpan.FromMinutes(5);
-
-    /// <summary>
-    /// The maximum time between naps.
-    /// </summary>
-    [DataField]
-    public TimeSpan MaxTimeBetweenIncidents = TimeSpan.FromMinutes(10);
+    public (TimeSpan Min, TimeSpan Max) TimeBetweenIncidents = (TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(10));
 
     /// <summary>
     /// The minimum duration that the entity will be unable to wake.
     /// </summary>
     [DataField]
-    public TimeSpan MinIncidentDuration = TimeSpan.FromSeconds(10);
-
-    /// <summary>
-    /// The maximum duration the entity will be unable to wake.
-    /// </summary>
-    [DataField]
-    public TimeSpan MaxIncidentDuration = TimeSpan.FromSeconds(30);
+    public (TimeSpan Min, TimeSpan Max) IncidentDuration = (TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(30));
 
     /// <summary>
     /// The next time a forced sleep will occur.
