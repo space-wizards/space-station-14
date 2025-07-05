@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -29,52 +30,58 @@ public sealed class InteractionPopupSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<InteractionPopupComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<InteractionPopupComponent, ActivateInWorldEvent>(OnActivateInWorld);
+        SubscribeLocalEvent<InteractionPopupComponent, GetVerbsEvent<ActivationVerb>>(AddVerb);
     }
 
     private void OnActivateInWorld(EntityUid uid, InteractionPopupComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!args.Complex)
             return;
 
         if (!component.OnActivate)
             return;
 
-        SharedInteract(uid, component, args, args.Target, args.User);
+        if (SharedInteract(uid, component, args.Target, args.User))
+            args.Handled = true;
     }
 
     private void OnInteractHand(EntityUid uid, InteractionPopupComponent component, InteractHandEvent args)
     {
-        SharedInteract(uid, component, args, args.Target, args.User);
+        if (args.Handled)
+            return;
+
+        if (SharedInteract(uid, component, args.Target, args.User))
+            args.Handled = true;
     }
 
-    private void SharedInteract(
+    private bool SharedInteract(
         EntityUid uid,
         InteractionPopupComponent component,
-        HandledEntityEventArgs args,
         EntityUid target,
         EntityUid user)
     {
-        if (args.Handled || user == target)
-            return;
+        if (user == target)
+            return false;
 
         //Handling does nothing and this thing annoyingly plays way too often.
         // HUH? What does this comment even mean?
 
         if (HasComp<SleepingComponent>(uid))
-            return;
+            return false;
 
         if (TryComp<MobStateComponent>(uid, out var state)
             && !_mobStateSystem.IsAlive(uid, state))
         {
-            return;
+            return false;
         }
-
-        args.Handled = true;
 
         var curTime = _gameTiming.CurTime;
 
         if (curTime < component.LastInteractTime + component.InteractDelay)
-            return;
+            return false;
 
         component.LastInteractTime = curTime;
 
@@ -89,7 +96,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                       && component.InteractFailureSpawn == null;
 
         if (_netMan.IsClient && !predict)
-            return;
+            return false;
 
         if (_random.Prob(component.SuccessChance))
         {
@@ -135,18 +142,18 @@ public sealed class InteractionPopupSystem : EntitySystem
                 _audio.PlayPvs(sfx, target);
             else
                 _audio.PlayEntity(sfx, Filter.Entities(user, target), target, false);
-            return;
+            return false;
         }
 
         _popupSystem.PopupClient(msg, uid, user);
 
         if (sfx == null)
-            return;
+            return false;
 
         if (component.SoundPerceivedByOthers)
         {
             _audio.PlayPredicted(sfx, target, user);
-            return;
+            return false;
         }
 
         if (_netMan.IsClient)
@@ -158,6 +165,24 @@ public sealed class InteractionPopupSystem : EntitySystem
         {
             _audio.PlayEntity(sfx, Filter.Empty().FromEntities(target), target, false);
         }
+        return true;
+    }
+
+    private void AddVerb(EntityUid uid, InteractionPopupComponent comp, GetVerbsEvent<ActivationVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        var verb = new ActivationVerb
+        {
+            Text = Loc.GetString(comp.Verb),
+            Act = () =>
+            {
+                SharedInteract(uid, comp, uid, args.User);
+            }
+        };
+
+        args.Verbs.Add(verb);
     }
 
     /// <summary>
