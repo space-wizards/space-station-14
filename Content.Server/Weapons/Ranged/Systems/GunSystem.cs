@@ -449,4 +449,10 @@ public sealed partial class GunSystem : SharedGunSystem
     }
 
     #endregion
+
+    public override void Update(float frameTime)
+    {
+        UpdateBallistic();
+        UpdateAutoFire();
+    }
 }
