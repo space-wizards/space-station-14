@@ -8883,4 +8883,74 @@ Entries:
   id: 1225
   time: '2025-07-05T22:53:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/956
+- author: Killer Tamashi (The rest) & Happyrobot33 (Gun breaking code)
+  changes:
+  - message: Craftable Shotguns (3 variants)
+    type: Add
+  id: 1226
+  time: '2025-07-05T22:58:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/939
+- author: Killer Tamashi (The rest) & Happyrobot33 (Gun breaking code)
+  changes:
+  - message: Craftable Pistols (3 variants)
+    type: Add
+  id: 1227
+  time: '2025-07-05T22:58:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/939
+- author: Killer Tamashi (The rest) & Happyrobot33 (Gun breaking code)
+  changes:
+  - message: Craftable Revolvers (3 variants)
+    type: Add
+  id: 1228
+  time: '2025-07-05T22:58:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/939
+- author: Killer Tamashi (The rest) & Happyrobot33 (Gun breaking code)
+  changes:
+  - message: Craftable Smgs (3 variants)
+    type: Add
+  id: 1229
+  time: '2025-07-05T22:58:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/939
+- author: Killer Tamashi (The rest) & Happyrobot33 (Gun breaking code)
+  changes:
+  - message: Craftable Rifles (3 variants)
+    type: Add
+  id: 1230
+  time: '2025-07-05T22:58:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/939
+- author: Killer Tamashi (The rest) & Happyrobot33 (Gun breaking code)
+  changes:
+  - message: Craftable Tools (3-2 variants depending on tool)
+    type: Add
+  id: 1231
+  time: '2025-07-05T22:58:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/939
+- author: Killer Tamashi (The rest) & Happyrobot33 (Gun breaking code)
+  changes:
+  - message: Craftable Swords (5 variants)
+    type: Add
+  id: 1232
+  time: '2025-07-05T22:58:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/939
+- author: Killer Tamashi (The rest) & Happyrobot33 (Gun breaking code)
+  changes:
+  - message: Craftable Armor (4 variants)
+    type: Add
+  id: 1233
+  time: '2025-07-05T22:58:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/939
+- author: Killer Tamashi (The rest) & Happyrobot33 (Gun breaking code)
+  changes:
+  - message: Craftable Helmets (4 variants)
+    type: Add
+  id: 1234
+  time: '2025-07-05T22:58:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/939
+- author: Killer Tamashi (The rest) & Happyrobot33 (Gun breaking code)
+  changes:
+  - message: Craftable Shields (6 variants)
+    type: Add
+  id: 1235
+  time: '2025-07-05T22:58:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/939
 
