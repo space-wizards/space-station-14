@@ -89,6 +89,8 @@
       - state: equipped-head-light
       head-vox:
       - state: equipped-head-light-vox
+      head-reptilian:
+      - state: equipped-head-light-reptilian
       head-dog:
       - state: equipped-head-light-dog
   - type: Clothing
@@ -97,6 +99,8 @@
       - state: equipped-head
       head-vox:
       - state: equipped-head-vox
+      head-reptilian:
+      - state: equipped-head-reptilian
       head-dog:
       - state: equipped-head-dog
   - type: TemperatureProtection
