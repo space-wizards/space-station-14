@@ -49,18 +49,18 @@ namespace Content.Client.Stack
         /// </summary>
         protected override void UpdateLingering(Entity<StackComponent> ent)
         {
-            if (ent.Comp.Lingering &&
-                TryComp<SpriteComponent>(ent.Owner, out var sprite))
-            {
-                // tint the stack gray and make it transparent if it's lingering.
-                var color = ent.Comp.Count == 0 && ent.Comp.Lingering
-                    ? Color.DarkGray.WithAlpha(0.65f)
-                    : Color.White;
+            if (!ent.Comp.Lingering ||
+                !TryComp<SpriteComponent>(ent.Owner, out var sprite))
+                return;
 
-                for (var i = 0; i < sprite.AllLayers.Count(); i++)
-                {
-                    _sprite.LayerSetColor((ent.Owner, sprite), i, color);
-                }
+            // tint the stack gray and make it transparent if it's lingering.
+            var color = ent.Comp.Count == 0
+                      ? Color.DarkGray.WithAlpha(0.65f)
+                      : Color.White;
+
+            for (var i = 0; i < sprite.AllLayers.Count(); i++)
+            {
+                _sprite.LayerSetColor((ent.Owner, sprite), i, color);
             }
         }
 
