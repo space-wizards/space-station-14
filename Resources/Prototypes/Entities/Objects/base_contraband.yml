@@ -1,4 +1,13 @@
-﻿# used by the unique items of xenoborgs (like modules and stuff)
+﻿# generic "extreme" contraband; Syndicate/magical contraband are equivalent under Space Law, so this is mostly a placeholder
+# for stuff that should be equally illegal but doesn't need its own unique contraband tier added
+- type: entity
+  id: BaseExtremeContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Extreme
+
+# used by the unique items of xenoborgs (like modules and stuff)
 - type: entity
   id: BaseXenoborgContraband
   abstract: true
