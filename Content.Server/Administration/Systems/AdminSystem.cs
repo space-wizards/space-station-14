@@ -461,5 +461,9 @@ public sealed class AdminSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Event fired after a player is erased by an admin
+/// </summary>
+/// <param name="PlayerNetUserId">NetUserId of the player that was the target of the Erase</param>
 [ByRefEvent]
 public record struct EraseEvent(NetUserId PlayerNetUserId);
