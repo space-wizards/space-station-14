@@ -23,14 +23,19 @@ namespace Content.Client.Disposal.Tube
 
             _window = this.CreateWindow<DisposalRouterWindow>();
 
-            _window.Confirm.OnPressed += _ => ButtonPressed(UiAction.Ok, _window.TagInput.Text);
-            _window.TagInput.OnTextEntered += args => ButtonPressed(UiAction.Ok, args.Text);
+            _window.Confirm.OnPressed += _ =>
+                ButtonPressed(UiAction.Ok, _window.TagInput.Text, _window.BackwardsAllowed.Pressed);
+            _window.TagInput.OnTextEntered +=
+                args => ButtonPressed(UiAction.Ok, args.Text, _window.BackwardsAllowed.Pressed);
+            _window.BackwardsAllowed.OnPressed +=
+                args => ButtonPressed(UiAction.Ok, _window.TagInput.Text, args.Button.Pressed, false);
         }
 
-        private void ButtonPressed(UiAction action, string tag)
+        private void ButtonPressed(UiAction action, string tag, bool backwardsAllowed, bool close = true)
         {
-            SendMessage(new UiActionMessage(action, tag));
-            Close();
+            SendMessage(new UiActionMessage(action, tag, backwardsAllowed));
+            if (close)
+                Close();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
