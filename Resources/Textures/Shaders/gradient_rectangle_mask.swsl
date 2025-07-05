@@ -1,0 +1,37 @@
+// Has an outer rectangle that defines the hard border to the outer alpha color. It's scaled based on a 0-zoom game view; 1.0/1.0 width/height is a rectangle at the edge of the game view when not zoomed.
+// The inner rectangle is defined via a thickness (scaled on the y-axis); 0.5 means the gradient will be fully to the middle.
+
+light_mode unshaded;
+
+uniform highp vec3 color;
+uniform highp float zoom;
+
+uniform highp float outerRectangleWidth;
+uniform highp float outerRectangleHeight;
+uniform highp float innerRectangleThickness;
+uniform highp float alphaInner;
+uniform highp float alphaOuter;
+
+void fragment() {
+	highp vec2 pixelCenter = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y) * 0.5;
+	highp float distance = length(FRAGCOORD.xy - pixelCenter);
+
+	highp float top = pixelCenter.y + outerRectangleHeight * 0.5 / zoom / SCREEN_PIXEL_SIZE.y;
+	highp float bottom = pixelCenter.y - outerRectangleHeight * 0.5 / zoom / SCREEN_PIXEL_SIZE.y;
+	highp float left = pixelCenter.x - outerRectangleWidth * 0.5 / zoom / SCREEN_PIXEL_SIZE.x;
+	highp float right = pixelCenter.x + outerRectangleWidth * 0.5 / zoom / SCREEN_PIXEL_SIZE.x;
+
+	if (FRAGCOORD.x < left || FRAGCOORD.x > right || FRAGCOORD.y > top || FRAGCOORD.y < bottom || innerRectangleThickness <= 0.0) {
+		COLOR = vec4(color.x, color.y, color.z, alphaOuter);
+	} else {
+	    highp float actualThickness = innerRectangleThickness / zoom / SCREEN_PIXEL_SIZE.y;
+        highp float ratio_left = 1 - (FRAGCOORD.x - left) / (actualThickness);
+        highp float ratio_bottom = 1 - (FRAGCOORD.y - bottom) / (actualThickness);
+        highp float ratio_right = (FRAGCOORD.x - (right - actualThickness)) / (actualThickness);
+        highp float ratio_top = (FRAGCOORD.y - (top - actualThickness)) / (actualThickness);
+
+        highp float alpha = alphaInner + ((alphaOuter - alphaInner) * clamp(max(max(max(ratio_right, ratio_top),ratio_left),ratio_bottom), 0.0, 1.0));
+
+        COLOR = vec4(color.x, color.y, color.z, alpha);
+	}
+}
