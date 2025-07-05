@@ -1114,8 +1114,9 @@ namespace Content.Client.Lobby.UI
                         RgbSkinColorContainer.Visible = true;
                     }
 
-                    Markings.CurrentSkinColor = _rgbSkinColorSelector.Color;
-                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(_rgbSkinColorSelector.Color));
+                    var color = SkinColor.MakeHueValid(_rgbSkinColorSelector.Color);
+                    Markings.CurrentSkinColor = color;
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
                 case HumanoidSkinColor.TintedHues:
@@ -1334,7 +1335,6 @@ namespace Content.Client.Lobby.UI
                     }
 
                     Skin.Value = SkinColor.HumanSkinToneFromColor(Profile.Appearance.SkinColor);
-
                     break;
                 }
                 case HumanoidSkinColor.Hues:
@@ -1345,8 +1345,7 @@ namespace Content.Client.Lobby.UI
                         RgbSkinColorContainer.Visible = true;
                     }
 
-                    // set the RGB values to the direct values otherwise
-                    _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
+                    _rgbSkinColorSelector.Color = SkinColor.MakeHueValid(Profile.Appearance.SkinColor);
                     break;
                 }
                 case HumanoidSkinColor.TintedHues:
@@ -1357,8 +1356,7 @@ namespace Content.Client.Lobby.UI
                         RgbSkinColorContainer.Visible = true;
                     }
 
-                    // set the RGB values to the direct values otherwise
-                    _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
+                    _rgbSkinColorSelector.Color = SkinColor.TintedHues(Profile.Appearance.SkinColor);
                     break;
                 }
                 case HumanoidSkinColor.VoxFeathers:
