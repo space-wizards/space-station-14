@@ -4,12 +4,15 @@
     ClothingBackpackHydroponics: 2
     ClothingBackpackSatchelHydroponics: 2
     ClothingBackpackDuffelHydroponics: 2
-    ClothingOuterApronBotanist: 2
+    PlantBag: 3
+    ClothingOuterApronBotanist: 3
     ClothingUniformOveralls: 3
     ClothingUniformJumpsuitHydroponics: 3
     ClothingUniformJumpskirtHydroponics: 3
     ClothingNeckScarfStripedGreen: 3
     ClothingHeadBandBotany: 3
+    ClothingHeadHatTrucker: 3
+    ClothingHandsGlovesLeather: 3
     ClothingHeadsetService: 2
     ClothingOuterWinterHydro: 2
   contrabandInventory:
