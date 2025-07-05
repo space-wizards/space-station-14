@@ -61,35 +61,22 @@
   id: AmmoniaOxygenReaction
   priority: 2
   minimumTemperature: 323.149
-  minimumRequirements:
-  - 0.01  # oxygen
-  - 0     # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0.01  # ammonia
-  - 0     # n2o
-  - 0     # frezon
-  effects:
-  - !type:AmmoniaOxygenReaction {}
+  reactants:
+    Ammonia: 2
+    Oxygen: 2
+  products:
+    NitrousOxide: 1
+    WaterVapor: 3
 
 - type: gasReaction
   id: N2ODecomposition
   priority: 0
   minimumTemperature: 850
-  minimumRequirements:
-  - 0     # oxygen
-  - 0     # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0     # ammonia
-  - 0.01  # n2o
-  - 0     # frezon
-  effects:
-  - !type:N2ODecompositionReaction {}
+  reactants:
+    NitrousOxide: 2
+  products:
+    Nitrogen: 2
+    Oxygen: 1
 
 #- type: gasReaction
 #  id: WaterVaporPuddle
