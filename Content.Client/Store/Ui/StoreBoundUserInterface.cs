@@ -30,12 +30,12 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<StoreMenu>();
-        if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store))
+        if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store) || (EntMan.TryGetComponent<RemoteStoreComponent>(Owner, out var remoteStore) && remoteStore.Store != null && EntMan.TryGetComponent<StoreComponent>(remoteStore.Store, out store)))
             _menu.Title = Loc.GetString(store.Name);
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
-            SendMessage(new StoreBuyListingMessage(listing.ID));
+            SendMessage(new StoreBuyListingMessage(listing.ID, EntMan.GetNetEntity(Owner)));
         };
 
         _menu.OnCategoryButtonPressed += (_, category) =>

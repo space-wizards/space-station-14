@@ -18,7 +18,7 @@ namespace Content.Shared.PDA;
 /// </summary>
 public abstract class SharedRingerSystem : EntitySystem
 {
-    public const int RingtoneLength = 6;
+    public const int RingtoneLength = 7;
     public const int NoteTempo = 300;
     public const float NoteDelay = 60f / NoteTempo;
 
@@ -137,6 +137,7 @@ public abstract class SharedRingerSystem : EntitySystem
             return;
 
         ent.Comp.Unlocked = false;
+        ent.Comp.TargetStore = null;
         UI.CloseUi(ent.Owner, StoreUiKey.Key);
     }
 
@@ -249,7 +250,10 @@ public abstract class SharedRingerSystem : EntitySystem
 
         // Close store UI if we're locking
         if (!ent.Comp.Unlocked)
+        {
+            ent.Comp.TargetStore = null;
             UI.CloseUi(ent.Owner, StoreUiKey.Key);
+        }
 
         return true;
     }
