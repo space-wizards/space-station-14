@@ -13,14 +13,14 @@ public sealed partial class WeldingMaskOverlayComponent : Component
     /// 1.0 is at the edge of the game view.
     /// </summary>
     [DataField]
-    public float OuterRectangleWidth = 0.35f;
+    public float OuterRectangleWidth = 0.45f;
 
     /// <summary>
     /// The height of the rectangle's bounds.
     /// 1.0 is at the edge of the game view.
     /// </summary>
     [DataField]
-    public float OuterRectangleHeight = 0.3f;
+    public float OuterRectangleHeight = 0.4f;
 
     /// <summary>
     /// The thickness for the inner rectangle.
