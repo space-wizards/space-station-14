@@ -68,31 +68,37 @@ public abstract partial class SharedStatusEffectsSystem
     }
 
     /// <summary>
-    /// Updates duration of effect to larger value between provided <see cref="duration"/> and current effect duration.
+    /// Updates duration of effect to larger value between provided <see cref="duration"/> and current effect duration if refresh is true.
+    /// Adds <see cref="duration"/> of effect to the lifetime of the status effect if refresh is false.
     /// Tries to add status effect if it is not yet present on entity.
     /// </summary>
     /// <param name="target">The target entity to which the effect should be added.</param>
     /// <param name="effectProto">ProtoId of the status effect entity. Make sure it has StatusEffectComponent on it.</param>
     /// <param name="duration">Duration of status effect. Leave null and the effect will be permanent until it is removed using <c>TryRemoveStatusEffect</c>.</param>
     /// <param name="statusEffect">The EntityUid of the status effect we have just created or null if it doesn't exist.</param>
+    /// <param name="refresh">A bool that if true refreshes duration to the highest value, and if false adds to the current duration.</param>
     /// <returns>True if effect exists and its duration is set properly, false in case effect cannot be applied.</returns>
     public bool TryUpdateStatusEffectDuration(
         EntityUid target,
         EntProtoId effectProto,
         [NotNullWhen(true)] out EntityUid? statusEffect,
-        TimeSpan? duration = null
+        TimeSpan? duration = null,
+        bool refresh = true
     )
     {
         if (!TryGetStatusEffect(target, effectProto, out statusEffect))
             return TryAddStatusEffect(target, effectProto, out statusEffect, duration);
 
-        UpdateStatusEffectTime(statusEffect.Value, duration);
+        if (refresh || duration == null)
+            UpdateStatusEffectTime(statusEffect.Value, duration);
+        else
+            AddStatusEffectTime(statusEffect.Value, duration.Value);
 
         return true;
     }
 
     /// <inheritdoc cref="TryUpdateStatusEffectDuration(Robust.Shared.GameObjects.EntityUid,Robust.Shared.Prototypes.EntProtoId,out Robust.Shared.GameObjects.EntityUid?,System.TimeSpan?)"/>
-    public bool TryUpdateStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan? duration = null)
+    public bool TryUpdateStatusEffectDuration(EntityUid target, EntProtoId effectProto, TimeSpan? duration = null, bool refresh = true)
     {
         return TryUpdateStatusEffectDuration(target, effectProto, out _, duration);
     }

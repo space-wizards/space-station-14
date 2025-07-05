@@ -20,7 +20,6 @@
   - type: StatusEffects
     allowed:
     - SlowedDown
-    - Stutter
     - Electrocution
     - TemporaryBlindness
     - Pacified
@@ -96,7 +95,6 @@
     - Stun
     - KnockedDown
     - SlowedDown
-    - Stutter
     - Electrocution
     - TemporaryBlindness
     - Pacified
