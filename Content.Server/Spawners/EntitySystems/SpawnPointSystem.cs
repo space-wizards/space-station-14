@@ -15,6 +15,9 @@ public sealed class SpawnPointSystem : EntitySystem
 
     public override void Initialize()
     {
+        // Order is arrivals → container spawn (cryosleep) → spawn points (includes fallback)
+        // We need to handle 1) round start spawns with either no spawn priority or arrivals spawn priority, 2) AI/borg
+        // spawns, and 3) oh frick everything else failed just spawn this person somewhere
         SubscribeLocalEvent<PlayerSpawningEvent>(OnPlayerSpawning);
     }
 
@@ -51,11 +54,16 @@ public sealed class SpawnPointSystem : EntitySystem
             // TODO: Refactor gameticker spawning code so we don't have to do this!
             var points2 = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
 
-            if (points2.MoveNext(out var spawnPoint, out var xform))
+            while (points2.MoveNext(out var uid, out _, out var xform))
             {
+                // Okay, make sure the spawn point is at least on the right station.
+                if (args.Station != null && _stationSystem.GetOwningStation(uid, xform) != args.Station)
+                    continue;
+
                 possiblePositions.Add(xform.Coordinates);
             }
-            else
+
+            if (possiblePositions.Count == 0)
             {
                 Log.Error("No spawn points were available!");
                 return;
