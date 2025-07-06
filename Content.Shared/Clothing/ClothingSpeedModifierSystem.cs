@@ -30,7 +30,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, ClothingSpeedModifierComponent component, ref ComponentGetState args)
     {
-        args.State = new ClothingSpeedModifierComponentState(component.WalkModifier, component.SprintModifier, component.ZeroGravityModifier);
+        args.State = new ClothingSpeedModifierComponentState(component.WalkModifier, component.SprintModifier);
     }
 
     private void OnHandleState(EntityUid uid, ClothingSpeedModifierComponent component, ref ComponentHandleState args)
@@ -43,7 +43,6 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
         component.WalkModifier = state.WalkModifier;
         component.SprintModifier = state.SprintModifier;
-        component.ZeroGravityModifier = state.ZeroGravityModifier;
 
         // Avoid raising the event for the container if nothing changed.
         // We'll still set the values in case they're slightly different but within tolerance.
@@ -56,7 +55,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
     private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
         if (_toggle.IsActivated(uid))
-            args.Args.ModifySpeed(component.WalkModifier, component.SprintModifier, component.ZeroGravityModifier);
+            args.Args.ModifySpeed(component.WalkModifier, component.SprintModifier);
     }
 
     private void OnClothingVerbExamine(EntityUid uid, ClothingSpeedModifierComponent component, GetVerbsEvent<ExamineVerb> args)

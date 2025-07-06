@@ -25,12 +25,10 @@ public sealed class ClothingSpeedModifierComponentState : ComponentState
 {
     public float WalkModifier;
     public float SprintModifier;
-    public float ZeroGravityModifier;
 
-    public ClothingSpeedModifierComponentState(float walkModifier, float sprintModifier, float zeroGravityModifier)
+    public ClothingSpeedModifierComponentState(float walkModifier, float sprintModifier)
     {
         WalkModifier = walkModifier;
         SprintModifier = sprintModifier;
-        ZeroGravityModifier = zeroGravityModifier;
     }
 }
