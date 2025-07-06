@@ -21,6 +21,7 @@ namespace Content.Shared.Fluids;
 
 public abstract partial class SharedPuddleSystem
 {
+    private static readonly FixedPoint2 MeleeHitTransferProportion = 0.25;
 
     protected virtual void InitializeSpillable()
     {
@@ -46,7 +47,10 @@ public abstract partial class SharedPuddleSystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
-        if (!_solutionContainerSystem.TryGetSolution(args.Target, entity.Comp.SolutionName, out var soln, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(args.Target,
+                entity.Comp.SolutionName,
+                out var soln,
+                out var solution))
             return;
 
         if (Openable.IsClosed(args.Target))
@@ -81,7 +85,12 @@ public abstract partial class SharedPuddleSystem
             var user = args.User;
             verb.Act = () =>
             {
-                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, entity.Comp.SpillDelay ?? 0, new SpillDoAfterEvent(), entity.Owner, target: entity.Owner)
+                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
+                    user,
+                    entity.Comp.SpillDelay ?? 0,
+                    new SpillDoAfterEvent(),
+                    entity.Owner,
+                    target: entity.Owner)
                 {
                     BreakOnDamage = true,
                     BreakOnMove = true,
@@ -94,7 +103,7 @@ public abstract partial class SharedPuddleSystem
         args.Verbs.Add(verb);
     }
 
-        private void SplashOnMeleeHit(Entity<SpillableComponent> entity, ref MeleeHitEvent args)
+    private void SplashOnMeleeHit(Entity<SpillableComponent> entity, ref MeleeHitEvent args)
     {
         if (args.Handled)
             return;
@@ -109,11 +118,9 @@ public abstract partial class SharedPuddleSystem
 
         var hitCount = args.HitEntities.Count;
 
-        var totalSplit = FixedPoint2.Min(solution.MaxVolume * 0.25, solution.Volume);
+        var totalSplit = FixedPoint2.Min(solution.MaxVolume * MeleeHitTransferProportion, solution.Volume);
         if (TryComp<SolutionTransferComponent>(entity, out var transfer))
-        {
             totalSplit = FixedPoint2.Min(transfer.TransferAmount, solution.Volume);
-        }
 
         // a little lame, but reagent quantity is not very balanced and we don't want people
         // spilling like 100u of reagent on someone at once!
@@ -139,21 +146,30 @@ public abstract partial class SharedPuddleSystem
 
             var splitSolution = _solutionContainerSystem.SplitSolution(soln.Value, totalSplit / hitCount);
 
-            AdminLogger.Add(LogType.MeleeHit, $"{ToPrettyString(args.User)} splashed {SharedSolutionContainerSystem.ToPrettyString(splitSolution):solution} from {ToPrettyString(entity.Owner):entity} onto {ToPrettyString(hit):target}");
+            AdminLogger.Add(LogType.MeleeHit,
+                $"{ToPrettyString(args.User):actor} "
+                + $"splashed {SharedSolutionContainerSystem.ToPrettyString(splitSolution):solution} "
+                + $"from {ToPrettyString(entity.Owner):entity} onto {ToPrettyString(hit):target}");
+
             Reactive.DoEntityReaction(hit, splitSolution, ReactionMethod.Touch);
 
+            Popups.PopupClient(Loc.GetString("spill-melee-hit-attacker",
+                    ("amount", totalSplit / hitCount),
+                    ("spillable", entity.Owner),
+                    ("target", Identity.Entity(hit, EntityManager, args.User))),
+                hit,
+                args.User);
             Popups.PopupEntity(
-                Loc.GetString("spill-melee-hit-attacker", ("amount", totalSplit / hitCount), ("spillable", entity.Owner),
+                Loc.GetString("spill-melee-hit-others",
+                    ("attacker", Identity.Entity(args.User, EntityManager)),
+                    ("spillable", entity.Owner),
                     ("target", Identity.Entity(hit, EntityManager))),
-                hit, args.User);
-
-            Popups.PopupEntity(
-                Loc.GetString("spill-melee-hit-others", ("attacker", args.User), ("spillable", entity.Owner),
-                    ("target", Identity.Entity(hit, EntityManager))),
-                hit, Filter.PvsExcept(args.User), true, PopupType.SmallCaution);
+                hit,
+                Filter.PvsExcept(args.User),
+                true,
+                PopupType.SmallCaution);
         }
     }
-
 
     /// <summary>
     /// Prevent Pacified entities from throwing items that can spill liquids.
@@ -165,10 +181,10 @@ public abstract partial class SharedPuddleSystem
             return;
 
         // Don’t care about empty containers.
-        if (!_solutionContainerSystem.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out _, out var solution) || solution.Volume <= 0)
+        if (!_solutionContainerSystem.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out _, out var solution)
+            || solution.Volume <= 0)
             return;
 
         args.Cancel("pacified-cannot-throw-spill");
     }
-
 }
