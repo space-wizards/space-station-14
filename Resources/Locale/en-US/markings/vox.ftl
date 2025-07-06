@@ -25,19 +25,15 @@ marking-VoxScarTopSurgeryLong = Clamshell Scar
 marking-VoxScarChest-vox_scar_chest = Chest Scar
 marking-VoxScarChest = Chest Scar
 
-<#-- Heart Scar -->
 marking-VoxScarSternotomy-vox_scar_sternotomy = Sternotomy Scar
 marking-VoxScarSternotomy = Sternotomy Scar
 
-<#-- Stomach Scar -->
 marking-VoxScarLaparotomy-vox_scar_laparotomy = Laparotomy Scar
 marking-VoxScarLaparotomy = Laparotomy Scar
 
-<#-- Liver Scar -->
 marking-VoxScarHepatectomy-vox_scar_hepatectomy = Hepatectomy Scar
 marking-VoxScarHepatectomy = Hepatectomy Scar
 
-<#-- Kidney Scar -->
 marking-VoxScarNephrectomy-vox_scar_nephrectomy = Nephrectomy Scar 
 marking-VoxScarNephrectomy = Nephrectomy Scar
 
