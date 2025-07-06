@@ -2457,7 +2457,7 @@
       path: /Audio/Animals/snake_hiss.ogg
   - type: NoSlip
   - type: WebPlacer
-    webPrototype: SpiderWeb
+    spawnId: SpiderWeb
     destinationBlacklist:
       components:
       - SpiderWebObject
@@ -2593,7 +2593,7 @@
         0: Alive
         180: Dead
     - type: WebPlacer
-      webPrototype: SpiderWebClown
+      spawnId: SpiderWebClown
       webSound:
         collection: BikeHorn
         params:
