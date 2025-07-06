@@ -71,6 +71,7 @@ namespace Content.Shared.Movement.Systems
                 WeightlessAcceleration = ent.Comp.BaseWeightlessAcceleration,
                 WeightlessAccelerationMod = 1.0f,
                 WeightlessModifier = ent.Comp.BaseWeightlessModifier,
+                WeightlessModifierMod = 1.0f,
                 WeightlessFriction = ent.Comp.BaseWeightlessFriction,
                 WeightlessFrictionMod = 1.0f,
                 WeightlessFrictionNoInput = ent.Comp.BaseWeightlessFriction,
@@ -88,7 +89,7 @@ namespace Content.Shared.Movement.Systems
             }
 
             ent.Comp.WeightlessAcceleration = ev.WeightlessAcceleration * ev.WeightlessAccelerationMod;
-            ent.Comp.WeightlessModifier = ev.WeightlessModifier;
+            ent.Comp.WeightlessModifier = ev.WeightlessModifier * ev.WeightlessModifierMod;
             ent.Comp.WeightlessFriction = _airDamping * ev.WeightlessFriction * ev.WeightlessFrictionMod;
             ent.Comp.WeightlessFrictionNoInput = _airDamping * ev.WeightlessFrictionNoInput * ev.WeightlessFrictionNoInputMod;
             Dirty(ent);
@@ -204,6 +205,7 @@ namespace Content.Shared.Movement.Systems
         public float WeightlessAccelerationMod;
 
         public float WeightlessModifier;
+        public float WeightlessModifierMod;
 
         public float WeightlessFriction;
         public float WeightlessFrictionMod;
@@ -214,7 +216,7 @@ namespace Content.Shared.Movement.Systems
         public void ModifyFriction(float friction, float noInput)
         {
             WeightlessFrictionMod *= friction;
-            WeightlessFrictionNoInput *= noInput;
+            WeightlessFrictionNoInputMod *= noInput;
         }
 
         public void ModifyFriction(float friction)
@@ -224,8 +226,8 @@ namespace Content.Shared.Movement.Systems
 
         public void ModifyAcceleration(float acceleration, float modifier)
         {
-            WeightlessAcceleration *= acceleration;
-            WeightlessModifier *= modifier;
+            WeightlessAccelerationMod *= acceleration;
+            WeightlessModifierMod *= modifier;
         }
 
         public void ModifyAcceleration(float modifier)
