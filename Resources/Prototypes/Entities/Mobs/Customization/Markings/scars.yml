@@ -71,14 +71,14 @@
     state: scar_hepatectomy
     
 - type: marking
-  id: ScarLaprotomy
+  id: ScarLaparotomy
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Moth, Arachnid, Diona]
   followSkinColor: true
   sprites:
   - sprite: Mobs/Customization/scars.rsi
-    state: scar_laprotomy
+    state: scar_laparotomy
     
 - type: marking
   id: ScarNeck
