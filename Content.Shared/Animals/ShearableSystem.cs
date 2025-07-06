@@ -271,8 +271,8 @@ public sealed class SharedShearableSystem : EntitySystem
         for (var i = 0; i < removedSolution.Volume.Value / productsPerSolution; i++)
         {
             // Crazy spawn
-            var xoffs = random.NextFloat(-1f, 1f);
-            var yoffs = random.NextFloat(-1f, 1f);
+            var xoffs = random.NextFloat(-0.2f, 0.2f);
+            var yoffs = random.NextFloat(-0.2f, 0.2f);
             var pos = center.Offset(new Vector2(xoffs, yoffs));
             // A weaker sheep would disable prediction here but we are pioneering technology.
             EntityManager.PredictedSpawnAtPosition(ent.Comp.ShearedProductID, pos);
