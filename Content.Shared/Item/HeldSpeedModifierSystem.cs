@@ -17,36 +17,43 @@ public sealed class HeldSpeedModifierSystem : EntitySystem
         SubscribeLocalEvent<HeldSpeedModifierComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<HeldSpeedModifierComponent, GotUnequippedHandEvent>(OnGotUnequippedHand);
         SubscribeLocalEvent<HeldSpeedModifierComponent, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshMovementSpeedModifiers);
+        SubscribeLocalEvent<HeldSpeedModifierComponent, HeldRelayedEvent<RefreshWeightlessModifiersEvent>>(OnRefreshModifiers);
+    }
+
+    private void OnRefreshModifiers(Entity<HeldSpeedModifierComponent> ent, ref HeldRelayedEvent<RefreshWeightlessModifiersEvent> args)
+    {
+        args.Args.ModifySpeed(ent.Comp.ZeroGravityModifier);
     }
 
     private void OnGotEquippedHand(Entity<HeldSpeedModifierComponent> ent, ref GotEquippedHandEvent args)
     {
         _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshWeightlessModifiers(args.User);
     }
 
     private void OnGotUnequippedHand(Entity<HeldSpeedModifierComponent> ent, ref GotUnequippedHandEvent args)
     {
         _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+        _movementSpeedModifier.RefreshWeightlessModifiers(args.User);
     }
 
-    public (float,float,float) GetHeldMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component)
+    public (float,float) GetHeldMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component)
     {
         var walkMod = component.WalkModifier;
         var sprintMod = component.SprintModifier;
-        var zeroGMod = component.ZeroGravityModifier;
         if (component.MirrorClothingModifier && TryComp<ClothingSpeedModifierComponent>(uid, out var clothingSpeedModifier))
         {
             walkMod = clothingSpeedModifier.WalkModifier;
             sprintMod = clothingSpeedModifier.SprintModifier;
-            zeroGMod = clothingSpeedModifier.ZeroGravityModifier;
         }
 
-        return (walkMod, sprintMod, zeroGMod);
+        return (walkMod, sprintMod);
     }
+
 
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
-        var (walkMod, sprintMod,zeroGMod) = GetHeldMovementSpeedModifiers(uid, component);
-        args.Args.ModifySpeed(walkMod, sprintMod, zeroGMod);
+        var (walkMod, sprintMod) = GetHeldMovementSpeedModifiers(uid, component);
+        args.Args.ModifySpeed(walkMod, sprintMod);
     }
 }

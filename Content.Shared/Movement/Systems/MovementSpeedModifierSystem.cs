@@ -185,6 +185,7 @@ namespace Content.Shared.Movement.Systems
     [ByRefEvent]
     public record struct RefreshWeightlessModifiersEvent
     {
+
         public float WeightlessAcceleration;
         public float WeightlessAccelerationMod;
 
@@ -195,6 +196,11 @@ namespace Content.Shared.Movement.Systems
 
         public float WeightlessFrictionNoInput;
         public float WeightlessFrictionNoInputMod;
+
+        public void ModifySpeed(float mod)
+        {
+            WeightlessModifier *= mod;
+        }
 
         public void ModifyFriction(float friction, float noInput)
         {

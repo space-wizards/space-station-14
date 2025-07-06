@@ -26,6 +26,9 @@ public sealed partial class HeldSpeedModifierComponent : Component
     [DataField] [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float SprintModifier = 1.0f;
 
+    /// <summary>
+    /// A multiplier applied to Weightlessness speed, I.E the Maximum speed one can go in 0G under their own power
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float ZeroGravityModifier = 1.0f;
 

@@ -15,9 +15,6 @@ public sealed partial class ClothingSpeedModifierComponent : Component
 
     [DataField]
     public float SprintModifier = 1.0f;
-
-    [DataField]
-    public float ZeroGravityModifier = 1.0f;
 }
 
 [Serializable, NetSerializable]
