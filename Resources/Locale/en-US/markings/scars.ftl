@@ -16,6 +16,12 @@ marking-ScarChest = Chest Scar
 marking-ScarSternotomy-scar_sternotomy = Sternotomy Scar
 marking-ScarSternotomy = Sternotomy Scar
 
+marking-ScarLaparotomy-scar_laparotomy = Laparotomy Scar
+marking-ScarLaparotomy = Laparotomy Scar
+
+marking-ScarHepatectomy-scar_hepatectomy = Hepatectomy Scar
+marking-ScarHepatectomy = Hepatectomy Scar
+
 marking-ScarNeck-scar_neck = Neck Scar
 marking-ScarNeck = Neck Scar
 
