@@ -60,16 +60,14 @@ public sealed class AddRoleCommand : LocalizedEntityCommands
         switch (args.Length)
         {
             case 1:
-                return CompletionResult.FromOptions(CompletionHelper.SessionNames());
+                return CompletionResult.FromOptions(CompletionHelper.SessionNames(players: _playerManager));
             case 2:
             {
                 var result = new List<CompletionOption>();
 
                 foreach (var job in _prototypeManager.EnumeratePrototypes<JobPrototype>())
                 {
-                    var completionOption = new CompletionOption(job.ID, job.Name);
-
-                    result.Add(completionOption);
+                    result.Add(new CompletionOption(job.ID, job.Name));
                 }
 
                 return CompletionResult.FromOptions(result);
