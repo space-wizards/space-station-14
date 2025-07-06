@@ -205,6 +205,9 @@
     node: done
     containers:
     - entity_storage
+  - type: Physics
+    bodyType: Static
+    canCollide: false
   - type: Fixtures
     fixtures:
       fix1:
@@ -239,9 +242,6 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
-  - type: Physics
-    bodyType: Static
-    canCollide: false
 
 #Base suit storage unit
 #I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.
