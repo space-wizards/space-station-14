@@ -64,7 +64,6 @@ public sealed class SharedShearableSystem : EntitySystem
         bool checkItem = true
     )
     {
-
         // If checkItem is true, and comp.ToolQuality has been set then check return on wrong tool.
         if (checkItem && comp.ToolQuality is not null)
         {
@@ -315,10 +314,7 @@ public sealed class SharedShearableSystem : EntitySystem
                     AttemptShear(ent, user, used);
                 },
                 Text = Loc.GetString("shearable-system-verb-shear"),
-                // TODO feels like this should be a datafield and a sprite object or something.
-                Icon = new SpriteSpecifier.Texture(
-                    new ResPath("/Textures/Interface/VerbIcons/scissors.svg.236dpi.png")
-                ),
+                Icon = ent.Comp.ShearingIcon,
                 Priority = 2
             };
         // Add verb to the player.

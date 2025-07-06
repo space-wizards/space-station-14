@@ -3,6 +3,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Content.Shared.Tools;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Animals;
 
@@ -16,15 +17,19 @@ public sealed partial class ShearableComponent : Component
 {
     /// <summary>
     ///     A pre-existing solution inside the target entity that will be subtracted from upon being sheared.
-    ///     e.g. wooly creatures use "wool"
     /// </summary>
+    /// <example>
+    ///     targetSolutionName: wool
+    /// </example>
     [DataField]
     public string TargetSolutionName = string.Empty;
 
     /// <summary>
     ///     An ID of an entity that will be spawned upon the creature being sheared.
-    ///     e.g. Sheep use "Cotton".
     /// </summary>
+    /// <example>
+    ///     shearedProductID: MaterialCotton1
+    /// </example>
     [DataField]
     public EntProtoId ShearedProductID;
 
@@ -35,6 +40,9 @@ public sealed partial class ShearableComponent : Component
     ///     Keep in mind, only up to the maximum stack of the specified product will be spawned,
     ///     the remaining solution will be truncated and left unchanged. In these cases the player can shear more than once to get more.
     /// </summary>
+    /// <example>
+    ///     productsPerSolution: 0.2
+    /// </example>
     [DataField]
     public float ProductsPerSolution = 0;
 
@@ -44,6 +52,9 @@ public sealed partial class ShearableComponent : Component
     ///     but MaximumProductsSpawned is set to 25, then you will need to shear it twice.
     ///     Default/null is infinite.
     /// </summary>
+    /// <example>
+    ///     maximumProductsSpawned: 25
+    /// </example>
     [DataField]
     public float? MaximumProductsSpawned;
 
@@ -52,22 +63,40 @@ public sealed partial class ShearableComponent : Component
     ///     For example, Wirecutters have the "cutting" quality.
     ///     Leave undefined for no tool required.
     /// </summary>
+    /// <example>
+    ///     toolQuality: Cutting
+    /// </example>
     [DataField]
     public ProtoId<ToolQualityPrototype>? ToolQuality;
 
     /// <summary>
     ///     A LocID that is added to the description box when the entity is shearable.
-    ///     e.g. "She has a fleece of fluffy wool."
     /// </summary>
+    /// <example>
+    ///     shearableMarkupText: sheep-shearable-examine-markup
+    /// </example>
     [DataField]
     public LocId ShearableMarkupText = string.Empty;
 
     /// <summary>
     ///     A LocID that is added to the description box when the entity is not shearable.
-    ///     e.g. "Her fleece is freshly sheared and bare."
     /// </summary>
+    /// <example>
+    ///     unShearableMarkupText: sheep-not-shearable-examine-markup
+    /// </example>
     [DataField]
     public LocId UnShearableMarkupText = string.Empty;
+
+    /// <summary>
+    ///     Specifies the shearing icon that appears in the context menu when right-clicking a shearable animal.
+    ///     Defaults to an icon of scissors.
+    ///     You can specify a direct path, or an RSI and icon state.
+    /// </summary>
+    /// <example>
+    ///     shearingIcon: /Textures/Interface/VerbIcons/scissors.svg.236dpi.png
+    /// </example>
+    [DataField]
+    public SpriteSpecifier ShearingIcon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/scissors.svg.236dpi.png"));
 
     /// <summary>
     ///     This is just for caching the resolved solution.
