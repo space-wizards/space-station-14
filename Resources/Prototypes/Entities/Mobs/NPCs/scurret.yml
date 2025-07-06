@@ -139,6 +139,14 @@
     available:
     - enum.DamageStateVisualLayers.Base:
         scurret: ScurretColors
+  # They are of a mysterious gender.
+  - type: Grammar
+    attributes:
+      gender: epicene
+      proper: true
+  # Strips the name identifier from them, so they're just "Confident Waters" rather than "Confident Waters (123)"
+  - type: NameIdentifier
+    group: null
 
 # Emotional Support Scurrets have a ghost role and equipment. At the moment, these are intended to be used for admemes, but
 # feel free to hook them into random content.
@@ -169,4 +177,4 @@
   name: Emotional Support Scurret
   id: MobEmotionalSupportScurret
   parent: [MobScurret, MobBaseEmotionalSupportScurret]
-  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds's Pizza's "loyal workforce". This one is here as a temp.
+  description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnold's Pizza's "loyal workforce". This one is here as a temp.
