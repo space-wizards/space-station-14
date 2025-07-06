@@ -48,6 +48,10 @@
         "directions": 4
     },
 	{
+        "name": "scar_navelless-laparotomy",
+        "directions": 4
+    },
+	{
         "name": "scar_hepatectomy",
         "directions": 4
     },
