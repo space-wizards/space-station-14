@@ -19,13 +19,13 @@ public sealed partial class PuddleSystem
     {
         if (!_actionBlocker.CanComplexInteract(args.User))
         {
-            _popups.PopupEntity(Loc.GetString("mopping-system-no-hands"), args.User, args.User);
+            Popups.PopupEntity(Loc.GetString("mopping-system-no-hands"), args.User, args.User);
             return;
         }
 
         if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out var soln, out var solution) || solution.Volume == FixedPoint2.Zero)
         {
-            _popups.PopupEntity(Loc.GetString("mopping-system-empty", ("used", entity.Owner)), entity, args.User);
+            Popups.PopupEntity(Loc.GetString("mopping-system-empty", ("used", entity.Owner)), entity, args.User);
             return;
         }
 
@@ -59,7 +59,7 @@ public sealed partial class PuddleSystem
             }
             else
             {
-                _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", args.Target)), args.Target, args.User);
+                Popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", args.Target)), args.Target, args.User);
             }
 
             return;
@@ -79,7 +79,7 @@ public sealed partial class PuddleSystem
             }
             else
             {
-                _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", entity.Owner)), entity, args.User);
+                Popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", entity.Owner)), entity, args.User);
             }
         }
     }
