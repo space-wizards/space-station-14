@@ -59,7 +59,27 @@
   sprites:
   - sprite: Mobs/Customization/scars.rsi
     state: scar_sternotomy
-
+    
+- type: marking
+  id: ScarHepatectomy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Moth, Arachnid, Diona]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_hepatectomy
+    
+- type: marking
+  id: ScarLaprotomy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Moth, Arachnid, Diona]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_laprotomy
+    
 - type: marking
   id: ScarNeck
   bodyPart: Head
