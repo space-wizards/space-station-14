@@ -178,7 +178,7 @@ namespace Content.Shared.Movement.Systems
 
         public void ModifySpeed(float mod)
         {
-            ModifySpeed(mod, mod, mod);
+            ModifySpeed(mod, mod);
         }
     }
 
