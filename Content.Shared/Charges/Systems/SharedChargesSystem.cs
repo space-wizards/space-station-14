@@ -97,14 +97,10 @@ public abstract class SharedChargesSystem : EntitySystem
     /// <param name="action">
     /// The action to add charges to. If it doesn't have <see cref="LimitedChargesComponent"/>, it will be added.
     /// </param>
-    /// <param name="addCharges">The number of charges to add. Can be negative.</param>
-    /// <param name="raiseMax">
-    /// If true, an increase in charges past <see cref="LimitedChargesComponent.MaxCharges"/> will automatically set a
-    /// higher max. If false, the change is clamped to MaxCharges.
+    /// <param name="addCharges">
+    /// The number of charges to add. Can be negative. Resulting charge count is clamped to [0, MaxCharges].
     /// </param>
-    public void AddCharges(Entity<LimitedChargesComponent?, AutoRechargeComponent?> action,
-        int addCharges,
-        bool raiseMax = false)
+    public void AddCharges(Entity<LimitedChargesComponent?, AutoRechargeComponent?> action, int addCharges)
     {
         if (addCharges == 0)
             return;
@@ -116,10 +112,6 @@ public abstract class SharedChargesSystem : EntitySystem
 
         if (lastCharges == charges)
             return;
-
-        // Increase charges first if needed
-        if (raiseMax && addCharges > 0)
-            action.Comp1.MaxCharges = Math.Max(action.Comp1.MaxCharges, action.Comp1.LastCharges + addCharges);
 
         // If we were at max then need to reset the timer.
         if (charges == action.Comp1.MaxCharges || lastCharges == action.Comp1.MaxCharges)
@@ -188,14 +180,10 @@ public abstract class SharedChargesSystem : EntitySystem
     /// Set the number of charges an action has, adding <see cref="LimitedChargesComponent"/> if needed.
     /// </summary>
     /// <param name="action">The action in question</param>
-    /// <param name="value">The number of charges. Clamped to [0, MaxCharges] unless <see cref="resetMax"/> is set.</param>
-    /// <param name="resetMax">If true, the maximum charges will be set to <see cref="value"/>, clamped to zero.</param>
-    public void SetCharges(Entity<LimitedChargesComponent?> action, int value, bool resetMax = false)
+    /// <param name="value">The number of charges. Clamped to [0, MaxCharges].</param>
+    public void SetCharges(Entity<LimitedChargesComponent?> action, int value)
     {
         action.Comp ??= EnsureComp<LimitedChargesComponent>(action.Owner);
-
-        if (resetMax && value >= 0)
-            action.Comp.MaxCharges = Math.Max(action.Comp.MaxCharges, value);
 
         var adjusted = Math.Clamp(value, 0, action.Comp.MaxCharges);
 
@@ -206,6 +194,26 @@ public abstract class SharedChargesSystem : EntitySystem
 
         action.Comp.LastCharges = adjusted;
         action.Comp.LastUpdate = _timing.CurTime;
+        Dirty(action);
+    }
+
+    /// <summary>
+    /// Sets the maximum charges of a given action, adding <see cref="LimitedChargesComponent"/> if it doesn't have it.
+    /// </summary>
+    /// <param name="action">The action being modified.</param>
+    /// <param name="value">The new maximum charges of the action. Clamped to zero.</param>
+    /// <remarks>
+    /// Does not change the current charge count, or adjust the accumulator for auto-recharge.
+    /// </remarks>
+    public void SetMaxCharges(Entity<LimitedChargesComponent?> action, int value)
+    {
+        action.Comp ??= EnsureComp<LimitedChargesComponent>(action.Owner);
+        // You can't have negative max charges (even zero is a bit goofy but eh)
+        var adjusted = Math.Max(0, value);
+        if (action.Comp.MaxCharges == adjusted)
+            return;
+
+        action.Comp.MaxCharges = adjusted;
         Dirty(action);
     }
 
