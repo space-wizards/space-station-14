@@ -277,17 +277,22 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         if (!_solutionContainerSystem.ResolveSolution(target, puddle.SolutionName, ref puddle.Solution, out var puddleSolution) || puddleSolution.Volume <= 0)
             return false;
 
-        // Check if the puddle has any non-evaporative reagents
-        if (_puddleSystem.CanFullyEvaporate(puddleSolution))
-        {
-            _popups.PopupEntity(Loc.GetString("mopping-system-puddle-evaporate", ("target", target)), user, user);
-            return true;
-        }
-
         Solution puddleSplit;
         var isRemoved = false;
         if (absorber.UseAbsorberSolution)
         {
+            // No reason to mop something that 1) can evaporate, 2) is an absorber, and 3) is being mopped with
+            // something that uses absorbers.
+            var puddleAbsorberVolume =
+                puddleSolution.GetTotalPrototypeQuantity(_puddleSystem.GetAbsorbentReagents(puddleSolution));
+            if (puddleAbsorberVolume == puddleSolution.Volume)
+            {
+                _popups.PopupEntity(Loc.GetString("mopping-system-puddle-already-mopped", ("target", target)),
+                    user,
+                    user);
+                return true;
+            }
+
             // Check if we have any evaporative reagents on our absorber to transfer
             var absorberSolution = absorberSoln.Comp.Solution;
             var available = absorberSolution.GetTotalPrototypeQuantity(_puddleSystem.GetAbsorbentReagents(absorberSolution));
@@ -317,6 +322,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         }
         else
         {
+            // Note: arguably shouldn't this get all solutions?
             puddleSplit = puddleSolution.SplitSolutionWithout(absorber.PickupAmount, _puddleSystem.GetAbsorbentReagents(puddleSolution));
             // Despawn if we're done
             if (puddleSolution.Volume == FixedPoint2.Zero)

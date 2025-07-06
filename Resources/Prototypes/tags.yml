@@ -43,6 +43,9 @@
   id: ATVKeys
 
 - type: Tag
+  id: Backpack
+
+- type: Tag
   id: Balloon
 
 - type: Tag
@@ -1038,6 +1041,9 @@
   id: PercussionInstrument
 
 - type: Tag
+  id: PetOnly
+
+- type: Tag
   id: PetWearable
 
 - type: Tag
@@ -1466,6 +1472,9 @@
 
 - type: Tag
   id: Wine
+
+- type: Tag
+  id: WireBrush
 
 - type: Tag
   id: Wirecutter
