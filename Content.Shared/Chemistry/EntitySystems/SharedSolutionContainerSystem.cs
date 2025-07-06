@@ -17,6 +17,7 @@ using System.Text;
 using Content.Shared.Containers;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Robust.Shared.ColorNaming;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Dependency = Robust.Shared.IoC.DependencyAttribute;
@@ -69,6 +70,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] private readonly ILocalizationManager _localization = default!;
 
     public override void Initialize()
     {
@@ -809,6 +811,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString(messageString,
                 ("color", colorHex),
+                ("colorName", ColorNaming.Describe(solution.GetColor(PrototypeManager), _localization)),
                 ("wordedAmount", Loc.GetString(solution.Contents.Count == 1
                     ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
                     : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
