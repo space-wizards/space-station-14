@@ -22,7 +22,7 @@ public abstract partial class SharedToolSystem
     private void OnMultipleToolStartup(EntityUid uid, MultipleToolComponent multiple, ComponentStartup args)
     {
         // Only set the multiple tool if we have a tool component.
-        if (EntityManager.TryGetComponent(uid, out ToolComponent? tool))
+        if (TryComp(uid, out ToolComponent? tool))
             SetMultipleTool(uid, multiple, tool);
     }
 
