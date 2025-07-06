@@ -61,7 +61,7 @@ public sealed class WebPlacerSystem : EntitySystem
             if (!IsValidTile(pos, webPlacer.Comp))
                 continue;
 
-            PredictedSpawnAtPosition(webPlacer.Comp.SpawnEntity, pos);
+            PredictedSpawnAtPosition(webPlacer.Comp.SpawnId, pos);
             success = true;
         }
 
