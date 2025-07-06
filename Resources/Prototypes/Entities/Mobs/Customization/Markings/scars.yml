@@ -81,6 +81,16 @@
     state: scar_laparotomy
     
 - type: marking
+  id: ScarNephrectomy
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Moth, Arachnid, Diona]
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/scars.rsi
+    state: scar_nephrectomy
+    
+- type: marking
   id: ScarNeck
   bodyPart: Head
   markingCategory: Head
