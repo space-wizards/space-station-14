@@ -228,6 +228,20 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.00"
+        density: 200
+        mask:
+        - WallmountMask
+        layer:
+        - WallmountLayer
 
 #Base suit storage unit
 #I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.
