@@ -27,6 +27,22 @@
         "name": "vox_scar_chest",
         "directions": 4
     },
+	{
+        "name": "vox_scar_sternotomy",
+        "directions": 4
+    },
+	{
+        "name": "vox_scar_laprotomy",
+        "directions": 4
+    },
+	{
+        "name": "vox_scar_hepatectomy",
+        "directions": 4
+    },
+	{
+        "name": "vox_scar_nephrectomy,
+        "directions": 4
+    },
     {
         "name": "vox_scar_neck",
         "directions": 4

@@ -51,6 +51,10 @@
         "name": "scar_hepatectomy",
         "directions": 4
     },
+	{
+        "name": "scar_nephrectomy,
+        "directions": 4
+    },
     {
         "name": "scar_face_1",
         "directions": 4
