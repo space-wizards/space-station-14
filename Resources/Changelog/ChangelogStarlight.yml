@@ -8971,4 +8971,11 @@ Entries:
   id: 1237
   time: '2025-07-05T23:09:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/967
+- author: Killer Tamashi
+  changes:
+  - message: Fixed Improvised Pistol/SMG mag from being giant errors when held.
+    type: Fix
+  id: 1238
+  time: '2025-07-06T20:05:50.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/978
 
