@@ -164,6 +164,9 @@
       path: /Audio/Items/deconstruct.ogg
     openSound:
       path: /Audio/Items/deconstruct.ogg
+    blacklist:
+      components:
+      - Body
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container

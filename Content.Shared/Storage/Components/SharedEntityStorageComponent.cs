@@ -114,6 +114,12 @@ public abstract partial class SharedEntityStorageComponent : Component
     public EntityWhitelist? Whitelist;
 
     /// <summary>
+    ///     Blacklist for what entities are not allowed to be inserted into this container.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Blacklist;
+
+    /// <summary>
     /// The contents of the storage
     /// </summary>
     [ViewVariables]
