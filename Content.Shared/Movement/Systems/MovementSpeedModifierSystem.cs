@@ -94,6 +94,7 @@ namespace Content.Shared.Movement.Systems
 
             move.WalkSpeedModifier = ev.WalkSpeedModifier;
             move.SprintSpeedModifier = ev.SprintSpeedModifier;
+            move.WeightlessAcceleration = ev.ZeroGravitySpeedModifier;
             Dirty(uid, move);
         }
 
@@ -160,15 +161,18 @@ namespace Content.Shared.Movement.Systems
         public float WalkSpeedModifier { get; private set; } = 1.0f;
         public float SprintSpeedModifier { get; private set; } = 1.0f;
 
-        public void ModifySpeed(float walk, float sprint)
+        public float ZeroGravitySpeedModifier { get; private set; } = 0.0f;
+
+        public void ModifySpeed(float walk, float sprint, float zeroGravityModifer)
         {
             WalkSpeedModifier *= walk;
             SprintSpeedModifier *= sprint;
+            ZeroGravitySpeedModifier *= zeroGravityModifer;
         }
 
         public void ModifySpeed(float mod)
         {
-            ModifySpeed(mod, mod);
+            ModifySpeed(mod, mod, mod);
         }
     }
 

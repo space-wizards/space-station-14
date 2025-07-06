@@ -29,22 +29,24 @@ public sealed class HeldSpeedModifierSystem : EntitySystem
         _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
     }
 
-    public (float,float) GetHeldMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component)
+    public (float,float,float) GetHeldMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component)
     {
         var walkMod = component.WalkModifier;
         var sprintMod = component.SprintModifier;
+        var zeroGMod = component.ZeroGravityModifier;
         if (component.MirrorClothingModifier && TryComp<ClothingSpeedModifierComponent>(uid, out var clothingSpeedModifier))
         {
             walkMod = clothingSpeedModifier.WalkModifier;
             sprintMod = clothingSpeedModifier.SprintModifier;
+            zeroGMod = clothingSpeedModifier.ZeroGravityModifier;
         }
 
-        return (walkMod, sprintMod);
+        return (walkMod, sprintMod, zeroGMod);
     }
 
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, HeldSpeedModifierComponent component, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
-        var (walkMod, sprintMod) = GetHeldMovementSpeedModifiers(uid, component);
-        args.Args.ModifySpeed(walkMod, sprintMod);
+        var (walkMod, sprintMod,zeroGMod) = GetHeldMovementSpeedModifiers(uid, component);
+        args.Args.ModifySpeed(walkMod, sprintMod, zeroGMod);
     }
 }

@@ -15,6 +15,9 @@ public sealed partial class ClothingSpeedModifierComponent : Component
 
     [DataField]
     public float SprintModifier = 1.0f;
+
+    [DataField]
+    public float ZeroGravityModifier = 1.0f;
 }
 
 [Serializable, NetSerializable]
@@ -22,10 +25,12 @@ public sealed class ClothingSpeedModifierComponentState : ComponentState
 {
     public float WalkModifier;
     public float SprintModifier;
+    public float ZeroGravityModifier;
 
-    public ClothingSpeedModifierComponentState(float walkModifier, float sprintModifier)
+    public ClothingSpeedModifierComponentState(float walkModifier, float sprintModifier, float zeroGravityModifier)
     {
         WalkModifier = walkModifier;
         SprintModifier = sprintModifier;
+        ZeroGravityModifier = zeroGravityModifier;
     }
 }

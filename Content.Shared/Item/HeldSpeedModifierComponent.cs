@@ -26,6 +26,9 @@ public sealed partial class HeldSpeedModifierComponent : Component
     [DataField] [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float SprintModifier = 1.0f;
 
+    [DataField, AutoNetworkedField]
+    public float ZeroGravityModifier = 1.0f;
+
     /// <summary>
     /// If true, values from <see cref="ClothingSpeedModifierComponent"/> will attempted to be used before the ones in this component.
     /// </summary>
