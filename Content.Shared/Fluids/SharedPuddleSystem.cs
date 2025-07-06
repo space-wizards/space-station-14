@@ -9,6 +9,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -41,6 +42,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
         SubscribeLocalEvent<PuddleComponent, GetFootstepSoundEvent>(OnGetFootstepSound);
         SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
+        SubscribeLocalEvent<PuddleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
 
         InitializeSpillable();
     }
@@ -122,6 +124,18 @@ public abstract partial class SharedPuddleSystem : EntitySystem
             else
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
         }
+    }
+
+    // Workaround for https://github.com/space-wizards/space-station-14/pull/35314
+    private void OnEntRemoved(Entity<PuddleComponent> ent, ref EntRemovedFromContainerMessage args)
+    {
+        // Make sure the removed entity was our contained solution
+        if (ent.Comp is not { Solution: { } sol }
+            || args.Entity != sol.Owner)
+            return;
+
+        // Clear our cached reference to the solution entity
+        ent.Comp.Solution = null;
     }
 
     private void UpdateAppearance(Entity<PuddleComponent?, AppearanceComponent?> ent)
