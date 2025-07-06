@@ -17,7 +17,7 @@
     successChance: 1
     interactSuccessSound:
       collection: ChurchBell
-    verb: interaction-popup-ring-verb
+    verb: interaction-popup-verb-ring
   - type: Clickable
   - type: Rotatable
   - type: CollisionWake
