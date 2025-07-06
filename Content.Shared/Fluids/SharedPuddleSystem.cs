@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
@@ -20,16 +21,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Blood = "Blood";
-
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string Slime = "Slime";
-
-    [ValidatePrototypeId<ReagentPrototype>]
-    private const string CopperBlood = "CopperBlood";
-
-    private static string[] _standoutReagents = [Blood, Slime, CopperBlood];
+    private static readonly ProtoId<ReagentPrototype>[] StandoutReagents = ["Blood", "Slime", "CopperBlood"];
 
     /// <summary>
     /// The lowest threshold to be considered for puddle sprite states as well as slipperiness of a puddle.
@@ -58,7 +50,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         if (args.SolutionId != entity.Comp.SolutionName)
             return;
 
-        UpdateAppearance(entity, entity.Comp);
+        UpdateAppearance((entity, entity.Comp));
     }
 
     private void OnRefillableCanDrag(Entity<RefillableSolutionComponent> entity, ref CanDragEvent args)
@@ -132,30 +124,30 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         }
     }
 
-    private void UpdateAppearance(EntityUid uid, PuddleComponent? puddleComponent = null,
-        AppearanceComponent? appearance = null)
+    private void UpdateAppearance(Entity<PuddleComponent?, AppearanceComponent?> ent)
     {
-        if (!Resolve(uid, ref puddleComponent, ref appearance, false))
-        {
+        var (_, puddle, appearance) = ent;
+        if (!Resolve(ent, ref puddle, ref appearance))
             return;
-        }
 
         var volume = FixedPoint2.Zero;
-        Color color = Color.White;
+        var color = Color.White;
 
-        if (_solutionContainerSystem.ResolveSolution(uid, puddleComponent.SolutionName, ref puddleComponent.Solution,
+        if (_solutionContainerSystem.ResolveSolution(ent.Owner,
+                puddle.SolutionName,
+                ref puddle.Solution,
                 out var solution))
         {
-            volume = solution.Volume / puddleComponent.OverflowVolume;
+            volume = solution.Volume / puddle.OverflowVolume;
 
             // Make blood stand out more
             // Kinda EH
             // Could potentially do alpha per-solution but future problem.
 
-            color = solution.GetColorWithout(_prototypeManager, _standoutReagents);
+            color = solution.GetColorWithout(_prototypeManager, StandoutReagents.Select(proto => proto.Id).ToArray());
             color = color.WithAlpha(0.7f);
 
-            foreach (var standout in _standoutReagents)
+            foreach (var standout in StandoutReagents)
             {
                 var quantity = solution.GetTotalPrototypeQuantity(standout);
                 if (quantity <= FixedPoint2.Zero)
@@ -163,12 +155,13 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
                 var interpolateValue = quantity.Float() / solution.Volume.Float();
                 color = Color.InterpolateBetween(color,
-                    _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor, interpolateValue);
+                    _prototypeManager.Index(standout).SubstanceColor,
+                    interpolateValue);
             }
         }
 
-        _appearance.SetData(uid, PuddleVisuals.CurrentVolume, volume.Float(), appearance);
-        _appearance.SetData(uid, PuddleVisuals.SolutionColor, color, appearance);
+        _appearance.SetData(ent, PuddleVisuals.CurrentVolume, volume.Float(), appearance);
+        _appearance.SetData(ent, PuddleVisuals.SolutionColor, color, appearance);
     }
 
     public void DoTileReactions(TileRef tileRef, Solution solution)
