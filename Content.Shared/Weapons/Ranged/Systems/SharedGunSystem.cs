@@ -426,7 +426,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
         var projectile = EnsureComp<ProjectileComponent>(uid);
-        projectile.Weapon = new WeakEntityReference(GetNetEntity(gunUid) ?? NetEntity.Invalid);
+        projectile.Weapon = GetWeakReference(ref gunUid);
         var shooter = user ?? gunUid;
         if (shooter != null)
             Projectiles.SetShooter(uid, projectile, shooter.Value);

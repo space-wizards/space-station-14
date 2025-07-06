@@ -211,7 +211,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (Resolve(ref component.Shooter) == shooterId)
             return;
 
-        component.Shooter = new WeakEntityReference(GetNetEntity(shooterId));
+        component.Shooter = GetWeakReference(ref shooterId);
         Dirty(id, component);
     }
 
