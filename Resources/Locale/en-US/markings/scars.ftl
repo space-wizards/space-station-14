@@ -19,6 +19,9 @@ marking-ScarSternotomy = Sternotomy Scar
 marking-ScarLaparotomy-scar_laparotomy = Laparotomy Scar
 marking-ScarLaparotomy = Laparotomy Scar
 
+marking-ScarLaparotomyNavelless-scar_navelless-laparotomy = Laparotomy Scar
+marking-ScarLaparotomyNavelless = Laparotomy Scar
+
 marking-ScarHepatectomy-scar_hepatectomy = Hepatectomy Scar
 marking-ScarHepatectomy = Hepatectomy Scar
 
