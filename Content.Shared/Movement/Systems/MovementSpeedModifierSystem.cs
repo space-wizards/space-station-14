@@ -51,7 +51,7 @@ namespace Content.Shared.Movement.Systems
             if (_gravity.IsWeightless(ent))
                 RefreshWeightlessModifiers(ent);
             else
-                RefreshMovementModifiers(ent);
+                RefreshMovementSpeedModifiers(ent);
         }
 
         /// <summary>
