@@ -57,19 +57,15 @@ public sealed class InteractionPopupSystem : EntitySystem
             args.Handled = true;
     }
 
-    private bool SharedInteract(
-        EntityUid uid,
-        InteractionPopupComponent component,
-        EntityUid target,
-        EntityUid user)
+    private bool CanInteract(EntityUid uid, EntityUid target, EntityUid user)
     {
         if (user == target)
             return false;
 
-        //Handling does nothing and this thing annoyingly plays way too often.
-        // HUH? What does this comment even mean?
-
         if (HasComp<SleepingComponent>(uid))
+            return false;
+
+        if (HasComp<SleepingComponent>(target))
             return false;
 
         if (TryComp<MobStateComponent>(uid, out var state)
@@ -78,6 +74,19 @@ public sealed class InteractionPopupSystem : EntitySystem
             return false;
         }
 
+        return true;
+    }
+    private bool SharedInteract(
+        EntityUid uid,
+        InteractionPopupComponent component,
+        EntityUid target,
+        EntityUid user)
+    {
+        //Handling does nothing and this thing annoyingly plays way too often.
+        // HUH? What does this comment even mean?
+        if (!CanInteract(uid, target, user))
+            return false;
+        
         var curTime = _gameTiming.CurTime;
 
         if (curTime < component.LastInteractTime + component.InteractDelay)
@@ -170,7 +179,7 @@ public sealed class InteractionPopupSystem : EntitySystem
 
     private void AddVerb(EntityUid uid, InteractionPopupComponent comp, GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || !CanInteract(uid, args.Target, args.User))
             return;
 
         var verb = new ActivationVerb
