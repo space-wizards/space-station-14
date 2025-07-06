@@ -2,6 +2,7 @@ using Content.Server.Administration;
 using Content.Server.Commands;
 using Content.Shared.Administration;
 using Content.Shared.Alert;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Alert.Commands;
@@ -9,6 +10,7 @@ namespace Content.Server.Alert.Commands;
 [AdminCommand(AdminFlags.Debug)]
 public sealed class ShowAlert : LocalizedEntityCommands
 {
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
 
     public override string Command => "showalert";
@@ -27,7 +29,7 @@ public sealed class ShowAlert : LocalizedEntityCommands
             return;
         }
 
-        if (args.Length > 2 && !CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, args[2], player, out attachedEntity))
+        if (args.Length > 2 && !CommandUtils.TryGetAttachedEntityByUsernameOrId(shell, args[2], _playerManager, out attachedEntity))
         {
             shell.WriteError(Loc.GetString("shell-target-player-does-not-exist"));
             return;
