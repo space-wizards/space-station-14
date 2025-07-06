@@ -39,6 +39,10 @@
       "name": "scar_stomach_bullets",
       "directions": 4
     },
+	{
+        "name": "scar_sternotomy",
+        "directions": 4
+    }, 
     {
         "name": "scar_face_1",
         "directions": 4

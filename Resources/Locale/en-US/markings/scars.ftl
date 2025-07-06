@@ -13,6 +13,9 @@ marking-ScarTopSurgeryLong = Top Surgery Scar (Long)
 marking-ScarChest-scar_chest = Chest Scar
 marking-ScarChest = Chest Scar
 
+marking-ScarSternotomy-scar_sternotomy = Sternotomy Scar
+marking-ScarSternotomy = Sternotomy Scar
+
 marking-ScarNeck-scar_neck = Neck Scar
 marking-ScarNeck = Neck Scar
 
