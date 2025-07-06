@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using Content.Shared.Instruments;
 
@@ -103,13 +104,16 @@ public static class MidiParser
                         // 0x04 is InstrumentName
 
                         var text = Encoding.ASCII.GetString(metaData, 0, (int)metaLength);
+                        // remove all control characters
+                        // some of these ended up in the admin logs, causing database errors
+                        var sanitizedText = new string(text.Where(c => !char.IsControl(c)).ToArray());
                         switch (metaType)
                         {
                             case 0x03 when track.TrackName == null:
-                                track.TrackName = text;
+                                track.TrackName = sanitizedText;
                                 break;
                             case 0x04 when track.InstrumentName == null:
-                                track.InstrumentName = text;
+                                track.InstrumentName = sanitizedText;
                                 break;
                         }
 
