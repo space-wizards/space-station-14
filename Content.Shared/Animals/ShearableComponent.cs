@@ -55,7 +55,6 @@ public sealed partial class ShearableComponent : Component
     [DataField]
     public ProtoId<ToolQualityPrototype>? ToolQuality;
 
-
     /// <summary>
     ///     A LocID that is added to the description box when the entity is shearable.
     ///     e.g. "She has a fleece of fluffy wool."
@@ -76,7 +75,6 @@ public sealed partial class ShearableComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public Entity<SolutionComponent>? Solution;
 
-
     /// <summary>
     ///     This is used for handling the shearable layer.
     ///     A special sprite layer that changes based on the mob's life state.
@@ -85,8 +83,6 @@ public sealed partial class ShearableComponent : Component
     /// </summary>
     [ViewVariables]
     public bool Shearable { get; set; } = false;
-
-
 }
 
 /// <summary>
