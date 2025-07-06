@@ -28,7 +28,6 @@ public sealed class ClumsySystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly INetManager _net = default!;
 
-
     public override void Initialize()
     {
         SubscribeLocalEvent<ClumsyComponent, SelfBeforeHyposprayInjectsEvent>(BeforeHyposprayEvent);
@@ -102,8 +101,8 @@ public sealed class ClumsySystem : EntitySystem
         if (_net.IsClient)
             return;
 
-        var selfMessage = Loc.GetString("clumsy-catch-fail-message-user", ("item", ent.Owner), ("catcher", Identity.Entity(ent.Owner, EntityManager)));
-        var othersMessage = Loc.GetString("clumsy-catch-fail-message-others", ("item", ent.Owner), ("catcher", Identity.Entity(ent.Owner, EntityManager)));
+        var selfMessage = Loc.GetString(ent.Comp.CatchingFailedMessageSelf, ("item", ent.Owner), ("catcher", Identity.Entity(ent.Owner, EntityManager)));
+        var othersMessage = Loc.GetString(ent.Comp.CatchingFailedMessageOthers, ("item", ent.Owner), ("catcher", Identity.Entity(ent.Owner, EntityManager)));
         _popup.PopupEntity(selfMessage, ent.Owner, ent.Owner);
         _popup.PopupEntity(othersMessage, ent.Owner, Filter.PvsExcept(ent.Owner), true);
         _audio.PlayPvs(ent.Comp.ClumsySound, ent);
@@ -135,7 +134,7 @@ public sealed class ClumsySystem : EntitySystem
         _audio.PlayPvs(ent.Comp.GunShootFailSound, ent);
         _audio.PlayPvs(ent.Comp.ClumsySound, ent);
 
-        _popup.PopupEntity(Loc.GetString("gun-clumsy"), ent, ent);
+        _popup.PopupEntity(Loc.GetString(ent.Comp.GunFailedMessage), ent, ent);
         args.Cancel();
     }
 
