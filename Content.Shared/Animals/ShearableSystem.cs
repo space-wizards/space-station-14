@@ -56,8 +56,8 @@ public sealed class SharedShearableSystem : EntitySystem
     /// <returns>
     ///     A <c>ShearableComponent.CheckShearReturns</c> enum of the result.
     /// </returns>
-    /// <seealso cref="ShearableComponent.CheckShearReturns"/>
-    public ShearableComponent.CheckShearReturns CheckShear(
+    /// <seealso cref="CheckShearReturns"/>
+    public CheckShearReturns CheckShear(
         EntityUid ent,
         ShearableComponent comp,
         EntityUid? usedItem = null,
@@ -75,13 +75,13 @@ public sealed class SharedShearableSystem : EntitySystem
                 // Does the held item have the correct toolQuality component quality?
                 !_tool.HasQuality((EntityUid)usedItem, comp.ToolQuality)
             )
-                return ShearableComponent.CheckShearReturns.WrongTool;
+                return CheckShearReturns.WrongTool;
         }
 
         // Test if the configured product exists.
         if (!_prototypeManager.TryIndex(comp.ShearedProductID, out var _))
         {
-            return ShearableComponent.CheckShearReturns.ProductError;
+            return CheckShearReturns.ProductError;
         }
 
         // Everything below this point is just calculating whether the animal
@@ -97,7 +97,7 @@ public sealed class SharedShearableSystem : EntitySystem
                 out var solution
             )
         )
-            return ShearableComponent.CheckShearReturns.SolutionError;
+            return CheckShearReturns.SolutionError;
 
         // Store solution.Volume in a variable to make calculations a bit clearer.
         var targetSolutionQuantity = solution.Volume;
@@ -128,10 +128,10 @@ public sealed class SharedShearableSystem : EntitySystem
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
         if (solutionToRemove <= 0)
         {
-            return ShearableComponent.CheckShearReturns.InsufficientSolution;
+            return CheckShearReturns.InsufficientSolution;
         }
 
-        return ShearableComponent.CheckShearReturns.Success;
+        return CheckShearReturns.Success;
     }
 
     /// <summary>
@@ -155,29 +155,21 @@ public sealed class SharedShearableSystem : EntitySystem
         // Run all shearing checks.
         switch (CheckShear(ent, ent.Comp, toolUsed))
         {
-            case ShearableComponent.CheckShearReturns.Success:
+            case CheckShearReturns.Success:
                 // ALL SYSTEMS GO!
                 break;
-            case ShearableComponent.CheckShearReturns.WrongTool:
+            case CheckShearReturns.WrongTool:
                 return;
-            case ShearableComponent.CheckShearReturns.SolutionError:
+            case CheckShearReturns.SolutionError:
                 return;
-            case ShearableComponent.CheckShearReturns.InsufficientSolution:
+            case CheckShearReturns.InsufficientSolution:
                 // Resolve the prototype so we can reference its name in localisation.
                 if (!_prototypeManager.TryIndex(ent.Comp.ShearedProductID, out var proto))
                     return;
                 // NO WOOL LEFT.
-                _popup.PopupClient(
-                    Loc.GetString(
-                        "shearable-system-no-product",
-                        ("target", Identity.Entity(ent.Owner, EntityManager)),
-                        ("product", proto.Name)
-                    ),
-                    ent.Owner,
-                    userUid
-                );
+                _popup.PopupClient(Loc.GetString("shearable-system-no-product", ("target", Identity.Entity(ent.Owner, EntityManager)), ("product", proto.Name)), ent.Owner, userUid);
                 return;
-            case ShearableComponent.CheckShearReturns.ProductError:
+            case CheckShearReturns.ProductError:
                 return;
         }
 
@@ -264,15 +256,7 @@ public sealed class SharedShearableSystem : EntitySystem
         // Failure message, if the shearable creature has no targetSolutionName to be sheared.
         if (solutionToRemove == 0)
         {
-            _popup.PopupClient(
-                Loc.GetString(
-                    "shearable-system-no-product",
-                    ("target", Identity.Entity(ent.Owner, EntityManager)),
-                    ("product", proto.Name)
-                ),
-                ent.Owner,
-                args.Args.User
-            );
+            _popup.PopupClient(Loc.GetString("shearable-system-no-product", ("target", Identity.Entity(ent.Owner, EntityManager)), ("product", proto.Name)), ent.Owner, args.Args.User);
             return;
         }
 
@@ -287,16 +271,7 @@ public sealed class SharedShearableSystem : EntitySystem
         }
 
         // Success message.
-        _popup.PopupClient(
-            Loc.GetString(
-                "shearable-system-success",
-                ("target", Identity.Entity(ent.Owner, EntityManager)),
-                ("product", proto.Name)
-            ),
-            ent.Owner,
-            args.Args.User,
-            PopupType.Medium
-        );
+        _popup.PopupClient(Loc.GetString("shearable-system-success", ("target", Identity.Entity(ent.Owner, EntityManager)), ("product", proto.Name)), ent.Owner, args.Args.User, PopupType.Medium);
     }
 
     /// <summary>
@@ -368,7 +343,7 @@ public sealed class SharedShearableSystem : EntitySystem
         // Checks whether the entity can be sheared and applies appropriate examine additions.
         switch (CheckShear(ent, ent.Comp, checkItem: false))
         {
-            case ShearableComponent.CheckShearReturns.Success:
+            case CheckShearReturns.Success:
                 // Check again if this description has been set.
                 if (string.IsNullOrEmpty(ent.Comp.ShearableMarkupText))
                 {
@@ -391,30 +366,19 @@ public sealed class SharedShearableSystem : EntitySystem
                     }
                 }
                 // ALL SYSTEMS GO!
-                args.PushMarkup(
-                    Loc.GetString(
-                        ent.Comp.ShearableMarkupText,
-                        ("target", Identity.Entity(ent.Owner, EntityManager)),
-                        ("toolQuality", toolQuality)
-                    )
-                );
+                args.PushMarkup(Loc.GetString(ent.Comp.ShearableMarkupText, ("target", Identity.Entity(ent.Owner, EntityManager)), ("toolQuality", toolQuality)));
                 return;
-            case ShearableComponent.CheckShearReturns.SolutionError:
+            case CheckShearReturns.SolutionError:
                 return;
-            case ShearableComponent.CheckShearReturns.InsufficientSolution:
+            case CheckShearReturns.InsufficientSolution:
                 // Check again if this description has been set.
                 if (string.IsNullOrEmpty(ent.Comp.UnShearableMarkupText))
                 {
                     break;
                 }
-                args.PushMarkup(
-                    Loc.GetString(
-                        ent.Comp.UnShearableMarkupText,
-                        ("target", Identity.Entity(ent.Owner, EntityManager))
-                    )
-                );
+                args.PushMarkup(Loc.GetString(ent.Comp.UnShearableMarkupText, ("target", Identity.Entity(ent.Owner, EntityManager))));
                 return;
-            case ShearableComponent.CheckShearReturns.ProductError:
+            case CheckShearReturns.ProductError:
                 return;
         }
     }
@@ -439,23 +403,13 @@ public sealed class SharedShearableSystem : EntitySystem
         if (sol.Volume.Value < minimumSol * 100)
         {
             // Remove wool layer
-            _appearance.SetData(
-                ent.Owner,
-                ShearableComponent.ShearableVisuals.Shearable,
-                false,
-                appearance
-            );
+            _appearance.SetData(ent.Owner, ShearableVisuals.Shearable, false, appearance);
         }
         // If solution is more than the minimum then disable the shearable layer.
         else
         {
             // Add wool layer
-            _appearance.SetData(
-                ent.Owner,
-                ShearableComponent.ShearableVisuals.Shearable,
-                true,
-                appearance
-            );
+            _appearance.SetData(ent.Owner, ShearableVisuals.Shearable, true, appearance);
         }
     }
 

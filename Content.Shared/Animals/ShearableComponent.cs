@@ -2,7 +2,6 @@ using Content.Shared.Chemistry.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Tools;
 
 namespace Content.Shared.Animals;
@@ -77,34 +76,44 @@ public sealed partial class ShearableComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public Entity<SolutionComponent>? Solution;
 
-    /// <summary>
-    /// These are used as return values for CheckShear()
-    /// Each one represents a different reason for why the target entity cannot be sheared.
-    /// Except <c>Success</c> which means it can be sheared.
-    /// </summary>
-    public enum CheckShearReturns
-    {
-        /// <summary> All checks were successful, the target entity can be sheared. </summary>
-        Success,
-        /// <summary> The player is not using the correct tool to shear this animal. Or their hand is empty. </summary>
-        WrongTool,
-        /// <summary> The configured solution does not exist, likely a typo in the yaml file. </summary>
-        SolutionError,
-        /// <summary> There is not enough solution in the animal to form a single target product. </summary>
-        InsufficientSolution,
-        /// <summary> The ShearedProductID did not resolve to an existing prototype. It might not exist. </summary>
-        ProductError
-    }
 
-    // These are used for handling the shearable layer.
-    // A special sprite layer that changes based on the mob's life state.
-    // But can also be toggled by the shearable solution dropping blow a certain amount.
+    /// <summary>
+    ///     This is used for handling the shearable layer.
+    ///     A special sprite layer that changes based on the mob's life state.
+    ///     But can also be toggled by the shearable solution dropping blow a certain amount.
+    ///     Typically, when Shearable is True, the shearable layer will be visible.
+    /// </summary>
     [ViewVariables]
     public bool Shearable { get; set; } = false;
 
-    [Serializable, NetSerializable]
-    public enum ShearableVisuals
-    {
-        Shearable,
-    }
+
+}
+
+/// <summary>
+///     These are used as return values for CheckShear()
+///     Each one represents a different reason for why the target entity cannot be sheared.
+///     Except <c>Success</c> which means it can be sheared.
+/// </summary>
+public enum CheckShearReturns
+{
+    /// <summary> All checks were successful, the target entity can be sheared. </summary>
+    Success,
+    /// <summary> The player is not using the correct tool to shear this animal. Or their hand is empty. </summary>
+    WrongTool,
+    /// <summary> The configured solution does not exist, likely a typo in the yaml file. </summary>
+    SolutionError,
+    /// <summary> There is not enough solution in the animal to form a single target product. </summary>
+    InsufficientSolution,
+    /// <summary> The ShearedProductID did not resolve to an existing prototype. It might not exist. </summary>
+    ProductError
+}
+
+/// <summary>
+///     Also part of the Shearable Layer.
+/// </summary>
+/// <seealso cref="ShearableComponent.Shearable"/>
+[Serializable, NetSerializable]
+public enum ShearableVisuals
+{
+    Shearable,
 }
