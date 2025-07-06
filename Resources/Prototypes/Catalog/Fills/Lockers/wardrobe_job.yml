@@ -57,7 +57,7 @@
       - id: trayScanner
       - id: Wristwatch
       - id: ClothingNeckBling
-      - id: ClothingNeckHeadphones
+      - id: ClothingMultipleHeadphones
       - id: DiceBag
       - id: PersonalAI
       - id: CrayonBox
