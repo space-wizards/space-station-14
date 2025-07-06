@@ -54,7 +54,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
 
     private void OnAfterInteract(Entity<AbsorbentComponent> ent, ref AfterInteractEvent args)
     {
-        if (!args.CanReach || args.Handled || args.Target is not {} target)
+        if (!args.CanReach || args.Handled || args.Target is not { } target)
             return;
 
         Mop(ent, args.User, target);
@@ -356,11 +356,5 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         _melee.DoLunge(user, absorbEnt, Angle.Zero, localPos, null);
 
         return true;
-    }
-
-    [Serializable, NetSerializable]
-    protected sealed class AbsorbentComponentState(Dictionary<Color, float> progress) : ComponentState
-    {
-        public Dictionary<Color, float> Progress = progress;
     }
 }
