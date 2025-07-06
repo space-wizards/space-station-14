@@ -48,7 +48,6 @@ public sealed class RespiratorSystem : EntitySystem
         // We want to process lung reagents before we inhale new reagents.
         UpdatesAfter.Add(typeof(MetabolizerSystem));
         SubscribeLocalEvent<RespiratorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<RespiratorComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BodyComponent, InhaledGasEvent>(OnGasInhaled);
         SubscribeLocalEvent<BodyComponent, ExhaledGasEvent>(OnGasExhaled);
@@ -56,25 +55,20 @@ public sealed class RespiratorSystem : EntitySystem
 
     private void OnMapInit(Entity<RespiratorComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
-    }
-
-    private void OnUnpaused(Entity<RespiratorComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.NextUpdate += args.PausedTime;
+        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.AdjustedUpdateInterval;
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<RespiratorComponent, BodyComponent>();
-        while (query.MoveNext(out var uid, out var respirator, out var body))
+        var query = EntityQueryEnumerator<RespiratorComponent>();
+        while (query.MoveNext(out var uid, out var respirator))
         {
             if (_gameTiming.CurTime < respirator.NextUpdate)
                 continue;
 
-            respirator.NextUpdate += respirator.UpdateInterval;
+            respirator.NextUpdate += respirator.AdjustedUpdateInterval;
 
             if (_mobState.IsDead(uid))
                 continue;
@@ -396,27 +390,9 @@ public sealed class RespiratorSystem : EntitySystem
             Math.Clamp(respirator.Saturation, respirator.MinSaturation, respirator.MaxSaturation);
     }
 
-    private void OnApplyMetabolicMultiplier(
-        Entity<RespiratorComponent> ent,
-        ref ApplyMetabolicMultiplierEvent args)
+    private void OnApplyMetabolicMultiplier(Entity<RespiratorComponent> ent, ref ApplyMetabolicMultiplierEvent args)
     {
-        // TODO REFACTOR THIS
-        // This will slowly drift over time due to floating point errors.
-        // Instead, raise an event with the base rates and allow modifiers to get applied to it.
-        if (args.Apply)
-        {
-            ent.Comp.UpdateInterval *= args.Multiplier;
-            ent.Comp.Saturation *= args.Multiplier;
-            ent.Comp.MaxSaturation *= args.Multiplier;
-            ent.Comp.MinSaturation *= args.Multiplier;
-            return;
-        }
-
-        // This way we don't have to worry about it breaking if the stasis bed component is destroyed
-        ent.Comp.UpdateInterval /= args.Multiplier;
-        ent.Comp.Saturation /= args.Multiplier;
-        ent.Comp.MaxSaturation /= args.Multiplier;
-        ent.Comp.MinSaturation /= args.Multiplier;
+        ent.Comp.UpdateIntervalMultiplier = args.Multiplier;
     }
 
     private void OnGasInhaled(Entity<BodyComponent> entity, ref InhaledGasEvent args)
