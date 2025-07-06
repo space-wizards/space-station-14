@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: Holobarrier projectors are now more power efficient.
-    type: Tweak
-  id: 8231
-  time: '2025-04-18T16:10:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34473
 - author: K-Dynamic
   changes:
   - message: Removed egg-plant from MegaSeed Servitor. (Egg-plant seeds can still
@@ -3887,3 +3880,11 @@
   id: 8742
   time: '2025-07-06T00:59:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38762
+- author: slarticodefast
+  changes:
+  - message: You can now catch basketballs, footballs and beach balls that are thrown
+      at you!
+    type: Add
+  id: 8743
+  time: '2025-07-06T16:54:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37702
