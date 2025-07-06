@@ -88,7 +88,10 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
         foreach (var ent in _deletionQueue)
         {
-            Del(ent);
+            // It's possible to have items in the queue that are already being deleted but threw a
+            // SolutionContainerChangedEvent as a part of their shutdown, like during a round restart.
+            if (!TerminatingOrDeleted(ent))
+                PredictedDel(ent);
         }
 
         _deletionQueue.Clear();
@@ -188,7 +191,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     private void OnAnchorChanged(Entity<PuddleComponent> entity, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
-            QueueDel(entity);
+            PredictedQueueDel(entity.Owner);
     }
 
     // Workaround for https://github.com/space-wizards/space-station-14/pull/35314
@@ -377,11 +380,11 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     // replicate those, and I am not enough of a wizard to attempt implementing that.
 
     /// <summary>
-    ///     First splashes reagent on reactive entities near the spilling entity, then spills the rest regularly to a
-    ///     puddle. This is intended for 'destructive' spills, like when entities are destroyed or thrown.
+    /// First splashes reagent on reactive entities near the spilling entity, then spills the rest regularly to a
+    /// puddle. This is intended for 'destructive' spills, like when entities are destroyed or thrown.
     /// </summary>
     /// <remarks>
-    /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
+    /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"/> and return false.
     /// </remarks>
     public abstract bool TrySplashSpillAt(EntityUid uid,
         EntityCoordinates coordinates,
@@ -391,29 +394,19 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         EntityUid? user = null);
 
     /// <summary>
-    ///     Spills solution at the specified coordinates.
+    /// Spills solution at the specified coordinates.
     /// Will add to an existing puddle if present or create a new one if not.
     /// </summary>
     /// <remarks>
-    /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
+    /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"/> and return false.
     /// </remarks>
     public abstract bool TrySpillAt(EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true);
 
-    /// <summary>
-    /// <see cref="TrySpillAt(EntityCoordinates, Solution, out EntityUid, bool)"/>
-    /// </summary>
-    /// <remarks>
-    /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
-    /// </remarks>
+    /// <inheritdoc cref="TrySpillAt(EntityCoordinates, Solution, out EntityUid, bool)"/>
     public abstract bool TrySpillAt(EntityUid uid, Solution solution, out EntityUid puddleUid, bool sound = true,
         TransformComponent? transformComponent = null);
 
-    /// <summary>
-    /// <see cref="TrySpillAt(EntityCoordinates, Solution, out EntityUid, bool)"/>
-    /// </summary>
-    /// <remarks>
-    /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
-    /// </remarks>
+    /// <inheritdoc cref="TrySpillAt(EntityCoordinates, Solution, out EntityUid, bool)"/>
     public abstract bool TrySpillAt(TileRef tileRef, Solution solution, out EntityUid puddleUid, bool sound = true,
         bool tileReact = true);
 
