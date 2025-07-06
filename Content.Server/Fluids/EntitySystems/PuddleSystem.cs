@@ -50,7 +50,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
@@ -59,12 +58,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly TileFrictionController _tile = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
-
-    private static readonly ProtoId<ReagentPrototype> Blood = "Blood";
-    private static readonly ProtoId<ReagentPrototype> Slime = "Slime";
-    private static readonly ProtoId<ReagentPrototype> CopperBlood = "CopperBlood";
-
-    private static readonly string[] StandoutReagents = [Blood, Slime, CopperBlood];
 
     // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
     // loses & then gains reagents in a single tick.
@@ -86,7 +79,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
-        SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
         SubscribeLocalEvent<PuddleComponent, SlipEvent>(OnPuddleSlip);
 
@@ -319,10 +311,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         TickEvaporation();
     }
 
-    private void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
+    protected override void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
     {
-        if (args.SolutionId != entity.Comp.SolutionName)
-            return;
+        base.OnSolutionUpdate(entity, ref args);
 
         if (args.Solution.Volume <= 0)
         {
@@ -334,46 +325,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         UpdateSlip((entity, entity.Comp), args.Solution);
         UpdateSlow(entity, args.Solution);
         UpdateEvaporation(entity, args.Solution);
-        UpdateAppearance(entity, entity.Comp);
-    }
-
-    private void UpdateAppearance(EntityUid uid, PuddleComponent? puddleComponent = null,
-        AppearanceComponent? appearance = null)
-    {
-        if (!Resolve(uid, ref puddleComponent, ref appearance, false))
-        {
-            return;
-        }
-
-        var volume = FixedPoint2.Zero;
-        Color color = Color.White;
-
-        if (_solutionContainerSystem.ResolveSolution(uid, puddleComponent.SolutionName, ref puddleComponent.Solution,
-                out var solution))
-        {
-            volume = solution.Volume / puddleComponent.OverflowVolume;
-
-            // Make blood stand out more
-            // Kinda EH
-            // Could potentially do alpha per-solution but future problem.
-
-            color = solution.GetColorWithout(_prototypeManager, StandoutReagents);
-            color = color.WithAlpha(0.7f);
-
-            foreach (var standout in StandoutReagents)
-            {
-                var quantity = solution.GetTotalPrototypeQuantity(standout);
-                if (quantity <= FixedPoint2.Zero)
-                    continue;
-
-                var interpolateValue = quantity.Float() / solution.Volume.Float();
-                color = Color.InterpolateBetween(color,
-                    _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor, interpolateValue);
-            }
-        }
-
-        _appearance.SetData(uid, PuddleVisuals.CurrentVolume, volume.Float(), appearance);
-        _appearance.SetData(uid, PuddleVisuals.SolutionColor, color, appearance);
     }
 
     private void UpdateSlip(Entity<PuddleComponent> entity, Solution solution)

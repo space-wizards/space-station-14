@@ -16,8 +16,20 @@ namespace Content.Shared.Fluids;
 public abstract partial class SharedPuddleSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+
+    [ValidatePrototypeId<ReagentPrototype>]
+    private const string Blood = "Blood";
+
+    [ValidatePrototypeId<ReagentPrototype>]
+    private const string Slime = "Slime";
+
+    [ValidatePrototypeId<ReagentPrototype>]
+    private const string CopperBlood = "CopperBlood";
+
+    private static string[] _standoutReagents = [Blood, Slime, CopperBlood];
 
     /// <summary>
     /// The lowest threshold to be considered for puddle sprite states as well as slipperiness of a puddle.
@@ -33,10 +45,20 @@ public abstract partial class SharedPuddleSystem : EntitySystem
         SubscribeLocalEvent<DumpableSolutionComponent, CanDropTargetEvent>(OnDumpCanDropTarget);
         SubscribeLocalEvent<DrainableSolutionComponent, CanDropTargetEvent>(OnDrainCanDropTarget);
         SubscribeLocalEvent<RefillableSolutionComponent, CanDropDraggedEvent>(OnRefillableCanDropDragged);
+
+        SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
         SubscribeLocalEvent<PuddleComponent, GetFootstepSoundEvent>(OnGetFootstepSound);
         SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
 
         InitializeSpillable();
+    }
+
+    protected virtual void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
+    {
+        if (args.SolutionId != entity.Comp.SolutionName)
+            return;
+
+        UpdateAppearance(entity, entity.Comp);
     }
 
     private void OnRefillableCanDrag(Entity<RefillableSolutionComponent> entity, ref CanDragEvent args)
@@ -108,6 +130,45 @@ public abstract partial class SharedPuddleSystem : EntitySystem
             else
                 args.PushMarkup(Loc.GetString("puddle-component-examine-evaporating-no"));
         }
+    }
+
+    private void UpdateAppearance(EntityUid uid, PuddleComponent? puddleComponent = null,
+        AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref puddleComponent, ref appearance, false))
+        {
+            return;
+        }
+
+        var volume = FixedPoint2.Zero;
+        Color color = Color.White;
+
+        if (_solutionContainerSystem.ResolveSolution(uid, puddleComponent.SolutionName, ref puddleComponent.Solution,
+                out var solution))
+        {
+            volume = solution.Volume / puddleComponent.OverflowVolume;
+
+            // Make blood stand out more
+            // Kinda EH
+            // Could potentially do alpha per-solution but future problem.
+
+            color = solution.GetColorWithout(_prototypeManager, _standoutReagents);
+            color = color.WithAlpha(0.7f);
+
+            foreach (var standout in _standoutReagents)
+            {
+                var quantity = solution.GetTotalPrototypeQuantity(standout);
+                if (quantity <= FixedPoint2.Zero)
+                    continue;
+
+                var interpolateValue = quantity.Float() / solution.Volume.Float();
+                color = Color.InterpolateBetween(color,
+                    _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor, interpolateValue);
+            }
+        }
+
+        _appearance.SetData(uid, PuddleVisuals.CurrentVolume, volume.Float(), appearance);
+        _appearance.SetData(uid, PuddleVisuals.SolutionColor, color, appearance);
     }
 
     public void DoTileReactions(TileRef tileRef, Solution solution)
