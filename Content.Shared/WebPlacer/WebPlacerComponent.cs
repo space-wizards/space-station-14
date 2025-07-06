@@ -17,7 +17,7 @@ public sealed partial class WebPlacerComponent : Component
     ///     Id of the entity getting spawned.
     /// </summary>
     [DataField]
-    public EntProtoId WebPrototype = "SpiderWeb";
+    public EntProtoId SpawnEntity = "SpiderWeb";
 
     /// <summary>
     ///     Id of the action that will be given.
@@ -86,7 +86,7 @@ public sealed partial class WebPlacerComponent : Component
 }
 
 /// <summary>
-///     IntstantActionEvent used by <see cref="WebPlacerSystem"/>.
+///     InstantActionEvent used by <see cref="WebPlacerSystem"/>.
 /// </summary>
 public sealed partial class SpiderWebActionEvent : InstantActionEvent
 {

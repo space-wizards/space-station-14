@@ -9,17 +9,21 @@ using Robust.Shared.Map.Components;
 namespace Content.Shared.WebPlacer;
 
 /// <summary>
-///     System for giving the component owner (probably a spider) an action to spawn entites around itself.
+///     System for giving the component owner (probably a spider) an action to spawn entities around itself.
 /// </summary>
 public sealed class WebPlacerSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    [Dependency] private readonly ITileDefinitionManager _tile = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedActionsSystem _action = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
+
+    /// <summary>
+    ///     A recycled hashset used to check turfs for spiderwebs.
+    /// </summary>
+    private readonly HashSet<EntityUid> _webs = [];
 
     public override void Initialize()
     {
@@ -43,7 +47,7 @@ public sealed class WebPlacerSystem : EntitySystem
         var grid = xform.GridUid;
 
         // Instantly fail in space.
-        if (!TryComp<MapGridComponent>(grid, out var gridComp))
+        if (!HasComp<MapGridComponent>(grid))
         {
             _popup.PopupClient(Loc.GetString(webPlacer.Comp.MessageOffGrid), args.Performer, args.Performer);
             return;
@@ -51,13 +55,13 @@ public sealed class WebPlacerSystem : EntitySystem
 
         // Get coordinates and spawn webs if the coordinates are valid.
         var success = false;
-        foreach (var vect in webPlacer.Comp.OffsetVectors)
+        foreach (var vector in webPlacer.Comp.OffsetVectors)
         {
-            var pos = xform.Coordinates.Offset(vect);
-            if (!IsValidTile(pos, (grid.Value, gridComp), webPlacer.Comp))
+            var pos = xform.Coordinates.Offset(vector);
+            if (!IsValidTile(pos, webPlacer.Comp))
                 continue;
 
-            PredictedSpawnAtPosition(webPlacer.Comp.WebPrototype, pos);
+            PredictedSpawnAtPosition(webPlacer.Comp.SpawnEntity, pos);
             success = true;
         }
 
@@ -76,18 +80,23 @@ public sealed class WebPlacerSystem : EntitySystem
     }
 
     /// <returns>False if coords are in space. False if whitelisting fails. True otherwise.</returns>
-    private bool IsValidTile(EntityCoordinates coords, Entity<MapGridComponent> mapGrid, WebPlacerComponent comp)
+    private bool IsValidTile(EntityCoordinates coords, WebPlacerComponent comp)
     {
-        // Don't place webs in space
-        if (!_map.TryGetTileRef(mapGrid.Owner, mapGrid.Comp, coords, out var tileRef) ||
-            tileRef.IsSpace(_tile))
+        // Invalid in space or non-existent tile
+        if (!_turf.TryGetTileRef(coords, out var tileRef) || _turf.IsSpace(tileRef.Value))
             return false;
 
-        // Check whitelist and blacklist
-        foreach (var entity in _lookup.GetEntitiesIntersecting(coords, LookupFlags.Uncontained))
-            if (!_whitelist.CheckBoth(entity, comp.DestinationBlacklist, comp.DestinationWhitelist))
-                return false;
+        _webs.Clear();
+        _lookup.GetEntitiesInTile(tileRef.Value, _webs, LookupFlags.Uncontained);
 
+        // Invalid if failing whitelist
+        foreach (var ent in _webs)
+        {
+            if (!_whitelist.CheckBoth(ent, comp.DestinationBlacklist, comp.DestinationWhitelist))
+                return false;
+        }
+
+        // Valid otherwise
         return true;
     }
 }
