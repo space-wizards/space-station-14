@@ -265,6 +265,7 @@ public sealed class SharedShearableSystem : EntitySystem
         var removedSolution = _solutionContainer.SplitSolution(ent.Comp.Solution.Value, solutionToRemove);
 
         // Used for slightly altering the spawn position of sheared items.
+        // Don't worry about how it works, it just does, I promise.
         var random = IoCManager.Resolve<IRobustRandom>();
         var center = ent.Owner.ToCoordinates();
         // Spawn product.
