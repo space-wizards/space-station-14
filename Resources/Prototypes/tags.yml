@@ -43,6 +43,9 @@
   id: ATVKeys
 
 - type: Tag
+  id: Backpack
+
+- type: Tag
   id: Balloon
 
 - type: Tag
@@ -221,7 +224,6 @@
 
 - type: Tag
   id: CanPilot
-
 
 - type: Tag
   id: CaptainSabre
@@ -1038,6 +1040,9 @@
   id: PercussionInstrument
 
 - type: Tag
+  id: PetOnly
+
+- type: Tag
   id: PetWearable
 
 - type: Tag
@@ -1196,6 +1201,9 @@
 
 - type: Tag
   id: Screwdriver
+
+- type: Tag # Flags items that scurrets can wear in their back and outerwear slots.
+  id: ScurretWearable
 
 - type: Tag
   id: SecBeltEquip
@@ -1468,6 +1476,9 @@
   id: Wine
 
 - type: Tag
+  id: WireBrush
+
+- type: Tag
   id: Wirecutter
 
 - type: Tag
@@ -1508,5 +1519,4 @@
 
 - type: Tag
   id: XenoborgModuleStealth
-
 # ALPHABETICAL

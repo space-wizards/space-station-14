@@ -101,6 +101,11 @@
       - id: SoapNT
       - id: FlashlightLantern
       - id: Plunger
+      	amount: !type:ConstantNumberSelector
+          value: 2
+      - id: WireBrush
+      	amount: !type:ConstantNumberSelector
+          value: 2
 
 - type: entity
   id: ClosetLegalFilled
