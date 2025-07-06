@@ -10,7 +10,9 @@ using Content.Shared.Shearing;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
+using Robust.Shared.Random;
+using Content.Shared.Coordinates;
+using System.Numerics;
 
 
 namespace Content.Shared.Animals;
@@ -262,11 +264,20 @@ public sealed class SharedShearableSystem : EntitySystem
         // Split the solution inside the creature by solutionToRemove, return what was removed.
         var removedSolution = _solutionContainer.SplitSolution(ent.Comp.Solution.Value, solutionToRemove);
 
+        // Used for slightly altering the spawn position of sheared items.
+        var random = IoCManager.Resolve<IRobustRandom>();
+        var center = ent.Owner.ToCoordinates();
         // Spawn product.
         for (var i = 0; i < removedSolution.Volume.Value / productsPerSolution; i++)
         {
-
-            EntityManager.PredictedSpawnNextToOrDrop(ent.Comp.ShearedProductID, ent);
+            // Crazy spawn
+            var xoffs = random.NextFloat(-1f, 1f);
+            var yoffs = random.NextFloat(-1f, 1f);
+            var pos = center.Offset(new Vector2(xoffs, yoffs));
+            // A weaker sheep would disable prediction here but we are pioneering technology.
+            EntityManager.PredictedSpawnAtPosition(ent.Comp.ShearedProductID, pos);
+            // Normal spawn just in case we need it later.
+            //EntityManager.PredictedSpawnNextToOrDrop(ent.Comp.ShearedProductID, ent);
         }
 
         // Success message.
