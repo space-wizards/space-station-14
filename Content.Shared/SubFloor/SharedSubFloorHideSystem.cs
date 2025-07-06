@@ -92,13 +92,13 @@ namespace Content.Shared.SubFloor
         {
             UpdateFloorCover(uid, component);
             UpdateAppearance(uid, component);
-            EntityManager.EnsureComponent<CollideOnAnchorComponent>(uid);
+            EnsureComp<CollideOnAnchorComponent>(uid);
         }
 
         private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ComponentShutdown _)
         {
             // If component is being deleted don't need to worry about updating any component stuff because it won't matter very shortly.
-            if (EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+            if (Comp<MetaDataComponent>(uid).EntityLifeStage >= EntityLifeStage.Terminating)
                 return;
 
             // Regardless of whether we're on a subfloor or not, unhide.
