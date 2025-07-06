@@ -64,8 +64,9 @@ public sealed class SharedShearableSystem : EntitySystem
         bool checkItem = true
     )
     {
-        // If false then skip checking for a tool, otherwise return on wrong tool.
-        if (checkItem)
+
+        // If checkItem is true, and comp.ToolQuality has been set then check return on wrong tool.
+        if (checkItem && comp.ToolQuality is not null)
         {
             if (
                 // Is the player holding an item?
@@ -139,6 +140,8 @@ public sealed class SharedShearableSystem : EntitySystem
     /// </summary>
     private void OnClicked(Entity<ShearableComponent> ent, ref InteractUsingEvent args)
     {
+        // If no tool is specified then this might take over empty-hand interaction of an entity.
+        // But, sheep have a default petting action so presumably this can also be overidden up the hierarchy.
         // All checks run from AttemptShear.
         AttemptShear(ent, args.User, args.Used);
     }
@@ -147,7 +150,7 @@ public sealed class SharedShearableSystem : EntitySystem
     ///     Attempts to shear the target animal, checking if it is shearable and building arguments for calling TryStartDoAfter.
     ///     Called by the "shear" verb.
     /// </summary>
-    private void AttemptShear(Entity<ShearableComponent> ent, EntityUid userUid, EntityUid toolUsed)
+    private void AttemptShear(Entity<ShearableComponent> ent, EntityUid userUid, EntityUid? toolUsed)
     {
         // Run all shearing checks.
         switch (CheckShear(ent, ent.Comp, toolUsed))
@@ -302,18 +305,32 @@ public sealed class SharedShearableSystem : EntitySystem
     /// </summary>
     private void AddShearVerb(Entity<ShearableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (
-            args.Using == null
-            || !args.CanInteract
-            ||
-            // Checks if you're using an item with the toolQuality component quality.
-            !_tool.HasQuality(args.Using.Value, ent.Comp.ToolQuality)
-        )
+        // Check if you are allowed to interact currently.
+        if (!args.CanInteract)
             return;
+
+        // Checks if a ToolQualty has been specified at all, if not proceeds.
+        if (ent.Comp.ToolQuality is not null)
+        {
+
+            // Checks if you have anything in your hand and then if that item has the specified toolQuality
+            // Will cancel if your hand is empty or the tool is wrong.
+            if (args.Using is null || !_tool.HasQuality(args.Using.Value, ent.Comp.ToolQuality))
+            {
+                return;
+            }
+        }
+
+        // If we're not using a tool then Using will be null so we need to check it quickly.
+        EntityUid? used = null;
+        if (args.Using is not null)
+        {
+            used = args.Using.Value;
+        }
 
         var uid = ent.Owner;
         var user = args.User;
-        var used = args.Using.Value;
+
         // Construct verb object.
         AlternativeVerb verb =
             new()
@@ -323,6 +340,7 @@ public sealed class SharedShearableSystem : EntitySystem
                     AttemptShear(ent, user, used);
                 },
                 Text = Loc.GetString("shearable-system-verb-shear"),
+                // TODO feels like this should be a datafield and a sprite object or something.
                 Icon = new SpriteSpecifier.Texture(
                     new ResPath("/Textures/Interface/VerbIcons/scissors.svg.236dpi.png")
                 ),
@@ -356,12 +374,28 @@ public sealed class SharedShearableSystem : EntitySystem
                 {
                     break;
                 }
+                // Default to empty string, if we just can't resolve the tool quality for whatever reason localisation have a blank variable..
+                var toolQuality = string.Empty;
+                // If a ToolQuality has been specified set it's name to toolQuality so it appears in localisation.
+                if (
+                    _prototypeManager.TryIndex(ent.Comp.ToolQuality, out var toolQualityProto, false)
+                    && toolQualityProto is not null
+                    )
+                {
+                    // Tool quality names are a Loc string so look up that and lower-case it.
+                    toolQuality = Loc.GetString(toolQualityProto.Name).ToLower();
+                    // If a Loc string isn't found then it will just return the same ID, which means it hasn't been configured right so just set it empty and don't use it.
+                    if (string.Equals(toolQuality, toolQualityProto.Name.ToLower()))
+                    {
+                        toolQuality = string.Empty;
+                    }
+                }
                 // ALL SYSTEMS GO!
                 args.PushMarkup(
                     Loc.GetString(
                         ent.Comp.ShearableMarkupText,
                         ("target", Identity.Entity(ent.Owner, EntityManager)),
-                        ("toolQuality", ent.Comp.ToolQuality.ToLower())
+                        ("toolQuality", toolQuality)
                     )
                 );
                 return;

@@ -1,8 +1,9 @@
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Mobs;
 using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Tools;
 
 namespace Content.Shared.Animals;
 
@@ -53,22 +54,22 @@ public sealed partial class ShearableComponent : Component
     ///     Leave undefined for no tool required.
     /// </summary>
     [DataField]
-    public string ToolQuality = string.Empty;
+    public ProtoId<ToolQualityPrototype>? ToolQuality;
 
 
     /// <summary>
-    ///     A localised string added to the description box when the entity is shearable.
+    ///     A LocID that is added to the description box when the entity is shearable.
     ///     e.g. "She has a fleece of fluffy wool."
     /// </summary>
     [DataField]
-    public string ShearableMarkupText = string.Empty;
+    public LocId ShearableMarkupText = string.Empty;
 
     /// <summary>
-    ///     A localised string added to the description box when the entity is not shearable.
+    ///     A LocID that is added to the description box when the entity is not shearable.
     ///     e.g. "Her fleece is freshly sheared and bare."
     /// </summary>
     [DataField]
-    public string UnShearableMarkupText = string.Empty;
+    public LocId UnShearableMarkupText = string.Empty;
 
     /// <summary>
     ///     This is just for caching the resolved solution.
