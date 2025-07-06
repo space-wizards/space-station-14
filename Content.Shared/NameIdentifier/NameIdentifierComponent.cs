@@ -9,7 +9,7 @@ namespace Content.Shared.NameIdentifier;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NameIdentifierComponent : Component
 {
-    [DataField(required: true)]
+    [DataField]
     public ProtoId<NameIdentifierGroupPrototype>? Group;
 
     /// <summary>
