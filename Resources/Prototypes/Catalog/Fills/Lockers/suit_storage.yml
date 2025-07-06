@@ -12,6 +12,22 @@
         - id: ClothingHeadHelmetEVA
         - id: ClothingMaskBreath
 
+- type: entity
+  id: SuitStorageEVADouble
+  parent: SuitStorageBase
+  suffix: EVA, Double
+  components:
+  - type: StorageFill
+    contents:
+    - id: OxygenTankFilled
+    - id: NitrogenTankFilled
+    - id: ClothingOuterHardsuitEVA
+      amount: 2
+    - id: ClothingHeadHelmetEVA
+      amount: 2
+    - id: ClothingMaskBreath
+      amount: 2
+
 #Basic EVA (Big Ass Helmet)
 - type: entity
   id: SuitStorageEVAAlternate
