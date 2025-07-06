@@ -46,6 +46,9 @@ public abstract partial class SharedPuddleSystem
             // If we have multiple evaporating reagents in one puddle, just take the average evaporation speed and apply
             // that to all of them.
             var evaporationSpeeds = GetEvaporationSpeeds(puddleSolution);
+            if (evaporationSpeeds.Count == 0)
+                continue;
+
             // Can't use .Average because FixedPoint2
             var evaporationSpeed = evaporationSpeeds.Values.Sum() / evaporationSpeeds.Count;
             var reagentProportions = evaporationSpeeds.ToDictionary(kv => kv.Key,
