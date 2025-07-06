@@ -146,7 +146,7 @@
       proper: true
   # Strips the name identifier from them, so they're just "Confident Waters" rather than "Confident Waters (123)"
   - type: NameIdentifier
-    group: Disabled
+    group: null
 
 # Emotional Support Scurrets have a ghost role and equipment. At the moment, these are intended to be used for admemes, but
 # feel free to hook them into random content.
