@@ -42,7 +42,15 @@
 	{
         "name": "scar_sternotomy",
         "directions": 4
-    }, 
+    },
+	{
+        "name": "scar_laprotomy",
+        "directions": 4
+    },
+	{
+        "name": "scar_hepatectomy",
+        "directions": 4
+    },
     {
         "name": "scar_face_1",
         "directions": 4
