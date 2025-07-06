@@ -37,7 +37,7 @@
       size: Small
       heldPrefix: brain
 
-      
+
 - type: entity
   id: OrganSlimeLungs
   parent: BaseHumanOrgan
@@ -55,7 +55,7 @@
     removeEmpty: true
     solutionOnBody: false
     solution: "Lung"
-    metabolizerTypes: [ Slime ]
+    metabolizerTypes: [ NitrogenBreather, NitrousOxideImmune ]
     groups:
     - id: Gas
       rateModifier: 100.0
