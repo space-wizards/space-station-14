@@ -1,15 +1,11 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
-using Content.Shared.Fluids;
-using Content.Shared.Nutrition.EntitySystems;
 
-namespace Content.Server.Fluids.EntitySystems;
+namespace Content.Shared.Fluids;
 
-public sealed partial class PuddleSystem
+public abstract partial class SharedPuddleSystem
 {
-    [Dependency] private readonly OpenableSystem _openable = default!;
-
     private void InitializeTransfers()
     {
         SubscribeLocalEvent<RefillableSolutionComponent, DragDropDraggedEvent>(OnRefillableDragged);
@@ -38,7 +34,7 @@ public sealed partial class PuddleSystem
             if (!_solutionContainerSystem.TryGetDrainableSolution(entity.Owner, out _, out _))
                 return;
 
-            if (_openable.IsClosed(entity))
+            if (Openable.IsClosed(entity))
                 return;
 
             bool success = true;
@@ -55,7 +51,7 @@ public sealed partial class PuddleSystem
 
             if (success)
             {
-                _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, args.Target);
+                Audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, args.Target);
             }
             else
             {
@@ -75,7 +71,7 @@ public sealed partial class PuddleSystem
 
             if (_solutionContainerSystem.TryAddSolution(soln.Value, split))
             {
-                _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, entity);
+                Audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, entity);
             }
             else
             {

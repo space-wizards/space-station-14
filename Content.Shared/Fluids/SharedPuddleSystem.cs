@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -13,10 +14,12 @@ using Content.Shared.Friction;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -29,8 +32,11 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] protected readonly OpenableSystem Openable = default!;
     [Dependency] protected readonly ReactiveSystem Reactive = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popups = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
@@ -72,6 +78,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
         CacheStandsout();
         InitializeSpillable();
+        InitializeTransfers();
     }
 
     public override void Update(float frameTime)
