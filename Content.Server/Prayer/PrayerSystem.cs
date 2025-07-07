@@ -1,8 +1,10 @@
+// Modified by Ronstation contributor(s), therefore this file is licensed as MIT sublicensed with AGPL-v3.0.
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
+using Content.Shared.Bible.Components; // Ronstation - moved BibleUserComponent to shared
 using Content.Shared.Database;
 using Content.Shared.Popups;
 using Content.Shared.Chat;
