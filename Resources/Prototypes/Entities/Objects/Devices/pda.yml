@@ -969,10 +969,10 @@
     tags:
     - DoorBumpOpener
   - type: Instrument
-    allowPercussion: false
+    allowPercussion: true
+    allowProgramChange: true
+    respectMidiLimits: false
     handheld: true
-    bank: 1
-    program: 2
 
 - type: entity
   parent: CentcomPDA
