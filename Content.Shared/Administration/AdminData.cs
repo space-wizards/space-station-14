@@ -31,10 +31,11 @@ namespace Content.Shared.Administration
         ///     Checks whether this admin has an admin flag.
         /// </summary>
         /// <param name="flag">The flags to check. Multiple flags can be specified, they must all be held.</param>
+        /// <param name="includeDeAdmin">If true then also count flags even if the admin has de-adminned.</param>
         /// <returns>False if this admin is not <see cref="Active"/> or does not have all the flags specified.</returns>
-        public bool HasFlag(AdminFlags flag)
+        public bool HasFlag(AdminFlags flag, bool includeDeAdmin = false)
         {
-            return Active && (Flags & flag) == flag;
+            return (includeDeAdmin || Active) && (Flags & flag) == flag;
         }
 
         /// <summary>

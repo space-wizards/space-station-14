@@ -111,7 +111,7 @@ namespace Content.Server.PowerSink
             foreach (var (entity, component) in toRemove)
             {
                 _explosionSystem.QueueExplosion(entity, "PowerSink", 2000f, 4f, 20f, canCreateVacuum: true);
-                EntityManager.RemoveComponent(entity, component);
+                RemComp(entity, component);
             }
         }
 
@@ -128,7 +128,7 @@ namespace Content.Server.PowerSink
 
             _chat.DispatchStationAnnouncement(
                 station.Value,
-                Loc.GetString("powersink-immiment-explosion-announcement"),
+                Loc.GetString("powersink-imminent-explosion-announcement"),
                 playDefaultSound: true,
                 colorOverride: Color.Yellow
             );

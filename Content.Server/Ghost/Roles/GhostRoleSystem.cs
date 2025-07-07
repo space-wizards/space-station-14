@@ -33,7 +33,6 @@ using Content.Server.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Collections;
 using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -127,7 +126,7 @@ public sealed class GhostRoleSystem : EntitySystem
     public void OpenEui(ICommonSession session)
     {
         if (session.AttachedEntity is not { Valid: true } attached ||
-            !EntityManager.HasComponent<GhostComponent>(attached))
+            !HasComp<GhostComponent>(attached))
             return;
 
         if (_openUis.ContainsKey(session))
@@ -512,15 +511,15 @@ public sealed class GhostRoleSystem : EntitySystem
         DebugTools.AssertNotNull(player.ContentData());
 
         var newMind = _mindSystem.CreateMind(player.UserId,
-            EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
-
-        _roleSystem.MindAddRole(newMind, "MindRoleGhostMarker");
-
-        if(_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind!, out var markerRole))
-            markerRole.Value.Comp2.Name = role.RoleName;
+            Comp<MetaDataComponent>(mob).EntityName);
 
         _mindSystem.SetUserId(newMind, player.UserId);
         _mindSystem.TransferTo(newMind, mob);
+
+        _roleSystem.MindAddRoles(newMind.Owner, role.MindRoles, newMind.Comp);
+
+        if (_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind!, out var markerRole))
+            markerRole.Value.Comp2.Name = role.RoleName;
     }
 
     /// <summary>

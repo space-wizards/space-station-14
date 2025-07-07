@@ -6,8 +6,7 @@ namespace Content.Shared.DeviceNetwork;
 /// <summary>
 ///     A named device network frequency. Useful for ensuring entity prototypes can communicate with each other.
 /// </summary>
-[Prototype("deviceFrequency")]
-[Serializable, NetSerializable]
+[Prototype]
 public sealed partial class DeviceFrequencyPrototype : IPrototype
 {
     [IdDataField]

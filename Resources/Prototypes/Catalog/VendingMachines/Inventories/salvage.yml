@@ -1,4 +1,4 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: SalvageEquipmentInventory
   startingInventory:
     Crowbar: 2
@@ -10,3 +10,5 @@
     RadioHandheld: 2
     WeaponGrapplingGun: 4
     WeaponProtoKineticAccelerator: 4
+  contrabandInventory:
+    PlushieCarp: 1

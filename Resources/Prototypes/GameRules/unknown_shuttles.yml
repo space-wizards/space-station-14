@@ -31,6 +31,8 @@
   id: UnknownShuttlesHostileTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
+    - id: LoneOpsSpawn
+    - id: UnknownShuttleManOWar
     - id: UnknownShuttleInstigator
 
 # Shuttle Game Rules
@@ -200,6 +202,17 @@
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
   - type: LoadMapRule
     preloadedGrid: Lambordeere
+
+- type: entity
+  id: UnknownShuttleManOWar
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #Leaving this one because theyre like primitives and its funnier
+    weight: 1 # lower because antags
+    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
+  - type: LoadMapRule
+    preloadedGrid: ManOWar
 
 - type: entity
   id: UnknownShuttleMeatZone

@@ -71,6 +71,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 buttonHeading.AddStyleClass(ContainerButton.StyleClassButton);
                 buttonHeading.Label.HorizontalAlignment = HAlignment.Center;
                 buttonHeading.Label.HorizontalExpand = true;
+                buttonHeading.Margin = new Thickness(8, 0, 8, 2);
 
                 var body = new CollapsibleBody
                 {

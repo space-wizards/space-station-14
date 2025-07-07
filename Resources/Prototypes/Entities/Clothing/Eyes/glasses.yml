@@ -65,6 +65,10 @@
   - type: EyeProtection
   - type: IdentityBlocker
     coverage: EYES
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingEyesBase
@@ -124,6 +128,8 @@
     sprite: Clothing/Eyes/Glasses/outlawglasses.rsi
   - type: VisionCorrection
   - type: IdentityBlocker
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingEyesBase
@@ -138,6 +144,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - CorgiWearable
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
@@ -154,11 +161,12 @@
   - type: Tag
     tags:
     - Sunglasses
+    - CorgiWearable
     - HamsterWearable
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseRestrictedContraband]
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
   id: ClothingEyesGlassesSecurity
   name: security glasses
   description: Upgraded sunglasses that provide flash immunity and a security HUD.
@@ -176,6 +184,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - CorgiWearable
     - WhitelistChameleon
   - type: GuideHelp
     guides:
@@ -188,7 +197,7 @@
   parent: [ClothingEyesBase, BaseCommandContraband]
   id: ClothingEyesGlassesCommand
   name: administration glasses
-  description: Upgraded sunglasses that provide flash immunity and show ID card status. 
+  description: Upgraded sunglasses that provide flash immunity and show ID card status.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi
@@ -200,6 +209,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - CorgiWearable
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
@@ -253,6 +263,10 @@
     - type: SolutionScanner
     - type: IdentityBlocker
       coverage: EYES
+    - type: Tag
+      tags:
+      - CorgiWearable
+      - WhitelistChameleon
 
 - type: entity
   parent: [ClothingEyesBase, BaseMajorContraband]
@@ -265,3 +279,24 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesNoir
+  name: noir-tech glasses
+  description: A pair of glasses that simulate what the world looked like before the invention of color.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/noir.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: NoirOverlay
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon

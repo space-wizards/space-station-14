@@ -4,12 +4,13 @@
   text: "/ServerInfo/Guidebook/Antagonist/Antagonists.xml"
   children:
   - Traitors
-  - NuclearOperatives
-  - Zombies
-  - Revolutionaries
-  - MinorAntagonists
-  - SpaceNinja
   - Thieves
+  - Revolutionaries
+  - NuclearOperatives
+  - SpaceNinja
+  - Wizard
+  - Zombies
+  - MinorAntagonists
 
 - type: guideEntry
   id: Traitors
@@ -45,3 +46,8 @@
   id: Thieves
   name: guide-entry-thieves
   text: "/ServerInfo/Guidebook/Antagonist/Thieves.xml"
+
+- type: guideEntry
+  id: Wizard
+  name: guide-entry-wizard
+  text: "/ServerInfo/Guidebook/Antagonist/Wizard.xml"

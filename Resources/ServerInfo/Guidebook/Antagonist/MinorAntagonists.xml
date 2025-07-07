@@ -1,7 +1,17 @@
 <Document>
   # Minor Antagonists
 
-  Most if not all Minor Antagonists are ghost-controlled roles that gives dead people new ways to cause chaos around the station. They are spawned by random events.
+  Minor Antagonists are ghost-controlled roles that give dead people a second chance to interact (and cause chaos!) around the station. They are spawned by random events.
+
+  # Paradox Clone
+
+  <Box>
+    <GuideEntityEmbed Entity="ParadoxCloneDummy"/>
+  </Box>
+
+  A perfect copy of a random crewmember that was thrown into our universe by a space-time anomaly. To fix the paradox and survive they have to find and kill their original counterpart.
+
+They have no special abilities, but are identical in appearance, DNA, fingerprints, clothing, equipment and IDs, making it hard to figure out who is the original and who is the clone... unless you know your fellow crewmembers well!
 
   # Revenant
 
@@ -32,7 +42,7 @@
   - You can conjure a cloud of [color=#77b58e]ammonia[/color] using [color=purple][italic]Rat King's Domain[/italic][/color]. This purple gas is mildly poisonous to humans but heals rats.
   - [color=#9daa98][italic]Rummage[/italic][/color] through a disposal unit by using the context menu. Use this to find [bold]scraps of food[/bold] to grow your army.
   - Besides your abilities, [bold]you are stronger than most other animals.[/bold] You and your servants are capable of speech and you're both small enough to fit under airlocks and tables.
-  - [bold]Your underlings are still very fragile![/bold] Beware of spacings, explosions and the buisness end of a melee weapon.
+  - [bold]Your underlings are still very fragile![/bold] Beware of spacings, explosions and the business end of a melee weapon.
 
   # Space Dragon
 
@@ -62,5 +72,5 @@
 
   Slimes and spiders have no remarkable features, but will [color=cyan]infest the station[/color] from time to time regardless. Both will give chase and attack anything they see.
   - Slimes may [bold]deal extra cellular or poison damage[/bold], based upon their color. Water hurts them just as it would hurt a slime person.
-  - Spiders have a venomous bite and can [bold]create webs[/bold] that are hard to move though. Webs are easily destroyed with a blade. They can also pry open airlocks.
+  - Spiders have a venomous bite and can [bold]create webs[/bold] that are hard to move through, but are easily destroyed with a blade. They can also pry open doors, windoors, and airlocks.
 </Document>

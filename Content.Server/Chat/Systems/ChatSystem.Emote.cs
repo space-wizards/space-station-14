@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Emoting;
 using Content.Shared.Speech;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -135,16 +136,16 @@ public partial class ChatSystem
     ///     Tries to find and play relevant emote sound in emote sounds collection.
     /// </summary>
     /// <returns>True if emote sound was played.</returns>
-    public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype? proto, EmotePrototype emote)
+    public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype? proto, EmotePrototype emote, AudioParams? audioParams = null)
     {
-        return TryPlayEmoteSound(uid, proto, emote.ID);
+        return TryPlayEmoteSound(uid, proto, emote.ID, audioParams);
     }
 
     /// <summary>
     ///     Tries to find and play relevant emote sound in emote sounds collection.
     /// </summary>
     /// <returns>True if emote sound was played.</returns>
-    public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype? proto, string emoteId)
+    public bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype? proto, string emoteId, AudioParams? audioParams = null)
     {
         if (proto == null)
             return false;
@@ -158,8 +159,8 @@ public partial class ChatSystem
                 return false;
         }
 
-        // if general params for all sounds set - use them
-        var param = proto.GeneralParams ?? sound.Params;
+        // optional override params > general params for all sounds in set > individual sound params
+        var param = audioParams ?? proto.GeneralParams ?? sound.Params;
         _audio.PlayPvs(sound, uid, param);
         return true;
     }
@@ -205,13 +206,25 @@ public partial class ChatSystem
     /// <returns></returns>
     private bool AllowedToUseEmote(EntityUid source, EmotePrototype emote)
     {
-        if ((_whitelistSystem.IsWhitelistFail(emote.Whitelist, source) || _whitelistSystem.IsBlacklistPass(emote.Blacklist, source)))
-            return false;
+        // If emote is in AllowedEmotes, it will bypass whitelist and blacklist
+        if (TryComp<SpeechComponent>(source, out var speech) &&
+            speech.AllowedEmotes.Contains(emote.ID))
+        {
+            return true;
+        }
 
-        if (!emote.Available &&
-            TryComp<SpeechComponent>(source, out var speech) &&
-            !speech.AllowedEmotes.Contains(emote.ID))
+        // Check the whitelist and blacklist
+        if (_whitelistSystem.IsWhitelistFail(emote.Whitelist, source) ||
+            _whitelistSystem.IsBlacklistPass(emote.Blacklist, source))
+        {
             return false;
+        }
+
+        // Check if the emote is available for all
+        if (!emote.Available)
+        {
+            return false;
+        }
 
         return true;
     }

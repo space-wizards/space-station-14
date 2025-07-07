@@ -15,9 +15,12 @@ public sealed partial class CargoBountyMenu : FancyWindow
     public CargoBountyMenu()
     {
         RobustXamlLoader.Load(this);
+
+        MasterTabContainer.SetTabTitle(0, Loc.GetString("bounty-console-tab-available-label"));
+        MasterTabContainer.SetTabTitle(1, Loc.GetString("bounty-console-tab-history-label"));
     }
 
-    public void UpdateEntries(List<CargoBountyData> bounties, TimeSpan untilNextSkip)
+    public void UpdateEntries(List<CargoBountyData> bounties, List<CargoBountyHistoryData> history, TimeSpan untilNextSkip)
     {
         BountyEntriesContainer.Children.Clear();
         foreach (var b in bounties)
@@ -32,5 +35,21 @@ public sealed partial class CargoBountyMenu : FancyWindow
         {
             MinHeight = 10
         });
+
+        BountyHistoryContainer.Children.Clear();
+        if (history.Count == 0)
+        {
+            NoHistoryLabel.Visible = true;
+        }
+        else
+        {
+            NoHistoryLabel.Visible = false;
+
+            // Show the history in reverse, so last entry is first in the list
+            for (var i = history.Count - 1; i >= 0; i--)
+            {
+                BountyHistoryContainer.AddChild(new BountyHistoryEntry(history[i]));
+            }
+        }
     }
 }

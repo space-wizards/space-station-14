@@ -18,6 +18,7 @@
       proto: VGRoidSmaller
     - !type:PrototypeDunGen
       proto: VGRoidSmallPaths
+      inheritDungeons: All
     - !type:EntityTableDunGen
       minCount: 7
       maxCount: 12
@@ -26,6 +27,7 @@
     # Fill
     - !type:PrototypeDunGen
       proto: VGRoidFill
+      inheritDungeons: All
     # Ores
     - !type:OreDunGen
       replacement: IronRock
@@ -87,6 +89,12 @@
       count: 15
       minGroupSize: 1
       maxGroupSize: 2
+    - !type:OreDunGen
+      replacement: IronRock
+      entity: IronRockGibtonite
+      count: 60 # you don't really hit it on purpose so it should be common
+      minGroupSize: 1
+      maxGroupSize: 1
 
 # Configs
 - type: dungeonConfig
@@ -129,14 +137,12 @@
 - type: dungeonConfig
   id: VGRoidExterior
   reserveTiles: true
-  data:
-    tiles:
-      FallbackTile: PlatingAsteroid
-      WidenTile: FloorAsteroidSand
   layers:
   - !type:PrototypeDunGen
     proto: VGRoidExteriorDungeons
   - !type:SplineDungeonConnectorDunGen
+    tile: PlatingAsteroid
+    widenTile: FloorAsteroidSand
 
 - type: dungeonConfig
   id: VGRoidExteriorDungeons
@@ -157,29 +163,24 @@
     table: !type:NestedSelector
       tableId: SalvageScrapSpawnerValuable
   - !type:EntityTableDunGen
-    minCount: 15
-    maxCount: 25
+    minCount: 30
+    maxCount: 45
     table: !type:NestedSelector
       tableId: SalvageTreasureSpawnerCommon
   - !type:EntityTableDunGen
-    minCount: 15
-    maxCount: 25
-    table: !type:NestedSelector
-      tableId: SalvageEquipmentSpawnerCommon
-  - !type:EntityTableDunGen
-    minCount: 15
-    maxCount: 20
+    minCount: 30
+    maxCount: 45
     table: !type:NestedSelector
       tableId: SalvageTreasureSpawnerValuable
-  - !type:EntityTableDunGen
-    minCount: 15
-    maxCount: 20
-    table: !type:NestedSelector
-      tableId: SalvageEquipmentSpawnerValuable
   - !type:MobsDunGen
     minCount: 8
     maxCount: 15
-    groups:
+    contents: VGRoidExteriorDungeonsMobs
+
+- type: entityTable
+  id: VGRoidExteriorDungeonsMobs
+  table: !type:GroupSelector
+    children:
     - id: SalvageSpawnerMobMiningAsteroid
       amount: 1
 
@@ -209,7 +210,12 @@
   - !type:MobsDunGen
     minCount: 25
     maxCount: 35
-    groups:
+    contents: VGRoidSmallPathsMobs
+
+- type: entityTable
+  id: VGRoidSmallPathsMobs
+  table: !type:GroupSelector
+    children:
     - id: SalvageSpawnerMobMiningAsteroid
       amount: 1
 
@@ -219,10 +225,8 @@
 # Fill with rocks.
 - type: dungeonConfig
   id: VGRoidFill
-  data:
-    entities:
-      Fill: IronRock
   layers:
   - !type:FillGridDunGen
+    entity: IronRock
     allowedTiles:
     - FloorAsteroidSand

@@ -26,7 +26,7 @@
     <GuideEntityEmbed Entity="BaseUplinkRadio" Caption="Uplink Implant"/>
   </Box>
 
-  [bold]Make sure to close your PDA uplink to prevent anyone else from seeing it.[/bold] You don't want [color=#cb0000]Security[/color] to get their hands on this premium selection of contraband!
+  [bold]Make sure to close your PDA uplink to prevent anyone else from seeing it.[/bold] You don't want [color=#cb0000]Security[/color] to notice you have it and confiscate it from you!
 
   Implanted uplinks are not normally accessible to other people, so they do not have any security measures. They can, however, be removed from you with an empty implanter.
 
@@ -68,12 +68,12 @@
 
   Alternatively, your objectives may require you to [italic][color=cyan]die a glorious death.[/color][/italic] [bold]Make sure you don't come back from the dead,[/bold] or else you may wake up in cuffs.
 
-  ## Appropiation
+  ## Appropriation
   More often than not, you'll have to [italic][color=cyan]steal a possession of a department head.[/color][/italic]
 
   The target may be in their office, or on their person. It may become necessary to kill whoever is carrying it, if you cannot pickpocket them.
 
-  You may be tasked with:
+  Some of the things you may be tasked with include:
   - Stealing the [color=yellow]Captain[/color]'s [bold]ID Card[/bold], [bold]antique laser pistol[/bold], [bold]jetpack[/bold], or [bold]nuclear authentication disk[/bold].
   <Box>
     <GuideEntityEmbed Entity="CaptainIDCard" Caption=""/>
