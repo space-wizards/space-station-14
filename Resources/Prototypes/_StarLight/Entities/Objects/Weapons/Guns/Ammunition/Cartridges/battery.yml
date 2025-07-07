@@ -18,7 +18,7 @@
   - type: Appearance
   - type: SpentAmmoVisuals
   - type: Contraband
-    allowedDepartments: [ Security, CentralCommand, Command ]
+    allowedDepartments: [ Security, CentralCommand, Command, Salvage ]
   
 - type: entity
   id: CartridgeBattery
