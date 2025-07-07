@@ -37,7 +37,7 @@ public sealed class NameIdentifierSystem : EntitySystem
 
     private void OnComponentShutdown(EntityUid uid, NameIdentifierComponent component, ComponentShutdown args)
     {
-        if (CurrentIds.TryGetValue(component.Group, out var ids))
+        if (CurrentIds.TryGetValue(component.Group, out var ids) && ids.Count > 0)
         {
             // Avoid inserting the value right back at the end or shuffling in place:
             // just pick a random spot to put it and then move that one to the end.

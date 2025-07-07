@@ -27,7 +27,7 @@
     prototype: MobRatvar
 
 - type: entity
-  parent: [MobRatvarBase, BaseMob]
+  parent: [BaseUniqueMob, MobRatvarBase, BaseMob]
   id: MobRatvar
   components:
   - type: AnnounceOnSpawn

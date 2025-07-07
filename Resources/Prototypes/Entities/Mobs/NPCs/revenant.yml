@@ -1,6 +1,7 @@
 - type: entity
   id: MobRevenant
   parent:
+  - BaseUniqueMob
   - Incorporeal
   - BaseMob
   name: revenant
