@@ -3,16 +3,19 @@
   maps:
   - Barratry
   - StarlightCog
+  - Cork
   - StarlightFland
   - Lobster
   - Manor
   - StarlightOasis
   - StarlightOmega
+  - Origin
   - Orwell
   - StarlightReach
   - StarlightSaltern
   - Starboard
   - Kiloton
+  - StarlightElkridge
 
 # - StarlightBagel
 # - StarlightBox
@@ -20,4 +23,3 @@
 # - StarlightMarathon
 # - StarlightMeta
 # - StarlightPacked
-# - StarlightElkridge

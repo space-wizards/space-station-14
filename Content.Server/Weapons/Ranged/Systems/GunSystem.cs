@@ -143,6 +143,8 @@ public sealed partial class GunSystem : SharedGunSystem
         // DebugTools.Assert(direction != Vector2.Zero);
         var shotProjectiles = new List<EntityUid>(ammo.Count);
 
+        bool bulletSoundCheck = false; //starlight
+
         foreach (var (ent, shootable) in ammo)
         {
             // pneumatic cannon doesn't shoot bullets it just throws them, ignore ammo handling
@@ -380,6 +382,7 @@ public sealed partial class GunSystem : SharedGunSystem
         RaiseLocalEvent(gunUid, new AmmoShotEvent()
         {
             FiredProjectiles = shotProjectiles,
+            Shooter = user, //starlight
         });
 
         void CreateAndFireProjectiles(EntityUid ammoEnt, AmmoComponent ammoComp)
@@ -541,7 +544,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
             }
 
-            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+            // Starlight confirm bullet sound should play
+            bulletSoundCheck = true;
 
             return effects;
 
@@ -580,6 +584,11 @@ public sealed partial class GunSystem : SharedGunSystem
                     }
                 }
             }
+        }
+
+        //starlight check to see if bullet sound should play
+        if (bulletSoundCheck){
+            Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
         }
     }
 

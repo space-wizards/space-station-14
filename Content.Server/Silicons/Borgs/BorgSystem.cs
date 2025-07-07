@@ -23,6 +23,7 @@ using Content.Shared.PowerCell.Components;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Starlight.TextToSpeech;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
 using Content.Shared.Wires;
@@ -164,7 +165,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         base.OnInserted(uid, component, args);
 
         if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind) && args.Container == component.BrainContainer)
-        {
+        {            
             _mind.TransferTo(mindId, uid, mind: mind);
         }
     }
@@ -181,6 +182,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     private void OnMindAdded(EntityUid uid, BorgChassisComponent component, MindAddedMessage args)
     {
+            //Load voice from mind 🌟Starlight🌟
+            if (TryComp<TextToSpeechComponent>(uid, out var ttscomp))
+            {
+                ttscomp.VoicePrototypeId = args.Mind.Comp.SiliconVoice;
+            }
         BorgActivate(uid, component);
     }
 
@@ -278,6 +284,13 @@ public sealed partial class BorgSystem : SharedBorgSystem
             _throwing.TryThrow(uid, _random.NextVector2() * 5, 5f);
             return;
         }
+
+        //Load voice from mind 🌟Starlight🌟
+		if (TryComp<TextToSpeechComponent>(uid, out var ttscomp))
+		{
+			if(mind != null)
+			    ttscomp.VoicePrototypeId = mind.SiliconVoice;
+		}
 
         _mind.TransferTo(mindId, containerEnt, mind: mind);
     }

@@ -104,6 +104,23 @@
       state: sp
 
 - type: hitscan
+  id: BulletMagnumTraceImprovised
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 15
+      Blunt: 15
+  armorPenetration: -0.35
+  pierceChance: 0.25
+  derivation: 0.05
+  ricochetChance: 0.30
+  staminaDamage: 5
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: sp
+
+- type: hitscan
   id: BulletMagnumTraceHP
   parent: BulletTrace
   damage:
@@ -206,6 +223,23 @@
   derivation: 0.2
   ricochetChance: 0.30
   staminaDamage: 2
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: sp
+
+- type: hitscan
+  id: BulletPistolTraceImprovised
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 7
+      Blunt: 7
+  armorPenetration: -0.30
+  pierceChance: 0.25
+  derivation: 0.2
+  ricochetChance: 0.10
+  staminaDamage: 3
   bullet:
     sprite:
       sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -411,6 +445,24 @@
   armorPenetration: -0.25
   staminaDamage: 2
   pierceChance: 0.40
+  derivation: 0.05
+  ricochetChance: 0.30
+  pierceLevel: Metal
+  bullet:
+    sprite:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+      state: sp
+
+- type: hitscan
+  id: BulletLightRifleTraceImprovised
+  parent: BulletTrace
+  damage:
+    types:
+      Piercing: 7
+      Blunt: 7
+  armorPenetration: -0.35
+  staminaDamage: 3
+  pierceChance: 0.20
   derivation: 0.05
   ricochetChance: 0.30
   pierceLevel: Metal

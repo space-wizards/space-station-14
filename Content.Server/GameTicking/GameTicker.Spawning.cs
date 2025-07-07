@@ -108,7 +108,7 @@ namespace Content.Server.GameTicking
             var stationJobCounts = spawnableStations.ToDictionary(e => e, _ => 0);
             foreach (var netUser in netUserIds)
             {
-                if(!assignedJobs.TryGetValue(netUser, out var assignedJobAndStation) || assignedJobAndStation.Item1 is null)
+                if(!assignedJobs.TryGetValue(netUser, out var assignment) || assignment.job is null)
                 {
                     var playerSession = _playerManager.GetSessionById(netUser);
                     var evNoJobs = new NoJobsAvailableSpawningEvent(playerSession); // Used by gamerules to wipe their antag slot, if they got one
@@ -118,7 +118,7 @@ namespace Content.Server.GameTicking
                 }
                 else
                 {
-                    stationJobCounts[assignedJobAndStation.Item2] += 1;
+                    stationJobCounts[assignment.station] += 1;
                 }
             }
 
@@ -330,7 +330,11 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
 
-            _mind.TransferTo(newMind, mob);
+			//Attach voices to mind 🌟Starlight🌟
+            newMind.Comp.Voice = character.Voice;
+            newMind.Comp.SiliconVoice = character.SiliconVoice;
+            
+			_mind.TransferTo(newMind, mob);
 
             _roles.MindAddJobRole(newMind, silent: silent, jobPrototype: jobId);
             var jobName = _jobs.MindTryGetJobName(newMind);

@@ -625,7 +625,7 @@
     sprite: Clothing/Belt/securitywebbing.rsi
 
 - type: entity
-  parent: [ ClothingBeltStorageBase, BaseSecurityCargoContraband ]
+  parent: [ ClothingBeltStorageBase, BaseSalvageContraband ] #Starlight salvContra
   id: ClothingBeltMercWebbing
   name: mercenary webbing
   description: Ideal for storing everything from ammo to weapons and combat essentials.
