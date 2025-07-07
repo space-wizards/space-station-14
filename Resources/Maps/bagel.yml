@@ -9871,17 +9871,6 @@ entities:
     - type: Transform
       pos: 31.477634,-79.4623
       parent: 60
-- proto: ActionToggleLight
-  entities:
-  - uid: 8447
-    mapInit: true
-    paused: true
-    components:
-    - type: Transform
-      parent: 8441
-    - type: Action
-      originalIconColor: '#FFFFFFFF'
-      container: 8441
 - proto: AirAlarm
   entities:
   - uid: 105
@@ -61513,17 +61502,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 4711
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
   - uid: 11484
     components:
     - type: Transform
@@ -61828,10 +61806,6 @@ entities:
     - type: Transform
       pos: 6.5002446,-6.7582207
       parent: 60
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          ents: []
 - proto: ClothingBeltHolster
   entities:
   - uid: 9072
@@ -64815,23 +64789,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 18641
-          - 17812
-          - 18647
-          - 18725
-          - 19185
-          - 19186
-          - 19187
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: CrateHydroponicsSeedsMedicinal
   entities:
   - uid: 2759
@@ -64964,22 +64921,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 18835
-          - 18834
-          - 18823
-          - 18792
-          - 18731
-          - 18442
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: CrateScienceSecure
   entities:
   - uid: 13917
@@ -113088,22 +113029,8 @@ entities:
     - type: Transform
       pos: -23.478413,-8.206952
       parent: 60
-    - type: HandheldLight
-      toggleActionEntity: 8447
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 8447
     - type: Physics
       canCollide: True
-    - type: ActionsContainer
   - uid: 13120
     components:
     - type: Transform
@@ -113584,19 +113511,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 2619
-          - 19882
-          - 21020
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerFreezerVaultFilled
   entities:
   - uid: 2252
@@ -113629,18 +113543,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 5207
-          - 4641
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerHeadOfSecurityFilled
   entities:
   - uid: 9032
@@ -113728,17 +113630,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 17673
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerSalvageSpecialistFilledHardsuit
   entities:
   - uid: 215
@@ -113830,21 +113721,6 @@ entities:
         - 0
         - 0
         - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 9114
-          - 9115
-          - 9116
-          - 9117
-          - 9118
-        paper_label: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
 - proto: LockerWallBasePrisoner
   entities:
   - uid: 769
@@ -117627,12 +117503,6 @@ entities:
     - type: Transform
       pos: -1.5,-75.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: 4540
 - proto: PottedPlant4
   entities:
   - uid: 15519
@@ -117725,17 +117595,11 @@ entities:
     - type: Transform
       pos: 24.5,-22.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 2905
     components:
     - type: Transform
       pos: 37.5,-22.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 4678
     components:
     - type: Transform
@@ -117761,9 +117625,6 @@ entities:
     - type: Transform
       pos: -38.5,-24.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 6034
     components:
     - type: Transform
@@ -117789,9 +117650,6 @@ entities:
     - type: Transform
       pos: 45.5,-29.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 7422
     components:
     - type: Transform
@@ -117812,9 +117670,6 @@ entities:
     - type: Transform
       pos: -2.5,11.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 9149
     components:
     - type: Transform
@@ -117845,73 +117700,46 @@ entities:
     - type: Transform
       pos: -24.5,26.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 17381
     components:
     - type: Transform
       pos: -63.5,21.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 17382
     components:
     - type: Transform
       pos: -63.5,25.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 18837
     components:
     - type: Transform
       pos: -21.5,9.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 18838
     components:
     - type: Transform
       pos: -22.5,21.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 18839
     components:
     - type: Transform
       pos: -28.5,21.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 19095
     components:
     - type: Transform
       pos: 15.5,28.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 19144
     components:
     - type: Transform
       pos: 24.5,17.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 19891
     components:
     - type: Transform
       pos: 19.5,6.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
   - uid: 21017
     components:
     - type: Transform
@@ -139999,161 +139827,41 @@ entities:
     - type: Transform
       pos: 24.5,0.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 17633
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
   - uid: 18890
     components:
     - type: Transform
       pos: 22.5,0.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 18891
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
   - uid: 18893
     components:
     - type: Transform
       pos: 25.5,-0.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 18907
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
   - uid: 18909
     components:
     - type: Transform
       pos: 24.5,2.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 19008
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
   - uid: 19009
     components:
     - type: Transform
       pos: 25.5,2.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 19039
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
   - uid: 19040
     components:
     - type: Transform
       pos: 22.5,2.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 19041
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
   - uid: 19091
     components:
     - type: Transform
       pos: 21.5,2.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 19092
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
   - uid: 19096
     components:
     - type: Transform
       pos: 21.5,-0.5
       parent: 60
-    - type: ContainerContainer
-      containers:
-        key_slots: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 19097
-        machine_board: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
-        machine_parts: !type:Container
-          showEnts: False
-          occludes: True
-          ents: []
   - uid: 19168
     components:
     - type: Transform
