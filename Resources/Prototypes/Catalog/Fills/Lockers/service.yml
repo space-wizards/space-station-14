@@ -18,14 +18,10 @@
     - id: ClothingEyesHudBeer
     - id: HandLabeler
     - id: DrinkBottleBeer
-      prob: 0.5
-    - id: DrinkBottleBeer
-      prob: 0.5
-    - id: DrinkBottleBeer
-      prob: 0.5
+      amount: !type:BinomialNumberSelector
+        trials: 3
     - !type:AllSelector
-      rolls: !type:ConstantNumberSelector
-        value: 2
+      rolls: 2
       children:
       - id: BoxBeanbag
       - id: RagItem
@@ -56,8 +52,7 @@
     - id: FoodCondimentBottleEnzyme
     - id: DrinkSoyMilkCarton
     - !type:AllSelector
-      rolls: !type:ConstantNumberSelector
-        value: 2
+      rolls: 2
       children:
       - id: DrinkMilkCarton
       # really, milk should go in the fridge. Unfortunately saltern only has freezers.
@@ -65,8 +60,7 @@
       - id: ReagentContainerFlour
       - id: BoxMousetrap
     - !type:AllSelector
-      rolls: !type:ConstantNumberSelector
-        value: 3
+      rolls: 3
       children:
       - id: FoodCondimentPacketSalt
       - id: FoodCondimentPacketPepper
@@ -86,14 +80,12 @@
   table: !type:AllSelector
     children:
     - id: WetFloorSign
-      amount: !type:ConstantNumberSelector
-        value: 3
+      amount: 3
     - id: LightReplacer
     - id: BoxLightMixed
     - id: Holoprojector
     - !type:AllSelector
-      rolls: !type:ConstantNumberSelector
-        value: 2
+      rolls: 2
       children:
       - id: MopItem
       - id: BoxMousetrap

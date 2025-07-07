@@ -40,11 +40,9 @@
     - id: HoloprojectorSecurity
     - id: BookSpaceLaw
     - id: ClothingBackpackElectropack
-      amount: !type:ConstantNumberSelector
-        value: 2
+      amount: 2
     - id: RemoteSignaller
-      amount: !type:ConstantNumberSelector
-        value: 2
+      amount: 2
     - id: Binoculars
 
 - type: entityTable
@@ -107,8 +105,7 @@
     - id: ClothingEyesGlassesSecurity
     - id: WeaponDisabler
     - id: TrackingImplanter
-      rolls: !type:ConstantNumberSelector
-        value: 2
+      amount: 2
     - id: ClothingOuterHardsuitBrigmedic
     - id: BoxSterileMask
     - id: ClothingHeadHatBeretBrigmedic
@@ -202,8 +199,7 @@
   table: !type:AllSelector
     children:
     - id: WeaponDisabler
-      amount: !type:ConstantNumberSelector
-        value: 5
+      amount: 5
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
@@ -220,11 +216,9 @@
   table: !type:AllSelector
     children:
     - id: WeaponPistolMk58
-      amount: !type:ConstantNumberSelector
-        value: 4
+      amount: 4
     - id: MagazinePistol
-      amount: !type:ConstantNumberSelector
-        value: 8
+      amount: 8
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
@@ -241,11 +235,9 @@
   table: !type:AllSelector
     children:
     - id: WeaponRifleLecter
-      amount: !type:ConstantNumberSelector
-        value: 2
+      amount: 2
     - id: MagazineRifle
-      amount: !type:ConstantNumberSelector
-        value: 4
+      amount: 4
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
@@ -262,11 +254,9 @@
   table: !type:AllSelector
     children:
     - id: WeaponSubMachineGunDrozd
-      amount: !type:ConstantNumberSelector
-        value: 2
+      amount: 2
     - id: MagazinePistolSubMachineGun
-      amount: !type:ConstantNumberSelector
-        value: 4
+      amount: 4
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
@@ -283,11 +273,9 @@
   table: !type:AllSelector
     children:
     - id: WeaponShotgunEnforcer
-      amount: !type:ConstantNumberSelector
-        value: 2
+      amount: 2
     - id: BoxLethalshot
-      amount: !type:ConstantNumberSelector
-        value: 4
+      amount: 4
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
@@ -304,11 +292,9 @@
   table: !type:AllSelector
     children:
     - id: WeaponShotgunKammerer
-      amount: !type:ConstantNumberSelector
-        value: 2
+      amount: 2
     - id: BoxLethalshot
-      amount: !type:ConstantNumberSelector
-        value: 4
+      amount: 4
 
 - type: entity
   id: GunSafeSubMachineGunWt550
@@ -326,11 +312,9 @@
   table: !type:AllSelector
     children:
     - id: WeaponSubMachineGunWt550
-      amount: !type:ConstantNumberSelector
-        value: 2
+      amount: 2
     - id: MagazinePistolSubMachineGunTopMounted
-      amount: !type:ConstantNumberSelector
-        value: 4
+      amount: 4
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseSecurityContraband]
@@ -347,5 +331,4 @@
   table: !type:AllSelector
     children:
     - id: WeaponLaserCarbine
-      amount: !type:ConstantNumberSelector
-        value: 3
+      amount: 3
