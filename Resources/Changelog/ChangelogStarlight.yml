@@ -9014,4 +9014,32 @@ Entries:
   id: 1243
   time: '2025-07-07T12:49:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/982
+- author: Gensy
+  changes:
+  - message: More inventory slots for aghost. Drippy!
+    type: Add
+  id: 1244
+  time: '2025-07-07T12:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/973
+- author: Gensy
+  changes:
+  - message: Aghost now has a CE toolbelt by default
+    type: Add
+  id: 1245
+  time: '2025-07-07T12:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/973
+- author: Gensy
+  changes:
+  - message: changed the contents of aghost bag
+    type: Tweak
+  id: 1246
+  time: '2025-07-07T12:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/973
+- author: Gensy
+  changes:
+  - message: clothing items no longer go into pockets as aghost
+    type: Fix
+  id: 1247
+  time: '2025-07-07T12:52:30.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/973
 
