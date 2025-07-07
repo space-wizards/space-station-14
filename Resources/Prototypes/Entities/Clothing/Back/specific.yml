@@ -106,16 +106,17 @@
   description: Robust Integrated Gearset
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/waterbackpack.rsi
+    sprite: Clothing/Back/Backpacks/robust.rsi
     state: icon
   - type: Item
     size: Ginormous
   - type: Clothing
     slots: BACK
-    sprite: Clothing/Back/Backpacks/waterbackpack.rsi
   - type: ExtraHandsEquipment
     hands:
+      # middle hands to prevent overlapping inhand sprites
+      # This can be changed once we have per-hand displacement maps
       extra_hand_1:
-        location: Middle # middle hands to prevent overlapping inhand sprites
+        location: Middle
       extra_hand_2:
         location: Middle

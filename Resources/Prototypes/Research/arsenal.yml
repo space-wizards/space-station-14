@@ -195,7 +195,7 @@
   id: DualWieldingTechnology
   name: research-technology-dual-wielding-technology
   icon:
-    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+    sprite: Clothing/Back/Backpacks/robust.rsi
     state: icon
   discipline: Arsenal
   tier: 2
