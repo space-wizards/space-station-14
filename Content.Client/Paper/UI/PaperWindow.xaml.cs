@@ -105,9 +105,11 @@ namespace Content.Client.Paper.UI
         }
 
         /// <summary>
-        ///     Initialize this UI according to <code>visuals</code> Initializes
-        ///     textures, recalculates sizes, and applies some layout rules.
+        /// Initialize the paper window's visual appearance based on the paper entity's visual component.
+        /// Sets up background textures, header/footer images, content styling, and size constraints.
         /// </summary>
+        /// <param name="entity">The paper entity UID used for stamp placement randomization</param>
+        /// <param name="visuals">Visual configuration containing textures, colors, and layout settings</param>
         public void InitVisuals(EntityUid entity, PaperVisualsComponent visuals)
         {
             // Randomize the placement of any stamps based on the entity UID
@@ -211,28 +213,28 @@ namespace Content.Client.Paper.UI
         }
 
         /// <summary>
-        ///     Control interface. We'll mostly rely on the children to do the drawing
-        ///     but in order to get lines on paper to match up with the rich text labels,
-        ///     we need to do a small calculation to sync them up.
+        /// Custom drawing logic to align text with paper line textures.
+        /// Calculates font metrics and adjusts texture scaling so that text baselines
+        /// align perfectly with the paper's ruled lines.
         /// </summary>
+        /// <param name="handle">Drawing handle for rendering operations</param>
         protected override void Draw(DrawingHandleScreen handle)
         {
-            // Now do the deferred setup of the written area. At the point
-            // that InitVisuals runs, the label hasn't had it's style initialized
-            // so we need to get some info out now:
+            // Deferred setup of the written area - we need font metrics that aren't available during InitVisuals
+            // The label's style must be initialized before we can get font information
             if (WrittenTextLabel.TryGetStyleProperty<Font>("font", out var font))
             {
                 float fontLineHeight = font.GetLineHeight(1.0f);
-                // This positions the texture so the font baseline is on the bottom:
+
+                // Position the background texture so font baseline aligns with texture lines
                 _paperContentTex.ExpandMarginTop = font.GetDescent(UIScale);
-                // And this scales the texture so that it's a single text line:
+
+                // Scale the texture vertically so it represents the correct number of text lines
                 var scaleY = (_paperContentLineScale * fontLineHeight) / _paperContentTex.Texture?.Height ?? fontLineHeight;
                 _paperContentTex.TextureScale = new Vector2(1, scaleY);
-                // Now, we might need to add some padding to the text to ensure
-                // that, even if a header is specified, the text will line up with
-                // where the content image expects the font to be rendered (i.e.,
-                // adjusting the height of the header image shouldn't cause the
-                // text to be offset from a line)
+
+                // Calculate padding to ensure text aligns with paper lines even with headers
+                // This prevents header images from throwing off the text-to-line alignment
                 var headerHeight = HeaderImage.Size.Y + HeaderImage.Margin.Top + HeaderImage.Margin.Bottom;
                 var headerInLines = headerHeight / (fontLineHeight * _paperContentLineScale);
                 var paddingRequiredInLines = (float)Math.Ceiling(headerInLines) - headerInLines;
@@ -244,9 +246,11 @@ namespace Content.Client.Paper.UI
         }
 
         /// <summary>
-        ///     Initialize the paper contents, i.e. the text typed by the
-        ///     user and any stamps that have been put on the page.
+        /// Populate the paper window with content based on the current paper state.
+        /// Handles both editing mode (showing text input) and reading mode (showing formatted text).
+        /// Processes markup tags like [form] and [signature] for interactive elements.
         /// </summary>
+        /// <param name="state">Current paper state containing text, mode, and stamp information</param>
         public void Populate(PaperComponent.PaperBoundUserInterfaceState state)
         {
             _currentState = state;
@@ -261,16 +265,16 @@ namespace Content.Client.Paper.UI
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
 
             if (isEditing)
-            {   // For premade documents, we want to be able to edit them rather than
-                // replace them.
-                // Copy server text to input field if it's empty
+            {
+                // Initialize the text input field with server content if it's currently empty
+                // This allows editing existing documents while preserving any text the user has already typed
                 var shouldCopy = Input.TextLength == 0 && state.Text.Length > 0;
                 if (shouldCopy)
-                // We can get repeated messages with state.Mode == Write if another
-                // player opens the UI for reading. In this case, don't update the
-                // text input, as this player is currently writing new text and we
-                // don't want to lose any text they already input.
                 {
+                    // We can get repeated messages with state.Mode == Write if another
+                    // player opens the UI for reading. In this case, don't update the
+                    // text input, as this player is currently writing new text and we
+                    // don't want to lose any text they already input.
                     Input.TextRope = Rope.Leaf.Empty;
                     Input.CursorPosition = new TextEdit.CursorPos();
                     Input.InsertAtCursor(state.Text);
@@ -279,16 +283,19 @@ namespace Content.Client.Paper.UI
             }
 
             // Reset form and signature counters before processing to ensure consistent indexing
+            // This is crucial because the tag handlers maintain state between renders
             FormTagHandler.SetFormText(state.Text);
             FormTagHandler.ResetFormCounter();
             SignatureTagHandler.ResetSignatureCounter();
 
             // Display text with markup processing (forms, signatures, colors, etc.)
+            // The markup system converts [form] and [signature] tags into interactive buttons
             var fm = new FormattedMessage();
             fm.AddMarkupPermissive(state.Text);
             WrittenTextLabel.SetMessage(fm, _allowedTags, DefaultTextColor);
 
             // Add stamps that have been applied to this paper
+            // Clear existing stamps first, then add all current ones
             StampDisplay.RemoveAllChildren();
             StampDisplay.RemoveStamps();
             foreach (var stamper in state.StampedBy)
@@ -296,11 +303,12 @@ namespace Content.Client.Paper.UI
         }
 
         /// <summary>
-        ///     BaseWindow interface. Allow users to drag UI around by grabbing
-        ///     anywhere on the page (like FancyWindow) but try to calculate
-        ///     reasonable dragging bounds because this UI can have round corners,
-        ///     and it can be hard to judge where to click to resize.
+        /// Base Window. Determines how the window can be dragged/resized based on mouse position (Like FancyWindow).
+        /// Provides generous resize margins since paper UI may have rounded corners
+        /// that make precise edge clicking difficult.
         /// </summary>
+        /// <param name="relativeMousePos">Mouse position relative to window</param>
+        /// <returns>Drag mode indicating which edges can be used for resizing</returns>
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
         {
             var mode = DragMode.None;
@@ -321,26 +329,37 @@ namespace Content.Client.Paper.UI
             return mode & _allowedResizeModes;
         }
 
+        /// <summary>
+        /// Handles the save operation by invoking the OnSaved event with current text.
+        /// Temporarily disables the save button to prevent multiple simultaneous saves.
+        /// </summary>
         private void RunOnSaved()
-        { // Prevent further saving while text processing still in
+        {
+            // Prevent further saving while text processing is in progress
             SaveButton.Disabled = true;
             OnSaved?.Invoke(Rope.Collapse(Input.TextRope));
             SaveButton.Disabled = false;
         }
 
+        /// <summary>
+        /// Updates the fill status display and save button state based on text length limits.
+        /// Shows current character count vs maximum allowed, disables save if over limit.
+        /// </summary>
         private void UpdateFillState()
         {
             if (MaxInputLength != -1)
             {
                 var inputLength = Input.TextLength;
+                // Display current vs maximum character count
                 FillStatus.Text = Loc.GetString("paper-ui-fill-level",
                     ("currentLength", inputLength),
                     ("maxLength", MaxInputLength));
-                // Disable the save button if we've gone over the limit
+                // Disable the save button if we've exceeded the character limit
                 SaveButton.Disabled = inputLength > MaxInputLength;
             }
             else
             {
+                // No limit set, clear status and enable saving
                 FillStatus.Text = "";
                 SaveButton.Disabled = false;
             }
@@ -358,11 +377,13 @@ namespace Content.Client.Paper.UI
         }
 
         /// <summary>
-        /// Opens a dialog for filling out a specific form field.
+        /// Opens a modal dialog allowing the user to fill in a specific [form] tag.
+        /// Creates a popup with text input, OK/Cancel buttons, and handles form submission.
         /// </summary>
-        /// <param name="formIndex">The index of the form field to fill</param>
+        /// <param name="formIndex">Zero-based index of which [form] tag to replace</param>
         public void OpenFormDialog(int formIndex)
         {
+            // Create the popup dialog structure
             var popup = new Popup();
             var vbox = new BoxContainer { Orientation = BoxContainer.LayoutOrientation.Vertical, Margin = new Thickness(10) };
             var editContainer = new PanelContainer { StyleClasses = { "TransparentBorderedWindowPanel" } };
@@ -373,6 +394,7 @@ namespace Content.Client.Paper.UI
 
             editContainer.AddChild(edit);
 
+            // Handle OK button press - save the form data if text was entered
             ok.OnPressed += _ =>
             {
                 if (!string.IsNullOrEmpty(edit.Text))
@@ -383,8 +405,10 @@ namespace Content.Client.Paper.UI
                 popup.Close();
             };
 
+            // Handle Cancel button - just close without saving
             cancel.OnPressed += _ => popup.Close();
 
+            // Handle Enter key in text field - same as OK button
             edit.OnTextEntered += _ =>
             {
                 if (!string.IsNullOrEmpty(edit.Text))
@@ -395,6 +419,7 @@ namespace Content.Client.Paper.UI
                 popup.Close();
             };
 
+            // Assemble the dialog layout and show it
             hbox.AddChild(ok);
             hbox.AddChild(cancel);
             vbox.AddChild(editContainer);
@@ -402,113 +427,90 @@ namespace Content.Client.Paper.UI
             popup.AddChild(vbox);
             AddChild(popup);
             popup.Open();
-            edit.GrabKeyboardFocus();
-        }
-
-        private static string ReplaceFormAtPosition(string text, int formIndex, string replacement)
-        {
-            var formTag = "[form]";
-            var parts = text.Split(new[] { formTag }, StringSplitOptions.None);
-
-            if (formIndex >= 0 && formIndex < parts.Length - 1)
-            {
-                var result = "";
-                for (int i = 0; i < parts.Length; i++)
-                {
-                    result += parts[i];
-                    if (i < parts.Length - 1)
-                    {
-                        if (i == formIndex)
-                            result += replacement;
-                        else
-                            result += formTag;
-                    }
-                }
-                return result;
-            }
-
-            return text;
+            edit.GrabKeyboardFocus(); // Focus the text input for immediate typing
         }
 
         /// <summary>
-        /// Replaces a specific [signature] tag with the player's signature.
+        /// Replaces a specific [signature] tag with the player's signature text.
+        /// Called by the SignatureTagHandler when a signature button is clicked.
         /// </summary>
-        /// <param name="signatureIndex">The index of the signature field to fill</param>
-        /// <param name="signature">The player's signature text</param>
+        /// <param name="signatureIndex">Zero-based index of which [signature] tag to replace</param>
+        /// <param name="signature">The player's signature text (usually their character name)</param>
         public void ReplaceSignature(int signatureIndex, string signature)
         {
             var newText = ReplaceNthSignatureTag(_currentRawText, signatureIndex, signature);
             OnSaved?.Invoke(newText);
         }
 
-        private static string ReplaceSignatureAtIndex(string text, int index, string replacement)
-        {
-            var signatureTag = "[signature]";
-            var parts = text.Split(new[] { signatureTag }, StringSplitOptions.None);
-
-            if (index >= 0 && index < parts.Length - 1)
-            {
-                var result = "";
-                for (int i = 0; i < parts.Length; i++)
-                {
-                    result += parts[i];
-                    if (i < parts.Length - 1)
-                    {
-                        if (i == index)
-                            result += replacement;
-                        else
-                            result += signatureTag;
-                    }
-                }
-                return result;
-            }
-
-            return text;
-        }
-
+        /// <summary>
+        /// Replaces the nth occurrence of [form] tag with replacement text.
+        /// Uses IndexOf for efficient searching rather than splitting the entire string.
+        /// </summary>
+        /// <param name="text">The text containing form tags</param>
+        /// <param name="index">Zero-based index of which form tag to replace</param>
+        /// <param name="replacement">Text to replace the form tag with</param>
+        /// <returns>Text with the specified form tag replaced, or original text if index not found</returns>
         private static string ReplaceNthFormTag(string text, int index, string replacement)
         {
             var formTag = "[form]";
             var currentIndex = 0;
             var pos = 0;
 
+            // Search through the text for form tags
             while (pos < text.Length)
             {
                 var foundPos = text.IndexOf(formTag, pos);
-                if (foundPos == -1) break;
+                if (foundPos == -1) break; // No more tags found
 
+                // Check if this is the tag we want to replace
                 if (currentIndex == index)
                 {
+                    // Replace this specific occurrence: text before + replacement + text after
                     return text.Substring(0, foundPos) + replacement + text.Substring(foundPos + formTag.Length);
                 }
 
+                // Move to the next tag
                 currentIndex++;
                 pos = foundPos + formTag.Length;
             }
 
+            // Index not found, return original text unchanged
             return text;
         }
 
+        /// <summary>
+        /// Replaces the nth occurrence of [signature] tag with replacement text.
+        /// Uses IndexOf for efficient searching rather than splitting the entire string.
+        /// </summary>
+        /// <param name="text">The text containing signature tags</param>
+        /// <param name="index">Zero-based index of which signature tag to replace</param>
+        /// <param name="replacement">Text to replace the signature tag with</param>
+        /// <returns>Text with the specified signature tag replaced, or original text if index not found</returns>
         private static string ReplaceNthSignatureTag(string text, int index, string replacement)
         {
             var signatureTag = "[signature]";
             var currentIndex = 0;
             var pos = 0;
 
+            // Search through the text for signature tags
             while (pos < text.Length)
             {
                 var foundPos = text.IndexOf(signatureTag, pos);
-                if (foundPos == -1) break;
+                if (foundPos == -1) break; // No more tags found
 
+                // Check if this is the tag we want to replace
                 if (currentIndex == index)
                 {
+                    // Replace this specific occurrence: text before + replacement + text after
                     return text.Substring(0, foundPos) + replacement + text.Substring(foundPos + signatureTag.Length);
                 }
 
+                // Move to the next tag
                 currentIndex++;
                 pos = foundPos + signatureTag.Length;
             }
 
+            // Index not found, return original text unchanged
             return text;
         }
     }

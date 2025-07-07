@@ -8,14 +8,18 @@ using Content.Client.Paper.UI;
 
 namespace Content.Client.UserInterface.RichText
 {
+    /// <summary>
+    /// Converts [form] tags into clickable buttons that open fill-in dialogs.
+    /// </summary>
     public sealed class FormTagHandler : IMarkupTagHandler
     {
         public string Name => "form";
-        
+
         public bool CanHandle(MarkupNode node)
         {
             return node.Name == "form" || node.Value.StringValue?.StartsWith("__FORM_") == true;
         }
+
         private static int _formCounter = 0;
         private static readonly Dictionary<string, int> _formPositions = new();
         private static string _lastText = "";
@@ -25,30 +29,36 @@ namespace Content.Client.UserInterface.RichText
             return _formCounter++;
         }
 
+        /// <summary>
+        /// Resets the form counter to ensure consistent indexing across renders.
+        /// </summary>
         public static void ResetFormCounter()
         {
             _formCounter = 0;
         }
-        
+
+        /// <summary>
+        /// Counts form buttons before the clicked button to determine which [form] tag it represents.
+        /// </summary>
         private static int CountFormButtonsBefore(Control clickedButton)
         {
             var count = 0;
             var root = clickedButton;
-            
+
             // Find the root container
             while (root.Parent != null)
                 root = root.Parent;
-            
-            // Count form buttons in document order (top to bottom, left to right)
+
+            // Count form buttons in document order
             var found = false;
             CountFormButtonsRecursive(root, clickedButton, ref count, ref found);
             return found ? count : 0;
         }
-        
+
         private static void CountFormButtonsRecursive(Control control, Control target, ref int count, ref bool found)
         {
             if (found) return;
-            
+
             if (control is Button btn && btn.Text == Loc.GetString("paper-form-fill-button"))
             {
                 if (control == target)
@@ -58,13 +68,16 @@ namespace Content.Client.UserInterface.RichText
                 }
                 count++;
             }
-            
+
             foreach (Control child in control.Children)
             {
                 CountFormButtonsRecursive(child, target, ref count, ref found);
             }
         }
-        
+
+        /// <summary>
+        /// Caches form tag positions to avoid recalculating on every render.
+        /// </summary>
         public static void SetFormText(string text)
         {
             if (_lastText != text)
@@ -86,6 +99,9 @@ namespace Content.Client.UserInterface.RichText
         public string TextBefore(MarkupNode node) => "";
         public string TextAfter(MarkupNode node) => "";
 
+        /// <summary>
+        /// Creates a clickable button to replace the [form] tag.
+        /// </summary>
         public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
         {
             var btn = new Button
@@ -96,7 +112,6 @@ namespace Content.Client.UserInterface.RichText
                 Margin = new Thickness(4, 2, 4, 2)
             };
 
-            // Store form index in the button's Name property
             var formIndex = GetFormIndex(node);
             btn.Name = $"form_{formIndex}";
 
@@ -109,7 +124,7 @@ namespace Content.Client.UserInterface.RichText
 
                 if (parent is PaperWindow paperWindow)
                 {
-                    // Count which button this is by walking the UI tree
+                    // Count buttons to determine which [form] tag this represents
                     var buttonIndex = CountFormButtonsBefore(btn);
                     paperWindow.OpenFormDialog(buttonIndex);
                 }
