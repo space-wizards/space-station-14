@@ -186,10 +186,10 @@
       time: 86400 # 24h STARLIGHT
     - !type:RoleTimeRequirement
       role: JobChemist
-      time: 21600 # 6h STARLIGHT
+      time: 10800 # 3h STARLIGHT
     - !type:RoleTimeRequirement
       role: JobSurgeon
-      time: 21600 # 6h STARLIGHT
+      time: 10800 # 3h STARLIGHT
     - !type:DepartmentTimeRequirement
       department: Security
       time: 21600 # 6h STARLIGHT
