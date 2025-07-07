@@ -41,6 +41,7 @@
                                                 StyleClasses="ButtonBig" MinWidth="137" />
                                     </BoxContainer>
                                 </controls:StripeBack>
+                                <RichTextLabel Name="PlaytimeComment" Visible="False" Access="Public" HorizontalAlignment="Center" />
                             </BoxContainer>
                         </PanelContainer>
                         <!-- Voting Popups -->
