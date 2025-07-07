@@ -16,6 +16,5 @@ public sealed partial class ItemActionGrantComponent : Component
     /// Actions will only be available if the item is in the clothing slot.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool ActiveIfWorn = false;
-
+    public bool ActiveIfWorn;
 }
