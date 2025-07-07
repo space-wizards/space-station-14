@@ -49,7 +49,7 @@
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 2, 3 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 2, 2 ] #intern, not counted[p
+            SecurityCadet: [ 2, 2 ] #intern, not counted
             Lawyer: [ 1, 1 ]
             #supply (4)
             SalvageSpecialist: [ 2, 2 ]
