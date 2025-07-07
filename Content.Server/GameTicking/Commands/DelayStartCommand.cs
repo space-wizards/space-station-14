@@ -40,6 +40,6 @@ public sealed class DelayStartCommand : LocalizedEntityCommands
 
         var time = TimeSpan.FromSeconds(seconds);
         if (!_gameTicker.DelayStart(time))
-            shell.WriteLine("An unknown error has occurred.");
+            shell.WriteLine(Loc.GetString("cmd-delaystart-too-late"));
     }
 }
