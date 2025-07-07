@@ -8985,4 +8985,11 @@ Entries:
   id: 1239
   time: '2025-07-06T20:10:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/971
+- author: Trosling
+  changes:
+  - message: Fixed missing contraband type on laser cartridges
+    type: Fix
+  id: 1240
+  time: '2025-07-07T12:45:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/981
 
