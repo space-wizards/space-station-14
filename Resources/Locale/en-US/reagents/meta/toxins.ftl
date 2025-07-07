@@ -84,3 +84,6 @@ reagent-desc-mechanotoxin = A neurotoxin used as venom by some species of spider
 
 reagent-name-toxintrash = trash 
 reagent-desc-toxintrash = An awful-smelling fluid. Deadly to non-vox.
+
+reagent-name-cellularacid = cellularacid
+reagent-desc-cellularacid = The result of your bitter experience in chemistry.
