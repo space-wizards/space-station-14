@@ -151,7 +151,6 @@
 - type: entity
   id: AirAlarmXeno
   parent: AirAlarm
-  name: air alarm
   description: An alien air alarm. Hopefully they didn't breathe poison.
   components:
   - type: Sprite
@@ -161,17 +160,11 @@
       map: ["airAlarmBase"] # TODO: fire alarm enum
     - state: alarmx
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Construction
 
 - type: entity
   id: AirAlarmAssemblyXeno
   parent: AirAlarmAssembly
-  name: air alarm assembly
   description: An alien air alarm. Why are the wires pulsating?...
   components:
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors_xeno.rsi
-    layers:
-    - state: alarm_b1
-      map: [ "enum.ConstructionVisuals.Layer" ]
-  - type: Construction
