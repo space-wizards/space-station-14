@@ -34,7 +34,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: CrowbarRed
       - id: VariantCubeBox
       - id: BoxMousetrap
         amount: 2
@@ -78,6 +77,8 @@
       - id: FlashlightLantern
         amount: 2
       - id: Plunger
+        amount: 2
+      - id: WireBrush
         amount: 2
 
 - type: entity

@@ -38,3 +38,43 @@
     guides:
     - Botanical
     - Chemicals
+
+- type: entity
+  parent: BoxLightbulb
+  id: BoxLightbulbColorfulMixed
+  name: mixed colorful lightbulb box
+  components:
+  - type: StorageFill
+    contents:
+    - id: LightBulbCrystalCyan
+      amount: 2
+    - id: LightBulbCrystalBlue
+      amount: 2
+    - id: LightBulbCrystalGreen
+      amount: 2
+    - id: LightBulbCrystalPink
+      amount: 2
+    - id: LightBulbCrystalRed
+      amount: 2
+    - id: LightBulbCrystalOrange
+      amount: 2
+
+- type: entity
+  parent: BoxLighttube
+  id: BoxLighttubeColorfulMixed
+  name: mixed colorful lighttube box
+  components:
+  - type: StorageFill
+    contents:
+    - id: LightTubeCrystalCyan
+      amount: 2
+    - id: LightTubeCrystalBlue
+      amount: 2
+    - id: LightTubeCrystalGreen
+      amount: 2
+    - id: LightTubeCrystalPink
+      amount: 2
+    - id: LightTubeCrystalRed
+      amount: 2
+    - id: LightTubeCrystalOrange
+      amount: 2

@@ -219,6 +219,7 @@ public sealed class CargoTest
 
 - type: stack
   id: StackProto
+  name: stack-steel
   spawn: A
 
 - type: entity

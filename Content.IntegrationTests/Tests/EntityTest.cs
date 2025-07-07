@@ -277,11 +277,6 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var protoId in protoIds)
                 {
-                    // TODO fix ninja
-                    // Currently ninja fails to equip their own loadout.
-                    if (protoId == "MobHumanSpaceNinja")
-                        continue;
-
                     var count = Count(server.EntMan);
                     var clientCount = Count(client.EntMan);
                     var serverEntities = new HashSet<EntityUid>(Entities(server.EntMan));

@@ -126,6 +126,12 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                 child.SetPositionInParent(invisibleIndex);
             };
 
+            if (hotbar != null)
+            {
+                hotbar.DoubleStorageContainer.Visible = _openStorageLimit == 2;
+                hotbar.SingleStorageContainer.Visible = _openStorageLimit != 2;
+            }
+
             if (_openStorageLimit == 2)
             {
                 if (hotbar?.LeftStorageContainer.Children.Any(c => c.Visible) == false) // we're comparing booleans because it's bool? and not bool from the optional chaining
@@ -217,6 +223,10 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             return;
 
         if (!IsDragging && EntityManager.System<HandsSystem>().GetActiveHandEntity() == null)
+            return;
+
+        // Do not rotate items unless we are either dragging them or hovering over a storage window.
+        if (DraggingGhost is null && UIManager.CurrentlyHovered is not StorageWindow)
             return;
 
         //clamp it to a cardinal.

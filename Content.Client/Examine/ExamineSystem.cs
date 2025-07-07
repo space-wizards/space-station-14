@@ -37,7 +37,6 @@ namespace Content.Client.Examine
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
         private EntityUid _examinedEntity;
-        private EntityUid _lastExaminedEntity;
         private Popup? _examineTooltipOpen;
         private ScreenCoordinates _popupPos;
         private CancellationTokenSource? _requestCancelTokenSource;
@@ -111,7 +110,7 @@ namespace Content.Client.Examine
         {
             var entity = args.EntityUid;
 
-            if (!args.EntityUid.IsValid() || !EntityManager.EntityExists(entity))
+            if (!args.EntityUid.IsValid() || !Exists(entity))
             {
                 return false;
             }
@@ -226,7 +225,7 @@ namespace Content.Client.Examine
 
             vBox.AddChild(hBox);
 
-            if (EntityManager.HasComponent<SpriteComponent>(target))
+            if (HasComp<SpriteComponent>(target))
             {
                 var spriteView = new SpriteView
                 {
@@ -416,15 +415,14 @@ namespace Content.Client.Examine
             if (!IsClientSide(entity))
             {
                 // Ask server for extra examine info.
-                if (entity != _lastExaminedEntity)
+                unchecked
+                {
                     _idCounter += 1;
-                if (_idCounter == int.MaxValue)
-                    _idCounter = 0;
+                }
                 RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(GetNetEntity(entity), _idCounter, true));
             }
 
             RaiseLocalEvent(entity, new ClientExaminedEvent(entity, playerEnt.Value));
-            _lastExaminedEntity = entity;
         }
 
         private void CloseTooltip()

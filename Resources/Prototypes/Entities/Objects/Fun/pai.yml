@@ -13,6 +13,13 @@
     program: 2
   - type: UserInterface
     interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+        requireInputValidation: false
+      # available in pai shop
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+        requireInputValidation: false
       enum.InstrumentUiKey.Key:
         type: InstrumentBoundUserInterface
         requireInputValidation: false
@@ -51,6 +58,16 @@
     - Common
   - type: DoAfter
   - type: Actions
+  - type: Store
+    categories:
+    - PAIAbilities
+    currencyWhitelist:
+    - SiliconMemory
+    balance:
+      SiliconMemory: 30
+  - type: RadarConsole
+    maxRange: 256
+    followEntity: true
   - type: TypingIndicator
     proto: robot
   - type: Speech
@@ -75,6 +92,7 @@
     whitelist:
       components:
         - SecretStash
+        - WrappedParcel
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
@@ -109,6 +127,25 @@
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }
           On: { state: syndicate-pai-on-overlay }
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: PersonalAI
+  id: GoldenPersonalAI
+  name: golden personal ai device
+  description: Your electronic pal who's fun to be with! Special golden edition!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pai.rsi
+    layers:
+    - state: golden-pai-base
+    - state: pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: Appearance
+  - type: StaticPrice
+    price: 5000
 
 - type: entity
   parent: PersonalAI
@@ -142,25 +179,51 @@
     node: potatoai
 
 - type: entity
+  parent: BaseMentalAction
+  id: ActionPAIOpenShop
+  name: Software Catalog
+  description: Install new software to assist your owner.
+  components:
+  - type: Action
+    icon: Interface/Actions/shop.png
+  - type: InstantAction
+    event: !type:PAIShopActionEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionPAIMassScanner
+  name: Mass Scanner
+  description: View a mass scanner interface.
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: mass_scanner }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.RadarConsoleUiKey.Key
+
+- type: entity
+  parent: BaseMentalAction
   id: ActionPAIPlayMidi
   name: Play MIDI
   description: Open your portable MIDI interface to soothe your owner.
   components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
+  - type: Action
     icon: Interface/Actions/pai-midi.png
+    itemIconStyle: NoItem
+  - type: InstantAction
     event: !type:OpenUiActionEvent
       key: enum.InstrumentUiKey.Key
 
 - type: entity
+  parent: BaseMentalAction
   id: ActionPAIOpenMap
   name: Open Map
   description: Open your map interface and guide your owner.
   components:
-    - type: InstantAction
-      checkCanInteract: false
-      checkConsciousness: false
-      icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
-      event: !type:OpenUiActionEvent
-        key: enum.StationMapUiKey.Key
+  - type: Action
+    icon: { sprite: Interface/Actions/pai-map.rsi, state: icon }
+    itemIconStyle: NoItem
+  - type: InstantAction
+    event: !type:OpenUiActionEvent
+      key: enum.StationMapUiKey.Key
