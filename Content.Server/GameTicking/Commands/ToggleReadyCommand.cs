@@ -26,7 +26,7 @@ public sealed class ToggleReadyCommand : LocalizedEntityCommands
 
         if (_gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
         {
-            shell.WriteError(Loc.GetString("shell-command-only-available-in-lobby"));
+            shell.WriteError(Loc.GetString("shell-can-only-run-from-pre-round-lobby"));
             return;
         }
 
