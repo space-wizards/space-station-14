@@ -31,6 +31,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
@@ -53,8 +54,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
 
-        [ValidatePrototypeId<MaterialPrototype>]
-        public const string BiomassPrototype = "Biomass";
+        public static readonly ProtoId<MaterialPrototype> BiomassPrototype = "Biomass";
 
         public override void Update(float frameTime)
         {
