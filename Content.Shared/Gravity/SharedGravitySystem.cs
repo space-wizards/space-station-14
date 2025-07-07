@@ -1,6 +1,7 @@
 using Content.Shared.Alert;
 using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -107,9 +108,9 @@ namespace Content.Shared.Gravity
                 return;
 
             entity.Comp.Weightless = TryWeightless(entity);
-
             Dirty(entity);
-            var ev = new WeightlessnessChangedEvent();
+
+            var ev = new WeightlessnessChangedEvent(entity.Comp.Weightless);
             RaiseLocalEvent(entity, ref ev);
         }
 
@@ -154,6 +155,11 @@ namespace Content.Shared.Gravity
         {
             entity.Comp ??= Transform(entity);
 
+            // DO NOT SET TO WEIGHTLESS IF THEY'RE IN NULL-SPACE
+            // TODO: If entities actually properly pause when leaving PVS rather than entering null-space this can probably go.
+            if (entity.Comp.MapID == MapId.Nullspace)
+                return true;
+
             return _gravityQuery.TryComp(entity.Comp.GridUid, out var gravity) && gravity.Enabled ||
                    _gravityQuery.TryComp(entity.Comp.MapUid, out var mapGravity) && mapGravity.Enabled;
         }
@@ -186,7 +192,7 @@ namespace Content.Shared.Gravity
                 weightless.Weightless = TryWeightless(uid);
                 Dirty(uid, weightless);
 
-                var ev = new WeightlessnessChangedEvent();
+                var ev = new WeightlessnessChangedEvent(weightless.Weightless);
                 RaiseLocalEvent(uid, ref ev);
 
                 if (weightless.Weightless)
@@ -256,5 +262,5 @@ namespace Content.Shared.Gravity
     /// Raised on an entity when their weightless status changes.
     /// </summary>
     [ByRefEvent]
-    public record struct WeightlessnessChangedEvent;
+    public record struct WeightlessnessChangedEvent(bool Weightless);
 }
