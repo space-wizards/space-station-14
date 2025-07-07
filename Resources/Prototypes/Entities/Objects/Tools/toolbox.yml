@@ -147,3 +147,19 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+
+- type: entity
+  name: steel toolbox
+  parent: ToolboxBase
+  id: ToolboxSteel
+  description: A cheap, mass-produced toolbox made from stamped sheet metal.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_steel.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/toolbox_steel.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10 # Lower damage than a normal toolbox; gameplay-wise because this is about the damage of other autolathe items, roleplay-wise because it's cheap and flimsy compared to a "proper" toolbox

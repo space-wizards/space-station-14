@@ -216,3 +216,10 @@
     Steel: 750
     Plasma: 150
     Uranium: 150
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: ToolboxSteel
+  result: ToolboxSteel
+  materials:
+    Steel: 300
