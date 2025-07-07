@@ -213,8 +213,8 @@ public sealed class StatValuesCommand : IConsoleCommand
                 proto.ID,
                 baseDamage.ToString(),
                 wieldedDamage,
-                comp.AttackRate.ToString("0.00", CultureInfo.InvariantCulture),
-                (comp.AttackRate * baseDamage).Float().ToString("0.00", CultureInfo.InvariantCulture),
+                comp.AttackRate.ToString("0.00", CultureInfo.CurrentCulture),
+                (comp.AttackRate * baseDamage).Float().ToString("0.00", CultureInfo.CurrentCulture),
                 structuralDamage.ToString(),
                 wieldedStructuralDamage,
             });
