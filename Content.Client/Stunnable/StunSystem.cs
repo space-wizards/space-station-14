@@ -35,9 +35,6 @@ public sealed class StunSystem : SharedStunSystem
     /// </summary>
     private void OnComponentInit(Entity<StunnedComponent> entity, ref ComponentInit args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
         if (!TryComp<SpriteComponent>(entity, out var sprite))
             return;
 
@@ -107,49 +104,6 @@ public sealed class StunSystem : SharedStunSystem
             return;
 
         _spriteSystem.LayerSetVisible((entity, sprite), index, stars);
-    }
-
-    /// <summary>
-    /// A simple random rotation animation.
-    /// </summary>
-    /// <param name="sprite">The spriteComp we're rotating</param>
-    /// <param name="frequency">How many times per second we're rotating</param>
-    /// <param name="rotateClamp">Maximum angle of rotation (in radians)</param>
-    /// <param name="startAngle">Default starting angle of rotation (used because we don't have adjustment layers)</param>
-    /// <returns></returns>
-    public Animation GetTwitchAnimation(SpriteComponent sprite,
-        float frequency,
-        (float, float) rotateClamp,
-        Angle startAngle)
-    {
-        // avoid animations with negative length or infinite length
-        if (frequency <= 0)
-            return new Animation();
-
-        var rotation = new Angle(_random.NextFloat(rotateClamp.Item1, rotateClamp.Item2));
-
-        rotation *= _random.Pick(_sign);
-
-        var length = 1f / frequency;
-
-        return new Animation
-        {
-            Length = TimeSpan.FromSeconds(length),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty
-                {
-                    ComponentType = typeof(SpriteComponent),
-                    Property = nameof(SpriteComponent.Rotation),
-                    KeyFrames =
-                    {
-                        new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0f),
-                        new AnimationTrackProperty.KeyFrame(startAngle + rotation, length/2),
-                        // hold the rotation for 50% of the time
-                    }
-                }
-            }
-        };
     }
 
     /// <summary>
