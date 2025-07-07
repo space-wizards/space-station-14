@@ -8,7 +8,11 @@
     },
     "states": [
 	{
-	    "name": "ironsand_step",
+	    "name": "straight",
+	    "directions": 4
+	},
+	{
+	    "name": "corner_convex",
 	    "directions": 4
 	}
     ]
