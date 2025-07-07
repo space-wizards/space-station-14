@@ -1,3 +1,4 @@
+using Content.Shared.Administration.Managers;
 using Content.Shared.Audio;
 using Content.Shared.Construction.Components;
 using Content.Shared.Explosion;
@@ -18,6 +19,7 @@ namespace Content.Shared.SubFloor
     [UsedImplicitly]
     public abstract class SharedSubFloorHideSystem : EntitySystem
     {
+        [Dependency] private readonly ISharedAdminManager _adminMan = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] protected readonly SharedMapSystem Map = default!;
@@ -83,6 +85,10 @@ namespace Content.Shared.SubFloor
 
         private void OnInteractionAttempt(EntityUid uid, SubFloorHideComponent component, ref GettingInteractedWithAttemptEvent args)
         {
+            // Allow admins (e.g., mappers/aghosts) to twiddle with stuff under subfloors
+            if (_adminMan.IsAdmin(args.Uid))
+                return;
+
             // No interactions with entities hidden under floor tiles.
             if (component.BlockInteractions && component.IsUnderCover)
                 args.Cancelled = true;
