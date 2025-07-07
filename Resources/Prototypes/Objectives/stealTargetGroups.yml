@@ -163,7 +163,7 @@
   name: steal-target-groups-forensic-scanner
   sprite:
     sprite: Objects/Devices/forensic_scanner.rsi
-    state: forensicnew
+    state: icon
 
 - type: stealTargetGroup
   id: FlippoEngravedLighter

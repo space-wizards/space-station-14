@@ -63,6 +63,9 @@ public sealed class LungSystem : EntitySystem
         _solutionContainerSystem.UpdateChemicals(lung.Solution.Value);
     }
 
+    /* This should really be moved to somewhere in the atmos system and modernized,
+     so that other systems, like CondenserSystem, can use it.
+     */
     private void GasToReagent(GasMixture gas, Solution solution)
     {
         foreach (var gasId in Enum.GetValues<Gas>())
