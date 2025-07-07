@@ -232,7 +232,6 @@ public sealed class MidiTrack
         return input.Substring(0, truncatedLength) + Postfix;
     }
 
-    // TODO: more general sanitation for all admin logs that can contain strings send from the client, not just for this case
     private static string Sanitize(string input)
     {
         var sanitized = new StringBuilder(input.Length);
