@@ -4,6 +4,6 @@
   antagonist: true
   objective: roles-antag-dragon-objective
   requirements:
-  - !type:DepartmentTimeRequirement
-    department: Security
+  - !type:RoleTimeRequirement
+    role: JobSalvageSpecialist
     time: 10800 # 3h STARLIGHT

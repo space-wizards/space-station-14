@@ -219,8 +219,8 @@
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
     requirments:
-    - !type:DepartmentTimeRequirement
-      department: Security
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
       time: 10800 # 3h STARLIGHT
   - type: Sprite
     layers:

@@ -6,7 +6,7 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobSecurityOfficer
-    time: 21600 # 6 hrs
+    time: 10800 # 3 hrs
   - !type:RoleTimeRequirement
     role: JobSurgeon
-    time: 21600 # 6 hrs
+    time: 10800 # 3 hrs
