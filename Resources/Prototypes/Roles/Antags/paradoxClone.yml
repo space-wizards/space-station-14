@@ -6,7 +6,7 @@
   setPreference: false
   requirements:
   - !type:OverallPlaytimeRequirement
-    time: 3600 # 5h
+    time: 86400 # 24h STARLIGHT
 
 # they need to be able to espace when spawning inside a locked room
 # TODO: remove this once we got a better spawning loacation selection
