@@ -3879,3 +3879,11 @@
   id: 8746
   time: '2025-07-07T05:07:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38549
+- author: Smugman
+  changes:
+  - message: Many new lighters can now be found in both Maints loot and the Syndicate
+      Uplink.
+    type: Add
+  id: 8747
+  time: '2025-07-07T18:53:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35514
