@@ -2,7 +2,7 @@ using Content.Server.Speech.Components;
 using Content.Shared.Emoting;
 using Content.Shared.Inventory;
 
-namespace Content.Server.Speech;
+namespace Content.Server.Speech.EntitySystems;
 
 public sealed class EmoteBlockerSystem : EntitySystem
 {
@@ -14,26 +14,26 @@ public sealed class EmoteBlockerSystem : EntitySystem
         SubscribeLocalEvent<EmoteBlockerComponent, InventoryRelayedEvent<BeforeEmoteEvent>>(OnRelayedEmoteEvent);
     }
 
-    private void OnRelayedEmoteEvent(EntityUid uid, EmoteBlockerComponent component, InventoryRelayedEvent<BeforeEmoteEvent> args)
+    private static void OnRelayedEmoteEvent(Entity<EmoteBlockerComponent> entity, ref InventoryRelayedEvent<BeforeEmoteEvent> args)
     {
-        OnEmoteEvent(uid, component, ref args.Args);
+        OnEmoteEvent(entity, ref args.Args);
     }
 
-    private void OnEmoteEvent(EntityUid uid, EmoteBlockerComponent component, ref BeforeEmoteEvent args)
+    private static void OnEmoteEvent(Entity<EmoteBlockerComponent> entity, ref BeforeEmoteEvent args)
     {
-        if (component.BlocksEmotes.Contains(args.Emote))
+        if (entity.Comp.BlocksEmotes.Contains(args.Emote))
         {
             args.Cancel();
-            args.Blocker = uid;
+            args.Blocker = entity;
             return;
         }
 
-        foreach (var blockedCat in component.BlocksCategories)
+        foreach (var blockedCat in entity.Comp.BlocksCategories)
         {
             if (blockedCat == args.Emote.Category)
             {
                 args.Cancel();
-                args.Blocker = uid;
+                args.Blocker = entity;
                 return;
             }
         }

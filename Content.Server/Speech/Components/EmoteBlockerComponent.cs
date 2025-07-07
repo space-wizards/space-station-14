@@ -13,14 +13,12 @@ public sealed partial class EmoteBlockerComponent : Component
     /// <summary>
     /// Which categories of emotes are blocked by this component.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public HashSet<EmoteCategory> BlocksCategories = [];
 
     /// <summary>
     /// IDs of which specific emotes are blocked by this component.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public HashSet<ProtoId<EmotePrototype>> BlocksEmotes = [];
 }

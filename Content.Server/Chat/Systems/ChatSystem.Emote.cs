@@ -246,17 +246,26 @@ public partial class ChatSystem
         {
             if (beforeEv.Blocker != null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("chat-system-emote-cancelled-blocked",
-                    [("emote", Loc.GetString(proto.Name).ToLower()),
-                    ("blocker", beforeEv.Blocker.Value)]),
-                    uid, uid);
+                _popupSystem.PopupEntity(
+                    Loc.GetString(
+                        "chat-system-emote-cancelled-blocked",
+                        ("emote", Loc.GetString(proto.Name).ToLower()),
+                        ("blocker", beforeEv.Blocker.Value)
+                    ),
+                    uid,
+                    uid
+                );
             }
             else
             {
-                _popupSystem.PopupEntity(Loc.GetString("chat-system-emote-cancelled-generic",
-                    ("emote", Loc.GetString(proto.Name).ToLower())),
-                    uid, uid);
+                _popupSystem.PopupEntity(
+                    Loc.GetString("chat-system-emote-cancelled-generic",
+                        ("emote", Loc.GetString(proto.Name).ToLower())),
+                    uid,
+                    uid
+                );
             }
+
             return false;
         }
 
