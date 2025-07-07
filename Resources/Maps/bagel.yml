@@ -4,8 +4,8 @@ meta:
   engineVersion: 264.0.0
   forkId: ""
   forkVersion: ""
-  time: 07/07/2025 15:04:27
-  entityCount: 25541
+  time: 07/07/2025 15:40:25
+  entityCount: 25542
 maps:
 - 943
 grids:
@@ -6683,10 +6683,11 @@ entities:
           decals:
             2695: 29.974606,-11.088503
         - node:
-            color: '#FF0000FF'
+            cleanable: True
+            color: '#FF000054'
             id: e
           decals:
-            6459: -7.9462476,-21.015383
+            6487: -7.964929,-21.021265
         - node:
             cleanable: True
             color: '#79150096'
@@ -6762,10 +6763,11 @@ entities:
           decals:
             1656: -30,-36
         - node:
-            color: '#FF0000FF'
+            cleanable: True
+            color: '#FF000054'
             id: s
           decals:
-            6460: -7.689175,-21.029282
+            6486: -7.691646,-21.025898
         - node:
             cleanable: True
             color: '#FED83DFF'
@@ -6798,10 +6800,11 @@ entities:
           decals:
             2698: 9.979055,-45.00161
         - node:
-            color: '#FF0000FF'
+            cleanable: True
+            color: '#FF000054'
             id: y
           decals:
-            6458: -8.251954,-20.980637
+            6488: -8.215054,-20.979568
     - type: GridAtmosphere
       version: 2
       data:
@@ -112138,6 +112141,13 @@ entities:
     - type: Transform
       pos: -32.5,13.5
       parent: 60
+- proto: HolopadSecurityArmory
+  entities:
+  - uid: 16450
+    components:
+    - type: Transform
+      pos: -32.5,-3.5
+      parent: 60
 - proto: HolopadSecurityBreakroom
   entities:
   - uid: 1146
@@ -131522,7 +131532,7 @@ entities:
   - uid: 2121
     components:
     - type: Transform
-      pos: -7.492196,-20.498932
+      pos: -7.455665,-20.516632
       parent: 60
 - proto: SoapNT
   entities:
