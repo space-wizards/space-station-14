@@ -32,7 +32,7 @@
     - id: ClothingMaskMuzzle
     - !type:GroupSelector
       prob: 0.15
-      amount: 2
+      rolls: 2
       children:
       - id: FoodSnackBoritos
       - id: FoodSnackCheesie
