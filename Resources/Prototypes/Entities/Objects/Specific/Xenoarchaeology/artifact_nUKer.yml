@@ -1,0 +1,12 @@
+- type: entity
+  id: ArtifactNuker
+  parent: BaseItem
+  name: artifact nUKer
+  description: Used to safely destroy active nodes in artifact.
+  components:
+  - type: ArtifactNuker
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
