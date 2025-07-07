@@ -61,9 +61,6 @@ public abstract class SharedConveyorController : VirtualController
         if(!ent.Comp.Conveying)
             return;
 
-        if(!PhysicsQuery.TryComp(ent, out var body) || body.BodyStatus != BodyStatus.OnGround)
-            return;
-
         // Conveyed entities don't get friction, they just get wishdir applied so will inherently slowdown anyway.
         args.Modifier = 0f;
     }
@@ -148,7 +145,10 @@ public abstract class SharedConveyorController : VirtualController
             var physics = ent.Entity.Comp3;
 
             if (physics.BodyStatus != BodyStatus.OnGround)
+            {
+                SetConveying(ent.Entity.Owner, ent.Entity.Comp1, false);
                 continue;
+            }
 
             var velocity = physics.LinearVelocity;
             var angularVelocity = physics.AngularVelocity;
