@@ -2,6 +2,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Alert;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Coordinates;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Gravity;
@@ -50,6 +51,15 @@ public abstract class SharedRootableSystem : EntitySystem
         SubscribeLocalEvent<RootableComponent, IsWeightlessEvent>(OnIsWeightless);
         SubscribeLocalEvent<RootableComponent, SlipAttemptEvent>(OnSlipAttempt);
         SubscribeLocalEvent<RootableComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
+        SubscribeLocalEvent<RootableComponent, CloningEvent>(OnCloning);
+    }
+
+    private void OnCloning(Entity<RootableComponent> ent, ref CloningEvent args)
+    {
+        if (!args.Settings.EventComponents.Contains(Factory.GetRegistration(ent.Comp.GetType()).Name))
+            return;
+
+        EnsureComp<RootableComponent>(args.CloneUid);
     }
 
     private void OnRootableMapInit(Entity<RootableComponent> entity, ref MapInitEvent args)
