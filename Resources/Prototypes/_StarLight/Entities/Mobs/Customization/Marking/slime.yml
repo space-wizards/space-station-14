@@ -49,21 +49,6 @@
     state: core
 
 - type: marking
-  id: SlimeCoreGlowing
-  bodyPart: Chest
-  markingCategory: Chest
-  speciesRestriction: [ SlimePerson ]
-  followSkinColor: false
-  coloring:
-    default:
-      type:
-        !type:EyeColoring
-  sprites:
-  - sprite: _Starlight/Mobs/Customization/SlimePerson/chest.rsi
-    state: core
-  shader: unshaded
-
-- type: marking
   id: SlimeLungs
   bodyPart: Chest
   markingCategory: Chest
@@ -87,7 +72,6 @@
     state: fadingstars2
   - sprite: _Starlight/Mobs/Customization/SlimePerson/head.rsi
     state: fadingstars3
-  shader: unshaded
 
 - type: marking
   id: fizz
@@ -148,24 +132,23 @@
 # Eyes
 
 - type: marking
-  id: SlimeEyeglow
+  id: SlimeEyesDefault
   bodyPart: Eyes
-  markingCategory: HeadTop
+  markingCategory: Eyes
   speciesRestriction: [ SlimePerson ]
+  forcedColoring: true
   coloring:
     default:
       type:
         !type:EyeColoring
-        negative: false
   sprites:
-  - sprite: _Starlight/Mobs/Customization/SlimePerson/eyes.rsi
-    state: glow
-  shader: unshaded
+  - sprite:  Mobs\Species\Slime\parts.rsi #Unfinished???
+    state: eyes
 
 - type: marking
   id: SlimeEyesDroopy
   bodyPart: Eyes
-  markingCategory: HeadTop
+  markingCategory: Eyes
   speciesRestriction: [ SlimePerson ]
   coloring:
     default:
@@ -177,24 +160,9 @@
     state: droopy
 
 - type: marking
-  id: SlimeEyesDroopyGlowing
-  bodyPart: Eyes
-  markingCategory: HeadTop
-  speciesRestriction: [ SlimePerson ]
-  coloring:
-    default:
-      type:
-        !type:EyeColoring
-        negative: false
-  sprites:
-  - sprite: _Starlight/Mobs/Customization/SlimePerson/eyes.rsi
-    state: droopyglow
-  shader: unshaded
-
-- type: marking
   id: SlimeEyesCyclops
   bodyPart: Eyes
-  markingCategory: HeadTop
+  markingCategory: Eyes
   speciesRestriction: [ SlimePerson ]
   coloring:
     default:
@@ -204,21 +172,6 @@
   sprites:
   - sprite: _Starlight/Mobs/Customization/SlimePerson/eyes.rsi
     state: cyclops
-
-- type: marking
-  id: SlimeEyesCyclopsGlowing
-  bodyPart: Eyes
-  markingCategory: HeadTop
-  speciesRestriction: [ SlimePerson ]
-  coloring:
-    default:
-      type:
-        !type:EyeColoring
-        negative: false
-  sprites:
-  - sprite: _Starlight/Mobs/Customization/SlimePerson/eyes.rsi
-    state: cyclopsglow
-  shader: unshaded
 
 # RArm
 

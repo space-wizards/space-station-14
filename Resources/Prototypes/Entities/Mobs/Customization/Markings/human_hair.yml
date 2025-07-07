@@ -1391,3 +1391,17 @@
   sprites:
   - sprite: Mobs/Customization/human_hair.rsi
     state: longwithbangs
+- type: marking # Imp
+  id: HumanHairLowpigtails
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Starlight\Mobs\Customization\human_hair.rsi
+      state: lowpigtails
+- type: marking # Imp
+  id: HumanHairGatheredLow
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Starlight\Mobs\Customization\human_hair.rsi
+      state: gatheredlow
