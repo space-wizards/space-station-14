@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Nuclear operative agent is renamed to nuclear operative corpsman.
-    type: Tweak
-  id: 8236
-  time: '2025-04-18T19:56:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34627
 - author: Ilya246
   changes:
   - message: The actions hotbar now has up to 10 more hotkeys accessible through the
@@ -3887,3 +3880,12 @@
   id: 8748
   time: '2025-07-07T19:19:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36862
+- author: slarticodefast, EmoGarbage404
+  changes:
+  - message: 'Added a new science gadget: The H.A.R.M.P.A.C.K., a backpack that gives
+      you two extra hands when worn. Unlocked with a T2 arsenal research and printable
+      at the protolathe and secfab.'
+    type: Fix
+  id: 8749
+  time: '2025-07-07T21:43:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38824
