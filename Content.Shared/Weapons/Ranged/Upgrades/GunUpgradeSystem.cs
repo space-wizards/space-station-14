@@ -38,6 +38,7 @@ public sealed class GunUpgradeSystem : EntitySystem
         SubscribeLocalEvent<GunUpgradeFireRateComponent, GunRefreshModifiersEvent>(OnFireRateRefresh);
         SubscribeLocalEvent<GunUpgradeSpeedComponent, GunRefreshModifiersEvent>(OnSpeedRefresh);
         SubscribeLocalEvent<GunUpgradeDamageComponent, GunShotEvent>(OnDamageGunShot);
+        SubscribeLocalEvent<GunUpgradePenetrationComponent, GunShotEvent>(OnPierceGunShot);
     }
 
     private void RelayEvent<T>(Entity<UpgradeableGunComponent> ent, ref T args) where T : notnull
@@ -108,6 +109,15 @@ public sealed class GunUpgradeSystem : EntitySystem
         {
             if (TryComp<ProjectileComponent>(ammo, out var proj))
                 proj.Damage += ent.Comp.Damage;
+        }
+    }
+
+    private void OnPierceGunShot(Entity<GunUpgradePenetrationComponent> ent, ref GunShotEvent args)
+    {
+        foreach (var (ammo, _) in args.Ammo)
+        {
+            if (TryComp<ProjectileComponent>(ammo, out var proj))
+                proj.PenetrationThreshold = ent.Comp.Threshold;
         }
     }
 
