@@ -30,6 +30,7 @@
   - SignallerAdvanced
   - DeviceQuantumSpinInverter
   - DeviceDesynchronizer
+  - ClothingBackpackHarmpack
 
 - type: latheRecipePack
   id: ScienceClothing
