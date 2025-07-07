@@ -84,3 +84,6 @@ reagent-desc-mechanotoxin = A neurotoxin used as venom by some species of spider
 
 reagent-name-toxintrash = trash 
 reagent-desc-toxintrash = An awful-smelling fluid. Deadly to non-vox.
+
+reagent-name-nollazine = nollazine
+reagent-desc-nollazine = An appalling, tar-like sludge that reacts viciously with anything living. Rumors regarding its origins have discouraged widespread commercial use.
