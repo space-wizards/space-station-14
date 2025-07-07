@@ -83,8 +83,8 @@
         key: Jitter
         time: 3.0
         type: Remove
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
         component: Drowsiness
         time: 1.5
         type: Add
@@ -749,8 +749,8 @@
         key: KnockedDown
         time: 3.0
         type: Remove
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectSeeingRainbow
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
         time: 15.0
         type: Remove
 
@@ -922,8 +922,8 @@
       - !type:Jitter
       - !type:GenericStatusEffect
         key: Stutter
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+        component: StutteringAccent
+      - !type:GenericStatusEffect
         key: Drowsiness
         time: 10
         type: Remove
@@ -948,8 +948,8 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
         time: 10
         type: Remove
       - !type:ResetNarcolepsy
