@@ -14,7 +14,7 @@ public abstract partial class SharedStunSystem
 
     private bool GetStarsData(Entity<StunVisualsComponent, StunnedComponent?> entity)
     {
-        if (!Resolve(entity, ref entity.Comp2))
+        if (!Resolve(entity, ref entity.Comp2, false))
             return false;
 
         return Blocker.CanConsciouslyPerformAction(entity);
