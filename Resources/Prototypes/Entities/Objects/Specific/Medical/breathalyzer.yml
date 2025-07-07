@@ -1,0 +1,101 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseBreathalyzer
+  name: breathalyzer
+  description: A breath analyzer, able to approximate how long it takes for an individual to return to sobriety
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
+  - type: UseDelay
+    delay: 3
+  - type: Clothing
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
+      Plastic: 25
+      Steel: 25
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Breathalyzer
+    thresholds: # I chose these threshold values arbitrarily
+      0: breathalyzer-sober
+      5: breathalyzer-tipsy
+      15: breathalyzer-inebriated
+      30: breathalyzer-intoxicated
+      120: breathalyzer-dangerously-drunk
+      600: breathalyzer-alcohol-poisoning
+
+- type: entity
+  parent: BaseBreathalyzer
+  id: BreathalyzerMedical
+  name: precision breath analyzer
+  description: A state of the art high-precision breath analyzer, able to accurately predict how long it takes for an individual to return to sobriety
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
+  - type: UseDelay
+    delay: 3
+  - type: Clothing
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
+  - type: Breathalyzer
+    delay: 3
+    specificity: 3
+    # variance: 1
+    thresholds:
+      0: breathalyzer-sober
+      1: breathalyzer-tipsy
+      15: breathalyzer-inebriated
+      30: breathalyzer-intoxicated
+      120: breathalyzer-dangerously-drunk
+      600: breathalyzer-alcohol-poisoning
+
+- type: entity
+  parent: BaseBreathalyzer
+  id: BreathalyzerBarkeep
+  name: worn-out breathalyzer
+  description: An old, shitty breathalyzer, able to tell you how sloshed a patron is
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Breathalyzer/barkeep.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Medical/Breathalyzer/barkeep.rsi
+  - type: UseDelay
+    delay: 3
+  - type: Clothing
+    sprite: Objects/Specific/Medical/Breathalyzer/barkeep.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: GuideHelp
+    guides:
+    - Bartender
+  - type: Breathalyzer
+    delay: 1
+    specificity: 10
+    # variance: 15
+    thresholds:
+      0: breathalyzer-sober
+      10: breathalyzer-tipsy
+      20: breathalyzer-drunk
+      30: breathalyzer-sloshed
+      120: breathalyzer-shitfaced
+      600: breathalyzer-alcohol-poisoning
