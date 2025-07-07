@@ -41,3 +41,40 @@
   - type: Construction
     graph: BananiumStatueClown
     node: bananiumStatue
+
+- type: entity
+  id: StatueIronsandSmall
+  parent: BaseStructure
+  name: ironsand small statue
+  description: A mysterious statue found in a desert of iron sand
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Decoration/ironsand_statue.rsi
+    state: small_pillar
+    drawdepth: Mobs
+
+- type: entity
+  id: StatueIronsandSmall2
+  parent: BaseStructure
+  name: ironsand small statue
+  description: A mysterious statue found in a desert of iron sand
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Decoration/ironsand_statue.rsi
+    state: small_pillar_2
+    drawdepth: Mobs
+
+- type: entity
+  id: StatueIronsandTall
+  parent: BaseStructure
+  name: ironsand tall statue
+  description: A mysterious statue found in a desert of iron sand
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Decoration/ironsand_statue_tall.rsi
+    state: pillar_of_weh
+    drawdepth: Mobs
+    offset: "0.0,0.5"
