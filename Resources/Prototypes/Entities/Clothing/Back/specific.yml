@@ -101,9 +101,9 @@
 
 - type: entity
   parent: Clothing
-  id: ClothingBackpackRIG
-  name: R.I.G
-  description: Robust Integrated Gearset
+  id: ClothingBackpackHarmpack
+  name: H.A.R.M.P.A.C.K.
+  description: Now you can reload, punch, and eat a snack - simultaneously.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/robust.rsi

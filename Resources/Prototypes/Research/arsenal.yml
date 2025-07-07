@@ -201,7 +201,7 @@
   tier: 2
   cost: 10000
   recipeUnlocks:
-  - ClothingBackpackRIG
+  - ClothingBackpackHarmpack
 
 # Tier 3
 

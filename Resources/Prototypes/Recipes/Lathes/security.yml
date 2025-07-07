@@ -85,8 +85,8 @@
     Glass: 500
 
 - type: latheRecipe
-  id: ClothingBackpackRIG
-  result: ClothingBackpackRIG
+  id: ClothingBackpackHarmpack
+  result: ClothingBackpackHarmpack
   categories:
   - Clothing
   completetime: 15
