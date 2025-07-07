@@ -12,17 +12,18 @@ namespace Content.Shared.SSDIndicator;
 [AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class SSDIndicatorComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
     public bool IsSSD = true;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public ProtoId<SsdIconPrototype> Icon = "SSDIcon";
 
     /// <summary>
     ///     When the entity should fall asleep
     /// </summary>
-    [DataField, AutoPausedField, Access(typeof(SSDIndicatorSystem))]
+    [DataField]
+    [AutoNetworkedField, AutoPausedField]
+    [Access(typeof(SSDIndicatorSystem))]
     public TimeSpan FallAsleepTime = TimeSpan.Zero;
 }
