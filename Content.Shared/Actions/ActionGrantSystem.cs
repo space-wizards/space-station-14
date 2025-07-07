@@ -24,7 +24,7 @@ public sealed class ActionGrantSystem : EntitySystem
             return;
 
         // If slot we are equipping into isn't allowed then don't give the action
-        if ((ent.Comp.AllowedSlots & args.SlotFlags) != args.SlotFlags)
+        if (args.SlotFlags == null || (ent.Comp.AllowedSlots & args.SlotFlags) != args.SlotFlags)
             return;
 
         foreach (var action in grant.ActionEntities)
