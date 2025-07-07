@@ -106,7 +106,7 @@
   description: Now you can reload, punch, and eat a snack - simultaneously.
   components:
   - type: Sprite
-    sprite: Clothing/Back/Backpacks/robust.rsi
+    sprite: Clothing/Back/Specific/harmpack.rsi
     state: icon
   - type: Item
     size: Ginormous
