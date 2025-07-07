@@ -9007,4 +9007,11 @@ Entries:
   id: 1242
   time: '2025-07-07T12:47:39.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/979
+- author: Gensy
+  changes:
+  - message: Magnet on mail bags and ore bags can now be toggled
+    type: Tweak
+  id: 1243
+  time: '2025-07-07T12:49:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/982
 
