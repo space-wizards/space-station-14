@@ -174,7 +174,7 @@ public sealed class StatValuesCommand : IConsoleCommand
         return state;
     }
 
-    private static ProtoId<DamageTypePrototype> _structuralDamageType = "Structural";
+    private static readonly ProtoId<DamageTypePrototype> StructuralDamageType = "Structural";
 
     private StatValuesEuiMessage GetMelee()
     {
@@ -195,8 +195,8 @@ public sealed class StatValuesCommand : IConsoleCommand
 
             // TODO: Esword damage
 
-            var structuralDamage = comp.Damage.DamageDict.GetValueOrDefault(_structuralDamageType);
-            var baseDamage = comp.Damage.GetTotal() - comp.Damage.DamageDict.GetValueOrDefault(_structuralDamageType);
+            var structuralDamage = comp.Damage.DamageDict.GetValueOrDefault(StructuralDamageType);
+            var baseDamage = comp.Damage.GetTotal() - comp.Damage.DamageDict.GetValueOrDefault(StructuralDamageType);
 
             var wieldedStructuralDamage = "-";
             var wieldedDamage = "-";
@@ -204,8 +204,8 @@ public sealed class StatValuesCommand : IConsoleCommand
             {
                 var comp2 = (IncreaseDamageOnWieldComponent) increaseDamageComp.Component;
 
-                wieldedStructuralDamage = (structuralDamage + comp2.BonusDamage.DamageDict.GetValueOrDefault(_structuralDamageType)).ToString();
-                wieldedDamage = (baseDamage + comp2.BonusDamage.GetTotal() - comp2.BonusDamage.DamageDict.GetValueOrDefault(_structuralDamageType)).ToString();
+                wieldedStructuralDamage = (structuralDamage + comp2.BonusDamage.DamageDict.GetValueOrDefault(StructuralDamageType)).ToString();
+                wieldedDamage = (baseDamage + comp2.BonusDamage.GetTotal() - comp2.BonusDamage.DamageDict.GetValueOrDefault(StructuralDamageType)).ToString();
             }
 
             values.Add(new[]
