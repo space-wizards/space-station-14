@@ -18,19 +18,19 @@
   - type: AntagObjectives
     objectives:
     - StealResearchObjective
-  requirements:
-  - !type:RoleTimeRequirement
-    role: JobSecurityOfficer
-    time: 10800 # 3 hrs
-  - !type:RoleTimeRequirement
-    role: JobSurgeon
-    time: 10800 # 3 hrs
   - type: GhostRole
     name: abductors-ghost-role-name
     description: abductors-ghost-role-desc
     rules: abductors-ghost-role-rules
     raffle:
       settings: default
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 10800 # 3 hrs
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 10800 # 3 hrs
   - type: AbductorScientist
   - type: ActionGrant
     actions:
@@ -47,19 +47,19 @@
   - type: AntagObjectives
     objectives:
     - StealResearchObjective
-  requirements:
-  - !type:RoleTimeRequirement
-    role: JobSecurityOfficer
-    time: 10800 # 3 hrs
-  - !type:RoleTimeRequirement
-    role: JobSurgeon
-    time: 10800 # 3 hrs
   - type: GhostRole
     name: abductora-ghost-role-name
     description: abductora-ghost-role-desc
     rules: abductors-ghost-role-rules
     raffle:
       settings: default
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 10800 # 3 hrs
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 10800 # 3 hrs
   - type: AbductorAgent
   - type: ActionGrant
     actions:
