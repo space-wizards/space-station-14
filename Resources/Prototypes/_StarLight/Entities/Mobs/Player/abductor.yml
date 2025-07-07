@@ -18,13 +18,13 @@
   - type: AntagObjectives
     objectives:
     - StealResearchObjective
-    requirements:
-    - !type:RoleTimeRequirement
-      role: JobSecurityOfficer
-      time: 10800 # 3 hrs
-    - !type:RoleTimeRequirement
-      role: JobSurgeon
-      time: 10800 # 3 hrs
+  requirements:
+  - !type:RoleTimeRequirement
+    role: JobSecurityOfficer
+    time: 10800 # 3 hrs
+  - !type:RoleTimeRequirement
+    role: JobSurgeon
+    time: 10800 # 3 hrs
   - type: GhostRole
     name: abductors-ghost-role-name
     description: abductors-ghost-role-desc
@@ -47,13 +47,13 @@
   - type: AntagObjectives
     objectives:
     - StealResearchObjective
-    requirements:
-    - !type:RoleTimeRequirement
-      role: JobSecurityOfficer
-      time: 10800 # 3 hrs
-    - !type:RoleTimeRequirement
-      role: JobSurgeon
-      time: 10800 # 3 hrs
+  requirements:
+  - !type:RoleTimeRequirement
+    role: JobSecurityOfficer
+    time: 10800 # 3 hrs
+  - !type:RoleTimeRequirement
+    role: JobSurgeon
+    time: 10800 # 3 hrs
   - type: GhostRole
     name: abductora-ghost-role-name
     description: abductora-ghost-role-desc
