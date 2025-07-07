@@ -100390,8 +100390,6 @@ entities:
       pos: -32.5,-1.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 6779
     - type: AtmosPipeColor
@@ -101173,8 +101171,6 @@ entities:
       pos: -32.5,-4.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 6779
     - type: AtmosPipeColor
@@ -156824,8 +156820,6 @@ entities:
       pos: -31.5,-4.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11377
 - proto: WeaponEnergyTurretSecurityControlPanel
