@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: filing cabinets no longer have whitelists.
-    type: Tweak
-  id: 8234
-  time: '2025-04-18T17:37:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36185
 - author: aada
   changes:
   - message: Egg-plants now have 6 reagent per egg at 20 potency, up from 3.
@@ -3887,3 +3880,11 @@
   id: 8745
   time: '2025-07-06T23:50:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38808
+- author: AsnDen
+  changes:
+  - message: Golden PAI was added. It is extremely rare and expensive. This PAI can
+      be found in maint lockers
+    type: Add
+  id: 8746
+  time: '2025-07-07T05:07:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38549
