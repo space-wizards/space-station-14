@@ -10,12 +10,14 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
+using Content.Shared.Tag;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Wires;
 using Content.Shared.Item.ItemToggle.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Lock;
@@ -33,7 +35,10 @@ public sealed class LockSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _sharedPopupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+
+    private static readonly ProtoId<TagPrototype> NoConsoleSoundTag = "NoConsoleSound";
 
     /// <inheritdoc />
     public override void Initialize()
@@ -425,7 +430,8 @@ public sealed class LockSystem : EntitySystem
             _sharedPopupSystem.PopupClient(Loc.GetString(component.Popup), uid, args.User);
         }
 
-        _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
+        if (!_tag.HasTag(args.User, NoConsoleSoundTag))
+            _audio.PlayPredicted(component.AccessDeniedSound, uid, args.User);
     }
 
     private void LockToggled(EntityUid uid, UIRequiresLockComponent component, LockToggledEvent args)
