@@ -12,11 +12,7 @@ namespace Content.Client.Stunnable;
 
 public sealed class StunSystem : SharedStunSystem
 {
-    private static readonly ResPath StarsPath = new ResPath("Mobs/Effects/stunned.rsi");
-    private static readonly string State = "stunned";
-
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
     private readonly int[] _sign = [-1, 1];
@@ -25,15 +21,14 @@ public sealed class StunSystem : SharedStunSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StunnedComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<StunnedComponent, MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<StunnedComponent, AppearanceChangeEvent>(OnAppearanceChanged);
+        SubscribeLocalEvent<StunVisualsComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<StunVisualsComponent, AppearanceChangeEvent>(OnAppearanceChanged);
     }
 
     /// <summary>
     ///     Add stun visual layers
     /// </summary>
-    private void OnComponentInit(Entity<StunnedComponent> entity, ref ComponentInit args)
+    private void OnComponentInit(Entity<StunVisualsComponent> entity, ref ComponentInit args)
     {
         if (!TryComp<SpriteComponent>(entity, out var sprite))
             return;
@@ -44,66 +39,29 @@ public sealed class StunSystem : SharedStunSystem
         _spriteSystem.LayerSetVisible(spriteEntity, StunVisualLayers.StamCrit, false);
         _spriteSystem.LayerSetOffset(spriteEntity, StunVisualLayers.StamCrit, new Vector2(0, 0.3125f));
 
-        _spriteSystem.LayerSetRsi(spriteEntity, StunVisualLayers.StamCrit, StarsPath);
+        _spriteSystem.LayerSetRsi(spriteEntity, StunVisualLayers.StamCrit, entity.Comp.StarsPath);
 
-        UpdateAppearance((entity,  entity.Comp, sprite));
+        UpdateAppearance((entity, sprite), entity.Comp.State);
     }
 
-    protected override void OnStunShutdown(Entity<StunnedComponent> ent, ref ComponentShutdown args)
-    {
-        base.OnStunShutdown(ent, ref args);
-
-        if (!TryComp<SpriteComponent>(ent, out var sprite))
-            return;
-
-        var entity = (ent, sprite);
-
-        if (!_spriteSystem.LayerMapTryGet(entity, StunVisualLayers.StamCrit, out var index, false))
-            return;
-
-        _spriteSystem.LayerSetVisible(entity, index, false);
-    }
-
-    private void OnAppearanceChanged(Entity<StunnedComponent> entity, ref AppearanceChangeEvent args)
+    private void OnAppearanceChanged(Entity<StunVisualsComponent> entity, ref AppearanceChangeEvent args)
     {
         if (args.Sprite != null)
-            UpdateAppearance((entity, entity.Comp, args.Sprite));
+            UpdateAppearance((entity, args.Sprite), entity.Comp.State);
     }
 
-    private void UpdateAppearance(Entity<StunnedComponent, SpriteComponent?> entity)
+    private void UpdateAppearance(Entity<SpriteComponent?> entity, string state)
     {
-        if (!Resolve(entity, ref entity.Comp2))
+        if (!Resolve(entity, ref entity.Comp))
             return;
 
-        if (!_spriteSystem.LayerMapTryGet((entity, entity.Comp2), StunVisualLayers.StamCrit, out var index, false))
+        if (!_spriteSystem.LayerMapTryGet((entity, entity.Comp), StunVisualLayers.StamCrit, out var index, false))
             return;
 
-        if (!Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars))
-            return;
+        var visible = Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars) && stars;
 
-        // Don't animate if we're not conscious
-        if (!Blocker.CanConsciouslyPerformAction(entity))
-            Appearance.SetData(entity, StunVisuals.SeeingStars, false);
-
-        _spriteSystem.LayerSetVisible((entity, entity.Comp2), index, stars);
-        _spriteSystem.LayerSetRsiState((entity, entity.Comp2), index, State);
-    }
-
-    private void OnMobStateChanged(Entity<StunnedComponent> entity, ref MobStateChangedEvent args)
-    {
-        if (!Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars))
-            return;
-
-        if (!Blocker.CanConsciouslyPerformAction(entity))
-            Appearance.SetData(entity, StunVisuals.SeeingStars, false);
-
-        if (!TryComp<SpriteComponent>(entity, out var sprite))
-            return;
-
-        if (!_spriteSystem.LayerMapTryGet((entity, sprite), StunVisualLayers.StamCrit, out var index, false))
-            return;
-
-        _spriteSystem.LayerSetVisible((entity, sprite), index, stars);
+        _spriteSystem.LayerSetVisible((entity, entity.Comp), index, visible);
+        _spriteSystem.LayerSetRsiState((entity, entity.Comp), index, state);
     }
 
     /// <summary>

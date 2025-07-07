@@ -24,7 +24,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Stunnable;
 
-public abstract class SharedStunSystem : EntitySystem
+public abstract partial class SharedStunSystem : EntitySystem
 {
     [Dependency] protected readonly ActionBlockerSystem Blocker = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -73,6 +73,9 @@ public abstract class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<StunnedComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
         SubscribeLocalEvent<StunnedComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
         SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
+
+        // Stun Appearance Data
+        InitializeAppearance();
     }
 
     private void OnAttemptInteract(Entity<StunnedComponent> ent, ref InteractionAttemptEvent args)
@@ -109,10 +112,11 @@ public abstract class SharedStunSystem : EntitySystem
 
     }
 
-    protected virtual void OnStunShutdown(Entity<StunnedComponent> ent, ref ComponentShutdown args)
+    private void OnStunShutdown(Entity<StunnedComponent> ent, ref ComponentShutdown args)
     {
         // This exists so the client can end their funny animation if they're playing one.
         UpdateCanMove(ent, ent.Comp, args);
+        Appearance.RemoveData(ent, StunVisuals.SeeingStars);
     }
 
     private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
@@ -360,20 +364,6 @@ public abstract class SharedStunSystem : EntitySystem
     }
 
     #endregion
-
-    public virtual void TryStunAnimation(Entity<AppearanceComponent?> entity)
-    {
-        if (!Resolve(entity, ref entity.Comp))
-            return;
-
-        // Here so server can tell the client to do things
-        // Don't dirty the component if we don't need to
-        if (!Appearance.TryGetData<bool>(entity, StunVisuals.SeeingStars, out var stars, entity.Comp) && stars)
-            return;
-
-        Appearance.SetData(entity, StunVisuals.SeeingStars, true);
-        Dirty(entity);
-    }
 }
 
 /// <summary>
