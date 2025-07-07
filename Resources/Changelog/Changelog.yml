@@ -3565,15 +3565,6 @@
   id: 8704
   time: '2025-06-21T22:23:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38486
-- author: keronshb
-  changes:
-  - message: Added the Hypereutactic Blade back to the Traitor Uplink
-    type: Add
-  - message: Added the Hypereutatic Blade to the Nukie uplink
-    type: Add
-  id: 8705
-  time: '2025-06-22T16:50:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37182
 - author: Cojoke-dot
   changes:
   - message: Pacifists can now use the Staff of Healing
