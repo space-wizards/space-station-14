@@ -18,6 +18,13 @@
   - type: AntagObjectives
     objectives:
     - StealResearchObjective
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 10800 # 3 hrs
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 10800 # 3 hrs
   - type: GhostRole
     name: abductors-ghost-role-name
     description: abductors-ghost-role-desc
@@ -40,9 +47,16 @@
   - type: AntagObjectives
     objectives:
     - StealResearchObjective
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 10800 # 3 hrs
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 10800 # 3 hrs
   - type: GhostRole
-    name: abductors-ghost-role-name
-    description: abductors-ghost-role-desc
+    name: abductora-ghost-role-name
+    description: abductora-ghost-role-desc
     rules: abductors-ghost-role-rules
     raffle:
       settings: default
@@ -97,9 +111,16 @@
   id: AbductorAgentSpawner
   components:
   - type: GhostRole
-    name: abductors-ghost-role-name
-    description: abductors-ghost-role-desc
+    name: abductora-ghost-role-name
+    description: abductora-ghost-role-desc
     rules: abductors-ghost-role-rules
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 10800 # 3 hrs
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 10800 # 3 hrs
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -129,6 +150,13 @@
     name: abductors-ghost-role-name
     description: abductors-ghost-role-desc
     rules: abductors-ghost-role-rules
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 10800 # 3 hrs
+    - !type:RoleTimeRequirement
+      role: JobSurgeon
+      time: 10800 # 3 hrs
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
