@@ -156,7 +156,7 @@ namespace Content.Server.Disposal.Unit
                 holder.Air.Clear();
             }
 
-            EntityManager.DeleteEntity(uid);
+            Del(uid);
         }
 
         // Note: This function will cause an ExitDisposals on any failure that does not make an ExitDisposals impossible.
@@ -243,7 +243,7 @@ namespace Content.Server.Disposal.Unit
                 holder.TimeLeft -= time;
                 frameTime -= time;
 
-                if (!EntityManager.EntityExists(holder.CurrentTube))
+                if (!Exists(holder.CurrentTube))
                 {
                     ExitDisposals(uid, holder);
                     break;
@@ -268,7 +268,7 @@ namespace Content.Server.Disposal.Unit
 
                 // Find next tube
                 var nextTube = _disposalTubeSystem.NextTubeFor(currentTube, holder.CurrentDirection);
-                if (!EntityManager.EntityExists(nextTube))
+                if (!Exists(nextTube))
                 {
                     ExitDisposals(uid, holder);
                     break;
