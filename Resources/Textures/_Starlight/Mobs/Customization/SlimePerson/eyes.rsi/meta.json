@@ -1,0 +1,31 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprited by Sha-Seng (Github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "glow",
+            "directions": 4
+        },
+        {
+            "name": "droopy",
+            "directions": 4
+        },
+        {
+            "name": "droopyglow",
+            "directions": 4
+        },
+        {
+            "name": "cyclops",
+            "directions": 4
+        },
+        {
+            "name": "cyclopsglow",
+            "directions": 4
+        }
+    ]
+}
