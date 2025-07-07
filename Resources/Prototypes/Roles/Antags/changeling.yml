@@ -7,4 +7,4 @@
   guides: [ Changelings ]
   requirements:
   - !type:OverallPlaytimeRequirement
-    time: 21600 # 6h
+    time: 10800 # 3h

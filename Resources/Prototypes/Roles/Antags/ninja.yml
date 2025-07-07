@@ -9,7 +9,7 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: Security
-    time: 21600 # 6h STARLIGHT
+    time: 10800 # 3h STARLIGHT
 
 #Ninja Gear
 - type: startingGear
