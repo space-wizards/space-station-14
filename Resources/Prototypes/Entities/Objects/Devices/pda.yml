@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [ BaseItem, StorePresetUplink ] #PDA's have uplinks so they have to inherit the data.
+  parent: [ BaseItem ] #PDA's have uplinks so they have to inherit the data.
   id: BasePDA
   name: PDA
   description: Personal Data Assistant.
@@ -106,6 +106,7 @@
         type: InstrumentBoundUserInterface
       enum.HealthAnalyzerUiKey.Key:
         type: HealthAnalyzerBoundUserInterface
+  - type: RemoteStore
   - type: Tag
     tags:
     - DoorBumpOpener

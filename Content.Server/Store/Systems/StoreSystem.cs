@@ -90,15 +90,22 @@ public sealed partial class StoreSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
-        if (!TryComp<StoreComponent>(args.Target, out var store))
+        EntityUid? store = null;
+        StoreComponent? storeComp = null;
+
+        if (TryComp<StoreComponent>(args.Target, out storeComp))
+            store = args.Target;
+        else if (TryComp<RemoteStoreComponent>(args.Target, out var remoteStore) && remoteStore.Store != null && TryComp<StoreComponent>(remoteStore.Store, out storeComp))
+            store = remoteStore.Store;
+        else
             return;
 
-        var ev = new CurrencyInsertAttemptEvent(args.User, args.Target.Value, args.Used, store);
+        var ev = new CurrencyInsertAttemptEvent(args.User, args.Target.Value, args.Used, storeComp);
         RaiseLocalEvent(args.Target.Value, ev);
         if (ev.Cancelled)
             return;
 
-        if (!TryAddCurrency((uid, component), (args.Target.Value, store)))
+        if (!TryAddCurrency((uid, component), (store.Value, storeComp)))
             return;
 
         args.Handled = true;
