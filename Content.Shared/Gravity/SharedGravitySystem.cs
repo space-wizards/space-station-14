@@ -96,7 +96,7 @@ namespace Content.Shared.Gravity
         /// Refreshes weightlessness status, needs to be called anytime it would change.
         /// </summary>
         /// <param name="entity">The entity we are updating the weightless status of</param>
-        /// <param name="weightless">The weightless value we are trying to change to, helps avoid networking</param>
+        /// <param name="weightless">The weightless value we are trying to change to, helps avoid needless networking</param>
         public void RefreshWeightless(Entity<WeightlessnessComponent?> entity, bool? weightless = null)
         {
             if (!Resolve(entity, ref entity.Comp))
@@ -107,7 +107,10 @@ namespace Content.Shared.Gravity
                 return;
 
             entity.Comp.Weightless = TryWeightless(entity);
+
             Dirty(entity);
+            var ev = new WeightlessnessChangedEvent();
+            RaiseLocalEvent(entity, ref ev);
         }
 
         private void OnMapInit(Entity<WeightlessnessComponent> entity, ref MapInitEvent args)
@@ -172,16 +175,19 @@ namespace Content.Shared.Gravity
             args.State = new GravityComponentState(component.EnabledVV);
         }
 
-        private void OnGravityChange(ref GravityChangedEvent ev)
+        private void OnGravityChange(ref GravityChangedEvent args)
         {
             var gravity = AllEntityQuery<WeightlessnessComponent, TransformComponent>();
             while(gravity.MoveNext(out var uid, out var weightless, out var xform))
             {
-                if (xform.GridUid != ev.ChangedGridIndex || ev.HasGravity == !weightless.Weightless )
+                if (xform.GridUid != args.ChangedGridIndex || args.HasGravity == !weightless.Weightless )
                     continue;
 
                 weightless.Weightless = TryWeightless(uid);
                 Dirty(uid, weightless);
+
+                var ev = new WeightlessnessChangedEvent();
+                RaiseLocalEvent(uid, ref ev);
 
                 if (weightless.Weightless)
                 {
@@ -235,9 +241,20 @@ namespace Content.Shared.Gravity
         }
     }
 
+    /// <summary>
+    /// Raised to determine if an entity's weightlessness is being overwritten by a component or item with a component.
+    /// </summary>
+    /// <param name="IsWeightless">Whether we should be weightless</param>
+    /// <param name="Handled">Whether something is trying to override our weightlessness</param>
     [ByRefEvent]
     public record struct IsWeightlessEvent(bool IsWeightless = false, bool Handled = false) : IInventoryRelayEvent
     {
         SlotFlags IInventoryRelayEvent.TargetSlots => ~SlotFlags.POCKET;
     }
+
+    /// <summary>
+    /// Raised on an entity when their weightless status changes.
+    /// </summary>
+    [ByRefEvent]
+    public record struct WeightlessnessChangedEvent;
 }
