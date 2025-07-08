@@ -3,6 +3,7 @@ using Content.Server.Radio.Components;
 using Content.Server.Vocalization.Components;
 using Content.Shared.Chat;
 using Content.Shared.Clothing;
+using Content.Shared.Inventory;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -17,6 +18,7 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
@@ -44,8 +46,6 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
         if (!HasComp<ActiveRadioComponent>(args.Clothing))
             return;
 
-        entity.Comp.ActiveRadioEntities.Add(args.Clothing.Owner);
-
         // update active radio channels
         UpdateRadioChannels((entity, activeRadio, entity));
     }
@@ -58,11 +58,6 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     {
         // return if this entity does not have an ActiveRadioComponent
         if (!TryComp<ActiveRadioComponent>(entity, out var activeRadio))
-            return;
-
-        // try to remove this item from the active radio entities list
-        // if this returns false, the item wasn't found so it was never a radio we cared about, quit early
-        if (!entity.Comp.ActiveRadioEntities.Remove(args.Clothing.Owner))
             return;
 
         // update active radio channels
@@ -89,15 +84,10 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
         // clear all channels first
         entity.Comp1.Channels.Clear();
 
-        // quit early if there are no ActiveRadios on the VocalizerRadioComponent
-        if (entity.Comp2.ActiveRadioEntities.Count == 0)
-            return;
-
-        // loop through ActiveRadios in inventory to (re-)add channels
-        foreach (var radio in entity.Comp2.ActiveRadioEntities)
+        // loop through inventory entities. Will yield nothing if there is no inventory on this entity
+        foreach (var equipment in _inventory.GetHandOrInventoryEntities(entity.Owner))
         {
-            // if for whatever reason this entity does not have an ActiveRadioComponent, skip it
-            if (!TryComp<ActiveRadioComponent>(radio, out var activeRadioComponent))
+            if (!TryComp<ActiveRadioComponent>(equipment, out var activeRadioComponent))
                 continue;
 
             // add them to the channels on the ActiveRadioComponent on the entity

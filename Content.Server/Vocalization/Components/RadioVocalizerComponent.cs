@@ -11,10 +11,4 @@ public sealed partial class RadioVocalizerComponent : Component
     /// </summary>
     [DataField]
     public float RadioAttemptChance = 0.3f;
-
-    /// <summary>
-    /// List of objects that are used by the entity to check which channels it has access to
-    /// </summary>
-    [DataField]
-    public List<EntityUid> ActiveRadioEntities = [];
 }
