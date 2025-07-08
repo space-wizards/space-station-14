@@ -17,5 +17,5 @@ public sealed partial class ItemActionGrantComponent : Component
     /// The slots this must be equipped in to grant the actions.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SlotFlags AllowedSlots = SlotFlags.WITHOUT_POCKET;
+    public SlotFlags? AllowedSlots = SlotFlags.WITHOUT_POCKET;
 }
