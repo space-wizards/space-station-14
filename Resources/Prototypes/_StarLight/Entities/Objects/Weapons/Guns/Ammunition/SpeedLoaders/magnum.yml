@@ -73,6 +73,10 @@
     magState: base
     steps: 9
     zeroVisible: false
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,0
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/improvised_lever_action_speed_loader.rsi
     layers:
