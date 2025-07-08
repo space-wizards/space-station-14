@@ -352,3 +352,39 @@
     - type: Fiber
       fiberColor: fibers-white
     - type: DnaSubstanceTrace
+
+- type: entity
+  parent: BaseItem
+  id: WireBrush
+  name: wire brush
+  description: A bristly steel wire brush, perfect for scraping away even the toughest patches of rust.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/wirebrush.rsi
+    state: icon
+  - type: Item
+    storedSprite:
+      sprite: Objects/Specific/Janitorial/wirebrush.rsi
+      state: storage
+    size: Small
+  - type: Tag
+    tags:
+    - WireBrush
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 50
+  - type: Tool
+    qualities:
+    - Brushing
+    useSound:
+      path: /Audio/Items/wirebrushing.ogg
+  - type: StaticPrice
+    price: 22
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Piercing: 3
+    soundHit:
+      path: "/Audio/Weapons/bladeslice.ogg"

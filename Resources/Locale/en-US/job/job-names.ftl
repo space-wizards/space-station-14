@@ -49,6 +49,8 @@ job-name-ertjanitor = ERT Janitor
 job-name-boxer = Boxer
 job-name-zookeeper = Zookeeper
 job-name-visitor = Visitor
+job-name-cluwne = Cluwne
+
 # event-restricted job(?)
 job-name-magician = Stage Magician
 
