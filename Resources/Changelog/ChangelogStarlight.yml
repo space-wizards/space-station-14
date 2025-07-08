@@ -9080,4 +9080,11 @@ Entries:
   id: 1252
   time: '2025-07-08T12:50:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/990
+- author: Happyrobot33
+  changes:
+  - message: Added examine text for the weapon dismantle on shoot system.
+    type: Add
+  id: 1253
+  time: '2025-07-08T12:50:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/985
 
