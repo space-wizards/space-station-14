@@ -106,7 +106,7 @@ public sealed partial class AdminLogsControl : Control
 
     private void LogSearchChanged(LineEditEventArgs args)
     {
-        LogSearchRegex = new Regex(LogSearch.Text, RegexOptions.IgnoreCase);
+        LogSearchRegex = new Regex($"{LogSearch.Text}.*$", RegexOptions.IgnoreCase);
         UpdateLogs();
     }
 
@@ -296,7 +296,7 @@ public sealed partial class AdminLogsControl : Control
             return false;
 
         // Check search
-        if (LogSearchRegex.Match(entry.Log.Message) == Match.Empty)
+        if (LogSearchRegex.IsMatch(entry.Log.Message))
             return false;
 
         return true;

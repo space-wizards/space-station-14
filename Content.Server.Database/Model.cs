@@ -705,6 +705,10 @@ namespace Content.Server.Database
 
         [Required] public DateTime Date { get; set; }
 
+        public long CurTime { get; set; }
+
+        public long RealTime { get; set; }
+
         [Required] public string Message { get; set; } = default!;
 
         [Required, Column(TypeName = "jsonb")] public JsonDocument Json { get; set; } = default!;

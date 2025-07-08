@@ -91,6 +91,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("admin_log_id");
 
+                    b.Property<long>("CurTime")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("cur_time");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT")
                         .HasColumnName("date");
@@ -108,6 +112,10 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("message");
+
+                    b.Property<long>("RealTime")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("real_time");
 
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER")

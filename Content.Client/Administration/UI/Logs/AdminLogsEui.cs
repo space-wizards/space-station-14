@@ -109,10 +109,10 @@ public sealed class AdminLogsEui : BaseEui
             await writer.WriteLineAsync(CsvHeader);
             foreach (var child in LogsControl.LogsContainer.Children)
             {
-                if (child is not AdminLogLabel logLabel || !child.Visible)
+                if (child is not AdminLogsEntry entry || !child.Visible)
                     continue;
 
-                var log = logLabel.Log;
+                var log = entry.Log;
 
                 // Date
                 // I swear to god if someone adds ,s or "s to the other fields...
