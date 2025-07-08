@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Fixed breaking small mobs (e.g. mice) mask after getting into an air
-      flow.
-    type: Fix
-  id: 8238
-  time: '2025-04-18T22:52:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33888
 - author: YoungThugSS14
   changes:
   - message: The Diona and Gingerbread species now get unique typing indicators
@@ -3889,3 +3881,12 @@
   id: 8750
   time: '2025-07-08T01:45:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38670
+- author: maland1
+  changes:
+  - message: Updated contraband tags on pulse weapons, temp gun, portable particle
+      decelerator, tesla gun and makeshift laser pistol to be more consistent with
+      their intended owners and legality
+    type: Tweak
+  id: 8751
+  time: '2025-07-08T11:55:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38698
