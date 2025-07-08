@@ -15,7 +15,7 @@
     id: SovietIdCard
     ears: ClothingHeadsetAltSoviet
     belt: WeaponPistolAPS
-    pocket1: USSPUplinkRadioPresetDebug
+    pocket1: SovietDeskFlag
     pocket2: ClothingSovietMedals
 
 - type: startingGear
@@ -33,6 +33,6 @@
     id: SovietIdCard
     ears: ClothingHeadsetAltSoviet
     belt: WeaponPistolMakarov
-    pocket1: USSPUplinkRadioPresetDebug
+    pocket1: SovietDeskFlag
     pocket2: ClothingSovietMedals
     suitstorage: WeaponSubMachineGunPPSH
