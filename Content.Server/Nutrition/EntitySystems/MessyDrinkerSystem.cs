@@ -24,6 +24,10 @@ public sealed class MessyDrinkerSystem : EntitySystem
         if (ev.Solution.Volume <= ent.Comp.SpillAmount)
             return;
 
+        // Cannot spill if you're being forced to drink.
+        if (ev.Forced)
+            return;
+
         if (_random.NextFloat() > ent.Comp.SpillChance)
             return;
 

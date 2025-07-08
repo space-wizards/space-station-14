@@ -243,7 +243,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
 
         _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-2f).WithVariation(0.25f));
 
-        var beforeDrinkEvent = new BeforeIngestDrinkEvent(entity.Owner, drained);
+        var beforeDrinkEvent = new BeforeIngestDrinkEvent(entity.Owner, drained, forceDrink);
         RaiseLocalEvent(args.Target.Value, ref beforeDrinkEvent);
 
         if (drained.Volume == 0)
