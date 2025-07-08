@@ -62,7 +62,6 @@ public sealed class PassiveDamageSystem : EntitySystem
                 specifcDamage.Clamp(0, 0);
                 //Add any healing to the corresponding value.
                 specifcDamage.ExclusiveAdd(comp.Damage);
-
             }
             // Set the next time they can take damage
             comp.NextDamage = curTime + TimeSpan.FromSeconds(1f);
