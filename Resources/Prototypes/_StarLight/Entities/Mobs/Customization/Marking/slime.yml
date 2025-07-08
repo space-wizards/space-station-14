@@ -142,7 +142,7 @@
       type:
         !type:EyeColoring
   sprites:
-  - sprite:  Mobs\Species\Slime\parts.rsi #Unfinished???
+  - sprite:  Mobs/Species/Slime/parts.rsi #Unfinished???
     state: eyes
 
 - type: marking
