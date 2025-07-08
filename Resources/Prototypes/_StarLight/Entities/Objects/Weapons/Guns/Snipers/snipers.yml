@@ -119,7 +119,7 @@
     minAngle: -8
     maxAngle: -15
   - type: Gun
-    fireRate: 2 #Should allow for more intuitive cycling while still being balanced, as a lever action's RoF is determined on how fast you can cycle.
+    fireRate: 1.5 #Should allow for more intuitive cycling while still being balanced, as a lever action's RoF is determined on how fast you can cycle.
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
