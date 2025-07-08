@@ -44,6 +44,7 @@ research-technology-advanced-shuttle-weapon = Advanced shuttle weapons
 research-technology-explosive-mech-ammunition = Explosive Mech Ammunition
 research-technology-kinetic-modifications = Kinetic Modifications
 research-technology-thermal-weaponry = Thermal Weaponry
+research-technology-dual-wielding-technology = Dual Wielding Technology
 
 research-technology-basic-robotics = Basic Robotics
 research-technology-basic-anomalous-research = Basic Anomalous Research
