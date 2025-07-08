@@ -9109,4 +9109,42 @@ Entries:
   id: 1256
   time: '2025-07-08T13:09:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/833
+- author: Trosling
+  changes:
+  - message: Removed heat damage from Dominator/Taser to match the disabler and disabler
+      smg
+    type: Tweak
+  id: 1257
+  time: '2025-07-08T13:20:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/953
+- author: Trosling
+  changes:
+  - message: Changed Disabler and Disabler SMG projectiles to behave like the Dominator/Taser
+    type: Tweak
+  id: 1258
+  time: '2025-07-08T13:20:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/953
+- author: Trosling
+  changes:
+  - message: Changed Starlight laser weapons to visually match normal laser weapons,
+      and go through windows like them
+    type: Tweak
+  id: 1259
+  time: '2025-07-08T13:20:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/953
+- author: Trosling
+  changes:
+  - message: Destroyer bolts are now destroyer beams visually, and go through windows
+      like lasers
+    type: Tweak
+  id: 1260
+  time: '2025-07-08T13:20:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/953
+- author: Trosling
+  changes:
+  - message: Fixed certain Starlight lasers not going through windows
+    type: Fix
+  id: 1261
+  time: '2025-07-08T13:20:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/953
 
