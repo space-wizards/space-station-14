@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: The actions hotbar now has up to 10 more hotkeys accessible through the
-      shift key.
-    type: Add
-  id: 8237
-  time: '2025-04-18T22:45:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33872
 - author: lzk228
   changes:
   - message: Fixed breaking small mobs (e.g. mice) mask after getting into an air
@@ -3889,3 +3881,11 @@
   id: 8749
   time: '2025-07-07T21:43:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38824
+- author: kosticia
+  changes:
+  - message: Added new reagent for artifact researching - artifact glue! Use it on
+      the artefact with active node for repair its durability.
+    type: Add
+  id: 8750
+  time: '2025-07-08T01:45:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38670
