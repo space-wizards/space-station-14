@@ -245,7 +245,7 @@
   parent: [ClothingHeadset, BaseSecurityLawyerContraband]
   id: ClothingHeadsetLawyer
   name: lawyer's headset
-  description: A headset used by dreadful lawyers.
+  description: A headset used by the entire circus.
   components:
   - type: ContainerFill
     containers:
