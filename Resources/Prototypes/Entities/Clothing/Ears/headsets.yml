@@ -242,6 +242,23 @@
     sprite: Clothing/Ears/Headsets/security.rsi
 
 - type: entity
+  parent: [ClothingHeadset, BaseSecurityLawyerContraband]
+  id: ClothingHeadsetLawyer
+  name: lawyer's headset
+  description: A headset used by dreadful lawyers.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+      - EncryptionKeyService
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/security.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/security.rsi
+
+- type: entity
   parent: [ClothingHeadset, BaseSecurityContraband]
   id: ClothingHeadsetBrigmedic
   name: brigmedic headset

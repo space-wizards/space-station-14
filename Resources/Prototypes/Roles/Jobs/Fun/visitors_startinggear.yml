@@ -282,7 +282,7 @@
     outerClothing: ClothingOuterArmorBasicSlim
     pocket1: WeaponPistolMk58
     pocket2: MagazinePistol
-  inhand: 
+  inhand:
   - FlashlightSeclite
 
 - type: startingGear
@@ -859,7 +859,7 @@
     eyes: ClothingEyesHudMedical
     pocket1: RegenerativeMesh
     pocket2: PillCanisterBicaridine
-  inhand: 
+  inhand:
   - ScalpelAdvanced
   - MedicatedSuture
 
@@ -1120,7 +1120,8 @@
     neck: ClothingNeckLawyerbadge
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetLawyer
+    eyes: ClothingEyesGlassesSunglasses
     pocket1: RubberStampLawyer
     pocket2: LuxuryPen
   inhand:
@@ -1135,7 +1136,8 @@
     neck: ClothingNeckLawyerbadge
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetLawyer
+    eyes: ClothingEyesGlassesSunglasses
     pocket1: RubberStampLawyer
     pocket2: SmokingPipeFilledTobacco
   inhand:
@@ -1151,7 +1153,8 @@
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetLawyer
+    eyes: ClothingEyesGlassesSunglasses
     pocket1: RubberStampLawyer
     pocket2: SmokingPipeFilledTobacco
   inhand:
@@ -1168,7 +1171,8 @@
     mask: CigarGold
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetLawyer
+    eyes: ClothingEyesGlassesSunglasses
     outerClothing: ClothingOuterCoatExpensive
     pocket1: RubberStampLawyer
     pocket2: LuxuryPen
@@ -1185,7 +1189,8 @@
     id: VisitorPDA
     back: ClothingBackpackSatchelLeather
     belt: ClothingBeltStorageWaistbag
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetLawyer
+    eyes: ClothingEyesGlassesSunglasses
     pocket1: RubberStampLawyer
     pocket2: LuxuryPen
   inhand:

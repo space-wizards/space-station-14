@@ -18,9 +18,10 @@
 - type: startingGear
   id: LawyerGear
   equipment:
+    eyes: ClothingEyesGlassesSunglasses
     shoes: ClothingShoesBootsLaceup
     id: LawyerPDA
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetLawyer
   inhand:
     - BriefcaseBrownFilled
   storage:
