@@ -1,4 +1,95 @@
 - type: entity
+  name: Makeshift Revolver
+  parent: [BaseWeaponRevolver, BaseMinorContraband]
+  id: WeaponRevolverMakeshift
+  description: Little more than a hand-cannon with a high chance of blowing up in your face.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/makeshift_revolver.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/makeshift_revolver.rsi
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
+        - CartridgeMagnumImprovised
+        - SpeedLoaderMagnum
+        - SpeedLoaderMagnumImprovised
+    proto: null
+    capacity: 1
+    chambers: [ true]
+    ammoSlots: [ null]
+  - type: Construction
+    graph: MakeshiftRevolverGraph
+    node: shotgun
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0.30
+    selfDamage:
+      types:
+        Blunt: 8
+        Heat: 8
+    items:
+      - id: ModularBarrel
+        launchAngle: 0
+        prob: 1
+      - id: ModularReceiver
+        launchAngle: 90
+        prob: 0.10
+      - id: RifleStock
+        launchAngle: 180
+        prob: 0.80
+
+- type: entity
+  name: Improvised Revolver
+  parent: WeaponRevolverMakeshift
+  id: WeaponRevolverImprovised
+  description: A revolver that has two barrels and no cylinder. Can you really call this a revolver?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/improvised_revolver.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/improvised_revolver.rsi
+  - type: RevolverAmmoProvider
+    capacity: 2
+    chambers: [ true, true]
+    ammoSlots: [ null, null]
+  - type: Construction
+    graph: ImprovisedRevolverGraph
+    node: shotgun
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0.10
+    items:
+      - id: ModularBarrel
+        launchAngle: 0
+        prob: 1
+      - id: ModularReceiver
+        launchAngle: 90
+        prob: 0.10
+      - id: SheetSteel1
+        launchAngle: 67
+        prob: 0.70
+      - id: RifleStock
+        launchAngle: 180
+        prob: 0.80
+
+- type: entity
+  name: Forged Revolver
+  parent: WeaponRevolverImprovised
+  id: WeaponRevolverForged
+  description: The best Tider engineering can offer, a revolver with the ability to hold 4 bullets! 
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/forged_revolver.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/forged_revolver.rsi
+  - type: RevolverAmmoProvider
+    capacity: 4
+    chambers: [ null, null, null, null]
+    ammoSlots: [ null, null, null, null]
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0
+
+- type: entity
   name: snub-nose revolver
   parent: [BaseWeaponRevolver, BaseSecurityContraband]
   id: WeaponRevolverSnubRevolver

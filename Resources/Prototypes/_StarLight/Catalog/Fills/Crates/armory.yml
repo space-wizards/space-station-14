@@ -34,3 +34,18 @@
         amount: 2
       - id: BoxLethalshot
         amount: 2
+
+- type: entity
+  id: CrateArmoryAdvancedRestraints
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
+  name: advanced restraints crate
+  description: For the most annoying prisoners.
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterStraightjacket
+    - id: ClothingOuterStraightjacket
+    - id: ClothingMaskBreath
+    - id: ClothingMaskBreath
+    - id: NitrousOxideTank
+    - id: NitrousOxideTank

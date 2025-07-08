@@ -1,0 +1,31 @@
+- type: constructionGraph
+  id: ForgedSMGGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: shotgun
+      steps:
+      - tag: ModularBarrel
+        icon:
+          sprite: _Starlight/Objects/Misc/modular_barrel.rsi
+          state: icon
+        name: crafting-menu-name-MB
+      - tag: ModularReceiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+        name: construction-graph-tag-modular-receiver
+      - tag: RifleStock
+        icon:
+          sprite: Objects/Misc/rifle_stock.rsi
+          state: icon
+        name: construction-graph-tag-rifle-stock
+      - material: Steel
+        amount: 17
+        doAfter: 17
+      - material: Plasteel
+        amount: 10
+        doAfter: 20
+  - node: shotgun
+    entity: UnfinishedSubMachineGunForged

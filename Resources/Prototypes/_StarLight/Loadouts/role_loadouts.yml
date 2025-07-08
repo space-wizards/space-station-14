@@ -24,9 +24,19 @@
 - type: roleLoadout
   id: JobSurgeon
   groups:
-  - Survival
+  - GroupTankHarness
+  - MedicalDoctorHead
+  - MedicalMask
+  - MedicalDoctorJumpsuit
+  - MedicalGloves
+  - MedicalBackpack
+  - MedicalDoctorOuterClothing
+  - MedicalShoes
+  - MedicalDoctorPDA
+  - MedicalEyewear
+  - SurvivalMedical
   - Trinkets
-  - GroupSpeciesBreathTool
+  - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
   id: JobNanoTrasenRepresentative
