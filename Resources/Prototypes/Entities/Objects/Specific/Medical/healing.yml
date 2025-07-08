@@ -49,10 +49,6 @@
   - type: Stack
     stackType: Ointment
     count: 10
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: StackPrice
     price: 5
 
@@ -110,10 +106,6 @@
   - type: Stack
     stackType: RegenerativeMesh
     count: 10
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: StackPrice
     price: 20
 
@@ -168,10 +160,6 @@
   - type: Stack
     stackType: Brutepack
     count: 10
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: StackPrice
     price: 5
 
@@ -228,10 +216,6 @@
   - type: Stack
     stackType: MedicatedSuture
     count: 10
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: StackPrice
     price: 20
 
@@ -287,10 +271,6 @@
   - type: Stack
     stackType: Bloodpack
     count: 10
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: StackPrice
     price: 10
 
@@ -384,10 +364,6 @@
   - type: Stack
     stackType: Gauze
     count: 10
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: StackPrice
     price: 10
 

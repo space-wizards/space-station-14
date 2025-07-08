@@ -40,10 +40,6 @@
     - cardboard
     - cardboard_2
     - cardboard_3
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: cardboard_3
     layers:
@@ -112,10 +108,6 @@
     - cloth
     - cloth_2
     - cloth_3
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Material
   - type: PhysicalComposition
     materialComposition:
@@ -187,10 +179,6 @@
     - durathread
     - durathread_2
     - durathread_3
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Material
   - type: PhysicalComposition
     materialComposition:
@@ -254,10 +242,6 @@
     - wood
     - wood_2
     - wood_3
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: wood
     layers:
@@ -308,10 +292,6 @@
   - type: Stack
     stackType: Biomass
     count: 100
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
@@ -389,10 +369,6 @@
     - diamond
     - diamond_2
     - diamond_3
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: diamond
     layers:
@@ -439,10 +415,6 @@
     - cotton
     - cotton_2
     - cotton_3
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: cotton_3
     layers:
@@ -502,10 +474,6 @@
     - pyrotton
     - pyrotton_2
     - pyrotton_3
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: pyrotton_3
     layers:
@@ -569,10 +537,6 @@
     layerStates:
       - bananium
       - bananium_1
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: FlavorProfile
     flavors:
       - banana
@@ -628,10 +592,6 @@
   - type: Stack
     count: 50
     stackType: WebSilk
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Food
     requiresSpecialDigestion: true
   - type: FlavorProfile
@@ -699,10 +659,6 @@
     - tooth
     - tooth_2
     - tooth_3
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: StackPrice
     price: 50
   - type: Tag
@@ -745,10 +701,6 @@
     - tooth
     - tooth_2
     - tooth_3
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: StackPrice
     price: 150
   - type: Tag
@@ -777,10 +729,6 @@
     - bones
     - bones_2
     - bones_3
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: cotton_3
     layers:
@@ -816,10 +764,6 @@
   - type: Stack
     stackType: Gunpowder
     count: 1
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     sprite: Objects/Misc/reagent_fillings.rsi
     state: powderpile
@@ -854,10 +798,6 @@
     - goliath_hide
     - goliath_hide_2
     - goliath_hide_3
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Item
     size: Large
     heldPrefix: goliathhide

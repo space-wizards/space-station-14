@@ -15,10 +15,6 @@
         Blunt: 5
   - type: Stack
     count: 1
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

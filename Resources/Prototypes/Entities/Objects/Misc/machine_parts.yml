@@ -11,10 +11,6 @@
       size: Tiny
     - type: Stack
       count: 1
-    - type: UserInterface
-      interfaces:
-        enum.StackCustomSplitUiKey.Key:
-          type: StackCustomSplitBoundUserInterface
 
 - type: entity
   id: MicroManipulatorStockPart

@@ -14,10 +14,6 @@
       - Plating
   - type: Stack
     stackType: FloorCarpetRed
-  - type: UserInterface
-    interfaces:
-      enum.StackCustomSplitUiKey.Key:
-        type: StackCustomSplitBoundUserInterface
   - type: SpawnAfterInteract #Nuke after convert to FloorTile
     prototype: Carpet
     doAfter: 0.5

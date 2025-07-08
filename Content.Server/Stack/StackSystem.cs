@@ -207,6 +207,10 @@ namespace Content.Server.Stack
                 Category = VerbCategory.Split,
                 Act = () =>
                 {
+                    // add the UI if we don't have
+                    if (!_ui.HasUi(uid, StackCustomSplitUiKey.Key))
+                        _ui.SetUi(uid, StackCustomSplitUiKey.Key, new InterfaceData("StackCustomSplitBoundUserInterface"));
+
                     _ui.OpenUi(uid, StackCustomSplitUiKey.Key, args.User);
                 },
                 Priority = priority - 1
