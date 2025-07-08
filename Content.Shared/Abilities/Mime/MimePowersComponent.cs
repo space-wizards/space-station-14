@@ -1,47 +1,55 @@
 using Content.Shared.Alert;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Abilities.Mime
 {
     /// <summary>
     /// Lets its owner entity use mime powers, like placing invisible walls.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [AutoGenerateComponentPause]
     public sealed partial class MimePowersComponent : Component
     {
         /// <summary>
         /// Whether this component is active or not.
         /// </summarY>
         [DataField]
+        [AutoNetworkedField]
         public bool Enabled = true;
 
         /// <summary>
         /// The wall prototype to use.
         /// </summary>
-        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string WallPrototype = "WallInvisible";
-
-        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? InvisibleWallAction = "ActionMimeInvisibleWall";
+        [DataField]
+        public EntProtoId WallPrototype = "WallInvisible";
 
         [DataField]
+        public EntProtoId? InvisibleWallAction = "ActionMimeInvisibleWall";
+
+        [DataField]
+        [AutoNetworkedField]
         public EntityUid? InvisibleWallActionEntity;
 
         // The vow zone lies below
+        [ViewVariables]
+        [AutoNetworkedField]
         public bool VowBroken = false;
 
         /// <summary>
         /// Whether this mime is ready to take the vow again.
         /// Note that if they already have the vow, this is also false.
         /// </summary>
+        [ViewVariables]
+        [AutoNetworkedField]
         public bool ReadyToRepent = false;
 
         /// <summary>
         /// Time when the mime can repent their vow
         /// </summary>
         [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        [AutoNetworkedField, AutoPausedField]
         public TimeSpan VowRepentTime = TimeSpan.Zero;
 
         /// <summary>
@@ -67,5 +75,7 @@ namespace Content.Shared.Abilities.Mime
         /// </summary>
         [DataField]
         public LocId FailWriteMessage = "paper-component-illiterate-mime";
+
+        public override bool SendOnlyToOwner => true;
     }
 }

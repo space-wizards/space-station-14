@@ -48,6 +48,7 @@ namespace Content.Shared.Abilities.Mime
                     continue;
 
                 mime.ReadyToRepent = true;
+                Dirty(uid, mime);
                 _popupSystem.PopupClient(Loc.GetString("mime-ready-to-repent"), uid);
             }
         }
@@ -129,6 +130,7 @@ namespace Content.Shared.Abilities.Mime
             mimePowers.Enabled = false;
             mimePowers.VowBroken = true;
             mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
+            Dirty(uid, mimePowers);
             RemComp<MutedComponent>(uid);
             if (mimePowers.PreventWriting)
                 RemComp<BlockWritingComponent>(uid);
@@ -154,6 +156,7 @@ namespace Content.Shared.Abilities.Mime
             mimePowers.Enabled = true;
             mimePowers.ReadyToRepent = false;
             mimePowers.VowBroken = false;
+            Dirty(uid, mimePowers);
             AddComp<MutedComponent>(uid);
             if (mimePowers.PreventWriting)
             {
