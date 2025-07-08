@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -49,6 +50,8 @@ public sealed partial class AdminLogsControl : Control
     }
 
     private int CurrentRound { get; set; }
+
+    private Regex LogSearchRegex = new(".");
 
     public int SelectedRoundId => RoundSpinBox.Value;
     public string Search => LogSearch.Text;
@@ -103,6 +106,7 @@ public sealed partial class AdminLogsControl : Control
 
     private void LogSearchChanged(LineEditEventArgs args)
     {
+        LogSearchRegex = new Regex(LogSearch.Text, RegexOptions.IgnoreCase);
         UpdateLogs();
     }
 
@@ -242,7 +246,7 @@ public sealed partial class AdminLogsControl : Control
 
         foreach (var child in LogsContainer.Children)
         {
-            if (child is not AdminLogLabel log)
+            if (child is not AdminLogsEntry log)
             {
                 continue;
             }
@@ -269,30 +273,30 @@ public sealed partial class AdminLogsControl : Control
                button.Text.Contains(PlayerSearch.Text, StringComparison.OrdinalIgnoreCase);
     }
 
-    private bool LogMatchesPlayerFilter(AdminLogLabel label)
+    private bool LogMatchesPlayerFilter(AdminLogsEntry entry)
     {
-        if (label.Log.Players.Length == 0)
+        if (entry.Log.Players.Length == 0)
             return SelectedPlayers.Count == 0 || IncludeNonPlayerLogs;
 
-        return SelectedPlayers.Overlaps(label.Log.Players);
+        return SelectedPlayers.Overlaps(entry.Log.Players);
     }
 
-    private bool ShouldShowLog(AdminLogLabel label)
+    private bool ShouldShowLog(AdminLogsEntry entry)
     {
         // Check log type
-        if (!SelectedTypes.Contains(label.Log.Type))
+        if (!SelectedTypes.Contains(entry.Log.Type))
             return false;
 
         // Check players
-        if (!LogMatchesPlayerFilter(label))
+        if (!LogMatchesPlayerFilter(entry))
             return false;
 
         // Check impact
-        if (!SelectedImpacts.Contains(label.Log.Impact))
+        if (!SelectedImpacts.Contains(entry.Log.Impact))
             return false;
 
         // Check search
-        if (!label.Log.Message.Contains(LogSearch.Text, StringComparison.OrdinalIgnoreCase))
+        if (LogSearchRegex.Match(entry.Log.Message) == Match.Empty)
             return false;
 
         return true;
@@ -468,18 +472,16 @@ public sealed partial class AdminLogsControl : Control
         for (var i = 0; i < span.Length; i++)
         {
             ref var log = ref span[i];
-            var separator = new HSeparator();
-            var label = new AdminLogLabel(ref log, separator);
-            label.Visible = ShouldShowLog(label);
+            var entry = new AdminLogsEntry(ref log);
+            entry.Visible = ShouldShowLog(entry);
 
             TotalLogs++;
-            if (label.Visible)
+            if (entry.Visible)
             {
                 ShownLogs++;
             }
 
-            LogsContainer.AddChild(label);
-            LogsContainer.AddChild(separator);
+            LogsContainer.AddChild(entry);
         }
 
         UpdateCount();

@@ -21,3 +21,12 @@ admin-logs-include-non-player = Include Non-players
 admin-logs-search-logs-placeholder = Search Logs
 admin-logs-refresh = Refresh
 admin-logs-next = Next
+
+# Log Data Fields
+admin-logs-field-type = Type
+admin-logs-field-impact = Impact
+admin-logs-field-time-header = Time
+admin-logs-field-time-local = Local
+admin-logs-field-time-utc = UTC
+admin-logs-field-time-current= Current
+admin-logs-field-time-real = Real
