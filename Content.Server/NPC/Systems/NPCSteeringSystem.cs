@@ -329,14 +329,17 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         var agentRadius = steering.Radius;
         var worldPos = _transform.GetWorldPosition(xform);
         var (layer, mask) = _physics.GetHardCollision(uid);
-
         // Use rotation relative to parent to rotate our context vectors by.
         var offsetRot = -_mover.GetParentGridAngle(mover);
+
         _modifierQuery.TryGetComponent(uid, out var modifier);
-        var moveSpeed = GetSprintSpeed(uid, modifier);
-        var acceleration = GetAcceleration((uid, modifier, xform, null));
-        var friction = GetFriction((uid, modifier, xform, null));
         var body = _physicsQuery.GetComponent(uid);
+
+        var weightless = _gravity.IsWeightless(uid, body, xform);
+        var moveSpeed = GetSprintSpeed(uid, modifier);
+        var acceleration = GetAcceleration((uid, modifier), weightless);
+        var friction = GetFriction((uid, modifier), weightless);
+
         var dangerPoints = steering.DangerPoints;
         dangerPoints.Clear();
         Span<float> interest = stackalloc float[InterestDirections];
@@ -485,23 +488,19 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         return modifier.CurrentSprintSpeed;
     }
 
-    private float GetAcceleration(Entity<MovementSpeedModifierComponent?, TransformComponent?, PhysicsComponent?> ent)
+    private float GetAcceleration(Entity<MovementSpeedModifierComponent?> ent, bool weightless)
     {
-        var weightless = _gravity.IsWeightless(ent, ent.Comp3, ent.Comp2);
-
-        if (!Resolve(ent, ref ent.Comp1, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             return weightless ? MovementSpeedModifierComponent.DefaultWeightlessAcceleration : MovementSpeedModifierComponent.DefaultAcceleration;
 
-        return weightless ? ent.Comp1.WeightlessAcceleration : ent.Comp1.Acceleration;
+        return weightless ? ent.Comp.WeightlessAcceleration : ent.Comp.Acceleration;
     }
 
-    private float GetFriction(Entity<MovementSpeedModifierComponent?, TransformComponent?, PhysicsComponent?> ent)
+    private float GetFriction(Entity<MovementSpeedModifierComponent?> ent, bool weightless)
     {
-        var weightless = _gravity.IsWeightless(ent, ent.Comp3, ent.Comp2);
-
-        if (!Resolve(ent, ref ent.Comp1, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             return weightless ? MovementSpeedModifierComponent.DefaultWeightlessFriction : MovementSpeedModifierComponent.DefaultFriction;
 
-        return weightless ? ent.Comp1.WeightlessFriction : ent.Comp1.Friction;
+        return weightless ? ent.Comp.WeightlessFriction : ent.Comp.Friction;
     }
 }
