@@ -1467,6 +1467,25 @@
 
 - type: entity
   parent: BasePDA
+  id: MagicianPDA
+  name: stage magician PDA
+  description: Is this your identification card?
+  components:
+  - type: Pda
+    id: MagicianIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-magician
+  - type: PdaBorderColor
+    borderColor: "#333333"
+    accentVColor: "#d7d7d0"
+  - type: Icon
+    state: pda-magician
+
+- type: entity
+  parent: BasePDA
   id: ChameleonPDA
   name: passenger PDA
   description: Why isn't it gray?

@@ -880,3 +880,17 @@
     interfaces:
       enum.AgentIDCardUiKey.Key:
         type: AgentIDCardBoundUserInterface
+
+# event-restricted job(?)
+- type: entity
+  parent: IDCardStandard
+  id: MagicianIDCard
+  name: stage magician ID card
+  description: Is this your identification card, which is necessary to access various areas aboard the station?
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idmagician
+  - type: PresetIdCard
+    job: Magician

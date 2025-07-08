@@ -73,3 +73,32 @@
   - type: Tag
     tags:
     - Sidearm
+
+
+- type: entity
+  name: magician's wand
+  parent: [WeaponFlareGun, BaseCivilianContraband]
+  id: WeaponMagiciansWand
+  description: A flare gun modified to have the appearance of a magic wand.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/wand_magician.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    size: Small
+    sprite: Objects/Weapons/Guns/Basic/wand_magician.rsi
+    inhandVisuals:
+      left:
+      - state: wand-inhand-left
+      right:
+      - state: wand-inhand-right
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Basic/wand_magician.rsi
+    clothingVisuals:
+      belt:
+      - state: equipped-BELT
+    quickEquip: false
+    slots:
+    - Belt
