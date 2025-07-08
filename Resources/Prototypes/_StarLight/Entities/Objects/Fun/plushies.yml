@@ -1113,7 +1113,7 @@
 - type: entity
   parent: PlushieHuman
   id: PlushieOog
-  name: Oog-man Plushie
+  name: Oog-man Plushie #I AM OOG-MAN
   description: A marketable plushie of everyone's favourite caveman. It's missing it's clothes?
   components:
   - type: Item
