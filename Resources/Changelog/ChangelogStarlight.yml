@@ -9156,4 +9156,11 @@ Entries:
   id: 1262
   time: '2025-07-08T13:32:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/742
+- author: RHSvenson
+  changes:
+  - message: Added salvage to contra allow list for laser cartridges
+    type: Tweak
+  id: 1263
+  time: '2025-07-08T13:42:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/991
 
