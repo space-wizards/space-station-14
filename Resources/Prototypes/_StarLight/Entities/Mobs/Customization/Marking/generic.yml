@@ -1,0 +1,447 @@
+# Head
+- type: marking
+  id: HeadHeavyTattoos
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/head.rsi
+    state: head_heavy1
+  - sprite: _Starlight/Mobs/Customization/Generic/head.rsi
+    state: head_heavy2
+
+# Head Top
+- type: marking
+  id: HeadEarrings
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/head_top.rsi
+    state: head_earrings1
+  - sprite: _Starlight/Mobs/Customization/Generic/head_top.rsi
+    state: head_earrings2
+
+- type: marking
+  id: HeadEarringsDrop
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/head_top.rsi
+    state: head_earrings_drop1
+  - sprite: _Starlight/Mobs/Customization/Generic/head_top.rsi
+    state: head_earrings_drop2
+
+- type: marking
+  id: HeadEarringsWeights
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/head_top.rsi
+    state: head_earrings_weights1
+  - sprite: _Starlight/Mobs/Customization/Generic/head_top.rsi
+    state: head_earrings_weights2
+
+# Snout
+- type: marking
+  id: HeadSeptum
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Human, Dwarf]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/snout.rsi
+    state: head_septum
+
+# Chest
+- type: marking
+  id: ChestNecklace
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/chest.rsi
+    state: chest_necklace
+
+- type: marking
+  id: ChestCutHere
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/chest.rsi
+    state: chest_cuthere
+
+- type: marking
+  id: ChestHeavyTattoos
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/chest.rsi
+    state: chest_heavy1
+  - sprite: _Starlight/Mobs/Customization/Generic/chest.rsi
+    state: chest_heavy2
+  - sprite: _Starlight/Mobs/Customization/Generic/chest.rsi
+    state: chest_heavy3
+
+# Arms
+- type: marking
+  id: HandBraceletLeft
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: l_hand_bracelet
+
+- type: marking
+  id: HandBraceletRight
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: r_hand_bracelet
+
+- type: marking
+  id: HandRingsLeft
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: l_hand_rings1
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: l_hand_rings2
+
+- type: marking
+  id: HandRingsRight
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: r_hand_rings1
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: r_hand_rings2
+
+- type: marking
+  id: ArmDollJointsTattooLeft
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: l_arm_doll
+
+- type: marking
+  id: ArmDollJointsTattooRight
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: r_arm_doll
+
+- type: marking
+  id: HandDollJointsTattooLeft
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: l_hand_doll
+
+- type: marking
+  id: HandDollJointsTattooRight
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: r_hand_doll
+
+- type: marking
+  id: ArmHeavyTattoosLeft
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: l_arm_heavy1
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: l_arm_heavy2
+
+- type: marking
+  id: ArmHeavyTattoosRight
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: r_arm_heavy1
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: r_arm_heavy2
+
+- type: marking
+  id: HandHeavyTattoosLeft
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: l_hand_heavy1
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: l_hand_heavy2
+
+- type: marking
+  id: HandHeavyTattoosRight
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian, Vulpkanin]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: r_hand_heavy1
+  - sprite: _Starlight/Mobs/Customization/Generic/arms.rsi
+    state: r_hand_heavy2
+
+# Legs
+- type: marking
+  id: LegDollJointsTattooLeft
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: l_leg_doll
+
+- type: marking
+  id: LegDollJointsTattooRight
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: r_leg_doll
+
+- type: marking
+  id: FootDollJointsTattooLeft
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: l_foot_doll
+
+- type: marking
+  id: FootDollJointsTattooRight
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: r_foot_doll
+
+- type: marking
+  id: LegHeavyTattoosLeft
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: l_leg_heavy1
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: l_leg_heavy2
+
+- type: marking
+  id: LegHeavyTattoosRight
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: r_leg_heavy1
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: r_leg_heavy2
+
+- type: marking
+  id: FootHeavyTattoosLeft
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: l_foot_heavy1
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: l_foot_heavy2
+
+- type: marking
+  id: FootHeavyTattoosRight
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: r_foot_heavy1
+  - sprite: _Starlight/Mobs/Customization/Generic/legs.rsi
+    state: r_foot_heavy2
