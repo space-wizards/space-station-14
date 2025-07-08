@@ -20,6 +20,14 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.45
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Bloodsucker
+        damage:
+          groups:
+            Brute: -3
+            Burn: -1.25
     Alcohol:
       effects:
       - !type:Drunk
