@@ -20,7 +20,10 @@ public sealed class QuickDialogSystem : SharedQuickDialogSystem
 
     protected override int GetDialogId(Robust.Shared.Network.NetUserId userId)
     {
-        return nextDialogId++;
+        var did = nextDialogId++;
+
+        _mappingClientToLocal[(userId, did)] = did;
+        return did;
     }
 
     private void OpenDialog(QuickDialogOpenEvent ev)
@@ -31,14 +34,14 @@ public sealed class QuickDialogSystem : SharedQuickDialogSystem
 
         window.OnConfirmed += responses =>
         {
-            RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
+            RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
                 responses,
                 QuickDialogButtonFlag.OkButton));
         };
 
         window.OnCancelled += () =>
         {
-            RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
+            RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
                 new(),
                 QuickDialogButtonFlag.CancelButton));
         };

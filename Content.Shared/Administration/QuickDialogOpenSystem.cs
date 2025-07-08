@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 /*using Robust.Server.Player;*/
 /*using Robust.Shared.Enums;*/
 using Robust.Shared.Network;
-/*using Robust.Shared.Player;*/
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Administration;
 
@@ -13,16 +13,22 @@ namespace Content.Shared.Administration;
 /// </summary>
 public abstract partial class SharedQuickDialogSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeAllEvent<QuickDialogResponseEvent>(Handler);
     }
 
     protected abstract int GetDialogId(NetUserId userId);
 
-    protected virtual int OpenDialogInternal(ICommonSession session, string title, List<QuickDialogEntry> entries, QuickDialogButtonFlag buttons, Action<QuickDialogResponseEvent> okAction, Action cancelAction)
+    protected readonly Dictionary<int, Dialog> _openDialogs = new();
+    protected readonly Dictionary<(NetUserId, int), int> _mappingClientToLocal = new();
+
+    private void OpenDialogInternal(ICommonSession session, string title, List<QuickDialogEntry> entries, QuickDialogButtonFlag buttons, Action<QuickDialogResponseEvent> okAction, Action cancelAction)
     {
         var did = GetDialogId(session.UserId);
         RaiseLocalEvent(
@@ -33,7 +39,39 @@ public abstract partial class SharedQuickDialogSystem : EntitySystem
                 buttons)
         );
 
-        return did;
+        _openDialogs.Add(did, new Dialog(okAction, cancelAction));
+    }
+
+    private void Handler(QuickDialogResponseEvent msg, EntitySessionEventArgs args)
+    {
+        if (!_gameTiming.IsFirstTimePredicted)
+            return;
+
+        if (!_mappingClientToLocal.ContainsKey((args.SenderSession.UserId, msg.DialogId)))
+        {
+            args.SenderSession.Channel.Disconnect($"Replied with invalid quick dialog data with id {msg.DialogId} for {args.SenderSession.UserId}.");
+            return;
+        }
+
+        var didLocal = _mappingClientToLocal[(args.SenderSession.UserId, msg.DialogId)];
+
+        if (!_openDialogs.ContainsKey(didLocal))
+        {
+            args.SenderSession.Channel.Disconnect($"Replied with invalid quick dialog data with id {msg.DialogId}({didLocal}).");
+            return;
+        }
+
+        switch (msg.ButtonPressed)
+        {
+            case QuickDialogButtonFlag.OkButton:
+                _openDialogs[didLocal].okAction.Invoke(msg);
+                break;
+            case QuickDialogButtonFlag.CancelButton:
+                _openDialogs[didLocal].cancelAction.Invoke();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 
     private bool TryParseQuickDialog<T>(QuickDialogEntryType entryType, string input, [NotNullWhen(true)] out T? output)
