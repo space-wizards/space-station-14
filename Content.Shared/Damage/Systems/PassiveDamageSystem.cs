@@ -46,13 +46,9 @@ public sealed class PassiveDamageSystem : EntitySystem
             if (comp.NextDamage > curTime)
                 continue;
 
-            // Make sure they can take damage
-            if (comp.DamageCap != 0 && damage.TotalDamage >= comp.DamageCap)
-                continue;
-
             //See if they can take the entire damage specifier.
-            if (damage.TotalDamage <= comp.DamageCap)
-                specifcDamage = new();
+            if (comp.DamageCap == 0 | damage.TotalDamage <= comp.DamageCap)
+                specifcDamage = new(comp.Damage);
             else if (comp.SeperateDamageCap.Empty == false)
             //Check if any specific damage types are eligible to be healed, and if so construct a damagespecifier out of just those.
             {
@@ -65,6 +61,7 @@ public sealed class PassiveDamageSystem : EntitySystem
                 //Set all values of remaining types to 0
                 specifcDamage.Clamp(0, 0);
                 //Add any healing to the corresponding value.
+                specifcDamage.ExclusiveAdd(comp.Damage);
 
             }
             // Set the next time they can take damage
