@@ -9163,4 +9163,12 @@ Entries:
   id: 1263
   time: '2025-07-08T13:42:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/991
+- author: Conflee
+  changes:
+  - message: Changed Infiltration Suit's explosion resistance from 90% to 50%, to
+      match Blood-Red.
+    type: Tweak
+  id: 1264
+  time: '2025-07-08T13:56:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/992
 
