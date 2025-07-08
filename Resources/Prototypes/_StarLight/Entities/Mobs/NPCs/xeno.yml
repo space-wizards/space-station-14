@@ -125,7 +125,7 @@
 
 - type: entity
   name: praetorian
-  parent: MobXenoAdmemeAdmeme
+  parent: MobXenoAdmeme
   id: MobXenoRunnerAdmeme
   suffix: Admeme
   components:
