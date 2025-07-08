@@ -9065,4 +9065,19 @@ Entries:
   id: 1250
   time: '2025-07-08T12:44:57.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/988
+- author: Happyrobot33
+  changes:
+  - message: Added New Life usage limit of 5 per round.
+    type: Add
+  id: 1251
+  time: '2025-07-08T12:50:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/990
+- author: Happyrobot33
+  changes:
+  - message: Planned increase of maximum character slots from 10 to 30 following this
+      change.
+    type: Tweak
+  id: 1252
+  time: '2025-07-08T12:50:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/990
 
