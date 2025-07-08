@@ -31,11 +31,11 @@
     - cash_50000
     - cash_100000
     - cash_1000000
+    layerFunction: Threshold
   - type: UserInterface
     interfaces:
       enum.StackCustomSplitUiKey.Key:
         type: StackCustomSplitBoundUserInterface
-    layerFunction: Threshold
   - type: StackLayerThreshold
     thresholds: [10, 100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 1000000]
   - type: Sprite
