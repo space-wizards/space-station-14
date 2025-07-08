@@ -32,3 +32,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Made by SlamBamActionman"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/space_map3.png"
+
+- files: [ "layer1.png", "layer2.png", "layer3.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TGstation13"
+  source: "https://github.com/tgstation/tgstation/blob/bce9afc2cf39c229f2799c6ad2124f4d69a2dbbf/icons/effects/parallax.dmi"
