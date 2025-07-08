@@ -24,15 +24,21 @@ namespace Content.Shared.Gravity
         public override void Initialize()
         {
             base.Initialize();
+            // Grid Gravity
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
-            SubscribeLocalEvent<AlertSyncEvent>(OnAlertsSync);
-            SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(OnAlertsParentChange);
             SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
             SubscribeLocalEvent<GravityComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<GravityComponent, ComponentHandleState>(OnHandleState);
+
+            // Weightlessness
             SubscribeLocalEvent<WeightlessnessComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<WeightlessnessComponent, EntParentChangedMessage>(OnEntParentChanged);
             SubscribeLocalEvent<WeightlessnessComponent, PhysicsBodyTypeChangedEvent>(OnBodyTypeChanged);
+
+            // Alerts
+            SubscribeLocalEvent<AlertSyncEvent>(OnAlertsSync);
+            SubscribeLocalEvent<AlertsComponent, WeightlessnessChangedEvent>(OnWeightlessnessChanged);
+            SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(OnAlertsParentChange);
 
             _gravityQuery = GetEntityQuery<GravityComponent>();
         }
@@ -73,9 +79,9 @@ namespace Content.Shared.Gravity
             return Resolve(entity, ref entity.Comp, false) && entity.Comp.Weightless;
         }
 
-        private bool TryWeightless(Entity<WeightlessnessComponent?, PhysicsComponent?, TransformComponent?> entity)
+        private bool TryWeightless(Entity<WeightlessnessComponent, PhysicsComponent?, TransformComponent?> entity)
         {
-            if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
+            if (!Resolve(entity, ref entity.Comp2, false))
                 return false;
 
             if (entity.Comp2.BodyType is BodyType.Static or BodyType.Kinematic)
@@ -107,7 +113,17 @@ namespace Content.Shared.Gravity
             if (entity.Comp.Weightless == weightless)
                 return;
 
-            entity.Comp.Weightless = TryWeightless(entity);
+            ChangeWeightless(entity!);
+        }
+
+        private void ChangeWeightless(Entity<WeightlessnessComponent> entity)
+        {
+            var newWeightless = TryWeightless(entity!);
+
+            if (newWeightless == entity.Comp.Weightless)
+                return;
+
+            entity.Comp.Weightless = newWeightless;
             Dirty(entity);
 
             var ev = new WeightlessnessChangedEvent(entity.Comp.Weightless);
@@ -117,6 +133,14 @@ namespace Content.Shared.Gravity
         private void OnMapInit(Entity<WeightlessnessComponent> entity, ref MapInitEvent args)
         {
             RefreshWeightless((entity.Owner, entity.Comp));
+        }
+
+        private void OnWeightlessnessChanged(Entity<AlertsComponent> entity, ref WeightlessnessChangedEvent args)
+        {
+            if (args.Weightless)
+                _alerts.ShowAlert(entity, WeightlessAlert);
+            else
+                _alerts.ClearAlert(entity, WeightlessAlert);
         }
 
         private void OnEntParentChanged(Entity<WeightlessnessComponent> entity, ref EntParentChangedMessage args)
@@ -189,45 +213,24 @@ namespace Content.Shared.Gravity
                 if (xform.GridUid != args.ChangedGridIndex || args.HasGravity == !weightless.Weightless )
                     continue;
 
-                weightless.Weightless = TryWeightless(uid);
-                Dirty(uid, weightless);
-
-                var ev = new WeightlessnessChangedEvent(weightless.Weightless);
-                RaiseLocalEvent(uid, ref ev);
-
-                if (weightless.Weightless)
-                {
-                    _alerts.ShowAlert(uid, WeightlessAlert);
-                }
-                else
-                {
-                    _alerts.ClearAlert(uid, WeightlessAlert);
-                }
+                ChangeWeightless((uid, weightless));
             }
         }
 
         private void OnAlertsSync(AlertSyncEvent ev)
         {
             if (IsWeightless(ev.Euid))
-            {
                 _alerts.ShowAlert(ev.Euid, WeightlessAlert);
-            }
             else
-            {
                 _alerts.ClearAlert(ev.Euid, WeightlessAlert);
-            }
         }
 
         private void OnAlertsParentChange(EntityUid uid, AlertsComponent component, ref EntParentChangedMessage args)
         {
             if (IsWeightless(uid))
-            {
                 _alerts.ShowAlert(uid, WeightlessAlert);
-            }
             else
-            {
                 _alerts.ClearAlert(uid, WeightlessAlert);
-            }
         }
 
         private void OnGridInit(GridInitializeEvent ev)
