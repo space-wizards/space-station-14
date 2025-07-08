@@ -135,16 +135,10 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     /// <param name="source">Source EntityUid of the message</param>
     public void TryLearn(Entity<ParrotMemoryComponent?> entity, string incomingMessage, EntityUid source)
     {
-        // ignore yourself
-        if (source.Equals(entity))
+        if (!Resolve(entity, ref entity.Comp))
             return;
 
-        // learning requires a memory
-        if (!Resolve<ParrotMemoryComponent>(entity, ref entity.Comp))
-            return;
-
-        // can't learn when unconscious
-        if (_mobState.IsIncapacitated(entity))
+        if (source.Equals(entity) || _mobState.IsIncapacitated(entity))
             return;
 
         // can't learn too soon after having already learnt something else

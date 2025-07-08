@@ -115,12 +115,7 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     /// <returns></returns>
     private bool TrySpeakRadio(Entity<RadioVocalizerComponent?, ActiveRadioComponent?> entity, string message)
     {
-        // return if this entity does not have the VocalizerRadioComponent
-        if (!Resolve<RadioVocalizerComponent>(entity, ref entity.Comp1))
-            return false;
-
-        // return if this entity does not have an ActiveRadioComponent
-        if (!Resolve<ActiveRadioComponent>(entity, ref entity.Comp2))
+        if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
             return false;
 
         // return if this entity's ActiveRadioComponent contains no channels
