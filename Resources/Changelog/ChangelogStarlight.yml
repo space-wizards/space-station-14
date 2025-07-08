@@ -9102,4 +9102,11 @@ Entries:
   id: 1255
   time: '2025-07-08T13:06:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/865
+- author: deltaVelocity
+  changes:
+  - message: Cycler Shotgun Wield Sprites
+    type: Add
+  id: 1256
+  time: '2025-07-08T13:09:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/833
 
