@@ -36,6 +36,13 @@
     allowedStates:
     - Alive
     damageCap: 20
+    # Poison ignores other damages when calculating if its at its damage cap.
+    seperateDamageCap:
+      types:
+        Poison: 0.0
+        Heat: 0.0
+      groups:
+        Brute: 0.0
     damage:
       types:
         Heat: -0.07

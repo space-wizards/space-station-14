@@ -230,6 +230,51 @@ namespace Content.Shared.Damage
         }
 
         /// <summary>
+        ///     Remove any damage entries outside or inside the specified range. If min is less than max, trim whats inside, otherwise trim whats outside
+        /// </summary>
+        public void Trim(FixedPoint2 minValue, FixedPoint2 maxValue)
+        {
+            if (minValue < maxValue)
+            {
+                TrimMax(maxValue);
+                TrimMin(minValue);
+            }
+            else if (minValue < maxValue)
+            {
+                TrimMin(maxValue);
+                TrimMax(minValue);
+            }
+        }
+
+        /// <summary>
+        ///     Remove any damage entries with less than the specified damage.
+        /// </summary>
+        public void TrimMin(FixedPoint2 minValue)
+        {
+            foreach (var (key, value) in DamageDict)
+            {
+                if (value < minValue)
+                {
+                    DamageDict.Remove(key);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Remove any damage entries with more than the specified damage.
+        /// </summary>
+        public void TrimMax(FixedPoint2 maxValue)
+        {
+            foreach (var (key, value) in DamageDict)
+            {
+                if (value > maxValue)
+                {
+                    DamageDict.Remove(key);
+                }
+            }
+        }
+
+        /// <summary>
         ///     Clamps each damage value to be within the given range.
         /// </summary>
         public void Clamp(FixedPoint2 minValue, FixedPoint2 maxValue)
@@ -258,7 +303,7 @@ namespace Content.Shared.Damage
 
         /// <summary>
         ///     Sets all damage values to be at most some number. Note that if a damage type is not present in the
-        ///     dictionary, these will not be added.
+        ///     dictionary, it will not be added.
         /// </summary>
         public void ClampMax(FixedPoint2 maxValue)
         {

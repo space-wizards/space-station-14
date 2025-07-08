@@ -234,6 +234,11 @@
     allowedStates:
     - Alive
     damageCap: 20
+    seperateDamageCap:
+      types:
+        Heat: 0.0
+      groups:
+        Brute: 0.0
     damage:
       types:
         Heat: -0.07
