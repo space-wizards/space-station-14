@@ -387,9 +387,12 @@ public sealed partial class NPCSteeringSystem
             case MovementType.Braking:
                 if (velLen > 0f)
                 {
+                    // copy our velocity and apply friction to the copy
                     var cvel = body.LinearVelocity;
                     _mover.Friction(0f, frameTime, friction, ref cvel);
-                    // slow down our braking if we would overbrake in this frame
+                    // clamp our braking to what our post-friction velocity would be
+                    // otherwise we can overbrake in this frame and reverse movement direction
+                    // TODO: a way to tell calling code that we don't want to reverse movement direction to not have to do this
                     moveMultiplier = MapValue(cvel.Length(), 0f, frameAccel);
                                         // brake                                 // normalise
                     ApplySeek(interest, -offsetRot.RotateVec(body.LinearVelocity / velLen), 1f);
