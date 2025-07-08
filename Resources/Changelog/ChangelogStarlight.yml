@@ -9058,4 +9058,11 @@ Entries:
   id: 1249
   time: '2025-07-07T12:55:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/976
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added the new best map, Lagan!
+    type: Add
+  id: 1250
+  time: '2025-07-08T12:44:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/988
 
