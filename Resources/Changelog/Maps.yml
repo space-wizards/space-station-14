@@ -371,4 +371,38 @@
   id: 45
   time: '2025-06-13T19:17:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38259
+- author: SlamBamActionman
+  changes:
+  - message: Exo has received a "day 1 patch", fixing various incorrectly mapped features
+      and some smaller balance tweaks.
+    type: Fix
+  id: 46
+  time: '2025-06-16T16:43:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38348
+- author: SlamBamActionman
+  changes:
+  - message: Exo has received minor balance changes and fixes, along with having its
+      Atmos layout slightly modified.
+    type: Tweak
+  id: 47
+  time: '2025-06-19T04:06:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38435
+- author: UpAndLeaves
+  changes:
+  - message: CentComm security now uses a genpop system.
+    type: Add
+  id: 48
+  time: '2025-07-02T03:14:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37494
+- author: SlamBamActionman
+  changes:
+  - message: Exo station has had several minor changes and fixes, including a change
+      to the Nuke vault to allow it to be anchored in its center and its windows blocked
+      with blastdoors.
+    type: Fix
+  - message: Exo station's playercap has been increased from 30-70 to 40-80.
+    type: Tweak
+  id: 49
+  time: '2025-07-03T18:51:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38689
 Order: 1
