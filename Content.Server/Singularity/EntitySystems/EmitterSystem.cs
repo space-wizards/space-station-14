@@ -1,12 +1,12 @@
 using System.Numerics;
 using System.Threading;
 using Content.Server.Administration.Logs;
-using Content.Server.DeviceLinking.Events;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Database;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
@@ -45,7 +45,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
             SubscribeLocalEvent<EmitterComponent, PowerChangedEvent>(OnApcChanged);
-            SubscribeLocalEvent<EmitterComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<EmitterComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<EmitterComponent, GetVerbsEvent<Verb>>(OnGetVerb);
             SubscribeLocalEvent<EmitterComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
@@ -60,9 +60,9 @@ namespace Content.Server.Singularity.EntitySystems
             SwitchOff(uid, component);
         }
 
-        private void OnInteractHand(EntityUid uid, EmitterComponent component, InteractHandEvent args)
+        private void OnActivate(EntityUid uid, EmitterComponent component, ActivateInWorldEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.Complex)
                 return;
 
             if (TryComp(uid, out LockComponent? lockComp) && lockComp.Locked)
@@ -101,7 +101,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnGetVerb(EntityUid uid, EmitterComponent component, GetVerbsEvent<Verb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || args.Hands == null)
                 return;
 
             if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked)
@@ -196,7 +196,8 @@ namespace Content.Server.Singularity.EntitySystems
             if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
             {
                 apcReceiver.Load = component.PowerUseActive;
-                PowerOn(uid, component);
+                if (apcReceiver.Powered)
+                    PowerOn(uid, component);
             }
             // Do not directly PowerOn().
             // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.

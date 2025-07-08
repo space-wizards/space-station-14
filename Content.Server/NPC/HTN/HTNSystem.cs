@@ -134,6 +134,39 @@ public sealed class HTNSystem : EntitySystem
     }
 
     /// <summary>
+    /// Enable / disable the hierarchical task network of an entity
+    /// </summary>
+    /// <param name="ent">The entity and its <see cref="HTNComponent"/></param>
+    /// <param name="state">Set 'true' to enable, or 'false' to disable, the HTN</param>
+    /// <param name="planCooldown">Specifies a time in seconds before the entity can start planning a new action (only takes effect when the HTN is enabled)</param>
+    // ReSharper disable once InconsistentNaming
+    [PublicAPI]
+    public void SetHTNEnabled(Entity<HTNComponent> ent, bool state, float planCooldown = 0f)
+    {
+        if (ent.Comp.Enabled == state)
+            return;
+
+        ent.Comp.Enabled = state;
+        ent.Comp.PlanAccumulator = planCooldown;
+
+        ent.Comp.PlanningToken?.Cancel();
+        ent.Comp.PlanningToken = null;
+
+        if (ent.Comp.Plan != null)
+        {
+            var currentOperator = ent.Comp.Plan.CurrentOperator;
+
+            ShutdownTask(currentOperator, ent.Comp.Blackboard, HTNOperatorStatus.Failed);
+            ShutdownPlan(ent.Comp);
+
+            ent.Comp.Plan = null;
+        }
+
+        if (ent.Comp.Enabled && ent.Comp.PlanAccumulator <= 0)
+            RequestPlan(ent.Comp);
+    }
+
+    /// <summary>
     /// Forces the NPC to replan.
     /// </summary>
     [PublicAPI]
@@ -147,11 +180,27 @@ public sealed class HTNSystem : EntitySystem
         _planQueue.Process();
         var query = EntityQueryEnumerator<ActiveNPCComponent, HTNComponent>();
 
-        while(query.MoveNext(out var uid, out _, out var comp))
+        // Move ahead "count" entries in the query.
+        // This is to ensure that if we didn't process all the npcs the first time,
+        // we get to the remaining ones instead of iterating over the beginning again.
+        for (var i = 0; i < count; i++)
+        {
+            query.MoveNext(out _, out _);
+        }
+
+        // the amount of updates we've processed during this iteration.
+        var updates = 0;
+        while (query.MoveNext(out var uid, out _, out var comp))
         {
             // If we're over our max count or it's not MapInit then ignore the NPC.
-            if (count >= maxUpdates)
-                break;
+            if (updates >= maxUpdates)
+            {
+                // Intentional return. We don't want to go to the end logic and reset count.
+                return;
+            }
+
+            if (!comp.Enabled)
+                continue;
 
             if (comp.PlanningJob != null)
             {
@@ -238,7 +287,12 @@ public sealed class HTNSystem : EntitySystem
 
             Update(comp, frameTime);
             count++;
+            updates++;
         }
+
+        // only reset our counter back to 0 if we finish iterating.
+        // otherwise it lets us know where we left off.
+        count = 0;
     }
 
     private void AppendDebugText(HTNTask task, StringBuilder text, List<int> planBtr, List<int> btr, ref int level)
@@ -292,7 +346,7 @@ public sealed class HTNSystem : EntitySystem
             component.PlanAccumulator -= frameTime;
 
         // We'll still try re-planning occasionally even when we're updating in case new data comes in.
-        if (component.PlanAccumulator <= 0f)
+        if ((component.ConstantlyReplan || component.Plan is null) && component.PlanAccumulator <= 0f)
         {
             RequestPlan(component);
         }
@@ -426,7 +480,7 @@ public sealed class HTNSystem : EntitySystem
         if (component.PlanningJob != null)
             return;
 
-        component.PlanAccumulator += component.PlanCooldown;
+        component.PlanAccumulator = component.PlanCooldown;
         var cancelToken = new CancellationTokenSource();
         var branchTraversal = component.Plan?.BranchTraversalRecord;
 

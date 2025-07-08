@@ -1,0 +1,34 @@
+﻿- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseWizardObjective
+  components:
+  - type: Objective
+    # required but not used
+    difficulty: 1
+    issuer: objective-issuer-swf
+  - type: RoleRequirement
+    roles:
+    - WizardRole
+
+- type: entity
+  parent: [BaseWizardObjective, BaseSurviveObjective]
+  id: WizardSurviveObjective
+  name: Survive
+  description: The Space Wizards Federation want you to live!
+  components:
+  - type: Objective
+    icon:
+      sprite: Clothing/Head/Hats/wizardhat.rsi
+      state: icon
+
+- type: entity
+  parent: [BaseWizardObjective, BaseFreeObjective]
+  id: WizardDemonstrateObjective
+  name: Show off
+  description: Give the station a good demonstration of your powers!
+  components:
+  - type: Objective
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: fireball

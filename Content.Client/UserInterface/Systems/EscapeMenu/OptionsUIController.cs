@@ -26,7 +26,7 @@ public sealed class OptionsUIController : UIController
 
         if (!int.TryParse(args[0], out var tab))
         {
-            shell.WriteError(Loc.GetString("cmd-parse-failure-int", ("arg", args[0])));
+            shell.WriteError(Loc.GetString("cmd-parse-failure-integer", ("arg", args[0])));
             return;
         }
 

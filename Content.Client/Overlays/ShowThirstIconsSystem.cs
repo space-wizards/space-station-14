@@ -22,6 +22,6 @@ public sealed class ShowThirstIconsSystem : EquipmentHudSystem<ShowThirstIconsCo
             return;
 
         if (_thirst.TryGetStatusIconPrototype(component, out var iconPrototype))
-            ev.StatusIcons.Add(iconPrototype!);
+            ev.StatusIcons.Add(iconPrototype);
     }
 }

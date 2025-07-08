@@ -4,20 +4,24 @@
     Title="{Loc sandbox-window-title}"
     Resizable="False">
     <BoxContainer Orientation="Vertical" SeparationOverride="4">
-        <Button Name="AiOverlayButton" Access="Public" Text="{Loc sandbox-window-ai-overlay-button}" ToggleMode="True"/>
-        <Button Name="RespawnButton" Access="Public" Text="{Loc sandbox-window-respawn-button}"/>
-        <Button Name="SpawnEntitiesButton" Access="Public" Text="{Loc sandbox-window-spawn-entities-button}"/>
+        <Label Text="{Loc sandbox-window-map-editing-label}"/>
         <Button Name="SpawnTilesButton" Access="Public" Text="{Loc sandbox-window-spawn-tiles-button}"/>
+        <Button Name="SpawnEntitiesButton" Access="Public" Text="{Loc sandbox-window-spawn-entities-button}"/>
         <Button Name="SpawnDecalsButton" Access="Public" Text="{Loc sandbox-window-spawn-decals-button}"/>
-        <Button Name="GiveFullAccessButton" Access="Public" Text="{Loc sandbox-window-grant-full-access-button}"/>
-        <Button Name="GiveAghostButton" Access="Public" Text="{Loc sandbox-window-ghost-button}"/>
+
+        <Label Text="{Loc sandbox-window-visibility-label}"/>
         <Button Name="ToggleLightButton" Access="Public" Text="{Loc sandbox-window-toggle-lights-button}" ToggleMode="True"/>
         <Button Name="ToggleFovButton" Access="Public" Text="{Loc sandbox-window-toggle-fov-button}" ToggleMode="True"/>
         <Button Name="ToggleShadowsButton" Access="Public" Text="{Loc sandbox-window-toggle-shadows-button}" ToggleMode="True"/>
         <Button Name="ToggleSubfloorButton" Access="Public" Text="{Loc sandbox-window-toggle-subfloor-button}" ToggleMode="True"/>
-        <Button Name="SuicideButton" Access="Public" Text="{Loc sandbox-window-toggle-suicide-button}" ToggleMode="True"/>
+        <Button Name="AiOverlayButton" Access="Public" Text="{Loc sandbox-window-ai-overlay-button}" ToggleMode="True"/>
         <Button Name="ShowMarkersButton" Access="Public" Text="{Loc sandbox-window-show-spawns-button}" ToggleMode="True"/>
         <Button Name="ShowBbButton" Access="Public" Text="{Loc sandbox-window-show-bb-button}" ToggleMode="True"/>
-        <Button Name="MachineLinkingButton" Access="Public" Text="{Loc sandbox-window-link-machines-button}" ToggleMode="True"/>
+
+        <Label Text="{Loc sandbox-window-your-character-label}"/>
+        <Button Name="GiveAghostButton" Access="Public" Text="{Loc sandbox-window-ghost-button}"/>
+        <Button Name="GiveFullAccessButton" Access="Public" Text="{Loc sandbox-window-grant-full-access-button}"/>
+        <Button Name="SuicideButton" Access="Public" Text="{Loc sandbox-window-toggle-suicide-button}"/>
+        <Button Name="RespawnButton" Access="Public" Text="{Loc sandbox-window-respawn-button}"/>
     </BoxContainer>
 </windows:SandboxWindow>

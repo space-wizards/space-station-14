@@ -14,8 +14,7 @@ namespace Content.Server.StoreDiscount.Systems;
 /// </summary>
 public sealed class StoreDiscountSystem : EntitySystem
 {
-    [ValidatePrototypeId<StoreCategoryPrototype>]
-    private const string DiscountedStoreCategoryPrototypeKey = "DiscountedItems";
+    private static readonly ProtoId<StoreCategoryPrototype> DiscountedStoreCategoryPrototypeKey = "DiscountedItems";
 
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -71,7 +70,7 @@ public sealed class StoreDiscountSystem : EntitySystem
 
     private IReadOnlyList<StoreDiscountData> InitializeDiscounts(
         IReadOnlyCollection<ListingDataWithCostModifiers> listings,
-        int totalAvailableDiscounts = 3
+        int totalAvailableDiscounts = 6
     )
     {
         // Get list of categories with cumulative weights.

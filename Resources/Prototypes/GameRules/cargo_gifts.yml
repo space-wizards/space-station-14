@@ -16,7 +16,7 @@
     - id: GiftsVendingRestock
 
 # Game Rules
-    
+
 - type: entity
   id: CargoGiftsBase
   parent: BaseGameRule
@@ -63,9 +63,9 @@
     description: cargo-gift-pizza-large
     dest: cargo-gift-dest-bar
     gifts:
-      FoodPizzaLarge: 1              # 16 pizzas
+      FoodPizza: 4              # 16 pizzas
       FoodBarSupply: 1
-      FoodSoftdrinksLarge: 1
+      FoodSoftdrinks: 2         # 32 sodas
 
 - type: entity
   id: GiftsEngineering
@@ -196,6 +196,7 @@
       ArmorySmg: 1
       ArmoryShotgun: 1
       ArmoryLaser: 1
+      ArmoryRifle: 1
 
 - type: entity
   id: GiftsSecurityRiot
@@ -213,3 +214,4 @@
       SecurityRiot: 2
       SecurityRestraints: 2
       SecurityNonLethal: 2
+      SecurityNonlethalThrowables: 1

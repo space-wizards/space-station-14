@@ -24,6 +24,14 @@
             - material: Steel
               amount: 1
               doAfter: 2.0
+        - to: emergencyLight
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1.0
+            - material: Glass
+              amount: 1
+              doAfter: 1.0
     - node: tubeLight
       entity: PoweredlightEmpty
       edges:
@@ -82,5 +90,20 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}
+    - node: emergencyLight
+      entity: EmergencyLight
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
               amount: 1
             - !type:DeleteEntity {}

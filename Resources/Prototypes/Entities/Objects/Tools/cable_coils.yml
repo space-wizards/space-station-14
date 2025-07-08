@@ -33,6 +33,10 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 15
+  - type: GuideHelp
+    guides:
+    - VoltageNetworks
+    - Power
 
 - type: entity
   id: CableHVStack

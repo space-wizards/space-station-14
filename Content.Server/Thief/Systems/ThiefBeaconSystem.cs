@@ -20,7 +20,6 @@ public sealed class ThiefBeaconSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
-
     public override void Initialize()
     {
         base.Initialize();
