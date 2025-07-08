@@ -110,7 +110,7 @@
             shutdownState: PlanFinished
             pathfindInPlanning: true
             removeKeyOnFinish: false
-            brakeMaxVelocity: null # Goobstation - no braking
+            brakeMaxVelocity: null # don't try to brake
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
             rangeKey: MeleeRange
@@ -159,7 +159,7 @@
             shutdownState: PlanFinished
             pathfindInPlanning: true
             removeKeyOnFinish: false
-            brakeMaxVelocity: null # Goobstation - no braking
+            brakeMaxVelocity: null # don't try to brake
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
             rangeKey: MeleeRange

@@ -61,17 +61,15 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
     [DataField("stopOnLineOfSight")]
     public bool StopOnLineOfSight;
 
-    // Goobstation
     /// <summary>
     /// Velocity below which we count as successfully braked.
-    /// Don't try to brake if null (upstream behavior).
+    /// Don't care about velocity if null.
     /// </summary>
     [DataField]
     public float? BrakeMaxVelocity = 0.03f;
 
-    // Goobstation
     /// <summary>
-    /// If either we or the target are offgrid, gets assigned to make us just move directly to target.
+    /// If either we or the target are offgrid, gets assigned to make us just move directly to target without pathfinding.
     /// </summary>
     [DataField]
     public string DirectMoveTargetKey = "DirectMoveTarget";
@@ -100,7 +98,7 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
             !_entManager.TryGetComponent<PhysicsComponent>(owner, out var body))
             return (false, null);
 
-        // Goobstation - check if we or target are offgrid
+        // check if we or target are offgrid
         var offGrid = !_entManager.TryGetComponent<MapGridComponent>(xform.GridUid, out var ownerGrid) ||
                       !_entManager.TryGetComponent<MapGridComponent>(_transform.GetGrid(targetCoordinates), out var targetGrid);
 
@@ -123,7 +121,7 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
             });
         }
 
-        // Goobstation - if we're not offgrid, just try to pathfind
+        // if we're not offgrid, pathfind normally
         if (!offGrid)
         {
             var path = await _pathfind.GetPath(
@@ -145,7 +143,7 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
                 {PathfindKey, path}
             });
         }
-        // Goobstation - else try move directly to target
+        // else try move directly to target without pathing
         else
         {
             return (true, new Dictionary<string, object>()
@@ -176,7 +174,7 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
             comp.Range = range;
         }
 
-        // Goobstation - see if we want to just move directly first
+        // see if we want to just move directly first
         if (blackboard.TryGetValue<bool>(DirectMoveTargetKey, out var doDirectMove, _entManager) && doDirectMove)
         {
             comp.Coordinates = targetCoordinates;
@@ -184,8 +182,7 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
         }
         else if (blackboard.TryGetValue<PathResultEvent>(PathfindKey, out var result, _entManager))
         {
-            // Goobstation
-            comp.DirectMove = false;
+            comp.DirectMove = false; // i'm not sure whether this being needed is a good sign - if you know a better solution, tell
 
             if (blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates, _entManager))
             {
@@ -195,7 +192,7 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
 
             comp.CurrentPath = new Queue<PathPoly>(result.Path);
         }
-        comp.InRangeMaxSpeed = BrakeMaxVelocity; // Goobstation
+        comp.InRangeMaxSpeed = BrakeMaxVelocity;
     }
 
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
@@ -231,7 +228,7 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
 
         // OwnerCoordinates is only used in planning so dump it.
         blackboard.Remove<PathResultEvent>(PathfindKey);
-        // Goobstation - also clear direct move
+        // also clear DirectMove
         blackboard.Remove<bool>(DirectMoveTargetKey);
 
         if (RemoveKeyOnFinish)

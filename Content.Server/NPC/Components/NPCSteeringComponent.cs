@@ -98,13 +98,11 @@ public sealed partial class NPCSteeringComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public float Range = 0.2f;
 
-    // Goobstation
     /// <summary>
     /// Whether to ignore pathing and just move directly to target.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public bool DirectMove = false;
 
-    // Goobstation
     /// <summary>
     /// Up to how fast can we be going before being considered in range, if not null.
     /// </summary>

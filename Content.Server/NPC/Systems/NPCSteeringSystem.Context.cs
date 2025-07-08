@@ -93,18 +93,18 @@ public sealed partial class NPCSteeringSystem
         TransformComponent xform,
         Angle offsetRot,
         float moveSpeed,
-        float acceleration, // Goobstation
-        float friction, // Goobstation
+        float acceleration,
+        float friction,
         Span<float> interest,
         float frameTime,
         ref bool forceSteer,
-        ref float moveMultiplier) // Goobstation
+        ref float moveMultiplier)
     {
         var ourCoordinates = xform.Coordinates;
         var destinationCoordinates = steering.Coordinates;
         var inLos = true;
 
-        // Goobstation - makes us ignore all pathing logic and go straight to the target coordinates
+        // check if we should ignore all pathing logic and go straight to the target coordinates
         var directMove = steering.DirectMove;
 
         // Check if we're in LOS if that's required.
@@ -136,17 +136,16 @@ public sealed partial class NPCSteeringSystem
             steering.ForceMove = false;
         }
 
-        // Goobstation
+        var velLen = body.LinearVelocity.Length();
+
         var careAboutSpeed = steering.InRangeMaxSpeed != null;
         var finalInRange = ourCoordinates.TryDistance(EntityManager, destinationCoordinates, out var targetDistance) && inLos && targetDistance <= steering.Range;
-                           // ideally this would be careAboutSpeed but schizo C#
-        var velocityHigh = steering.InRangeMaxSpeed != null && body.LinearVelocity.LengthSquared() > steering.InRangeMaxSpeed.Value * steering.InRangeMaxSpeed.Value;
+        var velocityHigh = careAboutSpeed && velLen > steering.InRangeMaxSpeed!.Value;
         // if we're in range and we care about velocity, stop trying to move if we early return
         if (finalInRange && careAboutSpeed)
             moveMultiplier = 0f;
 
-        // We've arrived, nothing else matters.
-        // Goobstation - also check if our velocity is higher than desired
+        // We've arrived and velocity is acceptable, nothing else matters.
         if (finalInRange && !velocityHigh)
         {
             steering.Status = SteeringStatus.InRange;
@@ -155,7 +154,6 @@ public sealed partial class NPCSteeringSystem
         }
 
         // Grab the target position, either the next path node or our end goal..
-        // Goobstation - add DirectMove
         var targetCoordinates = steering.DirectMove ? steering.Coordinates : GetTargetCoordinates(steering);
 
         if (!targetCoordinates.IsValid(EntityManager))
@@ -169,7 +167,6 @@ public sealed partial class NPCSteeringSystem
         // If the next node is invalid then get new ones
         if (!targetCoordinates.IsValid(EntityManager))
         {
-            // Goobstation - add DirectMove
             if (!directMove && steering.CurrentPath.TryPeek(out var poly) &&
                 (poly.Data.Flags & PathfindingBreadcrumbFlag.Invalid) != 0x0)
             {
@@ -219,7 +216,6 @@ public sealed partial class NPCSteeringSystem
         if (arrived)
         {
             // Node needs some kind of special handling like access or smashing.
-            // Goobstation - add DirectMove
             if (!directMove && steering.CurrentPath.TryPeek(out var node) && !IsFreeSpace(uid, steering, node))
             {
                 // Ignore stuck while handling obstacles.
@@ -259,7 +255,6 @@ public sealed partial class NPCSteeringSystem
 
             // Distance should already be handled above.
             // It was just a node, not the target, so grab the next destination (either the target or next node).
-            // Goobstation - add DirectMove
             if (!directMove && steering.CurrentPath.Count > 0)
             {
                 forceSteer = true;
@@ -328,7 +323,6 @@ public sealed partial class NPCSteeringSystem
         }
 
         // If not in LOS and no path then get a new one fam.
-        // Goobstation - add DirectMove
         if (!directMove &&
             ((!inLos && steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0) ||
              (!steering.ArriveOnLineOfSight && steering.CurrentPath.Count == 0)))
@@ -337,18 +331,15 @@ public sealed partial class NPCSteeringSystem
         }
 
         // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
-        // Goobstation - add DirectMove
         if (!directMove)
             CheckPath(uid, steering, xform, needsPath, targetDistance);
 
-        // Goobstation
+        // whether we should want to brake right now
         var haveToBrake = finalInRange && velocityHigh;
 
         // If we don't have a path yet then do nothing; this is to avoid stutter-stepping if it turns out there's no path
-        // available but we assume there was.
-        // Goobstation - add DirectMove
+        // available but we assume there was. Brake if we have to, though.
         if (!directMove && steering is { Pathfind: true, CurrentPath.Count: 0 } && !haveToBrake)
-                                                                 // Goobstation
             return true;
 
         if (moveSpeed == 0f || direction == Vector2.Zero)
@@ -357,14 +348,12 @@ public sealed partial class NPCSteeringSystem
             return false;
         }
 
-        // <Goobstation>
         var moveType = MovementType.MovingToTarget;
 
         var realAccel = acceleration * moveSpeed;
         var frameAccel = realAccel * frameTime;
 
         // check our tangential velocity
-        var velLen = body.LinearVelocity.Length();
         var normVel = direction * Vector2.Dot(body.LinearVelocity, direction) / direction.LengthSquared();
         var tgVel = body.LinearVelocity - normVel;
 
@@ -372,7 +361,6 @@ public sealed partial class NPCSteeringSystem
         if (haveToBrake)
         {
             // how much distance we'll pass before hitting our desired max speed
-                                                              // schizo C#
             var brakePath = (velLen - steering.InRangeMaxSpeed ?? 0f) / friction;
             var hardBrake = brakePath > MathF.Min(0.5f, steering.Range); // hard brake if it takes more than half a tile
 
@@ -380,6 +368,7 @@ public sealed partial class NPCSteeringSystem
         }
         else
         {
+            // scary magic number but shouldn't be a datafield since what this actually does is implementation-dependent
             const float circlingTolerance = 0.5f;
 
             var dirLen = direction.Length();
@@ -418,12 +407,11 @@ public sealed partial class NPCSteeringSystem
                 moveMultiplier = 0f;
                 break;
         }
-        // </Goobstation>
 
         return true;
     }
 
-    // Goobstation - used in TrySeek()
+    // used in TrySeek()
     private enum MovementType
     {
         MovingToTarget,

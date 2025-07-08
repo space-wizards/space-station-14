@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.DoAfter;
+using Content.Server.Gravity;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
@@ -52,6 +53,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly GravitySystem _gravity = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
     [Dependency] private readonly PryingSystem _pryingSystem = default!;
@@ -332,8 +334,8 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         var offsetRot = -_mover.GetParentGridAngle(mover);
         _modifierQuery.TryGetComponent(uid, out var modifier);
         var moveSpeed = GetSprintSpeed(uid, modifier);
-        var acceleration = GetAcceleration((uid, modifier, xform, null)); // Goobstation
-        var friction = GetFriction((uid, modifier, xform, null)); // Goobstation
+        var acceleration = GetAcceleration((uid, modifier, xform, null));
+        var friction = GetFriction((uid, modifier, xform, null));
         var body = _physicsQuery.GetComponent(uid);
         var dangerPoints = steering.DangerPoints;
         dangerPoints.Clear();
@@ -347,9 +349,9 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         RaiseLocalEvent(uid, ref ev);
         // If seek has arrived at the target node for example then immediately re-steer.
         var forceSteer = true;
-        var moveMultiplier = 1f; // Goobstation
+        var moveMultiplier = 1f; // multiplier to acceleration we should actually move with
 
-        if (steering.CanSeek && !TrySeek(uid, mover, steering, body, xform, offsetRot, moveSpeed, acceleration, friction, interest, frameTime, ref forceSteer, ref moveMultiplier)) // Goobstation
+        if (steering.CanSeek && !TrySeek(uid, mover, steering, body, xform, offsetRot, moveSpeed, acceleration, friction, interest, frameTime, ref forceSteer, ref moveMultiplier))
         {
             SetDirection(uid, mover, steering, Vector2.Zero);
             return;
@@ -396,7 +398,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
         if (desiredDirection != -1)
         {
-            resultDirection = new Angle(desiredDirection * InterestRadians).ToVec() * moveMultiplier; // Goobstation
+            resultDirection = new Angle(desiredDirection * InterestRadians).ToVec() * moveMultiplier;
         }
 
         steering.LastSteerDirection = resultDirection;
@@ -483,7 +485,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         return modifier.CurrentSprintSpeed;
     }
 
-    // <Goobstation>
     private float GetAcceleration(Entity<MovementSpeedModifierComponent?, TransformComponent?, PhysicsComponent?> ent)
     {
         var weightless = _gravity.IsWeightless(ent, ent.Comp3, ent.Comp2);
@@ -494,7 +495,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         return weightless ? ent.Comp1.WeightlessAcceleration : ent.Comp1.Acceleration;
     }
 
-    // TODO: make this upstream's problem since friction as-is is kinda scuffed to get properly
     private float GetFriction(Entity<MovementSpeedModifierComponent?, TransformComponent?, PhysicsComponent?> ent)
     {
         var weightless = _gravity.IsWeightless(ent, ent.Comp3, ent.Comp2);
@@ -504,5 +504,4 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
         return weightless ? ent.Comp1.WeightlessFriction : ent.Comp1.Friction;
     }
-    // </Goobstation>
 }
