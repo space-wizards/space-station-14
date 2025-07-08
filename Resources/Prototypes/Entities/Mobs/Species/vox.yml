@@ -40,9 +40,6 @@
     seperateDamageCap:
       types:
         Poison: 0.0
-        Heat: 0.0
-      groups:
-        Brute: 0.0
     damage:
       types:
         Heat: -0.07
