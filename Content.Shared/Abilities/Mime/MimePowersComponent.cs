@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Abilities.Mime
+namespace Content.Shared.Abilities.Mime
 {
     /// <summary>
     /// Lets its owner entity use mime powers, like placing invisible walls.
@@ -14,19 +14,20 @@ namespace Content.Server.Abilities.Mime
         /// <summary>
         /// Whether this component is active or not.
         /// </summarY>
-        [DataField("enabled")]
+        [DataField]
         public bool Enabled = true;
 
         /// <summary>
         /// The wall prototype to use.
         /// </summary>
-        [DataField("wallPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string WallPrototype = "WallInvisible";
 
-        [DataField("invisibleWallAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? InvisibleWallAction = "ActionMimeInvisibleWall";
 
-        [DataField("invisibleWallActionEntity")] public EntityUid? InvisibleWallActionEntity;
+        [DataField]
+        public EntityUid? InvisibleWallActionEntity;
 
         // The vow zone lies below
         public bool VowBroken = false;
@@ -40,13 +41,13 @@ namespace Content.Server.Abilities.Mime
         /// <summary>
         /// Time when the mime can repent their vow
         /// </summary>
-        [DataField("vowRepentTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan VowRepentTime = TimeSpan.Zero;
 
         /// <summary>
         /// How long it takes the mime to get their powers back
         /// </summary>
-        [DataField("vowCooldown")]
+        [DataField]
         public TimeSpan VowCooldown = TimeSpan.FromMinutes(5);
 
         [DataField]
