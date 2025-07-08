@@ -1,21 +1,20 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Stacks
+namespace Content.Shared.Stacks;
+
+[Serializable, NetSerializable]
+public sealed class StackCustomSplitAmountMessage : BoundUserInterfaceMessage
 {
-    [Serializable, NetSerializable]
-    public sealed class StackCustomSplitAmountMessage : BoundUserInterfaceMessage
-    {
-        public int Amount;
+    public int Amount;
 
-        public StackCustomSplitAmountMessage(int amount)
-        {
-            Amount = amount;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public enum StackCustomSplitUiKey
+    public StackCustomSplitAmountMessage(int amount)
     {
-        Key,
+        Amount = amount;
     }
+}
+
+[Serializable, NetSerializable]
+public enum StackCustomSplitUiKey : byte
+{
+    Key,
 }

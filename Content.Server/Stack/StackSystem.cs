@@ -24,6 +24,7 @@ namespace Content.Server.Stack
             base.Initialize();
 
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
+            SubscribeLocalEvent<StackComponent, StackCustomSplitAmountMessage>(OnCustomSplitMessage);
         }
 
         public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
@@ -213,16 +214,14 @@ namespace Content.Server.Stack
             args.Verbs.Add(custom);
         }
 
-        protected override void OnCustomSplitMessage(Entity<StackComponent> ent, ref StackCustomSplitAmountMessage message)
+        private void OnCustomSplitMessage(Entity<StackComponent> ent, ref StackCustomSplitAmountMessage message)
         {
-            var (uid, comp) = ent;
-
             // digital ghosts shouldn't be allowed to split stacks
             if (!(message.Actor is { Valid: true } user))
                 return;
 
             var amount = message.Amount;
-            UserSplit(uid, user, amount, comp);
+            UserSplit(ent, user, amount, ent.Comp);
         }
 
         private void UserSplit(EntityUid uid, EntityUid userUid, int amount,
