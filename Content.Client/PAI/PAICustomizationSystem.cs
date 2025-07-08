@@ -17,6 +17,9 @@ public sealed class PAICustomizationSystem : EntitySystem
     private void OnAfterAutoHandleState(EntityUid uid, PAICustomizationComponent component, ref AfterAutoHandleStateEvent args)
     {
         if (_ui.TryGetOpenUi<PAICustomizationBoundUserInterface>(uid, PAICustomizationUiKey.Key, out var bui))
+        {
             bui.UpdateEmotion(component.CurrentEmotion);
+            bui.UpdateGlasses(component.CurrentGlasses);
+        }
     }
 }

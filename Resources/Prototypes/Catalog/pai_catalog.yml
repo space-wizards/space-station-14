@@ -54,3 +54,48 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: PAIHealthBar
+  name: pai-health-bar-name
+  description: pai-health-bar-desc
+  icon:
+    sprite: Interface/Actions/actions_pai.rsi
+    state: pai_health_bar
+  raiseProductEventOnUser: true
+  productEvent: !type:PAIHealthBarEvent
+  cost:
+    SiliconMemory: 10
+  categories:
+  - PAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    blacklist:
+      components:
+      - ShowCriminalRecordIcons
+
+# Syndicate pAI Abilities
+
+- type: listing
+  id: PAISecurityBar
+  name: pai-security-bar-name
+  description: pai-security-bar-desc
+  icon:
+    sprite: Interface/Actions/actions_pai.rsi
+    state: pai_security_bar
+  raiseProductEventOnUser: true
+  productEvent: !type:PAISecurityBarEvent
+  cost:
+    SiliconMemory: 15
+  categories:
+  - SyndicatePAIAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    blacklist:
+      components:
+      - ShowHealthBars
+

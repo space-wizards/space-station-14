@@ -15,25 +15,41 @@ public sealed class PAICustomizationBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        // Retrieve the current emotion from the PAICustomizationComponent
+        // Retrieve the current emotion and glasses from the PAICustomizationComponent
         var currentEmotion = PAIEmotion.Neutral;
-        if (EntMan.TryGetComponent<PAICustomizationComponent>(Owner, out var emotionComp))
-            currentEmotion = emotionComp.CurrentEmotion;
+        var currentGlasses = PAIGlasses.None;
 
-        // Pass both current emotion and the PAI entity for preview
-        _menu = new PAICustomizationMenu(currentEmotion, Owner);
+        if (EntMan.TryGetComponent<PAICustomizationComponent>(Owner, out var customizationComp))
+        {
+            currentEmotion = customizationComp.CurrentEmotion;
+            currentGlasses = customizationComp.CurrentGlasses;
+        }
+
+        // Pass both current emotion, glasses and the PAI entity for preview
+        _menu = new PAICustomizationMenu(currentEmotion, currentGlasses, Owner);
         _menu.OpenCentered();
         _menu.OnClose += Close;
         _menu.OnEmotionSelected += OnEmotionSelected;
+        _menu.OnGlassesSelected += OnGlassesSelected;
+        _menu.OnNameChanged += OnNameChanged;
+        _menu.OnNameReset += OnNameReset;
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
         base.ReceiveMessage(message);
 
-        if (message is PAIEmotionStateMessage stateMessage)
+        switch (message)
         {
-            UpdateEmotion(stateMessage.Emotion);
+            case PAIEmotionStateMessage stateMessage:
+                UpdateEmotion(stateMessage.Emotion);
+                break;
+            case PAIGlassesStateMessage glassesMessage:
+                UpdateGlasses(glassesMessage.Glasses);
+                break;
+            case PAINameStateMessage nameMessage:
+                UpdateName(nameMessage.Name);
+                break;
         }
     }
 
@@ -42,9 +58,34 @@ public sealed class PAICustomizationBoundUserInterface : BoundUserInterface
         SendMessage(new PAIEmotionMessage(emotion));
     }
 
+    private void OnGlassesSelected(PAIGlasses glasses)
+    {
+        SendMessage(new PAIGlassesMessage(glasses));
+    }
+
+    private void OnNameChanged(string name)
+    {
+        SendMessage(new PAISetNameMessage(name));
+    }
+
+    private void OnNameReset()
+    {
+        SendMessage(new PAIResetNameMessage());
+    }
+
     public void UpdateEmotion(PAIEmotion emotion)
     {
         _menu?.UpdateEmotion(emotion);
+    }
+
+    public void UpdateGlasses(PAIGlasses glasses)
+    {
+        _menu?.UpdateGlasses(glasses);
+    }
+
+    public void UpdateName(string name)
+    {
+        _menu?.UpdateName(name);
     }
 
     protected override void Dispose(bool disposing)

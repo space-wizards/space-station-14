@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.PAI;
 
@@ -36,3 +37,16 @@ public abstract class SharedPAISystem : EntitySystem
 public sealed partial class PAIShopActionEvent : InstantActionEvent
 {
 }
+
+/// <summary>
+/// Health Bar
+/// </summary>
+[Serializable, NetSerializable, ByRefEvent]
+public sealed partial class PAIHealthBarEvent;
+
+
+/// <summary>
+/// Security Bar Event
+/// </summary>
+[Serializable, NetSerializable, ByRefEvent]
+public sealed partial class PAISecurityBarEvent;

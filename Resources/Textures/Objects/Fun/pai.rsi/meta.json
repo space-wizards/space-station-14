@@ -8,6 +8,12 @@
   },
   "states": [
     {
+      "name": "pai-sunglasses-overlay"
+    },
+    {
+      "name": "pai-glasses-overlay"
+    },
+    {
       "name": "icon-pai-off"
     },
     {

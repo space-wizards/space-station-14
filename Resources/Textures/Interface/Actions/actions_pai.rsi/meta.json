@@ -1,0 +1,41 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by mofkkol (Discord) for SS14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "pai_base"
+        },
+        {
+            "name": "pai_customization"
+        },
+        {
+            "name": "pai_gas_analyzer"
+        },
+        {
+            "name": "pai_health_bar"
+        },
+        {
+            "name": "pai_map"
+        },
+        {
+            "name": "pai_mass_scanner"
+        },
+        {
+            "name": "pai_midi"
+        },
+        {
+            "name": "pai_flashlight"
+        },
+        {
+            "name": "pai_self_destruct"
+        },
+        {
+            "name": "pai_security_bar"
+        }
+    ]
+}

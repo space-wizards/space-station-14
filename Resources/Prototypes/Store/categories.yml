@@ -98,6 +98,12 @@
 - type: storeCategory
   id: PAIAbilities
   name: store-category-abilities
+  priority: 1
+
+- type: storeCategory
+  id: SyndicatePAIAbilities
+  name: store-category-syndicate-abilities
+  priority: 2
 
 - type: storeCategory
   id: DiscountedItems

@@ -278,6 +278,7 @@
       - id: ModularReceiver
       - id: WeaponFlareGun
       - id: BarberScissors
+      - id: PersonalAIMemoryDisk
       - !type:GroupSelector
         children:
         - id: DrinkSpaceGlue
