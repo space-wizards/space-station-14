@@ -1,7 +1,7 @@
 # Hacky for the stress test so don't even consider adding to this
 - type: entity
   name: burrower
-  id: MobXeno
+  id: MobXenoAdmeme
   suffix: Admeme
   parent: SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
@@ -125,170 +125,8 @@
 
 - type: entity
   name: praetorian
-  parent: MobXeno
-  id: MobXenoPraetorian
-  suffix: Admeme
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/Xenos/praetorian.rsi
-    offset: 0,0.4
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: running
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      200: Dead
-  - type: Stamina
-    critThreshold: 300
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      50: 0.7
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.45
-        density: 400
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-
-- type: entity
-  name: drone
-  parent: MobXeno
-  id: MobXenoDrone
-  suffix: Admeme
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/Xenos/drone.rsi
-    offset: 0,0.2
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: running
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      180: Dead
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      40: 0.7
-  - type: MeleeWeapon
-    damage:
-      groups:
-        Brute: 6
-  - type: MovementSpeedModifier
-    baseSprintSpeed: 4
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.45
-        density: 450
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-
-- type: entity
-  name: queen
-  parent: MobXeno
-  id: MobXenoQueen
-  suffix: Admeme
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/Xenos/queen.rsi
-    offset: 0,0.4
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: running
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      500: Dead
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      150: 0.7
-  - type: MovementSpeedModifier
-  - type: MeleeWeapon
-    damage:
-     groups:
-      Brute: 20
-      Structural: 50
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.45
-        density: 15500
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-  - type: Tag
-    tags:
-    - CannotSuicide
-  - type: Devourer
-    foodPreference: Humanoid
-    shouldStoreDevoured: true
-    chemical: Ichor
-    healRate: 7.5
-    whitelist:
-      components:
-      - MobState
-      - Door
-      tags:
-      - Wall
-
-- type: entity
-  name: ravager
-  parent: MobXeno
-  id: MobXenoRavager
-  suffix: Admeme
-  components:
-  - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Aliens/Xenos/ravager.rsi
-    offset: 0,0.5
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: running
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      300: Dead
-  - type: MovementSpeedModifier
-    baseSprintSpeed: 4
-  - type: MeleeWeapon
-    damage:
-     groups:
-       Brute: 30
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      50: 0.7
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.45
-        density: 1350
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
-
-- type: entity
-  name: runner
-  parent: MobXeno
-  id: MobXenoRunner
+  parent: MobXenoAdmemeAdmeme
+  id: MobXenoRunnerAdmeme
   suffix: Admeme
   components:
   - type: Sprite
@@ -319,7 +157,7 @@
 - type: entity
   name: rouny
   parent: MobXenoRunner
-  id: MobXenoRouny
+  id: MobXenoRounyAdmeme
   suffix: Admeme
   components:
   - type: Sprite
@@ -334,8 +172,8 @@
 
 - type: entity
   name: spitter
-  parent: MobXeno
-  id: MobXenoSpitter
+  parent: MobXenoAdmeme
+  id: MobXenoSpitterAdmeme
   suffix: Admeme
   components:
   - type: Sprite
