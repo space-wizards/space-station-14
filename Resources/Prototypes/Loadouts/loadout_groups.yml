@@ -1166,6 +1166,7 @@
   loadouts:
   - JackBoots
   - SecurityWinterBoots
+  - HighHeelBoots # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: SecurityPDA
@@ -1324,6 +1325,9 @@
   loadouts:
   - WhiteShoes
   - MedicalWinterBoots
+  - Heels # 🌟Starlight🌟
+  - LaceupShoes # 🌟Starlight🌟
+  - LeatherShoes # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: MedicalDoctorPDA

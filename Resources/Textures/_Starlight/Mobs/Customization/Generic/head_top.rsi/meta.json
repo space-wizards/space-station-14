@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sha-Seng (Github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "head_earrings1",
+      "directions": 4
+    },
+    {
+      "name": "head_earrings2",
+      "directions": 4
+    },
+    {
+      "name": "head_earrings_drop1",
+      "directions": 4
+    },
+    {
+      "name": "head_earrings_drop2",
+      "directions": 4
+    },
+    {
+      "name": "head_earrings_weights1",
+      "directions": 4
+    },
+    {
+      "name": "head_earrings_weights2",
+      "directions": 4
+    }
+  ]
+}
