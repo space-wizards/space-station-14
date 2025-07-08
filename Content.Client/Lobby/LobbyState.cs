@@ -176,19 +176,22 @@ namespace Content.Client.Lobby
 
         private void UpdateLobbyUi()
         {
+            var minutesToday = _playtimeTracking.PlaytimeMinutesToday;
+
             if (_gameTicker.IsGameStarted)
             {
                 Lobby!.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-join-state");
                 Lobby!.ReadyButton.ToggleMode = false;
                 Lobby!.ReadyButton.Pressed = false;
                 Lobby!.ObserveButton.Disabled = false;
+                Lobby!.ReadyButton.Disabled = false;
             }
             else
             {
                 Lobby!.StartTime.Text = string.Empty;
                 Lobby!.ReadyButton.Text = Loc.GetString(Lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready": "lobby-state-player-status-not-ready");
                 Lobby!.ReadyButton.ToggleMode = true;
-                Lobby!.ReadyButton.Disabled = false;
+                Lobby!.ReadyButton.Disabled = (minutesToday >= 180);
                 Lobby!.ReadyButton.Pressed = _gameTicker.AreWeReady;
                 Lobby!.ObserveButton.Disabled = true;
             }
@@ -198,7 +201,6 @@ namespace Content.Client.Lobby
                 Lobby!.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);
             }
 
-            var minutesToday = _playtimeTracking.PlaytimeMinutesToday;
             if (minutesToday > 60)
             {
                 Lobby!.PlaytimeComment.Visible = true;

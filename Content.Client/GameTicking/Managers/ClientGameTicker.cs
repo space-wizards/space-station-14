@@ -2,6 +2,7 @@ using Content.Client.Administration.Managers;
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
+using Content.Client.Playtime;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Roles;
@@ -21,6 +22,7 @@ namespace Content.Client.GameTicking.Managers
         [Dependency] private readonly IClientAdminManager _admin = default!;
         [Dependency] private readonly IClyde _clyde = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly ClientsidePlaytimeTrackingManager _playtimeTracking = default!;
 
         private Dictionary<NetEntity, Dictionary<ProtoId<JobPrototype>, int?>>  _jobsAvailable = new();
         private Dictionary<NetEntity, string> _stationNames = new();
@@ -90,10 +92,22 @@ namespace Content.Client.GameTicking.Managers
 
         private void UpdateJobsAvailable(TickerJobsAvailableEvent message)
         {
+            var minutesToday = _playtimeTracking.PlaytimeMinutesToday;
+
             _jobsAvailable.Clear();
 
             foreach (var (job, data) in message.JobsAvailableByStation)
             {
+                if (minutesToday >= 180)
+                {
+                    foreach (var (jobId, slots) in data)
+                    {
+                        if (jobId.ToString() == "Passenger" || jobId.ToString() == "Musician" || jobId.ToString() == "Mime")
+                            continue;
+
+                        data.Remove(jobId);
+                    }
+                }
                 _jobsAvailable[job] = data;
             }
 
