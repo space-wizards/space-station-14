@@ -129,8 +129,8 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         var markingManager = IoCManager.Resolve<MarkingManager>();
         var proto = IoCManager.Resolve<IPrototypeManager>();
 
-        var newFacialHairStyle = HairStyles.DefaultFacialHairStyle;
-        var newHairStyle = HairStyles.DefaultHairStyle;
+        var newFacialHairStyle = HairStyles.DefaultFacialHairStyle.Id;
+        var newHairStyle = HairStyles.DefaultHairStyle.Id;
         List<Marking> newMarkings = [];
 
         // grab a completely random color.
