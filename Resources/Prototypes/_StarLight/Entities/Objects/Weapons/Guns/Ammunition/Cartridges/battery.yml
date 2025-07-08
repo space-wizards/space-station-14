@@ -17,6 +17,8 @@
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
   - type: SpentAmmoVisuals
+  - type: Contraband
+    allowedDepartments: [ Security, CentralCommand, Command ]
   
 - type: entity
   id: CartridgeBattery

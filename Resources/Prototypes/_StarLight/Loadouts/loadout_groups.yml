@@ -194,6 +194,8 @@
   - CowboyBootsBrown
   - CowboyBootsBlack
   - CowboyBootsWhite
+  - Heels
+  - HighHeelBoots
 
 - type: loadoutGroup
   id: CivilianShoes
