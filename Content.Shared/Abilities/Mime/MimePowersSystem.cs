@@ -89,13 +89,13 @@ namespace Content.Shared.Abilities.Mime
             // Check if the tile is blocked by a wall or mob, and don't create the wall if so
             if (_turf.IsTileBlocked(tile.Value, CollisionGroup.Impassable | CollisionGroup.Opaque))
             {
-                _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, uid);
+                _popupSystem.PopupClient(Loc.GetString("mime-invisible-wall-failed"), uid, uid);
                 return;
             }
 
-            _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-popup", ("mime", uid)), uid);
+            _popupSystem.PopupClient(Loc.GetString("mime-invisible-wall-popup", ("mime", uid)), uid);
             // Make sure we set the invisible wall to despawn properly
-            Spawn(component.WallPrototype, _turf.GetTileCenter(tile.Value));
+            EntityManager.PredictedSpawn(component.WallPrototype, _turf.GetTileCenter(tile.Value));
             // Handle args so cooldown works
             args.Handled = true;
         }
