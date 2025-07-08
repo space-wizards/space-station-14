@@ -18,5 +18,5 @@ public sealed partial class MessyDrinkerComponent : Component
     public FixedPoint2 SpillAmount = 1.0;
 
     [DataField]
-    public LocId? SpillMessagePopup = new LocId("messy-drinker-drink-spill-message");
+    public LocId? SpillMessagePopup;
 }
