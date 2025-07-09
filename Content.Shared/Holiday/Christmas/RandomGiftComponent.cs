@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Holiday.Christmas;
+namespace Content.Shared.Holiday.Christmas;
 
 /// <summary>
 /// This is used for gifts with COMPLETELY random things.

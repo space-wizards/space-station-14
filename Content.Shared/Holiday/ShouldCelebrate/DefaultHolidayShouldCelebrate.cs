@@ -1,6 +1,6 @@
-using Content.Server.Holiday.Interfaces;
+using Content.Shared.Holiday.Interfaces;
 
-namespace Content.Server.Holiday.ShouldCelebrate
+namespace Content.Shared.Holiday.ShouldCelebrate
 {
     [Virtual, DataDefinition]
     public partial class DefaultHolidayShouldCelebrate : IHolidayShouldCelebrate

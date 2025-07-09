@@ -4,7 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Storage;
 using Robust.Shared.Player;
 
-namespace Content.Server.Holiday.Christmas;
+namespace Content.Shared.Holiday.Christmas;
 
 /// <summary>
 /// This handles handing out items from item givers.

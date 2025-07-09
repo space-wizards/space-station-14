@@ -1,4 +1,4 @@
-namespace Content.Server.Holiday.Interfaces
+namespace Content.Shared.Holiday.Interfaces
 {
     public interface IHolidayGreet
     {

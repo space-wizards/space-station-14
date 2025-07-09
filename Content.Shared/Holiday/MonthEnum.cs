@@ -1,4 +1,4 @@
-namespace Content.Server.Holiday
+namespace Content.Shared.Holiday
 {
     public enum Month : byte
     {

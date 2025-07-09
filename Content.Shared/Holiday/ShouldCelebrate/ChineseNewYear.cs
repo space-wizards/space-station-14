@@ -1,7 +1,7 @@
 using System.Globalization;
-using Content.Server.Holiday.Interfaces;
+using Content.Shared.Holiday.Interfaces;
 
-namespace Content.Server.Holiday.ShouldCelebrate
+namespace Content.Shared.Holiday.ShouldCelebrate
 {
     public sealed partial class ChineseNewYear : IHolidayShouldCelebrate
     {

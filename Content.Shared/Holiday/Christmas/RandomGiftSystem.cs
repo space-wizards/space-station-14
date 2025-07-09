@@ -11,7 +11,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Holiday.Christmas;
+namespace Content.Shared.Holiday.Christmas;
 
 /// <summary>
 /// This handles granting players their gift.

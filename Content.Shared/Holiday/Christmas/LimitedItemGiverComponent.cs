@@ -2,7 +2,7 @@
 using Robust.Shared.Network;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Holiday.Christmas;
+namespace Content.Shared.Holiday.Christmas;
 
 /// <summary>
 /// This is used for granting items to lucky souls, exactly once.
