@@ -583,14 +583,14 @@
             "name": "dark-squiggly"
         },
 	{
-	    "name": "marble"
+	    "name": "white-marble"
 	},
 	{
-            "name": "marble-inhand-left",
+            "name": "white-marble-inhand-left",
             "directions": 4
         },
         {
-            "name": "marble-inhand-right",
+            "name": "white-marble-inhand-right",
             "directions": 4
         },
         {

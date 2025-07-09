@@ -308,8 +308,8 @@
 # Marble
 - type: latheRecipe
   parent: BaseMarbleTileRecipe
-  id: FloorTileItemMarble
-  result: FloorTileItemMarble
+  id: FloorTileItemWhiteMarble
+  result: FloorTileItemWhiteMarble
 
 - type: latheRecipe
   parent: BaseMarbleTileRecipe

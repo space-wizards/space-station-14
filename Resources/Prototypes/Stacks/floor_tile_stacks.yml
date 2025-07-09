@@ -672,9 +672,9 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileMarble
-  name: stack-marble-floor
-  spawn: FloorTileItemMarble
+  id: FloorTileWhiteMarble
+  name: stack-white-marble-floor
+  spawn: FloorTileItemWhiteMarble
   maxCount: 30
 
 - type: stack

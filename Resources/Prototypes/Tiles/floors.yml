@@ -2133,9 +2133,9 @@
   heatCapacity: 10000
 
 - type: tile
-  id: FloorMarble
-  name: tiles-marble
-  sprite: /Textures/Tiles/marble.png
+  id: FloorWhiteMarble
+  name: tiles-white-marble
+  sprite: /Textures/Tiles/white_marble.png
   variants: 8
   placementVariants:
   - 1.0
@@ -2152,7 +2152,7 @@
   footstepSounds:
     collection: FootstepTile
   friction: 0.8
-  itemDrop: FloorTileItemMarble
+  itemDrop: FloorTileItemWhiteMarble
   heatCapacity: 10000
 
 - type: tile

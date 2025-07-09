@@ -1623,26 +1623,26 @@
 # Marble
 
 - type: entity
-  name: marble tile
+  name: white marble tile
   description: A chiseled, polished square of the finest Space Marble. Best not to lose it.
   parent: FloorTileItemBase
-  id: FloorTileItemMarble
+  id: FloorTileItemWhiteMarble
   components:
   - type: Sprite
-    state: marble
+    state: white-marble
   - type: Item
-    heldPrefix: marble
+    heldPrefix: white-marble
   - type: FloorTile
     outputs:
       - Plating
-      - FloorMarble
+      - FloorWhiteMarble
   - type: Stack
-    stackType: FloorTileMarble
+    stackType: FloorTileWhiteMarble
 
 - type: entity
   name: dark marble tile
   description: A chiseled, polished square of the finest Space Marble. Best not to lose it.
-  parent: FloorTileItemMarble
+  parent: FloorTileItemWhiteMarble
   id: FloorTileItemDarkMarble
   components:
   - type: Sprite
@@ -1659,7 +1659,7 @@
 - type: entity
   name: plasmarble tile
   description: A chiseled, polished square of the finest Space Marble. Plasma-infused for extra... something.
-  parent: FloorTileItemMarble
+  parent: FloorTileItemWhiteMarble
   id: FloorTileItemPlasmaMarble
   components:
   - type: Sprite
@@ -1680,7 +1680,7 @@
 - type: entity
   name: uranium marble tile
   description: A chiseled, polished square of the finest Space Marble. Uranium-infused to make it extra rad! Pun intended!
-  parent: FloorTileItemMarble
+  parent: FloorTileItemWhiteMarble
   id: FloorTileItemUraniumMarble
   components:
   - type: Sprite
