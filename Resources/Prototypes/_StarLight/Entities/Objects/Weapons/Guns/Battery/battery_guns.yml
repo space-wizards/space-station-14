@@ -266,6 +266,64 @@
     autoRechargeRate: 20
 
 - type: entity
+  name: MT-7 Magnum
+  parent: [ BaseWeaponBatterySmall, BaseSecurityContraband ]
+  id: WeaponEnergyMagnumGun
+  description: This is an expensive, modern version of the Mateba revolver, with several unique fire modes. And a slow self recharging battery.
+  components:
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/Energy_Magnum.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: disable-unshaded
+      map: ["enum.FireModesLayers.FireMode"]
+      shader: unshaded
+    - state: disable-unshaded-0
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Lock
+    mindShieldLock: true
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Item
+    size: Small
+    shape:
+    - 0, 0, 1, 1
+  - type: MagazineVisuals
+    magState: disable
+    steps: 5
+    zeroVisible: true
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBolt
+    fireCost: 40
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: DisablerBolt
+      fireCost: 40
+      magState: disable
+      visualState: disable-unshaded
+    - proto: TaserBolt
+      fireCost: 100
+      magState: stun
+      visualState: stun-unshaded
+    - proto: WeaponLaserCannon # Does slightly more damage but costs more energy.
+      fireCost: 80
+      magState: kill
+      visualState: kill-unshaded
+    - proto: DestroyBeam
+      fireCost: 450
+      magState: destroy
+      visualState: destroy-unshaded
+  - type: Battery
+    maxCharge: 2000
+    startingCharge: 2000
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 35
+
+- type: entity
   parent: [ BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband ]
   id: WeaponIonRifle
   name: ion rifle
