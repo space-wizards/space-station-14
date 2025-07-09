@@ -12,9 +12,9 @@ namespace Content.Shared.Movement.Systems;
 /// </summary>
 public sealed class MovementModStatusSystem : EntitySystem
 {
-    public static readonly EntProtoId PoisonSlowdownProtoId = "PoisonSlowdownStatusEffect";
-    public static readonly EntProtoId ProjectileSlowdownProtoId = "ProjectileSlowdownStatusEffect";
-    public static readonly EntProtoId FlashSlowdownProtoId = "FlashSlowdownStatusEffect";
+    public static readonly EntProtoId VomitingSlowdown = "VomitingSlowdownStatusEffect";
+    public static readonly EntProtoId TaserSlowdown = "TaserSlowdownStatusEffect";
+    public static readonly EntProtoId FlashSlowdown = "FlashSlowdownStatusEffect";
 
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedStatusEffectsSystem _status = default!;

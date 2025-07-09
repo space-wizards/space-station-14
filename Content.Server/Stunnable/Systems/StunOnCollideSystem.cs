@@ -27,7 +27,7 @@ namespace Content.Server.Stunnable
 
             _movementMod.TryUpdateMovementSpeedModDuration(
                 target,
-                MovementModStatusSystem.ProjectileSlowdownProtoId,
+                MovementModStatusSystem.TaserSlowdown,
                 TimeSpan.FromSeconds(component.SlowdownAmount),
                 component.WalkSpeedMultiplier,
                 component.RunSpeedMultiplier

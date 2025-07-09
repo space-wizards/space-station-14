@@ -1,6 +1,7 @@
 - type: entity
   parent: MobStatusEffectBase
   id: StatusEffectSlowdown
+  abstract: true
   name: slowdown
   components:
   - type: StatusEffect
@@ -11,6 +12,21 @@
       tags:
       - SlowImmune
   - type: MovementModStatusEffect
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: VomitingSlowdownStatusEffect
+  name: vomiting slowdown
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: TaserSlowdownStatusEffect
+  name: shot by taser slowdown
+
+- type: entity
+  parent: StatusEffectSlowdown
+  id: FlashSlowdownStatusEffect
+  name: affected by flash slowdown
 
 - type: entity
   parent: StatusEffectSlowdown

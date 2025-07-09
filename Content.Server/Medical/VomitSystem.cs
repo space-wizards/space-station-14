@@ -58,7 +58,7 @@ namespace Content.Server.Medical
             // It fully empties the stomach, this amount from the chem stream is relatively small
             var solutionSize = (MathF.Abs(thirstAdded) + MathF.Abs(hungerAdded)) / 6;
             // Apply a bit of slowdown
-            _movementMod.TryUpdateMovementSpeedModDuration(uid, MovementModStatusSystem.PoisonSlowdownProtoId, TimeSpan.FromSeconds(solutionSize),  0.5f);
+            _movementMod.TryUpdateMovementSpeedModDuration(uid, MovementModStatusSystem.VomitingSlowdown, TimeSpan.FromSeconds(solutionSize),  0.5f);
 
             // TODO: Need decals
             var solution = new Solution();
