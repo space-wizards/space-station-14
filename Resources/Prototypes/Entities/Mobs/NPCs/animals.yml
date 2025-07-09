@@ -2219,12 +2219,15 @@
   - type: Inventory
     templateId: parrot
     speciesId: parrot
+    # transparent displacement map to hide the headset. this should be an animated displacement map to follow the parrot
+    # as it bobs up and down, but this in turn needs some way to change the displacement map on inventory entities when
+    # the parrot dies, otherwise the visuals will be broken
     displacements:
       ears:
         sizeMaps:
           32:
             sprite: Mobs/Animals/parrot/displacement.rsi
-            state: ears_dead
+            state: ears
   - type: InventorySlots
   - type: Strippable
   - type: UserInterface

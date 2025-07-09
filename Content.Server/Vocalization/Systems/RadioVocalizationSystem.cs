@@ -26,7 +26,6 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
         SubscribeLocalEvent<RadioVocalizerComponent, VocalizeEvent>(OnVocalize);
     }
 
-
     /// <summary>
     /// Called whenever an entity with a VocalizerComponent tries to speak
     /// </summary>

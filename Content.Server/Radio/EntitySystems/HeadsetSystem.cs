@@ -111,7 +111,7 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
             RaiseLocalEvent(parent, ref relayEvent);
         }
 
-        if (TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
+        if (TryComp(parent, out ActorComponent? actor))
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
     }
 
