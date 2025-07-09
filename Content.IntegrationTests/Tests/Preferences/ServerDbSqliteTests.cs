@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Database;
-using Content.Server.Light.EntitySystems;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
@@ -15,7 +14,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.UnitTesting;
-using SixLabors.ImageSharp.Formats.Webp;
 
 namespace Content.IntegrationTests.Tests.Preferences
 {

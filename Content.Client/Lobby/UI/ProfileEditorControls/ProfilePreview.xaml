@@ -6,6 +6,7 @@
               VerticalExpand="True"
               VerticalAlignment="Center">
 
+    <!-- STARLIGHT -->
     <!-- Actual sprite view -->
     <profile:ProfilePreviewSpriteView Name="SpriteView" Scale="8 8" Margin="4" SizeFlagsStretchRatio="1" SetSize="256 384"/>
 
