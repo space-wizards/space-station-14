@@ -87,7 +87,7 @@ ghost-role-information-kobold-description = Be the little gremlin you are, yell 
 
 ghost-role-information-rat-king-name = Rat King
 
-ghost-role-information-rat-king-description = You are the Rat King, your interests are food, food, and more food. Cooperate with or fight against the station for food. Did I say food interests you?
+ghost-role-information-rat-king-description = You are the Rat King, your interests are food, food, and more food. Fight against the station for food. Did I say food interests you?
 
 ghost-role-information-rat-servant-name = Rat Servant
 ghost-role-information-rat-servant-description = You are a Rat Servant. You must follow your king's orders.
@@ -320,3 +320,6 @@ ghost-role-information-gingerbread-description = A being of pure holiday spirit.
 
 ghost-role-information-wizard-name = Wizard
 ghost-role-information-wizard-desc = YER A WIZARD! Show the station what your magic is made of.
+
+ghost-role-information-emotional-support-scurret-name = Emotional Support Scurret
+ghost-role-information-emotional-support-scurret-description = Support the crew, be adorable, say "wa" a lot.

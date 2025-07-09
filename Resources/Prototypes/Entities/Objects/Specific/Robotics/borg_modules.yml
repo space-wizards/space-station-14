@@ -446,6 +446,7 @@
     items:
     - BorgFireExtinguisher
     - BorgHandheldGPSBasic
+    - HandheldStationMapUnpowered
     - HandHeldMassScannerBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: extinguisher-module }
@@ -932,6 +933,8 @@
       - state: base-part-inhand-right
       - state: base-stripes-inhand-right
         color: "#7B0F12"
+  - type: StaticPrice
+    price: 2500
 
 - type: entity
   id: BorgModuleOperative
@@ -1019,6 +1022,8 @@
         - state: base-part-inhand-right
         - state: base-stripes-inhand-right
           color: "#7B0F12"
+    - type: StaticPrice
+      price: 2000
 
 # xenoborg modules
 - type: entity

@@ -12,12 +12,10 @@ namespace Content.Server.Administration.Commands;
 public sealed class PersistenceSave : LocalizedEntityCommands
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly IEntitySystemManager _system = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
 
     public override string Command => "persistencesave";
-    public override string Description => "Saves server data to a persistence file to be loaded later.";
-    public override string Help => "persistencesave [mapId] [filePath - default: game.map (CCVar) ]";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -47,8 +45,7 @@ public sealed class PersistenceSave : LocalizedEntityCommands
             return;
         }
 
-        var mapLoader = _system.GetEntitySystem<MapLoaderSystem>();
-        mapLoader.TrySaveMap(mapId, new ResPath(saveFilePath));
+        _mapLoader.TrySaveMap(mapId, new ResPath(saveFilePath));
         shell.WriteLine(Loc.GetString("cmd-savemap-success"));
     }
 }
