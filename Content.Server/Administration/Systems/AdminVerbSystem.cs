@@ -143,7 +143,7 @@ namespace Content.Server.Administration.Systems
 
                         args.Verbs.Add(new Verb()
                         {
-                            Text = profile.Name,
+                            Text = $"{slot}. {profile.Name}",
                             Category = VerbCategory.Spawn,
                             Act = () =>
                             {
