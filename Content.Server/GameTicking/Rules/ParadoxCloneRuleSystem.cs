@@ -19,7 +19,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly CloningSystem _cloning = default!;
     [Dependency] private readonly SuitSensorSystem _sensor = default!;
-    [Dependency] private readonly CollectiveMindUpdateSystem _collectiveMindUpdate = default!;
+    [Dependency] private readonly SharedCollectiveMindSystem _collectiveMindUpdate = default!;
 
     public override void Initialize()
     {

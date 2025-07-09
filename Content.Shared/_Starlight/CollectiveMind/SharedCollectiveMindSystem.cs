@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.CollectiveMind;
 
-public sealed class CollectiveMindUpdateSystem : EntitySystem
+public abstract partial class SharedCollectiveMindSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
@@ -114,7 +114,7 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
             }
             else if (availability == ComponentAvailability.Unknown)
             {
-                _sawmill.Error($"StringsToRegs failed: Unknown component name {name} passed to {nameof(CollectiveMindUpdateSystem)}.");
+                _sawmill.Error($"StringsToRegs failed: Unknown component name {name} passed to {nameof(SharedCollectiveMindSystem)}.");
             }
         }
 
