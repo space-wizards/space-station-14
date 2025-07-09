@@ -9058,4 +9058,132 @@ Entries:
   id: 1249
   time: '2025-07-07T12:55:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/976
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added the new best map, Lagan!
+    type: Add
+  id: 1250
+  time: '2025-07-08T12:44:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/988
+- author: Happyrobot33
+  changes:
+  - message: Added New Life usage limit of 5 per round.
+    type: Add
+  id: 1251
+  time: '2025-07-08T12:50:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/990
+- author: Happyrobot33
+  changes:
+  - message: Planned increase of maximum character slots from 10 to 30 following this
+      change.
+    type: Tweak
+  id: 1252
+  time: '2025-07-08T12:50:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/990
+- author: Happyrobot33
+  changes:
+  - message: Added examine text for the weapon dismantle on shoot system.
+    type: Add
+  id: 1253
+  time: '2025-07-08T12:50:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/985
+- author: Citrea
+  changes:
+  - message: Dragons no longer digest cyborg brains, making recovery possible.
+    type: Tweak
+  id: 1254
+  time: '2025-07-08T12:55:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/974
+- author: arkanic
+  changes:
+  - message: Vulpkanin now metabolise solutions in their bloodstream at a 25% faster
+      rate
+    type: Add
+  id: 1255
+  time: '2025-07-08T13:06:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/865
+- author: deltaVelocity
+  changes:
+  - message: Cycler Shotgun Wield Sprites
+    type: Add
+  id: 1256
+  time: '2025-07-08T13:09:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/833
+- author: Trosling
+  changes:
+  - message: Removed heat damage from Dominator/Taser to match the disabler and disabler
+      smg
+    type: Tweak
+  id: 1257
+  time: '2025-07-08T13:20:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/953
+- author: Trosling
+  changes:
+  - message: Changed Disabler and Disabler SMG projectiles to behave like the Dominator/Taser
+    type: Tweak
+  id: 1258
+  time: '2025-07-08T13:20:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/953
+- author: Trosling
+  changes:
+  - message: Changed Starlight laser weapons to visually match normal laser weapons,
+      and go through windows like them
+    type: Tweak
+  id: 1259
+  time: '2025-07-08T13:20:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/953
+- author: Trosling
+  changes:
+  - message: Destroyer bolts are now destroyer beams visually, and go through windows
+      like lasers
+    type: Tweak
+  id: 1260
+  time: '2025-07-08T13:20:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/953
+- author: Trosling
+  changes:
+  - message: Fixed certain Starlight lasers not going through windows
+    type: Fix
+  id: 1261
+  time: '2025-07-08T13:20:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/953
+- author: Aedler
+  changes:
+  - message: Readded old wizden sprites such as security helmet, now with red tint,
+      detective trenchcoats, inspector coat, hos trenchcoat and the OG beloved wizden
+      sheriff hat now available separate in hos' loadout.
+    type: Add
+  id: 1262
+  time: '2025-07-08T13:32:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/742
+- author: RHSvenson
+  changes:
+  - message: Added salvage to contra allow list for laser cartridges
+    type: Tweak
+  id: 1263
+  time: '2025-07-08T13:42:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/991
+- author: Conflee
+  changes:
+  - message: Changed Infiltration Suit's explosion resistance from 90% to 50%, to
+      match Blood-Red.
+    type: Tweak
+  id: 1264
+  time: '2025-07-08T13:56:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/992
+- author: Aedler
+  changes:
+  - message: Added Dragan special drink, for battle hardened vox players.
+    type: Add
+  id: 1265
+  time: '2025-07-08T14:00:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/977
+- author: Aedler
+  changes:
+  - message: Vampires now benefit from drinks that include blood in them, such as
+      demon's blood and devil's kiss.
+    type: Add
+  id: 1266
+  time: '2025-07-08T14:00:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/977
 

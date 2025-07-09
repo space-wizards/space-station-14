@@ -34,6 +34,7 @@ public sealed partial class WeaponDismantleOnShootSystem : SharedWeaponDismantle
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<WeaponDismantleOnShootComponent, AmmoShotEvent>(OnGunShot);
     }
 
