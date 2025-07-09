@@ -1584,16 +1584,6 @@
     FoodOrange: 3
 
 - type: microwaveMealRecipe
-  id: RecipeBlueberryCake
-  name: blueberry cake recipe
-  result: FoodCakeBlueberry
-  time: 5
-  group: Cake
-  solids:
-    FoodCakePlain: 1
-    FoodBerries: 3
-
-- type: microwaveMealRecipe
   id: RecipeLimeCake
   name: lime cake recipe
   result: FoodCakeLime
