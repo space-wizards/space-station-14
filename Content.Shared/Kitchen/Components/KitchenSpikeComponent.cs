@@ -105,13 +105,13 @@ public sealed partial class KitchenSpikeComponent : Component
     /// Time that it will take to put the victim on the spike.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float HookDelay = 7.0f;
+    public TimeSpan HookDelay = TimeSpan.FromSeconds(7);
 
     /// <summary>
     /// Time that it will take to put the victim off the spike.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float UnhookDelay = 10.0f;
+    public TimeSpan UnhookDelay = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// Time that it will take to butcher the victim while they are alive.
@@ -120,7 +120,7 @@ public sealed partial class KitchenSpikeComponent : Component
     /// This is summed up with a <see cref="ButcherableComponent"/>'s butcher delay in butcher DoAfter.
     /// </remarks>
     [DataField, AutoNetworkedField]
-    public float ButcherDelayAlive = 8.0f;
+    public TimeSpan ButcherDelayAlive = TimeSpan.FromSeconds(8);
 }
 
 [Serializable, NetSerializable]
