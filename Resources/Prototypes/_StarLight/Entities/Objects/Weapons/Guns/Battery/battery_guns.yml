@@ -273,7 +273,7 @@
   components:
   - type: Gun
     fireRate: 1.5
-    soundGunShot:
+    soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Appearance
   - type: Sprite
