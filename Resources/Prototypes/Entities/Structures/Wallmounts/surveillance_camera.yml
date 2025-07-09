@@ -31,7 +31,7 @@
   - type: SlimPoweredLight
     enabled: false
   - type: StationAiVision
-    needsPower = true
+    needsPower: true
   - type: Clickable
   - type: InteractionOutline
   - type: Construction
