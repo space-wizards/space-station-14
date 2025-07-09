@@ -58,6 +58,8 @@
       visible: false
   - type: Appearance
   - type: ApcVisuals
+  - type: StationAiVision
+    range: 0.1
   - type: Battery
     maxCharge: 50000
     startingCharge: 0
