@@ -1,8 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Starlight, IAA/Magistrate Icons by Chim | CentComm Icon by Happyrobot33 | MailTech Icon by Happyrobot33 | HeadRevolutionary and Revolutionary by JustAdler",
-
+    "copyright": "Starlight, IAA/Magistrate Icons by Chim | CentComm Icon by Happyrobot33 | MailTech Icon by Happyrobot33 | HeadRevolutionary and Revolutionary by JustAdler | NTCCBlueShield by conf",
     "size": {
         "x": 8,
         "y": 8
@@ -43,6 +42,9 @@
         },
         {
             "name": "Revolutionary"
+        },
+        {
+            "name": "NTCCBlueShield"
         }
     ]
 }

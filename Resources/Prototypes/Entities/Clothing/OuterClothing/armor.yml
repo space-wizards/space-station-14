@@ -25,6 +25,7 @@
         Heat: 0.80
   - type: ExplosionResistance
     damageCoefficient: 0.90
+  - type: ArmorSparkEffect #starlight
 
 #Standard armor vest, allowed for security and bartenders
 - type: entity
@@ -203,7 +204,7 @@
 
 #Mercenary web vest
 - type: entity
-  parent: [ BaseMajorContraband, ClothingOuterVestWeb] #web vest so it should have some pockets for ammo
+  parent: [ BaseSalvageContraband, ClothingOuterVestWeb] #web vest so it should have some pockets for ammo # Starlight salvContra
   id: ClothingOuterVestWebMerc
   name: mercenary web vest
   description: A high-quality armored vest made from a hard synthetic material. It's surprisingly flexible and light, despite formidable armor plating.

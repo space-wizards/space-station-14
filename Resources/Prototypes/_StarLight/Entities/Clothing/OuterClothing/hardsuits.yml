@@ -31,7 +31,6 @@
     damageCoefficient: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBlueshield
-
 #NTRep Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseCommandContraband]
@@ -65,7 +64,6 @@
     damageCoefficient: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitNtrep
-
 #Clown Battlesuit
 - type: entity
   parent: [ClothingOuterHardsuitBase]
@@ -100,10 +98,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetBattlesuitClown
-    
 #Mercenary Hardsuit
 - type: entity
-  parent: [ClothingOuterHardsuitBase, BaseMajorContraband]
+  parent: [ ClothingOuterHardsuitBase, BaseSalvageContraband ]
   id: ClothingOuterHardsuitMercenary
   name: mercenary hardsuit
   description: It's a hardsuit. It could stop a bullet. It's sealed with top of the line duct tape. 
@@ -176,7 +173,7 @@
   parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieElite ] #sl Change
   id: ClothingOuterHardsuitNTCCConsortium
   name: nt cc consortium hardsuit
-  description: A protective hardsuit worn by NT-CC Consotrium Officers.
+  description: A protective hardsuit worn by NT-CC Consortium Officers.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_hardsuit.rsi
@@ -188,6 +185,91 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+
+#Syndicate Infiltration Suit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, AllowSuitStorageClothing, BaseToggleClothing, BaseSyndicateContraband]
+  id: ClothingOuterHardsuitInfiltration
+  name: syndicate infiltration hardsuit
+  description: The Syndicate's Special Operations' hardsuit of choice, this hardsuit, as well as durability, has been built with stealth in mind.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/infiltrationsyndie.rsi
+  - type: Clothing
+  - type: Item
+    size: Huge
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/infiltrationsyndie.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 10000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.5
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+    staminaModifier: 0.3
+    ingoreKnockdown: true
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: ToggleClothing
+    action: ActionTogglePhaseCloak
+    disableOnUnequip: true
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: Stealth
+      minVisibility: 0.3
+      maxVisibility: 0.3
+      lastVisibility: 0.3
+  - type: PowerCellDraw
+    drawRate: 1.8 # 200 seconds on the default cell
+  - type: ToggleCellDraw
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    fitsInCharger: false
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        disableEject: true
+        whitelist:
+          tags:
+            - PowerCell
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitInfiltration
+    
+    
+#CCNT Consortium medics
+- type: entity
+  parent: [ BaseCentcommContraband, ClothingOuterHardsuitSyndieMedic ] #sl Change
+  id: ClothingOuterHardsuitNTCCConsortiumMedic
+  name: nt cc consortium medic hardsuit
+  description: A protective hardsuit worn by NT-CC Consortium medical personnel.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_med_hardsuit.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Hardsuits/ntcc_med_hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitNTCCConsortiumMedic
+  - type: Tag
+    tags:
+    - Hardsuit
+    - WhitelistChameleon
+
 
 #USSP
 - type: entity
@@ -219,7 +301,7 @@
         Radiation: 0.1
         Caustic: 0.4
     staminaModifier: 1
-    ingoreKnockdown: true
+    ingoreKnockdown: false
   - type: ClothingSpeedModifier
     walkModifier: 0.90
     sprintModifier: 0.90
@@ -239,3 +321,4 @@
     - FootstepSound
   - type: Item
     size: Huge
+

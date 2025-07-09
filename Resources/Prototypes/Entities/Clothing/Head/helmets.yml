@@ -29,7 +29,7 @@
 
 #Basic Helmet (Security Helmet)
 - type: entity
-  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband, ClothingHeadSuitWithLightBase]
   id: ClothingHeadHelmetBasic
   name: helmet
   description: Standard security gear. Protects the head from impacts.
@@ -38,6 +38,13 @@
     sprite: Clothing/Head/Helmets/security.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/security.rsi
+    clothingVisuals:
+      head:
+      - state: light-equipped-HELMET
+      # - state: shaded
+      head-vox:
+      - state: equipped-HELMET-vox
+      # - state: shaded
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -45,10 +52,18 @@
   - type: HideLayerClothing
     layers:
       Hair: HEAD
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: lighton-equipped-HELMET
+        shader: unshaded
+      head-vox:
+      - state: lighton-equipped-HELMET-vox
+        shader: unshaded
 
 #Mercenary Helmet
 - type: entity
-  parent: [ ClothingHeadHelmetArmoredBase, BaseMajorContraband ]
+  parent: [ ClothingHeadHelmetArmoredBase, BaseSalvageContraband ] #Starlight salvContra
   id: ClothingHeadHelmetMerc
   name: mercenary helmet
   description: The combat helmet is commonly used by mercenaries, is strong, light and smells like gunpowder and the jungle.

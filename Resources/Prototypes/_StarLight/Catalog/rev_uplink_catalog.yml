@@ -6,7 +6,7 @@
   description: glasses-desc
   productEntity: ClothingEyesGlassesSKBGlasses
   cost:
-    Conversion: 20
+    Conversion: 10
   categories:
   - RevUplinkPassive
   conditions:
@@ -19,7 +19,7 @@
   description: stolen-implanter-desc
   productEntity: Implanter
   cost:
-    Conversion: 25
+    Conversion: 13
   categories:
   - RevUplinkPassive
   conditions:
@@ -33,7 +33,7 @@
   icon: { sprite: _Starlight/Objects/Devices/encryption_keys.rsi, state: soviet_label }
   productEntity: EncryptionKeySoviet
   cost:
-    Conversion: 30
+    Conversion: 15
   categories:
   - RevUplinkPassive
   conditions:
@@ -46,7 +46,7 @@
   description: whistle-desc
   productEntity: CommanderWhistle
   cost:
-    Conversion: 38
+    Conversion: 19
   categories:
   - RevUplinkPassive
   conditions:
@@ -59,7 +59,7 @@
   description: banner-desc
   productEntity: RevolutionaryHeldBanner
   cost:
-    Conversion: 39
+    Conversion: 14
   categories:
   - RevUplinkPassive
   conditions:
@@ -71,7 +71,7 @@
   id: RevSupplyRiftListing
   productEntity: RevSupplyRift
   cost:
-    Conversion: 40
+    Conversion: 20
   categories:
   - RevUplinkPassive
 
@@ -81,7 +81,7 @@
   description: aps-desc
   productEntity: WeaponPistolAPS
   cost:
-    Conversion: 55
+    Conversion: 28
   categories:
   - RevUplinkPassive
   conditions:
@@ -153,7 +153,7 @@
   icon: { sprite: _Starlight/Objects/Weapons/Guns/LMGs/DP28.rsi, state: icon }
   productEntity: WeaponLightMachineGunDP28
   cost:
-    Telebond: 26
+    Telebond: 20
   categories:
   - RevUplinkWeaponry
   conditions:
@@ -167,7 +167,7 @@
   icon: { sprite: _Starlight/Objects/Weapons/Guns/SMGs/PPSh59.rsi, state: icon }
   productEntity: WeaponSubMachineGunPPSH
   cost:
-    Telebond: 32
+    Telebond: 27
   categories:
   - RevUplinkWeaponry
   conditions:
@@ -235,7 +235,7 @@
   productEntity: ClothingBackpackDuffelMarineHardsuitBundle
   icon: { sprite: _Starlight/Clothing/OuterClothing/Hardsuits/sovietmarine.rsi, state: icon }
   cost:
-    Telebond: 35
+    Telebond: 29
   categories:
   - RevUplinkWearables
   conditions:
@@ -330,7 +330,7 @@
   description: lse-1200c-desc
   productEntity: ShuttleGunPerforator
   cost:
-    Telebond: 12
+    Telebond: 8
   categories:
   - RevUplinkShuttle
   conditions:

@@ -180,7 +180,7 @@
 
 - type: entity
   name: tesla gun
-  parent: BaseWeaponBattery
+  parent: [ BaseWeaponBattery, BaseMajorContraband ] #Starlight Major Contra
   id: WeaponTeslaGun
   description: The power of the primordial element of lightning in your hands.
   components:
@@ -465,8 +465,8 @@
     projectileSpeed: 35 # any higher and this causes issues in lag
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
-  - type: ProjectileBatteryAmmoProvider
-    proto: BulletDisablerPractice
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBoltPractice # 🌟Starlight🌟
     fireCost: 50
   - type: Tag
     tags:
@@ -493,8 +493,8 @@
     slots:
       - suitStorage
       - Belt
-  - type: ProjectileBatteryAmmoProvider
-    proto: BulletDisabler
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBolt # 🌟Starlight🌟
     fireCost: 50
   - type: GuideHelp
     guides:
@@ -528,8 +528,8 @@
       - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
-  - type: ProjectileBatteryAmmoProvider
-    proto: BulletDisablerSmg
+  - type: HitscanBatteryAmmoProvider
+    proto: DisablerBoltSmg # 🌟Starlight🌟
     fireCost: 25
   - type: MagazineVisuals
     magState: mag

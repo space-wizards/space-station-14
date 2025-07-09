@@ -1,0 +1,27 @@
+- type: constructionGraph
+  id: ImprovisedMultitoolGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: tool
+      steps:
+      - material: Steel
+        amount: 6
+        doAfter: 10
+      - material: Plastic
+        amount: 2
+        doAfter: 10
+      - material: Glass
+        amount: 4
+        doAfter: 10
+      - tag: PowerCellSmall
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+        name: construction-graph-tag-power-cell-small
+      - material: Cable
+        amount: 2
+        doAfter: 5
+  - node: tool
+    entity: UnfinishedImprovisedMultitool

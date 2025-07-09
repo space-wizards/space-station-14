@@ -6,7 +6,7 @@
     earliestStart: 15
     weight: 7.5
     minimumPlayers: 10
-    duration: 1
+    duration: null
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/_Starlight/Shuttles/ShuttleEvent/abductor_shuttle.yml
@@ -174,12 +174,6 @@
     - type: LoadMapRule
       mapPath: /Maps/_Starlight/EventMaps/research_outpost_map.yml
 
-
-
-
-
-
-
 # Roundender-less events table for survival
 - type: entityTable
   id: BasicAntagEventsTableNoRoundenders
@@ -193,7 +187,7 @@
     - id: RevenantSpawn
     - id: SleeperAgents
 #    - id: ZombieOutbreak
-#    - id: LoneOpsSpawn
+    - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
     - id: WizardSpawn
 
