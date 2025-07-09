@@ -274,15 +274,6 @@
   - type: Appearance
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Guns/Battery/Energy_Magnum.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: disable-unshaded
-      map: ["enum.FireModesLayers.FireMode"]
-      shader: unshaded
-    - state: disable-unshaded-0
-      map: ["enum.GunVisualLayers.MagUnshaded"]
-      shader: unshaded
   - type: Lock
     mindShieldLock: true
   - type: AccessReader
@@ -291,10 +282,7 @@
     size: Small
     shape:
     - 0, 0, 1, 1
-  - type: MagazineVisuals
-    magState: disable
-    steps: 5
-    zeroVisible: true
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/Energy_Magnum.rsi
   - type: HitscanBatteryAmmoProvider
     proto: DisablerBolt
     fireCost: 40
