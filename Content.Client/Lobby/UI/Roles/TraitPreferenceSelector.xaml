@@ -3,5 +3,6 @@
         <BoxContainer Name="Container"
                       Orientation="Horizontal">
             <CheckBox Name="Checkbox" Access="Public"/>
+            <CheckBox Name="CheckboxAntagDisable" Access="Public"/>
         </BoxContainer>
 </Control>

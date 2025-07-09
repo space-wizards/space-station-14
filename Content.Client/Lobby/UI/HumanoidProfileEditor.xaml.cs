@@ -555,6 +555,8 @@ namespace Content.Client.Lobby.UI
                     if (selector.Preference)
                         selectionCount += trait.Cost;
 
+                    selector.AntagDisablePreference = Profile?.AntagDisableTraitPreferences.Contains(trait.ID) == true;
+
                     selector.PreferenceChanged += preference =>
                     {
                         if (preference)
@@ -563,11 +565,17 @@ namespace Content.Client.Lobby.UI
                         }
                         else
                         {
+                            Profile?.AntagDisableTraitPreferences.Remove(trait.ID);
                             Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
                         }
 
                         SetDirty();
                         RefreshTraits(); // If too many traits are selected, they will be reset to the real value.
+                    };
+                    selector.AntagDisablePreferenceChanged += preference =>
+                    {
+                        Profile?.AntagDisableTraitPreferences.Remove(trait.ID);
+                        SetDirty();
                     };
                     selectors.Add(selector);
                 }

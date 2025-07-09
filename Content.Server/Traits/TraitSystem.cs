@@ -1,6 +1,9 @@
+using System.Linq;
+using Content.Server.Preferences.Managers;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
 using Content.Shared.Whitelist;
@@ -13,12 +16,14 @@ public sealed class TraitSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly IServerPreferencesManager _preferences = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
+        SubscribeLocalEvent<RoleAddedEvent>(OnRoleAddedEvent);
     }
 
     // When the player is spawned in, add all trait components selected during character creation
@@ -60,6 +65,39 @@ public sealed class TraitSystem : EntitySystem
                 inhandEntity,
                 checkActionBlocker: false,
                 handsComp: handsComponent);
+        }
+    }
+
+    // We optionally disable traits for antags that should have them disabled.
+    private void OnRoleAddedEvent(RoleAddedEvent args)
+    {
+        if (args.Mind.OwnedEntity == null || args.Mind.UserId == null || args.MindRole.AntagPrototype == null || !_prototypeManager.TryIndex(args.MindRole.AntagPrototype, out var antag) || !antag.RevertTraits)
+            return;
+
+        var pref = (HumanoidCharacterProfile) _preferences.GetPreferences(args.Mind.UserId.Value).SelectedCharacter;
+
+        foreach (var traitId in pref.TraitPreferences)
+        {
+            if (!pref.AntagDisableTraitPreferences.Contains(traitId))
+                continue;
+
+            if (!_prototypeManager.TryIndex(traitId, out var traitPrototype))
+            {
+                Log.Warning($"No trait found with ID {traitId}!");
+                return;
+            }
+
+            if (_whitelistSystem.IsWhitelistFail(traitPrototype.Whitelist, args.Mind.OwnedEntity.Value) ||
+                _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, args.Mind.OwnedEntity.Value))
+                continue;
+
+            var traitCompList = traitPrototype.Components.Values.Select(x => x.Component.GetType()).ToList();
+
+            var ev = new RevertTraitEvent(traitCompList);
+            RaiseLocalEvent(args.Mind.OwnedEntity.Value, ref ev);
+
+            // Add all components required by the prototype
+            EntityManager.RemoveComponents(args.Mind.OwnedEntity.Value, traitPrototype.Components);
         }
     }
 }

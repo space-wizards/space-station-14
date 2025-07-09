@@ -5,6 +5,9 @@
   name: trait-pacifist-name
   description: trait-pacifist-desc
   category: Quirks
+  blacklist:
+    components:
+    - Thieving
   components:
   - type: Pacified
 

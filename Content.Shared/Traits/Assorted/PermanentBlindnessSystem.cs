@@ -2,7 +2,6 @@
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.IdentityManagement;
-using Robust.Shared.Network;
 
 namespace Content.Shared.Traits.Assorted;
 
@@ -19,6 +18,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
         SubscribeLocalEvent<PermanentBlindnessComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PermanentBlindnessComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<PermanentBlindnessComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<PermanentBlindnessComponent, RevertTraitEvent>(OnRevertTrait);
     }
 
     private void OnExamined(Entity<PermanentBlindnessComponent> blindness, ref ExaminedEvent args)
@@ -52,5 +52,17 @@ public sealed class PermanentBlindnessSystem : EntitySystem
             var maxMagnitudeInt = (int) BlurryVisionComponent.MaxMagnitude;
             _blinding.SetMinDamage((blindness.Owner, blindable), maxMagnitudeInt);
         }
+    }
+
+    private void OnRevertTrait(Entity<PermanentBlindnessComponent> blindness, ref RevertTraitEvent args)
+    {
+        if (!args.Components.Contains(blindness.Comp.GetType()))
+            return;
+
+        if(!TryComp<BlindableComponent>(blindness.Owner, out var blindable))
+            return;
+
+        _blinding.SetMinDamage((blindness.Owner, blindable), 0);
+        _blinding.AdjustEyeDamage((blindness.Owner, blindable), -blindable.EyeDamage);
     }
 }

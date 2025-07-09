@@ -60,6 +60,7 @@
   blacklist:
     components:
       - BorgChassis
+      - MimePowers
   components:
     - type: Muted
 
