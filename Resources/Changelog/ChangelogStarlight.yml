@@ -9186,4 +9186,41 @@ Entries:
   id: 1266
   time: '2025-07-08T14:00:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/977
+- author: Killer Tamashi
+  changes:
+  - message: Gave Security/Brigmedic Belt/Rig 2 pistol-shaped slots (3 spaces in an
+      L shape)
+    type: Tweak
+  id: 1267
+  time: '2025-07-09T11:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/998
+- author: Killer Tamashi
+  changes:
+  - message: Gave BSO Rig 1 normal sized slot (4 spaces. This is due to the BSO gun
+      being 2x2)
+    type: Tweak
+  id: 1268
+  time: '2025-07-09T11:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/998
+- author: PubliclyExecutedPig
+  changes:
+  - message: Chainblade reflect 20% -> 10%
+    type: Tweak
+  id: 1269
+  time: '2025-07-09T11:51:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/996
+- author: PubliclyExecutedPig
+  changes:
+  - message: Lagan now has stuff like crew monitors
+    type: Fix
+  id: 1270
+  time: '2025-07-09T13:22:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/994
+- author: Killer Tamashi
+  changes:
+  - message: Pre-emptively fixed bug with BSO webbing
+    type: Fix
+  id: 1271
+  time: '2025-07-09T17:08:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1002
 
