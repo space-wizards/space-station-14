@@ -2182,7 +2182,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: parrot
       sprite: Mobs/Animals/parrot/parrot.rsi
-  - type: SyncSprite
   - type: Fixtures
     fixtures:
       fix1:
