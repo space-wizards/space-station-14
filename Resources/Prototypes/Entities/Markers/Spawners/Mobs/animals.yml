@@ -210,7 +210,7 @@
     layers:
     - state: green
     - state: parrot
-      sprite: Mobs/Animals/parrot.rsi
+      sprite: Mobs/Animals/parrot/parrot.rsi
   - type: ConditionalSpawner
     prototypes:
     - MobParrot
