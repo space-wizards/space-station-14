@@ -144,7 +144,7 @@ public sealed class FaxSystem : SharedFaxSystem
     ///     Sends message to addressee if paper is set and a known fax is selected
     ///     A timeout is set after sending, which is shared by the copy button.
     /// </summary>
-    protected override void Send(Entity<FaxMachineComponent> ent, FaxSendMessage args)
+    protected override void Send(Entity<FaxMachineComponent> ent, ref FaxSendMessage args)
     {
         var sendEntity = ent.Comp.PaperSlot.Item;
         if (sendEntity == null)
@@ -160,7 +160,7 @@ public sealed class FaxSystem : SharedFaxSystem
            !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
-        base.Send(ent, args);
+        base.Send(ent, ref args);
 
 
         TryComp<NameModifierComponent>(sendEntity, out var nameMod);
@@ -201,47 +201,18 @@ public sealed class FaxSystem : SharedFaxSystem
             $"of {ToPrettyString(sendEntity):subject}: {paper.Content}");
     }
 
-    protected override void SpawnPaperFromQueue(Entity<FaxMachineComponent> ent)
+    protected override void OnPrintedEvent(Entity<FaxMachineComponent> ent, ref PrintedEvent args)
     {
-        LogManager.RootSawmill.Debug("AAAAAAAAAAAA");
-        if (ent.Comp.PrintingQueue.Count == 0)
-            return;
-        LogManager.RootSawmill.Debug("BBBBBBBBBBBBB");
+        base.OnPrintedEvent(ent, ref args);
 
-        var printout = ent.Comp.PrintingQueue.Dequeue();
-
-        var entityToSpawn = printout.PrototypeId.Length == 0 ? ent.Comp.PrintPaperId.ToString() : printout.PrototypeId;
-        var printed = Spawn(entityToSpawn, Transform(ent.Owner).Coordinates);
-
-        if (TryComp<PaperComponent>(printed, out var paper))
+        if (TryComp<PaperComponent>(ent.Owner, out var paper))
         {
-            _paperSystem.SetContent((printed, paper), printout.Content);
-
-            // Apply stamps
-            if (printout.StampState != null)
-            {
-                foreach (var stamp in printout.StampedBy)
-                {
-                    _paperSystem.TryStamp((printed, paper), stamp, printout.StampState);
-                }
-            }
-
-            paper.EditingDisabled = printout.Locked;
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{ent.Comp.FaxName}\" {ToPrettyString(ent.Owner):tool} printed {ToPrettyString(args.Printed):subject}: {paper.Content}");
         }
-
-        _metaData.SetEntityName(printed, printout.Name);
-
-        if (printout.Label is { } label)
+        else
         {
-            _labelSystem.Label(printed, label);
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{ent.Comp.FaxName}\" {ToPrettyString(ent.Owner):tool} printed without PaperComponent {ToPrettyString(args.Printed):subject}");
         }
-
-        RaiseLocalEvent(new PrintedEvent(printed));
-        if (ent.Comp.PrintingQueue.Count == 0)
-            RaiseLocalEvent(new PrintedAllEvent());
-
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{ent.Comp.FaxName}\" {ToPrettyString(ent.Owner):tool} printed {ToPrettyString(printed):subject}: {printout.Content}");
-        Dirty(ent);
     }
 
     protected override void NotifyAdmins(string faxName)

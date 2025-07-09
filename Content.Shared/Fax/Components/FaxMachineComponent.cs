@@ -60,16 +60,13 @@ public sealed partial class FaxMachineComponent : Component
     public bool ReceiveNukeCodes { get; set; } = false;
 
     /// <summary>
-    /// Sound to play when fax printing new message
+    /// Sound to play when fax performing given action
     /// </summary>
     [DataField]
-    public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
-
-    /// <summary>
-    /// Sound to play when fax successfully send message
-    /// </summary>
-    [DataField]
-    public SoundSpecifier SendSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg");
+    public Dictionary<FaxActions, SoundSpecifier> ActionSoundsSpecifiers = new() {
+        { FaxActions.Send, new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg") },
+        { FaxActions.Print, new SoundPathSpecifier("/Audio/Machines/printer.ogg") },
+    };
 
     /// <summary>
     /// Known faxes in network by address with fax names
@@ -89,38 +86,29 @@ public sealed partial class FaxMachineComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField, AutoNetworkedField]
-    public TimeSpan ReadySendTime;
+    public Dictionary<FaxActions, TimeSpan> ReadyTimes = new();
 
     /// <summary>
     /// Message sending timeout
     /// </summary>
     [ViewVariables]
-    [DataField]
-    public TimeSpan SendTimeout = TimeSpan.FromSeconds(5f);
+    [DataField, AutoNetworkedField]
+    public Dictionary<FaxActions, TimeSpan> ActionTimeout = new() {
+        { FaxActions.Print, TimeSpan.FromSeconds(2.3f) },
+        { FaxActions.Send, TimeSpan.FromSeconds(5f) },
+        { FaxActions.Insert, TimeSpan.FromSeconds(1.88f) }, // 0.02 off for correct animation
+    };
 
     /// <summary>
-    /// Remaining time of inserting animation
-    /// </summary>
-    [DataField]
-    public TimeSpan ReadyInsertTime;
-
-    /// <summary>
-    /// How long the inserting animation will play
+    /// Message sending timeout
     /// </summary>
     [ViewVariables]
-    public TimeSpan InsertingTime = TimeSpan.FromSeconds(1.88f); // 0.02 off for correct animation
-
-    /// <summary>
-    /// Remaining time of printing animation
-    /// </summary>
-    [DataField]
-    public TimeSpan ReadyPrintTime;
-
-    /// <summary>
-    /// How long the printing animation will play
-    /// </summary>
-    [ViewVariables]
-    public TimeSpan PrintingTime = TimeSpan.FromSeconds(2.3f);
+    [DataField, AutoNetworkedField]
+    public Dictionary<FaxActions, bool> IsActionActive = new() {
+        { FaxActions.Print, false },
+        { FaxActions.Send, false },
+        { FaxActions.Insert, false },
+    };
 
     /// <summary>
     ///     The prototype ID to use for faxed or copied entities if we can't get one from
@@ -136,23 +124,11 @@ public sealed partial class FaxMachineComponent : Component
     [DataField, AutoNetworkedField]
     public EntProtoId PrintOfficePaperId = "PaperOffice";
 
-    /// <summary>
-    ///     Used to check if fax was just printing something.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool IsPrinting = false;
-
-    /// <summary>
-    ///     Used to check if fax was just printing something.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool IsSending = false;
-
-    /// <summary>
-    ///     Used to check if fax was just printing something.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool IsInserting = false;
+    /*/// <summary>*/
+    /*///     Ongoing sounds of actions fax may be performing*/
+    /*/// </summary>*/
+    /*[DataField, AutoNetworkedField]*/
+    /*public Dictionary<FaxActions, EntityUid> ActionSounds = new();*/
 }
 
 [DataDefinition, Serializable]
@@ -193,4 +169,11 @@ public sealed partial class FaxPrintout
         StampedBy = stampedBy ?? new List<StampDisplayInfo>();
         Locked = locked;
     }
+}
+
+public enum FaxActions
+{
+    Insert,
+    Send,
+    Print,
 }
