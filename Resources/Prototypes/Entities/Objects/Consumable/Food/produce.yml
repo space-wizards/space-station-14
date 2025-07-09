@@ -379,6 +379,8 @@
     sprite: Objects/Specific/Hydroponics/mimana.rsi
   - type: Item
     heldPrefix: produce
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/mimana.rsi
   - type: Produce
     seedId: mimana
   - type: Extractable
@@ -435,6 +437,8 @@
     - Recyclable
     - Trash
     - BananaPeel
+    - WhitelistChameleon
+    - HamsterWearable
   - type: SolutionContainerManager
     solutions:
       food:
@@ -447,12 +451,22 @@
   - type: SpaceGarbage
   - type: Food
     requiresSpecialDigestion: true
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    equippedState: peel-equipped-HELMET
+    slots:
+    - HEAD
+    quickEquip: false
+
 
 - type: entity
   name: baked banana peel
   parent: TrashBananaPeel
   id: TrashBakedBananaPeel
   components:
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    equippedState: baked-peel-equipped-HELMET
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: baked-peel
@@ -481,6 +495,8 @@
   - type: Item
     sprite: Objects/Specific/Hydroponics/mimana.rsi
     heldPrefix: peel
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/mimana.rsi
   - type: Slippery
     slipSound:
       path: /Audio/Effects/slip.ogg
@@ -499,6 +515,9 @@
     sprite: Objects/Materials/materials.rsi
     heldPrefix: peel
   - type: Slippery
+  - type: Clothing
+    sprite: Objects/Materials/materials.rsi
+    equippedState: peel-equipped-HELMET
 
 - type: entity
   name: carrot

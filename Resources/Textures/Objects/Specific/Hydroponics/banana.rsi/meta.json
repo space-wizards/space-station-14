@@ -43,6 +43,14 @@
             "name": "baked-peel3"
         },
         {
+            "name": "baked-peel-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "baked-peel-equipped-HELMET-hamster",
+            "directions": 4
+        },
+        {
             "name": "baked-peel-inhand-left",
             "directions": 4
         },
@@ -70,6 +78,14 @@
         },
         {
             "name": "stage-6"
+        },
+        {
+            "name": "peel-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "peel-equipped-HELMET-hamster",
+            "directions": 4
         },
         {
             "name": "produce-inhand-left",
