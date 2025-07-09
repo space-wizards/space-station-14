@@ -32,24 +32,20 @@ public sealed partial class CollectiveMind : SharedCollectiveMindSystem
     {
         var uid = ent.Owner;
 
-        Logger.Log(LogLevel.Info, "test0");
         if (ent.Comp.CorruptWhenUnconscious)
         {
-            Logger.Log(LogLevel.Info, "test1");
             //we need to check if the entity is sleeping, or crit
             if (TryComp<MobStateComponent>(uid, out var mobState))
             {
-                Logger.Log(LogLevel.Info, "test2");
                 if (mobState.CurrentState == MobState.Critical || TryComp<SleepingComponent>(uid, out _))
                 {
-                    Logger.Log(LogLevel.Info, "test3");
                     args.Message = CorruptDamage(args.Message, ref ent.Comp);
                 }
             }
         }
     }
 
-    private string CorruptDamage(string message, ref CollectiveMindComponent comp)
+    private string Corrupt(string message, ref CollectiveMindComponent comp)
     {
         var outMsg = new StringBuilder();
         // Linear interpolation of character damage probability
@@ -57,7 +53,7 @@ public sealed partial class CollectiveMind : SharedCollectiveMindSystem
         {
             if (_random.Prob(comp.CorruptionChanceWhenUnconscious)) // Corrupt!
             {
-                outMsg.Append(CorruptLetterDamage(letter));
+                outMsg.Append(CorruptLetter(letter));
             }
             else // Safe!
             {
@@ -67,7 +63,7 @@ public sealed partial class CollectiveMind : SharedCollectiveMindSystem
         return outMsg.ToString();
     }
 
-    private string CorruptLetterDamage(char letter)
+    private string CorruptLetter(char letter)
     {
         var res = _random.NextDouble();
         return res switch
