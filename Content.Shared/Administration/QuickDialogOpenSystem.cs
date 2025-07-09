@@ -41,8 +41,16 @@ public abstract partial class SharedQuickDialogSystem : EntitySystem
 
     private void Handler(QuickDialogResponseEvent msg, EntitySessionEventArgs args)
     {
+        LogManager.RootSawmill.Debug("handler");
+        foreach (var v in _mappingClientToLocal)
+        {
+            LogManager.RootSawmill.Debug($"mapping: {v.Key.Item1} {v.Key.Item2} {v.Value}");
+        }
+        LogManager.RootSawmill.Debug($"needle: {args.SenderSession.UserId} {msg.Responses}");
+
         if (!_gameTiming.IsFirstTimePredicted)
             return;
+        LogManager.RootSawmill.Debug("zzzzzzzzzzzzzzzz b");
 
         if (!_mappingClientToLocal.ContainsKey((args.SenderSession.UserId, msg.DialogId)))
         {
