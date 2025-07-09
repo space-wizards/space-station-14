@@ -15,7 +15,7 @@ public abstract partial class SharedPuddleSystem
         Dirty(ent);
     }
 
-    protected void UpdateEvaporation(EntityUid uid, Solution solution)
+    private void UpdateEvaporation(EntityUid uid, Solution solution)
     {
         if (HasComp<EvaporationComponent>(uid))
             return;
@@ -30,7 +30,7 @@ public abstract partial class SharedPuddleSystem
         RemComp<EvaporationComponent>(uid);
     }
 
-    protected void TickEvaporation()
+    private void TickEvaporation()
     {
         var query = EntityQueryEnumerator<EvaporationComponent, PuddleComponent>();
         var curTime = _timing.CurTime;
