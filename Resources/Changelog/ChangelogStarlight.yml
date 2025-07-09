@@ -9223,4 +9223,24 @@ Entries:
   id: 1271
   time: '2025-07-09T17:08:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1002
-
+- author: Happyrobot33
+  changes:
+  - message: Collective mind messages will be garbled when crit or asleep.
+    type: Tweak
+  id: 1272
+  time: '2025-07-09T19:15:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1001
+- author: Happyrobot33
+  changes:
+  - message: Ghosts can now hear all hiveminds when they can hear normal radios.
+    type: Add
+  id: 1273
+  time: '2025-07-09T19:15:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1001
+- author: stickycheZ101
+  changes:
+  - message: given everyones favourite caveman a plushie of his own
+    type: Add
+  id: 1274
+  time: '2025-07-09T19:15:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/980
