@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added the material silo. This machine allows nearby machines to share
-      a pool of resources, cutting down on micromanagement.
-    type: Add
-  id: 8242
-  time: '2025-04-18T23:43:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36492
 - author: Onezero0
   changes:
   - message: Modular Grenades can now fit inside Security belts and carriers.
@@ -3885,3 +3877,14 @@
   id: 8754
   time: '2025-07-09T12:43:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38087
+- author: Crude Oil
+  changes:
+  - message: Parrots now parrot nearby speech, sometimes even using the radio if they
+      have one equipped
+    type: Add
+  - message: Polly the Parrot, CE's pet parrot, may be found on some maps parroting
+      things into an engineering headset.
+    type: Add
+  id: 8755
+  time: '2025-07-09T19:04:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38243
