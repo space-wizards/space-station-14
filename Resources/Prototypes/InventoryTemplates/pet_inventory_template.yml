@@ -9,8 +9,7 @@
     displayName: Mask
     whitelist:
       tags:
-        - PetWearable
-
+      - PetWearable
   - name: suitstorage
     slotTexture: suit_storage
     slotFlags: SUITSTORAGE
@@ -20,7 +19,7 @@
     displayName: Suit Storage
     whitelist:
       components:
-        - GasTank
+      - GasTank
 
 - type: inventoryTemplate
   id: petAdvanced
@@ -33,8 +32,7 @@
     displayName: Mask
     whitelist:
       tags:
-        - PetWearable
-
+      - PetWearable
   - name: suitstorage
     slotTexture: suit_storage
     slotFlags: SUITSTORAGE
@@ -44,8 +42,7 @@
     displayName: Suit Storage
     whitelist:
       components:
-        - GasTank
-
+      - GasTank
   - name: head
     slotTexture: head
     slotFlags: HEAD
@@ -54,8 +51,7 @@
     displayName: Head
     whitelist:
       tags:
-        - PetWearable 
-        
+      - PetWearable
   - name: eyes
     slotTexture: glasses
     slotFlags: EYES
@@ -64,4 +60,4 @@
     displayName: Head
     whitelist:
       tags:
-        - PetWearable 
+      - PetWearable
