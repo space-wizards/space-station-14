@@ -231,7 +231,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
                 args.Target.Value,
                 ent);
 
-            _logger.Add(LogType.SpikeHook,
+            _logger.Add(LogType.Action,
                 LogImpact.High,
                 $"{ToPrettyString(args.User):user} put {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
 
@@ -256,7 +256,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
                 args.Target.Value,
                 ent);
 
-            _logger.Add(LogType.SpikeUnhook,
+            _logger.Add(LogType.Action,
                 LogImpact.Medium,
                 $"{ToPrettyString(args.User):user} took {ToPrettyString(args.Target):target} off the {ToPrettyString(ent):spike}");
 
@@ -314,7 +314,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
             EnsureComp<KitchenSpikeVictimComponent>(args.Target.Value);
 
             _damageableSystem.TryChangeDamage(args.Target, ent.Comp.ButcherDamage, true);
-            _logger.Add(LogType.SpikeButcher,
+            _logger.Add(LogType.Action,
                 LogImpact.Extreme,
                 $"{ToPrettyString(args.User):user} butchered {ToPrettyString(args.Target):target} on the {ToPrettyString(ent):spike}");
         }

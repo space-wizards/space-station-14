@@ -478,19 +478,4 @@ public enum LogType
     /// Events relating to midi playback.
     /// </summary>
     Instrument = 103,
-
-    /// <summary>
-    /// The entity was hooked to the spike.
-    /// </summary>
-    SpikeHook = 104,
-
-    /// <summary>
-    /// The entity was unhooked from the spike.
-    /// </summary>
-    SpikeUnhook = 105,
-
-    /// <summary>
-    /// The entity was butchered on the spike.
-    /// </summary>
-    SpikeButcher = 106,
 }
