@@ -552,6 +552,8 @@ namespace Content.Client.Lobby.UI
                     var selector = new TraitPreferenceSelector(trait);
 
                     selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
+                    selector.CheckboxAntagDisable.Disabled = !selector.Preference;
+
                     if (selector.Preference)
                         selectionCount += trait.Cost;
 
@@ -561,10 +563,12 @@ namespace Content.Client.Lobby.UI
                     {
                         if (preference)
                         {
+                            selector.CheckboxAntagDisable.Disabled = false;
                             Profile = Profile?.WithTraitPreference(trait.ID, _prototypeManager);
                         }
                         else
                         {
+                            selector.CheckboxAntagDisable.Disabled = true;
                             Profile?.AntagDisableTraitPreferences.Remove(trait.ID);
                             Profile = Profile?.WithoutTraitPreference(trait.ID, _prototypeManager);
                         }
@@ -574,7 +578,15 @@ namespace Content.Client.Lobby.UI
                     };
                     selector.AntagDisablePreferenceChanged += preference =>
                     {
-                        Profile?.AntagDisableTraitPreferences.Remove(trait.ID);
+                        if (preference)
+                        {
+                            Profile?.AntagDisableTraitPreferences.Add(trait.ID);
+                        }
+                        else
+                        {
+                            Profile?.AntagDisableTraitPreferences.Remove(trait.ID);
+                        }
+
                         SetDirty();
                     };
                     selectors.Add(selector);
