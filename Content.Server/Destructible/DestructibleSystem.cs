@@ -43,7 +43,6 @@ namespace Content.Server.Destructible
         [Dependency] public readonly PuddleSystem PuddleSystem = default!;
         [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
-        [Dependency] public readonly IComponentFactory ComponentFactory = default!;
         [Dependency] public readonly IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()

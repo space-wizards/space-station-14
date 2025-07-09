@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Lobby;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Construction.Prototypes;
@@ -28,6 +29,7 @@ namespace Content.Client.Construction.UI
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         private readonly SpriteSystem _spriteSystem;
 
         private readonly IConstructionMenuView _constructionView;
@@ -36,7 +38,7 @@ namespace Content.Client.Construction.UI
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
-        private Dictionary<string, ContainerButton> _recipeButtons = new();
+        private readonly Dictionary<string, ContainerButton> _recipeButtons = new();
         private string _selectedCategory = string.Empty;
 
         private const string FavoriteCatName = "construction-category-favorites";
@@ -116,7 +118,7 @@ namespace Content.Client.Construction.UI
 
             _constructionView.RecipeFavorited += (_, _) => OnViewFavoriteRecipe();
 
-            PopulateCategories();
+            SetFavorites(_preferencesManager.Preferences?.ConstructionFavorites ?? []);
             OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
         }
 
@@ -215,8 +217,8 @@ namespace Content.Client.Construction.UI
                 var itemButton = new ContainerButton()
                 {
                     VerticalAlignment = Control.VAlignment.Center,
-                    Name = recipe.TargetPrototype.Name,
-                    ToolTip = recipe.TargetPrototype.Name,
+                    Name = recipe.Prototype.Name,
+                    ToolTip = recipe.Prototype.Name,
                     ToggleMode = true,
                     Children = { protoView },
                 };
@@ -233,7 +235,7 @@ namespace Content.Client.Construction.UI
 
                     if (buttonToggledEventArgs.Pressed &&
                         _selected != null &&
-                        _recipeButtons.TryGetValue(_selected.Name!, out var oldButton))
+                        _recipeButtons.TryGetValue(_selected.ID, out var oldButton))
                     {
                         oldButton.Pressed = false;
                         SelectGridButton(oldButton, false);
@@ -243,7 +245,7 @@ namespace Content.Client.Construction.UI
                 };
 
                 recipesGrid.AddChild(itemButtonPanelContainer);
-                _recipeButtons[recipe.Prototype.Name!] = itemButton;
+                _recipeButtons[recipe.Prototype.ID] = itemButton;
                 var isCurrentButtonSelected = _selected == recipe.Prototype;
                 itemButton.Pressed = isCurrentButtonSelected;
                 SelectGridButton(itemButton, isCurrentButtonSelected);
@@ -305,7 +307,7 @@ namespace Content.Client.Construction.UI
             if (button.Parent is not PanelContainer buttonPanel)
                 return;
 
-            button.Modulate = select ? Color.Green : Color.Transparent;
+            button.Children.Single().Modulate = select ? Color.Green : Color.White;
             var buttonColor = select ? StyleNano.ButtonColorDefault : Color.Transparent;
             buttonPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = buttonColor };
         }
@@ -493,7 +495,31 @@ namespace Content.Client.Construction.UI
                     _favoritedRecipes.Count > 0 ? (string.Empty, FavoriteCatName) : (string.Empty, string.Empty));
             }
 
+            var newFavorites = new List<ProtoId<ConstructionPrototype>>(_favoritedRecipes.Count);
+            foreach (var recipe in _favoritedRecipes)
+                newFavorites.Add(recipe.ID);
+
+            _preferencesManager.UpdateConstructionFavorites(newFavorites);
             PopulateInfo(_selected);
+            PopulateCategories(_selectedCategory);
+        }
+
+        public void SetFavorites(IReadOnlyList<ProtoId<ConstructionPrototype>> favorites)
+        {
+            _favoritedRecipes.Clear();
+
+            foreach (var id in favorites)
+            {
+                if (_prototypeManager.TryIndex(id, out ConstructionPrototype? recipe, logError: false))
+                    _favoritedRecipes.Add(recipe);
+            }
+
+            if (_selectedCategory == FavoriteCatName)
+            {
+                OnViewPopulateRecipes(_constructionView,
+                    _favoritedRecipes.Count > 0 ? (string.Empty, FavoriteCatName) : (string.Empty, string.Empty));
+            }
+
             PopulateCategories(_selectedCategory);
         }
 

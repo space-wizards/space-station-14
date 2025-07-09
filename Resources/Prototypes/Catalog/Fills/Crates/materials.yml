@@ -85,15 +85,35 @@
       - id: SheetPlasma
 
 - type: entity
+  id: CrateMaterialGold
+  parent: CrateGenericSteel
+  name: gold crate
+  description: 30 bars of gold.
+  components:
+  - type: StorageFill
+    contents:
+    - id: IngotGold
+
+- type: entity
+  id: CrateMaterialSilver
+  parent: CrateGenericSteel
+  name: silver crate
+  description: 30 bars of silver.
+  components:
+  - type: StorageFill
+    contents:
+    - id: IngotSilver
+
+- type: entity
   id: CrateMaterialCardboard
   parent: CrateGenericSteel
   name: cardboard crate
-  description: 60 pieces of cardboard.
+  description: 90 pieces of cardboard.
   components:
   - type: StorageFill
     contents:
       - id: MaterialCardboard
-        amount: 2
+        amount: 3
 
 - type: entity
   id: CrateMaterialPaper
@@ -161,7 +181,7 @@
     - id: MaterialSiloMachineCircuitboard
     - id: SheetSteel1
       amount: 5
-    - id: MatterBinStockPart
+    - id: MicroManipulatorStockPart
       amount: 4
     - id: CableApcStack1
       amount: 2

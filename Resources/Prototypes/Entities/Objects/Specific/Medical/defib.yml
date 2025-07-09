@@ -10,14 +10,14 @@
       layers:
         - state: icon
         - state: screen
-          map: [ "enum.ToggleVisuals.Layer" ]
+          map: [ "enum.ToggleableVisuals.Layer" ]
           visible: false
           shader: unshaded
     - type: Appearance
     - type: GenericVisualizer
       visuals:
-        enum.ToggleVisuals.Toggled:
-          enum.ToggleVisuals.Layer:
+        enum.ToggleableVisuals.Enabled:
+          enum.ToggleableVisuals.Layer:
             True: { visible: true }
             False: { visible: false }
     - type: Item
@@ -63,7 +63,7 @@
 - type: entity
   id: DefibrillatorOneHandedUnpowered
   parent: BaseDefibrillator
-  suffix: One-Handed, Unpowered
+  suffix: One-Handed, Always Powered
 
 - type: entity
   id: DefibrillatorCompact # This should be a research item at some point
@@ -76,7 +76,7 @@
     layers:
       - state: icon
       - state: screen
-        map: [ "enum.ToggleVisuals.Layer" ]
+        map: [ "enum.ToggleableVisuals.Layer" ]
         visible: false
         shader: unshaded
       - state: ready
@@ -106,7 +106,7 @@
     layers:
       - state: icon
       - state: screen
-        map: [ "enum.ToggleVisuals.Layer" ]
+        map: [ "enum.ToggleableVisuals.Layer" ]
         visible: false
         shader: unshaded
       - state: ready
