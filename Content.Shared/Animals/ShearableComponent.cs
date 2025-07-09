@@ -1,9 +1,11 @@
 using Content.Shared.Chemistry.Components;
-using Robust.Shared.Serialization;
+using Content.Shared.DoAfter;
+using Content.Shared.Tools;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Content.Shared.Tools;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+
 
 namespace Content.Shared.Animals;
 
@@ -110,8 +112,8 @@ public sealed partial class ShearableComponent : Component
     ///     But can also be toggled by the shearable solution dropping blow a certain amount.
     ///     Typically, when Shearable is True, the shearable layer will be visible.
     /// </summary>
-    [ViewVariables]
-    public bool Shearable { get; set; } = false;
+    [DataField]
+    public bool Shearable;
 }
 
 /// <summary>
@@ -125,12 +127,10 @@ public enum CheckShearReturns
     Success,
     /// <summary> The player is not using the correct tool to shear this animal. Or their hand is empty. </summary>
     WrongTool,
-    /// <summary> The configured solution does not exist, likely a typo in the yaml file. </summary>
-    SolutionError,
     /// <summary> There is not enough solution in the animal to form a single target product. </summary>
     InsufficientSolution,
-    /// <summary> The ShearedProductID did not resolve to an existing prototype. It might not exist. </summary>
-    ProductError
+    /// <summary> Some error ocurred, check your debug log. </summary>
+    Error
 }
 
 /// <summary>
@@ -142,3 +142,9 @@ public enum ShearableVisuals
 {
     Shearable,
 }
+
+/// <summary>
+///     Thrown whenever an animal is sheared.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class ShearingDoAfterEvent : SimpleDoAfterEvent { }
