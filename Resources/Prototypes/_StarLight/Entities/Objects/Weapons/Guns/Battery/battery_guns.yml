@@ -272,7 +272,7 @@
   description: This is an expensive, modern recreation of the Mateba revolver, with several unique fire modes. And a slow self recharging battery. However, it has a slower recharge then most battery related weapons.
   components:
   - type: Gun
-    fireRate: 1.5
+    fireRate: 1.6
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Appearance
