@@ -219,7 +219,7 @@
     staminaModifier: 0.3
     ingoreKnockdown: true
   - type: ExplosionResistance
-    damageCoefficient: 0.1
+    damageCoefficient: 0.5
   - type: ToggleClothing
     action: ActionTogglePhaseCloak
     disableOnUnequip: true
