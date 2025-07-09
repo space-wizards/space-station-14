@@ -517,6 +517,7 @@
   - type: Fiber
     fiberColor: fibers-gold
   - type: MeleeWeapon
+    autoAttack: true
     attackRate: 1.5
     damage:
       types:
