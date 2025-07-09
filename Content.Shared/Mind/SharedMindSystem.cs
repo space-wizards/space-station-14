@@ -409,6 +409,13 @@ public abstract partial class SharedMindSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Returns the first objective component of a specific type T belonging to an entity with a mind.
+    /// </summary>
+    /// <param name="uid">The entity to check objectives for.</param>
+    /// <param name="objective">Return objective component.</param>
+    /// <typeparam name="T">The objective component to check for.</typeparam>
+    /// <returns>Returns true if an objective was found.</returns>
     public bool TryGetObjectiveComp<T>(EntityUid uid, [NotNullWhen(true)] out T? objective) where T : IComponent
     {
         if (TryGetMind(uid, out var mindId, out var mind) && TryGetObjectiveComp(mindId, out objective, mind))
@@ -419,6 +426,14 @@ public abstract partial class SharedMindSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Returns the first objective component of a specific type T belonging to a mind entity.
+    /// </summary>
+    /// <param name="mindId">The mind entity to check objectives for.</param>
+    /// <param name="objective">Return objective component.</param>
+    /// <param name="mind">MindComponent for the mind entity.</param>
+    /// <typeparam name="T">The objective component to check for.</typeparam>
+    /// <returns>Returns true if an objective was found.</returns>
     public bool TryGetObjectiveComp<T>(EntityUid mindId, [NotNullWhen(true)] out T? objective, MindComponent? mind = null) where T : IComponent
     {
         if (Resolve(mindId, ref mind))
@@ -437,6 +452,53 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns a list of objective entities of a specific type T belonging to a mind entity.
+    /// </summary>
+    /// <param name="uid">The entity to check objectives for.</param>
+    /// <param name="objectives">Return list of the objective component.</param>
+    /// <typeparam name="T">The objective component to check for.</typeparam>
+    /// <returns>Returns true if any objectives were found.</returns>
+    public bool TryGetObjectiveEntities<T>(EntityUid uid, [NotNullWhen(true)] out List<Entity<T>>? objectives) where T : IComponent
+    {
+        if (TryGetMind(uid, out var mindId, out var mind) && TryGetObjectiveEntities(mindId, out objectives, mind))
+        {
+            return true;
+        }
+        objectives = default;
+        return false;
+    }
+
+    /// <summary>
+    /// Returns a list of objective entities of a specific type T belonging to a mind entity.
+    /// </summary>
+    /// <param name="mindId">The mind entity to check objectives for.</param>
+    /// <param name="objectives">Return list of the objective component.</param>
+    /// <param name="mind">MindComponent for the mind entity.</param>
+    /// <typeparam name="T">The objective component to check for.</typeparam>
+    /// <returns>Returns true if any objectives were found.</returns>
+    public bool TryGetObjectiveEntities<T>(EntityUid mindId, [NotNullWhen(true)] out List<Entity<T>>? objectives, MindComponent? mind = null) where T : IComponent
+    {
+        objectives = new List<Entity<T>>();
+        if (Resolve(mindId, ref mind))
+        {
+            var query = GetEntityQuery<T>();
+            foreach (var uid in mind.Objectives)
+            {
+                if (query.TryGetComponent(uid, out var objective))
+                {
+                    objectives.Add((uid, objective));
+                }
+            }
+        }
+        if (objectives.Count > 0)
+            return true;
+
+        objectives = default;
+        return false;
+    }
+
+
+    /// <summary>
     /// Copies objectives from one mind to another, so that they are shared between two players.
     /// </summary>
     /// <remarks>
@@ -446,8 +508,8 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// </remarks>
     /// <param name="source"> mind entity of the player to copy from </param>
     /// <param name="target"> mind entity of the player to copy to </param>
-    /// <param name="except"> whitelist for objectives that should be copied </param>
-    /// <param name="except"> blacklist for objectives that should not be copied </param>
+    /// <param name="whitelist"> whitelist for objectives that should be copied </param>
+    /// <param name="blacklist"> blacklist for objectives that should not be copied </param>
     public void CopyObjectives(Entity<MindComponent?> source, Entity<MindComponent?> target, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
     {
         if (!Resolve(source, ref source.Comp) || !Resolve(target, ref target.Comp))

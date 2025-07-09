@@ -247,6 +247,9 @@ public sealed class DrinkSystem : SharedDrinkSystem
 
         _forensics.TransferDna(entity, args.Target.Value);
 
+        var ev = new SuccessfulConsumptionEvent(drained, entity, solution.Volume <= 0);
+        RaiseLocalEvent(args.Target.Value, ref ev);
+
         if (!forceDrink && solution.Volume > 0)
             args.Repeat = true;
     }

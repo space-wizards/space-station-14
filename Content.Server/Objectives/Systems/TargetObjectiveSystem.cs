@@ -24,7 +24,7 @@ public sealed class TargetObjectiveSystem : EntitySystem
 
     private void OnAfterAssign(EntityUid uid, TargetObjectiveComponent comp, ref ObjectiveAfterAssignEvent args)
     {
-        if (!GetTarget(uid, out var target, comp))
+        if (!GetTarget(uid, out var target, comp) || comp.Title == null)
             return;
 
         _metaData.SetEntityName(uid, GetTitle(target.Value, comp.Title), args.Meta);
