@@ -95,7 +95,6 @@ namespace Content.Server.Stack
             // There should always be a StackComponent, but make sure
             var stack = EnsureComp<StackComponent>(entity);
 
-            // And finally, set the correct amount!
             SetCount((entity, stack), count);
             return entity;
         }
@@ -130,7 +129,7 @@ namespace Content.Server.Stack
             var spawnedEnts = new List<EntityUid>();
             foreach (var count in amounts)
             {
-                var entity = SpawnAtPosition(entityPrototype, spawnPosition);
+                var entity = SpawnAtPosition(entityPrototype, spawnPosition); // The real SpawnAtPosition
                 spawnedEnts.Add(entity);
                 SetCount((entity, null), count);
             }
@@ -145,8 +144,8 @@ namespace Content.Server.Stack
                                                        EntityCoordinates spawnPosition)
         {
             return SpawnMultipleAtPosition(entityPrototypeId,
-                CalculateSpawns(entityPrototypeId, amount),
-                spawnPosition);
+                                            CalculateSpawns(entityPrototypeId, amount),
+                                            spawnPosition);
         }
 
         /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
@@ -155,7 +154,9 @@ namespace Content.Server.Stack
                                                        int amount,
                                                        EntityCoordinates spawnPosition)
         {
-            return SpawnMultipleAtPosition(entityProto.ID, CalculateSpawns(entityProto, amount), spawnPosition);
+            return SpawnMultipleAtPosition(entityProto.ID,
+                                            CalculateSpawns(entityProto, amount),
+                                            spawnPosition);
         }
 
         /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
@@ -164,7 +165,9 @@ namespace Content.Server.Stack
                                                        int amount,
                                                        EntityCoordinates spawnPosition)
         {
-            return SpawnMultipleAtPosition(stack.Spawn, CalculateSpawns(stack, amount), spawnPosition);
+            return SpawnMultipleAtPosition(stack.Spawn,
+                                            CalculateSpawns(stack, amount),
+                                            spawnPosition);
         }
 
         /// <inheritdoc cref="SpawnMultipleAtPosition(EntProtoId, List{int}, EntityCoordinates)"/>
@@ -174,7 +177,9 @@ namespace Content.Server.Stack
                                                        EntityCoordinates spawnPosition)
         {
             var stackProto = _prototypeManager.Index(stackId);
-            return SpawnMultipleAtPosition(stackProto.Spawn, CalculateSpawns(stackProto, amount), spawnPosition);
+            return SpawnMultipleAtPosition(stackProto.Spawn,
+                                            CalculateSpawns(stackProto, amount),
+                                            spawnPosition);
         }
 
         #endregion
@@ -215,7 +220,7 @@ namespace Content.Server.Stack
             var spawnedEnts = new List<EntityUid>();
             foreach (var count in amounts)
             {
-                var entity = SpawnNextToOrDrop(entityPrototype, target);
+                var entity = SpawnNextToOrDrop(entityPrototype, target); // The real SpawnNextToOrDrop
                 spawnedEnts.Add(entity);
                 SetCount((entity, null), count);
             }
@@ -229,7 +234,9 @@ namespace Content.Server.Stack
                                                          int amount,
                                                          EntityUid target)
         {
-            return SpawnMultipleNextToOrDrop(stack, CalculateSpawns(stack, amount), target);
+            return SpawnMultipleNextToOrDrop(stack,
+                                             CalculateSpawns(stack, amount),
+                                             target);
         }
 
         /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, List{int}, EntityUid)"/>
@@ -238,7 +245,9 @@ namespace Content.Server.Stack
                                                          int amount,
                                                          EntityUid target)
         {
-            return SpawnMultipleNextToOrDrop(stack.ID, CalculateSpawns(stack, amount), target);
+            return SpawnMultipleNextToOrDrop(stack.ID,
+                                             CalculateSpawns(stack, amount),
+                                             target);
         }
 
         /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, List{int}, EntityUid)"/>
@@ -247,7 +256,9 @@ namespace Content.Server.Stack
                                                          int amount,
                                                          EntityUid target)
         {
-            return SpawnMultipleNextToOrDrop(stack.Spawn, CalculateSpawns(stack, amount), target);
+            return SpawnMultipleNextToOrDrop(stack.Spawn,
+                                             CalculateSpawns(stack, amount),
+                                             target);
         }
 
         /// <inheritdoc cref="SpawnMultipleNextToOrDrop(EntProtoId, List{int}, EntityUid)"/>
@@ -257,7 +268,9 @@ namespace Content.Server.Stack
                                                          EntityUid target)
         {
             var stackProto = _prototypeManager.Index(stackId);
-            return SpawnMultipleNextToOrDrop(stackProto.Spawn, CalculateSpawns(stackProto, amount), target);
+            return SpawnMultipleNextToOrDrop(stackProto.Spawn,
+                                             CalculateSpawns(stackProto, amount),
+                                             target);
         }
 
         #endregion

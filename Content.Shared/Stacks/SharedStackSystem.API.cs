@@ -8,6 +8,7 @@ namespace Content.Shared.Stacks;
 public abstract partial class SharedStackSystem
 {
     #region Merge Stacks
+
     /// <summary>
     /// Moves as much stack count as we can from the donor to the recipient.
     /// Deletes the donor if count goes to 0.
@@ -66,7 +67,6 @@ public abstract partial class SharedStackSystem
             return;
         }
 
-        // This is shit code until hands get fixed and give an easy way to enumerate over items, starting with the currently active item.
         foreach (var held in Hands.EnumerateHeld(user))
         {
             TryMergeStacks(item, held, out _);
@@ -92,7 +92,7 @@ public abstract partial class SharedStackSystem
 
         var map = xform.MapID;
         var bounds = _physics.GetWorldAABB(uid);
-        var intersecting = new HashSet<Entity<StackComponent>>();
+        var intersecting = new HashSet<Entity<StackComponent>>(); // Should we reuse a HashSet instead of making a new one?
         _entityLookup.GetEntitiesIntersecting(map, bounds, intersecting, LookupFlags.Dynamic | LookupFlags.Sundries);
 
         var merged = false;
@@ -163,21 +163,20 @@ public abstract partial class SharedStackSystem
     /// <summary>
     ///     Increase a stack count by an amount, and spawn new entities if above the max.
     /// </summary>
-    // public List<EntityUid> IncreaseCountAndSpawn(Entity<StackComponent?> ent, int amount);
+    // public List<EntityUid> RaiseCountAndSpawn(Entity<StackComponent?> ent, int amount);
 
     /// <summary>
-    ///     Reduce a stack count by an amount.
+    ///     Reduce a stack count by an amount, even if it would go below 0.
     /// </summary>
-    /// <param name="ignoreUnlimited">Optional. If true, reduce the count even if it's unlimited.</param>
     /// <seealso cref="TryUse"/>
     [PublicAPI]
-    public void LowerCount(Entity<StackComponent?> ent, int amount, bool ignoreUnlimited = false)
+    public void LowerCount(Entity<StackComponent?> ent, int amount)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        // Don't reduce unlimited stacks unless explicit
-        if (!ignoreUnlimited && ent.Comp.Unlimited)
+        // Don't reduce unlimited stacks
+        if (ent.Comp.Unlimited)
             return;
 
         SetCount(ent, ent.Comp.Count - amount);
@@ -185,6 +184,7 @@ public abstract partial class SharedStackSystem
 
     /// <summary>
     ///     Try to reduce a stack count by a whole amount.
+    ///     Won't reduce the stack count if the amount is larger than the stack.
     /// </summary>
     /// <returns> True if the count was lowered. Always true if the stack is unlimited.</returns>
     [PublicAPI]
@@ -198,11 +198,8 @@ public abstract partial class SharedStackSystem
             return true;
 
         // Check if we have enough things in the stack for this...
-        if (ent.Comp.Count < amount)
-        {
-            // Not enough things in the stack, return false.
+        if (amount > ent.Comp.Count)
             return false;
-        }
 
         // We do have enough things in the stack, so remove them and change.
         SetCount(ent, ent.Comp.Count - amount);
