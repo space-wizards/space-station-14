@@ -35,11 +35,10 @@ public sealed partial class ConsumeDoAfterEvent : DoAfterEvent
 /// <summary>
 /// Called on an food entity when it consumed the reagent into its stomach, from DrinkComponent or FoodComponent
 /// </summary>
-/// <param name="solution"></param>
 [NetSerializable, Serializable]
-public sealed class ConsumedSolutionEvent(Solution solution, EntityUid target) : EntityEventArgs
+public sealed class ConsumedSolutionEvent(Solution solution, NetEntity target) : EntityEventArgs
 {
-    public EntityUid Target = target;
+    public NetEntity Target = target;
     public Solution Solution = solution;
 }
 

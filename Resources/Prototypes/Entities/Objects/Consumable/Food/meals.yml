@@ -315,6 +315,8 @@
   - type: Tag
     tags:
     - Meat
+  - type: StatusEffectConsumable
+    effect: StatusEffectFoodMealBearsteak
 # Tastes like meat, salmon.
 
 - type: entity

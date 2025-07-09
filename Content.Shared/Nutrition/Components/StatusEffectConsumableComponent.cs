@@ -11,11 +11,11 @@ namespace Content.Shared.Nutrition.Components;
 public sealed partial class StatusEffectConsumableComponent : Component
 {
     [DataField(required: true)]
-    public EntProtoId Effect = new();
+    public EntProtoId Effect;
 
     /// <summary>
     /// How long will the status effect last. The effect scales with the amount of reagent absorbed from the source.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public TimeSpan DurationPerUnit = TimeSpan.FromSeconds(1);
 }

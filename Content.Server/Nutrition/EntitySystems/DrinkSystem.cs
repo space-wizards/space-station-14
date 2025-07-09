@@ -212,7 +212,7 @@ public sealed class DrinkSystem : SharedDrinkSystem
             return;
         }
 
-        var ev = new ConsumedSolutionEvent(drained, args.Target.Value);
+        var ev = new ConsumedSolutionEvent(drained, GetNetEntity(args.Target.Value));
         RaiseLocalEvent(entity, ev);
 
         var flavors = args.FlavorMessage;

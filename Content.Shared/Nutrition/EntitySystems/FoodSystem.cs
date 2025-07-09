@@ -212,7 +212,7 @@ public sealed class FoodSystem : EntitySystem
 
     private void OnConsumeStatusEffect(Entity<StatusEffectConsumableComponent> ent, ref ConsumedSolutionEvent args)
     {
-        _statusEffects.TryAddStatusEffectDuration(args.Target, ent.Comp.Effect, ent.Comp.DurationPerUnit * (float)args.Solution.Volume);
+        _statusEffects.TryAddStatusEffectDuration(GetEntity(args.Target), ent.Comp.Effect, ent.Comp.DurationPerUnit * (float)args.Solution.Volume);
     }
 
     private void OnConsume(Entity<FoodComponent> entity, ref ConsumeDoAfterEvent args)
@@ -277,7 +277,7 @@ public sealed class FoodSystem : EntitySystem
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
         _stomach.TryTransferSolution(stomachToUse!.Value.Owner, split, stomachToUse);
 
-        var ev = new ConsumedSolutionEvent(split, args.Target.Value);
+        var ev = new ConsumedSolutionEvent(split, GetNetEntity(args.Target.Value));
         RaiseLocalEvent(entity, ev);
 
         var flavors = args.FlavorMessage;
