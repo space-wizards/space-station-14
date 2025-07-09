@@ -9237,4 +9237,10 @@ Entries:
   id: 1273
   time: '2025-07-09T19:15:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/1001
-
+- author: stickycheZ101
+  changes:
+  - message: given everyones favourite caveman a plushie of his own
+    type: Add
+  id: 1274
+  time: '2025-07-09T19:15:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/980
