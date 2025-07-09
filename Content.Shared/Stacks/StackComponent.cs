@@ -53,7 +53,7 @@ namespace Content.Shared.Stacks
         ///     Used by StackStatusControl in client to update UI.
         /// </summary>
         [ViewVariables]
-        [Access(typeof(SharedStackSystem), Other = AccessPermissions.ReadWrite)] // Set by
+        [Access(typeof(SharedStackSystem), Other = AccessPermissions.ReadWrite)] // Set by StackStatusControl
         public bool UiUpdateNeeded { get; set; }
 
         /// <summary>

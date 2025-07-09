@@ -116,7 +116,6 @@ public abstract partial class SharedStackSystem
     #endregion
     #region Setters
 
-    // TODO make private and remove nullable
     /// <summary>
     ///     Sets a stack count to an amount. Server will delete ent if count is 0.
     ///     Clamps between zero and the stack's max size.
