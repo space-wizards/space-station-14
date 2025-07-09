@@ -3,12 +3,14 @@ using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.Animals.Components;
 using Content.Server.Mind;
+using Content.Server.Popups;
 using Content.Server.Radio;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Server.Vocalization.Systems;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Network;
@@ -32,6 +34,7 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -56,8 +59,10 @@ public sealed partial class ParrotMemorySystem : EntitySystem
 
     private void OnGetVerbs(Entity<ParrotMemoryComponent> entity, ref GetVerbsEvent<Verb> args)
     {
+        var user = args.User;
+
         // limit this to admins
-        if (!_admin.IsAdmin(args.User))
+        if (!_admin.IsAdmin(user))
             return;
 
         // simple verb that just clears the memory list
@@ -66,7 +71,11 @@ public sealed partial class ParrotMemorySystem : EntitySystem
             Text = Loc.GetString("parrot-verb-clear-memory"),
             Category = VerbCategory.Admin,
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/clear-parrot.png")),
-            Act = () => entity.Comp.SpeechMemories.Clear(),
+            Act = () =>
+            {
+                entity.Comp.SpeechMemories.Clear();
+                _popup.PopupEntity(Loc.GetString("parrot-popup-memory-cleared"), entity, user, PopupType.Medium);
+            },
         };
 
         args.Verbs.Add(clearMemoryVerb);
@@ -81,27 +90,12 @@ public sealed partial class ParrotMemorySystem : EntitySystem
 
     private void OnListen(Entity<ParrotListenerComponent> entity, ref ListenEvent args)
     {
-        // return if whitelist is not null or fails to pass
-        if (!_whitelist.IsWhitelistPassOrNull(entity.Comp.Whitelist, args.Source))
-            return;
-
-        // return if blacklist is not null or passes
-        if (!_whitelist.IsBlacklistFailOrNull(entity.Comp.Blacklist, args.Source))
-            return;
 
         TryLearn(entity.Owner, args.Message, args.Source);
     }
 
     private void OnRadioReceive(Entity<ParrotListenerComponent> entity, ref RadioReceiveEvent args)
     {
-        // return if whitelist is not null or fails to pass
-        if (!_whitelist.IsWhitelistPassOrNull(entity.Comp.Whitelist, args.MessageSource))
-            return;
-
-        // return if blacklist is not null or passes
-        if (!_whitelist.IsBlacklistFailOrNull(entity.Comp.Blacklist, args.MessageSource))
-            return;
-
         TryLearn(entity.Owner, args.Message, args.MessageSource);
     }
 
@@ -133,16 +127,22 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     /// <param name="entity">Entity learning a new word</param>
     /// <param name="incomingMessage">Message to learn</param>
     /// <param name="source">Source EntityUid of the message</param>
-    public void TryLearn(Entity<ParrotMemoryComponent?> entity, string incomingMessage, EntityUid source)
+    public void TryLearn(Entity<ParrotMemoryComponent?, ParrotListenerComponent?> entity, string incomingMessage, EntityUid source)
     {
-        if (!Resolve(entity, ref entity.Comp))
+        if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
+            return;
+
+        if (!_whitelist.IsWhitelistPassOrNull(entity.Comp2.Whitelist, source))
+            return;
+
+        if (!_whitelist.IsBlacklistFailOrNull(entity.Comp2.Blacklist, source))
             return;
 
         if (source.Equals(entity) || _mobState.IsIncapacitated(entity))
             return;
 
         // can't learn too soon after having already learnt something else
-        if (_gameTiming.CurTime < entity.Comp.NextLearnInterval)
+        if (_gameTiming.CurTime < entity.Comp1.NextLearnInterval)
             return;
 
         // remove whitespace around message, if any
@@ -158,19 +158,19 @@ public sealed partial class ParrotMemorySystem : EntitySystem
             return;
 
         // ignore messages that are too short or too long
-        if (message.Length < entity.Comp.MinEntryLength || message.Length > entity.Comp.MaxEntryLength)
+        if (message.Length < entity.Comp1.MinEntryLength || message.Length > entity.Comp1.MaxEntryLength)
             return;
 
         // only from this point this message has a chance of being learned
         // set new time for learn interval, regardless of whether the learning succeeds
-        entity.Comp.NextLearnInterval = _gameTiming.CurTime + entity.Comp.LearnCooldown;
+        entity.Comp1.NextLearnInterval = _gameTiming.CurTime + entity.Comp1.LearnCooldown;
 
         // decide if this message passes the learning chance
-        if (!_random.Prob(entity.Comp.LearnChance))
+        if (!_random.Prob(entity.Comp1.LearnChance))
             return;
 
         // actually commit this message to memory
-        Learn((entity, entity.Comp), message, source);
+        Learn((entity, entity.Comp1), message, source);
     }
 
     /// <summary>
