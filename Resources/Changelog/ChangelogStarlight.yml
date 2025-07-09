@@ -9202,4 +9202,11 @@ Entries:
   id: 1268
   time: '2025-07-09T11:46:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/998
+- author: PubliclyExecutedPig
+  changes:
+  - message: Chainblade reflect 20% -> 10%
+    type: Tweak
+  id: 1269
+  time: '2025-07-09T11:51:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/996
 
