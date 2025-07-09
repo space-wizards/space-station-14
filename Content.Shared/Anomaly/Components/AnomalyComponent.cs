@@ -142,7 +142,7 @@ public sealed partial class AnomalyComponent : Component
     ///
     [DataField, AutoNetworkedField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float SupercriticalDuration = 10f;
+    public TimeSpan SupercriticalDuration = TimeSpan.FromSeconds(10f);
     #endregion
 
     /// <summary>

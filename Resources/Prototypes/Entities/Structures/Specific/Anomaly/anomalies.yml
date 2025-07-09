@@ -128,7 +128,7 @@
     coreInertPrototype: AnomalyCoreGravityInert
     supercriticalSoundAtAnimationStart:
       collection: AnomalyGravitySupercritical
-    supercriticalDuration: 15
+    supercriticalDuration: 15s
   - type: Sprite
     layers:
     - state: anom2

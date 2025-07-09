@@ -66,7 +66,7 @@ public sealed class AnomalySystem : SharedAnomalySystem
 
         while (query.MoveNext(out var uid, out var anomaly, out var super, out var sprite))
         {
-            var completion = 1f - (float) ((super.EndTime - _timing.CurTime) / TimeSpan.FromSeconds(anomaly.SupercriticalDuration));
+            var completion = 1f - (float) ((super.EndTime - _timing.CurTime) / anomaly.SupercriticalDuration);
             var scale = completion * (super.MaxScaleAmount - 1f) + 1f;
             _sprite.SetScale((uid, sprite), new Vector2(scale, scale));
 
