@@ -224,6 +224,23 @@
     price: 500
 
 - type: entity
+  parent: PersonalAI
+  id: GoldenPersonalAI
+  name: golden personal ai device
+  description: Your electronic pal who's fun to be with! Special golden edition!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pai.rsi
+    layers:
+    - state: golden-pai-base
+    - state: pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+  - type: Appearance
+  - type: StaticPrice
+    price: 5000
+
+- type: entity
   parent: PersonalAIBase
   id: PotatoAI
   name: potato artificial intelligence
