@@ -470,6 +470,12 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: Storage
+    grid: # Starlight
+    - 0,0,1,0 #left
+    - 0,1,0,1 #left - cube
+    - 3,0,10,1
+    - 12,0,13,0 #right
+    - 12,1,12,1 #right - cube
     whitelist:
       tags:
         - CigPack
