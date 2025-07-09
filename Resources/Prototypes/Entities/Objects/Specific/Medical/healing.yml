@@ -257,7 +257,7 @@
     damage:
       types:
         Bloodloss: -0.5 #lowers bloodloss damage
-    ModifyBloodLevel: 15 #restores about 5% blood per use on standard humanoids.
+    modifyBloodLevel: 15 #restores about 5% blood per use on standard humanoids.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
       params:

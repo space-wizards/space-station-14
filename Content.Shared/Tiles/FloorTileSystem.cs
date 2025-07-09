@@ -37,8 +37,14 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
 
     private static readonly Vector2 CheckRange = new(1f, 1f);
+
+    /// <summary>
+    ///     A recycled hashset used to check for walls when trying to place tiles on turfs.
+    /// </summary>
+    private readonly HashSet<EntityUid> _turfCheck = [];
 
     public override void Initialize()
     {
@@ -104,14 +110,16 @@ public sealed class FloorTileSystem : EntitySystem
 
         // if user can access tile center then they can place floor
         // otherwise check it isn't blocked by a wall
-        if (!canAccessCenter)
+        if (!canAccessCenter && _turf.TryGetTileRef(location, out var tileRef))
         {
-            foreach (var ent in location.GetEntitiesInTile(lookupSystem: _lookup))
+            _turfCheck.Clear();
+            _lookup.GetEntitiesInTile(tileRef.Value, _turfCheck);
+            foreach (var ent in _turfCheck)
             {
                 if (physicQuery.TryGetComponent(ent, out var phys) &&
                     phys.BodyType == BodyType.Static &&
                     phys.Hard &&
-                    (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                    (phys.CollisionLayer & (int)CollisionGroup.Impassable) != 0)
                 {
                     return;
                 }
@@ -126,14 +134,14 @@ public sealed class FloorTileSystem : EntitySystem
             if (mapGrid != null)
             {
                 var gridUid = location.EntityId;
+                var tile = _map.GetTileRef(gridUid, mapGrid, location);
 
-                if (!CanPlaceTile(gridUid, mapGrid, out var reason))
+                if (!CanPlaceTile(gridUid, mapGrid, tile.GridIndices, out var reason))
                 {
                     _popup.PopupClient(reason, args.User, args.User);
                     return;
                 }
 
-                var tile = _map.GetTileRef(gridUid, mapGrid, location);
                 var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
                 if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
@@ -182,12 +190,12 @@ public sealed class FloorTileSystem : EntitySystem
         _audio.PlayPredicted(placeSound, location, user);
     }
 
-    public bool CanPlaceTile(EntityUid gridUid, MapGridComponent component, [NotNullWhen(false)] out string? reason)
+    public bool CanPlaceTile(EntityUid gridUid, MapGridComponent component, Vector2i gridIndices, [NotNullWhen(false)] out string? reason)
     {
-        var ev = new FloorTileAttemptEvent();
+        var ev = new FloorTileAttemptEvent(gridIndices);
         RaiseLocalEvent(gridUid, ref ev);
 
-        if (HasComp<ProtectedGridComponent>(gridUid) || ev.Cancelled)
+        if (ev.Cancelled)
         {
             reason = Loc.GetString("invalid-floor-placement");
             return false;

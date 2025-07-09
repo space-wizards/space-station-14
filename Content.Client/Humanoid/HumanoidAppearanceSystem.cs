@@ -36,7 +36,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
     private void OnCvarChanged(bool value)
     {
-        var humanoidQuery = EntityManager.AllEntityQueryEnumerator<HumanoidAppearanceComponent, SpriteComponent>();
+        var humanoidQuery = AllEntityQuery<HumanoidAppearanceComponent, SpriteComponent>();
         while (humanoidQuery.MoveNext(out var uid, out var humanoidComp, out var spriteComp))
         {
             UpdateSprite((uid, humanoidComp, spriteComp));
@@ -393,7 +393,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
             if (humanoid.MarkingsDisplacement.TryGetValue(markingPrototype.BodyPart, out var displacementData) && markingPrototype.CanBeDisplaced)
             {
-                _displacement.TryAddDisplacement(displacementData, sprite, targetLayer + j + 1, layerId, out _);
+                _displacement.TryAddDisplacement(displacementData, (entity.Owner, sprite), targetLayer + j + 1, layerId, out _);
             }
         }
     }

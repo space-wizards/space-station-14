@@ -29,8 +29,6 @@ public sealed class RequiresTileSystem : EntitySystem
         foreach (var change in ev.Changes)
         {
             var anchored = _maps.GetAnchoredEntitiesEnumerator(ev.Entity, grid, change.GridIndices);
-            if (anchored.Equals(AnchoredEntitiesEnumerator.Empty))
-                return;
 
             while (anchored.MoveNext(out var ent))
             {

@@ -143,6 +143,8 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   name: self destruct
@@ -225,6 +227,8 @@
           params:
             volume: 5
       - type: DeleteOnTrigger
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   name: whitehole grenade
@@ -272,6 +276,8 @@
           params:
             volume: 15
       - type: DeleteOnTrigger
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   name: the nuclear option
@@ -367,6 +373,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+  - type: StaticPrice
+    price: 666 # 2000 for 3, I love fractions
 
 - type: entity
   name: holy hand grenade
@@ -392,6 +400,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/hallelujah.ogg
+  - type: StaticPrice
+    price: 10000
 
 - type: entity
   parent: [ GrenadeBase, BaseSecurityContraband ]
@@ -439,27 +449,60 @@
   - type: SmokeOnTrigger
     duration: 10
     spreadAmount: 30
+    smokePrototype: TearGasSmokeWhite
     solution:
       reagents:
       - ReagentId: TearGas
-        Quantity: 50
+        Quantity: 20
 
 - type: entity
   parent: [ BaseEngineeringContraband, SmokeGrenade ]
   id: MetalFoamGrenade
   name: metal foam grenade
-  description: An emergency tool used for patching breaches with special quick-set metal foam. Almost as good as real walls.
+  description: An emergency tool used for patching hull breaches with special quick-set metal foam. Almost as good as real floors!
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/metalfoam.rsi
   - type: OnUseTimerTrigger
-    delay: 1.5
+    delay: 5
   - type: SmokeOnTrigger
-    duration: 2
-    spreadAmount: 5
+    duration: 10
+    spreadAmount: 20
     smokePrototype: AluminiumMetalFoam
   - type: StaticPrice
     price: 350
+
+- type: entity
+  parent: [ BaseEngineeringContraband, GrenadeBase ] # Prevent inheriting DeleteOnTrigger from SmokeGrenade
+  id: AirGrenade
+  name: air grenade
+  description: A special solid state chemical grenade used for quickly releasing standard air into a spaced area. Fills up to 30 tiles!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/airboom.rsi
+  - type: SoundOnTrigger
+    sound: /Audio/Items/smoke_grenade_smoke.ogg
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Items/smoke_grenade_prime.ogg
+  - type: OnUseTimerTrigger
+    delay: 3
+  - type: ReleaseGasOnTrigger
+    removeFraction: 0.25
+    air:
+      volume: 1000
+      moles: # Target is 3117.84 mols total for filling 30 tiles (goal is 101.325 kPa @ 20C)
+      - 654.7464 # oxygen
+      - 2463.0936 # nitrogen
+      temperature: 293.15
+  - type: StaticPrice
+    price: 350
+  - type: GenericVisualizer
+    visuals:
+      enum.ReleaseGasOnTriggerVisuals.Key:
+        enabled:
+          True: { state: active }
+          False: { state: spent }
 
 # Non-explosive "dummy" grenades to use as a distraction.
 
@@ -501,3 +544,5 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
+  - type: StaticPrice
+    price: 1000
