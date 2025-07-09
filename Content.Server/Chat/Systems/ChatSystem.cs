@@ -529,6 +529,14 @@ public sealed partial class ChatSystem : SharedChatSystem
             }
         }
 
+        //add ghosts that have ghost hearing on
+        var ghostQuery = EntityQueryEnumerator<GhostHearingComponent, ActorComponent>();
+        while (ghostQuery.MoveNext(out var uid, out var ghostComp, out var actorComp))
+        {
+            clients.AddPlayer(actorComp.PlayerSession);
+            receivers.Add(uid);
+        }
+
         var Number = $"{sourceCollectiveMindComp.Minds[collectiveMind].MindId}";
 
         var admins = _adminManager.ActiveAdmins

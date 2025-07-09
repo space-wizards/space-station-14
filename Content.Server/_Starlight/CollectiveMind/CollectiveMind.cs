@@ -39,7 +39,7 @@ public sealed partial class CollectiveMind : SharedCollectiveMindSystem
             {
                 if (mobState.CurrentState == MobState.Critical || TryComp<SleepingComponent>(uid, out _))
                 {
-                    args.Message = CorruptDamage(args.Message, ref ent.Comp);
+                    args.Message = Corrupt(args.Message, ref ent.Comp);
                 }
             }
         }
