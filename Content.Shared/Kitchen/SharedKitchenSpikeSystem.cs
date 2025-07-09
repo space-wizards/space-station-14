@@ -155,7 +155,7 @@ public sealed class SharedKitchenSpikeSystem : EntitySystem
         var victimIdentity = Identity.Entity(victim.Value, EntityManager);
 
         _popupSystem.PopupPredicted(Loc.GetString("comp-kitchen-spike-begin-butcher-self", ("victim", victimIdentity)),
-            Loc.GetString("comp-kitchen-spike-begin-butcher-self", ("user", Identity.Entity(args.User, EntityManager)), ("victim", victimIdentity)),
+            Loc.GetString("comp-kitchen-spike-begin-butcher", ("user", Identity.Entity(args.User, EntityManager)), ("victim", victimIdentity)),
             ent,
             args.User,
             PopupType.MediumCaution);
