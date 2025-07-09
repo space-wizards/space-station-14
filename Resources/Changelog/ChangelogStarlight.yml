@@ -9216,4 +9216,11 @@ Entries:
   id: 1270
   time: '2025-07-09T13:22:39.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/994
+- author: Killer Tamashi
+  changes:
+  - message: Pre-emptively fixed bug with BSO webbing
+    type: Fix
+  id: 1271
+  time: '2025-07-09T17:08:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1002
 
