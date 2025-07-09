@@ -14,24 +14,24 @@ namespace Content.IntegrationTests.Tests.Minds;
 [TestFixture]
 public sealed class GhostRoleTests
 {
-    private static readonly EntProtoId GhostRoleProtoId = "GhostRoleTestEntity";
-    private static readonly EntProtoId TestMobProtoId = "GhostRoleTestMob";
+    private const string GhostRoleProtoId = "GhostRoleTestEntity";
+    private const string TestMobProtoId = "GhostRoleTestMob";
 
     [TestPrototypes]
-    private const string Prototypes = @"
-- type: entity
-  id: GhostRoleTestEntity
-  components:
-  - type: MindContainer
-  - type: GhostRole
-  - type: GhostTakeoverAvailable
-  - type: MobState
+    private const string Prototypes = $"""
+        - type: entity
+          id: {GhostRoleProtoId}
+          components:
+          - type: MindContainer
+          - type: GhostRole
+          - type: GhostTakeoverAvailable
+          - type: MobState
 
-- type: entity
-  id: GhostRoleTestMob
-  components:
-  - type: MobState # MobState is required for correct determination of if the player can return to body or not
-";
+        - type: entity
+          id: {TestMobProtoId}
+          components:
+          - type: MobState # MobState is required for correct determination of if the player can return to body or not
+        """;
 
     /// <summary>
     /// This is a simple test that just checks if a player can take a ghost role and then regain control of their
