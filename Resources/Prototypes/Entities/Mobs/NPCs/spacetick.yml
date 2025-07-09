@@ -41,7 +41,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      15: Dead
+      5: Dead
   - type: Destructible
     thresholds:
     - trigger:

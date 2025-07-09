@@ -5,7 +5,7 @@
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/space_map2.png"
       slowness: 0.995
-      scale: "1, 1"
+      scale: "4, 4"
     - texture:
         !type:GeneratedParallaxTextureSource
         id: "hq_wizard_stars"

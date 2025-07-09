@@ -7,31 +7,27 @@ using Robust.Shared.Console;
 namespace Content.Server.GameTicking.Commands
 {
     [AdminCommand(AdminFlags.Round)]
-    sealed class ToggleDisallowLateJoinCommand : IConsoleCommand
+    public sealed class ToggleDisallowLateJoinCommand : LocalizedCommands
     {
-        public string Command => "toggledisallowlatejoin";
-        public string Description => "Allows or disallows latejoining during mid-game.";
-        public string Help => $"Usage: {Command} <disallow>";
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "toggledisallowlatejoin";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
-                shell.WriteLine("Need exactly one argument.");
+                shell.WriteLine(Loc.GetString($"shell-need-exactly-one-argument"));
                 return;
             }
 
-            var cfgMan = IoCManager.Resolve<IConfigurationManager>();
-
             if (bool.TryParse(args[0], out var result))
             {
-                cfgMan.SetCVar(CCVars.GameDisallowLateJoins, bool.Parse(args[0]));
-                shell.WriteLine(result ? "Late joining has been disabled." : "Late joining has been enabled.");
+                _configManager.SetCVar(CCVars.GameDisallowLateJoins, bool.Parse(args[0]));
+                shell.WriteLine(Loc.GetString(result ? "cmd-toggledisallowlatejoin-disabled" : "cmd-toggledisallowlatejoin-enabled"));
             }
             else
-            {
-                shell.WriteLine("Invalid argument.");
-            }
+                shell.WriteLine(Loc.GetString($"shell-invalid-bool"));
         }
     }
 }

@@ -5,46 +5,43 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Mapping)]
-    public sealed class RemoveExtraComponents : IConsoleCommand
+    public sealed class RemoveExtraComponents : LocalizedEntityCommands
     {
-        public string Command => "removeextracomponents";
-        public string Description => "Removes all components from all entities of the specified id if that component is not in its prototype.\nIf no id is specified, it matches all entities.";
-        public string Help => $"{Command} <entityId> / {Command}";
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        [Dependency] private readonly IComponentFactory _compFactory = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+        public override string Command => "removeextracomponents";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var id = args.Length == 0 ? null : string.Join(" ", args);
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var fac = IoCManager.Resolve<IComponentFactory>();
 
             EntityPrototype? prototype = null;
             var checkPrototype = !string.IsNullOrEmpty(id);
 
-            if (checkPrototype && !prototypeManager.TryIndex(id!, out prototype))
+            if (checkPrototype && !_prototypeManager.TryIndex(id!, out prototype))
             {
-                shell.WriteError($"Can't find entity prototype with id \"{id}\"!");
+                shell.WriteError(Loc.GetString($"cmd-removeextracomponents-invalid-prototype-id", ("id", $"{id}")));
                 return;
             }
 
             var entities = 0;
             var components = 0;
 
-            foreach (var entity in entityManager.GetEntities())
+            foreach (var entity in EntityManager.GetEntities())
             {
-                var metaData = entityManager.GetComponent<MetaDataComponent>(entity);
+                var metaData = EntityManager.GetComponent<MetaDataComponent>(entity);
                 if (checkPrototype && metaData.EntityPrototype != prototype || metaData.EntityPrototype == null)
-                {
                     continue;
-                }
 
                 var modified = false;
 
-                foreach (var component in entityManager.GetComponents(entity))
+                foreach (var component in EntityManager.GetComponents(entity))
                 {
-                    if (metaData.EntityPrototype.Components.ContainsKey(fac.GetComponentName(component.GetType())))
+                    if (metaData.EntityPrototype.Components.ContainsKey(_compFactory.GetComponentName(component.GetType())))
                         continue;
 
-                    entityManager.RemoveComponent(entity, component);
+                    EntityManager.RemoveComponent(entity, component);
                     components++;
 
                     modified = true;
@@ -54,7 +51,18 @@ namespace Content.Server.Administration.Commands
                     entities++;
             }
 
-            shell.WriteLine($"Removed {components} components from {entities} entities{(id == null ? "." : $" with id {id}")}");
+            if (id != null)
+            {
+                shell.WriteLine(Loc.GetString($"cmd-removeextracomponents-success-with-id",
+                    ("count", components),
+                    ("entities", entities),
+                    ("id", id)));
+                return;
+            }
+
+            shell.WriteLine(Loc.GetString($"cmd-removeextracomponents-success",
+                ("count", components),
+                ("entities", entities)));
         }
     }
 }

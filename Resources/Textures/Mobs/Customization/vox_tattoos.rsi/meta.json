@@ -22,6 +22,14 @@
     {
       "name": "nightling_s",
       "directions": 4
+    },
+    {
+      "name": "tattoo_eye_vox_r",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_eye_vox_l",
+      "directions": 4
     }
   ]
 }

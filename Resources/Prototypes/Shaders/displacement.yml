@@ -8,3 +8,10 @@
     func: NotEqual
   params:
     displacementSize: 127
+
+- type: shader
+  id: DisplacedDraw
+  kind: source
+  path: "/Textures/Shaders/displacement.swsl"
+  params:
+    displacementSize: 127

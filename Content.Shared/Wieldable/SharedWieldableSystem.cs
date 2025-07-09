@@ -112,7 +112,7 @@ public abstract class SharedWieldableSystem : EntitySystem
 
     private void OnDeselectWieldable(EntityUid uid, WieldableComponent component, HandDeselectedEvent args)
     {
-        if (_hands.EnumerateHands(args.User).Count() > 2)
+        if (_hands.GetHandCount(args.User) > 2)
             return;
 
         TryUnwield(uid, component, args.User);
@@ -168,7 +168,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
 
-        if (!_hands.IsHolding(args.User, uid, out _, args.Hands))
+        if (!_hands.IsHolding((args.User, args.Hands), uid, out _))
             return;
 
         // TODO VERB TOOLTIPS Make CanWield or some other function return string, set as verb tooltip and disable
@@ -252,7 +252,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         }
 
         // Is it.. actually in one of their hands?
-        if (!_hands.IsHolding(user, uid, out _, hands))
+        if (!_hands.IsHolding((user, hands), uid, out _))
         {
             if (!quiet)
                 _popup.PopupClient(Loc.GetString("wieldable-component-not-in-hands", ("item", uid)), user, user);
@@ -373,7 +373,7 @@ public abstract class SharedWieldableSystem : EntitySystem
     /// <param name="force">If this is true we will bypass UnwieldAttemptEvent.</param>
     public void UnwieldAll(Entity<HandsComponent?> wielder, bool force = false)
     {
-        foreach (var held in _hands.EnumerateHeld(wielder.Owner, wielder.Comp))
+        foreach (var held in _hands.EnumerateHeld(wielder))
         {
             if (TryComp<WieldableComponent>(held, out var wieldable))
                 TryUnwield(held, wieldable, wielder, force);

@@ -61,7 +61,7 @@ public sealed partial class SiliconLawset
 /// This is a prototype for a <see cref="SiliconLawPrototype"/> list.
 /// Cannot be used directly since it is a list of prototype ids rather than List<Siliconlaw>.
 /// </summary>
-[Prototype, Serializable, NetSerializable]
+[Prototype]
 public sealed partial class SiliconLawsetPrototype : IPrototype
 {
     /// <inheritdoc/>

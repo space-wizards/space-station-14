@@ -147,3 +147,24 @@
     node: assembly
   - type: Transform
     anchored: true
+
+- type: entity
+  id: AirAlarmXeno
+  parent: AirAlarm
+  description: An alien air alarm. Hopefully they didn't breathe poison.
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors_xeno.rsi
+    layers:
+    - state: alarm0
+      map: ["airAlarmBase"] # TODO: fire alarm enum
+    - state: alarmx
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+
+- type: entity
+  id: AirAlarmAssemblyXeno
+  parent: AirAlarmAssembly
+  description: An alien air alarm. Why are the wires pulsating?...
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors_xeno.rsi

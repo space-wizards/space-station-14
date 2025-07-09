@@ -37,7 +37,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         var sourcePos = _xforms.GetWorldPosition(sourceXform, xformQuery);
 
         // This function ensures that chat popups appear on camera views that have connected microphones.
-        var query = EntityManager.EntityQueryEnumerator<StationAiCoreComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<StationAiCoreComponent, TransformComponent>();
         while (query.MoveNext(out var ent, out var entStationAiCore, out var entXform))
         {
             var stationAiCore = new Entity<StationAiCoreComponent?>(ent, entStationAiCore);

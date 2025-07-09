@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.VendingMachines
 {
-    [Serializable, NetSerializable, Prototype]
+    [Prototype]
     public sealed partial class VendingMachineInventoryPrototype : IPrototype
     {
         [ViewVariables]

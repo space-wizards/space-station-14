@@ -1479,3 +1479,7 @@
   flavorType: Base
   description: flavor-base-trashy
 
+- type: flavor
+  id: artifactglue
+  flavorType: Complex
+  description: flavor-complex-artifact-glue

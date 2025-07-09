@@ -16,12 +16,9 @@ public partial class InventorySystem
     {
         if (Resolve(user.Owner, ref user.Comp1, false))
         {
-            foreach (var hand in user.Comp1.Hands.Values)
+            foreach (var held in _handsSystem.EnumerateHeld(user))
             {
-                if (hand.HeldEntity == null)
-                    continue;
-
-                yield return hand.HeldEntity.Value;
+                yield return held;
             }
         }
 
@@ -76,12 +73,12 @@ public partial class InventorySystem
             return false;
 
         // Let's spawn this first...
-        var item = EntityManager.SpawnEntity(prototype, Transform(uid).Coordinates);
+        var item = Spawn(prototype, Transform(uid).Coordinates);
 
         // Helper method that deletes the item and returns false.
         bool DeleteItem()
         {
-            EntityManager.DeleteEntity(item);
+            Del(item);
             return false;
         }
 

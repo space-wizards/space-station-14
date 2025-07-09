@@ -8,6 +8,7 @@ shell-invalid-command-specific = Invalid {$commandName} command.
 shell-cannot-run-command-from-server = You cannot run this command from the server.
 shell-only-players-can-run-this-command = Only players can run this command.
 shell-must-be-attached-to-entity = You must be attached to an entity to run this command.
+shell-must-have-body = You must have a body to run this command.
 
 ## Arguments
 
@@ -19,11 +20,13 @@ shell-wrong-arguments-number = Wrong number of arguments.
 shell-need-between-arguments = Need {$lower} to {$upper} arguments!
 shell-need-minimum-arguments = Need at least {$minimum} arguments!
 shell-need-minimum-one-argument = Need at least one argument!
+shell-need-exactly-zero-arguments = This command takes zero arguments.
 
 shell-argument-uid = EntityUid
 
 ## Guards
 
+shell-missing-required-permission = You need {$perm} for this command!
 shell-entity-is-not-mob = Target entity is not a mob!
 shell-invalid-entity-id = Invalid entity ID.
 shell-invalid-grid-id = Invalid grid ID.
