@@ -24,8 +24,8 @@ namespace Content.Client.Flash
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
-        private bool _reducedMotion = false;
-        public float PercentComplete = 0.0f;
+        private bool _reducedMotion;
+        public float PercentComplete;
         public Texture? ScreenshotTexture;
 
         public FlashOverlay()
@@ -82,6 +82,10 @@ namespace Content.Client.Flash
             var worldHandle = args.WorldHandle;
             if (_reducedMotion)
             {
+                // TODO: This is a very simple placeholder.
+                // Replace it with a proper shader once we come up with something good.
+                // Turns out making an effect that is supposed to be a bright, sudden, and disorienting flash 
+                // not do any of that while also being equivalent in terms of game balance is hard.
                 var alpha = 1 - MathF.Pow(PercentComplete, 8f); // similar falloff curve to the flash shader
                 worldHandle.DrawRect(args.WorldBounds, new Color(0f, 0f, 0f, alpha));
             }
