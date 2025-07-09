@@ -43,6 +43,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Toolshed.TypeParsers;
 using Robust.Shared.Utility;
 using Content.Client._Starlight.Radio.Systems;
+using Content.Client.CollectiveMind;
 
 
 namespace Content.Client.UserInterface.Systems.Chat;
