@@ -9209,4 +9209,11 @@ Entries:
   id: 1269
   time: '2025-07-09T11:51:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/996
+- author: PubliclyExecutedPig
+  changes:
+  - message: Lagan now has stuff like crew monitors
+    type: Fix
+  id: 1270
+  time: '2025-07-09T13:22:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/994
 
