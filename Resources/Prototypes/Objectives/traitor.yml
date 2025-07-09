@@ -49,7 +49,7 @@
 - type: entity
   parent: [BaseTraitorObjective, BaseSurviveObjective]
   id: TraitorSurviveObjective
-  name: Survive
+  name: Survive.
   description: In cuffs, still on the station, whatever. Just don't die on us.
   components:
   - type: Objective
