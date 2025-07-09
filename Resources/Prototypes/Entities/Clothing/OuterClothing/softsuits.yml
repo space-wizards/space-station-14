@@ -80,6 +80,7 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - ScurretWearable
     - MonkeyWearable
     - WhitelistChameleon
 
