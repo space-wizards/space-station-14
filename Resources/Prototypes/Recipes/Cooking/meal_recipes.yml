@@ -2424,7 +2424,7 @@
     FoodSoybeans: 2 # replace these with green beans once those become a thing
 
 - type: microwaveMealRecipe
-  id: RecipeMoproach
+  id: RecipeMoproach # TODO: Move this to be an actual surgery instead, once surgery gets implemented.
   name: moproach recipe
   result: MobMoproach
   time: 30
