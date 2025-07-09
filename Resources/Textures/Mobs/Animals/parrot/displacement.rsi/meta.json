@@ -71,6 +71,10 @@
           0.1
         ]
       ]
+    },
+    {
+      "name": "ears_dead",
+      "directions": 1
     }
   ]
 }

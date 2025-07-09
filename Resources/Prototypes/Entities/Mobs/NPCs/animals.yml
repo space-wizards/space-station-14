@@ -2225,7 +2225,7 @@
         sizeMaps:
           32:
             sprite: Mobs/Animals/parrot/displacement.rsi
-            state: ears
+            state: ears_dead
   - type: InventorySlots
   - type: Strippable
   - type: UserInterface
