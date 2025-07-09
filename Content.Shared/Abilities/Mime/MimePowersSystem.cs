@@ -49,7 +49,7 @@ namespace Content.Shared.Abilities.Mime
 
                 mime.ReadyToRepent = true;
                 Dirty(uid, mime);
-                _popupSystem.PopupClient(Loc.GetString("mime-ready-to-repent"), uid);
+                _popupSystem.PopupClient(Loc.GetString("mime-ready-to-repent"), uid, uid);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Content.Shared.Abilities.Mime
                 return;
             }
 
-            _popupSystem.PopupClient(Loc.GetString("mime-invisible-wall-popup", ("mime", uid)), uid);
+            _popupSystem.PopupPredicted(Loc.GetString("mime-invisible-wall-popup", ("mime", uid)), uid, uid);
             // Make sure we set the invisible wall to despawn properly
             PredictedSpawnAttachedTo(component.WallPrototype, _turf.GetTileCenter(tile.Value));
             // Handle args so cooldown works
@@ -149,7 +149,7 @@ namespace Content.Shared.Abilities.Mime
 
             if (!mimePowers.ReadyToRepent)
             {
-                _popupSystem.PopupClient(Loc.GetString("mime-not-ready-repent"), uid);
+                _popupSystem.PopupClient(Loc.GetString("mime-not-ready-repent"), uid, uid);
                 return;
             }
 
