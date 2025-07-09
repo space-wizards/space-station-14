@@ -135,10 +135,7 @@ public sealed partial class ParrotMemorySystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
             return;
 
-        if (!_whitelist.IsWhitelistPassOrNull(entity.Comp2.Whitelist, source))
-            return;
-
-        if (!_whitelist.IsBlacklistFailOrNull(entity.Comp2.Blacklist, source))
+        if (!_whitelist.CheckBoth(source, entity.Comp2.Blacklist, entity.Comp2.Whitelist))
             return;
 
         if (source.Equals(entity) || _mobState.IsIncapacitated(entity))
