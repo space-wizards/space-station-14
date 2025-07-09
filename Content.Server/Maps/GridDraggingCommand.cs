@@ -9,25 +9,21 @@ namespace Content.Server.Maps;
 /// Toggles GridDragging on the system.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
-public sealed class GridDraggingCommand : IConsoleCommand
+public sealed class GridDraggingCommand : LocalizedEntityCommands
 {
-    public string Command => SharedGridDraggingSystem.CommandName;
-    public string Description => $"Allows someone with permissions to drag grids around.";
-    public string Help => $"{Command}";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    [Dependency] private readonly GridDraggingSystem _grid = default!;
+
+    public override string Command => SharedGridDraggingSystem.CommandName;
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player == null)
         {
-            shell.WriteError("shell-server-cannot");
+            shell.WriteError("shell-only-players-can-run-this-command");
             return;
         }
 
-        var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GridDraggingSystem>();
-        system.Toggle(shell.Player);
-
-        if (system.IsEnabled(shell.Player))
-            shell.WriteLine("Grid dragging toggled on");
-        else
-            shell.WriteLine("Grid dragging toggled off");
+        _grid.Toggle(shell.Player);
+        shell.WriteLine(Loc.GetString($"cmd-griddrag-status", ("status", _grid.IsEnabled(shell.Player))));
     }
 }

@@ -239,3 +239,10 @@
     pulseTimeout: 15
   - !type:AiInteractWireAction
   - !type:AccessWireAction
+
+- type: wireLayout
+  id: APC
+  dummyWires: 3
+  wires:
+  - !type:AccessWireAction
+  - !type:AiInteractWireAction
