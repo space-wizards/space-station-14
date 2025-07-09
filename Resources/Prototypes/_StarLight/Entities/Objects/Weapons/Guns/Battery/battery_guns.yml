@@ -277,7 +277,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Appearance
   - type: Sprite
-    sprite: _Starlight/Objects/Weapons/Guns/Battery/Energy_magnum.rsi
+    sprite: _Starlight/Objects/Weapons/Guns/Battery/Energy_Magnum.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
