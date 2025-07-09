@@ -1666,6 +1666,16 @@
     FoodSnackChocolateBar: 2
 
 - type: microwaveMealRecipe
+  id: RecipeBlueberryCake
+  name: blueberry cake recipe
+  result: FoodCakeBlueberry
+  time: 5
+  group: Cake
+  solids:
+    FoodCakePlain: 1
+    FoodBerries: 3
+
+- type: microwaveMealRecipe
   id: RecipeBrainCake
   name: brain cake recipe
   result: FoodCakeBrain
@@ -2422,3 +2432,15 @@
     FoodMeat: 1
     FoodTomato: 1
     FoodSoybeans: 2 # replace these with green beans once those become a thing
+
+- type: microwaveMealRecipe
+  id: RecipeBerryDelight
+  name: berry delight recipe
+  result: FoodCakeBerryDelight
+  time: 5
+  group: Cake
+  solids:
+    FoodCakePlain: 1
+    FoodBerries: 5
+  reagents:
+    Milk: 10
