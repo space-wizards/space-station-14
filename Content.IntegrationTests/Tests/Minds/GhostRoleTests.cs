@@ -1,21 +1,22 @@
 ﻿#nullable enable
 using System.Linq;
-using Content.IntegrationTests.Pair;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Players;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Minds;
 
 [TestFixture]
 public sealed class GhostRoleTests
 {
+    private static readonly EntProtoId GhostRoleProtoId = "GhostRoleTestEntity";
+    private static readonly EntProtoId TestMobProtoId = "GhostRoleTestMob";
+
     [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
@@ -67,7 +68,7 @@ public sealed class GhostRoleTests
         EntityUid originalPlayerMob = default;
         await server.WaitPost(() =>
         {
-            originalPlayerMob = entMan.SpawnEntity("GhostRoleTestMob", mapData.GridCoords);
+            originalPlayerMob = entMan.SpawnEntity(TestMobProtoId, mapData.GridCoords);
             mindSystem.TransferTo(originalPlayerMindId, originalPlayerMob, true);
         });
 
@@ -118,7 +119,7 @@ public sealed class GhostRoleTests
 
         // Spawn ghost takeover entity.
         EntityUid ghostRole = default;
-        await server.WaitPost(() => ghostRole = entMan.SpawnEntity("GhostRoleTestEntity", mapData.GridCoords));
+        await server.WaitPost(() => ghostRole = entMan.SpawnEntity(GhostRoleProtoId, mapData.GridCoords));
 
         // Take the ghost role
         await server.WaitPost(() =>
