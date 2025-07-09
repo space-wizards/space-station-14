@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Changed the air vent and scrubber sprites.
-    type: Tweak
-  id: 8241
-  time: '2025-04-18T23:34:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34223
 - author: EmoGarbage404
   changes:
   - message: Added the material silo. This machine allows nearby machines to share
@@ -3885,3 +3878,10 @@
   id: 8753
   time: '2025-07-09T11:07:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38788
+- author: Sparlight
+  changes:
+  - message: Dragons no longer destroy non-humanoid mobs upon eating them.
+    type: Tweak
+  id: 8754
+  time: '2025-07-09T12:43:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38087
