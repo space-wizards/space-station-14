@@ -81,6 +81,9 @@
         - SurgeryTool
         - Dropper
         - Truncheon
+        - Sidearm
+        - MagazinePistol
+        - MagazineMagnum
       components:
         - Stunbaton
         - FlashOnTrigger
