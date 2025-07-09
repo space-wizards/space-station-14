@@ -2,7 +2,6 @@ using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
 using Content.Server.Vocalization.Components;
 using Content.Shared.Chat;
-using Content.Shared.Clothing;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
@@ -24,87 +23,49 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RadioVocalizerComponent, ClothingDidEquippedEvent>(OnClothingEquipped);
-        SubscribeLocalEvent<RadioVocalizerComponent, ClothingDidUnequippedEvent>(OnClothingUnequipped);
-
-        SubscribeLocalEvent<RadioVocalizerComponent, MapInitEvent>(RadioOnMapInit);
-
         SubscribeLocalEvent<RadioVocalizerComponent, VocalizeEvent>(OnVocalize);
     }
 
-    /// <summary>
-    /// Callback for when this entity equips clothing or has clothing equipped by something
-    /// This updates the list of entities with ActiveRadioComponents that are used to set radio channels
-    /// </summary>
-    private void OnClothingEquipped(Entity<RadioVocalizerComponent> entity, ref ClothingDidEquippedEvent args)
-    {
-        // return if this entity does not have an ActiveRadioComponent
-        if (!TryComp<ActiveRadioComponent>(entity, out var activeRadio))
-            return;
-
-        // only care if the equipped clothing item has an ActiveRadioComponent
-        if (!HasComp<ActiveRadioComponent>(args.Clothing))
-            return;
-
-        // update active radio channels
-        UpdateRadioChannels((entity, activeRadio, entity));
-    }
-
-    /// <summary>
-    /// Called if this entity unequipped clothing or has clothing unequipped by something
-    /// This updates the list of entities with ActiveRadioComponents that are used to set radio channels
-    /// </summary>
-    private void OnClothingUnequipped(Entity<RadioVocalizerComponent> entity, ref ClothingDidUnequippedEvent args)
-    {
-        // return if this entity does not have an ActiveRadioComponent
-        if (!TryComp<ActiveRadioComponent>(entity, out var activeRadio))
-            return;
-
-        // update active radio channels
-        UpdateRadioChannels((entity, activeRadio, entity));
-    }
-
-    /// <summary>
-    /// Called when the map is initialized (or after an entity is created).
-    /// This ensures radio channels are updated when an entity spawns in with a radio pre-equipped
-    /// </summary>
-    private void RadioOnMapInit(Entity<RadioVocalizerComponent> entity, ref MapInitEvent args)
-    {
-        // If an entity has a VocalizerRadioComponent it really ought to have an ActiveRadioComponent
-        var activeRadio = EnsureComp<ActiveRadioComponent>(entity);
-
-        UpdateRadioChannels((entity, activeRadio, entity));
-    }
-
-    /// <summary>
-    /// Copies all radio channels from equipped radios to the ActiveRadioComponent of an entity
-    /// </summary>
-    private void UpdateRadioChannels(Entity<ActiveRadioComponent, RadioVocalizerComponent> entity)
-    {
-        // clear all channels first
-        entity.Comp1.Channels.Clear();
-
-        // loop through inventory entities. Will yield nothing if there is no inventory on this entity
-        foreach (var equipment in _inventory.GetHandOrInventoryEntities(entity.Owner))
-        {
-            if (!TryComp<ActiveRadioComponent>(equipment, out var activeRadioComponent))
-                continue;
-
-            // add them to the channels on the ActiveRadioComponent on the entity
-            entity.Comp1.Channels.UnionWith(activeRadioComponent.Channels);
-        }
-    }
 
     /// <summary>
     /// Called whenever an entity with a VocalizerComponent tries to speak
     /// </summary>
-    private void OnVocalize(Entity<RadioVocalizerComponent> ent, ref VocalizeEvent args)
+    private void OnVocalize(Entity<RadioVocalizerComponent> entity, ref VocalizeEvent args)
     {
         if (args.Handled)
             return;
 
         // set to handled if we succeed in speaking on the radio
-        args.Handled = TrySpeakRadio(ent.Owner, args.Message);
+        args.Handled = TrySpeakRadio(entity.Owner, args.Message);
+    }
+
+    /// <summary>
+    /// Selects a random radio channel from all ActiveRadio entities in a given entity's inventory
+    /// If no channels are found, this returns false and sets channel to an empty string
+    /// </summary>
+    private bool TryPickRandomRadioChannel(EntityUid entity, out string channel)
+    {
+        HashSet<string> potentialChannels = [];
+
+        // we don't have to check if this entity has an inventory. GetHandOrInventoryEntities will not yield anything
+        // if an entity has no inventory or inventory slots
+        foreach (var item in _inventory.GetHandOrInventoryEntities(entity))
+        {
+            if (!TryComp<ActiveRadioComponent>(item, out var radio))
+                continue;
+
+            potentialChannels.UnionWith(radio.Channels);
+        }
+
+        if (potentialChannels.Count == 0)
+        {
+            channel = string.Empty;
+            return false;
+        }
+
+        channel = _random.Pick(potentialChannels);
+
+        return true;
     }
 
     /// <summary>
@@ -112,22 +73,17 @@ public sealed partial class RadioVocalizationSystem : EntitySystem
     /// </summary>
     /// <param name="entity">Entity to try and make speak on the radio</param>
     /// <param name="message">Message to speak</param>
-    /// <returns></returns>
-    private bool TrySpeakRadio(Entity<RadioVocalizerComponent?, ActiveRadioComponent?> entity, string message)
+    private bool TrySpeakRadio(Entity<RadioVocalizerComponent?> entity, string message)
     {
-        if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
+        if (!Resolve(entity, ref entity.Comp))
             return false;
 
-        // return if this entity's ActiveRadioComponent contains no channels
-        if (entity.Comp2.Channels.Count == 0)
+        if (!_random.Prob(entity.Comp.RadioAttemptChance))
             return false;
 
-        // decide whether we actually speak using the radio
-        if (!_random.Prob(entity.Comp1.RadioAttemptChance))
+        if (!TryPickRandomRadioChannel(entity, out var channel))
             return false;
 
-        // choose random channel
-        var channel = _random.Pick(entity.Comp2.Channels);
         var channelPrefix = _proto.Index<RadioChannelPrototype>(channel).KeyCode;
 
         // send a whisper using the radio channel prefix and whatever relevant radio channel character

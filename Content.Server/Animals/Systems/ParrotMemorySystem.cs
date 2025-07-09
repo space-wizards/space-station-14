@@ -47,7 +47,7 @@ public sealed partial class ParrotMemorySystem : EntitySystem
         SubscribeLocalEvent<ParrotListenerComponent, MapInitEvent>(ListenerOnMapInit);
 
         SubscribeLocalEvent<ParrotListenerComponent, ListenEvent>(OnListen);
-        SubscribeLocalEvent<ParrotListenerComponent, RadioReceiveEvent>(OnRadioReceive);
+        SubscribeLocalEvent<ParrotListenerComponent, HeadsetRadioReceiveRelayEvent>(OnHeadsetReceive);
 
         SubscribeLocalEvent<ParrotMemoryComponent, TryVocalizeEvent>(OnTryVocalize);
     }
@@ -94,9 +94,12 @@ public sealed partial class ParrotMemorySystem : EntitySystem
         TryLearn(entity.Owner, args.Message, args.Source);
     }
 
-    private void OnRadioReceive(Entity<ParrotListenerComponent> entity, ref RadioReceiveEvent args)
+    private void OnHeadsetReceive(Entity<ParrotListenerComponent> entity, ref HeadsetRadioReceiveRelayEvent args)
     {
-        TryLearn(entity.Owner, args.Message, args.MessageSource);
+        var message = args.RelayedEvent.Message;
+        var source = args.RelayedEvent.MessageSource;
+
+        TryLearn(entity.Owner, message, source);
     }
 
     /// <summary>

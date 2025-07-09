@@ -2213,7 +2213,6 @@
     sounds:
       Unsexed: Parrot
   - type: ActiveListener
-  - type: ActiveRadio
   - type: Vocalizer
   - type: RadioVocalizer
   - type: ParrotListener
