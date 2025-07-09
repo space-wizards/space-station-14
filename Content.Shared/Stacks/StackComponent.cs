@@ -5,43 +5,43 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Stacks
 {
     /// <summary>
-    /// Component on an entity that represents a stack of identical things, usually materials.
+    ///     Component on an entity that represents a stack of identical things, usually materials.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
     [Access(typeof(SharedStackSystem))]
     public sealed partial class StackComponent : Component
     {
         /// <summary>
-        /// What stack type we are.
+        ///     What stack type we are.
         /// </summary>
         [DataField("stackType", required: true)]
         public ProtoId<StackPrototype> StackTypeId { get; private set; } = default!;
 
         /// <summary>
-        /// Current stack count.
-        /// Do NOT set this directly, use a setter method instead.
+        ///     Current stack count.
+        ///     Do NOT set this directly, use a setter method instead.
         /// </summary>
         [DataField]
         public int Count { get; set; } = 30;
 
         /// <summary>
-        /// Max amount of things that can be in the stack.
-        /// Overrides the max defined on the stack prototype.
+        ///     Max amount of things that can be in the stack.
+        ///     Overrides the max defined on the stack prototype.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly)] // Is this necessary?
         [DataField]
         public int? MaxCountOverride { get; set; }
 
         /// <summary>
-        /// Set to true to not reduce the count when used.
+        ///     Set to true to not reduce the count when used.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly)] // Is this necessary?
         [DataField]
         public bool Unlimited { get; set; }
 
         /// <summary>
-        /// Lingering stacks will remain present even when there are no items.
-        /// Instead, they will become transparent.
+        ///     Lingering stacks will remain present even when there are no items.
+        ///     Instead, they will become transparent.
         /// </summary>
         [DataField]
         public bool Lingering;
@@ -50,14 +50,14 @@ namespace Content.Shared.Stacks
         public bool ThrowIndividually { get; set; } = false;
 
         /// <summary>
-        /// Used by StackStatusControl in client to update UI.
+        ///     Used by StackStatusControl in client to update UI.
         /// </summary>
         [ViewVariables]
-        [Access(typeof(SharedStackSystem), Other = AccessPermissions.ReadWrite)]
+        [Access(typeof(SharedStackSystem), Other = AccessPermissions.ReadWrite)] // Set by
         public bool UiUpdateNeeded { get; set; }
 
         /// <summary>
-        /// Default IconLayer stack.
+        ///     Default IconLayer stack.
         /// </summary>
         [DataField]
         public string BaseLayer = "";
@@ -79,15 +79,15 @@ namespace Content.Shared.Stacks
         public bool IsComposite;
 
         /// <summary>
-        /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
-        /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
+        ///     Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
+        ///     e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
         /// </summary>
         [DataField]
         public List<string> LayerStates = new();
 
         /// <summary>
-        /// An optional function to convert the amounts used to adjust a stack's appearance.
-        /// Useful for different denominations of cash, for example.
+        ///     An optional function to convert the amounts used to adjust a stack's appearance.
+        ///     Useful for different denominations of cash, for example.
         /// </summary>
         [DataField]
         public StackLayerFunction LayerFunction = StackLayerFunction.None;

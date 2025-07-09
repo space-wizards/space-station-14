@@ -49,9 +49,10 @@ namespace Content.Server.Stack
 
         /// <summary>
         ///     Spawns a new entity and moves an amount to it from ent.
+        ///     Moves nothing if amount is greater than ent's stack count.
         /// </summary>
         /// <param name="amount"> How much to move to the new entity. </param>
-        /// <returns>Null if StackComponent doesn't resolve, or amount to move is greater than ent has.</returns>
+        /// <returns>Null if StackComponent doesn't resolve, or amount to move is greater than ent has available.</returns>
         [PublicAPI]
         public EntityUid? Split(Entity<StackComponent?> ent, int amount, EntityCoordinates spawnPosition)
         {

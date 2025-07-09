@@ -32,7 +32,7 @@ namespace Content.Client.Stack
 
             base.SetCount(ent, amount);
 
-            UpdateLingering(ent!);
+            UpdateLingering(ent!); // Danger! We already resolved the nullable so we're safe
 
             // TODO PREDICT ENTITY DELETION: This should really just be a normal entity deletion call.
             if (ent.Comp.Count <= 0 && !ent.Comp.Lingering)
@@ -96,21 +96,21 @@ namespace Content.Client.Stack
             if (comp.IsComposite)
             {
                 _counterSystem.ProcessCompositeSprite(uid,
-                    actual,
-                    maxCount,
-                    comp.LayerStates,
-                    hidden,
-                    sprite: args.Sprite);
+                                                    actual,
+                                                    maxCount,
+                                                    comp.LayerStates,
+                                                    hidden,
+                                                    sprite: args.Sprite);
             }
             else
             {
                 _counterSystem.ProcessOpaqueSprite(uid,
-                    comp.BaseLayer,
-                    actual,
-                    maxCount,
-                    comp.LayerStates,
-                    hidden,
-                    sprite: args.Sprite);
+                                                comp.BaseLayer,
+                                                actual,
+                                                maxCount,
+                                                comp.LayerStates,
+                                                hidden,
+                                                sprite: args.Sprite);
             }
         }
 
