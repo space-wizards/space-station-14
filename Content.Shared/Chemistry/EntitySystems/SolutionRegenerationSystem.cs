@@ -23,22 +23,15 @@ public sealed class SolutionRegenerationSystem : EntitySystem
     {
         ent.Comp.NextRegenTime = _timing.CurTime + ent.Comp.Duration;
 
-        // Okay, so I cannot figure out a way to get around networking this—without it, the predicted tick where the
-        // solution gets updated ends up being too early, causing really annoying mispredicts in the Absorption UI,
-        // where the water bar flutters back and forth.
         Dirty(ent);
     }
 
     // Workaround for https://github.com/space-wizards/space-station-14/pull/35314
     private void OnEntRemoved(Entity<SolutionRegenerationComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        // Make sure the removed entity was our contained solution
-        if (ent.Comp is not { SolutionRef: { } sol }
-            || args.Entity != sol.Owner)
+        // Make sure the removed entity was our contained solution and clear our cached reference
+        if (args.Entity != ent.Comp.SolutionRef?.Owner)
             return;
-
-        // Clear our cached reference to the solution entity
-        ent.Comp.SolutionRef = null;
     }
 
     public override void Update(float frameTime)
@@ -53,6 +46,7 @@ public sealed class SolutionRegenerationSystem : EntitySystem
 
             // timer ignores if its full, it's just a fixed cycle
             regen.NextRegenTime += regen.Duration;
+            // Needs to be networked and dirtied so that the client can reroll it during prediction
             Dirty(uid, regen);
             if (!_solutionContainer.ResolveSolution((uid, manager),
                     regen.SolutionName,

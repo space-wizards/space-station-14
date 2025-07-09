@@ -20,7 +20,6 @@ public sealed class SolutionPurgeSystem : EntitySystem
     private void OnMapInit(Entity<SolutionPurgeComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextPurgeTime = _timing.CurTime + ent.Comp.Duration;
-        // See SolutionRegenerationSystem on why this is networked
         Dirty(ent);
     }
 
@@ -36,6 +35,7 @@ public sealed class SolutionPurgeSystem : EntitySystem
 
             // timer ignores if it's empty, it's just a fixed cycle
             purge.NextPurgeTime += purge.Duration;
+            // Needs to be networked and dirtied so that the client can reroll it during prediction
             Dirty(uid, purge);
 
             if (_solutionContainer.TryGetSolution((uid, manager), purge.Solution, out var solution))

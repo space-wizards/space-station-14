@@ -22,7 +22,11 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
-    private static readonly ProtoId<ReagentPrototype>[] StandoutReagents = ["Blood", "Slime", "CopperBlood"];
+    private static readonly ProtoId<ReagentPrototype> Blood = "Blood";
+    private static readonly ProtoId<ReagentPrototype> Slime = "Slime";
+    private static readonly ProtoId<ReagentPrototype> CopperBlood = "CopperBlood";
+
+    private static readonly string[] StandoutReagents = [Blood, Slime, CopperBlood];
 
     /// <summary>
     /// The lowest threshold to be considered for puddle sprite states as well as slipperiness of a puddle.
@@ -129,25 +133,21 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     // Workaround for https://github.com/space-wizards/space-station-14/pull/35314
     private void OnEntRemoved(Entity<PuddleComponent> ent, ref EntRemovedFromContainerMessage args)
     {
-        // Make sure the removed entity was our contained solution
-        if (ent.Comp is not { Solution: { } sol }
-            || args.Entity != sol.Owner)
-            return;
-
-        // Clear our cached reference to the solution entity
-        ent.Comp.Solution = null;
+        // Make sure the removed entity was our contained solution and clear our cached reference
+        if (args.Entity == ent.Comp.Solution?.Owner)
+            ent.Comp.Solution = null;
     }
 
     private void UpdateAppearance(Entity<PuddleComponent?, AppearanceComponent?> ent)
     {
-        var (_, puddle, appearance) = ent;
+        var (uid, puddle, appearance) = ent;
         if (!Resolve(ent, ref puddle, ref appearance))
             return;
 
         var volume = FixedPoint2.Zero;
         var color = Color.White;
 
-        if (_solutionContainerSystem.ResolveSolution(ent.Owner,
+        if (_solutionContainerSystem.ResolveSolution(uid,
                 puddle.SolutionName,
                 ref puddle.Solution,
                 out var solution))
@@ -158,7 +158,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
             // Kinda EH
             // Could potentially do alpha per-solution but future problem.
 
-            color = solution.GetColorWithout(_prototypeManager, StandoutReagents.Select(proto => proto.Id).ToArray());
+            color = solution.GetColorWithout(_prototypeManager, StandoutReagents);
             color = color.WithAlpha(0.7f);
 
             foreach (var standout in StandoutReagents)
@@ -169,7 +169,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
 
                 var interpolateValue = quantity.Float() / solution.Volume.Float();
                 color = Color.InterpolateBetween(color,
-                    _prototypeManager.Index(standout).SubstanceColor,
+                    _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor,
                     interpolateValue);
             }
         }

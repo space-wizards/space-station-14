@@ -16,7 +16,7 @@ public sealed partial class AbsorbentComponent : Component
     /// Used by the client to display a bar showing the reagents contained when held.
     /// Has to still be networked in case the item is given to someone who didn't see a mop in PVS.
     /// </summary>
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public Dictionary<Color, float> Progress = [];
 
     /// <summary>
@@ -30,7 +30,7 @@ public sealed partial class AbsorbentComponent : Component
     /// How much solution we can transfer in one interaction.
     /// </summary>
     [DataField]
-    public FixedPoint2 PickupAmount = 100;
+    public FixedPoint2 PickupAmount = FixedPoint2.New(100);
 
     /// <summary>
     /// The effect spawned when the puddle fully evaporates.

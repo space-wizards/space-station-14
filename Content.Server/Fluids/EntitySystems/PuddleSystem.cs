@@ -313,6 +313,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     protected override void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
     {
+        if (args.SolutionId != entity.Comp.SolutionName)
+            return;
+
         base.OnSolutionUpdate(entity, ref args);
 
         if (args.Solution.Volume <= 0)
@@ -401,15 +404,15 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         // A puddle with 10 units of lube vs a puddle with 10 of lube and 20 catchup should stun and launch forward the same amount.
         if (slipperyUnits > 0)
         {
-            slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult/slipperyUnits);
-            slipComp.SlipData.ParalyzeTime = (stunTimer/(float)slipperyUnits);
+            slipComp.SlipData.LaunchForwardsMultiplier = (float)(launchMult / slipperyUnits);
+            slipComp.SlipData.ParalyzeTime = stunTimer / (float)slipperyUnits;
         }
 
         // Only make it super slippery if there is enough super slippery units for its own puddle
         slipComp.SlipData.SuperSlippery = superSlipperyUnits >= smallPuddleThreshold;
 
         // Lower tile friction based on how slippery it is, lets items slide across a puddle of lube
-        slipComp.SlipData.SlipFriction = (float)(puddleFriction/solution.Volume);
+        slipComp.SlipData.SlipFriction = (float)(puddleFriction / solution.Volume);
         _tile.SetModifier(entity, slipComp.SlipData.SlipFriction);
 
         Dirty(entity, slipComp);

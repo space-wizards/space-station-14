@@ -11,8 +11,6 @@ using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Fluids;
 
@@ -31,8 +29,6 @@ public abstract class SharedAbsorbentSystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
-
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -103,12 +99,12 @@ public abstract class SharedAbsorbentSystem : EntitySystem
 
         // Try to slurp up the puddle.
         // We're then done if our mop doesn't use absorber solutions, since those don't need refilling.
-        if (TryPuddleInteract((absorbEnt, absorbEnt.Comp, useDelay), absorberSoln.Value, user, target)
+        if (TryPuddleInteract((absorbEnt.Owner, absorbEnt.Comp, useDelay), absorberSoln.Value, user, target)
             || !absorbEnt.Comp.UseAbsorberSolution)
             return;
 
         // If it's refillable try to transfer
-        TryRefillableInteract(absorbEnt, absorberSoln.Value, user, target);
+        TryRefillableInteract((absorbEnt.Owner, absorbEnt.Comp, useDelay), absorberSoln.Value, user, target);
     }
 
     /// <summary>
