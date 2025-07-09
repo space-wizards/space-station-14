@@ -1,107 +1,4 @@
 ﻿Entries:
-- author: Fildrance
-  changes:
-  - message: returned deconstruct to the top level option on RCD
-    type: Fix
-  id: 8226
-  time: '2025-04-18T04:50:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36486
-- author: ciaran
-  changes:
-  - message: Added a button to scroll back to the bottom of the chat box
-    type: Add
-  id: 8227
-  time: '2025-04-18T07:43:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35913
-- author: Tayrtahn
-  changes:
-  - message: The popup when pointing at an item in a character's inventory now mentions
-      that character.
-    type: Tweak
-  id: 8228
-  time: '2025-04-18T12:09:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36252
-- author: slarticodefast
-  changes:
-  - message: Punching lights while wearing insulated gloves will no longer electrocute
-      you.
-    type: Fix
-  id: 8229
-  time: '2025-04-18T12:26:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36686
-- author: Minemoder
-  changes:
-  - message: Rainbow Cannabis Leaves no longer emit light due to a renderer limitation.
-    type: Remove
-  id: 8230
-  time: '2025-04-18T14:12:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36479
-- author: IProduceWidgets
-  changes:
-  - message: Holobarrier projectors are now more power efficient.
-    type: Tweak
-  id: 8231
-  time: '2025-04-18T16:10:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34473
-- author: K-Dynamic
-  changes:
-  - message: Removed egg-plant from MegaSeed Servitor. (Egg-plant seeds can still
-      be obtained by mutation or exotic seed crate.)
-    type: Remove
-  id: 8232
-  time: '2025-04-18T16:42:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36579
-- author: Failed, Centronias
-  changes:
-  - message: The drink shaker now has in-hand sprites
-    type: Tweak
-  id: 8233
-  time: '2025-04-18T17:12:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36382
-- author: IProduceWidgets
-  changes:
-  - message: filing cabinets no longer have whitelists.
-    type: Tweak
-  id: 8234
-  time: '2025-04-18T17:37:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36185
-- author: aada
-  changes:
-  - message: Egg-plants now have 6 reagent per egg at 20 potency, up from 3.
-    type: Tweak
-  id: 8235
-  time: '2025-04-18T19:52:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36693
-- author: Nox38
-  changes:
-  - message: Nuclear operative agent is renamed to nuclear operative corpsman.
-    type: Tweak
-  id: 8236
-  time: '2025-04-18T19:56:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34627
-- author: Ilya246
-  changes:
-  - message: The actions hotbar now has up to 10 more hotkeys accessible through the
-      shift key.
-    type: Add
-  id: 8237
-  time: '2025-04-18T22:45:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33872
-- author: lzk228
-  changes:
-  - message: Fixed breaking small mobs (e.g. mice) mask after getting into an air
-      flow.
-    type: Fix
-  id: 8238
-  time: '2025-04-18T22:52:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33888
-- author: YoungThugSS14
-  changes:
-  - message: The Diona and Gingerbread species now get unique typing indicators
-    type: Add
-  id: 8239
-  time: '2025-04-18T23:19:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36126
 - author: Rainbeon
   changes:
   - message: Fixed Revolvers not correctly reloading from Speedloaders when the Revolver
@@ -3631,15 +3528,6 @@
   id: 8704
   time: '2025-06-21T22:23:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38486
-- author: keronshb
-  changes:
-  - message: Added the Hypereutactic Blade back to the Traitor Uplink
-    type: Add
-  - message: Added the Hypereutatic Blade to the Nukie uplink
-    type: Add
-  id: 8705
-  time: '2025-06-22T16:50:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37182
 - author: Cojoke-dot
   changes:
   - message: Pacifists can now use the Staff of Healing
@@ -3888,3 +3776,117 @@
   id: 8737
   time: '2025-07-04T05:08:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38664
+- author: perryprog
+  changes:
+  - message: You can now mop space lube, letting it evaporate faster than it would
+      on its own.
+    type: Tweak
+  id: 8738
+  time: '2025-07-04T21:50:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38743
+- author: TrixxedHeart
+  changes:
+  - message: Vox now have scar markings.
+    type: Add
+  id: 8739
+  time: '2025-07-04T23:06:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38592
+- author: perryprog
+  changes:
+  - message: Spellbooks with infinite charges work again.
+    type: Fix
+  id: 8740
+  time: '2025-07-05T06:28:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38376
+- author: beck-thompson
+  changes:
+  - message: The escape menu ui has been updated slightly.
+    type: Tweak
+  id: 8741
+  time: '2025-07-05T09:28:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38650
+- author: EmoGarbage404
+  changes:
+  - message: Fixed people asphyxiating if left on a stasis bed.
+    type: Fix
+  id: 8742
+  time: '2025-07-06T00:59:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38762
+- author: slarticodefast
+  changes:
+  - message: You can now catch basketballs, footballs and beach balls that are thrown
+      at you!
+    type: Add
+  id: 8743
+  time: '2025-07-06T16:54:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37702
+- author: ArtisticRoomba
+  changes:
+  - message: The Go Go Hat now correctly retrieves and deposits items again.
+    type: Fix
+  id: 8744
+  time: '2025-07-06T23:42:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38810
+- author: maland1
+  changes:
+  - message: Reduced the size of the go go hat inventory
+    type: Tweak
+  id: 8745
+  time: '2025-07-06T23:50:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38808
+- author: AsnDen
+  changes:
+  - message: Golden PAI was added. It is extremely rare and expensive. This PAI can
+      be found in maint lockers
+    type: Add
+  id: 8746
+  time: '2025-07-07T05:07:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38549
+- author: Smugman
+  changes:
+  - message: Many new lighters can now be found in both Maints loot and the Syndicate
+      Uplink.
+    type: Add
+  id: 8747
+  time: '2025-07-07T18:53:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35514
+- author: Jopaglazik, Golub
+  changes:
+  - message: Added Jump Boots In T1 "Salvage Equipment" technology.
+    type: Add
+  id: 8748
+  time: '2025-07-07T19:19:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36862
+- author: slarticodefast, EmoGarbage404
+  changes:
+  - message: 'Added a new science gadget: The H.A.R.M.P.A.C.K., a backpack that gives
+      you two extra hands when worn. Unlocked with a T2 arsenal research and printable
+      at the protolathe and secfab.'
+    type: Fix
+  id: 8749
+  time: '2025-07-07T21:43:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38824
+- author: kosticia
+  changes:
+  - message: Added new reagent for artifact researching - artifact glue! Use it on
+      the artefact with active node for repair its durability.
+    type: Add
+  id: 8750
+  time: '2025-07-08T01:45:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38670
+- author: maland1
+  changes:
+  - message: Updated contraband tags on pulse weapons, temp gun, portable particle
+      decelerator, tesla gun and makeshift laser pistol to be more consistent with
+      their intended owners and legality
+    type: Tweak
+  id: 8751
+  time: '2025-07-08T11:55:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38698
+- author: TrixxedHeart
+  changes:
+  - message: Vox can now have heterochromia in the overlays category under markings.
+    type: Add
+  id: 8752
+  time: '2025-07-08T23:22:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38595
