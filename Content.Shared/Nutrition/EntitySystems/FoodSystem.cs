@@ -21,6 +21,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
@@ -51,6 +52,7 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
+    [Dependency] private readonly SharedStatusEffectsSystem _statusEffects = default!;
     [Dependency] private readonly UtensilSystem _utensil = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
@@ -65,8 +67,10 @@ public sealed class FoodSystem : EntitySystem
         SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand, after: new[] { typeof(OpenableSystem), typeof(InventorySystem) });
         SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
         SubscribeLocalEvent<FoodComponent, GetVerbsEvent<AlternativeVerb>>(AddEatVerb);
-        SubscribeLocalEvent<FoodComponent, ConsumeDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<FoodComponent, ConsumeDoAfterEvent>(OnConsume);
         SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
+
+        SubscribeLocalEvent<StatusEffectConsumableComponent, ConsumedSolutionEvent>(OnConsumeStatusEffect);
     }
 
     /// <summary>
@@ -206,7 +210,12 @@ public sealed class FoodSystem : EntitySystem
         return (true, true);
     }
 
-    private void OnDoAfter(Entity<FoodComponent> entity, ref ConsumeDoAfterEvent args)
+    private void OnConsumeStatusEffect(Entity<StatusEffectConsumableComponent> ent, ref ConsumedSolutionEvent args)
+    {
+        _statusEffects.TryAddStatusEffectDuration(args.Target, ent.Comp.Effect, ent.Comp.DurationPerUnit * (float)args.Solution.Volume);
+    }
+
+    private void OnConsume(Entity<FoodComponent> entity, ref ConsumeDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled || entity.Comp.Deleted || args.Target == null)
             return;
@@ -267,6 +276,9 @@ public sealed class FoodSystem : EntitySystem
 
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
         _stomach.TryTransferSolution(stomachToUse!.Value.Owner, split, stomachToUse);
+
+        var ev = new ConsumedSolutionEvent(split, args.Target.Value);
+        RaiseLocalEvent(entity, ev);
 
         var flavors = args.FlavorMessage;
 
