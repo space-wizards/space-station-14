@@ -1,40 +1,6 @@
-// Credited to PelicanPolice on Shadertoy
-// Free for any purpose, commercial or otherwise.
-// But do post here so I can see where it got used!
-// If using on shadertoy, do link to this project on yours :)
-
-highp float noise(highp vec2 pos, highp float evolve) {
-
-    // Loop the evolution (over a very long period of time).
-    highp float e = fract((evolve*0.01));
-
-    // Coordinates
-    highp float cx  = pos.x*e;
-    highp float cy  = sin(pos.y*e * 376.0); // is this close enough to a 60hz interference? :smol:
-
-    highp float v2_2 = cx*2.4/cy*23.0+pow(abs(cy/22.4),3.3);
-    highp float v2_1 = fract(fract(v2_2));
-    highp float v2 = fract(2.0/v2_1);
-    highp float v3 = fract(cx*evolve/pow(abs(cy),0.050));
-
-    // Generate a "random" black or white value
-    return fract(0.1*v2*v3);
-}
-
-
 void fragment() {
     highp vec2 coords = FRAGCOORD.xy;
-
-    // Increase this number to test performance
-    int intensity = 1;
-
-    highp vec3 colour;
-    for (int i = 0; i < intensity; i++)
-        {
-        // Generate a black to white pixel
-        colour = vec3(noise(coords,TIME));
-        }
-
-    // Output to screen
-    COLOR = vec4(colour,1.0);
+    highp vec2 value = zRandom(coords * SCREEN_PIXEL_SIZE * sin(TIME * 0.01));
+    highp vec3 color = vec3(value.x);
+    COLOR = vec4(0.1 * color,1.0);
 }
