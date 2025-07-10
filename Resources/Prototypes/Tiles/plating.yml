@@ -1,9 +1,15 @@
 ﻿- type: tile
-  id: Plating
-  name: tiles-plating
-  sprite: /Textures/Tiles/plating.png
+  id: BasePlating
+  abstract: true
   baseTurf:
     - Lattice
+    - TrainLattice
+
+- type: tile
+  id: Plating
+  parent: BasePlating
+  name: tiles-plating
+  sprite: /Textures/Tiles/plating.png
   isSubfloor: true
   footstepSounds:
     collection: FootstepPlating
@@ -12,6 +18,7 @@
 
 - type: tile
   id: PlatingDamaged
+  parent: BasePlating
   name: tiles-plating
   sprite: /Textures/Tiles/plating_damaged.png
   variants: 3
@@ -19,8 +26,6 @@
   - 1.0
   - 1.0
   - 1.0
-  baseTurf:
-    - Lattice
   isSubfloor: true
   footstepSounds:
     collection: FootstepPlating
@@ -29,10 +34,9 @@
 
 - type: tile
   id: PlatingAsteroid
+  parent: BasePlating
   name: tiles-asteroid-plating
   sprite: /Textures/Tiles/Asteroid/asteroid_plating.png
-  baseTurf:
-    - Lattice
   isSubfloor: true
   footstepSounds:
     collection: FootstepPlating
@@ -41,10 +45,9 @@
 
 - type: tile
   id: PlatingBrass
+  parent: BasePlating
   name: tiles-brass-plating
   sprite: /Textures/Tiles/Misc/clockwork/clockwork_floor.png
-  baseTurf:
-    - Lattice
   isSubfloor: true
   footstepSounds:
     collection: FootstepPlating
@@ -54,9 +57,8 @@
 - type: tile
   id: PlatingSnow
   name: tiles-snow-plating
+  parent: BasePlating
   sprite: /Textures/Tiles/snow_plating.png #Not in the snow planet RSI because it doesn't have any metadata. Should probably be moved to its own folder later.
-  baseTurf:
-    - Lattice
   isSubfloor: true
   footstepSounds:
     collection: FootstepPlating
