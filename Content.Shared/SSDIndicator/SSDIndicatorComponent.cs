@@ -1,7 +1,7 @@
 using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.SSDIndicator;
 
@@ -22,8 +22,8 @@ public sealed partial class SSDIndicatorComponent : Component
     /// <summary>
     ///     When the entity should fall asleep
     /// </summary>
-    [DataField]
     [AutoNetworkedField, AutoPausedField]
     [Access(typeof(SSDIndicatorSystem))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan FallAsleepTime = TimeSpan.Zero;
 }
