@@ -202,7 +202,7 @@ public sealed class TileSystem : EntitySystem
             _decal.RemoveDecal(tileRef.GridUid, id);
         }
 
-        // Replace tile with the one it was placed on
+        //Replace tile with the one it was placed on
         var previousDef = (ContentTileDefinition)_tileDefinitionManager[previousTileId];
         _maps.SetTile(gridUid, mapGrid, indices, new Tile(previousDef.TileId));
 
