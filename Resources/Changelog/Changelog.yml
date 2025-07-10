@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Fingerprints and fibers are now always applied to items being held, regardless
-      of how they got into your hands.
-    type: Fix
-  - message: Changing gloves now correctly applies new fibers/fingerprints on held
-      items.
-    type: Fix
-  id: 8249
-  time: '2025-04-19T01:02:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30609
 - author: Coolsurf6
   changes:
   - message: Attachbodypart command now functions as intended.
@@ -3890,3 +3879,10 @@
   id: 8761
   time: '2025-07-10T17:11:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38888
+- author: slarticodefast
+  changes:
+  - message: Fixed clones not getting the thieving skill.
+    type: Fix
+  id: 8762
+  time: '2025-07-10T21:37:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38914
