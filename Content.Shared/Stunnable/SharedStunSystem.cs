@@ -291,20 +291,30 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (time <= TimeSpan.Zero)
             return false;
 
-        if (!_status.TryAddStatusEffect(uid, StatusEffectFriciton, time, refresh))
+        if (refresh)
+        {
+            return _status.TryUpdateStatusEffectDuration(uid, StatusEffectFriciton, out var status, time)
+                   && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
+        }
+        else
+        {
+            return _status.TryAddStatusEffectDuration(uid, StatusEffectFriciton, out var status, time)
+                   && TrySetFrictionStatus(status.Value, friction, acceleration, uid);
+        }
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    private bool TrySetFrictionStatus(Entity<FrictionStatusEffectComponent?> status, float friction, float acceleration, EntityUid entity)
+    {
+        if (!Resolve(status, ref status.Comp, false))
             return false;
 
-        if (!_status.TryGetStatusEffect(uid, StatusEffectFriciton, out var status)
-            || !TryComp<FrictionStatusEffectComponent>(status, out var frictionStatus))
-            return false;
+        status.Comp.FrictionModifier = friction;
+        status.Comp.AccelerationModifier = acceleration;
 
-        frictionStatus.FrictionModifier = friction;
-        frictionStatus.AccelerationModifier = acceleration;
-
-
-        TryUpdateFrictionStatus(uid);
-
-        return true;
+        return TryUpdateFrictionStatus(entity);
     }
 
     /// <summary>
