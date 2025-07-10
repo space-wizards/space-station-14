@@ -92,13 +92,12 @@ public sealed class RespiratorSystem : EntitySystem
 
             if (respirator.Saturation < respirator.SuffocationThreshold)
             {
-                // You need lungs to gasp.
-                if (_gameTiming.CurTime >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown
-                    && _bodySystem.BodyHasOrganWithComp<LungComponent>(uid))
+                if (respirator.GaspEmote is { } emote
+                    && _gameTiming.CurTime >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown)
                 {
                     respirator.LastGaspEmoteTime = _gameTiming.CurTime;
                     _chat.TryEmoteWithChat(uid,
-                        respirator.GaspEmote,
+                        emote,
                         ChatTransmitRange.HideChat,
                         ignoreActionBlocker: true);
                 }
