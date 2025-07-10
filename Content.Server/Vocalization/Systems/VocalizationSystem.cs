@@ -18,6 +18,18 @@ public sealed partial class VocalizationSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<VocalizerComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<VocalizerComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextVocalizeInterval = _random.Next(ent.Comp.MinVocalizeInterval, ent.Comp.MaxVocalizeInterval);
+    }
+
     /// <summary>
     /// Try speaking by raising a TryVocalizeEvent
     /// This event is passed to systems adding a message to it and setting it to handled
@@ -60,7 +72,7 @@ public sealed partial class VocalizationSystem : EntitySystem
             return;
 
         // send the message
-        _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, ChatTransmitRange.Normal);
+        _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, entity.Comp.HideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);
     }
 
     public override void Update(float frameTime)
