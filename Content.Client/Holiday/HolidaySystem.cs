@@ -1,3 +1,4 @@
+using Content.Shared.GameTicking;
 using Content.Shared.Holiday;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
@@ -16,7 +17,14 @@ public sealed class HolidaySystem : SharedHolidaySystem
     {
         base.Initialize();
 
+        SubscribeNetworkEvent<TickerLobbyStatusEvent>(EnterLobby);
+
         SubscribeLocalEvent<HolidayRsiSwapComponent, AppearanceChangeEvent>(OnAppearanceChange);
+    }
+
+    private void EnterLobby(TickerLobbyStatusEvent _)
+    {
+        RefreshCurrentHolidays();
     }
 
     private void OnAppearanceChange(Entity<HolidayRsiSwapComponent> ent, ref AppearanceChangeEvent args)
