@@ -23,8 +23,7 @@ public sealed class DatasetVocalizationSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!_protoMan.TryIndex(ent.Comp.Dataset, out var dataset))
-            return;
+        var dataset = _protoMan.Index(ent.Comp.Dataset);
 
         args.Message = _random.Pick(dataset);
         args.Handled = true;
