@@ -13,12 +13,12 @@ public sealed class QuickDialogSystem : SharedQuickDialogSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<QuickDialogOpenEvent>(OpenDialog);
+        SubscribeAllEvent<QuickDialogOpenEvent>(OpenDialog);
     }
 
     private int nextDialogId = 0;
 
-    protected override int GetDialogId(Robust.Shared.Network.NetUserId userId)
+    protected override int GetDialogId(Robust.Shared.Network.NetUserId userId, bool predicted)
     {
         var did = nextDialogId++;
 
@@ -32,18 +32,37 @@ public sealed class QuickDialogSystem : SharedQuickDialogSystem
         var cancel = (ev.Buttons & QuickDialogButtonFlag.CancelButton) != 0;
         var window = new DialogWindow(ev.Title, ev.Prompts, ok: ok, cancel: cancel);
 
-        window.OnConfirmed += responses =>
+        if (ev.ServerOrigin)
         {
-            RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
-                responses,
-                QuickDialogButtonFlag.OkButton));
-        };
+            window.OnConfirmed += responses =>
+            {
+                RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
+                    responses,
+                    QuickDialogButtonFlag.OkButton));
+            };
 
-        window.OnCancelled += () =>
+            window.OnCancelled += () =>
+            {
+                RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
+                    new(),
+                    QuickDialogButtonFlag.CancelButton));
+            };
+        }
+        else
         {
-            RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
-                new(),
-                QuickDialogButtonFlag.CancelButton));
-        };
+            window.OnConfirmed += responses =>
+            {
+                RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
+                    responses,
+                    QuickDialogButtonFlag.OkButton));
+            };
+
+            window.OnCancelled += () =>
+            {
+                RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
+                    new(),
+                    QuickDialogButtonFlag.CancelButton));
+            };
+        }
     }
 }

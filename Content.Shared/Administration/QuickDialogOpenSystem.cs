@@ -20,37 +20,40 @@ public abstract partial class SharedQuickDialogSystem : EntitySystem
         SubscribeAllEvent<QuickDialogResponseEvent>(Handler);
     }
 
-    protected abstract int GetDialogId(NetUserId userId);
+    protected abstract int GetDialogId(NetUserId userId, bool predicted);
 
     protected readonly Dictionary<int, Dialog> _openDialogs = new();
     protected readonly Dictionary<(NetUserId, int), int> _mappingClientToLocal = new();
 
-    private void OpenDialogInternal(ICommonSession session, string title, List<QuickDialogEntry> entries, QuickDialogButtonFlag buttons, Action<QuickDialogResponseEvent> okAction, Action cancelAction)
+    private void OpenDialogInternal(ICommonSession session, string title, List<QuickDialogEntry> entries, QuickDialogButtonFlag buttons, Action<QuickDialogResponseEvent> okAction, Action cancelAction, bool predicted)
     {
-        var did = GetDialogId(session.UserId);
-        RaiseLocalEvent(
-            new QuickDialogOpenEvent(
-                title,
-                entries,
-                did,
-                buttons)
-        );
+        var did = GetDialogId(session.UserId, predicted);
+        if (predicted)
+            RaiseLocalEvent(
+                new QuickDialogOpenEvent(
+                    title,
+                    entries,
+                    did,
+                    buttons,
+                    false)
+            );
+        else
+            RaiseNetworkEvent(
+                new QuickDialogOpenEvent(
+                    title,
+                    entries,
+                    did,
+                    buttons),
+                session
+            );
 
         _openDialogs.Add(did, new Dialog(okAction, cancelAction));
     }
 
     private void Handler(QuickDialogResponseEvent msg, EntitySessionEventArgs args)
     {
-        LogManager.RootSawmill.Debug("handler");
-        foreach (var v in _mappingClientToLocal)
-        {
-            LogManager.RootSawmill.Debug($"mapping: {v.Key.Item1} {v.Key.Item2} {v.Value}");
-        }
-        LogManager.RootSawmill.Debug($"needle: {args.SenderSession.UserId} {msg.Responses}");
-
         if (!_gameTiming.IsFirstTimePredicted)
             return;
-        LogManager.RootSawmill.Debug("zzzzzzzzzzzzzzzz b");
 
         if (!_mappingClientToLocal.ContainsKey((args.SenderSession.UserId, msg.DialogId)))
         {

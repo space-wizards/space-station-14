@@ -34,13 +34,18 @@ public sealed partial class QuickDialogSystem : SharedQuickDialogSystem
     private int _nextServerDialogId = 0;
     private readonly Dictionary<NetUserId, int> _clientNextDialogId = new();
 
-    protected override int GetDialogId(NetUserId userId)
+    protected override int GetDialogId(NetUserId userId, bool predicted)
     {
+        int didClient;
+        var didServer = _nextServerDialogId++;
+
         if (!_clientNextDialogId.ContainsKey(userId))
             _clientNextDialogId[userId] = 0;
 
-        var didClient = _clientNextDialogId[userId]++;
-        var didServer = _nextServerDialogId++;
+        if (predicted)
+            didClient = _clientNextDialogId[userId]++;
+        else
+            didClient = didServer;
 
         _mappingClientToLocal[(userId, didClient)] = didServer;
 

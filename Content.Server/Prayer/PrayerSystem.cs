@@ -20,7 +20,6 @@ public sealed class PrayerSystem : SharedPrayerSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly SharedQuickDialogSystem _quickDialog = default!;
 
     public override void Initialize()
     {

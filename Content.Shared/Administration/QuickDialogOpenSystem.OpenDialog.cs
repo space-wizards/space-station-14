@@ -13,10 +13,11 @@ public abstract partial class SharedQuickDialogSystem
     /// <param name="prompt">The prompt.</param>
     /// <param name="okAction">The action to execute upon Ok being pressed.</param>
     /// <param name="cancelAction">The action to execute upon the dialog being cancelled.</param>
+    /// <param name="predicted">Can dialog popping up be predicted</param>
     /// <typeparam name="T1">Type of the input.</typeparam>
     [PublicAPI]
     public void OpenDialog<T1>(ICommonSession session, string title, string prompt, Action<T1> okAction,
-        Action? cancelAction = null)
+        Action? cancelAction = null, bool predicted = true)
     {
         OpenDialogInternal(
             session,
@@ -36,7 +37,8 @@ public abstract partial class SharedQuickDialogSystem
                     cancelAction?.Invoke();
                 }
             }),
-            cancelAction ?? (() => { })
+            cancelAction ?? (() => { }),
+            predicted
         );
     }
 
@@ -49,11 +51,12 @@ public abstract partial class SharedQuickDialogSystem
     /// <param name="prompt2">The second prompt.</param>
     /// <param name="okAction">The action to execute upon Ok being pressed.</param>
     /// <param name="cancelAction">The action to execute upon the dialog being cancelled.</param>
+    /// <param name="predicted">Can dialog popping up be predicted</param>
     /// <typeparam name="T1">Type of the first input.</typeparam>
     /// <typeparam name="T2">Type of the second input.</typeparam>
     [PublicAPI]
     public void OpenDialog<T1, T2>(ICommonSession session, string title, string prompt1, string prompt2,
-        Action<T1, T2> okAction, Action? cancelAction = null)
+        Action<T1, T2> okAction, Action? cancelAction = null, bool predicted = true)
     {
         OpenDialogInternal(
             session,
@@ -77,7 +80,8 @@ public abstract partial class SharedQuickDialogSystem
                     cancelAction?.Invoke();
                 }
             }),
-            cancelAction ?? (() => { })
+            cancelAction ?? (() => { }),
+            predicted
         );
     }
 
@@ -91,12 +95,13 @@ public abstract partial class SharedQuickDialogSystem
     /// <param name="prompt3">The third prompt.</param>
     /// <param name="okAction">The action to execute upon Ok being pressed.</param>
     /// <param name="cancelAction">The action to execute upon the dialog being cancelled.</param>
+    /// <param name="predicted">Can dialog popping up be predicted</param>
     /// <typeparam name="T1">Type of the first input.</typeparam>
     /// <typeparam name="T2">Type of the second input.</typeparam>
     /// <typeparam name="T3">Type of the third input.</typeparam>
     [PublicAPI]
     public void OpenDialog<T1, T2, T3>(ICommonSession session, string title, string prompt1, string prompt2,
-        string prompt3, Action<T1, T2, T3> okAction, Action? cancelAction = null)
+        string prompt3, Action<T1, T2, T3> okAction, Action? cancelAction = null, bool predicted = true)
     {
         OpenDialogInternal(
             session,
@@ -121,7 +126,8 @@ public abstract partial class SharedQuickDialogSystem
                     cancelAction?.Invoke();
                 }
             }),
-            cancelAction ?? (() => { })
+            cancelAction ?? (() => { }),
+            predicted
         );
     }
 
@@ -136,13 +142,14 @@ public abstract partial class SharedQuickDialogSystem
     /// <param name="prompt4">The fourth prompt.</param>
     /// <param name="okAction">The action to execute upon Ok being pressed.</param>
     /// <param name="cancelAction">The action to execute upon the dialog being cancelled.</param>
+    /// <param name="predicted">Can dialog popping up be predicted</param>
     /// <typeparam name="T1">Type of the first input.</typeparam>
     /// <typeparam name="T2">Type of the second input.</typeparam>
     /// <typeparam name="T3">Type of the third input.</typeparam>
     /// <typeparam name="T4">Type of the fourth input.</typeparam>
     [PublicAPI]
     public void OpenDialog<T1, T2, T3, T4>(ICommonSession session, string title, string prompt1, string prompt2,
-        string prompt3, string prompt4, Action<T1, T2, T3, T4> okAction, Action? cancelAction = null)
+        string prompt3, string prompt4, Action<T1, T2, T3, T4> okAction, Action? cancelAction = null, bool predicted = true)
     {
         OpenDialogInternal(
             session,
@@ -169,7 +176,8 @@ public abstract partial class SharedQuickDialogSystem
                     cancelAction?.Invoke();
                 }
             }),
-            cancelAction ?? (() => { })
+            cancelAction ?? (() => { }),
+            predicted
         );
     }
 }
