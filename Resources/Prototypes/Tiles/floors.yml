@@ -207,7 +207,6 @@
   sprite: /Textures/Tiles/Misc/clockwork/clockwork_floor_filled.png
   baseTurf:
     - PlatingBrass
-    - Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
@@ -221,7 +220,6 @@
   sprite: /Textures/Tiles/Misc/clockwork/reebe.png
   baseTurf:
     - PlatingBrass
-    - Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
@@ -1654,7 +1652,7 @@
     - 0.0116
     - 0.0116
   baseTurf:
-    -Space
+    - Space
   isSubfloor: true
   footstepSounds:
     collection: FootstepAsteroid
