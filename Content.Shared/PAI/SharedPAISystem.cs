@@ -41,12 +41,15 @@ public sealed partial class PAIShopActionEvent : InstantActionEvent
 /// <summary>
 /// Health Bar
 /// </summary>
-[Serializable, NetSerializable, ByRefEvent]
-public sealed partial class PAIHealthBarEvent;
-
+[Serializable, NetSerializable, ByRefEvent, DataDefinition]
+public sealed partial class PAIHealthBarEvent
+{
+}
 
 /// <summary>
 /// Security Bar Event
 /// </summary>
-[Serializable, NetSerializable, ByRefEvent]
-public sealed partial class PAISecurityBarEvent;
+[Serializable, NetSerializable, ByRefEvent, DataDefinition]
+public sealed partial class PAISecurityBarEvent
+{
+}
