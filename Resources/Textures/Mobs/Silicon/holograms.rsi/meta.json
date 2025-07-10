@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/blob/e2923df112df8aa025846d0764697bad6506586a/icons/mob/AI.dmi - modified by chromiumboy.",
+    "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/blob/e2923df112df8aa025846d0764697bad6506586a/icons/mob/AI.dmi - modified by chromiumboy. Kobold/monkey sprites taken from SS14 Wizard's Den at https://github.com/space-wizards/space-station-14/tree/f574990b11db5936de3635a4273d5eb26217882e/Resources/Textures/Mobs/Animals, modified by Hitlinemoss",
     "size": {
         "x": 32,
         "y": 32
@@ -33,6 +33,12 @@
         },
         {
             "name": "ai_dog"
+        },
+        {
+            "name": "ai_kobold"
+        },
+        {
+            "name": "ai_monkey"
         }
     ]
 }
