@@ -46,7 +46,7 @@
   - type: SelectableBorgModule
   - type: ContainerContainer
     containers:
-      provided_container: !type:Container { }
+      holding_container: !type:Container { }
 
 - type: entity
   parent: BaseAction
