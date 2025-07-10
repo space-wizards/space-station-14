@@ -96,8 +96,12 @@ public static class PoolManager
         Assert.That(passed);
     }
 
-    public static async Task<TestPair> GetServerClient(PoolSettings? settings = null)
-        => await Instance.GetPair(settings);
+    public static async Task<TestPair> GetServerClient(
+        PoolSettings? settings = null,
+        ITestContextLike? testContext = null)
+    {
+        return await Instance.GetPair(settings, testContext);
+    }
 
     public static void Startup(params Assembly[] extra)
         => Instance.Startup(extra);
@@ -112,9 +116,9 @@ public static class PoolManager
 public sealed class ContentPoolManager : PoolManager<TestPair>
 {
     public override PairSettings DefaultSettings =>  new PoolSettings();
-    protected override string GetDefaultTestName(TestContext testContext)
+    protected override string GetDefaultTestName(ITestContextLike testContext)
     {
-        return testContext.Test.FullName.Replace("Content.IntegrationTests.Tests.", "");
+        return testContext.FullName.Replace("Content.IntegrationTests.Tests.", "");
     }
 
     public override void Startup(params Assembly[] extraAssemblies)
