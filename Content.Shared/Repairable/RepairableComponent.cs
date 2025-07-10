@@ -9,7 +9,7 @@ namespace Content.Shared.Repairable;
 /// Use this component to mark a device as repairable.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class SharedRepairableComponent : Component
+public sealed partial class RepairableComponent : Component
 {
     /// <summary>
     ///     All the damage to change information is stored in this <see cref="DamageSpecifier"/>.
