@@ -152,7 +152,7 @@
   name: steel toolbox
   parent: ToolboxBase
   id: ToolboxSteel
-  description: An unpainted toolbox that could hold a variety of things.
+  description: An unpainted toolbox that can hold a variety of things.
   components:
   - type: Sprite
     sprite: Objects/Tools/Toolboxes/toolbox_steel.rsi
