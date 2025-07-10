@@ -10,8 +10,8 @@ namespace Content.Shared.Holiday.ShouldCelebrate
     [DataDefinition]
     public sealed partial class DayOfYear : IHolidayShouldCelebrate
     {
-        [DataField("dayOfYear")]
-        private uint _dayOfYear = 1;
+        [DataField("dayOfYear", required: true)]
+        private uint _dayOfYear;
 
         public bool ShouldCelebrate(DateTime date, HolidayPrototype holiday)
         {

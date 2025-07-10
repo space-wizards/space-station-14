@@ -1,5 +1,8 @@
 namespace Content.Shared.Holiday.Interfaces
 {
+    /// <summary>
+    ///     Used to trigger arbitrary code when the holiday is celebrated.
+    /// </summary>
     public interface IHolidayCelebrate
     {
         /// <summary>

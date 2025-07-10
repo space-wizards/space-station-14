@@ -2,6 +2,9 @@ using Content.Shared.Holiday.Interfaces;
 
 namespace Content.Shared.Holiday.ShouldCelebrate
 {
+    /// <summary>
+    ///     Default holiday condition used by <see cref="HolidayPrototype"/>.
+    /// </summary>
     [Virtual, DataDefinition]
     public partial class DefaultHolidayShouldCelebrate : IHolidayShouldCelebrate
     {
