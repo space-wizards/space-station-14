@@ -65,5 +65,11 @@ public sealed partial class TraitPrototype : IPrototype
     /// Allows this trait to be optionally selected for disabling when getting an antag role that disables traits.
     /// </summary>
     [DataField]
-    public bool AllowAntagDisable;
+    public bool AllowAntagDisable = true;
+
+    /// <summary>
+    /// Remove the trait's components if the trait is disabled.
+    /// </summary>
+    [DataField]
+    public bool RemoveComponentsWhenDisabled;
 }

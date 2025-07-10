@@ -93,11 +93,12 @@ public sealed class TraitSystem : EntitySystem
 
             var traitCompList = traitPrototype.Components.Values.Select(x => x.Component.GetType()).ToList();
 
-            var ev = new RevertTraitEvent(traitCompList);
+            var ev = new RevertTraitEvent(traitId, traitCompList);
             RaiseLocalEvent(args.Mind.OwnedEntity.Value, ref ev);
 
             // Add all components required by the prototype
-            EntityManager.RemoveComponents(args.Mind.OwnedEntity.Value, traitPrototype.Components);
+            if (traitPrototype.RemoveComponentsWhenDisabled)
+                EntityManager.RemoveComponents(args.Mind.OwnedEntity.Value, traitPrototype.Components);
         }
     }
 }

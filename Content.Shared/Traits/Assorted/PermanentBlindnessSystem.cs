@@ -23,7 +23,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
 
     private void OnExamined(Entity<PermanentBlindnessComponent> blindness, ref ExaminedEvent args)
     {
-        if (args.IsInDetailsRange && blindness.Comp.Blindness == 0)
+        if (args.IsInDetailsRange && blindness.Comp.BlindOnExamine)
         {
             args.PushMarkup(Loc.GetString("permanent-blindness-trait-examined", ("target", Identity.Entity(blindness, EntityManager))));
         }
@@ -46,20 +46,25 @@ public sealed class PermanentBlindnessSystem : EntitySystem
             return;
 
         if (blindness.Comp.Blindness != 0)
+        {
             _blinding.SetMinDamage((blindness.Owner, blindable), blindness.Comp.Blindness);
+        }
         else
         {
             var maxMagnitudeInt = (int) BlurryVisionComponent.MaxMagnitude;
+            blindness.Comp.BlindOnExamine = true;
             _blinding.SetMinDamage((blindness.Owner, blindable), maxMagnitudeInt);
         }
     }
 
     private void OnRevertTrait(Entity<PermanentBlindnessComponent> blindness, ref RevertTraitEvent args)
     {
+        // We do not revert the BlindOnExamine value, to hide the trait being reverted.
+
         if (!args.Components.Contains(blindness.Comp.GetType()))
             return;
 
-        if(!TryComp<BlindableComponent>(blindness.Owner, out var blindable))
+        if (!TryComp<BlindableComponent>(blindness.Owner, out var blindable))
             return;
 
         _blinding.SetMinDamage((blindness.Owner, blindable), 0);

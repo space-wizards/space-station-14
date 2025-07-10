@@ -26,6 +26,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.Themes;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Configuration;
@@ -526,6 +527,7 @@ namespace Content.Client.Lobby.UI
                 group.Add(trait.ID);
             }
 
+            BoxContainer? firstCategory = null;
             // Create UI view from model
             foreach (var (categoryId, categoryTraits) in traitGroups)
             {
@@ -534,25 +536,42 @@ namespace Content.Client.Lobby.UI
                 if (categoryId != TraitCategoryPrototype.Default)
                 {
                     category = _prototypeManager.Index<TraitCategoryPrototype>(categoryId);
-                    // Label
-                    TraitsList.AddChild(new Label
+
+                    // Label box
+                    var box = new BoxContainer();
+                    box.AddChild(new Label
                     {
                         Text = Loc.GetString(category.Name),
                         Margin = new Thickness(0, 10, 0, 0),
                         StyleClasses = { StyleBase.StyleClassLabelHeading },
+                        SizeFlagsStretchRatio = 3,
+                        HorizontalExpand = true,
+                        VerticalAlignment = VAlignment.Bottom,
                     });
+
+                    if (firstCategory == null)
+                        firstCategory = box;
+
+                    TraitsList.AddChild(box);
                 }
 
                 List<TraitPreferenceSelector?> selectors = new();
                 var selectionCount = 0;
+                int i = 0;
 
                 foreach (var traitProto in categoryTraits)
                 {
                     var trait = _prototypeManager.Index<TraitPrototype>(traitProto);
                     var selector = new TraitPreferenceSelector(trait);
+                    var bgColor = i % 2 == 0 ? Color.FromHex("#292B38") : Color.FromHex("#2F2F3B");
+                    i++;
 
+                    selector.Container.PanelOverride = new StyleBoxFlat(bgColor);
                     selector.Preference = Profile?.TraitPreferences.Contains(trait.ID) == true;
-                    selector.CheckboxAntagDisable.Disabled = !selector.Preference;
+                    selector.CheckboxAntagDisable.Disabled = !selector.Preference || !trait.AllowAntagDisable;
+
+                    if (!trait.AllowAntagDisable)
+                        selector.CheckboxAntagDisable.Visible = false;
 
                     if (selector.Preference)
                         selectionCount += trait.Cost;
@@ -615,6 +634,20 @@ namespace Content.Client.Lobby.UI
 
                     TraitsList.AddChild(selector);
                 }
+            }
+
+            // If there's a category, add a note
+            if (firstCategory != null)
+            {
+                var disableTraitLabel = new Label
+                {
+                    Text = Loc.GetString("humanoid-profile-editor-antag-disable-trait"),
+                    Margin = new Thickness(0, 10, 0, 0),
+                    StyleClasses = { StyleBase.StyleClassItalic },
+                    SizeFlagsStretchRatio = 3,
+                    HorizontalExpand = true,
+                };
+                firstCategory.AddChild(disableTraitLabel);
             }
         }
 

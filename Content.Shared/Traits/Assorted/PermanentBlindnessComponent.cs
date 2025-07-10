@@ -13,5 +13,11 @@ public sealed partial class PermanentBlindnessComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public int Blindness = 0;
+
+    /// <summary>
+    /// When examined, should they appear with additional description text?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool BlindOnExamine = false;
 }
 
