@@ -1296,7 +1296,8 @@ public abstract class SharedStorageSystem : EntitySystem
         Angle startAngle;
         if (storageEnt.Comp.DefaultStorageOrientation == null)
         {
-            startAngle = Angle.FromDegrees(-itemEnt.Comp.StoredRotation);
+            //if our start angle isn't a right angle we'll fail to insert if we're a complex shape, so we use zero instead
+            startAngle = (itemEnt.Comp.StoredRotation % 90 == 0) ? Angle.FromDegrees(-itemEnt.Comp.StoredRotation) : Angle.Zero;
         }
         else
         {
