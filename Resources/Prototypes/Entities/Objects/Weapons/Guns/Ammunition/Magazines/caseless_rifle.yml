@@ -106,7 +106,7 @@
     proto: CartridgeCaselessRifle
     capacity: 10
   - type: Sprite
-    slayers:
+    layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
