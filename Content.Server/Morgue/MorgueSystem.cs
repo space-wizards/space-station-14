@@ -3,8 +3,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Morgue;
 using Content.Shared.Morgue.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 
@@ -25,12 +23,12 @@ public sealed class MorgueSystem : EntitySystem
     /// <summary>
     ///     Handles the examination text for looking at a morgue.
     /// </summary>
-    private void OnExamine(EntityUid uid, MorgueComponent component, ExaminedEvent args)
+    private void OnExamine(Entity<MorgueComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        _appearance.TryGetData<MorgueContents>(uid, MorgueVisuals.Contents, out var contents);
+        _appearance.TryGetData<MorgueContents>(ent.Owner, MorgueVisuals.Contents, out var contents);
 
         var text = contents switch
         {

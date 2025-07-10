@@ -1,0 +1,56 @@
+- type: htnCompound
+  id: FirebotCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: DouseFireTargetCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound    
+          
+- type: htnCompound
+  id: DouseFireTargetCompound
+  branches:
+    - tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:UtilityOperator
+            proto: NearbyOnFire
+
+        - !type:HTNPrimitiveTask
+          operator: !type:SpeakOperator
+            speech: firebot-fire-detected
+            hidden: true  
+
+        - !type:HTNPrimitiveTask
+          operator: !type:MoveToOperator
+            pathfindInPlanning: true
+            removeKeyOnFinish: false
+            targetKey: TargetCoordinates
+            pathfindKey: TargetPathfind
+            rangeKey: InteractRange
+
+        - !type:HTNPrimitiveTask
+          operator: !type:SetFloatOperator
+            targetKey: WaitTime
+            amount: 1
+
+        - !type:HTNPrimitiveTask
+          operator: !type:WaitOperator
+            key: WaitTime
+          preconditions:
+            - !type:KeyExistsPrecondition
+              key: WaitTime
+
+        - !type:HTNPrimitiveTask
+          preconditions:
+            - !type:TargetInRangePrecondition
+              targetKey: Target
+              rangeKey: InteractRange
+          operator: !type:InteractWithOperator
+            targetKey: Target
+          services:
+            - !type:UtilityService
+              id: FireService
+              proto: NearbyOnFire
+              key: Target
+

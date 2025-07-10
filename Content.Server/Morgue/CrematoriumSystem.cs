@@ -1,4 +1,4 @@
-using Content.Server.GameTicking;
+using Content.Server.Ghost;
 using Content.Server.Morgue.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
@@ -13,8 +13,6 @@ using Content.Shared.Standing;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -25,7 +23,7 @@ public sealed class CrematoriumSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
@@ -89,7 +87,7 @@ public sealed class CrematoriumSystem : EntitySystem
             Text = Loc.GetString("cremate-verb-get-data-text"),
             // TODO VERB ICON add flame/burn symbol?
             Act = () => TryCremate(uid, component, storage),
-            Impact = LogImpact.Medium // could be a body? or evidence? I dunno.
+            Impact = LogImpact.High // could be a body? or evidence? I dunno.
         };
         args.Verbs.Add(verb);
     }
@@ -136,7 +134,7 @@ public sealed class CrematoriumSystem : EntitySystem
             {
                 var item = storage.Contents.ContainedEntities[i];
                 _containers.Remove(item, storage.Contents);
-                EntityManager.DeleteEntity(item);
+                Del(item);
             }
             var ash = Spawn("Ash", Transform(uid).Coordinates);
             _containers.Insert(ash, storage.Contents);
@@ -154,7 +152,7 @@ public sealed class CrematoriumSystem : EntitySystem
         var victim = args.Victim;
         if (TryComp(victim, out ActorComponent? actor) && _minds.TryGetMind(victim, out var mindId, out var mind))
         {
-            _ticker.OnGhostAttempt(mindId, false, mind: mind);
+            _ghostSystem.OnGhostAttempt(mindId, false, mind: mind);
 
             if (mind.OwnedEntity is { Valid: true } entity)
             {
@@ -174,7 +172,7 @@ public sealed class CrematoriumSystem : EntitySystem
         }
         else
         {
-            EntityManager.DeleteEntity(victim);
+            Del(victim);
         }
         _entityStorage.CloseStorage(uid);
         Cremate(uid, component);

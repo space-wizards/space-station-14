@@ -30,6 +30,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
     private GuidebookWindow? _guideWindow;
     private MenuButton? GuidebookButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.GuidebookButton;
+    private ProtoId<GuideEntryPrototype>? _lastEntry;
 
     public void OnStateEntered(LobbyState state)
     {
@@ -142,7 +143,10 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
             GuidebookButton.Pressed = false;
 
         if (_guideWindow != null)
+        {
             _guideWindow.ReturnContainer.Visible = false;
+            _lastEntry = _guideWindow.LastEntry;
+        }
     }
 
     private void OnWindowOpen()
@@ -176,8 +180,6 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         if (GuidebookButton != null)
             GuidebookButton.SetClickPressed(!_guideWindow.IsOpen);
 
-        selected ??= _configuration.GetCVar(CCVars.DefaultGuide);
-
         if (guides == null)
         {
             guides = _prototypeManager.EnumeratePrototypes<GuideEntryPrototype>()
@@ -193,6 +195,17 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
             }
         }
 
+        if (selected == null)
+        {
+            if (_lastEntry is { } lastEntry && guides.ContainsKey(lastEntry))
+            {
+                selected = _lastEntry;
+            }
+            else
+            {
+                selected = _configuration.GetCVar(CCVars.DefaultGuide);
+            }
+        }
         _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
 
         // Expand up to depth-2.
@@ -214,7 +227,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         {
             if (!_prototypeManager.TryIndex(guideId, out var guide))
             {
-                Logger.Error($"Encountered unknown guide prototype: {guideId}");
+                Log.Error($"Encountered unknown guide prototype: {guideId}");
                 continue;
             }
             guides.Add(guideId, guide);
@@ -244,7 +257,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
             if (!_prototypeManager.TryIndex(childId, out var child))
             {
-                Logger.Error($"Encountered unknown guide prototype: {childId} as a child of {guide.Id}. If the child is not a prototype, it must be directly provided.");
+                Log.Error($"Encountered unknown guide prototype: {childId} as a child of {guide.Id}. If the child is not a prototype, it must be directly provided.");
                 continue;
             }
 

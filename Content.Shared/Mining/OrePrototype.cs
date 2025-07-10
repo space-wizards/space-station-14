@@ -1,26 +1,27 @@
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Mining;
 
 /// <summary>
 /// This is a prototype for defining ores that generate in rock
 /// </summary>
-[Prototype("ore")]
+[Prototype]
 public sealed partial class OrePrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    [DataField("oreEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? OreEntity;
+    [DataField]
+    public EntProtoId? OreEntity;
 
-    [DataField("minOreYield")]
+    [DataField]
     public int MinOreYield = 1;
 
-    [DataField("maxOreYield")]
+    [DataField]
     public int MaxOreYield = 1;
 
-    //TODO: add sprites for ores for things like mining analyzer
+    [DataField]
+    public SpriteSpecifier? OreSprite;
 }

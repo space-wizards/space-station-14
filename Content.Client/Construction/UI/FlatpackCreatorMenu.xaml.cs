@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Client.Materials;
+using Content.Client.Materials.UI;
 using Content.Client.Message;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Construction.Components;
@@ -26,8 +27,7 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
 
     private EntityUid _owner;
 
-    [ValidatePrototypeId<EntityPrototype>]
-    public const string NoBoardEffectId = "FlatpackerNoBoardEffect";
+    public static readonly EntProtoId NoBoardEffectId = "FlatpackerNoBoardEffect";
 
     private EntityUid? _currentBoard = EntityUid.Invalid;
 

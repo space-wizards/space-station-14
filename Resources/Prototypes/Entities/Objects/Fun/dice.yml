@@ -121,11 +121,12 @@
   - type: StepTrigger
     intersectRatio: 0.2
   - type: TriggerOnStepTrigger
-  - type: ClothingRequiredStepTrigger
+  - type: PreventableStepTrigger
   - type: Slippery
     slipSound:
       path: /Audio/Effects/glass_step.ogg
-    launchForwardsMultiplier: 0
+    slipData:
+      launchForwardsMultiplier: 0
   - type: DamageUserOnTrigger
     damage:
       types:

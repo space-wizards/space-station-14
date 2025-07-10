@@ -1,5 +1,8 @@
 ﻿using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nutrition;
@@ -67,3 +70,8 @@ public record struct SliceFoodEvent();
 public sealed partial class SliceFoodDoAfterEvent : SimpleDoAfterEvent
 {
 }
+
+/// <summary>
+///    Raised on FoodSequence start element entity when new ingredient is added to FoodSequence
+/// </summary>
+public record struct FoodSequenceIngredientAddedEvent(EntityUid Start, EntityUid Element, ProtoId<FoodSequenceElementPrototype> Proto, EntityUid? User = null);

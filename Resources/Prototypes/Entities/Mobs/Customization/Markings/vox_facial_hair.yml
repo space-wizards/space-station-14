@@ -2,6 +2,7 @@
   id: VoxFacialHairBeard
   bodyPart: FacialHair
   markingCategory: FacialHair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
@@ -11,6 +12,7 @@
   id: VoxFacialHairColonel
   bodyPart: FacialHair
   markingCategory: FacialHair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
@@ -20,6 +22,7 @@
   id: VoxFacialHairFu
   bodyPart: FacialHair
   markingCategory: FacialHair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
@@ -29,6 +32,7 @@
   id: VoxFacialHairMane
   bodyPart: FacialHair
   markingCategory: FacialHair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
@@ -38,6 +42,7 @@
   id: VoxFacialHairManeSmall
   bodyPart: FacialHair
   markingCategory: FacialHair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
@@ -47,6 +52,7 @@
   id: VoxFacialHairNeck
   bodyPart: FacialHair
   markingCategory: FacialHair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi
@@ -56,6 +62,7 @@
   id: VoxFacialHairTufts
   bodyPart: FacialHair
   markingCategory: FacialHair
+  canBeDisplaced: false
   speciesRestriction: [Vox]
   sprites:
     - sprite: Mobs/Customization/vox_facial_hair.rsi

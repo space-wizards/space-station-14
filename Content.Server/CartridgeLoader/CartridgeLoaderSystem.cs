@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.PDA;
 using Content.Shared.CartridgeLoader;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Interaction;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -340,6 +341,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (args.Container.ID != InstalledContainerId && args.Container.ID != loader.CartridgeSlot.ID)
             return;
 
+        if (TryComp(args.Entity, out CartridgeComponent? cartridge))
+            cartridge.LoaderUid = uid;
+
         RaiseLocalEvent(args.Entity, new CartridgeAddedEvent(uid));
         base.OnItemInserted(uid, loader, args);
     }
@@ -359,6 +363,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
         if (deactivate)
             RaiseLocalEvent(args.Entity, new CartridgeDeactivatedEvent(uid));
+
+        if (TryComp(args.Entity, out CartridgeComponent? cartridge))
+            cartridge.LoaderUid = null;
 
         RaiseLocalEvent(args.Entity, new CartridgeRemovedEvent(uid));
         base.OnItemRemoved(uid, loader, args);
@@ -421,7 +428,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     private void OnUiMessage(EntityUid uid, CartridgeLoaderComponent component, CartridgeUiMessage args)
     {
         var cartridgeEvent = args.MessageEvent;
+        cartridgeEvent.User = args.Actor;
         cartridgeEvent.LoaderUid = GetNetEntity(uid);
+        cartridgeEvent.Actor = args.Actor;
 
         RelayEvent(component, cartridgeEvent, true);
     }

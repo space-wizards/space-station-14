@@ -33,9 +33,9 @@ public sealed class DiscordWebhook : IPostInjectInit
         {
             return await _http.GetFromJsonAsync<WebhookData>(url);
         }
-        catch
+        catch (Exception e)
         {
-            _sawmill.Error($"Error getting discord webhook data. Stack trace:\n{Environment.StackTrace}");
+            _sawmill.Error($"Error getting discord webhook data.\n{e}");
             return null;
         }
     }

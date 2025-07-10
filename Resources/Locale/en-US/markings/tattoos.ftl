@@ -27,3 +27,15 @@ marking-TattooEyeRight = Right Eye
 
 marking-TattooEyeLeft-tattoo_eye_l = Left Eye
 marking-TattooEyeLeft = Left Eye
+
+marking-TattooEyeMothRight-tattoo_eye_moth_r = Right Eye
+marking-TattooEyeMothRight = Right Eye
+
+marking-TattooEyeMothLeft-tattoo_eye_moth_l = Left Eye
+marking-TattooEyeMothLeft = Left Eye
+
+marking-TattooEyeVoxRight-tattoo_eye_vox_r = Right Eye
+marking-TattooEyeVoxRight = Right Eye
+
+marking-TattooEyeVoxLeft-tattoo_eye_vox_l = Left Eye
+marking-TattooEyeVoxLeft = Left Eye

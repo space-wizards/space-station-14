@@ -143,12 +143,12 @@ entities:
     - type: Transform
       pos: 0.5,-10.5
       parent: 1
-    - type: Door
-      secondsUntilStateChange: -81.781815
-      state: Opening
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
+    - type: Door
+      secondsUntilStateChange: -347.64847
+      state: Opening
 - proto: AirlockSecurityGlassLocked
   entities:
   - uid: 73
@@ -170,9 +170,9 @@ entities:
     - type: Transform
       pos: -0.5,-7.5
       parent: 1
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
-  - uid: 83
+  - uid: 57
     components:
     - type: Transform
       pos: 0.5,-10.5
@@ -829,6 +829,14 @@ entities:
         Glip Glorp,
 
         NanoTrasen Motorpool Division
+- proto: PlushieRouny
+  entities:
+  - uid: 83
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.53599805,-6.526394
+      parent: 1
 - proto: PortableGeneratorPacman
   entities:
   - uid: 41

@@ -1,0 +1,38 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Made by Flareguy for Space Station 14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "load": {
+        "srgb": false
+    },
+    "states": [
+        {
+            "name": "jumpsuit-male",
+            "directions": 4
+        },
+        {
+            "name": "jumpsuit-female",
+            "directions": 4
+        },
+        {
+            "name": "hand",
+            "directions": 4
+        },
+        {
+            "name": "outerclothing",
+            "directions": 4
+        },
+        {
+            "name": "back",
+            "directions": 4
+        },
+        {
+            "name": "shoes",
+            "directions": 4
+        }
+    ]
+}

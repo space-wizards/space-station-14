@@ -1,38 +1,48 @@
 ﻿#nullable enable
 using System.Linq;
-using Content.IntegrationTests.Pair;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Players;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Minds;
 
 [TestFixture]
 public sealed class GhostRoleTests
 {
+    private const string GhostRoleProtoId = "GhostRoleTestEntity";
+    private const string TestMobProtoId = "GhostRoleTestMob";
+
     [TestPrototypes]
-    private const string Prototypes = @"
-- type: entity
-  id: GhostRoleTestEntity
-  components:
-  - type: MindContainer
-  - type: GhostRole
-  - type: GhostTakeoverAvailable
-";
+    private const string Prototypes = $"""
+        - type: entity
+          id: {GhostRoleProtoId}
+          components:
+          - type: MindContainer
+          - type: GhostRole
+          - type: GhostTakeoverAvailable
+          - type: MobState
+
+        - type: entity
+          id: {TestMobProtoId}
+          components:
+          - type: MobState # MobState is required for correct determination of if the player can return to body or not
+        """;
 
     /// <summary>
     /// This is a simple test that just checks if a player can take a ghost role and then regain control of their
     /// original entity without encountering errors.
     /// </summary>
-    [Test]
-    public async Task TakeRoleAndReturn()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TakeRoleAndReturn(bool adminGhost)
     {
+        var ghostCommand = adminGhost ? "aghost" : "ghost";
+
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             Dirty = true,
@@ -49,36 +59,67 @@ public sealed class GhostRoleTests
         var conHost = client.ResolveDependency<IConsoleHost>();
         var mindSystem = entMan.System<SharedMindSystem>();
         var session = sPlayerMan.Sessions.Single();
-        var originalMindId = session.ContentData()!.Mind!.Value;
+        var originalPlayerMindId = session.ContentData()!.Mind!.Value;
+
+        // Check that there are no ghosts
+        Assert.That(entMan.Count<GhostComponent>(), Is.Zero);
 
         // Spawn player entity & attach
-        EntityUid originalMob = default;
+        EntityUid originalPlayerMob = default;
         await server.WaitPost(() =>
         {
-            originalMob = entMan.SpawnEntity(null, mapData.GridCoords);
-            mindSystem.TransferTo(originalMindId, originalMob, true);
+            originalPlayerMob = entMan.SpawnEntity(TestMobProtoId, mapData.GridCoords);
+            mindSystem.TransferTo(originalPlayerMindId, originalPlayerMob, true);
         });
 
-        // Check player got attached.
         await pair.RunTicksSync(10);
-        Assert.That(session.AttachedEntity, Is.EqualTo(originalMob));
-        var originalMind = entMan.GetComponent<MindComponent>(originalMindId);
-        Assert.That(originalMind.OwnedEntity, Is.EqualTo(originalMob));
-        Assert.That(originalMind.VisitingEntity, Is.Null);
+        var originalPlayerMind = entMan.GetComponent<MindComponent>(originalPlayerMindId);
+        Assert.Multiple(() =>
+        {
+            // Check player got attached.
+            Assert.That(session.AttachedEntity, Is.EqualTo(originalPlayerMob));
+            Assert.That(originalPlayerMind.OwnedEntity, Is.EqualTo(originalPlayerMob));
+            Assert.That(originalPlayerMind.VisitingEntity, Is.Null);
+            Assert.That(originalPlayerMind.OriginalOwnerUserId, Is.EqualTo(session.UserId));
+
+            // Check that there are still no ghosts
+            Assert.That(entMan.Count<GhostComponent>(), Is.Zero);
+        });
 
         // Use the ghost command
-        conHost.ExecuteCommand("ghost");
+        conHost.ExecuteCommand(ghostCommand);
         await pair.RunTicksSync(10);
-        var ghost = session.AttachedEntity;
-        Assert.That(entMan.HasComponent<GhostComponent>(ghost));
-        Assert.That(ghost, Is.Not.EqualTo(originalMob));
-        Assert.That(session.ContentData()?.Mind, Is.EqualTo(originalMindId));
-        Assert.That(originalMind.OwnedEntity, Is.EqualTo(originalMob), $"Original mob: {originalMob}, Ghost: {ghost}");
-        Assert.That(originalMind.VisitingEntity, Is.EqualTo(ghost));
+        var ghostOne = session.AttachedEntity;
+        Assert.Multiple(() =>
+        {
+            // Assert that the ghost is a new entity with a new mind
+            Assert.That(entMan.HasComponent<GhostComponent>(ghostOne));
+            Assert.That(ghostOne, Is.Not.EqualTo(originalPlayerMob));
+            Assert.That(session.ContentData()?.Mind, Is.EqualTo(originalPlayerMindId));
+            if (adminGhost)
+            {
+                // aghost, so the player mob should still own the mind, but the mind is visiting the ghost.
+                Assert.That(originalPlayerMind.OwnedEntity, Is.EqualTo(originalPlayerMob));
+                Assert.That(originalPlayerMind.VisitingEntity, Is.EqualTo(ghostOne));
+                Assert.That(originalPlayerMind.UserId, Is.EqualTo(session.UserId));
+            }
+            else
+            {
+                // player ghost, can't return. The mind is owned by the ghost, and is not visiting.
+                Assert.That(originalPlayerMind.OwnedEntity, Is.EqualTo(ghostOne));
+                Assert.That(originalPlayerMind.VisitingEntity, Is.Null);
+            }
+
+            // Check that we're tracking the original owner for round end screen
+            Assert.That(originalPlayerMind.OriginalOwnerUserId, Is.EqualTo(session.UserId));
+
+            // Check that there is only one ghost
+            Assert.That(entMan.Count<GhostComponent>(), Is.EqualTo(1));
+        });
 
         // Spawn ghost takeover entity.
         EntityUid ghostRole = default;
-        await server.WaitPost(() => ghostRole = entMan.SpawnEntity("GhostRoleTestEntity", mapData.GridCoords));
+        await server.WaitPost(() => ghostRole = entMan.SpawnEntity(GhostRoleProtoId, mapData.GridCoords));
 
         // Take the ghost role
         await server.WaitPost(() =>
@@ -89,40 +130,118 @@ public sealed class GhostRoleTests
 
         // Check player got attached to ghost role.
         await pair.RunTicksSync(10);
-        var newMindId = session.ContentData()!.Mind!.Value;
-        var newMind = entMan.GetComponent<MindComponent>(newMindId);
-        Assert.That(newMindId, Is.Not.EqualTo(originalMindId));
-        Assert.That(session.AttachedEntity, Is.EqualTo(ghostRole));
-        Assert.That(newMind.OwnedEntity, Is.EqualTo(ghostRole));
-        Assert.That(newMind.VisitingEntity, Is.Null);
+        var ghostRoleMindId = session.ContentData()!.Mind!.Value;
+        var ghostRoleMind = entMan.GetComponent<MindComponent>(ghostRoleMindId);
+        Assert.Multiple(() =>
+        {
+            // Check that the ghost role mind is new
+            Assert.That(ghostRoleMindId, Is.Not.EqualTo(originalPlayerMindId));
 
-        // Original mind should be unaffected, but the ghost will have deleted itself.
-        Assert.That(originalMind.OwnedEntity, Is.EqualTo(originalMob));
-        Assert.That(originalMind.VisitingEntity, Is.Null);
-        Assert.That(entMan.Deleted(ghost));
+            // Check that the session and mind are properly attached to the ghost role
+            Assert.That(session.AttachedEntity, Is.EqualTo(ghostRole));
+            Assert.That(ghostRoleMind.OwnedEntity, Is.EqualTo(ghostRole));
+            Assert.That(ghostRoleMind.VisitingEntity, Is.Null);
+
+            // Original mind should be unaffected, but the ghost will have deleted itself.
+            if (adminGhost)
+            {
+                // aghost case, the original player mob should still own the mind, and that mind is not visiting.
+                Assert.That(originalPlayerMind.OwnedEntity, Is.EqualTo(originalPlayerMob));
+            }
+            else
+            {
+                // player ghost case, the original mind is disconnected and not owned by an entity.
+                // This mind cannot be returned to
+                Assert.That(originalPlayerMind.OwnedEntity, Is.Null);
+            }
+
+            // In either case the original player mind is not visiting anything, not connected to any user.
+            Assert.That(originalPlayerMind.VisitingEntity, Is.Null);
+            Assert.That(originalPlayerMind.UserId, Is.Null);
+
+            // Now the original owner of both minds should permanently be set to this session.
+            Assert.That(originalPlayerMind.OriginalOwnerUserId, Is.EqualTo(session.UserId));
+            Assert.That(ghostRoleMind.OriginalOwnerUserId, Is.EqualTo(session.UserId));
+
+            // Make sure that the ghost was deleted
+            Assert.That(entMan.Deleted(ghostOne));
+
+            // Check that there is are no lingereing ghosts
+            Assert.That(entMan.Count<GhostComponent>(), Is.Zero);
+        });
 
         // Ghost again.
-        conHost.ExecuteCommand("ghost");
+        conHost.ExecuteCommand(ghostCommand);
         await pair.RunTicksSync(10);
-        var otherGhost = session.AttachedEntity;
-        Assert.That(entMan.HasComponent<GhostComponent>(otherGhost));
-        Assert.That(otherGhost, Is.Not.EqualTo(originalMob));
-        Assert.That(otherGhost, Is.Not.EqualTo(ghostRole));
-        Assert.That(session.ContentData()?.Mind, Is.EqualTo(newMindId));
-        Assert.That(newMind.OwnedEntity, Is.EqualTo(ghostRole));
-        Assert.That(newMind.VisitingEntity, Is.EqualTo(session.AttachedEntity));
+        var ghostTwo = session.AttachedEntity;
+        Assert.Multiple(() =>
+        {
+            // Check that the new ghost is a new entity
+            Assert.That(entMan.HasComponent<GhostComponent>(ghostTwo));
+            Assert.That(ghostTwo, Is.Not.EqualTo(originalPlayerMob));
+            Assert.That(ghostTwo, Is.Not.EqualTo(ghostRole));
+            Assert.That(session.ContentData()?.Mind, Is.EqualTo(ghostRoleMindId));
+
+            if(adminGhost)
+            {
+                // aghost case, the ghost role mind should be owned by the ghost role entity,
+                // the ghost role mind is visiting the new ghost
+                Assert.That(ghostRoleMind.OwnedEntity, Is.EqualTo(ghostRole));
+                Assert.That(ghostRoleMind.VisitingEntity, Is.EqualTo(ghostTwo));
+            }
+            else
+            {
+                // player ghost, can't return. The mind is owned by the ghost, and is not visiting.
+                Assert.That(ghostRoleMind.OwnedEntity, Is.EqualTo(ghostTwo));
+                Assert.That(ghostRoleMind.VisitingEntity, Is.Null);
+            }
+
+            // Check that the original mind is still not attached to a user
+            Assert.That(originalPlayerMind.UserId, Is.Null);
+
+            // Check that original owners of other minds are still tracked
+            Assert.That(originalPlayerMind.OriginalOwnerUserId, Is.EqualTo(session.UserId));
+            Assert.That(ghostRoleMind.OriginalOwnerUserId, Is.EqualTo(session.UserId));
+
+            // Check that there is exactly one ghost
+            Assert.That(entMan.Count<GhostComponent>(), Is.EqualTo(1));
+        });
+
+        if (!adminGhost)
+        {
+            // End of the normal player ghost role test
+            await pair.CleanReturnAsync();
+            return;
+        }
 
         // Next, control the original entity again:
-        await server.WaitPost(() => mindSystem.SetUserId(originalMindId, session.UserId));
+        await server.WaitPost(() => mindSystem.SetUserId(originalPlayerMindId, session.UserId));
         await pair.RunTicksSync(10);
-        Assert.That(session.AttachedEntity, Is.EqualTo(originalMob));
-        Assert.That(originalMind.OwnedEntity, Is.EqualTo(originalMob));
-        Assert.That(originalMind.VisitingEntity, Is.Null);
 
-        // the ghost-role mind is unaffected, though the ghost will have deleted itself
-        Assert.That(newMind.OwnedEntity, Is.EqualTo(ghostRole));
-        Assert.That(newMind.VisitingEntity, Is.Null);
-        Assert.That(entMan.Deleted(otherGhost));
+        Assert.Multiple(() =>
+        {
+            // Check that we are attached
+            Assert.That(session.AttachedEntity, Is.EqualTo(originalPlayerMob));
+
+            // Check the ownership of the original mind
+            Assert.That(originalPlayerMind.OwnedEntity, Is.EqualTo(originalPlayerMob));
+            Assert.That(originalPlayerMind.VisitingEntity, Is.Null);
+            Assert.That(originalPlayerMind.UserId, Is.EqualTo(session.UserId));
+
+            // Check that the ghost-role mind is unaffected
+            Assert.That(ghostRoleMind.OwnedEntity, Is.EqualTo(ghostRole));
+            Assert.That(ghostRoleMind.VisitingEntity, Is.Null);
+
+            // Check that the second ghost is deleted
+            Assert.That(entMan.Deleted(ghostTwo));
+
+            // Check that the original owners of the previous minds are still tracked
+            Assert.That(originalPlayerMind.OriginalOwnerUserId, Is.EqualTo(session.UserId));
+            Assert.That(ghostRoleMind.OriginalOwnerUserId, Is.EqualTo(session.UserId));
+
+            // Check that there is are no lingereing ghosts
+            Assert.That(entMan.Count<GhostComponent>(), Is.Zero);
+        });
 
         await pair.CleanReturnAsync();
     }

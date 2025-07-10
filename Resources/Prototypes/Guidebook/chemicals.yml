@@ -11,6 +11,7 @@
   - Foods
   - Botanical
   - Biological
+  - Special
   - Others
   filterEnabled: True
 
@@ -47,13 +48,19 @@
 - type: guideEntry
   id: Botanical
   name: guide-entry-botanical
-  text: "/ServerInfo/Guidebook/ChemicalTabs/Botany.xml"
+  text: "/ServerInfo/Guidebook/Medical/Botanicals.xml"
   filterEnabled: True
 
 - type: guideEntry
   id: Biological
   name: guide-entry-biological
   text: "/ServerInfo/Guidebook/ChemicalTabs/Biological.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: Special
+  name: guide-entry-special
+  text: "/ServerInfo/Guidebook/ChemicalTabs/Special.xml"
   filterEnabled: True
 
 - type: guideEntry

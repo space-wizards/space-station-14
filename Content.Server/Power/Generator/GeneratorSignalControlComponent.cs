@@ -1,4 +1,5 @@
 using Content.Shared.DeviceLinking;
+using Content.Shared.Power.Generator;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Power.Generator;

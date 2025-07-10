@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Localizations;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -18,8 +19,9 @@ public abstract class SharedLatheSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
 
-    private readonly Dictionary<string, List<LatheRecipePrototype>> _inverseRecipeDictionary = new();
+    public readonly Dictionary<string, List<LatheRecipePrototype>> InverseRecipes = new();
 
     public override void Initialize()
     {
@@ -30,6 +32,37 @@ public abstract class SharedLatheSystem : EntitySystem
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
         BuildInverseRecipeDictionary();
+    }
+
+    /// <summary>
+    /// Get the set of all recipes that a lathe could possibly ever create (e.g., if all techs were unlocked).
+    /// </summary>
+    public HashSet<ProtoId<LatheRecipePrototype>> GetAllPossibleRecipes(LatheComponent component)
+    {
+        var recipes = new HashSet<ProtoId<LatheRecipePrototype>>();
+        foreach (var pack in component.StaticPacks)
+        {
+            recipes.UnionWith(_proto.Index(pack).Recipes);
+        }
+
+        foreach (var pack in component.DynamicPacks)
+        {
+            recipes.UnionWith(_proto.Index(pack).Recipes);
+        }
+
+        return recipes;
+    }
+
+    /// <summary>
+    /// Add every recipe in the list of recipe packs to a single hashset.
+    /// </summary>
+    public void AddRecipesFromPacks(HashSet<ProtoId<LatheRecipePrototype>> recipes, IEnumerable<ProtoId<LatheRecipePackPrototype>> packs)
+    {
+        foreach (var id in packs)
+        {
+            var pack = _proto.Index(id);
+            recipes.UnionWith(pack.Recipes);
+        }
     }
 
     private void OnExamined(Entity<LatheComponent> ent, ref ExaminedEvent args)
@@ -66,6 +99,12 @@ public abstract class SharedLatheSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, EmagLatheRecipesComponent component, ref GotEmaggedEvent args)
     {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
         args.Handled = true;
     }
 
@@ -83,20 +122,20 @@ public abstract class SharedLatheSystem : EntitySystem
 
     private void BuildInverseRecipeDictionary()
     {
-        _inverseRecipeDictionary.Clear();
+        InverseRecipes.Clear();
         foreach (var latheRecipe in _proto.EnumeratePrototypes<LatheRecipePrototype>())
         {
-            if (latheRecipe.Result == null)
+            if (latheRecipe.Result is not {} result)
                 continue;
 
-            _inverseRecipeDictionary.GetOrNew(latheRecipe.Result).Add(latheRecipe);
+            InverseRecipes.GetOrNew(result).Add(latheRecipe);
         }
     }
 
     public bool TryGetRecipesFromEntity(string prototype, [NotNullWhen(true)] out List<LatheRecipePrototype>? recipes)
     {
         recipes = new();
-        if (_inverseRecipeDictionary.TryGetValue(prototype, out var r))
+        if (InverseRecipes.TryGetValue(prototype, out var r))
             recipes.AddRange(r);
         return recipes.Count != 0;
     }
@@ -111,7 +150,7 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Name))
             return Loc.GetString(proto.Name);
 
-        if (proto.Result is { } result)
+        if (proto.Result is {} result)
         {
             return _proto.Index(result).Name;
         }
@@ -137,7 +176,7 @@ public abstract class SharedLatheSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(proto.Description))
             return Loc.GetString(proto.Description);
 
-        if (proto.Result is { } result)
+        if (proto.Result is {} result)
         {
             return _proto.Index(result).Description;
         }

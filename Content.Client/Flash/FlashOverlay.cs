@@ -11,11 +11,14 @@ namespace Content.Client.Flash
 {
     public sealed class FlashOverlay : Overlay
     {
+        private static readonly ProtoId<ShaderPrototype> FlashedEffectShader = "FlashedEffect";
+
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
 
+        private readonly SharedFlashSystem _flash;
         private readonly StatusEffectsSystem _statusSys;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
@@ -26,7 +29,8 @@ namespace Content.Client.Flash
         public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").InstanceUnique();
+            _shader = _prototypeManager.Index(FlashedEffectShader).InstanceUnique();
+            _flash = _entityManager.System<SharedFlashSystem>();
             _statusSys = _entityManager.System<StatusEffectsSystem>();
         }
 
@@ -41,7 +45,7 @@ namespace Content.Client.Flash
                 || !_entityManager.TryGetComponent<StatusEffectsComponent>(playerEntity, out var status))
                 return;
 
-            if (!_statusSys.TryGetTime(playerEntity.Value, SharedFlashSystem.FlashedKey, out var time, status))
+            if (!_statusSys.TryGetTime(playerEntity.Value, _flash.FlashedKey, out var time, status))
                 return;
 
             var curTime = _timing.CurTime;

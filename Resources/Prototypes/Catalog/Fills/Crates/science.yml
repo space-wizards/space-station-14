@@ -12,3 +12,15 @@
         amount: 2
       - id: ClothingMaskSterile
         amount: 2
+
+- type: entity
+  id: CrateCrewMonitoring
+  parent: CrateScienceSecure
+  name: crew monitoring crate
+  description: Contains a flatpack of a crew monitoring server and a few crew monitoring computers. Requires Science access to open.
+  components:
+  - type: StorageFill
+    contents:
+    - id: CrewMonitoringServerFlatpack
+    - id: CrewMonitoringComputerFlatpack
+      amount: 3

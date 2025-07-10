@@ -7,8 +7,6 @@ namespace Content.Client.MachineLinking.UI;
 
 public sealed class SignalTimerBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-
     [ViewVariables]
     private SignalTimerWindow? _window;
 

@@ -2,10 +2,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Salvage.Expeditions;
 
-[Prototype("salvageFaction")]
+[Prototype]
 public sealed partial class SalvageFactionPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = default!;
+    [IdDataField] public string ID { get; private set; } = default!;
 
     [DataField("desc")] public LocId Description { get; private set; } = string.Empty;
 

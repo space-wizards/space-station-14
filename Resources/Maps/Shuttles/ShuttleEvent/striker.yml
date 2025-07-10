@@ -198,8 +198,6 @@ entities:
     - type: Transform
       pos: -0.5,-8.5
       parent: 325
-    - type: AtmosDevice
-      joinedGrid: 325
 - proto: AirlockExternalShuttleSyndicateLocked
   entities:
   - uid: 142
@@ -232,11 +230,12 @@ entities:
       currentReceiving: 15106.935
       currentSupply: 15107
       supplyRampPosition: 0.064453125
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
   - uid: 6
     components:
     - type: Transform
+      rot: 1.5707963267948966 rad
       pos: -3.5,-1.5
       parent: 325
 - proto: Bed
@@ -267,9 +266,6 @@ entities:
           occludes: True
           ents:
           - 331
-    - type: DeviceLinkSink
-      links:
-      - 205
   - uid: 191
     components:
     - type: Transform
@@ -282,9 +278,6 @@ entities:
           occludes: True
           ents:
           - 332
-    - type: DeviceLinkSink
-      links:
-      - 205
   - uid: 192
     components:
     - type: Transform
@@ -297,9 +290,6 @@ entities:
           occludes: True
           ents:
           - 333
-    - type: DeviceLinkSink
-      links:
-      - 205
   - uid: 193
     components:
     - type: Transform
@@ -312,9 +302,6 @@ entities:
           occludes: True
           ents:
           - 334
-    - type: DeviceLinkSink
-      links:
-      - 205
   - uid: 196
     components:
     - type: Transform
@@ -327,9 +314,6 @@ entities:
           occludes: True
           ents:
           - 337
-    - type: DeviceLinkSink
-      links:
-      - 205
   - uid: 198
     components:
     - type: Transform
@@ -342,9 +326,6 @@ entities:
           occludes: True
           ents:
           - 339
-    - type: DeviceLinkSink
-      links:
-      - 205
   - uid: 199
     components:
     - type: Transform
@@ -357,9 +338,6 @@ entities:
           occludes: True
           ents:
           - 340
-    - type: DeviceLinkSink
-      links:
-      - 205
   - uid: 200
     components:
     - type: Transform
@@ -372,9 +350,6 @@ entities:
           occludes: True
           ents:
           - 341
-    - type: DeviceLinkSink
-      links:
-      - 205
   - uid: 201
     components:
     - type: Transform
@@ -387,9 +362,6 @@ entities:
           occludes: True
           ents:
           - 342
-    - type: DeviceLinkSink
-      links:
-      - 205
   - uid: 202
     components:
     - type: Transform
@@ -402,9 +374,6 @@ entities:
           occludes: True
           ents:
           - 343
-    - type: DeviceLinkSink
-      links:
-      - 205
 - proto: BoxMRE
   entities:
   - uid: 320
@@ -825,6 +794,10 @@ entities:
           occludes: True
           ents:
           - 245
+        disk_slot: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
 - proto: CyberPen
   entities:
   - uid: 77
@@ -1041,8 +1014,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,-8.5
       parent: 325
-    - type: AtmosDevice
-      joinedGrid: 325
 - proto: GasVentPump
   entities:
   - uid: 218
@@ -1054,8 +1025,6 @@ entities:
       address: Vnt-5f41a0ae
       transmitFrequency: 1621
       receiveFrequency: 1621
-    - type: AtmosDevice
-      joinedGrid: 325
   - uid: 219
     components:
     - type: Transform
@@ -1066,8 +1035,6 @@ entities:
       address: Vnt-129c27d2
       transmitFrequency: 1621
       receiveFrequency: 1621
-    - type: AtmosDevice
-      joinedGrid: 325
   - uid: 220
     components:
     - type: Transform
@@ -1078,8 +1045,6 @@ entities:
       address: Vnt-11c4609d
       transmitFrequency: 1621
       receiveFrequency: 1621
-    - type: AtmosDevice
-      joinedGrid: 325
   - uid: 221
     components:
     - type: Transform
@@ -1090,8 +1055,6 @@ entities:
       address: Vnt-6859729f
       transmitFrequency: 1621
       receiveFrequency: 1621
-    - type: AtmosDevice
-      joinedGrid: 325
   - uid: 222
     components:
     - type: Transform
@@ -1102,8 +1065,6 @@ entities:
       address: Vnt-19d24c7f
       transmitFrequency: 1621
       receiveFrequency: 1621
-    - type: AtmosDevice
-      joinedGrid: 325
 - proto: GeneratorBasic15kW
   entities:
   - uid: 41
@@ -1456,6 +1417,13 @@ entities:
     components:
     - type: Transform
       pos: 1.561105,-2.5567772
+      parent: 325
+- proto: OxygenTankFilled
+  entities:
+  - uid: 167
+    components:
+    - type: Transform
+      pos: 1.60798,-0.3062118
       parent: 325
 - proto: PinpointerNuclear
   entities:
@@ -2379,11 +2347,4 @@ entities:
           occludes: True
           ents:
           - 346
-- proto: YellowOxygenTankFilled
-  entities:
-  - uid: 167
-    components:
-    - type: Transform
-      pos: 1.60798,-0.3062118
-      parent: 325
 ...

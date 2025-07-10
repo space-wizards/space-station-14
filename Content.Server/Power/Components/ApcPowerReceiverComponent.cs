@@ -24,7 +24,7 @@ namespace Content.Server.Power.Components
         ///     When false, causes this to appear powered even if not receiving power from an Apc.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool NeedsPower
+        public override bool NeedsPower
         {
             get => _needsPower;
             set
@@ -41,9 +41,9 @@ namespace Content.Server.Power.Components
         /// <summary>
         ///     When true, causes this to never appear powered.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("powerDisabled")]
-        public bool PowerDisabled {
+        public override bool PowerDisabled
+        {
             get => !NetworkLoad.Enabled;
             set => NetworkLoad.Enabled = !value;
         }
@@ -59,11 +59,4 @@ namespace Content.Server.Power.Components
 
         public float PowerReceived => NetworkLoad.ReceivingPower;
     }
-
-    /// <summary>
-    /// Raised whenever an ApcPowerReceiver becomes powered / unpowered.
-    /// Does nothing on the client.
-    /// </summary>
-    [ByRefEvent]
-    public readonly record struct PowerChangedEvent(bool Powered, float ReceivingPower);
 }

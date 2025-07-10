@@ -1,17 +1,44 @@
 - type: entity
   name: flare gun
-  parent: BaseWeaponLauncher
+  parent: BaseItem
   id: WeaponFlareGun
-  description: A compact, single-shot pistol that fires shotgun shells.
+  description: A compact, single-shot pistol that fires shotgun shells. Comes with a safety feature that prevents the user from fitting lethal shells inside.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
     layers:
-      - state: icon
+      - state: base
         map: ["enum.GunVisualLayers.Base"]
   - type: Item
     size: Small
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
+  - type: ItemSlots
+    slots:
+      gun_chamber:
+        name: Chamber
+        startingItem: ShellShotgunFlare
+        priority: 1
+        whitelist:
+          tags: ## TODO: Add a risk of the gun blowing up if using non-light shotgun shells, and then re-enable them.
+            ## - ShellShotgun
+            - ShellShotgunLight
+  - type: ContainerContainer
+    containers:
+      gun_chamber: !type:ContainerSlot
+  - type: ChamberMagazineAmmoProvider
+    autoCycle: false
+    boltClosed: false
+    canRack: false
+    soundBoltClosed: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
+    soundBoltOpened: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
+    soundRack: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
+    quickEquip: false
+    slots:
+    - Belt
+    - suitStorage
+  - type: Appearance
   - type: Gun
     fireRate: 8
     selectedMode: SemiAuto
@@ -19,21 +46,30 @@
       - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/flaregun.ogg
-  - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - ShellShotgun
-    proto: ShellShotgunFlare
-    capacity: 1
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-        ents: []
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
-    quickEquip: false
+
+
+- type: entity
+  name: security shell gun
+  parent: [WeaponFlareGun, BaseSecurityContraband]
+  id: WeaponFlareGunSecurity
+  description: A modified flare gun originally designed to be used by security to launch non-lethal shotgun shells, however it can also fire lethal shells without risk.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun_security.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    size: Small
+    sprite: Objects/Weapons/Guns/Shotguns/flaregun_security.rsi
+  - type: ItemSlots
     slots:
-    - Belt
-    - suitStorage
+      gun_chamber:
+        name: Chamber
+        priority: 1
+        whitelist:
+          tags:
+            - ShellShotgun
+  - type: Tag
+    tags:
+    - Sidearm

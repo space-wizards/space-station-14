@@ -1,15 +1,15 @@
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Emp;
-using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.Power;
 using Content.Shared.SurveillanceCamera;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.SurveillanceCamera;
 
@@ -129,7 +129,7 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
     private void AddVerbs(EntityUid uid, SurveillanceCameraComponent component, GetVerbsEvent<AlternativeVerb> verbs)
     {
-        if (!_actionBlocker.CanInteract(verbs.User, uid))
+        if (!_actionBlocker.CanInteract(verbs.User, uid) || !_actionBlocker.CanComplexInteract(verbs.User))
         {
             return;
         }
@@ -320,6 +320,13 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         {
             AddActiveViewer(camera, player, monitor, component);
         }
+
+        // Add monitor without viewers
+        if (players.Count == 0 && monitor != null)
+        {
+            component.ActiveMonitors.Add(monitor.Value);
+            UpdateVisuals(camera, component);
+        }
     }
 
     // Switch the set of active viewers from one camera to another.
@@ -348,13 +355,12 @@ public sealed class SurveillanceCameraSystem : EntitySystem
 
     public void RemoveActiveViewer(EntityUid camera, EntityUid player, EntityUid? monitor = null, SurveillanceCameraComponent? component = null, ActorComponent? actor = null)
     {
-        if (!Resolve(camera, ref component)
-            || !Resolve(player, ref actor))
-        {
+        if (!Resolve(camera, ref component))
             return;
-        }
 
-        _viewSubscriberSystem.RemoveViewSubscriber(camera, actor.PlayerSession);
+        if (Resolve(player, ref actor))
+            _viewSubscriberSystem.RemoveViewSubscriber(camera, actor.PlayerSession);
+
         component.ActiveViewers.Remove(player);
 
         if (monitor != null)
@@ -375,6 +381,13 @@ public sealed class SurveillanceCameraSystem : EntitySystem
         foreach (var player in players)
         {
             RemoveActiveViewer(camera, player, monitor, component);
+        }
+
+        // Even if not removing any viewers, remove the monitor
+        if (players.Count == 0 && monitor != null)
+        {
+            component.ActiveMonitors.Remove(monitor.Value);
+            UpdateVisuals(camera, component);
         }
     }
 

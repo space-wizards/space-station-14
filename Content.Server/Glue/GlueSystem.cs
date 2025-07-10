@@ -1,5 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Glue;
 using Content.Shared.Hands;
@@ -19,7 +19,7 @@ public sealed class GlueSystem : SharedGlueSystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
@@ -71,7 +71,9 @@ public sealed class GlueSystem : SharedGlueSystem
     private bool TryGlue(Entity<GlueComponent> entity, EntityUid target, EntityUid actor)
     {
         // if item is glued then don't apply glue again so it can be removed for reasonable time
-        if (HasComp<GluedComponent>(target) || !HasComp<ItemComponent>(target))
+        // If glue is applied to an unremoveable item, the component will disappear after the duration.
+        // This effecitvely means any unremoveable item could be removed with a bottle of glue.
+        if (HasComp<GluedComponent>(target) || !HasComp<ItemComponent>(target) || HasComp<UnremoveableComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("glue-failure", ("target", target)), actor, actor, PopupType.Medium);
             return false;

@@ -2,10 +2,8 @@ using Content.Shared.Chat;
 
 namespace Content.Client.Chat.Managers
 {
-    public interface IChatManager
+    public interface IChatManager : ISharedChatManager
     {
-        void Initialize();
-
         public void SendMessage(string text, ChatSelectChannel channel);
     }
 }

@@ -1,6 +1,6 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
@@ -14,12 +14,13 @@ using Robust.Shared.Random;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Content.Shared.Destructible;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
 public sealed class SliceableFoodSystem : EntitySystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -40,6 +41,9 @@ public sealed class SliceableFoodSystem : EntitySystem
         if (args.Handled)
             return;
 
+        if (!TryComp<UtensilComponent>(args.Used, out var utensil) || (utensil.Types & UtensilType.Knife) == 0)
+            return;
+
         var doAfterArgs = new DoAfterArgs(EntityManager,
             args.User,
             entity.Comp.SliceTime,
@@ -52,7 +56,7 @@ public sealed class SliceableFoodSystem : EntitySystem
             BreakOnMove = true,
             NeedHand = true,
         };
-        _doAfter.TryStartDoAfter(doAfterArgs);
+        args.Handled = _doAfter.TryStartDoAfter(doAfterArgs);
     }
 
     private void OnSlicedoAfter(Entity<SliceableFoodComponent> entity, ref SliceFoodDoAfterEvent args)
@@ -140,6 +144,9 @@ public sealed class SliceableFoodSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
+        var dev = new DestructionEventArgs();
+        RaiseLocalEvent(uid, dev);
+
         // Locate the sliced food and spawn its trash
         foreach (var trash in foodComp.Trash)
         {
@@ -169,7 +176,7 @@ public sealed class SliceableFoodSystem : EntitySystem
     private void OnComponentStartup(Entity<SliceableFoodComponent> entity, ref ComponentStartup args)
     {
         var foodComp = EnsureComp<FoodComponent>(entity);
-        _solutionContainer.EnsureSolution(entity.Owner, foodComp.Solution);
+        _solutionContainer.EnsureSolution(entity.Owner, foodComp.Solution, out _);
     }
 }
 

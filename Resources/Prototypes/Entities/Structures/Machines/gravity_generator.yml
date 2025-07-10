@@ -6,6 +6,7 @@
   placement:
     mode: AlignTileAny
   components:
+  - type: StationAiWhitelist
   - type: AmbientSound
     enabled: false
     volume: -6
@@ -50,9 +51,11 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
-  - type: GravityGenerator
+  - type: PowerCharge
+    windowTitle: gravity-generator-window-title
     idlePower: 50
     activePower: 2500
+  - type: GravityGenerator
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
     spriteMap:
@@ -60,10 +63,13 @@
       unpowered: "off"
       off: "off"
       on: "on"
+  - type: ActivatableUI
+    key: enum.PowerChargeUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
-        enum.GravityGeneratorUiKey.Key:
-          type: GravityGeneratorBoundUserInterface
+      enum.PowerChargeUiKey.Key:
+        type: PowerChargeBoundUserInterface
   - type: Appearance
   - type: PointLight
     radius: 2.5
@@ -80,6 +86,7 @@
   name: mini gravity generator
   description: It's what keeps you to the floor, now in fun size.
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Machines/gravity_generator_mini.rsi
     snapCardinals: true
@@ -124,9 +131,10 @@
     board: MiniGravityGeneratorCircuitboard
   - type: ApcPowerReceiver
     powerLoad: 500
-  - type: GravityGenerator
+  - type: PowerCharge
     idlePower: 15
     activePower: 500
+  - type: GravityGenerator
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
   - type: StaticPrice

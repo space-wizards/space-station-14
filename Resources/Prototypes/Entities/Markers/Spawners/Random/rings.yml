@@ -1,0 +1,21 @@
+- type: entityTable
+  id: RingTableCommon
+  table: !type:GroupSelector
+    children:
+    - id: SilverRing
+      weight: 0.55
+    - id: GoldRing
+      weight: 0.45
+
+- type: entityTable
+  id: RingTableRare
+  table: !type:GroupSelector
+    children:
+    - id: GoldRingDiamond
+      weight: 0.1
+    - id: SilverRingDiamond
+      weight: 0.1
+    - id: GoldRingGem
+      weight: 0.35
+    - id: SilverRingGem
+      weight: 0.45

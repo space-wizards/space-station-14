@@ -2,6 +2,7 @@
 
 ui-options-title = Game Options
 ui-options-tab-accessibility = Accessibility
+ui-options-tab-admin = Admin
 ui-options-tab-graphics = Graphics
 ui-options-tab-controls = Controls
 ui-options-tab-audio = Audio
@@ -37,6 +38,7 @@ ui-options-lobby-music = Lobby & Round-end Music
 ui-options-restart-sounds = Round Restart Sounds
 ui-options-event-music = Event Music
 ui-options-admin-sounds = Play Admin Sounds
+ui-options-bwoink-sound = Play AHelp Notification Sound
 ui-options-volume-label = Volume
 
 ## Graphics menu
@@ -47,6 +49,9 @@ ui-options-misc-label = Misc
 ui-options-interface-label = Interface
 
 
+ui-options-auto-fill-highlights = Auto-fill the highlights with the character's information
+ui-options-highlights-color = Highlighs color:
+ui-options-highlights-color-example = This is an highlighted text!
 ui-options-show-held-item = Show held item next to cursor
 ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor
 ui-options-opaque-storage-window = Opaque storage window
@@ -93,6 +98,7 @@ ui-options-vp-vertical-fit-tooltip = When enabled, the main viewport will ignore
                                      will cause the viewport to be cut off on the horizontal axis.
 ui-options-vp-low-res = Low-resolution viewport
 ui-options-parallax-low-quality = Low-quality Parallax (background)
+ui-options-ambient-occlusion = Show Ambient Occlusion
 ui-options-fps-counter = Show FPS counter
 ui-options-vp-width = Viewport width:
 ui-options-hud-layout = HUD layout:
@@ -116,6 +122,11 @@ ui-options-header-shuttle = Shuttle
 ui-options-header-map-editor = Map Editor
 ui-options-header-dev = Development
 ui-options-header-general = General
+ui-options-header-text-cursor = Text cursor
+ui-options-header-text-cursor-select = Text selecting
+ui-options-header-text-edit = Text editing
+ui-options-header-text-chat = Chat
+ui-options-header-text-other = Text input other
 
 ui-options-hotkey-keymap = Use US QWERTY Keys
 ui-options-hotkey-toggle-walk = Toggle Walk
@@ -144,6 +155,7 @@ ui-options-function-alt-activate-item-in-world = Alternative activate item in wo
 ui-options-function-drop = Drop item
 ui-options-function-examine-entity = Examine
 ui-options-function-swap-hands = Swap hands
+ui-options-function-swap-hands-reverse = Swap hands (other direction)
 ui-options-function-move-stored-item = Move stored item
 ui-options-function-rotate-stored-item = Rotate stored item
 ui-options-function-save-item-location = Save item location
@@ -220,6 +232,16 @@ ui-options-function-hotbar7 = Hotbar slot 7
 ui-options-function-hotbar8 = Hotbar slot 8
 ui-options-function-hotbar9 = Hotbar slot 9
 ui-options-function-hotbar0 = Hotbar slot 0
+ui-options-function-hotbar-shift1 = Hotbar slot Shift+1
+ui-options-function-hotbar-shift2 = Hotbar slot Shift+2
+ui-options-function-hotbar-shift3 = Hotbar slot Shift+3
+ui-options-function-hotbar-shift4 = Hotbar slot Shift+4
+ui-options-function-hotbar-shift5 = Hotbar slot Shift+5
+ui-options-function-hotbar-shift6 = Hotbar slot Shift+6
+ui-options-function-hotbar-shift7 = Hotbar slot Shift+7
+ui-options-function-hotbar-shift8 = Hotbar slot Shift+8
+ui-options-function-hotbar-shift9 = Hotbar slot Shift+9
+ui-options-function-hotbar-shift0 = Hotbar slot Shift+0
 ui-options-function-loadout1 = Hotbar Loadout 1
 ui-options-function-loadout2 = Hotbar Loadout 2
 ui-options-function-loadout3 = Hotbar Loadout 3
@@ -230,6 +252,16 @@ ui-options-function-loadout7 = Hotbar Loadout 7
 ui-options-function-loadout8 = Hotbar Loadout 8
 ui-options-function-loadout9 = Hotbar Loadout 9
 ui-options-function-loadout0 = Hotbar Loadout 0
+ui-options-function-loadoutshift1 = Hotbar Loadout Shift+1
+ui-options-function-loadoutshift2 = Hotbar Loadout Shift+2
+ui-options-function-loadoutshift3 = Hotbar Loadout Shift+3
+ui-options-function-loadoutshift4 = Hotbar Loadout Shift+4
+ui-options-function-loadoutshift5 = Hotbar Loadout Shift+5
+ui-options-function-loadoutshift6 = Hotbar Loadout Shift+6
+ui-options-function-loadoutshift7 = Hotbar Loadout Shift+7
+ui-options-function-loadoutshift8 = Hotbar Loadout Shift+8
+ui-options-function-loadoutshift9 = Hotbar Loadout Shift+9
+ui-options-function-loadoutshift0 = Hotbar Loadout Shift+0
 
 ui-options-function-shuttle-strafe-up = Strafe up
 ui-options-function-shuttle-strafe-right = Strafe right
@@ -238,6 +270,42 @@ ui-options-function-shuttle-strafe-down = Strafe down
 ui-options-function-shuttle-rotate-left = Rotate left
 ui-options-function-shuttle-rotate-right = Rotate right
 ui-options-function-shuttle-brake = Brake
+
+ui-options-function-text-cursor-left = Move cursor left
+ui-options-function-text-cursor-right = Move cursor right
+ui-options-function-text-cursor-up = Move cursor up
+ui-options-function-text-cursor-down = Move cursor down
+ui-options-function-text-cursor-word-left = Move cursor left by word
+ui-options-function-text-cursor-word-right = Move cursor right by word
+ui-options-function-text-cursor-begin = Move cursor to beginning
+ui-options-function-text-cursor-end = Move cursor to end
+ui-options-function-text-cursor-select = Select text
+ui-options-function-text-cursor-select-left = Expand selection left
+ui-options-function-text-cursor-select-right = Expand selection right
+ui-options-function-text-cursor-select-up = Expand selection up
+ui-options-function-text-cursor-select-down = Expand selection down
+ui-options-function-text-cursor-select-word-left = Expand selection left by word
+ui-options-function-text-cursor-select-word-right = Expand selection right by word
+ui-options-function-text-cursor-select-begin = Expand selection to beginning
+ui-options-function-text-cursor-select-end = Expand selection to end
+ui-options-function-text-backspace = Backspace
+ui-options-function-text-delete = Delete
+ui-options-function-text-word-backspace = Backspace word
+ui-options-function-text-word-delete = Delete word
+ui-options-function-text-newline = Newline
+ui-options-function-text-submit = Submit
+ui-options-function-multiline-text-submit = Submit multiline
+ui-options-function-text-select-all = Select all
+ui-options-function-text-copy = Copy
+ui-options-function-text-cut = Cut
+ui-options-function-text-paste = Paste
+ui-options-function-text-history-prev = Previous from history
+ui-options-function-text-history-next = Next from history
+ui-options-function-text-release-focus = Release focus
+ui-options-function-text-scroll-to-bottom = Scroll to bottom
+ui-options-function-text-tab-complete = Tab completion
+ui-options-function-text-complete-next = Complete next
+ui-options-function-text-complete-prev = Complete previous
 
 ## Network menu
 
@@ -277,8 +345,56 @@ cmd-options-help = Usage: options [tab]
 
 ## Accessibility menu
 
+ui-options-accessability-header-visuals = Visuals
+ui-options-accessability-header-content = Content
+
 ui-options-enable-color-name = Add colors to character names
 ui-options-colorblind-friendly = Colorblind friendly mode
 ui-options-reduced-motion = Reduce motion of visual effects
-ui-options-chat-window-opacity = Chat window opacity
 ui-options-screen-shake-intensity = Screen shake intensity
+
+ui-options-chat-window-opacity = Chat window opacity
+ui-options-speech-bubble-text-opacity = Speech bubble text opacity
+ui-options-speech-bubble-speaker-opacity = Speech bubble speaker opacity
+ui-options-speech-bubble-background-opacity = Speech bubble background opacity
+
+ui-options-censor-nudity = Censor character nudity
+
+## Admin menu
+
+ui-options-admin-player-panel = Admin Menu Players List
+
+ui-options-admin-player-tab-symbol-setting = Character column antag symbols
+ui-options-admin-player-tab-symbol-setting-off = No antag symbol
+ui-options-admin-player-tab-symbol-setting-basic = Show standard antag symbol
+ui-options-admin-player-tab-symbol-setting-specific = Show specific antag symbol
+
+ui-options-admin-player-tab-role-setting = Role display settings
+ui-options-admin-player-tab-role-setting-roletype = Show role type
+ui-options-admin-player-tab-role-setting-subtype = Show subtype
+ui-options-admin-player-tab-role-setting-roletypesubtype = Show role type and subtype
+ui-options-admin-player-tab-role-setting-subtyperoletype = Show subtype and role type
+
+ui-options-admin-player-tab-color-setting = Color settings
+ui-options-admin-player-tab-color-setting-off = I hate colors
+ui-options-admin-player-tab-color-setting-character = Colorize antag character names
+ui-options-admin-player-tab-color-setting-roletype = Colorize all role types
+ui-options-admin-player-tab-color-setting-both = Colorize both
+
+ui-options-admin-overlay-title = Admin Overlay
+
+ui-options-admin-overlay-antag-format = Antag label style
+ui-options-admin-overlay-antag-format-binary = Show antag status
+ui-options-admin-overlay-antag-format-roletype = Show role type
+ui-options-admin-overlay-antag-format-subtype = Show subtype
+
+ui-options-admin-overlay-antag-symbol = Antag symbol style
+ui-options-admin-overlay-antag-symbol-off = No antag symbol
+ui-options-admin-overlay-antag-symbol-basic = Show standard antag symbol
+ui-options-admin-overlay-antag-symbol-specific = Show specific antag symbol
+
+ui-options-admin-enable-overlay-playtime = Show playtime
+ui-options-admin-enable-overlay-starting-job = Show starting job
+ui-options-admin-overlay-merge-distance = Stack merge distance
+ui-options-admin-overlay-ghost-fade-distance = Ghost overlay fade range from mouse
+ui-options-admin-overlay-ghost-hide-distance = Ghost overlay hide range from mouse

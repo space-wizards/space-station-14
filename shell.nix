@@ -7,12 +7,12 @@ in import (builtins.fetchTarball {
 
 let
   dependencies = with pkgs; [
-    dotnetCorePackages.sdk_8_0
+    dotnetCorePackages.sdk_9_0
+    icu
     glfw
     SDL2
     libGL
     openal
-    glibc
     freetype
     fluidsynth
     soundfont-fluid
