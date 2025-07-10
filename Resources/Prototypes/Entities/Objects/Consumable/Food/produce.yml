@@ -1930,7 +1930,7 @@
     seedId: fakeCapfruit
   - type: Food
     trash:
-    - RevolverCapGunFake
+    - RevolverCapGunFakeNonAP
 
 - type: entity
   name: rice bushel
