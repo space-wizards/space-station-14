@@ -413,12 +413,12 @@ namespace Content.Server.Atmos.EntitySystems
                         DebugTools.Assert(otherTile.AdjacentBits.IsFlagSet(direction));
                         DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
 
-                        Log.Debug("PRE-considering direction " + otherTile.GridIndices + " and " + otherTile2.GridIndices + ", allowed flow " + otherTile.AdjacentBits + ", " + otherTile2.AdjacentBits);
+                        Log.Debug("PRE-considering direction " + otherTile.GridIndices + " and " + otherTile2.GridIndices + ", allowed flow " + otherTile.AdjacentBits + ", and " + otherTile2.AdjacentBits);
                         ConsiderFirelocks(ent, otherTile, otherTile2);
                         Log.Debug("Checking dir flags at " + otherTile.GridIndices + ", allowed flow " + otherTile.AdjacentBits + ", desired flow " + direction);
 
 
-                        Log.Debug("POST-considering direction " + otherTile.GridIndices + " and"  + otherTile2.GridIndices + ", allowed flow " + otherTile.AdjacentBits + ", " + otherTile2.AdjacentBits);
+                        Log.Debug("POST-considering direction " + otherTile.GridIndices + " and"  + otherTile2.GridIndices + ", allowed flow " + otherTile.AdjacentBits + ", and " + otherTile2.AdjacentBits);
                         // The firelocks might have closed on us.
                         if (!otherTile.AdjacentBits.IsFlagSet(direction))
                         {
@@ -593,6 +593,9 @@ namespace Content.Server.Atmos.EntitySystems
             if (!reconsiderAdjacent)
                 return;
 
+            UpdateAirtightnessInArea(tile.GridIndices);
+            UpdateAirtightnessInArea(other.GridIndices);
+
             UpdateTilesAndVisualsInArea(tile.GridIndices);
             UpdateTilesAndVisualsInArea(other.GridIndices);
             return;
@@ -632,6 +635,21 @@ namespace Content.Server.Atmos.EntitySystems
                         Log.Debug("Updating tiles at" + indices);
                         UpdateAdjacentTiles(ent, gridAtmosTile);
                         InvalidateVisuals(ent, gridAtmosTile);
+                    }
+                }
+            }
+
+            void UpdateAirtightnessInArea(Vector2i center)
+            {
+                for (var dx = -1; dx <= 1; dx++)
+                {
+                    for (var dy = -1; dy <= 1; dy++)
+                    {
+                        var indices = new Vector2i(center.X + dx, center.Y + dy);
+                        var gridAtmosTile = GetOrNewTile(ent.Owner, ent.Comp1, indices);
+
+                        Log.Debug("Updating airtightness INJECT at" + indices);
+                        UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, gridAtmosTile);
                     }
                 }
             }
