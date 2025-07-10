@@ -56,6 +56,16 @@
     allowedDepartments: [ Engineering ]
     allowedJobs: [ SalvageSpecialist ]
 
+# This might look really stupid but it's sadly necessary as conflicting base contra groups tend to be mutually exclusive...
+- type: entity
+  id: BaseEngineeringSecuritySalvageContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Engineering, Security ]
+    allowedJobs: [SalvageSpecialist]
+
 - type: entity
   id: BaseLawContraband
   parent: BaseRestrictedContraband

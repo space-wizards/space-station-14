@@ -290,7 +290,7 @@
     fiberColor: fibers-black
 
 - type: entity
-  parent: [ ClothingHandsGlovesCombat, BaseSalvageContraband ] #Starlight salvContra
+  parent: [ BaseEngineeringSecuritySalvageContraband, ClothingHandsGlovesCombat ] #Starlight salvContra
   id: ClothingHandsMercGlovesCombat
   name: mercenary combat gloves
   description: High-quality combat gloves to protect hands from mechanical damage during combat.
