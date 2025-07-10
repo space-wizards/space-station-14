@@ -4,6 +4,7 @@ using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Tools.Components;
 
@@ -26,7 +27,8 @@ public sealed partial class WelderComponent : Component
     /// <summary>
     /// Timestamp for the next update loop update.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextUpdate;
 
     /// <summary>
