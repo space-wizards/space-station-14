@@ -69,8 +69,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (pump.Blocked)
                 return;
 
+            //starlight fix subtick
+            float wantToTransfer = pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
+            float clamped = Math.Min(wantToTransfer, pump.HigherThreshold);
+            //starlight end
+
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var removed = inlet.Air.RemoveVolume(pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt);
+            var removed = inlet.Air.RemoveVolume(clamped); //starlight edit
 
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)

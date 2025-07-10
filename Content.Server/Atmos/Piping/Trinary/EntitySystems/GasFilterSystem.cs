@@ -61,8 +61,13 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 return;
             }
 
+            //starlight fix subtick
+            float wantToTransfer = filter.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
+            float clamped = Math.Min(wantToTransfer, Atmospherics.MaxOutputPressure);
+            //starlight end
+
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
-            var transferVol = filter.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
+            var transferVol = clamped; //starlight edit
 
             if (transferVol <= 0)
             {
