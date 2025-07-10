@@ -22,7 +22,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
 
     private void OnExamined(Entity<PermanentBlindnessComponent> blindness, ref ExaminedEvent args)
     {
-        if (args.IsInDetailsRange)
+        if (args.IsInDetailsRange && blindness.Comp.Blindness == 0)
         {
             args.PushMarkup(Loc.GetString("permanent-blindness-trait-examined", ("target", Identity.Entity(blindness, EntityManager))));
         }
@@ -46,9 +46,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
             return;
 
         if (blindness.Comp.Blindness != 0)
-        {
             _blinding.SetMinDamage((blindness.Owner, blindable), blindness.Comp.Blindness);
-        }
         else
         {
             var maxMagnitudeInt = (int) BlurryVisionComponent.MaxMagnitude;
