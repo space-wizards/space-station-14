@@ -5,7 +5,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Repairable;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+/// <summary>
+/// Use this component to mark a device as repairable.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SharedRepairableComponent : Component
 {
     /// <summary>
@@ -18,24 +21,33 @@ public sealed partial class SharedRepairableComponent : Component
     [DataField, AutoNetworkedField]
     public DamageSpecifier? Damage;
 
-    [DataField]
+    /// <summary>
+    /// Cost of fuel used to repair this device.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public int FuelCost = 5;
 
-    [DataField]
+    /// <summary>
+    /// Tool quality necessary to repair this device.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public ProtoId<ToolQualityPrototype> QualityNeeded = "Welding";
 
-    [DataField]
+    /// <summary>
+    /// The base tool use delay (seconds). This will be modified by the tool's quality
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public int DoAfterDelay = 1;
 
     /// <summary>
     /// A multiplier that will be applied to the above if an entity is repairing themselves.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float SelfRepairPenalty = 3f;
 
     /// <summary>
-    /// Whether or not an entity is allowed to repair itself.
+    /// Whether an entity is allowed to repair itself.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool AllowSelfRepair = true;
 }

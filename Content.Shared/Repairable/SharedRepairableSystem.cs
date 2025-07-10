@@ -22,62 +22,60 @@ public sealed partial class RepairableSystem : EntitySystem
         SubscribeLocalEvent<SharedRepairableComponent, RepairFinishedEvent>(OnRepairFinished);
     }
 
-    private void OnRepairFinished(EntityUid uid, SharedRepairableComponent component, RepairFinishedEvent args)
+    private void OnRepairFinished(Entity<SharedRepairableComponent> ent,  ref RepairFinishedEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (!TryComp(uid, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
+        if (!TryComp(ent.Owner, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
             return;
 
-        if (component.Damage != null)
+        if (ent.Comp.Damage != null)
         {
-            var damageChanged = _damageableSystem.TryChangeDamage(uid, component.Damage, true, false, origin: args.User);
-            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} by {damageChanged?.GetTotal()}");
+            var damageChanged = _damageableSystem.TryChangeDamage(ent.Owner, ent.Comp.Damage, true, false, origin: args.User);
+            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged?.GetTotal()}");
         }
 
         else
         {
             // Repair all damage
-            _damageableSystem.SetAllDamage(uid, damageable, 0);
-            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(uid):target} back to full health");
+            _damageableSystem.SetAllDamage(ent.Owner, damageable, 0);
+            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(ent.Owner):target} back to full health");
         }
 
-        var str = Loc.GetString("comp-repairable-repair",
-            ("target", uid),
-            ("tool", args.Used!));
-        _popup.PopupEntity(str, uid, args.User);
+        var str = Loc.GetString("comp-repairable-repair", ("target", ent.Owner), ("tool", args.Used!));
+        _popup.PopupClient(str, ent.Owner, args.User);
 
-        var ev = new RepairedEvent((uid, component), args.User);
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new RepairedEvent(ent, args.User);
+        RaiseLocalEvent(ent.Owner, ref ev);
     }
 
-    private void Repair(EntityUid uid, SharedRepairableComponent component, InteractUsingEvent args)
+    private void Repair(Entity<SharedRepairableComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
 
         // Only try repair the target if it is damaged
-        if (!TryComp<DamageableComponent>(uid, out var damageable) || damageable.TotalDamage == 0)
+        if (!TryComp<DamageableComponent>(ent.Owner, out var damageable) || damageable.TotalDamage == 0)
             return;
 
-        float delay = component.DoAfterDelay;
+        float delay = ent.Comp.DoAfterDelay;
 
         // Add a penalty to how long it takes if the user is repairing itself
         if (args.User == args.Target)
         {
-            if (!component.AllowSelfRepair)
+            if (!ent.Comp.AllowSelfRepair)
                 return;
 
-            delay *= component.SelfRepairPenalty;
+            delay *= ent.Comp.SelfRepairPenalty;
         }
 
         // Run the repairing doafter
-        args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, delay, component.QualityNeeded, new RepairFinishedEvent(), component.FuelCost);
+        args.Handled = _toolSystem.UseTool(args.Used, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairFinishedEvent(), ent.Comp.FuelCost);
     }
 
     [Serializable, NetSerializable]
-    protected sealed partial class RepairFinishedEvent : SimpleDoAfterEvent;
+    private sealed partial class RepairFinishedEvent : SimpleDoAfterEvent;
 }
 
 /// <summary>
