@@ -1,91 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Fixed breaking small mobs (e.g. mice) mask after getting into an air
-      flow.
-    type: Fix
-  id: 8238
-  time: '2025-04-18T22:52:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33888
-- author: YoungThugSS14
-  changes:
-  - message: The Diona and Gingerbread species now get unique typing indicators
-    type: Add
-  id: 8239
-  time: '2025-04-18T23:19:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36126
-- author: Rainbeon
-  changes:
-  - message: Fixed Revolvers not correctly reloading from Speedloaders when the Revolver
-      is partially loaded.
-    type: Fix
-  - message: Speedloaders will now prioritize loading the active and upcoming chambers
-      in a Revolver when the Speedloader is only partially filled, rather than the
-      ones farthest away.
-    type: Fix
-  id: 8240
-  time: '2025-04-18T23:26:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32396
-- author: ScarKy0
-  changes:
-  - message: Changed the air vent and scrubber sprites.
-    type: Tweak
-  id: 8241
-  time: '2025-04-18T23:34:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34223
-- author: EmoGarbage404
-  changes:
-  - message: Added the material silo. This machine allows nearby machines to share
-      a pool of resources, cutting down on micromanagement.
-    type: Add
-  id: 8242
-  time: '2025-04-18T23:43:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36492
-- author: Onezero0
-  changes:
-  - message: Modular Grenades can now fit inside Security belts and carriers.
-    type: Tweak
-  id: 8243
-  time: '2025-04-19T00:04:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34169
-- author: Alpaccalypse
-  changes:
-  - message: The cocktail "Irish slammer" has been renamed to "Grenade Penguin".
-    type: Tweak
-  id: 8244
-  time: '2025-04-19T00:24:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34181
-- author: ScarKy0
-  changes:
-  - message: Added a couple more tools to the artifact borg module.
-    type: Tweak
-  id: 8245
-  time: '2025-04-19T00:25:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33338
-- author: august-sun
-  changes:
-  - message: Resprited the Chief Engineer's mantle.
-    type: Tweak
-  id: 8246
-  time: '2025-04-19T00:26:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36697
-- author: IProduceWidgets
-  changes:
-  - message: Vox are no longer immune to the zombie virus under certain circumstances
-    type: Fix
-  - message: The zombie virus no longer provides non-Initial Infected an undue grace
-      period before poisoning them.
-    type: Fix
-  id: 8247
-  time: '2025-04-19T00:38:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34472
-- author: Booblesnoot42
-  changes:
-  - message: Airlocks will now animate properly after crushing someone.
-    type: Fix
-  id: 8248
-  time: '2025-04-19T00:57:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34523
 - author: SlamBamActionman
   changes:
   - message: Fingerprints and fibers are now always applied to items being held, regardless
@@ -3889,3 +3802,91 @@
   id: 8750
   time: '2025-07-08T01:45:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38670
+- author: maland1
+  changes:
+  - message: Updated contraband tags on pulse weapons, temp gun, portable particle
+      decelerator, tesla gun and makeshift laser pistol to be more consistent with
+      their intended owners and legality
+    type: Tweak
+  id: 8751
+  time: '2025-07-08T11:55:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38698
+- author: TrixxedHeart
+  changes:
+  - message: Vox can now have heterochromia in the overlays category under markings.
+    type: Add
+  id: 8752
+  time: '2025-07-08T23:22:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38595
+- author: Quantum-cross
+  changes:
+  - message: Fix lingering ghost entities after taking ghost roles.
+    type: Fix
+  id: 8753
+  time: '2025-07-09T11:07:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38788
+- author: Sparlight
+  changes:
+  - message: Dragons no longer destroy non-humanoid mobs upon eating them.
+    type: Tweak
+  id: 8754
+  time: '2025-07-09T12:43:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38087
+- author: Crude Oil
+  changes:
+  - message: Parrots now parrot nearby speech, sometimes even using the radio if they
+      have one equipped
+    type: Add
+  - message: Polly the Parrot, CE's pet parrot, may be found on some maps parroting
+      things into an engineering headset.
+    type: Add
+  id: 8755
+  time: '2025-07-09T19:04:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38243
+- author: slarticodefast
+  changes:
+  - message: Added VV buttons to the solution editor.
+    type: Add
+  id: 8756
+  time: '2025-07-10T06:31:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38889
+- author: Toby222
+  changes:
+  - message: pAIs can emote like borgs now
+    type: Add
+  id: 8757
+  time: '2025-07-10T07:56:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38425
+- author: Quantum-cross, slarticodefast
+  changes:
+  - message: The flash effect is now replaced with a reduced motion variant if the
+      accessibility setting is enabled in the game options.
+    type: Add
+  id: 8758
+  time: '2025-07-10T09:30:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37824
+- author: K-Dynamic
+  changes:
+  - message: Minigun now has inhand sprites.
+    type: Add
+  - message: Miniguns and other HMGs now require two hands to pick up and slows you
+      by 20%.
+    type: Tweak
+  id: 8759
+  time: '2025-07-10T12:42:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35344
+- author: ScarKy0
+  changes:
+  - message: SecTech vendor now starts with a few bolas.
+    type: Add
+  id: 8760
+  time: '2025-07-10T14:47:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38902
+- author: Hitlinemoss
+  changes:
+  - message: The station AI can now pick kobold/monkey holograms as customization
+      options.
+    type: Add
+  id: 8761
+  time: '2025-07-10T17:11:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38888
