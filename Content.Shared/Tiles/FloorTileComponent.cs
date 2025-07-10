@@ -13,7 +13,7 @@ namespace Content.Shared.Tiles
     public sealed partial class FloorTileComponent : Component
     {
         [DataField]
-        public List<ProtoId<ContentTileDefinition>>? OutputTiles;
+        public List<ProtoId<ContentTileDefinition>>? Outputs;
 
         [DataField("placeTileSound")] public SoundSpecifier PlaceTileSound =
             new SoundPathSpecifier("/Audio/Items/genhit.ogg")

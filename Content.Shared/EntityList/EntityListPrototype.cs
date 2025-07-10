@@ -11,13 +11,13 @@ namespace Content.Shared.EntityList
         public string ID { get; private set; } = default!;
 
         [DataField]
-        public ImmutableList<EntProtoId> EntityIds { get; private set; } = ImmutableList<EntProtoId>.Empty;
+        public ImmutableList<EntProtoId> Entities { get; private set; } = ImmutableList<EntProtoId>.Empty;
 
-        public IEnumerable<EntityPrototype> Entities(IPrototypeManager? prototypeManager = null)
+        public IEnumerable<EntityPrototype> GetEntities(IPrototypeManager? prototypeManager = null)
         {
             prototypeManager ??= IoCManager.Resolve<IPrototypeManager>();
 
-            foreach (var entityId in EntityIds)
+            foreach (var entityId in Entities)
             {
                 yield return prototypeManager.Index<EntityPrototype>(entityId);
             }
