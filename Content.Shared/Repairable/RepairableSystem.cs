@@ -73,9 +73,6 @@ public sealed partial class RepairableSystem : EntitySystem
         // Run the repairing doafter
         args.Handled = _toolSystem.UseTool(args.Used, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairFinishedEvent(), ent.Comp.FuelCost);
     }
-
-    [Serializable, NetSerializable]
-    private sealed partial class RepairFinishedEvent : SimpleDoAfterEvent;
 }
 
 /// <summary>
@@ -85,3 +82,6 @@ public sealed partial class RepairableSystem : EntitySystem
 /// <param name="User"></param>
 [ByRefEvent]
 public readonly record struct RepairedEvent(Entity<SharedRepairableComponent> Ent, EntityUid User);
+
+[Serializable, NetSerializable]
+public sealed partial class RepairFinishedEvent : SimpleDoAfterEvent;
