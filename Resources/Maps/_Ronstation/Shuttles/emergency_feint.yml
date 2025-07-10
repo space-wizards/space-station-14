@@ -4,8 +4,8 @@ meta:
   engineVersion: 262.0.0
   forkId: ""
   forkVersion: ""
-  time: 06/28/2025 13:48:37
-  entityCount: 558
+  time: 07/10/2025 16:20:11
+  entityCount: 562
 maps: []
 grids:
 - 18697
@@ -690,6 +690,11 @@ entities:
     - type: Transform
       pos: 1.5,1.5
       parent: 18697
+  - uid: 133
+    components:
+    - type: Transform
+      pos: -5.5,3.5
+      parent: 18697
   - uid: 19042
     components:
     - type: Transform
@@ -855,11 +860,6 @@ entities:
     - type: Transform
       pos: -6.5,3.5
       parent: 18697
-  - uid: 19076
-    components:
-    - type: Transform
-      pos: -5.5,2.5
-      parent: 18697
   - uid: 19077
     components:
     - type: Transform
@@ -977,6 +977,16 @@ entities:
       parent: 18697
 - proto: CableHV
   entities:
+  - uid: 131
+    components:
+    - type: Transform
+      pos: -5.5,10.5
+      parent: 18697
+  - uid: 132
+    components:
+    - type: Transform
+      pos: -6.5,9.5
+      parent: 18697
   - uid: 18933
     components:
     - type: Transform
@@ -1109,10 +1119,10 @@ entities:
     - type: Transform
       pos: 1.5,-3.5
       parent: 18697
-  - uid: 18942
+  - uid: 125
     components:
     - type: Transform
-      pos: -5.5,9.5
+      pos: -3.5,9.5
       parent: 18697
   - uid: 18943
     components:
@@ -1306,11 +1316,11 @@ entities:
       parent: 18697
 - proto: CableTerminal
   entities:
-  - uid: 18936
+  - uid: 128
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -3.5,9.5
+      rot: 1.5707963267948966 rad
+      pos: -5.5,9.5
       parent: 18697
 - proto: ChairOfficeDark
   entities:
@@ -2412,19 +2422,30 @@ entities:
       parent: 18697
     - type: AtmosPipeColor
       color: '#FC1313FF'
-- proto: GeneratorBasic15kW
+- proto: GeneratorWallmountAPU
   entities:
-  - uid: 18930
+  - uid: 129
     components:
     - type: Transform
-      pos: -3.5,9.5
+      pos: -5.5,10.5
       parent: 18697
+    - type: PowerSupplier
+      supplyRampRate: 5000
+      supplyRate: 60000
+  - uid: 130
+    components:
+    - type: Transform
+      pos: -6.5,9.5
+      parent: 18697
+    - type: PowerSupplier
+      supplyRampRate: 5000
+      supplyRate: 60000
 - proto: GravityGeneratorMini
   entities:
-  - uid: 113
+  - uid: 126
     components:
     - type: Transform
-      pos: -6.5,6.5
+      pos: -5.5,9.5
       parent: 18697
 - proto: Grille
   entities:
@@ -3096,12 +3117,19 @@ entities:
     - type: Transform
       pos: 1.5,8.5
       parent: 18697
-- proto: SubstationBasic
+- proto: SubstationBasicEmpty
   entities:
-  - uid: 18932
+  - uid: 127
     components:
     - type: Transform
-      pos: -5.5,9.5
+      pos: -3.5,9.5
+      parent: 18697
+- proto: SuitStorageEVA
+  entities:
+  - uid: 113
+    components:
+    - type: Transform
+      pos: -6.5,6.5
       parent: 18697
 - proto: TableReinforcedGlass
   entities:
