@@ -29,10 +29,17 @@ public sealed class ObserveCommand : LocalizedEntityCommands
             return;
         }
 
-        var isAdminCommand = args.Length > 0 && args[0].ToLower() == "admin";
+        if (args.Length == 1)
+        {
+            if (!bool.TryParse(args[0], out var enabled))
+            {
+                shell.WriteError(Loc.GetString("shell-invalid-bool"));
+                return;
+            }
 
-        if (!isAdminCommand && _adminManager.IsAdmin(player))
-            _adminManager.DeAdmin(player);
+            if (!enabled)
+                _adminManager.IsAdmin(player);
+        }
 
         _gameTicker.JoinAsObserver(player);
     }
