@@ -18,11 +18,11 @@ public sealed partial class RepairableSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<SharedRepairableComponent, InteractUsingEvent>(Repair);
-        SubscribeLocalEvent<SharedRepairableComponent, RepairFinishedEvent>(OnRepairFinished);
+        SubscribeLocalEvent<RepairableComponent, InteractUsingEvent>(Repair);
+        SubscribeLocalEvent<RepairableComponent, RepairFinishedEvent>(OnRepairFinished);
     }
 
-    private void OnRepairFinished(Entity<SharedRepairableComponent> ent,  ref RepairFinishedEvent args)
+    private void OnRepairFinished(Entity<RepairableComponent> ent,  ref RepairFinishedEvent args)
     {
         if (args.Cancelled)
             return;
@@ -50,7 +50,7 @@ public sealed partial class RepairableSystem : EntitySystem
         RaiseLocalEvent(ent.Owner, ref ev);
     }
 
-    private void Repair(Entity<SharedRepairableComponent> ent, ref InteractUsingEvent args)
+    private void Repair(Entity<RepairableComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -81,7 +81,7 @@ public sealed partial class RepairableSystem : EntitySystem
 /// <param name="Ent"></param>
 /// <param name="User"></param>
 [ByRefEvent]
-public readonly record struct RepairedEvent(Entity<SharedRepairableComponent> Ent, EntityUid User);
+public readonly record struct RepairedEvent(Entity<RepairableComponent> Ent, EntityUid User);
 
 [Serializable, NetSerializable]
 public sealed partial class RepairFinishedEvent : SimpleDoAfterEvent;
