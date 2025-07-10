@@ -1,11 +1,11 @@
-﻿# Based on https://github.com/space-wizards/space-station-14/pull/26883 by @Vonsant, sprites by belay5 (discord)
+﻿# Created by KarmaKistuna, sprites by the  themageofmicrosoftpaints (discord)
 
 # Base for dinos
 - type: entity
   parent: [ SimpleMobBase, MobCombat ]
   id: BaseMobDinosaur
   name: dinosaur
-  description: Enigmatic behemoths from a bygone era, known for their imposing stature and formidable presence.
+  description: Dinos
   abstract: true
   components:
   - type: Sprite
@@ -91,7 +91,7 @@
   parent: BaseMobDinosaur
   id: BaseMobDinosaurCarno
   name: carnivorous dinosaur
-  description: Enigmatic behemoths from a bygone era, known for their imposing stature and formidable presence.
+  description: A carnivorous dino
   abstract: true
   components:
     - type: NpcFactionMember
@@ -102,7 +102,7 @@
   parent: BaseMobDinosaur
   id: BaseMobDinosaurHerb
   name: herbivore dinosaur
-  description: Enigmatic behemoths from a bygone era, known for their imposing stature and formidable presence.
+  description: A vegetarian, but don't let that fool you. They're still out for blood
   abstract: true
   components:
     - type: NpcFactionMember
@@ -125,7 +125,7 @@
     layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: compy
-        scale: 0.6, 0.6
+        scale: 1.1, 1.1
   - type: NpcFactionMember
     factions:
       - Passive
