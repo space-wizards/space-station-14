@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Added a couple more tools to the artifact borg module.
-    type: Tweak
-  id: 8245
-  time: '2025-04-19T00:25:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33338
 - author: august-sun
   changes:
   - message: Resprited the Chief Engineer's mantle.
@@ -3888,3 +3881,11 @@
   id: 8757
   time: '2025-07-10T07:56:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38425
+- author: Quantum-cross, slarticodefast
+  changes:
+  - message: The flash effect is now replaced with a reduced motion variant if the
+      accessibility setting is enabled in the game options.
+    type: Add
+  id: 8758
+  time: '2025-07-10T09:30:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37824
