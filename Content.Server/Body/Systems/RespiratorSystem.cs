@@ -51,6 +51,8 @@ public sealed class RespiratorSystem : EntitySystem
         SubscribeLocalEvent<RespiratorComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BodyComponent, InhaledGasEvent>(OnGasInhaled);
         SubscribeLocalEvent<BodyComponent, ExhaledGasEvent>(OnGasExhaled);
+        SubscribeLocalEvent<BodyComponent, SuffocationEvent>(OnSuffocation);
+        SubscribeLocalEvent<BodyComponent, StopSuffocatingEvent>(OnStopSuffocating);
     }
 
     private void OnMapInit(Entity<RespiratorComponent> ent, ref MapInitEvent args)
@@ -188,7 +190,7 @@ public sealed class RespiratorSystem : EntitySystem
             return false;
 
         // If we don't have a body we can't be poisoned by gas, yet...
-        var success = TryMetabolizeGas((ent, ent.Comp));
+        var success = CanMetabolizeGas((ent, ent.Comp));
 
         // Don't keep that gas in our lungs lest it poisons a poor nuclear operative.
         Exhale(ent);
@@ -268,7 +270,7 @@ public sealed class RespiratorSystem : EntitySystem
     /// <summary>
     /// Tries to safely metabolize the current solutions in a body's lungs.
     /// </summary>
-    private bool TryMetabolizeGas(Entity<RespiratorComponent, BodyComponent?> ent)
+    private bool CanMetabolizeGas(Entity<RespiratorComponent, BodyComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp2))
             return false;
@@ -354,15 +356,11 @@ public sealed class RespiratorSystem : EntitySystem
 
         _damageableSys.TryChangeDamage(ent, ent.Comp.Damage, interruptsDoAfters: false);
 
-        if (ent.Comp.SuffocationCycles >= ent.Comp.SuffocationCycleThreshold)
-        {
-            // TODO: This is not going work with multiple different lungs, if that ever becomes a possibility
-            var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
-            foreach (var entity in organs)
-            {
-                _alertsSystem.ShowAlert(ent, entity.Comp1.Alert);
-            }
-        }
+        if (ent.Comp.SuffocationCycles < ent.Comp.SuffocationCycleThreshold)
+            return;
+
+        var ev = new SuffocationEvent();
+        RaiseLocalEvent(ent, ref ev);
     }
 
     private void StopSuffocation(Entity<RespiratorComponent> ent)
@@ -372,6 +370,22 @@ public sealed class RespiratorSystem : EntitySystem
 
         _damageableSys.TryChangeDamage(ent, ent.Comp.DamageRecovery);
 
+        var ev = new StopSuffocatingEvent();
+        RaiseLocalEvent(ent, ref ev);
+    }
+
+    private void OnSuffocation(Entity<BodyComponent> ent, ref SuffocationEvent args)
+    {
+        // TODO: This is not going work with multiple different lungs, if that ever becomes a possibility
+        var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
+        foreach (var entity in organs)
+        {
+            _alertsSystem.ShowAlert(ent, entity.Comp1.Alert);
+        }
+    }
+
+    private void OnStopSuffocating(Entity<BodyComponent> ent, ref StopSuffocatingEvent args)
+    {
         // TODO: This is not going work with multiple different lungs, if that ever becomes a possibility
         var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, null));
         foreach (var entity in organs)
@@ -421,3 +435,9 @@ public record struct InhaledGasEvent(GasMixture Gas, bool Handled = false, bool 
 
 [ByRefEvent]
 public record struct ExhaledGasEvent(GasMixture Gas, bool Handled = false);
+
+[ByRefEvent]
+public record struct SuffocationEvent;
+
+[ByRefEvent]
+public record struct StopSuffocatingEvent;
