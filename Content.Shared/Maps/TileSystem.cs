@@ -1,7 +1,9 @@
 using System.Linq;
 using System.Numerics;
+using Content.Shared.CCVar;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
@@ -20,9 +22,17 @@ public sealed class TileSystem : EntitySystem
     [Dependency] private readonly SharedDecalSystem _decal = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+
+    private int _tileStackingHistorySize;
 
     //Tile history for deconstruction.
     private readonly Dictionary<(EntityUid Grid, Vector2i Indices), Stack<string>> _tileBaseTurfHistory = new();
+
+    public override void Initialize()
+    {
+        _cfg.OnValueChanged(CCVars.TileStackingHistorySize, value => _tileStackingHistorySize = value, true);
+    }
 
     /// <summary>
     ///     Returns a weighted pick of a tile variant.
@@ -100,7 +110,7 @@ public sealed class TileSystem : EntitySystem
         if (tile.IsEmpty)
             return false;
 
-        var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.TypeId];
+        var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.TypeId];
 
         if (!tileDef.CanCrowbar)
             return false;
@@ -124,18 +134,26 @@ public sealed class TileSystem : EntitySystem
 
         var key = (grid, tileref.GridIndices);
 
-        //Creates stack if there is none
+        //Create stack if there is none
         if (!_tileBaseTurfHistory.TryGetValue(key, out var stack))
         {
             stack = new Stack<string>();
             _tileBaseTurfHistory[key] = stack;
         }
 
-        //Push current tile to the stack, if not empty.
+        //Push current tile to the stack, if not empty
         if (!tileref.Tile.IsEmpty)
         {
             var currentTileDef = (ContentTileDefinition)_tileDefinitionManager[tileref.Tile.TypeId];
             stack.Push(currentTileDef.ID);
+
+            //Enforce stack limit (0 = infinite)
+            if (_tileStackingHistorySize > 0 && stack.Count > _tileStackingHistorySize)
+            {
+                //Trim the bottom-most (oldest) entry
+                var newStack = new Stack<string>(stack.Reverse().Take(_tileStackingHistorySize));
+                _tileBaseTurfHistory[key] = newStack;
+            }
         }
 
         var variant = PickVariant(replacementTile);
@@ -148,6 +166,7 @@ public sealed class TileSystem : EntitySystem
         _maps.SetTile(grid, component, tileref.GridIndices, new Tile(replacementTile.TileId, 0, variant));
         return true;
     }
+
 
     public bool DeconstructTile(TileRef tileRef)
     {

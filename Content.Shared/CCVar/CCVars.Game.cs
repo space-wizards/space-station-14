@@ -403,4 +403,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> GameHostnameInTitlebar =
         CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     How long show tile stacking history be?
+    /// </summary>
+    public static readonly CVarDef<int> TileStackingHistorySize =
+        CVarDef.Create("game.tile_history_size", 5, CVar.SERVER | CVar.REPLICATED);
 }
