@@ -7,6 +7,7 @@
   - type: StationAiWhitelist
   - type: Vocalizer
     hideChat: true
+  - type: VocalizerRequiresPower
   - type: DatasetVocalizer
     dataset: SmartFridgeAds
   - type: Speech

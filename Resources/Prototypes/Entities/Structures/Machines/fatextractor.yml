@@ -103,6 +103,7 @@
     speechVerb: Robotic
   - type: Vocalizer
     hideChat: true
+  - type: VocalizerRequiresPower
   - type: DatasetVocalizer
     dataset: FatExtractorFacts
   - type: StaticPrice
