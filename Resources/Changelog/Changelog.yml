@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Booblesnoot42
-  changes:
-  - message: Airlocks will now animate properly after crushing someone.
-    type: Fix
-  id: 8248
-  time: '2025-04-19T00:57:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34523
 - author: SlamBamActionman
   changes:
   - message: Fingerprints and fibers are now always applied to items being held, regardless
@@ -3889,3 +3882,11 @@
   id: 8760
   time: '2025-07-10T14:47:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38902
+- author: Hitlinemoss
+  changes:
+  - message: The station AI can now pick kobold/monkey holograms as customization
+      options.
+    type: Add
+  id: 8761
+  time: '2025-07-10T17:11:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38888
