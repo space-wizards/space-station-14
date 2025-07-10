@@ -27,4 +27,11 @@ public sealed partial class VocalizerComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan NextVocalizeInterval = TimeSpan.Zero;
+
+    /// <summary>
+    /// If true, messages spoken by this vocalizer will not be logged in the chat window
+    /// and will only be shown as speech bubbles.
+    /// </summary>
+    [DataField]
+    public bool HideChat;
 }
