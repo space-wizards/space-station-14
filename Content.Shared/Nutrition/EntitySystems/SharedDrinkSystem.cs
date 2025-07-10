@@ -24,7 +24,6 @@ public abstract partial class SharedDrinkSystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly FlavorProfileSystem _flavorProfile = default!;
-    [Dependency] private readonly FoodSystem _food = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -165,8 +164,8 @@ public abstract partial class SharedDrinkSystem : EntitySystem
             return true;
         }
 
-        if (_food.IsMouthBlocked(target, user))
-            return true;
+        //if (_food.IsMouthBlocked(target, user))
+            //return true;
 
         if (!_interaction.InRangeUnobstructed(user, item, popup: true))
             return true;

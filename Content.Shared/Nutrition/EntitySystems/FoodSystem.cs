@@ -52,7 +52,6 @@ public sealed class FoodSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly StomachSystem _stomach = default!;
-    [Dependency] private readonly UtensilSystem _utensil = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public const float MaxFeedDistance = 1.0f;
@@ -67,8 +66,6 @@ public sealed class FoodSystem : EntitySystem
         SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
         SubscribeLocalEvent<FoodComponent, GetVerbsEvent<AlternativeVerb>>(AddEatVerb);
         SubscribeLocalEvent<FoodComponent, ConsumeDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<UnremoveableComponent, EdibleEvent>(OnUnremovableEdible);
-        SubscribeLocalEvent<InventoryComponent, IngestionAttemptEvent>(OnInventoryIngestAttempt);
     }
 
     /// <summary>
@@ -99,7 +96,7 @@ public sealed class FoodSystem : EntitySystem
     /// <returns> Returns false if nothing happened, and true if something happened even if it wasn't feeding.</returns>
     public bool TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
     {
-        var foodEv = new EdibleEvent();
+        var foodEv = new IngestibleEvent();
         RaiseLocalEvent(food, ref foodEv);
 
         if (foodEv.Cancelled)
@@ -107,13 +104,6 @@ public sealed class FoodSystem : EntitySystem
 
         if (IsMouthBlocked(target, user))
             return true;
-
-        var ingestionEv = new TryIngestEvent()
-        {
-            Ingested = food
-        };
-        //if (!ingestionEv.Handled)
-            //return false;
 
         //Suppresses eating yourself and alive mobs
         if (food == user || (_mobState.IsAlive(food) && foodComp.RequireDead))
@@ -127,7 +117,7 @@ public sealed class FoodSystem : EntitySystem
             //return false;
 
         if (_openable.IsClosed(food, user, predicted: true))
-            return false;
+            return false; //
 
         if (!_solutionContainer.TryGetSolution(food, foodComp.Solution, out _, out var foodSolution))
             return false;
@@ -298,7 +288,7 @@ public sealed class FoodSystem : EntitySystem
         // Try to break all used utensils
         foreach (var utensil in utensils)
         {
-            _utensil.TryBreak(utensil, args.User);
+            //_utensil.TryBreak(utensil, args.User);
         }
 
         args.Repeat = !forceFeed;
@@ -503,7 +493,7 @@ public sealed class FoodSystem : EntitySystem
             blocker.Enabled)
         {
             args.Blocker = maskUid;
-            args.Cancel();
+            args.Cancelled = true;
             return;
         }
 
@@ -512,7 +502,7 @@ public sealed class FoodSystem : EntitySystem
             blocker.Enabled)
         {
             args.Blocker = headUid;
-            args.Cancel();
+            args.Cancelled = true;
         }
     }
 
@@ -527,7 +517,7 @@ public sealed class FoodSystem : EntitySystem
     public bool IsMouthBlocked(EntityUid uid, EntityUid? popupUid = null)
     {
         var attempt = new IngestionAttemptEvent();
-        RaiseLocalEvent(uid, attempt, false);
+        RaiseLocalEvent(uid, ref attempt, false);
         if (attempt.Cancelled && attempt.Blocker != null && popupUid != null)
         {
             _popup.PopupClient(Loc.GetString("food-system-remove-mask", ("entity", attempt.Blocker.Value)),
@@ -555,14 +545,14 @@ public sealed class FoodSystem : EntitySystem
         return Math.Max(1, (int) Math.Ceiling((solution.Volume / (FixedPoint2) comp.TransferAmount).Float()));
     }
 
-    private void OnUnremovableEdible(Entity<UnremoveableComponent> entity, ref EdibleEvent args)
+    private void OnUnremovableEdible(Entity<UnremoveableComponent> entity, ref IngestibleEvent args)
     {
         // If we can't remove it we probably shouldn't be able to eat it.
         // TODO: Separate glue and Unremovable component.
         args.Cancelled = true;
     }
 
-    private void OnEdible(Entity<FoodComponent> entity, ref EdibleEvent args)
+    private void OnEdible(Entity<FoodComponent> entity, ref IngestibleEvent args)
     {
 
     }
