@@ -33,6 +33,12 @@
         },
         {
             "name": "ai_dog"
+        },
+        {
+            "name": "ai_kobold"
+        },
+        {
+            "name": "ai_monkey"
         }
     ]
 }
