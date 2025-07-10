@@ -1,7 +1,6 @@
 ﻿using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -14,8 +13,8 @@ public sealed partial class ItemBorgModuleComponent : Component
     /// <summary>
     /// The items that are provided.
     /// </summary>
-    [DataField("items", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>), required: true)]
-    public List<string> Items = new();
+    [DataField(required: true)]
+    public List<EntProtoId> Items = new();
 
     /// <summary>
     /// The entities from <see cref="Items"/> that were spawned.
