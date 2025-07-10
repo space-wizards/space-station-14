@@ -3,6 +3,7 @@
   name: roles-antag-paradox-clone-name
   antagonist: true
   objective: roles-antag-paradox-clone-objective
+  revertTraits: false
   setPreference: false
 
 # they need to be able to espace when spawning inside a locked room
