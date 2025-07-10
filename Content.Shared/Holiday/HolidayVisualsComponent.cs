@@ -20,5 +20,5 @@ public sealed partial class HolidayVisualsComponent : Component
 [Serializable, NetSerializable]
 public enum HolidayVisuals : byte
 {
-    Holiday
+    Holiday,
 }

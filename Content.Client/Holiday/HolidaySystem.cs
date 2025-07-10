@@ -6,9 +6,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Holiday;
 
+/// <inheritdoc />
 public sealed class HolidaySystem : SharedHolidaySystem
 {
-    [Dependency] private readonly IResourceCache _rescache = default!;
+    [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
@@ -17,7 +18,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<TickerLobbyStatusEvent>(EnterLobby);
+        SubscribeNetworkEvent<TickerLobbyStatusEvent>(EnterLobby); // TODO find a way to do this in shared
 
         SubscribeLocalEvent<HolidayRsiSwapComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
@@ -33,11 +34,11 @@ public sealed class HolidaySystem : SharedHolidaySystem
             return;
 
         var comp = ent.Comp;
-        if (!comp.Sprite.TryGetValue(data, out var rsistring) || args.Sprite == null)
+        if (!comp.Sprite.TryGetValue(data, out var rsiString) || args.Sprite == null)
             return;
 
-        var path = SpriteSpecifierSerializer.TextureRoot / rsistring;
-        if (_rescache.TryGetResource(path, out RSIResource? rsi))
+        var path = SpriteSpecifierSerializer.TextureRoot / rsiString;
+        if (_resCache.TryGetResource(path, out RSIResource? rsi))
             _sprite.SetBaseRsi((ent.Owner, args.Sprite), rsi.RSI);
     }
 }

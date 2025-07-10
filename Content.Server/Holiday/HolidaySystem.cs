@@ -4,9 +4,10 @@ using Content.Shared.Holiday;
 
 namespace Content.Server.Holiday;
 
-/// <summary>
-/// This handles...
-/// </summary>
+// To move to shared, this needs
+//      - a good way to periodically updated the holiday (i.e. shared knowing when we go to lobby)
+//      - serverwide announcements in shared
+/// <inheritdoc />
 public sealed class HolidaySystem : SharedHolidaySystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -21,12 +22,13 @@ public sealed class HolidaySystem : SharedHolidaySystem
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent eventArgs)
     {
-        if (!Enabled) return;
+        if (!Enabled)
+            return;
 
         switch (eventArgs.New)
         {
             case GameRunLevel.PreRoundLobby:
-                RefreshCurrentHolidays();
+                RefreshCurrentHolidays(); // Part one of keeping this in server
                 break;
             case GameRunLevel.InRound:
                 DoGreet();
@@ -37,11 +39,14 @@ public sealed class HolidaySystem : SharedHolidaySystem
         }
     }
 
-    public void DoGreet()
+    /// <summary>
+    ///     Send a chat message to the server announcing the holiday.
+    /// </summary>
+    private void DoGreet()
     {
         foreach (var holiday in CurrentHolidays)
         {
-            _chatManager.DispatchServerAnnouncement(holiday.Greet());
+            _chatManager.DispatchServerAnnouncement(holiday.Greet()); // Part two of keeping this in server
         }
     }
 }
