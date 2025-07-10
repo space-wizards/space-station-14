@@ -37,7 +37,7 @@ public sealed class ThrowInsertContainerSystem : EntitySystem
         if (beforeThrowArgs.Cancelled)
             return;
 
-        if (_random.Prob(ent.Comp.Probability))
+        if (!_random.Prob(ent.Comp.Probability))
         {
             _audio.PlayPvs(ent.Comp.MissSound, ent);
             _popup.PopupEntity(Loc.GetString(ent.Comp.MissLocString), ent);

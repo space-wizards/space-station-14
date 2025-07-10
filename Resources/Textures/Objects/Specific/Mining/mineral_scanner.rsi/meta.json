@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/125c975f1b3bf9826b37029e9ab5a5f89e975a7e. adv and adv-o by EmoGarbage404",
+  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/125c975f1b3bf9826b37029e9ab5a5f89e975a7e. adv and adv-o by EmoGarbage404, inhands by TiniestShark (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -14,10 +14,26 @@
       "name": "icon-o"
     },
     {
+      "name": "inhand-left-reg",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-reg",
+      "directions": 4
+    },
+    {
       "name": "adv"
     },
     {
       "name": "adv-o"
+    },
+    {
+      "name": "inhand-left-adv",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-adv",
+      "directions": 4
     }
   ]
 }

@@ -137,7 +137,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(morsel):player} entered the event horizon of {ToPrettyString(hungry)} and was deleted");
         }
 
-        EntityManager.QueueDeleteEntity(morsel);
+        QueueDel(morsel);
         var evSelf = new EntityConsumedByEventHorizonEvent(morsel, hungry, eventHorizon, outerContainer);
         var evEaten = new EventHorizonConsumedEntityEvent(morsel, hungry, eventHorizon, outerContainer);
         RaiseLocalEvent(hungry, ref evSelf);
@@ -270,7 +270,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         var toConsume = new List<(Vector2i, Tile)>();
         foreach (var tile in tiles)
         {
-            if (CanConsumeTile(hungry, tile, grid, eventHorizon))
+            if (CanConsumeTile((hungry, eventHorizon), tile, (gridId, grid)))
                 toConsume.Add((tile.GridIndices, Tile.Empty));
         }
 
@@ -284,14 +284,21 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Checks whether an event horizon can consume a given tile.
     /// This is only possible if it can also consume all entities anchored to the tile.
     /// </summary>
-    public bool CanConsumeTile(EntityUid hungry, TileRef tile, MapGridComponent grid, EventHorizonComponent eventHorizon)
+    public bool CanConsumeTile(Entity<EventHorizonComponent> hungry, TileRef tile, Entity<MapGridComponent> grid)
     {
-        foreach (var blockingEntity in grid.GetAnchoredEntities(tile.GridIndices))
+        foreach (var blockingEntity in _mapSystem.GetAnchoredEntities(grid, tile.GridIndices))
         {
-            if (!CanConsumeEntity(hungry, blockingEntity, eventHorizon))
+            if (!CanConsumeEntity(hungry, blockingEntity, hungry.Comp))
                 return false;
         }
         return true;
+    }
+
+    /// <inheritdoc cref="CanConsumeTile(EntityUid, TileRef, Entity{MapGridComponent}, EventHorizonComponent)"/>
+    [Obsolete("Use the Entity<T> overload")]
+    public bool CanConsumeTile(EntityUid hungry, TileRef tile, MapGridComponent grid, EventHorizonComponent eventHorizon)
+    {
+        return CanConsumeTile((hungry, eventHorizon), tile, (grid.Owner, grid));
     }
 
     /// <summary>
@@ -453,14 +460,14 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     private void OnEventHorizonContained(EventHorizonContainedEvent args)
     {
         var uid = args.Entity;
-        if (!EntityManager.EntityExists(uid))
+        if (!Exists(uid))
             return;
         var comp = args.EventHorizon;
         if (comp.BeingConsumedByAnotherEventHorizon)
             return;
 
         var containerEntity = args.Args.Container.Owner;
-        if (!EntityManager.EntityExists(containerEntity))
+        if (!Exists(containerEntity))
             return;
         if (AttemptConsumeEntity(uid, containerEntity, comp))
             return; // If we consume the entity we also consume everything in the containers it has.

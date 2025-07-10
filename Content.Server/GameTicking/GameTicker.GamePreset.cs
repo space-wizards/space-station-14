@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Shared.CCVar;
-using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 
@@ -12,8 +11,6 @@ namespace Content.Server.GameTicking;
 
 public sealed partial class GameTicker
 {
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
-
     public const float PresetFailedCooldownIncrease = 30f;
 
     /// <summary>

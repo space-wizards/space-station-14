@@ -393,6 +393,10 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
         {
             StationRecordFilterType.Name =>
                 !someRecord.Name.ToLower().Contains(filterLowerCaseValue),
+            StationRecordFilterType.Job =>
+                !someRecord.JobTitle.ToLower().Contains(filterLowerCaseValue),
+            StationRecordFilterType.Species =>
+                !someRecord.Species.ToLower().Contains(filterLowerCaseValue),
             StationRecordFilterType.Prints => someRecord.Fingerprint != null
                 && IsFilterWithSomeCodeValue(someRecord.Fingerprint, filterLowerCaseValue),
             StationRecordFilterType.DNA => someRecord.DNA != null

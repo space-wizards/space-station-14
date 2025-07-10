@@ -1,12 +1,9 @@
 ﻿#nullable enable
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
