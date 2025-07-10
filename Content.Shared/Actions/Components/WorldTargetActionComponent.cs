@@ -1,5 +1,4 @@
-using Content.Shared.Actions;
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Actions.Components;
@@ -13,6 +12,7 @@ namespace Content.Shared.Actions.Components;
 /// </remarks>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedActionsSystem))]
 [EntityCategory("Actions")]
+[AutoGenerateComponentState]
 public sealed partial class WorldTargetActionComponent : Component
 {
     /// <summary>
@@ -20,4 +20,10 @@ public sealed partial class WorldTargetActionComponent : Component
     /// </summary>
     [DataField(required: true), NonSerialized]
     public WorldTargetActionEvent? Event;
+
+    /// <summary>
+    /// Whether to make the user face towards the direction where they targeted this action.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RotateOnUse = true;
 }

@@ -12,7 +12,6 @@ namespace Content.Shared.Damage.Prototypes
     ///     cref="DamageableComponent"/> should support.
     /// </remarks>
     [Prototype]
-    [Serializable, NetSerializable]
     public sealed partial class DamageContainerPrototype : IPrototype
     {
         [ViewVariables]
