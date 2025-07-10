@@ -9244,3 +9244,11 @@ Entries:
   id: 1274
   time: '2025-07-09T19:15:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/980
+- author: stickycheZ101
+  changes:
+  - message: the QM can now throw hands more easily
+    type: Tweak
+  id: 1275
+  time: '2025-07-10T12:43:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/1005
+
