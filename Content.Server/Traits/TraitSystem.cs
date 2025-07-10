@@ -88,8 +88,7 @@ public sealed class TraitSystem : EntitySystem
                 return;
             }
 
-            if (_whitelistSystem.IsWhitelistFail(traitPrototype.Whitelist, args.Mind.OwnedEntity.Value) ||
-                _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, args.Mind.OwnedEntity.Value))
+            if (_whitelistSystem.CheckBoth(args.Mind.OwnedEntity.Value, traitPrototype.Blacklist, traitPrototype.Whitelist))
                 continue;
 
             EntityManager.RemoveComponents(args.Mind.OwnedEntity.Value, traitPrototype.Components);
