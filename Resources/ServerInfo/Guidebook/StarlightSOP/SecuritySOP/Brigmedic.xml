@@ -28,10 +28,13 @@
         or
         <GuideEntityEmbed Entity="Zipties"/>
     </Box>
+    <Box>
+        <GuideEntityEmbed Entity="WeaponPistolMk58"/>
+    </Box>
 
     2. Brigmedics may not perform Security Officer duties unless Security is severely understaffed, or a crime has occurred in their sight.
 
     3. Brigmedics must prioritize the health and safety of Security Officers and Prisoners over all other priorities.
 
-    4. Brigmedics putting themselves in excessive danger, and by extension the entire department, are to be considered negligent in their duties.
+    4. Brigmedics putting themselves in excessive danger, and by extension the entire department, are to be considered negligent in their duties. 
 </Document>
