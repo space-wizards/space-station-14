@@ -69,7 +69,6 @@ public sealed partial class LatheMenu : DefaultWindow
 
         ServerListButton.OnPressed += a => OnServerListButtonPressed?.Invoke(a);
         DeleteFabricating.OnPressed += _ => DeleteFabricatingAction?.Invoke();
-        DeleteFabricating.AddStyleClass("OpenLeft");
     }
 
     public void SetEntity(EntityUid uid)
@@ -246,11 +245,12 @@ public sealed partial class LatheMenu : DefaultWindow
         {
             var recipe = _prototypeManager.Index(batch.Recipe);
 
+            var itemName = _lathe.GetRecipeName(batch.Recipe);
             string displayText;
             if (batch.ItemsRequested > 1)
-                displayText = $"{idx}. {_lathe.GetRecipeName(batch.Recipe)} ({batch.ItemsPrinted}/{batch.ItemsRequested})";
+                displayText = Loc.GetString("lathe-menu-item-batch", ("index", idx), ("name", itemName), ("printed", batch.ItemsPrinted), ("total", batch.ItemsRequested));
             else
-                displayText = $"{idx}. {_lathe.GetRecipeName(batch.Recipe)}";
+                displayText = Loc.GetString("lathe-menu-item-single", ("index", idx), ("name", itemName));
 
             var queuedRecipeBox = new QueuedRecipeControl(displayText, idx - 1, GetRecipeDisplayControl(recipe));
             queuedRecipeBox.OnDeletePressed += s => QueueDeleteAction?.Invoke(s);

@@ -22,18 +22,15 @@ public sealed partial class QueuedRecipeControl : Control
         {
             OnMoveUpPressed?.Invoke(index);
         };
-        MoveUp.AddStyleClass("OpenRight"); // Left extra style classes in here, unsure how to define multiple in XAML.
 
         MoveDown.OnPressed += (_) =>
         {
             OnMoveDownPressed?.Invoke(index);
         };
-        MoveDown.AddStyleClass("OpenBoth");
 
         Delete.OnPressed += (_) =>
         {
             OnDeletePressed?.Invoke(index);
         };
-        Delete.AddStyleClass("OpenLeft");
     }
 }
