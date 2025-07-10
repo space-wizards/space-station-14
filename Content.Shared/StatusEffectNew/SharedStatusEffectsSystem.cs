@@ -2,8 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Whitelist;
-using Robust.Shared.GameStates;
-using Robust.Shared.Network;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -17,11 +16,9 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IComponentFactory _compFactory = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     private EntityQuery<StatusEffectContainerComponent> _containerQuery;
     private EntityQuery<StatusEffectComponent> _effectQuery;
@@ -35,15 +32,13 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         SubscribeLocalEvent<StatusEffectComponent, StatusEffectAppliedEvent>(OnStatusEffectApplied);
         SubscribeLocalEvent<StatusEffectComponent, StatusEffectRemovedEvent>(OnStatusEffectRemoved);
 
-        SubscribeLocalEvent<StatusEffectContainerComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<StatusEffectContainerComponent, ComponentInit>(OnStatusContainerInit);
+        SubscribeLocalEvent<StatusEffectContainerComponent, ComponentShutdown>(OnStatusContainerShutdown);
+        SubscribeLocalEvent<StatusEffectContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
+        SubscribeLocalEvent<StatusEffectContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
 
         _containerQuery = GetEntityQuery<StatusEffectContainerComponent>();
         _effectQuery = GetEntityQuery<StatusEffectComponent>();
-    }
-
-    private void OnGetState(Entity<StatusEffectContainerComponent> ent, ref ComponentGetState args)
-    {
-        args.State = new StatusEffectContainerComponentState(GetNetEntitySet(ent.Comp.ActiveStatusEffects));
     }
 
     public override void Update(float frameTime)
@@ -68,6 +63,55 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
             TryRemoveStatusEffect(effect.AppliedTo.Value, meta.EntityPrototype);
         }
+    }
+
+    private void OnStatusContainerInit(Entity<StatusEffectContainerComponent> ent, ref ComponentInit args)
+    {
+        ent.Comp.ActiveStatusEffects =
+            _container.EnsureContainer<Container>(ent, StatusEffectContainerComponent.ContainerId);
+    }
+
+    private void OnStatusContainerShutdown(Entity<StatusEffectContainerComponent> ent, ref ComponentShutdown args)
+    {
+        _container.ShutdownContainer(ent.Comp.ActiveStatusEffects);
+    }
+
+    private void OnEntityInserted(Entity<StatusEffectContainerComponent> ent, ref EntInsertedIntoContainerMessage args)
+    {
+        if (args.Container.ID != StatusEffectContainerComponent.ContainerId)
+            return;
+
+        if (!TryComp<StatusEffectComponent>(args.Entity, out var statusComp))
+            return;
+
+        // Make sure AppliedTo is set correctly so events can rely on it
+        if (statusComp.AppliedTo != ent)
+        {
+            statusComp.AppliedTo = ent;
+            Dirty(args.Entity, statusComp);
+        }
+
+        var ev = new StatusEffectAppliedEvent(ent);
+        RaiseLocalEvent(args.Entity, ref ev);
+    }
+
+    private void OnEntityRemoved(Entity<StatusEffectContainerComponent> ent, ref EntRemovedFromContainerMessage args)
+    {
+        if (args.Container.ID != StatusEffectContainerComponent.ContainerId)
+            return;
+
+        if (!TryComp<StatusEffectComponent>(args.Entity, out var statusComp))
+            return;
+
+        var ev = new StatusEffectAppliedEvent(ent);
+        RaiseLocalEvent(args.Entity, ref ev);
+
+        // Clear AppliedTo after events are handled so event handlers can use it
+        if (statusComp.AppliedTo == null)
+            return;
+
+        statusComp.AppliedTo = ent;
+        Dirty(args.Entity, statusComp);
     }
 
     private void AddStatusEffectTime(EntityUid effect, TimeSpan delta)
@@ -129,17 +173,13 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
     private void OnStatusEffectApplied(Entity<StatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        StatusEffectComponent statusEffect = ent;
-        ShowAlertIfNeeded(statusEffect);
+        ShowAlertIfNeeded(ent);
     }
 
     private void OnStatusEffectRemoved(Entity<StatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
-        if (ent.Comp.AppliedTo is null)
-            return;
-
-        if (ent.Comp is { AppliedTo: not null, Alert: not null })
-            _alerts.ClearAlert(ent.Comp.AppliedTo.Value, ent.Comp.Alert.Value);
+        if (ent.Comp is { AppliedTo: { } appliedTo, Alert: { } alert })
+            _alerts.ClearAlert(appliedTo, alert);
     }
 
     private bool CanAddStatusEffect(EntityUid uid, EntProtoId effectProto)
@@ -147,7 +187,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         if (!_proto.TryIndex(effectProto, out var effectProtoData))
             return false;
 
-        if (!effectProtoData.TryGetComponent<StatusEffectComponent>(out var effectProtoComp, _compFactory))
+        if (!effectProtoData.TryGetComponent<StatusEffectComponent>(out var effectProtoComp, Factory))
             return false;
 
         if (!_whitelist.CheckBoth(uid, effectProtoComp.Blacklist, effectProtoComp.Whitelist))
@@ -181,11 +221,15 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         if (!CanAddStatusEffect(target, effectProto))
             return false;
 
-        var container = EnsureComp<StatusEffectContainerComponent>(target);
+        EnsureComp<StatusEffectContainerComponent>(target);
 
-        //And only if all checks passed we spawn the effect
-        var effect = PredictedSpawnAttachedTo(effectProto, Transform(target).Coordinates);
-        _transform.SetParent(effect, target);
+        // And only if all checks passed we spawn the effect
+        if (!PredictedTrySpawnInContainer(effectProto,
+                target,
+                StatusEffectContainerComponent.ContainerId,
+                out var effect))
+            return false;
+
         if (!_effectQuery.TryComp(effect, out var effectComp))
             return false;
 
@@ -194,30 +238,21 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         if (duration != null)
             effectComp.EndEffectTime = _timing.CurTime + duration;
 
-        container.ActiveStatusEffects.Add(effect);
-        effectComp.AppliedTo = target;
-        Dirty(target, container);
-        Dirty(effect, effectComp);
-
-        var ev = new StatusEffectAppliedEvent(target);
-        RaiseLocalEvent(effect, ref ev);
+        Dirty(effect.Value, effectComp);
 
         return true;
     }
 
     private void ShowAlertIfNeeded(StatusEffectComponent effectComp)
     {
-        if (effectComp is { AppliedTo: not null, Alert: not null })
-        {
-            (TimeSpan, TimeSpan)? cooldown = effectComp.EndEffectTime is null
-                ? null
-                : (_timing.CurTime, effectComp.EndEffectTime.Value);
-            _alerts.ShowAlert(
-                effectComp.AppliedTo.Value,
-                effectComp.Alert.Value,
-                cooldown: cooldown
-            );
-        }
+        if (effectComp is not { AppliedTo: { } appliedTo, Alert: { } alert })
+            return;
+
+        (TimeSpan, TimeSpan)? cooldown = null;
+        if (effectComp.EndEffectTime is { } endTime)
+            cooldown  = (_timing.CurTime, endTime);
+
+        _alerts.ShowAlert(appliedTo, alert, cooldown: cooldown);
     }
 }
 

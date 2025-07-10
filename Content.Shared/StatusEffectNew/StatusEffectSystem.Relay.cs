@@ -25,7 +25,7 @@ public abstract partial class SharedStatusEffectsSystem
     {
         // this copies the by-ref event if it is a struct
         var ev = new StatusEffectRelayedEvent<T>(args);
-        foreach (var activeEffect in statusEffect.Comp.ActiveStatusEffects)
+        foreach (var activeEffect in statusEffect.Comp.ActiveStatusEffects.ContainedEntities)
         {
             RaiseLocalEvent(activeEffect, ref ev);
         }
@@ -37,7 +37,7 @@ public abstract partial class SharedStatusEffectsSystem
     {
         // this copies the by-ref event if it is a struct
         var ev = new StatusEffectRelayedEvent<T>(args);
-        foreach (var activeEffect in statusEffect.Comp.ActiveStatusEffects)
+        foreach (var activeEffect in statusEffect.Comp.ActiveStatusEffects.ContainedEntities)
         {
             RaiseLocalEvent(activeEffect, ref ev);
         }
