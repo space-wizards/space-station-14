@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Onezero0
-  changes:
-  - message: Modular Grenades can now fit inside Security belts and carriers.
-    type: Tweak
-  id: 8243
-  time: '2025-04-19T00:04:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34169
 - author: Alpaccalypse
   changes:
   - message: The cocktail "Irish slammer" has been renamed to "Grenade Penguin".
@@ -3888,3 +3881,10 @@
   id: 8755
   time: '2025-07-09T19:04:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38243
+- author: slarticodefast
+  changes:
+  - message: Added VV buttons to the solution editor.
+    type: Add
+  id: 8756
+  time: '2025-07-10T06:31:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38889
