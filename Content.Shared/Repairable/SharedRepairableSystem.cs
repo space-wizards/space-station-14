@@ -9,7 +9,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Repairable;
 
-public abstract partial class RepairableSystem : EntitySystem
+public sealed partial class RepairableSystem : EntitySystem
 {
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
