@@ -121,6 +121,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
                 Category = VerbCategory.Debug,
                 Act = () =>
                 {
+                    if (_net.IsClient)
+                        return;
                     var brain = SpawnInContainerOrDrop(DefaultAi, ent.Owner, StationAiCoreComponent.Container);
                     _mind.ControlMob(user, brain);
                 },
