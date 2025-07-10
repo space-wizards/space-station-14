@@ -19,6 +19,8 @@ namespace Content.Shared.Holiday
 
         public override void Initialize()
         {
+            base.Initialize();
+
             Subs.CVar(_configManager, CCVars.HolidaysEnabled, OnHolidaysEnableChange);
             SubscribeLocalEvent<HolidayVisualsComponent, ComponentInit>(OnVisualsInit);
         }
