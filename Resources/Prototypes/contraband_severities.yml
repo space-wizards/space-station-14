@@ -21,10 +21,10 @@
   id: GrandTheft
   examineText: contraband-examine-text-GrandTheft
 
-# This is extreme contraband and is illegal to own IC.
+# This is highly illegal contraband and is illegal to own IC.
 - type: contrabandSeverity
-  id: Extreme
-  examineText: contraband-examine-text-Extreme
+  id: HighlyIllegal
+  examineText: contraband-examine-text-Highly-Illegal
 
 # This is clear syndicate contraband and is illegal to own IC.
 - type: contrabandSeverity
