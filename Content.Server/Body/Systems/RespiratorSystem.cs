@@ -210,7 +210,6 @@ public sealed class RespiratorSystem : EntitySystem
         if (organs.Count == 0)
             return false;
 
-        gas = new GasMixture(gas);
         var lungRatio = 1.0f / organs.Count;
         gas.Multiply(MathF.Min(lungRatio * gas.Volume / ent.Comp.BreathVolume, lungRatio));
         var solution = _lungSystem.GasToReagent(gas);
