@@ -1,5 +1,5 @@
-﻿using Content.Server.Hands.Systems;
-using Content.Server.Popups;
+﻿using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
 using Robust.Shared.Player;
@@ -11,9 +11,9 @@ namespace Content.Shared.Holiday.Christmas;
 /// </summary>
 public sealed class LimitedItemGiverSystem : EntitySystem
 {
-    [Dependency] private readonly HandsSystem _hands = default!;
-    [Dependency] private readonly HolidaySystem _holiday = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedHolidaySystem _holiday = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -27,7 +27,7 @@ public sealed class LimitedItemGiverSystem : EntitySystem
 
         if (component.GrantedPlayers.Contains(actor.PlayerSession.UserId) || (component.RequiredHoliday is not null && !_holiday.IsCurrentlyHoliday(component.RequiredHoliday)))
         {
-            _popup.PopupEntity(Loc.GetString(component.DeniedPopup), uid, args.User);
+            _popup.PopupClient(Loc.GetString(component.DeniedPopup), uid, args.User);
             return;
         }
 
@@ -44,6 +44,6 @@ public sealed class LimitedItemGiverSystem : EntitySystem
         }
 
         component.GrantedPlayers.Add(actor.PlayerSession.UserId);
-        _popup.PopupEntity(Loc.GetString(component.ReceivedPopup), uid, args.User);
+        _popup.PopupClient(Loc.GetString(component.ReceivedPopup), uid, args.User);
     }
 }

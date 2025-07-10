@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Holiday;
 
-public sealed class HolidaySystem : EntitySystem
+public sealed class HolidaySystem : SharedHolidaySystem
 {
     [Dependency] private readonly IResourceCache _rescache = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -14,6 +14,8 @@ public sealed class HolidaySystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<HolidayRsiSwapComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 

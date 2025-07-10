@@ -1,11 +1,11 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Hands.Systems;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Whitelist;
-using Robust.Server.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
@@ -18,11 +18,11 @@ namespace Content.Shared.Holiday.Christmas;
 /// </summary>
 public sealed class RandomGiftSystem : EntitySystem
 {
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -62,7 +62,7 @@ public sealed class RandomGiftSystem : EntitySystem
         if (component.Wrapper is not null)
             Spawn(component.Wrapper, coords);
 
-        _audio.PlayPvs(component.Sound, args.User);
+        _audio.PlayPredicted(component.Sound, uid, args.User);
 
         // Don't delete the entity in the event bus, so we queue it for deletion.
         // We need the free hand for the new item, so we send it to nullspace.
