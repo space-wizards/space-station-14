@@ -66,10 +66,4 @@ public sealed partial class TraitPrototype : IPrototype
     /// </summary>
     [DataField]
     public bool AllowAntagDisable = true;
-
-    /// <summary>
-    /// Remove the trait's components if the trait is disabled.
-    /// </summary>
-    [DataField]
-    public bool RemoveComponentsWhenDisabled;
 }

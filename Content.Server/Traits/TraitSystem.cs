@@ -74,6 +74,7 @@ public sealed class TraitSystem : EntitySystem
         if (args.Mind.OwnedEntity == null || args.Mind.UserId == null || args.MindRole.AntagPrototype == null || !_prototypeManager.TryIndex(args.MindRole.AntagPrototype, out var antag) || !antag.RevertTraits)
             return;
 
+        // TODO: When we have a proper way to track character profiles to characters, it should be used here instead.
         var pref = (HumanoidCharacterProfile) _preferences.GetPreferences(args.Mind.UserId.Value).SelectedCharacter;
 
         foreach (var traitId in pref.TraitPreferences)
@@ -91,14 +92,7 @@ public sealed class TraitSystem : EntitySystem
                 _whitelistSystem.IsBlacklistPass(traitPrototype.Blacklist, args.Mind.OwnedEntity.Value))
                 continue;
 
-            var traitCompList = traitPrototype.Components.Values.Select(x => x.Component.GetType()).ToList();
-
-            var ev = new RevertTraitEvent(traitId, traitCompList);
-            RaiseLocalEvent(args.Mind.OwnedEntity.Value, ref ev);
-
-            // Add all components required by the prototype
-            if (traitPrototype.RemoveComponentsWhenDisabled)
-                EntityManager.RemoveComponents(args.Mind.OwnedEntity.Value, traitPrototype.Components);
+            EntityManager.RemoveComponents(args.Mind.OwnedEntity.Value, traitPrototype.Components);
         }
     }
 }

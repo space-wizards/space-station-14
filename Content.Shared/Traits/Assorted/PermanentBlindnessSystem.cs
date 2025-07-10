@@ -18,7 +18,6 @@ public sealed class PermanentBlindnessSystem : EntitySystem
         SubscribeLocalEvent<PermanentBlindnessComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PermanentBlindnessComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<PermanentBlindnessComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<PermanentBlindnessComponent, RevertTraitEvent>(OnRevertTrait);
     }
 
     private void OnExamined(Entity<PermanentBlindnessComponent> blindness, ref ExaminedEvent args)
@@ -37,6 +36,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
         if (blindable.MinDamage != 0)
         {
             _blinding.SetMinDamage((blindness.Owner, blindable), 0);
+            _blinding.AdjustEyeDamage((blindness.Owner, blindable), -blindable.EyeDamage); // This heals your eyes, in case traits using this component are removed! Should be changed if traits are refactored!
         }
     }
 
@@ -55,19 +55,5 @@ public sealed class PermanentBlindnessSystem : EntitySystem
             blindness.Comp.BlindOnExamine = true;
             _blinding.SetMinDamage((blindness.Owner, blindable), maxMagnitudeInt);
         }
-    }
-
-    private void OnRevertTrait(Entity<PermanentBlindnessComponent> blindness, ref RevertTraitEvent args)
-    {
-        // We do not revert the BlindOnExamine value, to hide the trait being reverted.
-
-        if (!args.Components.Contains(blindness.Comp.GetType()))
-            return;
-
-        if (!TryComp<BlindableComponent>(blindness.Owner, out var blindable))
-            return;
-
-        _blinding.SetMinDamage((blindness.Owner, blindable), 0);
-        _blinding.AdjustEyeDamage((blindness.Owner, blindable), -blindable.EyeDamage);
     }
 }
