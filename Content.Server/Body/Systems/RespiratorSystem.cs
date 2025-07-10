@@ -186,15 +186,22 @@ public sealed class RespiratorSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (!Inhale(ent))
+        // Inhale gas
+        var ev = new InhaleLocationEvent
+        {
+            Respirator = ent.Comp,
+        };
+        RaiseLocalEvent(ent, ref ev);
+
+        ev.Gas ??= _atmosSys.GetContainingMixture(ent.Owner, excite: true);
+
+        if (ev.Gas is null)
+        {
             return false;
+        }
 
         // If we don't have a body we can't be poisoned by gas, yet...
-        var success = CanMetabolizeGas((ent, ent.Comp));
-
-        // Don't keep that gas in our lungs lest it poisons a poor nuclear operative.
-        Exhale(ent);
-        return success;
+        return  CanMetabolizeGas(ent, ev.Gas);
     }
 
     /// <summary>
@@ -210,7 +217,6 @@ public sealed class RespiratorSystem : EntitySystem
         if (organs.Count == 0)
             return false;
 
-        gas = new GasMixture(gas);
         var lungRatio = 1.0f / organs.Count;
         gas.Multiply(MathF.Min(lungRatio * gas.Volume / ent.Comp.BreathVolume, lungRatio));
         var solution = _lungSystem.GasToReagent(gas);
