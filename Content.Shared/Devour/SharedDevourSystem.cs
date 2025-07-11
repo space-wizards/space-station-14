@@ -87,9 +87,3 @@ public sealed partial class DevourActionEvent : EntityTargetActionEvent { }
 [Serializable, NetSerializable]
 public sealed partial class DevourDoAfterEvent : SimpleDoAfterEvent { }
 
-[Serializable, NetSerializable]
-public enum FoodPreference : byte
-{
-    Humanoid = 0,
-    All = 1
-}
