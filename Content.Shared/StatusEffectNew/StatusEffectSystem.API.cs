@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.StatusEffectNew;
 
-public abstract partial class SharedStatusEffectsSystem
+public sealed partial class StatusEffectsSystem
 {
     /// <summary>
     /// Increments duration of status effect by <see cref="duration"/>.
