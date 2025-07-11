@@ -17,7 +17,7 @@
   - Maintenance
   - Service
   - External
-  - Hypersleep
+  - Cryogenics
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
