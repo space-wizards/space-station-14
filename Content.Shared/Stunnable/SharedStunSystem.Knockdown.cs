@@ -24,10 +24,11 @@ namespace Content.Shared.Stunnable;
 /// </summary>
 public abstract partial class SharedStunSystem
 {
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly StandingStateSystem _standingState = default!;
 
     private void InitializeKnockdown()
     {
@@ -152,7 +153,7 @@ public abstract partial class SharedStunSystem
 
     private bool StandingBlocked(Entity<KnockedDownComponent> entity)
     {
-        if (!_blocker.CanMove(entity))
+        if (!Blocker.CanMove(entity))
             return true;
 
         var ev = new StandUpAttemptEvent();

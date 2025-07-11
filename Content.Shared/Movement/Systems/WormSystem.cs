@@ -10,7 +10,7 @@ namespace Content.Shared.Movement.Systems;
 public sealed class WormSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IComponentFactory _worm = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<WormComponent, SharedStunSystem.StandUpAttemptEvent>(OnStandAttempt);

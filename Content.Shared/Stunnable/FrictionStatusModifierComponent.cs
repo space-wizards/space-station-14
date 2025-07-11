@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Movement.Components;
+namespace Content.Shared.Stunnable;
 
 /// <summary>
 /// This is used to apply a friction modifier to an entity temporarily

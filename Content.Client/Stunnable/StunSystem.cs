@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Shared.Mobs;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
 using Content.Shared.Stunnable;
@@ -7,11 +6,8 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Client.Animations;
-using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Stunnable;
 
