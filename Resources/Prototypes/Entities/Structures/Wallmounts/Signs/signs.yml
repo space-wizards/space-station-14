@@ -474,8 +474,7 @@
   description: Just like that? You're gonna chicken out?
   components:
   - type: Sprite
-    state: cryo
-
+    state: sleep
 
 - type: entity
   parent: BaseSign
