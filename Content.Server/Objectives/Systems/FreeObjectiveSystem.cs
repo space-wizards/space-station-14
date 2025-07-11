@@ -10,10 +10,17 @@ public sealed class FreeObjectiveSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<FreeObjectiveComponent, ObjectiveGetProgressEvent>(OnGetProgress);
+        SubscribeLocalEvent<StoryObjectiveComponent, ObjectiveGetProgressEvent>(OnGetProgress);
     }
 
     // You automatically greentext, there's not much else to it
     private void OnGetProgress(Entity<FreeObjectiveComponent> ent, ref ObjectiveGetProgressEvent args)
+    {
+        args.Progress = 1f;
+    }
+    
+    // You automatically greentext, there's not much else to it
+    private void OnGetProgress(Entity<StoryObjectiveComponent> ent, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = 1f;
     }

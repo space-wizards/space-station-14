@@ -63,6 +63,7 @@
       components:
       - EscapeShuttleCondition
       - StealCondition
+      - StoryObjective
   - type: DieCondition
 
 #- type: entity

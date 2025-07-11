@@ -38,3 +38,103 @@
   components:
   - type: StealCondition
     stealGroup: CMOLicenseSteal
+    
+# Story Objectives
+#- type: entity
+#  parent: [BaseTraitorObjective, BaseStoryObjective]
+#  id: RetrieveContrabandObjective
+#  description: Retrieve any Syndicate gear that SEC confiscates this shift.
+#  components:
+#    - type: Objective
+#      difficulty: 2
+#      unique: false
+#    - type: Objective
+#      title: objective-retrieve-contraband
+#      icon:
+#        sprite: 
+#        state: icon
+#        
+#
+#- type: entity
+#  parent: [BaseTraitorObjective, BaseStoryObjective]
+#  id: AccessForAllObjective
+#  description: Hack non-airlock doors.
+#  components:
+#    - type: Objective
+#      difficulty: 2
+#      unique: false
+#    - type: Objective
+#      title: objective-all-access
+#      icon:
+#        sprite:
+#        state: icon
+#
+#- type: entity
+#  parent: [BaseTraitorObjective, BaseStoryObjective]
+#  id: ArmsDealerObjective
+#  description: Open an underground arms trading ring.
+#  components:
+#    - type: Objective
+#      difficulty: 2
+#      unique: false
+#    - type: Objective
+#      title: objective-arms-ring
+#      icon:
+#        sprite:
+#        state: icon
+
+- type: entity
+  parent: [BaseTraitorObjective, BaseStoryObjective]
+  id: FrameObjective
+  components:
+    - type: Objective
+      difficulty: 2
+      unique: true
+      icon:
+        sprite: Objects/Misc/folders.rsi
+        state: folder-white
+    - type: DepartmentObjective
+      title: objective-framing
+    - type: PickRandomDepartment
+
+#- type: entity
+#  parent: [BaseTraitorObjective, BaseStoryObjective]
+#  id: FalseUprisingObjective
+#  description: Frame someone else as a Syndicate agent.
+#  components:
+#    - type: Objective
+#      difficulty: 2
+#      unique: false
+#    - type: Objective
+#      title: objective-false-uprising
+#      icon:
+#        sprite:
+#        state: icon
+#
+#- type: entity
+#  parent: [BaseTraitorObjective, BaseStoryObjective]
+#  id: DuelistObjective
+#  description: Challenge others to duels and win. You don't need to kill them, unless you want to.
+#  components:
+#    - type: Objective
+#      difficulty: 2
+#      unique: false
+#    - type: Objective
+#      title: objective-duelist
+#      icon:
+#        sprite:
+#        state: icon
+#        
+#- type: entity
+#  parent: [ BaseTraitorObjective, BaseStoryObjective ]
+#  id: EspionageObjective
+#  description: Interrogate the NT rep and department heads for corporate secrets.
+#  components:
+#    - type: Objective
+#      difficulty: 2
+#      unique: false
+#    - type: Objective
+#      title: objective-espionage
+#      icon:
+#        sprite:
+#        state: icon

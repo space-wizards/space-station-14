@@ -15,3 +15,15 @@
         components:
           - SocialObjective
     - type: TeachALessonCondition
+
+- type: entity
+  abstract: true
+  parent: BaseFreeObjective
+  id: BaseStoryObjective
+  components:
+  - type: StoryObjective
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - DieCondition
+      - SurviveCondition
