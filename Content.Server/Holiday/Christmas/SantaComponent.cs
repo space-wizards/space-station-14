@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Holiday.Christmas;
+﻿namespace Content.Server.Holiday.Christmas;
 
 // TODO santa should have more powers than this (otherwise make it a tag)
 /// <summary>

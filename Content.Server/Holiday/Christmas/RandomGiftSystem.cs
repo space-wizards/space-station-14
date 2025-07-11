@@ -11,7 +11,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Shared.Holiday.Christmas;
+namespace Content.Server.Holiday.Christmas;
 
 /// <summary>
 ///     This handles granting players their gift.
@@ -67,15 +67,15 @@ public sealed class RandomGiftSystem : EntitySystem
         var xform = Transform(gift);
         var coords = xform.Coordinates;
 
-        var spawned = PredictedSpawnAtPosition(comp.SelectedEntity, coords);
+        var spawned = SpawnAtPosition(comp.SelectedEntity, coords);
         _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low,
             $"{ToPrettyString(args.User)} used {ToPrettyString(gift)} which spawned {ToPrettyString(spawned)}");
 
         if (comp.Wrapper is { } trash)
-            PredictedSpawnAtPosition(trash, coords);
+            SpawnAtPosition(trash, coords);
 
         // Play sound at the spawned entity instead of the gift since it's going to get deleted
-        _audio.PlayPredicted(comp.Sound, spawned, args.User);
+        _audio.PlayPvs(comp.Sound, spawned);
 
         // Don't delete the entity in the event bus, so we queue it for deletion.
         // We need the free hand for the new item, so we send it to nullspace.
@@ -87,6 +87,7 @@ public sealed class RandomGiftSystem : EntitySystem
         args.Handled = true;
     }
 
+    // TODO move to shared once this is predicted
     /// <summary>
     ///     Pre-select the contained entity.
     /// </summary>

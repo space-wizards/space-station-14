@@ -1,10 +1,11 @@
 ﻿using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Holiday;
 using Content.Shared.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Storage;
 using Robust.Shared.Player;
 
-namespace Content.Shared.Holiday.Christmas;
+namespace Content.Server.Holiday.Christmas;
 
 /// <summary>
 ///     This handles handing out items from item givers that only give one item per actual player.
@@ -39,24 +40,24 @@ public sealed class LimitedItemGiverSystem : EntitySystem
             comp.RequiredHoliday is { } holiday && !_holiday.IsCurrentlyHoliday(holiday))
         {
             if (comp.DeniedPopup is { } denied)
-                _popup.PopupClient(Loc.GetString(denied), giver, args.User);
+                _popup.PopupEntity(Loc.GetString(comp.DeniedPopup), giver, args.User);
 
             return;
         }
 
-        var toGive = EntitySpawnCollection.GetSpawns(comp.SpawnEntries);
+        var toGive = EntitySpawnCollection.GetSpawns(comp.SpawnEntries); // TODO move to shared once this is predicted
         var coords = Transform(args.User).Coordinates;
 
         // Get your gifts here
         foreach (var item in toGive)
         {
-            var spawned = PredictedSpawnAtPosition(item, coords);
+            var spawned = SpawnAtPosition(item, coords);
             _hands.PickupOrDrop(args.User, spawned);
         }
 
         comp.GrantedPlayers.Add(actor.PlayerSession.UserId);
 
         if (comp.ReceivedPopup is { } received)
-            _popup.PopupClient(Loc.GetString(received), giver, args.User);
+            _popup.PopupEntity(Loc.GetString(comp.ReceivedPopup), giver, args.User);
     }
 }

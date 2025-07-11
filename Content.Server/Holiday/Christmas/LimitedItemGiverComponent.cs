@@ -1,20 +1,19 @@
-﻿using Content.Shared.Storage;
+﻿using Content.Shared.Holiday;
+using Content.Shared.Storage;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Holiday.Christmas;
+namespace Content.Server.Holiday.Christmas;
 
 /// <summary>
 /// This is used for granting items to lucky souls, exactly once.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentState, Access(typeof(LimitedItemGiverSystem))]
+[RegisterComponent, Access(typeof(LimitedItemGiverSystem))]
 public sealed partial class LimitedItemGiverComponent : Component
 {
     /// <summary>
     /// Santa knows who you are behind the screen, only one gift per player per round!
     /// </summary>
-    [AutoNetworkedField] // Should we network a HashSet? (Probably no)
     public HashSet<NetUserId> GrantedPlayers = new();
 
     /// <summary>

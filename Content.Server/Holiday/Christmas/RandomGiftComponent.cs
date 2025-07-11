@@ -1,14 +1,13 @@
 ﻿using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Holiday.Christmas;
+namespace Content.Server.Holiday.Christmas;
 
 /// <summary>
 /// This is used for gifts with COMPLETELY random things.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentState, Access(typeof(RandomGiftSystem))]
+[RegisterComponent, Access(typeof(RandomGiftSystem))]
 public sealed partial class RandomGiftComponent : Component
 {
     /// <summary>
@@ -39,7 +38,7 @@ public sealed partial class RandomGiftComponent : Component
     /// <summary>
     /// The currently selected entity to give out. Used so content viewers can see inside.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public EntProtoId? SelectedEntity;
 
     /// <summary>
