@@ -71,7 +71,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             //starlight fix subtick
             float wantToTransfer = pump.TransferRate * _atmosphereSystem.PumpSpeedup() * args.dt;
-            float clamped = Math.Min(wantToTransfer, pump.HigherThreshold);
+            float spaceLeft = Math.Clamp(pump.HigherThreshold - outlet.Air.Pressure, 0, pump.HigherThreshold);
+            float clamped = Math.Clamp(wantToTransfer, 0, spaceLeft); 
             //starlight end
 
             // We multiply the transfer rate in L/s by the seconds passed since the last process to get the liters.
