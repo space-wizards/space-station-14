@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Wardenshield.rsi sprite/s made by minthydra",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "wardenshield-icon"
+    },
+    {
+      "name": "wardenshield-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "wardenshield-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wardenshield-on"
+    },
+    {
+      "name": "inhand-right-shield",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-shield",
+      "directions": 4
+    }
+  ]
+}
