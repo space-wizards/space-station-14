@@ -112,7 +112,7 @@
 
 - type: entity
   name: raw human meat
-  parent: FoodMeatRawBase
+  parent: [ FoodMeatRawBase, BaseMajorContraband ]
   id: FoodMeatHuman
   description: Gross.
   components:

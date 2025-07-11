@@ -2,10 +2,12 @@
   id: JobRoboticist
   groups:
   - RoboticistHead
+  - RoboticistGoggles
   - RoboticistJumpsuit
+  - RoboticistGloves
   - RoboticistOuterClothing
   - RoboticistBackpack
-  - ScientistShoes
+  - RoboticistShoes
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -14,6 +16,7 @@
   id: JobMagistrate
   groups:
   - CommonBackpack
+  - MagistrateShoes
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -21,9 +24,19 @@
 - type: roleLoadout
   id: JobSurgeon
   groups:
-  - Survival
+  - GroupTankHarness
+  - MedicalDoctorHead
+  - MedicalMask
+  - MedicalDoctorJumpsuit
+  - MedicalGloves
+  - MedicalBackpack
+  - MedicalDoctorOuterClothing
+  - MedicalShoes
+  - MedicalDoctorPDA
+  - MedicalEyewear
+  - SurvivalMedical
   - Trinkets
-  - GroupSpeciesBreathTool
+  - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
   id: JobNanoTrasenRepresentative
@@ -31,6 +44,7 @@
   - NanoTrasenRepresentativeJumpsuit
   - NanoTrasenRepresentativeEyewear
   - CommonBackpack
+  - NanotrasenRepresentativeShoes
   - Trinkets
   - Survival
   - GroupSpeciesBreathTool
@@ -41,6 +55,7 @@
   - LawyerNeck
   - LawyerJumpsuit
   - CommonBackpack
+  - LawyerShoes
   - Trinkets
   - Survival
   - GroupSpeciesBreathTool

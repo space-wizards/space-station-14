@@ -64,7 +64,7 @@
   - type: TimerStartOnSignal
   - type: DeviceLinkSink
     ports:
-      - Timer
+    - Timer
   - type: Explosive # Powerful explosion in a very small radius. Doesn't break underplating.
     explosionType: DemolitionCharge
     totalIntensity: 60
@@ -83,7 +83,7 @@
 - type: entity
   name: seismic charge
   description: Concussion based explosive designed to destroy large amounts of rock.
-  parent: BasePlasticExplosive
+  parent: [ BaseSalvageMiningContraband, BasePlasticExplosive ] #Starlight SalvContra
   id: SeismicCharge
   components:
   - type: Sprite
@@ -102,10 +102,10 @@
         volume: -6
     startOnStick: false
     canToggleStartOnStick: true
-  - type: TriggerOnSignal
+  - type: TimerStartOnSignal
   - type: DeviceLinkSink
     ports:
-    - Trigger
+    - Timer
   - type: Explosive
     explosionType: Cryo
     totalIntensity: 120

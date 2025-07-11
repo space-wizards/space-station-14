@@ -1,6 +1,6 @@
 - type: entity
   name: riot shotgun
-  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponShotgunRiot
   description: A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control.
   components:
@@ -23,7 +23,7 @@
     
 - type: entity
   name: sawn-off riot shotgun
-  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponShotgunRiotSawn
   description: Come with me if you want to live.
   components:
@@ -46,7 +46,7 @@
     deconstructionTarget: null
     
 - type: entity
-  parent: WeaponShotgunRiotSawn
+  parent: [WeaponShotgunRiotSawn, BaseSecurityContraband]
   id: WeaponShotgunRiotSawnEmpty
   suffix: Empty
   components:
@@ -59,7 +59,7 @@
     
 - type: entity
   name: combat shotgun
-  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponShotgunCombat
   description: A semi automatic shotgun with tactical furniture and a six-shell capacity underneath.
   components:
@@ -77,7 +77,7 @@
     
 - type: entity
   name: cycler shotgun
-  parent: [BaseWeaponShotgunAny, BaseGunWieldable, BaseRestrictedContraband]
+  parent: [BaseWeaponShotgunAny, BaseGunWieldable, BaseSecuritySalvageContraband]
   id: WeaponShotgunCycler
   description: An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types.
   components:
@@ -106,7 +106,7 @@
       
 - type: entity
   name: Tkach Ya-Sui GA 12 revolver
-  parent: [BaseWeaponShotgunAny, BaseRestrictedContraband]
+  parent: [BaseWeaponShotgunAny, BaseSecuritySalvageContraband]
   id: WeaponShotgunGA12
   description: An outdated sidearm rarely seen in use by certain PMCs that operate throughout the frontier systems, featuring a three-shell cylinder. Thats right, shell, this one shoots twelve gauge.
   components:
@@ -195,3 +195,60 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+
+- type: entity
+  name: forged double-barrel shotgun
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseMinorContraband]
+  id: WeaponShotgunForged
+  description: Decently made double-barrel shotgun, reinforced with mixed steel and plasteel plates to keep it together. Not as accurate as a real gun.
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun_inhands_64x.rsi
+    size: Normal
+    shape:
+    - 0,0,4,0
+  - type: Gun
+    spread: 15
+    fireRate: 3
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
+  - type: GunRequiresWield
+  - type: BallisticAmmoProvider
+    capacity: 2
+    proto: null
+
+- type: entity
+  name: makeshift shotgun
+  parent: [WeaponFlareGunSecurity, BaseMinorContraband]
+  id: WeaponShotgunMakeshift
+  description: A small hand-cannon that fires .50 shotgun shells. Has no cloth to hold it together, so it has a high chance of falling apart with every shot.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/makeshift_shotgun.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/makeshift_shotgun.rsi
+  - type: Construction
+    graph: MakeshiftShotgunGraph
+    node: shotgun
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0.50
+    selfDamage:
+      types:
+        Blunt: 5
+        Heat: 5
+    items:
+      - id: ModularBarrel
+        launchAngle: 0
+        prob: 1
+      - id: ModularReceiver
+        launchAngle: 90
+        prob: 0.10
+      - id: RifleStock
+        launchAngle: 180
+        prob: 0.80

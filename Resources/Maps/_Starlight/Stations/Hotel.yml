@@ -137230,8 +137230,6 @@ entities:
     - type: Transform
       pos: 60.431927,-11.441023
       parent: 2
-    - type: Blocking
-      blockingToggleActionEntity: 27
     - type: ActionsContainer
     - type: ContainerContainer
       containers:

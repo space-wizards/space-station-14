@@ -27,7 +27,6 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IFileDialogManager _dialogManager = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -74,9 +73,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _profileEditor?.RefreshFlavorText();
         });
 
-        _configurationManager.OnValueChanged(CCVars.GameRoleTimers, _ => RefreshProfileEditor());
+        _configurationManager.OnValueChanged(CCVars.GameRoleTimers, _ => RefreshEditors());
 
-        _configurationManager.OnValueChanged(CCVars.GameRoleWhitelist, _ => RefreshProfileEditor());
+        _configurationManager.OnValueChanged(CCVars.GameRoleWhitelist, _ => RefreshEditors());
     }
 
     private LobbyCharacterPreviewPanel? GetLobbyPreview()
@@ -91,11 +90,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
     private void OnRequirementsUpdated()
     {
-        if (_profileEditor != null)
-        {
-            _profileEditor.RefreshAntags();
-            _profileEditor.RefreshJobs();
-        }
+        _profileEditor?.RefreshAntags();
+        _profileEditor?.RefreshJobs();
+        _jobPriorityEditor?.RefreshJobs();
     }
 
     private void OnProtoReload(PrototypesReloadedEventArgs obj)
@@ -183,11 +180,12 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         PreviewPanel?.Refresh();
     }
 
-    private void RefreshProfileEditor()
+    private void RefreshEditors()
     {
         _profileEditor?.RefreshAntags();
         _profileEditor?.RefreshJobs();
         _profileEditor?.RefreshLoadouts();
+        _jobPriorityEditor?.RefreshJobs();
     }
 
     /// <summary>
@@ -285,7 +283,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _configurationManager,
             EntityManager,
             _dialogManager,
-            _logManager,
+            LogManager,
             _playerManager,
             _prototypeManager,
             _resourceCache,

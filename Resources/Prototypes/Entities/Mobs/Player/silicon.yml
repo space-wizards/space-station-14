@@ -260,7 +260,7 @@
   - type: BlockMovement
     blockInteraction: false
   - type: SiliconLawProvider
-    laws: CrewsimovAI
+    laws: NTDefault # Starlight
   - type: SiliconLawBound
   - type: ActionGrant
     actions:
@@ -391,6 +391,7 @@
       borg_brain:
         - PositronicBrain
       borg_module:
+        - BorgModuleTool
         - BorgModuleOperative
         - BorgModuleL6C
         - BorgModuleEsword
@@ -425,6 +426,7 @@
         - PositronicBrain
       borg_module:
         - BorgModuleTool
+        - BorgModuleRCD
         - BorgModuleOperative
         - BorgModuleSyndicateWeapon
   - type: ItemSlots
@@ -440,6 +442,40 @@
   components:
     - type: GhostRole
       name: ghost-role-information-syndicate-cyborg-saboteur-name
+      description: ghost-role-information-syndicate-cyborg-description
+      rules: ghost-role-information-silicon-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerBorgSyndicateMedicalBattery
+  parent: BorgChassisSyndicateMedical
+  suffix: Battery, Module, Operative
+  components:
+  - type: NukeOperative
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+        - BorgModuleChemical
+        - BorgModuleTopicals
+        - BorgModuleRescue
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+
+- type: entity
+  id: PlayerBorgSyndicateMedicalGhostRole
+  parent: PlayerBorgSyndicateMedicalBattery
+  suffix: Ghost role
+  components:
+    - type: GhostRole
+      name: ghost-role-information-syndicate-cyborg-medical-name
       description: ghost-role-information-syndicate-cyborg-description
       rules: ghost-role-information-silicon-rules
       raffle:

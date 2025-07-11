@@ -119,6 +119,9 @@
       - id: BalloonCorgi
       - id: MysteryFigureBox
       - id: RubberChicken
+      - id: PlushieMimeLizard #starlight
+      - id: SnailPlushie #starlight
+      - id: AxolotlPlushie #starlight
       # Cult
       - !type:AllSelector
         children:
@@ -358,6 +361,7 @@
       - id: Shiv
       - id: SawImprov
       - id: HydroponicsToolMiniHoe
+      - id: EmeraldLizitar #starlight
       - id: ClothingHandsKnuckleDusters
 
 - type: entity

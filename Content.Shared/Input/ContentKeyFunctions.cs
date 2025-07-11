@@ -1,4 +1,4 @@
-using Robust.Shared.Input;
+﻿using Robust.Shared.Input;
 
 namespace Content.Shared.Input
 {
@@ -130,5 +130,8 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction MappingRemoveDecal = "MappingRemoveDecal";
         public static readonly BoundKeyFunction MappingCancelEraseDecal = "MappingCancelEraseDecal";
         public static readonly BoundKeyFunction MappingOpenContextMenu = "MappingOpenContextMenu";
+
+        // 🌟Starlight🌟
+        public static readonly BoundKeyFunction Jump = "Jump";
     }
 }

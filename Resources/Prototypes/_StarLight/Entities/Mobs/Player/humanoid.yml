@@ -47,3 +47,46 @@
         - NamesMilitaryFirstLeader
         - NamesMilitaryLast
       nameFormat: name-format-ert
+
+# USSP
+- type: entity
+  id: RandomHumanoidSpawnerSSFMarine
+  name: SSF Marine Soldier
+  suffix: Admeme
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/OuterClothing/Hardsuits/sovietmarine.rsi
+      state: icon
+    - type: RandomMetadata
+      nameSegments:
+        - NamesSovietMarinesFirst
+        - NamesSovietMarinesLast
+      nameFormat: name-format-ert
+    - type: RandomHumanoidSpawner
+      settings: SSFMarine
+
+- type: randomHumanoidSettings
+  id: SSFMarine
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-soviet-marine-name
+      description: ghost-role-information-soviet-marine-desc
+      rules: ghost-role-information-soviet-marine-rules
+      raffle:
+        settings: default
+      mindRoles:
+      - MindRoleGhostRoleFamiliar
+      requirements:
+      - !type:OverallPlaytimeRequirement
+        time: 72000 # 20h
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 36000 # 10h
+    - type: Loadout
+      prototypes: [ SSFMarineGear ]
+    - type: RandomMetadata
+      nameSegments:
+        - NamesSovietMarinesFirst
+        - NamesSovietMarinesLast
+      nameFormat: name-format-ert

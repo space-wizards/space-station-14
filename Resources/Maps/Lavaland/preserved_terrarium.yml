@@ -138,11 +138,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         92:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
         91:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 90
     components:
     - type: Transform
@@ -153,11 +151,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         92:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
         91:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 91
     components:
     - type: Transform
@@ -168,11 +164,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         90:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
         89:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
   - uid: 92
     components:
     - type: Transform
@@ -183,11 +177,9 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         89:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
         90:
-        - - DoorStatus
-          - DoorBolt
+        - DoorStatus: DoorBolt
 - proto: AirlockHydroponics
   entities:
   - uid: 87

@@ -3,6 +3,19 @@
 - type: Tag
   id: Arachnid
 
+
+- type: Tag  
+  id: Avali
+
+- type: Tag
+  id: AvianFood
+
+- type: Tag
+  id: BladePlasteel
+
+- type: Tag
+  id: BladeSteel
+
 - type: Tag
   id: CantInteract
 
@@ -11,6 +24,15 @@
 
 - type: Tag
   id: CartridgePistolDP
+
+- type: Tag
+  id: CartridgePistolImprovised
+
+- type: Tag
+  id: CartridgeMagnumImprovised
+
+- type: Tag
+  id: CartridgeLightRifleImprovised
 
 - type: Tag
   id: CentcommVibroblade
@@ -28,7 +50,31 @@
   id: ElderArena
 
 - type: Tag
+  id: EmergencyWelder
+
+- type: Tag
   id: Felionoid
+
+- type: Tag
+  id: HiltPlasteel
+
+- type: Tag
+  id: HiltWood
+
+- type: Tag
+  id: ImprovisedMultitool
+
+- type: Tag
+  id: ImprovisedWrench
+
+- type: Tag
+  id: ImprovisedWirecutter
+
+- type: Tag
+  id: ImprovisedScrewdriver
+
+- type: Tag
+  id: ImprovisedCrowbar
 
 - type: Tag
   id: LightRifleHeavy
@@ -40,13 +86,28 @@
   id: MagazinePistolDP
 
 - type: Tag
+  id: MagazinePistolImprovised
+
+- type: Tag
   id: MagazineRifleM52
 
+- type: Tag
+  id: MagazineSMGPPSH
+  
 - type: Tag
   id: MagazineSMGUzi
 
 - type: Tag
+  id: MagazineSMGImprovised
+
+- type: Tag
   id: MedCyberEyes
+
+- type: Tag
+  id: MicroManipulatorStockPart
+
+- type: Tag
+  id: ModularBarrel
 
 - type: Tag
   id: OmniCyberEyes
@@ -86,6 +147,15 @@
 
 - type: Tag
   id: SovietWarehouse
+
+- type: Tag
+  id: SwordForged
+
+- type: Tag
+  id: SpeedLoaderMagnumImprovised
+
+- type: Tag
+  id: ShellShotgunImprovised
 
 - type: Tag
   id: SpeedLoaderShotgun

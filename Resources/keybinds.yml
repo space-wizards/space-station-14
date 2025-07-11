@@ -628,3 +628,8 @@ binds:
   type: State
   key: MouseRight
   canFocus: true
+# 🌟Starlight🌟
+- function: Jump
+  type: State
+  key: Space
+  priority: -1 

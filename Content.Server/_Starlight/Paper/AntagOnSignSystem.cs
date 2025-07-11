@@ -25,7 +25,7 @@ public sealed class AntagOnSignSystem : EntitySystem
     {
         base.Initialize();
         _sawmill = Logger.GetSawmill(this.SawmillName);
-        SubscribeLocalEvent<AntagOnSignComponent, PaperSignedEvent>(OnPaperSigned);
+        SubscribeLocalEvent<AntagOnSignComponent, PaperSignedEvent>(OnPaperSigned, before: [typeof(ObjectiveOnSignSystem)]);
         SubscribeLocalEvent<AntagOnSignComponent, ComponentInit>(OnComponentInit);
     }
 
@@ -65,8 +65,6 @@ public sealed class AntagOnSignSystem : EntitySystem
             }
             var generic = fmakeantag.MakeGenericMethod(targetComp.GetType());
             generic.Invoke(_antag, [session, antag.Antag.Id]);
-
-            //_antag.ForceMakeAntag<GameRuleComponent>(session, antag.Id);
         }
 
         if (component.ParadoxClone)

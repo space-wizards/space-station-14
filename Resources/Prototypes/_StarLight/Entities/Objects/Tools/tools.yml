@@ -1,6 +1,6 @@
 - type: entity
   name: abductor's wirecutter
-  parent: BaseItem
+  parent: [ BaseItem, BaseMajorContraband ]
   id: WirecutterAbductor
   components:
   - type: EmitSoundOnLand
@@ -40,7 +40,7 @@
   
 - type: entity
   name: abductor's screwdriver
-  parent: BaseItem
+  parent: [ BaseItem, BaseMajorContraband ]
   id: ScrewdriverAbductor
   components:
   - type: EmitSoundOnLand
@@ -79,7 +79,7 @@
     
 - type: entity
   name: abductor's wrench
-  parent: Wrench
+  parent: [ Wrench, BaseMajorContraband ]
   id: WrenchAbductor
   components:
   - type: Sprite
@@ -100,7 +100,7 @@
       
 - type: entity
   name: abductor's multitool
-  parent: Multitool
+  parent: [ Multitool, BaseMajorContraband ]
   id: MultitoolAbductor
   components:
   - type: Sprite
@@ -110,3 +110,780 @@
       - Multitool
       - DoorElectronicsConfigurator
       - ShowWires
+
+- type: entity
+  name: makeshift crowbar-wrench
+  parent: BaseItem
+  id: CrowbarWrenchMakeshift
+  description: Still pretty bad.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg  
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+    state: wrench
+  - type: Item
+    sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+  - type: Prying
+    enabled: false
+    speedModifier: 0.25 
+  - type: ToolTileCompatible
+    delay: 4
+  - type: Tool
+    qualities:
+      - Screwing
+    speedModifier: 0.25  
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 9
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+          state: wrench
+        useSound:
+          path: /Audio/Items/crowbar.ogg
+      - behavior: Anchoring
+        sprite:
+          sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+          state: wrenchflipped
+        useSound:
+          path: /Audio/Items/ratchet.ogg
+  - type: ToolRefinable
+    refineResult:
+    - id: CrowbarWrenchScrewdriverMakeshift
+  - type: Tag
+    tags:
+      - Crowbar
+      - Wrench
+
+- type: entity
+  name: makeshift crowbar-wrench-screwdriver
+  parent: CrowbarWrenchMakeshift
+  id: CrowbarWrenchScrewdriverMakeshift
+  description: It's.. useful?
+  components:
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 9
+        Slash: 1
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+    state: screwdriver
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+          state: screwdriver
+        useSound:
+          path: /Audio/Items/crowbar.ogg
+      - behavior: Screwing
+        sprite:
+          sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+          state: screwdriverflipped
+      - behavior: Anchoring
+        sprite:
+          sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+          state: screwdriverflipped
+        useSound:
+          path: /Audio/Items/ratchet.ogg
+  - type: ToolRefinable
+    refineResult:
+    - id: OmnitoolMakeshift
+  - type: Tag
+    tags:
+      - Crowbar
+      - Wrench
+      - Screwdriver
+
+- type: entity
+  name: makeshift omni-tool
+  parent: CrowbarWrenchScrewdriverMakeshift
+  id: OmnitoolMakeshift
+  description: Who would've thought a red toolbox would have so many uses?
+  components:
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 9
+        Slash: 2
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+    state: wirecutter
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+          state: wirecutter
+        useSound:
+          path: /Audio/Items/crowbar.ogg
+      - behavior: Screwing
+        sprite:
+          sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+          state: wirecutterflipped
+      - behavior: Anchoring
+        sprite:
+          sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+          state: wirecutterflipped
+        useSound:
+          path: /Audio/Items/ratchet.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: _Starlight/Objects/Tools/makeshift_omnitool.rsi
+          state: wirecutterside
+        useSound:
+          path: /Audio/Items/wirecutter.ogg
+  - type: Tag
+    tags:
+      - Crowbar
+      - Wrench
+      - Screwdriver
+      - Wirecutter
+
+- type: entity
+  name: improvised screwdriver
+  parent: BaseItem
+  id: ScrewdriverImprovised
+  description: A handful of metal with some cloth wrapped around it, and sharpened at the tip. It works.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/screwdriver_drop.ogg
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_screwdriver.rsi
+    state: screwdriver
+  - type: Item
+    sprite: _Starlight/Objects/Tools/improvised_screwdriver.rsi
+    storedRotation: -90
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    attackRate: 1
+    damage:
+      types:
+        Slash: 6 #I don't care if base screwdriver does pierce, that's fucking dumb.
+    soundHit:
+      path: "/Audio/Weapons/bladeslice.ogg"
+  - type: Tool
+    qualities:
+    - Screwing
+    useSound:
+      collection: Screwdriver
+    speedModifier: 0.50
+  - type: Tag
+    tags:
+    - ImprovisedScrewdriver
+
+- type: entity
+  name: improvised wirecutter
+  parent: BaseItem
+  id: WirecutterImprovised
+  description: The metal's just sharp enough to cut through thick wires.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/wirecutter_drop.ogg
+  - type: Tag
+    tags:
+    - PlantSampleTaker
+    - ImprovisedWirecutter
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_wirecutters.rsi
+    state: cutters
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    damage:
+      types:
+        Slash: 2 #WHY IS WIZ SO OBSESSED WITH PIERCE
+    soundHit:
+      path: "/Audio/Items/wirecutter.ogg"
+    attackRate: 2 
+  - type: Item
+    sprite: _Starlight/Objects/Tools/improvised_wirecutters.rsi
+    storedRotation: -90
+  - type: ToolTileCompatible
+  - type: Tool
+    qualities:
+    - Cutting
+    useSound:
+      path: /Audio/Items/wirecutter.ogg
+    speedModifier: 0.50
+
+- type: entity
+  name: improvised wrench
+  parent: BaseItem
+  id: WrenchImprovised
+  description: One size fits all.. Kinda.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/wrench_drop.ogg
+  - type: Tag
+    tags:
+    - ImprovisedWrench
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_wrench.rsi
+    state: icon
+  - type: Item
+    sprite: _Starlight/Objects/Tools/improvised_wrench.rsi
+    storedSprite:
+      sprite: _Starlight/Objects/Tools/improvised_wrench.rsi
+      state: storage
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 4.5
+    soundHit:
+      collection: MetalThud
+  - type: Tool
+    qualities:
+    - Anchoring
+    useSound:
+      path: /Audio/Items/ratchet.ogg
+    speedModifier: 0.50
+
+- type: entity
+  name: improvised multitool
+  parent: BaseItem
+  id: MultitoolImprovised
+  description: A not so advanced tool to break into places. Why else would you have this?
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/multitool_drop.ogg
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_multitool.rsi
+    layers:
+    - state: icon
+    - state: green-unlit
+      shader: unshaded
+  - type: Item
+    sprite: _Starlight/Objects/Tools/improvised_multitool.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Tools/improvised_multitool.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Tool
+    qualities:
+      - Pulsing
+  - type: NetworkConfigurator
+  - type: ActivatableUI
+    key: enum.NetworkConfiguratorUiKey.List
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      enum.NetworkConfiguratorUiKey.List:
+        type: NetworkConfiguratorBoundUserInterface
+      enum.NetworkConfiguratorUiKey.Configure:
+        type: NetworkConfiguratorBoundUserInterface
+      enum.NetworkConfiguratorUiKey.Link:
+        type: NetworkConfiguratorBoundUserInterface
+  - type: Tag
+    tags:
+      - ImprovisedMultitool
+      - DoorElectronicsConfigurator
+
+- type: entity
+  name: improvised omnitool
+  parent: BaseItem
+  id: OmnitoolImprovised
+  description: An unholy abomination only second to the great Throngler itself.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg  
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
+    layers:
+    - state: icon
+    - state: welder_flame
+      visible: false
+      shader: unshaded
+      map: ["enum.ToggleableVisuals.Layer"]
+  - type: RefillableSolution
+    solution: Welder
+  - type: Tool
+    useSound:
+      collection: Welder
+    qualities: Welding
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 50
+        maxVol: 50
+  - type: Welder
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Item
+    sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
+    size: Normal
+  - type: ItemSwitch
+    state: Prying
+    states:
+      prying: !type:ItemSwitchState
+        verb: Prying
+        sprite:
+          sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
+          state: icon
+        components:
+        - type: ToolTileCompatible
+          delay: 1
+        - type: Prying
+          speedModifier: 0.75
+          useSound:
+            path: /Audio/Items/crowbar.ogg
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+            params:
+              variation: 0.250
+              volume: -10
+          damage:
+            types:
+              Blunt: 5
+              Slash: 5
+
+      screwing: !type:ItemSwitchState
+        verb: Screwing
+        sprite:
+          sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
+          state: icon
+        components:
+        - type: Tool
+          qualities:
+            - Screwing
+          useSound:
+            collection: Screwdriver
+          speedModifier: 0.75
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+            params:
+              variation: 0.250
+              volume: -10
+          damage:
+            types:
+              Blunt: 5
+              Slash: 5
+
+      cutting: !type:ItemSwitchState
+        verb: Cutting
+        sprite:
+          sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
+          state: icon
+        components:
+        - type: ToolTileCompatible
+        - type: Tool
+          qualities:
+            - Cutting
+          useSound:
+            path: /Audio/Items/wirecutter.ogg
+          speedModifier: 0.75
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+            params:
+              variation: 0.250
+              volume: -10
+          damage:
+            types:
+              Blunt: 5
+              Slash: 5
+
+      anchoring: !type:ItemSwitchState
+        verb: Anchoring
+        sprite:
+          sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
+          state: icon
+        components:
+        - type: Tool
+          qualities:
+            - Anchoring
+          useSound:
+            path: /Audio/Items/ratchet.ogg
+          speedModifier: 0.75
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+            params:
+              variation: 0.250
+              volume: -10
+          damage:
+            types:
+              Blunt: 5
+              Slash: 5
+
+      pulsing: !type:ItemSwitchState
+        verb: Pulsing
+        sprite:
+          sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
+          state: icon
+        components:
+        - type: Tool
+          qualities:
+            - Pulsing
+        - type: NetworkConfigurator
+        - type: ActivatableUI
+          key: enum.NetworkConfiguratorUiKey.List
+          inHandsOnly: true
+        - type: UserInterface
+          interfaces:
+            enum.NetworkConfiguratorUiKey.List:
+              type: NetworkConfiguratorBoundUserInterface
+            enum.NetworkConfiguratorUiKey.Configure:
+              type: NetworkConfiguratorBoundUserInterface
+            enum.NetworkConfiguratorUiKey.Link:
+              type: NetworkConfiguratorBoundUserInterface
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+            params:
+              variation: 0.250
+              volume: -10
+          damage:
+            types:
+              Blunt: 5
+              Slash: 5
+
+      welding: !type:ItemSwitchState
+        verb: Welding
+        sprite:
+          sprite: _Starlight/Objects/Tools/improvised_omnitool.rsi
+          state: icon
+        components:
+        - type: ItemToggle
+          predictable: false
+          soundActivate:
+            collection: WelderOn
+            params:
+              variation: 0.125
+              volume: -5
+          soundDeactivate:
+            collection: WelderOff
+            params:
+              variation: 0.125
+              volume: -5
+        - type: ItemToggleSize
+          activatedSize: Large
+        - type: ItemToggleHot
+        - type: ComponentToggler
+          components:
+          - type: DisarmMalus
+            malus: 0.6
+        - type: ToggleableLightVisuals
+          spriteLayer: flame
+        - type: RefillableSolution
+          solution: Welder
+        - type: Tool
+          useSound:
+            collection: Welder
+          qualities: Welding
+          speedModifier: 0.75
+        - type: PointLight
+          enabled: false
+          radius: 1.5
+          color: orange
+          netsync: false
+        - type: ItemTogglePointLight
+        - type: Appearance
+        - type: RequiresEyeProtection
+        - type: IgnitionSource
+          temperature: 700
+        - type: ItemToggleMeleeWeapon
+          activatedSoundOnHit:
+            path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+            params:
+              variation: 0.250
+              volume: -10
+          activatedSoundOnHitNoDamage:
+            path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+            params:
+              variation: 0.250
+              volume: -12
+          deactivatedSoundOnHitNoDamage:
+            collection: MetalThud
+          activatedDamage:
+            types: # Have you ever been attacked by a lit welder, a sharp object, and a blunt crowbar all at the same time? That hurts.
+              Blunt: 4
+              Slash: 4
+              Heat: 5
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+          damage:
+            types:
+              Blunt: 5
+              Slash: 5
+  - type: Tag
+    tags:
+      - Multitool
+      - DoorElectronicsConfigurator
+      - Wrench
+      - PlantSampleTaker
+      - Wirecutter
+      - Screwdriver
+
+- type: entity
+  name: forged omnitool
+  parent: BaseItem
+  id: OmnitoolForged
+  description: Some absolute psychopath decided to saw off the heads of all tools they could find and smash it together into a makeshift drill. Looks nice, considering it's origins.
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg  
+  - type: Sprite
+    sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
+    layers:
+    - state: icon
+    - state: welder_flame
+      visible: false
+      shader: unshaded
+      map: ["enum.ToggleableVisuals.Layer"]
+  - type: RefillableSolution
+    solution: Welder
+  - type: Tool
+    useSound:
+      collection: Welder
+    qualities: Welding
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 50
+        maxVol: 100
+  - type: Welder
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Item
+    sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
+    size: Normal
+  - type: ItemSwitch
+    state: Prying
+    states:
+      prying: !type:ItemSwitchState
+        verb: Prying
+        sprite:
+          sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
+          state: crowbar
+        components:
+        - type: ToolTileCompatible
+          delay: 1
+        - type: Prying
+          useSound:
+            path: /Audio/Items/crowbar.ogg
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+            params:
+              variation: 0.250
+              volume: -10
+          damage:
+            types:
+              Blunt: 9 #one extra damage, as a treat
+
+      screwing: !type:ItemSwitchState
+        verb: Screwing
+        sprite:
+          sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
+          state: screwdriver
+        components:
+        - type: Tool
+          qualities:
+            - Screwing
+          useSound:
+            collection: Screwdriver
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+            params:
+              variation: 0.250
+              volume: -10
+          damage:
+            types:
+              Slash: 7
+
+      cutting: !type:ItemSwitchState
+        verb: Cutting
+        sprite:
+          sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
+          state: cutters
+        components:
+        - type: ToolTileCompatible
+        - type: Tool
+          qualities:
+            - Cutting
+          useSound:
+            path: /Audio/Items/wirecutter.ogg
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+            params:
+              variation: 0.250
+              volume: -10
+          damage:
+            types:
+              Slash: 4
+
+      anchoring: !type:ItemSwitchState
+        verb: Anchoring
+        sprite:
+          sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
+          state: wrench
+        components:
+        - type: Tool
+          qualities:
+            - Anchoring
+          useSound:
+            path: /Audio/Items/ratchet.ogg
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+            params:
+              variation: 0.250
+              volume: -10
+          damage:
+            types:
+              Blunt: 5.5
+
+      pulsing: !type:ItemSwitchState
+        verb: Pulsing
+        sprite:
+          sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
+          state: multi
+        components:
+        - type: Tool
+          qualities:
+            - Pulsing
+        - type: NetworkConfigurator
+        - type: ActivatableUI
+          key: enum.NetworkConfiguratorUiKey.List
+          inHandsOnly: true
+        - type: UserInterface
+          interfaces:
+            enum.NetworkConfiguratorUiKey.List:
+              type: NetworkConfiguratorBoundUserInterface
+            enum.NetworkConfiguratorUiKey.Configure:
+              type: NetworkConfiguratorBoundUserInterface
+            enum.NetworkConfiguratorUiKey.Link:
+              type: NetworkConfiguratorBoundUserInterface
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+            params:
+              variation: 0.250
+              volume: -10
+          damage:
+            types:
+              Blunt: 5
+
+      welding: !type:ItemSwitchState
+        verb: Welding
+        sprite:
+          sprite: _Starlight/Objects/Tools/forged_omnitool.rsi
+          state: welder
+        components:
+        - type: ItemToggle
+          predictable: false
+          soundActivate:
+            collection: WelderOn
+            params:
+              variation: 0.125
+              volume: -5
+          soundDeactivate:
+            collection: WelderOff
+            params:
+              variation: 0.125
+              volume: -5
+        - type: ItemToggleSize
+          activatedSize: Large
+        - type: ItemToggleHot
+        - type: ComponentToggler
+          components:
+          - type: DisarmMalus
+            malus: 0.6
+        - type: ToggleableLightVisuals
+          spriteLayer: flame
+        - type: RefillableSolution
+          solution: Welder
+        - type: Tool
+          useSound:
+            collection: Welder
+          qualities: Welding
+        - type: PointLight
+          enabled: false
+          radius: 2.5
+          color: orange
+          netsync: false
+        - type: ItemTogglePointLight
+        - type: Appearance
+        - type: RequiresEyeProtection
+        - type: IgnitionSource
+          temperature: 700
+        - type: ItemToggleMeleeWeapon
+          activatedSoundOnHit:
+            path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+            params:
+              variation: 0.250
+              volume: -10
+          activatedSoundOnHitNoDamage:
+            path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
+            params:
+              variation: 0.250
+              volume: -12
+          deactivatedSoundOnHitNoDamage:
+            collection: MetalThud
+          activatedDamage:
+            types:
+              Heat: 10
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          soundHit:
+            collection: MetalThud
+          damage:
+            types:
+              Blunt: 5
+  - type: Tag
+    tags:
+      - Multitool
+      - DoorElectronicsConfigurator
+      - Wrench
+      - PlantSampleTaker
+      - Wirecutter
+      - Screwdriver

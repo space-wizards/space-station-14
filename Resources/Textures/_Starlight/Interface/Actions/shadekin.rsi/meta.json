@@ -1,0 +1,15 @@
+{
+    "version": 1,
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "DEATHB4DEFEAT#4404 (801294818839756811)",
+    "states": [
+        {
+            "name": "phase",
+            "directions": 1
+        }
+    ]
+}

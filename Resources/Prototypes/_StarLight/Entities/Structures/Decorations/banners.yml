@@ -1,0 +1,108 @@
+- type: entity
+  id: BannerBaseAlt
+  parent: BaseStructureDynamic
+  name: base banner
+  description: It's the concept of a banner, you shouldn't be seeing this.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+    state: banner
+    noRot: true
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - Opaque
+        - MidImpassable
+        - HighImpassable
+        - BulletImpassable
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseSign
+  id: BaseWallBanner
+  abstract: true
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+
+
+- type: entity
+  parent: BaseWallBanner
+  id: BannerWallHammer
+  name: revolutionary wall banner
+  description: Gone are the days of oppression and the unfair treatment of contractors! URAA!
+  components:
+  - type: Sprite
+    state: banner0
+
+- type: entity
+  parent: BaseWallBanner
+  id: BannerWallSoviet
+  name: USSP wall banner
+  description: Banner of the United Soviet Socialist Planets. Hang it up. Obey it. Try not to salute by reflex.
+  components:
+  - type: Sprite
+    state: banner1
+
+- type: entity
+  id: BannerSovietRegular
+  parent: BannerBaseAlt
+  name: USSP banner
+  description: Banner of the United Soviet Socialist Planets. Features the glorious hammer and wrench. Symbols of industry, progress, fraternity and fixing what you broke.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+    state: banner2
+
+- type: entity
+  id: BannerSovietHammer
+  parent: BannerBaseAlt
+  name: revolutionary banner
+  description: Gone are the days of oppression and the unfair treatment of contractors! URAA!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+    state: banner3
+
+- type: entity
+  id: BannerSNKVD
+  parent: BannerBaseAlt
+  name: soviet SNKVD banner
+  description: One wrong move and you're dead comrade. For good.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+    state: banner4
+
+- type: entity
+  id: BannerSGKB
+  parent: BannerBaseAlt
+  name: soviet SKB banner
+  description: Implementing workers rights. Yeah, we do that in your stations. You're welcome.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Decorations/Banners.rsi
+    state: banner5

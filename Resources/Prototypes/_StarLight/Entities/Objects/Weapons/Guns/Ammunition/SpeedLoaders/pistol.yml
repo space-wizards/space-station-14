@@ -1,7 +1,7 @@
 - type: entity
   id: SpeedLoaderPistolRubber
   name: "speed loader (.35 auto rubber)"
-  parent: BaseSpeedLoaderPistol
+  parent: [ BaseSpeedLoaderPistol, BaseSecurityContraband ]
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolRubber

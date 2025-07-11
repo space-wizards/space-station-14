@@ -226,3 +226,9 @@
   - !type:AiInteractWireAction
   - !type:AccessWireAction 
   
+- type: wireLayout
+  id: MedibotControls
+  dummyWires: 9
+  wires:
+  - !type:SpeechWireAction
+  

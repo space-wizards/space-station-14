@@ -7,6 +7,7 @@
   - CaptainJumpsuit
   - CaptainBackpack
   - CaptainOuterClothing
+  - CaptainShoes # 🌟Starlight🌟
   - CaptainEyewear
   - SurvivalExtended
   - Trinkets
@@ -21,6 +22,7 @@
   - HoPJumpsuit
   - HoPBackpack
   - HoPOuterClothing
+  - HoPShoes # 🌟Starlight🌟
   - Glasses
   - Survival
   - Trinkets
@@ -43,13 +45,14 @@
   groups:
   - GroupTankHarness
   - AssistantJumpsuit
-  - CommonBackpack
+  - AssistantBackpack #starlight
   - AssistantNeck
   - AssistantFace
   - AssistantGloves
   - AssistantOuterClothing
   - AssistantShoes
-  - Glasses
+  - AssistantGlasses #starlight
+  - AssistantHead #starlight
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -62,6 +65,7 @@
   - BartenderJumpsuit
   - CommonBackpack
   - BartenderOuterClothing
+  - CivilianShoes # 🌟Starlight🌟
   - Glasses
   - Survival
   - Trinkets
@@ -73,6 +77,7 @@
   - GroupTankHarness
   - BartenderJumpsuit
   - CommonBackpack
+  - CivilianShoes # 🌟Starlight🌟
   - Glasses
   - Survival
   - Trinkets
@@ -87,6 +92,7 @@
   - ChefJumpsuit
   - CommonBackpack
   - ChefOuterClothing
+  - CivilianShoes # 🌟Starlight🌟
   - Glasses
   - Survival
   - Trinkets
@@ -98,6 +104,7 @@
   - GroupTankHarness
   - LibrarianJumpsuit
   - CommonBackpack
+  - CivilianShoes # 🌟Starlight🌟
   - Glasses
   - Survival
   - Trinkets
@@ -125,6 +132,7 @@
   - ChaplainJumpsuit
   - CommonBackpack
   - ChaplainOuterClothing
+  - CivilianShoes # 🌟Starlight🌟
   - Glasses
   - Survival
   - Trinkets
@@ -194,6 +202,7 @@
   - MusicianJumpsuit
   - CommonBackpack
   - MusicianOuterClothing
+  - CivilianShoes # 🌟Starlight🌟
   - Glasses
   - Survival
   - Trinkets
@@ -398,7 +407,7 @@
   - SecurityBackpack
   - SecurityEyewear
   - DetectiveOuterClothing
-  - SecurityShoes
+  - DetectiveShoes # 🌟Starlight🌟
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
@@ -497,6 +506,7 @@
   groups:
   - GroupTankHarness
   - CommonBackpack
+  - CivilianShoes # 🌟Starlight🌟
   - Glasses
   - Survival
   - Trinkets
@@ -508,6 +518,7 @@
   - GroupTankHarness
   - ReporterJumpsuit
   - CommonBackpack
+  - CivilianShoes # 🌟Starlight🌟
   - Glasses
   - Survival
   - Trinkets
@@ -519,6 +530,7 @@
   - GroupTankHarness
   - PsychologistJumpsuit
   - MedicalBackpack
+  - CivilianShoes # 🌟Starlight🌟
   - Glasses
   - Survival
   - Trinkets

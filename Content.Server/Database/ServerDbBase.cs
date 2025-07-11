@@ -128,7 +128,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            var oldPrios = db.DbContext.Preference
+            var playerPreference = db.DbContext.Preference
                 .Include(p => p.JobPriorities)
                 .Single(p => p.UserId == userId.UserId);
 
@@ -142,7 +142,7 @@ namespace Content.Server.Database
                 };
                 newPrios.Add(newPrio);
             }
-            oldPrios.JobPriorities = newPrios;
+            playerPreference.JobPriorities = newPrios;
 
             await db.DbContext.SaveChangesAsync();
         }
@@ -280,6 +280,7 @@ namespace Content.Server.Database
             return new HumanoidCharacterProfile(
                 profile.CharacterName,
                 profile.Voice,
+                profile.SiliconVoice, // 🌟Starlight🌟
                 profile.FlavorText,
                 profile.Species,
                 profile.StarLightProfile?.CustomSpecieName ?? "", // Starlight
@@ -321,6 +322,7 @@ namespace Content.Server.Database
 
             profile.CharacterName = humanoid.Name;
             profile.Voice = humanoid.Voice;
+            profile.SiliconVoice = humanoid.SiliconVoice; // 🌟Starlight🌟
             profile.FlavorText = humanoid.FlavorText;
             profile.Species = humanoid.Species;
             profile.StarLightProfile ??= new StarLightModel.StarLightProfile(); // Starlight

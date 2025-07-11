@@ -3,6 +3,7 @@ using Content.Server.Actions;
 using Content.Server.Administration.Systems;
 using Content.Shared._Starlight.Medical.Limbs;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Starlight;

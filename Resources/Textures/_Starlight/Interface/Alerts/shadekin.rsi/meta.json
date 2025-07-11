@@ -1,0 +1,36 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Starlight, MailTech Icons by tinnitus intensifies (420711810417557504) on discord",
+
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "dark"
+        },
+        {
+            "name": "low"
+        },
+        {
+            "name": "normal"
+        },
+        {
+            "name": "high"
+        },
+        {
+            "name": "extreme"
+        },
+        {
+            "name": "dangerous",
+            "delays": [
+                [
+                    0.5,
+                    0.5
+                ]
+            ]
+        }
+    ]
+}

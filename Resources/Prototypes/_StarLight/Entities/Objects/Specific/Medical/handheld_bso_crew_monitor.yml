@@ -1,6 +1,6 @@
 - type: entity
   name: CommandFriend™ X-02
-  parent: [ BaseHandheldComputer, BaseRestrictedContraband ]
+  parent: [ BaseHandheldComputer, BaseCommandContraband ]
   id: HandheldBSOCrewMonitor
   description: Does not monitor the competence levels of command members.
   components:

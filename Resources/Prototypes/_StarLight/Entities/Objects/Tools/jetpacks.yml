@@ -1,0 +1,43 @@
+#USSP
+- type: entity
+  id: JetpackSSFMarine
+  parent: [BaseJetpack, BaseSovietContraband]
+  name: SSF marine jetpack
+  suffix: Empty
+  description: Standard issued soviet-made jetpack for the kosmos.
+  components:
+    - type: Item
+      sprite: _Starlight/Objects/Tanks/Jetpacks/marine_jetpack.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Tanks/Jetpacks/marine_jetpack.rsi
+    - type: Clothing
+      sprite: _Starlight/Objects/Tanks/Jetpacks/marine_jetpack.rsi
+      slots:
+        - Back
+        - suitStorage
+        - Belt
+
+- type: entity
+  id: JetpackSSFMarineFilled
+  parent: [JetpackSSFMarine, BaseSovietContraband]
+  name: SSF marine jetpack
+  description: Standard issued soviet-made jetpack for the kosmos.
+  components:
+    - type: Item
+      sprite: _Starlight/Objects/Tanks/Jetpacks/marine_jetpack.rsi
+    - type: Sprite
+      sprite: _Starlight/Objects/Tanks/Jetpacks/marine_jetpack.rsi
+    - type: Clothing
+      sprite: _Starlight/Objects/Tanks/Jetpacks/marine_jetpack.rsi
+      slots:
+        - Back
+        - suitStorage
+        - Belt
+    - type: GasTank
+      outputPressure: 42.6
+      air:
+        volume: 5
+        temperature: 293.15
+        moles:
+          - 1.025689525 # oxygen
+          - 1.025689525 # nitrogen

@@ -350,6 +350,9 @@ uplink-hardsuit-syndie-desc = The Syndicate's well known armored blood red hards
 uplink-syndie-raid-name = Syndicate Raid Suit
 uplink-syndie-raid-desc = A very durable and reasonably flexible suit of blood-red armor, reinforced against all common forms of damage but not capable of space walks. Comes with a sick helmet.
 
+uplink-hardsuit-infiltration-name = Syndicate Infiltration Hardsuit
+uplink-hardsuit-infiltration-desc = The Syndicate's Special Operations' hardsuit of choice, this hardsuit, as well as durability, has been built with chameleon technology integrated.
+
 uplink-hardsuit-syndieelite-name = Syndicate Elite Hardsuit
 uplink-hardsuit-syndieelite-desc = An elite version of the blood-red hardsuit, with improved mobility and fireproofing. Property of Gorlex Marauders.
 

@@ -59,6 +59,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly IBanManager _banManager = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedHumanoidAppearanceSystem _appearance = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -363,7 +364,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     {
         _adminLogger.Add(LogType.AntagSelection, $"Start trying to make {session} become the antagonist: {ToPrettyString(ent)}");
 
-        if (checkPref && !HasPrimaryAntagPreference(session, def))
+        if (checkPref && !HasPrimaryAntagPreference(session, def, ent.Comp.SelectionTime))
             return false;
 
         if (!IsSessionValid(ent, session, def) || !IsEntityValid(session?.AttachedEntity, def))
@@ -516,11 +517,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (ent.Comp.PreSelectedSessions.TryGetValue(def, out var preSelected) && preSelected.Contains(session))
                 continue;
 
-            if (HasPrimaryAntagPreference(session, def))
+            if (HasPrimaryAntagPreference(session, def, ent.Comp.SelectionTime))
             {
                 preferredList.Add(session);
             }
-            else if (HasFallbackAntagPreference(session, def))
+            else if (HasFallbackAntagPreference(session, def, ent.Comp.SelectionTime))
             {
                 fallbackList.Add(session);
             }
@@ -591,6 +592,15 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (!def.AllowNonHumans && !HasComp<HumanoidAppearanceComponent>(entity))
             return false;
+
+        // Ensure that the profile has the antag preference set, if this is a late join this hasn't been checked!
+        var baseProfile = _appearance.GetBaseProfile(entity.Value);
+        if (baseProfile is not null)
+        {
+            if (!def.PrefRoles.ToHashSet().Overlaps(baseProfile.AntagPreferences) &&
+                !def.FallbackRoles.ToHashSet().Overlaps(baseProfile.AntagPreferences))
+                return false;
+        }
 
         if (def.Whitelist != null)
         {

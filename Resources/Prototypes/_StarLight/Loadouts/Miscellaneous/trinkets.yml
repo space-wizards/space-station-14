@@ -29,3 +29,27 @@
   storage:
     back:
     - ClothingClothWrap
+
+- type: loadout
+  id: ClothingUniformJumpskirtElegantMaid
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:AnyFlagsRequirement
+      flags:
+      - Staff
+  storage:
+    back:
+    - ClothingUniformJumpskirtElegantMaid
+
+- type: loadout
+  id: ClothingHeadHatCatEars
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:AnyFlagsRequirement
+      flags:
+      - Staff
+  storage:
+    back:
+    - ClothingHeadHatCatEars
