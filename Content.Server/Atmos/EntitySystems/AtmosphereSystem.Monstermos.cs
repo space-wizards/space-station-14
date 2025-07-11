@@ -413,6 +413,7 @@ namespace Content.Server.Atmos.EntitySystems
                         DebugTools.Assert(otherTile.AdjacentBits.IsFlagSet(direction));
                         DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
 
+                        ConsiderFirelocks(ent, otherTile, otherTile2);
 
                         // The firelocks might have closed on us.
                         if (!otherTile.AdjacentBits.IsFlagSet(direction))
