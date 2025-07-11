@@ -585,74 +585,38 @@ namespace Content.Server.Atmos.EntitySystems
             TileAtmosphere other)
         {
             var reconsiderAdjacent = false;
-            var mapGrid = ent.Comp3;
 
-            CheckFirelocksInArea(tile.GridIndices);
-            CheckFirelocksInArea(other.GridIndices);
+            var mapGrid = ent.Comp3;
+            foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, tile.GridIndices))
+            {
+                if (_firelockQuery.TryGetComponent(entity, out var firelock))
+                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStopAirtight((entity, firelock));
+            }
+
+            foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, other.GridIndices))
+            {
+                if (_firelockQuery.TryGetComponent(entity, out var firelock))
+                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStopAirtight((entity, firelock));
+            }
 
             if (!reconsiderAdjacent)
                 return;
 
-            UpdateAirtightnessInArea(tile.GridIndices);
-            UpdateAirtightnessInArea(other.GridIndices);
+            // Before updating the adjacent tile flags that determine whether air is allowed to flow
+            // or not, we explicitly update airtight data on these tiles right now.
+            // This ensures that UpdateAdjacentTiles has updated data before updating flags.
+            // This allows monstermos' floodfill check that determines if firelocks have dropped
+            // to work correctly.
+            var tilegridAtmosTile = GetOrNewTile(ent.Owner, ent.Comp1, tile.GridIndices);
+            var othergridAtmosTile = GetOrNewTile(ent.Owner, ent.Comp1, other.GridIndices);
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, tilegridAtmosTile);
+            UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, othergridAtmosTile);
 
-            UpdateTilesAndVisualsInArea(tile.GridIndices);
-            UpdateTilesAndVisualsInArea(other.GridIndices);
-            return;
+            UpdateAdjacentTiles(ent, tile);
+            UpdateAdjacentTiles(ent, other);
 
-            // Helper method to check all firelocks in a 3x3 area.
-            // TODO: Don't check things two times over as there's some overlap.
-            void CheckFirelocksInArea(Vector2i center)
-            {
-                for (var dx = -1; dx <= 1; dx++)
-                {
-                    for (var dy = -1; dy <= 1; dy++)
-                    {
-                        var indices = new Vector2i(center.X + dx, center.Y + dy);
-                        foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, indices))
-                        {
-                            if (_firelockQuery.TryGetComponent(entity, out var firelock))
-                            {
-                                reconsiderAdjacent |= _firelockSystem.EmergencyPressureStopAirtight((entity, firelock));
-                                Log.Debug("PressureStopping firelock at" + indices);
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Helper method to update tiles in an area if we triggered firelocks.
-            // TODO: Don't check things two times over as there's some overlap.
-            void UpdateTilesAndVisualsInArea(Vector2i center)
-            {
-                for (var dx = -1; dx <= 1; dx++)
-                {
-                    for (var dy = -1; dy <= 1; dy++)
-                    {
-                        var indices = new Vector2i(center.X + dx, center.Y + dy);
-                        var gridAtmosTile = GetOrNewTile(ent.Owner, ent.Comp1, indices);
-
-                        Log.Debug("Updating tiles at" + indices);
-                        UpdateAdjacentTiles(ent, gridAtmosTile);
-                        InvalidateVisuals(ent, gridAtmosTile);
-                    }
-                }
-            }
-
-            void UpdateAirtightnessInArea(Vector2i center)
-            {
-                for (var dx = -1; dx <= 1; dx++)
-                {
-                    for (var dy = -1; dy <= 1; dy++)
-                    {
-                        var indices = new Vector2i(center.X + dx, center.Y + dy);
-                        var gridAtmosTile = GetOrNewTile(ent.Owner, ent.Comp1, indices);
-
-                        Log.Debug("Updating airtightness INJECT at" + indices);
-                        UpdateAirtightData(ent.Owner, ent.Comp1, ent.Comp3, gridAtmosTile);
-                    }
-                }
-            }
+            InvalidateVisuals(ent, tile);
+            InvalidateVisuals(ent, other);
         }
 
         private void FinalizeEq(
