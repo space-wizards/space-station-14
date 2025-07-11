@@ -690,4 +690,3 @@ CryogenicSleepUnitSpawnerLateJoin: HyperSleepUnitSpawnerLateJoin
 CryogenicSleepUnitSpawner: HyperSleepUnitSpawner
 CryogenicSleepUnit: HyperSleepUnitSpawner
 SignDirectionalCryo: SignDirectionalHypersleep
-LockableButtonCryogenics: LockableButtonHypersleep

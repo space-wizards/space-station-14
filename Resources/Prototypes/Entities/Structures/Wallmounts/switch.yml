@@ -312,12 +312,12 @@
     access: [["Command"]]
 
 - type: entity
-  id: LockableButtonHypersleep
-  suffix: Hypersleep
+  id: LockableButtonCryogenics
+  suffix: Cryogenics
   parent: LockableButton
   components:
   - type: AccessReader
-    access: [["Hypersleep"]]
+    access: [["Cryogenics"]]
 
 - type: entity
   id: LockableButtonSecurity
