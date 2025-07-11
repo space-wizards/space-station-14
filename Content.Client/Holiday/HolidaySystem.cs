@@ -33,11 +33,12 @@ public sealed class HolidaySystem : SharedHolidaySystem
         if (!_appearance.TryGetData<string>(ent, HolidayVisuals.Holiday, out var data, args.Component))
             return;
 
-        var comp = ent.Comp;
-        if (!comp.Sprite.TryGetValue(data, out var rsiString) || args.Sprite == null)
+        // Get the new rsi
+        if (args.Sprite == null || !ent.Comp.Sprite.TryGetValue(data, out var rsiString))
             return;
-
         var path = SpriteSpecifierSerializer.TextureRoot / rsiString;
+
+        // Set the new rsi
         if (_resCache.TryGetResource(path, out RSIResource? rsi))
             _sprite.SetBaseRsi((ent.Owner, args.Sprite), rsi.RSI);
     }
