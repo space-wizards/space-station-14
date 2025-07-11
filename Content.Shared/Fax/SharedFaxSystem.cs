@@ -95,6 +95,7 @@ public abstract class SharedFaxSystem : EntitySystem
                     continue;
 
                 ent.Comp.IsActionActive[action] = false;
+                ent.Comp.ActionSounds[action] = null;
 
                 switch (action)
                 {
@@ -148,8 +149,7 @@ public abstract class SharedFaxSystem : EntitySystem
         var isPaperInserted = ent.Comp.PaperSlot.Item.HasValue;
         if (isPaperInserted)
         {
-            ent.Comp.ReadyTimes[FaxActions.Insert] = _gameTiming.CurTime + ent.Comp.ActionTimeout[FaxActions.Insert];
-            ent.Comp.IsActionActive[FaxActions.Insert] = true;
+            DoAction(ent, FaxActions.Insert);
             _itemSlotsSystem.SetLock(ent.Owner, ent.Comp.PaperSlot, true);
 
         }
@@ -184,11 +184,11 @@ public abstract class SharedFaxSystem : EntitySystem
             ent.Comp.IsActionActive[FaxActions.Print] = false;
         }
 
-        /*foreach (var sound in ent.Comp.ActionSounds)*/
-        /*{*/
-        /*    _audioSystem.Stop(sound.Value);*/
-        /*}*/
-        /*ent.Comp.ActionSounds.Clear();*/
+        foreach (var sound in ent.Comp.ActionSounds)
+        {
+            _audioSystem.Stop(sound.Value);
+        }
+        ent.Comp.ActionSounds.Clear();
 
         UpdateAppearance(ent);
         UpdateUserInterface(ent);
@@ -382,6 +382,7 @@ public abstract class SharedFaxSystem : EntitySystem
             $"of {ToPrettyString(sendEntity):subject}: {printout.Content}");
 
         UpdateUserInterface(ent);
+        UpdateAppearance(ent);
     }
 
     /// <summary>
@@ -390,15 +391,10 @@ public abstract class SharedFaxSystem : EntitySystem
     /// </summary>
     protected virtual void Send(Entity<FaxMachineComponent> ent, ref FaxSendMessage args)
     {
-        ent.Comp.ReadyTimes[FaxActions.Send] = _gameTiming.CurTime + ent.Comp.ActionTimeout[FaxActions.Send];
-        ent.Comp.IsActionActive[FaxActions.Send] = true;
-
-        _audioSystem.PlayPredicted(ent.Comp.ActionSoundsSpecifiers[FaxActions.Send], ent.Owner, null);
-        /*var sound = _audioSystem.PlayPredicted(ent.Comp.ActionSoundsSpecifiers[FaxActions.Send], ent.Owner, null);*/
-        /*if (sound != null)*/
-        /*    ent.Comp.ActionSounds[FaxActions.Send] = sound.Value.Entity;*/
+        DoAction(ent, FaxActions.Send);
 
         UpdateUserInterface(ent);
+        UpdateAppearance(ent);
         Dirty(ent);
     }
 
@@ -485,16 +481,12 @@ public abstract class SharedFaxSystem : EntitySystem
         if (ent.Comp.IsActionActive[FaxActions.Print])
             return false;
 
-        ent.Comp.ReadyTimes[FaxActions.Print] = _gameTiming.CurTime + ent.Comp.ActionTimeout[FaxActions.Print];
-        ent.Comp.IsActionActive[FaxActions.Print] = true;
-
-        _audioSystem.PlayPredicted(ent.Comp.ActionSoundsSpecifiers[FaxActions.Print], ent.Owner, null);
-        /*var sound = _audioSystem.PlayPredicted(ent.Comp.ActionSoundsSpecifiers[FaxActions.Print], ent.Owner, null);*/
-        /*if (sound != null)*/
-        /*    ent.Comp.ActionSounds[FaxActions.Print] = sound.Value.Entity;*/
+        DoAction(ent, FaxActions.Print);
 
         RaiseLocalEvent(ent, new PrintEvent(ent.Comp.PrintingQueue.Peek()));
 
+        UpdateUserInterface(ent);
+        UpdateAppearance(ent);
         Dirty(ent);
         return true;
     }
@@ -505,6 +497,25 @@ public abstract class SharedFaxSystem : EntitySystem
     }
 
     protected virtual void NotifyAdmins(string faxName) { }
+
+    /// <summary>
+    /// Helper function to set things
+    /// </summary>
+    /// <remarks>
+    /// Always call <see cref="EntitySystem.Dirty()"/> after this
+    /// </remarks>
+    private void DoAction(Entity<FaxMachineComponent> ent, FaxActions action)
+    {
+        ent.Comp.ReadyTimes[action] = _gameTiming.CurTime + ent.Comp.ActionTimeout[action];
+        ent.Comp.IsActionActive[action] = true;
+
+        if (ent.Comp.ActionSoundsSpecifiers.TryGetValue(action, out var specifier))
+        {
+            var sound = _audioSystem.PlayPredicted(specifier, ent.Owner, null);
+            if (sound != null)
+                ent.Comp.ActionSounds[action] = sound.Value.Entity;
+        }
+    }
 }
 
 /// <summary>

@@ -104,7 +104,6 @@ public sealed class FaxSystem : SharedFaxSystem
                     args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
                     args.Data.TryGetValue(FaxConstants.FaxPaperLockedData, out bool? locked);
 
-                    LogManager.RootSawmill.Debug("Nubbo?");
                     var printout = new FaxPrintout(content, name, label, prototypeId, stampState, stampedBy, locked ?? false);
 
                     Receive((ent.Owner, ent.Comp), printout, args.SenderAddress);

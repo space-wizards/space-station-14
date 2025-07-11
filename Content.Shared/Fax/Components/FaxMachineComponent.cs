@@ -124,11 +124,11 @@ public sealed partial class FaxMachineComponent : Component
     [DataField, AutoNetworkedField]
     public EntProtoId PrintOfficePaperId = "PaperOffice";
 
-    /*/// <summary>*/
-    /*///     Ongoing sounds of actions fax may be performing*/
-    /*/// </summary>*/
-    /*[DataField, AutoNetworkedField]*/
-    /*public Dictionary<FaxActions, EntityUid> ActionSounds = new();*/
+    /// <summary>
+    ///     Ongoing sounds of actions fax may be performing
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<FaxActions, EntityUid?> ActionSounds = new();
 }
 
 [DataDefinition, Serializable]

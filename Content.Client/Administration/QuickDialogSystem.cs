@@ -32,18 +32,18 @@ public sealed class QuickDialogSystem : SharedQuickDialogSystem
         var cancel = (ev.Buttons & QuickDialogButtonFlag.CancelButton) != 0;
         var window = new DialogWindow(ev.Title, ev.Prompts, ok: ok, cancel: cancel);
 
-        if (ev.ServerOrigin)
+        if (ev.Predicted)
         {
             window.OnConfirmed += responses =>
             {
-                RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
+                RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
                     responses,
                     QuickDialogButtonFlag.OkButton));
             };
 
             window.OnCancelled += () =>
             {
-                RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
+                RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
                     new(),
                     QuickDialogButtonFlag.CancelButton));
             };
@@ -52,14 +52,14 @@ public sealed class QuickDialogSystem : SharedQuickDialogSystem
         {
             window.OnConfirmed += responses =>
             {
-                RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
+                RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
                     responses,
                     QuickDialogButtonFlag.OkButton));
             };
 
             window.OnCancelled += () =>
             {
-                RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
+                RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
                     new(),
                     QuickDialogButtonFlag.CancelButton));
             };

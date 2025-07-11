@@ -29,17 +29,17 @@ public sealed class QuickDialogOpenEvent : EntityEventArgs
     public QuickDialogButtonFlag Buttons = QuickDialogButtonFlag.OkButton | QuickDialogButtonFlag.CancelButton;
 
     /// <summary>
-    /// Dialog created on server
+    /// Dialog that can be predicted
     /// </summary>
-    public bool ServerOrigin;
+    public bool Predicted;
 
-    public QuickDialogOpenEvent(string title, List<QuickDialogEntry> prompts, int dialogId, QuickDialogButtonFlag buttons, bool serverOrigin = true)
+    public QuickDialogOpenEvent(string title, List<QuickDialogEntry> prompts, int dialogId, QuickDialogButtonFlag buttons, bool predicted = false)
     {
         Title = title;
         Prompts = prompts;
         Buttons = buttons;
         DialogId = dialogId;
-        ServerOrigin = serverOrigin;
+        Predicted = predicted;
     }
 }
 

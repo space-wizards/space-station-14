@@ -35,7 +35,7 @@ public abstract partial class SharedQuickDialogSystem : EntitySystem
                     entries,
                     did,
                     buttons,
-                    false)
+                    true)
             );
         else
             RaiseNetworkEvent(
