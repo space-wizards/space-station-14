@@ -68,6 +68,9 @@
   id: MagazineTommyGun
 
 - type: Tag
+  id: Plasteel
+
+- type: Tag
   id: MagazineTommyGunCap
 
 - type: Tag

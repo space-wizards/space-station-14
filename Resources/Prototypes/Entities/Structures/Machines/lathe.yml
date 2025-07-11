@@ -686,8 +686,5 @@
     whitelist:
       tags:
         - Sheet
-        - Metal
-        - Wooden
         - RawMaterial
-        - Plastic
         - Ingot
