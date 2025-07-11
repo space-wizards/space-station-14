@@ -15,14 +15,14 @@ namespace Content.Server.DeathNote;
 /// </summary>
 public sealed class DeathNoteSystem : EntitySystem
 {
-    [Dependency] private readonly GameTiming _gameTiming = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly DamageableSystem _damageSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<DeathNoteComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<DeathNoteComponent, PaperAfterWriteEvent>(OnPaperAfterWriteInteract);
     }
 
     public override void Update(float frameTime)
@@ -42,11 +42,8 @@ public sealed class DeathNoteSystem : EntitySystem
         }
     }
 
-    private void OnAfterInteract(Entity<DeathNoteComponent> ent, ref AfterInteractEvent args)
+    private void OnPaperAfterWriteInteract(Entity<DeathNoteComponent> ent, ref PaperAfterWriteEvent args)
     {
-        if (!args.CanReach || args.Handled)
-            return;
-
         // if the entity is not a paper, we don't do anything
         if (!TryComp<PaperComponent>(ent.Owner, out var paper))
             return;
@@ -62,20 +59,16 @@ public sealed class DeathNoteSystem : EntitySystem
 
             var name = line.Substring("Name: ".Length).Trim();
 
-            if (!TryFindEntityByName(name, out var uid))
-                return;
+            if (!TryFindEntityByName(name, out var uid) ||
+                !TryComp<MobStateComponent>(uid, out var mob) ||
+                mob.CurrentState != MobState.Dead)
+            {
+                _popupSystem.PopupClient("Name is invalid", ent.Owner, PopupType.Medium);
+            }
 
-            if (!TryComp<MobStateComponent>(uid, out var mob))
-                return;
+            var targetComp = new DeathNoteTargetComponent(40);
 
-            if(mob.CurrentState != MobState.Dead)
-                return;
-
-            var targetComp = AddComp<DeathNoteTargetComponent>(uid);
-
-            var killTime = _gameTiming.CurTime + TimeSpan.FromSeconds(targetComp.KillDelay);
-
-            targetComp.KillTime = killTime;
+            AddComp(uid, targetComp);
 
             _popupSystem.PopupClient("You have written a name in the Death Note.", ent.Owner, PopupType.Medium);
         }

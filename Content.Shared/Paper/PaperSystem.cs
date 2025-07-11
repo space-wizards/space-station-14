@@ -187,6 +187,10 @@ public sealed class PaperSystem : EntitySystem
     {
         var ev = new PaperWriteAttemptEvent(entity.Owner);
         RaiseLocalEvent(args.Actor, ref ev);
+
+        var writeAfterEv = new PaperAfterWriteEvent(args.Actor);
+        RaiseLocalEvent(entity.Owner, ref writeAfterEv);
+
         if (ev.Cancelled)
             return;
 
@@ -322,3 +326,7 @@ public record struct PaperWriteEvent(EntityUid User, EntityUid Paper);
 /// <param name="paper">The paper that the writing will take place on.</param>
 [ByRefEvent]
 public record struct PaperWriteAttemptEvent(EntityUid Paper, string? FailReason = null, bool Cancelled = false);
+
+[ByRefEvent]
+public record struct PaperAfterWriteEvent(EntityUid Actor);
+

@@ -8,5 +8,11 @@ public sealed partial class DeathNoteTargetComponent : Component
 {
     public float KillDelay = 40f;
 
-    public TimeSpan KillTime = TimeSpan.Zero;
+    public TimeSpan KillTime = TimeSpan.FromSeconds(40);
+
+    public DeathNoteTargetComponent(float killDelay)
+    {
+        KillDelay = killDelay;
+        KillTime = TimeSpan.FromSeconds(killDelay);
+    }
 }
