@@ -72,7 +72,7 @@
 
 - type: entity
   parent: BaseSignDirectional
-  id: SignDirectionalHypersleep
+  id: SignDirectionalHyperSleep
   name: hypersleep sign
   description: A direction sign, pointing out the way to hypersleep storage.
   components:
@@ -469,7 +469,7 @@
 
 - type: entity
   parent: BaseSign
-  id: SignCryo
+  id: SignHyperSleep
   name: cryosleep sign
   description: Just like that? You're gonna chicken out?
   components:
