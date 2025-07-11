@@ -65,6 +65,8 @@
   groups:
   - BlueShieldJumpsuit
   - BlueShieldBackpack
+  - BlueShieldOuterclothing
+  - BlueShieldNeck
   - BlueShieldEyewear
   - Trinkets
   - SurvivalSecurity
