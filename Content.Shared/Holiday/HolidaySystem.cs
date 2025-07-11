@@ -61,7 +61,7 @@ public abstract class SharedHolidaySystem : EntitySystem
             }
         }
 
-        RaiseNetworkEvent(new HolidaysRefreshedEvent());
+        RaiseLocalEvent(new HolidaysRefreshedEvent());
     }
 
     #region Public API
