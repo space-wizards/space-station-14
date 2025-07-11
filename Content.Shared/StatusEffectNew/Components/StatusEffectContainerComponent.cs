@@ -18,5 +18,5 @@ public sealed partial class StatusEffectContainerComponent : Component
     /// The actual container holding references to the active status effects
     /// </summary>
     [ViewVariables]
-    public Container ActiveStatusEffects;
+    public Container? ActiveStatusEffects;
 }

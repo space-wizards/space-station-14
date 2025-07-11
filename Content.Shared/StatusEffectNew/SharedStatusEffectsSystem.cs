@@ -73,7 +73,8 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
 
     private void OnStatusContainerShutdown(Entity<StatusEffectContainerComponent> ent, ref ComponentShutdown args)
     {
-        _container.ShutdownContainer(ent.Comp.ActiveStatusEffects);
+        if (ent.Comp.ActiveStatusEffects is { } container)
+            _container.ShutdownContainer(container);
     }
 
     private void OnEntityInserted(Entity<StatusEffectContainerComponent> ent, ref EntInsertedIntoContainerMessage args)

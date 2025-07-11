@@ -106,7 +106,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects.ContainedEntities)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(effect);
 
@@ -132,7 +132,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects.ContainedEntities)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(effect);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
@@ -151,7 +151,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var e in container.ActiveStatusEffects.ContainedEntities)
+        foreach (var e in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(e);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
@@ -182,7 +182,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!Resolve(uid, ref container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects.ContainedEntities)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(effect);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
@@ -243,7 +243,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(uid, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects.ContainedEntities)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(effect);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
@@ -267,7 +267,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(uid, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects.ContainedEntities)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             var meta = MetaData(effect);
             if (meta.EntityPrototype is not null && meta.EntityPrototype == effectProto)
@@ -287,7 +287,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects.ContainedEntities)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             if (HasComp<T>(effect))
                 return true;
@@ -305,7 +305,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects.ContainedEntities)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             if (!_effectQuery.TryComp(effect, out var statusComp))
                 continue;
@@ -332,7 +332,7 @@ public abstract partial class SharedStatusEffectsSystem
         if (!_containerQuery.TryComp(target, out var container))
             return false;
 
-        foreach (var effect in container.ActiveStatusEffects.ContainedEntities)
+        foreach (var effect in container.ActiveStatusEffects?.ContainedEntities ?? [])
         {
             if (!HasComp<T>(effect))
                 continue;
