@@ -103,7 +103,7 @@ public abstract partial class SharedStatusEffectsSystem : EntitySystem
         if (!TryComp<StatusEffectComponent>(args.Entity, out var statusComp))
             return;
 
-        var ev = new StatusEffectAppliedEvent(ent);
+        var ev = new StatusEffectRemovedEvent(ent);
         RaiseLocalEvent(args.Entity, ref ev);
 
         // Clear AppliedTo after events are handled so event handlers can use it
