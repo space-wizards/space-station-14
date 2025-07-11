@@ -1,11 +1,11 @@
-using Content.Shared.Administration.Logs;
-using Content.Shared.Hands.EntitySystems;
+using Content.Server.Administration.Logs;
+using Content.Server.Hands.Systems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Whitelist;
-using Robust.Shared.Audio.Systems;
+using Robust.Server.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
@@ -14,26 +14,24 @@ using Robust.Shared.Random;
 namespace Content.Server.Holiday.Christmas;
 
 /// <summary>
-///     This handles granting players their gift.
+/// This handles granting players their gift.
 /// </summary>
 public sealed class RandomGiftSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private readonly List<string> _possibleGiftsSafe = new(); // Should these be HashSet?
+    private readonly List<string> _possibleGiftsSafe = new();
     private readonly List<string> _possibleGiftsUnsafe = new();
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
         SubscribeLocalEvent<RandomGiftComponent, MapInitEvent>(OnGiftMapInit);
         SubscribeLocalEvent<RandomGiftComponent, UseInHandEvent>(OnUseInHand);
@@ -41,73 +39,55 @@ public sealed class RandomGiftSystem : EntitySystem
         BuildIndex();
     }
 
-    /// <summary>
-    ///     Santa can peek inside the present.
-    /// </summary>
-    private void OnExamined(Entity<RandomGiftComponent> ent, ref ExaminedEvent args)
+    private void OnExamined(EntityUid uid, RandomGiftComponent component, ExaminedEvent args)
     {
-        if (ent.Comp.SelectedEntity is not { } spawnId
-            || _whitelistSystem.IsWhitelistFail(ent.Comp.ContentsViewers, args.Examiner))
+        if (_whitelistSystem.IsWhitelistFail(component.ContentsViewers, args.Examiner) || component.SelectedEntity is null)
             return;
 
-        var name = _prototype.Index(spawnId).Name;
-        args.PushText(Loc.GetString(ent.Comp.GiftContains, ("name", name)));
+        var name = _prototype.Index<EntityPrototype>(component.SelectedEntity).Name;
+        args.PushText(Loc.GetString("gift-packin-contains", ("name", name)));
     }
 
-    /// <summary>
-    ///     Open the present.
-    /// </summary>
-    private void OnUseInHand(Entity<RandomGiftComponent> ent, ref UseInHandEvent args)
+    private void OnUseInHand(EntityUid uid, RandomGiftComponent component, UseInHandEvent args)
     {
-        var (gift, comp) = ent;
-
-        if (args.Handled || comp.SelectedEntity is null)
+        if (args.Handled)
             return;
 
-        var xform = Transform(gift);
-        var coords = xform.Coordinates;
+        if (component.SelectedEntity is null)
+            return;
 
-        var spawned = SpawnAtPosition(comp.SelectedEntity, coords);
-        _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low,
-            $"{ToPrettyString(args.User)} used {ToPrettyString(gift)} which spawned {ToPrettyString(spawned)}");
+        var coords = Transform(args.User).Coordinates;
+        var handsEnt = Spawn(component.SelectedEntity, coords);
+        _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(handsEnt)}");
+        if (component.Wrapper is not null)
+            Spawn(component.Wrapper, coords);
 
-        if (comp.Wrapper is { } trash)
-            SpawnAtPosition(trash, coords);
-
-        // Play sound at the spawned entity instead of the gift since it's going to get deleted
-        _audio.PlayPvs(comp.Sound, spawned);
+        _audio.PlayPvs(component.Sound, args.User);
 
         // Don't delete the entity in the event bus, so we queue it for deletion.
         // We need the free hand for the new item, so we send it to nullspace.
-        _transform.DetachEntity(gift, xform);
-        QueueDel(gift);
+        _transform.DetachEntity(uid, Transform(uid));
+        QueueDel(uid);
 
-        _hands.PickupOrDrop(args.User, spawned);
+        _hands.PickupOrDrop(args.User, handsEnt);
 
         args.Handled = true;
     }
 
-    // TODO move to shared once this is predicted
-    /// <summary>
-    ///     Pre-select the contained entity.
-    /// </summary>
-    private void OnGiftMapInit(Entity<RandomGiftComponent> ent, ref MapInitEvent args)
+    private void OnGiftMapInit(EntityUid uid, RandomGiftComponent component, MapInitEvent args)
     {
-        ent.Comp.SelectedEntity = _random.Pick(ent.Comp.InsaneMode ? _possibleGiftsUnsafe : _possibleGiftsSafe);
+        if (component.InsaneMode)
+            component.SelectedEntity = _random.Pick(_possibleGiftsUnsafe);
+        else
+            component.SelectedEntity = _random.Pick(_possibleGiftsSafe);
     }
 
-    /// <summary>
-    ///     Rebuild the entity lists.
-    /// </summary>
     private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
     {
         if (obj.WasModified<EntityPrototype>())
             BuildIndex();
     }
 
-    /// <summary>
-    ///     Builds a safe list and unsafe list from all <see cref="EntityPrototype"/>s.
-    /// </summary>
     private void BuildIndex()
     {
         _possibleGiftsSafe.Clear();
@@ -118,10 +98,7 @@ public sealed class RandomGiftSystem : EntitySystem
 
         foreach (var proto in _prototype.EnumeratePrototypes<EntityPrototype>())
         {
-            if (proto.Abstract || // it's not real
-                proto.HideSpawnMenu || // it's too weird
-                proto.Components.ContainsKey(mapGridCompName) || // it's too big
-                !proto.Components.ContainsKey(physicsCompName)) // it just wouldn't work
+            if (proto.Abstract || proto.HideSpawnMenu || proto.Components.ContainsKey(mapGridCompName) || !proto.Components.ContainsKey(physicsCompName))
                 continue;
 
             _possibleGiftsUnsafe.Add(proto.ID);

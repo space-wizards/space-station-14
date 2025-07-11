@@ -1,8 +1,7 @@
 ﻿namespace Content.Server.Holiday.Christmas;
 
-// TODO santa should have more powers than this (otherwise make it a tag)
 /// <summary>
-///     Marker component for someone allowed to peek inside Christmas gifts.
+/// This is used as a marker component, allows them to see gift contents.
 /// </summary>
 [RegisterComponent]
 public sealed partial class SantaComponent : Component
