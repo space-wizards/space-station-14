@@ -1255,5 +1255,12 @@ Entries:
   id: 152
   time: '2025-07-10T11:14:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38813
+- author: VerinSenpai
+  changes:
+  - message: The showrules command now has autocomplete.
+    type: Tweak
+  id: 153
+  time: '2025-07-11T17:48:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38855
 Name: Admin
 Order: 2
