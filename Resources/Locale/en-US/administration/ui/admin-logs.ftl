@@ -30,3 +30,7 @@ admin-logs-field-time-local = Local
 admin-logs-field-time-utc = UTC
 admin-logs-field-time-current= Current
 admin-logs-field-time-real = Real
+
+# Log Player Fields
+admin-logs-player-field-no-players = No Players
+admin-logs-player-field-not-in-round = Not in round.

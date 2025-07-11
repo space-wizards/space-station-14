@@ -1,6 +1,6 @@
 <BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
          HorizontalExpand="True"
          Orientation="Vertical">
     <BoxContainer
@@ -14,5 +14,5 @@
             </CollapsibleBody>
         </Collapsible>
     </BoxContainer>
-    <customControls:HSeparator/>
+    <cc:HSeparator/>
 </BoxContainer>
