@@ -17,7 +17,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<HolidaysRefreshedEvent>(RefreshHolidays);
+        SubscribeNetworkEvent<UpdateHolidaysEvent>(RefreshHolidays);
 
         SubscribeLocalEvent<HolidayRsiSwapComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
@@ -26,7 +26,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
     ///     Update's client holiday list.
     /// </summary>
     /// <param name="args">Sent by server HolidaySystem when changing holidays.</param>
-    private void RefreshHolidays(HolidaysRefreshedEvent args)
+    private void RefreshHolidays(UpdateHolidaysEvent args)
     {
         SetActiveHolidays(args.Now);
     }

@@ -42,7 +42,7 @@ public sealed class HolidaySystem : SharedHolidaySystem
         var now = DateTime.Now;
 
         SetActiveHolidays(now);
-        RaiseNetworkEvent(new HolidaysRefreshedEvent(now));
+        RaiseNetworkEvent(new UpdateHolidaysEvent(now));
     }
 
     /// <summary>

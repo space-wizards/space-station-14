@@ -60,6 +60,8 @@ public abstract class SharedHolidaySystem : EntitySystem
                 CurrentHolidays.Add(holiday);
             }
         }
+
+        RaiseNetworkEvent(new HolidaysRefreshedEvent());
     }
 
     #region Public API
@@ -89,7 +91,13 @@ public abstract class SharedHolidaySystem : EntitySystem
 ///     Event for when the list of currently active holidays has been refreshed.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HolidaysRefreshedEvent(DateTime now) : EntityEventArgs
+public sealed class HolidaysRefreshedEvent : EntityEventArgs;
+
+/// <summary>
+///     Network event telling client to update its holidays.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class UpdateHolidaysEvent(DateTime now) : EntityEventArgs
 {
     public readonly DateTime Now = now;
 }
