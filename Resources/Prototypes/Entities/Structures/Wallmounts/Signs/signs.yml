@@ -77,7 +77,7 @@
   description: A direction sign, pointing out the way to hypersleep storage.
   components:
   - type: Sprite
-    state: direction_cryo
+    state: direction_sleep
 
 - type: entity
   parent: BaseSignDirectional
