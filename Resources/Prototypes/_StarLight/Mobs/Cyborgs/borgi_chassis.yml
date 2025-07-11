@@ -72,17 +72,26 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 750
+        damage: 75
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: gib
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
       - !type:EmptyContainersBehaviour
         containers:
         - borg_brain
         - borg_module
         - cell_slot
-      - !type:GibBehavior
+      - !type:DoActsBehavior
   - type: HealthExaminable
     examinableTypes:
     - Blunt
@@ -216,7 +225,7 @@
     - Binary
 
 - type: entity
-  parent: BaseBorgiChassis
+  parent: [ BaseBorgiChassis, BaseBorgTransponder ]
   id: BaseStationBorgiChassis
   name: Smart Borgi
   description: A unusually smart dog, loves stating it's laws.
@@ -228,27 +237,6 @@
         sprite: Mobs/Pets/corgi.rsi
         state: corgi
       name: borgi
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequencyId: CyborgControl
-      transmitFrequencyId: RoboticsConsole
-      savableAddress: false
-    - type: AutomatedTimer
-    - type: ExplodeOnTrigger #bad borgis get exploded.
-    - type: Explosive
-      explosionType: Minibomb
-      deleteAfterExplosion: false # let damage threshold gib the borgi
-      totalIntensity: 200
-      intensitySlope: 100
-      maxIntensity: 60
-      canCreateVacuum: false # its for killing the borg not the station
-    - type: OnUseTimerTrigger
-      delay: 10
-      examinable: false
-      beepSound: # it is LITERALLY a minibomb in their chassis.
-        path: /Audio/Effects/minibombcountdown.ogg
-        params:
-          volume: 12
     - type: IonStormTarget
     - type: CyborgSparkEffect
 
